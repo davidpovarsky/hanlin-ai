@@ -17,6 +17,11 @@ private func require(_ condition: Bool, _ detail: String) throws {
     }
     throw ProofFailure(detail: "Expected rejection")
 }
+@MainActor private func rejectsCancellation(_ body: @MainActor () async throws -> Void) async throws {
+    do { try await body() }
+    catch is CancellationError { return }
+    throw ProofFailure(detail: "Expected task cancellation after captured-context await")
+}
 private actor ProgressLog {
     var values: [UInt64] = []
     func record(_ event: HanlinToolProgressEvent) { values.append(event.sequence) }
@@ -42,10 +47,140 @@ private struct Fixture {
     }
 }
 
+private struct GatedFixture: Sendable {
+    let host: GatedContextHost
+    let dispatcher: HanlinHostDispatcher
+    let session: HanlinHostSession
+    let catalog: HanlinHostCatalog
+    let run: UUID
+    static func make(forwardProgress: Bool = false) async throws -> Self {
+        let fixture = try await Fixture.make()
+        let host = GatedContextHost(context: fixture.session.context, forwardProgress: forwardProgress)
+        return .init(host: host, dispatcher: HanlinHostDispatcher(host: host), session: fixture.session,
+                     catalog: fixture.catalog, run: fixture.run)
+    }
+    func call(progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void = { _ in }) async throws -> HanlinHostExecutionResult {
+        try await dispatcher.dispatch(alias: "fixture_create", argumentsJSON: #"{"text":"gated input"}"#,
+            providerCallID: "gated-call", runID: run, step: 0, session: session, catalog: catalog,
+            limits: .init(), progress: progress)
+    }
+    var destination: HanlinHostDestination { .init(context: session.context, objectReference: "gated-object", blockReference: "gated-block") }
+}
+
 @main struct PortableProof {
     static func main() async throws {
         var passed: [String] = []
         let cases: [(String, () async throws -> Void)] = [
+            ("revoke during captured context rejects cached write receipt", {
+                let f = try await GatedFixture.make()
+                let original = try await f.call()
+                await f.host.gateContext()
+                let duplicate = Task { try await f.call() }
+                await f.host.waitUntilContextIsSuspended()
+                await f.dispatcher.invalidate(f.session)
+                await f.host.releaseCapturedContext()
+                try await rejects(.staleContext) { _ = try await duplicate.value }
+                try require(await f.host.base.nativeWrites == 1, "Cached write repeated")
+                try require(await f.dispatcher.receipts(for: f.session) == [original], "Original receipt lost after revoke")
+            }),
+            ("revoke during post-execute context blocks delivery and retains committed or uncertain receipt", {
+                for mode in [SyntheticFixtureHost.Mode.complete, .uncertainAfterDispatch] {
+                    let f = try await GatedFixture.make()
+                    await f.host.base.setMode(mode)
+                    await f.host.gateContext(after: 2)
+                    let execution = Task { try await f.call() }
+                    await f.host.waitUntilContextIsSuspended()
+                    let beforeRevoke = await f.dispatcher.receipts(for: f.session)
+                    try require(beforeRevoke.count == 1, "Receipt was not recorded before post-effect context")
+                    try require(beforeRevoke[0].context == f.session.context, "Receipt retargeted")
+                    try require(beforeRevoke[0].effectState == (mode == .complete ? .confirmedCommitted : .uncertain), "Effect certainty changed")
+                    await f.dispatcher.invalidate(f.session)
+                    await f.host.releaseCapturedContext()
+                    try await rejects(.staleContext) { _ = try await execution.value }
+                    try require(await f.dispatcher.receipts(for: f.session) == beforeRevoke, "Receipt lost on stale delivery")
+                    try await rejects(.staleContext) { _ = try await f.call() }
+                    try require(await f.host.base.nativeWrites == 1, "Revoked uncertain operation retried")
+                }
+            }),
+            ("revoke during initial open context forbids host navigation", {
+                let f = try await GatedFixture.make()
+                await f.host.gateContext()
+                let navigation = Task { try await f.dispatcher.open(f.destination, session: f.session) }
+                await f.host.waitUntilContextIsSuspended()
+                await f.dispatcher.invalidate(f.session)
+                await f.host.releaseCapturedContext()
+                try await rejects(.staleContext) { _ = try await navigation.value }
+                try require(await f.host.openCalls == 0, "Host open dispatched after revoke")
+            }),
+            ("revoke during post-open context suppresses scripted exact-target acknowledgement", {
+                let f = try await GatedFixture.make()
+                await f.host.gateContext(after: 2)
+                let navigation = Task { try await f.dispatcher.open(f.destination, session: f.session) }
+                await f.host.waitUntilContextIsSuspended()
+                try require(await f.host.openCalls == 1, "Scripted open not reached")
+                await f.dispatcher.invalidate(f.session)
+                await f.host.releaseCapturedContext()
+                try await rejects(.staleContext) { _ = try await navigation.value }
+                try require(await f.host.openCalls == 1, "Open repeated after revoke")
+            }),
+            ("revoke during progress context suppresses stale progress and preserves receipt", {
+                let f = try await GatedFixture.make(forwardProgress: true)
+                let log = ProgressLog()
+                await f.host.gateContext(after: 2)
+                let execution = Task { try await f.call(progress: { await log.record($0) }) }
+                await f.host.waitUntilContextIsSuspended()
+                await f.dispatcher.invalidate(f.session)
+                await f.host.releaseCapturedContext()
+                try await rejects(.staleContext) { _ = try await execution.value }
+                try require(await log.values.isEmpty, "Stale progress delivered")
+                try require(await f.host.base.cancellations == 1, "In-flight host cancellation missing")
+                try require(await f.dispatcher.receipts(for: f.session).count == 1, "Post-cancel receipt lost")
+                try require(await f.host.base.nativeWrites == 1, "Progress race repeated write")
+            }),
+            ("task cancellation during cached context rejects old receipt", {
+                let f = try await GatedFixture.make()
+                let original = try await f.call()
+                await f.host.gateContext()
+                let duplicate = Task { try await f.call() }
+                await f.host.waitUntilContextIsSuspended()
+                duplicate.cancel()
+                await f.host.releaseCapturedContext()
+                try await rejectsCancellation { _ = try await duplicate.value }
+                try require(await f.dispatcher.receipts(for: f.session) == [original], "Cancelled cache lost receipt")
+                try require(await f.host.base.nativeWrites == 1, "Cancelled duplicate repeated write")
+            }),
+            ("task cancellation during post-execute context retains effect without delivery", {
+                let f = try await GatedFixture.make()
+                await f.host.gateContext(after: 2)
+                let execution = Task { try await f.call() }
+                await f.host.waitUntilContextIsSuspended()
+                execution.cancel()
+                await f.host.releaseCapturedContext()
+                try await rejectsCancellation { _ = try await execution.value }
+                let receipts = await f.dispatcher.receipts(for: f.session)
+                try require(receipts.count == 1 && receipts[0].effectState == .confirmedCommitted, "Cancellation erased effect")
+                try require(await f.host.base.nativeWrites == 1, "Cancellation repeated effect")
+            }),
+            ("task cancellation during initial open context forbids host navigation", {
+                let f = try await GatedFixture.make()
+                await f.host.gateContext()
+                let navigation = Task { try await f.dispatcher.open(f.destination, session: f.session) }
+                await f.host.waitUntilContextIsSuspended()
+                navigation.cancel()
+                await f.host.releaseCapturedContext()
+                try await rejectsCancellation { _ = try await navigation.value }
+                try require(await f.host.openCalls == 0, "Cancelled open dispatched")
+            }),
+            ("task cancellation during post-open context suppresses scripted acknowledgement", {
+                let f = try await GatedFixture.make()
+                await f.host.gateContext(after: 2)
+                let navigation = Task { try await f.dispatcher.open(f.destination, session: f.session) }
+                await f.host.waitUntilContextIsSuspended()
+                navigation.cancel()
+                await f.host.releaseCapturedContext()
+                try await rejectsCancellation { _ = try await navigation.value }
+                try require(await f.host.openCalls == 1, "Cancelled open repeated")
+            }),
             ("native cumulative snapshots and combining marks emit exact suffix once", {
                 var delta = HanlinAppleTextDelta()
                 try require(try delta.append(snapshot: "ש") == "ש", "Initial snapshot")

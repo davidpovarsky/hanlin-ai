@@ -45,6 +45,8 @@ public protocol HanlinHostIntegration: Sendable {
 
 Receipts are recorded in the original dispatcher namespace before stale-result delivery is rejected. They do not authorize new data access or navigation after account/Space switch. No automatic write retry in a newly selected account/Space; reconcile only with reacquired authority for the original scope. Host cancellation is best effort and does not promise native rollback. The SDK's default transcript stores pending tool identity before dispatch, metadata-only result receipts after dispatch, and rejects a new run while unresolved tool calls remain. Host reconciliation may explicitly update that original record after authoritative readback; replaying stored events never executes tools.
 
+A host freshness call can suspend and later return a previously captured matching context. The dispatcher rechecks its own session revocation and task cancellation immediately after that await, before cached return, host navigation dispatch and post-effect result/navigation acknowledgement delivery. Checking the captured context alone is insufficient. Progress has the same post-await lifetime filtering. These checks preserve receipts for effects already dispatched and do not claim native rollback.
+
 The canonical model/provider stream remains the existing HanlinAISDKAgentEngine loop. Thin facade callbacks expose current authorized host result/progress data for canonical UI consumption; raw host payloads are not logged or automatically persisted. Default persistence strips tool arguments, business result contents and raw host error details. Rehydration of rich historical host output needs scoped host references and the canonical UI projection, not duplicated host storage.
 
 ## Navigation acknowledgement

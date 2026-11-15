@@ -6,6 +6,12 @@ MAIN_SESSION, independently verified TOP_LEVEL_THREAD `01a1dd57-5fd2-78d2-98f1-9
 
 Scope: SDK-01 `1220542174541844`, SDK-02 `1220542419128390`, SDK-03 `1220542199992529`, SDK-05 `1220542199999956`, SDK-07 fixture `1220542174542004`; parent `1219613181643838`. All remain open for their actual acceptance/review. SDK-04 Maya/Eitan, SDK-06 Anytype lead/Noam, SDK-08 Roni/Tomer are separate owners.
 
+## Source QA correction after 357d0042
+
+Independent Roni source review requested a P1 correction: an awaited host context can return an old matching snapshot after the dispatcher actor has revoked the session. The corrected dispatcher checks task cancellation and actor revocation before AND immediately after each freshness await; cached returns have a final cancellation/revocation check. Initial navigation cannot dispatch after invalidation during the context await, and post-effect/result/navigation acknowledgement delivery is rejected after that same race. Progress also rejects cancelled tasks before/after its context await. Receipts remain recorded in the original scope before delivery rejection, including uncertain outcomes; no write is reissued.
+
+Nine new continuation-gated race cases cover cached duplicate delivery, post-execute delivery (both committed and uncertain), initial open dispatch, post-open scripted acknowledgement, progress filtering/in-flight host cancellation, and task cancellation at the four result/navigation boundaries. The host fixture captures a matching context, signals actual suspension, waits for explicit invalidation/cancellation, then releases that captured value. There are no sleeps or timing assumptions. A scripted navigation acknowledgement is test data, not real host/UI evidence. The corrected closure has **32 portable case passes**; independent re-review remains pending. No public host API, shared core, Apple provider, store, app source, manifest, native/full-graph or device gate was changed by this correction.
+
 ## Delivered source
 
 - NEW `Packages/HanlinAgentSDK`: products HanlinHostContracts, HanlinAgentCore, HanlinPersistenceAdapters and headless HanlinFixtureHost. iOS27/macOS26/tools6.2/Swift6 preserved; no changes to existing Platform manifest/locks, app projects/workflows/entitlements. Existing SwiftAISDK exact pin reused and new package lock captured.
@@ -19,7 +25,7 @@ Scope: SDK-01 `1220542174541844`, SDK-02 `1220542419128390`, SDK-03 `12205421999
 
 ## Actual verification
 
-**PASS: 23 portable behavior cases**, executed on Windows Swift **6.3.3**, target **x86_64-unknown-windows-msvc**, language mode **6**. Exact commands, original input hashes and raw text output are in `evidence/portable-source-proof.json` and `evidence/portable-run.log`. Reproduce with:
+**PASS: 32 portable behavior cases** (original 23 plus nine gated race cases above), executed on Windows Swift **6.3.3**, target **x86_64-unknown-windows-msvc**, language mode **6**. Exact commands, original input hashes and raw text output are in `evidence/portable-source-proof.json` and `evidence/portable-run.log`. Reproduce with:
 
 ```powershell
 & Packages/HanlinAgentSDK/Tests/PortableProof/run.ps1

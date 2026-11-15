@@ -26,8 +26,8 @@ public actor HanlinHostDispatcher {
         try Task.checkCancellation()
         guard host.apiVersion.major == 1 else { throw HanlinHostError.unsupportedVersion }
         try catalog.validate()
-        guard !revokedSessions.contains(session.id), catalog.context == session.context,
-              try await host.context(for: session) == session.context else { throw HanlinHostError.staleContext }
+        guard catalog.context == session.context else { throw HanlinHostError.staleContext }
+        try await requireCurrent(session)
         guard let tool = catalog.tools.first(where: { $0.route.alias == alias }) else { throw HanlinHostError.unknownTool }
         if expectedRevision != nil && tool.writeGuarantee != .atomicRevisionMutation {
             throw HanlinHostError.unsupportedConditionalWrite
@@ -44,6 +44,8 @@ public actor HanlinHostDispatcher {
             guard old.alias == alias, old.arguments == bytes else { throw HanlinHostError.idempotencyConflict }
             guard let result = old.result else { throw HanlinHostError.duplicateInvocation }
             guard try JSONEncoder().encode(result).count <= limits.maximumOutputBytes else { throw HanlinHostError.outputLimitExceeded }
+            try Task.checkCancellation()
+            guard !revokedSessions.contains(session.id) else { throw HanlinHostError.staleContext }
             return result
         }
         // The provider ID is opaque. A fresh UUID maps it to a valid canonical invocation ID.
@@ -87,8 +89,7 @@ public actor HanlinHostDispatcher {
         guard try JSONEncoder().encode(result).count <= limits.maximumOutputBytes else {
             throw HanlinHostError.outputLimitExceeded
         }
-        guard !revokedSessions.contains(session.id),
-              try await host.context(for: session) == session.context else { throw HanlinHostError.staleContext }
+        try await requireCurrent(session)
         return result
     }
 
@@ -106,22 +107,32 @@ public actor HanlinHostDispatcher {
     public func open(_ destination: HanlinHostDestination, session: HanlinHostSession) async throws -> HanlinHostNavigationResult {
         try Task.checkCancellation()
         guard host.apiVersion.major == 1 else { throw HanlinHostError.unsupportedVersion }
-        guard destination.context == session.context, !revokedSessions.contains(session.id),
-              try await host.context(for: session) == session.context else { throw HanlinHostError.staleContext }
+        guard destination.context == session.context else { throw HanlinHostError.staleContext }
+        try await requireCurrent(session)
         let result = try await host.open(destination)
         try result.validate(for: destination)
-        guard !revokedSessions.contains(session.id), try await host.context(for: session) == session.context else { throw HanlinHostError.staleContext }
+        try await requireCurrent(session)
         return result
+    }
+
+    /// The host may suspend with a captured matching context. Actor revocation and task
+    /// cancellation must both be checked AFTER that await, before any dispatch or delivery.
+    private func requireCurrent(_ session: HanlinHostSession) async throws {
+        try Task.checkCancellation()
+        guard !revokedSessions.contains(session.id) else { throw HanlinHostError.staleContext }
+        let current = try await host.context(for: session)
+        try Task.checkCancellation()
+        guard !revokedSessions.contains(session.id), current == session.context else { throw HanlinHostError.staleContext }
     }
 
     private func forward(_ event: HanlinToolProgressEvent, key: CallKey, session: HanlinHostSession,
                          to sink: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async {
-        guard !revokedSessions.contains(session.id), let state = calls[key], state.result == nil,
+        guard !Task.isCancelled, !revokedSessions.contains(session.id), let state = calls[key], state.result == nil,
               state.invocationID == event.invocationID,
               state.progressSequence.map({ event.sequence > $0 }) ?? true,
               (event.message?.utf8.count ?? 0) <= 4_096,
               let current = try? await host.context(for: session), current == session.context,
-              !revokedSessions.contains(session.id), calls[key]?.result == nil,
+              !Task.isCancelled, !revokedSessions.contains(session.id), calls[key]?.result == nil,
               calls[key]?.progressSequence.map({ event.sequence > $0 }) ?? true else { return }
         calls[key]?.progressSequence = event.sequence
         await sink(event)

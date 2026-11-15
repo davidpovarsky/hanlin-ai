@@ -20,7 +20,7 @@ try {
     $sdkProofHosts = @(Get-ChildItem -LiteralPath Packages/HanlinAgentSDK/Sources/HanlinHostContracts -Filter '*.swift' -File | ForEach-Object FullName)
     $sdkProofStores = @(Get-ChildItem -LiteralPath Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters -Filter '*.swift' -File | ForEach-Object FullName)
     $sdkProofDispatcher = @((Join-Path $sdkProofRoot 'Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift'), (Join-Path $sdkProofRoot 'Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleTextDelta.swift'))
-    $sdkProofFixture = @((Join-Path $sdkProofRoot 'Packages/HanlinAgentSDK/Tests/Fixtures/SyntheticFixtureHost.swift'))
+    $sdkProofFixture = @(Get-ChildItem -LiteralPath Packages/HanlinAgentSDK/Tests/Fixtures -Filter '*.swift' -File | ForEach-Object FullName)
     $sdkProofInputs = $sdkProofCanonical + $sdkProofHosts + $sdkProofStores + $sdkProofDispatcher + $sdkProofFixture
     $sdkProofModules = @(
         @{name='HanlinPlatformContracts';sources=$sdkProofCanonical;libraries=@()},

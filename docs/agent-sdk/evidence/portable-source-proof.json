@@ -8,7 +8,7 @@
     "Apple SDK/FoundationModels/UIKit/SwiftUI",
     "real Anytype/Otzaria host"
   ],
-  "sourceHead": "f33e50f5a9e0e01c7397740da43e94fcc1347781",
+  "sourceHead": "357d0042809c2c71bc6725466994b2adbaadf3da",
   "workingTree": "Source changes under exclusive CHAT-SDK W1 lease; exact input hashes below",
   "result": "PASS",
   "commands": [
@@ -144,6 +144,7 @@
         "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\portable",
         "-lHanlinPlatformContracts",
         "-lHanlinHostContracts",
+        "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\Tests\\Fixtures\\GatedContextHost.swift",
         "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\Tests\\Fixtures\\SyntheticFixtureHost.swift",
         "-emit-module-path",
         "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115\\Packages\\HanlinAgentSDK\\.build\\portable\\HanlinSDKTestFixtures.swiftmodule",
@@ -270,7 +271,7 @@
       "path": "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters/HanlinPrivateConversationStore.swift"
     },
     {
-      "sha256": "c0bf1976d75334d4e24f2a622e172b07c446a9bf3cd7ffc14d753679869d334c",
+      "sha256": "464f1e247054ecf407b65f015c223a650322f6a0b2d55b8db3b423548d244830",
       "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift"
     },
     {
@@ -278,11 +279,15 @@
       "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleTextDelta.swift"
     },
     {
+      "sha256": "911bf6a2edfccb85ed7218aab6a0d3297b444b7d496d170fc2daf62eb4b63d03",
+      "path": "Packages/HanlinAgentSDK/Tests/Fixtures/GatedContextHost.swift"
+    },
+    {
       "sha256": "7d4a3512d74a0b491cf1a11e26d536c0fe81ad5e884c7457e483d3d059ed4b5b",
       "path": "Packages/HanlinAgentSDK/Tests/Fixtures/SyntheticFixtureHost.swift"
     },
     {
-      "sha256": "ab0bc9a268e4e30f14b702ae3a6ed570453b16e0e577401624c4302d2081b019",
+      "sha256": "4e878cfd0e53e3b679da18e300e6e2f193a203bf975a35dba57ef8a9fe8a65ab",
       "path": "Packages/HanlinAgentSDK/Tests/PortableProof/main.swift"
     }
   ]

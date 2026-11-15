@@ -12,7 +12,7 @@
   },
   "verification": {
     "portable": "PASS; exact subset in portable-source-proof.json",
-    "portableCases": 23,
+    "portableCases": 32,
     "UI": "NOT_RUN",
     "fullGraph": "BLOCKED_WINDOWS_FOUNDATION_API",
     "nativeSDK": "NOT_RUN",
@@ -25,7 +25,7 @@
     },
     {
       "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
-      "sha256": "c0bf1976d75334d4e24f2a622e172b07c446a9bf3cd7ffc14d753679869d334c"
+      "sha256": "464f1e247054ecf407b65f015c223a650322f6a0b2d55b8db3b423548d244830"
     },
     {
       "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
@@ -73,11 +73,11 @@
     },
     {
       "path": "Packages/HanlinAgentSDK/Tests/PortableProof/main.swift",
-      "sha256": "ab0bc9a268e4e30f14b702ae3a6ed570453b16e0e577401624c4302d2081b019"
+      "sha256": "4e878cfd0e53e3b679da18e300e6e2f193a203bf975a35dba57ef8a9fe8a65ab"
     },
     {
       "path": "Packages/HanlinAgentSDK/Tests/PortableProof/run.ps1",
-      "sha256": "572500b2a2eae93d8baad17f03ed37922565d27e8c1fc7d6db0a138144cfd6af"
+      "sha256": "f4cac0fed1af06fc493767f866a3f1de6df3df8a1fecbdec31d43d4e6aa16657"
     },
     {
       "path": "Packages/HanlinAgentSDK/Examples/FixtureHost/main.swift",
@@ -106,6 +106,11 @@
     {
       "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinInjectedProviderTests.swift",
       "sha256": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/Fixtures/GatedContextHost.swift",
+      "sha256": "911bf6a2edfccb85ed7218aab6a0d3297b444b7d496d170fc2daf62eb4b63d03"
     }
-  ]
+  ],
+  "reviewBase": "357d0042809c2c71bc6725466994b2adbaadf3da"
 }
