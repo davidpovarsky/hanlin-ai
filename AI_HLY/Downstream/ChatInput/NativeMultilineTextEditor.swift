@@ -81,7 +81,8 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
     }
 
     /// Reads visual line fragments without switching a TextKit 2 editor to TextKit 1.
-    static func visualLineLimit(for textView: UITextView, observeDiagnostic: ((String) -> Void)? = nil) -> (count: Int, sixthBottom: CGFloat?, complete: Bool) {
+    static func visualLineLimit(for textView: UITextView, fittingHeight: CGFloat? = nil,
+                                observeDiagnostic: ((String) -> Void)? = nil) -> (count: Int, sixthBottom: CGFloat?, complete: Bool) {
         var count = 0
         var sixthBottom: CGFloat?
         if let manager = textView.textLayoutManager {
@@ -134,8 +135,26 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
             // Access only when the view is already using TextKit 1.
             observeDiagnostic?("TextKit1")
             let manager = textView.layoutManager
-            manager.ensureLayout(for: textView.textContainer)
-            let glyphs = manager.glyphRange(for: textView.textContainer)
+            let container = textView.textContainer
+            let priorSize = container.size
+            let priorHeightTracking = container.heightTracksTextView
+            let expandsForMeasurement = fittingHeight.map { $0.isFinite && $0 > priorSize.height } ?? false
+            // sizeThatFits can leave the compatibility container at viewport
+            // height after scrolling changes. Give the same native layout enough
+            // measured content space to count its lines, then restore its state.
+            if expandsForMeasurement, let fittingHeight {
+                container.heightTracksTextView = false
+                container.size = CGSize(width: priorSize.width, height: fittingHeight)
+                observeDiagnostic?("native fitting container height \(priorSize.height) -> \(fittingHeight); priorHeightTracking=\(priorHeightTracking)")
+            }
+            defer {
+                if expandsForMeasurement {
+                    container.size = priorSize
+                    container.heightTracksTextView = priorHeightTracking
+                }
+            }
+            manager.ensureLayout(for: container)
+            let glyphs = manager.glyphRange(for: container)
             guard glyphs.location == 0 else {
                 observeDiagnostic?("nonzero first glyph range=\(glyphs) containerSize=\(textView.textContainer.size)")
                 return (0, nil, false)
@@ -194,7 +213,7 @@ struct NativeMultilineTextEditor: UIViewRepresentable {
         }
         var measuredLines: (count: Int, sixthBottom: CGFloat?, complete: Bool)? = nil
         if usesAutomaticLineLimits && !isEmpty {
-            let lines = Self.visualLineLimit(for: textView, observeDiagnostic: layoutObserver)
+            let lines = Self.visualLineLimit(for: textView, fittingHeight: fitting, observeDiagnostic: layoutObserver)
             measuredLines = lines
             let limit = Self.automaticLimit(fittingHeight: fitting, availableHeight: maxHeight, minimumHeight: bounds.min,
                 verticalInsets: textView.textContainerInset.top + textView.textContainerInset.bottom,

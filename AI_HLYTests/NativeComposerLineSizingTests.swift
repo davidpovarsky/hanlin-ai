@@ -101,6 +101,7 @@ struct NativeComposerLineSizingTests {
                         #expect(range.location == 0 && range.length == layoutManager.numberOfGlyphs)
                         var currentTrace: NativeMultilineTextEditor.MeasurementTrace?
                         let height = editor.measuredHeight(for: view, isEmpty: false) { currentTrace = $0 }
+                        print("COMPOSER_LAYOUT script=\(sample) target=\(target) trace=\(String(describing: currentTrace))")
                         #expect(view.isScrollEnabled == (target == 7))
                         if target == 6 {
                             #expect(height > minimum)
