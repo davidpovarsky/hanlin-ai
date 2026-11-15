@@ -11,9 +11,7 @@ public actor HanlinPrivateConversationStore: HanlinConversationStore {
         guard directory.isFileURL, maximumRecordBytes > 0, maximumRecordBytes <= 16 * 1_048_576 else {
             throw HanlinHostError.invalidArguments
         }
-        // URL-level dot-segment normalization preserves the host's canonical /private root.
-        // File-path standardization can rewrite it to /var and reintroduce a system symlink.
-        self.directory = directory.standardized
+        self.directory = directory.standardizedFileURL
         self.maximumRecordBytes = maximumRecordBytes
     }
 

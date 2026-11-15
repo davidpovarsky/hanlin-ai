@@ -43,13 +43,14 @@ before invocation. Apple documents enumeration in the [Xcode release notes](http
 Installed CLI help and the actual enumerated identifier remain the authority for this runner.
 
 Run43728173010 confirmed that enumeration and the corrected selector execute the exact method,
-but the checkpoint still threw invalidRecord. The production store used filesystem standardization,
-which can rewrite a canonical /private path to its /var alias. The source correction uses URL-level
-dot-segment normalization instead, preserving symbolic-link rejection. The failed case also checks
-that an actual symlink root remains rejected. Apple documents the distinction in
+but the checkpoint still threw invalidRecord. A subsequent normalization hypothesis in43729703890
+was NOT confirmed: the runtime witness reported no root rewrite. That production change was reverted.
+The fixture now uses the runner-designated unaliased fixture root (or a unique owned directory below
+the user's home when running locally), and records bounded operation stages before each store call.
+The failed case also checks that an actual symlink root remains rejected. Apple documents path behavior in
 [standardized URL](https://developer.apple.com/documentation/foundation/url/standardized) and
 [filesystem path standardization](https://developer.apple.com/documentation/foundation/nsstring/standardizingpath).
-This private-store initializer is invoked only by the failed checkpoint case among the41 package cases.
+The production private-store implementation is identical to9a864b3c after reverting that hypothesis.
 Core20 and Context5 have no private-store dependency; Session14 and the other Store case use only the
 unchanged in-memory store. Their40 original passes remain candidates only after the complete source,
 method/fixture and environment audit; do not treat the entire changed persistence module as unchanged.
