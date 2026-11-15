@@ -122,3 +122,17 @@ closure/environment audit, never reported as reexecuted. The three catalog cases
 runtime availability evidence on the new runner. App SwiftData store/row collision/actual closure
 execution, SDK-enabled full app/Composer, live model/rendered form, XCUITest/physical-device,
 RTL/AX and release remain separate OPEN obligations.
+
+## Conversation-open read-only restore
+
+`HanlinAppAgentSessionOwner.restoreHistory(conversation: ChatRecords, conversationID: UUID,
+sceneID: UUID, temporary: Bool, modelContext: ModelContext) async throws` loads through the
+same store and private original-row decoder before any model request. Install the presentation
+consumer first and call from a lifecycle task outside View.body, using the original conversation,
+scene and ModelContext. It creates no engine/Host/Session, performs no admission or model request,
+and forwards historical original Session/run/row bindings as read-only replay. The same-owner
+temporary store is retained. Cancellation, revoke, a new stream/restore, wrong scope, replacement
+or deletion suppress delivery; freshness and actual row existence are rechecked after the await.
+
+Source syntax parsed on Windows. Actual SwiftData/App tests remain NOT_RUN pending the combined
+enabled application graph. Package-only tests do not establish this app hook's compilation.
