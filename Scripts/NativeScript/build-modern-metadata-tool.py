@@ -49,6 +49,16 @@ def main():
     writer.write_text(base.patch_declaration_writer(writer.read_text()))
     serializer = generator / "src/Binary/binarySerializer.cpp"
     serializer.write_text(base.replace_once(serializer.read_text(), "Archive* archive = dyn_cast<Archive>(&binary)", "isa<Archive>(&binary)"))
+    parser = generator / "src/HeadersParser/Parser.cpp"
+    text = parser.read_text()
+    text = base.replace_once(text, "const FileEntry* header,", "FileEntryRef header,")
+    text = base.replace_once(text, "header->getName()", "header.getName()")
+    text = base.replace_once(text, "module->Umbrella && module->Umbrella.is<FileEntryRef>()", "std::holds_alternative<FileEntryRef>(module->Umbrella)")
+    text = base.replace_once(text, "const FileEntry* umbrellaHeader = module->Umbrella.get<FileEntryRef>();", "const FileEntryRef umbrellaHeader = std::get<FileEntryRef>(module->Umbrella);")
+    text = base.replace_once(text, "module->Umbrella && module->Umbrella.is<DirectoryEntryRef>()", "std::holds_alternative<DirectoryEntryRef>(module->Umbrella)")
+    text = base.replace_once(text, "module->Umbrella.get<DirectoryEntryRef>()", "std::get<DirectoryEntryRef>(module->Umbrella)")
+    text = base.replace_once(text, "module->Headers[Module::HK_Normal]", "module->getHeaders(Module::HK_Normal)")
+    parser.write_text(text)
     # LLVM20 renamed StringRef's spelling; this is an API migration only.
     for path in (generator / "src").rglob("*"):
         if path.suffix in {".h", ".cpp"}:
