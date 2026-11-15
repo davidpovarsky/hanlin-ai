@@ -45,7 +45,8 @@ public actor HanlinAISDKAgentEngine {
         )
     }
 
-    init(
+    /// Injects a provider into the same production agent loop (including tool and cancellation handling).
+    public init(
         configuration: HanlinChatModelConfiguration,
         model: LanguageModel,
         descriptor: HanlinAISDKProviderDescriptor? = nil,
@@ -107,6 +108,13 @@ public actor HanlinAISDKAgentEngine {
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         prepareStep: @escaping StepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
+        // Native unsupported content must fail before SwiftAISDK prompt conversion can download
+        // an image URL. This guard never selects a cloud provider or includes private payloads.
+        if resolvedProvider.descriptor.kind == .appleOnDevice {
+            guard messages.allSatisfy({ message in
+                message.parts.allSatisfy { part in if case .text = part { return true }; return false }
+            }) else { throw HanlinAISDKError.nativeUnsupportedContent }
+        }
         let modelMessages = try Self.modelMessages(from: messages)
         guard !modelMessages.isEmpty else {
             throw HanlinAISDKError.invalidConversation("At least one user or assistant message is required.")
@@ -335,7 +343,13 @@ public actor HanlinAISDKAgentEngine {
     private static func makeTools(
         _ definitions: [HanlinAISDKToolDefinition]
     ) throws -> ToolSet {
-        try Dictionary(uniqueKeysWithValues: definitions.map { definition in
+        var aliases = Set<String>()
+        for definition in definitions {
+            guard aliases.insert(definition.name).inserted else {
+                throw HanlinAISDKError.invalidToolSchema(name: definition.name)
+            }
+        }
+        return try Dictionary(uniqueKeysWithValues: definitions.map { definition in
             let schema: JSONValue
             do {
                 schema = try JSONDecoder().decode(JSONValue.self, from: definition.inputSchemaData)

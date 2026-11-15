@@ -1,0 +1,116 @@
+{
+  "packageVersion": "0.1.0-preview.1",
+  "hostAPIMajor": 1,
+  "baseline": "6a533ef4cc26c3c4e2ce90037bbe2e50f4862c36",
+  "branch": "codex/hanlin-agent-sdk-wave1-20261115",
+  "thread": "01a1dd57-5fd2-78d2-98f1-95b0eecbe97c",
+  "platforms": {
+    "swiftTools": "6.2",
+    "iOS": "27.0",
+    "swiftLanguageMode": "6",
+    "macOS": "26.0"
+  },
+  "verification": {
+    "portable": "PASS; exact subset in portable-source-proof.json",
+    "portableCases": 32,
+    "UI": "NOT_RUN",
+    "fullGraph": "BLOCKED_WINDOWS_FOUNDATION_API",
+    "nativeSDK": "NOT_RUN",
+    "device": "NOT_RUN"
+  },
+  "files": [
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "sha256": "93e3f0dd15a921b0842b6b27095654d9f3a25ce11daafce72b59589c0bba8d6a"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+      "sha256": "464f1e247054ecf407b65f015c223a650322f6a0b2d55b8db3b423548d244830"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
+      "sha256": "e9cce91de6ae2ad7b93d86efe81d3ee8c550c504fe167c0a6bc17098f7ded22f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleTextDelta.swift",
+      "sha256": "c40a267b83f68e803c515ae43846d6b9d98d58b3c89007065f0909adb3477c7a"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinConversationStore.swift",
+      "sha256": "85274442975fe0bcac8b35a5583b9c7bb96371b02e866be739be4c1329b37b67"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostContext.swift",
+      "sha256": "9891cb9ca8aca591f1a5ff4be1393e0ce4db3467df5b750c75ddec00efb17f31"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostIntegration.swift",
+      "sha256": "6ca77b8fe21c84328ce9cc40578ce832837676c04fae12b21c42950b3a4e509f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters/HanlinInMemoryConversationStore.swift",
+      "sha256": "0c3f501fc503bb448e594da824a57b3052e72c294f800c363198e03eab7e7c49"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters/HanlinPrivateConversationStore.swift",
+      "sha256": "0c090c1e1034dd26733766065ca50d1282bee33fe5819f3cbb325586e02975f3"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/Fixtures/SyntheticFixtureHost.swift",
+      "sha256": "7d4a3512d74a0b491cf1a11e26d536c0fe81ad5e884c7457e483d3d059ed4b5b"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+      "sha256": "5ace1e65fc16dfdfaef4a802e28e8c4140ea9c34824c272610c4f91fb1757777"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinHostContractsTests/ContextTests.swift",
+      "sha256": "b3a0d06c2a00f53bad104c4e52d28ade0f3ae3536f64c0bc5d4a1d3a43ad2cd5"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinPersistenceAdaptersTests/StoreTests.swift",
+      "sha256": "35008fea92024389ab242e82df77a47a934b2abbcb946da69f683fb65fb93d13"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/PortableProof/main.swift",
+      "sha256": "4e878cfd0e53e3b679da18e300e6e2f193a203bf975a35dba57ef8a9fe8a65ab"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/PortableProof/run.ps1",
+      "sha256": "f4cac0fed1af06fc493767f866a3f1de6df3df8a1fecbdec31d43d4e6aa16657"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Examples/FixtureHost/main.swift",
+      "sha256": "e7a4aa594c1df688178c259a3c357a70b68d2cbdf9e0068e5db3389510332302"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.swift",
+      "sha256": "5bb584f5e1b0e26a4618c2c5135e83805f095369c81dbae7bd059e37bd17913b"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.resolved",
+      "sha256": "8bcf81bd96464354e9a7c46d3a592b1f2a0eec0a31c91847a24e5586084828a0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "sha256": "11a79c40d6f8298027c281bbe30c214972c99ddf89ef57bc486ac1c8dcdd008d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift",
+      "sha256": "abd6035827216a9e2d5656a4df4653ba867a3c08dfb586b198c4574e8eeb4b72"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "sha256": "10ee6937b4dc9fe44091d1e5388b753232567835fd4f7cd9ce8f36fd1654ea6a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinInjectedProviderTests.swift",
+      "sha256": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/Fixtures/GatedContextHost.swift",
+      "sha256": "911bf6a2edfccb85ed7218aab6a0d3297b444b7d496d170fc2daf62eb4b63d03"
+    }
+  ],
+  "reviewBase": "357d0042809c2c71bc6725466994b2adbaadf3da"
+}

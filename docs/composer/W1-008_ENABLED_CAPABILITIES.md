@@ -1,0 +1,19 @@
+# W1-008 enabled-capability chips
+
+Reference supplied by the owner: `Hanlin_Detached_Active_Chips_Original_Composer.swift`, 57,535 bytes, SHA-256 `e3cf93feac90ff1ead2e6bd2acbb3cace1a2b89e07dd97d242e4b89751bbb5c7`. Source task `1220541898122292`, parent `1220539644804804`.
+
+The downstream row uses the reference's 36-point scroll area, 32-point capsules, 6-point spacing, original blue palette, icon-only presentation below 510 points, and identity transition. It appears only with at least one projected enabled capability while the Morph bubble is closed. Tapping opens an existing settings route in the same bubble using the reference opening spring; context-menu actions mutate the existing chat bindings. The in-bubble capability tiles use the reference's blue glass and enabled checkmark. The input, separate launcher and Morph shell remain in their existing owners.
+
+Search/knowledge and thinking/planning are grouped from the existing action bridge's model-gated live bindings. Built-in tools, Skills, runtimes and selected MCP servers require the current chat's actual tool-use binding and model support plus the relevant catalog/provider eligibility; a ready or executing runtime alone does not enable a chip. The tools, Skills and runtimes context action explicitly turns off tool use in this chat through that binding, without stopping runtimes or changing global skill preferences. MCP dismissal clears the current chat's selected server IDs through the existing selection API, reads them back, and surfaces load or persistence errors; it does not disable MCP globally. Mandatory model reasoning is not presented as removable. Image generation derives from the selected model; its context action opens the existing model picker and does not claim it is off until model selection actually changes. Model identity and image size are not represented as independent toggles. Existing availability checks remain the authority when enabling search or knowledge.
+
+## Explicitly incomplete
+
+- Eligibility is read directly from `NativeToolCatalog`, `HanlinSkillCatalog` and `SkillStore`, without a parallel authority. Those sources do not yet provide the observation contract needed for immediate updates made outside this view; the service owner is implementing the narrow notification/revision APIs. Until that contract is integrated, external changes while the view remains open can be stale.
+- MCP readback uses existing void/error APIs. It conservatively retains the chip and displays an error when the provider reports one; a structured per-operation result and selection revision from the service owner remain necessary for conclusive concurrent/failure handling.
+- The new reference is **not accepted** until the observation contract and actual SDK/UI/device checks are completed. MiniApps remains owned by the separate split contract and is not simulated here.
+
+## Evidence and pending gates
+
+Local `swiftc -frontend -parse` and tracked `git diff --check` are syntax/whitespace checks only. Focused additions cover projection of zero, one and multiple groups, disabled MCP and unsupported/mandatory model capabilities, the 510-point boundary, coordinator route retention, and a real UI flow for tool-chip tap/context-menu disable. These cases are **NOT RUN** until an app/SDK harness with the actual dependencies is available. Request the verification owner to include the real new source, action bridge/model dependencies, and actual test selectors; do not use a stand-in model or call the prior five-case Morph-only result a W1-008 pass.
+
+Outstanding acceptance includes live Skills/runtime/image contracts, compact/wide and RTL behavior, keyboard, six-line editor, accessibility/Reduce Motion, source-matched visuals and animation, and real iPad comparison. No UI, Apple SDK or device result is claimed for this tranche.

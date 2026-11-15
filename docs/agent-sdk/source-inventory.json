@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "repository": "davidpovarsky/hanlin-ai",
+  "sourceCommit": "6a533ef4cc26c3c4e2ce90037bbe2e50f4862c36",
+  "threadUUID": "01a1dd57-5fd2-78d2-98f1-95b0eecbe97c",
+  "branch": "codex/hanlin-agent-sdk-wave1-20261115",
+  "worktree": "C:\\Users\\DAVID\\Code\\hanlin-agent-sdk-wave1-20261115",
+  "scope": "read-only source inventory for SDK-01; documentation-only write lease",
+  "platforms": {
+    "swiftLanguageMode": "6",
+    "packageMacOS": "26.0",
+    "packageIOS": "27.0",
+    "swiftTools": "6.2"
+  },
+  "swiftAISDKRevision": "43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6",
+  "hostSnapshots": {
+    "Anytype": "SDK-06 frozen external source audit consumed at 389f12320d89975ebb58d2aaf13b051693194d59; no direct host runtime/checkout inspection",
+    "Otzaria": "NOT_INSPECTED; production APIs prohibited"
+  },
+  "evidence": {
+    "documentation": "RESEARCHED",
+    "device": "NOT_RUN",
+    "build": "NOT_RUN",
+    "simulator": "NOT_RUN",
+    "userAcceptance": "NOT_RUN",
+    "source": "INSPECTED"
+  },
+  "files": [
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "gitBlob": "5fd9c9a7d6687693f6e242c9a4320f8461929d7f",
+      "bytes": 9541,
+      "sha256": "986b56d473c6e7116ea8898b22d51ab550113d61d9af2882c40ad58176efc0d1",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "gitBlob": "e9ac9eba2ad096d97bf860aa1d0b670cc89a3d36",
+      "bytes": 22321,
+      "sha256": "869c989537e1d6048195e5db5f75b364a0da762f7580a2983864c77b5fa05285",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift",
+      "gitBlob": "9569f46c348844fa05cf6ed3ebf618692af45120",
+      "bytes": 5198,
+      "sha256": "ab472ab34227f0472106f5da95b4b3ec64b2368c70bd88b20334b75888d5d126",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "gitBlob": "76f459c35e4f8ed1ea232757be121421404fb592",
+      "bytes": 10739,
+      "sha256": "c382eb6c2ef90160d37b870e11e4e46582438ff12d50169876199f29704217e4",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinCapturedStreamReplay.swift",
+      "gitBlob": "9c8da6db693b1ec7b6c2ead643b1356e1b68a8b6",
+      "bytes": 7787,
+      "sha256": "ad4f7d48c49e918db2f826d02556b63a95e29f0b34637d1f853a9bc6c20169ce",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift",
+      "gitBlob": "a372e9dbce3242a5a03e406cdba7414bf649c7d0",
+      "bytes": 6838,
+      "sha256": "2bccec0d98941fb9ad89b8b8ca2325e773f853908d379e15617ca877af4700ca",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatMessage.swift",
+      "gitBlob": "c99be01a793abd27f9af7819fd571f183258ece2",
+      "bytes": 1040,
+      "sha256": "b6ebae1ff8788ca405cb9e5b54379894d9c5f29a58e81101d07b8df53f805704",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatModelConfiguration.swift",
+      "gitBlob": "b53f797f046b3a671858f2c419630b2bb7c668f4",
+      "bytes": 7036,
+      "sha256": "f7b52386256f944677ef7d96380bdab99be8d724c88236112fdf79841a1edfa6",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatRequestBuilder.swift",
+      "gitBlob": "aec967db17a8dc082a91cea7d3e41c0471fda2c6",
+      "bytes": 16132,
+      "sha256": "7d0dbe545c2642e32f9a1dcaade6776e917b9a5603cb1535f7eac492a9efade6",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamEvent.swift",
+      "gitBlob": "81b56aa2a03543803757352c91b808ad200ae288",
+      "bytes": 1488,
+      "sha256": "d5760c05a0c9154b8716e3f9c95be4df7dc1c42974dd21612ab43bdb235094ef",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamParser.swift",
+      "gitBlob": "483bd3548f66332a0785b698d3a0149b0deda1dd",
+      "bytes": 11530,
+      "sha256": "ff20771a6aed636bd4abbb5de26f4adc350c338f16e30659ba919c6fa1614826",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatTransportTrace.swift",
+      "gitBlob": "99f3184e127f48ddb289a23b9a01b715b1d670b8",
+      "bytes": 569,
+      "sha256": "6acef2c38d98f14c34221a1995913d03c6ec1b34f3ad6df31b0d889cddbb8395",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNonEmptyLanguageModel.swift",
+      "gitBlob": "e4690c00af7ff565375d32c94b5bbc4342062c87",
+      "bytes": 5939,
+      "sha256": "d62ad35a0e618bbfedb56dd79a9301585725589184aaaf3a26ab870d8a17716e",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+      "gitBlob": "2974c7eea85d2007ab3847c746a2632b68cdb05c",
+      "bytes": 7298,
+      "sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift",
+      "gitBlob": "3f7819721750b12326c6b8c5c37dce89eb9eb197",
+      "bytes": 8912,
+      "sha256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+      "gitBlob": "486ad7bb698598ed4f7255113574a61a3ea42215",
+      "bytes": 10661,
+      "sha256": "e05fb0509136f303f621f292147d98db140f3e0f028e7431cc7064fb935e7a9b",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift",
+      "gitBlob": "5e788e7b4ab1519d2ddd52d6b31253a4be436fa6",
+      "bytes": 4842,
+      "sha256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "gitBlob": "26ce7f7138fb00ade59780b854d075f49e4f4a52",
+      "bytes": 15313,
+      "sha256": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+      "gitBlob": "c44dfa46ed185941df4a7e97d1ac5070c7461626",
+      "bytes": 15847,
+      "sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "gitBlob": "91d256b101eacd094a0221613a2489806e310293",
+      "bytes": 44005,
+      "sha256": "6b4076de7b2416d108431276b147796352aa232d39507dca2f7f0b5cd5efa0d1",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "gitBlob": "a8430f4a88d066a853d22a24fe6e5ac245a374c4",
+      "bytes": 56729,
+      "sha256": "8284d64b8d9f0fc9212d6178860db6ce75dd15b212fb9214fea33fe1e51b9750",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "gitBlob": "7b105b91779320e197816fad4be29afce7128e10",
+      "bytes": 201102,
+      "sha256": "20c4bb70493d6797078504fe8d5af1b9f67d00d16c45932453dd5cf188f4ccbb",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "gitBlob": "2a2fa11c76d711426d0ac32f5d47c35a30af6b89",
+      "bytes": 110930,
+      "sha256": "2a08ac2c17ea4da889b8b518bb75d2b2d75a1f761e56359bab829bc51c555db9",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Model/ChatMessages.swift",
+      "gitBlob": "54cb9663fac7deaa1150bb74e594e5d4fea7b843",
+      "bytes": 8486,
+      "sha256": "a3dd18501c445f5a3e40048cbc5903a7d1ee9a684890fdb613df6ee06f8e7bed",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Model/AllModels.swift",
+      "gitBlob": "11b10af64dc6228213fb163d814834a06abb39c1",
+      "bytes": 3801,
+      "sha256": "c0bd2a7b9d441876743c8ac4c25f179a07456b84ddd8828f22d5dc8c1b145ce5",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+      "gitBlob": "c6c06f823bddc5181ffb0344b321ab8d694a8ce0",
+      "bytes": 3865,
+      "sha256": "ecd09b57a4aa346b28e5a0497dd52abcffbea83c91e6e4e69fea67fe6121712d",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
+      "gitBlob": "6a6d9535f393dab33be6cdf88531e3cf78ae56e9",
+      "bytes": 15636,
+      "sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinModelPickerPopover.swift",
+      "gitBlob": "2754f5872055ea3153b05f9e69c07a740f5371a3",
+      "bytes": 16821,
+      "sha256": "0e810e29ee01c1665852e4c8e933baf5229dfba45e5c835c86187f98ceb01c2c",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift",
+      "gitBlob": "e53e03264d64632703d3a4d5cb0035861558d6e0",
+      "bytes": 4608,
+      "sha256": "9fce089ed37dc6ef79072620ed10579964d99662c8f94cb3d5f48c2af4e81959",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/AssistantToolExposurePlanner.swift",
+      "gitBlob": "44fff01d8fbf05f0a41efe37b584832604063873",
+      "bytes": 2708,
+      "sha256": "14033d19f9da93ad0c0a3780c21f23d1f608787a8eeda5e6b2f70b7b99fa61ec",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "gitBlob": "e735f3b1a618ef5dbec62c989b63625d0a92c4e3",
+      "bytes": 46194,
+      "sha256": "9d8a0be8149de25edf82c5dc6a28d4e0667eb7a358db208bd723442644d0db75",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinSkillCatalog.swift",
+      "gitBlob": "86daf05bb16f40dd711015db2846b72c8855784d",
+      "bytes": 19228,
+      "sha256": "fb3c0d52b29765ab7c9749c13563230415744f4161940843ee8ab759d52811ae",
+      "review": "targeted source audit; not full feature acceptance"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/ToolResultStore.swift",
+      "gitBlob": "2e714c1be7b723d8ac25a22263696dc022c8b283",
+      "bytes": 8104,
+      "sha256": "20176211c23d5af30cb2a8de086c221781f9023d0904a7f0bfad888bd389c2a1",
+      "review": "targeted source audit; not full feature acceptance"
+    }
+  ],
+  "consumerEvidence": [
+    {
+      "host": "Anytype",
+      "sourceCommit": "389f12320d89975ebb58d2aaf13b051693194d59",
+      "ownerThread": "01a1dcb2-5101-74b1-b828-29590c46614d",
+      "directory": "C:/Users/DAVID/Code/Codex-Agent-HQ/docs/anytype/hanlin-sdk06-20261115",
+      "reportSHA256": "d14eabfe48088c43822432f858b2f5c5d35a5eabd6e1efa82bce64e2065b0713",
+      "sourceMapSHA256": "69f6bc7ec08bb52d2083b5a657bb22485260e62cf461ca6b370c4e55eb32f744",
+      "sourceBlobCount": 57,
+      "hashesVerified": true,
+      "review": "HOST_AUDIT read; source-map schema/count and relevant API anchors read; no duplicate host audit",
+      "runtime": "NOT_RUN"
+    }
+  ]
+}

@@ -149,10 +149,10 @@ final class HanlinOrganizerDockState {
     /// In automatic mode (`manualComposerHeight == nil`), follows intrinsic text height (at least `minimumInteractiveHeight`).
     /// When manually resized (`manualComposerHeight != nil`), expands the inner editor frame proportionally.
     func effectiveEditorFrameHeight(intrinsicHeight: CGFloat, minimumInteractiveHeight: CGFloat = 44) -> CGFloat {
-        let autoFrame = max(minimumInteractiveHeight, min(max(intrinsicHeight, 38), editorMaxHeight))
         guard manualComposerHeight != nil else {
-            return autoFrame
+            return max(minimumInteractiveHeight, intrinsicHeight)
         }
+        let autoFrame = max(minimumInteractiveHeight, min(max(intrinsicHeight, 38), editorMaxHeight))
         let usable = max(minimumInteractiveHeight, composerHeight - 88 - attachmentOverheadHeight)
         return max(autoFrame, min(usable, editorMaxHeight))
     }
@@ -258,9 +258,7 @@ final class HanlinOrganizerDockState {
     }
 
     func handleDraftTextChange(_ text: String) {
-        if text.isEmpty {
-            manualComposerHeight = nil
-        }
+        // Preserve the deliberate size until the user resets it or switches chats.
     }
 
     func handleInputFocusChange(_ focused: Bool) {

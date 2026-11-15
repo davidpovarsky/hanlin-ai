@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "selector": "AI_HLYUITests/HanlinSimulatorAcceptanceUITests/testEnglishDraftSurvivesPortraitLandscapeRoundTrip",
+      "device_families": ["iPhone", "iPad"],
+      "locales": ["en"],
+      "coverage_tags": ["rotation", "draft_retention"],
+      "fixture_paths": ["AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift", "AI_HLY/AI_HLY.swift"]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinSimulatorAcceptanceUITests/testHebrewLargeTextPanelRoundTripPreservesDraft",
+      "device_families": ["iPhone", "iPad"],
+      "locales": ["he"],
+      "coverage_tags": ["rtl", "draft_retention"],
+      "fixture_paths": ["AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift", "AI_HLY/AI_HLY.swift"]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinSimulatorAcceptanceUITests/testDraftSurvivesLeavingAndReturningToSeededChat",
+      "device_families": ["iPhone", "iPad"],
+      "locales": ["en"],
+      "coverage_tags": ["navigation", "draft_restore"],
+      "fixture_paths": ["AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift", "AI_HLY/AI_HLY.swift"]
+    }
+  ]
+}

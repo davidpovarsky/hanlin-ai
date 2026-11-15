@@ -1,0 +1,48 @@
+Swift version 6.3.3 (swift-6.3.3-RELEASE)
+Target: x86_64-unknown-windows-msvc
+Build config: +assertions
+   Creating library C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinPlatformContracts.lib and object C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinPlatformContracts.exp
+
+   Creating library C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinHostContracts.lib and object C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinHostContracts.exp
+
+   Creating library C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinPersistenceAdapters.lib and object C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinPersistenceAdapters.exp
+
+   Creating library C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinAgentCore.lib and object C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinAgentCore.exp
+
+   Creating library C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinSDKTestFixtures.lib and object C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\HanlinSDKTestFixtures.exp
+
+   Creating library C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\PortableProof.lib and object C:\Users\DAVID\Code\hanlin-agent-sdk-wave1-20261115\Packages\HanlinAgentSDK\.build\portable\PortableProof.exp
+
+PASS: revoke during captured context rejects cached write receipt
+PASS: revoke during post-execute context blocks delivery and retains committed or uncertain receipt
+PASS: revoke during initial open context forbids host navigation
+PASS: revoke during post-open context suppresses scripted exact-target acknowledgement
+PASS: revoke during progress context suppresses stale progress and preserves receipt
+PASS: task cancellation during cached context rejects old receipt
+PASS: task cancellation during post-execute context retains effect without delivery
+PASS: task cancellation during initial open context forbids host navigation
+PASS: task cancellation during post-open context suppresses scripted acknowledgement
+PASS: native cumulative snapshots and combining marks emit exact suffix once
+PASS: opaque namespace identities do not merge Unicode byte sequences
+PASS: namespace rejects empty decoded identity
+PASS: scoped read through host
+PASS: unknown tool never dispatches
+PASS: duplicate catalog aliases rejected
+PASS: duplicate JSON member rejected before host
+PASS: actual fixture schema rejects extra field
+PASS: denied consent has no effect
+PASS: duplicate write returns one authoritative receipt
+PASS: idempotency conflict never repeats write
+PASS: conditional edit unsupported without CAS
+PASS: stale scene generation rejected
+PASS: cancellation after dispatched write is uncertain and not retried
+PASS: context switch suppresses delivery but retains original receipt
+PASS: out-of-order progress suppressed
+PASS: revoked presentation cannot dispatch
+PASS: output budget rejects delivery without losing receipt
+PASS: queued navigation is not a native UI acknowledgement
+PASS: metadata receipt excludes business payload and raw error details
+PASS: ephemeral store isolates namespaces and enforces revision
+PASS: replay rejects newer version and non-monotonic events
+PASS: private store roundtrip checkpoint and rollback preserve namespaces
+{"count":32,"passed":["revoke during captured context rejects cached write receipt","revoke during post-execute context blocks delivery and retains committed or uncertain receipt","revoke during initial open context forbids host navigation","revoke during post-open context suppresses scripted exact-target acknowledgement","revoke during progress context suppresses stale progress and preserves receipt","task cancellation during cached context rejects old receipt","task cancellation during post-execute context retains effect without delivery","task cancellation during initial open context forbids host navigation","task cancellation during post-open context suppresses scripted acknowledgement","native cumulative snapshots and combining marks emit exact suffix once","opaque namespace identities do not merge Unicode byte sequences","namespace rejects empty decoded identity","scoped read through host","unknown tool never dispatches","duplicate catalog aliases rejected","duplicate JSON member rejected before host","actual fixture schema rejects extra field","denied consent has no effect","duplicate write returns one authoritative receipt","idempotency conflict never repeats write","conditional edit unsupported without CAS","stale scene generation rejected","cancellation after dispatched write is uncertain and not retried","context switch suppresses delivery but retains original receipt","out-of-order progress suppressed","revoked presentation cannot dispatch","output budget rejects delivery without losing receipt","queued navigation is not a native UI acknowledgement","metadata receipt excludes business payload and raw error details","ephemeral store isolates namespaces and enforces revision","replay rejects newer version and non-monotonic events","private store roundtrip checkpoint and rollback preserve namespaces"],"scope":"Actual portable host contracts, dispatcher, stores and synthetic host; excludes AgentSession\/SwiftAISDK\/FoundationModels\/native UI"}

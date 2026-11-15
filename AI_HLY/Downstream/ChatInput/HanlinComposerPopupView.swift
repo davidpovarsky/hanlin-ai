@@ -11,6 +11,7 @@
 
 import SwiftUI
 import SwiftData
+import Observation
 import HanlinPlatformContracts
 #if canImport(UIKit)
 import UIKit
@@ -81,6 +82,7 @@ struct HanlinComposerGeneralActionsView: View {
     var embeddedInDrawer: Bool = true
     var embeddedInMorph: Bool = false
     var morphHomeOnly: Bool = false
+    var enabledCapabilities: [HanlinDetachedCapability] = []
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Namespace private var zoomNamespace
@@ -103,6 +105,8 @@ struct HanlinComposerGeneralActionsView: View {
                 if let activeRoute = morphHomeOnly ? nil : coordinator.generalNavigationPath.last {
                     Group {
                         switch activeRoute {
+                        case .search, .thinking, .creative:
+                            conversationModes(filter: activeRoute)
                         case .prompts:
                             promptsSubpage
                         case .parameters:
@@ -135,6 +139,8 @@ struct HanlinComposerGeneralActionsView: View {
                     .navigationDestination(for: ComposerGeneralSubroute.self) { route in
                         Group {
                             switch route {
+                            case .search, .thinking, .creative:
+                                conversationModes(filter: route)
                             case .prompts:
                                 promptsSubpage
                             case .parameters:
@@ -290,135 +296,11 @@ struct HanlinComposerGeneralActionsView: View {
                     .fill(Color.primary.opacity(0.08))
                     .frame(height: 0.6)
 
-                // 2. Conversation Modes
-                VStack(spacing: 4) {
-                    if capability.supportsSearch {
-                        modeToggleRow(
-                            title: String(localized: "Online Search"),
-                            subtitle: String(localized: "Search the web and latest reference material in real time"),
-                            systemImage: "globe",
-                            tint: .hlAzure,
-                            isOn: Binding(
-                                get: { ifSearch },
-                                set: { newValue in
-                                    if !newValue {
-                                        ifSearch = false
-                                    } else if checkSearchAvailability() {
-                                        ifSearch = true
-                                    } else {
-                                        showSearchAlert = true
-                                    }
-                                }
-                            ),
-                            identifier: "hanlin-general-toggle-search"
-                        )
-
-                        HStack(spacing: 6) {
-                            modeToggleRow(
-                                title: String(localized: "Knowledge Bag"),
-                                subtitle: String(localized: "Search local vectorized knowledge base"),
-                                systemImage: "backpack.fill",
-                                tint: accentColor,
-                                isOn: Binding(
-                                    get: { ifKnowledge },
-                                    set: { newValue in
-                                        if !newValue {
-                                            ifKnowledge = false
-                                        } else if checkEmbeddingAvailability() {
-                                            ifKnowledge = true
-                                        } else {
-                                            showKnowledgeAlert = true
-                                        }
-                                    }
-                                ),
-                                identifier: "hanlin-general-toggle-knowledge"
-                            )
-
-                            Button {
-                                coordinator.closeAll()
-                                onOpenEmbeddingSettings()
-                            } label: {
-                                Image(systemName: "slider.horizontal.2.square")
-                                    .font(.footnote)
-                                    .foregroundStyle(accentColor)
-                                    .padding(7)
-                                    .background(accentColor.opacity(0.1), in: Circle())
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityIdentifier("hanlin-general-embedding-settings")
-                        }
-                    }
-
-                    if capability.supportsReasoning {
-                        VStack(alignment: .leading, spacing: 6) {
-                            modeToggleRow(
-                                title: String(localized: "Deep Thinking"),
-                                subtitle: capability.supportReasoningChange ? String(localized: "Reason through complex problems and show reasoning summary") : String(localized: "The current model enables reasoning by default"),
-                                systemImage: "sparkles",
-                                tint: .hlPurple,
-                                isOn: Binding(
-                                    get: { ifThink },
-                                    set: { newValue in
-                                        if capability.supportReasoningChange {
-                                            ifThink = newValue
-                                        }
-                                    }
-                                ),
-                                disabled: !capability.supportReasoningChange,
-                                identifier: "hanlin-general-toggle-thinking"
-                            )
-
-                            if ifThink {
-                                Picker(String(localized: "Thinking Depth"), selection: $thinkingLength) {
-                                    Text(String(localized: "Default")).tag(0)
-                                    Text(String(localized: "Brief")).tag(1)
-                                    Text(String(localized: "Medium")).tag(2)
-                                    Text(String(localized: "Deep")).tag(3)
-                                }
-                                .pickerStyle(.segmented)
-                                .padding(.horizontal, 8)
-                                .padding(.bottom, 4)
-                                .accessibilityIdentifier("hanlin-general-thinking-length-picker")
-                            }
-                        }
-                    } else if !capability.isLocal {
-                        modeToggleRow(
-                            title: String(localized: "Planning & Execution"),
-                            subtitle: String(localized: "Plan tasks step by step before generating answers"),
-                            systemImage: "list.bullet.clipboard.fill",
-                            tint: .hlIndigo,
-                            isOn: $ifPlanning,
-                            identifier: "hanlin-general-toggle-planning"
-                        )
-                    }
-
-                    if capability.supportsVoiceGen {
-                        modeToggleRow(
-                            title: String(localized: "Voice Generation"),
-                            subtitle: String(localized: "Synthesize natural speech for assistant responses"),
-                            systemImage: "waveform",
-                            tint: .hlPink,
-                            isOn: $ifAudio,
-                            identifier: "hanlin-general-toggle-audio"
-                        )
-                    }
-
-                    if capability.supportsImageGen {
-                        Button {
-                            coordinator.pushGeneralSubroute(.imageSize, reduceMotion: reduceMotion)
-                        } label: {
-                            navigationRowLabel(
-                                title: String(localized: "Image Aspect Ratio & Negative Prompts"),
-                                subtitle: String(format: String(localized: "Current aspect ratio: %@"), selectedImageSize),
-                                systemImage: "paintbrush.pointed.fill",
-                                tint: .hlGreen
-                            )
-                        }
-                        .buttonStyle(.plain)
-                        .matchedTransitionSource(id: "hanlin-general-imagesize-row", in: zoomNamespace)
-                        .accessibilityIdentifier("hanlin-general-imagesize-button")
-                    }
+                if embeddedInMorph {
+                    capabilityTiles
                 }
+                // Shared live controls used by the root and focused capability pages.
+                conversationModes(filter: nil)
 
                 Divider()
 
@@ -599,6 +481,197 @@ struct HanlinComposerGeneralActionsView: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-drawer-saved-prompts-slot")
+    }
+
+    private var capabilityTiles: some View {
+        let blue = Color(red: 58 / 255, green: 124 / 255, blue: 180 / 255)
+        let azure = Color(red: 2 / 255, green: 136 / 255, blue: 209 / 255)
+        return LazyVGrid(columns: [GridItem(.adaptive(minimum: 128, maximum: 230), spacing: 10)], spacing: 10) {
+            ForEach(HanlinDetachedCapability.allCases) { item in
+                let enabled = enabledCapabilities.contains(item)
+                Button {
+                    switch item {
+                    case .search: coordinator.pushGeneralSubroute(.search, reduceMotion: true)
+                    case .thinking: coordinator.pushGeneralSubroute(.thinking, reduceMotion: true)
+                    case .creative: coordinator.pushGeneralSubroute(.creative, reduceMotion: true)
+                    case .tools: coordinator.switchFromGeneralToTools()
+                    case .skills:
+                        coordinator.switchFromGeneralToTools()
+                        coordinator.pushToolsSubroute(.skillsCenter, reduceMotion: true)
+                    case .mcp:
+                        coordinator.switchFromGeneralToTools()
+                        coordinator.pushToolsSubroute(.mcpServers, reduceMotion: true)
+                    case .runtimes:
+                        coordinator.switchFromGeneralToTools()
+                        coordinator.pushToolsSubroute(.runtimeCenter, reduceMotion: true)
+                    }
+                } label: {
+                    VStack(alignment: .leading, spacing: 7) {
+                        HStack(spacing: 4) {
+                            Image(systemName: item.symbol).font(.title3)
+                            Spacer(minLength: 0)
+                            if enabled {
+                                Image(systemName: "checkmark.circle.fill").font(.caption).accessibilityHidden(true)
+                            }
+                        }
+                        Text(item.title).font(.subheadline.weight(.semibold)).lineLimit(1).minimumScaleFactor(0.8)
+                        Text(item.subtitle).font(.caption2).foregroundStyle(.white.opacity(0.88)).lineLimit(1)
+                    }
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity, minHeight: 94, alignment: .leading)
+                    .padding(.horizontal, 13).padding(.vertical, 7)
+                }
+                .buttonStyle(.plain)
+                .disabled(isResponding)
+                .background(blue, in: RoundedRectangle(cornerRadius: 17, style: .continuous))
+                .glassEffect(.regular.tint(blue.opacity(0.55)).interactive(), in: RoundedRectangle(cornerRadius: 17, style: .continuous))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 17, style: .continuous)
+                        .strokeBorder(azure.opacity(enabled ? 0.90 : 0.58), lineWidth: enabled ? 1.15 : 1)
+                        .allowsHitTesting(false)
+                }
+                .accessibilityIdentifier("tool-\(item.id)")
+                .accessibilityValue(enabled ? String(localized: "Enabled") : String(localized: "Open settings"))
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func conversationModes(filter: ComposerGeneralSubroute?) -> some View {
+                VStack(spacing: 4) {
+                    if filter == nil || filter == .search {
+                        if capability.supportsSearch {
+                            modeToggleRow(
+                            title: String(localized: "Online Search"),
+                            subtitle: String(localized: "Search the web and latest reference material in real time"),
+                            systemImage: "globe",
+                            tint: .hlAzure,
+                            isOn: Binding(
+                                get: { ifSearch },
+                                set: { newValue in
+                                    if !newValue {
+                                        ifSearch = false
+                                    } else if checkSearchAvailability() {
+                                        ifSearch = true
+                                    } else {
+                                        showSearchAlert = true
+                                    }
+                                }
+                            ),
+                                identifier: "hanlin-general-toggle-search"
+                            )
+                        }
+
+                        if capability.supportsTextGen {
+                          HStack(spacing: 6) {
+                            modeToggleRow(
+                                title: String(localized: "Knowledge Bag"),
+                                subtitle: String(localized: "Search local vectorized knowledge base"),
+                                systemImage: "backpack.fill",
+                                tint: accentColor,
+                                isOn: Binding(
+                                    get: { ifKnowledge },
+                                    set: { newValue in
+                                        if !newValue {
+                                            ifKnowledge = false
+                                        } else if checkEmbeddingAvailability() {
+                                            ifKnowledge = true
+                                        } else {
+                                            showKnowledgeAlert = true
+                                        }
+                                    }
+                                ),
+                                identifier: "hanlin-general-toggle-knowledge"
+                            )
+
+                            Button {
+                                coordinator.closeAll()
+                                onOpenEmbeddingSettings()
+                            } label: {
+                                Image(systemName: "slider.horizontal.2.square")
+                                    .font(.footnote)
+                                    .foregroundStyle(accentColor)
+                                    .padding(7)
+                                    .background(accentColor.opacity(0.1), in: Circle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("hanlin-general-embedding-settings")
+                          }
+                        }
+                    }
+
+                    if (filter == nil || filter == .thinking) && capability.supportsReasoning {
+                        VStack(alignment: .leading, spacing: 6) {
+                            modeToggleRow(
+                                title: String(localized: "Deep Thinking"),
+                                subtitle: capability.supportReasoningChange ? String(localized: "Reason through complex problems and show reasoning summary") : String(localized: "The current model enables reasoning by default"),
+                                systemImage: "sparkles",
+                                tint: .hlPurple,
+                                isOn: Binding(
+                                    get: { ifThink },
+                                    set: { newValue in
+                                        if capability.supportReasoningChange {
+                                            ifThink = newValue
+                                        }
+                                    }
+                                ),
+                                disabled: !capability.supportReasoningChange,
+                                identifier: "hanlin-general-toggle-thinking"
+                            )
+
+                            if ifThink {
+                                Picker(String(localized: "Thinking Depth"), selection: $thinkingLength) {
+                                    Text(String(localized: "Default")).tag(0)
+                                    Text(String(localized: "Brief")).tag(1)
+                                    Text(String(localized: "Medium")).tag(2)
+                                    Text(String(localized: "Deep")).tag(3)
+                                }
+                                .pickerStyle(.segmented)
+                                .padding(.horizontal, 8)
+                                .padding(.bottom, 4)
+                                .accessibilityIdentifier("hanlin-general-thinking-length-picker")
+                            }
+                        }
+                    }
+                    if (filter == nil || filter == .thinking) && capability.supportsTextGen {
+                        modeToggleRow(
+                            title: String(localized: "Planning & Execution"),
+                            subtitle: String(localized: "Plan tasks step by step before generating answers"),
+                            systemImage: "list.bullet.clipboard.fill",
+                            tint: .hlIndigo,
+                            isOn: $ifPlanning,
+                            identifier: "hanlin-general-toggle-planning"
+                        )
+                    }
+
+                    if (filter == nil || filter == .creative) && capability.supportsVoiceGen {
+                        modeToggleRow(
+                            title: String(localized: "Voice Generation"),
+                            subtitle: String(localized: "Synthesize natural speech for assistant responses"),
+                            systemImage: "waveform",
+                            tint: .hlPink,
+                            isOn: $ifAudio,
+                            identifier: "hanlin-general-toggle-audio"
+                        )
+                    }
+
+                    if (filter == nil || filter == .creative) && capability.supportsImageGen {
+                        Button {
+                            coordinator.pushGeneralSubroute(.imageSize, reduceMotion: reduceMotion)
+                        } label: {
+                            navigationRowLabel(
+                                title: String(localized: "Image Aspect Ratio & Negative Prompts"),
+                                subtitle: String(format: String(localized: "Current aspect ratio: %@"), selectedImageSize),
+                                systemImage: "paintbrush.pointed.fill",
+                                tint: .hlGreen
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .matchedTransitionSource(id: "hanlin-general-imagesize-row", in: zoomNamespace)
+                        .accessibilityIdentifier("hanlin-general-imagesize-button")
+                    }
+                }
+
     }
 
     // MARK: - Subpages
@@ -965,7 +1038,80 @@ struct HanlinComposerGeneralActionsView: View {
 // MARK: - 2. Direct 1-Tap Tools / Skills / MCP / Runtime Popover
 
 @MainActor
+@Observable
+final class HanlinMCPIntentFeedback {
+    private struct Entry {
+        let requestID: UUID
+        var error: String?
+    }
+    private var scope: MCPChatSelectionScope?
+    private var entries: [UUID: Entry] = [:]
+
+    func setScope(_ newScope: MCPChatSelectionScope?) {
+        guard scope != newScope else { return }
+        scope = newScope
+        entries.removeAll()
+    }
+
+    func begin(serverID: UUID, scope: MCPChatSelectionScope) -> UUID {
+        setScope(scope)
+        let requestID = UUID()
+        entries[serverID] = Entry(requestID: requestID, error: nil)
+        return requestID
+    }
+
+    func finish(serverID: UUID, scope: MCPChatSelectionScope, requestID: UUID, error: String?) {
+        guard self.scope == scope, entries[serverID]?.requestID == requestID else { return }
+        if let error { entries[serverID]?.error = error }
+        else { entries.removeValue(forKey: serverID) }
+    }
+
+    func message(for serverID: UUID) -> String? { entries[serverID]?.error }
+    func dismiss(serverID: UUID) { entries.removeValue(forKey: serverID) }
+    func isCurrent(serverID: UUID, scope: MCPChatSelectionScope, requestID: UUID) -> Bool {
+        self.scope == scope && entries[serverID]?.requestID == requestID
+    }
+}
+
+@MainActor
 struct HanlinComposerToolsRootView: View {
+    static func applyServerSelection(
+        provider: MCPRuntimeProvider,
+        serverID: UUID,
+        isSelected: Bool,
+        chatID: UUID,
+        temporary: Bool
+    ) async throws -> UInt64 {
+        _ = try await provider.applySelectionIntent(
+            .init(serverID: serverID, isSelected: isSelected), chatID: chatID, temporary: temporary
+        )
+        return provider.selectionRevision(chatID: chatID, temporary: temporary)
+    }
+
+    static func performServerSelection(
+        serverID: UUID, isSelected: Bool, scope: MCPChatSelectionScope, requestID: UUID,
+        feedback: HanlinMCPIntentFeedback, isCurrentScope: () -> Bool,
+        apply: () async throws -> UInt64, read: () async throws -> Set<UUID>,
+        revision: () -> UInt64, publish: (Set<UUID>) -> Void
+    ) async {
+        do {
+            let committedRevision = try await apply()
+            let actual = try await read()
+            guard !Task.isCancelled, isCurrentScope(), feedback.isCurrent(serverID: serverID, scope: scope, requestID: requestID) else { return }
+            if revision() == committedRevision {
+                publish(actual)
+                feedback.finish(serverID: serverID, scope: scope, requestID: requestID,
+                    error: actual.contains(serverID) == isSelected ? nil : String(localized: "MCP selection could not be updated."))
+            } else {
+                // A newer commit may belong to another server; this action still succeeded.
+                feedback.finish(serverID: serverID, scope: scope, requestID: requestID, error: nil)
+            }
+        } catch {
+            guard !Task.isCancelled, isCurrentScope(), feedback.isCurrent(serverID: serverID, scope: scope, requestID: requestID) else { return }
+            feedback.finish(serverID: serverID, scope: scope, requestID: requestID, error: error.localizedDescription)
+        }
+    }
+
     private enum ManagementDestination: String, Identifiable {
         case skills, mcp, runtime
         var id: String { rawValue }
@@ -976,7 +1122,6 @@ struct HanlinComposerToolsRootView: View {
     let temporaryRecord: Bool
     let capability: HanlinComposerActionBridge.ModelCapabilitySnapshot
     @Binding var ifToolUse: Bool
-    let onMCPSelectionChanged: (Int) -> Void
     var embeddedInDrawer: Bool = true
     var embeddedInMorph: Bool = false
 
@@ -985,12 +1130,31 @@ struct HanlinComposerToolsRootView: View {
 
     @State private var mcpProvider = MCPRuntimeProvider.shared
     @State private var selectedMCPServerIDs: Set<UUID> = []
-    @State private var toolGroups: [NativeAssistantToolGroup] = []
-    @State private var allSkills: [HanlinSkillDescriptor] = []
-    @State private var disabledSkillIDs: Set<String> = []
+    @State private var activeLiveContext: LiveContext?
+    @State private var selectionError: String?
+    @State private var intentFeedback = HanlinMCPIntentFeedback()
     @State private var skillSearchText: String = ""
     @State private var runtimeSnapshots: [RuntimeSnapshot] = []
     @State private var managementDestination: ManagementDestination?
+
+    private typealias LiveContext = HanlinComposerRefreshContext
+
+    private var liveContext: LiveContext {
+        LiveContext(chatID: chatID, temporary: temporaryRecord, selectionRevision: mcpProvider.selectionRevision(chatID: chatID, temporary: temporaryRecord),
+                    globallyEnabled: mcpProvider.configuration.isEnabled,
+                    serverStates: mcpProvider.servers.map { "\($0.id.uuidString):\($0.isGloballyEnabled):\($0.isEnabledForNewChats)" })
+    }
+
+    private var toolGroups: [NativeAssistantToolGroup] { NativeToolCatalog.shared.settingsGroups() }
+    private var disabledSkillIDs: Set<String> { Set(SkillStore.shared.disabledSkillIDs().map(\.rawValue)) }
+    private var allSkills: [HanlinSkillDescriptor] {
+        let active = HanlinSkillCatalog.shared.allSkills()
+        let stored = SkillStore.shared.allCustomSkillDescriptors()
+        var merged: [String: HanlinSkillDescriptor] = [:]
+        for skill in active { merged[skill.id.rawValue] = skill }
+        for skill in stored where merged[skill.id.rawValue] == nil { merged[skill.id.rawValue] = skill }
+        return merged.values.sorted { $0.id.rawValue < $1.id.rawValue }
+    }
 
     private let compactSize = CGSize(width: 326, height: 396)
     private let expandedSize = CGSize(width: 360, height: 496)
@@ -1033,15 +1197,19 @@ struct HanlinComposerToolsRootView: View {
             .onChange(of: coordinator.toolsNavigationPath) { _, _ in
                 coordinator.handleToolsNavPathChange(reduceMotion: reduceMotion)
             }
-            .task {
-                await refreshLiveState()
+            .task(id: liveContext) {
+                await refreshLiveState(for: liveContext)
             }
+            .onDisappear { intentFeedback.setScope(nil) }
             .frame(maxWidth: .infinity, maxHeight: embeddedInMorph ? nil : .infinity, alignment: .top)
             .scrollContentBackground(.hidden)
             .background(Color.clear)
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-composer-tools-popover")
-            .sheet(item: $managementDestination) { destination in
+            .sheet(item: $managementDestination, onDismiss: {
+                let request = liveContext
+                Task { await refreshRuntimeSnapshots(for: request) }
+            }) { destination in
                 NavigationStack {
                     managementView(destination)
                         .toolbar {
@@ -1082,9 +1250,10 @@ struct HanlinComposerToolsRootView: View {
             .onChange(of: coordinator.toolsNavigationPath) { _, _ in
                 coordinator.handleToolsNavPathChange(reduceMotion: reduceMotion)
             }
-            .task {
-                await refreshLiveState()
+            .task(id: liveContext) {
+                await refreshLiveState(for: liveContext)
             }
+            .onDisappear { intentFeedback.setScope(nil) }
             .frame(width: currentSize.width, height: currentSize.height)
             .background(GlassView(style: .systemUltraThinMaterial))
             .clipShape(.rect(cornerRadius: 22, style: .continuous))
@@ -1264,7 +1433,6 @@ struct HanlinComposerToolsRootView: View {
                                 get: { groupOn },
                                 set: { enabled in
                                     NativeToolCatalog.shared.setGroupEnabled(enabled, for: group)
-                                    toolGroups = NativeToolCatalog.shared.settingsGroups()
                                 }
                             )) {
                                 HStack(spacing: 8) {
@@ -1288,7 +1456,6 @@ struct HanlinComposerToolsRootView: View {
                                         get: { NativeToolCatalog.shared.isEnabled(entry) },
                                         set: { enabled in
                                             NativeToolCatalog.shared.setEnabled(enabled, for: entry)
-                                            toolGroups = NativeToolCatalog.shared.settingsGroups()
                                         }
                                     )) {
                                         VStack(alignment: .leading, spacing: 1) {
@@ -1355,7 +1522,6 @@ struct HanlinComposerToolsRootView: View {
                             get: { isEnabled },
                             set: { newValue in
                                 SkillStore.shared.setSkillEnabled(id: skill.id, enabled: newValue)
-                                refreshSkillsState()
                             }
                         )) {
                             VStack(alignment: .leading, spacing: 2) {
@@ -1425,7 +1591,6 @@ struct HanlinComposerToolsRootView: View {
                         set: { value in
                             Task {
                                 await mcpProvider.setEnabled(value)
-                                await refreshLiveState()
                             }
                         }
                     )) {
@@ -1441,6 +1606,13 @@ struct HanlinComposerToolsRootView: View {
                     .padding(10)
                     .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .accessibilityIdentifier("hanlin-mcp-global-toggle")
+
+                    if let selectionError {
+                        Text(selectionError)
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                            .accessibilityIdentifier("hanlin-mcp-selection-error")
+                    }
 
                     if mcpProvider.servers.isEmpty {
                         VStack(spacing: 6) {
@@ -1468,21 +1640,20 @@ struct HanlinComposerToolsRootView: View {
                                 Toggle(isOn: Binding(
                                     get: { isSelectedForChat },
                                     set: { enabled in
-                                        let previous = selectedMCPServerIDs
-                                        var next = selectedMCPServerIDs
-                                        if enabled { next.insert(server.id) } else { next.remove(server.id) }
+                                        let requestChatID = chatID
+                                        let requestTemporary = temporaryRecord
+                                        let scope = MCPChatSelectionScope(chatID: requestChatID, temporary: requestTemporary)
+                                        let requestID = intentFeedback.begin(serverID: server.id, scope: scope)
                                         Task {
-                                            await mcpProvider.setSelection(next, chatID: chatID, temporary: temporaryRecord)
-                                            let confirmed = await mcpProvider.selection(chatID: chatID, temporary: temporaryRecord)
-                                            await MainActor.run {
-                                                if confirmed.contains(server.id) == enabled {
-                                                    selectedMCPServerIDs = confirmed
-                                                    onMCPSelectionChanged(confirmed.count)
-                                                } else {
-                                                    selectedMCPServerIDs = previous
-                                                    onMCPSelectionChanged(previous.count)
-                                                }
-                                            }
+                                            await Self.performServerSelection(
+                                                serverID: server.id, isSelected: enabled, scope: scope, requestID: requestID,
+                                                feedback: intentFeedback,
+                                                isCurrentScope: { activeLiveContext?.chatID == requestChatID && activeLiveContext?.temporary == requestTemporary },
+                                                apply: { try await Self.applyServerSelection(provider: mcpProvider, serverID: server.id, isSelected: enabled, chatID: requestChatID, temporary: requestTemporary) },
+                                                read: { try await mcpProvider.readSelection(chatID: requestChatID, temporary: requestTemporary) },
+                                                revision: { mcpProvider.selectionRevision(chatID: requestChatID, temporary: requestTemporary) },
+                                                publish: { selectedMCPServerIDs = $0 }
+                                            )
                                         }
                                     }
                                 )) {
@@ -1496,6 +1667,16 @@ struct HanlinComposerToolsRootView: View {
                                 }
                                 .tint(.hlTeal)
 
+                                if let error = intentFeedback.message(for: server.id) {
+                                    HStack {
+                                        Text(error).font(.caption).foregroundStyle(.red)
+                                        Spacer()
+                                        Button(String(localized: "Dismiss")) { intentFeedback.dismiss(serverID: server.id) }
+                                            .font(.caption)
+                                    }
+                                    .accessibilityIdentifier("hanlin-mcp-intent-error-\(server.id.uuidString)")
+                                }
+
                                 HStack(spacing: 6) {
                                     statusPill(String(localized: "Installed"), active: true)
                                     statusPill(String(localized: "Enabled"), active: server.isGloballyEnabled)
@@ -1503,13 +1684,14 @@ struct HanlinComposerToolsRootView: View {
                                     statusPill(String(localized: "Running"), active: isRunning)
                                     Spacer()
                                     Button(isRunning ? String(localized: "Restart") : String(localized: "Start")) {
+                                        let request = liveContext
                                         Task {
                                             if isRunning {
                                                 await mcpProvider.restart(server)
                                             } else {
                                                 await mcpProvider.start(server)
                                             }
-                                            await refreshLiveState()
+                                            await refreshRuntimeSnapshots(for: request)
                                         }
                                     }
                                     .font(.caption2.weight(.semibold))
@@ -1577,13 +1759,14 @@ struct HanlinComposerToolsRootView: View {
                             }
                             Spacer()
                             Button(isReady ? String(localized: "Stop") : String(localized: "Start")) {
+                                let request = liveContext
                                 Task {
                                     if isReady {
                                         _ = try? await AppRuntimeCore.shared.stop(snap.kind)
                                     } else {
                                         _ = try? await AppRuntimeCore.shared.start(snap.kind)
                                     }
-                                    runtimeSnapshots = await AppRuntimeCore.shared.snapshots()
+                                    await refreshRuntimeSnapshots(for: request)
                                 }
                             }
                             .font(.caption.weight(.semibold))
@@ -1663,27 +1846,34 @@ struct HanlinComposerToolsRootView: View {
         return String(format: String(localized: "Node / TS / Python / JSC / Shell · Ready %lld/%lld"), readyCount, max(runtimeSnapshots.count, 5))
     }
 
-    private func refreshLiveState() async {
+    private func refreshLiveState(for request: LiveContext) async {
+        intentFeedback.setScope(MCPChatSelectionScope(chatID: request.chatID, temporary: request.temporary))
+        if activeLiveContext?.chatID != request.chatID || activeLiveContext?.temporary != request.temporary {
+            selectedMCPServerIDs = []
+            selectionError = nil
+        }
+        activeLiveContext = request
         NativeToolCatalog.shared.ensureBuiltinsRegistered()
-        toolGroups = NativeToolCatalog.shared.settingsGroups()
-        refreshSkillsState()
         await mcpProvider.loadIfNeeded(startHost: false)
-        selectedMCPServerIDs = await mcpProvider.selection(chatID: chatID, temporary: temporaryRecord)
-        onMCPSelectionChanged(selectedMCPServerIDs.count)
-        runtimeSnapshots = await AppRuntimeCore.shared.snapshots()
+        await HanlinComposerSelectionRefresh.perform(
+            request: request,
+            current: { activeLiveContext },
+            revision: { mcpProvider.selectionRevision(chatID: request.chatID, temporary: request.temporary) },
+            read: { try await mcpProvider.readSelection(chatID: request.chatID, temporary: request.temporary) },
+            publish: { result in
+                switch result {
+                case .success(let selection): selectedMCPServerIDs = selection; selectionError = nil
+                case .failure(let error): selectionError = error.localizedDescription
+                }
+            }
+        )
+        await refreshRuntimeSnapshots(for: request)
     }
 
-    private func refreshSkillsState() {
-        let disabledSet = Set(SkillStore.shared.disabledSkillIDs().map(\.rawValue))
-        disabledSkillIDs = disabledSet
-        let activeCatalog = HanlinSkillCatalog.shared.allSkills()
-        let customStored = SkillStore.shared.allCustomSkillDescriptors()
-        var mergedByID: [String: HanlinSkillDescriptor] = [:]
-        for s in activeCatalog { mergedByID[s.id.rawValue] = s }
-        for s in customStored where mergedByID[s.id.rawValue] == nil {
-            mergedByID[s.id.rawValue] = s
-        }
-        allSkills = mergedByID.values.sorted { $0.id.rawValue < $1.id.rawValue }
+    private func refreshRuntimeSnapshots(for request: LiveContext) async {
+        let snapshots = await AppRuntimeCore.shared.snapshots()
+        guard request.canPublish(current: activeLiveContext, currentSelectionRevision: mcpProvider.selectionRevision(chatID: request.chatID, temporary: request.temporary), isCancelled: Task.isCancelled) else { return }
+        runtimeSnapshots = snapshots
     }
 
     private func domainCard(

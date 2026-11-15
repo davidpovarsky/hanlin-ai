@@ -18,7 +18,9 @@ public enum HanlinAISDKProviderFactory {
         let apiType = configuration.apiType?.lowercased() ?? ""
         let kind: HanlinAISDKProviderKind
 
-        if company == "ANTHROPIC" || apiType.contains("anthropic") {
+        if company == "APPLE" || apiType == "apple-on-device" {
+            kind = .appleOnDevice
+        } else if company == "ANTHROPIC" || apiType.contains("anthropic") {
             kind = .anthropic
         } else if company == "GOOGLE" || company == "GEMINI" || apiType.contains("gemini") {
             kind = .google
@@ -26,6 +28,10 @@ public enum HanlinAISDKProviderFactory {
             kind = .openAI
         } else {
             kind = .openAICompatible
+        }
+
+        if kind == .appleOnDevice {
+            return HanlinAISDKProviderDescriptor(kind: kind, modelID: configuration.baseModelID, baseURL: URL(filePath: "/apple-on-device"))
         }
 
         var headers: [String: String] = [:]
@@ -66,6 +72,8 @@ public enum HanlinAISDKProviderFactory {
         var path = components?.path ?? endpoint.path
         let suffixes: [String]
         switch kind {
+        case .appleOnDevice:
+            return endpoint
         case .openAI, .openAICompatible:
             suffixes = ["/chat/completions", "/responses"]
         case .anthropic:
@@ -98,6 +106,8 @@ extension HanlinAISDKProviderFactory {
         let model: any LanguageModelV3
 
         switch descriptor.kind {
+        case .appleOnDevice:
+            throw HanlinAISDKError.nativeProviderInjectionRequired
         case .openAI:
             let provider = try createOpenAIProvider(settings: .init(
                 baseURL: baseURL,
@@ -155,6 +165,8 @@ extension HanlinAISDKProviderFactory {
         guard configuration.supportsReasoning else { return nil }
 
         switch kind {
+        case .appleOnDevice:
+            return nil
         case .openAI:
             guard let effort = configuration.reasoningEffort, !effort.isEmpty else { return nil }
             return ["openai": ["reasoningEffort": .string(effort)]]

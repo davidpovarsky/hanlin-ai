@@ -281,10 +281,16 @@ struct ChatViewBottom: View {
     @State private var textEditorHeight: CGFloat = 38
     @State private var measuredAttachmentPreviewHeight: CGFloat = 0
     @State private var measuredMorphInputHeight: CGFloat = 52
+    @State private var measuredEditorFrameHeight: CGFloat = 44
+    @State private var measuredCapabilitiesHeight: CGFloat = 42
     @State private var measuredMorphToolbarHeight: CGFloat = 44
     @State private var baselineWorkspaceHeight: CGFloat = 0
     @State private var popupCoordinator = HanlinComposerPopupCoordinator()
     @State private var selectedMCPCountForChat: Int = 0
+    @State private var capabilityMCPProvider = MCPRuntimeProvider.shared
+    @State private var activeMCPCountContext: MCPCountContext?
+    @State private var toolCatalogReady = false
+    @State private var capabilityUpdateError: String?
     @State private var showEmbeddingSettingSheet: Bool = false
     @State private var isEmbeddingModelError: Bool = false
     @State private var sessionFallbackChatID = UUID()
@@ -295,6 +301,15 @@ struct ChatViewBottom: View {
 
     private var effectiveMCPChatID: UUID {
         chatRecord.id ?? sessionFallbackChatID
+    }
+
+    private typealias MCPCountContext = HanlinComposerRefreshContext
+
+    private var mcpCountContext: MCPCountContext {
+        MCPCountContext(chatID: effectiveMCPChatID, temporary: TemporaryRecord,
+            selectionRevision: capabilityMCPProvider.selectionRevision(chatID: effectiveMCPChatID, temporary: TemporaryRecord),
+            globallyEnabled: capabilityMCPProvider.configuration.isEnabled,
+            serverStates: capabilityMCPProvider.servers.map { "\($0.id.uuidString):\($0.isGloballyEnabled):\($0.isEnabledForNewChats)" })
     }
 
     static func shouldEnableSend(
@@ -471,12 +486,16 @@ struct ChatViewBottom: View {
                 isInputActive.wrappedValue = false
             }
         }
-        .task(id: effectiveMCPChatID) {
-            let selection = await MCPRuntimeProvider.shared.selection(
-                chatID: effectiveMCPChatID,
-                temporary: TemporaryRecord
-            )
-            selectedMCPCountForChat = selection.count
+        .task(id: mcpCountContext) {
+            let request = mcpCountContext
+            if activeMCPCountContext?.chatID != request.chatID || activeMCPCountContext?.temporary != request.temporary {
+                selectedMCPCountForChat = 0
+                capabilityUpdateError = nil
+            }
+            activeMCPCountContext = request
+            NativeToolCatalog.shared.ensureBuiltinsRegistered()
+            toolCatalogReady = true
+            await refreshSelectedMCPCount(request)
         }
         .background(
             GeometryReader { proxy in
@@ -663,28 +682,78 @@ struct ChatViewBottom: View {
         )
     }
 
-    private var morphComposer: some View {
-        let availableHeight = max(0, popupCoordinator.dockState.availableHeight - popupCoordinator.dockState.keyboardHeight)
-        let accessoryLimit = HanlinMorphGeometry.accessoryBudget(
-            availableHeight: availableHeight,
+    private var morphAvailableHeight: CGFloat {
+        max(0, popupCoordinator.dockState.availableHeight - popupCoordinator.dockState.keyboardHeight)
+    }
+
+    private var showsDetachedCapabilities: Bool {
+        !morphExpanded.wrappedValue && !detachedCapabilities.isEmpty
+    }
+
+    private var morphCapabilitiesOverhead: CGFloat {
+        showsDetachedCapabilities ? measuredCapabilitiesHeight + 6 : 0
+    }
+
+    private var morphAccessoryLimit: CGFloat {
+        HanlinMorphGeometry.accessoryBudget(
+            availableHeight: max(0, morphAvailableHeight - morphCapabilitiesOverhead),
             inputHeight: measuredMorphInputHeight,
             toolbarHeight: measuredMorphToolbarHeight,
             isExpanded: morphExpanded.wrappedValue
         )
-        let visibleAccessoryHeight = min(measuredAttachmentPreviewHeight, accessoryLimit)
+    }
+
+    private var morphVisibleAccessoryHeight: CGFloat {
+        min(measuredAttachmentPreviewHeight, morphAccessoryLimit)
+    }
+
+    private var morphEditorBudget: CGFloat {
+        HanlinMorphGeometry.editorBudget(
+            availableHeight: morphAvailableHeight,
+            accessoryHeight: morphVisibleAccessoryHeight + morphCapabilitiesOverhead,
+            inputHeight: measuredMorphInputHeight,
+            editorHeight: measuredEditorFrameHeight,
+            toolbarHeight: measuredMorphToolbarHeight,
+            isExpanded: morphExpanded.wrappedValue
+        )
+    }
+
+    private var morphComposer: some View {
+        let availableHeight = morphAvailableHeight
+        let visibleCapabilities = detachedCapabilities
+        let showCapabilities = showsDetachedCapabilities
+        let accessoryLimit = morphAccessoryLimit
+        let visibleAccessoryHeight = morphVisibleAccessoryHeight
         return VStack(spacing: 6) {
             ScrollView(.vertical, showsIndicators: measuredAttachmentPreviewHeight > accessoryLimit) {
                 composerInputAccessories
             }
             .frame(height: visibleAccessoryHeight)
+            if showCapabilities {
+                HanlinDetachedCapabilityChips(
+                    capabilities: visibleCapabilities,
+                    availableWidth: availableWorkspaceSize.width > 0 ? availableWorkspaceSize.width : popupCoordinator.measuredContainerSize.width,
+                    canDisable: canDisableCapability,
+                    actionTitle: capabilityActionTitle,
+                    open: openCapability,
+                    disable: disableCapability
+                )
+                .padding(.horizontal, 22)
+                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { measuredCapabilitiesHeight = $0 }
+                .disabled(isResponding)
+                .transition(.identity)
+            }
             HanlinMorphComposer(
                 isExpanded: morphExpanded,
                 activePage: morphPage,
                 availableHeight: availableHeight,
-                accessoryHeight: visibleAccessoryHeight,
+                accessoryHeight: visibleAccessoryHeight + morphCapabilitiesOverhead,
                 title: { page in
                     switch page {
                     case nil: return String(localized: "Action Center")
+                    case .general(.search): return String(localized: "Search & Knowledge")
+                    case .general(.thinking): return String(localized: "Thinking & Planning")
+                    case .general(.creative): return String(localized: "Creative & Audio")
                     case .general(.prompts): return String(localized: "Prompt Templates")
                     case .general(.parameters): return String(localized: "Model Parameters")
                     case .general(.imageSize): return String(localized: "Image Settings")
@@ -725,6 +794,14 @@ struct ChatViewBottom: View {
         .onChange(of: popupCoordinator.dockState.mode) { _, mode in
             popupCoordinator.syncFromDockModeChange(mode)
         }
+        .alert(String(localized: "Could not update capability"), isPresented: Binding(
+            get: { capabilityUpdateError != nil },
+            set: { if !$0 { capabilityUpdateError = nil } }
+        )) {
+            Button(String(localized: "OK"), role: .cancel) { capabilityUpdateError = nil }
+        } message: {
+            Text(capabilityUpdateError ?? "")
+        }
     }
 
     private func syncDockGeometryAndContext() {
@@ -746,7 +823,6 @@ struct ChatViewBottom: View {
         if !selectedURLs.isEmpty { overhead += 48 }
         if !selectedPrompts.isEmpty { overhead += 52 }
         if showModelSuggestions && !filteredModels.isEmpty { overhead += 48 }
-        if !activeChips.isEmpty { overhead += 36 }
         return overhead
     }
 
@@ -794,7 +870,8 @@ struct ChatViewBottom: View {
             onSendObserve: { onSendObserve() },
             embeddedInDrawer: true,
             embeddedInMorph: true,
-            morphHomeOnly: morphHomeOnly
+            morphHomeOnly: morphHomeOnly,
+            enabledCapabilities: detachedCapabilities
         )
     }
 
@@ -805,9 +882,6 @@ struct ChatViewBottom: View {
             temporaryRecord: TemporaryRecord,
             capability: currentModelSnapshot,
             ifToolUse: $ifToolUse,
-            onMCPSelectionChanged: { count in
-                selectedMCPCountForChat = count
-            },
             embeddedInDrawer: true,
             embeddedInMorph: true
         )
@@ -822,7 +896,6 @@ struct ChatViewBottom: View {
             linkPreviewSection
             promptSection
             modelSuggestionSection
-            activeModeChipsSection
         }
         .onGeometryChange(for: CGFloat.self) { proxy in
             proxy.size.height
@@ -852,77 +925,108 @@ struct ChatViewBottom: View {
         )
     }
 
-    @ViewBuilder
-    private var activeModeChipsSection: some View {
-        let chips = activeChips
-        if !chips.isEmpty {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 6) {
-                    ForEach(chips) { chip in
-                        Button {
-                            isFeedBack.toggle()
-                            handleActiveChipTap(chip)
-                        } label: {
-                            HStack(spacing: 4) {
-                                Image(systemName: chip.systemImage)
-                                    .font(.system(size: 11, weight: .semibold))
-                                Text(chip.title)
-                                    .font(.caption2.weight(.medium))
-                                    .lineLimit(1)
-                                if chip.isRemovable {
-                                    Image(systemName: "xmark")
-                                        .font(.system(size: 9, weight: .bold))
-                                        .opacity(0.75)
-                                }
-                            }
-                            .foregroundStyle(TemporaryRecord ? Color.primary : Color.hlBluefont)
-                            .padding(.horizontal, 9)
-                            .padding(.vertical, 4)
-                            .background(
-                                (TemporaryRecord ? Color.primary : Color.hlBlue).opacity(0.12),
-                                in: Capsule()
-                            )
-                            .overlay(
-                                Capsule()
-                                    .stroke((TemporaryRecord ? Color.primary : Color.hlBluefont).opacity(0.22), lineWidth: 0.6)
-                            )
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("hanlin-composer-chip-\(chip.id)")
-                    }
+    private var detachedCapabilities: [HanlinDetachedCapability] {
+        let catalog = NativeToolCatalog.shared
+        let enabledEntries = toolCatalogReady ? catalog.allEntries().filter { catalog.isEffectivelyEnabled($0) } : []
+        let eligibleSkills = HanlinSkillCatalog.shared.allSkills().contains { SkillStore.shared.isSkillEnabled(id: $0.id) }
+        let eligibleRuntimes = enabledEntries.contains { $0.categories.contains("runtime") && $0.categories.contains("code") }
+        return HanlinDetachedCapability.enabled(
+            from: activeChips, mcpEnabled: capabilityMCPProvider.configuration.isEnabled,
+            hasModel: currentModelSnapshot.hasModel,
+            toolUseEnabled: ifToolUse && currentModelSnapshot.supportsToolUse,
+            toolsEligible: !enabledEntries.isEmpty, skillsEligible: eligibleSkills, runtimesEligible: eligibleRuntimes
+        )
+    }
+
+    private func refreshSelectedMCPCount(_ request: MCPCountContext) async {
+        await capabilityMCPProvider.loadIfNeeded(startHost: false)
+        await HanlinComposerSelectionRefresh.perform(
+            request: request,
+            current: { activeMCPCountContext },
+            revision: { capabilityMCPProvider.selectionRevision(chatID: request.chatID, temporary: request.temporary) },
+            read: { try await capabilityMCPProvider.readSelection(chatID: request.chatID, temporary: request.temporary) },
+            publish: { result in
+                switch result {
+                case .success(let selection):
+                    selectedMCPCountForChat = capabilityMCPProvider.servers.filter { selection.contains($0.id) && $0.isGloballyEnabled }.count
+                case .failure(let error):
+                    capabilityUpdateError = error.localizedDescription
                 }
-                .padding(.horizontal, 12)
-                .padding(.top, 8)
             }
-            .accessibilityIdentifier("hanlin-composer-active-chips")
-            .transition(.opacity.combined(with: .move(edge: .bottom)))
+        )
+    }
+
+    private func canDisableCapability(_ capability: HanlinDetachedCapability) -> Bool {
+        capability.canDisable(from: activeChips)
+    }
+
+    private func capabilityActionTitle(_ capability: HanlinDetachedCapability) -> String {
+        switch capability.contextAction(imageGenerationActive: currentModelSnapshot.supportsImageGen) {
+        case .disableChatToolUse:
+            return String(localized: "Turn off tool use in this chat")
+        case .chooseModel:
+            return String(localized: "Change model to disable image generation")
+        default:
+            return String(format: String(localized: "Turn off %@"), capability.title)
         }
     }
 
-    private func handleActiveChipTap(_ chip: HanlinComposerActiveChip) {
-        switch chip.kind {
-        case .search:
-            ifSearch = false
-        case .knowledge:
-            ifKnowledge = false
-        case .thinking:
-            if currentModelSnapshot.supportReasoningChange {
-                ifThink = false
-            } else {
-                popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
+    private func openCapability(_ capability: HanlinDetachedCapability) {
+        guard !isResponding else { return }
+        let focus = isInputActive.wrappedValue
+        withAnimation(reduceMotion ? nil : .spring(response: 0.48, dampingFraction: 0.79)) {
+            switch capability {
+            case .tools, .skills, .mcp, .runtimes:
+                popupCoordinator.open(.tools, isInputCurrentlyFocused: focus)
+            case .search, .thinking, .creative:
+                popupCoordinator.open(.general, isInputCurrentlyFocused: focus)
             }
-        case .planning:
-            ifPlanning = false
-        case .audio:
-            ifAudio = false
-        case .tools:
-            ifToolUse = false
+        }
+        switch capability {
+        case .search: popupCoordinator.pushGeneralSubroute(.search, reduceMotion: true)
+        case .thinking: popupCoordinator.pushGeneralSubroute(.thinking, reduceMotion: true)
+        case .creative: popupCoordinator.pushGeneralSubroute(.creative, reduceMotion: true)
+        case .skills: popupCoordinator.pushToolsSubroute(.skillsCenter, reduceMotion: true)
+        case .mcp: popupCoordinator.pushToolsSubroute(.mcpServers, reduceMotion: true)
+        case .runtimes: popupCoordinator.pushToolsSubroute(.runtimeCenter, reduceMotion: true)
+        case .tools: break
+        }
+        isInputActive.wrappedValue = false
+    }
+
+    private func disableCapability(_ capability: HanlinDetachedCapability) {
+        guard !isResponding, canDisableCapability(capability) else { return }
+        switch capability {
+        case .search: ifSearch = false; ifKnowledge = false
+        case .thinking: ifThink = false; ifPlanning = false
+        case .creative:
+            if capability.contextAction(imageGenerationActive: currentModelSnapshot.supportsImageGen) == .chooseModel {
+                if popupCoordinator.activePopup != .model {
+                    popupCoordinator.open(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
+                }
+            } else {
+                ifAudio = false
+            }
+        case .tools, .skills, .runtimes: ifToolUse = false
         case .mcp:
-            popupCoordinator.presentDirectTools(isInputCurrentlyFocused: isInputActive.wrappedValue)
-        case .imageGen:
-            popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
-        case .localModel:
-            popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
+            let chatID = effectiveMCPChatID
+            let temporary = TemporaryRecord
+            Task { @MainActor in
+                await capabilityMCPProvider.setSelection([], chatID: chatID, temporary: temporary)
+                let revision = capabilityMCPProvider.selectionRevision(chatID: chatID, temporary: temporary)
+                do {
+                    let actual = try await capabilityMCPProvider.readSelection(chatID: chatID, temporary: temporary)
+                    guard !Task.isCancelled, activeMCPCountContext?.chatID == chatID,
+                          activeMCPCountContext?.temporary == temporary,
+                          capabilityMCPProvider.selectionRevision(chatID: chatID, temporary: temporary) == revision else { return }
+                    if !actual.isEmpty { capabilityUpdateError = String(localized: "MCP selection could not be updated.") }
+                } catch {
+                    guard !Task.isCancelled, activeMCPCountContext?.chatID == chatID,
+                          activeMCPCountContext?.temporary == temporary,
+                          capabilityMCPProvider.selectionRevision(chatID: chatID, temporary: temporary) == revision else { return }
+                    capabilityUpdateError = error.localizedDescription
+                }
+            }
         }
     }
 
@@ -1194,7 +1298,9 @@ struct ChatViewBottom: View {
 
     // MARK: - 输入栏及底部按钮区域
     private var inputFieldSection: some View {
-        HStack {
+        let editorBudget = morphEditorBudget
+        let interactiveMinimum = min(size_44, editorBudget)
+        return HStack {
             VStack(spacing: 6) {
                 composerResizeHandle
                 HStack(alignment: .bottom, spacing: 6) {
@@ -1202,8 +1308,11 @@ struct ChatViewBottom: View {
                         text: $message,
                         textHeight: $textEditorHeight,
                         placeholderText: String(localized: "Message"),
-                        minHeight: 38,
-                        maxHeight: popupCoordinator.dockState.editorMaxHeight,
+                        minHeight: min(38, editorBudget),
+                        maxHeight: popupCoordinator.dockState.manualComposerHeight == nil
+                            ? editorBudget
+                            : min(editorBudget, max(interactiveMinimum, popupCoordinator.dockState.composerHeight - 88 - popupCoordinator.dockState.attachmentOverheadHeight)),
+                        usesAutomaticLineLimits: popupCoordinator.dockState.manualComposerHeight == nil,
                         onPasteImage: { pastedImage in
                             selectedImages.append(pastedImage)
                         },
@@ -1233,11 +1342,12 @@ struct ChatViewBottom: View {
                     )
                     .padding(.leading, 12)
                     .frame(
-                        height: popupCoordinator.dockState.effectiveEditorFrameHeight(
+                        height: min(editorBudget, popupCoordinator.dockState.effectiveEditorFrameHeight(
                             intrinsicHeight: textEditorHeight,
-                            minimumInteractiveHeight: size_44
-                        )
+                            minimumInteractiveHeight: interactiveMinimum
+                        ))
                     )
+                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { measuredEditorFrameHeight = $0 }
                     .focused(isInputActive)
                     .accessibilityIdentifier("hanlin-chat-input")
                     .onChange(of: message) {

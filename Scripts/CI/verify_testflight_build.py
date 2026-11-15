@@ -17,6 +17,8 @@ import jwt
 
 BUNDLE_ID = "com.itorah.chavrusachat"
 build_number = sys.argv[1]
+expected_build_id = os.environ.get("HANLIN_EXPECTED_ASC_BUILD_ID")
+expected_app_id = os.environ.get("HANLIN_EXPECTED_ASC_APP_ID")
 audience_source = None
 if len(sys.argv) > 2:
     if len(sys.argv) != 4 or sys.argv[2] != "--reuse-internal-audience-from" or not sys.argv[3].isdigit():
@@ -63,6 +65,8 @@ app_query = urllib.parse.urlencode({"filter[bundleId]": BUNDLE_ID, "limit": 1})
 apps = get(f"/v1/apps?{app_query}").get("data", [])
 if len(apps) != 1:
     raise SystemExit(f"Expected one App Store Connect app for {BUNDLE_ID}")
+if expected_app_id and apps[0]["id"] != expected_app_id:
+    raise SystemExit("App Store Connect app ID differs from authenticated UI release proof")
 
 query = urllib.parse.urlencode(
     {
@@ -76,6 +80,10 @@ audience_groups = None
 for _ in range(40):
     builds = get(f"/v1/builds?{query}").get("data", [])
     if builds:
+        if len(builds) != 1:
+            raise SystemExit("Ambiguous App Store Connect build number; refusing distribution")
+        if expected_build_id and builds[0]["id"] != expected_build_id:
+            raise SystemExit("App Store Connect build ID differs from authenticated UI release proof")
         state = builds[0]["attributes"]["processingState"]
         print(f"TestFlight build {build_number} processing state: {state}")
         if state in {"FAILED", "INVALID"} or builds[0]["attributes"].get("expired"):

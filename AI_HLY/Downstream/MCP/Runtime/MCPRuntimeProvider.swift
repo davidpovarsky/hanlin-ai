@@ -9,6 +9,16 @@ enum MCPPersistentLoadState: Equatable, Sendable {
     case failed(String)
 }
 
+enum MCPChatSelectionReadError: Error, Sendable {
+    case storageNotLoaded
+}
+
+@MainActor
+@Observable
+private final class MCPChatSelectionSignal {
+    var revision: UInt64 = 0
+}
+
 @MainActor
 @Observable
 final class MCPRuntimeProvider {
@@ -21,11 +31,14 @@ final class MCPRuntimeProvider {
     private(set) var installState: MCPInstallState = .idle
     private(set) var lastError: String?
     private(set) var persistentLoadState: MCPPersistentLoadState = .notLoaded
+    @ObservationIgnored private var selectionSignals: [MCPChatSelectionScope: MCPChatSelectionSignal] = [:]
 
     let nodeRuntime: NodeRuntimeService
     let controller: MCPRuntimeController
     private let registryStore: MCPServerRegistryStore
     private let selectionStore: MCPChatSelectionStore
+    // Internal fixture seam only; nil in production, without an extra suspension.
+    private let selectionIntentAdmission: (@Sendable () async -> Void)?
     private let configurationStore: MCPFeatureConfigurationStore
     private let secretStore: MCPSecretStore
     private let installService: MCPPackageInstallService
@@ -33,17 +46,25 @@ final class MCPRuntimeProvider {
     private var activeInstallOperationID: UUID?
     private var cancelledInstallOperationIDs: Set<UUID> = []
 
-    private init() {
-        let runtime = AppRuntimeCore.shared.node
-        let registry = MCPServerRegistryStore()
+    init(
+        runtime: NodeRuntimeService? = nil,
+        fileLayout: MCPFileLayout = .default,
+        runtimeEnvironment: RuntimeEnvironmentStore? = nil,
+        selectionStore: MCPChatSelectionStore? = nil,
+        selectionIntentAdmission: (@Sendable () async -> Void)? = nil
+    ) {
+        let runtime = runtime ?? AppRuntimeCore.shared.node
+        let registry = MCPServerRegistryStore(fileLayout: fileLayout)
         let secrets = MCPSecretStore()
         nodeRuntime = runtime
         registryStore = registry
-        selectionStore = MCPChatSelectionStore()
-        configurationStore = MCPFeatureConfigurationStore()
+        self.selectionStore = selectionStore ?? MCPChatSelectionStore(fileLayout: fileLayout)
+        self.selectionIntentAdmission = selectionIntentAdmission
+        configurationStore = MCPFeatureConfigurationStore(fileLayout: fileLayout)
         secretStore = secrets
-        controller = MCPRuntimeController(runtime: runtime, registry: registry, secrets: secrets)
-        installService = MCPPackageInstallService(runtime: runtime)
+        controller = MCPRuntimeController(runtime: runtime, registry: registry, secrets: secrets,
+            runtimeEnvironment: runtimeEnvironment ?? AppRuntimeCore.shared.environment, fileLayout: fileLayout)
+        installService = MCPPackageInstallService(runtime: runtime, fileLayout: fileLayout)
     }
 
     func loadIfNeeded(startHost: Bool = false) async {
@@ -143,7 +164,35 @@ final class MCPRuntimeProvider {
         }
     }
 
+    /// Stable per-chat observation: inserting or mutating another token is ignored.
+    func selectionRevision(chatID: UUID, temporary: Bool) -> UInt64 {
+        selectionSignal(for: .init(chatID: chatID, temporary: temporary)).revision
+    }
+
+    private func selectionSignal(for scope: MCPChatSelectionScope) -> MCPChatSelectionSignal {
+        if let signal = selectionSignals[scope] { return signal }
+        let signal = MCPChatSelectionSignal()
+        selectionSignals[scope] = signal
+        return signal
+    }
+
+    /// Notification only; the committed store outcome carries no new authority.
+    func publishSelectionMutation(_ mutation: MCPChatSelectionMutation) {
+        for scope in mutation.affectedScopes { selectionSignal(for: scope).revision &+= 1 }
+    }
+
+    /// Request-scoped read: absence uses defaults, while storage failures throw.
+    func readSelection(chatID: UUID, temporary: Bool) async throws -> Set<UUID> {
+        _ = selectionRevision(chatID: chatID, temporary: temporary)
+        guard persistentLoadState == .loaded else { throw MCPChatSelectionReadError.storageNotLoaded }
+        if let stored = try await selectionStore.selection(chatID: chatID, temporary: temporary) {
+            return stored
+        }
+        return Set(servers.filter { $0.isGloballyEnabled && $0.isEnabledForNewChats }.map(\.id))
+    }
+
     func selection(chatID: UUID, temporary: Bool) async -> Set<UUID> {
+        _ = selectionRevision(chatID: chatID, temporary: temporary)
         do {
             if let stored = try await selectionStore.selection(chatID: chatID, temporary: temporary) {
                 return stored
@@ -154,8 +203,33 @@ final class MCPRuntimeProvider {
 
     func setSelection(_ ids: Set<UUID>, chatID: UUID, temporary: Bool) async {
         guard persistentLoadState == .loaded else { return }
-        do { try await selectionStore.setSelection(ids, chatID: chatID, temporary: temporary) }
-        catch { lastError = error.localizedDescription }
+        do {
+            let mutation = try await selectionStore.setSelection(ids, chatID: chatID, temporary: temporary)
+            publishSelectionMutation(mutation)
+        } catch { lastError = error.localizedDescription }
+    }
+
+    /// Composer intent against canonical current storage, never a UI selection
+    /// snapshot. Throws this request's failure and returns its committed readback.
+    /// The caller still owns scope/revision guards for asynchronous presentation.
+    /// Defaults are a request-entry snapshot of eligible configured servers, used
+    /// only if this intent first materializes an absent record. Later default or
+    /// global-enable changes never rebase explicit selections. This is a stored
+    /// preference; runtime resolution/calls still enforce current eligibility.
+    @discardableResult
+    func applySelectionIntent(
+        _ intent: MCPChatServerSelectionIntent,
+        chatID: UUID,
+        temporary: Bool
+    ) async throws -> Set<UUID> {
+        guard persistentLoadState == .loaded else { throw MCPChatSelectionReadError.storageNotLoaded }
+        let defaults = Set(servers.filter { $0.isGloballyEnabled && $0.isEnabledForNewChats }.map(\.id))
+        if let selectionIntentAdmission { await selectionIntentAdmission() }
+        let result = try await selectionStore.applySelectionIntent(
+            intent, chatID: chatID, temporary: temporary, defaultServerIDs: defaults
+        )
+        publishSelectionMutation(result.mutation)
+        return result.serverIDs
     }
 
     func install(spec: MCPPackageSpec, entryPointOverride: String? = nil) async {
@@ -393,7 +467,8 @@ final class MCPRuntimeProvider {
                     method: "DELETE"
                 )
             }
-            try await selectionStore.removeServer(server.id)
+            let mutation = try await selectionStore.removeServer(server.id)
+            publishSelectionMutation(mutation)
             servers = try await registryStore.remove(id: server.id)
             lastError = nil
         } catch {

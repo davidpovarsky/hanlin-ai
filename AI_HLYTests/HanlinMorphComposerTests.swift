@@ -27,6 +27,17 @@ struct HanlinMorphComposerTests {
         #expect(HanlinMorphGeometry.accessoryBudget(availableHeight: 800, inputHeight: 260, toolbarHeight: 44, isExpanded: true) == 405)
     }
 
+    @Test("Editor budget shares the bubble viewport with measured controls, attachments and expanded panel")
+    func editorAndShellShareViewport() {
+        let roomy = HanlinMorphGeometry.editorBudget(availableHeight: 800, accessoryHeight: 60, inputHeight: 260, editorHeight: 180, toolbarHeight: 44, isExpanded: false)
+        #expect(roomy == 628)
+        #expect(roomy > 226, "A large font may grow past the old fixed composer cap")
+        let keyboard = HanlinMorphGeometry.editorBudget(availableHeight: 400, accessoryHeight: 100, inputHeight: 300, editorHeight: 200, toolbarHeight: 60, isExpanded: true)
+        #expect(keyboard == 49)
+        #expect(keyboard + (300 - 200) + 100 + 119 + 32 == 400)
+        #expect(HanlinMorphGeometry.editorBudget(availableHeight: 100, accessoryHeight: 100, inputHeight: 300, editorHeight: 200, toolbarHeight: 60, isExpanded: true) == 0)
+    }
+
     @Test("The source back gesture requires a predominantly horizontal leftward drag")
     func backSwipeThreshold() {
         #expect(HanlinMorphGeometry.isBackSwipe(horizontal: -66, vertical: 10))
@@ -67,5 +78,26 @@ struct HanlinMorphComposerTests {
         coordinator.returnFromMorphPage()
         #expect(coordinator.morphRoute == nil)
         #expect(coordinator.activePopup == .general)
+    }
+
+    @MainActor
+    @Test("Each capability settings route stays in the same open bubble")
+    func capabilityRoutesReturnToOpenHome() {
+        let coordinator = HanlinComposerPopupCoordinator()
+        coordinator.open(.general)
+        for route in [ComposerGeneralSubroute.search, .thinking, .creative] {
+            coordinator.pushGeneralSubroute(route, reduceMotion: true)
+            #expect(coordinator.morphRoute == .general(route))
+            #expect(coordinator.activePopup == .general)
+            coordinator.returnFromMorphPage()
+            #expect(coordinator.morphRoute == nil)
+            #expect(coordinator.activePopup == .general)
+        }
+        coordinator.switchFromGeneralToTools()
+        coordinator.pushToolsSubroute(.mcpServers, reduceMotion: true)
+        #expect(coordinator.morphRoute == .tools(.mcpServers))
+        coordinator.returnFromMorphPage()
+        #expect(coordinator.morphRoute == .tools(nil))
+        #expect(coordinator.activePopup == .tools)
     }
 }

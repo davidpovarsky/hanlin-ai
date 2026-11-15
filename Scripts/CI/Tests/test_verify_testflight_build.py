@@ -17,7 +17,8 @@ SCRIPT = Path(__file__).resolve().parents[1] / "verify_testflight_build.py"
 
 class TestFlightReadinessTests(unittest.TestCase):
     def run_states(self, states, internal="IN_BETA_TESTING", expired=False,
-                   audience=None, previous_groups=None, current_groups=None):
+                   audience=None, previous_groups=None, current_groups=None,
+                   expected_build_id=None, build_count=1):
         pending = iter(states)
         calls = []
         assigned = set(current_groups or [])
@@ -44,7 +45,7 @@ class TestFlightReadinessTests(unittest.TestCase):
                 state = next(pending)
                 data = {"data": [] if state is None else [{
                     "id": "build", "attributes": {"processingState": state, "expired": expired}
-                }]}
+                }] * build_count}
             return io.BytesIO(json.dumps(data).encode())
 
         fake_jwt = types.SimpleNamespace(encode=lambda *args, **kwargs: "test-token")
@@ -54,7 +55,8 @@ class TestFlightReadinessTests(unittest.TestCase):
             arguments += ["--reuse-internal-audience-from", audience]
         with patch.dict(sys.modules, jwt=fake_jwt), \
              patch.dict("os.environ", {"ASC_ISSUER_ID": "test", "ASC_KEY_ID": "test",
-                                       "ASC_KEY_PATH": "unused", "BUILD_DIR": ""}), \
+                                       "ASC_KEY_PATH": "unused", "BUILD_DIR": "",
+                                       "HANLIN_EXPECTED_ASC_BUILD_ID": expected_build_id or ""}), \
              patch.object(sys, "argv", arguments), \
              patch("pathlib.Path.read_bytes", return_value=b"test-only"), \
              patch("urllib.request.urlopen", side_effect=urlopen), \
@@ -69,6 +71,17 @@ class TestFlightReadinessTests(unittest.TestCase):
         self.assertEqual(sleeps, 2)
         self.assertIn('"processingState": "VALID"', output)
         self.assertTrue(calls[-1].endswith("/buildBetaDetail"))
+
+    def test_authenticated_build_id_mismatch_blocks_before_distribution(self):
+        result, _, sleeps, _ = self.run_states(["VALID"], audience="89401", expected_build_id="other-build")
+        self.assertIn("authenticated UI release proof", result)
+        self.assertEqual(sleeps, 0)
+        self.assertEqual(self.last_posts, [])
+
+    def test_ambiguous_build_number_blocks_before_distribution(self):
+        result, _, _, _ = self.run_states(["VALID"], audience="89401", build_count=2)
+        self.assertIn("Ambiguous", result)
+        self.assertEqual(self.last_posts, [])
 
     def test_rejected_build_fails_without_waiting(self):
         for state in ("FAILED", "INVALID"):

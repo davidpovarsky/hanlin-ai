@@ -5,6 +5,77 @@ Worktree `C:/Users/DAVID/Code/hanlin-wave1-integration-20261115`, branch
 `codex/hanlin-wave1-integration-20261115`. Source integration task
 K `1219656771637321`; HQ `1220539630159023`. Date: 2026-11-15, Asia/Hebron.
 
+## Current accepted source and mandatory simulator UI gate
+
+One coherent net source import combines Maya UI
+`75605e9e439ecc2c118a37dc41d47d988b0b618a` (13 leased UI/test/doc paths), the
+earlier accepted observation cut, final selection actor
+`9249e0e0e3588b0bdf10fc0131c33884434e353f`, and final provider/observation tests
+`43f9417917e96b15add401e6bf15151335380b9d`. The last two files come from Noam,
+not the older copies on the UI branch. All 21 imported paths match their exact
+accepted owner bytes in the index and working tree. Net patch SHA256:
+`eb76c067f7a9a12d6ef471d80b4daa9e5b70879afc00c1528942517c8a05e438`.
+No metadata ancestors, whole producer branch or original dirty worktree entered.
+The component plan retains all ten cases; application observation/refresh,
+parity, manual resize and UI obligations still require their actual app closure.
+The affected map was consumed as the exact owner delta; newly declared
+`ComposerSelectionRefreshTests` and `ComposerRefreshIdentityTests` are not yet
+listed in that map's suite routing and need the map owner's follow-up.
+
+QA packet `0eac9556e99b6b9811fbd55bb7f7177f424c526d` was consumed as three
+unchanged new test/coverage/document files. Its three methods describe **six**
+authored iPhone/iPad and fixed-language obligations, not complete UI acceptance.
+The fixture deletes/reseeds local chats/models/credentials/prompts on every
+fixture-enabled launch. The runner therefore creates dedicated disposable CI
+simulators, rejects any original device ID or preexisting app data container,
+and binds the creation receipt to the actual xcresult device ID. It never uses
+a personal simulator, globally erases data or claims fixture relaunch persistence.
+
+`Scripts/CI/SimulatorAcceptance` and the UI-only Release scheme add a fail-closed
+contract before fresh TestFlight upload and existing-build distribution, including
+the reusable workflow path. It requires actual iOS/iPadOS 27 iPhone/iPad results,
+English/Hebrew applicability, comprehensive coverage, exact candidate/build,
+retained whole test/fixture source, prepared transitive/resource inventories,
+raw xcresults, case screenshots and toolchain/runtime provenance. An incomplete
+execution plan never becomes release-eligible. The current QA coverage correctly
+blocks the comprehensive gate for missing keyboard/forms/gestures/transitions,
+actual Dynamic Type, recovery and window obligations. No new automatic triggers
+were added. Existing-build reuse authenticates the original successful release
+run/artifact and ZIP digest, original full source tree and assertion/fixture
+bytes, exact build/IPA and App Store Connect IDs. It never labels current HEAD
+as an older uploaded build's source. A mismatching/ambiguous ASC build is rejected
+before audience mutation. These are source/tooling changes, not release approval.
+
+Portable checks actually passed: 21 synthetic gate/authentication/reporting tests,
+13 App Store readiness helper tests, and nine project graph guards. Their raw logs
+are retained under ignored integration evidence. None is an Apple/UI test result.
+
+The preview Agent SDK cut `08b5d6f31153063c31be321fbd35c7301f302fc1` was consumed
+only as its new package/docs and approved three shared core seams plus new core
+tests (34 exact paths). Original local Platform layout, platforms and SwiftAISDK
+`43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6` pin remain. Revocation P1 source
+correction is accepted; **numeric model-tool safety remains BLOCKED** because
+the existing producer represents numbers through Double and loses raw input.
+No consumer shim, pin override, UI adoption, real host dispatch or distribution
+claim is made. The separately owned raw producer/consumer correction and its
+future reviewed pin/lock integration are still required. Apple proof planning
+names 25 actual test methods across the new SDK and existing injected/cloud core
+suites; execution and iOS compile results are not inferred from portable32 PASS.
+
+The later A2UI proof at `fa810e87213ee45da76b465ef50e6b54edc74a86`, run
+[43679728130](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43679728130),
+compiled and executed **35 cases: 33 PASS, two FAILED**. Failing identities:
+`eventSinkIsWeakAndCannotKeepAuthorityAlive` and
+`retiredSurfaceCannotReanimateQueuedEventsInSameResult`. All 15 source/recipe/
+route and 15 workflow hashes match exact recorded Git, raw lock bytes/hash/JSON
+agree (SHA256 `af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae`).
+Artifact `14147962603`, `a2ui-exact-pin-43679728130`, API digest
+`sha256:0337ce415a75c87f85956225b1e8b1487f12aeef67ed9684242fc1e54d520400`.
+The raw xcresult is retained; exported JSON/logs were inspected without claiming
+independent Windows binary decoding. Six hosted iOS cases remain NOT_RUN.
+The lead authorized a distinct proof of corrected test-only source
+`c777b65ecc5b5d82b922fc21a402b6d658469ad6`; its outcome must be recorded separately.
+
 ## Current continuation: W1-007 provider candidate
 
 The bootstrap P2 is corrected in the current candidate: a single observable

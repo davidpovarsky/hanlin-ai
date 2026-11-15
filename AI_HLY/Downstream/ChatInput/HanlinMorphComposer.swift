@@ -32,6 +32,16 @@ enum HanlinMorphGeometry {
         return max(0, availableHeight - max(52, inputHeight) - panelChrome - 32)
     }
 
+    /// The editor and its enclosing bubble share the same remaining viewport.
+    /// The input's other controls are measured, so Dynamic Type and chrome changes
+    /// do not rely on a guessed fixed editor-to-bubble offset.
+    static func editorBudget(availableHeight: CGFloat, accessoryHeight: CGFloat, inputHeight: CGFloat, editorHeight: CGFloat, toolbarHeight: CGFloat, isExpanded: Bool) -> CGFloat {
+        let inputChrome = max(0, inputHeight - editorHeight)
+        let panelChrome: CGFloat = isExpanded ? 32 + 14 + 13 + max(0, toolbarHeight) : 0
+        let shellAndHostSpacing: CGFloat = 32
+        return max(0, availableHeight - max(0, accessoryHeight) - inputChrome - panelChrome - shellAndHostSpacing)
+    }
+
     static func isBackSwipe(horizontal: CGFloat, vertical: CGFloat) -> Bool {
         horizontal < -65 && abs(horizontal) > abs(vertical) * 1.2
     }

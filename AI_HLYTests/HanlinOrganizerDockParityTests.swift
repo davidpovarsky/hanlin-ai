@@ -12,7 +12,201 @@ import Foundation
 import SwiftUI
 import SwiftData
 import Testing
+import UIKit
 @testable import AI_Hanlin
+
+@Suite("Composer live refresh identity")
+struct ComposerRefreshIdentityTests {
+    @Test("Old chats, temporary sessions, revisions, configuration and cancellations cannot publish")
+    func staleRequestsAreRejected() {
+        let chat = UUID()
+        let request = HanlinComposerRefreshContext(chatID: chat, temporary: false, selectionRevision: 7, globallyEnabled: true, serverStates: ["server:true"])
+        #expect(request.canPublish(current: request, currentSelectionRevision: 7, isCancelled: false))
+        #expect(!request.canPublish(current: request, currentSelectionRevision: 7, isCancelled: true))
+        #expect(!request.canPublish(current: request, currentSelectionRevision: 8, isCancelled: false))
+        #expect(!request.canPublish(current: nil, currentSelectionRevision: 7, isCancelled: false))
+        let otherChat = HanlinComposerRefreshContext(chatID: UUID(), temporary: false, selectionRevision: 7, globallyEnabled: true, serverStates: ["server:true"])
+        let temporary = HanlinComposerRefreshContext(chatID: chat, temporary: true, selectionRevision: 7, globallyEnabled: true, serverStates: ["server:true"])
+        let disabled = HanlinComposerRefreshContext(chatID: chat, temporary: false, selectionRevision: 7, globallyEnabled: false, serverStates: ["server:true"])
+        #expect(!request.canPublish(current: otherChat, currentSelectionRevision: 7, isCancelled: false))
+        #expect(!request.canPublish(current: temporary, currentSelectionRevision: 7, isCancelled: false))
+        #expect(!request.canPublish(current: disabled, currentSelectionRevision: 7, isCancelled: false))
+    }
+}
+
+@MainActor
+@Suite("Composer asynchronous selection publication")
+struct ComposerSelectionRefreshTests {
+    private enum ReadError: Error { case failed }
+    private final class DelayedRead {
+        var continuation: CheckedContinuation<Set<UUID>, Error>?
+        func read() async throws -> Set<UUID> {
+            try await withCheckedThrowingContinuation { continuation = $0 }
+        }
+    }
+
+    private final class IntentDelay {
+        var continuation: CheckedContinuation<Void, Never>?
+        func wait() async { await withCheckedContinuation { continuation = $0 } }
+    }
+
+    @Test("Rapid UI server intents retain both selections after a delayed first action")
+    func delayedUIToggleIntentsPreserveBothSelections() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("hanlin-ui-intents-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let runtimeLayout = RuntimeFileLayout(root: root)
+        let environment = RuntimeEnvironmentStore(fileLayout: runtimeLayout)
+        let runtime = NodeRuntimeService(fileLayout: runtimeLayout, environment: environment)
+        let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
+        let store = MCPChatSelectionStore(fileLayout: layout)
+        let provider = MCPRuntimeProvider(runtime: runtime, fileLayout: layout, runtimeEnvironment: environment, selectionStore: store)
+        await provider.loadIfNeeded(startHost: false)
+        let chatID = UUID(), firstID = UUID(), secondID = UUID()
+        let delay = IntentDelay()
+        let first = Task { @MainActor in
+            await delay.wait()
+            return try await HanlinComposerToolsRootView.applyServerSelection(provider: provider, serverID: firstID, isSelected: true, chatID: chatID, temporary: true)
+        }
+        while delay.continuation == nil { await Task.yield() }
+        let second = Task { @MainActor in
+            try await HanlinComposerToolsRootView.applyServerSelection(provider: provider, serverID: secondID, isSelected: true, chatID: chatID, temporary: true)
+        }
+        let secondResult = await second.result
+        delay.continuation?.resume()
+        let firstResult = await first.result
+        _ = try secondResult.get()
+        _ = try firstResult.get()
+        #expect(try await provider.readSelection(chatID: chatID, temporary: true) == [firstID, secondID])
+        #expect(try await store.selection(chatID: chatID, temporary: true) == [firstID, secondID])
+    }
+
+    @Test("A failed server intent remains visible after another server succeeds")
+    func delayedFailureSurvivesOtherServerCommit() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("hanlin-ui-errors-\(UUID().uuidString)", isDirectory: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let runtimeLayout = RuntimeFileLayout(root: root)
+        let environment = RuntimeEnvironmentStore(fileLayout: runtimeLayout)
+        let runtime = NodeRuntimeService(fileLayout: runtimeLayout, environment: environment)
+        let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
+        let store = MCPChatSelectionStore(fileLayout: layout)
+        let provider = MCPRuntimeProvider(runtime: runtime, fileLayout: layout, runtimeEnvironment: environment, selectionStore: store)
+        await provider.loadIfNeeded(startHost: false)
+        let scope = MCPChatSelectionScope(chatID: UUID(), temporary: true)
+        let firstID = UUID(), secondID = UUID()
+        let feedback = HanlinMCPIntentFeedback()
+        var currentScope: MCPChatSelectionScope? = scope
+        var displayed: Set<UUID> = []
+        let delay = IntentDelay()
+        let firstRequest = feedback.begin(serverID: firstID, scope: scope)
+        let first = Task { @MainActor in
+            await HanlinComposerToolsRootView.performServerSelection(
+                serverID: firstID, isSelected: true, scope: scope, requestID: firstRequest,
+                feedback: feedback, isCurrentScope: { currentScope == scope },
+                apply: { await delay.wait(); throw ReadError.failed },
+                read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+                revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+                publish: { displayed = $0 })
+        }
+        while delay.continuation == nil { await Task.yield() }
+        let secondRequest = feedback.begin(serverID: secondID, scope: scope)
+        await HanlinComposerToolsRootView.performServerSelection(
+            serverID: secondID, isSelected: true, scope: scope, requestID: secondRequest,
+            feedback: feedback, isCurrentScope: { currentScope == scope },
+            apply: { try await HanlinComposerToolsRootView.applyServerSelection(provider: provider, serverID: secondID, isSelected: true, chatID: scope.chatID, temporary: scope.temporary) },
+            read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+            revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+            publish: { displayed = $0 })
+        delay.continuation?.resume()
+        await first.value
+        #expect(try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) == [secondID])
+        #expect(displayed == [secondID])
+        #expect(feedback.message(for: firstID) != nil)
+        #expect(feedback.message(for: secondID) == nil)
+
+        let refreshed = HanlinComposerRefreshContext(chatID: scope.chatID, temporary: scope.temporary, selectionRevision: provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary), globallyEnabled: false, serverStates: [])
+        await HanlinComposerSelectionRefresh.perform(request: refreshed, current: { refreshed },
+            revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+            read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+            publish: { if case .success(let value) = $0 { displayed = value } })
+        #expect(feedback.message(for: firstID) != nil)
+
+        let supersededDelay = IntentDelay()
+        let older = feedback.begin(serverID: firstID, scope: scope)
+        let oldTask = Task { @MainActor in
+            await HanlinComposerToolsRootView.performServerSelection(
+                serverID: firstID, isSelected: true, scope: scope, requestID: older,
+                feedback: feedback, isCurrentScope: { currentScope == scope },
+                apply: { await supersededDelay.wait(); throw ReadError.failed },
+                read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+                revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+                publish: { displayed = $0 })
+        }
+        while supersededDelay.continuation == nil { await Task.yield() }
+        let newer = feedback.begin(serverID: firstID, scope: scope)
+        await HanlinComposerToolsRootView.performServerSelection(
+            serverID: firstID, isSelected: true, scope: scope, requestID: newer,
+            feedback: feedback, isCurrentScope: { currentScope == scope },
+            apply: { try await HanlinComposerToolsRootView.applyServerSelection(provider: provider, serverID: firstID, isSelected: true, chatID: scope.chatID, temporary: scope.temporary) },
+            read: { try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) },
+            revision: { provider.selectionRevision(chatID: scope.chatID, temporary: scope.temporary) },
+            publish: { displayed = $0 })
+        supersededDelay.continuation?.resume()
+        await oldTask.value
+        #expect(feedback.message(for: firstID) == nil)
+        #expect(try await provider.readSelection(chatID: scope.chatID, temporary: scope.temporary) == [firstID, secondID])
+        let switched = feedback.begin(serverID: firstID, scope: scope)
+        currentScope = MCPChatSelectionScope(chatID: UUID(), temporary: true)
+        feedback.setScope(currentScope)
+        feedback.finish(serverID: firstID, scope: scope, requestID: switched, error: "wrong chat")
+        #expect(feedback.message(for: firstID) == nil)
+    }
+
+    @Test("A delayed old-chat result and error are discarded, while a current failure is published")
+    func delayedChatSwitchAndReadFailure() async {
+        let first = HanlinComposerRefreshContext(chatID: UUID(), temporary: false, selectionRevision: 1, globallyEnabled: true, serverStates: [])
+        let second = HanlinComposerRefreshContext(chatID: UUID(), temporary: true, selectionRevision: 0, globallyEnabled: true, serverStates: [])
+        for shouldFail in [false, true] {
+            let gate = DelayedRead()
+            var current: HanlinComposerRefreshContext? = first
+            var publications = 0
+            let task = Task {
+                await HanlinComposerSelectionRefresh.perform(request: first, current: { current }, revision: { 1 }, read: { try await gate.read() }, publish: { _ in publications += 1 })
+            }
+            while gate.continuation == nil { await Task.yield() }
+            current = second
+            if shouldFail { gate.continuation?.resume(throwing: ReadError.failed) }
+            else { gate.continuation?.resume(returning: [UUID()]) }
+            await task.value
+            #expect(publications == 0)
+        }
+        let gate = DelayedRead()
+        var didPublishFailure = false
+        let task = Task {
+            await HanlinComposerSelectionRefresh.perform(request: first, current: { first }, revision: { 1 }, read: { try await gate.read() }, publish: { result in
+                if case .failure = result { didPublishFailure = true }
+            })
+        }
+        while gate.continuation == nil { await Task.yield() }
+        gate.continuation?.resume(throwing: ReadError.failed)
+        await task.value
+        #expect(didPublishFailure)
+    }
+
+    @Test("Cancellation discards a delayed read without canceling the service")
+    func canceledReadDoesNotPublish() async {
+        let request = HanlinComposerRefreshContext(chatID: UUID(), temporary: false, selectionRevision: 1, globallyEnabled: true, serverStates: [])
+        let gate = DelayedRead()
+        var publications = 0
+        let task = Task {
+            await HanlinComposerSelectionRefresh.perform(request: request, current: { request }, revision: { 1 }, read: { try await gate.read() }, publish: { _ in publications += 1 })
+        }
+        while gate.continuation == nil { await Task.yield() }
+        task.cancel()
+        gate.continuation?.resume(returning: [])
+        await task.value
+        #expect(publications == 0)
+    }
+}
 
 // MARK: - 7A.1 OrganizerDockStateTests
 
@@ -115,7 +309,7 @@ struct OrganizerDockStateTests {
         #expect(state.manualComposerHeight == nil)
     }
 
-    @Test("1.6 Input focus, empty draft, and context key change reset transient layout state")
+    @Test("1.6 Focus and draft changes preserve manual size; a context change resets it")
     func focusAndLifecycleResets() {
         let state = HanlinOrganizerDockState()
         state.openMode(.general)
@@ -126,9 +320,11 @@ struct OrganizerDockStateTests {
         #expect(state.mode == .collapsed)
         #expect(state.manualComposerHeight == 220)
 
-        // Clearing draft text resets manualComposerHeight
+        // Clearing the draft preserves the deliberate manual size.
         state.handleDraftTextChange("")
-        #expect(state.manualComposerHeight == nil)
+        #expect(state.manualComposerHeight == 220)
+        state.handleDraftTextChange("new draft")
+        #expect(state.manualComposerHeight == 220)
 
         // Switching context key collapses drawer and resets transient measurements
         state.openMode(.tools)
@@ -143,6 +339,7 @@ struct OrganizerDockStateTests {
     func manualResizeExpandsInnerEditorFrameHeight() {
         let state = HanlinOrganizerDockState()
         #expect(state.effectiveEditorFrameHeight(intrinsicHeight: 38, minimumInteractiveHeight: 44) == 44)
+        #expect(state.effectiveEditorFrameHeight(intrinsicHeight: 240, minimumInteractiveHeight: 44) == 240)
 
         // Drag up by 60pt (composerHeight = 186pt) -> inner editor frame expands to 98pt
         state.handleComposerResizeChanged(translationHeight: -60)
@@ -570,6 +767,42 @@ struct ChatComposerSessionBridgeTests {
         #expect(restoredTextA == "Draft in A")
         #expect(restoredDocsA == [docURL])
         #expect(restoredSearchA == true)
+    }
+
+    @Test("Turning off the current chat's tool-use binding preserves another chat's setting")
+    func toolUseBindingRemainsScopedToItsChat() {
+        let bridge = HanlinActiveComposerSessionBridge()
+        let chatA = UUID(), chatB = UUID()
+        var textA = "A", textB = "B"
+        var toolsA = true, toolsB = true
+        let endpointA = Self.makeTestEndpoint(
+            sessionID: chatA, message: Binding(get: { textA }, set: { textA = $0 }),
+            ifToolUse: Binding(get: { toolsA }, set: { toolsA = $0 })
+        )
+        let endpointB = Self.makeTestEndpoint(
+            sessionID: chatB, message: Binding(get: { textB }, set: { textB = $0 }),
+            ifToolUse: Binding(get: { toolsB }, set: { toolsB = $0 })
+        )
+        bridge.snapshotDraft(from: endpointB)
+        endpointA.ifToolUse.wrappedValue = false
+        bridge.snapshotDraft(from: endpointA)
+        #expect(!toolsA)
+        #expect(toolsB)
+        #expect(bridge.perChatDrafts[chatA]?.ifToolUse == false)
+        #expect(bridge.perChatDrafts[chatB]?.ifToolUse == true)
+    }
+
+    @Test("Clearing one temporary chat's MCP selection leaves the other chat intact")
+    func temporaryMCPSelectionClearDoesNotCrossChats() async throws {
+        let store = MCPChatSelectionStore()
+        let chatA = UUID(), chatB = UUID(), serverA = UUID(), serverB = UUID()
+        try await store.setSelection([serverA], chatID: chatA, temporary: true)
+        try await store.setSelection([serverB], chatID: chatB, temporary: true)
+        try await store.setSelection([], chatID: chatA, temporary: true)
+        let a = try await store.selection(chatID: chatA, temporary: true)
+        let b = try await store.selection(chatID: chatB, temporary: true)
+        #expect(a == [])
+        #expect(b == [serverB])
     }
 
     @Test("5.3 Out-of-order stale endpoint registration is rejected when expectedActiveSessionID does not match")
@@ -1059,6 +1292,92 @@ struct ComposerActionsParityTests {
             activeMCPServerCount: 2
         )
         #expect(shortcutCount == 3)
+    }
+
+    @Test("Detached groups reflect enabled model-supported modes and MCP configuration")
+    func detachedCapabilitiesProjectRealModeState() {
+        let model = AllModels(name: "test", displayName: "Test", position: 0, company: "OPENAI",
+                              supportsSearch: true, supportsTextGen: true, supportsMultimodal: true,
+                              supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true)
+        let cap = HanlinComposerActionBridge.capabilitySnapshot(for: model)
+        func project(search: Bool, knowledge: Bool, thinking: Bool, planning: Bool, tools: Bool, mcp: Int, mcpEnabled: Bool, skills: Bool = false, runtimes: Bool = false) -> [HanlinDetachedCapability] {
+            let chips = HanlinComposerActionBridge.activeModeChips(
+                capability: cap, ifSearch: search, ifKnowledge: knowledge, ifThink: thinking,
+                thinkingLength: 0, ifPlanning: planning, ifAudio: false, ifToolUse: tools,
+                activeMCPServerCount: mcp, selectedImageSize: "1:1"
+            )
+            return HanlinDetachedCapability.enabled(from: chips, mcpEnabled: mcpEnabled, hasModel: cap.hasModel,
+                                                     toolUseEnabled: tools && cap.supportsToolUse,
+                                                     toolsEligible: true, skillsEligible: skills, runtimesEligible: runtimes)
+        }
+        #expect(project(search: false, knowledge: false, thinking: false, planning: false, tools: false, mcp: 0, mcpEnabled: true).isEmpty)
+        #expect(project(search: false, knowledge: true, thinking: false, planning: false, tools: false, mcp: 0, mcpEnabled: true) == [.search])
+        #expect(project(search: true, knowledge: true, thinking: true, planning: true, tools: true, mcp: 2, mcpEnabled: true, skills: true, runtimes: true) == [.search, .thinking, .tools, .skills, .mcp, .runtimes])
+        #expect(project(search: false, knowledge: false, thinking: false, planning: false, tools: false, mcp: 2, mcpEnabled: false).isEmpty)
+        #expect(project(search: false, knowledge: false, thinking: false, planning: false, tools: false, mcp: 2, mcpEnabled: true, skills: true, runtimes: true).isEmpty)
+        #expect(!project(search: false, knowledge: false, thinking: false, planning: false, tools: true, mcp: 2, mcpEnabled: false).contains(.mcp))
+
+        let unsupported = HanlinComposerActionBridge.capabilitySnapshot(for: nil)
+        let unsupportedChips = HanlinComposerActionBridge.activeModeChips(
+            capability: unsupported, ifSearch: true, ifKnowledge: false, ifThink: true,
+            thinkingLength: 0, ifPlanning: false, ifAudio: true, ifToolUse: true,
+            activeMCPServerCount: 0, selectedImageSize: "1:1"
+        )
+        #expect(HanlinDetachedCapability.enabled(from: unsupportedChips, mcpEnabled: true, hasModel: false,
+                                                  toolUseEnabled: false, toolsEligible: true, skillsEligible: true, runtimesEligible: true).isEmpty)
+
+        let mandatory = AllModels(name: "fixed-reasoning", displayName: "Fixed", position: 1, company: "OPENAI",
+                                  supportsSearch: false, supportsTextGen: true, supportsMultimodal: false,
+                                  supportsReasoning: true, supportReasoningChange: false, supportsToolUse: false)
+        let fixedChips = HanlinComposerActionBridge.activeModeChips(
+            capability: HanlinComposerActionBridge.capabilitySnapshot(for: mandatory), ifSearch: false,
+            ifKnowledge: false, ifThink: true, thinkingLength: 0, ifPlanning: true,
+            ifAudio: false, ifToolUse: false, activeMCPServerCount: 0, selectedImageSize: "1:1"
+        )
+        #expect(HanlinDetachedCapability.enabled(from: fixedChips, mcpEnabled: true, hasModel: true,
+                                                  toolUseEnabled: false, toolsEligible: false, skillsEligible: false, runtimesEligible: false) == [.thinking])
+        #expect(!HanlinDetachedCapability.thinking.canDisable(from: fixedChips))
+        let imageModel = AllModels(name: "image", displayName: "Image", position: 2, company: "OPENAI", supportsImageGen: true)
+        let imageChips = HanlinComposerActionBridge.activeModeChips(
+            capability: HanlinComposerActionBridge.capabilitySnapshot(for: imageModel), ifSearch: false,
+            ifKnowledge: false, ifThink: false, thinkingLength: 0, ifPlanning: false,
+            ifAudio: false, ifToolUse: false, activeMCPServerCount: 0, selectedImageSize: "1:1"
+        )
+        #expect(HanlinDetachedCapability.enabled(from: imageChips, mcpEnabled: false, hasModel: true,
+                                                  toolUseEnabled: false, toolsEligible: false, skillsEligible: false, runtimesEligible: false) == [.creative])
+        #expect(HanlinDetachedCapability.creative.contextAction(imageGenerationActive: true) == .chooseModel)
+        #expect(HanlinDetachedCapability.creative.contextAction(imageGenerationActive: false) == .disableModes)
+        #expect(HanlinDetachedCapability.skills.contextAction(imageGenerationActive: false) == .disableChatToolUse)
+        #expect(HanlinDetachedCapability.runtimes.contextAction(imageGenerationActive: false) == .disableChatToolUse)
+        #expect(HanlinDetachedCapability.mcp.contextAction(imageGenerationActive: false) == .clearChatMCPSelection)
+        #expect(HanlinDetachedCapabilityChips.usesCompactLayout(width: 509))
+        #expect(!HanlinDetachedCapabilityChips.usesCompactLayout(width: 510))
+    }
+
+    @Test("Closing model presentation leaves projection unchanged until selected model changes")
+    func imageCapabilityFollowsActualModelAfterPickerCancellation() {
+        let image = AllModels(name: "image", displayName: "Image", position: 0, company: "OPENAI", supportsImageGen: true)
+        let text = AllModels(name: "text", displayName: "Text", position: 1, company: "OPENAI", supportsImageGen: false)
+        var selected = image
+        func visibleCapabilities() -> [HanlinDetachedCapability] {
+            let snapshot = HanlinComposerActionBridge.capabilitySnapshot(for: selected)
+            let chips = HanlinComposerActionBridge.activeModeChips(
+                capability: snapshot, ifSearch: false, ifKnowledge: false, ifThink: false,
+                thinkingLength: 0, ifPlanning: false, ifAudio: false, ifToolUse: false,
+                activeMCPServerCount: 0, selectedImageSize: "1:1"
+            )
+            return HanlinDetachedCapability.enabled(from: chips, mcpEnabled: false, hasModel: snapshot.hasModel,
+                                                     toolUseEnabled: false, toolsEligible: false,
+                                                     skillsEligible: false, runtimesEligible: false)
+        }
+        let coordinator = HanlinComposerPopupCoordinator()
+        #expect(visibleCapabilities() == [.creative])
+        #expect(HanlinDetachedCapability.creative.contextAction(imageGenerationActive: true) == .chooseModel)
+        coordinator.open(.model)
+        coordinator.closeAll() // Cancellation changes only presentation, not selected model.
+        #expect(visibleCapabilities() == [.creative])
+        selected = text // Changes the test's selected model; this is not a UI interaction test.
+        #expect(visibleCapabilities().isEmpty)
     }
 }
 

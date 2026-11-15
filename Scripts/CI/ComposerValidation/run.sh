@@ -9,7 +9,7 @@ actual_sha="$(git rev-parse HEAD)"
 [[ "${COMPOSER_EXPECTED_SHA:-}" =~ ^[0-9a-f]{40}$ ]] || { echo 'Exact 40-character COMPOSER_EXPECTED_SHA is required' >&2; exit 2; }
 [[ "$actual_sha" == "$COMPOSER_EXPECTED_SHA" ]] || { echo "Commit mismatch: $actual_sha" >&2; exit 2; }
 
-selected_xcode="$(python3 -c 'import glob,re; paths=[p for p in glob.glob("/Applications/Xcode*.app") if "beta" not in p.lower()]; paths.sort(key=lambda p: tuple(map(int, re.findall(r"[0-9]+", p)))); print(paths[-1] if paths else "")')"
+selected_xcode="$(python3 -c 'import glob,re; paths=[p for p in glob.glob("/Applications/Xcode*.app") if re.search(r"/Xcode[_-]27(?:[._][0-9]+)*\.app$",p)]; paths.sort(key=lambda p: tuple(map(int, re.findall(r"[0-9]+", p)))); print(paths[-1] if paths else "")')"
 [[ -n "$selected_xcode" ]] || { echo 'No stable installed Xcode found' >&2; exit 2; }
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 xcodebuild -version | tee "$evidence/xcode-version.txt"
@@ -18,6 +18,7 @@ sw_vers > "$evidence/host-version.txt"
 sdk_version="$(xcrun --sdk iphonesimulator --show-sdk-version)"
 printf '%s\n' "$sdk_version" | tee "$evidence/ios-simulator-sdk-version.txt"
 ios_major="${sdk_version%%.*}"
+[[ "$ios_major" == 27 ]] || { echo 'Actual iOS Simulator SDK 27 required' >&2; exit 2; }
 
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/composer-proof.XXXXXXXX")"
 package_dir="$scratch/ComposerValidation"
