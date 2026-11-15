@@ -1,0 +1,116 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 185]
+[Planning deferred tasks]
+[45 / 96] HanlinSkillFormat_HanlinSkillFormatTests
+[50 / 96]
+[54 / 97] CYaml
+[60 / 107]
+[65 / 107]
+[67 / 107]
+[72 / 107] CYaml
+[73 / 107] CYaml
+[74 / 107] Yams
+[78 / 146]
+[83 / 146]
+[84 / 146]
+[86 / 146]
+[91 / 146]
+[93 / 146]
+[94 / 146]
+[97 / 146]
+[98 / 146]
+[100 / 146]
+[103 / 146]
+[106 / 146]
+[107 / 146]
+[108 / 146]
+[109 / 146]
+[113 / 146] Yams
+[114 / 146] Yams
+[122 / 147] Yams
+[122 / 147] HanlinSkillFormat
+[126 / 151] HanlinSkillFormat
+[127 / 151] HanlinSkillFormat
+[134 / 151] HanlinSkillFormat
+[141 / 152] HanlinSkillFormatTests-product
+[147 / 193]
+[150 / 193]
+[151 / 193]
+[153 / 193]
+[158 / 193]
+[160 / 193]
+[161 / 193]
+[164 / 193]
+[165 / 193]
+[167 / 193]
+[168 / 193]
+[169 / 193]
+[171 / 193]
+[174 / 193]
+[175 / 193]
+[176 / 193]
+[177 / 193]
+[178 / 193]
+[182 / 193] HanlinSkillFormatTests-product
+[185 / 193] HanlinSkillFormatTests-product
+[187 / 193] HanlinSkillFormatTests-product
+[189 / 193] HanlinSkillFormatTests-product
+[193 / 193] HanlinSkillFormatTests-product
+Build complete! (27.99 sec)
+Test Suite 'All tests' started at 2026-11-15 20:06:35.868.
+Test Suite 'All tests' passed at 2026-11-15 20:06:35.871.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.003) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Original Yams metadata, bounded parsing and lossless edits" started.
+◇ Test openClawNestedMetadataUsesOneTaggedContract() started.
+◇ Test parsingHonorsCancellation() started.
+◇ Test allKnownEditsPreserveUnknownBytesAndBody() started.
+◇ Test bomCRLFUnicodeMarksMapToExactUTF8Bytes() started.
+◇ Test blockScalarUsesNativeSpanAndRetainsFollowingField(style:) started.
+◇ Test sourceAndConfigurationBudgetsFailBeforeComposition() started.
+◇ Test compatibleMigrationReadsLegacyWithoutRewriting() started.
+◇ Test physicalAndAliasExpandedDepthAreBounded() started.
+◇ Test anchoredKnownFieldFailsExplicitlyWithoutChangingSource() started.
+◇ Test scalarAliasCanBeEditedWithoutChangingItsSource() started.
+◇ Test quotedKeysAndExplicitStringTagsUseOriginalScanner() started.
+◇ Test aliasesCyclesAndTextExpansionHaveSeparateResourceErrors() started.
+◇ Test optionalTitleRemovalRetainsInlineComment() started.
+◇ Test bodyOnlyEditPreservesEntireFrontmatterAndNewlineStyle() started.
+◇ Test canonicalUnicodeEditDoesNotCollapseDistinctBytes() started.
+◇ Test malformedDuplicateAndInvalidRootsFailClosed() started.
+◇ Test newDocumentsUseUpstreamEmitterEscaping() started.
+◇ Test noOpAndTypedCodableRetainOriginalData() started.
+◇ Test complexUnknownKeysRemainOrderedTaggedData() started.
+◇ Test flowMappingAddsMissingFieldWithOrWithoutTrailingComma(trailing:) started.
+◇ Test case passing 1 argument style → "|" to blockScalarUsesNativeSpanAndRetainsFollowingField(style:) started.
+◇ Test case passing 1 argument style → "|-" to blockScalarUsesNativeSpanAndRetainsFollowingField(style:) started.
+◇ Test case passing 1 argument style → "|+" to blockScalarUsesNativeSpanAndRetainsFollowingField(style:) started.
+◇ Test case passing 1 argument style → ">" to blockScalarUsesNativeSpanAndRetainsFollowingField(style:) started.
+◇ Test case passing 1 argument style → ">-" to blockScalarUsesNativeSpanAndRetainsFollowingField(style:) started.
+◇ Test case passing 1 argument trailing → false to flowMappingAddsMissingFieldWithOrWithoutTrailingComma(trailing:) started.
+◇ Test case passing 1 argument trailing → true to flowMappingAddsMissingFieldWithOrWithoutTrailingComma(trailing:) started.
+✔ Test bomCRLFUnicodeMarksMapToExactUTF8Bytes() passed after 0.018 seconds.
+✔ Test sourceAndConfigurationBudgetsFailBeforeComposition() passed after 0.018 seconds.
+✔ Test compatibleMigrationReadsLegacyWithoutRewriting() passed after 0.018 seconds.
+✔ Test blockScalarUsesNativeSpanAndRetainsFollowingField(style:) with 5 test cases passed after 0.018 seconds.
+✔ Test anchoredKnownFieldFailsExplicitlyWithoutChangingSource() passed after 0.018 seconds.
+✔ Test physicalAndAliasExpandedDepthAreBounded() passed after 0.018 seconds.
+✔ Test openClawNestedMetadataUsesOneTaggedContract() passed after 0.018 seconds.
+✔ Test scalarAliasCanBeEditedWithoutChangingItsSource() passed after 0.018 seconds.
+✔ Test quotedKeysAndExplicitStringTagsUseOriginalScanner() passed after 0.018 seconds.
+✔ Test allKnownEditsPreserveUnknownBytesAndBody() passed after 0.018 seconds.
+✔ Test optionalTitleRemovalRetainsInlineComment() passed after 0.018 seconds.
+✔ Test aliasesCyclesAndTextExpansionHaveSeparateResourceErrors() passed after 0.018 seconds.
+✔ Test canonicalUnicodeEditDoesNotCollapseDistinctBytes() passed after 0.018 seconds.
+✔ Test bodyOnlyEditPreservesEntireFrontmatterAndNewlineStyle() passed after 0.018 seconds.
+✔ Test malformedDuplicateAndInvalidRootsFailClosed() passed after 0.018 seconds.
+✔ Test newDocumentsUseUpstreamEmitterEscaping() passed after 0.018 seconds.
+✔ Test complexUnknownKeysRemainOrderedTaggedData() passed after 0.018 seconds.
+✔ Test parsingHonorsCancellation() passed after 0.018 seconds.
+✔ Test flowMappingAddsMissingFieldWithOrWithoutTrailingComma(trailing:) with 2 test cases passed after 0.018 seconds.
+✔ Test noOpAndTypedCodableRetainOriginalData() passed after 0.021 seconds.
+✔ Suite "Original Yams metadata, bounded parsing and lossless edits" passed after 0.022 seconds.
+✔ Test run with 20 tests in 1 suite passed after 0.023 seconds.

@@ -1,0 +1,11 @@
+{
+  "repository": "davidpovarsky/hanlin-ai",
+  "branch": "codex/upstream-validation-base-20261115-b8ab2c84",
+  "mode": "apply",
+  "onlyPackage": "semver",
+  "exitCode": 0,
+  "tool": "44.239.1",
+  "node": "v24.22.1",
+  "mergeEnabled": false,
+  "log": "build/upstream-updates/renovate.log"
+}

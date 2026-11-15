@@ -1,0 +1,40 @@
+✔ only complete, current, protected and explicitly enabled evidence can qualify (2.1925ms)
+✔ merge refuses missing checks (0.3174ms)
+✔ merge refuses failed CI (0.1788ms)
+✔ merge refuses skipped CI (0.1806ms)
+✔ merge refuses pending CI (0.2213ms)
+✔ merge refuses wrong check source (0.1899ms)
+✔ merge refuses stale check head (0.1881ms)
+✔ merge refuses stale receipt (0.3388ms)
+✔ merge refuses unknown impact (0.2087ms)
+✔ merge refuses native ABI (0.245ms)
+✔ merge refuses major (0.2121ms)
+✔ merge refuses missing license (0.1064ms)
+✔ merge refuses missing checksum (0.1236ms)
+✔ merge refuses no gates (0.128ms)
+✔ merge refuses no rollback (0.0961ms)
+✔ merge refuses unprotected branch (0.0959ms)
+✔ merge refuses merge not enabled (0.1049ms)
+✔ merge correct protected set requires every exact server context on the same head (0.9ms)
+✔ merge protected-but-wrong-gate cannot substitute lint for the upstream gate (0.15ms)
+✔ merge extra-required-failed blocks even after upstream validation passes (0.1145ms)
+✔ merge extra-required-pending blocks even after upstream validation passes (0.0701ms)
+✔ merge extra-required-skipped blocks even after upstream validation passes (0.0711ms)
+✔ merge server context preserves the original raw prefixed check name (0.1149ms)
+✔ merge missing or ambiguous server configuration stays blocked (0.2065ms)
+✔ merge app binding is enforced for additional required gates (0.1257ms)
+✔ merge checks-only server configuration is supported without losing app bindings (0.1066ms)
+✔ merge legacy any-app context requires an unambiguous authenticated check run (0.109ms)
+✔ merge required status-only or missing gate is unknown rather than silently omitted (0.1074ms)
+✔ merge extra required check cannot borrow another head result (0.0973ms)
+✔ merge unrelated failed checks do not replace the configured required set (0.0914ms)
+✔ merge unknown or additional effective branch rules require explicit review (0.1369ms)
+✔ merge caller protectedBranch boolean cannot bypass absent server configuration (0.1158ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 236.3772

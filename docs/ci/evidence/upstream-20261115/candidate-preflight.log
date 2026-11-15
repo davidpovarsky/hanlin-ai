@@ -1,0 +1,10 @@
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+arm64
+Xcode 27.1
+Build version 27A9275
+v24.22.1
+11.19.1
+Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on
+/dev/disk2s5   180Gi   119Gi    36Gi    77%    1.4M  380M    0%   /System/Volumes/Data

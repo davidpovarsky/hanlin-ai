@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "kind": "DERIVED_CORRECTION_OF_IMMUTABLE_SCHEMA1_RECEIPT_NOT_A_NEW_CI_RUN",
+  "runs": [
+    {
+      "run": "43754245990",
+      "attempt": 1,
+      "head": "ea969bee9c1b18a19eafeeecb16ecf454935c244",
+      "workflow": {
+        "path": ".github/workflows/validate-app-split.yml",
+        "referenced_workflows": [
+          {
+            "path": "davidpovarsky/hanlin-ai/.github/workflows/check-runtime-dependency-updates.yml@ea969bee9c1b18a19eafeeecb16ecf454935c244",
+            "sha": "ea969bee9c1b18a19eafeeecb16ecf454935c244",
+            "ref": "refs/heads/codex/renovate/semver-7.x"
+          }
+        ]
+      },
+      "job": {
+        "id": 132934735463,
+        "runner": "GitHub Actions 1000019844",
+        "labels": [
+          "xcode-27"
+        ],
+        "conclusion": "failure"
+      },
+      "artifact": {
+        "id": 14178031532,
+        "digest": "sha256:67333d847b0885e330d1c51119489ac0c42a32d7621811de23af7396552c8f15",
+        "downloadedDigestVerified": true
+      },
+      "execution": {
+        "status": "EXECUTED_PASS",
+        "stage": "native-origin",
+        "counts": {
+          "tests": 150,
+          "pass": 149,
+          "fail": 0,
+          "skipped": 1
+        },
+        "durationMs": "62034.953375",
+        "logSHA256": "b3768c7f1056770dc3d5241f6cd0823e676e464ca2f90defe1765c427dfcdf1d",
+        "packedJitlessProbe": {
+          "passed": true,
+          "fetchImplementation": "node-fetch@3.3.2+native-web-api",
+          "webAssemblyAvailable": false,
+          "nonce": "790dfc05-1f62-42a3-b854-b30a595f7a22",
+          "contracts": [
+            "GET",
+            "Request POST Unicode",
+            "redirect",
+            "HTTP error",
+            "ReadableStream",
+            "clone",
+            "gzip",
+            "multipart File",
+            "abort",
+            "HEAD",
+            "204"
+          ]
+        },
+        "innerArchiveSHA256": "0730ae26a1d01470aaf81c2577c887e952be494177d8346046db7173bca506d4",
+        "node": "24.5.0",
+        "npm": "11.5.1",
+        "actualPlatform": "darwin/arm64",
+        "repositoryCredentialFree": "NOT_RUN: source and original job log show GH_TOKEN present in native-origin stage"
+      },
+      "laterHostStage": {
+        "status": "REUSED_VERIFIED_PASS",
+        "scope": "Within-run current archive and source-input identity, not fresh tests",
+        "testsExecutedHere": 0,
+        "logSHA256": "a25e80883883c90d6f96fafdad674f0586bb7a850257dd9510e8417542d91ab2",
+        "originRun": "43754245990",
+        "originStage": "native-origin"
+      },
+      "jobLog": {
+        "api": "repos/davidpovarsky/hanlin-ai/actions/jobs/132934735463/logs",
+        "retained": "host-origin-job-43754245990.log",
+        "sha256": "a6d92b762b79609a909f38aff31978877130259bd860b44f2e75209927680eff"
+      },
+      "overallConclusion": "failure"
+    },
+    {
+      "run": "43754712044",
+      "attempt": 1,
+      "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+      "workflow": {
+        "path": ".github/workflows/validate-app-split.yml",
+        "referenced_workflows": [
+          {
+            "path": "davidpovarsky/hanlin-ai/.github/workflows/check-runtime-dependency-updates.yml@77a225a5af05de82335f387680c3e5d0b355aaeb",
+            "sha": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+            "ref": "refs/heads/codex/renovate/semver-7.x"
+          }
+        ]
+      },
+      "job": {
+        "id": 132936161812,
+        "runner": "GitHub Actions 1000019856",
+        "labels": [
+          "xcode-27"
+        ],
+        "conclusion": "success"
+      },
+      "artifact": {
+        "id": 14177409001,
+        "digest": "sha256:52b6dbf3988de43ac149077772d11e5b0b314bcade80230a1d3bc353f6047df7",
+        "downloadedDigestVerified": true
+      },
+      "execution": {
+        "status": "EXECUTED_PASS",
+        "stage": "native-origin",
+        "counts": {
+          "tests": 150,
+          "pass": 149,
+          "fail": 0,
+          "skipped": 1
+        },
+        "durationMs": "44719.73225",
+        "logSHA256": "d1a0819a1fde30d9298ca123ffc19d2545efbfad2c69019628ee3e0c80288130",
+        "packedJitlessProbe": {
+          "passed": true,
+          "fetchImplementation": "node-fetch@3.3.2+native-web-api",
+          "webAssemblyAvailable": false,
+          "nonce": "6f6e900e-f953-45b6-a6be-c1360b1063b6",
+          "contracts": [
+            "GET",
+            "Request POST Unicode",
+            "redirect",
+            "HTTP error",
+            "ReadableStream",
+            "clone",
+            "gzip",
+            "multipart File",
+            "abort",
+            "HEAD",
+            "204"
+          ]
+        },
+        "innerArchiveSHA256": "de786941c6340de0ab9c6771181051954cb5120beb5af75e789a8ce61bba4b5a",
+        "node": "24.5.0",
+        "npm": "11.5.1",
+        "actualPlatform": "darwin/arm64",
+        "repositoryCredentialFree": "NOT_RUN: source and original job log show GH_TOKEN present in native-origin stage"
+      },
+      "laterHostStage": {
+        "status": "REUSED_VERIFIED_PASS",
+        "scope": "Within-run current archive and source-input identity, not fresh tests",
+        "testsExecutedHere": 0,
+        "logSHA256": "a25e80883883c90d6f96fafdad674f0586bb7a850257dd9510e8417542d91ab2",
+        "originRun": "43754712044",
+        "originStage": "native-origin"
+      },
+      "jobLog": {
+        "api": "repos/davidpovarsky/hanlin-ai/actions/jobs/132936161812/logs",
+        "retained": "host-origin-job-43754712044.log",
+        "sha256": "d4f422b04e622faffdf142788a58c04572b0a7b125ba08bbfde279e94471ef39"
+      },
+      "overallConclusion": "success"
+    }
+  ],
+  "greenAccounting": {
+    "wholeWorkflowHostTests": "EXECUTED_PASS in native-origin of43754712044;149PASS/0FAIL/1SKIPof150",
+    "explicitHostStage": "REUSED_VERIFIED_PASS within same job/run/head;0tests executed here",
+    "credentialFreeHostExecution": "NOT_RUN/NOT_PROVEN",
+    "nativeNodePythonBinary": "REUSED_ORIGINAL_AUTHENTICATED_BINARY; NOT_REBUILT"
+  },
+  "archiveTrace": "Original green native-origin Prepared line matches innerHostde786... authenticated through outer artifact14177109938. Failed prior run produced different0730... payload and did not supply the green test origin.",
+  "sourceClosure": "host-origin-source-closure.json audits133fingerprintedfiles and additionalrecipes across full ea969bee\u219277a225a5 range; same-run origin has zero source/head delta to direct reuse",
+  "originalArtifactsChanged": false,
+  "futureSchema2": "Legacy schema1 lacks stage captures/full serialized environment; future automaticconsumer rejects it as UNKNOWN. This correction preserves authentic historical raw executed tests without manufacturing a schema2 receipt."
+}

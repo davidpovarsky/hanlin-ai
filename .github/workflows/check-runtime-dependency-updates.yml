@@ -1,9 +1,35 @@
 name: Check RuntimeCore Dependency Updates
 
 on:
+  workflow_call:
+    inputs:
+      operation:
+        type: string
+        required: true
+      candidate_pr:
+        type: string
+        required: true
+      runtime_baseline_run_id:
+        type: string
+        default: '42926628418'
+        required: false
   schedule:
     - cron: '23 4 * * 2'
   workflow_dispatch:
+    inputs:
+      operation:
+        description: Scoped upstream operation; no merge or distribution
+        type: choice
+        options: [audit, renovate, candidate, failure-demo, swiftpm-candidate, swiftpm-pin-only, native-candidate]
+        default: audit
+      candidate_pr:
+        description: Same-repository isolated Host update PR (candidate/failure-demo)
+        type: string
+        default: ''
+      runtime_baseline_run_id:
+        description: Existing verified RuntimeCore artifact origin for unchanged native inputs
+        type: string
+        default: '42926628418'
 
 permissions:
   actions: write
@@ -16,6 +42,7 @@ concurrency:
 
 jobs:
   update-and-verify:
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'native-candidate'
     name: Pin, build, test, and propose RuntimeCore updates
     runs-on: ubuntu-latest
     timeout-minutes: 360
@@ -34,7 +61,7 @@ jobs:
       - name: Checkout protected branch without modifying it
         uses: actions/checkout@v7.0.1
         with:
-          ref: ${{ github.event.repository.default_branch }}
+          ref: ${{ github.sha }}
           fetch-depth: 0
 
       - name: Live Activity · refresh
@@ -69,7 +96,7 @@ jobs:
           echo "baseline_hash=$baseline_hash" >> "$GITHUB_OUTPUT"
 
           npm ci --ignore-scripts --no-audit --no-fund --prefix "$HOST_ROOT"
-          node Scripts/Runtime/update-runtime-dependencies.mjs
+          node Scripts/Runtime/update-runtime-dependencies.mjs --include-native --allow-major
           npm install --package-lock-only --ignore-scripts --no-audit --no-fund --prefix "$HOST_ROOT"
           node Scripts/Runtime/update-runtime-dependencies.mjs \
             RuntimeDependencies.lock.json "$HOST_ROOT/package.json" "$HOST_ROOT/package-lock.json" \
@@ -134,7 +161,7 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
-      - name: Build and publish immutable candidate runtime
+      - name: Build immutable candidate runtime artifact (no release)
         if: steps.update.outputs.changed == 'true'
         id: runtime
         env:
@@ -142,7 +169,7 @@ jobs:
         run: |
           set -euo pipefail
           gh workflow run build-runtime-bundle.yml --ref "$BRANCH" \
-            -f publish_release=true -f force_rebuild=false -f reuse_artifacts_run_id=''
+            -f publish_release=false -f force_rebuild=false -f reuse_artifacts_run_id=''
           for attempt in {1..30}; do
             run_id="$(gh run list --workflow build-runtime-bundle.yml --branch "$BRANCH" \
               --event workflow_dispatch --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
@@ -171,8 +198,9 @@ jobs:
           dependency_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)"
           release_tag="runtime-core-v1-${dependency_hash}"
           mkdir -p "$RUNNER_TEMP/runtime-release"
-          gh release download "$release_tag" --dir "$RUNNER_TEMP/runtime-release" \
-            --pattern runtime-bundle.sha256 --pattern node-xcframework.sha256
+          gh run download "${{ steps.runtime.outputs.run_id }}" \
+            --name "hanlin-runtime-bundle-${dependency_hash}" --dir "$RUNNER_TEMP/runtime-release"
+          (cd "$RUNNER_TEMP/runtime-release" && sha256sum -c runtime-bundle.sha256)
           bundle_sha="$(awk 'NR == 1 {print $1}' "$RUNNER_TEMP/runtime-release/runtime-bundle.sha256")"
           node_sha="$(awk 'NR == 1 {print $1}' "$RUNNER_TEMP/runtime-release/node-xcframework.sha256")"
           node - "$bundle_sha" "$node_sha" <<'NODE'
@@ -206,7 +234,9 @@ jobs:
           BRANCH: ${{ steps.branch.outputs.name }}
         run: |
           set -euo pipefail
-          gh workflow run build-ios26-unsigned-ipa.yml --ref "$BRANCH"
+          gh workflow run build-ios26-unsigned-ipa.yml --ref "$BRANCH" \
+            -f testflight_upload=false -f runtime_publish_release=false \
+            -f runtime_bundle_artifact_run_id="${{ steps.runtime.outputs.run_id }}"
           for attempt in {1..30}; do
             run_id="$(gh run list --workflow build-ios26-unsigned-ipa.yml --branch "$BRANCH" \
               --event workflow_dispatch --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
@@ -243,8 +273,7 @@ jobs:
           dependency_hash="$(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)"
           release_tag="runtime-core-v1-${dependency_hash}"
           old_tag="runtime-core-v1-${BASELINE_HASH}"
-          new_size="$(gh release view "$release_tag" --json assets --jq \
-            ".assets[] | select(.name == \"hanlin-runtime-${dependency_hash}.zip\") | .size")"
+          new_size="$(find "$RUNNER_TEMP/runtime-release" -name 'hanlin-runtime-*.zip' -type f -exec stat -c '%s' {} \; | head -1)"
           old_size="$(gh release view "$old_tag" --json assets --jq \
             ".assets[] | select(.name == \"hanlin-runtime-${BASELINE_HASH}.zip\") | .size" 2>/dev/null || echo 0)"
           delta=$((new_size - old_size))
@@ -270,3 +299,154 @@ jobs:
           } > "$RUNNER_TEMP/pr-body.md"
           gh pr create --base "${{ github.event.repository.default_branch }}" --head "$BRANCH" \
             --title 'Update pinned RuntimeCore dependencies' --body-file "$RUNNER_TEMP/pr-body.md"
+
+  upstream:
+    name: Hanlin upstream acceptance
+    if: inputs.operation != 'native-candidate' && inputs.operation != 'swiftpm-candidate' && inputs.operation != 'swiftpm-pin-only'
+    runs-on: xcode-27
+    timeout-minutes: 30
+    env:
+      UPDATE_OPERATION: ${{ inputs.operation || 'renovate' }}
+      CANDIDATE_PR: ${{ inputs.candidate_pr }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24.22.1'
+          cache: npm
+          cache-dependency-path: Scripts/Runtime/DependencyUpdates/package-lock.json
+      - name: Preflight actual automation toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/upstream-updates
+          { sw_vers; uname -m; xcodebuild -version; node --version; npm --version; df -h .; } > build/upstream-updates/preflight.log
+      - name: Install pinned updater tooling
+        working-directory: Scripts/Runtime/DependencyUpdates
+        run: |
+          npm ci --ignore-scripts --workspaces=false --no-audit --no-fund
+          npm rebuild re2 --foreground-scripts --workspaces=false
+          npm sbom --sbom-format cyclonedx > ../../../build/upstream-updates/tooling-sbom.json
+      - name: Validate actual Renovate configuration
+        run: node Scripts/Runtime/DependencyUpdates/node_modules/renovate/dist/config-validator.js --strict .renovaterc.json
+      - name: Test updater, drift and merge policy
+        run: |
+          node --test Scripts/Runtime/Tests/dependency-updates.test.mjs
+          node --test Scripts/Runtime/Tests/upstream-host-accounting.test.mjs
+          python3 Scripts/Runtime/Tests/test_upstream_proof_reader.py
+      - name: Inventory actual tracked graphs
+        run: node Scripts/Runtime/inventory-upstream-dependencies.mjs
+      - name: Audit supported upstream releases without editing pins
+        if: env.UPDATE_OPERATION == 'audit' || env.UPDATE_OPERATION == 'renovate'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          (cd AI_HLY/Downstream/RuntimeCore/Node/Host && npm ci --ignore-scripts --workspaces=false --no-audit --no-fund)
+          node Scripts/Runtime/update-runtime-dependencies.mjs --plan --include-native --report=build/upstream-updates/plan.json
+      - name: Run the single configured Renovate bot
+        if: env.UPDATE_OPERATION == 'renovate'
+        env:
+          RENOVATE_TOKEN: ${{ github.token }}
+          RENOVATE_BASE_BRANCH_PATTERNS: ${{ github.ref_name }}
+          RENOVATE_ONBOARDING: 'false'
+          RENOVATE_REQUIRE_CONFIG: ignored
+          RENOVATE_ALLOW_SCRIPTS: 'false'
+          RENOVATE_BINARY_SOURCE: global
+          LOG_FILE: build/upstream-updates/renovate.log
+        run: node Scripts/Runtime/run-upstream-bot.mjs "${{ github.repository }}" "${{ github.ref_name }}" apply
+      - name: Authenticate candidate diff and upstream source pins
+        if: env.UPDATE_OPERATION == 'candidate' || env.UPDATE_OPERATION == 'failure-demo'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node Scripts/Runtime/prepare-upstream-verification.mjs "${{ github.repository }}" "$CANDIDATE_PR"
+      - name: Reproduce real failure gate on the candidate
+        if: env.UPDATE_OPERATION == 'failure-demo'
+        run: |
+          echo 'Intentional negative acceptance demonstration: merge gate must reject this actual failed run.'
+          exit 1
+      - name: Select actual embedded Host engine for candidate validation
+        if: env.UPDATE_OPERATION == 'candidate'
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24.5.0'
+      - name: Authenticate and stage the unchanged native binary origin
+        if: env.UPDATE_OPERATION == 'candidate'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_baseline_run_id }}
+        run: |
+          node Scripts/Runtime/upstream-host-accounting.mjs capture native-origin
+          python3 Scripts/Runtime/runtime_native_identity.py --verify-reuse
+          bash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee build/upstream-updates/native-origin.log
+      - name: Prepare Host artifact or verify its same-run reuse
+        id: host-closure
+        if: env.UPDATE_OPERATION == 'candidate'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(node --version)" = 'v24.5.0'
+          node Scripts/Runtime/upstream-host-accounting.mjs capture host
+          bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee build/upstream-updates/host.log
+          node Scripts/Runtime/validate-runtime-lock.mjs
+          cp build/runtime-host/host-metadata.json build/upstream-updates/host-metadata.json
+      - name: Generate source lock SBOM and complete candidate receipt
+        if: env.UPDATE_OPERATION == 'candidate'
+        shell: bash
+        run: |
+          set -euo pipefail
+          (cd AI_HLY/Downstream/RuntimeCore/Node/Host && npm sbom --package-lock-only --omit=dev --sbom-format cyclonedx) > build/upstream-updates/host-sbom.json
+          node Scripts/Runtime/record-upstream-receipt.mjs
+      - name: Preserve complete candidate Host artifact
+        if: always() && env.UPDATE_OPERATION == 'candidate' && steps.host-closure.outcome == 'success'
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: upstream-host-${{ github.run_id }}
+          path: build/runtime-host
+          if-no-files-found: error
+          retention-days: 14
+      - name: Retain original evidence even on failed/blocked verification
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: upstream-proof-${{ github.run_id }}
+          path: build/upstream-updates
+          if-no-files-found: error
+          retention-days: 14
+
+  swiftpm:
+    name: Hanlin SwiftPM upstream acceptance
+    if: inputs.operation == 'swiftpm-candidate' || inputs.operation == 'swiftpm-pin-only'
+    runs-on: xcode-27
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify authoritative SwiftPM manifest constraints
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p build/upstream-updates
+          python3 Scripts/Runtime/Tests/test_swiftpm_pin.py 2>&1 | tee build/upstream-updates/pin-semantic-tests.log
+          python3 Scripts/Runtime/verify-swiftpm-pin.py Packages/HanlinSkillFormat 6.2.2 jpsim/Yams a27b21e0c81c5bf42049b897a62aaf387e80f279 > build/upstream-updates/pin-semantic-receipt.json
+      - name: Execute actual pinned SwiftPM baseline and candidate
+        if: inputs.operation == 'swiftpm-candidate'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 Scripts/Runtime/verify-swiftpm-update.py "${{ github.repository }}" "${{ inputs.candidate_pr }}"
+      - name: Retain original SwiftPM evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: upstream-swiftpm-proof-${{ github.run_id }}
+          path: build/upstream-updates
+          if-no-files-found: error
+          retention-days: 14

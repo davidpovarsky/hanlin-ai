@@ -1,0 +1,745 @@
+{
+  "schemaVersion": 1,
+  "comparisonRange": {
+    "from": "ea969bee9c1b18a19eafeeecb16ecf454935c244",
+    "to": "77a225a5af05de82335f387680c3e5d0b355aaeb"
+  },
+  "comparisonPurpose": "Complete source range audit; NOT cross-run test reuse",
+  "completeChangedPaths": [
+    "M\t.github/workflows/check-runtime-dependency-updates.yml",
+    "M\tScripts/Runtime/check-upstream-merge-gate.mjs",
+    "M\tScripts/Runtime/sync-upstream-host-pr.mjs",
+    "M\tdocs/ci/UPSTREAM_MAINTENANCE.md"
+  ],
+  "fingerprintedFiles": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/PEGJS-LICENSE.txt",
+      "sha256": "e56890ff38a31e1adc0617f57c23056289dd27a9ff6263eaf6137dacd1253d9d",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/package.json",
+      "sha256": "00e01b16d1e612ae0dd4a4d92a2fafc1f7e52cfc952cb2b5f7e7d30356c12803",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/server.mjs",
+      "sha256": "7e1521b53b692c7d8a98b58b993c839b4ad4d0ff88671833d85bb4e2111c6d26",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/package.json",
+      "sha256": "8622d224936d7b9f0cd9e0ca3871f274ee47d196e3f3322968800195ebbac52a",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/server.cjs",
+      "sha256": "f1c60042da7ad7b09e38656e645554a683ee4ada24758f4460678c1e7d79dd44",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/package.json",
+      "sha256": "38acff3bdeae5c7501d06d7a4689e4b375df1f1db014e3c6d6aa8e9ecc2fe6ab",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/server.mjs",
+      "sha256": "af757b65e58926dae8f3589bb7dc0c59b02830f745ea6731676aa6ef8db42cd8",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/package.json",
+      "sha256": "a80e372624f66eb2b4bd96b0fdc369dc77d582c303db8d7b9e0e5b1364b97b97",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/server.mjs",
+      "sha256": "bf25ec65bbcc4ad87197761ef3480767a83db0e8acc4f833c7ccca4fa59b1aaf",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/package.json",
+      "sha256": "4d962a17360a513f662edb370115bee50c6aa0e67df4b66493b2ee0f4ecb0c44",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/server.mjs",
+      "sha256": "1666731ee4e9de5e6dc5fb001b0a70e74e72b023f03fb4295daf0a7651806932",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/package.json",
+      "sha256": "d781369bc650080b31ac795cd65b0c1d3ccc4ef372fe0e2ed9f1f0ba64b904a5",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/server.mjs",
+      "sha256": "be8004c181241556663195ccb4ec16be1945e92cadb321e7bad1e710a1fd628c",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/package.json",
+      "sha256": "74df0885beac53df29c26fa8a82b2dd405a68b721425be1588e6b78d7afb6ea3",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/server.mjs",
+      "sha256": "d60241ae2bf053b0def9fb275a50df155e24e3018f4914fdb7c3ade25fe8f6d4",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/package.json",
+      "sha256": "1b3e7faeb79ae38dc7331ce3f4ca8986e192d1007b1fa0cf4b569dabde29b19c",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/server.mjs",
+      "sha256": "f48c749f711648c7a2e66a13f9b57ddf02bdf27c79c86bbe010bedaa14469786",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/package.json",
+      "sha256": "6899eb61afe0b952925b0d6ffad7cea93b833901650ba3236c221f01bc3eb972",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/server.mjs",
+      "sha256": "469e6811ee4107c85e9c677ce9671cb97e27d0a09e75cde21b80c2c37cac0e2b",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/package.json",
+      "sha256": "b27d0c617678bcefe25116729f5d0159165ce46ff7d05033e77f4ca8cd76a5fe",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/server.mjs",
+      "sha256": "97d410354e56192ad76696be8fc87a2667f31e94427b79ea69ee85e625c735ec",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/package.json",
+      "sha256": "288bd243a5bf5ccb282441295f9b2d969185dd3196699860d90fd73147b7be29",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/server.mjs",
+      "sha256": "f8fa6c96fde4f2ecbf2dde0501c302fe92d126cd7e932244e9d2886e53ba658f",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/package.json",
+      "sha256": "6b721ece791b04f850a6e41bf441ea9829b27c1c9a81b551bef4d9adf8f87b2e",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/server.mjs",
+      "sha256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/package.json",
+      "sha256": "3ed20ec5e1ba9bbe45afcc79dd3637cd105e0bd50265443921ff611782410e9c",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/server.mjs",
+      "sha256": "77e660683b86d631a4ec91a19933d87e88ab23a1b1af33677c95ffa0d350ac67",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/module-a.mjs",
+      "sha256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/package.json",
+      "sha256": "073e7cfb564a0dffc4e971f41d1fa5a6c4d4dd4c2bbb4270d9d576f792df530d",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/server.mjs",
+      "sha256": "b475e1821d9ffa16c29e7ee7f84b42c43b97071a013c36450f32274af8ed72f1",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/package.json",
+      "sha256": "d9558e8ef6ca0b8cf830e098e56036de5588e892031d9b82880bba8a5fee39d0",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/server.mjs",
+      "sha256": "107ad2aec7efd4e2cda5882c8d885fe5fa47e872279b79a1f868c5e7478330fa",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/package.json",
+      "sha256": "520f86a8f824a1a36db10e16751e33e78873e47b71f14569ccc80f17aa9a23df",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/server.mjs",
+      "sha256": "734230e94ef0bdf1ea36dd6fb2cf747ee6793da6253c54156819fd4d070fd50d",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/package.json",
+      "sha256": "5ee27b2f7a1afca8eabba3bc5ff0c2bc06e184e6b84c0fd48492fd9b26b36bd1",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/server.cjs",
+      "sha256": "1c58d346a4326d5167252008021aaddc2f262d313cc8efda04e3d5f1b1f1a94f",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/package.json",
+      "sha256": "ddd0b4c123f16ab60eb0f5baf91b2abed3b2acf12e22718fdc6a3621e4396f90",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/server.mjs",
+      "sha256": "35ef18067a5ebf605ecce7716a83867e86af0d3e4e962c4e4b6140f9c82e1573",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/package.json",
+      "sha256": "06ac762d77ae6b9d7b193d86101b83654f5c8e00d30b0af96050d48e0b52238c",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/server.mjs",
+      "sha256": "89f6cf99c2588c96b646a27509251e65d3dbcc83162b0f0d16b5d12ef05f9002",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/package.json",
+      "sha256": "cfc386f20c8abf2edb64079f87d35c65b03e8b8227103a9e842904d97944763a",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/server.mjs",
+      "sha256": "e32b05eac2c5aff8741a3789ea663508ba158e32daa351edfc646792095d3ddf",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/fetch-compatibility-probe.mjs",
+      "sha256": "35074bed12cc9b999a442d2df93b52823d2b367e2ce71fad029ae16be2c108c3",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/package.json",
+      "sha256": "5b865d55da12ec8172084346336a14a7c78c9b149c03ca844c0b32b281de1cfa",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/server.mjs",
+      "sha256": "f4aaafa9ee2a7d17a9be772e7248445e0bda288ce76f66859f23f2a89444fde0",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/mcp-reference-lifecycle.mjs",
+      "sha256": "b9731a89cf08147c9ab88b25e517e0935b757ff970f7c808085baf8dfe9fc2f6",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/addon.node",
+      "sha256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/package.json",
+      "sha256": "4bfd432e8f8aa167c2e4847c7841eb7ea70f0aea2940221abbc28b01d7b9c778",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/server.cjs",
+      "sha256": "c9f5901a33f9455a608a8cef81378caf5d4fdd155f63d9cd7e6c2ea2349f76c1",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/module-a.mjs",
+      "sha256": "518dbab9b57fdde73a9d8d7a450ec07dee293c0b2293026ff901a0974cbf0cec",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/package.json",
+      "sha256": "97d7d397153d509c7ddb7e48b000add70b0fecf7d3f62838b6656487b76dc924",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/server.mjs",
+      "sha256": "777da3779c5b19b5f52aa0d3e0377350771f11d034b0b2ee9b93da71edc88a1d",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/package.json",
+      "sha256": "165f5204a88ecf18e31ac4531e57b18d49187f7b83c0d06310070a330ffc1c84",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/server.ts",
+      "sha256": "6d6a7e2810b2448e84187b0937e7b5090c497255405811598dace1911a97d4f0",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/package.json",
+      "sha256": "056a752de536a4149bcc9f13f83c3e44452a2e7ddc5ccd8d397fbf3b46234f92",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/server.mjs",
+      "sha256": "7e655246f02417a2d116db324363e9aee036ebf7de04d829a2e68bcb8a0670f8",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/addon.node",
+      "sha256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/binding.gyp",
+      "sha256": "a758f0791313b284d4e230a4d5f162fb002bbb9c0e814277ddc24b07ace36cb2",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/archive-resources.test.mjs",
+      "sha256": "ef0caf9c8e714e3d943f0f14845c731f3a183c782bae055d9886a2b2a62b8712",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/cablate-google-map.integration.mjs",
+      "sha256": "d9adab3a75c797ba3225b1c35f95b9bbc0f21da242f0db37fba94e16afa5bdc9",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/cli-entry-resolution.test.mjs",
+      "sha256": "c425716dad74710ae6d914ac54f2269ed8df11229beaf30272fc5a9088cc2ebc",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/compatibility.test.mjs",
+      "sha256": "f2abaa0927107ca4ed1761637077381967127c48ca4ae4613b83d21ab91e6cce",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-input.test.mjs",
+      "sha256": "36da4dac42aefe9c0d08e46d8146e848ed642c12618c0fb9aad4ebad4054affb",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs",
+      "sha256": "fcdb75086eeed7e8d97c459492e7735eb911686b3046a8532db4154746c911ef",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/fetch-compatibility.test.mjs",
+      "sha256": "72b68cd74580c9bac8f48f01eb38dec4c8e1ca1541f57191dad29eae9041b7f5",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/fetch-conformance.test.mjs",
+      "sha256": "4057560be54e16a5c1a3193852ff15534c352bdf02ba80ad1258a3c0a5ff8dfe",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/host-dependency-patches.test.mjs",
+      "sha256": "404fb0ad2f3fca8597e03aaa48b6d4ffc98938ec71774806baaf2bbe3118718a",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/host-operations.test.mjs",
+      "sha256": "8340059bf2c5d2c3e92a99e4e625787ac6119aa1d44d8dde144fb23a1fa9142b",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/host.test.mjs",
+      "sha256": "9a235851048a63be088a5835251072d36a6d73b5f1fb0d54c2bfeadaff5a1df5",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/job-terminal-publication.test.mjs",
+      "sha256": "0b01e02fa3c3792e78ed0c8e79817176c62256e732c925438ec2340ffaa25acf",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/lifecycle.integration.mjs",
+      "sha256": "250459bbe1026aaea1ff91610c409a783525072ff8ef5c56afb67ee8fd184e77",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-install-lifecycle.test.mjs",
+      "sha256": "2b9b60e58bb374daaa4650c9e3907545f13dea699139b0ec0fb117200cffe2e8",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-large-probe.test.mjs",
+      "sha256": "a3ebc3f8f39167dc48825a6c6c41bf41dcea071ffbe788d3c775828c90f50df2",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-large-transport.test.mjs",
+      "sha256": "f3ea855dabb03883ae87db7a06acae4936a6be01a13e344bd1f974e762cf5b7b",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-package-generations.test.mjs",
+      "sha256": "96ea36d1338f056e0bff77adef5c0bbd60cca586af5d37c3c87436eecdc341dc",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-server-regression.integration.mjs",
+      "sha256": "9d206b38579703a08800ecdb62b42a4f53666224ccd5611716ab7917ffcadf0b",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/native-commands.test.mjs",
+      "sha256": "add7f47c2b9de3881646a7ef1e7890e920fa39653f7a71ba10d4c1ea70864e0d",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/network-diagnostics.test.mjs",
+      "sha256": "8d0c8edfc99e5ca37f75b7bcceb68f04fb0b637c2be7f1d4749ad48a3f5faba5",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/optional-lifecycle.test.mjs",
+      "sha256": "54d1ed12d8f044fda90e1ab5a81af5f7b33d306aa6c97a29479835912353f0b7",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/package-lifecycle.test.mjs",
+      "sha256": "c7d0fb58af6b07e61bfd235e01bdb9d11483254ed0601d4f9363b375c2e0f2f9",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/package-validation.test.mjs",
+      "sha256": "6cfec074c956d98500c6c840f83970d2ec6ee076e1abb9024701af2dc34dc2df",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/portable-shell.test.mjs",
+      "sha256": "0d6469838a7451ba581c156e85ab293a997debbce5d32fbf0ef116e172a2bbbe",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime-command-broker.test.mjs",
+      "sha256": "31d9ba300648b0c13c558d49e99956aa6f6dbde8b833327cad7501ef5778b383",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime-package-target.test.mjs",
+      "sha256": "318c7c035661d3ee4461a42931c97416c0eb92d6e6b51891f77dc6425a8ea7fa",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime.test.mjs",
+      "sha256": "cbd84f7ef1d192ec3ba171982f6597aafea72e7efa4be14f69e207b9dbfee320",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/server-everything.integration.mjs",
+      "sha256": "9789308a914581e96608eb80b192cfc39d4af945aac8b7939dcea79d307bc022",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/typescript-jobs.test.mjs",
+      "sha256": "a96406171b1ec35e06be5abe6b9772b5eb9501b883b9295d48d068686228203c",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/warning-diagnostics.test.mjs",
+      "sha256": "40a6a53c243c06a01bf64b341ac535c6131b143c76fb1d598030fd0708ef28c1",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/workspace-io.test.mjs",
+      "sha256": "d817d3b2d244013c900dfa2b72287bee4d577a07b4a1cb3aaddd4b681ab9f2a2",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/UNICODE-LICENSE.txt",
+      "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/apply-host-dependency-patches.mjs",
+      "sha256": "ad74dbf9ffdf23d8fe0a75905f11cf52760a0d815e601813fea9bab1aa2d5d96",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/cli-preload.mjs",
+      "sha256": "f1443f786a3fe2e80c735c819242c311399f666cbaf80c6d89813e2903e5a833",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/diagnostic-worker.mjs",
+      "sha256": "2b7d4ecd3651521ccef6b3860ca13ba530e03b040e627c96f1e6ec87ffb95ddc",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-context.mjs",
+      "sha256": "ab9d145b80ffcae8f4e8fccd02e4c8f5db67f15dae57f5cacea49ed84424e4c7",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-input.mjs",
+      "sha256": "127a06f12bb687736c0e28a7fd0a8f6e060325d4b518e487ed37c0bef8b5c3b0",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-jobs.mjs",
+      "sha256": "1173ca370f3d28997fbd7dd83f181d87e0df5c4751a5e373968798b136f94b52",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-modules.mjs",
+      "sha256": "3a581b4f68a80b39ae013a0e345d973146533551eb1d6166e09cf970357e0252",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-worker.mjs",
+      "sha256": "92e0368e0ab09270c8ab3f0a4c989b570c0f7bebb0d2a41fda35b7efb9e993f1",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/fetch-compatibility.mjs",
+      "sha256": "e1c2bdbe192a2d9b3f0e0aed7141796d91a730d76ce8746015eef1e4a5fff483",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-manager.mjs",
+      "sha256": "de4a56d9936dcb9cf7270e469ed54fc14ed646bbfb9447840910d418b256920d",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-state.mjs",
+      "sha256": "1ec7ffe20def4025cec4d228b8432c9d9950d01ccdf5b076a3c4b92dd3a16a5c",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host-dependency-patches.json",
+      "sha256": "adff17c32c653f0e3b99db277f42718218fb1a19c03a0c158079fceee873fba8",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs",
+      "sha256": "808c80eaef48bdf5772871b8065ef24b00d4f01b2663b87366986ff538bd8147",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-executor.mjs",
+      "sha256": "f989f12f516ab4e9ef4bc2471ba0603cc566716d746444ab5364c1f415653c92",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-planner.mjs",
+      "sha256": "7e8937094fed66ae25fbdac8bfc3fd5a91779855a51bbe2f97517d313e137b58",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-framing.mjs",
+      "sha256": "6c558bb28dae24ea4582450a0af7067bbbb7cee9d675e6ccb047ce3140eebffb",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-package-generations.mjs",
+      "sha256": "67b608d52a7bdc7dea854c50e777ab4d466517958903bcc746a13e98a132d96c",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/native-commands.mjs",
+      "sha256": "c4ab93a40ef6ae316ccfe0fa870f18b5ec8a1a40484c3e27ebdc40c469e5f3b2",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/network-diagnostics.mjs",
+      "sha256": "e8cda97ae01cae485138c1f9d01f246935ece9c26da3cfd5f94e09bd08c6bc26",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/optional-lifecycle.mjs",
+      "sha256": "1f668656e67d4be59536fd606f7ab92ef2587d45d3f9fc1fb509eedd3a8134ba",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-compatibility.mjs",
+      "sha256": "32424b3a6e153d655677c524e85ab6b96a1085941d7d356906cfe3dfd609cd45",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs",
+      "sha256": "fbc7c68aafafdbc8b80a8ff70466ab0d2b780a733975d4442a887cb7a884ee05",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json",
+      "sha256": "34e9dc8175a214e2e126f79ab270d34f9d70d3f590ca0dbd2dd572125f01a0f9",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-validation.mjs",
+      "sha256": "b95da83e38ee55603712c17fed092232c8f23a13ce7c86d3bba1c450d185560c",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json",
+      "sha256": "46dee029627d14139ae9e9d3cc268fe5e7fa50444a7201f961ab2de84c3a6ad4",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/portable-shell.mjs",
+      "sha256": "60f244d5d8ab1537894d02c123ea9699a4da2e3ea8a5d611c302ce1628bbf16e",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-capabilities.mjs",
+      "sha256": "f7c86be9fcfc738e8818f6cf74ffe6f4c1579873073bfd4a7cfe8138368b9cc4",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-broker.mjs",
+      "sha256": "7e7d289ecee36a20041e5237a834d6fd7435e49b33922f0541ac4582a93efae7",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-client.mjs",
+      "sha256": "621af880e349fd99b6ec888e0d8cefa0fa4b447c64d96a7216c4d8d2803d1bc7",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-resolution.mjs",
+      "sha256": "88e0308f25b4d489098cff0973d6d742553e53bc1ee346a7ee3df3de17385211",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-dependency-overrides.json",
+      "sha256": "20f62dcb9696e3c85825bf4297bff5af7527b87dd19bc290daabeea78077dea8",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-probe.mjs",
+      "sha256": "8f6c140c337ea0524747450162ce8a712bc9c0142e305ad6fc3c24de2ba442b7",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/server-worker.mjs",
+      "sha256": "53255b3b3d1cd77671219afa2dde6440636250804b3719e32b2d50e2add8a2d1",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/typescript-compiler.mjs",
+      "sha256": "c21a05fdc704305815e130ad913a2c63b4e705bf06b68bacf0a855e0aab2631e",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/warning-diagnostics.mjs",
+      "sha256": "b2d4111e9f22f2ae9c1ef61716040646b9e1e5aa7f93d4b7fc2a16ae3fe73d08",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle/probe.mjs",
+      "sha256": "8ae9d02c1296b8f3a55c248d03b4a4bb2cf5e7538e36dc1327cbf55e0490143d",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle/tls-fixture.json",
+      "sha256": "2dd234ef6f9429ab93c2a78c082fb0297e3949877508876f5c49b19d71ea9464",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "Scripts/Runtime/HostGrammarTools/package-lock.json",
+      "sha256": "8a76d3aba3058502335f8b3c529ed84d9417c6c3ca5c77890a49256c2a79a564",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "Scripts/Runtime/HostGrammarTools/package.json",
+      "sha256": "1a43e3f26c6ca992c43cff593ee0b5391dd6a30833d20e6303e53beeb9d1ad0a",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "Scripts/Runtime/generate-yarn-multiline-patch.mjs",
+      "sha256": "d3d53dcd1ce75536057ee03669e61f581ef6194dec0f0258fd44a442d0444997",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "Scripts/Runtime/generate-yarn-unicode-patch.mjs",
+      "sha256": "fb738ab65d09f2a90ad0561994b7e7802653140f8adc38c486af2dab3a9335b7",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-host.sh",
+      "sha256": "249c5136e886887800ff88e9fb3c3c32aa6749b6c5694dee8dbe980c4c108523",
+      "unchangedAcrossFullRange": true
+    },
+    {
+      "path": "Scripts/Runtime/runtime_host_archive.py",
+      "sha256": "55b31a02dbded24ba1b9a4c1036715a89755be2548dea36a948f57df6d42f334",
+      "unchangedAcrossFullRange": true
+    }
+  ],
+  "fingerprintedFilesCount": 133,
+  "additionalExecutionRecipes": {
+    "Scripts/Runtime/prepare-runtime-core.sh": {
+      "sha256": "8765967fdba85cc77dcbf3c02936993c39bf186d7327560a3d84590222710a10",
+      "unchangedAcrossFullRange": true
+    },
+    "Scripts/Runtime/validate-runtime-lock.mjs": {
+      "sha256": "9f8ac78b6e07f1bee92addf5e05ad1e9c39634b7dfa945a020e6da64d71bc032",
+      "unchangedAcrossFullRange": true
+    },
+    "Scripts/Runtime/runtime_native_identity.py": {
+      "sha256": "2b0430d2bfc8c1e362d3a5f764280459ad14551714613eecc47fae4d36409ff2",
+      "unchangedAcrossFullRange": true
+    },
+    "Scripts/Runtime/record-upstream-receipt.mjs": {
+      "sha256": "0b465ed34d24ee71f087e1f0f68dd4ef5fcbfc52cfa39862400a34635cb99f9d",
+      "unchangedAcrossFullRange": true
+    },
+    "RuntimeDependencies.lock.json": {
+      "sha256": "e917ebb45adaf0df4e654c8845d091937e952e60bfa8e2e5f20de7abd6d82222",
+      "unchangedAcrossFullRange": true
+    }
+  },
+  "nativeStepSame": true,
+  "nativeStep": {
+    "name": "Authenticate and stage the unchanged native binary origin",
+    "if": "env.UPDATE_OPERATION == 'candidate'",
+    "env": {
+      "GH_TOKEN": "${{ github.token }}",
+      "RUNTIME_CORE_ARTIFACT_RUN_ID": "${{ inputs.runtime_baseline_run_id }}"
+    },
+    "run": "python3 Scripts/Runtime/runtime_native_identity.py --verify-reuse\nbash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee build/upstream-updates/native-origin.log\n"
+  },
+  "embeddedNodeSetupSame": true,
+  "embeddedNodeSetup": {
+    "name": "Select actual embedded Host engine for candidate validation",
+    "if": "env.UPDATE_OPERATION == 'candidate'",
+    "uses": "actions/setup-node@v7.1.0",
+    "with": {
+      "node-version": "24.5.0"
+    }
+  },
+  "executionPath": [
+    "prepare-runtime-core.sh line127 -> runtime_host_archive.py sync",
+    "synchronize_archive -> builder for changed Host dependencies",
+    "builder -> prepare-runtime-host.sh",
+    "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "npm test -> node --test Tests/*.test.mjs",
+    "packed ZIP validation -> node --jitless Tests/Fixtures/fetch-compatibility-probe.mjs",
+    "later explicit Host call verifies current input/archive identity and reuses"
+  ],
+  "environmentDerivation": {
+    "grammarCompiler": "${RUNNER_TEMP:-${TMPDIR:-/tmp}}/hanlin-runtime-host-grammar-tools",
+    "networkFixtures": "${REPOSITORY_ROOT}/AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle",
+    "longJobGate": "HANLIN_RUN_LONG_JOBS !=1; actual results include1SKIP",
+    "nativeStageRepositoryCredential": "GH_TOKEN assigned from github.token in source and *** present in original job log; no value retained",
+    "laterHostStage": "No GH_TOKEN step assignment; no fresh149 execute here"
+  },
+  "crossRunReuseEligibility": "NOT_CLAIMED: distinct runner/token/runtime inputs, incomplete historical environment snapshots; green149 actually executed fresh in its native-origin stage",
+  "historicalLimits": [
+    "Full process.versions JSON and complete Python/git/environment snapshot were not serialized by schema1; sourceInputsHash includes process.versions/platform/arch and all listed Host/test/fixture/build files.",
+    "Failed archive0730... and greenarchive de786... differ. Failed payload was not retained as a Host artifact; no byte-identity or reuse of that payload is claimed.",
+    "Later within-run REUSED_VERIFIED_PASS covers verified archive/input identity, not149 fresh tests without repository credentials."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "validatorSource": "4b34f3e3590a0b6961fa1d120d9356d9dc67f45b",
+  "originalRun": "43754712044",
+  "originalHead": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+  "operation": "Read-only API/artifact reauthentication under new schema2 contract; no tests/CI executed",
+  "legacyAutomaticConsumerAccounting": "UNKNOWN",
+  "actualHistoricalHostTests": "EXECUTED_PASS150/149/0/1 in native-origin, preserved in authenticated original artifact and separate derived correction",
+  "reason": "Legacy artifact has no schema2 stage captures. It is not automatically upgraded or treated as proof of credential-free direct-stage test execution.",
+  "reportSHA256": "bfc1dbd90967fe09816122ded61ce2131394b6d52396f9a7c323fce9c6ec6ee1",
+  "exitCode": 1,
+  "artifactsChanged": false
+}

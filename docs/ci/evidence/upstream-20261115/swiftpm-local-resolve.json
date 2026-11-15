@@ -1,0 +1,16 @@
+[
+  {
+    "label": "baseline",
+    "status": "EXECUTED_PASS",
+    "toolchain": "WindowsSwift6.3.3; not Apple acceptance",
+    "resolvedSHA256": "347e22bf916da7793acd9dcd9f0c3478b7905ee6d69c5c6c012bc05fc4bb3f5f",
+    "output": ""
+  },
+  {
+    "label": "candidate",
+    "status": "EXECUTED_PASS",
+    "toolchain": "WindowsSwift6.3.3; not Apple acceptance",
+    "resolvedSHA256": "37b0700d9d821d899a0f63d2e4feee66721a9d25e500cac5587022e782e47399",
+    "output": ""
+  }
+]
