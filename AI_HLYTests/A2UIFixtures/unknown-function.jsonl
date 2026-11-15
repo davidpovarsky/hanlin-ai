@@ -1,2 +1,2 @@
 {"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":"greeting","component":"Text","text":{"@call":"lookupNotAuthorized","args":{}}}]}}
-{"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":"submit","component":"Button","child":"submit-label","action":{"event":{"name":"submit","context":{"secret":{"@call":"lookupNotAuthorized","args":{}}}}}}]}}
+{"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":"submit","component":"Button","child":"submitLabel","action":{"event":{"name":"submit","context":{"secret":{"@call":"lookupNotAuthorized","args":{}}}}}}]}}

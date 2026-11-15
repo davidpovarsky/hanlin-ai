@@ -73,7 +73,13 @@ or execute actions itself. No cross-app or service authorization is implied.
 One session may hold four surfaces, each message is at most65,536 UTF-8 bytes
 and64 components, and a session accepts at most1,048,576 cumulative bytes. The
 budget resets only with a new owner/session. This intentionally bounded POC is
-not a long-running production streaming policy. Unknown component schemas in a
+not a long-running production streaming policy. The `sessionBudget` check runs
+**after** ingress has produced a validated Frame: a rejected update/delete to
+an SDK-owned surface therefore returns its correlated ID and a fallback for
+that same surface. It neither applies the mutation/deletion nor affects another
+surface. At an exhausted budget, owner `close()` still works outside the gate;
+continuing content needs a new owner/session. This is not an uncorrelated
+preflight rejection. Unknown component schemas in a
 validated update fall back only for a surface the current SDK processor owns.
 Raw IDs from rejected envelopes never route fallback. Unsupported operations,
 invalid IDs and foreign targets return errors without adding surfaces or hiding
@@ -102,12 +108,25 @@ protects the synchronized app source groups from unresolved optional imports.
 When enabled, missing imports fail compilation; there is no `canImport` fake
 implementation or success fallback.
 
-Eight portable framing scenarios passed on Windows Swift6.3.3. All17 SDK tests
-are **NOT_RUN**, and enabled SDK compilation, SwiftUI rendering, inline app
-integration and hardware verification remain **NOT_RUN**. A disabled flag,
-syntax-only parse or zero selected cases cannot satisfy either source task.
+Native run43662884686 exposed the invalid v1 component ID `submit-label`.
+The corrected2bae5a3e source then compiled and passed all25 enabled cases in
+run43664698104 with the exact SDK. See [the identifier evidence](NATIVE_VALIDATION_FIX_2026-11-15.md).
+The [privacy correction](DIAGNOSTIC_PRIVACY_FIX_2026-11-15.md) then passed all25
+enabled cases at a43 in run43667371439, including its canaries. The current
+[consumer-module correction](CONSUMER_MODULE_FIX_2026-11-15.md) aligns the test
+import and temporary recipe with actual `AI_Hanlin`; its new bytes need a proof.
+Neither isolated result establishes inline app or physical-device acceptance.
+Inline app integration and hardware verification remain NOT_RUN. A disabled
+flag, syntax-only parse or zero selected cases cannot satisfy either task.
 See [TEST_EXECUTION_MANIFEST.md](TEST_EXECUTION_MANIFEST.md) for exact cases,
 commands, fixture identities and evidence.
+
+The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) uses all25 actual
+cases in a temporary consumer, exact root/transitive resolution evidence and
+unchanged source bytes. It does not require shared product wiring. Its planner
+and verifier have local checks. Tomer's existing verifier produced both actual
+native results; the consumer-name candidate awaits the same enabled25-case proof.
+No shared product wiring is added by this correction.
 
 ## Proposed integration, not applied
 

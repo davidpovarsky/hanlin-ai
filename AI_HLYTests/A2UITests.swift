@@ -2,7 +2,7 @@ import Foundation
 
 #if !HANLIN_A2UI_PORTABLE_RUNNER
 import Testing
-@testable import AI_HLY
+@testable import AI_Hanlin
 #endif
 
 private struct A2UICheckFailure: Error, CustomStringConvertible {
@@ -11,6 +11,18 @@ private struct A2UICheckFailure: Error, CustomStringConvertible {
 
 private func requireA2UI(_ condition: Bool, _ message: String) throws {
     guard condition else { throw A2UICheckFailure(description: message) }
+}
+
+private let diagnosticCanary = "HANLIN_PRIVATE_CANARY_7D2F"
+
+private func requireNoDiagnosticCanary(_ rejection: HanlinA2UIIngress.Rejection) throws {
+    let fields = [rejection.failure.rawValue, rejection.surfaceID ?? "", rejection.sdkErrorType ?? ""]
+        + rejection.diagnostics.map(\.code)
+    let renderings = fields + [String(describing: rejection), String(reflecting: rejection),
+                               rejection.localizedDescription]
+        + rejection.diagnostics.map { String(reflecting: $0) }
+    let leaked = renderings.contains { $0.contains(diagnosticCanary) }
+    try requireA2UI(!leaked, "Private canary escaped a surfaced diagnostic field/rendering")
 }
 
 private enum A2UIFixture {
@@ -148,6 +160,16 @@ private enum A2UIPortableChecks {
             let frame = try inspect(line)
             try requireA2UI(frame.operation == .updateComponents, "Invalid-component fixture route")
         }
+        let rejection = HanlinA2UIIngress.Rejection(
+            .sdkValidation, surfaceID: "form-a", sdkErrorType: diagnosticCanary + ".A2UIValidationError",
+            diagnostics: [.init(code: diagnosticCanary), .init(code: "invalid_identifier")]
+        )
+        try requireNoDiagnosticCanary(rejection)
+        try requireA2UI(rejection.diagnostics.map(\.code) == ["SDK_ERROR", "invalid_identifier"],
+                       "Diagnostic code allowlist lost stable failure classification")
+        try requireA2UI(rejection.sdkErrorType == "A2UIError", "Unknown error type was retained")
+        let known = HanlinA2UIIngress.Rejection(.sdkValidation, sdkErrorType: "A2UICore.A2UIValidationError")
+        try requireA2UI(known.sdkErrorType == "A2UIValidationError", "Stable SDK error type was lost")
     }
 
     static func rejectedEnvelopesNeverExportSurfaceCorrelation() throws {
@@ -158,6 +180,8 @@ private enum A2UIPortableChecks {
             } catch let error as HanlinA2UIIngress.Rejection {
                 try requireA2UI(error.failure == .unsupportedOperation, "Unsupported classification changed")
                 try requireA2UI(error.surfaceID == nil, "Raw unsupported-operation ID escaped rejection")
+                try requireA2UI(error.sdkErrorType == nil && error.diagnostics.isEmpty,
+                               "Ingress rejection falsely acquired SDK diagnostics")
             }
         }
         for message in [
@@ -259,6 +283,26 @@ struct A2UISDKTests {
         throw A2UICheckFailure(description: "Missing SDK node \(id)")
     }
 
+    private func requireNoCallbackCanary(_ event: RendererToAgentMessage) throws {
+        let encoded = try JSONEncoder().encode(event)
+        let decoded = try JSONDecoder().decode(RendererToAgentMessage.self, from: encoded)
+        let json = String(decoding: encoded, as: UTF8.self)
+        var renderings = [json, String(describing: event), String(reflecting: event), String(reflecting: decoded)]
+        if case .error(let error) = event {
+            switch error {
+            case .validationFailed(let failure):
+                renderings += [failure.code.rawValue, failure.surfaceID, failure.path, failure.message,
+                               failure.localizedDescription, String(reflecting: failure)]
+            case .generic(let failure):
+                renderings += [failure.code, failure.surfaceID ?? "", failure.functionCallID ?? "",
+                               failure.message, failure.expression ?? "", failure.localizedDescription,
+                               String(reflecting: failure)]
+            }
+        }
+        let leaked = renderings.contains { $0.contains(diagnosticCanary) }
+        try requireA2UI(!leaked, "Private canary escaped a diagnostic callback/encoding")
+    }
+
     @Test func parsesAndRendersTextCardInputButton() throws {
         let session = HanlinA2UISession(onEvent: { _ in })
         try load(session)
@@ -289,7 +333,7 @@ struct A2UISDKTests {
         try load(session, fixture: "update")
         #expect(try node(session, id: "name").identity == input.identity)
         #expect(try node(session, id: "root").identity == root.identity)
-        #expect(try node(session, id: "submit-label").string(for: "text") == "Send")
+        #expect(try node(session, id: "submitLabel").string(for: "text") == "Send")
     }
 
     @Test func malformedAndUnknownContentFallsBackAndRecovers() throws {
@@ -307,13 +351,37 @@ struct A2UISDKTests {
         #expect(session.failures.isEmpty && session.unroutedFailure == nil)
     }
 
-    @Test func officialSchemasRejectInvalidTextInputButton() throws {
-        for line in try A2UIFixture.lines("invalid-components") {
+    @Test func officialSchemasRejectInvalidTextInputButton() async throws {
+        let invalid = try A2UIFixture.lines("invalid-components")
+        #expect(invalid.count == 4)
+        for (index, line) in invalid.enumerated() {
             let session = HanlinA2UISession(onEvent: { _ in })
             try load(session)
-            #expect(throws: HanlinA2UIIngress.Rejection.self) { try session.receive(line).get() }
+            let result = session.receive(line)
+            #expect(throws: HanlinA2UIIngress.Rejection.self) { try result.get() }
             #expect(session.failures["form-a"] == .sdkValidation)
+            if index == 3, case .failure(let rejection) = result {
+                // Preserve the original invalid identifier as a real SDK rejection regression.
+                #expect(rejection.diagnostics.contains { $0.code == "invalid_identifier" })
+                #expect(rejection.sdkErrorType?.hasSuffix("A2UIValidationError") == true)
+            }
         }
+        let recorder = A2UIEventRecorder()
+        let session = HanlinA2UISession(onEvent: { recorder.record($0) })
+        try load(session)
+        let message = #"{"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":""#
+            + diagnosticCanary + #"-component","component":"Text","text":"Rejected"}]}}"#
+        guard case .failure(let rejection) = session.receive(message) else {
+            Issue.record("SDK accepted an invalid canary component identifier")
+            return
+        }
+        #expect(rejection.diagnostics.contains { $0.code == "invalid_identifier" })
+        #expect(rejection.sdkErrorType == "A2UIValidationError")
+        try requireNoDiagnosticCanary(rejection)
+        let event = try await nextA2UIValue(recorder.stream)
+        guard case .error = event else { Issue.record("Expected sanitized SDK error callback"); return }
+        for recorded in recorder.snapshot { try requireNoCallbackCanary(recorded) }
+        session.close()
     }
 
     @Test func independentSurfacesKeepModelsSeparate() throws {
@@ -404,6 +472,48 @@ struct A2UISDKTests {
         #expect(session.failures.isEmpty && session.unroutedFailure == nil)
         #expect(session.surfaceIDs.count == HanlinA2UISession.maximumSurfaces)
         #expect(session.surface("surface-0") != nil && session.surface("form-a") == nil)
+
+        // The byte-budget gate runs after Frame validation. A budget rejection for an existing
+        // owner's update/delete is correlated; an untrusted ID cannot choose another fallback.
+        let budgetSession = HanlinA2UISession(onEvent: { _ in })
+        var consumed = 0
+        for id in ["form-a", "form-b"] {
+            for line in try A2UIFixture.lines("form") {
+                let message = line.replacingOccurrences(of: "form-a", with: id)
+                try budgetSession.receive(message).get()
+                consumed += message.utf8.count
+            }
+        }
+        let first = try #require(budgetSession.surface("form-a"))
+        let second = try #require(budgetSession.surface("form-b"))
+        let prefix = #"{"version":"1.0","updateDataModel":{"surfaceId":"form-a","path":"/budgetProbe","value":""#
+        let suffix = #""}}"#
+        let overhead = prefix.utf8.count + suffix.utf8.count
+        while consumed < HanlinA2UISession.maximumSessionBytes {
+            let remaining = HanlinA2UISession.maximumSessionBytes - consumed
+            try requireA2UI(remaining >= overhead, "Budget fixture cannot fill the exact remaining bytes")
+            let bytes = min(remaining, HanlinA2UIIngress.maximumMessageBytes)
+            let message = prefix + String(repeating: "x", count: bytes - overhead) + suffix
+            try budgetSession.receive(message).get()
+            consumed += message.utf8.count
+        }
+        #expect(consumed == HanlinA2UISession.maximumSessionBytes && budgetSession.failures.isEmpty)
+        for message in [
+            #"{"version":"1.0","updateDataModel":{"surfaceId":"form-a","path":"/name","value":"Must not apply"}}"#,
+            #"{"version":"1.0","deleteSurface":{"surfaceId":"form-a"}}"#
+        ] {
+            guard case .failure(let rejection) = budgetSession.receive(message) else {
+                Issue.record("An exhausted session accepted a mutation")
+                return
+            }
+            #expect(rejection.failure == .sessionBudget && rejection.surfaceID == "form-a")
+            #expect(budgetSession.failures == ["form-a": .sessionBudget])
+            #expect(budgetSession.surface("form-a") === first && budgetSession.surface("form-b") === second)
+            #expect(budgetSession.surfaceIDs == ["form-a", "form-b"] && budgetSession.unroutedFailure == nil)
+            #expect(first.dataModel.get("/name")?.stringValue == "Ada")
+            #expect(second.dataModel.get("/name")?.stringValue == "Ada")
+        }
+        budgetSession.close()
     }
 
     @Test func rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() throws {
@@ -477,6 +587,30 @@ struct A2UISDKTests {
                 Issue.record("Unknown function emitted an outbound request: \(event)")
                 return
             }
+        }
+        for (function, argument) in [(diagnosticCanary + "-function", "value"),
+                                     ("formatNumber", diagnosticCanary + "-argument")] {
+            let privateRecorder = A2UIEventRecorder()
+            let privateSession = HanlinA2UISession(onEvent: { privateRecorder.record($0) })
+            try load(privateSession)
+            var arguments: [String: Any] = [argument: "Rejected"]
+            if function == "formatNumber" { arguments["value"] = 1 }
+            let payload: [String: Any] = ["version": "1.0", "updateComponents": [
+                "surfaceId": "form-a", "components": [["id": "greeting", "component": "Text",
+                "text": ["@call": function, "args": arguments]]]
+            ]]
+            let message = String(decoding: try JSONSerialization.data(withJSONObject: payload), as: UTF8.self)
+            guard case .failure(let rejection) = privateSession.receive(message) else {
+                Issue.record("SDK accepted invalid function/argument canary identifiers")
+                return
+            }
+            #expect(rejection.diagnostics.contains { $0.code == "invalid_identifier" })
+            try requireNoDiagnosticCanary(rejection)
+            let event = try await nextA2UIValue(privateRecorder.stream)
+            guard case .error = event else { Issue.record("Unexpected canary RPC request"); return }
+            for recorded in privateRecorder.snapshot { try requireNoCallbackCanary(recorded) }
+            #expect(privateSession.surface("form-a")?.agentFunctionCaller == nil)
+            privateSession.close()
         }
         let response = session.receive(#"{"version":"1.0","agentFunctionResponse":{"functionCallId":"unsolicited","value":"x"}}"#)
         guard case .failure(let rejection) = response else {

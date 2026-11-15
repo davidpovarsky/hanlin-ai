@@ -112,6 +112,36 @@
       "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Errors/FunctionError.swift",
       "utf8_sha256": "2c270c997fd62ea176ba37dae52147c25ba9b5e736746121ae994e09b9f35074",
       "bytes": 4086
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Validation/UnicodeIdentifierValidator.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Validation/UnicodeIdentifierValidator.swift",
+      "utf8_sha256": "33eb878b41c8d6d5fd5c36fac1766fe17701935483f659e0eaadbf18a4a2af7d",
+      "bytes": 1475
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Validation/PayloadValidator.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Validation/PayloadValidator.swift",
+      "utf8_sha256": "2112c3e04778e162c4f5bbf8e5b2e5038ba0f26723e816b2fec193a408b567c2",
+      "bytes": 45948
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Errors/A2UIError.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Errors/A2UIError.swift",
+      "utf8_sha256": "b1c8b4dc7e40fe1463c13890d757927971e17034278b43438266727e37f7a47f",
+      "bytes": 1701
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Errors/GenericError.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Errors/GenericError.swift",
+      "utf8_sha256": "02aeeb1f478aa0d0a4f4d54299590fac6fd13d1166d06b0ade434059658a94e7",
+      "bytes": 3796
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/Errors/ValidationFailedError.swift",
+      "url": "https://raw.githubusercontent.com/a2ui-project/a2ui/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Errors/ValidationFailedError.swift",
+      "utf8_sha256": "996b378a9354496ee0db5c6ca73393550581e6368db41cfb35ca9d9b28afbe9c",
+      "bytes": 1934
     }
   ]
 }

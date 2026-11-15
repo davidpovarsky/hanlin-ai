@@ -180,9 +180,20 @@ revision and four resolved package pins are unchanged. Artifact
 Evidence remains under ignored `build/integration-validation-evidence/a2ui-43668852483`.
 This is the native macOS consumer proof using Xcode 27.2, Swift 6.4.2, macOS SDK
 27.2 and macOS 27.0.1. Actual iOS app/test-bundle compilation, inline connection,
-A2UI02 and physical iPad acceptance remain open. The producer source has not yet
-been merged into this integration branch; its verification ref only supplies the
-exact immutable source object. No unchanged proof rerun is needed.
+A2UI02 and physical iPad acceptance remain open.
+
+Following the lead's acceptance, the integration branch consumes one net A2UI
+delta from its unchanged `3a24003e` baseline to tested `f654ac11`, limited to
+`AI_HLY/Downstream/ChatPresentation/A2UI/**`, `AI_HLYTests/A2UITests.swift`,
+`AI_HLYTests/A2UIFixtures/**` and `docs/a2ui/**`. No whole producer branch or its
+later docs-only commit was merged. All 26 imported paths match the accepted
+tree; all 13 retained proof-input hashes match both staged Git and actual local
+file bytes. The imported owner verifier also accepts the existing raw 25-case
+results, retained proof-input plan and raw lock. This is reuse of the same scoped
+native proof, not a new run or iOS acceptance. Patch SHA256 is
+`2106a0d8658ad61c5b10b5f2f434b0a07c443b513558a68445d806f5a2f6413d`.
+The workflow, fallback, project manifests, feature flags and inline wiring are
+unchanged by this import. No unchanged proof rerun is needed.
 
 ## W1-008 Composer verification preparation
 

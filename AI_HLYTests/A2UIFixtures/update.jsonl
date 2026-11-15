@@ -1,2 +1,2 @@
 {"version":"1.0","updateDataModel":{"surfaceId":"form-a","path":"/name","value":"Grace"}}
-{"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":"submit-label","component":"Text","text":"Send"}]}}
+{"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":"submitLabel","component":"Text","text":"Send"}]}}

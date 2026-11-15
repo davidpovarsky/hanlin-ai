@@ -1,0 +1,39 @@
+{
+  "correctedIdentifierAccepted" : true,
+  "inspectedEntries" : 23,
+  "invalidEntries" : [
+    {
+      "field" : "child",
+      "fixture" : "form",
+      "identifier" : "submit-label",
+      "line" : 3
+    },
+    {
+      "field" : "id",
+      "fixture" : "form",
+      "identifier" : "submit-label",
+      "line" : 3
+    },
+    {
+      "field" : "child",
+      "fixture" : "rtl",
+      "identifier" : "submit-label",
+      "line" : 3
+    },
+    {
+      "field" : "id",
+      "fixture" : "rtl",
+      "identifier" : "submit-label",
+      "line" : 3
+    },
+    {
+      "field" : "id",
+      "fixture" : "update",
+      "identifier" : "submit-label",
+      "line" : 2
+    }
+  ],
+  "originalIdentifierAccepted" : false,
+  "scope" : "Portable exact-source UAX31 probe; not full SDK validation",
+  "upstreamRevision" : "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+}
