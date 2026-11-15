@@ -6,6 +6,7 @@ import { execFileSync, execSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import https from 'node:https';
 import http from 'node:http';
+import { preservesPartitionUmbrellaContract } from './metadata-interface-partition.mjs';
 
 const scriptRoot = resolve(import.meta.dirname);
 const repositoryRoot = resolve(scriptRoot, '..', '..');
@@ -1110,13 +1111,17 @@ template <typename CharTransformT = fnv1a_identity>
       count++;
       console.log('[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks and enriched React.xcframework.');
 
-      // Strip dummy cxxstableapi guards that reference non-existent react.framework headers
+      // Preserve the real RN strict-API guard for the bounded interface inputs.
+      // Its include is not an API-absence proof; these inputs remain public until
+      // their separate interface contract and native equivalence are complete.
+      // Retain the legacy handling outside this exclusively owned header scope.
       for (const fw of await readdir(modularFwsRoot, { withFileTypes: true })) {
         if (!fw.isDirectory()) continue;
         const hDir = resolve(modularFwsRoot, fw.name, 'Headers');
         if (!existsSync(hDir)) continue;
         for (const hFile of await readdir(hDir, { withFileTypes: true })) {
           if (!hFile.isFile() || !hFile.name.endsWith('.h')) continue;
+          if (preservesPartitionUmbrellaContract(fw.name, hFile.name)) continue;
           const fullPath = resolve(hDir, hFile.name);
           let hContent = await readFile(fullPath, 'utf8');
           if (hContent.includes('cxxstableapi/')) {
