@@ -142,7 +142,7 @@ concurrency:
 
 jobs:
   agent-sdk-proof:
-    if: ${{ (inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && inputs.exact_test_selector != 'HanlinSkillFormatIOS26' && !inputs.testflight_upload }}
+    if: ${{ (inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && inputs.exact_test_selector != 'HanlinSkillFormatIOS26' && inputs.exact_test_selector != 'OpenClawEmbeddedRequirementsProbe' && !inputs.testflight_upload }}
     name: Exact-source Agent SDK Apple tests
     env:
       HANLIN_SDK_CONTRACTS_ONLY: '1'
@@ -186,6 +186,26 @@ jobs:
         with:
           name: agent-sdk-apple-${{ github.run_id }}
           path: build/agent-sdk-validation-evidence
+          if-no-files-found: error
+          retention-days: 30
+
+  openclaw-embedded-requirements:
+    if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'OpenClawEmbeddedRequirementsProbe' && !inputs.testflight_upload }}
+    name: Original OpenClaw subset on existing embedded Node JITless
+    runs-on: xcode-27
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Build original predicate and execute only owned in-memory native probe
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash Scripts/Skills/OpenClaw/run-embedded-probe.sh
+      - name: Retain exact source, native identity and original predicate evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: openclaw-embedded-${{ github.run_id }}
+          path: build/openclaw-embedded-evidence
           if-no-files-found: error
           retention-days: 30
 

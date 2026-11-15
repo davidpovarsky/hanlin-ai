@@ -11,10 +11,14 @@ const started = performance.now();
 const before = process.memoryUsage();
 const results = [];
 let failure;
+let artifactIdentity;
+const challenge = process.argv[2];
 try {
   assert.equal(process.versions.node, '24.5.0');
   assert.ok(process.execArgv.includes('--jitless'));
+  assert.match(challenge ?? '', /^[a-f0-9]{32}$/);
   const provenance = JSON.parse(await readFile(new URL('./generated/provenance.json', import.meta.url)));
+  artifactIdentity = { revision: provenance.revision, artifactSHA256: provenance.artifactSHA256, nativeContractArtifactSHA256: provenance.nativeContractArtifactSHA256 };
   const contract = await readFile(new URL('./generated/native-contract.mjs', import.meta.url));
   assert.equal(createHash('sha256').update(contract).digest('hex'), provenance.nativeContractArtifactSHA256);
   globalThis.__hanlinMemoryProbeCases = [];
@@ -28,8 +32,9 @@ try {
   assert.ok(results.every(value => value.status === 'EXECUTED_PASS'));
 } catch (error) { failure = String(error?.stack ?? error); }
 const report = {
-  ok: !failure, failure, scope: 'standalone original embedded Node requirements diagnostic only',
+  ok: !failure, failure, scope: 'in-process original Node requirements diagnostic; actual environment identified below',
   node: process.versions.node, v8: process.versions.v8, platform: process.platform, arch: process.arch,
+  challenge, artifactIdentity,
   execArgv: process.execArgv, cases: results,
   measuredMilliseconds: performance.now() - started, memoryBefore: before, memoryAfter: process.memoryUsage(),
   facts: 'synthetic scoped in-memory fixtures; no actual binary/env/config availability is established',
