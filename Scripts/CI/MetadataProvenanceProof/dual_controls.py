@@ -105,6 +105,11 @@ __attribute__((objc_root_class))
         (folder / "stdout.log").write_bytes(run.stdout)
         (folder / "stderr.log").write_bytes(run.stderr)
         actual = json.loads(receipt.read_text()) if receipt.is_file() else {}
+        if run.returncode < 0 and not receipt.exists() and not output.exists() and not (OUTPUT / "crash-backtrace.log").exists():
+            debug_command = ["xcrun", "lldb", "--batch", "-o", "run", "-o", "thread backtrace all", "--", *command]
+            write(OUTPUT / "crash-backtrace-command.json", {"argv": debug_command, "boundary": "Diagnostic rerun of first crashing fixture; never a test pass"})
+            debug_run = subprocess.run(debug_command, cwd=tool_root / "bin", capture_output=True, timeout=60)
+            (OUTPUT / "crash-backtrace.log").write_bytes(debug_run.stdout + debug_run.stderr)
         expected_status = "EXECUTED_PASS" if expectation == "pass" else "REJECTED_EXPECTED"
         passed = run.returncode == 0 and actual.get("status") == expected_status
         if expectation == "pass":
