@@ -25,6 +25,12 @@
   listing; it stopped BEFORE test invocation. No new trace exists. No retry loop.
   Source geometry/tolerance/assertions are unchanged; source owner needs a real
   trace or independently justified correction before a future accepted proof.
+- **SDK-explicit metadata only:**authorized run43698593968/cf8d70bb executed
+  exactly the two120s xcodebuild queries, both exit0. SDK-explicit destinations
+  include concrete iOS27 phone/tablet entries, but generic Simulator build-settings
+  JSON is exactly an empty array. Target names and all four requested build-setting
+  values remain missing; metadata status BLOCKED. No test/build/device action,
+  default-query rerun or extension of the exhausted test authorization occurred.
 - **APP suite routing:**source-reviewed owner `fcce7796` adds only two existing
   organizer-parity APP suite selectors. JSON bytes match owner SHA256
   51b1b735ceb9a2b107ca41a323a174159f00fff90e4450f7fad0135e25d1f79a.
@@ -1075,3 +1081,43 @@ budgets,17 exclusion guards and unchanged12 prepared input paths. No native code
 was compiled or metadata query executed locally. No device creation/boot, runtime
 installation, geometry/test/measurement/pin/platform change or extra query is
 included. A future test/eligibility attempt requires separate authorization.
+
+
+### Actual two-query metadata result (no further attempt authorized)
+
+43698593968 at cf8d70bbe8c408dd24ea3de6ec1541774bac79f7 ran ONLY the new metadata
+job; all17 pre-existing jobs were excluded. Source was e8/owner20980 with all12
+prepared content hashes unchanged. Independent inspection verified12 source+4
+harness hashes, both raw stdout/stderr receipt hashes and the prior-default
+reference. Artifact14155895233 is13948 bytes, FULL ZIP SHA256 independently
+recomputed73f6005770fc407730ce436b88021b425e023226cb1668f43621911a931a39a2.
+
+Query1 exact argv: xcodebuild -showdestinations -scheme ComposerValidation -sdk
+iphonesimulator. Exit0,12.411s, no timeout. Raw stdout SHA256
+0064b032fed155b5ccaedc005fa5edbe40eb558fb44b0d0f6bd3187ec989e020;
+stderr ef8d51b974904cc7b37b4465f83748175ac16c69ff4522e2e43d0c3f97a1b556.
+It lists concrete arm64 iOS Simulator devices, including iPhone18Pro27.0 UUID
+0A1B5EC5-2485-4F8E-B06B-1185D8E186C0 and27.2 UUID
+A8CE73D2-F54C-4FB2-B688-BC6BD7612FA8. No device was selected, created or booted.
+The same empty-supported-platforms warning remains in stderr; that warning alone
+therefore cannot establish device incompatibility or a layout cause. The existing
+prior default output is a different prior-run reference, not a newly controlled
+same-run baseline: its SHA is8015e03e0c5353f1dce29e1b9030c1818549c3310daad813089d5d961a0557f3,
+anchored to verified prior ZIP8f9f58e1... No new default query was executed.
+
+Query2 exact argv: xcodebuild -showBuildSettings -json -scheme ComposerValidation
+-sdk iphonesimulator -destination 'generic/platform=iOS Simulator'. Exit0,1.534s,
+no timeout. Raw stdout is exactly '[\n\n]\n' (empty JSON array), SHA256
+2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d;
+stderr8d5a11234260ca04f647b4a13cd9343b8eba2f593d072b2203ffdcdb6c5c8c72.
+Actual target names, SDKROOT, SUPPORTED_PLATFORMS, TARGETED_DEVICE_FAMILY and
+IPHONEOS_DEPLOYMENT_TARGET are ALL MISSING. None is inferred from package floor,
+CLI SDK argument, destination listing or installed SDK metadata.
+
+Actual per-process DeveloperDir /Applications/Xcode_27.2.app/Contents/Developer,
+installed27.2/27B52, AppleSwift6.4.2 and SimulatorSDK27.2 are recorded. Both queries
+were sequential in the same staged package directory. Metadata summary is BLOCKED
+solely because no nonempty build-settings array exists; command exits are0, not
+failed tests. Builds0/tests0/devices-created0; all12 authored obligations NOT_RUN.
+No UI guard bypass, measurement/pin/platform/source change, new agent, runtime
+installation, global Xcode switch, follow-up query or future test dispatch.
