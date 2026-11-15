@@ -1,0 +1,72 @@
+{
+  "run_id": 43755833008,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43755833008",
+  "workflow_conclusion": "success",
+  "source_sha": "76fffd08de001e4ffac779afd437946982bb5670",
+  "target_package_inputs_unchanged_through": "91c633527de94804fd4ad74a0996415fa31b6093",
+  "artifact_id": 14177984399,
+  "artifact_sha256": "b2830e3771c86fb80f4dd279fc9b9bd668d16d7d6b90003410402dde83150dad",
+  "classification": "RESOLVED_ONLY_PASS",
+  "tests_executed": 0,
+  "source_hashes_git_archive_verified": 9,
+  "raw_lock_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+  "version": "6.2.2",
+  "tag_commit": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+  "upstream_archives_byte_identical_to_native_run": true,
+  "toolchain_environment_record_byte_identical_to_native_run": true,
+  "selected_original_iOS27_runtime": {
+    "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "version": "27.0",
+    "buildversion": "24A434",
+    "isAvailable": true
+  },
+  "full_own_evidence_sha_to_target_changed_package_files": [
+    "Packages/HanlinSkillFormat/Package.resolved",
+    "Packages/HanlinSkillFormat/Package.swift",
+    "Packages/HanlinSkillFormat/README.md"
+  ],
+  "root_manifest_delta": "Only revision:a27 -> exact:6.2.2; actual SwiftPM target/product/platform/language graphs verified equal, with only snapshot root paths normalized. Original Sources/Tests/fixtures byte-identical; transitive set remains original Yams/CYaml only.",
+  "reused_native_evidence": {
+    "classification": "REUSED_VERIFIED_PASS",
+    "origin_run": 43754353738,
+    "origin_sha": "78c8880e512078bafaa21f4deab87163d410f887",
+    "macOS_identities": 20,
+    "iOS27_identities": 20,
+    "parameter_invocations_per_platform": 25,
+    "semantics_fixtures_sources": "All six actual source/test/resource files verified unchanged by native resolution audit",
+    "compiler_flags": "Original Swift6, root target/platform/CSettings unchanged; no test dispatch or compiler flag modification for reuse. Same actual Xcode27.2/Swift6.4.2/SDK27.2/macOS27.0.1 and installed iOS27.0 runtime identity.",
+    "runtime_inputs": "Same immutable fixture bytes and test semantics; explicit UTF8 YAML encoding; no provider/network/business execution. No tests newly executed in resolve-only run.",
+    "freshness": "Same task/day; no elapsed-time acceptance assertions or changed freshness requirement.",
+    "contract": "Packages/HanlinSkillFormat/README.md at76fffd08 permits authenticated unchanged-closure reuse; missing/failed/app obligations stay separate."
+  },
+  "not_run": [
+    "actual app tests/Skills UI",
+    "iOS26 in this resolution-only run"
+  ],
+  "ios26_separate_execution_run": 43756155889,
+  "subsequent_source_change": "Sliced-Data parser fix after target91c63352 invalidates the native test reuse for later source. Resolution/tag evidence remains authentic; fresh all-platform package tests required.",
+  "authoritative_swiftpm_manifest_dependencies": [
+    {
+      "identity": "yams",
+      "requirement": {
+        "exact": [
+          "6.2.2"
+        ]
+      },
+      "type": "sourceControl",
+      "url": "https://github.com/jpsim/Yams.git"
+    }
+  ],
+  "previous_authoritative_swiftpm_manifest_dependencies": [
+    {
+      "identity": "yams",
+      "requirement": {
+        "revision": [
+          "a27b21e0c81c5bf42049b897a62aaf387e80f279"
+        ]
+      },
+      "type": "sourceControl",
+      "url": "https://github.com/jpsim/Yams.git"
+    }
+  ]
+}
