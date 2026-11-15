@@ -486,6 +486,7 @@ struct ChatView: View {
 
     var body: some View {
         chatWorkspaceStack
+        .chatMotionPreferences()
         #if HANLIN_A2UI_POC
         .environment(\.hanlinA2UIAppPresentation, a2uiPresentation)
         #if DEBUG && targetEnvironment(simulator)

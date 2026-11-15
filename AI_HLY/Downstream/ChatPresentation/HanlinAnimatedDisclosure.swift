@@ -18,7 +18,7 @@ struct HanlinAnimatedDisclosure<Content: View>: View {
         VStack(alignment: .leading, spacing: 0) {
             if mounted {
                 ChatDisclosureLayout(progress: progress, spacing: spacing) {
-                    content()
+                    VStack(alignment: .leading, spacing: 6, content: content)
                         .opacity(motion.collapsedOpacity + (1 - motion.collapsedOpacity) * Double(progress))
                         .scaleEffect(x: 1, y: motion.collapsedScale + (1 - motion.collapsedScale) * Double(progress), anchor: .top)
                 }
@@ -71,6 +71,34 @@ struct HanlinAnimatedDisclosure<Content: View>: View {
         } completion: {
             guard revision == currentRevision, !isExpanded, !expanding else { return }
             mounted = false
+        }
+    }
+}
+
+/// Keep native DisclosureGroup ownership/identity, sharing only its presentation.
+struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
+    @Environment(\.chatMotion) private var motion
+
+    func makeBody(configuration: Configuration) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Button {
+                configuration.isExpanded.toggle()
+            } label: {
+                HStack(spacing: 8) {
+                    configuration.label
+                    Image(systemName: "chevron.down")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                        .rotationEffect(.degrees(configuration.isExpanded ? 180 : 0))
+                        .animation(motion.disclosureAnimation(expanding: configuration.isExpanded), value: configuration.isExpanded)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityValue(configuration.isExpanded ? Text("Expanded") : Text("Collapsed"))
+            HanlinAnimatedDisclosure(isExpanded: configuration.isExpanded) {
+                configuration.content
+            }
         }
     }
 }

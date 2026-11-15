@@ -1,6 +1,78 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Chat animations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Chat animations" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "אנימציות הצ'אט" } },
+        "ar" : { "stringUnit" : { "state" : "translated", "value" : "حركات الدردشة" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "聊天动画" } }
+      }
+    },
+    "Smooth and relaxed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Smooth and relaxed" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חלק ונינוח" } },
+        "ar" : { "stringUnit" : { "state" : "translated", "value" : "سلس ومريح" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "流畅舒缓" } }
+      }
+    },
+    "Height reveal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Height reveal" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "חשיפת גובה" } },
+        "ar" : { "stringUnit" : { "state" : "translated", "value" : "كشف الارتفاع" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "高度展开" } }
+      }
+    },
+    "Gentle squeeze" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Gentle squeeze" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "כיווץ עדין" } },
+        "ar" : { "stringUnit" : { "state" : "translated", "value" : "انكماش لطيف" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "轻柔收缩" } }
+      }
+    },
+    "Quiet fade" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Quiet fade" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "דהייה שקטה" } },
+        "ar" : { "stringUnit" : { "state" : "translated", "value" : "تلاشي هادئ" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "柔和淡入淡出" } }
+      }
+    },
+    "No animations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No animations" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "ללא אנימציות" } },
+        "ar" : { "stringUnit" : { "state" : "translated", "value" : "بدون حركات" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无动画" } }
+      }
+    },
+    "Expanded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Expanded" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מורחב" } },
+        "ar" : { "stringUnit" : { "state" : "translated", "value" : "موسّع" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已展开" } }
+      }
+    },
+    "Collapsed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Collapsed" } },
+        "he" : { "stringUnit" : { "state" : "translated", "value" : "מקופל" } },
+        "ar" : { "stringUnit" : { "state" : "translated", "value" : "مطوي" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已折叠" } }
+      }
+    },
   "Offline replay API format": {
     "extractionState": "manual",
     "localizations": {

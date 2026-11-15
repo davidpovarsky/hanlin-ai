@@ -963,6 +963,8 @@ struct GeneralSettingsView: View {
                 NavigationLink(destination: FeedBackView().onAppear { isPushed = true }.onDisappear { isPushed = false }) {
                     Label(String(localized: "触感反馈"), systemImage: "iphone.gen3.radiowaves.left.and.right")
                 }
+
+                ChatMotionPresetPicker()
             }
 
             Section(header: Text(String(localized: "发送栏"))) {

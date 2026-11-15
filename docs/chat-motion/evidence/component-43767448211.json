@@ -1,0 +1,77 @@
+{
+  "run_id": 43767448211,
+  "job_id": 132975640557,
+  "source_sha": "2b79df3f68c6aa5a47f6a0cf19d81cba8790b343",
+  "job_duration_seconds": 41,
+  "status": {
+    "simulator_module_compile": "COMPILE_PASS",
+    "device_module_compile": "COMPILE_PASS",
+    "model_checks": "EXECUTED_PASS",
+    "UI": "NOT_RUN",
+    "original_app": "NOT_RUN"
+  },
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43767448211",
+  "artifact": {
+    "id": 14182084326,
+    "size_bytes": 78598,
+    "zip_sha256": "d885dbb9e7f028724442c07fb6bd51022840017180a11fadb4566b7f0be2afa6",
+    "verification": "DOWNLOADED_ZIP_MATCHES_API"
+  },
+  "input_files": [
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMotionConfiguration.swift",
+      "sha256": "51b04346202f9a63db6dd4e136113a564fe48ef5b3bfe3d9f570502a7b781068"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMotionPreferences.swift",
+      "sha256": "1f9c827c3a2ec1ad09389d11994db0e29994b6c57e4e86a4205d70db07a2db65"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinAnimatedDisclosure.swift",
+      "sha256": "6fa6c1d8706649878767652d7ada48d4f7b46fb9532367c7dbd61001b2586203"
+    },
+    {
+      "path": "docs/chat-motion/ChatMotionModelChecks.swift",
+      "sha256": "b6c2fb49533956eca1ed8f5d4c3d6cb138d3ac2e265faa861706b56d4a65672a"
+    }
+  ],
+  "deployment_target": "iOS26.0",
+  "sdk": {
+    "iphoneos": "27.2",
+    "iphonesimulator": "27.2"
+  },
+  "preflight": {
+    "xcode": "Xcode 27.2\nBuild version 27B52\n",
+    "swift": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\n",
+    "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n"
+  },
+  "checks": "PASS: preset identity/Codable, migration/corruption, Reduce Motion, bounded tuning, Defaults serialization",
+  "file_hashes": {
+    "input-hashes.txt": "1d0e7c733151d6f9cf0526f02300354841cb10ccbc6f2abc3b219cb12a2f2066",
+    "iphoneos-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "iphoneos.abi.json": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+    "iphoneos.swiftdoc": "0ffc254f63549baa149808ae39a12a5473637beb7602fdba721b4cd83bb7b831",
+    "iphoneos.swiftmodule": "f6f5c8f1c723dacccb35c13d6c1897f8cee97ad2fa4c78f918868bfb95abae93",
+    "iphoneos.swiftsourceinfo": "b7569def61cd5d90d85b183a989ee9f5ea06a5e1e7ab06d787484d4f147f48ac",
+    "iphoneos.txt": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "iphonesimulator-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "iphonesimulator.abi.json": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+    "iphonesimulator.swiftdoc": "5e39af1f977e754d051b43fa04103d326ccf1c417cdde4d41effde1d193bd389",
+    "iphonesimulator.swiftmodule": "899dddf8f17c94e26fb3f4bd39ff45dc5ed59445803bfbc22daa9ebbb28a9846",
+    "iphonesimulator.swiftsourceinfo": "00e8844767e70c3c1fc6bc64e4819bca98bf5d17e486d914ff4a9c5c04b3e0ae",
+    "iphonesimulator.txt": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "model-checks": "c4320a902041421ddc4e8837198e6d42067443345787e1e82903c62408da0340",
+    "model-checks.log": "7f41b4f3056b5229e9bd69b8550fe92aef72aba540feefbcfb21066fb9852dd4",
+    "os.txt": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+    "process-status.txt": "74a161fbffce9c5cdb516cf53b0c02444282aaa87655a92b706d569a90fb2d8b",
+    "result.txt": "0784aac76b8de8089f5dfe59e766e96372aca52abeb75a67cc3c677b2982c695",
+    "source-sha.txt": "6df7553a6a369df4ea9e0336d2cf2e750865af9fa0b81fb110f73fc3d6cf7472",
+    "swift.txt": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "xcode.txt": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+  },
+  "limits": [
+    "Three Motion sources at own immutable source SHA; subsequent native DisclosureGroup style and chat callsite changes are not covered",
+    "No simulator app launched; no UI/geometry/persistence-relaunch acceptance",
+    "API lookup43766122528 returned empty for SwiftUI.withAnimation; actual native compilation is authority for the used signature"
+  ]
+}

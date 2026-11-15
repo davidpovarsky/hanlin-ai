@@ -24,6 +24,7 @@ import HanlinPlatformContracts
 
 struct LoadingGradientText: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.chatMotion) private var motion
     let text: String
     var textColor: Color = .gray
     var gradientColors: [Color] = [
@@ -36,10 +37,10 @@ struct LoadingGradientText: View {
         .hlBluefont.opacity(0.0)
     ]
     var font: Font = .body.bold()
-    var animationSpeed: Double = 2
+    var isActive: Bool = true
 
     var body: some View {
-        if reduceMotion {
+        if reduceMotion || !isActive || !motion.showsShimmer {
             Text(text).font(font).foregroundStyle(textColor)
         } else {
         Text(text)
@@ -49,7 +50,8 @@ struct LoadingGradientText: View {
                 GeometryReader { geo in
                     TimelineView(.animation) { timeline in
                         let time = timeline.date.timeIntervalSinceReferenceDate
-                        let progress = time.truncatingRemainder(dividingBy: animationSpeed) / animationSpeed
+                        let duration = motion.shimmerDuration
+                        let progress = time.truncatingRemainder(dividingBy: duration) / duration
                         let offset = CGFloat(progress) * geo.size.width * 2
 
                         LinearGradient(
@@ -67,7 +69,6 @@ struct LoadingGradientText: View {
                     }
                 }
             )
-            .frame(height: 24)
         }
     }
 }
@@ -134,6 +135,8 @@ struct ChatBubbleView: View {
     @StateObject var context = RichTextContext() // 富文本
     
     @State private var isResourcesExpanded: Bool = false  // 资源文本折叠状态
+    @State private var expandedActivityIDs: Set<String> = []
+    @Environment(\.chatMotion) private var chatMotion
     @State private var isTranslateExpanded: Bool = false  // 翻译文本折叠状态
     @State private var selectedImage: UIImage? // 选中的图片
     @State private var isImageViewerPresented: Bool = false // 是否显示大图
@@ -626,7 +629,7 @@ struct ChatBubbleView: View {
             VStack(alignment: .leading, spacing: 6) {
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 
                 // 文字主体
@@ -636,22 +639,22 @@ struct ChatBubbleView: View {
                 // 代码块
                 if let codes = codeBlocks, !codes.isEmpty {
                     codeBubble(for: codes)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 知识卡
                 if let cards = knowledgeCard, !cards.isEmpty {
                     knowledgeCardBubble(for: cards)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 网页
                 if let htmls = htmlContent, !htmls.isEmpty {
                     htmlWebBubble(for: htmls)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 事件
                 if let evs = events, !evs.isEmpty {
                     eventsBubble(for: evs)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 健康卡
                 if let hcs = healthCards {
@@ -661,12 +664,12 @@ struct ChatBubbleView: View {
                             set: { _ in }
                         )
                     )
-                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .transition(chatMotion.resultTransition)
                 }
                 // 地图
                 if (locations?.isEmpty == false) || (routes?.isEmpty == false) {
                     mapBubble(for: locations ?? [], routes: routes ?? [])
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 新型交互式小程序 / NativeScript / 脚本界面内嵌宿主
                 if !embeddedInteractiveItems.isEmpty {
@@ -680,14 +683,14 @@ struct ChatBubbleView: View {
                                 runID: agentRun?.id, resultID: item.id, callID: item.callID
                             )
                         )
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                         #else
                         AgentTranscriptToolResultView(
                             item: item,
                             temporaryRecord: temporaryRecord,
                             onLaunchRequest: launchNativeApp
                         )
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                         #endif
                     }
                 }
@@ -698,7 +701,7 @@ struct ChatBubbleView: View {
                         containerWidth: effectiveContainerWidth,
                         onLaunchRequest: launchNativeApp
                     )
-                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .transition(chatMotion.resultTransition)
                 }
                 // 底部按钮
                 if isLastAssistant && !isResponding {
@@ -721,7 +724,7 @@ struct ChatBubbleView: View {
                 .bold()
                 .foregroundColor(.hlBluefont)
                 .symbolEffect(.breathe.pulse.byLayer,
-                              options: .repeat(.continuous))
+                              options: .repeat(.continuous), isActive: chatMotion.isAnimated)
                 .padding(5)
         }
     }
@@ -732,9 +735,11 @@ struct ChatBubbleView: View {
         HStack(alignment: .top) {
             if !operationalState.isEmpty {
                 VStack(alignment: .leading) {
-                    LoadingGradientText(text: operationalState)
+                    LoadingGradientText(text: operationalState, isActive: isResponding && isLastAssistant)
                         .foregroundColor(.gray)
                         .padding(5)
+                        .contentTransition(.opacity)
+                        .animation(chatMotion.updateAnimation, value: operationalState)
                     
                     if !operationalDescription.isEmpty {
                         let allLines = operationalDescription
@@ -747,7 +752,6 @@ struct ChatBubbleView: View {
                             ForEach(Array(displayLines.enumerated()),
                                     id: \.offset) { idx, line in
                                 Text(line)
-                                    .id(line)
                                     .font(.system(size:
                                                     idx == 2 ? 10 :
                                                     (idx == 1 ? 9 : 8)))
@@ -762,19 +766,9 @@ struct ChatBubbleView: View {
                                                 idx == 1 ? 0.7 : 1.0)
                                     .blur(radius: idx == 0 ? 1 : 0)
                                     .padding(.horizontal, 5)
-                                    .transition(.asymmetric(
-                                        insertion: .move(edge: .bottom)
-                                            .combined(with: .opacity),
-                                        removal: .move(edge: .top)
-                                            .combined(with: .opacity)
-                                    ))
                             }
                         }
                         .padding(.bottom, 5)
-                        .animation(.spring(response: 0.8,
-                                           dampingFraction: 0.8,
-                                           blendDuration: 0.6),
-                                   value: operationalDescription)
                     }
                 }
             } else {
@@ -782,13 +776,11 @@ struct ChatBubbleView: View {
                     .bold()
                     .foregroundColor(.hlBluefont)
                     .symbolEffect(.breathe.pulse.byLayer,
-                                  options: .repeat(.continuous))
+                                  options: .repeat(.continuous), isActive: isResponding && isLastAssistant && chatMotion.isAnimated)
             }
         }
         .padding(10)
         .cornerRadius(20)
-        .animation(.spring(response: 0.8, dampingFraction: 0.95),
-                   value: operationalDescription)
     }
     
     @State private var selectedCodeBlock: CodeBlock? = nil
@@ -2170,16 +2162,17 @@ struct ChatBubbleView: View {
         let timeline = agentRun.map(AgentActivityComposer.compose)
         let entries = ClassicChatAgentProjection.projectToolEntries(from: agentRun)
         if hasAgentActivity {
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 0) {
                 ToggleButton(
                     title: String(localized: "Thinking"),
                     timeText: reasoningTime ?? timeline?.summaryTitle ?? "",
                     isExpanded: $isReasoningExpanded,
-                    isActive: isResponding && isLastAssistantGroup
+                    isActive: isResponding && isLastAssistantGroup,
+                    usesAnimatedDisclosure: true
                 )
                 .accessibilityIdentifier("hanlin-reasoning-toggle")
 
-                if !isReasoningExpanded && isResponding && isLastAssistantGroup {
+                HanlinAnimatedDisclosure(isExpanded: !isReasoningExpanded && isResponding && isLastAssistantGroup) {
                     VStack(alignment: .leading, spacing: 2) {
                         ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { index, line in
                             Text(line)
@@ -2197,12 +2190,14 @@ struct ChatBubbleView: View {
                 if timeline?.status == .failed || timeline?.activities.contains(where: { $0.status == .failed }) == true {
                     Label("Some activity failed", systemImage: "exclamationmark.circle")
                         .font(.caption).foregroundStyle(.red)
+                        .padding(.top, 6)
                 } else if timeline?.status == .cancelled {
                     Label("Cancelled", systemImage: "stop.circle")
                         .font(.caption).foregroundStyle(.secondary)
+                        .padding(.top, 6)
                 }
 
-                if isReasoningExpanded {
+                HanlinAnimatedDisclosure(isExpanded: isReasoningExpanded) {
                     if let timeline, let agentRun, !timeline.activities.isEmpty {
                         ForEach(AgentActivityComposer.rounds(for: agentRun, timeline: timeline)) { round in
                             VStack(alignment: .leading, spacing: 6) {
@@ -2238,7 +2233,13 @@ struct ChatBubbleView: View {
     }
 
     private func activityDisclosure(_ activity: AgentDisplayActivity, entries: [ClassicProjectedToolCallEntry]) -> some View {
-        DisclosureGroup {
+        DisclosureGroup(isExpanded: Binding(
+            get: { expandedActivityIDs.contains(activity.id) },
+            set: { expanded in
+                if expanded { expandedActivityIDs.insert(activity.id) }
+                else { expandedActivityIDs.remove(activity.id) }
+            }
+        )) {
             VStack(alignment: .leading, spacing: 6) {
                 if let input = activity.inputPreview { Text(input).font(.caption.monospaced()).textSelection(.enabled) }
                 if let error = activity.errorDescription { Text(error).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
@@ -2255,8 +2256,11 @@ struct ChatBubbleView: View {
                 } else { Text(activity.title).font(.subheadline) }
                 Spacer()
                 Text(activity.status.rawValue.capitalized).font(.caption2).foregroundStyle(.secondary)
+                    .contentTransition(.opacity)
+                    .animation(chatMotion.updateAnimation, value: activity.status)
             }
         }
+        .disclosureGroupStyle(HanlinMotionDisclosureStyle())
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-agent-activity-\(activity.id)")
     }
@@ -2268,9 +2272,13 @@ struct ChatBubbleView: View {
             HStack(spacing: 6) {
                 switch entry.status {
                 case .running, .pending:
-                    ProgressView()
-                        .controlSize(.mini)
-                        .frame(width: 14, height: 14)
+                    if chatMotion.isAnimated {
+                        ProgressView()
+                            .controlSize(.mini)
+                            .frame(width: 14, height: 14)
+                    } else {
+                        Image(systemName: "hourglass").font(.caption)
+                    }
                 case .completed:
                     Image(systemName: "checkmark.circle.fill")
                         .font(.system(size: 13, weight: .semibold))
@@ -2303,6 +2311,8 @@ struct ChatBubbleView: View {
                 Text(entry.statusText)
                     .font(.caption2)
                     .foregroundColor(.secondary)
+                    .contentTransition(.opacity)
+                    .animation(chatMotion.updateAnimation, value: entry.statusText)
             }
 
             if let summary = entry.summary, !summary.isEmpty, summary != entry.output {
@@ -2445,22 +2455,23 @@ struct ChatBubbleView: View {
     private func resourcesView() -> some View {
         let deduplicatedResources = resolvedResourcesForDisplay
         if !deduplicatedResources.isEmpty {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 
                 ToggleButton(
                     title: String(localized: "reference_materials"),
                     timeText: String(deduplicatedResources.count),
-                    isExpanded: $isResourcesExpanded
+                    isExpanded: $isResourcesExpanded,
+                    numericCount: deduplicatedResources.count,
+                    usesAnimatedDisclosure: true
                 )
 
-                if isResourcesExpanded {
+                HanlinAnimatedDisclosure(isExpanded: isResourcesExpanded) {
                     VStack(alignment: .leading) {
                         ForEach(deduplicatedResources.indices, id: \.self) { index in
                             resourceItemView(resource: deduplicatedResources[index], index: index)
                         }
                     }
                     .padding(.horizontal, 6)
-                    .transition(.opacity.combined(with: .scale))
                     .textSelection(.enabled)
                     .padding(.bottom, 5)
                 }
@@ -2604,10 +2615,14 @@ struct ChatBubbleView: View {
         let timeText: String
         @Binding var isExpanded: Bool
         var isActive = false
+        var numericCount: Int? = nil
+        var usesAnimatedDisclosure = false
+        @Environment(\.chatMotion) private var motion
         
         var body: some View {
             Button(action: {
-                withAnimation { isExpanded.toggle() }
+                if usesAnimatedDisclosure { isExpanded.toggle() }
+                else { withAnimation { isExpanded.toggle() } }
             }) {
                 HStack {
                     if isActive {
@@ -2617,26 +2632,20 @@ struct ChatBubbleView: View {
                     }
                     Spacer()
                     if !timeText.isEmpty {
-                        ForEach([timeText], id: \.self) { text in
-                            Text(text)
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                                .animation(
-                                    .spring(response: 0.8, dampingFraction: 0.7, blendDuration: 0.5),
-                                    value: text
-                                )
-                        }
+                        Text(timeText)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .contentTransition(motion.numericCounts && numericCount != nil
+                                ? .numericText(value: Double(numericCount ?? 0)) : .opacity)
+                            .animation(motion.updateAnimation, value: timeText)
                     }
                     Image(systemName: "chevron.down")
                         .foregroundColor(Color(.systemGray))
                         .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                        .animation(motion.disclosureAnimation(expanding: isExpanded), value: isExpanded)
                 }
                 .padding(.vertical, 5)
                 .padding(.horizontal, 5)
-                .animation(
-                    .spring(response: 0.8, dampingFraction: 0.95, blendDuration: 0),
-                    value: timeText
-                )
             }
         }
     }
