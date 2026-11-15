@@ -62,7 +62,9 @@ class ModelMerge {
         auto cppABI = declarationABI(*cpp);
         auto objcABI = declarationABI(*objc);
         if (cppABI != objcABI)
-            throw std::runtime_error("Dual-grammar actual AST ABI conflict: " + cpp->identificationString());
+            throw std::runtime_error("Dual-grammar actual AST ABI conflict: " + cpp->identificationString() +
+                "\nActual CPP ABI=" + llvm::formatv("{0}", cppABI).str() +
+                "\nActual ObjC ABI=" + llvm::formatv("{0}", objcABI).str());
         if (cpp->deprecatedIn != objc->deprecatedIn || cpp->obsoletedIn != objc->obsoletedIn ||
             !introducedAvailabilityEquivalent(*cpp, *objc))
             throw std::runtime_error("Dual-grammar availability conflict: " + cpp->identificationString());

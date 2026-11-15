@@ -51,6 +51,11 @@ struct HanlinDualShared {
   double ratio;
 };
 RETURN_TYPE HanlinDualSharedFunction(struct HanlinDualShared *value);
+int HanlinDualTakeSigned(int value);
+unsigned long HanlinDualTakeUnsigned(unsigned long value);
+double HanlinDualTakeDouble(double value);
+void HanlinDualTakePointer(void *value);
+struct HanlinDualShared *HanlinDualReturnShared(void);
 static const int HanlinDualConstant = CONSTANT_VALUE;
 #ifdef __cplusplus
 }
@@ -63,7 +68,7 @@ OBJC_INVALID
 #endif
 CLASS_ATTRIBUTE
 __attribute__((objc_root_class))
-@interface HanlinDualObject
+@interface HanlinDualObject { void *isa; int _token; }
 @property(nonatomic) int token;
 @end
 """
