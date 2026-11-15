@@ -6,6 +6,11 @@ source_sha="$(git rev-parse HEAD)"
 producer_sha=e7bf34111e603ca977becd007dd4e5bb109af857
 evidence="$root/build/agent-sdk-validation-evidence"
 mkdir -p "$evidence"
+if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" == 1 ]]; then
+  printf '["SDKTests"]\n' > "$evidence/selected-results.json"
+else
+  printf '["ProducerTests","SDKTests","CoreTests"]\n' > "$evidence/selected-results.json"
+fi
 git rev-parse HEAD > "$evidence/workflow-commit.txt"
 printf '%s\n' "$source_sha" > "$evidence/tested-source-commit.txt"
 if ! git cat-file -e "$source_sha^{commit}" 2>/dev/null; then git fetch --no-tags --depth=1 origin "$source_sha"; fi
@@ -117,6 +122,7 @@ print(next(x for x in ['SwiftAISDK-Package','SwiftAISDK'] if x in names))
 PY
 )"
 set +e
+if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 ]]; then
 (cd "$producer" && AGENT=1 xcodebuild test -scheme "$producer_scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/ProducerDerivedData" -resultBundlePath "$evidence/ProducerTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
@@ -125,6 +131,9 @@ set +e
   -only-testing:SwiftAISDKTests/ExecuteToolCallProviderMetadataTests \
   -only-testing:AISDKProviderUtilsTests/ModelMessageCodableTests) > "$evidence/producer-tests.log" 2>&1
 producer_status=$?
+else
+producer_status=null
+fi
 (cd "$sdk" && xcodebuild test -scheme "$sdk_scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/SDKDerivedData" -resultBundlePath "$evidence/SDKTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
@@ -132,6 +141,7 @@ producer_status=$?
   -only-testing:HanlinHostContractsTests/ContextTests \
   -only-testing:HanlinPersistenceAdaptersTests/StoreTests) > "$evidence/sdk-tests.log" 2>&1
 sdk_status=$?
+if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 ]]; then
 (cd "$core" && xcodebuild test -scheme "$core_scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/CoreDerivedData" -resultBundlePath "$evidence/CoreTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
@@ -143,6 +153,10 @@ core_status=$?
   -derivedDataPath "$scratch/IOSDerivedData" -resultBundlePath "$evidence/IOSBuild.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO) > "$evidence/ios-build.log" 2>&1
 ios_status=$?
+else
+core_status=null
+ios_status=null
+fi
 set -e
 printf '{"producer_test_exit":%s,"sdk_test_exit":%s,"core_test_exit":%s,"ios_build_exit":%s}\n' "$producer_status" "$sdk_status" "$core_status" "$ios_status" > "$evidence/process-status.json"
 for item in ProducerTests SDKTests CoreTests; do

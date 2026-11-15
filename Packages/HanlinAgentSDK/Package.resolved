@@ -1,12 +1,12 @@
 {
-  "originHash" : "5bb584f5e1b0e26a4618c2c5135e83805f095369c81dbae7bd059e37bd17913b",
+  "originHash" : "8a0846341234f25127f1625547cf7c2a0ca23047e32f9ae2d7d9e1c91070029e",
   "pins" : [
     {
       "identity" : "swift-ai-sdk",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davidpovarsky/swift-ai-sdk.git",
       "state" : {
-        "revision" : "43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6"
+        "revision" : "e7bf34111e603ca977becd007dd4e5bb109af857"
       }
     },
     {

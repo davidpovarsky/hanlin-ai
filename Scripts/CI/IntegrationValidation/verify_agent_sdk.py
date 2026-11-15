@@ -27,8 +27,11 @@ EXPECTED = {
 
 def summarize(root):
     statuses=json.loads((root/'process-status.json').read_text());cases=[];errors=[]
+    selected=json.loads((root/'selected-results.json').read_text()) if (root/'selected-results.json').exists() else list(EXPECTED)
+    if selected not in [list(EXPECTED),['SDKTests']]:raise ValueError('Unsupported result selection')
     planned=json.loads((root/'expected-tests.json').read_text()) if (root/'expected-tests.json').exists() else {}
     for name,suites in EXPECTED.items():
+        if name not in selected:continue
         try:
             data=json.loads((root/f'{name}.json').read_text());actual=[n for n in nodes(data) if n.get('nodeType')=='Test Case']
         except (OSError,ValueError):actual=[]
@@ -44,8 +47,10 @@ def summarize(root):
                     cases.append({'id':suite+'/'+method,'status':'NOT_RUN','kind':'unexecuted_method_obligation'})
         for n in actual:cases.append({'id':n.get('nodeIdentifier'),'status':{'Passed':'EXECUTED_PASS','Failed':'FAILED','Skipped':'SKIPPED'}.get(n.get('result'),'NOT_RUN')})
     counts={s:sum(c['status']==s for c in cases) for s in ['EXECUTED_PASS','REUSED_VERIFIED_PASS','FAILED','SKIPPED','NOT_RUN','BLOCKED']}
-    passed=bool(cases) and not errors and all(v==0 for v in statuses.values()) and counts['EXECUTED_PASS']==len(cases)
-    return {'scope':'exact-source-Apple-producer-core-session-fixture-host-regression','status':'PASS' if passed else 'BLOCKED','counts':counts,'cases':cases,'process_status':statuses,'errors':errors,'ios_compile':'PASS' if statuses['ios_build_exit']==0 else 'NOT_RUN' if statuses['ios_build_exit'] is None else 'FAILED','not_asserted':['real FoundationModels generation/availability','native tools','real host/API/navigation','AI app migration/UI','physical iPad','release/TestFlight']}
+    relevant={'SDKTests':'sdk_test_exit','CoreTests':'core_test_exit','ProducerTests':'producer_test_exit'}
+    required=[relevant[name] for name in selected]+([] if selected==['SDKTests'] else ['ios_build_exit'])
+    passed=bool(cases) and not errors and all(statuses.get(key)==0 for key in required) and counts['EXECUTED_PASS']==len(cases)
+    return {'scope':'exact-source-Apple-session-package-regression' if selected==['SDKTests'] else 'exact-source-Apple-producer-core-session-fixture-host-regression','selected_results':selected,'status':'PASS' if passed else 'BLOCKED','counts':counts,'cases':cases,'process_status':statuses,'errors':errors,'ios_compile':'PASS' if statuses['ios_build_exit']==0 else 'NOT_RUN' if statuses['ios_build_exit'] is None else 'FAILED','not_asserted':['real FoundationModels generation/availability','native tools','real host/API/navigation','AI app migration/UI','physical iPad','release/TestFlight']}
 
 
 if __name__=='__main__':

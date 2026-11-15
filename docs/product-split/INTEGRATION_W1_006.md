@@ -713,3 +713,59 @@ pin; all old other pin records must remain identical. All resulting identity set
 must equal the existing Platform graph, and raw six locks are retained before
 validation even on failure. The corrected resolution-only route performs no tests
 or builds. Failed first verifier output is not a successful lock handoff.
+
+
+## Verified e7bf producer/core scope and remaining Session compile blocker
+
+Actual corrected-chain run43686294717 at e233bffcef77080295656dceac71b04b1b5d4528
+finished with68 actual PASS and10 NOT_RUN, zero actual failed/skipped cases.
+Producer root suites executed48 cases (30 SwiftAISDK /18 ModelMessageCodable);
+existing Core suites executed20 PASS. Actual AgentCore iOS build passed. SDK test
+bundle failed to compile: ExactNumericHost at AgentSessionTests.swift42 and
+ExecutionGateHost at86 omit required HanlinHostIntegration conformance members.
+Therefore all10 SDK methods, including the seven Session tests, did NOT execute.
+The producer/core successes do not pass numeric Session/host acceptance.
+
+Artifact14150797620:5689572 bytes, ZIP SHA256
+96b513a92fb7e82f35d46cc5940d2e6711596c7c5397d484a8175afd51ca1028 checked in RAM.
+All250 Hanlin source hashes and3 workflow hashes match exact e233 Git blobs;
+three actual raw lock hashes checked. Producer raw lock98ecacdc3ccd61c5ebbdcd896cf3213bd98f5d51bf24eb1014273329e0bebd75;
+SDK lock0b190b1d589a67422f7c7847c3a9c70533d89dd82e4ee7589b73836d277ce2f6;
+Platform lock7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17.
+The full producer source inventory/archive is retained remotely; it is not claimed
+that all producer inventory hashes were independently decoded in this inspection.
+The source script checks exact producer e7bf checkout, with whole root packages.
+
+The lead assigned only the two test fixture conformance corrections to the SDK
+owner. A new explicit Session-only route will compile the whole existing SDK
+package and execute its10 methods, without repeating unchanged48 producer/20 core
+cases or iOS compile. Its report counts only cases actually run there; old passes
+remain bound to their original SHA/inputs/locks/toolchain. Four in-memory reporting
+checks passed, including missing-obligation rejection and Session-only zero-reuse
+counting. These checks are synthetic, not Apple acceptance.
+
+## Actual six Apple-resolved lock import
+
+Resolution-only run43687551868 at094b99aa48b4f4d49ade22c8e9acb720aeddfdaf PASSED,
+zero builds/tests. Artifact14150713009:23138 bytes, ZIP SHA256
+d4912737033da5b337d00d21b577f667ec8795147cec7d0794bee73fd9697fbc checked in RAM.
+All270 package/workflow input hashes independently matched that exact Git tree.
+All six raw root locks were independently parsed, SHA256 checked and imported
+byte-for-byte. SDK/Platform hashes equal the actual earlier e233 build locks above.
+The four Mini App root lock hashes are:
+
+- Parity64abcc6af574107b111a5facbc00f70259aa0a809ab2fc6a5c0a571b5b10ea04
+- TextStudio402e58427b5cffccf4e2ca1cfc82785266433a62b8fbb96ba6711cff75dc2a28
+- Sefaria6c7a3f29ad73f35a20ed25f838c673cf2970398c18c4b0429f55b56a98a9f3ac
+- Wikipedia3591fbb4df85047710671391b83116e4725b44cceebb315aadd6d08dc48c555c
+
+Every graph now resolves exact e7bf, argument-parser1.8.2, ZIPFoundation0.9.19 and
+SwiftyJSON5.0.1. Existing non-SDK pin records remain byte-equivalent as parsed;
+only the four stale Mini App locks add already-declared SwiftyJSON. Source-bound
+actual resolution is distinct from any compile/UI/functional success.
+
+Composer diagnostic run43687001012 at94cd2662 still fails one wrapped method,
+10 total executed and2 issues. Actual Latin and Hebrew six-line measurements are
+both fitting148.0 /cap138.0 /returned138.0 /fontlineHeight20.287109375 /innerwidth152.0
+and scrolling=true. These exact numbers were relayed to the source owner. No
+hardcoded compensation, assertion change or causal conclusion is introduced here.
