@@ -60,7 +60,7 @@ for label,ref,version in [("baseline",base,"6.2.1"),("candidate",head,"6.2.2")]:
   counts=re.findall(r"Executed (\d+) tests?, with (\d+) failures?",logs[-1])
   swift_counts=re.findall(r"Test run with (\d+) tests?[^\n]*passed",logs[-1])
   if not any(int(n)>0 and int(f)==0 for n,f in counts) and not any(int(n)>0 for n in swift_counts):raise SystemExit("No authentic executed test summary")
-  results.append({"label":label,"sourceSHA":ref,"version":version,"upstreamCommit":actual,"manifestSHA256":sha(manifest),"resolvedSHA256":sha(resolved),"license":"MIT","licenseSHA256":sha(license_bytes),"status":"EXECUTED_PASS","testSummaries":counts or swift_counts})
+  results.append({"label":label,"sourceSHA":ref,"version":version,"upstreamCommit":actual,"manifestSHA256":sha(manifest),"resolvedSHA256":sha(resolved),"license":"MIT","licenseSHA256":sha(license_bytes),"status":"EXECUTED_PASS","testSummaries":{"xctest":[[n,f] for n,f in counts if int(n)>0],"swiftTesting":[n for n in swift_counts if int(n)>0]}})
 receipt={"schemaVersion":1,"status":"EXECUTED_PASS","repository":REPO,"pullRequest":int(NUMBER),"head":head,"base":base,"changedPaths":paths,"sourceOwnerCommit":OWNER,"consumer":"HanlinSkillFormat original owner sources/tests","results":results,"toolchain":toolchain,"platform":platform,"scope":"Real macOS SwiftPM resolver, compile and package tests for both original Yams releases; no iOS simulator/app distribution claim","rollback":{"parent":base,"strategy":"Restore the isolated parent manifest and exact resolved Git SHA"}}
 (OUT/"swiftpm-receipt.json").write_text(json.dumps(receipt,indent=2)+"\n",encoding="utf-8")
 print(json.dumps(receipt))

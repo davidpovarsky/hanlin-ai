@@ -15,7 +15,7 @@ on:
       upstream_operation:
         description: Isolated upstream proof; skips the native MiniApps build
         type: choice
-        options: [disabled, candidate, failure-demo, swiftpm-candidate]
+        options: [disabled, candidate, failure-demo, swiftpm-candidate, swiftpm-pin-only]
         default: disabled
       upstream_pr:
         description: Same-repository Renovate Host candidate PR
@@ -38,7 +38,7 @@ permissions:
 
 jobs:
   upstream-validation:
-    if: inputs.upstream_operation == 'candidate' || inputs.upstream_operation == 'failure-demo' || inputs.upstream_operation == 'swiftpm-candidate'
+    if: inputs.upstream_operation == 'candidate' || inputs.upstream_operation == 'failure-demo' || inputs.upstream_operation == 'swiftpm-candidate' || inputs.upstream_operation == 'swiftpm-pin-only'
     permissions:
       actions: write
       contents: write
@@ -49,7 +49,7 @@ jobs:
       candidate_pr: ${{ inputs.upstream_pr }}
       runtime_baseline_run_id: ${{ inputs.runtime_bundle_artifact_run_id }}
   miniapps:
-    if: inputs.upstream_operation != 'candidate' && inputs.upstream_operation != 'failure-demo' && inputs.upstream_operation != 'swiftpm-candidate'
+    if: inputs.upstream_operation != 'candidate' && inputs.upstream_operation != 'failure-demo' && inputs.upstream_operation != 'swiftpm-candidate' && inputs.upstream_operation != 'swiftpm-pin-only'
     runs-on: xcode-27
     timeout-minutes: 35
     env:

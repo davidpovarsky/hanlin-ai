@@ -1,0 +1,21 @@
+{
+  "rows": [
+    {
+      "label": "baseline",
+      "actualSwiftTestingCount": [
+        "20"
+      ],
+      "status": "EXECUTED_PASS",
+      "sourceLog": "spm-swift-baseline-2.log"
+    },
+    {
+      "label": "candidate",
+      "actualSwiftTestingCount": [
+        "20"
+      ],
+      "status": "EXECUTED_PASS",
+      "sourceLog": "spm-swift-candidate-2.log"
+    }
+  ],
+  "receiptDisplayCorrection": "Original immutable receipt preserved: XCTest reports0 tests while actual SwiftTesting executes20 each. Acceptance condition checked positive SwiftTesting summary correctly; future receipt records both frameworks separately. No compile/test rerun needed for this reporting-only correction."
+}

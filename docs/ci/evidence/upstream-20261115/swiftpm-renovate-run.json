@@ -1,0 +1,20 @@
+{
+  "run": {
+    "repository": "davidpovarsky/hanlin-ai",
+    "branch": "codex/upstream-swiftpm-baseline-20261115",
+    "mode": "apply",
+    "onlyPackage": "jpsim/Yams",
+    "exitCode": 0,
+    "tool": "44.239.1",
+    "node": "v24.22.1",
+    "mergeEnabled": false,
+    "log": "build/upstream-updates/renovate.log"
+  },
+  "logSHA256": "9329a18bcd7bbb6d80b2778476661e9e142cf68ac5e9f7ea43559f386be5b66d",
+  "candidate": "9d5241766fea76830b5084f771ccdec98d57f6bb",
+  "pullRequest": 7,
+  "files": [
+    "Packages/HanlinSkillFormat/Package.swift",
+    "Packages/HanlinSkillFormat/Package.resolved"
+  ]
+}

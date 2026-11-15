@@ -1,0 +1,9 @@
+{
+  "featureSource": "e46b918e0a4fb0a35a1e331a384bff9a9205d333",
+  "owner": "485933ba56952b4aef1363b88e5b4bc33bb2b94c",
+  "ownerPackageTree": "831182a5613f1181137bd625cda8eeca1cc14f04",
+  "baseline": "2b7f4a5490a7939c87f17939b883976146266bf0",
+  "baselineRef": "refs/heads/codex/upstream-swiftpm-baseline-20261115",
+  "manifestForm": "Owner revision a27 replaced by exact6.2.1 only on test baseline",
+  "resolved": "Actual Swift6.3.3 Windows resolution to original deaf82e867fa2cbd3cd865978b079bfcf384ac28; Apple acceptance not yet run"
+}

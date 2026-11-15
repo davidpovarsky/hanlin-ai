@@ -1,0 +1,18 @@
+{
+  "operation": "Local deliberately incorrect pin compared to actual untouched upstream GitHub tag",
+  "command": [
+    "py",
+    "-3",
+    "-X",
+    "utf8",
+    "Scripts/Runtime/verify-swiftpm-pin.py",
+    ".scratch\\yams-drift-negative",
+    "6.2.2",
+    "jpsim/Yams",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  ],
+  "exitCode": 1,
+  "output": "Original upstream tag retarget/source drift: review required\n",
+  "sourceMutation": false,
+  "mergePerformed": false
+}

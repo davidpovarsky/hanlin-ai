@@ -20,7 +20,7 @@ on:
       operation:
         description: Scoped upstream operation; no merge or distribution
         type: choice
-        options: [audit, renovate, candidate, failure-demo, swiftpm-candidate, native-candidate]
+        options: [audit, renovate, candidate, failure-demo, swiftpm-candidate, swiftpm-pin-only, native-candidate]
         default: audit
       candidate_pr:
         description: Same-repository isolated Host update PR (candidate/failure-demo)
@@ -302,7 +302,7 @@ jobs:
 
   upstream:
     name: Hanlin upstream acceptance
-    if: inputs.operation != 'native-candidate' && inputs.operation != 'swiftpm-candidate'
+    if: inputs.operation != 'native-candidate' && inputs.operation != 'swiftpm-candidate' && inputs.operation != 'swiftpm-pin-only'
     runs-on: xcode-27
     timeout-minutes: 30
     env:
@@ -414,7 +414,7 @@ jobs:
 
   swiftpm:
     name: Hanlin SwiftPM upstream acceptance
-    if: inputs.operation == 'swiftpm-candidate'
+    if: inputs.operation == 'swiftpm-candidate' || inputs.operation == 'swiftpm-pin-only'
     runs-on: xcode-27
     timeout-minutes: 25
     steps:
@@ -423,11 +423,19 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 0
           persist-credentials: false
-      - name: Execute actual pinned SwiftPM baseline and candidate
+      - name: Verify authoritative SwiftPM manifest constraints
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          python3 Scripts/Runtime/Tests/test_swiftpm_pin.py
+          set -euo pipefail
+          mkdir -p build/upstream-updates
+          python3 Scripts/Runtime/Tests/test_swiftpm_pin.py 2>&1 | tee build/upstream-updates/pin-semantic-tests.log
+          python3 Scripts/Runtime/verify-swiftpm-pin.py Packages/HanlinSkillFormat 6.2.2 jpsim/Yams a27b21e0c81c5bf42049b897a62aaf387e80f279 > build/upstream-updates/pin-semantic-receipt.json
+      - name: Execute actual pinned SwiftPM baseline and candidate
+        if: inputs.operation == 'swiftpm-candidate'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
           python3 Scripts/Runtime/verify-swiftpm-update.py "${{ github.repository }}" "${{ inputs.candidate_pr }}"
       - name: Retain original SwiftPM evidence
         if: always()
