@@ -141,4 +141,22 @@ final class BashSyntaxTests: XCTestCase {
                 from: JSONEncoder().encode(report)), report)
         }
     }
+
+    func testNonzeroDataSliceIsRebasedBeforeUTF8ParserAndSpanReads() async throws {
+        let original = Data("prefixprintf 'שלום🙂'; curl x\n".utf8)
+        let slice = original.dropFirst(6)
+        XCTAssertEqual(slice.startIndex, 6)
+        let scanner = BashSkillSyntaxAnalyzer()
+        let report = await scanner.scan(file: "slice.sh", utf8: slice)
+        let whole = await BashSkillSyntaxAnalyzer().scan(file: "slice.sh", utf8: Data(slice))
+        XCTAssertEqual(report, whole)
+        XCTAssertEqual(report.completion, .complete)
+        XCTAssertEqual(report.inputBytes, slice.count)
+        let curl = try XCTUnwrap(report.findings.first { $0.kind == .command && $0.value == "curl" })
+        XCTAssertEqual(curl.source.byteOffset, Data("printf 'שלום🙂'; ".utf8).count)
+        XCTAssertEqual(curl.source.byteLength, 4)
+        let oversized = await BashSkillSyntaxAnalyzer(budget: .init(maximumBytes: 1)).scan(file: "slice.sh", utf8: slice)
+        XCTAssertEqual(oversized.findings.first?.reason, "sourceBudget")
+        XCTAssertNil(oversized.sourceSHA256)
+    }
 }

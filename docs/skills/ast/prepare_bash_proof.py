@@ -48,7 +48,7 @@ def plan():
     tests = re.findall(r'^    func (test\w+)\(', (HERE/'Tests/BashSyntaxTests.swift').read_text(encoding='utf-8'), re.M)
     fixtures = json.loads((HERE/'Tests/Fixtures/bash.json').read_text(encoding='utf-8'))
     assert len(fixtures) == 20 and len({f['file'] for f in fixtures}) == 20
-    assert len(tests) == len(set(tests)) == 7
+    assert len(tests) == len(set(tests)) == 8
     paths = files() + [HERE/'prepare_bash_proof.py', HERE/'run_bash_proof.sh']
     return {'scope': 'original Bash parser only; Python/TS/product/readiness NOT_RUN',
             'pins': {name: {'version': version, 'revision': revision} for name, (version, revision) in PINS.items()},

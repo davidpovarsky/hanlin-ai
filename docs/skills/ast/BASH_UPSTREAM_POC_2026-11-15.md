@@ -98,3 +98,13 @@ Swift model/tests/fixture closure requires fresh native tests and simulator/devi
 the original six-case pass above remains evidence only for its own7992 source. The Bash
 algorithm/upstream pins are unchanged. Passive helper details and portable-only execution
 limits are in `PASSIVE_PYTHON_TYPESCRIPT_HELPERS.md`.
+
+Subsequent source audit found a real input bug: Foundation Data subsequences retain nonzero
+indices, while Tree-sitter offsets start at zero. Using raw `subdata(in:0..<n)` on such a slice
+crashed the isolated Windows Foundation probe (exit3221225501). The analyzer now checks the
+byte budget first, then copies/rebases with `withUnsafeBytes { Data($0) }` before UTF-8/hash,
+parser input and source-span reads. The eighth native test supplies an actual nonzero slice,
+compares its complete report/hash/spans with rebased bytes and verifies the oversized early
+rejection. This changes the shared parser path: earlier6/7 passes retain their own source
+identity, and all8/native simulator/device compilation require fresh validation. The local
+Foundation reproduction does not substitute for the native Apple test.

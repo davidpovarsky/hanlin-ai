@@ -34,8 +34,11 @@ public actor BashSkillSyntaxAnalyzer {
         guard !file.isEmpty, file.utf8.count <= 1_024, !file.utf8.contains(0) else { return unavailable("invalidSourceIdentity") }
         guard utf8.count <= budget.maximumBytes else { return unavailable("sourceBudget") }
         guard !Task.isCancelled else { return unavailable("cancelled") }
-        guard String(data: utf8, encoding: .utf8) != nil else { return unavailable("invalidUTF8") }
-        let digest = SHA256.hash(data: utf8).map { String(format: "%02x", $0) }.joined()
+        // Data subsequences retain their original indices. The C parser's offsets
+        // are relative to this source, so copy/rebase only AFTER the size gate.
+        let bytes = utf8.withUnsafeBytes { Data($0) }
+        guard String(data: bytes, encoding: .utf8) != nil else { return unavailable("invalidUTF8") }
+        let digest = SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined()
         // Byte identity avoids Swift String's canonical-equivalence coalescing of
         // distinct supplied source identities (e.g. NFC versus NFD filenames).
         var key = Data(file.utf8)
@@ -53,11 +56,11 @@ public actor BashSkillSyntaxAnalyzer {
         parser.timeout = budget.parseSeconds
         let oldTree: SwiftTreeSitter.Tree? = nil
         guard let tree = parser.parse(tree: oldTree, encoding: TSInputEncodingUTF8, readBlock: { offset, _ in
-            guard offset >= 0, offset < utf8.count else { return nil }
-            return utf8.subdata(in: offset..<min(offset + 4_096, utf8.count))
+            guard offset >= 0, offset < bytes.count else { return nil }
+            return bytes.subdata(in: offset..<min(offset + 4_096, bytes.count))
         }), let root = tree.rootNode else { return unavailable("parseBudgetOrFailure", digest: digest) }
 
-        var visitor = BashSyntaxVisitor(file: file, bytes: utf8, budget: budget)
+        var visitor = BashSyntaxVisitor(file: file, bytes: bytes, budget: budget)
         visitor.visit(root)
         guard !Task.isCancelled else { return unavailable("cancelled", digest: digest) }
         let report = SkillSyntaxReport(file: file, sourceSHA256: digest,
