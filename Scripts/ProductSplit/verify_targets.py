@@ -29,6 +29,10 @@ def main():
     assert set(entitlements['com.apple.security.application-groups']) == {
         'group.com.itorah.chavrusachat', 'group.com.itorah.shared'}
     assert 'com.apple.developer.icloud-container-identifiers' not in entitlements
+    info = plistlib.loads((ROOT / 'HanlinMiniAppsApp/Info.plist').read_bytes())
+    assert info['UTImportedTypeDeclarations']
+    assert info['CFBundleDocumentTypes'][0]['LSItemContentTypes'] == [
+        'com.hanlin.scripting-package', 'public.zip-archive']
     manifest = (ROOT / 'Packages/HanlinProductSplit/Package.swift').read_text()
     for name in ['SplitFixtureStore.swift', 'SplitReceiverFixturePersistence.swift', 'SplitMigrationFixturePersistence.swift']:
         assert name in manifest, name

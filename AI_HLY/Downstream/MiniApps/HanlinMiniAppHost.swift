@@ -105,23 +105,9 @@ final class HanlinMiniAppHost {
     func refresh(installedPackages: [HanlinStoredPackageSnapshot]) async {
         do {
             let dynamicPackages = installedPackages.filter { package in
-                guard package.hasLaunchableApp || package.entrypoints.isEmpty else {
-                    return false
-                }
-                if package.entrypoints.contains(where: {
-                    $0.runtimeProfile == .hanlinNativeScript || $0.runtimeProfile == .hanlinExpo
-                }) {
-                    return true
-                }
-                if let rt = package.manifest?.unknownFields["hanlinRuntime"],
-                   case let .string(rtStr) = rt,
-                   (rtStr == HanlinRuntimeProfile.hanlinNativeScript.rawValue || rtStr == HanlinRuntimeProfile.hanlinExpo.rawValue) {
-                    return true
-                }
-                if package.manifest?.entry?.contains("nativescript") == true || package.manifest?.entry?.contains("expo") == true {
-                    return true
-                }
-                return false
+                // Canonical discovery resolves the engine. Filtering by native
+                // runtime names here silently dropped installed ScriptUI apps.
+                package.hasLaunchableApp || package.entrypoints.isEmpty
             }
             BuiltinCanonicalRegistrations.ensureRegistered()
             let discovery = HanlinCompositeMiniAppDiscovery(providers: [

@@ -428,7 +428,7 @@
 			);
 			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
 		};
-		7FE313BA594C7AB411944585 = {isa = PBXFileSystemSynchronizedBuildFileExceptionSet; membershipExceptions = (HanlinMiniApps.entitlements,); target = C9B384692DF64FDC83A424ED; };
+		7FE313BA594C7AB411944585 = {isa = PBXFileSystemSynchronizedBuildFileExceptionSet; membershipExceptions = (HanlinMiniApps.entitlements, Info.plist,); target = C9B384692DF64FDC83A424ED; };
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -1808,6 +1808,7 @@ C51334EE9689903546A2337C /* Debug */ = {
 					"\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HanlinMiniAppsApp/Info.plist;
 
 				INFOPLIST_KEY_CFBundleDisplayName = "Hanlin MiniApps";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1906,6 +1907,7 @@ C51334EE9689903546A2337C /* Debug */ = {
 					"\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = HanlinMiniAppsApp/Info.plist;
 
 				INFOPLIST_KEY_CFBundleDisplayName = "Hanlin MiniApps";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

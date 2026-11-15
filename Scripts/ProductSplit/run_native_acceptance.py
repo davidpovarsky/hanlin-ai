@@ -12,7 +12,11 @@ EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
 
 
 def command(argv, name, timeout=60):
-    result = subprocess.run(argv, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout)
+    try:
+        result = subprocess.run(argv, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout)
+    except subprocess.TimeoutExpired as error:
+        (EVIDENCE / name).write_bytes(error.stdout or b'No output before subprocess timeout.')
+        raise
     (EVIDENCE / name).write_bytes(result.stdout)
     if result.returncode:
         raise RuntimeError(f'{argv[0]} exit {result.returncode}; see {name}')
@@ -27,8 +31,11 @@ def main():
     simulator = None
     try:
         state['sha'] = command(['git', 'rev-parse', 'HEAD'], 'source-sha.txt').strip()
-        sources = sorted(set(ROOT.glob('Packages/**/*.swift')) | set(ROOT.glob('HanlinMiniAppsApp/**/*.swift'))
-                         | set(ROOT.glob('AI_HLY/**/*.swift')) | set(ROOT.glob('HanlinMiniAppsUITests/**/*.swift')))
+        tracked = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
+        sources = sorted(ROOT/p for p in tracked if p and Path(p).suffix in {
+            '.swift', '.mm', '.m', '.h', '.hpp', '.cpp', '.json', '.plist', '.entitlements', '.xcconfig', '.xcscheme',
+            '.mjs', '.js', '.cjs', '.sh', '.py', '.yml', '.yaml', '.tsx', '.ts'
+        } and (ROOT/p).is_file())
         inputs = {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
         for name in ['AI_HLY.xcodeproj/project.pbxproj', 'RuntimeDependencies.lock.json',
                      'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved']:
@@ -37,6 +44,8 @@ def main():
         (EVIDENCE / 'source-inputs.json').write_text(json.dumps(inputs, indent=2)+'\n')
         state['impact'] = 'New app target, explicit shared host sources, authorization extraction and AI-only DI: no earlier app acceptance is reusable.'
         command(['xcodebuild', '-list', '-json', '-project', 'AI_HLY.xcodeproj'], 'schemes.json', timeout=600)
+        resolved = ROOT/'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved'
+        (EVIDENCE/'Package.resolved').write_bytes(resolved.read_bytes())
         runtimes = json.loads(command(['xcrun', 'simctl', 'list', 'runtimes', '-j'], 'runtimes.json'))['runtimes']
         runtime = next(r for r in runtimes if r.get('isAvailable') and r['identifier'].endswith('iOS-27-0'))
         types = json.loads(command(['xcrun', 'simctl', 'list', 'devicetypes', '-j'], 'devicetypes.json'))['devicetypes']
@@ -48,11 +57,25 @@ def main():
         command(['xcrun', 'simctl', 'boot', simulator], 'boot.log')
         command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=180)
         state['architecture'] = command(['xcrun', 'simctl', 'spawn', simulator, 'uname', '-m'], 'architecture.txt').strip()
-        argv = ['xcodebuild', 'test', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
+        derived = Path(os.environ['RUNNER_TEMP'])/'HanlinSplitDerivedData'
+        base = ['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
                 '-destination', 'platform=iOS Simulator,id='+simulator, '-parallel-testing-enabled', 'NO',
-                '-derivedDataPath', str(Path(os.environ['RUNNER_TEMP'])/'HanlinSplitDerivedData'),
+                '-derivedDataPath', str(derived), 'CODE_SIGNING_ALLOWED=NO']
+        build = base + ['build-for-testing', '-resultBundlePath', str(EVIDENCE/'Build.xcresult')]
+        state['build_command'] = build
+        state['status'] = 'BUILD_FAILED'
+        command(build, 'build.log', timeout=1200)
+        state['build'] = 'EXECUTED_PASS'
+        state['status'] = 'INFRA_ERROR'
+        command([sys.executable, 'Scripts/CI/stage_scriptui_fixtures.py',
+                 '--simulator-udid', simulator,
+                 '--app-path', str(derived/'Build/Products/Debug-iphonesimulator/HanlinMiniApps.app'),
+                 '--bundle-id', 'com.itorah.hanlinminiapps',
+                 '--fixtures-dir', str(EVIDENCE/'fixtures'),
+                 '--log-file', str(EVIDENCE/'fixture-provenance.log')], 'fixture-staging.log', timeout=240)
+        argv = base + ['test-without-building',
                 '-resultBundlePath', str(EVIDENCE/'MiniApps.xcresult'),
-                '-only-testing:HanlinMiniAppsUITests', 'CODE_SIGNING_ALLOWED=NO']
+                '-only-testing:HanlinMiniAppsUITests']
         state['command'] = argv
         (EVIDENCE/'command.json').write_text(json.dumps(argv,indent=2)+'\n')
         with (EVIDENCE/'xcodebuild.log').open('wb') as log:
@@ -65,7 +88,7 @@ def main():
             summary = json.loads(raw)
             state['summary'] = summary
             passed, failed = summary.get('passedTests',0), summary.get('failedTests',0)
-            if process.returncode == 0 and passed == 3 and failed == 0 and summary.get('skippedTests',0) == 0:
+            if process.returncode == 0 and passed == 4 and failed == 0 and summary.get('skippedTests',0) == 0:
                 state.update(status='EXECUTED_PASS',ui='EXECUTED_PASS')
             elif failed:
                 state.update(status='TEST_FAILED',ui='TEST_FAILED')
@@ -84,7 +107,11 @@ def main():
                 except Exception as capture: state.setdefault('capture_errors',[]).append(str(capture))
         print(str(error), file=sys.stderr)
     finally:
+        state['result_bundles'] = [p.name for p in EVIDENCE.glob('*.xcresult')]
+        if state['result_bundles']:
+            state['xcresult'] = 'CREATED: '+', '.join(state['result_bundles'])
         state['duration_seconds'] = time.time()-state['started_at']
+        (EVIDENCE/'native-acceptance-duration-seconds.txt').write_text(str(int(state['duration_seconds']))+'\n')
         (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
         if simulator:
             subprocess.run(['xcrun','simctl','shutdown',simulator],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,timeout=30)

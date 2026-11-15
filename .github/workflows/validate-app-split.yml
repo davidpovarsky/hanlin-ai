@@ -36,6 +36,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$SPLIT_EVIDENCE"
+          split_phase_start=$SECONDS
+          trap 'printf "%s\n" "$(( SECONDS - split_phase_start ))" > "$SPLIT_EVIDENCE/preflight-duration-seconds.txt"' EXIT
           selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
           test -n "$selected_xcode"
           export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
@@ -66,12 +68,35 @@ jobs:
           fi
           plutil -lint AI_HLY.xcodeproj/project.pbxproj HanlinMiniAppsApp/HanlinMiniApps.entitlements
           python3 Scripts/ProductSplit/verify_targets.py
+      - name: Reproduce and verify affected package lifecycle on the actual Mac first
+        shell: bash
+        run: |
+          set -euo pipefail
+          split_phase_start=$SECONDS
+          trap 'printf "%s\n" "$(( SECONDS - split_phase_start ))" > "$SPLIT_EVIDENCE/package-lifecycle-duration-seconds.txt"' EXIT
+          test "$(node --version)" = 'v24.5.0'
+          host_root="$PWD/AI_HLY/Downstream/RuntimeCore/Node/Host"
+          grammar_root="$PWD/Scripts/Runtime/HostGrammarTools"
+          export HANLIN_HOST_GRAMMAR_COMPILER_ROOT="$grammar_root"
+          npm ci --prefix "$grammar_root" --ignore-scripts --workspaces=false --no-audit --no-fund
+          npm ci --prefix "$host_root" --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund
+          (cd "$host_root" && node apply-host-dependency-patches.mjs)
+          node Scripts/Runtime/generate-yarn-unicode-patch.mjs --root "$host_root"
+          node Scripts/Runtime/generate-yarn-multiline-patch.mjs --root "$host_root" --compiler-root "$grammar_root"
+          {
+            node --version
+            shasum -a 256 "$host_root/global-package-state.mjs" "$host_root/Tests/package-lifecycle.test.mjs" "$host_root/package-lock.json"
+            node --test "$host_root/Tests/package-lifecycle.test.mjs"
+          } 2>&1 | tee "$SPLIT_EVIDENCE/package-lifecycle.log"
       - name: Prepare the existing pinned metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
       - name: Prepare existing native dependencies and Runtime host
         shell: bash
         run: |
           set -euo pipefail
+          split_phase_start=$SECONDS
+          trap 'printf "%s\n" "$(( SECONDS - split_phase_start ))" > "$SPLIT_EVIDENCE/native-dependencies-duration-seconds.txt"' EXIT
+          {
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/Expo
@@ -86,6 +111,7 @@ jobs:
           CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
           CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
           EOF
+          } 2>&1 | tee "$SPLIT_EVIDENCE/native-dependencies.log"
       - name: Execute actual standalone target XCUITests
         shell: bash
         run: python3 Scripts/ProductSplit/run_native_acceptance.py
@@ -103,6 +129,9 @@ jobs:
               'sha': os.environ['GITHUB_SHA'], 'reason': 'preflight/dependency preparation failed; inspect original job logs'})+'\n')
           PY
           fi
+          python3 Scripts/CI/generate_performance_report.py \
+            --log-dir "$SPLIT_EVIDENCE" --run-id "$GITHUB_RUN_ID" --commit-sha "$GITHUB_SHA" \
+            --output-json "$SPLIT_EVIDENCE/ci-performance-report.json" --step-summary "$GITHUB_STEP_SUMMARY"
       - name: Upload evidence
         if: always()
         uses: actions/upload-artifact@v7.0.2

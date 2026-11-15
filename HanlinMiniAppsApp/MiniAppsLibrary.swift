@@ -77,7 +77,9 @@ struct MiniAppsLibrary: View {
             }
         }
         .task { await reload() }
-        .fullScreenCover(item: $presentation) { destination in
+        .fullScreenCover(item: $presentation, onDismiss: {
+            Task { await reload() }
+        }) { destination in
             NavigationStack {
                 destination.view.toolbar {
                     ToolbarItem(placement: .confirmationAction) {

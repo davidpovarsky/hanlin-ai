@@ -4,6 +4,7 @@ import SwiftUI
 struct HanlinMiniAppsApplication: App {
     @State private var services: MiniAppsServices?
     @State private var startupError: String?
+    @State private var showsImport = false
 
     var body: some Scene {
         WindowGroup {
@@ -20,6 +21,16 @@ struct HanlinMiniAppsApplication: App {
                         catch { startupError = error.localizedDescription }
                     }
                 }
+            }
+            .onOpenURL { url in
+                guard url.isFileURL else { return }
+                Task {
+                    await HanlinScriptingPlatform.shared.importPackage(from: url)
+                    showsImport = true
+                }
+            }
+            .sheet(isPresented: $showsImport) {
+                NavigationStack { ScriptingPackageImportView(platform: .shared) }
             }
         }
     }

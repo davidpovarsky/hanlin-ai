@@ -6,6 +6,7 @@ final class HanlinMiniAppsUITests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
     }
 
     override func tearDownWithError() throws {
@@ -61,6 +62,50 @@ final class HanlinMiniAppsUITests: XCTestCase {
         XCTAssertTrue(importPackage.waitForExistence(timeout: 15))
         importPackage.tap()
         XCTAssertTrue(app.buttons["hanlin-file-importer"].waitForExistence(timeout: 15))
+    }
+
+    func testInstalledScriptUIAppearsAndRunsAfterRestart() throws {
+        executionTimeAllowance = 240
+        app.launch()
+        let manage = app.buttons["miniapps.manage"]
+        XCTAssertTrue(manage.waitForExistence(timeout: 30))
+        manage.tap()
+        let importPackage = app.buttons["miniapps.import"]
+        XCTAssertTrue(importPackage.waitForExistence(timeout: 15))
+        importPackage.tap()
+        let archive = app.buttons["HanlinScriptUIValid"]
+        XCTAssertTrue(archive.waitForExistence(timeout: 15), "The production package fixture must be staged in this app's Documents.")
+        archive.tap()
+        let install = app.buttons["hanlin-package-install"]
+        XCTAssertTrue(install.waitForExistence(timeout: 30))
+        XCTAssertTrue(install.isEnabled)
+        install.tap()
+        let installed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: install)
+        XCTAssertEqual(XCTWaiter.wait(for: [installed], timeout: 60), .completed)
+        app.navigationBars["Script Package"].buttons["Done"].tap()
+        let close = app.buttons["miniapps.close"]
+        XCTAssertTrue(close.waitForExistence(timeout: 15))
+        close.tap()
+        try openScriptUI()
+        let increment = app.buttons["Increment"]
+        XCTAssertTrue(increment.waitForExistence(timeout: 30))
+        increment.tap()
+        XCTAssertTrue(app.staticTexts["Count 1"].waitForExistence(timeout: 15))
+        app.terminate()
+        app.launch()
+        try openScriptUI()
+        XCTAssertTrue(app.staticTexts["Count 0"].waitForExistence(timeout: 30))
+    }
+
+    private func openScriptUI() throws {
+        let row = app.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier BEGINSWITH 'miniapps.catalog.' AND label CONTAINS %@", "Hanlin ScriptUI Valid"
+        )).firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 30))
+        row.tap()
+        let open = app.buttons["miniapps.open"]
+        XCTAssertTrue(open.waitForExistence(timeout: 15))
+        open.tap()
     }
 
     private func openParity() throws {
