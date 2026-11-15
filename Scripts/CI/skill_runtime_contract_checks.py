@@ -24,11 +24,12 @@ def main():
     OUTPUT.mkdir(parents=True, exist_ok=False)
     compiler = subprocess.check_output(["xcrun", "--find", "swiftc"], text=True).strip()
     sdk = subprocess.check_output(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-path"], text=True).strip()
+    host_sdk = subprocess.check_output(["xcrun", "--sdk", "macosx", "--show-sdk-path"], text=True).strip()
     result = {"schemaVersion": 1, "status": "FAILED", "sourceSHA": subprocess.check_output(
         ["git", "rev-parse", "HEAD"], text=True).strip(), "compiler": compiler,
         "swiftVersion": subprocess.check_output([compiler, "--version"], text=True).strip(),
         "xcode": subprocess.check_output(["xcodebuild", "-version"], text=True).strip(),
-        "sdk": sdk, "sourceFiles": {str(p.relative_to(ROOT)): sha(p) for p in [*SOURCES, CHECKS]},
+        "sdk": sdk, "hostSDK": host_sdk, "sourceFiles": {str(p.relative_to(ROOT)): sha(p) for p in [*SOURCES, CHECKS]},
         "commands": [], "boundary": "Original passive contract/planner/registry sources only. Synthetic cases; no real Skill, engine, app, JobStore, UI or physical-device execution."}
 
     def run(label, argv):
@@ -43,7 +44,8 @@ def main():
 
     try:
         binary = OUTPUT / "SkillRuntimeContractChecks"
-        run("compile-macos", [compiler, "-swift-version", "6", *SOURCES, CHECKS, "-o", binary])
+        run("compile-macos", [compiler, "-swift-version", "6", "-sdk", host_sdk,
+            "-target", "arm64-apple-macos26.0", *SOURCES, CHECKS, "-o", binary])
         checks = json.loads(run("execute-macos", [binary]))
         if checks.get("status") != "EXECUTED_PASS" or len(checks.get("cases", [])) != 38:
             raise RuntimeError("Original focused test result/case identity mismatch")
