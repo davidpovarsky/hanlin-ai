@@ -1,5 +1,5 @@
 {
-  "status": "REGISTERED_OWNER_CUT_21a7394d_PENDING_NATIVE_PROOF",
+  "status": "REGISTERED_OWNER_CUT_6837d0ae_PENDING_NATIVE_PROOF",
   "swift_sources": [
     "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
     "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
@@ -120,7 +120,7 @@
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift",
     "AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift"
   ],
-  "application_services_cut": "21a7394df7a43656a62229191b3b13a366835df6",
+  "application_services_cut": "6837d0aef974a3c763b4d1ef878d63715ebb47cb",
   "ui_test_target": "F9AB2938F7BF9D8F3F6C9844",
   "ui_test_source": "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift",
   "ui_test_cases": [
