@@ -118,6 +118,26 @@ source Link is opened through the fixture's handled port before recording AX/pix
 the URL actually resolved by the same node. No global process kill, renderer substitution,
 weakened explicit-load requirement or further timeout widening is introduced.
 
+Run [43756668201](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43756668201), job132942157121
+at9882c479edf089bad812b6856553e5bab116e62b: EXECUTED_PASS1/1 bound-source method,83.793s, all three
+YouTube/Video/AudioPlayer loops. Original AX/pixels show actual new source Link receipts, Load
+restored and no player after replacement, with the positive live form event outbound:1.
+Exact sources/project/selection/unchanged lock and one unique Passed node authenticated;
+finalized archive readable. Downloaded ZIP digest and each extracted file match GitHub's
+artifact14179206209,1216310bytes, SHA256
+`2cd2c9f3e84b145f451c938656c5cafc2c1abb2c9b18ca488db529a97848052a`.
+See `evidence/media-replay-ui-43756668201.json`. No production change or root cause for the
+earlier audio failure is inferred from a later pass. Job797s; build/test641s includes startup
+and finalization beyond the actual83.793s method. Original app/external playback remain NOT_RUN.
+
+The remaining five missing-raw obligations need execution. The original YouTube history
+method passed at9fee, but its complete test compilation unit changed for bound-case diagnostics;
+strict full-input closure reuse cannot be established for that older SHA. The next six-case
+selection therefore includes history YouTube and excludes the freshly authenticated bound
+method. All compiled component/fixture/test inputs from9882 to current1a4d6ed4 are byte-identical,
+allowing the fresh bound pass to aggregate under contractv1 if the remaining cases pass with
+the same runtime/toolchain/pins. This is targeted closure validation, not a new seven-case run.
+
 The test project spec follows the [XcodeGen project schema](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md).
 Only the existing manual workflow is extended; automatic triggers, product PBX/locks and release
 settings remain unchanged.
