@@ -2896,7 +2896,10 @@
         "referenceModules": 31
       },
       "nextRun": {
-        "status": "NONE_RUNNING_DUAL_GRAMMAR_SOURCE_IMPLEMENTATION"
+        "run": 43740551820,
+        "mode": "modern-dual-controls",
+        "source": "72fd7609",
+        "status": "RUNNING_NO_PASS_CLAIMED"
       },
       "combined": "NOT_RUN",
       "VM": "NOT_RUN",
@@ -2982,6 +2985,29 @@
         "manifestFilesVerified": 72,
         "mismatches": 0,
         "resultSHA256": "133e35e1eb0a049198eec71cebddda4c4339b4d4707344b1ba923758316a8db7"
+      },
+      "dualGrammarControls": {
+        "status": "FAILED",
+        "compileRun": 43740009253,
+        "sourceSHA": "a546fe990ac39ac014896a216c457b3d2797c353",
+        "compileStatus": "EXECUTED_PASS",
+        "generatorSHA256": "7ede2a79b304c76e1d5da673558796d140f7178248d729050ee25130baad6df5",
+        "controlBinarySHA256": "d25eca4d89f5b2c2ad5482972c47b8461a4622d741ef1db61eb95a24f8689e59",
+        "fixtures": {
+          "executedPass": 0,
+          "failed": 7,
+          "nativeReceiptCount": 0,
+          "termination": "SIGSEGV"
+        },
+        "artifactManifest": {
+          "filesVerified": 67,
+          "mismatches": 0
+        },
+        "diagnosticRun": 43740317581,
+        "diagnosticCompile": "REUSED_VERIFIED_COMPILE_PASS",
+        "actualStack": "HanlinDual::ActualUnit::ActualUnit +648; EXC_BAD_ACCESS address0x7f",
+        "correctionSource": "72fd7609",
+        "boundary": "No actual SDK/Host/Expo dual model, VM, UI or device acceptance"
       }
     }
   }
