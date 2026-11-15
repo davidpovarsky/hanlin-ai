@@ -1,0 +1,102 @@
+name: Validate standalone MiniApps target
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  miniapps:
+    runs-on: xcode-27
+    timeout-minutes: 35
+    env:
+      SPLIT_EVIDENCE: ${{ runner.temp }}/app-split-evidence
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24.5.0'
+      - name: Verify actual Mac toolchain, disk and installed simulator tooling
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$SPLIT_EVIDENCE"
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
+          {
+            sw_vers
+            uname -m
+            xcodebuild -version
+            xcodebuild -showsdks
+            xcrun simctl list runtimes -j
+            xcrun simctl list devicetypes -j
+            command -v python3
+            python3 --version
+            command -v xcodebuild
+            command -v xcrun
+            df -Pk . "$RUNNER_TEMP"
+            command -v idb && idb --version || true
+            command -v maestro && maestro --version || true
+          } > "$SPLIT_EVIDENCE/preflight.log" 2>&1
+          cat "$SPLIT_EVIDENCE/preflight.log"
+          test "$(df -Pk . | awk 'NR==2 {print $4}')" -gt 15000000
+          test "$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)" -ge 27
+          skill_script="$HOME/.codex/skills/ios-simulator-skill/scripts/sim_health_check.sh"
+          if [ -f "$skill_script" ]; then
+            bash "$skill_script" --json > "$SPLIT_EVIDENCE/skill-health.json" 2>&1 || true
+          else
+            echo 'NOT_AVAILABLE: ios-simulator-skill scripts on this Mac; XCUITest remains available.' > "$SPLIT_EVIDENCE/skill-health.txt"
+          fi
+          plutil -lint AI_HLY.xcodeproj/project.pbxproj HanlinMiniAppsApp/HanlinMiniApps.entitlements
+          python3 Scripts/ProductSplit/verify_targets.py
+      - name: Prepare the existing pinned metadata tool
+        uses: ./.github/actions/prepare-nativescript-metadata-tool
+      - name: Prepare existing native dependencies and Runtime host
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/Expo
+          node Scripts/Expo/prepare-ios-dependencies.mjs
+          bash Scripts/Runtime/prepare-runtime-core.sh
+          bash Scripts/Runtime/prepare-runtime-host.sh
+          cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+          cat > Config.xcconfig <<'EOF'
+          SWIFT_ENABLE_EXPLICIT_MODULES = NO
+          SWIFT_OBJC_INTEROP_MODE = objcxx
+          CLANG_CXX_LANGUAGE_STANDARD = gnu++20
+          CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
+          CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
+          EOF
+      - name: Execute actual standalone target XCUITests
+        shell: bash
+        run: python3 Scripts/ProductSplit/run_native_acceptance.py
+      - name: Keep original logs, status and xcresult even after early failure
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "$SPLIT_EVIDENCE"
+          if [ ! -f "$SPLIT_EVIDENCE/acceptance.json" ]; then
+            python3 - <<'PY'
+          import json, os, pathlib
+          path = pathlib.Path(os.environ['SPLIT_EVIDENCE']) / 'acceptance.json'
+          path.write_text(json.dumps({'status': 'INFRA_ERROR', 'ui': 'NOT_RUN',
+              'xcresult': 'NOT_CREATED: native test step not reached',
+              'sha': os.environ['GITHUB_SHA'], 'reason': 'preflight/dependency preparation failed; inspect original job logs'})+'\n')
+          PY
+          fi
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: app-split-${{ github.run_id }}
+          path: ${{ runner.temp }}/app-split-evidence
+          if-no-files-found: error
+          retention-days: 14

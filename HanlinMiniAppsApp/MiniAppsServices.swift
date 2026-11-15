@@ -32,7 +32,7 @@ struct MiniAppsServices {
         self.launch = launch; self.packageManagement = packageManagement
     }
 
-    private init(catalog: @escaping () async throws -> [HanlinMiniAppCatalogItem],
+    init(catalog: @escaping () async throws -> [HanlinMiniAppCatalogItem],
                  launch: @escaping (HanlinMiniAppCatalogItem) async throws -> AnyView,
                  packageManagement: @escaping () throws -> AnyView) {
         self.catalog = catalog; self.launch = launch; self.packageManagement = packageManagement

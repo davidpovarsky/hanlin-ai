@@ -60,6 +60,87 @@
 		D7D5EE482DD58D7F00B89AAD /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE472DD58D7F00B89AAD /* ZIPFoundation */; };
 		D7D5EE4B2DD590A100B89AAD /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE4A2DD590A100B89AAD /* MarkdownUI */; };
 		D7D5EE4E2DD590C500B89AAD /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = D7D5EE4D2DD590C500B89AAD /* SwiftSoup */; };
+		6E163C635623BA1971CA6C9F /* AgentDiagnosticsRedactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057ED4EF02ECAFC728E6427; };
+		B7BA4385C57586D2EFFFC634 /* ExpoHostServicesAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1C1E6A9A8A34E2D67F3121; };
+		1FB5EC51E80826119B4268AC /* NativeScriptHostServicesAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6FD252079779B243CAFC1C; };
+		DFAD9ABAD1486A046CDDDF37 /* HanlinHostCapabilityAuthority.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D61B9F4171BB5A9F2BFCEC; };
+		11338372B992D9A252A76342 /* HanlinHostCapabilityMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710ADDA1D297EE839984319E; };
+		30161CD264F2F134E63E6390 /* HanlinHostCallContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912569EE7DA5D226A846EA31; };
+		D501555ED9708FC8310A9C93 /* HanlinHostServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFAD183364AE570360A76EE; };
+		6F1F113E66013AE6627EEDB8 /* HanlinHostServicesBroker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A34E86D0665D1BD575A188; };
+		BB072BE38DB276FA33F0565B /* HanlinFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E947FF53D1F3A09BD823AE7; };
+		4199FABF4C1570E43E3357C6 /* HanlinSQLiteHostAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718274C800CD1A3A885BBD0A; };
+		83BBE229D641488DD73962A7 /* HanlinRuntimeBroker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962B59EF2E84D15C1CAFE9E1; };
+		70B3F279527D3D80E2BD1BE6 /* HanlinRuntimeWireProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715A3EAD88D980EAEF4152EC; };
+		C5B70E31EF74AAEF39F6D082 /* RuntimeAvailabilityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC88B149812B58E2FC666B2; };
+		10BD0534999F6D2947A23529 /* MCPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C2A8A8DFDD3A9041792560; };
+		BFBD601D2EF7EE727FBE4ACE /* CompiledMiniAppExposureRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B6D50C7DF9EE45660F2E29; };
+		C907F6138824E7F7A6070742 /* HanlinMiniAppHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510DE6BB64325001EBCF8655; };
+		10D7E269FCA5DB87E07BB34C /* HanlinNativeScriptProductionBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1EF11978C7C7E1F41E804F; };
+		C0BAB0085B962D7D399FECF3 /* HanlinNativeServicesBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92C3C16EB0988538A44CDF2; };
+		36585B2B64B857739F35350A /* AppRuntimeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12E8D6331A796FE8C064FD3; };
+		1C22CE07B9DC92BCC7AC8DB9 /* RuntimeDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A16EE17B5B38EBFECD26331; };
+		ADC302093FE1B29D07402E4E /* RuntimeExecutionInputArtifact.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6BB37CA7927B1E9C5A20C7; };
+		E64D48F39CF1B63803D4A032 /* RuntimeFileLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03662C0A01C3BB45A3C5409; };
+		F190B053CDD7F1E14644A480 /* RuntimeJobStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C311F3435A7B81C28F8A155; };
+		BCC249703D10A8AF3200DE2E /* RuntimeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0654BB98FE99B7CBCAEE2436; };
+		EAC70CA82CD26D7CF74A9A56 /* RuntimePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D19AE9D8F7C23C096B50D6; };
+		7D6CBFC78C7DD921B5539B4C /* RuntimeQueuedExecution.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF562D875F215845ADE5974; };
+		CA0C035C91479CD90793DD61 /* RuntimeUserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF279D791EAD52D14AFCB95D; };
+		28BDD11FFF1500D1A16BB7A2 /* RuntimeEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BBE08AD553594D48DD4DA2; };
+		BD567AE85F05E364818B8F25 /* JavaScriptCoreOutputCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2A594216BDD8CB30652BAB; };
+		E940F9CE095E27BBB5120FC4 /* JavaScriptCoreRuntimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE5992F1D59F9DFF1D5D86; };
+		BC7542458B0FB27196C98A38 /* LifecycleExecutionBroker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE99E146F9DFB401A60BA64; };
+		3A35131634B6BD4C02206FC1 /* NodeRuntimeBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C832984A954D5D11AF82A177; };
+		9DCF9FC2280B4D16BBE436E0 /* NodePackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F1A0097A8934C2D9FB163E; };
+		214F96508A3B69B3F6A389F1 /* NodeRuntimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B098EBB021D125A5E920C8; };
+		890ACEB029EDA77F75F04D28 /* RuntimeCommandDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7A2D4FEFE33D3BF86CECDD; };
+		21A20ADE9C860242E28450E1 /* RuntimeHostConnection+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758892775312C816B9F3B3B1; };
+		D69079DF47C2E644AF3A9AEA /* TypeScriptRuntimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B7515C117E272BBD335F22; };
+		FD262728E3831F0CDD22ADB7 /* PythonPackageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A104E990EE8A62CA97D6943; };
+		8D82FC48EC2F2153AE189BE5 /* PythonQueuedExecution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ACF83AB6A0DD2976462DE6; };
+		8E87992919D126A23C344EC0 /* PythonRuntimeBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8C794996CE053D4E4EF62F; };
+		B4B1EFB5BE34936F3A943B16 /* PythonRuntimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B191EEE4B3D3177B451E349; };
+		21890795578C0AF11605162B /* ShellRuntimeDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A71B0D09234000481AAD09; };
+		B1BBB0D2E916221CC069F3FB /* ShellRuntimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E47209914B377830193C3C2; };
+		E68610E4CB760D4059FC6F34 /* HanlinAppleDeviceSnapshotProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76491073AD399F5985D5F7C4; };
+		9697686903CDF253B9A5A0DF /* HanlinNodeMobileScriptingCompiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF949B9662C1B6CBDD863B79; };
+		24C39ED576116C5EDE836A92 /* HanlinScriptingApplicationRuntimeBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40486F7E6563F0BA59FDD1B2; };
+		7C575E1D8D5569548B254276 /* HanlinScriptingPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66146C8B1FDCAECFD2C2F9B3; };
+		A725B284DE51F314FD681A72 /* HanlinScriptingSystemUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E604F7D9FE77462681C5C1E; };
+		3E62C83D1BDB36EFCF70A36F /* ScriptingPackageCenterViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163AD171B7ED5DB5E29CECCC; };
+		A4E2F7DD7AD7D7158C034806 /* ChavrusaShareInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E947767A45827D406B88061; };
+		DE2A4F34A4BADC8C8F5DAEA0 /* ChavrusaShareInboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C6F7D45A8B73E2F70576FF; };
+		3E5549CC35CB61529B0846C9 /* NativeToolTraceLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56AEE7F9BFE90EAB4179C1B0; };
+		204DCFC1877B2F98372A0388 /* BuiltinCanonicalRegistrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDB7072CD779E0736EC6357; };
+		E036206406377B91163EC852 /* NodeRunner.mm in Sources */ = {isa = PBXBuildFile; fileRef = A96301088C4540CF9F5E4A99; };
+		826B1E2F731820B576560601 /* PythonRuntimeBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 40087AA3BFCAF3BE766B63CC; };
+		E316753F3C55247837F07741 /* HanlinPythonNativeExtensions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1C132B3CC3CDF043BABAEBCB; };
+		48BE62859462B2616AD155DB /* RuntimeHostResources.zip in Resources */ = {isa = PBXBuildFile; fileRef = E849649B90E78BEE8588AB82; };
+		6BFBB66D01E3E4C3414B7BCD = {isa = PBXBuildFile; productRef = F70000000000000000000011; };
+		9A62EB43F5AF4D700BA66F7D = {isa = PBXBuildFile; productRef = F70000000000000000000012; };
+		0AA28DC0ADA4AC6C566FF5D5 = {isa = PBXBuildFile; productRef = F70000000000000000000021; };
+		F0717152119AA8824C2B722E = {isa = PBXBuildFile; productRef = F70000000000000000000031; };
+		0F0C0E8B7D751F93AF32F01F = {isa = PBXBuildFile; productRef = F70000000000000000000041; };
+		FB554AC27FA91D92A959E9BD = {isa = PBXBuildFile; productRef = C10000000000000000000021; };
+		85E2C258A35ACD2B98755412 = {isa = PBXBuildFile; productRef = C10000000000000000000022; };
+		002D5CC5405657364A519E69 = {isa = PBXBuildFile; productRef = C10000000000000000000023; };
+		991D94DFCE5A66668CE19D95 = {isa = PBXBuildFile; productRef = C10000000000000000000024; };
+		0C5F20B1969FBE740617D8DB = {isa = PBXBuildFile; productRef = C10000000000000000000025; };
+		235B5DD931A2B2F8816B1FBD = {isa = PBXBuildFile; productRef = C10000000000000000000027; };
+		AB4F07C765C19E8C575150D7 = {isa = PBXBuildFile; productRef = C10000000000000000000026; };
+		F0EC19EBF1BBDBBCFAB48E91 = {isa = PBXBuildFile; productRef = C10000000000000000000020; };
+		6A510F1438FB1FE101B2A6E1 = {isa = PBXBuildFile; productRef = C10000000000000000000019; };
+		1CA337DBE563E39B26672C4A = {isa = PBXBuildFile; productRef = C10000000000000000000018; };
+		DA89FD0FB6B9F68698596D37 = {isa = PBXBuildFile; productRef = C10000000000000000000017; };
+		4B8F6843B317C82D6AA376F1 = {isa = PBXBuildFile; productRef = A10000000000000000000015; };
+		2BADF576E7B370C4DF0E3A1A = {isa = PBXBuildFile; productRef = A10000000000000000000014; };
+		A942F85E443A1E1AF4EC5B80 = {isa = PBXBuildFile; fileRef = A10000000000000000000020; };
+		096E8F7794099439E3DEF1BD = {isa = PBXBuildFile; fileRef = A10000000000000000000020; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy,); }; };
+		A6707C298B5C94BA7DE6EFBB = {isa = PBXBuildFile; fileRef = A10000000000000000000021; };
+		B49E032C25076BA0CDE2EA6B = {isa = PBXBuildFile; fileRef = A10000000000000000000021; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy,); }; };
+		F2278E15E02108CA81A3E504 /* HanlinProductSplit in Frameworks */ = {isa = PBXBuildFile; productRef = E983F65EB97FCC56F8F2E5B8; };
+		B7A1EC5F618FF79D760CCA43 /* HanlinProductSplit in Frameworks */ = {isa = PBXBuildFile; productRef = E983F65EB97FCC56F8F2E5B8; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +186,7 @@
 			remoteGlobalIDString = E60000000000000000000050;
 			remoteInfo = ChavrusaChatNotificationService;
 		};
+		039FFAAC5BB40AC9CAB75847 = {isa = PBXContainerItemProxy; containerPortal = D7B6C3B92D50A55D004E3AD6; proxyType = 1; remoteGlobalIDString = C9B384692DF64FDC83A424ED; remoteInfo = HanlinMiniApps; };
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -144,6 +226,7 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A3BE6ADF3219DA1559312338 = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 10; files = (096E8F7794099439E3DEF1BD,B49E032C25076BA0CDE2EA6B,); name = "Embed Frameworks"; runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +243,65 @@
 		E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = ChavrusaChatTranslationProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E60000000000000000000020 /* ChavrusaChatNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ChavrusaChatNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		3057ED4EF02ECAFC728E6427 /* AgentDiagnosticsRedactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift"; sourceTree = SOURCE_ROOT; };
+		4B1C1E6A9A8A34E2D67F3121 /* ExpoHostServicesAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift"; sourceTree = SOURCE_ROOT; };
+		AC6FD252079779B243CAFC1C /* NativeScriptHostServicesAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift"; sourceTree = SOURCE_ROOT; };
+		A2D61B9F4171BB5A9F2BFCEC /* HanlinHostCapabilityAuthority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Capabilities/HanlinHostCapabilityAuthority.swift"; sourceTree = SOURCE_ROOT; };
+		710ADDA1D297EE839984319E /* HanlinHostCapabilityMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Capabilities/HanlinHostCapabilityMetadata.swift"; sourceTree = SOURCE_ROOT; };
+		912569EE7DA5D226A846EA31 /* HanlinHostCallContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift"; sourceTree = SOURCE_ROOT; };
+		0BFAD183364AE570360A76EE /* HanlinHostServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Core/HanlinHostServiceError.swift"; sourceTree = SOURCE_ROOT; };
+		06A34E86D0665D1BD575A188 /* HanlinHostServicesBroker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Core/HanlinHostServicesBroker.swift"; sourceTree = SOURCE_ROOT; };
+		9E947FF53D1F3A09BD823AE7 /* HanlinFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Data/HanlinFileService.swift"; sourceTree = SOURCE_ROOT; };
+		718274C800CD1A3A885BBD0A /* HanlinSQLiteHostAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Data/HanlinSQLiteHostAdapter.swift"; sourceTree = SOURCE_ROOT; };
+		962B59EF2E84D15C1CAFE9E1 /* HanlinRuntimeBroker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift"; sourceTree = SOURCE_ROOT; };
+		715A3EAD88D980EAEF4152EC /* HanlinRuntimeWireProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift"; sourceTree = SOURCE_ROOT; };
+		9CC88B149812B58E2FC666B2 /* RuntimeAvailabilityStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/HostServices/Runtime/RuntimeAvailabilityStore.swift"; sourceTree = SOURCE_ROOT; };
+		86C2A8A8DFDD3A9041792560 /* MCPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/MCP/Core/MCPError.swift"; sourceTree = SOURCE_ROOT; };
+		83B6D50C7DF9EE45660F2E29 /* CompiledMiniAppExposureRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/MiniApps/CompiledMiniAppExposureRegistry.swift"; sourceTree = SOURCE_ROOT; };
+		510DE6BB64325001EBCF8655 /* HanlinMiniAppHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift"; sourceTree = SOURCE_ROOT; };
+		9E1EF11978C7C7E1F41E804F /* HanlinNativeScriptProductionBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/NativeScript/HanlinNativeScriptProductionBootstrap.swift"; sourceTree = SOURCE_ROOT; };
+		A92C3C16EB0988538A44CDF2 /* HanlinNativeServicesBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift"; sourceTree = SOURCE_ROOT; };
+		C12E8D6331A796FE8C064FD3 /* AppRuntimeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Core/AppRuntimeCore.swift"; sourceTree = SOURCE_ROOT; };
+		2A16EE17B5B38EBFECD26331 /* RuntimeDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift"; sourceTree = SOURCE_ROOT; };
+		EF6BB37CA7927B1E9C5A20C7 /* RuntimeExecutionInputArtifact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeExecutionInputArtifact.swift"; sourceTree = SOURCE_ROOT; };
+		A03662C0A01C3BB45A3C5409 /* RuntimeFileLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeFileLayout.swift"; sourceTree = SOURCE_ROOT; };
+		0C311F3435A7B81C28F8A155 /* RuntimeJobStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeJobStore.swift"; sourceTree = SOURCE_ROOT; };
+		0654BB98FE99B7CBCAEE2436 /* RuntimeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeModels.swift"; sourceTree = SOURCE_ROOT; };
+		F5D19AE9D8F7C23C096B50D6 /* RuntimePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Core/RuntimePolicy.swift"; sourceTree = SOURCE_ROOT; };
+		DFF562D875F215845ADE5974 /* RuntimeQueuedExecution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeQueuedExecution.swift"; sourceTree = SOURCE_ROOT; };
+		BF279D791EAD52D14AFCB95D /* RuntimeUserOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Core/RuntimeUserOperation.swift"; sourceTree = SOURCE_ROOT; };
+		63BBE08AD553594D48DD4DA2 /* RuntimeEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift"; sourceTree = SOURCE_ROOT; };
+		AD2A594216BDD8CB30652BAB /* JavaScriptCoreOutputCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreOutputCapture.swift"; sourceTree = SOURCE_ROOT; };
+		B4EE5992F1D59F9DFF1D5D86 /* JavaScriptCoreRuntimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreRuntimeService.swift"; sourceTree = SOURCE_ROOT; };
+		ACE99E146F9DFB401A60BA64 /* LifecycleExecutionBroker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Lifecycle/LifecycleExecutionBroker.swift"; sourceTree = SOURCE_ROOT; };
+		C832984A954D5D11AF82A177 /* NodeRuntimeBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRuntimeBridge.swift"; sourceTree = SOURCE_ROOT; };
+		89F1A0097A8934C2D9FB163E /* NodePackageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Node/NodePackageManager.swift"; sourceTree = SOURCE_ROOT; };
+		D2B098EBB021D125A5E920C8 /* NodeRuntimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift"; sourceTree = SOURCE_ROOT; };
+		4F7A2D4FEFE33D3BF86CECDD /* RuntimeCommandDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Node/RuntimeCommandDispatcher.swift"; sourceTree = SOURCE_ROOT; };
+		758892775312C816B9F3B3B1 /* RuntimeHostConnection+Operations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Node/RuntimeHostConnection+Operations.swift"; sourceTree = SOURCE_ROOT; };
+		27B7515C117E272BBD335F22 /* TypeScriptRuntimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift"; sourceTree = SOURCE_ROOT; };
+		0A104E990EE8A62CA97D6943 /* PythonPackageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift"; sourceTree = SOURCE_ROOT; };
+		E9ACF83AB6A0DD2976462DE6 /* PythonQueuedExecution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Python/PythonQueuedExecution.swift"; sourceTree = SOURCE_ROOT; };
+		8E8C794996CE053D4E4EF62F /* PythonRuntimeBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift"; sourceTree = SOURCE_ROOT; };
+		3B191EEE4B3D3177B451E349 /* PythonRuntimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift"; sourceTree = SOURCE_ROOT; };
+		D8A71B0D09234000481AAD09 /* ShellRuntimeDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeDiagnostics.swift"; sourceTree = SOURCE_ROOT; };
+		5E47209914B377830193C3C2 /* ShellRuntimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeService.swift"; sourceTree = SOURCE_ROOT; };
+		76491073AD399F5985D5F7C4 /* HanlinAppleDeviceSnapshotProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift"; sourceTree = SOURCE_ROOT; };
+		AF949B9662C1B6CBDD863B79 /* HanlinNodeMobileScriptingCompiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift"; sourceTree = SOURCE_ROOT; };
+		40486F7E6563F0BA59FDD1B2 /* HanlinScriptingApplicationRuntimeBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift"; sourceTree = SOURCE_ROOT; };
+		66146C8B1FDCAECFD2C2F9B3 /* HanlinScriptingPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift"; sourceTree = SOURCE_ROOT; };
+		5E604F7D9FE77462681C5C1E /* HanlinScriptingSystemUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift"; sourceTree = SOURCE_ROOT; };
+		163AD171B7ED5DB5E29CECCC /* ScriptingPackageCenterViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift"; sourceTree = SOURCE_ROOT; };
+		2E947767A45827D406B88061 /* ChavrusaShareInbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift"; sourceTree = SOURCE_ROOT; };
+		D8C6F7D45A8B73E2F70576FF /* ChavrusaShareInboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift"; sourceTree = SOURCE_ROOT; };
+		56AEE7F9BFE90EAB4179C1B0 /* NativeToolTraceLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift"; sourceTree = SOURCE_ROOT; };
+		9FDB7072CD779E0736EC6357 /* BuiltinCanonicalRegistrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift"; sourceTree = SOURCE_ROOT; };
+		A96301088C4540CF9F5E4A99 /* NodeRunner.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRunner.mm"; sourceTree = SOURCE_ROOT; };
+		40087AA3BFCAF3BE766B63CC /* PythonRuntimeBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "AI_HLY/Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.mm"; sourceTree = SOURCE_ROOT; };
+		1C132B3CC3CDF043BABAEBCB /* HanlinPythonNativeExtensions.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "AI_HLY/Downstream/RuntimeCore/Python/Native/HanlinPythonNativeExtensions.mm"; sourceTree = SOURCE_ROOT; };
+		4851A2AA13C4051F159A03E7 /* HanlinMiniApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HanlinMiniApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D1CA4076E5C9F8EA71C24E1 /* HanlinMiniAppsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HanlinMiniAppsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E849649B90E78BEE8588AB82 /* RuntimeHostResources.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = AI_HLY/RuntimeHostResources.zip; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -286,6 +428,7 @@
 			);
 			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
 		};
+		7FE313BA594C7AB411944585 = {isa = PBXFileSystemSynchronizedBuildFileExceptionSet; membershipExceptions = (HanlinMiniApps.entitlements,); target = C9B384692DF64FDC83A424ED; };
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -339,6 +482,8 @@
 			path = ChavrusaChatNotificationService;
 			sourceTree = "<group>";
 		};
+		4D723F33814D42AFF9FA3BC7 /* HanlinMiniAppsApp */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (7FE313BA594C7AB411944585,); path = HanlinMiniAppsApp; sourceTree = "<group>"; };
+		FE3641FE310F14DCD8342801 /* HanlinMiniAppsUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; path = HanlinMiniAppsUITests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +491,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7A1EC5F618FF79D760CCA43 /* HanlinProductSplit in Frameworks */,
 				F70000000000000000000002 /* HanlinParityMiniApp in Frameworks */,
 				F70000000000000000000022 /* HanlinSefariaMiniApp in Frameworks */,
 				F70000000000000000000052 /* TorahLibraryKit in Frameworks */,
@@ -436,6 +582,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5B77D959731B2C4844143D8B = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (6BFBB66D01E3E4C3414B7BCD,9A62EB43F5AF4D700BA66F7D,0AA28DC0ADA4AC6C566FF5D5,F0717152119AA8824C2B722E,0F0C0E8B7D751F93AF32F01F,FB554AC27FA91D92A959E9BD,85E2C258A35ACD2B98755412,002D5CC5405657364A519E69,991D94DFCE5A66668CE19D95,0C5F20B1969FBE740617D8DB,235B5DD931A2B2F8816B1FBD,AB4F07C765C19E8C575150D7,F0EC19EBF1BBDBBCFAB48E91,6A510F1438FB1FE101B2A6E1,1CA337DBE563E39B26672C4A,DA89FD0FB6B9F68698596D37,4B8F6843B317C82D6AA376F1,2BADF576E7B370C4DF0E3A1A,F2278E15E02108CA81A3E504,A942F85E443A1E1AF4EC5B80,A6707C298B5C94BA7DE6EFBB,); runOnlyForDeploymentPostprocessing = 0; };
+		7942B977DC30F7150993BFBF = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -462,6 +610,9 @@
 			isa = PBXGroup;
 			children = (
 				D7B6C3C32D50A55D004E3AD6 /* AI_HLY */,
+				4D723F33814D42AFF9FA3BC7 /* HanlinMiniAppsApp */,
+				FE3641FE310F14DCD8342801 /* HanlinMiniAppsUITests */,
+				1C441EBC59A0B0F1607EAAC3 /* MiniApps Shared Sources */,
 				B10000000000000000000003 /* AI_HLYTests */,
 				E30000000000000000000002 /* AI_HLYUITests */,
 				D20000000000000000000030 /* HanlinScriptingWidgets */,
@@ -479,6 +630,8 @@
 			isa = PBXGroup;
 			children = (
 				D7B6C3C12D50A55D004E3AD6 /* AI_Hanlin.app */,
+				4851A2AA13C4051F159A03E7 /* HanlinMiniApps.app */,
+				5D1CA4076E5C9F8EA71C24E1 /* HanlinMiniAppsUITests.xctest */,
 				B10000000000000000000002 /* AI_HLYTests.xctest */,
 				E30000000000000000000001 /* AI_HLYUITests.xctest */,
 				D20000000000000000000020 /* HanlinScriptingWidgets.appex */,
@@ -489,6 +642,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1C441EBC59A0B0F1607EAAC3 /* MiniApps Shared Sources */ = {isa = PBXGroup; name = "MiniApps Shared Sources"; children = (3057ED4EF02ECAFC728E6427,4B1C1E6A9A8A34E2D67F3121,AC6FD252079779B243CAFC1C,A2D61B9F4171BB5A9F2BFCEC,710ADDA1D297EE839984319E,912569EE7DA5D226A846EA31,0BFAD183364AE570360A76EE,06A34E86D0665D1BD575A188,9E947FF53D1F3A09BD823AE7,718274C800CD1A3A885BBD0A,962B59EF2E84D15C1CAFE9E1,715A3EAD88D980EAEF4152EC,9CC88B149812B58E2FC666B2,86C2A8A8DFDD3A9041792560,83B6D50C7DF9EE45660F2E29,510DE6BB64325001EBCF8655,9E1EF11978C7C7E1F41E804F,A92C3C16EB0988538A44CDF2,C12E8D6331A796FE8C064FD3,2A16EE17B5B38EBFECD26331,EF6BB37CA7927B1E9C5A20C7,A03662C0A01C3BB45A3C5409,0C311F3435A7B81C28F8A155,0654BB98FE99B7CBCAEE2436,F5D19AE9D8F7C23C096B50D6,DFF562D875F215845ADE5974,BF279D791EAD52D14AFCB95D,63BBE08AD553594D48DD4DA2,AD2A594216BDD8CB30652BAB,B4EE5992F1D59F9DFF1D5D86,ACE99E146F9DFB401A60BA64,C832984A954D5D11AF82A177,89F1A0097A8934C2D9FB163E,D2B098EBB021D125A5E920C8,4F7A2D4FEFE33D3BF86CECDD,758892775312C816B9F3B3B1,27B7515C117E272BBD335F22,0A104E990EE8A62CA97D6943,E9ACF83AB6A0DD2976462DE6,8E8C794996CE053D4E4EF62F,3B191EEE4B3D3177B451E349,D8A71B0D09234000481AAD09,5E47209914B377830193C3C2,76491073AD399F5985D5F7C4,AF949B9662C1B6CBDD863B79,40486F7E6563F0BA59FDD1B2,66146C8B1FDCAECFD2C2F9B3,5E604F7D9FE77462681C5C1E,163AD171B7ED5DB5E29CECCC,2E947767A45827D406B88061,D8C6F7D45A8B73E2F70576FF,56AEE7F9BFE90EAB4179C1B0,9FDB7072CD779E0736EC6357,A96301088C4540CF9F5E4A99,40087AA3BFCAF3BE766B63CC,1C132B3CC3CDF043BABAEBCB,); sourceTree = "<group>"; };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -518,6 +672,7 @@
 			);
 			name = AI_Hanlin;
 			packageProductDependencies = (
+				E983F65EB97FCC56F8F2E5B8 /* HanlinProductSplit */,
 				F70000000000000000000012 /* HanlinParityMiniApp */,
 				F70000000000000000000021 /* HanlinSefariaMiniApp */,
 				F70000000000000000000051 /* TorahLibraryKit */,
@@ -699,6 +854,8 @@
 			productReference = E60000000000000000000020 /* ChavrusaChatNotificationService.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		C9B384692DF64FDC83A424ED /* HanlinMiniApps */ = {isa = PBXNativeTarget; buildConfigurationList = 32219BF7F9D4DC3B66CC4629; buildPhases = (85B356B256571CA2E0F968D7,5B77D959731B2C4844143D8B,F4CFC14E096F0A0C9648C90B,A3BE6ADF3219DA1559312338,27AFA58CA9FFAE48C703E868,9CEA2E54B0672EB4A56BC7E2,); buildRules = (); dependencies = (); fileSystemSynchronizedGroups = (4D723F33814D42AFF9FA3BC7,); name = HanlinMiniApps; packageProductDependencies = (F70000000000000000000011,F70000000000000000000012,F70000000000000000000021,F70000000000000000000031,F70000000000000000000041,C10000000000000000000021,C10000000000000000000022,C10000000000000000000023,C10000000000000000000024,C10000000000000000000025,C10000000000000000000027,C10000000000000000000026,C10000000000000000000020,C10000000000000000000019,C10000000000000000000018,C10000000000000000000017,A10000000000000000000015,A10000000000000000000014,E983F65EB97FCC56F8F2E5B8,); productName = HanlinMiniApps; productReference = 4851A2AA13C4051F159A03E7; productType = "com.apple.product-type.application"; };
+		F9DE554ECEBFD69F269E9A81 /* HanlinMiniAppsUITests */ = {isa = PBXNativeTarget; buildConfigurationList = B76288F795E64433BCF63B27; buildPhases = (A49BC01319D20C7EB3221D9E,7942B977DC30F7150993BFBF,A8DE31D0DEAB2FEA55880361,); buildRules = (); dependencies = (C0CA92CB46DB8D474390D107,); fileSystemSynchronizedGroups = (FE3641FE310F14DCD8342801,); name = HanlinMiniAppsUITests; packageProductDependencies = (); productName = HanlinMiniAppsUITests; productReference = 5D1CA4076E5C9F8EA71C24E1; productType = "com.apple.product-type.bundle.ui-testing"; };
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -746,6 +903,7 @@
 			mainGroup = D7B6C3B82D50A55D004E3AD6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				79489FAA5443D3A40143D4F0 /* HanlinProductSplit */,
 				F70000000000000000000010 /* XCLocalSwiftPackageReference "HanlinParityMiniApp" */,
 				F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */,
 				F70000000000000000000050 /* XCLocalSwiftPackageReference "TorahLibraryKit" */,
@@ -774,6 +932,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				C9B384692DF64FDC83A424ED /* HanlinMiniApps */,
+				F9DE554ECEBFD69F269E9A81 /* HanlinMiniAppsUITests */,
 				D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */,
 				B10000000000000000000007 /* AI_HLYTests */,
 				E30000000000000000000003 /* AI_HLYUITests */,
@@ -837,6 +997,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F4CFC14E096F0A0C9648C90B = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (48BE62859462B2616AD155DB,A10000000000000000000060,A10000000000000000000061,); runOnlyForDeploymentPostprocessing = 0; };
+		A8DE31D0DEAB2FEA55880361 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -881,6 +1043,47 @@
 			shellScript = "set -e\nsource \"$PROJECT_DIR/Vendor/Python/Python.xcframework/build/utils.sh\"\nif [ -z \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" ]; then\n  export EXPANDED_CODE_SIGN_IDENTITY=\"-\"\n  export EXPANDED_CODE_SIGN_IDENTITY_NAME=\"Ad Hoc\"\nfi\ninstall_python Vendor/Python/Python.xcframework\n";
 			showEnvVarsInLog = 0;
 		};
+9CEA2E54B0672EB4A56BC7E2 /* Process Python libraries */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Process Python libraries";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nsource \"$PROJECT_DIR/Vendor/Python/Python.xcframework/build/utils.sh\"\nif [ -z \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" ]; then\n  export EXPANDED_CODE_SIGN_IDENTITY=\"-\"\n  export EXPANDED_CODE_SIGN_IDENTITY_NAME=\"Ad Hoc\"\nfi\ninstall_python Vendor/Python/Python.xcframework\n";
+			showEnvVarsInLog = 0;
+		};
+27AFA58CA9FFAE48C703E868 /* Generate NativeScript metadata */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate NativeScript metadata";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(CONFIGURATION_BUILD_DIR)/metadata-$(ARCHS).bin",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\n\"$generator\" \"$target_arch\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -914,6 +1117,7 @@
 			target = E60000000000000000000050 /* ChavrusaChatNotificationService */;
 			targetProxy = E60000000000000000000010 /* PBXContainerItemProxy */;
 		};
+		C0CA92CB46DB8D474390D107 = {isa = PBXTargetDependency; target = C9B384692DF64FDC83A424ED; targetProxy = 039FFAAC5BB40AC9CAB75847; };
 /* End PBXTargetDependency section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -966,6 +1170,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		85B356B256571CA2E0F968D7 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (6E163C635623BA1971CA6C9F,B7BA4385C57586D2EFFFC634,1FB5EC51E80826119B4268AC,DFAD9ABAD1486A046CDDDF37,11338372B992D9A252A76342,30161CD264F2F134E63E6390,D501555ED9708FC8310A9C93,6F1F113E66013AE6627EEDB8,BB072BE38DB276FA33F0565B,4199FABF4C1570E43E3357C6,83BBE229D641488DD73962A7,70B3F279527D3D80E2BD1BE6,C5B70E31EF74AAEF39F6D082,10BD0534999F6D2947A23529,BFBD601D2EF7EE727FBE4ACE,C907F6138824E7F7A6070742,10D7E269FCA5DB87E07BB34C,C0BAB0085B962D7D399FECF3,36585B2B64B857739F35350A,1C22CE07B9DC92BCC7AC8DB9,ADC302093FE1B29D07402E4E,E64D48F39CF1B63803D4A032,F190B053CDD7F1E14644A480,BCC249703D10A8AF3200DE2E,EAC70CA82CD26D7CF74A9A56,7D6CBFC78C7DD921B5539B4C,CA0C035C91479CD90793DD61,28BDD11FFF1500D1A16BB7A2,BD567AE85F05E364818B8F25,E940F9CE095E27BBB5120FC4,BC7542458B0FB27196C98A38,3A35131634B6BD4C02206FC1,9DCF9FC2280B4D16BBE436E0,214F96508A3B69B3F6A389F1,890ACEB029EDA77F75F04D28,21A20ADE9C860242E28450E1,D69079DF47C2E644AF3A9AEA,FD262728E3831F0CDD22ADB7,8D82FC48EC2F2153AE189BE5,8E87992919D126A23C344EC0,B4B1EFB5BE34936F3A943B16,21890795578C0AF11605162B,B1BBB0D2E916221CC069F3FB,E68610E4CB760D4059FC6F34,9697686903CDF253B9A5A0DF,24C39ED576116C5EDE836A92,7C575E1D8D5569548B254276,A725B284DE51F314FD681A72,3E62C83D1BDB36EFCF70A36F,A4E2F7DD7AD7D7158C034806,DE2A4F34A4BADC8C8F5DAEA0,3E5549CC35CB61529B0846C9,204DCFC1877B2F98372A0388,E036206406377B91163EC852,826B1E2F731820B576560601,E316753F3C55247837F07741,); runOnlyForDeploymentPostprocessing = 0; };
+		A49BC01319D20C7EB3221D9E = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -1582,6 +1788,202 @@
 			};
 			name = Release;
 		};
+C51334EE9689903546A2337C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
+			buildSettings = {
+
+
+				CODE_SIGN_ENTITLEMENTS = HanlinMiniAppsApp/HanlinMiniApps.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(CONFIGURATION_BUILD_DIR)",
+					"\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+
+				INFOPLIST_KEY_CFBundleDisplayName = "Hanlin MiniApps";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Hanlin MiniApps accesses the camera only when you ask it to take a photo.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Hanlin MiniApps accesses your contacts only when you ask it to find a person or use contact information for a feature you requested.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Hanlin MiniApps uses Face ID only when you ask it to unlock or authorize a protected action in the app.";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Hanlin MiniApps reads clinical health records only when you request a health feature that needs them.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Hanlin MiniApps reads health data only when you request a health-related feature.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Hanlin MiniApps writes health data only when you ask it to record an activity.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Hanlin MiniApps uses your location only for location-based features you request.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Hanlin MiniApps uses your location only for nearby, maps, and weather features you request.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hanlin MiniApps uses the microphone only when you ask it to record audio.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "ChavrusaChat saves media to your photo library only when you ask it to.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Hanlin MiniApps reads selected photos only when you choose them.";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Hanlin MiniApps accesses reminders only when you ask it to read or add a task.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hanlin MiniApps uses speech recognition only when you ask it to transcribe speech.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)/Python.framework/Headers",
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				LD = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				LDPLUSPLUS = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				MARKETING_VERSION = 0.7.3;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-sectcreate",
+					__DATA,
+					__TNSMetadata,
+					"$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin",
+					"-licucore",
+					"-lz",
+					"-lc++",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreServices,
+					"-framework",
+					Security,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.hanlinminiapps;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AAE418FF955B638DE274024D = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = NA6HPWARQ2; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 27.0; PRODUCT_BUNDLE_IDENTIFIER = com.itorah.hanlinminiapps.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 6.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = HanlinMiniApps; }; name = Debug; };
+5700D6FAF105918206E495B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
+			buildSettings = {
+
+
+				CODE_SIGN_ENTITLEMENTS = HanlinMiniAppsApp/HanlinMiniApps.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+
+				DEVELOPMENT_TEAM = NA6HPWARQ2;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(CONFIGURATION_BUILD_DIR)",
+					"\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+
+				INFOPLIST_KEY_CFBundleDisplayName = "Hanlin MiniApps";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Hanlin MiniApps accesses the camera only when you ask it to take a photo.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Hanlin MiniApps accesses your contacts only when you ask it to find a person or use contact information for a feature you requested.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Hanlin MiniApps uses Face ID only when you ask it to unlock or authorize a protected action in the app.";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Hanlin MiniApps reads clinical health records only when you request a health feature that needs them.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Hanlin MiniApps reads health data only when you request a health-related feature.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Hanlin MiniApps writes health data only when you ask it to record an activity.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Hanlin MiniApps uses your location only for location-based features you request.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Hanlin MiniApps uses your location only for nearby, maps, and weather features you request.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Hanlin MiniApps uses the microphone only when you ask it to record audio.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "ChavrusaChat saves media to your photo library only when you ask it to.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Hanlin MiniApps reads selected photos only when you choose them.";
+				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Hanlin MiniApps accesses reminders only when you ask it to read or add a task.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Hanlin MiniApps uses speech recognition only when you ask it to transcribe speech.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILT_PRODUCTS_DIR)/Python.framework/Headers",
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path",
+					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				LD = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				LDPLUSPLUS = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
+				MARKETING_VERSION = 0.7.3;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-sectcreate",
+					__DATA,
+					__TNSMetadata,
+					"$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin",
+					"-licucore",
+					"-lz",
+					"-lc++",
+					"-framework",
+					Foundation,
+					"-framework",
+					UIKit,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreServices,
+					"-framework",
+					Security,
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.hanlinminiapps;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat App Store";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E941575273F32289E06CD1F2 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; DEVELOPMENT_TEAM = NA6HPWARQ2; GENERATE_INFOPLIST_FILE = YES; IPHONEOS_DEPLOYMENT_TARGET = 27.0; PRODUCT_BUNDLE_IDENTIFIER = com.itorah.hanlinminiapps.uitests; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 6.0; TARGETED_DEVICE_FAMILY = "1,2"; TEST_TARGET_NAME = HanlinMiniApps; }; name = Release; };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1657,6 +2059,8 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		32219BF7F9D4DC3B66CC4629 = {isa = XCConfigurationList; buildConfigurations = (C51334EE9689903546A2337C,5700D6FAF105918206E495B1,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		B76288F795E64433BCF63B27 = {isa = XCConfigurationList; buildConfigurations = (AAE418FF955B638DE274024D,E941575273F32289E06CD1F2,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
@@ -1704,6 +2108,7 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/IOSSystemLite;
 		};
+		79489FAA5443D3A40143D4F0 /* HanlinProductSplit */ = {isa = XCLocalSwiftPackageReference; relativePath = Packages/HanlinProductSplit; };
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1956,6 +2361,7 @@
 			package = D7D5EE4C2DD590C500B89AAD /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
 		};
+		E983F65EB97FCC56F8F2E5B8 /* HanlinProductSplit */ = {isa = XCSwiftPackageProductDependency; package = 79489FAA5443D3A40143D4F0; productName = HanlinProductSplit; };
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D7B6C3B92D50A55D004E3AD6 /* Project object */;

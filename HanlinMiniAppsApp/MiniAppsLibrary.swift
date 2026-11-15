@@ -36,6 +36,7 @@ struct MiniAppsLibrary: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    .accessibilityIdentifier("miniapps.catalog.\(item.id.rawValue)")
                 }
             }
             .navigationTitle("MiniApps")
@@ -46,6 +47,7 @@ struct MiniAppsLibrary: View {
                     do { presentation = PresentedContent(view: try services.packageManagement()) }
                     catch { self.error = error.localizedDescription }
                 }
+                .accessibilityIdentifier("miniapps.manage")
             }
             .overlay {
                 if loading { ProgressView() }
@@ -67,6 +69,7 @@ struct MiniAppsLibrary: View {
                                 catch { self.error = error.localizedDescription }
                             }
                         }
+                        .accessibilityIdentifier("miniapps.open")
                     }
                 }
             } else {
@@ -79,6 +82,7 @@ struct MiniAppsLibrary: View {
                 destination.view.toolbar {
                     ToolbarItem(placement: .confirmationAction) {
                         Button("Done") { presentation = nil }
+                            .accessibilityIdentifier("miniapps.close")
                     }
                 }
             }

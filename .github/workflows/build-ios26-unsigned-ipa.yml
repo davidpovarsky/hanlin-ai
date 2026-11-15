@@ -131,6 +131,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  focused-app-split:
+    if: ${{ inputs.target_validation_group == 'app_split' && !inputs.testflight_upload }}
+    uses: ./.github/workflows/validate-app-split.yml
+
   focused-nativescript-metadata-tests:
     if: ${{ inputs.nativescript_metadata_validation_only && !inputs.testflight_upload }}
     name: Probe pinned NativeScript SDK metadata
@@ -170,7 +174,7 @@ jobs:
           retention-days: 14
 
   plan-affected-validation:
-    if: ${{ !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
+    if: ${{ inputs.target_validation_group != 'app_split' && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '') }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
