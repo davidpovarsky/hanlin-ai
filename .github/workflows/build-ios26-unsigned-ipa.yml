@@ -137,12 +137,41 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
+  skill-format-app-resolution:
+    if: ${{ inputs.target_validation_group == 'skill_format_app_resolve' && !inputs.testflight_upload }}
+    name: Resolve original Yams in the actual app graph only
+    runs-on: xcode-27
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Resolve app dependencies without building or testing
+        run: bash Scripts/CI/IntegrationValidation/resolve_skill_format_app.sh
+      - name: Record measured resolution cost
+        if: always()
+        run: |
+          python3 Scripts/CI/generate_performance_report.py \
+            --log-dir build/skill-format-app-resolution \
+            --run-id "${{ github.run_id }}" --commit-sha "${{ github.sha }}" \
+            --event-name "${{ github.event_name }}" \
+            --output-json build/skill-format-app-resolution/ci-performance-report.json \
+            --step-summary "$GITHUB_STEP_SUMMARY" --require-complete
+      - name: Retain original app graph and source evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: skill-format-app-resolution-${{ github.run_id }}
+          path: build/skill-format-app-resolution
+          if-no-files-found: error
+          retention-days: 30
+
   composer-native-host-diagnostic:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'composer_native_host_diagnostic' && !inputs.testflight_upload }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'composer_native_host_diagnostic' && !inputs.testflight_upload ) }}
     name: One guarded native hosted Composer component diagnostic
     runs-on: xcode-27
     timeout-minutes: 40
@@ -164,7 +193,7 @@ jobs:
           retention-days: 14
 
   composer-sdk-eligibility-diagnostic:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' && !inputs.testflight_upload) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' && !inputs.testflight_upload) ) }}
     name: One SDK-explicit eligibility-gated frozen Composer diagnostic
     runs-on: xcode-27
     timeout-minutes: 40
@@ -185,7 +214,7 @@ jobs:
           retention-days: 14
 
   composer-metadata-only:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group == 'composer_metadata_only' && !inputs.testflight_upload)) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group == 'composer_metadata_only' && !inputs.testflight_upload)) ) }}
     name: Two frozen Composer metadata queries only
     runs-on: xcode-27
     timeout-minutes: 15
@@ -205,7 +234,7 @@ jobs:
           retention-days: 14
 
   agent-sdk-proof:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) ) }}
     name: Exact-source Agent SDK Apple tests
     env:
       HANLIN_SDK_SESSION_ONLY: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && '1' || '0' }}
@@ -234,7 +263,7 @@ jobs:
           retention-days: 30
 
   agent-sdk-lock-resolution:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (inputs.target_validation_group == 'agent_sdk_resolve_locks' && !inputs.testflight_upload))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (inputs.target_validation_group == 'agent_sdk_resolve_locks' && !inputs.testflight_upload))) ) }}
     name: Resolve exact SDK producer in all six existing Apple package graphs
     runs-on: xcode-27
     timeout-minutes: 20
@@ -252,7 +281,7 @@ jobs:
           retention-days: 30
 
   simulator-parity-ui:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload))) ) }}
     name: Actual compiled Swift Mini App UI on iPhone and iPad 27
     env:
       HANLIN_PARITY_FROZEN_SOURCE: ${{ inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' && '2427aac90154834eb5f31c746d47f6dcd3129e8e' || '' }}
@@ -273,7 +302,7 @@ jobs:
           retention-days: 30
 
   focused-integration-tests:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((((inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && !inputs.composer_validation_only) || (inputs.target_validation_group == 'agent_sdk_exact_source_proof' && inputs.composer_validation_only)) && !inputs.testflight_upload && !inputs.runtime_bundle_only && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == ''))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((((inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof') && !inputs.composer_validation_only) || (inputs.target_validation_group == 'agent_sdk_exact_source_proof' && inputs.composer_validation_only)) && !inputs.testflight_upload && !inputs.runtime_bundle_only && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == ''))) ) }}
     name: ${{ inputs.target_validation_group != 'product_split_integration' && 'Verify exact-pin A2UI on macOS 27' || 'Verify MiniApps provider and focused tests on iOS 27' }}
     runs-on: xcode-27
     timeout-minutes: ${{ inputs.target_validation_group == 'product_split_integration' && 60 || 30 }}
@@ -310,7 +339,7 @@ jobs:
           retention-days: 14
 
   focused-composer-tests:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') ) && inputs.composer_validation_only && !inputs.testflight_upload && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == ''))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || !(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') ) && inputs.composer_validation_only && !inputs.testflight_upload && !inputs.nativescript_metadata_validation_only && !inputs.runtime_job_foundation_only && !inputs.markdown_renderer_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.diagnostics_capture_validation_only && inputs.scripting_package_test_filter == ''))) ) }}
     name: Verify whole Composer and UIKit components on iOS 27
     runs-on: xcode-27
     timeout-minutes: 35
@@ -330,7 +359,7 @@ jobs:
           retention-days: 14
 
   focused-nativescript-metadata-tests:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && inputs.nativescript_metadata_validation_only && !inputs.testflight_upload))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && inputs.nativescript_metadata_validation_only && !inputs.testflight_upload))) ) }}
     name: Probe pinned NativeScript SDK metadata
     runs-on: xcode-27
     timeout-minutes: 12
@@ -368,7 +397,7 @@ jobs:
           retention-days: 14
 
   plan-affected-validation:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '')))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '')))) ) }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -477,7 +506,7 @@ jobs:
 
   validate-hanlin-platform-phase1:
     needs: plan-affected-validation
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_phase1 == 'true'))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_phase1 == 'true'))) ) }}
     name: Validate baseline, contracts, tests, and iOS compilation
     runs-on: xcode-27
     timeout-minutes: 60
@@ -931,7 +960,7 @@ jobs:
 
   validate-runtime-bundle:
     needs: plan-affected-validation
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_runtimecore_bundle == 'true'))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_runtimecore_bundle == 'true'))) ) }}
     name: Run split RuntimeCore bundle pipeline
     uses: ./.github/workflows/build-runtime-bundle.yml
     with:
@@ -944,7 +973,7 @@ jobs:
 
   build-ios26-unsigned-ipa:
     needs: plan-affected-validation
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_device_build == 'true'))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_device_build == 'true'))) ) }}
     name: Build unsigned IPA with Xcode 26
     runs-on: xcode-27
     timeout-minutes: 60
@@ -1754,7 +1783,7 @@ jobs:
 
   full-app-simulator-smoke:
     needs: plan-affected-validation
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_simulator_job == 'true'))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_simulator_job == 'true'))) ) }}
     name: Launch full app on iPad Simulator
     runs-on: xcode-27
     timeout-minutes: 240
@@ -3087,7 +3116,7 @@ jobs:
       - plan-affected-validation
       - validate-hanlin-platform-phase1
       - full-app-simulator-smoke
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (always() && !cancelled() && !inputs.testflight_upload && (needs.plan-affected-validation.outputs.run_phase1 == 'true' || needs.plan-affected-validation.outputs.run_simulator_job == 'true')))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (always() && !cancelled() && !inputs.testflight_upload && (needs.plan-affected-validation.outputs.run_phase1 == 'true' || needs.plan-affected-validation.outputs.run_simulator_job == 'true')))) ) }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -3192,21 +3221,21 @@ jobs:
 
 
   focused-markdown-renderer-tests:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload && inputs.markdown_renderer_validation_only))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload && inputs.markdown_renderer_validation_only))) ) }}
     uses: ./.github/workflows/validate-chat-markdown.yml
 
   focused-code-fence-webkit-tests:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload && inputs.code_fence_webkit_validation_only))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload && inputs.code_fence_webkit_validation_only))) ) }}
     uses: ./.github/workflows/validate-chat-code-fences.yml
 
   focused-diagnostics-capture-tests:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload && inputs.diagnostics_capture_validation_only))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload && inputs.diagnostics_capture_validation_only))) ) }}
     uses: ./.github/workflows/validate-chat-diagnostics.yml
     with:
       test_suite: ${{ inputs.exact_test_selector }}
 
   focused-scripting-package-tests:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '')))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.testflight_upload && (inputs.runtime_job_foundation_only || inputs.scripting_package_test_filter != '')))) ) }}
     uses: ./.github/workflows/validate-scripting-runtime.yml
     with:
       test_filter: ${{ inputs.scripting_package_test_filter }}
@@ -3215,7 +3244,7 @@ jobs:
     secrets: inherit
 
   upload-chavrusachat-to-testflight:
-    if: ${{ inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && inputs.testflight_upload))) }}
+    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && inputs.testflight_upload))) ) }}
     uses: ./.github/workflows/testflight.yml
     with:
       upload_to_testflight: true

@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import HanlinSkillFormat
 import HanlinPlatformContracts
 
 /// Persistent store managing user-created, imported, and overridden Agent Skills.
@@ -175,7 +176,8 @@ public final class SkillStore {
                 directoryURL: dir,
                 resources: resources,
                 installedAt: meta?.installedAt ?? Date(),
-                updatedAt: meta?.updatedAt ?? Date()
+                updatedAt: meta?.updatedAt ?? Date(),
+                markdownDocument: try? existingDocument(at: dir.appendingPathComponent("SKILL.md"))
             ))
         }
         return records
@@ -278,12 +280,16 @@ public final class SkillStore {
         sha256: String? = nil
     ) throws {
         let dir = skillsDirectoryURL.appendingPathComponent(id.rawValue, isDirectory: true)
-        try fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
 
         let effectiveDesc = description.isEmpty ? title : description
-        let skillMD = SkillMarkdownParser.serialize(name: id.rawValue, title: title, description: effectiveDesc, body: instructions)
         let skillMDURL = dir.appendingPathComponent("SKILL.md")
-        try skillMD.data(using: .utf8)?.write(to: skillMDURL, options: .atomic)
+        let existing = try existingDocument(at: skillMDURL)
+        let document = try editedDocument(existing, name: id.rawValue, title: title,
+                                          description: effectiveDesc, body: instructions)
+        try fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
+        if document.originalSource != existing?.originalSource {
+            try document.originalSource.write(to: skillMDURL, options: .atomic)
+        }
 
         let existingMeta = cachedState.metadataBySkillID[id.rawValue]
         let meta = HanlinSkillMetadata(
@@ -348,7 +354,8 @@ public final class SkillStore {
                 directoryURL: targetDir,
                 resources: listResources(for: id),
                 installedAt: meta.installedAt,
-                updatedAt: meta.updatedAt
+                updatedAt: meta.updatedAt,
+                markdownDocument: try? existingDocument(at: targetDir.appendingPathComponent("SKILL.md"))
             )
         } catch {
             if fileManager.fileExists(atPath: targetDir.path) {
@@ -413,13 +420,22 @@ public final class SkillStore {
         keywords: [String]? = nil
     ) throws {
         let dir = overridesDirectoryURL.appendingPathComponent(baseSkill.id.rawValue, isDirectory: true)
-        try fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
 
         let title = newTitle ?? baseSkill.title.preferredValue()
         let desc = newDescription ?? baseSkill.summary.preferredValue()
-        let skillMD = SkillMarkdownParser.serialize(name: baseSkill.id.rawValue, title: title, description: desc, body: newInstructions)
         let skillMDURL = dir.appendingPathComponent("SKILL.md")
-        try skillMD.data(using: .utf8)?.write(to: skillMDURL, options: .atomic)
+        let existing = try existingDocument(at: skillMDURL)
+        // First override copies the selected original document, including unknown extensions.
+        // Subsequent edits use that override's own bytes instead of reserializing a descriptor.
+        let catalog = HanlinSkillCatalog.shared
+        let source = existing ?? catalog.markdownDocument(for: baseSkill.id)
+            ?? (catalog.resolve(id: baseSkill.id) == nil ? markdownDocument(for: baseSkill.id, isOverride: false) : nil)
+        let document = try editedDocument(source, name: baseSkill.id.rawValue, title: title,
+                                          description: desc, body: newInstructions)
+        try fileManager.createDirectory(at: dir, withIntermediateDirectories: true)
+        if document.originalSource != existing?.originalSource {
+            try document.originalSource.write(to: skillMDURL, options: .atomic)
+        }
 
         let tools = preferredToolIDs ?? baseSkill.preferredToolIDs
         let hints = triggerHints ?? baseSkill.triggerHints
@@ -465,10 +481,35 @@ public final class SkillStore {
 
     // MARK: - Private Helpers
 
+    /// Fresh read only; no migration/rewrite or additional authoritative store.
+    public func markdownDocument(for skillID: HanlinSkillID, isOverride: Bool? = nil) -> SkillMarkdownDocument? {
+        let directory: URL?
+        if let isOverride {
+            directory = (isOverride ? overridesDirectoryURL : skillsDirectoryURL).appendingPathComponent(skillID.rawValue, isDirectory: true)
+        } else { directory = directoryURL(for: skillID) }
+        guard let directory else { return nil }
+        return try? existingDocument(at: directory.appendingPathComponent("SKILL.md"))
+    }
+
+    private func existingDocument(at url: URL) throws -> SkillMarkdownDocument? {
+        guard fileManager.fileExists(atPath: url.path) else { return nil }
+        return try SkillDocumentParser.parse(Data(contentsOf: url))
+    }
+
+    private func editedDocument(_ existing: SkillMarkdownDocument?, name: String, title: String,
+                                description: String, body: String) throws -> SkillMarkdownDocument {
+        guard let existing else {
+            return try .create(name: name, title: title, description: description, body: body)
+        }
+        // UI title fallback must not insert a title into an otherwise unchanged original header.
+        let effectiveTitle = Data(title.utf8) == Data(existing.displayTitle.utf8) ? existing.title : title
+        return try existing.updating(name: name, title: effectiveTitle, description: description, instructionBody: body)
+    }
+
     private func loadDescriptor(from dir: URL, skillID: HanlinSkillID, isOverride: Bool) -> HanlinSkillDescriptor? {
         let skillFile = dir.appendingPathComponent("SKILL.md", isDirectory: false)
-        guard let content = try? String(contentsOf: skillFile, encoding: .utf8),
-              let parsed = try? SkillMarkdownParser.parse(content) else {
+        guard let data = try? Data(contentsOf: skillFile),
+              let parsed = try? SkillMarkdownParser.parse(data) else {
             return nil
         }
         let metaFile = dir.appendingPathComponent("hanlin.json", isDirectory: false)

@@ -1,5 +1,6 @@
 import Foundation
 import HanlinPlatformContracts
+import HanlinSkillFormat
 
 /// Represents the origin source of a Skill in Hanlin.
 public enum SkillSourceKind: String, Codable, Hashable, Sendable {
@@ -171,6 +172,7 @@ public struct StoredSkillRecord: Identifiable, Sendable {
     public var resources: [SkillResourceFile]
     public var installedAt: Date
     public var updatedAt: Date
+    public let markdownDocument: SkillMarkdownDocument?
 
     public init(
         descriptor: HanlinSkillDescriptor,
@@ -184,8 +186,10 @@ public struct StoredSkillRecord: Identifiable, Sendable {
         directoryURL: URL? = nil,
         resources: [SkillResourceFile] = [],
         installedAt: Date = Date(),
-        updatedAt: Date = Date()
+        updatedAt: Date = Date(),
+        markdownDocument: SkillMarkdownDocument? = nil
     ) {
+        self.markdownDocument = markdownDocument
         self.descriptor = descriptor
         self.sourceKind = sourceKind
         self.sourcePackageID = sourcePackageID
@@ -201,160 +205,35 @@ public struct StoredSkillRecord: Identifiable, Sendable {
     }
 }
 
-/// Safe parser for standard `SKILL.md` frontmatter and markdown body.
+/// App compatibility facade over the single original-Yams document contract.
 public enum SkillMarkdownParser {
     public struct ParsedSkillMarkdown: Sendable {
         public let name: String
         public let title: String?
         public let description: String
         public let body: String
+        /// Legacy scalar projection only. Use document.root for complete typed metadata.
         public let rawFrontmatter: [String: String]
+        public let document: SkillMarkdownDocument?
+        public var displayTitle: String { title?.isEmpty == false ? title! : name }
 
-        public var displayTitle: String {
-            if let title = title?.trimmingCharacters(in: .whitespacesAndNewlines), !title.isEmpty {
-                return title
-            }
-            return name
-        }
-
-        public init(
-            name: String,
-            title: String? = nil,
-            description: String,
-            body: String,
-            rawFrontmatter: [String: String]
-        ) {
-            self.name = name
-            self.title = title
-            self.description = description
-            self.body = body
-            self.rawFrontmatter = rawFrontmatter
+        public init(name: String, title: String? = nil, description: String, body: String,
+                    rawFrontmatter: [String: String], document: SkillMarkdownDocument? = nil) {
+            self.name = name; self.title = title; self.description = description; self.body = body
+            self.rawFrontmatter = rawFrontmatter; self.document = document
         }
     }
 
-    public enum ParseError: Error, LocalizedError, Hashable, Sendable {
-        case missingFrontmatter
-        case missingRequiredField(String)
-        case malformedFrontmatter(String)
+    public static func parse(_ content: String) throws -> ParsedSkillMarkdown { try parse(Data(content.utf8)) }
 
-        public var errorDescription: String? {
-            switch self {
-            case .missingFrontmatter:
-                return "SKILL.md is missing required YAML frontmatter delimited by '---'."
-            case .missingRequiredField(let field):
-                return "SKILL.md frontmatter is missing required field: '\(field)'."
-            case .malformedFrontmatter(let detail):
-                return "SKILL.md frontmatter is malformed: \(detail)"
-            }
-        }
+    public static func parse(_ source: Data) throws -> ParsedSkillMarkdown {
+        let document = try SkillDocumentParser.parse(source)
+        return .init(name: document.name, title: document.title, description: document.description,
+                     body: document.instructionBody, rawFrontmatter: document.legacyStringFrontmatter, document: document)
     }
 
-    public static func parse(_ content: String) throws -> ParsedSkillMarkdown {
-        var cleanContent = content
-        if cleanContent.hasPrefix("\u{FEFF}") {
-            cleanContent.removeFirst()
-        }
-        cleanContent = cleanContent.replacingOccurrences(of: "\r\n", with: "\n").replacingOccurrences(of: "\r", with: "\n")
-        let lines = cleanContent.components(separatedBy: "\n")
-        guard let firstLine = lines.first?.trimmingCharacters(in: .whitespaces),
-              firstLine == "---" else {
-            throw ParseError.missingFrontmatter
-        }
-
-        var closingIndex: Int?
-        for i in 1..<lines.count {
-            if lines[i].trimmingCharacters(in: .whitespaces) == "---" {
-                closingIndex = i
-                break
-            }
-        }
-
-        guard let closeIdx = closingIndex else {
-            throw ParseError.missingFrontmatter
-        }
-
-        var frontmatter: [String: String] = [:]
-        var currentKey: String?
-        var multilineMode: Character?
-        var multilineBuffer: [String] = []
-
-        func flushMultiline() {
-            guard let key = currentKey else { return }
-            if multilineMode == ">" {
-                frontmatter[key] = multilineBuffer.joined(separator: " ").trimmingCharacters(in: .whitespaces)
-            } else if multilineMode == "|" {
-                frontmatter[key] = multilineBuffer.joined(separator: "\n").trimmingCharacters(in: .newlines)
-            }
-            multilineMode = nil
-            multilineBuffer = []
-            currentKey = nil
-        }
-
-        for i in 1..<closeIdx {
-            let rawLine = lines[i]
-            let trimmed = rawLine.trimmingCharacters(in: .whitespaces)
-            if trimmed.isEmpty || trimmed.hasPrefix("#") { continue }
-
-            if rawLine.hasPrefix("  ") || rawLine.hasPrefix("\t") {
-                if multilineMode != nil {
-                    multilineBuffer.append(trimmed)
-                    continue
-                }
-            } else {
-                flushMultiline()
-            }
-
-            guard let colonIdx = trimmed.firstIndex(of: ":") else {
-                continue
-            }
-            let key = String(trimmed[..<colonIdx]).trimmingCharacters(in: .whitespaces)
-            var value = String(trimmed[trimmed.index(after: colonIdx)...]).trimmingCharacters(in: .whitespaces)
-
-            if value == ">" || value == "|" {
-                currentKey = key
-                multilineMode = value.first
-                multilineBuffer = []
-                continue
-            }
-
-            if (value.hasPrefix("\"") && value.hasSuffix("\"") && value.count >= 2) ||
-               (value.hasPrefix("'") && value.hasSuffix("'") && value.count >= 2) {
-                value = String(value.dropFirst().dropLast())
-            }
-            frontmatter[key] = value
-        }
-        flushMultiline()
-
-        guard let name = frontmatter["name"], !name.isEmpty else {
-            throw ParseError.missingRequiredField("name")
-        }
-        let rawTitle = frontmatter["title"]?.trimmingCharacters(in: .whitespacesAndNewlines)
-        let title = (rawTitle?.isEmpty == false) ? rawTitle : nil
-        let desc = frontmatter["description"] ?? ""
-
-        let bodyStartIndex = closeIdx + 1
-        let body: String
-        if bodyStartIndex < lines.count {
-            body = lines[bodyStartIndex...].joined(separator: "\n").trimmingCharacters(in: .newlines)
-        } else {
-            body = ""
-        }
-
-        return ParsedSkillMarkdown(
-            name: name,
-            title: title,
-            description: desc,
-            body: body,
-            rawFrontmatter: frontmatter
-        )
-    }
-
-    public static func serialize(name: String, title: String? = nil, description: String, body: String) -> String {
-        var header = "---\nname: \(name)\n"
-        if let title = title, !title.isEmpty, title != name {
-            header += "title: \(title)\n"
-        }
-        header += "description: \(description)\n---\n\n\(body)"
-        return header
+    public static func serialize(name: String, title: String? = nil, description: String, body: String) throws -> String {
+        String(decoding: try SkillMarkdownDocument.create(name: name, title: title, description: description, body: body).originalSource,
+               as: UTF8.self)
     }
 }

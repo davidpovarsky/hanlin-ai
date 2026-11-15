@@ -1,0 +1,204 @@
+{
+  "run_id": 43757913093,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43757913093",
+  "workflow_conclusion": "success",
+  "source_sha": "e44c57cf348b1037baa8416277a3414d7e93b805",
+  "classification": "EXECUTED_PASS",
+  "scope": "Original Yams HanlinSkillFormat package only; actual app Store/ZIP/UI NOT_RUN",
+  "platforms": [
+    {
+      "platform": "iOS26",
+      "classification": "EXECUTED_PASS",
+      "test_identities": 22,
+      "parameter_expanded_invocations": 27,
+      "actual_identifiers": [
+        "SkillDocumentTests/noOpAndTypedCodableRetainOriginalData()",
+        "SkillDocumentTests/allKnownEditsPreserveUnknownBytesAndBody()",
+        "SkillDocumentTests/complexUnknownKeysRemainOrderedTaggedData()",
+        "SkillDocumentTests/sourceAndConfigurationBudgetsFailBeforeComposition()",
+        "SkillDocumentTests/aliasesCyclesAndTextExpansionHaveSeparateResourceErrors()",
+        "SkillDocumentTests/openClawNestedMetadataUsesOneTaggedContract()",
+        "SkillDocumentTests/importedFenceAtEOFCanGainInstructionsWithoutHeaderRewrite()",
+        "SkillDocumentTests/physicalAndAliasExpandedDepthAreBounded()",
+        "SkillDocumentTests/malformedDuplicateAndInvalidRootsFailClosed()",
+        "SkillDocumentTests/optionalTitleRemovalRetainsInlineComment()",
+        "SkillDocumentTests/bodyOnlyEditPreservesEntireFrontmatterAndNewlineStyle()",
+        "SkillDocumentTests/scalarAliasCanBeEditedWithoutChangingItsSource()",
+        "SkillDocumentTests/bomCRLFUnicodeMarksMapToExactUTF8Bytes()",
+        "SkillDocumentTests/anchoredKnownFieldFailsExplicitlyWithoutChangingSource()",
+        "SkillDocumentTests/canonicalUnicodeEditDoesNotCollapseDistinctBytes()",
+        "SkillDocumentTests/compatibleMigrationReadsLegacyWithoutRewriting()",
+        "SkillDocumentTests/newDocumentsUseUpstreamEmitterEscaping()",
+        "SkillDocumentTests/slicedDataUsesDocumentRelativeRangesWithoutChangingBytes()",
+        "SkillDocumentTests/quotedKeysAndExplicitStringTagsUseOriginalScanner()",
+        "SkillDocumentTests/parsingHonorsCancellation()",
+        "SkillDocumentTests/blockScalarUsesNativeSpanAndRetainsFollowingField(style:)",
+        "SkillDocumentTests/flowMappingAddsMissingFieldWithOrWithoutTrailingComma(trailing:)"
+      ],
+      "destination": "platform=iOS Simulator,id=73903A6E-DECF-4552-ADBB-B4B1F348F51F",
+      "artifact_id": 14179715088,
+      "actual_device": {
+        "name": "iPhone 16e",
+        "udid": "73903A6E-DECF-4552-ADBB-B4B1F348F51F",
+        "runtime": {
+          "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-26-2",
+          "name": "iOS 26.2",
+          "version": "26.2",
+          "buildversion": "23C54",
+          "isAvailable": true
+        }
+      },
+      "compiler_language_mode": "6",
+      "compiled_deployment_target": "arm64-apple-ios26.0-simulator"
+    },
+    {
+      "platform": "macOS",
+      "classification": "EXECUTED_PASS",
+      "test_identities": 22,
+      "parameter_expanded_invocations": 27,
+      "actual_identifiers": [
+        "SkillDocumentTests/quotedKeysAndExplicitStringTagsUseOriginalScanner()",
+        "SkillDocumentTests/aliasesCyclesAndTextExpansionHaveSeparateResourceErrors()",
+        "SkillDocumentTests/scalarAliasCanBeEditedWithoutChangingItsSource()",
+        "SkillDocumentTests/bomCRLFUnicodeMarksMapToExactUTF8Bytes()",
+        "SkillDocumentTests/anchoredKnownFieldFailsExplicitlyWithoutChangingSource()",
+        "SkillDocumentTests/slicedDataUsesDocumentRelativeRangesWithoutChangingBytes()",
+        "SkillDocumentTests/noOpAndTypedCodableRetainOriginalData()",
+        "SkillDocumentTests/openClawNestedMetadataUsesOneTaggedContract()",
+        "SkillDocumentTests/sourceAndConfigurationBudgetsFailBeforeComposition()",
+        "SkillDocumentTests/importedFenceAtEOFCanGainInstructionsWithoutHeaderRewrite()",
+        "SkillDocumentTests/physicalAndAliasExpandedDepthAreBounded()",
+        "SkillDocumentTests/parsingHonorsCancellation()",
+        "SkillDocumentTests/malformedDuplicateAndInvalidRootsFailClosed()",
+        "SkillDocumentTests/complexUnknownKeysRemainOrderedTaggedData()",
+        "SkillDocumentTests/blockScalarUsesNativeSpanAndRetainsFollowingField(style:)",
+        "SkillDocumentTests/allKnownEditsPreserveUnknownBytesAndBody()",
+        "SkillDocumentTests/flowMappingAddsMissingFieldWithOrWithoutTrailingComma(trailing:)",
+        "SkillDocumentTests/compatibleMigrationReadsLegacyWithoutRewriting()",
+        "SkillDocumentTests/newDocumentsUseUpstreamEmitterEscaping()",
+        "SkillDocumentTests/optionalTitleRemovalRetainsInlineComment()",
+        "SkillDocumentTests/bodyOnlyEditPreservesEntireFrontmatterAndNewlineStyle()",
+        "SkillDocumentTests/canonicalUnicodeEditDoesNotCollapseDistinctBytes()"
+      ],
+      "destination": "platform=macOS",
+      "artifact_id": 14178408435
+    },
+    {
+      "platform": "iOS27",
+      "classification": "EXECUTED_PASS",
+      "test_identities": 22,
+      "parameter_expanded_invocations": 27,
+      "actual_identifiers": [
+        "SkillDocumentTests/scalarAliasCanBeEditedWithoutChangingItsSource()",
+        "SkillDocumentTests/quotedKeysAndExplicitStringTagsUseOriginalScanner()",
+        "SkillDocumentTests/complexUnknownKeysRemainOrderedTaggedData()",
+        "SkillDocumentTests/newDocumentsUseUpstreamEmitterEscaping()",
+        "SkillDocumentTests/blockScalarUsesNativeSpanAndRetainsFollowingField(style:)",
+        "SkillDocumentTests/flowMappingAddsMissingFieldWithOrWithoutTrailingComma(trailing:)",
+        "SkillDocumentTests/slicedDataUsesDocumentRelativeRangesWithoutChangingBytes()",
+        "SkillDocumentTests/aliasesCyclesAndTextExpansionHaveSeparateResourceErrors()",
+        "SkillDocumentTests/allKnownEditsPreserveUnknownBytesAndBody()",
+        "SkillDocumentTests/openClawNestedMetadataUsesOneTaggedContract()",
+        "SkillDocumentTests/compatibleMigrationReadsLegacyWithoutRewriting()",
+        "SkillDocumentTests/optionalTitleRemovalRetainsInlineComment()",
+        "SkillDocumentTests/bodyOnlyEditPreservesEntireFrontmatterAndNewlineStyle()",
+        "SkillDocumentTests/bomCRLFUnicodeMarksMapToExactUTF8Bytes()",
+        "SkillDocumentTests/sourceAndConfigurationBudgetsFailBeforeComposition()",
+        "SkillDocumentTests/malformedDuplicateAndInvalidRootsFailClosed()",
+        "SkillDocumentTests/parsingHonorsCancellation()",
+        "SkillDocumentTests/importedFenceAtEOFCanGainInstructionsWithoutHeaderRewrite()",
+        "SkillDocumentTests/canonicalUnicodeEditDoesNotCollapseDistinctBytes()",
+        "SkillDocumentTests/physicalAndAliasExpandedDepthAreBounded()",
+        "SkillDocumentTests/anchoredKnownFieldFailsExplicitlyWithoutChangingSource()",
+        "SkillDocumentTests/noOpAndTypedCodableRetainOriginalData()"
+      ],
+      "destination": "platform=iOS Simulator,id=24E299B4-C77B-4426-AC2B-71243825F07C",
+      "artifact_id": 14178408435,
+      "actual_device": {
+        "name": "iPhone 17",
+        "udid": "24E299B4-C77B-4426-AC2B-71243825F07C",
+        "runtime": {
+          "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+          "name": "iOS 27.0",
+          "version": "27.0",
+          "buildversion": "24A434",
+          "isAvailable": true
+        }
+      },
+      "compiler_language_mode": "6",
+      "compiled_deployment_target": "arm64-apple-ios26.0-simulator"
+    }
+  ],
+  "artifacts": [
+    {
+      "artifact_name": "skill-format-ios26-43757913093",
+      "artifact_id": 14179715088,
+      "artifact_sha256": "0d40c1625a2b8aeb2a85a8372a09032e9590525027301d62b2ee7766444a77f6",
+      "zip_digest_and_all_crcs": "VERIFIED",
+      "source_hashes_verified": {
+        "Packages/HanlinSkillFormat/Package.resolved": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+        "Packages/HanlinSkillFormat/Package.swift": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+        "Packages/HanlinSkillFormat/README.md": "6fec57ec750366ed1d56a96a569ba7d235471971c4e4f3253933015d5b4d4f8e",
+        "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillDocumentEditing.swift": "49ee1cadfc7a5b0931abdad0b86ee79a5c0ab7f905c0c049215e609bd38843b1",
+        "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillDocumentParser.swift": "516af3113b808985210e5d53802a74c904f9ea5d6d5b1e6f35cbd3b46661e043",
+        "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillMarkdownDocument.swift": "44af023aa465984253e184e11a1c09b94e39073cfeae87a1810557e4d80e0f03",
+        "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/YAMLSourceInspector.swift": "8b4ae12a1108b804c7641c290c06f614b8ef75785b20c57a7d0a1f6da7fe21f6",
+        "Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests/Fixtures/openclaw.md": "01887afef5beb260a45e4002ce4f39aee5acea2429a8acce229ca40cdd3227af",
+        "Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests/SkillDocumentTests.swift": "5e648e5feabd7faca7dda4bd4bff767f32a04184de62bf37322c85f8650476f0"
+      },
+      "raw_lock_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "upstream_archive_sha256": "dff911cd6ea0eb6266d636c32853a6b63e7e43084bdd0833a8a00128685930dc",
+      "toolchain": "Xcode 26.6\nBuild version 17F113\nApple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: arm64-apple-macosx26.0\n26.5\n26.5\narm64\nProductName:\t\tmacOS\nProductVersion:\t\t26.7.2\nBuildVersion:\t\t25G332\n",
+      "elapsed_seconds": 341
+    },
+    {
+      "artifact_name": "agent-sdk-apple-43757913093",
+      "artifact_id": 14178408435,
+      "artifact_sha256": "887e54f6369bbbc7a6fa8d406793d9799325065ee862c3e7df3a3d21933edbe4",
+      "zip_digest_and_all_crcs": "VERIFIED",
+      "source_hashes_verified": {
+        "Packages/HanlinSkillFormat/Package.resolved": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+        "Packages/HanlinSkillFormat/Package.swift": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+        "Packages/HanlinSkillFormat/README.md": "6fec57ec750366ed1d56a96a569ba7d235471971c4e4f3253933015d5b4d4f8e",
+        "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillDocumentEditing.swift": "49ee1cadfc7a5b0931abdad0b86ee79a5c0ab7f905c0c049215e609bd38843b1",
+        "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillDocumentParser.swift": "516af3113b808985210e5d53802a74c904f9ea5d6d5b1e6f35cbd3b46661e043",
+        "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillMarkdownDocument.swift": "44af023aa465984253e184e11a1c09b94e39073cfeae87a1810557e4d80e0f03",
+        "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/YAMLSourceInspector.swift": "8b4ae12a1108b804c7641c290c06f614b8ef75785b20c57a7d0a1f6da7fe21f6",
+        "Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests/Fixtures/openclaw.md": "01887afef5beb260a45e4002ce4f39aee5acea2429a8acce229ca40cdd3227af",
+        "Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests/SkillDocumentTests.swift": "5e648e5feabd7faca7dda4bd4bff767f32a04184de62bf37322c85f8650476f0"
+      },
+      "raw_lock_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "upstream_archive_sha256": "dff911cd6ea0eb6266d636c32853a6b63e7e43084bdd0833a8a00128685930dc",
+      "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\n27.2\n27.2\narm64\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+      "elapsed_seconds": 227
+    }
+  ],
+  "reused_test_identities": 0,
+  "not_run": [
+    "actual app Skills tests and UI",
+    "physical devices",
+    "full project CI/release"
+  ],
+  "jobs": [
+    {
+      "id": 132945971303,
+      "name": "Original Yams Skill package tests on iOS 26 only",
+      "conclusion": "success",
+      "started_at": "2026-11-15T20:24:42Z",
+      "completed_at": "2026-11-15T20:30:59Z"
+    },
+    {
+      "id": 132945971486,
+      "name": "Exact-source Agent SDK Apple tests",
+      "conclusion": "success",
+      "started_at": "2026-11-15T20:24:42Z",
+      "completed_at": "2026-11-15T20:28:41Z"
+    }
+  ],
+  "freshness_and_reuse": "All22 identities on all3 platforms freshly executed at e44c57cf. No original20/21 case is reused for this final source proof.",
+  "open_integration_obligations": [
+    "Manager-owned local package/product link for app + unit targets",
+    "Actual app Package.resolved and affected app Skills tests/UI",
+    "Manager-owned focused adoption PR; UPSTREAM01 separate controlled update/rollback/failure demonstration"
+  ]
+}
