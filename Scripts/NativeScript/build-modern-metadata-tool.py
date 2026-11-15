@@ -18,6 +18,41 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def enum_prefix_source():
+    # Preserve the original terminating results, and stop the observed
+    # underscore -> digit -> shorter-prefix cycle before stack exhaustion.
+    return r'''static std::string createValidPrefix(const std::vector<std::string>& fieldNames,
+                                     const std::string& prefix) {
+  std::set<std::string> visited;
+  std::string candidate = prefix;
+  while (visited.insert(candidate).second) {
+    for (const auto& field : fieldNames)
+      if (candidate.size() > field.size()) return "";
+    bool shortened = false;
+    if (!candidate.empty()) {
+      for (const auto& field : fieldNames) {
+        if (candidate.size() < field.size() && std::isdigit(static_cast<unsigned char>(field[candidate.size()]))) {
+          size_t length = candidate.size();
+          while (length > 0 && !std::isupper(static_cast<unsigned char>(field[length]))) --length;
+          candidate = candidate.substr(0, length);
+          shortened = true;
+          break;
+        }
+      }
+    }
+    if (shortened) continue;
+    bool underscore = !fieldNames.empty();
+    for (const auto& field : fieldNames)
+      if (candidate.size() >= field.size() || field[candidate.size()] != '_') underscore = false;
+    if (!underscore) return candidate;
+    candidate += '_';
+  }
+  return "";
+}
+
+'''
+
+
 def main():
     if sys.platform != "darwin" or platform.machine() != "arm64":
         raise RuntimeError("Candidate asset is pinned to actual macOS arm64")
@@ -101,6 +136,12 @@ def main():
         try {
             // Remove from cache''')
     visitor.write_text(text)
+    utils = generator / "src/Meta/Utils.cpp"
+    text = utils.read_text()
+    first = text.index("static std::string createValidPrefix(")
+    last = text.index("std::string Utils::calculateEnumFieldsPrefix", first)
+    text = text[:first] + enum_prefix_source() + text[last:]
+    utils.write_text(base.replace_once(text, '#include "TypeEntities.h"', '#include "TypeEntities.h"\n#include <set>\n#include <cctype>'))
     # LLVM20 renamed StringRef's spelling; this is an API migration only.
     for path in (generator / "src").rglob("*"):
         if path.suffix in {".h", ".cpp"}:
@@ -156,6 +197,23 @@ add_subdirectory(src)
         for index, command in enumerate(commands):
             with (work / f"build-{index}.log").open("w") as log:
                 subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=420)
+        controls = work / "enum-prefix-controls.cpp"
+        controls.write_text('#include <string>\n#include <vector>\n#include <set>\n#include <cctype>\n' + enum_prefix_source() + r'''
+int main() {
+  if (createValidPrefix({"__1", "__2"}, "__") != "") return 1;
+  if (createValidPrefix({"__foo1", "__foo2"}, "__foo") != "__") return 2;
+  if (createValidPrefix({"MyEnumOne", "MyEnumTwo"}, "MyEnum") != "MyEnum") return 3;
+  if (createValidPrefix({"Prefix_One", "Prefix_Two"}, "Prefix") != "Prefix_") return 4;
+  if (createValidPrefix({"ABC1", "ABC2"}, "ABC") != "AB") return 5;
+  return 0;
+}
+''')
+        control_binary = work / "enum-prefix-controls"
+        control_compile = [result["buildTools"]["clang++"]["path"], "-std=c++17", str(controls), "-o", str(control_binary)]
+        subprocess.run(control_compile, check=True, capture_output=True, timeout=60)
+        subprocess.run([str(control_binary)], check=True, capture_output=True, timeout=5)
+        result["enumPrefixControls"] = {"status": "EXECUTED_PASS", "cases": 5, "sourceSHA256": sha(controls), "compileCommand": control_compile,
+            "boundary": "Actual portable C++ algorithm execution, not iOS/runtime acceptance."}
         result.update(status="BUILT_NOT_ACCEPTED", generatorSHA256=sha(build / "bin/objc-metadata-generator"))
         import shlex
         dependencies = set()
