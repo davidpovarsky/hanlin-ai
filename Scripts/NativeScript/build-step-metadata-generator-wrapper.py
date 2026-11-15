@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # HANLIN_METADATA_WRAPPER_V1
 
+from __future__ import annotations
+
 import os
 import hashlib
 import json

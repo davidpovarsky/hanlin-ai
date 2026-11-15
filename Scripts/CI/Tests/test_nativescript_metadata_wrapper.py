@@ -356,6 +356,43 @@ generate_metadata("arm64")
                                 if p.is_file() and (p.suffix in {".h", ".hpp"} or p.name == "module.modulemap")})
             self.assertEqual(results[0], results[1])
 
+    def test_signing_mode_transitions_invalidate_same_path_stamps(self):
+        spec = importlib.util.spec_from_file_location("actual_signing_stamp_stage", ROOT / "Scripts/CI/stage_modular_headers.py")
+        staging = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(staging)
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            artifacts, packages, derived = root / "Artifacts", root / "SourcePackages", root / "DerivedData"
+            headers = artifacts / "ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/Headers"
+            for relative in ["React/React-umbrella.h", "folly/dynamic.h", "folly/json/dynamic.h", "jsi/JSIDynamic.h"]:
+                file = headers / relative
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_text('// owned completeness input\n')
+            packages.mkdir()
+            snapshots = []
+            # Covers unsigned→default and default→unsigned→default on identical paths.
+            for index, enabled in enumerate([False, True, False, True, True]):
+                options = {} if enabled else {"sign_xcframeworks": False}
+                with patch.object(staging, "resign_xcframework", return_value=True) as sign, contextlib.redirect_stdout(io.StringIO()):
+                    result = staging.stage_modular_headers(packages, artifacts, derived_data_dir=derived,
+                        configurations=["Debug"], run_patch_hash_combine=False, **options)
+                self.assertEqual(result["status"], "SKIPPED_STAMP_MATCH" if index == 4 else "SUCCESS")
+                self.assertEqual(sign.call_count > 0, enabled and index != 4)
+                snapshots.append({p.relative_to(root).as_posix(): p.read_bytes() for p in root.rglob("*.h")})
+                for stamp in [packages / ".modular_headers_staged", derived / "CacheMetadata/.modular_headers_staged"]:
+                    self.assertIs(json.loads(stamp.read_text())["sign_xcframeworks"], enabled)
+            self.assertTrue(all(value == snapshots[0] for value in snapshots))
+            # A legacy/unknown signing stamp is never accepted as a signed cache hit.
+            for stamp in [packages / ".modular_headers_staged", derived / "CacheMetadata/.modular_headers_staged"]:
+                document = json.loads(stamp.read_text())
+                document.pop("sign_xcframeworks")
+                stamp.write_text(json.dumps(document))
+            with patch.object(staging, "resign_xcframework", return_value=True) as sign, contextlib.redirect_stdout(io.StringIO()):
+                result = staging.stage_modular_headers(packages, artifacts, derived_data_dir=derived,
+                    configurations=["Debug"], run_patch_hash_combine=False)
+            self.assertEqual(result["status"], "SUCCESS")
+            self.assertGreater(sign.call_count, 0)
+
     def framework(self, directory, name="ExpoModulesCore", module=None):
         framework = directory / (name + ".framework")
         (framework / "Modules").mkdir(parents=True)

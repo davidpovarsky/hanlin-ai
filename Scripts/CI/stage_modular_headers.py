@@ -24,7 +24,7 @@ import sys
 import time
 from typing import Dict, List, Optional, Set, Tuple
 
-STAMP_SCHEMA_VERSION = 3
+STAMP_SCHEMA_VERSION = 4
 
 REQUIRED_DERIVED_DATA_HEADERS = [
     "React/React-umbrella.h",
@@ -294,6 +294,7 @@ def stage_modular_headers(
                     data.get("version") != STAMP_SCHEMA_VERSION
                     or data.get("inputs_hash") != expected_inputs_hash
                     or data.get("configurations") != configurations
+                    or data.get("sign_xcframeworks") is not sign_xcframeworks
                 ):
                     all_stamps_match = False
                     break
@@ -324,6 +325,11 @@ def stage_modular_headers(
 
     print(f"[stage_modular_headers] Performing staging (force={force}, inputs_hash={expected_inputs_hash[:16]}...)")
     updated_files = 0
+
+    # A failed/unsigned re-stage must not leave a prior signed cache hit behind.
+    for stamp_file in stamp_files:
+        if stamp_file.exists():
+            stamp_file.unlink()
 
     # 1. Stage into React.xcframework slices
     for slice_name in ("ios-arm64", "ios-arm64_x86_64-simulator"):
@@ -528,6 +534,7 @@ def stage_modular_headers(
             "version": STAMP_SCHEMA_VERSION,
             "inputs_hash": expected_inputs_hash,
             "configurations": configurations,
+            "sign_xcframeworks": sign_xcframeworks,
             "updated_files": updated_files,
             "timestamp": int(time.time()),
         },
