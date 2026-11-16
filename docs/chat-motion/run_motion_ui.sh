@@ -20,10 +20,19 @@ if ! command -v xcodegen >/dev/null; then brew install xcodegen > "$evidence/xco
 { xcodebuild -version;xcrun swift --version;xcodebuild -showsdks;sw_vers;uname -m;xcodegen --version; } > "$evidence/preflight.txt"
 xcrun simctl list devices available -j > "$evidence/devices.json"
 xcrun simctl list runtimes -j > "$evidence/runtimes.json"
-device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json" --create-owned "Hanlin-Phase2-Motion-${GITHUB_RUN_ID:-local}")"
-python3 - "$device" "$evidence/verified-environment.json" <<'PY'
+device_strategy="${HANLIN_MOTION_DEVICE_STRATEGY:-ready}"
+if [[ "$device_strategy" == fresh ]]; then
+  device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json" --create-owned "Hanlin-Phase2-Motion-${GITHUB_RUN_ID:-local}")"
+else
+  [[ "$device_strategy" == ready ]]
+  device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json")"
+fi
+printf '%s\n' "$device_strategy" > "$evidence/device-strategy.txt"
+python3 - "$device" "$evidence/verified-environment.json" "$device_strategy" <<'PY'
 import json,subprocess,sys
 selected=json.load(open(sys.argv[2]))
+if sys.argv[3]=='ready' and selected['device']['state']!='Booted':
+    raise SystemExit('BLOCKED_ENVIRONMENT: no already-booted SDK-matching iPad; no cold-boot retry was performed')
 if selected['device']['state']!='Booted':subprocess.run(['xcrun','simctl','boot',sys.argv[1]],check=True,timeout=15)
 from pathlib import Path
 out=Path(sys.argv[2]).parent
