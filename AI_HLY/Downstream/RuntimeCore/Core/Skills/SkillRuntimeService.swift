@@ -103,7 +103,8 @@ final class SkillRuntimeService {
             syntax: combined, openClawKnown: upstream?.0.known == true, packageFingerprint: packageFingerprint)
         let last = forExecution ? nil : try receipt(skillID: skillID, path: path, store: store)?.test
         return await registry.plan(action: action, lastTest: last,
-            freshness: .init(notBefore: .now.addingTimeInterval(-86_400), now: .now), supplement: { facts in
+            freshness: .init(notBefore: .now.addingTimeInterval(-86_400), now: .now),
+            evaluationTime: { .now }, supplement: { facts in
                 guard let upstream, upstream.0.known, let binding = facts.binding else { return [] }
                 return [.init(requirement: .init(kind: .capability, name: "openclaw.requirements", versionConstraint: nil),
                     binding: binding, status: upstream.0.rawUpstreamResult.eligible ? .available : .unsupported,

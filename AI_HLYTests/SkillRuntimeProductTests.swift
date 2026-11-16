@@ -74,7 +74,9 @@ struct SkillRuntimeProductTests {
         let source: String
         switch fixture {
         case "python", "unicode", "requirements", "toml": source = "print('\(nonce) שלום مرحبا')\n"
-        case "shell": source = "echo \"\(nonce)\"\n"
+        // Use the original linked native command catalog, which does not claim
+        // Yarn/Bash builtins such as echo as native command capabilities.
+        case "shell": source = "awk 'BEGIN { print \"\(nonce)\" }'\n"
         case "typescript": source = "const value: string = '\(nonce)'; console.log(value); export default value;"
         case "argv": source = "if(JSON.stringify(process.argv.slice(2))!==JSON.stringify(['\(nonce)','עברית']))throw Error('argv changed'); console.log('\(nonce)');"
         case "failure": source = "throw new Error('EXPECTED_FAILURE_\(nonce)');"

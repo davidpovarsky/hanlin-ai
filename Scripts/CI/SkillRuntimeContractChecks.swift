@@ -18,11 +18,15 @@ enum SkillRuntimeContractChecks {
     actor Provider: SkillRuntimeCapabilityProvider {
         nonisolated let engineID: C.EngineID
         private var queries = 0
+        private let observedAt: Date?
 
-        init(_ engineID: C.EngineID) { self.engineID = engineID }
+        init(_ engineID: C.EngineID, observedAt: Date? = nil) {
+            self.engineID = engineID; self.observedAt = observedAt
+        }
         func snapshot(environmentID: String) async -> C.EngineFacts {
             queries += 1
-            return SkillRuntimeContractChecks.facts()
+            return observedAt.map { SkillRuntimeContractChecks.facts(evidence: SkillRuntimeContractChecks.evidence(date: $0)) }
+                ?? SkillRuntimeContractChecks.facts()
         }
         func count() -> Int { queries }
     }
@@ -171,6 +175,14 @@ enum SkillRuntimeContractChecks {
         let fallbackCount = await python.count()
         try check("registry never queries an alternative after failed execution",
                   afterFailure.readiness == .unknown && fallbackCount == 0)
+        let duringSnapshot = Date(timeIntervalSince1970: 2_050)
+        let liveRegistry = try SkillRuntimeRegistry(providers: [Provider(.node, observedAt: duringSnapshot)])
+        let freshObservation = await liveRegistry.plan(action: action(), freshness: freshness,
+            evaluationTime: { Date(timeIntervalSince1970: 2_051) })
+        try check("live facts observed after async entry are assessed at completion", freshObservation.isExecutable)
+        let futureObservation = await liveRegistry.plan(action: action(), freshness: freshness,
+            evaluationTime: { Date(timeIntervalSince1970: 2_049) })
+        try check("completion clock still rejects genuinely future observations", !futureObservation.isExecutable)
         var duplicateRejected = false
         do { _ = try SkillRuntimeRegistry(providers: [node, node]) }
         catch let error as SkillRuntimeRegistry.RegistrationError {

@@ -84,6 +84,7 @@ struct SkillRuntimeRegistry: Sendable {
 
     func plan(action: C.Action, lastTest: C.ExecutionTest? = nil,
               freshness: C.Freshness,
+              evaluationTime: (@Sendable () -> Date)? = nil,
               supplement: (@Sendable (C.EngineFacts) -> [C.CapabilityFact])? = nil) async -> C.ExecutionPlan {
         let facts: C.EngineFacts?
         if action.kind != .instructions, let engine = action.engineID, let provider = providers[engine] {
@@ -93,8 +94,13 @@ struct SkillRuntimeRegistry: Sendable {
         } else {
             facts = nil
         }
+        // A live snapshot can observe facts after the caller entered this async
+        // method. Assess against the completion time, keeping the original lower
+        // cutoff. Deterministic/offline callers retain their explicit clock.
+        let evaluatedFreshness = C.Freshness(notBefore: freshness.notBefore,
+            now: evaluationTime?() ?? freshness.now)
         return SkillRuntimePlanner.evaluate(action: action, engineFacts: facts,
-                                            lastTest: lastTest, freshness: freshness)
+                                            lastTest: lastTest, freshness: evaluatedFreshness)
     }
 
     /// Preparation only. RuntimeCore's existing execution route must validate
