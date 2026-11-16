@@ -4,11 +4,35 @@ from pathlib import Path
 import re
 import subprocess
 import unittest
+import yaml
 
 ROOT = Path(__file__).resolve().parents[3]
 
 
 class Phase2WiringTests(unittest.TestCase):
+    def test_skill_exposure_does_not_stage_unrelated_expo_fixtures(self):
+        from Scripts.CI.plan_affected_validation import plan_affected_validation
+        mapping = json.loads((ROOT / "Scripts/CI/affected-validation-map.json").read_text())
+        for selector, required in [("AI_HLYTests/AgentSkillsExposureTests", False),
+            ("AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd", True)]:
+            plan = plan_affected_validation(mapping, ["README.md"], "base", "head", "workflow_dispatch",
+                exact_test_selector=selector)
+            self.assertEqual(plan.step_outputs["stage_scriptui_fixtures"], required)
+
+    def test_optional_progress_cannot_block_focused_native_acceptance(self):
+        workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
+        notifications = [step for job in workflow["jobs"].values() for step in job.get("steps", [])
+            if step.get("uses") == "davidpovarsky/github-automation/live-refresh@main"]
+        self.assertTrue(notifications)
+        for step in notifications:
+            for scope in ["exact_test_selector", "device_build", "chat_motion_product"]:
+                self.assertIn("inputs.target_validation_group != '" + scope + "'", step["if"])
+        simulator = next(job for job in workflow["jobs"].values() if job.get("name") == "Launch full app on iPad Simulator")
+        for name in ["Build full arm64 simulator app", "Boot iPad Simulator and stage fixtures", "Run simulator test suite"]:
+            step = next(step for step in simulator["steps"] if step.get("name") == name)
+            self.assertNotIn("continue-on-error", step)
+            self.assertNotIn("if", step, "Product validation remains mandatory after skipping optional progress")
+
     def test_exact_app_tests_rebuild_affected_host_without_enabling_unrelated_groups(self):
         from Scripts.CI.plan_affected_validation import plan_affected_validation
         mapping = json.loads((ROOT / "Scripts/CI/affected-validation-map.json").read_text())

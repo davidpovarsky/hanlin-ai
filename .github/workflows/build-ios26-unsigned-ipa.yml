@@ -519,6 +519,7 @@ jobs:
       exact_test_selector: ${{ steps.plan.outputs.exact_test_selector }}
     steps:
       - name: Live Activity Ã‚Â· refresh
+        if: ${{ inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -606,6 +607,7 @@ jobs:
 
     steps:
       - name: Live Activity Ã‚Â· refresh
+        if: ${{ inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -869,7 +871,7 @@ jobs:
             2>&1 | tee "$LOG_DIR/04-swift-build.log"
 
       - name: Live Activity Ã‚Â· refresh
-        if: ${{ needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
+        if: ${{ (needs.plan-affected-validation.outputs.run_platform_contracts == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true') && inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -1024,7 +1026,7 @@ jobs:
           } | tee "$LOG_DIR/09-warnings.log"
 
       - name: Live Activity Ã‚Â· refresh
-        if: always()
+        if: ${{ (always()) && inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -1075,6 +1077,7 @@ jobs:
 
     steps:
       - name: Live Activity Ã‚Â· refresh
+        if: ${{ inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -1701,6 +1704,7 @@ jobs:
           } 2>&1 | tee "$LOG_DIR/08-locate-app.log"
 
       - name: Live Activity Ã‚Â· refresh
+        if: ${{ inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -1786,7 +1790,7 @@ jobs:
           key: ${{ steps.app-deriveddata-cache.outputs.cache-primary-key }}
 
       - name: Live Activity Ã‚Â· refresh
-        if: always()
+        if: ${{ (always()) && inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -1909,6 +1913,7 @@ jobs:
 
     steps:
       - name: Live Activity Ã‚Â· refresh
+        if: ${{ inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -2435,6 +2440,7 @@ jobs:
           fi
 
       - name: Live Activity Ã‚Â· refresh
+        if: ${{ inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -2508,6 +2514,7 @@ jobs:
           echo "$(( $(date +%s) - started_at ))" > "$LOG_DIR/08-simulator-staging-duration-seconds.txt"
 
       - name: Live Activity Ã‚Â· refresh
+        if: ${{ inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -3105,7 +3112,7 @@ jobs:
           trap - EXIT
 
       - name: Live Activity Ã‚Â· refresh
-        if: always()
+        if: ${{ (always()) && inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -3194,6 +3201,7 @@ jobs:
 
     steps:
       - name: Live Activity Ã‚Â· refresh
+        if: ${{ inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true
@@ -3242,7 +3250,7 @@ jobs:
             $gate_flags
 
       - name: Live Activity Ã‚Â· refresh
-        if: always()
+        if: ${{ (always()) && inputs.target_validation_group != 'exact_test_selector' && inputs.target_validation_group != 'device_build' && inputs.target_validation_group != 'chat_motion_product' }}
         uses: davidpovarsky/github-automation/live-refresh@main
         timeout-minutes: 1
         continue-on-error: true

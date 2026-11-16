@@ -679,7 +679,8 @@ def plan_affected_validation(
             "run_simulator_scripting_acceptance": False,
             "run_simulator_targeted_ui": is_ui,
             "simulator_ui_filter": ",".join(ui_selectors),
-            "stage_scriptui_fixtures": ("ScriptUI" in exact_test_selector or "Expo" in exact_test_selector),
+            "stage_scriptui_fixtures": any(part.split("/")[1].startswith(
+                ("HanlinExpo", "Expo", "HanlinScriptUI", "ScriptUI")) for part in selectors),
             "run_simulator_shell_acceptance": False,
             "run_simulator_mcp_acceptance": False,
             "run_simulator_smoke_launch": False,
