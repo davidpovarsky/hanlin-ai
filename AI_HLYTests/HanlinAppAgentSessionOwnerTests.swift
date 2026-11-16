@@ -475,7 +475,9 @@ private struct AppPartModel: LanguageModelV3 {
                 callbacks: .init(onAgentEvent: { _ in callbackCount += 1 }))
             let host = HanlinAppHostIntegration(identity: identity, store: store, isCurrent: { true })
             host.toolAdapter = adapter
+            var confirmations = 0
             host.confirmInvocation = { invocation in
+                confirmations += 1
                 if expires {
                     let remaining = max(0, invocation.request.deadline?.timeIntervalSinceNow ?? 0)
                     try? await Task.sleep(for: .seconds(remaining + 0.01))
@@ -487,13 +489,14 @@ private struct AppPartModel: LanguageModelV3 {
             #expect(tool.descriptor.risk == .read) // Current shadow metadata is not a no-write guarantee.
             #expect(tool.writeGuarantee == .hostManagedMutation)
             let dispatcher = HanlinHostDispatcher(host: host), run = UUID()
-            let limits = try HanlinToolInvocationLimits(timeoutMilliseconds: expires ? 100 : 30_000)
+            let limits = try HanlinToolInvocationLimits(timeoutMilliseconds: expires ? 1_000 : 30_000)
             let first = try await dispatcher.dispatchEvent(alias: alias, argumentsJSON: "{}", providerCallID: "original",
                 runID: run, step: 2, session: identity, catalog: catalog, limits: limits)
             let countBeforeReplay = callbackCount
             let replay = try await dispatcher.dispatchEvent(alias: alias, argumentsJSON: "{}", providerCallID: "original",
                 runID: run, step: 2, session: identity, catalog: catalog, limits: limits)
             let dispatched = approved && !expires
+            #expect(confirmations == 1, "Expiry must cross the live approval boundary, and replay cannot prompt again")
             #expect(calls == (dispatched ? 1 : 0) && callbackCount == countBeforeReplay)
             #expect(dispatched ? callbackCount > 0 : callbackCount == 0)
             #expect(first.resultID == replay.resultID && first.call == replay.call)
