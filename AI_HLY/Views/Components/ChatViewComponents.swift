@@ -2653,6 +2653,7 @@ struct ChatBubbleView: View {
                 }
                 .padding(.vertical, 5)
                 .padding(.horizontal, 5)
+                .contentShape(Rectangle())
             }
         }
     }

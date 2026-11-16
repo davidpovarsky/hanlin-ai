@@ -1,7 +1,7 @@
 import AISDKProvider
 import Foundation
 import JSON
-import JSONSchema
+import HanlinExactJSONSchema
 
 /// A transient, bounded validation plan. JSON/JSONSchema are implementation details, not a
 /// second canonical value, transcript, permission authority or persistent store.
@@ -52,7 +52,9 @@ public struct HanlinHostSchemaValidation: Sendable {
                   !name.isEmpty, let schema = tool["inputSchema"] else { throw Failure.invalidArguments }
             let key = Data(name.utf8).base64EncodedString()
             guard schemas[key] == nil else { throw Failure.invalidArguments }
-            schemas[key] = try JSONWriter().write(schema)
+            var bounded = limits
+            bounded[.outputBytes] = UInt64(maximumBytes)
+            schemas[key] = try JSONWriter(options: .init(limits: bounded, keyOrder: .scalar, numberStyle: .normalized)).write(schema)
         }
         return schemas
     }

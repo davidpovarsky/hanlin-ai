@@ -55,7 +55,7 @@ struct SkillExecutionPlanSection: View {
                 .accessibilityValue(lastTest)
                 .accessibilityIdentifier("hanlin-skill-detail-compatibility-last-tested")
             if let receipt {
-                Text("\(receipt.status.rawValue) · \(receipt.result.executionID.uuidString.prefix(8))")
+                Text("\(receiptIsCurrent ? receipt.status.rawValue : "Historical result — source or engine changed") · \(receipt.result.executionID.uuidString.prefix(8))")
                     .font(.caption).textSelection(.enabled)
             }
             if let error { Text(error).foregroundStyle(.red).textSelection(.enabled) }
@@ -112,6 +112,14 @@ struct SkillExecutionPlanSection: View {
             return plan.action.requirementsComplete ? "PARSE_ONLY" : "UNKNOWN"
         }
         return plan.isExecutable ? (plan.readiness == .verified ? "EXECUTION_PASS" : "PLAN_READY") : plan.readiness.rawValue
+    }
+
+    private var receiptIsCurrent: Bool {
+        guard let receipt, let test = receipt.test, let plan else { return false }
+        return test.sourceFingerprint == plan.action.sourceFingerprint
+            && test.actionFingerprint == plan.action.actionFingerprint
+            && test.binding == plan.binding
+            && test.invocationFingerprint == plan.action.invocationFingerprint
     }
 
     private var lastTest: String {

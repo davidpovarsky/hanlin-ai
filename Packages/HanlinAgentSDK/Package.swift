@@ -23,7 +23,7 @@ let package = Package(
             .product(name: "AISDKProvider", package: "swift-ai-sdk"),
             .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
             .product(name: "JSON", package: "Swift-JSON"),
-            .product(name: "JSONSchema", package: "Swift-JSON")
+            .product(name: "JSONSchema", package: "Swift-JSON", moduleAliases: ["JSONSchema": "HanlinExactJSONSchema"])
         ]),
         .target(name: "HanlinPersistenceAdapters", dependencies: ["HanlinHostContracts"]),
         .target(name: "HanlinSDKTestFixtures", dependencies: ["HanlinHostContracts"], path: "Tests/Fixtures"),
