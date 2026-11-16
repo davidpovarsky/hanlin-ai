@@ -1302,13 +1302,15 @@ jobs:
         run: |
           set -euxo pipefail
           test "$(node --version)" = "v24.5.0"
+          # The canonical preparer supplies audited Yarn patches, grammar tools,
+          # original fixtures and the full Host tests before producing this archive.
+          bash Scripts/Runtime/prepare-runtime-host.sh \
+            2>&1 | tee "$LOG_DIR/04-mcp-host-prepare.log"
           verification_root="$(mktemp -d "$RUNNER_TEMP/mcp-host-verification.XXXXXX")"
           trap 'rm -rf "$verification_root"' EXIT
-          cp -R AI_HLY/Downstream/RuntimeCore/Node/Host/. "$verification_root/"
-          npm ci --ignore-scripts --no-audit --no-fund --prefix "$verification_root" \
-            2>&1 | tee "$LOG_DIR/04-mcp-host-npm-ci.log"
-          npm test --prefix "$verification_root" \
-            2>&1 | tee "$LOG_DIR/04-mcp-host-tests.log"
+          python3 -m zipfile -e build/runtime-host/RuntimeHostResources.zip "$verification_root"
+          cp -R AI_HLY/Downstream/RuntimeCore/Node/Host/Tests "$verification_root/Tests"
+          export HANLIN_RUNTIME_TEST_FIXTURES="$GITHUB_WORKSPACE/AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle"
           npm run test:integration --prefix "$verification_root" \
             2>&1 | tee "$LOG_DIR/04-mcp-server-everything-integration.log"
           node Scripts/Runtime/validate-mcp-install-dedup.mjs \

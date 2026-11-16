@@ -10,6 +10,18 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class Phase2WiringTests(unittest.TestCase):
+    def test_device_mcp_verifies_the_canonical_patched_archive(self):
+        workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
+        job = next(job for job in workflow["jobs"].values() if job.get("name") == "Build unsigned IPA with Xcode 26")
+        step = next(step for step in job["steps"] if step.get("name") == "Verify MCP host on pinned Node 24.5.0")
+        command = step["run"]
+        self.assertLess(command.index("prepare-runtime-host.sh"), command.index("python3 -m zipfile -e"))
+        self.assertIn("build/runtime-host/RuntimeHostResources.zip", command)
+        self.assertIn("HANLIN_RUNTIME_TEST_FIXTURES", command)
+        self.assertIn("npm run test:integration", command)
+        self.assertNotIn("npm ci", command, "A clean second install would discard the audited runtime patches")
+        self.assertNotIn("npm test --prefix", command, "The original preparer already executes the same Host test gate")
+
     def test_motion_reuses_prepared_simulator_only_by_explicit_manual_group(self):
         from Scripts.CI.plan_affected_validation import plan_affected_validation, RoutingError
         mapping = json.loads((ROOT / "Scripts/CI/affected-validation-map.json").read_text())
