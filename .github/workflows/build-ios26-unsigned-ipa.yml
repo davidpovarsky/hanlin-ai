@@ -167,7 +167,9 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7.0.1
-      - name: Exercise all five presets, interruption, persistence and RTL rotation
+      - name: Exercise the two affected Motion UI cases first
+        env:
+          HANLIN_MOTION_SCOPE: ${{ inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'cycles' || 'affected' }}
         run: bash docs/chat-motion/run_motion_ui.sh
       - uses: actions/upload-artifact@v7.0.2
         if: always()

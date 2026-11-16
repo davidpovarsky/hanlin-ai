@@ -89,7 +89,8 @@ selected_tests=(-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests
   -only-testing:HanlinHostConcurrencyTests/HostCallbackConventionTests)
 if [[ "${HANLIN_SDK_ASSOCIATION_ONLY:-0}" == 1 ]]; then
   selected_tests=('-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()'
-    -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests)
+    -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests
+    -only-testing:HanlinHostConcurrencyTests/HostCallbackConventionTests)
 elif [[ "${HANLIN_SDK_WRITER_ONLY:-0}" == 1 ]]; then
   selected_tests=('-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests/deterministicWriterKeepsExactDecimalsScalarKeysAndStableOrdering()')
 fi

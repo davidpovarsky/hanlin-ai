@@ -1,5 +1,5 @@
 {
-  "originHash" : "22f30a52c2b08e3a255c30c0887c35e8d2cdc1b0ca6b84648fbacd7f678b8d2c",
+  "originHash" : "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
   "pins" : [
     {
       "identity" : "swift-ai-sdk",
@@ -16,14 +16,6 @@
       "state" : {
         "revision" : "6a52f3251125d74daf04fcbd5e6f08a75d074382",
         "version" : "1.8.2"
-      }
-    },
-    {
-      "identity" : "swift-json",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ThorFuchs/Swift-JSON.git",
-      "state" : {
-        "revision" : "f2a0d12da7028edfbcb0cb307f19a921a3a12d03"
       }
     },
     {

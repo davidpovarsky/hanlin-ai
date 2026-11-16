@@ -261,7 +261,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             // cancellation receipt from the existing journal, including partial output.
             if let (plan, id, path, kind) = receiptContext, kind == .node, let observedJob,
                error is CancellationError || Task.isCancelled {
-                let result = await Task { @MainActor in
+                let result = await Task<RuntimeExecutionResult?, Never> { @MainActor in
                     await AppRuntimeCore.shared.node.cancelExecution(id: observedJob.executionID)
                     // Cancellation acknowledgement can precede the terminal journal write.
                     // Observe only this exact existing job; never replay source or invent output.
@@ -270,7 +270,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                            snapshot.state.isTerminal, let result = snapshot.result { return result }
                         try? await Task.sleep(for: .milliseconds(100))
                     }
-                    return nil as RuntimeExecutionResult?
+                    return nil
                 }.value
                 if let result {
                     try? SkillRuntimeService.shared.record(result, plan: plan, skillID: id, path: path, store: store ?? .shared)

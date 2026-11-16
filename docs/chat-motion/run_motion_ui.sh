@@ -61,6 +61,15 @@ xcodebuild build-for-testing -project ChatMotionProof.xcodeproj -scheme ChatMoti
   -derivedDataPath "$scratch/DerivedData" CODE_SIGNING_ALLOWED=NO \
   2>&1 | tee "$evidence/build.log"
 finish_phase test
+motion_scope="${HANLIN_MOTION_SCOPE:-affected}"
+if [[ "$motion_scope" == cycles ]]; then
+  selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach)
+else
+  [[ "$motion_scope" == affected ]]
+  selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence
+    -only-testing:ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion)
+fi
+printf '%s\n' "$motion_scope" > "$evidence/selected-scope.txt"
 set +e
 python3 "$root/docs/chat-motion/record_ui_run.py" --device "$device" --evidence "$evidence" -- \
   xcodebuild test-without-building -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
@@ -68,7 +77,7 @@ python3 "$root/docs/chat-motion/record_ui_run.py" --device "$device" --evidence 
   -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$scratch/Motion.xcresult" \
   -parallel-testing-enabled NO -test-timeouts-enabled YES \
   -default-test-execution-time-allowance 600 -maximum-test-execution-time-allowance 720 \
-  CODE_SIGNING_ALLOWED=NO 2>&1 | tee "$evidence/test.log"
+  CODE_SIGNING_ALLOWED=NO "${selected_tests[@]}" 2>&1 | tee "$evidence/test.log"
 test_code=${PIPESTATUS[0]};set -e
 finish_phase results
 python3 - "$scratch/Motion.xcresult" "$device" "$evidence" <<'PY'
@@ -98,10 +107,13 @@ def visit(n):
     elif isinstance(n,list):
         for v in n:visit(v)
 visit(json.loads((e/'tests.json').read_text()))
-expected={'MotionUITests/'+name+'()' for name in ['testAAllFivePresetsTwentyCompleteCyclesEach','testBRapidReversalPresetSwitchAndPersistence','testCReadableLongContentRTLTypeOrientationAndCompletion']}
-assert len(found)==3 and {n['nodeIdentifier'] for n in found}==expected and all(n['result']=='Passed' for n in found)
-timeline=json.loads((e/'motion-geometry-timeline.json').read_text());assert {n['preset'] for n in timeline}=={'v1.relaxed','v1.height-reveal','v1.gentle-squeeze','v1.quiet-fade','v1.none'}
+scope=(e/'selected-scope.txt').read_text().strip()
+names=['testAAllFivePresetsTwentyCompleteCyclesEach'] if scope=='cycles' else ['testBRapidReversalPresetSwitchAndPersistence','testCReadableLongContentRTLTypeOrientationAndCompletion']
+expected={'MotionUITests/'+name+'()' for name in names}
+assert len(found)==len(expected) and {n['nodeIdentifier'] for n in found}==expected and all(n['result']=='Passed' for n in found)
+if scope=='cycles':
+    timeline=json.loads((e/'motion-geometry-timeline.json').read_text());assert {n['preset'] for n in timeline}=={'v1.relaxed','v1.height-reveal','v1.gentle-squeeze','v1.quiet-fade','v1.none'}
 assert json.loads((e/'video-status.json').read_text())['exit_code']==0 and (e/'motion-first120s.mp4').stat().st_size>1024
-(e/'result-validation.json').write_text(json.dumps({'status':'EXECUTED_PASS','methods':3,'cycles_per_preset':20,'scope':'native components; original app/renderer/scroll/iPad26/physical NOT_RUN'}))
+(e/'result-validation.json').write_text(json.dumps({'status':'EXECUTED_PASS','methods':len(found),'selected_scope':scope,'cycles_per_preset':20 if scope=='cycles' else None,'scope':'native components; original app/renderer/scroll/iPad26/physical NOT_RUN'}))
 PY
 finish_phase complete

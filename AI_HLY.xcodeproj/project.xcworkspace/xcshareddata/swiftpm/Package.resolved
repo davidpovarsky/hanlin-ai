@@ -1,6 +1,14 @@
 {
-  "originHash" : "28d7c44a9c1c3699d0e99a2025b0445d63a47f4af46bde23aed639e22cd1bbf6",
+  "originHash" : "9e0a5f5d0e16840db5c06b9e338ebb8edd1a4506e21c194a2d64120c7d67c8cc",
   "pins" : [
+    {
+      "identity" : "a2ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/a2ui-project/a2ui",
+      "state" : {
+        "revision" : "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+      }
+    },
     {
       "identity" : "bitbytedata",
       "kind" : "remoteSourceControl",
@@ -187,11 +195,12 @@
       }
     },
     {
-      "identity" : "swift-json",
+      "identity" : "swift-json-schema",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ThorFuchs/Swift-JSON.git",
+      "location" : "https://github.com/ajevans99/swift-json-schema",
       "state" : {
-        "revision" : "f2a0d12da7028edfbcb0cb307f19a921a3a12d03"
+        "revision" : "c0a9375ea9cd3fd47d875c98ed7f027ea61c03cb",
+        "version" : "0.13.2"
       }
     },
     {
@@ -249,6 +258,14 @@
       }
     },
     {
+      "identity" : "swift-tree-sitter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tree-sitter/swift-tree-sitter",
+      "state" : {
+        "revision" : "08ef81eb8620617b55b08868126707ad72bf754f"
+      }
+    },
+    {
       "identity" : "swiftdraw",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swhitty/SwiftDraw",
@@ -282,6 +299,22 @@
       "state" : {
         "revision" : "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
         "version" : "5.0.1"
+      }
+    },
+    {
+      "identity" : "tree-sitter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tree-sitter/tree-sitter",
+      "state" : {
+        "revision" : "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"
+      }
+    },
+    {
+      "identity" : "tree-sitter-bash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tree-sitter/tree-sitter-bash",
+      "state" : {
+        "revision" : "a06c2e4415e9bc0346c6b86d401879ffb44058f7"
       }
     },
     {
