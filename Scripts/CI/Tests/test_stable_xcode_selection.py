@@ -6,10 +6,30 @@ from unittest.mock import patch
 
 from Scripts.CI.select_stable_xcode import select
 from Scripts.CI.select_installed_simulator import select as select_simulator
+from Scripts.CI.select_installed_simulator import family_for_selectors
 from Scripts.CI.verify_exact_json_vendor import verify
 
 
 class StableEnvironmentTests(unittest.TestCase):
+    def test_compact_selectors_require_a_real_narrow_device_and_cannot_mix_wide_ui(self):
+        narrow = "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft"
+        self.assertEqual(family_for_selectors(narrow + ",AI_HLYTests/NativeComposerLineSizingTests"), "iPhone")
+        self.assertEqual(family_for_selectors("AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft"), "iPad")
+        with self.assertRaisesRegex(ValueError, "separate narrow-device run"):
+            family_for_selectors(narrow + ",AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft")
+
+    def test_explicit_narrow_family_does_not_select_a_wide_ipad(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "Contents").mkdir(); (root / "Contents/Info.plist").touch()
+            identity = "com.apple.CoreSimulator.SimRuntime.iOS-27-2"
+            runtime = {"platform":"iOS", "version":"27.2", "isAvailable":True,
+                "identifier":identity, "runtimeRoot":str(root), "bundlePath":str(root)}
+            devices = {"devices":{identity:[
+                {"isAvailable":True,"name":"iPad Pro 13-inch (M5)","udid":"wide"},
+                {"isAvailable":True,"name":"iPhone 18","udid":"narrow"}]}}
+            self.assertEqual(select_simulator(devices,{"runtimes":[runtime]},"27.2","iPhone")["device"]["udid"], "narrow")
+
     def test_parallel_iphone_runtime_does_not_make_valid_ipad_selection_ambiguous(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

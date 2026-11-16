@@ -2459,7 +2459,7 @@ jobs:
           APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
           BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP_PATH/Info.plist")"
           APP_EXECUTABLE="$(/usr/libexec/PlistBuddy -c 'Print CFBundleExecutable' "$APP_PATH/Info.plist")"
-          selection="$(python3 Scripts/CI/select_installed_simulator.py --output "$LOG_DIR/verified-simulator-environment.json" --tsv)"
+          selection="$(python3 Scripts/CI/select_installed_simulator.py --output "$LOG_DIR/verified-simulator-environment.json" --selectors "${SIMULATOR_UI_FILTER:-}" --tsv)"
           IFS=$'\t' read -r SIMULATOR_UDID SIMULATOR_MODEL SIMULATOR_RUNTIME <<< "$selection"
           test -n "$SIMULATOR_UDID"
           printf '%s\n' "$SIMULATOR_UDID" > "$LOG_DIR/simulator-udid.txt"
