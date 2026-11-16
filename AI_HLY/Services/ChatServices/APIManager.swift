@@ -3817,7 +3817,7 @@ class APIManager {
                 }
                 continuation.yield(StreamData(content: text))
 
-            case .structuredPart:
+            case .structuredResponseStarted, .structuredPart:
                 // The canonical A2UI consumer installs its admission/presentation bridge here.
                 // Never reinterpret structured provider bytes as ordinary chat prose.
                 throw HanlinAISDKError.invalidConversation("Structured presentation is unavailable in this host adapter.")
