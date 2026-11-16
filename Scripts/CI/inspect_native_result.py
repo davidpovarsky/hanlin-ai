@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import tarfile
 
@@ -22,6 +23,12 @@ names = {a["name"] for a in available["artifacts"] if not a["expired"]}
 artifact = f"chat-motion-ui-{run}" if motion and f"chat-motion-ui-{run}" in names else "AI_Hanlin-iOS26-simulator-smoke-logs"
 assert artifact in names, "Original native evidence artifact is unavailable"
 subprocess.run(["gh", "run", "download", run, "--repo", repo, "--name", artifact, "--dir", str(raw)], check=True)
+for name in ["08-downstream-unit-test-results.json", "08-downstream-unit-tests.log",
+             "08-nativescript-production-ui-tests.log", "06-diagnostics-build-provenance.json"]:
+    matches = list(raw.rglob(name))
+    assert len(matches) <= 1, "Ambiguous original evidence file: " + name
+    if matches:
+        shutil.copyfile(matches[0], out / name)
 if motion:
     archive = next(raw.rglob("Motion.xcresult.tar.gz"))
     with tarfile.open(archive) as packed:
