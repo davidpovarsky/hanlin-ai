@@ -13,13 +13,15 @@ import sys
 
 REQUIRED_METADATA_NAMES = ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge",
     "HanlinNativeScriptCompatibility", "UIView", "NSObject", "NativeScriptEmbedder",
-    "SwiftUIProvider", "HanlinNativeScriptSwiftUIFixtureProvider"]
+    "SwiftUIProvider", "HanlinNativeScriptSwiftUIFixtureProvider",
+    "WKNavigationDelegate", "WKWebView"]
 
-# The production host needs its real Foundation/UIKit and generated Host/provider
+# The production host needs Foundation/UIKit, Core's eager WebView declarations,
+# and generated Host/provider
 # declarations. Importing every Expo/React public umbrella into the legacy ObjC
 # parser is a separate full-SDK expansion and pulls in C++ declarations. Keep that
 # optional scan in the explicit SDK probe; do not change its generator or guards.
-HOST_FRAMEWORKS = {"Foundation.framework", "UIKit.framework"}
+HOST_FRAMEWORKS = {"Foundation.framework", "UIKit.framework", "WebKit.framework"}
 
 
 def required_env(name: str) -> str:

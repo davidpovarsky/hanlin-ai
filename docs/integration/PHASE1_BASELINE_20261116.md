@@ -68,3 +68,20 @@ throwing receipt reads inside `#require`. Those reads now carry their own `try`,
 matching the original package tests; the outer `try` still unwraps the required
 value. Error propagation and both assertions are retained. This is another test
 bundle compiler repair, with zero selected app cases executed in the failed run.
+
+## Actual current engine results
+
+Run `43795999531` at `9ef84ab8` built the complete Release app/test hosts and
+executed all21 requested identities (22 invocations):17 unit identities, the
+original Expo SwiftUI UI smoke and direct NativeScript UIKit smoke passed.
+The original unbundled Core smoke failed because Core eagerly imports its
+WebView implementation: `WKNavigationDelegate is not defined`. The bounded
+production root therefore additionally includes the original public WebKit
+framework, with `WKNavigationDelegate` and `WKWebView` added to the existing
+eight-name guard. No Full-SDK/BEScrollViewDelegate work is involved.
+
+Composer failed before reaching its draft assertion because the original chat
+input was not found after navigating to the acceptance chat. Export original
+failure attachments through the existing manual workflow's isolated
+`native_result_inspection_run_id` path; it skips planning, builds and tests.
+Inspect actual evidence before choosing a navigation or product repair.
