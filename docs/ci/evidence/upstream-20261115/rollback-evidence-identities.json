@@ -1,0 +1,12 @@
+[
+  {
+    "path": "docs/ci/evidence/upstream-20261115/rollback-rehearsal.json",
+    "sha256": "ff6db1fbe2cb05c1fc73ba59913d73f8798c48edea9b004ac6ed93180366a578",
+    "evidenceKind": "Git-versioned local actual git reverse-apply proof; no CI artifact is claimed"
+  },
+  {
+    "path": "docs/ci/evidence/upstream-20261115/swiftpm-rollback.json",
+    "sha256": "638d7658e677806bb9456185fccbcb300043b9b343db50effaef8d2836116c5a",
+    "evidenceKind": "Git-versioned local actual git reverse-apply proof; no CI artifact is claimed"
+  }
+]

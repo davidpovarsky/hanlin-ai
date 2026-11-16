@@ -3,9 +3,11 @@
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import process from 'node:process';
+import { pathToFileURL } from 'node:url';
+import { resolve } from 'node:path';
 
-const lockPath = process.argv[2] ?? 'RuntimeDependencies.lock.json';
-const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+export function runtimeDependencyHash(value) {
+const lock = structuredClone(value);
 
 delete lock.runtimeBundle.sha256;
 delete lock.runtimeBundle.verificationStatus;
@@ -20,4 +22,10 @@ if (lock.iosSystem) {
   delete lock.iosSystem.linkDependencies;
 }
 
-process.stdout.write(`${createHash('sha256').update(JSON.stringify(lock)).digest('hex')}\n`);
+return createHash('sha256').update(JSON.stringify(lock)).digest('hex');
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  const lock = JSON.parse(await readFile(process.argv[2] ?? 'RuntimeDependencies.lock.json', 'utf8'));
+  process.stdout.write(`${runtimeDependencyHash(lock)}\n`);
+}

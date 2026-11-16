@@ -1,0 +1,40 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "components": [
+    {
+      "type": "library",
+      "name": "Yams",
+      "version": "6.2.2",
+      "purl": "pkg:swift/github.com/jpsim/Yams@6.2.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/jpsim/Yams/tree/a27b21e0c81c5bf42049b897a62aaf387e80f279"
+        }
+      ],
+      "properties": [
+        {
+          "name": "sourceCommit",
+          "value": "a27b21e0c81c5bf42049b897a62aaf387e80f279"
+        },
+        {
+          "name": "bundledNativeTarget",
+          "value": "CYaml; exact Yams source tree"
+        },
+        {
+          "name": "originalLicenseSHA256",
+          "value": "0354b0ea403d2e78059c5ae0510a2cfae9f8eb306fcef094ac9fff5b47e20bed"
+        }
+      ]
+    }
+  ]
+}
