@@ -20,24 +20,13 @@ if ! command -v xcodegen >/dev/null; then brew install xcodegen > "$evidence/xco
 { xcodebuild -version;xcrun swift --version;xcodebuild -showsdks;sw_vers;uname -m;xcodegen --version; } > "$evidence/preflight.txt"
 xcrun simctl list devices available -j > "$evidence/devices.json"
 xcrun simctl list runtimes -j > "$evidence/runtimes.json"
-device="$(python3 - "$evidence/devices.json" "$evidence/runtimes.json" "$evidence" <<'PY'
+device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json")"
+python3 - "$device" "$evidence/verified-environment.json" <<'PY'
 import json,subprocess,sys
-from pathlib import Path
-d=json.load(open(sys.argv[1]));r=json.load(open(sys.argv[2]));sdk=subprocess.check_output(['xcrun','--sdk','iphonesimulator','--show-sdk-version'],text=True).strip()
-valid=[]
-for runtime in r['runtimes']:
-    if runtime.get('platform')!='iOS' or runtime.get('version')!=sdk or not runtime.get('isAvailable'):continue
-    root=Path(runtime['runtimeRoot']);info=Path(runtime['bundlePath'])/'Contents/Info.plist'
-    if root.is_dir() and info.is_file():valid.append(runtime)
-assert len(valid)==1,'INFRA_ERROR: exact stable SDK runtime files are not installed'
-runtime=valid[0];pairs=[x for x in d['devices'].get(runtime['identifier'],[]) if 'iPad' in x['name'] and x['isAvailable']]
-assert pairs,'INFRA_ERROR: no iPad for verified runtime';device=pairs[0]
-Path(sys.argv[3],'verified-environment.json').write_text(json.dumps({'sdk':sdk,'runtime':runtime,'device':device},indent=2))
-if device['state']!='Booted':subprocess.run(['xcrun','simctl','boot',device['udid']],check=True,timeout=15)
-subprocess.run(['xcrun','simctl','bootstatus',device['udid'],'-b'],stdout=sys.stderr,stderr=sys.stderr,check=True,timeout=180)
-print(device['udid'])
+selected=json.load(open(sys.argv[2]))
+if selected['device']['state']!='Booted':subprocess.run(['xcrun','simctl','boot',sys.argv[1]],check=True,timeout=15)
+subprocess.run(['xcrun','simctl','bootstatus',sys.argv[1],'-b'],check=True,timeout=180)
 PY
-)"
 echo "$device" > "$evidence/selected-device.txt"
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-motion-ui.XXXXXXXX")"
 python3 docs/chat-motion/prepare_motion_ui.py --output "$scratch/proof" > "$evidence/preparation.json"

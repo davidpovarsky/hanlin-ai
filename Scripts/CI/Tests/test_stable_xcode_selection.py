@@ -5,10 +5,27 @@ import unittest
 from unittest.mock import patch
 
 from Scripts.CI.select_stable_xcode import select
+from Scripts.CI.select_installed_simulator import select as select_simulator
 from Scripts.CI.verify_exact_json_vendor import verify
 
 
 class StableEnvironmentTests(unittest.TestCase):
+    def test_parallel_iphone_runtime_does_not_make_valid_ipad_selection_ambiguous(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            info = root / "Contents/Info.plist"
+            info.parent.mkdir(); info.touch()
+            canonical = "com.apple.CoreSimulator.SimRuntime.iOS-27-2"
+            records = [{"platform": "iOS", "version": "27.2", "isAvailable": True,
+                "identifier": identity, "runtimeRoot": str(root), "bundlePath": str(root)}
+                for identity in [canonical, canonical + "-iPhone19-4"]]
+            devices = {"devices": {canonical: [{"isAvailable": True, "name": "iPad Pro 13-inch (M5)", "udid": "original-ipad"}],
+                canonical + "-iPhone19-4": [{"isAvailable": True, "name": "iPhone 18", "udid": "other-device"}]}}
+            self.assertEqual(select_simulator(devices, {"runtimes": records}, "27.2")["device"]["udid"], "original-ipad")
+            info.unlink()
+            with self.assertRaisesRegex(RuntimeError, "No available iPad"):
+                select_simulator(devices, {"runtimes": records}, "27.2")
+
     def test_actual_beta_build_behind_stable_spelling_cannot_win(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

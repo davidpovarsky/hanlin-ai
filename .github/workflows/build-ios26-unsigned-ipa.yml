@@ -2432,30 +2432,7 @@ jobs:
           APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
           BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP_PATH/Info.plist")"
           APP_EXECUTABLE="$(/usr/libexec/PlistBuddy -c 'Print CFBundleExecutable' "$APP_PATH/Info.plist")"
-          selection="$(python3 - <<'PY'
-          import json
-          import subprocess
-
-          payload = json.loads(subprocess.check_output(
-              ["xcrun", "simctl", "list", "devices", "available", "--json"],
-              text=True,
-              timeout=15,
-          ))
-          candidates = []
-          for runtime, devices in payload.get("devices", {}).items():
-              if "iOS" not in runtime:
-                  continue
-              for device in devices:
-                  if device.get("isAvailable"):
-                      is_ipad = "iPad" in device.get("name", "")
-                      candidates.append((1 if is_ipad else 0, runtime, device["name"], device["udid"]))
-          if not candidates:
-              raise SystemExit("No available iOS simulator was found")
-          candidates.sort(reverse=True)
-          _, runtime, name, udid = candidates[0]
-          print(f"{udid}\t{name}\t{runtime}")
-          PY
-          )"
+          selection="$(python3 Scripts/CI/select_installed_simulator.py --output "$LOG_DIR/verified-simulator-environment.json" --tsv)"
           IFS=$'\t' read -r SIMULATOR_UDID SIMULATOR_MODEL SIMULATOR_RUNTIME <<< "$selection"
           test -n "$SIMULATOR_UDID"
           printf '%s\n' "$SIMULATOR_UDID" > "$LOG_DIR/simulator-udid.txt"
