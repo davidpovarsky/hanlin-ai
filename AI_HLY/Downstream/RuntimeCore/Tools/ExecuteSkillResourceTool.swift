@@ -187,13 +187,16 @@ struct ExecuteSkillResourceTool: NativeTool {
             let plan = try await SkillRuntimeService.shared.plan(skillID: skillID, path: cleanPath,
                 engine: SkillRuntimeRequirements.engine(selectedKind), arguments: argv,
                 catalog: catalog ?? .shared, store: store ?? .shared, forExecution: true)
-            guard plan.isExecutable,
-                  plan.action.actionFingerprint == SkillRuntimeRequirements.digest(Data(scriptContent.utf8)),
+            guard plan.isExecutable else {
+                let reasons = plan.issues.map { $0.code.rawValue }.joined(separator: ", ")
+                throw HanlinHostServiceError.invalidRequest("Skill requirements are not verified for this engine (\(plan.readiness.rawValue): \(reasons)). Recheck compatibility in Skill Center.")
+            }
+            guard plan.action.actionFingerprint == SkillRuntimeRequirements.digest(Data(scriptContent.utf8)),
                   (catalog ?? .shared).resolveResourceURL(skillID: skillID, relativePath: cleanPath) == resourceURL,
                   SkillRuntimeRequirements.digest(try Data(contentsOf: resourceURL)) == plan.action.actionFingerprint,
                   try await SkillRuntimeService.shared.sourceFingerprint(skillID: skillID, catalog: catalog ?? .shared, store: store ?? .shared) == plan.action.sourceFingerprint,
                   (store ?? .shared).isSkillEnabled(id: skillID), session.isSkillLoaded(skillID) else {
-                throw HanlinHostServiceError.invalidRequest("Skill requirements are not verified for this engine. Recheck compatibility in Skill Center.")
+                throw HanlinHostServiceError.invalidRequest("Skill source or session changed after compatibility evaluation. Reopen and review the current resource.")
             }
 
             // Build isolated per-session/per-run workspace with automatic cleanup

@@ -69,6 +69,7 @@ struct HanlinAutonomousRuntimeTests {
             skill: try HanlinSkillDescriptor(id: skillID, title: "Runtime Probe", summary: "Canonical resource", instructions: .inline("Read, then execute the resource.")),
             tier: .installedPackage,
             markdownDocument: try SkillDocumentParser.parse(Data("---\nname: \(skillID.rawValue)\ndescription: Canonical runtime probe\n---\nRead then execute".utf8)),
+            sourceDirectoryURL: root,
             resourceResolver: { path in path == relativePath ? file : nil }
         )
         let session = AssistantCapabilitySession()

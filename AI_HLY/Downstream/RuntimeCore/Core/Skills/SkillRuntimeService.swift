@@ -40,7 +40,7 @@ final class SkillRuntimeService {
     func sourceFingerprint(skillID: HanlinSkillID, catalog: HanlinSkillCatalog = .shared,
                            store: SkillStore = .shared) async throws -> String {
         guard let document = catalog.markdownDocument(for: skillID) else { throw RuntimeCoreError.invalidDependencyManifest }
-        let urls = try store.sourceResourceURLs(for: skillID)
+        let urls = try catalog.sourceResourceURLs(for: skillID, store: store)
         let original = document.originalSource
         return try await Task.detached {
             var identity = original

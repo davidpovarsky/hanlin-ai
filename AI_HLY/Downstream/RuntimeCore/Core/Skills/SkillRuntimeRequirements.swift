@@ -51,7 +51,7 @@ enum SkillRuntimeRequirements {
         let actionHash = digest(bytes)
         let evidence = C.SourceEvidence(kind: .declared, producer: "HanlinSkillFormat/Yams",
             producerVersion: "6.2.2", sourceID: skillID, sourceVersion: nil,
-            sourceFingerprint: digest(document.originalSource), observedAt: nil, artifactReference: "SKILL.md")
+            sourceFingerprint: sourceHash, observedAt: nil, artifactReference: "SKILL.md")
         var requirements: [C.SkillRequirement] = []
         var complete = document.findings.isEmpty && (path == nil || syntax != nil)
         func add(_ kind: C.RequirementKind, _ name: String) {

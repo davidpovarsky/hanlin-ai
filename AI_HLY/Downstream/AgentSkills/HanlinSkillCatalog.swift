@@ -78,6 +78,7 @@ public final class HanlinSkillCatalog {
         let isExplicitOverride: Bool
         let sourceIdentity: SkillSourceIdentity?
         let markdownDocument: SkillMarkdownDocument?
+        let sourceDirectoryURL: URL?
         let loader: (@MainActor @Sendable () async -> String)?
         let resourceResolver: (@MainActor @Sendable (String) -> URL?)?
     }
@@ -98,6 +99,7 @@ public final class HanlinSkillCatalog {
         isExplicitOverride: Bool = false,
         sourceIdentity: SkillSourceIdentity? = nil,
         markdownDocument: SkillMarkdownDocument? = nil,
+        sourceDirectoryURL: URL? = nil,
         instructionLoader: (@MainActor @Sendable () async -> String)? = nil,
         resourceResolver: (@MainActor @Sendable (String) -> URL?)? = nil
     ) {
@@ -124,6 +126,7 @@ public final class HanlinSkillCatalog {
             isExplicitOverride: isExplicitOverride,
             sourceIdentity: sourceIdentity,
             markdownDocument: markdownDocument,
+            sourceDirectoryURL: sourceDirectoryURL,
             loader: instructionLoader,
             resourceResolver: resourceResolver
         )
@@ -136,6 +139,7 @@ public final class HanlinSkillCatalog {
         isExplicitOverride: Bool = false,
         sourceIdentity: SkillSourceIdentity? = nil,
         markdownDocument: SkillMarkdownDocument? = nil,
+        sourceDirectoryURL: URL? = nil,
         instructionLoader: (@MainActor @Sendable () async -> String)? = nil,
         resourceResolver: (@MainActor @Sendable (String) -> URL?)? = nil
     ) {
@@ -145,6 +149,7 @@ public final class HanlinSkillCatalog {
             isExplicitOverride: isExplicitOverride,
             sourceIdentity: sourceIdentity,
             markdownDocument: markdownDocument,
+            sourceDirectoryURL: sourceDirectoryURL,
             instructionLoader: instructionLoader,
             resourceResolver: resourceResolver
         )
@@ -404,6 +409,21 @@ public final class HanlinSkillCatalog {
             return bundleURL
         }
         return nil
+    }
+
+    /// All registered skills for catalog discovery.
+    /// The selected host registration owns the complete integrity inventory.
+    /// An opaque package resolver must never borrow a same-ID Store directory.
+    func sourceResourceURLs(for skillID: HanlinSkillID, store: SkillStore) throws -> [(String, URL)] {
+        guard let entry = skillEntries[skillID] else { throw RuntimeCoreError.invalidDependencyManifest }
+        if let root = entry.sourceDirectoryURL { return try SkillStore.sourceResourceURLs(in: root) }
+        if entry.resourceResolver != nil {
+            throw RuntimeCoreError.invalidRequest("Selected Skill source requires a complete host-owned resource inventory")
+        }
+        if entry.tier == .userCustom || entry.tier == .userOverride {
+            return try store.sourceResourceURLs(for: skillID)
+        }
+        return []
     }
 
     /// All registered skills for catalog discovery.

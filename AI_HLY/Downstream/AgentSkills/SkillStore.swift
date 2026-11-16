@@ -270,6 +270,15 @@ public final class SkillStore {
     /// the visible resource list intentionally has different presentation filtering.
     func sourceResourceURLs(for skillID: HanlinSkillID) throws -> [(String, URL)] {
         guard let base = directoryURL(for: skillID) else { return [] }
+        return try Self.sourceResourceURLs(in: base)
+    }
+
+    static func sourceResourceURLs(in base: URL) throws -> [(String, URL)] {
+        let fileManager = FileManager.default
+        let rootValues = try base.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
+        guard rootValues.isDirectory == true, rootValues.isSymbolicLink != true else {
+            throw SkillImportError.stagingFailed("Skill source root must be an original directory.")
+        }
         let keys: Set<URLResourceKey> = [.isRegularFileKey, .isDirectoryKey, .isSymbolicLinkKey]
         guard let files = fileManager.enumerator(at: base, includingPropertiesForKeys: Array(keys)) else {
             throw SkillImportError.stagingFailed("Unable to inspect Skill sources.")

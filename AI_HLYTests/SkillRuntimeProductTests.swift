@@ -85,6 +85,7 @@ struct SkillRuntimeProductTests {
         let id = record.id
         let catalog = HanlinSkillCatalog()
         catalog.register(descriptor: record.descriptor, markdownDocument: record.markdownDocument,
+            sourceDirectoryURL: record.directoryURL,
             resourceResolver: { store.safeResourceURL(for: id, relativePath: $0) })
         let service = SkillRuntimeService()
         if fixture == "instructions" {
@@ -98,6 +99,8 @@ struct SkillRuntimeProductTests {
         let initial = try await service.plan(skillID: id, path: path,
             engine: SkillRuntimeRequirements.engine(engine), catalog: catalog, store: store)
         #expect(initial.lastTest == nil, "Import must not manufacture an execution test")
+        #expect(initial.action.requirements.allSatisfy { $0.evidence.sourceFingerprint == initial.action.sourceFingerprint },
+            "Declared requirements must bind to the selected complete source generation")
         if fixture == "disabled" { store.setSkillEnabled(id: id, enabled: false) }
         let session = AssistantCapabilitySession(chatID: "fixture-" + nonce, isTemporaryChat: true)
         session.recordSkillLoaded(id: id, instructionText: markdown)
@@ -137,6 +140,12 @@ struct SkillRuntimeProductTests {
                 let receipt = try #require(recorded)
                 #expect(receipt.status == .cancelled && receipt.result.wasCancelled)
                 #expect(receipt.result.stdout.contains("STARTED_" + nonce))
+            }
+            if fixture == "failure" {
+                let recorded = try service.receipt(skillID: id, path: path, store: store)
+                let receipt = try #require(recorded)
+                #expect(receipt.status == .failed && receipt.result.stderr.contains("EXPECTED_FAILURE_" + nonce),
+                    "The intentionally throwing resource must actually execute; a planning rejection is not this test")
             }
             print("SKILL_PRODUCT REJECTED_OR_FAILED \(fixture) \(result.outcome)")
             return
