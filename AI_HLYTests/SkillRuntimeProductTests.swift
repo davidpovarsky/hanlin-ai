@@ -26,7 +26,7 @@ struct SkillRuntimeProductTests {
         let output = root.appending(path: "native-report.json")
         let result = try await AppRuntimeCore.shared.node.executeCLI(entryPoint: root.appending(path: "native-probe.mjs"),
             arguments: [challenge], workspace: root, environment: ["HANLIN_OPENCLAW_PROBE_RESULT": output.path])
-        #expect(result.exitCode == 0, result.stderr)
+        #expect(result.exitCode == 0, "\(result.stderr)")
         let report = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: output)) as? [String: Any])
         #expect(report["challenge"] as? String == challenge)
         #expect(report["node"] as? String == "24.5.0")
@@ -36,7 +36,7 @@ struct SkillRuntimeProductTests {
         print("OPENCLAW_EMBEDDED_ORIGINAL_SIX " + String(decoding: try JSONSerialization.data(withJSONObject: report), as: UTF8.self))
     }
 
-    static let fixtures = ["instructions", "node", "python", "typescript", "jsc", "argv", "unicode",
+    nonisolated static let fixtures = ["instructions", "node", "python", "typescript", "jsc", "argv", "unicode",
         "missing-module", "unknown-engine", "disabled", "denied", "wrong-engine", "failure",
         "cancel", "restart", "reinstall", "openclaw", "shell", "requirements", "toml", "package-manifest", "hidden-resource"]
 
@@ -73,8 +73,9 @@ struct SkillRuntimeProductTests {
         if fixture == "package-manifest" { files.append(("package.json", Data(#"{"dependencies":{"hanlin-never-installed":"^1"}}"#.utf8))) }
         if fixture == "hidden-resource" { files.append((".helper.txt", Data("first source".utf8))) }
         for (file, bytes) in files {
-            try archive.addEntry(with: file, type: .file, uncompressedSize: UInt32(bytes.count)) { position, size in
-                bytes.subdata(in: position..<(position + size))
+            try archive.addEntry(with: file, type: .file, uncompressedSize: Int64(bytes.count)) { position, size in
+                let offset = Int(position)
+                return bytes.subdata(in: offset..<(offset + size))
             }
         }
         let importer = SkillImporter()
@@ -132,7 +133,8 @@ struct SkillRuntimeProductTests {
             #expect(!result.outcome.isSuccess, "\(fixture) incorrectly succeeded: \(result.modelText)")
             #expect(!result.modelText.contains("UNEXPECTED_LATE_" + nonce))
             if fixture == "cancel" {
-                let receipt = try #require(service.receipt(skillID: id, path: path, store: store))
+                let recorded = try service.receipt(skillID: id, path: path, store: store)
+                let receipt = try #require(recorded)
                 #expect(receipt.status == .cancelled && receipt.result.wasCancelled)
                 #expect(receipt.result.stdout.contains("STARTED_" + nonce))
             }
@@ -142,7 +144,8 @@ struct SkillRuntimeProductTests {
         #expect(result.outcome.isSuccess, "\(fixture): \(result.modelText)")
         #expect(result.modelText.contains(nonce), "Original engine did not return the execution challenge")
         let reopened = SkillRuntimeService()
-        let receipt = try #require(reopened.receipt(skillID: id, path: path, store: store))
+        let recorded = try reopened.receipt(skillID: id, path: path, store: store)
+        let receipt = try #require(recorded)
         #expect(receipt.status == .executionPass && receipt.result.stdout.contains(nonce))
         #expect(receipt.test?.actionFingerprint == SkillRuntimeRequirements.digest(Data(source.utf8)))
         if fixture == "hidden-resource" {
@@ -173,8 +176,9 @@ struct SkillRuntimeProductTests {
             : [("SKILL.md", markdown)]
         for (path, string) in entries {
             let bytes = Data(string.utf8)
-            try archive.addEntry(with: path, type: .file, uncompressedSize: UInt32(bytes.count)) { position, size in
-                bytes.subdata(in: position..<(position + size))
+            try archive.addEntry(with: path, type: .file, uncompressedSize: Int64(bytes.count)) { position, size in
+                let offset = Int(position)
+                return bytes.subdata(in: offset..<(offset + size))
             }
         }
         do {

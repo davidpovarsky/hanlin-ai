@@ -368,7 +368,8 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                     #"{"version":"1.0","updateDataModel":{"surfaceId":"tool-form","path":"/","value":{"name":"Ada"}}}"#,
                     #"{"version":"1.0","updateComponents":{"surfaceId":"tool-form","components":[{"id":"root","component":"Column","children":["name","submit"]},{"id":"name","component":"TextField","label":"Tool name","value":{"@path":"/name"}},{"id":"submit","component":"Button","child":"submitLabel","action":{"event":{"name":"phase2-tool-submit","context":{"name":{"@path":"/name"}}}}},{"id":"submitLabel","component":"Text","text":"Submit tool form"}]}}"#
                 ]
-                guard let data = try? JSONSerialization.data(withJSONObject: ["messages": frames, "result_presentation": "card"]) else {
+                let arguments: [String: Any] = ["messages": frames, "result_presentation": "card"]
+                guard let data = try? JSONSerialization.data(withJSONObject: arguments) else {
                     client?.urlProtocol(self, didFailWithError: URLError(.cannotDecodeContentData)); return
                 }
                 emitToolCall(id: callID, name: "present_a2ui", arguments: String(decoding: data, as: UTF8.self))
