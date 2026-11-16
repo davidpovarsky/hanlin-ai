@@ -20,12 +20,23 @@ if ! command -v xcodegen >/dev/null; then brew install xcodegen > "$evidence/xco
 { xcodebuild -version;xcrun swift --version;xcodebuild -showsdks;sw_vers;uname -m;xcodegen --version; } > "$evidence/preflight.txt"
 xcrun simctl list devices available -j > "$evidence/devices.json"
 xcrun simctl list runtimes -j > "$evidence/runtimes.json"
-device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json")"
+device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json" --create-owned "Hanlin-Phase2-Motion-${GITHUB_RUN_ID:-local}")"
 python3 - "$device" "$evidence/verified-environment.json" <<'PY'
 import json,subprocess,sys
 selected=json.load(open(sys.argv[2]))
 if selected['device']['state']!='Booted':subprocess.run(['xcrun','simctl','boot',sys.argv[1]],check=True,timeout=15)
-subprocess.run(['xcrun','simctl','bootstatus',sys.argv[1],'-b'],check=True,timeout=180)
+from pathlib import Path
+out=Path(sys.argv[2]).parent
+try:
+    with (out/'bootstatus.log').open('w') as log:
+        subprocess.run(['xcrun','simctl','bootstatus',sys.argv[1],'-b'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=180)
+except (subprocess.TimeoutExpired,subprocess.CalledProcessError):
+    for name,command in [('devices-after',['xcrun','simctl','list','devices','-j']),('core-simulator-log',['log','show','--last','3m','--style','compact','--predicate','process == "CoreSimulatorService"'])]:
+        try:
+            result=subprocess.run(command,capture_output=True,timeout=15)
+            (out/(name+'.stdout')).write_bytes(result.stdout);(out/(name+'.stderr')).write_bytes(result.stderr)
+        except subprocess.TimeoutExpired:(out/(name+'.timeout')).write_text('15s observation deadline')
+    raise
 PY
 echo "$device" > "$evidence/selected-device.txt"
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-motion-ui.XXXXXXXX")"
