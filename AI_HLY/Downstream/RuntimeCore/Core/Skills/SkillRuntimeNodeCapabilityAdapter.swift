@@ -19,6 +19,7 @@ enum SkillRuntimeNodeCapabilityAdapter {
             let webAssemblyAvailable: Bool?
             let fetchImplementation: String?
             let builtInModules: [String]?
+            let portableShellAdapterVersion: Int?
         }
 
         let schemaVersion: Int
@@ -53,6 +54,9 @@ enum SkillRuntimeNodeCapabilityAdapter {
                                resolvedPath: nil, evidence: evidence))
         }
         add(.engine, C.EngineID.node.rawValue, .available, version: report.observed.node)
+        if report.observed.portableShellAdapterVersion == 1 {
+            add(.capability, "node.portable-shell.original", .available, version: "1")
+        }
         for name in Set(report.observed.builtInModules ?? []).sorted() {
             add(.module, name, .available, version: report.observed.node)
             if !name.hasPrefix("node:") { add(.module, "node:" + name, .available, version: report.observed.node) }

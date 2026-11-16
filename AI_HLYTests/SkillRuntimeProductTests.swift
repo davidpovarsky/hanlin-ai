@@ -8,6 +8,29 @@ import ZIPFoundation
 @Suite("Imported Skills through the original product execution path", .serialized)
 @MainActor
 struct SkillRuntimeProductTests {
+    @Test(arguments: ["scalar", "array", "bins-scalar", "unknown-requirement", "always-string", "valid"])
+    func openClawInputBoundaryRejectsUnsupportedShapes(_ fixture: String) throws {
+        let metadata: String
+        switch fixture {
+        case "scalar": metadata = "metadata: opaque-legacy-value\n"
+        case "array": metadata = "metadata:\n  openclaw: []\n"
+        case "bins-scalar": metadata = "metadata:\n  openclaw:\n    requires:\n      bins: node\n"
+        case "unknown-requirement": metadata = "metadata:\n  openclaw:\n    requires:\n      unobservedGPU: []\n"
+        case "always-string": metadata = "metadata:\n  openclaw:\n    always: 'yes'\n"
+        default: metadata = "metadata:\n  openclaw:\n    requires:\n      bins: [node]\n"
+        }
+        let document = try SkillDocumentParser.parse(Data(("---\nname: boundary-test\ndescription: Typed input boundary\n" + metadata + "---\nInstructions\n").utf8))
+        let bytes = Data("console.log('boundary')".utf8)
+        let syntax = SkillSyntaxReport(file: "run.js", sourceSHA256: SkillRuntimeRequirements.digest(bytes),
+            completion: .complete, provenance: .init(scanner: "synthetic-boundary-fixture"),
+            findings: [], visitedNodes: 1, inputBytes: bytes.count, limitations: [])
+        let action = try SkillRuntimeRequirements.action(skillID: "boundary-test", document: document,
+            path: "run.js", bytes: bytes, engine: .node, arguments: [], environmentID: "boundary-test",
+            syntax: syntax, openClawKnown: true)
+        #expect(action.requirementsComplete == (fixture == "valid"),
+            "A previous diagnostic observation cannot make an unsupported input shape complete")
+    }
+
     @Test(arguments: ["requirements.txt", "pyproject.toml"])
     func nativeManifestAnalysisProducesTheExpectedPassiveFacts(_ file: String) async throws {
         let source = file == "requirements.txt" ? "hanlin-never-installed>=1\n"
@@ -76,7 +99,7 @@ struct SkillRuntimeProductTests {
         case "python", "unicode", "requirements", "toml": source = "print('\(nonce) שלום مرحبا')\n"
         // Use the original linked native command catalog, which does not claim
         // Yarn/Bash builtins such as echo as native command capabilities.
-        case "shell": source = "awk 'BEGIN { print \"\(nonce)\" }'\n"
+        case "shell": source = "awk 'BEGIN { print ARGV[1] \":\" ARGV[2]; exit }' \"$0\" \"$1\"\n"
         case "typescript": source = "const value: string = '\(nonce)'; console.log(value); export default value;"
         case "argv": source = "if(JSON.stringify(process.argv.slice(2))!==JSON.stringify(['\(nonce)','עברית']))throw Error('argv changed'); console.log('\(nonce)');"
         case "failure": source = "throw new Error('EXPECTED_FAILURE_\(nonce)');"
@@ -173,12 +196,12 @@ struct SkillRuntimeProductTests {
             print("SKILL_PRODUCT REJECTED_OR_FAILED \(fixture) \(result.outcome)")
             return
         }
-        #expect(result.outcome.isSuccess, "\(fixture): \(result.modelText)")
-        #expect(result.modelText.contains(nonce), "Original engine did not return the execution challenge")
+        try #require(result.outcome.isSuccess, "\(fixture): \(result.modelText)")
+        try #require(result.modelText.contains(nonce), "Original engine did not return the execution challenge")
         let reopened = SkillRuntimeService()
         let recorded = try reopened.receipt(skillID: id, path: path, store: store)
         let receipt = try #require(recorded)
-        #expect(receipt.status == .executionPass && receipt.result.stdout.contains(nonce))
+        try #require(receipt.status == .executionPass && receipt.result.stdout.contains(nonce))
         #expect(receipt.test?.actionFingerprint == SkillRuntimeRequirements.digest(Data(source.utf8)))
         if fixture == "hidden-resource" {
             try store.addOrUpdateTextResource(for: id, relativePath: ".helper.txt", content: "changed helper")

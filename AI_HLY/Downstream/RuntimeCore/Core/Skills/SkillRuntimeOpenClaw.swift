@@ -14,7 +14,32 @@ enum SkillRuntimeOpenClaw {
         document.metadata?["openclaw"] ?? document.metadata?["clawdbot"]
     }
 
+    /// Validate the typed input boundary, not eligibility policy. An opaque or
+    /// malformed requirements object must not be mistaken for absent metadata.
+    static func supportsRequirementsInput(_ document: SkillMarkdownDocument) -> Bool {
+        guard let container = document.metadata else { return true }
+        guard let entries = container.mapping,
+              entries.allSatisfy({ $0.key.stringValue != nil }) else { return false }
+        for name in ["openclaw", "clawdbot"] {
+            guard let value = container[name] else { continue }
+            guard let mapping = value.mapping,
+                  mapping.allSatisfy({ $0.key.stringValue != nil }) else { return false }
+            if let always = value["always"], always.booleanValue == nil { return false }
+            if let os = value["os"], os.sequence?.allSatisfy({ $0.stringValue != nil }) != true { return false }
+            if let requires = value["requires"] {
+                guard let fields = requires.mapping else { return false }
+                for field in fields {
+                    guard let key = field.key.stringValue,
+                          ["bins", "anyBins", "env", "config"].contains(key),
+                          field.value.sequence?.allSatisfy({ $0.stringValue != nil }) == true else { return false }
+                }
+            }
+        }
+        return true
+    }
+
     static func inspect(_ document: SkillMarkdownDocument) async throws -> Report? {
+        guard supportsRequirementsInput(document) else { return nil }
         guard let metadata = metadata(document) else { return nil }
         guard let url = Bundle.main.url(forResource: "hanlin_openclaw_requirements", withExtension: "js") else {
             throw RuntimeCoreError.invalidRequest("Original OpenClaw requirements artifact missing")

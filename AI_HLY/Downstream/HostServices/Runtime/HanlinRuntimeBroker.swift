@@ -73,9 +73,10 @@ actor HanlinRuntimeBroker {
             return executionResult
 
         case .shell:
-            return try await core.shell.execute(
+            return try await executeLegacyShell(
                 command: source,
-                workspace: workspace,
+                arguments: arguments,
+                context: context,
                 environment: environment,
                 allowNetwork: true,
                 limits: effectiveLimits
@@ -114,6 +115,7 @@ actor HanlinRuntimeBroker {
     /// structured argv remains on the direct linked ios_system route.
     func executeLegacyShell(
         command: String,
+        arguments: [String] = [],
         context: HanlinHostCallContext,
         environment: [String: String] = [:],
         allowNetwork: Bool = false,
@@ -126,7 +128,7 @@ actor HanlinRuntimeBroker {
         let workspace = try deriveWorkspace(for: context)
         _ = try await core.ensureStarted(.node)
         return try await core.node.executePortableShell(RuntimeExecutionRequest(
-            source: command, workspace: workspace, environment: environment,
+            source: command, arguments: arguments, workspace: workspace, environment: environment,
             limits: limits ?? RuntimeExecutionLimits()))
     }
 

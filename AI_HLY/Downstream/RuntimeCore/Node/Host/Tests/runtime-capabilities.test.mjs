@@ -9,6 +9,7 @@ test('capability facts identify the actual Node process and its actual built-in 
   assert.equal(report.observed.platform,process.platform);
   assert.deepEqual(report.observed.builtInModules,builtinModules);
   assert.ok(report.observed.builtInModules.includes('fs'));
+  assert.equal(report.observed.portableShellAdapterVersion,1);
   assert.equal(report.externalExecution.automaticTransfer,false);
   assert.equal(report.finiteCommandAdapter.pid,false);
 });

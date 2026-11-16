@@ -54,6 +54,7 @@ enum SkillRuntimeRequirements {
             sourceFingerprint: sourceHash, observedAt: nil, artifactReference: "SKILL.md")
         var requirements: [C.SkillRequirement] = []
         var complete = document.findings.isEmpty && (path == nil || syntax != nil)
+            && SkillRuntimeOpenClaw.supportsRequirementsInput(document)
         func add(_ kind: C.RequirementKind, _ name: String) {
             guard !name.isEmpty else { complete = false; return }
             let key = C.RequirementKey(kind: kind, name: name, versionConstraint: nil)
@@ -62,6 +63,7 @@ enum SkillRuntimeRequirements {
             }
         }
         if let engine { add(.engine, engine.rawValue) }
+        if engine == .shell { add(.capability, "shell.portable-parser") }
         let metadata = document.metadata?["openclaw"] ?? document.metadata?["clawdbot"]
         let declared = document.root["requires"]
         if metadata != nil {

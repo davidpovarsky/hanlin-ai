@@ -24,7 +24,7 @@ def main(node_facts=False):
     output = OUTPUT.with_name("skill-runtime-node-facts") if node_facts else OUTPUT
     sources = [SOURCES[0], SOURCES[0].with_name("SkillRuntimeNodeCapabilityAdapter.swift")] if node_facts else SOURCES
     checks_source = CHECKS.with_name("SkillRuntimeNodeCapabilityAdapterChecks.swift") if node_facts else CHECKS
-    expected_cases = 18 if node_facts else 40
+    expected_cases = 20 if node_facts else 40
     output.mkdir(parents=True, exist_ok=False)
     compiler = subprocess.check_output(["xcrun", "--find", "swiftc"], text=True).strip()
     sdk = subprocess.check_output(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-path"], text=True).strip()

@@ -21,7 +21,19 @@ enum SkillRuntimeAnalysis {
         } else { throw RuntimeCoreError.invalidRequest("No original syntax helper for this language") }
         try Task.checkCancellation()
         guard result.exitCode == 0, !result.wasCancelled, !result.didTimeOut,
-              result.stdout.utf8.count <= 1_048_576 else { throw RuntimeCoreError.runtimeFailure("Passive source analysis failed") }
+              result.stdout.utf8.count <= 1_048_576 else {
+            // Finite trusted-helper diagnostics only. Never expose analyzed source,
+            // base64 input, paths or raw tracebacks (metadata can contain secrets).
+            let reason: String
+            if result.stderr.contains("Untrusted packaging module origin") { reason = "preloaded-packaging-origin" }
+            else if result.stderr.contains("Original packaging provenance mismatch") { reason = "packaging-provenance" }
+            else if result.stderr.contains("No module named 'tomllib'") { reason = "missing-tomllib" }
+            else if result.stderr.contains("No module named 'packaging'") { reason = "missing-trusted-packaging" }
+            else if result.stderr.contains("zipimport") || result.stderr.contains("No module named 'zlib'") { reason = "wheel-zip-reader" }
+            else if result.stderr.contains("SyntaxError") || result.stderr.contains("IndentationError") { reason = "helper-syntax" }
+            else { reason = "helper-failure" }
+            throw RuntimeCoreError.runtimeFailure("Passive source analysis failed (\(reason), exit=\(result.exitCode.map { String($0) } ?? "unknown"))")
+        }
         let report = try JSONDecoder().decode(SkillSyntaxReport.self, from: Data(result.stdout.utf8))
         guard report.file == path, report.sourceSHA256 == SkillRuntimeRequirements.digest(bytes) else {
             throw RuntimeCoreError.invalidRequest("Syntax provenance does not match original bytes")

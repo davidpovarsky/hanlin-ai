@@ -39,9 +39,15 @@ enum SkillRuntimeNodeCapabilityAdapterChecks {
             passed.append(name)
         }
         let actual = try inspect(data())
+        let parser = try inspect(data(extras: ["portableShellAdapterVersion": 1]))
+        let unknownParser = try inspect(data(extras: ["portableShellAdapterVersion": 2]))
         func fact(_ name: String, in facts: C.EngineFacts? = nil) -> C.CapabilityFact? {
             (facts ?? actual).facts.first { $0.requirement.name == name }
         }
+        try check("actual loaded portable shell adapter establishes only its exact version",
+            fact("node.portable-shell.original", in: parser)?.resolvedVersion == "1")
+        try check("unknown portable shell versions do not establish parser availability",
+            fact("node.portable-shell.original", in: unknownParser) == nil)
         try check("engine version comes from original observed node field",
                   fact(C.EngineID.node.rawValue)?.resolvedVersion == "22.21.1")
         try check("actual namespace observation maps narrowly",

@@ -81,6 +81,22 @@ struct SkillRuntimeFactsProvider: SkillRuntimeCapabilityProvider {
                     resolvedVersion: nil, resolvedPath: diagnostic.framework + "/" + diagnostic.symbol, evidence: evidence))
             }
         }
+        if engineID == .shell,
+           let node = await AppRuntimeCore.shared.snapshots().first(where: { $0.kind == .node }),
+           [.ready, .executing].contains(node.state), let nodeVersion = node.version,
+           let report = try? await AppRuntimeCore.shared.node.capabilityReportIfLaunched(),
+           let bytes = try? JSONEncoder().encode(report),
+           let observed = try? SkillRuntimeNodeCapabilityAdapter.inspect(report: bytes,
+                binding: .init(engineID: .node, engineVersion: nodeVersion,
+                    engineFingerprint: binding.engineFingerprint, environmentID: environmentID,
+                    environmentFingerprint: binding.environmentFingerprint), observedAt: .now, artifactReference: nil),
+           observed.facts.contains(where: { $0.requirement.name == "node.portable-shell.original" && $0.status == .available }) {
+            facts.append(.init(requirement: .init(kind: .capability, name: "shell.portable-parser", versionConstraint: nil),
+                binding: binding, status: .available, resolvedVersion: "1", resolvedPath: nil,
+                evidence: .init(kind: .observed, producer: "OriginalYarnPortableShell/Node.capabilityReportIfLaunched",
+                    producerVersion: "1", sourceID: engineID.rawValue, sourceVersion: version,
+                    sourceFingerprint: binding.engineFingerprint, observedAt: .now, artifactReference: nil)))
+        }
         return .init(engineID: engineID, binding: binding, facts: facts)
     }
 }

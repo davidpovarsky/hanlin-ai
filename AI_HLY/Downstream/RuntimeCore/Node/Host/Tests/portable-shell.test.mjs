@@ -6,6 +6,15 @@ import os from 'node:os';
 import { PassThrough, Readable } from 'node:stream';
 import { executePortableShell } from '../portable-shell.mjs';
 
+test('source execution preserves explicit positional arguments through the original parser',async t=>{
+  const io=await fixture(t),calls=[];
+  const code=await executePortableShell('native-command "$0" "$1"',['nonce with spaces','עברית'],{
+    ...io,dispatch:async request=>{calls.push([request.command,request.arguments]);return 0;},
+  });
+  assert.equal(code,0);
+  assert.deepEqual(calls,[['native-command',['nonce with spaces','עברית']]]);
+});
+
 async function fixture(t) {
   const cwd = await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-portable-shell-'));
   t.after(() => fs.rm(cwd, { recursive: true, force: true }));

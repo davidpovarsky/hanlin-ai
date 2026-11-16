@@ -32,7 +32,8 @@ enum RuntimeToolSupport {
         title: String,
         systemImage: String,
         runtimeKind: RuntimeKind,
-        argumentKeys: [String]
+        argumentKeys: [String],
+        jobRuntime: RuntimeKind? = nil
     ) -> NativeToolResult {
         let renderedValue = result.value.flatMap(renderValue)
         var sections: [String] = []
@@ -42,13 +43,13 @@ enum RuntimeToolSupport {
         let outputBody = sections.joined(separator: "\n")
         var modelSections = sections
         if let files = result.outputFiles, !files.isEmpty {
-            let jobRuntime = switch runtimeKind {
+            let jobStorage = switch jobRuntime ?? runtimeKind {
             case .node, .typeScript: "node"
             case .localPython: "python"
             case .javaScriptCore: "jsc"
             case .shell: "shell"
             }
-            modelSections.append("Full output retained. Use get_runtime_job with runtime=\(jobRuntime), job_id=\(result.executionID.uuidString) to inspect status or read output pages.")
+            modelSections.append("Full output retained. Use get_runtime_job with runtime=\(jobStorage), job_id=\(result.executionID.uuidString) to inspect status or read output pages.")
             for name in files.keys.sorted() {
                 if let file = files[name] { modelSections.append("\(name): \(file.bytes) bytes, SHA256 \(file.sha256)") }
             }

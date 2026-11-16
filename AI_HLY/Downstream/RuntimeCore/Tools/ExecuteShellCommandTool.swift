@@ -104,7 +104,8 @@ struct ExecuteShellCommandTool: NativeTool {
                 title: "Shell / ios_system",
                 systemImage: "apple.terminal",
                 runtimeKind: .shell,
-                argumentKeys: Array(arguments.keys)
+                argumentKeys: Array(arguments.keys),
+                jobRuntime: program == nil && shellServiceOverride == nil ? .node : nil
             )
         } catch { return RuntimeToolSupport.failure(error, title: "Shell command failed", runtimeKind: .shell) }
     }

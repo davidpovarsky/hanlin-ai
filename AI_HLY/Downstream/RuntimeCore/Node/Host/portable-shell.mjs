@@ -7,6 +7,7 @@ import { workerData } from 'node:worker_threads';
 import { dispatchRuntimeCommand } from './runtime-command-client.mjs';
 
 if (hanlinCommandAdapterVersion !== 1) throw new Error('The authenticated Yarn command-adapter patch is missing. Rebuild the Host dependencies.');
+export const portableShellAdapterVersion = hanlinCommandAdapterVersion;
 
 /** Public upstream parser for previews; retain the original source for execution. */
 export function validatePortableShell(source) {

@@ -123,6 +123,7 @@ final class SkillRuntimeService {
         if let engine {
             guard let kind = SkillRuntimeRequirements.kind(engine) else { throw RuntimeCoreError.invalidRequest("Engine unavailable") }
             _ = try await AppRuntimeCore.shared.start(kind)
+            if kind == .shell { _ = try await AppRuntimeCore.shared.ensureStarted(.node) }
         }
         try Task.checkCancellation()
         if let path { try await analyze(skillID: skillID, path: path, catalog: catalog) }

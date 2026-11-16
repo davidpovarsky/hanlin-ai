@@ -182,6 +182,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                 selectedKind = value
             } else { selectedKind = runtimeKind }
             _ = try await AppRuntimeCore.shared.ensureStarted(selectedKind)
+            if selectedKind == .shell { _ = try await AppRuntimeCore.shared.ensureStarted(.node) }
             try Task.checkCancellation()
             try await SkillRuntimeService.shared.analyze(skillID: skillID, path: cleanPath, catalog: catalog ?? .shared)
             let plan = try await SkillRuntimeService.shared.plan(skillID: skillID, path: cleanPath,
@@ -257,12 +258,13 @@ struct ExecuteSkillResourceTool: NativeTool {
                 title: "Skill Resource: \(components.last ?? "")",
                 systemImage: "terminal",
                 runtimeKind: selectedKind,
-                argumentKeys: Array(arguments.keys)
+                argumentKeys: Array(arguments.keys),
+                jobRuntime: selectedKind == .shell ? .node : nil
             )
         } catch {
             // Observation cancellation never replays source. Preserve an actual settled Node
             // cancellation receipt from the existing journal, including partial output.
-            if let (plan, id, path, kind) = receiptContext, kind == .node, let observedJob,
+            if let (plan, id, path, kind) = receiptContext, [.node, .typeScript, .shell].contains(kind), let observedJob,
                error is CancellationError || Task.isCancelled {
                 let result = await Task<RuntimeExecutionResult?, Never> { @MainActor in
                     await AppRuntimeCore.shared.node.cancelExecution(id: observedJob.executionID)
