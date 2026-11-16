@@ -437,6 +437,10 @@ final class HanlinSkillCenterUITests: XCTestCase {
         let receipt = app.staticTexts["hanlin-skill-execution-receipt"].firstMatch
         let cancelled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label CONTAINS 'CANCELLED'"), object: receipt)
         XCTAssertEqual(XCTWaiter.wait(for: [cancelled], timeout: 15), .completed)
+        let status = app.descendants(matching: .any)["hanlin-skill-detail-compatibility-status"].firstMatch
+        let currentStatus = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == 'CANCELLED'"), object: status)
+        XCTAssertEqual(XCTWaiter.wait(for: [currentStatus], timeout: 10), .completed)
+        XCTAssertFalse(receipt.label.contains("Historical"), "The just-cancelled original job must match current source and engine facts")
         XCTAssertTrue(output.label.contains("STARTED_" + fixtureID))
         XCTAssertFalse(output.label.contains("UNEXPECTED_LATE"))
         let attachment = XCTAttachment(screenshot: app.screenshot())

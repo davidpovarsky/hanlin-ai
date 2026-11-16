@@ -182,6 +182,15 @@ struct SkillExecutionPlanSection: View {
                 receipt = try SkillRuntimeService.shared.receipt(skillID: skillID, path: selectedPath)
                 if Task.isCancelled {
                     if let receipt { output = receipt.result.stdout + receipt.result.stderr }
+                    // The cancellation receipt describes the engine that actually ran. Refresh
+                    // passive facts outside the cancelled observer, rather than compare it with
+                    // the pre-start Unknown plan and falsely label it historical.
+                    let refreshed = try await Task { @MainActor in
+                        try await SkillRuntimeService.shared.plan(skillID: skillID, path: selectedPath,
+                            engine: SkillRuntimeRequirements.engine(selectedEngine))
+                    }.value
+                    guard revision == token else { return }
+                    plan = refreshed
                     return
                 }
                 plan = try await SkillRuntimeService.shared.plan(skillID: skillID, path: selectedPath,
