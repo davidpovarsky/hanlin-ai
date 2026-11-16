@@ -30,6 +30,12 @@
       "description": "CI workflows, actions, acceptance pipeline and planning scripts",
       "patterns": [
         ".github/**",
+        ".renovaterc.json",
+        "Scripts/Runtime/DependencyUpdates/**",
+        "Scripts/Runtime/upstream-sources.json",
+        "Scripts/Runtime/verify-swiftpm-pin.py",
+        "Scripts/Runtime/verify-swiftpm-update.py",
+        "Scripts/Runtime/verify-upstream-proof.py",
         "Scripts/CI/**",
         "Scripts/Diagnostics/**",
         "Scripts/ChatRendering/**",
@@ -873,6 +879,7 @@
     "skill_store_and_import_unit_tests": {
       "description": "Skill store persistence, overrides, and archive importer unit tests",
       "patterns": [
+        "Packages/HanlinSkillFormat/**",
         "AI_HLYTests/SkillStoreAndImportTests.swift"
       ],
       "direct_validation_groups": [
@@ -1287,6 +1294,8 @@
     "original_chat_presentation_tests": {
       "description": "ChatPresentationTests acceptance for original chat and Runtime V3",
       "patterns": [
+        "AI_HLYTests/A2UITests.swift",
+        "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
         "AI_HLYTests/ChatPresentationTests.swift",
         "AI_HLY/Downstream/ChatPresentation/**"
       ],
