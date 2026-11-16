@@ -8,6 +8,27 @@ import ZIPFoundation
 @Suite("Imported Skills through the original product execution path", .serialized)
 @MainActor
 struct SkillRuntimeProductTests {
+    @Test(arguments: ["requirements.txt", "pyproject.toml"])
+    func nativeManifestAnalysisProducesTheExpectedPassiveFacts(_ file: String) async throws {
+        let source = file == "requirements.txt" ? "hanlin-never-installed>=1\n"
+            : "[project]\ndynamic = ['dependencies']\n"
+        let bytes = Data(source.utf8)
+        let report = try await SkillRuntimeAnalysis.scan(path: file, bytes: bytes)
+        #expect(report.sourceSHA256 == SkillRuntimeRequirements.digest(bytes))
+        #expect(report.provenance.scanner == "python.tomllib+packaging/26.3")
+        #expect(report.visitedNodes > 0 && report.inputBytes == bytes.count)
+        if file == "requirements.txt" {
+            #expect(report.completion == .complete)
+            #expect(report.findings.contains { $0.kind == .dependencyDeclaration
+                && $0.value == "hanlin-never-installed>=1" && $0.reason == "declaredPEP508NotInstalled" })
+        } else {
+            #expect(report.completion == .partial)
+            #expect(report.findings.contains { $0.kind == .unknown
+                && $0.reason == "dynamicProjectMetadataNotExecuted" })
+        }
+        print("SKILL_NATIVE_PASSIVE_MANIFEST \(file) \(report.completion.rawValue) \(report.provenance.scanner)")
+    }
+
     @Test func originalOpenClawSixCasesExecuteInTheActualEmbeddedAppEngine() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "openclaw-native-" + UUID().uuidString)
         let generated = root.appending(path: "generated")
