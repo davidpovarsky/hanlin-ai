@@ -3,6 +3,44 @@ import UIKit
 
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
+    func testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication(), nonce = UUID().uuidString
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        app.launch()
+        openChat(in: app)
+        sendPrompt("PHASE2_TOOL_A2UI_" + nonce, in: app)
+        let review = app.staticTexts["hanlin-tool-consent-original-request"].firstMatch
+        XCTAssertTrue(review.waitForExistence(timeout: 45))
+        XCTAssertTrue(review.label.contains("createSurface") && review.label.contains("Tool name"))
+        tapElement(app.buttons["hanlin-tool-consent-allow-once"].firstMatch)
+        let ready = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", "PHASE2_TOOL_SURFACE_READY_" + nonce)).firstMatch
+        XCTAssertTrue(ready.waitForExistence(timeout: 45))
+        let field = app.textFields["Tool name"].firstMatch
+        if !field.waitForExistence(timeout: 3) {
+            let disclosure = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
+            XCTAssertTrue(disclosure.waitForExistence(timeout: 10)); tapElement(disclosure)
+        }
+        XCTAssertTrue(field.waitForExistence(timeout: 15) && field.isEnabled, "The original tool receipt must admit the official Surface")
+        tapElement(field)
+        let old = try XCTUnwrap(field.value as? String)
+        field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count) + "Grace")
+        let draft = "UNSENT_TOOL_A2UI_" + nonce
+        let input = chatInputElement(in: app)
+        tapElement(input); input.typeText(draft)
+        let submit = app.buttons["Submit tool form"].firstMatch
+        XCTAssertTrue(submit.isEnabled); tapElement(submit)
+        let answer = app.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", "PHASE2_TOOL_ACTION_VERIFIED_" + nonce)).firstMatch
+        XCTAssertTrue(answer.waitForExistence(timeout: 45), "The actual edited action must return through the original Host/Session, not an injected UI callback")
+        XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+        XCTAssertFalse(app.webViews.firstMatch.exists)
+        let proof = XCTAttachment(screenshot: app.screenshot())
+        proof.name = "original-host-tool-official-surface-and-action-continuation"; proof.lifetime = .keepAlways; add(proof)
+    }
+
     func testPhase2ActualPythonToolApprovalAndColdConversationRestoration() throws {
         continueAfterFailure = false
         let app = XCUIApplication(), nonce = UUID().uuidString

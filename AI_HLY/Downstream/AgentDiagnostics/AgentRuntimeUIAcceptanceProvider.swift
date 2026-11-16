@@ -354,6 +354,27 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let messages = body?["messages"] as? [[String: Any]]
         let content = messages?.last(where: { $0["role"] as? String == "user" })?["content"]
         let currentText = (content as? String) ?? (content as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined(separator: "\n") ?? ""
+        if let marker = bodyString.range(of: "PHASE2_TOOL_A2UI_[0-9A-F-]{36}", options: .regularExpression) {
+            let nonce = String(bodyString[marker]).replacingOccurrences(of: "PHASE2_TOOL_A2UI_", with: "")
+            let callID = "phase2-a2ui-" + nonce
+            if currentText.contains("phase2-tool-submit"), currentText.contains("Grace"),
+               !currentText.contains("UNSENT_TOOL_A2UI_") {
+                emitFinalAnswer("PHASE2_TOOL_ACTION_VERIFIED_" + nonce)
+            } else if (messages ?? []).contains(where: { $0["role"] as? String == "tool" && $0["tool_call_id"] as? String == callID }) {
+                emitFinalAnswer("PHASE2_TOOL_SURFACE_READY_" + nonce)
+            } else {
+                let frames = [
+                    #"{"version":"1.0","createSurface":{"surfaceId":"tool-form","catalogId":"https://a2ui.org/specification/v1_0/catalogs/basic/catalog.json"}}"#,
+                    #"{"version":"1.0","updateDataModel":{"surfaceId":"tool-form","path":"/","value":{"name":"Ada"}}}"#,
+                    #"{"version":"1.0","updateComponents":{"surfaceId":"tool-form","components":[{"id":"root","component":"Column","children":["name","submit"]},{"id":"name","component":"TextField","label":"Tool name","value":{"@path":"/name"}},{"id":"submit","component":"Button","child":"submitLabel","action":{"event":{"name":"phase2-tool-submit","context":{"name":{"@path":"/name"}}}}},{"id":"submitLabel","component":"Text","text":"Submit tool form"}]}}"#
+                ]
+                guard let data = try? JSONSerialization.data(withJSONObject: ["messages": frames, "result_presentation": "card"]) else {
+                    client?.urlProtocol(self, didFailWithError: URLError(.cannotDecodeContentData)); return
+                }
+                emitToolCall(id: callID, name: "present_a2ui", arguments: String(decoding: data, as: UTF8.self))
+            }
+            return
+        }
         if let marker = currentText.range(of: "PHASE2_REAL_PYTHON_[0-9A-F-]{36}", options: .regularExpression) {
             let nonce = String(currentText[marker]).replacingOccurrences(of: "PHASE2_REAL_PYTHON_", with: "")
             let resultMarker = "PHASE2_RESULT_" + nonce + ":3.14.6:42"
