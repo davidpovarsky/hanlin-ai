@@ -2694,22 +2694,9 @@ jobs:
                 nativescript_e2e_status=65
               fi
               if [ "$nativescript_e2e_status" -eq 0 ]; then
-                if [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinUIPerformanceUITests"* ]] || [ -z "$SIMULATOR_UI_FILTER" ]; then
-                  grep -Fq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT' "$LOG_DIR/08-nativescript-production.log"
-                  grep -Eq 'HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=.*/Library/Application Support/' "$LOG_DIR/08-nativescript-production.log"
-                  if [ -z "$SIMULATOR_UI_FILTER" ] || [[ "$SIMULATOR_UI_FILTER" == *"testProductionSwiftUIInteractionCoreRegressionAndLifecycle"* ]] || { [[ "$SIMULATOR_UI_FILTER" == *"HanlinNativeScriptProductionE2ETests"* ]] && [[ "$SIMULATOR_UI_FILTER" != *"testProductionNativeScriptParityFullRuntime"* ]]; }; then
-                    grep -Fq 'HANLIN_NS_FIXTURE_STARTED' "$LOG_DIR/08-nativescript-production.log"
-                    grep -Fq 'HANLIN_NS_NATIVE_API_OK' "$LOG_DIR/08-nativescript-production.log"
-                    grep -Fq 'HANLIN_NS_SCRIPTING_ADAPTER_OK' "$LOG_DIR/08-nativescript-production.log"
-                    grep -Fq 'HANLIN_NS_MODULE_RESOURCE_OK' "$LOG_DIR/08-nativescript-production.log"
-                    grep -Fq 'HANLIN_NS_CORE_UI_READY controls=Label,Button' "$LOG_DIR/08-nativescript-production.log"
-                    grep -Fq 'HANLIN_NS_SWIFTUI_MODULE_OK package=@nativescript/swift-ui version=4.0.2' "$LOG_DIR/08-nativescript-production.log"
-                    grep -Fq 'HANLIN_NS_SWIFTUI_PROVIDER_READY' "$LOG_DIR/08-nativescript-production.log"
-                    grep -Fq 'HANLIN_NS_SWIFTUI_DATA_OK' "$LOG_DIR/08-nativescript-production.log"
-                    grep -Fq 'HANLIN_NS_SWIFTUI_EVENT_OK count=1 source=swiftui' "$LOG_DIR/08-nativescript-production.log"
-                    grep -Fq 'HANLIN_NS_PRODUCTION_SHUTDOWN_OK' "$LOG_DIR/08-nativescript-production.log"
-                  fi
-                fi
+                python3 Scripts/CI/verify_nativescript_test_log.py \
+                  --log "$LOG_DIR/08-nativescript-production.log" \
+                  --selectors "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"
               fi
             else
               printf '%s\n' "NativeScript production UI tests skipped by affected-validation router." > "$LOG_DIR/08-nativescript-production-ui-tests-skipped.txt"
