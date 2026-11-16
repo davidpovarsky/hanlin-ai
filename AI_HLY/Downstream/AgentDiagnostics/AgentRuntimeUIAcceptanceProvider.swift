@@ -368,7 +368,8 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                     #"{"version":"1.0","updateDataModel":{"surfaceId":"tool-form","path":"/","value":{"name":"Ada"}}}"#,
                     #"{"version":"1.0","updateComponents":{"surfaceId":"tool-form","components":[{"id":"root","component":"Column","children":["name","submit"]},{"id":"name","component":"TextField","label":"Tool name","value":{"@path":"/name"}},{"id":"submit","component":"Button","child":"submitLabel","action":{"event":{"name":"phase2-tool-submit","context":{"name":{"@path":"/name"}}}}},{"id":"submitLabel","component":"Text","text":"Submit tool form"}]}}"#
                 ]
-                let arguments: [String: Any] = ["messages": frames, "result_presentation": "card"]
+                let arguments: [String: Any] = ["messages": frames, "result_presentation": "card",
+                    "progress_summary": "Present the native tool form for review."]
                 guard let data = try? JSONSerialization.data(withJSONObject: arguments) else {
                     client?.urlProtocol(self, didFailWithError: URLError(.cannotDecodeContentData)); return
                 }
@@ -386,7 +387,8 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 emitFinalAnswer(text.contains(resultMarker) ? "PHASE2_VERIFIED_" + nonce + ":3.14.6:42" : "PHASE2_EXECUTION_NOT_VERIFIED")
             } else if outputs.contains(where: { $0["tool_call_id"] as? String == loadID }) {
                 let source = "import sys; print('PHASE2_RESULT_\(nonce):' + sys.version.split()[0] + ':' + str(6*7))"
-                let arguments = try? JSONSerialization.data(withJSONObject: ["source": source])
+                let arguments = try? JSONSerialization.data(withJSONObject: ["source": source,
+                    "progress_summary": "Run the reviewed Python calculation."])
                 emitToolCall(id: toolID, name: "execute_local_python_code", arguments: String(decoding: arguments ?? Data(), as: UTF8.self))
             } else { emitToolCall(id: loadID, name: "load_skill", arguments: #"{"skill_id":"code"}"#) }
             return
