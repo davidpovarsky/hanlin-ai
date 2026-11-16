@@ -357,11 +357,16 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         if let marker = bodyString.range(of: "PHASE2_TOOL_A2UI_[0-9A-F-]{36}", options: .regularExpression) {
             let nonce = String(bodyString[marker]).replacingOccurrences(of: "PHASE2_TOOL_A2UI_", with: "")
             let callID = "phase2-a2ui-" + nonce
+            let searchID = "phase2-a2ui-search-" + nonce
             if currentText.contains("phase2-tool-submit"), currentText.contains("Grace"),
                !currentText.contains("UNSENT_TOOL_A2UI_") {
                 emitFinalAnswer("PHASE2_TOOL_ACTION_VERIFIED_" + nonce)
             } else if (messages ?? []).contains(where: { $0["role"] as? String == "tool" && $0["tool_call_id"] as? String == callID }) {
                 emitFinalAnswer("PHASE2_TOOL_SURFACE_READY_" + nonce)
+            } else if !(messages ?? []).contains(where: { $0["role"] as? String == "tool" && $0["tool_call_id"] as? String == searchID }) {
+                // Follow the real deferred-tool contract before calling the native
+                // presenter. The fixture must not bypass canonical discovery.
+                emitToolCall(id: searchID, name: "tool_search", arguments: #"{"query":"present_a2ui","limit":1}"#)
             } else {
                 let frames = [
                     #"{"version":"1.0","createSurface":{"surfaceId":"tool-form","catalogId":"https://a2ui.org/specification/v1_0/catalogs/basic/catalog.json"}}"#,
@@ -435,7 +440,9 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             )!
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
             DispatchQueue.global().async { [weak self] in
-                for _ in 0..<80 {
+                // Keep the cancellable request alive through XCTest's real
+                // accessibility/idle round trips; completion is not a fake stop.
+                for _ in 0..<1200 {
                     guard let self, !self.isStopped else { return }
                     Thread.sleep(forTimeInterval: 0.1)
                 }

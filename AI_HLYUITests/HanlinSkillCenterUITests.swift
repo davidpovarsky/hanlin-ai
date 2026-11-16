@@ -749,7 +749,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         for _ in 0..<6 where !element.isHittable {
             let containers = ["hanlin-skill-detail-list", "hanlin-skill-center-list", "hanlin-skill-import-preview-list", "hanlin-settings-list"]
             guard let list = containers.map({ app.descendants(matching: .any)[$0].firstMatch })
-                .first(where: { $0.exists && $0.isHittable }) else { break }
+                .first(where: { $0.exists && !$0.frame.isEmpty }) else { break }
             let above = element.exists && element.frame.maxY < list.frame.minY
             let start = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.3 : 0.7))
             let end = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.7 : 0.3))

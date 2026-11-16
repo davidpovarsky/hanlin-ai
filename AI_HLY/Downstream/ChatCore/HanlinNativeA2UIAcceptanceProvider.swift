@@ -65,9 +65,15 @@ enum HanlinNativeA2UIAcceptanceProvider {
         0
 #endif
     }
-    static var lastRequestFailure: String? {
+    @MainActor private static var engineFailure: String?
+    @MainActor static func recordEngineFailure(_ error: Error) {
+        guard isEnabled else { return }
+        // Type identity only; never source, submitted values or raw provider text.
+        engineFailure = "engine:" + String(reflecting: type(of: error))
+    }
+    @MainActor static var lastRequestFailure: String? {
 #if DEBUG && targetEnvironment(simulator)
-        HanlinNativeA2UIAcceptanceURLProtocol.snapshot().failure
+        HanlinNativeA2UIAcceptanceURLProtocol.snapshot().failure ?? engineFailure
 #else
         nil
 #endif

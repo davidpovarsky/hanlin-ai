@@ -4009,6 +4009,7 @@ class APIManager {
         let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
         throw error
         } catch {
+            HanlinNativeA2UIAcceptanceProvider.recordEngineFailure(error)
             await agentSessionOwner.invalidate(uiRunID: runID)
             throw error
         }

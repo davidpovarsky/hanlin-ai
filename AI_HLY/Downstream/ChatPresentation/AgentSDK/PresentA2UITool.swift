@@ -11,7 +11,10 @@ struct PresentA2UITool: NativeTool {
             summary: "Display official A2UI 1.0 content in the current tool result.",
             categories: ["presentation"], keywords: ["a2ui", "form", "interactive"],
             systemImage: "rectangle.and.hand.point.up.left",
-            presentationProfile: .generic(toolName: name))
+            presentationProfile: .modernNative(toolName: name, kind: .generic,
+                systemImage: "rectangle.and.hand.point.up.left",
+                runningTitle: "Preparing interactive content", completedTitle: "Interactive content",
+                visibleArgumentKeys: []))
     }
 
     func openAIToolSchema() -> [String: Any] {
