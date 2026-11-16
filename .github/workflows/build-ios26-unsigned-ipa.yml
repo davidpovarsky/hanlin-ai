@@ -2680,15 +2680,20 @@ jobs:
               if [ "$log_window_minutes" -lt 5 ]; then
                 log_window_minutes=5
               fi
-              xcrun simctl boot "$SIMULATOR_UDID" 2>/dev/null || true
-              xcrun simctl spawn "$SIMULATOR_UDID" log show \
-                --style compact \
-                --last "${log_window_minutes}m" \
-                --predicate "process == '$APP_EXECUTABLE'" \
-                > "$LOG_DIR/08-nativescript-production.log" 2>&1 || true
+              # Preserve actual test results before optional simulator diagnostics.
               xcrun xcresulttool get test-results tests \
                 --path "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
                 --format json 2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-test-results.json" || true
+              python3 - "$SIMULATOR_UDID" "$APP_EXECUTABLE" "$log_window_minutes" <<'PY'
+          import os
+          from pathlib import Path
+          import sys
+          from Scripts.CI.stage_simulator_fixtures import run_bounded
+          result = run_bounded(["xcrun", "simctl", "spawn", sys.argv[1], "log", "show",
+              "--style", "compact", "--last", sys.argv[3] + "m", "--predicate", "process == '" + sys.argv[2] + "'"], timeout_seconds=20.0)
+          Path(os.environ["LOG_DIR"], "08-nativescript-production.log").write_text(result.stdout + result.stderr, encoding="utf-8")
+          Path(os.environ["LOG_DIR"], "08-nativescript-log-capture-status.txt").write_text(str(result.returncode) + "\n", encoding="utf-8")
+          PY
               if ! python3 Scripts/CI/verify_selected_tests.py \
                 --results "$LOG_DIR/08-nativescript-production-ui-test-results.json" \
                 --selectors "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"; then
