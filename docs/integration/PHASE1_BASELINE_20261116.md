@@ -96,3 +96,12 @@ in Phase2. Only the two metadata-affected NativeScript cases and the failed
 Composer case need fresh execution; the17 app unit identities and Expo smoke
 have authentic passing raw results at `9ef84ab8` and require an unchanged-input
 closure audit rather than another execution.
+
+Retry `43803750882` correctly rejected a partial metadata binary before any
+app case: the restored compiler state exposed the app's real generated
+`AI_Hanlin-Swift.h`, whose original camera/location/speech delegate declarations
+require AVFoundation, CoreLocation and Speech. Add those three actual public
+header dependencies to the bounded root, keeping all actual Host/provider
+headers and the zero-Clang-error guard. This is the original app header closure,
+not Full-SDK/BEScrollViewDelegate expansion; no fake protocol or omitted Host
+declaration is substituted.

@@ -17,11 +17,13 @@ REQUIRED_METADATA_NAMES = ["HanlinNativeServicesBridge", "HanlinNativeServicesSe
     "WKNavigationDelegate", "WKWebView"]
 
 # The production host needs Foundation/UIKit, Core's eager WebView declarations,
-# and generated Host/provider
+# and generated Host/provider declarations. The app's actual generated header
+# also declares its existing camera, location and speech delegate conformances.
 # declarations. Importing every Expo/React public umbrella into the legacy ObjC
 # parser is a separate full-SDK expansion and pulls in C++ declarations. Keep that
 # optional scan in the explicit SDK probe; do not change its generator or guards.
-HOST_FRAMEWORKS = {"Foundation.framework", "UIKit.framework", "WebKit.framework"}
+HOST_FRAMEWORKS = {"Foundation.framework", "UIKit.framework", "WebKit.framework",
+    "AVFoundation.framework", "CoreLocation.framework", "Speech.framework"}
 
 
 def required_env(name: str) -> str:

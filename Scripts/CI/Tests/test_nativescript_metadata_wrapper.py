@@ -31,6 +31,9 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             ui = self.framework(frameworks, "UIKit")
             foundation = self.framework(frameworks, "Foundation")
             webkit = self.framework(frameworks, "WebKit")
+            capture = self.framework(frameworks, "AVFoundation")
+            location = self.framework(frameworks, "CoreLocation")
+            speech = self.framework(frameworks, "Speech")
             expo = self.framework(root / "products", "ExpoModulesCore")
             (expo / "Headers/Exported.h").write_text("namespace facebook { class CallInvoker; }\n")
             provider = root / "ActualProvider-Swift.h"
@@ -39,7 +42,7 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             records = HEADERS.write_public_umbrella(
                 sdk, host, [provider], [expo.parent], framework_names=WRAPPER.HOST_FRAMEWORKS)
             self.assertEqual({record["framework"] for record in records}, WRAPPER.HOST_FRAMEWORKS)
-            for header in [ui / "Headers/Entry.h", foundation / "Headers/Entry.h", webkit / "Headers/Entry.h", provider]:
+            for header in [p / "Headers/Entry.h" for p in [ui, foundation, webkit, capture, location, speech]] + [provider]:
                 self.assertIn(str(header), host.read_text())
             self.assertNotIn(str(expo), host.read_text())
             # The explicit full-SDK path remains unchanged and observable.
