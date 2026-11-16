@@ -10,15 +10,26 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class Phase2WiringTests(unittest.TestCase):
-    def test_motion_reuses_prepared_simulator_only_by_explicit_manual_input(self):
+    def test_motion_reuses_prepared_simulator_only_by_explicit_manual_group(self):
+        from Scripts.CI.plan_affected_validation import plan_affected_validation, RoutingError
+        mapping = json.loads((ROOT / "Scripts/CI/affected-validation-map.json").read_text())
+        with self.assertRaises(RoutingError):
+            plan_affected_validation(mapping, ["README.md"], "base", "head", "workflow_dispatch",
+                target_group="phase2_app_with_motion")
+        plan = plan_affected_validation(mapping, ["README.md"], "base", "head", "workflow_dispatch",
+            target_group="phase2_app_with_motion",
+            exact_test_selector="AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testDirectUIKitTabBarBridge")
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
         workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
         triggers = workflow.get("on", workflow.get(True))
-        option = triggers["workflow_dispatch"]["inputs"]["phase2_motion_after_boot"]
-        self.assertIs(option["default"], False)
+        self.assertLessEqual(len(triggers["workflow_dispatch"]["inputs"]), 25)
+        self.assertEqual(triggers["workflow_dispatch"]["inputs"]["target_validation_group"]["default"], "")
         simulator = next(job for job in workflow["jobs"].values() if job.get("name") == "Launch full app on iPad Simulator")
         steps = simulator["steps"]
         motion = next(step for step in steps if step.get("name") == "Verify affected Motion on the prepared app simulator")
-        self.assertIn("inputs.phase2_motion_after_boot", motion["if"])
+        self.assertIn("inputs.target_validation_group == 'phase2_app_with_motion'", motion["if"])
         self.assertIn("!cancelled()", motion["if"])
         self.assertNotIn("continue-on-error", motion)
         self.assertEqual(motion["env"]["HANLIN_MOTION_SCOPE"], "affected")
@@ -40,7 +51,7 @@ class Phase2WiringTests(unittest.TestCase):
             if step.get("uses") == "davidpovarsky/github-automation/live-refresh@main"]
         self.assertTrue(notifications)
         for step in notifications:
-            for scope in ["exact_test_selector", "device_build", "chat_motion_product", "project_packaging"]:
+            for scope in ["exact_test_selector", "device_build", "chat_motion_product", "project_packaging", "phase2_app_with_motion"]:
                 self.assertIn("inputs.target_validation_group != '" + scope + "'", step["if"])
         simulator = next(job for job in workflow["jobs"].values() if job.get("name") == "Launch full app on iPad Simulator")
         for name in ["Build full arm64 simulator app", "Boot iPad Simulator and stage fixtures", "Run simulator test suite"]:

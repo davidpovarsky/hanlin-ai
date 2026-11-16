@@ -622,6 +622,8 @@ def plan_affected_validation(
             raise RoutingError("runtime_bundle_only cannot be combined with another manual validation mode")
 
     # EXACT TEST SELECTOR GUARD & ROUTING
+    if target_group == "phase2_app_with_motion" and not exact_test_selector:
+        raise RoutingError("phase2_app_with_motion requires explicit exact-test-selector coverage")
     if exact_test_selector:
         exact_test_selector = exact_test_selector.strip()
         selectors = list(dict.fromkeys(part.strip() for part in exact_test_selector.split(",")))
