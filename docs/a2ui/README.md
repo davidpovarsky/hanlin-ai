@@ -2,8 +2,76 @@
 
 [איתן | ARCH] [MAIN_SESSION], 2026-11-15. Lease W1-001. Source tasks
 A2UI-01 `1220489258069695` and A2UI-03 `1220489258419968` remain **open**.
-A2UI-02 `1220489383643571` remains deferred. This is an unconnected prototype,
-not an inline-chat feature or a new persisted envelope.
+A2UI-02 `1220489383643571` remains deferred. Source includes optional mounting in
+the existing chat host. Production transport, app/inline/device acceptance and
+persisted-envelope work remain outside this packet.
+
+The current source adds transient result ownership and projection primitives in
+`HanlinA2UIResultOwner.swift`. Registration binds caller-supplied run/result/call
+identity to a fresh generation; exact-key lookup has no creation or replay side
+effects. The owner receives complete frames at consecutive ordinals starting at0;
+an ordered rejected delivery still consumes its ordinal. No stream framing,
+persisted payload, production transport or callback continuation is introduced.
+
+`seal` cancels the attached receiver and revokes the weak event sink while keeping
+the actual SDK model/node identities visible. The renderer disables controls.
+`discard`, replacement and explicit run/chat discard close the real session.
+Projection copies share the same owner and have no appearance-based teardown.
+The caller must retain the sink, explicitly seal finished runs and discard owners
+on cancellation, supersession, removal or chat teardown. This store is transient
+presentation state, not message or tool authority. A sealed result cannot resume.
+Ended runs reject late result registrations/replacements; discarding the chat
+permanently ends that store. Old generations cannot be reset into authority.
+
+The optional mount source now supplies only explicitly registered projections to
+the actual ChatBubbleView.assistantTextSection -> AgentTranscriptToolResultView
+-> generic ChatEmbeddedResultHost path. Environment injection defaults to nil;
+there is no production frame source, event route or run continuation. Existing
+display gates and nil/flag-off resolver/modern/legacy branches are preserved.
+Inline and expanded content share one projection without appearance teardown.
+
+Result owners now refuse a deleted surface ID for that result's remaining lifetime.
+The SDK callback exposes no emitting model instance, so delayed membership cannot
+distinguish a same-ID reincarnation. Only observed removal of an actually owned
+SDK surface after its delete retires the ID, even if the SDK also reports an error.
+This is host admission policy, not SDK schema validation;
+other owners/fresh generations may reuse IDs. Standalone SDK session delete/recreate
+behavior is unchanged.
+
+**Current candidate native status: NOT_RUN.** The frozen961 benchmark's34 methods
+are retained, plus one same-ID race regression:8 portable +27 SDK =35. Six iOS-only
+A2UIHostedResultTests methods are authored for the actual chat/host/native-input
+path and excluded from the isolated macOS harness. Their compilation/execution is
+NOT_RUN. Windows syntax parsing is not Apple import/API/type checking. Historical
+f65425-case and96134-case outcomes cannot accept this later correction or UI mount.
+
+The actual961 attempt [run43674291306](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43674291306)
+failed compilation (exit65) on recursive nested Testing.require expansion at
+A2UITests.swift507, before any tests. All34 are NOT_RUN; raw test-case count is0.
+The same expression survived in e1d3d242. The follow-up moves registration into a
+returning helper with sequential requires, releasing its unwrapped sink before
+the weak-lifetime test sets sink=nil. Current35/6 cases retain their assertions
+and remain NOT_RUN. [Failure evidence](evidence/native-run-43674291306.json)
+records exact source/workflow/artifact provenance. Local Windows macro typecheck
+is unavailable because this Windows Swift invocation cannot import Testing; no native job was dispatched.
+
+The later actualfa810 run43679728130 compiled and executed35 Swift Testing cases:
+33 PASS /2 FAIL (`eventSinkIsWeakAndCannotKeepAuthorityAlive` and
+`retiredSurfaceCannotReanimateQueuedEventsInSameResult`, both `.ended`). The6
+hosted iOS cases were NOT_RUN. [Actual outcomes](evidence/native-run-43679728130.json)
+remain failed evidence, not35PASS.
+
+Root cause was destructive negative observation: timing out a pending shared
+AsyncStream iterator cancels that stream, preventing the later phase from reading
+it. The correction checks monotonic recorder counts before/after100ms and leaves
+positive reads strict. It does not catch ended as success, reset recorders, remove
+regressions or alter product authority. The independent positive explicitly
+requires the real action/context/key. Three real Swift AsyncStream checks using
+the actual generic test helpers passed locally; this is not an SDK substitute.
+Run `py -3 docs/a2ui/validate_async_observation.py` to reproduce. See
+[local observer results](evidence/async-observation-results.json) and Swift's
+[documented cancellation behavior](https://github.com/swiftlang/swift-evolution/blob/main/proposals/0314-async-stream.md#cancellation-handlers).
+The corrected source still needs the authorized changed-source35-case native run.
 
 ## Official source and revision
 
@@ -43,7 +111,7 @@ renderer, copied renderer, NativeScript engine or alternate MiniApp engine is us
 
 ## Ownership and behavior
 
-The only source additions are in
+The core source lives in
 `AI_HLY/Downstream/ChatPresentation/A2UI/`:
 
 - `HanlinA2UIIngress.swift` checks a complete UTF-8 message's framing, version,
@@ -99,9 +167,14 @@ is **not verified**. Core catalog functions currently use upstream's default
 locale; locale-sensitive function parity beyond this text-only POC is a later
 integration concern, not an asserted capability.
 
+The mount packet changes only optional environment injection/filter/callsite in
+ChatViewComponents.swift and the projection branch in AgentTranscriptToolResultView.
+ChatEmbeddedResultHost, Runtime, project/lock/flags, APIManager and run lifecycle
+remain untouched. No persisted envelope, renderer kind or engine identity is added.
+
 ## Deliberate activation gate
 
-The SDK-backed source and17 SDK tests are behind **HANLIN_A2UI_POC**. The manager
+The SDK-backed source and27 SDK tests are behind **HANLIN_A2UI_POC**. The manager
 authorized this temporary prototype gate without changing the lease. No build
 flag, manifest, dependency lock or project file was changed. This explicit flag
 protects the synchronized app source groups from unresolved optional imports.
@@ -114,18 +187,20 @@ run43664698104 with the exact SDK. See [the identifier evidence](NATIVE_VALIDATI
 The [privacy correction](DIAGNOSTIC_PRIVACY_FIX_2026-11-15.md) then passed all25
 enabled cases at a43 in run43667371439, including its canaries. The current
 [consumer-module correction](CONSUMER_MODULE_FIX_2026-11-15.md) aligns the test
-import and temporary recipe with actual `AI_Hanlin`; its new bytes need a proof.
-Neither isolated result establishes inline app or physical-device acceptance.
+import and temporary recipe with actual `AI_Hanlin`; source f654ac11 passed
+all25 actual native cases in [run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483).
+These isolated results do not establish inline app or physical-device acceptance.
 Inline app integration and hardware verification remain NOT_RUN. A disabled
 flag, syntax-only parse or zero selected cases cannot satisfy either task.
 See [TEST_EXECUTION_MANIFEST.md](TEST_EXECUTION_MANIFEST.md) for exact cases,
 commands, fixture identities and evidence.
 
-The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) uses all25 actual
+The prepared [isolated proof route](EXACT_PIN_PROOF_ROUTE.md) now requires all35 authored
 cases in a temporary consumer, exact root/transitive resolution evidence and
 unchanged source bytes. It does not require shared product wiring. Its planner
-and verifier have local checks. Tomer's existing verifier produced both actual
-native results; the consumer-name candidate awaits the same enabled25-case proof.
+and verifier have local checks. Tomer's existing verifier produced the actual
+native results, including the consumer-name25-case pass retained in
+[evidence](evidence/native-run-43668852483.json).
 No shared product wiring is added by this correction.
 
 ## Proposed integration, not applied

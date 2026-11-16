@@ -1,0 +1,122 @@
+[
+  {
+    "label": "cmark06",
+    "repository": "swiftlang/swift-cmark",
+    "commit": "b022b08312decdc46585e0b3440d97f6f22ef703",
+    "path": "COPYING",
+    "gitBlob": "db88a81b3ec3513cda9a4822565fbc06d958b74a",
+    "sha256": "c22e885f33b821bddb24cf007145e5540655b6c0f403e49e6c76a93c28e6d9a9"
+  },
+  {
+    "label": "cmark06",
+    "repository": "swiftlang/swift-cmark",
+    "commit": "b022b08312decdc46585e0b3440d97f6f22ef703",
+    "path": "Package.swift",
+    "gitBlob": "f1acc5f3a1d05476f04aa454bf9ea2efc6787106",
+    "sha256": "eafc97ee3efac9be8c23ad1d0003cb44d45aa15d7a30373d953d386afefc10c9"
+  },
+  {
+    "label": "cmark09",
+    "repository": "swiftlang/swift-cmark",
+    "commit": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+    "path": "COPYING",
+    "gitBlob": "db88a81b3ec3513cda9a4822565fbc06d958b74a",
+    "sha256": "c22e885f33b821bddb24cf007145e5540655b6c0f403e49e6c76a93c28e6d9a9"
+  },
+  {
+    "label": "cmark09",
+    "repository": "swiftlang/swift-cmark",
+    "commit": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+    "path": "Package.swift",
+    "gitBlob": "6cdf00ff5a798d94f72e10a2f8e9495edea57a60",
+    "sha256": "60c2250cbae9160395168d8eb3a11aa8b49177b8fd12d8f69bc0b71a83665ee4"
+  },
+  {
+    "label": "docc-plugin",
+    "repository": "swiftlang/swift-docc-plugin",
+    "commit": "e977f65879f82b375a044c8837597f690c067da6",
+    "path": "LICENSE.txt",
+    "gitBlob": "aacf32d6dd161a75290dde940764b2e8b77a0ecb",
+    "sha256": "11875c32f8de06e40b25b9e1dc78776baad9810032601c5325db6234c86d71e9"
+  },
+  {
+    "label": "docc-plugin",
+    "repository": "swiftlang/swift-docc-plugin",
+    "commit": "e977f65879f82b375a044c8837597f690c067da6",
+    "path": "Package.swift",
+    "gitBlob": "ef103c9772aaef64368c0456f320fc9285411df5",
+    "sha256": "b2e843ff07bec685f4f08203055995c08710f3a4e4260fe99b5d850017450e16"
+  },
+  {
+    "label": "symbolkit",
+    "repository": "swiftlang/swift-docc-symbolkit",
+    "commit": "b45d1f2ed151d057b54504d653e0da5552844e34",
+    "path": "LICENSE.txt",
+    "gitBlob": "aacf32d6dd161a75290dde940764b2e8b77a0ecb",
+    "sha256": "11875c32f8de06e40b25b9e1dc78776baad9810032601c5325db6234c86d71e9"
+  },
+  {
+    "label": "symbolkit",
+    "repository": "swiftlang/swift-docc-symbolkit",
+    "commit": "b45d1f2ed151d057b54504d653e0da5552844e34",
+    "path": "Package.swift",
+    "gitBlob": "6d82c3b836b472430ae0409bbb43c942265bc09a",
+    "sha256": "479a41138b1d1e3a5b31b3c41bdc0564b012b23294ccd3cb403e125f3ce0b67f"
+  },
+  {
+    "label": "symbolkit",
+    "repository": "swiftlang/swift-docc-symbolkit",
+    "commit": "b45d1f2ed151d057b54504d653e0da5552844e34",
+    "path": "Package@swift-5.5.swift",
+    "gitBlob": "dc56106d4f87d12dd753f4647f95f990b7de9c79",
+    "sha256": "b02f54fc94d3c4f1ef55438b4e5236b03f2824d7446bda5e173ade7fed9eca4d"
+  },
+  {
+    "label": "markdown",
+    "repository": "swiftlang/swift-markdown",
+    "commit": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+    "path": "LICENSE.txt",
+    "gitBlob": "78129ccbb84cfba2b132bb471ad7e8b701e22ca0",
+    "sha256": "167beb36f181bd163c93c6feb45c68e5f9462fe1af55b278f7bfd1df20e673a3"
+  },
+  {
+    "label": "markdown",
+    "repository": "swiftlang/swift-markdown",
+    "commit": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+    "path": "NOTICE.txt",
+    "gitBlob": "555f51d8485d271df5912777c02699c64c72a818",
+    "sha256": "ee7da43afcac4a52196a2141024573ec2ceb84b14e74dfed38522d94586fbc52"
+  },
+  {
+    "label": "markdown",
+    "repository": "swiftlang/swift-markdown",
+    "commit": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+    "path": "Package.swift",
+    "gitBlob": "0f31e7da2f9472f0de4283d40df8737e57dd3ad0",
+    "sha256": "f2b31dc2e03b221015e71c8a242c8517df53a9622a8ee0df4ba56275a23753cf"
+  },
+  {
+    "label": "markdown",
+    "repository": "swiftlang/swift-markdown",
+    "commit": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+    "path": "Package@swift-5.7.swift",
+    "gitBlob": "39a278b379918f97c57d43fb4dacc551452215fc",
+    "sha256": "77b9ae5127e323147bdd0e87f863180d315185123239f493274a09b26b2ef02b"
+  },
+  {
+    "label": "fork",
+    "repository": "davidpovarsky/hanlin-streaming-markdown",
+    "commit": "f59bd0d533b6d94e01408bf6bdf9f5b09db57891",
+    "path": "Package.swift",
+    "gitBlob": "c6a424823b556158c18541300121e1706e35d320",
+    "sha256": "9a6d87007499587933bbd04e3edf9aadb4bfceba91c3b1914bfc383e96f7aa8e"
+  },
+  {
+    "label": "markdownui",
+    "repository": "gonzalezreal/MarkdownUI",
+    "commit": "5f613358148239d0292c0cef674a3c2314737f9e",
+    "path": "Package.swift",
+    "gitBlob": "5fb61bc92880b35a13d96d283960f4103eb1e696",
+    "sha256": "e9b91c7361e2258157445289b9cc5eabd0f83b11b6c371574d6868485a8a2b9a"
+  }
+]

@@ -1,0 +1,39 @@
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:08:00.2430990Z  * branch            fa810e87213ee45da76b465ef50e6b54edc74a86 -> FETCH_HEAD
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:33.8277460Z ✔ Test preservesUnicodeSurfaceIdentity() passed after 0.019 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:33.8279140Z ✔ Test boundsUTF8MessageAndComponentBatch() passed after 0.019 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:33.8294210Z ✔ Test rejectsRPCAndUnnegotiatedCatalogs() passed after 0.019 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:33.8295390Z ✔ Test acceptsOfficialV1FixtureFrames() passed after 0.019 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:33.8298010Z ✔ Test rejectsOtherProtocolVersions() passed after 0.009 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:33.8302110Z ✔ Test rejectsMalformedAndAmbiguousFrames() passed after 0.009 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:33.8303610Z ✔ Test rejectedEnvelopesNeverExportSurfaceCorrelation() passed after 0.019 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:33.8305240Z ✔ Test componentValidationRemainsWithSDK() passed after 0.012 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.7137080Z ✔ Test deletedSurfaceDropsQueuedOwnedEvents() passed after 0.924 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8487690Z ✔ Test transientOwnerLookupKeepsWireIDsIndependent() passed after 1.067 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8544090Z ✔ Test hebrewFixtureRetainsBindingsInRTLComposition() passed after 1.067 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8545030Z ✔ Test transientReceiveRejectsWrongIdentityAndSequence() passed after 1.067 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8545990Z ✔ Test closeRejectsLateFramesAndDisposesSurfaces() passed after 1.067 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8549080Z ✔ Test closeRevokesQueuedAndRetainedActionCallbacks() passed after 1.054 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8550090Z ✔ Test rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound() passed after 1.055 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8550900Z ✔ Test sealedResultRetainsModelsAndRevokesActions() passed after 1.054 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8555960Z ✔ Test surfaceLimitDoesNotRemoveExistingContent() passed after 1.056 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8607730Z ✔ Test stableIDsAndNodeIdentityAcrossUpdates() passed after 1.056 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8608660Z ✔ Test nativeInputBindingWritesAndReadsOfficialModel() passed after 1.055 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8609820Z XCTestOutputBar✔ Test malformedAndUnknownContentFallsBackAndRecovers() passed after 1.055 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8610710Z rier✔ Test parsesAndRendersTextCardInputButton() passed after 1.056 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8611450Z ✔ Test presentationCopiesDoNotOwnDiscard() passed after 1.057 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8612140Z ✔ Test independentSurfacesKeepModelsSeparate() passed after 1.057 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8612900Z ✔ Test officialSchemasRejectInvalidTextInputButton() passed after 1.056 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8614090Z ✘ Test eventSinkIsWeakAndCannotKeepAuthorityAlive() recorded an issue at A2UITests.swift:501:6: Caught error: .ended
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8615030Z ✔ Test buttonEventUsesCurrentBoundValue() passed after 1.061 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8615690Z ✘ Test eventSinkIsWeakAndCannotKeepAuthorityAlive() failed after 1.062 seconds with 1 issue.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8616500Z ✔ Test deleteDisposesAndRecreateStartsWithNewIdentity() passed after 1.061 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8617390Z ✔ Test unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks() passed after 1.061 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8618070Z ✔ Test sealingRunDoesNotRevokeOtherRun() passed after 1.063 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.8618740Z ✔ Test independentOwnersCanReuseWireSurfaceID() passed after 1.062 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.9129900Z ✔ Test endingResultCancelsOwnedReceiveTask() passed after 1.124 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:34.9130840Z ✔ Test unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC() passed after 1.136 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:35.0766320Z ✔ Test replacementRevokesOldGenerationBeforeNewDelivery() passed after 1.279 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:35.0880320Z ✔ Test closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce() passed after 1.280 seconds.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:35.1007410Z ✘ Test retiredSurfaceCannotReanimateQueuedEventsInSameResult() recorded an issue at A2UITests.swift:563:6: Caught error: .ended
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:35.1546080Z ✘ Test retiredSurfaceCannotReanimateQueuedEventsInSameResult() failed after 1.269 seconds with 1 issue.
+Verify exact-pin A2UI on macOS 27	Execute the selected isolated source proof	2026-11-15T05:11:35.1907190Z ✘ Test run with 35 tests in 2 suites failed after 1.295 seconds with 2 issues.

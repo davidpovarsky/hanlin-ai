@@ -1,0 +1,261 @@
+{
+  "contract": "Component UI acceptance contract v1",
+  "target_source": "229e928676aa1cc8a2798c2a91ffafc2682c4abe",
+  "functional_component_assertions": "PASS_7_OF_7_AGGREGATED",
+  "new_seven_case_execution": false,
+  "target_status": "REUSED_VERIFIED_PASS",
+  "actual_executions": {
+    "43756668201": 1,
+    "43758320410": 6
+  },
+  "cases": [
+    {
+      "name": "testBoundURLReplacementUnloadsEveryRequestedPlayer()",
+      "identity": "MediaReplayUITests/testBoundURLReplacementUnloadsEveryRequestedPlayer()",
+      "original_execution": "EXECUTED_PASS",
+      "original_run": 43756668201,
+      "original_source": "9882c479edf089bad812b6856553e5bab116e62b",
+      "target_status": "REUSED_VERIFIED_PASS",
+      "evidence": "media-replay-ui-43756668201.json"
+    },
+    {
+      "name": "testBackgroundDisappearanceAndDisposalUnloadEveryPlayer()",
+      "identity": "MediaReplayUITests/testBackgroundDisappearanceAndDisposalUnloadEveryPlayer()",
+      "original_execution": "EXECUTED_PASS",
+      "original_run": 43758320410,
+      "original_source": "99c31bd750878cbbdf4fed459088ce35ce4b0553",
+      "target_status": "REUSED_VERIFIED_PASS",
+      "evidence": "media-replay-ui-43758320410.json"
+    },
+    {
+      "name": "testHistoryAudioAllowsExplicitLoadAndApprovedSource()",
+      "identity": "MediaReplayUITests/testHistoryAudioAllowsExplicitLoadAndApprovedSource()",
+      "original_execution": "EXECUTED_PASS",
+      "original_run": 43758320410,
+      "original_source": "99c31bd750878cbbdf4fed459088ce35ce4b0553",
+      "target_status": "REUSED_VERIFIED_PASS",
+      "evidence": "media-replay-ui-43758320410.json"
+    },
+    {
+      "name": "testHistoryVideoAllowsExplicitLoadAndApprovedSource()",
+      "identity": "MediaReplayUITests/testHistoryVideoAllowsExplicitLoadAndApprovedSource()",
+      "original_execution": "EXECUTED_PASS",
+      "original_run": 43758320410,
+      "original_source": "99c31bd750878cbbdf4fed459088ce35ce4b0553",
+      "target_status": "REUSED_VERIFIED_PASS",
+      "evidence": "media-replay-ui-43758320410.json"
+    },
+    {
+      "name": "testHistoryYouTubeAllowsOnlyExplicitLocalMedia()",
+      "identity": "MediaReplayUITests/testHistoryYouTubeAllowsOnlyExplicitLocalMedia()",
+      "original_execution": "EXECUTED_PASS",
+      "original_run": 43758320410,
+      "original_source": "99c31bd750878cbbdf4fed459088ce35ce4b0553",
+      "target_status": "REUSED_VERIFIED_PASS",
+      "evidence": "media-replay-ui-43758320410.json"
+    },
+    {
+      "name": "testParentDisabledBlocksAndUnloadsEveryMediaBuilder()",
+      "identity": "MediaReplayUITests/testParentDisabledBlocksAndUnloadsEveryMediaBuilder()",
+      "original_execution": "EXECUTED_PASS",
+      "original_run": 43758320410,
+      "original_source": "99c31bd750878cbbdf4fed459088ce35ce4b0553",
+      "target_status": "REUSED_VERIFIED_PASS",
+      "evidence": "media-replay-ui-43758320410.json"
+    },
+    {
+      "name": "testSealingALiveOwnerDoesNotGrantHistoryMediaPermission()",
+      "identity": "MediaReplayUITests/testSealingALiveOwnerDoesNotGrantHistoryMediaPermission()",
+      "original_execution": "EXECUTED_PASS",
+      "original_run": 43758320410,
+      "original_source": "99c31bd750878cbbdf4fed459088ce35ce4b0553",
+      "target_status": "REUSED_VERIFIED_PASS",
+      "evidence": "media-replay-ui-43758320410.json"
+    }
+  ],
+  "source_closure": "ALL_COMPILED_SOURCE_TEST_FIXTURE_AND_PROJECT_INPUTS_BYTE_IDENTICAL",
+  "full_ranges": [
+    {
+      "from": "9882c479edf089bad812b6856553e5bab116e62b",
+      "to": "229e928676aa1cc8a2798c2a91ffafc2682c4abe"
+    },
+    {
+      "from": "99c31bd750878cbbdf4fed459088ce35ce4b0553",
+      "to": "229e928676aa1cc8a2798c2a91ffafc2682c4abe"
+    }
+  ],
+  "pins_runtime_toolchain_xcodegen": "VERIFIED_IDENTICAL",
+  "inputs": {
+    "scope": "actual SwiftUI component UI; original ChatView/SDK/provider/physical NOT_RUN",
+    "upstream": "https://github.com/a2ui-project/a2ui",
+    "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+    "cases": [
+      "testHistoryYouTubeAllowsOnlyExplicitLocalMedia",
+      "testHistoryVideoAllowsExplicitLoadAndApprovedSource",
+      "testHistoryAudioAllowsExplicitLoadAndApprovedSource",
+      "testSealingALiveOwnerDoesNotGrantHistoryMediaPermission",
+      "testParentDisabledBlocksAndUnloadsEveryMediaBuilder",
+      "testBoundURLReplacementUnloadsEveryRequestedPlayer",
+      "testBackgroundDisappearanceAndDisposalUnloadEveryPlayer"
+    ],
+    "files": [
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift",
+        "sha256": "6a78f5bf5c3c829c608854bce16eac714397a248c94a67bedc21efcc260848e0"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift",
+        "sha256": "bc0b200e4db97cd200ac571253e878277a7df4d5132018dfb627d0cabb87bca8"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+        "sha256": "0033c2f4522ac2fcee212becdaff3a2285d6a47349a2101457511116bda2cb1c"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UILocalMedia.swift",
+        "sha256": "ae58cf03a5da2f3a019a697279e40bb0911d0cc8254a7c7c65e725d6984dd107"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
+        "sha256": "546388db45d7bebe14c7a335e670e23e7cd87760ada4897373b025428a759ee4"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift",
+        "sha256": "4420dd5bcd3d8cd3c65018a4a994f2cd65eb5e4f8162b7e318514f5004607f4a"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+        "sha256": "afb27c3c95235bfac4d6ff6f0ea0c22ed47f89b03e501d4f4c0de198d0628df1"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+        "sha256": "60b64b4f2720df1d4e99e5222a1e606e425e2e71d4dfe1fd21da24fdcf40e5b3"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift",
+        "sha256": "6523fe65987113da98d161379aad075a550d98fd86aa3cafef3ccfa136d3615f"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift",
+        "sha256": "d39331996522721bfa1d482914ea2ef886d40f329aacecd77b63b093fdb5c99f"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinA2UIMediaURLGate.swift",
+        "sha256": "715e1cd64005dcee282201eda284c884f9a04dff94b2b82d99d32b6eba557a48"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinMediaCatalogImplementation.swift",
+        "sha256": "f99d7b0f47b17bad512126ec3e17d5be44f84c03fe544615f9f9bdccbde382be"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRemoteMediaURL.swift",
+        "sha256": "691a095aca71d0ffcdd7fa3af56480bc470d35e4d8f049042948f1bb949d9caa"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeDocument.swift",
+        "sha256": "c7dbf50affd9ff18288b425617e583ca92fee44149a9d305f386ff42e8f44e90"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubePlayerView.swift",
+        "sha256": "0197b08ff2d8510f7a7b44d437dc450df883faa6d9e52a0bce60f15060bb5a5e"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeVideo.swift",
+        "sha256": "5791cfa1ca552332628ce4b4c9fc1145e3cbcaf1bdec05188bd74e4e340020c8"
+      },
+      {
+        "path": "docs/a2ui/MediaReplayUI/App.swift",
+        "sha256": "417e4d595234ad57c52fc5df186183e6eb5f611b19b4dfb1550b6220755fe077"
+      },
+      {
+        "path": "docs/a2ui/MediaReplayUI/MediaReplayUITests.swift",
+        "sha256": "5d1e5b4918043aeab9c4de89da48a23e73051b7b18c33c1fcaf35eee3ec4d53e"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/A2UIReplayMedia.jsonl",
+        "sha256": "1f0fbb0926011673b95bfae719babede6bc138119559156543b81a97acc5cb1e"
+      }
+    ],
+    "project_spec_sha256": "533010cef5c74392d6b8b52c1f247142009dffb520eb4a9933097aa48610b006"
+  },
+  "raw_records": [
+    {
+      "file": "media-replay-ui-43756668201.json",
+      "sha256": "eada59f58384950c69a751f8aab37a8889e9e685339bbf763d33cd6cc3174f92"
+    },
+    {
+      "file": "media-replay-ui-43758320410.json",
+      "sha256": "d3478c44a958527e339e457c899e13d28cbc0e0f73cbd9d2cbf5240686d8696d"
+    }
+  ],
+  "ax_observations": [
+    {
+      "name": "closed-owner---audio-AX_0_2685C4A6-4847-4C20-ADEA-B0EFCE7E4B7A.txt",
+      "file": "attachments/47155A08-8E4C-43A7-8952-52A9D5B91FF4.txt",
+      "sha256": "28673075107ca7db46b0d507b49f0b854201ead91e7efb6c76edcc8b989499cc"
+    },
+    {
+      "name": "closed-owner---video-AX_0_93783557-E744-4A96-9BD4-88D63CC03A5A.txt",
+      "file": "attachments/56F70F6A-EA49-4FA1-871B-8FF65D662BC0.txt",
+      "sha256": "32c52fa15fff65b1563f0b7ecb86f44d0df4263c01326735e057492a22bb74b7"
+    },
+    {
+      "name": "closed-owner--AX_0_CFD3779A-CE1A-493B-8A25-A97756BECD79.txt",
+      "file": "attachments/75AF7819-D229-492F-B586-6E5055C5CCE5.txt",
+      "sha256": "ec08ee3e8bf2606a08ccaedd39a7285668cfcebe132a0539af7e6cb2ef61b065"
+    },
+    {
+      "name": "native-history-loaded---audio-AX_0_263172F1-0506-4613-85A8-2B5EE408C9FD.txt",
+      "file": "attachments/FCFED8E5-202A-4C58-8275-BFD7B213DE7D.txt",
+      "sha256": "f1df70f726cbbcad94626239fc9f4da92244ddcbdf195c8c56ed4a45d18c0c55"
+    },
+    {
+      "name": "native-history-loaded---video-AX_0_97DED1AF-3C5E-4C6E-8239-47AB9A2EAD09.txt",
+      "file": "attachments/981931E6-20E6-4913-81B3-3844BCB0EE76.txt",
+      "sha256": "1296d8084c3a7b7ffcf71306477ba2bb6f6fbf3d2f6455f7725a18422b27eccb"
+    },
+    {
+      "name": "history-explicit-player-AX_0_8C983C1E-3FE5-4CF9-8671-AD64ABDE9DE1.txt",
+      "file": "attachments/E941C9B2-A762-407C-8522-386CECA19BFD.txt",
+      "sha256": "0a2c075a01e61209a128f90a6bb1fcf5f5622d04793e6bebadb003230aa9c7c0"
+    },
+    {
+      "name": "history-before-explicit-load-AX_0_97772E11-A939-418C-9C72-1FBE054F0969.txt",
+      "file": "attachments/D85715D9-FC92-40D4-8508-C1DD5C436491.txt",
+      "sha256": "812f1430efab0d64c0a9ae3a98655a793d766845c5930d9e7d8907270f2053b4"
+    },
+    {
+      "name": "parent-disabled---audio-AX_0_A0B8D4B5-C3A9-4E9D-898A-6CA87945D86D.txt",
+      "file": "attachments/8E07B007-69C0-4598-98DC-FF390529FFD9.txt",
+      "sha256": "22fe5e389aace10cee340b22b2135652d1bd681b66cef7374fd4210ff63f0502"
+    },
+    {
+      "name": "parent-disabled---video-AX_0_024075DF-5BEB-4D6A-8377-3A517AE18B9F.txt",
+      "file": "attachments/C550CA38-C39D-483F-9B84-79DC6460692F.txt",
+      "sha256": "53a7e2944dcc11feb467de09a31e383301980357a9bdc49dc0f9792cd4a03c8e"
+    },
+    {
+      "name": "parent-disabled--AX_0_CFFD3D77-FFF3-43ED-8010-87549581255C.txt",
+      "file": "attachments/2827AE5D-41FC-48DE-ACF1-571A3B0EDE8C.txt",
+      "sha256": "0c2fb75652074c2adff39bd08bce84f8adc05f339e8a54bfe4f2a9c0c8b2c273"
+    },
+    {
+      "name": "sealed-live-owner-stays-disabled-AX_0_C43B3DC9-3E3C-4151-A909-6A9414B841D6.txt",
+      "file": "attachments/82EDCE7A-2F59-4940-857C-282C7DB0D172.txt",
+      "sha256": "7a001ad0bf3f6dbef5e9b70f489df5cce4ffb2240909a88964346f73a62339e8"
+    }
+  ],
+  "visual_limitations": "Some post-disposal or seal screenshots omit unchanged fixture header pixels while AX retains controls; component removal/disabled assertions passed. No whole-host visual continuity or actual playback claim. Preserve for original-app acceptance.",
+  "visually_reviewed_original_pngs": [
+    "1206DACA-8840-4865-BAF6-DB40459C3016.png",
+    "2A1CD741-C163-48EA-9C27-F43FD09EF35E.png",
+    "035EAA8C-9453-471D-970D-0658E3180DAC.png",
+    "D86A1CDC-E808-43E1-BBE7-C1694778468F.png",
+    "84165C74-0D6C-407C-960B-CE37C980688A.png",
+    "77EB4E59-85FA-4607-A680-B88F746672D4.png",
+    "2ACC03AC-A0FE-45EA-B487-4A2358AD9B23.png",
+    "1FB5711E-5F65-43D7-98ED-FADBF2A036A9.png"
+  ],
+  "original_app_provider_external_playback_physical_RTL_visual_performance": "NOT_RUN",
+  "full_ci_pass": false
+}

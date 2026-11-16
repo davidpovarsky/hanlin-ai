@@ -1,0 +1,115 @@
+{
+  "source_sha": "42f1e7a9da1ee968af61189a03a67b0bb62dca1e",
+  "run": 43724157995,
+  "job": 132842329366,
+  "artifact": 14166201264,
+  "artifact_sha256": "0cf7b90dfddd3e4d9b788e0bac1b546718a1a82324896e65f508c0f83f1f910b",
+  "artifact_bytes": 91556,
+  "status": "EXECUTED_PASS",
+  "cases": [
+    {
+      "name": "watchURL()",
+      "result": "Passed"
+    },
+    {
+      "name": "shareAndShorts()",
+      "result": "Passed"
+    },
+    {
+      "name": "embedURL()",
+      "result": "Passed"
+    },
+    {
+      "name": "spoofedHosts()",
+      "result": "Passed"
+    },
+    {
+      "name": "unsupportedSchemesAndPorts()",
+      "result": "Passed"
+    },
+    {
+      "name": "malformedIdentity()",
+      "result": "Passed"
+    },
+    {
+      "name": "appIdentity()",
+      "result": "Passed"
+    },
+    {
+      "name": "officialDocument()",
+      "result": "Passed"
+    }
+  ],
+  "job_seconds": 327,
+  "scope": "production YouTube3-file WebKit/SwiftUI SDK compilation and8 URL/document controls",
+  "device": [
+    {
+      "architecture": "arm64",
+      "deviceId": "0A1B5EC5-2485-4F8E-B06B-1185D8E186C0",
+      "deviceName": "iPhone 18 Pro",
+      "modelName": "iPhone 18 Pro",
+      "osBuildNumber": "24A434",
+      "osVersion": "27.0",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\narm64\n/opt/homebrew/bin/python3\n",
+  "inputs": {
+    "scope": "iOS27 SDK component; playback/full-app XCUITest NOT_RUN",
+    "cases": [
+      "watchURL",
+      "shareAndShorts",
+      "embedURL",
+      "spoofedHosts",
+      "unsupportedSchemesAndPorts",
+      "malformedIdentity",
+      "appIdentity",
+      "officialDocument"
+    ],
+    "files": [
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeDocument.swift",
+        "sha256": "c7dbf50affd9ff18288b425617e583ca92fee44149a9d305f386ff42e8f44e90"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubePlayerView.swift",
+        "sha256": "ca5687e5ff9cd0844aee71d3e926831fb54db6bdb8d869863825e477aaaa2565"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeVideo.swift",
+        "sha256": "5791cfa1ca552332628ce4b4c9fc1145e3cbcaf1bdec05188bd74e4e340020c8"
+      },
+      {
+        "path": "AI_HLYTests/HanlinYouTubeTests.swift",
+        "sha256": "23b5b96a4b49df7ad2d86e703b5de00091fbf12ddf07880f3711d09c4f9ac15b"
+      }
+    ],
+    "manifest_sha256": "837eebc1a6324e4d7648e2d8a2534fa8f19b88daf1d2d0a149a2773a65bd2889"
+  },
+  "raw_files_sha256": {
+    "destinations.txt": "b9fa3e315b0d08bdaf9d1fcd0e44e6773183aed743cf26e6ac56a442bf0fd247",
+    "devices.json": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32",
+    "disk.txt": "df1c96bf30a0e120cd9635e5fea9b06a2f74d9c3f8da9157160f0367b8f06ffb",
+    "Package.swift": "837eebc1a6324e4d7648e2d8a2534fa8f19b88daf1d2d0a149a2773a65bd2889",
+    "preflight.txt": "5a19cb566fed83def2a7df2f3966c81ac982fc82e3de2bbc50f82e6cefdeffbd",
+    "preparation.json": "e372c43d2684e0dd96c31967aab320ce6f7c4374bdd35fc5b9b338c7ceb7b0bc",
+    "process-status.json": "936ece199b37f0ccf9918f925b2021b2f85102999b03144aae0b31593814e16a",
+    "proof-inputs.json": "e372c43d2684e0dd96c31967aab320ce6f7c4374bdd35fc5b9b338c7ceb7b0bc",
+    "result-validation.json": "d83bbe1c8747a6ed87e6a4f370903bc571659b309151e099280d07c1e4c516b0",
+    "runtimes.json": "554e5b90fa094f7d1cc95a1bfa79a07152d90cdfc5ff7164d1df2b64c5e29132",
+    "schemes.json": "5c3a928c71a2e893f096daa97c89b90f02991f44871812371b1dec912d39207c",
+    "selected-device.txt": "a964b846a4a5d36046ae57070d5b9e94fcd04abd5e4dfe867702670b51fb1dfb",
+    "selected-scheme.txt": "25b298cffc95c5040c886e0054d04eec02dae5eedfe042e8a0f44ca7bbd873af",
+    "skill-health.txt": "65da2f7a32dd5264a5b7f638922b1ac4700e5544f596299f625bfd502149c4bf",
+    "source-sha.txt": "df02122d6569d94f8ba3262513c139b0b8e6c6cb3bd74cee3bc2eeb1bc5870f3",
+    "tests.json": "027d7d7261ac1c1695723920c76c391fd0fd1523d580207a58d6fdeb00963f3f",
+    "xcodebuild.log": "6980d0ab86d986c1c4467cf9f29c210f61c1145582c6fdcdf367ade47bbc5b98"
+  },
+  "not_run": [
+    "actual YouTube playback/network/iframe result",
+    "full-app original chat UI/XCUITest",
+    "custom A2UI catalog integration",
+    "RTL/AX/physical device",
+    "Markdown images/MP4/HLS/audio/gallery/link-card acceptance"
+  ]
+}

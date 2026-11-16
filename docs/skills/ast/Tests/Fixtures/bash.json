@@ -1,0 +1,22 @@
+[
+  {"file":"basic.sh","source":"#!/bin/bash\ncurl https://example.invalid | jq .\n","commands":["curl","jq"],"references":[],"unknown":false},
+  {"file":"importable.sh","source":"#!/usr/bin/env bash\nsource ./lib.sh\n","commands":["source"],"references":["./lib.sh"],"unknown":false},
+  {"file":"dot.sh","source":". './shared library.sh'\n","commands":["."],"references":["./shared library.sh"],"unknown":false},
+  {"file":"directory.sh","source":"cd './project dir'\npython3 main.py\n","commands":["cd","python3"],"references":["main.py"],"unknown":false},
+  {"file":"pipeline.sh","source":"git status | sed -n '1p' | wc -l\n","commands":["git","sed","wc"],"references":[],"unknown":false},
+  {"file":"conditional.sh","source":"if command -v ffmpeg; then ffmpeg -version; fi\n","commands":["command","ffmpeg"],"references":[],"unknown":false,"conditional":"ffmpeg"},
+  {"file":"function.sh","source":"optional() { missing_binary --version; }\n","commands":["missing_binary"],"references":[],"unknown":false,"conditional":"missing_binary"},
+  {"file":"dynamic.sh","source":"\"$TOOL\" input.txt\n","commands":[],"references":[],"unknown":true},
+  {"file":"substitution.sh","source":"echo \"$(curl https://example.invalid)\"\n","commands":["echo","curl"],"references":[],"unknown":true},
+  {"file":"eval.sh","source":"eval 'touch do-not-execute'\n","commands":["eval"],"references":[],"unknown":true},
+  {"file":"quoted.sh","source":"printf '%s' 'curl | definitely_not_a_command'\n","commands":["printf"],"references":[],"unknown":false,"absent":"definitely_not_a_command"},
+  {"file":"heredoc.sh","source":"cat <<'DATA'\ncurl https://example.invalid\nDATA\n","commands":["cat"],"references":[],"unknown":false,"absent":"curl"},
+  {"file":"malformed.sh","source":"if true; then\ncurl https://example.invalid\n","commands":[],"references":[],"unknown":true},
+  {"file":"module.sh","source":"python3 -m PIL --help\n","commands":["python3"],"references":[],"unknown":false,"module":"PIL"},
+  {"file":"typescript.sh","source":"node ./scripts/audit.mjs\n","commands":["node"],"references":["./scripts/audit.mjs"],"unknown":false},
+  {"file":"direct.sh","source":"./tools/check.sh\n","commands":["./tools/check.sh"],"references":["./tools/check.sh"],"unknown":false},
+  {"file":"globs.sh","source":"cat ./data/*.txt\n","commands":["cat"],"references":[],"unknown":true},
+  {"file":"redirect.sh","source":"jq . input.json > output.json\n","commands":["jq"],"references":[],"unknown":false},
+  {"file":"env-flags.sh","source":"#!/usr/bin/env -S bash -e\nprintf ok\n","commands":["printf"],"references":[],"unknown":true},
+  {"file":"code-argument.sh","source":"python3 -c 'fake.py' actual-data.py\n","commands":["python3"],"references":[],"unknown":true}
+]

@@ -1,0 +1,277 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "ea1898aab363939c5e6362d0942e3799259ed955",
+      "deviceName" : "My Mac",
+      "modelName" : "Virtual Machine",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0.77s",
+                  "durationInSeconds" : 0.7651069164276123,
+                  "name" : "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+                  "nodeIdentifier" : "A2UISDKTests/closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.59s",
+                  "durationInSeconds" : 0.5935301780700684,
+                  "name" : "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+                  "nodeIdentifier" : "A2UISDKTests/unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.59s",
+                  "durationInSeconds" : 0.5936627388000488,
+                  "name" : "surfaceLimitDoesNotRemoveExistingContent()",
+                  "nodeIdentifier" : "A2UISDKTests/surfaceLimitDoesNotRemoveExistingContent()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/surfaceLimitDoesNotRemoveExistingContent()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.59s",
+                  "durationInSeconds" : 0.5936548709869385,
+                  "name" : "nativeInputBindingWritesAndReadsOfficialModel()",
+                  "nodeIdentifier" : "A2UISDKTests/nativeInputBindingWritesAndReadsOfficialModel()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/nativeInputBindingWritesAndReadsOfficialModel()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.59s",
+                  "durationInSeconds" : 0.5936758518218994,
+                  "name" : "parsesAndRendersTextCardInputButton()",
+                  "nodeIdentifier" : "A2UISDKTests/parsesAndRendersTextCardInputButton()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/parsesAndRendersTextCardInputButton()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.5971839427947998,
+                  "name" : "officialSchemasRejectInvalidTextInputButton()",
+                  "nodeIdentifier" : "A2UISDKTests/officialSchemasRejectInvalidTextInputButton()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/officialSchemasRejectInvalidTextInputButton()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.5972318649291992,
+                  "name" : "closeRejectsLateFramesAndDisposesSurfaces()",
+                  "nodeIdentifier" : "A2UISDKTests/closeRejectsLateFramesAndDisposesSurfaces()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/closeRejectsLateFramesAndDisposesSurfaces()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.5972661972045898,
+                  "name" : "independentOwnersCanReuseWireSurfaceID()",
+                  "nodeIdentifier" : "A2UISDKTests/independentOwnersCanReuseWireSurfaceID()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/independentOwnersCanReuseWireSurfaceID()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.5972638130187988,
+                  "name" : "stableIDsAndNodeIdentityAcrossUpdates()",
+                  "nodeIdentifier" : "A2UISDKTests/stableIDsAndNodeIdentityAcrossUpdates()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/stableIDsAndNodeIdentityAcrossUpdates()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.5972728729248047,
+                  "name" : "independentSurfacesKeepModelsSeparate()",
+                  "nodeIdentifier" : "A2UISDKTests/independentSurfacesKeepModelsSeparate()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/independentSurfacesKeepModelsSeparate()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.597283124923706,
+                  "name" : "buttonEventUsesCurrentBoundValue()",
+                  "nodeIdentifier" : "A2UISDKTests/buttonEventUsesCurrentBoundValue()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/buttonEventUsesCurrentBoundValue()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.59s",
+                  "durationInSeconds" : 0.5933871269226074,
+                  "name" : "closeRevokesQueuedAndRetainedActionCallbacks()",
+                  "nodeIdentifier" : "A2UISDKTests/closeRevokesQueuedAndRetainedActionCallbacks()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/closeRevokesQueuedAndRetainedActionCallbacks()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.65s",
+                  "durationInSeconds" : 0.6450991630554199,
+                  "name" : "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+                  "nodeIdentifier" : "A2UISDKTests/unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.5972464084625244,
+                  "name" : "malformedAndUnknownContentFallsBackAndRecovers()",
+                  "nodeIdentifier" : "A2UISDKTests/malformedAndUnknownContentFallsBackAndRecovers()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/malformedAndUnknownContentFallsBackAndRecovers()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.5972371101379395,
+                  "name" : "hebrewFixtureRetainsBindingsInRTLComposition()",
+                  "nodeIdentifier" : "A2UISDKTests/hebrewFixtureRetainsBindingsInRTLComposition()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/hebrewFixtureRetainsBindingsInRTLComposition()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.597235918045044,
+                  "name" : "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+                  "nodeIdentifier" : "A2UISDKTests/rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.5976760387420654,
+                  "name" : "deleteDisposesAndRecreateStartsWithNewIdentity()",
+                  "nodeIdentifier" : "A2UISDKTests/deleteDisposesAndRecreateStartsWithNewIdentity()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests/deleteDisposesAndRecreateStartsWithNewIdentity()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "A2UI official exact-pin SDK",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UISDKTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.00078s",
+                  "durationInSeconds" : 0.0007832050323486328,
+                  "name" : "rejectsRPCAndUnnegotiatedCatalogs()",
+                  "nodeIdentifier" : "A2UIIngressTests/rejectsRPCAndUnnegotiatedCatalogs()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UIIngressTests/rejectsRPCAndUnnegotiatedCatalogs()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0016s",
+                  "durationInSeconds" : 0.0016269683837890625,
+                  "name" : "acceptsOfficialV1FixtureFrames()",
+                  "nodeIdentifier" : "A2UIIngressTests/acceptsOfficialV1FixtureFrames()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UIIngressTests/acceptsOfficialV1FixtureFrames()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0024s",
+                  "durationInSeconds" : 0.002377033233642578,
+                  "name" : "boundsUTF8MessageAndComponentBatch()",
+                  "nodeIdentifier" : "A2UIIngressTests/boundsUTF8MessageAndComponentBatch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UIIngressTests/boundsUTF8MessageAndComponentBatch()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0066s",
+                  "durationInSeconds" : 0.006613016128540039,
+                  "name" : "componentValidationRemainsWithSDK()",
+                  "nodeIdentifier" : "A2UIIngressTests/componentValidationRemainsWithSDK()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UIIngressTests/componentValidationRemainsWithSDK()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.001s",
+                  "durationInSeconds" : 0.0009989738464355469,
+                  "name" : "rejectsMalformedAndAmbiguousFrames()",
+                  "nodeIdentifier" : "A2UIIngressTests/rejectsMalformedAndAmbiguousFrames()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UIIngressTests/rejectsMalformedAndAmbiguousFrames()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00012s",
+                  "durationInSeconds" : 0.00011801719665527344,
+                  "name" : "preservesUnicodeSurfaceIdentity()",
+                  "nodeIdentifier" : "A2UIIngressTests/preservesUnicodeSurfaceIdentity()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UIIngressTests/preservesUnicodeSurfaceIdentity()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0024s",
+                  "durationInSeconds" : 0.0023899078369140625,
+                  "name" : "rejectedEnvelopesNeverExportSurfaceCorrelation()",
+                  "nodeIdentifier" : "A2UIIngressTests/rejectedEnvelopesNeverExportSurfaceCorrelation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UIIngressTests/rejectedEnvelopesNeverExportSurfaceCorrelation()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00015s",
+                  "durationInSeconds" : 0.00015020370483398438,
+                  "name" : "rejectsOtherProtocolVersions()",
+                  "nodeIdentifier" : "A2UIIngressTests/rejectsOtherProtocolVersions()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UIIngressTests/rejectsOtherProtocolVersions()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "A2UI portable ingress",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests/A2UIIngressTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/HanlinA2UIProof/AI_HLYTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "HanlinA2UIProof-Package",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

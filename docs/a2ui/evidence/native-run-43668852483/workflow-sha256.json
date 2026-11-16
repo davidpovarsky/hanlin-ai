@@ -1,0 +1,17 @@
+{
+  ".github/workflows/build-ios26-unsigned-ipa.yml": "d9c6adee8786b75572cf27cf4375465c2a618d496291cfa311b2d9c85cbdf3fc",
+  "Scripts/CI/IntegrationValidation/MiniAppsBootstrapTests.swift": "15e459dd05dd1781561dac38c05497356a826eda3c2e7aadc8befc695c605780",
+  "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift": "18ac88e99eff0db4f1c5ee7783b0c12da821f13357912a517bf4b2243a92292d",
+  "Scripts/CI/IntegrationValidation/extract_target.py": "5842d5b3004d266bd40607cfe4bd44a9a076908efae42534d385554b6eddecf3",
+  "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json": "a975abfeb72142ed457f9cabd0cfde32bb0a8ade21db963efef0617426ab34c4",
+  "Scripts/CI/IntegrationValidation/prepare_bootstrap_proof.py": "09f15f9f798a1520e67331aa8672032f233fa2a00180d0044d02edfbe60216f7",
+  "Scripts/CI/IntegrationValidation/prepare_ordinary_scriptui.py": "723c60b49af8ffeeda6369deb255d826eb8381941251bd8f08308c5404d0ca5c",
+  "Scripts/CI/IntegrationValidation/project_graph.py": "5a84cbe967e4fab3fd933e37004067e5037fc80408cb89e65101a79cf705df41",
+  "Scripts/CI/IntegrationValidation/run.sh": "3dce68c613e3dd0e9b89059148d40c77e903a06b338f44bd7dcc3b26cfd82481",
+  "Scripts/CI/IntegrationValidation/run_a2ui.sh": "9345a6a6aece58036f36377f37f35f8a27822908eeda30d9ea2fc512c08c5f00",
+  "Scripts/CI/IntegrationValidation/run_provider.sh": "f8bf98262068740b919a821378e1a62b04184a097f2aa1f27c564726bf0d992e",
+  "Scripts/CI/IntegrationValidation/test_project_graph.py": "dedca3d0080d4d55b0226e6f8a11bd7c47938ce7ad57557ec9ec441cb3ae38b5",
+  "Scripts/CI/IntegrationValidation/validate.py": "6201e920a34caee08eb90f1e7646857020debfb7688d93765c8f5d3f6a40f0e7",
+  "Scripts/CI/IntegrationValidation/verify_results.py": "db7b48737b06cd1b5857bf41f7705cc0a89262968e45e3d317576cc9e9f1a28e",
+  "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py": "e6ab08b96828007fcc31b55561bdbc1e52472da0d42b7c10dc8cb93b7ae61281"
+}

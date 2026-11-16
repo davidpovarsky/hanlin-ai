@@ -1,0 +1,63 @@
+{
+  "status": "EXECUTED_PASS_PORTABLE_ONLY",
+  "python_manifest_methods": 5,
+  "typescript_source_and_manifest_methods": 5,
+  "actual_python": "3.12.5",
+  "actual_node": "v22.17.0",
+  "existing_packaging": {
+    "version": "26.3",
+    "wheel": "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/packaging-26.3-py3-none-any.whl",
+    "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c"
+  },
+  "existing_typescript": {
+    "version": "6.0.3",
+    "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+    "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+    "license": "Apache-2.0",
+    "bin": {
+      "tsc": "bin/tsc",
+      "tsserver": "bin/tsserver"
+    },
+    "engines": {
+      "node": ">=14.17"
+    }
+  },
+  "host_lock_sha256": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+  "source_inputs": [
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_python_manifest.py",
+      "sha256": "b8e543128d6a7df233124b1ff6a9ddd6fe3b5e47ffcf76ebc182037783b11b6b"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_typescript_ast.mjs",
+      "sha256": "b76c90dae0454bab5de1f729b2dce3086e084ba7d86e60348aabf2761b02cc99"
+    },
+    {
+      "path": "docs/skills/ast/test_python_manifest.py",
+      "sha256": "fe2dd2cb7ad56730d3c9f0c36d5a211a32fee42370cfc756cda9a5d05de12cbe"
+    },
+    {
+      "path": "docs/skills/ast/test_typescript_helper.mjs",
+      "sha256": "0803ffec61651ff2424c2b196da12e62acd62f318ac84204e54181bc3c4843f1"
+    },
+    {
+      "path": "docs/skills/ast/Tests/Fixtures/python-manifest-host.json",
+      "sha256": "f4350a3ce308f2d917fe9196133f1168a7bb2d552faa146617c2524e20772c3d"
+    },
+    {
+      "path": "docs/skills/ast/Tests/Fixtures/typescript-manifest-host.json",
+      "sha256": "098b245c44075302fbf21515340b0c9c002a48967425fa9c0fd8bc4877ae5b9f"
+    }
+  ],
+  "test_logs_sha256": {
+    "build/ast-python-manifest-host-tests.log": "bd77af2fbc15d336e3d3ad8fa80c6f18c3b77b1db9f9b13a6d3d2cfb19b0d93c",
+    "build/ast-typescript-manifest-host-tests.log": "f8a8a5b4cbce23313d39783c1da3d045fa5773e672f3afa2ac09dfbe4bda64cb"
+  },
+  "TOML_span_precision": "WHOLE_DOCUMENT_UNKNOWN_CONFIDENCE",
+  "dependencies_available_or_compatible": "NOT_VERIFIED",
+  "embedded_python314": "NOT_RUN",
+  "embedded_node_jitless": "NOT_RUN",
+  "iOS_runtime": "NOT_RUN",
+  "product_registration": "NOT_RUN",
+  "full_ci_pass": false
+}

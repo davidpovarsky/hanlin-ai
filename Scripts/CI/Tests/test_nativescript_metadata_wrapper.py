@@ -23,6 +23,29 @@ HEADER_SPEC.loader.exec_module(HEADERS)
 
 
 class NativeScriptMetadataWrapperTests(unittest.TestCase):
+    def test_host_baseline_keeps_real_host_headers_without_expanding_expo_cpp_roots(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            sdk = root / "sdk"
+            frameworks = sdk / "System/Library/Frameworks"
+            ui = self.framework(frameworks, "UIKit")
+            foundation = self.framework(frameworks, "Foundation")
+            expo = self.framework(root / "products", "ExpoModulesCore")
+            (expo / "Headers/Exported.h").write_text("namespace facebook { class CallInvoker; }\n")
+            provider = root / "ActualProvider-Swift.h"
+            provider.write_text("@interface SwiftUIProvider\n@end\n")
+            host = root / "host.h"
+            records = HEADERS.write_public_umbrella(
+                sdk, host, [provider], [expo.parent], framework_names=WRAPPER.HOST_FRAMEWORKS)
+            self.assertEqual({record["framework"] for record in records}, WRAPPER.HOST_FRAMEWORKS)
+            for header in [ui / "Headers/Entry.h", foundation / "Headers/Entry.h", provider]:
+                self.assertIn(str(header), host.read_text())
+            self.assertNotIn(str(expo), host.read_text())
+            # The explicit full-SDK path remains unchanged and observable.
+            full = root / "full.h"
+            HEADERS.write_public_umbrella(sdk, full, [provider], [expo.parent])
+            self.assertIn(str(expo), full.read_text())
+
     def framework(self, directory, name="ExpoModulesCore", module=None):
         framework = directory / (name + ".framework")
         (framework / "Modules").mkdir(parents=True)

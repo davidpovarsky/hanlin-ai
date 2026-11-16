@@ -1,0 +1,34 @@
+{
+  "file": "package.json",
+  "sourceSHA256": "032d1d9feabd954e31d8c4d17ab7068f25299eb10c180a68946eeec4133e1e99",
+  "completion": "complete",
+  "provenance": {
+    "scanner": "typescript.JSONCompilerAPI/6.0.3",
+    "engineVersion": "22.17.0"
+  },
+  "findings": [
+    {
+      "kind": "dependencyDeclaration",
+      "value": "@scope/package@^2",
+      "confidence": "literalSyntax",
+      "source": {
+        "file": "package.json",
+        "line": 1,
+        "utf8Column": 18,
+        "byteOffset": 17,
+        "byteLength": 21
+      },
+      "reason": "declaredNpmConstraintNotInstalled"
+    }
+  ],
+  "visitedNodes": 10,
+  "inputBytes": 40,
+  "limitations": [
+    "syntaxOnlyNotReadinessOrPermission",
+    "noPackageResolutionOrFilesystem",
+    "noReferencedFileReadsOrExecution",
+    "aliasesAndBindingsNotResolved",
+    "conditionalFactsDoNotProveReachability",
+    "parseIsSynchronousInputBoundedNotHardTimeOrRSSCap"
+  ]
+}

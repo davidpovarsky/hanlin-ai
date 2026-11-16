@@ -1,4 +1,4 @@
-// Enable only in the isolated exact-pin SDK harness. App wiring is a separate lease.
+// Official SDK state shared by presentation and temporary complete-batch validation.
 #if HANLIN_A2UI_POC
 import A2UICore
 import BasicCatalog
@@ -10,24 +10,29 @@ import Observation
 @MainActor
 @Observable
 final class HanlinA2UISession {
+    enum Presentation: Equatable, Sendable { case live, history }
+    private let presentation: Presentation
     private let processor: MessageProcessor
     private let eventRelay: HanlinA2UIEventRelay
     private var acceptedBytes = 0
+    private(set) var isInputSealed = false
     private(set) var isClosed = false
     private(set) var surfaceIDs: [String] = []
     private(set) var failures: [String: HanlinA2UIIngress.Failure] = [:]
     private(set) var unroutedFailure: HanlinA2UIIngress.Failure?
+    var allowsLocalHistoryMedia: Bool { presentation == .history && isInputSealed && !isClosed }
 
     static let maximumSurfaces = 4
     static let maximumSessionBytes = 1_048_576
 
     /// Only resolved user events and renderer errors leave this POC. RPC stays disabled by the
     /// SDK's absent-listener policy; installing an outboundListener would enable agent calls.
-    init(onEvent: @escaping @Sendable (RendererToAgentMessage) -> Void) {
+    init(presentation: Presentation = .live, onEvent: @escaping @Sendable (RendererToAgentMessage) -> Void) {
+        self.presentation = presentation
         let relay = HanlinA2UIEventRelay(onEvent: onEvent)
         eventRelay = relay
         processor = MessageProcessor(
-            catalog: BasicCatalog.makeCatalog(version: .v10),
+            catalogs: [BasicCatalog.makeCatalog(version: .v10), HanlinMediaCatalog.makeCatalog()],
             actionHandler: relay,
             validationConfig: ValidationConfig(
                 allowOrphanComponents: true,
@@ -45,12 +50,32 @@ final class HanlinA2UISession {
         processor.surfaceGroupModel[id]
     }
 
+    /// Final completeness is stricter than incremental input: use the official topology
+    /// validator on the final public SDK models, including their resolved catalog identities.
+    func validateCompleteGraphs() throws {
+        guard !isClosed else { throw HanlinA2UIIngress.Rejection(.closed) }
+        for id in surfaceIDs {
+            guard let surface = surface(id) else { continue }
+            let components = surface.componentsModel.components.values.map { model in
+                var value = model.properties
+                value["id"] = .string(model.id)
+                value["component"] = .string(model.type)
+                if let catalogID = model.catalogID { value["@catalogId"] = .string(catalogID) }
+                return value
+            }
+            try GraphTopologyValidator.validate(components: components, rootID: "root",
+                config: ValidationConfig(protocolVersion: .v10), catalogs: surface.catalogs,
+                defaultCatalogID: surface.defaultCatalogID)
+        }
+    }
+
     /// Consumes a complete message without changing any persisted chat schema or replay order.
     /// Only a validated update/delete frame targeting an SDK-owned surface can hide its controls.
     /// Uncorrelated input is returned as an error without changing existing surface presentation.
     @discardableResult
     func receive(_ json: String) -> Result<Void, HanlinA2UIIngress.Rejection> {
         guard !isClosed else { return .failure(.init(.closed)) }
+        guard !isInputSealed else { return .failure(.init(.inputSealed)) }
         let data = Data(json.utf8)
         var frame: HanlinA2UIIngress.Frame?
         do {
@@ -99,10 +124,19 @@ final class HanlinA2UISession {
         }
     }
 
+    /// Generation completion removes input/action authority without deleting visible models.
+    /// No continuation or RPC permission can be added back to a sealed session.
+    func seal() {
+        guard !isInputSealed, !isClosed else { return }
+        isInputSealed = true
+        eventRelay.close()
+    }
+
     /// Called by the owner when the result is discarded. Old model subscriptions are disposed.
     /// Closed sessions cannot be reanimated by late stream frames.
     func close() {
         guard !isClosed else { return }
+        seal()
         isClosed = true
         eventRelay.close()
         processor.outboundListener = nil

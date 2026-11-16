@@ -1,0 +1,12 @@
+macro expansion #require:1:96: error: recursive expansion of macro 'require(_:_:sourceLocation:)'
+`- /Users/runner/work/_temp/hanlin-a2ui-proof.5ziEiwSq/harness/Tests/AI_HLYTests/A2UITests.swift:507:120: note: expanded code originates here
+505 |         var sink: A2UIResultSinkRecorder? = A2UIResultSinkRecorder(recorder: recorder)
+506 |         weak var weakSink = sink
+507 |         let p = try #require(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: try #require(sink)))
+    |                     `- note: in expansion of macro 'require' here
+    +--- macro expansion #require --------------------------------------
+    |1 | Testing.__checkValue(store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: try #require(sink)),expression: .__fromSyntaxNode(#"store.register(runID: UUID(), resultID: UUID(), callID: "call", sink: try #require(sink))"#),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+    |  |                                                                                                `- error: recursive expansion of macro 'require(_:_:sourceLocation:)'
+    +-------------------------------------------------------------------
+508 |         try load(store, p)
+509 |         let action = try #require(try node(p, id: "submit").action(for: "action", userActivation: true))

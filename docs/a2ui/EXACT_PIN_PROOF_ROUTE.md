@@ -1,5 +1,30 @@
 # Isolated exact-pin proof route
 
+The frozen961 source remains the34-case benchmark. The current mount/retired-ID
+packet retains those identities and adds one SDK regression:35 cases (8 portable
++27 SDK) and all5 owned SDK-source files, with unchanged official products/pin.
+Its compilation/execution is NOT_RUN. Six separate iOS hosted cases and the two
+shared UI files are not part of this macOS harness. No961 result can accept the
+new lifetime-policy correction or host mounting. This owner dispatched no CI.
+
+The actual96134-case attempt43674291306 failed to compile (xcodebuild65), with
+recursive nested Testing.require expansion and0 executed Test Case nodes. All34
+are NOT_RUN. That expression also existed in e1d3d242. The current follow-up uses
+sequential requires in a returning helper so the unwrapped sink does not survive
+the caller's sink=nil. This still needs one changed-source35-case native proof;
+local syntax parsing cannot expand/typecheck Swift Testing on this Windows host.
+See [actual failed-build evidence](evidence/native-run-43674291306.json).
+
+The subsequentfa810 run43679728130 compiled and executed35 Swift Testing methods,
+33 PASS /2 FAIL with ended from shared negative-observation streams. That is a
+failed suite. The current observer correction preserves strict positive delivery
+and uses monotonic count checks for absence;3 extracted-helper/real-AsyncStream
+checks pass locally. They do not execute the SDK. See
+[native outcomes/diagnosis](evidence/native-run-43679728130.json) and
+[portable observer results](evidence/async-observation-results.json).
+Current corrected-source35-case and6 separate hosted executions remain NOT_RUN;
+the source must change before the next authorized native proof, with no unchanged retry.
+
 Initially prepared after source review of `3a24003e`; the preparation utility
 itself dispatched no native job. Tomer's actual run43662884686 later compiled
 c40e617b and executed all25 cases:8 PASS/17 SDK FAIL during fixture load. The
@@ -7,9 +32,11 @@ fixture/diagnostic correction is documented in
 [NATIVE_VALIDATION_FIX_2026-11-15.md](NATIVE_VALIDATION_FIX_2026-11-15.md).
 The2bae5a3e follow-up passed25 in run43664698104, and a43 passed25 including
 privacy canaries in run43667371439. The actual AI_Hanlin consumer-name
-correction now awaits the same enabled proof; neither previous result covers it.
+correction at f654ac11 then passed all25 in
+[run43668852483](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483).
+See [retained native evidence](evidence/native-run-43668852483.json).
 
-`prepare_exact_pin_proof.py` prepares the same3 source files, the unchanged25
+`prepare_exact_pin_proof.py` prepares the current5 source files, the exact35
 Swift Testing selectors and all7 fixtures in an isolated SwiftPM consumer.
 It does not dispatch jobs or invoke a compiler. Its default `--plan` and
 `--self-test` modes are portable, read-only checks. No product manifests,
@@ -19,13 +46,14 @@ The generated temporary consumer uses the official exact root revision and
 four real products. Its source module is the actual app module `AI_Hanlin`,
 copied under `Sources/AI_Hanlin`; the unchanged tests import that module.
 `AI_HLY` is the repository/source directory, not the app module. The test
-target remains `AI_HLYTests` so the25 case identities do not change. No
+target remains `AI_HLYTests`; the original25 case identities are retained and10
+owner lifecycle cases are added. No
 PRODUCT_MODULE_NAME override, stub or module alias is used. Both targets enable
 `HANLIN_A2UI_POC` and `DEBUG` for the Debug build; the standalone portable
 runner flag is absent. Source/fixture bytes and the harness manifest are
-hashed. The compiler and all25 tests, including the byte-budget assertions,
-remain **NOT_RUN for the corrected candidate**. The earlier c40e617b cases
-actually ran and failed; the recipe/flags must not be used to erase that result.
+hashed. The corrected f654ac11 consumer compiled and all25 tests passed,
+including the byte-budget assertions. The earlier c40e617b cases actually ran
+and failed; the successful follow-ups do not erase that result.
 
 This proves a macOS27 SDK consumer when executed successfully. It does not
 prove iOS27 app integration, an inline host, hosted layout or physical iPad
@@ -51,7 +79,7 @@ using stdin and the installed ManifestAPI module. No Package.swift file was
 created and no dependency was resolved. This checks the preparation template,
 not Apple SDK imports or the upstream package build.
 
-## Native recipe — corrected-source execution pending
+## Native recipe — executed at f654ac11; current35-case candidate NOT_RUN
 
 Only after the authorized stable-Xcode host and serialized resource are
 available, run from an authenticated checkout of the handoff commit. Keep the
@@ -83,7 +111,7 @@ xcrun swift test --package-path "$A2UI_PROOF_ROOT/harness" -c debug \
 cmp "$A2UI_PROOF_ROOT/evidence/resolved-before.json" "$A2UI_PROOF_ROOT/harness/Package.resolved"
 
 # Swift Testing output may use results-swift-testing.xml. Pass all result XMLs;
-# empty XCTest output does not substitute for the25 actual Swift Testing cases.
+# empty XCTest output does not substitute for the35 actual Swift Testing cases.
 python3 docs/a2ui/prepare_exact_pin_proof.py \
   --verify-results "$A2UI_PROOF_ROOT/evidence/"*.xml \
   --resolved "$A2UI_PROOF_ROOT/harness/Package.resolved" \
@@ -95,7 +123,7 @@ SwiftPM's CLI offers forced resolved versions and Swift Testing selection;
 see its [official test command reference](https://github.com/swiftlang/swift-package-manager/blob/main/Sources/PackageManagerDocs/Documentation.docc/SwiftTest.md).
 The installed Windows6.3.3 `swift test --help` also exposes these flags.
 The exact Apple toolchain's acceptance remains unverified. If its XML format
-does not identify the25 methods, validation fails closed: retain the files
+does not identify all35 methods, validation fails closed: retain the files
 and correct the evidence adapter using actual output rather than treating
 zero discovery or a green heading as success.
 

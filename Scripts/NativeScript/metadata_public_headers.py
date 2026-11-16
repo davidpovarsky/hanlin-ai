@@ -34,7 +34,8 @@ def module_names(module_text: str) -> list[str]:
 
 
 def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path],
-                          framework_search_paths: list[Path] | None = None) -> list[dict]:
+                          framework_search_paths: list[Path] | None = None,
+                          framework_names: set[str] | None = None) -> list[dict]:
     inventory = []
     public_headers = []
     # SubFrameworks is an include-search dependency, not another public root.
@@ -49,6 +50,8 @@ def write_public_umbrella(sdk: Path, destination: Path, extra_headers: list[Path
         if directory.resolve() == (sdk / "System/Library/SubFrameworks").resolve():
             continue
         for candidate in sorted(directory.glob("*.framework")):
+            if framework_names is not None and candidate.name not in framework_names:
+                continue
             framework = candidate.resolve()
             if framework in seen_paths:
                 continue

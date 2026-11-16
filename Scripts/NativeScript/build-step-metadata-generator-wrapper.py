@@ -15,6 +15,12 @@ REQUIRED_METADATA_NAMES = ["HanlinNativeServicesBridge", "HanlinNativeServicesSe
     "HanlinNativeScriptCompatibility", "UIView", "NSObject", "NativeScriptEmbedder",
     "SwiftUIProvider", "HanlinNativeScriptSwiftUIFixtureProvider"]
 
+# The production host needs its real Foundation/UIKit and generated Host/provider
+# declarations. Importing every Expo/React public umbrella into the legacy ObjC
+# parser is a separate full-SDK expansion and pulls in C++ declarations. Keep that
+# optional scan in the explicit SDK probe; do not change its generator or guards.
+HOST_FRAMEWORKS = {"Foundation.framework", "UIKit.framework"}
+
 
 def required_env(name: str) -> str:
     value = os.environ.get(name)
@@ -106,6 +112,7 @@ def retain_and_check_metadata(arch: str, platform: str) -> bool:
     errors = [line for line in diagnostics
               if re.search(r"(?:^|:\d+(?::\d+)?:\s+)(?:fatal\s+)?error:", line)]
     (evidence / "visibility.json").write_text(json.dumps({"schemaVersion": 1,
+        "scope": "HOST_BASELINE_ONLY",
         "platform": platform, "architecture": arch, "sha256": hashes,
         "requiredMetadataStringsPresent": symbols,
         "clangErrorCount": len(errors),
@@ -165,7 +172,8 @@ def main() -> int:
         try:
             write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
                                   sorted(core_support_dir.glob("*.h")) + swift_headers,
-                                  [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))])
+                                  [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))],
+                                  framework_names=HOST_FRAMEWORKS)
         finally:
             for path in [umbrella, umbrella.with_suffix(".inventory.json"), tool_root / "provenance.json"]:
                 if path.is_file():

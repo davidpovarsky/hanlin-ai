@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "scope": "Three changed/pruned pins only, review not consumer acceptance or full14-added-pin audit",
+  "pullRequest": 9,
+  "head": "05af4bbfd4ec9b3a243984ccf266aa3ab20e6142",
+  "base": "89f2caaf2c2a7d24e247713fa3793b83afc0e321",
+  "resolver": {
+    "run": 43761037885,
+    "source": "c1a539774072b70047f128b5fde89d155fe7d986",
+    "artifact": 14180119013,
+    "digest": "sha256:d245f3e04099528f99286784a244f417b78fb47c5665a061dce49954997abb53",
+    "crc": "PASS",
+    "rawLockSHA256": "c71ab78897eb3c84f245f5efa96c5371b61172f712b8ff534bec7a9d19982fb6",
+    "rawLockBytesEqualDraft": true,
+    "beforeLockBytesEqualBase": true,
+    "classification": "RESOLVED_ONLY_PASS",
+    "appBuilds": 0,
+    "tests": 0,
+    "scopeNote": "Canonical native prerequisites built ExpoModulesJSI separately; no app compile/test from resolver"
+  },
+  "changedOrRemoved": {
+    "swift-cmark": {
+      "before": {
+        "identity": "swift-cmark",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/swiftlang/swift-cmark",
+        "state": {
+          "revision": "b022b08312decdc46585e0b3440d97f6f22ef703",
+          "version": "0.6.0"
+        }
+      },
+      "after": {
+        "identity": "swift-cmark",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/swiftlang/swift-cmark",
+        "state": {
+          "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+          "version": "0.9.0"
+        }
+      }
+    },
+    "swift-docc-plugin": {
+      "before": {
+        "identity": "swift-docc-plugin",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/swiftlang/swift-docc-plugin",
+        "state": {
+          "branch": "main",
+          "revision": "e977f65879f82b375a044c8837597f690c067da6"
+        }
+      },
+      "after": null
+    },
+    "swift-docc-symbolkit": {
+      "before": {
+        "identity": "swift-docc-symbolkit",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/swiftlang/swift-docc-symbolkit",
+        "state": {
+          "revision": "b45d1f2ed151d057b54504d653e0da5552844e34",
+          "version": "1.0.0"
+        }
+      },
+      "after": null
+    }
+  },
+  "addedCount": 14,
+  "manifestEvaluation": {
+    "toolchain": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions",
+    "command": "swift package dump-package",
+    "context": "Trusted original manifests only; SWIFTCI_USE_LOCAL_DEPS absent; repository credential variables removed from child",
+    "librariesBuilt": 0,
+    "dependenciesResolved": 0,
+    "testsExecuted": 0,
+    "models": "*-manifest-model.json"
+  },
+  "requirements": {
+    "forkMarkdownExact": "0.7.3",
+    "markdownCmarkRange": "[0.7.0,1.0.0)",
+    "markdownUICmarkRange": "[0.4.0,1.0.0)",
+    "reviewedIntersection": "[0.7.0,1.0.0)",
+    "old0.6Compatible": false,
+    "selected0.9Admissible": true,
+    "exact0.9MandatedByReviewedChain": false
+  },
+  "tagChecks": [
+    {
+      "repository": "swiftlang/swift-cmark",
+      "tag": "0.6.0",
+      "peeledCommit": "b022b08312decdc46585e0b3440d97f6f22ef703",
+      "matchesLockedSource": true
+    },
+    {
+      "repository": "swiftlang/swift-cmark",
+      "tag": "0.9.0",
+      "peeledCommit": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+      "matchesLockedSource": true
+    },
+    {
+      "repository": "swiftlang/swift-markdown",
+      "tag": "0.7.3",
+      "peeledCommit": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+      "matchesLockedSource": true
+    },
+    {
+      "repository": "swiftlang/swift-docc-symbolkit",
+      "tag": "1.0.0",
+      "peeledCommit": "b45d1f2ed151d057b54504d653e0da5552844e34",
+      "matchesLockedSource": true
+    }
+  ],
+  "licenses": {
+    "cmarkCOPYINGSameGitBlob": "db88a81b3ec3513cda9a4822565fbc06d958b74a",
+    "cmarkCOPYINGSHA256": "c22e885f33b821bddb24cf007145e5540655b6c0f403e49e6c76a93c28e6d9a9",
+    "runtimeNotices": "BSD-2-Clause primary plus retained MIT notices for bundled portions; preserve compositeCOPYING",
+    "testSpecNotice": "CC-BY-SA4.0 applies to CommonMarktest/spec.txt as separately stated inCOPYING; not a blanket runtime-library license",
+    "removedDocumentationTools": "Apache-2.0 WITH Swift-exception at both original locked sources",
+    "documentationLicenseSHA256": "11875c32f8de06e40b25b9e1dc78776baad9810032601c5325db6234c86d71e9",
+    "distributionNoticesPackaging": "NOT_AUDITED"
+  },
+  "pruning": {
+    "markdownStillDeclaresDocc": true,
+    "pluginStillDeclaresSymbolKit": true,
+    "appSelectedProductsReferenceDocc": false,
+    "actualResolverIncludesDoccOrSymbolKit": false,
+    "conclusion": "Source-consistent app product-graph pruning; not source-dependency deletion or a proven doc-build/packaged-binary change",
+    "implementationCausality": "INFERENCE from selected products and original source; resolver trace does not expose its internal pruning decision",
+    "documentationCommandsValidated": "NOT_RUN"
+  },
+  "consumer": {
+    "owner": "A2UI / Markdown, coordinated by manager",
+    "status": "NOT_RUN at this graph",
+    "required": "Focused native compile/link and affected Markdown/GFM/streaming/source-range tests on exact new lock; app-hosted and UI cases when canonical native prerequisites permit",
+    "priorProofReuse": "Only after authentic per-test original resolved graph and full source/fixture/toolchain/environment closure matches; no inference from oldGitlock or unchanged Swiftfiles"
+  },
+  "mutations": {
+    "realLocks": false,
+    "managerWorktree": false,
+    "sourceLibraries": false,
+    "ciDispatches": false,
+    "mergeOrRelease": false
+  }
+}

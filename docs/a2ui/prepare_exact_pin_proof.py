@@ -12,15 +12,80 @@ import json
 from pathlib import Path
 import re
 import sys
+import subprocess
+import tarfile
+import io
 import xml.etree.ElementTree as ET
 
 REPOSITORY = Path(__file__).resolve().parents[2]
 UPSTREAM = "https://github.com/a2ui-project/a2ui"
 REVISION = "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
 CONSUMER_MODULE = "AI_Hanlin"
+PORTABLE_CASE_COUNT = 8
+SDK_CASE_COUNT = 36
+MEDIA_CASES = ["customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding",
+               "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields"]
+OWNERSHIP_CASES = [
+    "successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
+    "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",
+    "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool",
+    "modelPartUsesMessageIdentityWithoutToolCall",
+    "orderedModelProjectionPreservesTextAndRegisteredSurface",
+    "modelProjectionRejectsForeignIdentityAndAmbiguousParts",
+    "modelProjectionNeverFollowsReplacedGeneration",
+    "transientOwnerLookupKeepsWireIDsIndependent",
+    "transientReceiveRejectsWrongIdentityAndSequence",
+    "sealedResultRetainsModelsAndRevokesActions",
+    "sealingRunDoesNotRevokeOtherRun",
+    "replacementRevokesOldGenerationBeforeNewDelivery",
+    "endingResultCancelsOwnedReceiveTask",
+    "presentationCopiesDoNotOwnDiscard",
+    "eventSinkIsWeakAndCannotKeepAuthorityAlive",
+    "deletedSurfaceDropsQueuedOwnedEvents",
+    "retiredSurfaceCannotReanimateQueuedEventsInSameResult",
+]
+CASE_COUNT = PORTABLE_CASE_COUNT + SDK_CASE_COUNT
 SOURCES = "AI_HLY/Downstream/ChatPresentation/A2UI"
+MEDIA_SOURCES = "AI_HLY/Downstream/ChatPresentation/Media"
 TEST = "AI_HLYTests/A2UITests.swift"
+MEDIA_POLICY_TEST = "AI_HLYTests/HanlinRemoteMediaURLTests.swift"
 FIXTURES = "AI_HLYTests/A2UIFixtures"
+SDK_SHA = "18813519eada1db152bd206d5c7bd922ddc987ee"
+APP_SDK_SHA = "d1eedf9ed73b4f6c7c64f488caf92494602db865"
+APP_SOURCE = "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAppPresentation.swift"
+APP_TEST = "AI_HLYTests/HanlinA2UIAppPresentationTests.swift"
+APP_CONTRACT = "AI_HLY/Downstream/ChatCore/HanlinAppAgentPresentationContracts.swift"
+APP_CASES = [
+    "originalRowAndUIRunMapToCanonicalSurfaceWithoutTextInference",
+    "foreignAndAmbiguousBindingsCannotRetargetAnExistingRow",
+    "realRendererActionQueuesOriginalBindingAndRevokesBeforeAsyncContinuation",
+    "canonicalHistoryKeepsOriginalDisplayBindingWithoutRestoringAuthority",
+    "sourceReplacementIsObservedOutsideViewBody",
+]
+PRODUCER_SHA = "e7bf34111e603ca977becd007dd4e5bb109af857"
+CONSUMER_SOURCE = "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift"
+CONSUMER_TEST = "AI_HLYTests/HanlinA2UIAgentPresentationTests.swift"
+VALIDATOR_SOURCE = "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UICompleteBatchValidator.swift"
+VALIDATOR_TEST = "AI_HLYTests/HanlinA2UICompleteBatchValidatorTests.swift"
+VALIDATOR_CASES = [
+    "completeBatchUsesOfficialSchemasAndResolvesForwardReferences",
+    "finalGraphRejectsMissingRootDanglingReferencesAndSchemaErrors",
+    "independentOwnersReuseWireAndPartIDsWithoutSharingGraphs",
+    "wholeBatchFramingRejectsBeforeAnyScratchConstruction",
+    "canonicalOrderKindsProtocolAndResourceBoundsArePreserved",
+    "scratchProcessorsDisposeOnSuccessAndFailureWithoutRPCAuthority",
+]
+CONSUMER_CASES = [
+    "bufferedEOFRetainsRealRendererActionAndSeparateRunIdentity",
+    "canonicalRecordReplayKeepsBytesAndCannotRestoreActions",
+    "invalidationRejectsQueuedOriginalEventsAndKeys",
+    "malformedCompletePartStaysUnavailableAndPreservesAdjacentText",
+    "completedRunBudgetRevokesBeforeUnboundedIdentityGrowth",
+    "canonicalMessagesCanReusePartIDWithoutSharingFormState",
+]
+PROJECTION_CASES = ["modelPartUsesMessageIdentityWithoutToolCall",
+    "orderedModelProjectionPreservesTextAndRegisteredSurface",
+    "modelProjectionRejectsForeignIdentityAndAmbiguousParts", "modelProjectionNeverFollowsReplacedGeneration"]
 PACKAGE = f'''// swift-tools-version: 6.1
 import PackageDescription
 
@@ -52,24 +117,82 @@ def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def plan() -> dict:
+def package_text(platform: str, consumer: bool = False) -> str:
+    text = PACKAGE.replace('.macOS("27.0")', '.iOS("27.0")') if platform == "ios" else PACKAGE
+    if consumer:
+        text = text.replace('swift-tools-version: 6.1', 'swift-tools-version: 6.2')
+        text = text.replace('let products: [Target.Dependency] = [', '''let products: [Target.Dependency] = [
+    .product(name: "HanlinAgentCore", package: "HanlinAgentSDK"),
+    .product(name: "HanlinHostContracts", package: "HanlinAgentSDK"),
+    .product(name: "HanlinPersistenceAdapters", package: "HanlinAgentSDK"),
+    .product(name: "HanlinPlatformContracts", package: "HanlinPlatform"),
+    .product(name: "HanlinChatCore", package: "HanlinPlatform"),
+    .product(name: "AISDKProvider", package: "swift-ai-sdk"),''')
+        text = text.replace('dependencies: [.package(url:', f'''dependencies: [
+        .package(path: "../Packages/HanlinAgentSDK"),
+        .package(path: "../Packages/HanlinPlatform"),
+        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "{PRODUCER_SHA}"),
+        .package(url:''')
+    return text
+
+
+def plan(platform: str = "macos", consumer: bool = False, app: bool = False) -> dict:
+    sdk_source = APP_SDK_SHA if app else SDK_SHA
     source = (REPOSITORY / TEST).read_text(encoding="utf-8")
     if re.findall(r"^@testable import (\w+)$", source, re.MULTILINE) != [CONSUMER_MODULE]:
         raise ValueError("Test import must match the actual AI_Hanlin consumer; do not add a module alias")
     ingress, sdk = source.split("struct A2UISDKTests", 1)
     cases = lambda text: re.findall(r"^\s+@Test func (\w+)\(", text, re.MULTILINE)
     portable, native = cases(ingress), cases(sdk)
-    if len(portable) != 8 or len(native) != 17 or len(set(portable + native)) != 25:
-        raise ValueError("Expected exactly 8 portable and 17 enabled SDK cases; update the proof contract")
+    if (len(portable) != PORTABLE_CASE_COUNT or len(native) != SDK_CASE_COUNT
+            or len(set(portable + native)) != CASE_COUNT):
+        raise ValueError(f"Expected exactly {PORTABLE_CASE_COUNT} portable and {SDK_CASE_COUNT} enabled SDK cases; update the proof contract")
+    if not set(OWNERSHIP_CASES + MEDIA_CASES).issubset(native):
+        raise ValueError("Missing exact affected ownership case")
     paths = sorted((REPOSITORY / SOURCES).glob("*.swift"))
+    media_cases = list(MEDIA_CASES)
+    if platform == "ios":
+        paths += sorted((REPOSITORY / MEDIA_SOURCES).glob("*.swift"))
+        paths += [REPOSITORY / MEDIA_POLICY_TEST]
+        policy_cases = re.findall(r"@Test func (\w+)\(", (REPOSITORY / MEDIA_POLICY_TEST).read_text(encoding="utf-8"))
+        if len(set(policy_cases)) != 6:
+            raise ValueError("Expected six media source admission controls")
+        media_cases += policy_cases
     paths += [REPOSITORY / TEST] + sorted((REPOSITORY / FIXTURES).iterdir())
+    if consumer:
+        paths += [REPOSITORY / CONSUMER_SOURCE, REPOSITORY / CONSUMER_TEST,
+                  REPOSITORY / VALIDATOR_SOURCE, REPOSITORY / VALIDATOR_TEST]
+        suite_source = (REPOSITORY / CONSUMER_TEST).read_text(encoding="utf-8").split("struct HanlinA2UIAgentPresentationTests {", 1)[1]
+        actual = re.findall(r"^    func (\w+)\(", suite_source, re.MULTILINE)
+        if actual != CONSUMER_CASES:
+            raise ValueError("Unexpected consumer integration test identities")
+        actual = re.findall(r"@Test func (\w+)\(", (REPOSITORY / VALIDATOR_TEST).read_text(encoding="utf-8"))
+        if actual != VALIDATOR_CASES:
+            raise ValueError("Unexpected pure validator test identities")
+    if app:
+        paths += [REPOSITORY / APP_SOURCE, REPOSITORY / APP_TEST]
+        suite = (REPOSITORY / APP_TEST).read_text(encoding="utf-8").split("struct HanlinA2UIAppPresentationTests {", 1)[1]
+        if re.findall(r"^    func (\w+)\(", suite, re.MULTILINE) != APP_CASES:
+            raise ValueError("Unexpected actual application-consumer test identities")
     files = [{"path": p.relative_to(REPOSITORY).as_posix(), "sha256": sha(p.read_bytes())}
              for p in paths if p.is_file()]
-    return {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
+    if app:
+        original = subprocess.check_output(["git", "show", sdk_source + ":" + APP_CONTRACT], cwd=REPOSITORY)
+        files.append({"path": APP_CONTRACT, "sha256": sha(original), "source_git_sha": sdk_source})
+    result = {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
             "consumer_module": CONSUMER_MODULE, "test_module": "AI_HLYTests",
-            "portable_cases": portable, "sdk_cases": native, "files": files,
-            "harness_manifest_sha256": sha(PACKAGE.encode()),
-            "native_execution": "NOT_RUN", "platform": "macOS27 / current stable Xcode"}
+            "portable_cases": portable, "sdk_cases": native, "ownership_cases": OWNERSHIP_CASES,
+            "media_cases": media_cases, "files": files, "target_platform": platform,
+            "harness_manifest_sha256": sha(package_text(platform, consumer).encode()),
+            "native_execution": "NOT_RUN", "platform": platform + "27 / current stable Xcode"}
+    if consumer:
+        result.update(consumer_cases=CONSUMER_CASES, projection_cases=PROJECTION_CASES, validator_cases=VALIDATOR_CASES,
+                      sdk_source_sha=sdk_source, producer_revision=PRODUCER_SHA,
+                      sdk_tree_ids={name: subprocess.check_output(["git", "rev-parse", f"{sdk_source}:Packages/{name}"], cwd=REPOSITORY, text=True).strip()
+                                    for name in ["HanlinAgentSDK", "HanlinPlatform"]})
+    if app:
+        result.update(app_cases=APP_CASES, scope="actual app presentation protocol/consumer; ChatView/SwiftData owner/native model/XCUITest NOT_RUN")
+    return result
 
 
 def prepare(destination: Path, inputs: dict) -> None:
@@ -81,18 +204,25 @@ def prepare(destination: Path, inputs: dict) -> None:
     destination.mkdir()
     for entry in inputs["files"]:
         relative = entry["path"]
-        data = (REPOSITORY / relative).read_bytes()
+        data = (subprocess.check_output(["git", "show", entry["source_git_sha"] + ":" + relative], cwd=REPOSITORY)
+                if "source_git_sha" in entry else (REPOSITORY / relative).read_bytes())
         if sha(data) != entry["sha256"]:
             raise ValueError(f"Input changed while preparing proof: {relative}")
-        if relative.startswith(SOURCES + "/"):
+        if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/") or relative in [CONSUMER_SOURCE, VALIDATOR_SOURCE, APP_SOURCE, APP_CONTRACT]:
             target = destination / "Sources" / CONSUMER_MODULE / Path(relative).name
-        elif relative == TEST:
-            target = destination / "Tests/AI_HLYTests/A2UITests.swift"
+        elif relative in [TEST, MEDIA_POLICY_TEST, CONSUMER_TEST, VALIDATOR_TEST, APP_TEST]:
+            target = destination / "Tests/AI_HLYTests" / Path(relative).name
         else:
             target = destination / "Tests/AI_HLYTests/A2UIFixtures" / Path(relative).name
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
-    (destination / "Package.swift").write_text(PACKAGE, encoding="utf-8")
+    consumer = "sdk_source_sha" in inputs
+    if consumer:
+        archive = subprocess.check_output(["git", "archive", "--format=tar", inputs["sdk_source_sha"],
+                                          "Packages/HanlinAgentSDK", "Packages/HanlinPlatform"], cwd=REPOSITORY)
+        with tarfile.open(fileobj=io.BytesIO(archive)) as content:
+            content.extractall(destination.parent, filter="data")
+    (destination / "Package.swift").write_text(package_text(inputs["target_platform"], consumer), encoding="utf-8")
     (destination / "proof-inputs.json").write_text(json.dumps(inputs, indent=2) + "\n", encoding="utf-8")
 
 
@@ -122,7 +252,7 @@ def verify_cases(roots: list[ET.Element], expected: list[str]) -> None:
                 raise ValueError(f"Unrecognized/ambiguous actual test identity: {identity}")
             seen.append(matches[0])
     if sorted(seen) != sorted(expected):
-        raise ValueError("Executed cases differ from the exact 25-case contract (missing/duplicate/zero cases)")
+        raise ValueError(f"Executed cases differ from the exact {len(expected)}-case contract (missing/duplicate/zero cases)")
 
 
 def self_test(inputs: dict) -> int:
@@ -159,30 +289,62 @@ def main() -> None:
     modes.add_argument("--self-test", action="store_true")
     modes.add_argument("--verify-pin", type=Path)
     modes.add_argument("--verify-results", type=Path, nargs="+")
+    modes.add_argument("--verify-xcresult", type=Path)
     parser.add_argument("--resolved", type=Path)
     parser.add_argument("--inputs", type=Path)
+    parser.add_argument("--platform", choices=["macos", "ios"], default="macos")
+    parser.add_argument("--sdk-consumer", action="store_true")
+    parser.add_argument("--app-consumer", action="store_true")
+    parser.add_argument("--suite", choices=["all", "sdk", "ownership", "media", "consumer", "app"], default="all",
+                        help="Verify only SDK identities when portable framing is unaffected")
     args = parser.parse_args()
-    inputs = plan()
+    inputs = plan(args.platform, args.sdk_consumer or args.app_consumer, args.app_consumer)
+    def check_lock(path: Path) -> None:
+        lock = json.loads(path.read_text(encoding="utf-8"))
+        verify_pin(lock)
+        if args.sdk_consumer or args.app_consumer:
+            producer = [p for p in lock["pins"] if p.get("identity") == "swift-ai-sdk"]
+            if len(producer) != 1 or producer[0]["state"].get("revision") != PRODUCER_SHA:
+                raise ValueError("Canonical producer revision changed")
     if args.self_test:
         print(json.dumps({"local_validator_self_checks": self_test(inputs),
                           "data": "synthetic XML/lock; not native execution", "sdk": "NOT_RUN"}))
     elif args.verify_pin:
-        verify_pin(json.loads(args.verify_pin.read_text(encoding="utf-8")))
+        check_lock(args.verify_pin)
         print(json.dumps({"status": "RESOLVED_PIN_MATCHES", "native_execution": "NOT_ASSERTED",
                           "lock_sha256": sha(args.verify_pin.read_bytes())}))
     elif args.output:
         prepare(args.output, inputs)
         print(json.dumps({"harness": str(args.output.resolve()), "status": "PREPARED_NOT_EXECUTED"}))
-    elif args.verify_results:
+    elif args.verify_results or args.verify_xcresult:
         if not args.resolved or not args.inputs:
             parser.error("--verify-results requires the actual --resolved lock and retained --inputs")
         recorded = json.loads(args.inputs.read_text(encoding="utf-8"))
         if recorded != inputs:
             raise ValueError("Current sources/cases/harness differ from the retained proof inputs")
-        verify_pin(json.loads(args.resolved.read_text(encoding="utf-8")))
-        verify_cases([ET.parse(p).getroot() for p in args.verify_results],
-                     inputs["portable_cases"] + inputs["sdk_cases"])
-        print(json.dumps({"status": "RESULT_CONTENTS_VALID", "cases": 25,
+        check_lock(args.resolved)
+        expected = (inputs["app_cases"] + inputs["consumer_cases"] + inputs["projection_cases"] if args.suite == "app" else inputs["consumer_cases"] + inputs["ownership_cases"] + inputs["validator_cases"] if args.suite == "consumer" else inputs["media_cases"] if args.suite == "media" else inputs["ownership_cases"]
+                    if args.suite == "ownership" else inputs["sdk_cases"]
+                    if args.suite == "sdk" else inputs["portable_cases"] + inputs["sdk_cases"])
+        if args.verify_xcresult:
+            root = ET.Element("testsuite")
+            def visit(node):
+                if isinstance(node, dict):
+                    if node.get("nodeType") == "Test Case":
+                        case = ET.SubElement(root, "testcase", name=node.get("name", ""),
+                                             classname=node.get("nodeIdentifier", ""))
+                        if node.get("result") != "Passed":
+                            ET.SubElement(case, "failure")
+                    for value in node.values():
+                        visit(value)
+                elif isinstance(node, list):
+                    for value in node:
+                        visit(value)
+            visit(json.loads(args.verify_xcresult.read_text(encoding="utf-8")))
+            verify_cases([root], expected)
+        else:
+            verify_cases([ET.parse(p).getroot() for p in args.verify_results], expected)
+        print(json.dumps({"status": "RESULT_CONTENTS_VALID", "cases": len(expected), "suite": args.suite,
                           "provenance": "Authenticate process/toolchain/artifact separately",
                           "lock_sha256": sha(args.resolved.read_bytes())}))
     else:

@@ -4,6 +4,7 @@ import Foundation
 enum HanlinA2UIIngress {
     static let upstreamRevision = "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
     static let catalogID = "https://a2ui.org/specification/v1_0/catalogs/basic/catalog.json"
+    static let mediaCatalogID = "https://hanlin.ai/a2ui/catalogs/media/v1"
     static let maximumMessageBytes = 65_536
     static let maximumComponentsPerMessage = 64
 
@@ -19,7 +20,7 @@ enum HanlinA2UIIngress {
     enum Failure: String, Error, Sendable {
         case messageTooLarge, malformedEnvelope, unsupportedVersion, unsupportedOperation
         case invalidSurfaceID, unsupportedCatalog, tooManyComponents
-        case surfaceLimit, sessionBudget, sdkValidation, closed
+        case surfaceLimit, sessionBudget, sdkValidation, inputSealed, closed
     }
 
     /// Finite SDK codes only. Never store a raw path, message, identifier or unknown code.
@@ -91,8 +92,9 @@ enum HanlinA2UIIngress {
             throw Rejection(.unsupportedVersion)
         }
         // This POC deliberately does not negotiate custom/defaultless catalogs or RPC.
-        if operation == .createSurface, payload["catalogId"] as? String != catalogID {
-            throw Rejection(.unsupportedCatalog)
+        if operation == .createSurface {
+            guard let requested = payload["catalogId"] as? String,
+                  [catalogID, mediaCatalogID].contains(requested) else { throw Rejection(.unsupportedCatalog) }
         }
         if let components = payload["components"] as? [Any],
            components.count > maximumComponentsPerMessage {

@@ -1,0 +1,208 @@
+{
+  "run_id": 43668852483,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43668852483",
+  "workflow_sha": "e1dba14f78e543316dd2f6c9b901cdb558bdb844",
+  "tested_source_sha": "f654ac113447177df3838908c53ce9aa24dc47ff",
+  "upstream_revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+  "result": "25 EXECUTED_PASS; AI_Hanlin consumer / AI_HLYTests test module",
+  "independent_owner_checks": [
+    "GitHub API completed/success and artifact metadata",
+    "Retained raw tests.json: exactly25 unique expected Test Case nodes, all Passed",
+    "All13 source hashes match Git bytes at tested source SHA",
+    "All15 workflow hashes match Git bytes at workflow SHA",
+    "Actual harness manifest names AI_Hanlin and AI_HLYTests",
+    "Raw lock bytes/hash/full JSON match resolution.json and resolved-before.json; official pin unchanged"
+  ],
+  "coordinator_observation": "Tomer independently observed -module-name AI_Hanlin in actual compiler log; owner did not reread compiler log",
+  "artifact": {
+    "id": 14143507639,
+    "name": "a2ui-exact-pin-43668852483",
+    "size_in_bytes": 295185,
+    "advertised_digest": "sha256:4c8473c1acc6930b25c6d6f448276637146f4f33b20a4f8321502ad69b5b49cd",
+    "digest_provenance": "GitHub API advertised ZIP digest; owner inspected extracted evidence supplied by Tomer, did not independently download/recompute ZIP"
+  },
+  "toolchain": {
+    "xcode": "27.2 (27B52)",
+    "swift": "6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)",
+    "macos_sdk": "27.2",
+    "host_macos": "27.0.1 (26A434)"
+  },
+  "raw_lock_sha256": "af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae",
+  "resolution": {
+    "originHash": "0cc415a4bf878f586252e68eafb951938979ddcb0f124a612be563668bc1f522",
+    "pins": [
+      {
+        "identity": "a2ui",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/a2ui-project/a2ui",
+        "state": {
+          "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+        }
+      },
+      {
+        "identity": "swift-collections",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-collections.git",
+        "state": {
+          "revision": "88754449ab766a739610b660e117762115fabc9c",
+          "version": "1.7.6"
+        }
+      },
+      {
+        "identity": "swift-json-schema",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/ajevans99/swift-json-schema",
+        "state": {
+          "revision": "c0a9375ea9cd3fd47d875c98ed7f027ea61c03cb",
+          "version": "0.13.2"
+        }
+      },
+      {
+        "identity": "swift-syntax",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/swiftlang/swift-syntax.git",
+        "state": {
+          "revision": "050f1a346fbbac0ca2cfb15a95274f7bd1cf0ccf",
+          "version": "604.0.0"
+        }
+      }
+    ],
+    "version": 3
+  },
+  "retained_raw_file_sha256": {
+    "tests.json": "9305a5f87c739e1f7fc9d81b704a3b3b07bd071ef8a30118907cafd2bbd93f39",
+    "tested-source-sha256.json": "1c48706d69e0fa250329991af69668922e8b62451fdf526ee44593c837846c16",
+    "workflow-sha256.json": "c3a64a8ff88b481439d8eb96de7acc1da85c0fc19d6b1a07a5f17cdf766c2aae",
+    "Harness-Package.swift": "0cc415a4bf878f586252e68eafb951938979ddcb0f124a612be563668bc1f522",
+    "raw-locks/00-Package.resolved": "af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae"
+  },
+  "cases": [
+    {
+      "name": "acceptsOfficialV1FixtureFrames()",
+      "identity": "A2UIIngressTests/acceptsOfficialV1FixtureFrames()",
+      "result": "Passed"
+    },
+    {
+      "name": "boundsUTF8MessageAndComponentBatch()",
+      "identity": "A2UIIngressTests/boundsUTF8MessageAndComponentBatch()",
+      "result": "Passed"
+    },
+    {
+      "name": "buttonEventUsesCurrentBoundValue()",
+      "identity": "A2UISDKTests/buttonEventUsesCurrentBoundValue()",
+      "result": "Passed"
+    },
+    {
+      "name": "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+      "identity": "A2UISDKTests/closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+      "result": "Passed"
+    },
+    {
+      "name": "closeRejectsLateFramesAndDisposesSurfaces()",
+      "identity": "A2UISDKTests/closeRejectsLateFramesAndDisposesSurfaces()",
+      "result": "Passed"
+    },
+    {
+      "name": "closeRevokesQueuedAndRetainedActionCallbacks()",
+      "identity": "A2UISDKTests/closeRevokesQueuedAndRetainedActionCallbacks()",
+      "result": "Passed"
+    },
+    {
+      "name": "componentValidationRemainsWithSDK()",
+      "identity": "A2UIIngressTests/componentValidationRemainsWithSDK()",
+      "result": "Passed"
+    },
+    {
+      "name": "deleteDisposesAndRecreateStartsWithNewIdentity()",
+      "identity": "A2UISDKTests/deleteDisposesAndRecreateStartsWithNewIdentity()",
+      "result": "Passed"
+    },
+    {
+      "name": "hebrewFixtureRetainsBindingsInRTLComposition()",
+      "identity": "A2UISDKTests/hebrewFixtureRetainsBindingsInRTLComposition()",
+      "result": "Passed"
+    },
+    {
+      "name": "independentOwnersCanReuseWireSurfaceID()",
+      "identity": "A2UISDKTests/independentOwnersCanReuseWireSurfaceID()",
+      "result": "Passed"
+    },
+    {
+      "name": "independentSurfacesKeepModelsSeparate()",
+      "identity": "A2UISDKTests/independentSurfacesKeepModelsSeparate()",
+      "result": "Passed"
+    },
+    {
+      "name": "malformedAndUnknownContentFallsBackAndRecovers()",
+      "identity": "A2UISDKTests/malformedAndUnknownContentFallsBackAndRecovers()",
+      "result": "Passed"
+    },
+    {
+      "name": "nativeInputBindingWritesAndReadsOfficialModel()",
+      "identity": "A2UISDKTests/nativeInputBindingWritesAndReadsOfficialModel()",
+      "result": "Passed"
+    },
+    {
+      "name": "officialSchemasRejectInvalidTextInputButton()",
+      "identity": "A2UISDKTests/officialSchemasRejectInvalidTextInputButton()",
+      "result": "Passed"
+    },
+    {
+      "name": "parsesAndRendersTextCardInputButton()",
+      "identity": "A2UISDKTests/parsesAndRendersTextCardInputButton()",
+      "result": "Passed"
+    },
+    {
+      "name": "preservesUnicodeSurfaceIdentity()",
+      "identity": "A2UIIngressTests/preservesUnicodeSurfaceIdentity()",
+      "result": "Passed"
+    },
+    {
+      "name": "rejectedEnvelopesNeverExportSurfaceCorrelation()",
+      "identity": "A2UIIngressTests/rejectedEnvelopesNeverExportSurfaceCorrelation()",
+      "result": "Passed"
+    },
+    {
+      "name": "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+      "identity": "A2UISDKTests/rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+      "result": "Passed"
+    },
+    {
+      "name": "rejectsMalformedAndAmbiguousFrames()",
+      "identity": "A2UIIngressTests/rejectsMalformedAndAmbiguousFrames()",
+      "result": "Passed"
+    },
+    {
+      "name": "rejectsOtherProtocolVersions()",
+      "identity": "A2UIIngressTests/rejectsOtherProtocolVersions()",
+      "result": "Passed"
+    },
+    {
+      "name": "rejectsRPCAndUnnegotiatedCatalogs()",
+      "identity": "A2UIIngressTests/rejectsRPCAndUnnegotiatedCatalogs()",
+      "result": "Passed"
+    },
+    {
+      "name": "stableIDsAndNodeIdentityAcrossUpdates()",
+      "identity": "A2UISDKTests/stableIDsAndNodeIdentityAcrossUpdates()",
+      "result": "Passed"
+    },
+    {
+      "name": "surfaceLimitDoesNotRemoveExistingContent()",
+      "identity": "A2UISDKTests/surfaceLimitDoesNotRemoveExistingContent()",
+      "result": "Passed"
+    },
+    {
+      "name": "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+      "identity": "A2UISDKTests/unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+      "result": "Passed"
+    },
+    {
+      "name": "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+      "identity": "A2UISDKTests/unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+      "result": "Passed"
+    }
+  ],
+  "scope": "Isolated native macOS package with POC+DEBUG and official products; not actual iOS app/test-bundle integration, inline host, hosted layout, physical iPad acceptance or independent QA acceptance",
+  "integration_state_at_handoff": "Tomer reported f654 not yet merged into integration; producer untouched; no owner merge/sync/push or rerun performed"
+}
