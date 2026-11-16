@@ -631,12 +631,13 @@ struct SkillDetailView: View {
         isEnabled = store.isSkillEnabled(id: skillID)
         isOverride = store.hasOverride(for: skillID)
 
-        let catalog = HanlinSkillCatalog.shared
-        descriptor = catalog.resolve(id: skillID)
-
         let allRecords = store.allStoredRecords()
         record = allRecords.first(where: { $0.descriptor.id == skillID })
         isCustomOrImported = (record != nil && !record!.isOverride)
+
+        let catalog = HanlinSkillCatalog.shared
+        // Disabled Skills remain inspectable; the active execution catalog correctly omits them.
+        descriptor = catalog.resolve(id: skillID) ?? record?.descriptor
 
         resources = store.listResources(for: skillID)
 

@@ -22,7 +22,9 @@ struct SkillExecutionPlanSection: View {
     private var scripts: [SkillResourceFile] {
         resources.filter { SkillRuntimeRequirements.suggestedEngine(path: $0.relativePath) != nil }
     }
-    private var selectionID: String { skillID.rawValue + ":" + path + ":" + engine.rawValue }
+    private var selectionID: String {
+        skillID.rawValue + ":" + path + ":" + engine.rawValue + ":" + String(SkillStore.shared.revision)
+    }
 
     var body: some View {
         Section(SkillL10n.string("Compatibility")) {
@@ -73,10 +75,10 @@ struct SkillExecutionPlanSection: View {
             if !path.isEmpty {
                 Button("Start engine and recheck") { begin(run: false) }
                     .accessibilityIdentifier("hanlin-skill-recheck")
-                    .disabled(working)
+                    .disabled(working || !SkillStore.shared.isSkillEnabled(id: skillID))
                 Button("Run with approval") { confirmRun = true }
                     .accessibilityIdentifier("hanlin-skill-run")
-                    .disabled(working)
+                    .disabled(working || !SkillStore.shared.isSkillEnabled(id: skillID))
             }
             if working {
                 ProgressView()
@@ -93,6 +95,8 @@ struct SkillExecutionPlanSection: View {
         .task(id: selectionID) {
             operation?.cancel(); revision = UUID(); working = false; plan = nil; receipt = nil; findings = []; output = ""; error = nil
             let token = revision
+            receipt = try? SkillRuntimeService.shared.receipt(skillID: skillID, path: path)
+            guard SkillStore.shared.isSkillEnabled(id: skillID) else { return }
             do {
                 let value = try await SkillRuntimeService.shared.plan(skillID: skillID,
                     path: path.isEmpty ? nil : path,
@@ -119,6 +123,7 @@ struct SkillExecutionPlanSection: View {
     }
 
     private var status: String {
+        guard SkillStore.shared.isSkillEnabled(id: skillID) else { return "DISABLED" }
         guard let plan else { return SkillL10n.string("Unknown") }
         if plan.action.kind == .instructions {
             return plan.action.requirementsComplete ? "PARSE_ONLY" : "UNKNOWN"
@@ -145,6 +150,7 @@ struct SkillExecutionPlanSection: View {
     }
 
     private func begin(run: Bool) {
+        guard SkillStore.shared.isSkillEnabled(id: skillID) else { return }
         operation?.cancel()
         let token = UUID(); revision = token
         let selectedPath = path, selectedEngine = engine

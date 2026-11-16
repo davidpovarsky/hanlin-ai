@@ -166,7 +166,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(isToggleOn(enableToggle), "Skill should initially be enabled")
         tapToggle(enableToggle)
         XCTAssertTrue(waitForToggle(enableToggle, toBe: false, timeout: 10), "Skill should be toggled off")
-        assertUnknownCompatibility(scope: "detail", expectedStatus: "PARSE_ONLY")
+        assertUnknownCompatibility(scope: "detail", expectedStatus: "DISABLED")
 
         // 4. Leave and reopen to assert disabled persisted
         let backButton = app.navigationBars.buttons.firstMatch
@@ -179,6 +179,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         let reopenedToggle = skillDetailToggle()
         XCTAssertTrue(reopenedToggle.waitForExistence(timeout: 10), "Enable toggle not found on reopen")
         XCTAssertTrue(waitForToggle(reopenedToggle, toBe: false, timeout: 10), "Disabled state should persist across navigation")
+        assertUnknownCompatibility(scope: "detail", expectedStatus: "DISABLED")
 
         // 5. Re-enable
         tapToggle(reopenedToggle)
