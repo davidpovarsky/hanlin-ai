@@ -14,7 +14,13 @@ actor PythonRuntimeService {
         guard hash == "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c" else {
             throw RuntimeCoreError.invalidDependencyManifest
         }
-        let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+        let literal: (String) throws -> String = {
+            // Python string literals do not decode JSON's optional escaped slash.
+            // Match the original PythonPackageManager's trusted-path encoding.
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.withoutEscapingSlashes]
+            return String(decoding: try encoder.encode($0), as: UTF8.self)
+        }
         let helper = try String(contentsOf: helperURL, encoding: .utf8)
         let source = helper + """
 

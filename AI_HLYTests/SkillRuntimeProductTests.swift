@@ -99,7 +99,10 @@ struct SkillRuntimeProductTests {
         case "python", "unicode", "requirements", "toml": source = "print('\(nonce) שלום مرحبا')\n"
         // Use the original linked native command catalog, which does not claim
         // Yarn/Bash builtins such as echo as native command capabilities.
-        case "shell": source = "awk 'BEGIN { print ARGV[1] \":\" ARGV[2]; exit }' \"$0\" \"$1\"\n"
+        // Positional expansions intentionally remain UNKNOWN in passive Bash
+        // analysis. This case proves the real native command/quoting route;
+        // the separate argv case verifies argument preservation through Node.
+        case "shell": source = "awk 'BEGIN { print \"\(nonce)\"; exit }'\n"
         case "typescript": source = "const value: string = '\(nonce)'; console.log(value); export default value;"
         case "argv": source = "if(JSON.stringify(process.argv.slice(2))!==JSON.stringify(['\(nonce)','עברית']))throw Error('argv changed'); console.log('\(nonce)');"
         case "failure": source = "throw new Error('EXPECTED_FAILURE_\(nonce)');"
