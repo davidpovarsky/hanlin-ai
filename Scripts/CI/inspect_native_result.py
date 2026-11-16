@@ -15,8 +15,12 @@ source = json.loads(subprocess.check_output(["gh", "api", f"repos/{repo}/actions
 assert source["status"] == "completed"
 (out / "source-run.json").write_text(json.dumps({"run": run, "head": source["head_sha"], "conclusion": source["conclusion"]}, indent=2))
 raw = Path(os.environ["RUNNER_TEMP"]) / f"native-result-{run}"
-motion = run == "43771756937"
-artifact = f"chat-motion-ui-{run}" if motion else "AI_Hanlin-iOS26-simulator-smoke-logs"
+requested = os.environ.get("SELECTED_TESTS", "").strip()
+motion = run == "43771756937" or bool(requested) and all(s.strip().startswith("MotionUITests/") for s in requested.split(","))
+available = json.loads(subprocess.check_output(["gh", "api", f"repos/{repo}/actions/runs/{run}/artifacts"]))
+names = {a["name"] for a in available["artifacts"] if not a["expired"]}
+artifact = f"chat-motion-ui-{run}" if motion and f"chat-motion-ui-{run}" in names else "AI_Hanlin-iOS26-simulator-smoke-logs"
+assert artifact in names, "Original native evidence artifact is unavailable"
 subprocess.run(["gh", "run", "download", run, "--repo", repo, "--name", artifact, "--dir", str(raw)], check=True)
 if motion:
     archive = next(raw.rglob("Motion.xcresult.tar.gz"))
@@ -25,7 +29,6 @@ if motion:
 bundles = list(raw.rglob("Motion.xcresult" if motion else "NativeScriptProductionE2EResult.xcresult"))
 assert len(bundles) == 1
 tests = ["MotionUITests/testBRapidReversalPresetSwitchAndPersistence()", "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()"] if motion else ["HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()"]
-requested = os.environ.get("SELECTED_TESTS", "").strip()
 if requested:
     tests = []
     for selected in requested.split(","):
