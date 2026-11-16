@@ -1479,162 +1479,187 @@ struct ChatViewBottom: View {
     }
 
     // MARK: - 双入口底部控制栏（+ 通用菜单 / 工具直达 / 紧凑模型胶囊 / 麦克风 / 发送）
+    // Symbol-only actions keep a usable compact footprint; model text retains
+    // the user's full Dynamic Type size and moves to its own row when needed.
+    private var composerActionSize: CGFloat { min(size_32, 44) }
+
     private var composerBottomToolbar: some View {
+        return ViewThatFits(in: .horizontal) {
+            HStack(spacing: 8) {
+                composerToolsControl
+                composerModelControl
+                Spacer(minLength: 4)
+                composerMicrophoneControl
+                composerPrimaryControl
+            }
+            .frame(height: composerActionSize)
+            VStack(spacing: 8) {
+                composerModelControl.frame(maxWidth: .infinity, alignment: .leading)
+                HStack(spacing: 8) {
+                    composerToolsControl
+                    Spacer(minLength: 4)
+                    composerMicrophoneControl
+                    composerPrimaryControl
+                }
+                .frame(height: composerActionSize)
+            }
+        }
+        .frame(minWidth: 0, maxWidth: .infinity)
+        .padding(.horizontal, 10)
+        .padding(.bottom, 8)
+    }
+
+    private var composerToolsControl: some View {
         let accent: Color = TemporaryRecord ? .primary : .hlBluefont
         let isToolsOpen = popupCoordinator.dockState.mode == .tools
-        let isModelOpen = popupCoordinator.activePopup == .model
         let isToolsActive = ifToolUse && currentModelSnapshot.supportsToolUse
         let toolsActiveBadgeCount = HanlinComposerActionBridge.activeToolsShortcutCount(
             capability: currentModelSnapshot,
             ifToolUse: ifToolUse,
             activeMCPServerCount: selectedMCPCountForChat
         )
+        return Button {
+            isFeedBack.toggle()
+            popupCoordinator.toggle(.tools, isInputCurrentlyFocused: isInputActive.wrappedValue)
+        } label: {
+            ZStack(alignment: .topTrailing) {
+                Image(systemName: (isToolsOpen || isToolsActive) ? "hammer.circle.fill" : "hammer.circle")
+                    .font(.system(size: min(size_20 + 5, 36), weight: .regular))
+                    .foregroundStyle(
+                        isResponding
+                        ? Color.gray
+                        : (isToolsOpen ? accent : (isToolsActive ? (TemporaryRecord ? Color.primary : Color.hlBrown) : Color.secondary))
+                    )
+                    .frame(width: composerActionSize, height: composerActionSize)
+                    .background(
+                        (isToolsOpen || isToolsActive)
+                        ? (isToolsActive ? Color.hlBrown : (TemporaryRecord ? Color.primary : Color.hlBlue)).opacity(0.14)
+                        : Color.secondary.opacity(0.08),
+                        in: Circle()
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(
+                                (isToolsOpen || isToolsActive)
+                                ? (isToolsActive ? Color.hlBrown : accent).opacity(0.32)
+                                : Color.clear,
+                                lineWidth: 0.8
+                            )
+                    )
 
-        return HStack(spacing: 8) {
-            // Entrypoint 2: Direct 1-Tap Tools / Skills / MCP button (restored classic `hammer.circle`, drives integrated dock drawer)
+                if toolsActiveBadgeCount > 0 {
+                    Circle()
+                        .fill(isToolsActive ? Color.hlBrown : accent)
+                        .frame(width: 7, height: 7)
+                        .offset(x: -1, y: 1)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("hanlin-composer-tools-direct")
+        .disabled(isResponding)
+        .sensoryFeedback(.impact, trigger: isFeedBack)
+    }
+
+    private var composerModelControl: some View {
+        let accent: Color = TemporaryRecord ? .primary : .hlBluefont
+        let isModelOpen = popupCoordinator.activePopup == .model
+        return HanlinModelZoomPopover(
+            isPresented: popupCoordinator.binding(for: .model),
+            presentationID: popupCoordinator.modelPresentationGeneration,
+            contentSize: popupCoordinator.modelPopoverSize,
+            onResizeCompleted: { generation, size in
+                popupCoordinator.modelFrameResizeDidComplete(presentationID: generation, size: size)
+            }
+        ) {
             Button {
                 isFeedBack.toggle()
-                popupCoordinator.toggle(.tools, isInputCurrentlyFocused: isInputActive.wrappedValue)
+                popupCoordinator.toggle(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
             } label: {
-                ZStack(alignment: .topTrailing) {
-                    Image(systemName: (isToolsOpen || isToolsActive) ? "hammer.circle.fill" : "hammer.circle")
-                        .font(.system(size: size_20 + 5, weight: .regular))
-                        .foregroundStyle(
-                            isResponding
-                            ? Color.gray
-                            : (isToolsOpen ? accent : (isToolsActive ? (TemporaryRecord ? Color.primary : Color.hlBrown) : Color.secondary))
-                        )
-                        .frame(width: size_32, height: size_32)
-                        .background(
-                            (isToolsOpen || isToolsActive)
-                            ? (isToolsActive ? Color.hlBrown : (TemporaryRecord ? Color.primary : Color.hlBlue)).opacity(0.14)
-                            : Color.secondary.opacity(0.08),
-                            in: Circle()
-                        )
-                        .overlay(
-                            Circle()
-                                .stroke(
-                                    (isToolsOpen || isToolsActive)
-                                    ? (isToolsActive ? Color.hlBrown : accent).opacity(0.32)
-                                    : Color.clear,
-                                    lineWidth: 0.8
-                                )
-                        )
-
-                    if toolsActiveBadgeCount > 0 {
-                        Circle()
-                            .fill(isToolsActive ? Color.hlBrown : accent)
-                            .frame(width: 7, height: 7)
-                            .offset(x: -1, y: 1)
-                    }
-                }
+                composerModelCapsuleLabel(isOpen: isModelOpen, accent: accent)
             }
             .buttonStyle(.plain)
-            .accessibilityIdentifier("hanlin-composer-tools-direct")
-            .disabled(isResponding)
-            .sensoryFeedback(.impact, trigger: isFeedBack)
-
-            // Native source-item popover morph is isolated from the inner All Models morph.
-            HanlinModelZoomPopover(
-                isPresented: popupCoordinator.binding(for: .model),
-                presentationID: popupCoordinator.modelPresentationGeneration,
-                contentSize: popupCoordinator.modelPopoverSize,
-                onResizeCompleted: { generation, size in
-                    popupCoordinator.modelFrameResizeDidComplete(presentationID: generation, size: size)
-                }
-            ) {
-                Button {
-                    isFeedBack.toggle()
-                    popupCoordinator.toggle(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
-                } label: {
-                    composerModelCapsuleLabel(isOpen: isModelOpen, accent: accent)
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("hanlin-composer-model-picker")
-                .sensoryFeedback(.selection, trigger: isSelect)
-            } content: {
-                HanlinModelPickerPopover(
-                    coordinator: popupCoordinator,
-                    models: modelTemp,
-                    selectedModelIndex: $selectedModelIndex,
-                    onSelectModel: { index in
-                        isSelect.toggle()
-                        onSelectModel(index)
-                    },
-                    temporaryRecord: TemporaryRecord,
-                    ifToolUse: ifToolUse,
-                    ifThink: ifThink,
-                    ifAudio: ifAudio
-                )
-            }
-
-            Spacer(minLength: 4)
-
-            // Permanent Microphone Action
-            Button(action: {
-                isFeedBack.toggle()
-                voiceExpanded.toggle()
-            }) {
-                Image(systemName: "microphone")
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(isResponding ? Color.gray : Color(.systemGray))
-                    .frame(width: size_30, height: size_30)
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("hanlin-chat-mic")
-            .sensoryFeedback(.impact, trigger: isFeedBack)
-            .disabled(isResponding)
-
-            // Contextual Primary Action: Stop / Send / Observe
-            Group {
-                if isResponding {
-                    Button(action: onCancel) {
-                        Image(systemName: "stop.circle.fill")
-                            .resizable()
-                            .frame(width: size_32, height: size_32)
-                            .foregroundColor(.hlRed)
-                            .symbolEffect(.breathe, isActive: true)
-                    }
-                    .accessibilityIdentifier("hanlin-chat-stop")
-                    .animation(.spring(response: 0.4, dampingFraction: 0.78), value: isResponding)
-                } else if !selectedImages.isEmpty
-                            || !selectedDocumentURLs.isEmpty
-                            || !selectedPrompts.isEmpty
-                            || !message.isEmpty {
-                    Button(action: onSendUser) {
-                        Image(systemName: "arrowtriangle.up.circle.fill")
-                            .resizable()
-                            .frame(width: size_32, height: size_32)
-                            .foregroundColor(sendButtonColor)
-                    }
-                    .accessibilityIdentifier("hanlin-chat-send")
-                    .animation(.spring(response: 0.4, dampingFraction: 0.78), value: message)
-                    .disabled(
-                        !Self.shouldEnableSend(
-                            message: message,
-                            selectedImagesCount: selectedImages.count,
-                            selectedDocumentsCount: selectedDocumentURLs.count,
-                            selectedPromptsCount: selectedPrompts.count,
-                            isResponding: isResponding
-                        )
-                    )
-                } else {
-                    Button(action: onSendObserve) {
-                        Image(systemName: "eye.circle.fill")
-                            .resizable()
-                            .frame(width: size_32, height: size_32)
-                            .foregroundColor(observeButtonColor)
-                    }
-                    .accessibilityIdentifier("hanlin-chat-observe")
-                    .animation(.spring(response: 0.4, dampingFraction: 0.78), value: message)
-                    .disabled(!canObserveCurrentChat)
-                }
-            }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .accessibilityIdentifier("hanlin-composer-model-picker")
+            .sensoryFeedback(.selection, trigger: isSelect)
+        } content: {
+            HanlinModelPickerPopover(
+                coordinator: popupCoordinator,
+                models: modelTemp,
+                selectedModelIndex: $selectedModelIndex,
+                onSelectModel: { index in
+                    isSelect.toggle()
+                    onSelectModel(index)
+                },
+                temporaryRecord: TemporaryRecord,
+                ifToolUse: ifToolUse,
+                ifThink: ifThink,
+                ifAudio: ifAudio
+            )
         }
-        .frame(height: size_32)
-        .padding(.horizontal, 10)
-        .padding(.bottom, 8)
+    }
+
+    private var composerMicrophoneControl: some View {
+        Button(action: {
+            isFeedBack.toggle()
+            voiceExpanded.toggle()
+        }) {
+            Image(systemName: "microphone")
+                .font(.system(size: 16, weight: .medium))
+                .foregroundColor(isResponding ? Color.gray : Color(.systemGray))
+                .frame(width: min(size_30, 44), height: min(size_30, 44))
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("hanlin-chat-mic")
+        .sensoryFeedback(.impact, trigger: isFeedBack)
+        .disabled(isResponding)
+    }
+
+    private var composerPrimaryControl: some View {
+        Group {
+            if isResponding {
+                Button(action: onCancel) {
+                    Image(systemName: "stop.circle.fill")
+                        .resizable()
+                        .frame(width: composerActionSize, height: composerActionSize)
+                        .foregroundColor(.hlRed)
+                        .symbolEffect(.breathe, isActive: true)
+                }
+                .accessibilityIdentifier("hanlin-chat-stop")
+                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: isResponding)
+            } else if !selectedImages.isEmpty
+                        || !selectedDocumentURLs.isEmpty
+                        || !selectedPrompts.isEmpty
+                        || !message.isEmpty {
+                Button(action: onSendUser) {
+                    Image(systemName: "arrowtriangle.up.circle.fill")
+                        .resizable()
+                        .frame(width: composerActionSize, height: composerActionSize)
+                        .foregroundColor(sendButtonColor)
+                }
+                .accessibilityIdentifier("hanlin-chat-send")
+                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: message)
+                .disabled(
+                    !Self.shouldEnableSend(
+                        message: message,
+                        selectedImagesCount: selectedImages.count,
+                        selectedDocumentsCount: selectedDocumentURLs.count,
+                        selectedPromptsCount: selectedPrompts.count,
+                        isResponding: isResponding
+                    )
+                )
+            } else {
+                Button(action: onSendObserve) {
+                    Image(systemName: "eye.circle.fill")
+                        .resizable()
+                        .frame(width: composerActionSize, height: composerActionSize)
+                        .foregroundColor(observeButtonColor)
+                }
+                .accessibilityIdentifier("hanlin-chat-observe")
+                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: message)
+                .disabled(!canObserveCurrentChat)
+            }
+        }
+        .sensoryFeedback(.impact, trigger: isFeedBack)
     }
 
     @ViewBuilder

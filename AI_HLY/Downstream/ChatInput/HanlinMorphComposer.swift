@@ -229,6 +229,7 @@ struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Input: View
                 .foregroundStyle(azure)
                 .accessibilityLabel(String(localized: "Back"))
                 .accessibilityIdentifier(activePage.map(backIdentifier) ?? "composer-toolbar-back")
+                .id(activePage)
             } else {
                 Image(systemName: "square.grid.3x2.fill").foregroundStyle(azure)
             }
@@ -326,6 +327,7 @@ private struct HanlinMorphMeasuredPages<ID: Hashable, Content: View>: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .frame(height: naturalHeight, alignment: .top)
         }
+        .accessibilityIdentifier("hanlin-composer-page-scroll")
         .frame(height: animatedHeight, alignment: .top)
         .frame(maxHeight: maxHeight, alignment: .top)
         .clipped()

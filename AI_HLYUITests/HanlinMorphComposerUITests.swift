@@ -271,7 +271,7 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let panel = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
         XCTAssertTrue(panel.waitForExistence(timeout: 10))
         let sampleImage = app.buttons["hanlin-attach-sample-image"].firstMatch
-        for _ in 0..<6 where !sampleImage.isHittable { panel.swipeUp() }
+        revealInComposer(sampleImage)
         XCTAssertTrue(sampleImage.isHittable)
         sampleImage.tap()
         let attachment = app.descendants(matching: .any)["hanlin-composer-image-attachment"].firstMatch
@@ -284,9 +284,13 @@ final class HanlinMorphComposerUITests: XCTestCase {
         XCTAssertTrue(panel.waitForExistence(timeout: 5))
         XCTAssertGreaterThanOrEqual(panel.frame.minY, window.frame.minY - 1)
         XCTAssertLessThanOrEqual(panel.frame.maxY, window.frame.maxY + 1)
+        XCTAssertGreaterThanOrEqual(panel.frame.minX, window.frame.minX - 1)
+        XCTAssertLessThanOrEqual(panel.frame.maxX, window.frame.maxX + 1)
+        XCTAssertGreaterThanOrEqual(input.frame.minX, window.frame.minX - 1)
+        XCTAssertLessThanOrEqual(input.frame.maxX, window.frame.maxX + 1)
         XCTAssertLessThanOrEqual(input.frame.maxY, window.frame.maxY + 1)
         let prompts = app.buttons["hanlin-general-prompts-button"].firstMatch
-        for _ in 0..<6 where !prompts.isHittable { panel.swipeUp() }
+        revealInComposer(prompts)
         XCTAssertTrue(prompts.isHittable)
         prompts.tap()
         let back = app.buttons["hanlin-general-subpage-back"].firstMatch
@@ -303,14 +307,14 @@ final class HanlinMorphComposerUITests: XCTestCase {
         XCTAssertTrue(tools.waitForExistence(timeout: 5))
         tools.tap()
         let skills = app.buttons["hanlin-tools-open-skills"].firstMatch
-        for _ in 0..<6 where !skills.isHittable { panel.swipeUp() }
+        revealInComposer(skills)
         XCTAssertTrue(skills.isHittable)
         skills.tap()
         let toolsBack = app.buttons["hanlin-tools-subpage-back"].firstMatch
         XCTAssertTrue(toolsBack.waitForExistence(timeout: 5))
         XCTAssertTrue(panel.exists)
         let manage = app.buttons["hanlin-tools-open-full-skill-center"].firstMatch
-        for _ in 0..<6 where !manage.isHittable { panel.swipeUp() }
+        revealInComposer(manage)
         XCTAssertTrue(manage.isHittable)
         manage.tap()
         let management = app.descendants(matching: .any)["hanlin-tools-management-skills"].firstMatch
@@ -322,5 +326,18 @@ final class HanlinMorphComposerUITests: XCTestCase {
         tools.tap()
         XCTAssertTrue(panel.waitForNonExistence(timeout: 5))
         XCTAssertEqual(input.value as? String, draft)
+    }
+
+    private func revealInComposer(_ element: XCUIElement) {
+        let viewport = app.scrollViews["hanlin-composer-page-scroll"].firstMatch
+        XCTAssertTrue(viewport.waitForExistence(timeout: 5))
+        for _ in 0..<10 {
+            if element.isHittable { return }
+            if element.exists, element.frame.height > 0, element.frame.midY < viewport.frame.midY {
+                viewport.swipeDown()
+            } else {
+                viewport.swipeUp()
+            }
+        }
     }
 }
