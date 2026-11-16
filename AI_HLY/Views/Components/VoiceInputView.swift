@@ -436,7 +436,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
     private var recordingInputUIDs: Set<String> = []
     private var activeRecordingFormat: AVAudioFormat?
 
-    #if DEBUG
+    #if DEBUG || HANLIN_TESTING
     var testHasRecordingResources: Bool {
         audioFile != nil || audioSink != nil || recognitionRequest != nil || recognitionTask != nil
     }
@@ -1041,7 +1041,7 @@ internal final class AudioTapSink: @unchecked Sendable {
     private let maxPoolCapacity: Int = 16
     private let poolBufferCapacity: AVAudioFrameCount = 8192
 
-    #if DEBUG
+    #if DEBUG || HANLIN_TESTING
     var testDroppedWritesCount: Int {
         lock.lock()
         defer { lock.unlock() }

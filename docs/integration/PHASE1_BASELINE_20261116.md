@@ -49,3 +49,16 @@ MiniApp smokes must establish its acceptance.
 
 The canonical result, integration ledger (all 30 task IDs) and acceptance matrix are saved
 beside the owner's phase plan in `Codex-Agent-HQ/docs/hanlin/single-agent-three-phases-20261116`.
+
+## Release test-host compilation
+
+Run `43789179207` compiled the app past the SDK event boundary but failed while building
+the existing whole unit-test bundle: `NativeScriptShareDeliveryTests` lacked its actual
+`HanlinScriptCompiler` import, and unselected Voice tests referenced read-only probes
+guarded by `DEBUG` although NativeScript tests require Release. The import is restored.
+Only simulator `build-for-testing` now defines `HANLIN_TESTING`, including its optional
+same-run warm build. The existing probes use `DEBUG || HANLIN_TESTING`; assertions,
+shipping build settings and runtime behavior are unchanged. No test is skipped, and
+`DEBUG` is not enabled for the Release NativeScript host. This is test-host compilation,
+not a claim that Voice cases executed. The selected original app obligations remain
+missing until the next scoped native run actually executes them.

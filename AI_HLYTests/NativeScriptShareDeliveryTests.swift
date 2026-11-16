@@ -1,5 +1,6 @@
 import Foundation
 import HanlinPlatformContracts
+import HanlinScriptCompiler
 import HanlinScriptExtensions
 import HanlinScriptStore
 import Testing
