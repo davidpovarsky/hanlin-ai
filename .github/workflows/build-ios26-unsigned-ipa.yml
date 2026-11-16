@@ -3,11 +3,6 @@ name: Build iOS 26 Unsigned IPA
 on:
   workflow_dispatch:
     inputs:
-      native_result_inspection_run_id:
-        description: Export failure attachments from an existing native result without building or running tests
-        required: false
-        default: ''
-        type: string
       composer_validation_only:
         description: Verify the actual Morph shell and coordinator source closure in an isolated iOS simulator package
         required: false
@@ -69,7 +64,7 @@ on:
         default: false
         type: boolean
       runtime_bundle_artifact_run_id:
-        description: Validate a completed same-repository Runtime candidate before release publication
+        description: Existing same-repository artifact run for Runtime validation or native_result_inspection
         required: false
         default: ''
         type: string
@@ -147,7 +142,7 @@ concurrency:
 
 jobs:
   inspect-existing-native-result:
-    if: ${{ inputs.native_result_inspection_run_id != '' }}
+    if: ${{ inputs.target_validation_group == 'native_result_inspection' }}
     name: Inspect existing native failure evidence only
     runs-on: xcode-27
     timeout-minutes: 10
@@ -155,7 +150,7 @@ jobs:
       - name: Export original xcresult failure attachments
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_RUN_ID: ${{ inputs.native_result_inspection_run_id }}
+          SOURCE_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -euo pipefail
           python3 - <<'PY'
@@ -181,7 +176,7 @@ jobs:
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
-          name: native-result-inspection-${{ inputs.native_result_inspection_run_id }}
+          name: native-result-inspection-${{ inputs.runtime_bundle_artifact_run_id }}
           path: native-result-inspection
           if-no-files-found: error
           retention-days: 14
@@ -467,7 +462,7 @@ jobs:
           retention-days: 14
 
   plan-affected-validation:
-    if: ${{ inputs.native_result_inspection_run_id == '' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '')))) ) }}
+    if: ${{ inputs.target_validation_group != 'native_result_inspection' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '')))) ) }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15

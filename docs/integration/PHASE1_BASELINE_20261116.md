@@ -83,5 +83,6 @@ eight-name guard. No Full-SDK/BEScrollViewDelegate work is involved.
 Composer failed before reaching its draft assertion because the original chat
 input was not found after navigating to the acceptance chat. Export original
 failure attachments through the existing manual workflow's isolated
-`native_result_inspection_run_id` path; it skips planning, builds and tests.
+`native_result_inspection` group with the existing artifact-run input; it skips
+planning, builds and tests and preserves the25-input GitHub dispatch limit.
 Inspect actual evidence before choosing a navigation or product repair.
