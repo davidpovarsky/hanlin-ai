@@ -10,6 +10,15 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class Phase2WiringTests(unittest.TestCase):
+    def test_explicit_compact_validation_does_not_cancel_native_ipad_acceptance(self):
+        workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
+        group = workflow["concurrency"]["group"]
+        self.assertIn("(inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'HanlinMorphComposerUITests/testCompact')) && 'explicit-compact-composer'", group)
+        self.assertIn("'phase2-combined-native'", group)
+        triggers = workflow.get("on", workflow.get(True))
+        self.assertEqual(triggers["push"], {"branches": ["main"]})
+        self.assertNotIn("pull_request", triggers)
+
     def test_device_mcp_verifies_the_canonical_patched_archive(self):
         workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
         job = next(job for job in workflow["jobs"].values() if job.get("name") == "Build unsigned IPA with Xcode 26")
