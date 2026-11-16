@@ -25,7 +25,7 @@ class Phase2WiringTests(unittest.TestCase):
             if step.get("uses") == "davidpovarsky/github-automation/live-refresh@main"]
         self.assertTrue(notifications)
         for step in notifications:
-            for scope in ["exact_test_selector", "device_build", "chat_motion_product"]:
+            for scope in ["exact_test_selector", "device_build", "chat_motion_product", "project_packaging"]:
                 self.assertIn("inputs.target_validation_group != '" + scope + "'", step["if"])
         simulator = next(job for job in workflow["jobs"].values() if job.get("name") == "Launch full app on iPad Simulator")
         for name in ["Build full arm64 simulator app", "Boot iPad Simulator and stage fixtures", "Run simulator test suite"]:
