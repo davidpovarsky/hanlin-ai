@@ -42,6 +42,10 @@ final class HanlinAISDKToolAdapter {
     var currentRoundID: UUID?
     var currentStepIndex: Int = 0
     var completedCallIDs: Set<String> = []
+    /// Transient observers on the existing execution path. They never execute a tool.
+    var sdkProgressHandlers: [String: @MainActor @Sendable (String) -> Void] = [:]
+    var sdkPreDispatchHandlers: [String: @MainActor @Sendable (String) throws -> Void] = [:]
+    var sdkOutcomeHandlers: [String: @MainActor @Sendable (NativeToolExecutionOutcome) -> Void] = [:]
     var maxActiveStepSchemaBytes: Int? = nil
 
     static func buildUnknownToolErrorMessage(
@@ -286,7 +290,7 @@ final class HanlinAISDKToolAdapter {
         let schema = LoadSkillTool.schema
         let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
         let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
-        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters)
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
 
         return HanlinAISDKToolDefinition(
             name: LoadSkillTool.toolName,
@@ -370,7 +374,7 @@ final class HanlinAISDKToolAdapter {
         let schema = ReadSkillResourceTool.schema
         let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
         let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
-        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters)
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
 
         return HanlinAISDKToolDefinition(
             name: ReadSkillResourceTool.toolName,
@@ -450,7 +454,7 @@ final class HanlinAISDKToolAdapter {
         let schema = ToolSearchTool.schema
         let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
         let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
-        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters)
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
 
         return HanlinAISDKToolDefinition(
             name: ToolSearchTool.toolName,
@@ -533,7 +537,7 @@ final class HanlinAISDKToolAdapter {
         let schema = ReadToolResultTool.schema
         let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
         let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
-        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters)
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
 
         return HanlinAISDKToolDefinition(
             name: ReadToolResultTool.toolName,
@@ -612,7 +616,7 @@ final class HanlinAISDKToolAdapter {
         let schema = ToolSchemaDecorator.reportProgressSchema()
         let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
         let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
-        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters)
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
 
         return HanlinAISDKToolDefinition(
             name: ToolSchemaDecorator.reportProgressName,
@@ -641,6 +645,7 @@ final class HanlinAISDKToolAdapter {
                     )
                     self.callbacks.onProgressMessage?(progressMsg)
                     self.callbacks.onAgentEvent?(.progressMessage(progressMsg))
+                    self.sdkProgressHandlers[callID]?(message)
                 }
                 let result = "Progress update delivered."
                 if let recorder = self.diagnosticsRecorder, let roundID = await self.resolveRoundID() {
@@ -667,7 +672,7 @@ final class HanlinAISDKToolAdapter {
         let function = schema["function"] as? [String: Any]
         let description = function?["description"] as? String ?? schema["description"] as? String ?? ""
         let parameters = function?["parameters"] as? [String: Any] ?? schema["parameters"] as? [String: Any] ?? ["type": "object", "properties": [:]]
-        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters)
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
 
         return HanlinAISDKToolDefinition(
             name: alias,
@@ -744,10 +749,20 @@ final class HanlinAISDKToolAdapter {
             }
         )
 
+        // The SDK Host verifies exact business input and original context after the preceding
+        // diagnostics/round awaits and immediately before the existing prepared executor.
+        do { try sdkPreDispatchHandlers[callID]?(parsedCall.sanitizedArgumentsJSON) }
+        catch {
+            sdkOutcomeHandlers[callID]?(.invalidArguments)
+            completedCallIDs.insert(callID)
+            return HanlinAISDKToolExecutionOutput(modelText: "Operation input or context could not be verified before dispatch.", isError: true)
+        }
+
         let nativeResult = await RuntimeJobProgress.$reporter.withValue({ [weak self] job in
             guard let self, !self.completedCallIDs.contains(callID) else { return }
             let message = "Job \(job.executionID.uuidString.prefix(8)) · \(job.state.rawValue) · stdout \(job.stdoutBytes) B · stderr \(job.stderrBytes) B"
             self.callbacks.onAgentEvent?(.toolExecutionProgress(id: "\(callID):execution", message: message))
+            self.sdkProgressHandlers[callID]?(message)
         }) {
             await preparedTools.execute(alias: alias, argumentsJSON: parsedCall.sanitizedArgumentsJSON, context: nativeContext)
         }
@@ -788,6 +803,8 @@ final class HanlinAISDKToolAdapter {
             self.completedCallIDs.insert(callID)
             return HanlinAISDKToolExecutionOutput(modelText: errorText, isError: true)
         }
+
+        sdkOutcomeHandlers[callID]?(result.outcome)
 
         var modelText = result.modelText
         let userText = result.userText ?? result.modelText

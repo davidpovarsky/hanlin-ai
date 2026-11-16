@@ -69,6 +69,11 @@ class AppDataManager: ObservableObject {
     // 异步预加载所有数据
     @MainActor func preloadDataIfNeeded() {
         let context = modelContainer.mainContext
+        if HanlinNativeA2UIAcceptanceProvider.isEnabled {
+            do { try HanlinNativeA2UIAcceptanceProvider.configureIfRequested(context: context) }
+            catch { fatalError("Native A2UI isolated fixture bootstrap failed") }
+            return
+        }
         // 确保模型数据优先加载完成
         preloadModelDataIfNeeded(context: context)
         preloadAPIKeysIfNeeded(context: context)

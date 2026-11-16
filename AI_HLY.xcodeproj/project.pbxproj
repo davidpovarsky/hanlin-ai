@@ -488,6 +488,20 @@
 			"isa" = "PBXBuildFile";
 			"fileRef" = "FA8159CB799005F585B0200D";
 		};
+		AC1700000000000000000003 = {isa = PBXBuildFile; productRef = AC1700000000000000000002; };
+		AC1700000000000000000004 = {isa = PBXBuildFile; productRef = AC1700000000000000000002; };
+		AC1700000000000000000006 = {isa = PBXBuildFile; productRef = AC1700000000000000000005; };
+		AC1700000000000000000007 = {isa = PBXBuildFile; productRef = AC1700000000000000000005; };
+		AC1700000000000000000009 = {isa = PBXBuildFile; productRef = AC1700000000000000000008; };
+		AC170000000000000000000A = {isa = PBXBuildFile; productRef = AC1700000000000000000008; };
+		AC170000000000000000000C = {isa = PBXBuildFile; productRef = AC170000000000000000000B; };
+		AC170000000000000000000D = {isa = PBXBuildFile; productRef = AC170000000000000000000B; };
+		AC1700000000000000000010 = {isa = PBXBuildFile; productRef = AC170000000000000000000F; };
+		AC1700000000000000000011 = {isa = PBXBuildFile; productRef = AC170000000000000000000F; };
+		AC1700000000000000000014 = {isa = PBXBuildFile; productRef = AC1700000000000000000013; };
+		AC1700000000000000000015 = {isa = PBXBuildFile; productRef = AC1700000000000000000013; };
+		AC1700000000000000000018 = {isa = PBXBuildFile; productRef = AC1700000000000000000017; };
+		AC1700000000000000000019 = {isa = PBXBuildFile; productRef = AC1700000000000000000017; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1284,6 +1298,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC1700000000000000000003,
+				AC1700000000000000000006,
+				AC1700000000000000000009,
+				AC170000000000000000000C,
+				AC1700000000000000000010,
+				AC1700000000000000000014,
+				AC1700000000000000000018,
+
 				AC1600000000000000000003,
 				AC1500000000000000000005 /* HanlinHostContracts in Frameworks */,
 				AC1500000000000000000006 /* HanlinAgentCore in Frameworks */,
@@ -1328,6 +1350,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC1700000000000000000004,
+				AC1700000000000000000007,
+				AC170000000000000000000A,
+				AC170000000000000000000D,
+				AC1700000000000000000011,
+				AC1700000000000000000015,
+				AC1700000000000000000019,
+
 				AC1600000000000000000004,
 				AC1500000000000000000008 /* HanlinAgentCore in Test Frameworks */,
 				B10000000000000000000001 /* HanlinPlatformContracts in Frameworks */,
@@ -1466,6 +1496,14 @@
 			);
 			name = AI_Hanlin;
 			packageProductDependencies = (
+				AC1700000000000000000002,
+				AC1700000000000000000005,
+				AC1700000000000000000008,
+				AC170000000000000000000B,
+				AC170000000000000000000F,
+				AC1700000000000000000013,
+				AC1700000000000000000017,
+
 				AC1600000000000000000002,
 				AC1500000000000000000002 /* HanlinHostContracts */,
 				AC1500000000000000000003 /* HanlinAgentCore */,
@@ -1523,6 +1561,14 @@
 			);
 			name = AI_HLYTests;
 			packageProductDependencies = (
+				AC1700000000000000000002,
+				AC1700000000000000000005,
+				AC1700000000000000000008,
+				AC170000000000000000000B,
+				AC170000000000000000000F,
+				AC1700000000000000000013,
+				AC1700000000000000000017,
+
 				AC1600000000000000000002,
 				AC1500000000000000000003 /* HanlinAgentCore */,
 				E3A100000000000000000004 /* HanlinExpoWidgetNative */,
@@ -2034,6 +2080,7 @@
 		B10000000000000000000008 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2059,6 +2106,7 @@
 		B10000000000000000000009 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2216,6 +2264,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
 			buildSettings = {
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				APS_ENVIRONMENT = development;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2513,6 +2562,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
 			buildSettings = {
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				APS_ENVIRONMENT = production;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -2999,6 +3049,10 @@
 				minimumVersion = 2.8.7;
 			};
 		};
+		AC1700000000000000000001 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/a2ui-project/a2ui"; requirement = {kind = revision; revision = 3ed9601862ecc78027e20ac80ad8b1b98a5d9079; }; };
+		AC170000000000000000000E = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/tree-sitter/swift-tree-sitter"; requirement = {kind = revision; revision = 08ef81eb8620617b55b08868126707ad72bf754f; }; };
+		AC1700000000000000000012 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/tree-sitter/tree-sitter"; requirement = {kind = revision; revision = da6fe9beb4f7f67beb75914ca8e0d48ae48d6406; }; };
+		AC1700000000000000000016 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/tree-sitter/tree-sitter-bash"; requirement = {kind = revision; revision = a06c2e4415e9bc0346c6b86d401879ffb44058f7; }; };
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -3182,6 +3236,13 @@
 			"package" = "F8000000000000000000005A";
 			"productName" = "HanlinProductSplit";
 		};
+		AC1700000000000000000002 = {isa = XCSwiftPackageProductDependency; package = AC1700000000000000000001; productName = A2UISwiftCore; };
+		AC1700000000000000000005 = {isa = XCSwiftPackageProductDependency; package = AC1700000000000000000001; productName = A2UISwiftUI; };
+		AC1700000000000000000008 = {isa = XCSwiftPackageProductDependency; package = AC1700000000000000000001; productName = BasicCatalog; };
+		AC170000000000000000000B = {isa = XCSwiftPackageProductDependency; package = AC1700000000000000000001; productName = BasicCatalogSwiftUI; };
+		AC170000000000000000000F = {isa = XCSwiftPackageProductDependency; package = AC170000000000000000000E; productName = SwiftTreeSitter; };
+		AC1700000000000000000013 = {isa = XCSwiftPackageProductDependency; package = AC1700000000000000000012; productName = TreeSitter; };
+		AC1700000000000000000017 = {isa = XCSwiftPackageProductDependency; package = AC1700000000000000000016; productName = TreeSitterBash; };
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D7B6C3B92D50A55D004E3AD6 /* Project object */;

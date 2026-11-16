@@ -9,26 +9,27 @@ import SwiftUI
 
 struct ChatShimmerModifier: ViewModifier {
     let isActive: Bool
-    let animationDuration: Double
 
-    @State private var phase: CGFloat = -1.0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.chatMotion) private var motion
 
-    init(isActive: Bool = true, animationDuration: Double = 1.8) {
+    init(isActive: Bool = true) {
         self.isActive = isActive
-        self.animationDuration = animationDuration
     }
 
     func body(content: Content) -> some View {
-        if !isActive || reduceMotion {
+        if !isActive || reduceMotion || scenePhase != .active || !motion.showsShimmer {
             content
         } else {
             content
                 .overlay {
                     GeometryReader { geo in
+                        TimelineView(.animation) { timeline in
                         let width = geo.size.width
-                        let shimmerColor = colorScheme == .dark ? Color.white : Color.primary
+                        let shimmerColor = Color.blue
+                        let time = timeline.date.timeIntervalSinceReferenceDate
+                        let phase = time.truncatingRemainder(dividingBy: motion.shimmerDuration) / motion.shimmerDuration * 2 - 1
 
                         LinearGradient(
                             stops: [
@@ -43,17 +44,9 @@ struct ChatShimmerModifier: ViewModifier {
                         )
                         .frame(width: max(width * 1.5, 120))
                         .offset(x: phase * (width + 120) - 60)
+                        }
                     }
                     .mask(content)
-                }
-                .onAppear {
-                    phase = -1.0
-                    withAnimation(
-                        .linear(duration: animationDuration)
-                            .repeatForever(autoreverses: false)
-                    ) {
-                        phase = 1.0
-                    }
                 }
         }
     }
@@ -61,7 +54,7 @@ struct ChatShimmerModifier: ViewModifier {
 
 extension View {
     /// Applies a glowing shimmer sweep animation passing across the view.
-    func chatShimmer(isActive: Bool = true, animationDuration: Double = 1.8) -> some View {
-        modifier(ChatShimmerModifier(isActive: isActive, animationDuration: animationDuration))
+    func chatShimmer(isActive: Bool = true) -> some View {
+        modifier(ChatShimmerModifier(isActive: isActive))
     }
 }

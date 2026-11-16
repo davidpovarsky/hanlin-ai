@@ -5,6 +5,9 @@ import UIKit
 /// The shared renderer inside the original message bubble and translated/transcript text.
 struct ChatMarkdownView: View {
     let text: String
+    /// Ordered model parts parse independently, so their block IDs need a stable namespace.
+    var selectionPartID: UUID? = nil
+    var messageText: String? = nil
     var savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?
     var saveKnowledge: (@MainActor @Sendable (String) -> Void)?
     var onRendered: (@MainActor @Sendable () -> Void)?
@@ -18,7 +21,7 @@ struct ChatMarkdownView: View {
 
     var body: some View {
         let _ = dynamicTypeSize
-        let _ = listener.update(savePersonal: savePersonal, saveKnowledge: saveKnowledge, onRendered: {
+        let _ = listener.update(savePersonal: scopedSavePersonal, saveKnowledge: saveKnowledge, onRendered: {
             onRendered?()
             if let messageID = source?.messageID { markdownDidRender?(messageID) }
         })
@@ -47,9 +50,27 @@ struct ChatMarkdownView: View {
 
     private var highlight: MarkdownSelectionHighlight? {
         guard let destination, highlightedRequestID == destination.id, destination.messageID == source?.messageID,
-              destination.sourceDigest == ChatSavedExcerpt.digest(text),
-              let selection = destination.selection, let blockID = selection.sourceBlockID else { return nil }
+              destination.sourceDigest == ChatSavedExcerpt.digest(messageText ?? text),
+              let selection = destination.selection, let storedBlockID = selection.sourceBlockID else { return nil }
+        let blockID: String
+        if let selectionPartID {
+            let prefix = "hanlin-part:\(selectionPartID.uuidString):"
+            guard storedBlockID.hasPrefix(prefix) else { return nil }
+            blockID = String(storedBlockID.dropFirst(prefix.count))
+        } else {
+            guard !storedBlockID.hasPrefix("hanlin-part:") else { return nil }
+            blockID = storedBlockID
+        }
         return MarkdownSelectionHighlight(sourceBlockID: blockID, renderedText: selection.renderedText, range: selection.range)
+    }
+
+    private var scopedSavePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)? {
+        guard let savePersonal else { return nil }
+        guard let selectionPartID else { return savePersonal }
+        return { quote in
+            savePersonal(ChatTextQuote(text: quote.text, renderedText: quote.renderedText, range: quote.range,
+                sourceBlockID: quote.sourceBlockID.map { "hanlin-part:\(selectionPartID.uuidString):\($0)" }))
+        }
     }
 
     private var config: MarkdownRenderConfig {
@@ -68,7 +89,16 @@ struct ChatMarkdownView: View {
         let codeStyle = CodeBlockConfig.default
         let codeFonts = TextFonts(normal: UIFont.monospacedSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .callout).pointSize, weight: .regular),
             italic: nil, bold: nil, boldItalic: nil, preferredLetterSpacing: nil, preferredLineHeight: nil)
+        #if HANLIN_A2UI_POC
+        // The pinned renderer owns parsing, loading/failure presentation and fullscreen zoom.
+        // Keep this in the existing rich-content prototype until network/resource gates pass.
+        let imageConfig = ImageConfig(enabled: true,
+            allowedImageTypes: [.remote(allowedDomains: [])], fullscreenViewerEnabled: true)
+        #else
+        let imageConfig = ImageConfig.disabled
+        #endif
         return MarkdownRenderConfig.default
+            .withImageConfig(imageConfig)
             .withShouldAnimateText(value: false)
             .withBlockSpacing(value: 12)
             .withParagraphStyle(value: body)

@@ -2460,6 +2460,14 @@ jobs:
           printf '%s\n' "$BUNDLE_ID" > "$LOG_DIR/bundle-id.txt"
           printf '%s\n' "$APP_EXECUTABLE" > "$LOG_DIR/app-executable.txt"
 
+          if { [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
+            python3 Scripts/CI/stage_simulator_fixtures.py \
+              --simulator-udid "$SIMULATOR_UDID" \
+              --bundle-id "$BUNDLE_ID" \
+              --app-path "$APP_PATH" \
+              --fixtures-dir "build/NativeScriptE2E" \
+              --log-dir "$LOG_DIR"
+          else
           python3 - "$SIMULATOR_UDID" <<'PY'
           import os
           from pathlib import Path
@@ -2475,14 +2483,6 @@ jobs:
           if result.returncode:
               raise SystemExit(f"Simulator boot failed or timed out: {result.returncode}")
           PY
-          if { [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
-            python3 Scripts/CI/stage_simulator_fixtures.py \
-              --simulator-udid "$SIMULATOR_UDID" \
-              --bundle-id "$BUNDLE_ID" \
-              --app-path "$APP_PATH" \
-              --fixtures-dir "build/NativeScriptE2E" \
-              --log-dir "$LOG_DIR"
-          else
             printf '%s\n' "NativeScript fixture staging skipped (NativeScript not affected)." > "$LOG_DIR/08-nativescript-files-staging-skipped.txt"
           fi
 

@@ -24,6 +24,8 @@ import HanlinPlatformContracts
 
 struct LoadingGradientText: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.chatMotion) private var motion
     let text: String
     var textColor: Color = .gray
     var gradientColors: [Color] = [
@@ -36,10 +38,10 @@ struct LoadingGradientText: View {
         .hlBluefont.opacity(0.0)
     ]
     var font: Font = .body.bold()
-    var animationSpeed: Double = 2
+    var isActive: Bool = true
 
     var body: some View {
-        if reduceMotion {
+        if reduceMotion || scenePhase != .active || !isActive || !motion.showsShimmer {
             Text(text).font(font).foregroundStyle(textColor)
         } else {
         Text(text)
@@ -49,7 +51,8 @@ struct LoadingGradientText: View {
                 GeometryReader { geo in
                     TimelineView(.animation) { timeline in
                         let time = timeline.date.timeIntervalSinceReferenceDate
-                        let progress = time.truncatingRemainder(dividingBy: animationSpeed) / animationSpeed
+                        let duration = motion.shimmerDuration
+                        let progress = time.truncatingRemainder(dividingBy: duration) / duration
                         let offset = CGFloat(progress) * geo.size.width * 2
 
                         LinearGradient(
@@ -67,7 +70,6 @@ struct LoadingGradientText: View {
                     }
                 }
             )
-            .frame(height: 24)
         }
     }
 }
@@ -77,6 +79,10 @@ struct ChatBubbleView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
     @Environment(\.chatExcerptSource) private var excerptSource
+    #if HANLIN_A2UI_POC
+    @Environment(\.hanlinA2UIResultProjectionSource) private var a2uiProjectionSource
+    @Environment(\.hanlinA2UIAppPresentation) private var a2uiAppPresentation
+    #endif
     @State private var isPersonallySaved = false
     let temporaryRecord: Bool
     let id: UUID
@@ -130,6 +136,8 @@ struct ChatBubbleView: View {
     @StateObject var context = RichTextContext() // 富文本
     
     @State private var isResourcesExpanded: Bool = false  // 资源文本折叠状态
+    @State private var expandedActivityIDs: Set<String> = []
+    @Environment(\.chatMotion) private var chatMotion
     @State private var isTranslateExpanded: Bool = false  // 翻译文本折叠状态
     @State private var selectedImage: UIImage? // 选中的图片
     @State private var isImageViewerPresented: Bool = false // 是否显示大图
@@ -585,15 +593,23 @@ struct ChatBubbleView: View {
     }
 
     private var embeddedInteractiveItems: [AgentTranscriptItem] {
-        guard showsAgentActivitySummary, let items = agentRun?.transcriptItems else { return [] }
-        return items.filter { item in
-            item.kind == .userVisibleToolResult
-                && (item.embeddedResultPayload != nil || item.canonicalEmbeddedPresentation != nil)
+        guard showsAgentActivitySummary, let run = agentRun else { return [] }
+        return run.transcriptItems.filter { item in
+            guard item.kind == .userVisibleToolResult else { return false }
+            if item.embeddedResultPayload != nil || item.canonicalEmbeddedPresentation != nil { return true }
+            #if HANLIN_A2UI_POC
+            return a2uiProjectionSource?.projection(runID: run.id, resultID: item.id, callID: item.callID) != nil
+            #else
+            return false
+            #endif
         }
     }
 
     private var hasAssistantRichCards: Bool {
-        (showCanvas && canvas?.content.isEmpty == false)
+        #if HANLIN_A2UI_POC
+        if orderedModelContent != nil { return true }
+        #endif
+        return (showCanvas && canvas?.content.isEmpty == false)
             || codeBlocks?.isEmpty == false
             || knowledgeCard?.isEmpty == false
             || htmlContent?.isEmpty == false
@@ -614,7 +630,7 @@ struct ChatBubbleView: View {
             VStack(alignment: .leading, spacing: 6) {
                 if showCanvas, canvas?.content.isEmpty == false {
                     canvasBubble(for: canvas)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 
                 // 文字主体
@@ -624,22 +640,22 @@ struct ChatBubbleView: View {
                 // 代码块
                 if let codes = codeBlocks, !codes.isEmpty {
                     codeBubble(for: codes)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 知识卡
                 if let cards = knowledgeCard, !cards.isEmpty {
                     knowledgeCardBubble(for: cards)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 网页
                 if let htmls = htmlContent, !htmls.isEmpty {
                     htmlWebBubble(for: htmls)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 事件
                 if let evs = events, !evs.isEmpty {
                     eventsBubble(for: evs)
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 健康卡
                 if let hcs = healthCards {
@@ -649,22 +665,34 @@ struct ChatBubbleView: View {
                             set: { _ in }
                         )
                     )
-                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .transition(chatMotion.resultTransition)
                 }
                 // 地图
                 if (locations?.isEmpty == false) || (routes?.isEmpty == false) {
                     mapBubble(for: locations ?? [], routes: routes ?? [])
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
                 }
                 // 新型交互式小程序 / NativeScript / 脚本界面内嵌宿主
                 if !embeddedInteractiveItems.isEmpty {
                     ForEach(embeddedInteractiveItems) { item in
+                        #if HANLIN_A2UI_POC
+                        AgentTranscriptToolResultView(
+                            item: item,
+                            temporaryRecord: temporaryRecord,
+                            onLaunchRequest: launchNativeApp,
+                            a2uiProjection: a2uiProjectionSource?.projection(
+                                runID: agentRun?.id, resultID: item.id, callID: item.callID
+                            )
+                        )
+                        .transition(chatMotion.resultTransition)
+                        #else
                         AgentTranscriptToolResultView(
                             item: item,
                             temporaryRecord: temporaryRecord,
                             onLaunchRequest: launchNativeApp
                         )
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .transition(chatMotion.resultTransition)
+                        #endif
                     }
                 }
                 if !nativeUIBlocks.isEmpty {
@@ -674,7 +702,7 @@ struct ChatBubbleView: View {
                         containerWidth: effectiveContainerWidth,
                         onLaunchRequest: launchNativeApp
                     )
-                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .transition(chatMotion.resultTransition)
                 }
                 // 底部按钮
                 if isLastAssistant && !isResponding {
@@ -697,7 +725,7 @@ struct ChatBubbleView: View {
                 .bold()
                 .foregroundColor(.hlBluefont)
                 .symbolEffect(.breathe.pulse.byLayer,
-                              options: .repeat(.continuous))
+                              options: .repeat(.continuous), isActive: isMotionRunActive && chatMotion.isAnimated)
                 .padding(5)
         }
     }
@@ -708,9 +736,11 @@ struct ChatBubbleView: View {
         HStack(alignment: .top) {
             if !operationalState.isEmpty {
                 VStack(alignment: .leading) {
-                    LoadingGradientText(text: operationalState)
+                    LoadingGradientText(text: operationalState, isActive: isMotionRunActive && isLastAssistant)
                         .foregroundColor(.gray)
                         .padding(5)
+                        .contentTransition(.opacity)
+                        .animation(chatMotion.updateAnimation, value: operationalState)
                     
                     if !operationalDescription.isEmpty {
                         let allLines = operationalDescription
@@ -723,7 +753,6 @@ struct ChatBubbleView: View {
                             ForEach(Array(displayLines.enumerated()),
                                     id: \.offset) { idx, line in
                                 Text(line)
-                                    .id(line)
                                     .font(.system(size:
                                                     idx == 2 ? 10 :
                                                     (idx == 1 ? 9 : 8)))
@@ -738,19 +767,9 @@ struct ChatBubbleView: View {
                                                 idx == 1 ? 0.7 : 1.0)
                                     .blur(radius: idx == 0 ? 1 : 0)
                                     .padding(.horizontal, 5)
-                                    .transition(.asymmetric(
-                                        insertion: .move(edge: .bottom)
-                                            .combined(with: .opacity),
-                                        removal: .move(edge: .top)
-                                            .combined(with: .opacity)
-                                    ))
                             }
                         }
                         .padding(.bottom, 5)
-                        .animation(.spring(response: 0.8,
-                                           dampingFraction: 0.8,
-                                           blendDuration: 0.6),
-                                   value: operationalDescription)
                     }
                 }
             } else {
@@ -758,13 +777,11 @@ struct ChatBubbleView: View {
                     .bold()
                     .foregroundColor(.hlBluefont)
                     .symbolEffect(.breathe.pulse.byLayer,
-                                  options: .repeat(.continuous))
+                                  options: .repeat(.continuous), isActive: isMotionRunActive && isLastAssistant && chatMotion.isAnimated)
             }
         }
         .padding(10)
         .cornerRadius(20)
-        .animation(.spring(response: 0.8, dampingFraction: 0.95),
-                   value: operationalDescription)
     }
     
     @State private var selectedCodeBlock: CodeBlock? = nil
@@ -1758,90 +1775,114 @@ struct ChatBubbleView: View {
     }
 
     // MARK: - AI 助手消息内容
+    #if HANLIN_A2UI_POC
+    private var orderedModelContent: HanlinChatContentProjection? {
+        a2uiAppPresentation?.projection(uiRunID: agentRun?.id, rowID: id, text: text)
+    }
+    #endif
+
+    @ViewBuilder
+    private var existingAssistantMarkdown: some View {
+        if !text.isEmpty {
+            ChatMarkdownView(text: text,
+                savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
+                saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
+            .padding(.vertical, 4)
+            .contentShape(Rectangle())
+            .contextMenu {
+                // 复制
+                Button(action: {
+                    UIPasteboard.general.string = markdownToPlainText(text)
+                }) {
+                    Label("复制内容", systemImage: "square.on.square")
+                }
+                .accessibilityIdentifier("hanlin-message-menu-copy")
+
+                // 选中文本
+                Button(action: {
+                    isTextSelectionSheetPresented = true
+                }) {
+                    Label("选择文本", systemImage: "text.redaction")
+                }
+
+                // 生成语音
+                Button(action: {
+                    tts.setContextIfNeeded(modelContext)
+                    tts.updateSelectedModel()
+                    tts.setMessageId(id)
+                    tts.toggleSpeech(text: text)
+                }) {
+                    if tts.isAsking {
+                        Label("正在请求", systemImage: "progress.indicator")
+                    } else {
+                        Label("生成语音", systemImage: "waveform")
+                    }
+                }
+
+                // 翻译/删除译文/翻译中…
+                Button(action: translateText) {
+                    if isTranslating {
+                        Label("正在翻译", systemImage: "progress.indicator")
+                    } else if translated {
+                        Label("删除译文", systemImage: "trash")
+                    } else {
+                        HStack {
+                            Image("translate")
+                                .renderingMode(.template)
+                                .font(.system(size: size_14, weight: .medium))
+                                .frame(width: size_24, height: size_24)
+                                .foregroundColor(.secondary)
+                                .clipShape(Circle())
+                            Text("翻译内容")
+                        }
+                    }
+                }
+
+                Button { savePersonalExcerpt(text) } label: {
+                    Label("Save for myself", systemImage: "bookmark")
+                }
+
+                // 存为知识
+                Button(action: {
+                    createAndSaveKnowledgeRecord(with: text)
+                }) {
+                    Label("存为知识", systemImage: "backpack")
+                }
+
+                // 删除消息
+                Button(action: {
+                    showDeleteConfirmation = true
+                }) {
+                    Label("删除消息", systemImage: "trash")
+                }
+            } preview: {
+                ChatMarkdownView(text: text)
+                    .padding()
+                    .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 16))
+                    .frame(maxWidth: 560)
+            }
+        }
+
+    }
+
+
+
     @ViewBuilder
     private func messageContent() -> some View {
         VStack(alignment: .leading, spacing: 6) {
             if showsAgentActivitySummary { activityContent() }
             
-            if !text.isEmpty {
-                ChatMarkdownView(text: text,
+            #if HANLIN_A2UI_POC
+            if let projection = orderedModelContent {
+                HanlinChatContentView(projection: projection,
                     savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
                     saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
-                .padding(.vertical, 4)
-                .contentShape(Rectangle())
-                .contextMenu {
-                    // 复制
-                    Button(action: {
-                        UIPasteboard.general.string = markdownToPlainText(text)
-                    }) {
-                        Label("复制内容", systemImage: "square.on.square")
-                    }
-                    .accessibilityIdentifier("hanlin-message-menu-copy")
-                    
-                    // 选中文本
-                    Button(action: {
-                        isTextSelectionSheetPresented = true
-                    }) {
-                        Label("选择文本", systemImage: "text.redaction")
-                    }
-                    
-                    // 生成语音
-                    Button(action: {
-                        tts.setContextIfNeeded(modelContext)
-                        tts.updateSelectedModel()
-                        tts.setMessageId(id)
-                        tts.toggleSpeech(text: text)
-                    }) {
-                        if tts.isAsking {
-                            Label("正在请求", systemImage: "progress.indicator")
-                        } else {
-                            Label("生成语音", systemImage: "waveform")
-                        }
-                    }
-                    
-                    // 翻译/删除译文/翻译中…
-                    Button(action: translateText) {
-                        if isTranslating {
-                            Label("正在翻译", systemImage: "progress.indicator")
-                        } else if translated {
-                            Label("删除译文", systemImage: "trash")
-                        } else {
-                            HStack {
-                                Image("translate")
-                                    .renderingMode(.template)
-                                    .font(.system(size: size_14, weight: .medium))
-                                    .frame(width: size_24, height: size_24)
-                                    .foregroundColor(.secondary)
-                                    .clipShape(Circle())
-                                Text("翻译内容")
-                            }
-                        }
-                    }
-                    
-                    Button { savePersonalExcerpt(text) } label: {
-                        Label("Save for myself", systemImage: "bookmark")
-                    }
-
-                    // 存为知识
-                    Button(action: {
-                        createAndSaveKnowledgeRecord(with: text)
-                    }) {
-                        Label("存为知识", systemImage: "backpack")
-                    }
-                    
-                    // 删除消息
-                    Button(action: {
-                        showDeleteConfirmation = true
-                    }) {
-                        Label("删除消息", systemImage: "trash")
-                    }
-                } preview: {
-                    ChatMarkdownView(text: text)
-                        .padding()
-                        .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 16))
-                        .frame(maxWidth: 560)
-                }
+            } else {
+                existingAssistantMarkdown
             }
+            #else
+            existingAssistantMarkdown
+            #endif
             
             audioView()
                 .transition(.opacity.combined(with: .move(edge: .top)))
@@ -2115,6 +2156,12 @@ struct ChatBubbleView: View {
             || !sanitizedReasoningDisplay.isEmpty || !resolvedToolContentForDisplay.isEmpty)
     }
 
+    private var isMotionRunActive: Bool {
+        guard isResponding else { return false }
+        guard let status = agentRun?.status else { return true }
+        return status == .pending || status == .running
+    }
+
     /// The first original bubble owns the run's activity. Streaming changes the data,
     /// never the user's disclosure state. Rich results keep their original rendering below.
     @ViewBuilder
@@ -2122,16 +2169,17 @@ struct ChatBubbleView: View {
         let timeline = agentRun.map(AgentActivityComposer.compose)
         let entries = ClassicChatAgentProjection.projectToolEntries(from: agentRun)
         if hasAgentActivity {
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 0) {
                 ToggleButton(
                     title: String(localized: "Thinking"),
                     timeText: reasoningTime ?? timeline?.summaryTitle ?? "",
                     isExpanded: $isReasoningExpanded,
-                    isActive: isResponding && isLastAssistantGroup
+                    isActive: isMotionRunActive && isLastAssistantGroup,
+                    usesAnimatedDisclosure: true
                 )
                 .accessibilityIdentifier("hanlin-reasoning-toggle")
 
-                if !isReasoningExpanded && isResponding && isLastAssistantGroup {
+                HanlinAnimatedDisclosure(isExpanded: !isReasoningExpanded && isMotionRunActive && isLastAssistantGroup) {
                     VStack(alignment: .leading, spacing: 2) {
                         ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { index, line in
                             Text(line)
@@ -2149,12 +2197,14 @@ struct ChatBubbleView: View {
                 if timeline?.status == .failed || timeline?.activities.contains(where: { $0.status == .failed }) == true {
                     Label("Some activity failed", systemImage: "exclamationmark.circle")
                         .font(.caption).foregroundStyle(.red)
+                        .padding(.top, 6)
                 } else if timeline?.status == .cancelled {
                     Label("Cancelled", systemImage: "stop.circle")
                         .font(.caption).foregroundStyle(.secondary)
+                        .padding(.top, 6)
                 }
 
-                if isReasoningExpanded {
+                HanlinAnimatedDisclosure(isExpanded: isReasoningExpanded) {
                     if let timeline, let agentRun, !timeline.activities.isEmpty {
                         ForEach(AgentActivityComposer.rounds(for: agentRun, timeline: timeline)) { round in
                             VStack(alignment: .leading, spacing: 6) {
@@ -2190,7 +2240,13 @@ struct ChatBubbleView: View {
     }
 
     private func activityDisclosure(_ activity: AgentDisplayActivity, entries: [ClassicProjectedToolCallEntry]) -> some View {
-        DisclosureGroup {
+        DisclosureGroup(isExpanded: Binding(
+            get: { expandedActivityIDs.contains(activity.id) },
+            set: { expanded in
+                if expanded { expandedActivityIDs.insert(activity.id) }
+                else { expandedActivityIDs.remove(activity.id) }
+            }
+        )) {
             VStack(alignment: .leading, spacing: 6) {
                 if let input = activity.inputPreview { Text(input).font(.caption.monospaced()).textSelection(.enabled) }
                 if let error = activity.errorDescription { Text(error).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
@@ -2207,8 +2263,11 @@ struct ChatBubbleView: View {
                 } else { Text(activity.title).font(.subheadline) }
                 Spacer()
                 Text(activity.status.rawValue.capitalized).font(.caption2).foregroundStyle(.secondary)
+                    .contentTransition(.opacity)
+                    .animation(chatMotion.updateAnimation, value: activity.status)
             }
         }
+        .disclosureGroupStyle(HanlinMotionDisclosureStyle())
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-agent-activity-\(activity.id)")
     }
@@ -2220,9 +2279,13 @@ struct ChatBubbleView: View {
             HStack(spacing: 6) {
                 switch entry.status {
                 case .running, .pending:
-                    ProgressView()
-                        .controlSize(.mini)
-                        .frame(width: 14, height: 14)
+                    if chatMotion.isAnimated {
+                        ProgressView()
+                            .controlSize(.mini)
+                            .frame(width: 14, height: 14)
+                    } else {
+                        Image(systemName: "hourglass").font(.caption)
+                    }
                 case .completed:
                     Image(systemName: "checkmark.circle.fill")
                         .font(.system(size: 13, weight: .semibold))
@@ -2255,6 +2318,8 @@ struct ChatBubbleView: View {
                 Text(entry.statusText)
                     .font(.caption2)
                     .foregroundColor(.secondary)
+                    .contentTransition(.opacity)
+                    .animation(chatMotion.updateAnimation, value: entry.statusText)
             }
 
             if let summary = entry.summary, !summary.isEmpty, summary != entry.output {
@@ -2397,22 +2462,23 @@ struct ChatBubbleView: View {
     private func resourcesView() -> some View {
         let deduplicatedResources = resolvedResourcesForDisplay
         if !deduplicatedResources.isEmpty {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 
                 ToggleButton(
                     title: String(localized: "reference_materials"),
                     timeText: String(deduplicatedResources.count),
-                    isExpanded: $isResourcesExpanded
+                    isExpanded: $isResourcesExpanded,
+                    numericCount: deduplicatedResources.count,
+                    usesAnimatedDisclosure: true
                 )
 
-                if isResourcesExpanded {
+                HanlinAnimatedDisclosure(isExpanded: isResourcesExpanded) {
                     VStack(alignment: .leading) {
                         ForEach(deduplicatedResources.indices, id: \.self) { index in
                             resourceItemView(resource: deduplicatedResources[index], index: index)
                         }
                     }
                     .padding(.horizontal, 6)
-                    .transition(.opacity.combined(with: .scale))
                     .textSelection(.enabled)
                     .padding(.bottom, 5)
                 }
@@ -2556,10 +2622,14 @@ struct ChatBubbleView: View {
         let timeText: String
         @Binding var isExpanded: Bool
         var isActive = false
+        var numericCount: Int? = nil
+        var usesAnimatedDisclosure = false
+        @Environment(\.chatMotion) private var motion
         
         var body: some View {
             Button(action: {
-                withAnimation { isExpanded.toggle() }
+                if usesAnimatedDisclosure { isExpanded.toggle() }
+                else { withAnimation { isExpanded.toggle() } }
             }) {
                 HStack {
                     if isActive {
@@ -2569,26 +2639,20 @@ struct ChatBubbleView: View {
                     }
                     Spacer()
                     if !timeText.isEmpty {
-                        ForEach([timeText], id: \.self) { text in
-                            Text(text)
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                                .animation(
-                                    .spring(response: 0.8, dampingFraction: 0.7, blendDuration: 0.5),
-                                    value: text
-                                )
-                        }
+                        Text(timeText)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .contentTransition(motion.numericCounts && numericCount != nil
+                                ? .numericText(value: Double(numericCount ?? 0)) : .opacity)
+                            .animation(motion.updateAnimation, value: timeText)
                     }
                     Image(systemName: "chevron.down")
                         .foregroundColor(Color(.systemGray))
                         .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                        .animation(motion.disclosureAnimation(expanding: isExpanded), value: isExpanded)
                 }
                 .padding(.vertical, 5)
                 .padding(.horizontal, 5)
-                .animation(
-                    .spring(response: 0.8, dampingFraction: 0.95, blendDuration: 0),
-                    value: timeText
-                )
             }
         }
     }
