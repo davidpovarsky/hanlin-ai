@@ -776,13 +776,15 @@ class AffectedValidationPlannerTests(unittest.TestCase):
         ]
         plan = self.plan_files(changed, target_group="runtime_tooling_full_acceptance")
         self.assertTrue(plan.step_outputs["run_runtime_tooling_full_acceptance"])
-        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/AgentSkillsExposureTests")
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"],
+            "AI_HLYTests/AgentSkillsExposureTests,AI_HLYTests/HanlinCapabilityObservationTests")
         self.assertTrue(plan.step_outputs["run_simulator_unit"])
         bft = plan.step_outputs["simulator_build_for_testing_args"]
         self.assertNotIn("-only-testing:AI_HLYTests ", bft)
         self.assertFalse(bft.endswith("-only-testing:AI_HLYTests"))
         self.assertIn("-only-testing:AI_HLYTests/RuntimeToolContractTests", bft)
         self.assertIn("-only-testing:AI_HLYTests/AgentSkillsExposureTests", bft)
+        self.assertEqual(bft.split().count("-only-testing:AI_HLYTests/HanlinCapabilityObservationTests"), 1)
         self.assertIn("-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests", bft)
 
     def test_explicit_component_targeted_validation_avoids_full_acceptance(self) -> None:

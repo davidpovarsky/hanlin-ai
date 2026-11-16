@@ -1500,6 +1500,14 @@ jobs:
             RuntimeDependencies.lock.json \
             2>&1 | tee "$LOG_DIR/06-cache-input-capture.log"
 
+      - name: Stage exact original A2UI plugin schemas for the device graph
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/stage_a2ui_schemas.py \
+            --source-packages-path "$CLONED_PACKAGES_PATH" \
+            --derived-data-path "$DERIVED_DATA_PATH" \
+            --evidence "$LOG_DIR/a2ui-generation"
+
       - name: Build unsigned iOS 26 app
         run: |
           set -euxo pipefail

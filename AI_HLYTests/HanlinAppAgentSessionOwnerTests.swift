@@ -59,6 +59,42 @@ private struct AppPartModel: LanguageModelV3 {
 }
 
 @Suite @MainActor struct HanlinAppAgentSessionOwnerTests {
+    @Test func originalConsentExpiresRevokesAndRejectsStaleSheetAnswers() async throws {
+        let ns = try HanlinConversationNamespace(app: "hanlin", account: "consent", workspace: "test", space: UUID().uuidString)
+        let identity = HanlinHostSession(conversationID: UUID(), context: .init(namespace: ns, sceneID: UUID(), generation: UUID()))
+        let logical = try HanlinLogicalToolID(providerInstanceID: .init(validating: "hanlin.host"), localToolID: .init(validating: "fixture"))
+        func invocation(deadline: Date) throws -> HanlinHostInvocation {
+            .init(request: .init(id: try .init(validating: UUID().uuidString.lowercased()), logicalToolID: logical,
+                aliasUsed: "fixture", descriptorRevision: try .init(1), routingTableRevision: .init(1), arguments: .object([:]),
+                origin: .assistantModel, deadline: deadline, limits: try .init()), session: identity,
+                runID: UUID(), step: 0, providerCallID: UUID().uuidString, writeGuarantee: .hostManagedMutation,
+                originalArgumentsJSON: Data("{}".utf8))
+        }
+        let consent = HanlinAppToolConsent()
+        #expect(await consent.request(try invocation(deadline: .now.addingTimeInterval(-1))) == false)
+        #expect(consent.pending == nil)
+        let expiring = try invocation(deadline: .now.addingTimeInterval(0.15))
+        let expiredTask = Task { @MainActor in await consent.request(expiring) }
+        #expect(await expiredTask.value == false)
+        #expect(consent.pending == nil)
+
+        let live = try invocation(deadline: .now.addingTimeInterval(30))
+        let cancelled = Task { @MainActor in await consent.request(live) }
+        for _ in 0..<100 where consent.pending == nil { await Task.yield() }
+        let oldID = try #require(consent.pending?.id)
+        cancelled.cancel()
+        #expect(await cancelled.value == false)
+        #expect(consent.pending == nil)
+        let replacement = Task { @MainActor in await consent.request(live) }
+        for _ in 0..<100 where consent.pending == nil { await Task.yield() }
+        let currentID = try #require(consent.pending?.id)
+        consent.answer(id: oldID, allowed: true)
+        #expect(consent.pending?.id == currentID)
+        consent.revoke()
+        #expect(await replacement.value == false)
+        #expect(consent.pending == nil)
+    }
+
     private func database() throws -> ModelContainer {
         try ModelContainer(for: ChatRecords.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
     }
