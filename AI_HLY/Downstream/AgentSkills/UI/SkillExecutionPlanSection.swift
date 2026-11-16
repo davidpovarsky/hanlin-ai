@@ -123,6 +123,7 @@ struct SkillExecutionPlanSection: View {
         if plan.action.kind == .instructions {
             return plan.action.requirementsComplete ? "PARSE_ONLY" : "UNKNOWN"
         }
+        if receiptIsCurrent, let receipt, receipt.status != .executionPass { return receipt.status.rawValue }
         return plan.isExecutable ? (plan.readiness == .verified ? "EXECUTION_PASS" : "PLAN_READY") : plan.readiness.rawValue
     }
 
@@ -135,6 +136,10 @@ struct SkillExecutionPlanSection: View {
     }
 
     private var lastTest: String {
+        if let receipt {
+            return receipt.recordedAt.formatted(date: .abbreviated, time: .shortened)
+                + (receiptIsCurrent ? "" : " · Historical")
+        }
         guard let date = plan?.lastTest?.evidence.observedAt else { return SkillL10n.string("Not recorded") }
         return date.formatted(date: .abbreviated, time: .shortened)
     }
