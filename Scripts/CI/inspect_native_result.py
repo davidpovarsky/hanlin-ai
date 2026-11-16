@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import tarfile
 
@@ -24,6 +25,17 @@ if motion:
 bundles = list(raw.rglob("Motion.xcresult" if motion else "NativeScriptProductionE2EResult.xcresult"))
 assert len(bundles) == 1
 tests = ["MotionUITests/testBRapidReversalPresetSwitchAndPersistence()", "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()"] if motion else ["HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()"]
+requested = os.environ.get("SELECTED_TESTS", "").strip()
+if requested:
+    tests = []
+    for selected in requested.split(","):
+        selected = selected.strip().removeprefix("AI_HLYUITests/").removesuffix("()")
+        assert re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*/[A-Za-z_][A-Za-z_0-9]*", selected), "Select exact original UI methods"
+        tests.append(selected + "()")
+assert 1 <= len(tests) <= 20, "Bound the original attachment inspection"
+(out / "selected-tests.json").write_text(json.dumps(tests, indent=2))
+with (out / "tests.json").open("w") as log:
+    subprocess.run(["xcrun", "xcresulttool", "get", "test-results", "tests", "--path", str(bundles[0]), "--format", "json"], stdout=log, check=True)
 for index, test in enumerate(tests):
     folder = out / f"case-{index}"
     subprocess.run(["xcrun", "xcresulttool", "export", "attachments", "--path", str(bundles[0]), "--output-path", str(folder), "--test-id", test], check=True)

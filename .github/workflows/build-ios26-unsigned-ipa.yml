@@ -189,6 +189,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
+          SELECTED_TESTS: ${{ inputs.exact_test_selector }}
         run: |
           set -euo pipefail
           python3 Scripts/CI/inspect_native_result.py
