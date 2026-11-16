@@ -12,18 +12,23 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../HanlinPlatform"),
-        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "e7bf34111e603ca977becd007dd4e5bb109af857"),
-        .package(url: "https://github.com/ThorFuchs/Swift-JSON.git", revision: "f2a0d12da7028edfbcb0cb307f19a921a3a12d03")
+        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "e7bf34111e603ca977becd007dd4e5bb109af857")
     ],
     targets: [
+        // Original pinned Swift-JSON sources, with a unique schema module in the A2UI app graph.
+        // See Vendor/Swift-JSON/PROVENANCE.json for byte identity and the resource-name adaptation.
+        .target(name: "JSON", path: "Vendor/Swift-JSON/Sources/JSON"),
+        .target(name: "JSONRegexRuntime", dependencies: ["JSON"], path: "Vendor/Swift-JSON/Sources/JSONRegexRuntime"),
+        .target(name: "HanlinExactJSONSchema", dependencies: ["JSON", "JSONRegexRuntime"],
+                path: "Vendor/Swift-JSON/Sources/JSONSchema", resources: [.copy("Resources/Draft2020-12")]),
         .target(name: "HanlinHostContracts", dependencies: [.product(name: "HanlinPlatformContracts", package: "HanlinPlatform")]),
         .target(name: "HanlinAgentCore", dependencies: [
             "HanlinHostContracts",
             .product(name: "HanlinChatCore", package: "HanlinPlatform"),
             .product(name: "AISDKProvider", package: "swift-ai-sdk"),
             .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
-            .product(name: "JSON", package: "Swift-JSON"),
-            .product(name: "JSONSchema", package: "Swift-JSON", moduleAliases: ["JSONSchema": "HanlinExactJSONSchema"])
+            "JSON",
+            "HanlinExactJSONSchema"
         ]),
         .target(name: "HanlinPersistenceAdapters", dependencies: ["HanlinHostContracts"]),
         .target(name: "HanlinSDKTestFixtures", dependencies: ["HanlinHostContracts"], path: "Tests/Fixtures"),

@@ -394,8 +394,27 @@ private struct AppPartModel: LanguageModelV3 {
         }
     }
 
+    #if HANLIN_A2UI_POC
+    @Test func officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON() async throws {
+        let fixture = URL(fileURLWithPath: #filePath).deletingLastPathComponent().appending(path: "A2UIFixtures/form.jsonl")
+        let messages = try String(contentsOf: fixture, encoding: .utf8).split(whereSeparator: \.isNewline).map(String.init)
+        let arguments = try JSONSerialization.data(withJSONObject: ["messages": messages])
+        let result = await PresentA2UITool().execute(argumentsJSON: String(decoding: arguments, as: UTF8.self),
+            context: .init(localeIdentifier: "he"))
+        #expect(result.outcome == .succeeded)
+        let original = try #require(result.embeddedPayload)
+        #expect(original.officialA2UIMessages == messages.map { Data($0.utf8) })
+        let reopened = try JSONDecoder().decode(HanlinEmbeddedResultPayload.self, from: JSONEncoder().encode(original))
+        #expect(reopened.officialA2UIMessages == original.officialA2UIMessages)
+        #expect(HanlinEmbeddedResultPayload(payload: .string(messages.joined())).officialA2UIMessages == nil)
+        let rejected = await PresentA2UITool().execute(argumentsJSON: #"{"messages":["{\"untrusted\":true}"]}"#,
+            context: .init(localeIdentifier: "he"))
+        #expect(rejected.outcome == .invalidArguments && rejected.embeddedPayload == nil)
+    }
+    #endif
+
     @Test func appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome() async throws {
-        for nativeOutcome in [NativeToolExecutionOutcome.succeeded, .rejectedByCapability, .failed] {
+        for (nativeOutcome, approved) in [(NativeToolExecutionOutcome.succeeded, true), (.rejectedByCapability, true), (.failed, true), (.succeeded, false)] {
             let container = try database(), context = container.mainContext
             let row = ChatRecords(name: "Host", type: "chat")
             context.insert(row); try context.save()
@@ -419,7 +438,7 @@ private struct AppPartModel: LanguageModelV3 {
                 callbacks: .init(onAgentEvent: { _ in callbackCount += 1 }))
             let host = HanlinAppHostIntegration(identity: identity, store: store, isCurrent: { true })
             host.toolAdapter = adapter
-            host.confirmInvocation = { _ in true }
+            host.confirmInvocation = { _ in approved }
             let catalog = try await host.catalog(for: identity.context)
             let tool = try #require(catalog.tools.first(where: { $0.route.alias == alias }))
             #expect(tool.descriptor.risk == .read) // Current shadow metadata is not a no-write guarantee.
@@ -430,10 +449,11 @@ private struct AppPartModel: LanguageModelV3 {
             let countBeforeReplay = callbackCount
             let replay = try await dispatcher.dispatchEvent(alias: alias, argumentsJSON: "{}", providerCallID: "original",
                 runID: run, step: 2, session: identity, catalog: catalog, limits: .init())
-            #expect(calls == 1 && callbackCount == countBeforeReplay && callbackCount > 0)
+            #expect(calls == (approved ? 1 : 0) && callbackCount == countBeforeReplay)
+            #expect(approved ? callbackCount > 0 : callbackCount == 0)
             #expect(first.resultID == replay.resultID && first.call == replay.call)
-            #expect(adapter.completedCallIDs.contains("original"))
-            let expected: HanlinHostEffectState = nativeOutcome == .succeeded ? .confirmedCommitted
+            #expect(adapter.completedCallIDs.contains("original") == approved)
+            let expected: HanlinHostEffectState = !approved ? .notDispatched : nativeOutcome == .succeeded ? .confirmedCommitted
                 : nativeOutcome == .rejectedByCapability ? .confirmedNoEffect : .uncertain
             #expect(first.result.effectState == expected)
             #expect(first.call.session == identity && first.call.step == 2)

@@ -168,7 +168,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                 requiredCapability = "runtime.shell"
             default:
                 return RuntimeToolSupport.failure(
-                    HanlinHostServiceError.invalidRequest("Unsupported script file extension '.\(ext)'. Only .py, .js, and .ts are executable."),
+                    HanlinHostServiceError.invalidRequest("Unsupported script file extension '.\(ext)'. Supported resources are .py, .js, .mjs, .ts, .sh and .bash."),
                     title: "Unsupported Runtime"
                 )
             }
@@ -263,7 +263,14 @@ struct ExecuteSkillResourceTool: NativeTool {
                error is CancellationError || Task.isCancelled {
                 let result = await Task { @MainActor in
                     await AppRuntimeCore.shared.node.cancelExecution(id: observedJob.executionID)
-                    return try? await AppRuntimeCore.shared.jobs.snapshot(id: observedJob.executionID, kind: kind)?.result
+                    // Cancellation acknowledgement can precede the terminal journal write.
+                    // Observe only this exact existing job; never replay source or invent output.
+                    for _ in 0..<30 {
+                        if let snapshot = try? await AppRuntimeCore.shared.node.existingExecution(id: observedJob.executionID),
+                           snapshot.state.isTerminal, let result = snapshot.result { return result }
+                        try? await Task.sleep(for: .milliseconds(100))
+                    }
+                    return nil as RuntimeExecutionResult?
                 }.value
                 if let result {
                     try? SkillRuntimeService.shared.record(result, plan: plan, skillID: id, path: path, store: store ?? .shared)

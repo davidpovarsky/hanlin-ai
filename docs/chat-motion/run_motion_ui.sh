@@ -14,23 +14,28 @@ retain(){
 }
 trap retain EXIT
 git rev-parse HEAD > "$evidence/source-sha.txt"
-selected_xcode="$(python3 - <<'PY'
-import glob,re,shutil
-assert shutil.disk_usage('.').free>=10*1024**3
-p=[x for x in glob.glob('/Applications/Xcode*.app') if re.search(r'/Xcode[_-]27(?:[._][0-9]+)*\.app$',x)]
-p.sort(key=lambda x:tuple(map(int,re.findall(r'[0-9]+',x))));print(p[-1] if p else '')
-PY
-)"
-[[ -n "$selected_xcode" ]] || { echo 'INFRA_ERROR no stable Xcode27';exit 2; }
+selected_xcode="$(python3 Scripts/CI/select_stable_xcode.py)"
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 if ! command -v xcodegen >/dev/null; then brew install xcodegen > "$evidence/xcodegen-install.log" 2>&1; fi
 { xcodebuild -version;xcrun swift --version;xcodebuild -showsdks;sw_vers;uname -m;xcodegen --version; } > "$evidence/preflight.txt"
 xcrun simctl list devices available -j > "$evidence/devices.json"
 xcrun simctl list runtimes -j > "$evidence/runtimes.json"
-device="$(python3 - "$evidence/devices.json" <<'PY'
-import json,sys
-d=json.load(open(sys.argv[1]));pairs=[(runtime,x) for runtime,devices in sorted(d['devices'].items()) if 'iOS-27' in runtime for x in devices if 'iPad' in x['name'] and x['isAvailable']]
-assert pairs,'INFRA_ERROR no available iPad27 simulator';print(pairs[0][1]['udid'])
+device="$(python3 - "$evidence/devices.json" "$evidence/runtimes.json" "$evidence" <<'PY'
+import json,subprocess,sys
+from pathlib import Path
+d=json.load(open(sys.argv[1]));r=json.load(open(sys.argv[2]));sdk=subprocess.check_output(['xcrun','--sdk','iphonesimulator','--show-sdk-version'],text=True).strip()
+valid=[]
+for runtime in r['runtimes']:
+    if runtime.get('platform')!='iOS' or runtime.get('version')!=sdk or not runtime.get('isAvailable'):continue
+    root=Path(runtime['runtimeRoot']);info=Path(runtime['bundlePath'])/'Contents/Info.plist'
+    if root.is_dir() and info.is_file():valid.append(runtime)
+assert len(valid)==1,'INFRA_ERROR: exact stable SDK runtime files are not installed'
+runtime=valid[0];pairs=[x for x in d['devices'].get(runtime['identifier'],[]) if 'iPad' in x['name'] and x['isAvailable']]
+assert pairs,'INFRA_ERROR: no iPad for verified runtime';device=pairs[0]
+Path(sys.argv[3],'verified-environment.json').write_text(json.dumps({'sdk':sdk,'runtime':runtime,'device':device},indent=2))
+if device['state']!='Booted':subprocess.run(['xcrun','simctl','boot',device['udid']],check=True,timeout=15)
+subprocess.run(['xcrun','simctl','bootstatus',device['udid'],'-b'],stdout=sys.stderr,stderr=sys.stderr,check=True,timeout=180)
+print(device['udid'])
 PY
 )"
 echo "$device" > "$evidence/selected-device.txt"

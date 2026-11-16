@@ -2,6 +2,7 @@
 set -euo pipefail
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
+python3 Scripts/CI/verify_exact_json_vendor.py
 evidence="$root/build/agent-sdk-validation-evidence"
 mkdir -p "$evidence"
 started=$SECONDS
@@ -51,8 +52,7 @@ if os.environ.get('HANLIN_SDK_WRITER_ONLY')=='1':
     assert len(expected)==1
 (evidence/'expected-tests.json').write_text(json.dumps(expected,indent=2))
 PY_SOURCE
-selected_xcode="$(python3 -c 'import glob,re; p=[p for p in glob.glob("/Applications/Xcode*.app") if re.search(r"/Xcode[_-]27(?:[._][0-9]+)*\.app$",p)]; p.sort(key=lambda x:tuple(map(int,re.findall(r"[0-9]+",x)))); print(p[-1] if p else "")')"
-test -n "$selected_xcode"
+selected_xcode="$(python3 Scripts/CI/select_stable_xcode.py)"
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 { xcodebuild -version; xcrun swift --version; xcrun --sdk macosx --show-sdk-version; xcrun --sdk iphonesimulator --show-sdk-version; uname -m; sw_vers; } > "$evidence/toolchain.txt"
 sdk="$scratch/Packages/HanlinAgentSDK"
@@ -67,13 +67,15 @@ for p in scratch.rglob('Package.resolved'):
     records.append({'path':str(p.relative_to(scratch)),'raw_file':name,'sha256':hashlib.sha256(raw).hexdigest(),'resolved':json.loads(raw)})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))
 pins=json.loads((scratch/'Packages/HanlinAgentSDK/Package.resolved').read_text())['pins']
-assert next(p for p in pins if p['identity']=='swift-json')['state']['revision']=='f2a0d12da7028edfbcb0cb307f19a921a3a12d03'
 assert next(p for p in pins if p['identity']=='swift-ai-sdk')['state']['revision']=='e7bf34111e603ca977becd007dd4e5bb109af857'
-checkout=scratch/'Packages/HanlinAgentSDK/.build/checkouts/Swift-JSON'
-if not checkout.exists():checkout=scratch/'Packages/HanlinAgentSDK/.build/checkouts/swift-json'
-sha=subprocess.check_output(['git','-C',str(checkout),'rev-parse','HEAD'],text=True).strip();assert sha=='f2a0d12da7028edfbcb0cb307f19a921a3a12d03'
-(evidence/'validator-source.tar').write_bytes(subprocess.check_output(['git','-C',str(checkout),'archive','HEAD']))
-(evidence/'validator-source-commit.txt').write_text(sha+'\n')
+vendor=scratch/'Packages/HanlinAgentSDK/Vendor/Swift-JSON'
+provenance=json.loads((vendor/'PROVENANCE.json').read_text())
+assert provenance['revision']=='f2a0d12da7028edfbcb0cb307f19a921a3a12d03'
+for name,record in provenance['files'].items():
+    assert hashlib.sha256((vendor/name).read_bytes()).hexdigest()==record['local_sha256'],name
+    assert record['local_sha256']==record['upstream_sha256'] or name in provenance['adaptations'],name
+(evidence/'validator-provenance.json').write_text(json.dumps(provenance,indent=2))
+(evidence/'validator-source-commit.txt').write_text(provenance['revision']+'\n')
 PY_DEPS
 (cd "$sdk" && xcodebuild -list -json) > "$evidence/schemes.json"
 scheme="$(python3 - "$evidence/schemes.json" <<'PY_SCHEME'

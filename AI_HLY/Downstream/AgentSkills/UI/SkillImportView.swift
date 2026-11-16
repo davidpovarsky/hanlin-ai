@@ -418,9 +418,11 @@ struct SkillImportView: View {
                     presentation.inspectionFailed(attempt: attempt, message: "Failed to create test fixture zip.")
                     return
                 }
+                let requestedID = ProcessInfo.processInfo.environment["HANLIN_SKILL_ZIP_FIXTURE_ID"]
+                let fixtureID = requestedID.flatMap { $0.hasPrefix("ui-exec-") && $0.allSatisfy({ $0.isASCII && ($0.isLetter || $0.isNumber || $0 == "-") }) ? $0 : nil } ?? "ui-import-skill"
                 let skillMD = """
                 ---
-                name: ui-import-skill
+                name: \(fixtureID)
                 description: Deterministic UI imported skill for acceptance testing.
                 ---
 
@@ -440,6 +442,12 @@ struct SkillImportView: View {
                     scriptData.subdata(in: position..<(position + size))
                 })
 
+                if fixtureID != "ui-import-skill" {
+                    let slow = Data("console.log('STARTED_\(fixtureID)'); await new Promise(resolve=>setTimeout(resolve,30000)); console.log('UNEXPECTED_LATE');".utf8)
+                    try archive.addEntry(with: "scripts/slow.mjs", type: .file, uncompressedSize: UInt32(slow.count)) { position, size in
+                        slow.subdata(in: position..<(position + size))
+                    }
+                }
                 let staged = try await SkillImporter.shared.stageAndInspectInBackground(fileURL: tempZip)
                 try presentPreview(staged, attempt: attempt)
             } catch is CancellationError {

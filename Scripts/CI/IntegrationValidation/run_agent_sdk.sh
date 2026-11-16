@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+python3 "$(git rev-parse --show-toplevel)/Scripts/CI/verify_exact_json_vendor.py"
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
 source_sha="$(git rev-parse HEAD)"
@@ -30,8 +31,7 @@ from pathlib import Path
 root=Path(sys.argv[1]);paths=subprocess.check_output(['git','-C',str(root),'ls-files','Package.swift','Sources','Tests'],text=True).splitlines()
 print(json.dumps({p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in paths},indent=2))
 PY
-selected_xcode="$(python3 -c 'import glob,re; p=[p for p in glob.glob("/Applications/Xcode*.app") if re.search(r"/Xcode[_-]27(?:[._][0-9]+)*\.app$",p)]; p.sort(key=lambda x:tuple(map(int,re.findall(r"[0-9]+",x)))); print(p[-1] if p else "")')"
-test -n "$selected_xcode"
+selected_xcode="$(python3 Scripts/CI/select_stable_xcode.py)"
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 xcodebuild -version > "$evidence/xcode.txt"
 xcrun swift --version > "$evidence/swift.txt"

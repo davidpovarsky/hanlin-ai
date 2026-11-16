@@ -1903,21 +1903,8 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR" build
-          selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) ! -name '*_beta*' -print \
-            | sort -V \
-            | tail -1)"
-          if [ -z "$selected_xcode" ]; then
-            selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \
-              | sort -V \
-              | tail -1)"
-          fi
-          if [ -z "$selected_xcode" ]; then
-            dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"
-            selected_xcode="$(dirname "$(dirname "$dev_dir")")"
-          fi
-          if [ -d "$selected_xcode/Contents/Developer" ]; then
-            sudo xcode-select -s "$selected_xcode/Contents/Developer"
-          fi
+          selected_xcode="$(python3 Scripts/CI/select_stable_xcode.py)"
+          sudo xcode-select -s "$selected_xcode/Contents/Developer"
           {
             sw_vers
             xcode-select -p

@@ -29,11 +29,13 @@ struct SkillExecutionPlanSection: View {
                 Text("Instructions").tag("")
                 ForEach(scripts) { Text($0.relativePath).tag($0.relativePath) }
             }
+            .pickerStyle(.menu)
             .accessibilityIdentifier("hanlin-skill-action-picker")
             if !path.isEmpty {
                 Picker("Engine", selection: $engine) {
                     ForEach(RuntimeKind.allCases) { Text($0.rawValue).tag($0) }
                 }
+                .pickerStyle(.menu)
                 .accessibilityIdentifier("hanlin-skill-engine-picker")
             }
             LabeledContent(SkillL10n.string("Status"), value: status)
@@ -55,8 +57,9 @@ struct SkillExecutionPlanSection: View {
                 .accessibilityValue(lastTest)
                 .accessibilityIdentifier("hanlin-skill-detail-compatibility-last-tested")
             if let receipt {
-                Text("\(receiptIsCurrent ? receipt.status.rawValue : "Historical result — source or engine changed") · \(receipt.result.executionID.uuidString.prefix(8))")
+                Text("\(receiptIsCurrent ? receipt.status.rawValue : "Historical \(receipt.status.rawValue) — source or engine changed") · \(receipt.result.executionID.uuidString.prefix(8))")
                     .font(.caption).textSelection(.enabled)
+                    .accessibilityIdentifier("hanlin-skill-execution-receipt")
             }
             if let error { Text(error).foregroundStyle(.red).textSelection(.enabled) }
             if !path.isEmpty {
@@ -143,9 +146,17 @@ struct SkillExecutionPlanSection: View {
                     session.recordSkillLoaded(id: skillID, instructionText: instructions)
                     let args = try JSONSerialization.data(withJSONObject: ["skill_id": skillID.rawValue,
                         "relative_path": selectedPath, "engine": selectedEngine.rawValue])
-                    let result = await SkillRuntimeAuthorization.$approved.withValue(true) {
-                        await ExecuteSkillResourceTool().execute(argumentsJSON: String(decoding: args, as: UTF8.self),
-                            context: .init(localeIdentifier: Locale.current.identifier, capabilitySession: session))
+                    let result = await RuntimeJobProgress.$reporter.withValue({ job in
+                        guard revision == token, job.stdoutBytes > 0 else { return }
+                        let file = AppRuntimeCore.shared.jobs.directory(id: job.executionID, kind: selectedEngine).appending(path: "stdout.log")
+                        if let bytes = try? Data(contentsOf: file, options: .mappedIfSafe), bytes.count <= 1_048_576 {
+                            output = String(decoding: bytes, as: UTF8.self)
+                        }
+                    }) {
+                        await SkillRuntimeAuthorization.$approved.withValue(true) {
+                            await ExecuteSkillResourceTool().execute(argumentsJSON: String(decoding: args, as: UTF8.self),
+                                context: .init(localeIdentifier: Locale.current.identifier, capabilitySession: session))
+                        }
                     }
                     guard revision == token else { return }
                     output = result.userText ?? result.modelText
@@ -153,7 +164,12 @@ struct SkillExecutionPlanSection: View {
                     _ = try await SkillRuntimeService.shared.recheck(skillID: skillID, path: selectedPath,
                         engine: SkillRuntimeRequirements.engine(selectedEngine))
                 }
-                guard !Task.isCancelled, revision == token else { return }
+                guard revision == token else { return }
+                receipt = try SkillRuntimeService.shared.receipt(skillID: skillID, path: selectedPath)
+                if Task.isCancelled {
+                    if let receipt { output = receipt.result.stdout + receipt.result.stderr }
+                    return
+                }
                 plan = try await SkillRuntimeService.shared.plan(skillID: skillID, path: selectedPath,
                     engine: SkillRuntimeRequirements.engine(selectedEngine))
                 receipt = try SkillRuntimeService.shared.receipt(skillID: skillID, path: selectedPath)

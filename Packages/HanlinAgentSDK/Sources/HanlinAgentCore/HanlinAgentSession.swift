@@ -251,6 +251,31 @@ public final class HanlinAgentSession {
         interactionOrigins.insert(origin)
     }
 
+    /// The original Host receipt must already have passed the ordered durable writer.
+    /// Called only by the trusted presentation adapter after official tool-Surface admission.
+    /// Historical metadata, forged outcomes and another invocation cannot authorize a control.
+    public func admitHostResultInteraction(_ event: HanlinHostResultEvent, messageID: UUID) throws -> HanlinHostInteractionOrigin {
+        guard !invalidated, event.call.session == identity,
+              event.result.context == identity.context,
+              event.result.effectState == .confirmedCommitted || event.result.effectState == .confirmedNoEffect,
+              case .completed = event.result.result.outcome,
+              record?.entries.contains(where: {
+                  if case .hostResultIdentity(let id, let call) = $0.payload { return id == event.resultID && call == event.call }
+                  return false
+              }) == true,
+              record?.entries.contains(where: {
+                  if case .toolResult(let callID, let result) = $0.payload {
+                      return $0.runID == event.call.runID && callID == event.call.providerCallID && result == event.result.metadataReceipt()
+                  }
+                  return false
+              }) == true else { throw HanlinHostError.staleContext }
+        let origin = HanlinHostInteractionOrigin(session: identity, runID: event.call.runID,
+            messageID: messageID, partID: event.resultID)
+        observedInteractionOrigins.insert(origin)
+        interactionOrigins.insert(origin)
+        return origin
+    }
+
     /// Successful producer EOF keeps admitted controls live. A user action obtains current host
     /// admission and starts a NEW turn through the same stream/engine, retaining original provenance.
     public func continueInteraction(_ request: HanlinHostInteractionRequest, messages: [HanlinAISDKMessage],

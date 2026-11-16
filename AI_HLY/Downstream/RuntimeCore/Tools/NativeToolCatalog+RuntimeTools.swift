@@ -10,6 +10,9 @@ extension NativeToolCatalog {
         register(ManageRuntimePackagesTool())
         register(ManageMCPServersTool())
         register(ExecuteSkillResourceTool())
+        #if HANLIN_A2UI_POC
+        register(PresentA2UITool())
+        #endif
         register(TorahOCRExcerptTool())
         register(TorahIdentifyExcerptTool())
         register(TorahSearchTextTool())

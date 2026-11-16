@@ -185,9 +185,10 @@ final class HanlinA2UIResultStore {
     private var isDiscarded = false
 
     func register(runID: UUID, resultID: UUID, callID: String?,
+                  presentation: HanlinA2UISession.Presentation = .live,
                   sink: any HanlinA2UIResultEventSink) -> HanlinA2UIResultProjection? {
         guard let callID, !callID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
-        return register(runID: runID, resultID: resultID, origin: .tool(callID: callID), sink: sink)
+        return register(runID: runID, resultID: resultID, origin: .tool(callID: callID), presentation: presentation, sink: sink)
     }
 
     /// Model content has a message/part identity, never a fabricated provider tool call.

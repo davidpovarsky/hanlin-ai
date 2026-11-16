@@ -366,6 +366,83 @@ final class HanlinSkillCenterUITests: XCTestCase {
         assertUnknownCompatibility(scope: "detail", expectedStatus: "PARSE_ONLY")
     }
 
+    func testImportedSkillExecutionRequiresApprovalAndPersistsAfterColdLaunch() throws {
+        let fixtureID = "ui-exec-" + UUID().uuidString.lowercased()
+        app.terminate()
+        app.launchEnvironment["HANLIN_SKILL_ZIP_FIXTURE_ID"] = fixtureID
+        app.launch()
+        openSkillCenter()
+        tapElement(app.buttons["hanlin-skill-center-import-button"].firstMatch)
+        tapElement(app.buttons["hanlin-skill-import-tab-zip"].firstMatch)
+        tapElement(app.buttons["hanlin-skill-import-fixture-button"].firstMatch)
+        let install = app.buttons["hanlin-skill-import-install-button"].firstMatch
+        XCTAssertTrue(install.waitForExistence(timeout: 10)); tapElement(install)
+        let row = app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(fixtureID)"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 10)); tapElement(row)
+        let action = app.buttons["hanlin-skill-action-picker"].firstMatch
+        XCTAssertTrue(action.waitForExistence(timeout: 10)); tapElement(action)
+        tapElement(app.buttons["scripts/run.py"].firstMatch)
+        let run = app.buttons["hanlin-skill-run"].firstMatch
+        for _ in 0..<5 where !run.isHittable { app.swipeUp() }
+        XCTAssertTrue(run.waitForExistence(timeout: 5)); tapElement(run)
+        let cancel = app.buttons["Cancel"].firstMatch
+        XCTAssertTrue(cancel.waitForExistence(timeout: 5)); tapElement(cancel)
+        XCTAssertFalse(app.staticTexts["hanlin-skill-execution-output"].exists)
+        tapElement(run)
+        let allow = app.buttons["Allow once"].firstMatch
+        XCTAssertTrue(allow.waitForExistence(timeout: 5)); tapElement(allow)
+        let status = app.descendants(matching: .any)["hanlin-skill-detail-compatibility-status"].firstMatch
+        let passed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == 'EXECUTION_PASS'"), object: status)
+        XCTAssertEqual(XCTWaiter.wait(for: [passed], timeout: 90), .completed)
+        let output = app.staticTexts["hanlin-skill-execution-output"].firstMatch
+        XCTAssertTrue(output.label.contains("test script"))
+        let receipt = app.staticTexts["hanlin-skill-execution-receipt"].firstMatch
+        XCTAssertTrue(receipt.exists)
+        let receiptID = String(receipt.label.suffix(8))
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "skill-real-python-execution"; attachment.lifetime = .keepAlways; add(attachment)
+        app.terminate(); app.launch()
+        openSkillCenter()
+        XCTAssertTrue(row.waitForExistence(timeout: 10)); tapElement(row)
+        tapElement(action); tapElement(app.buttons["scripts/run.py"].firstMatch)
+        XCTAssertTrue(receipt.waitForExistence(timeout: 10))
+        XCTAssertTrue(receipt.label.hasSuffix(receiptID), "Cold launch must load the original execution receipt")
+        XCTAssertTrue(output.waitForExistence(timeout: 5)); XCTAssertTrue(output.label.contains("test script"))
+    }
+
+    func testCancelActuallyRunningImportedNodeSkillRetainsPartialOutput() throws {
+        let fixtureID = "ui-exec-" + UUID().uuidString.lowercased()
+        app.terminate(); app.launchEnvironment["HANLIN_SKILL_ZIP_FIXTURE_ID"] = fixtureID; app.launch()
+        openSkillCenter()
+        tapElement(app.buttons["hanlin-skill-center-import-button"].firstMatch)
+        tapElement(app.buttons["hanlin-skill-import-tab-zip"].firstMatch)
+        tapElement(app.buttons["hanlin-skill-import-fixture-button"].firstMatch)
+        let install = app.buttons["hanlin-skill-import-install-button"].firstMatch
+        XCTAssertTrue(install.waitForExistence(timeout: 10)); tapElement(install)
+        let row = app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(fixtureID)"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 10)); tapElement(row)
+        let action = app.buttons["hanlin-skill-action-picker"].firstMatch
+        XCTAssertTrue(action.waitForExistence(timeout: 10)); tapElement(action)
+        tapElement(app.buttons["scripts/slow.mjs"].firstMatch)
+        let run = app.buttons["hanlin-skill-run"].firstMatch
+        for _ in 0..<5 where !run.isHittable { app.swipeUp() }
+        tapElement(run)
+        let allow = app.buttons["Allow once"].firstMatch
+        XCTAssertTrue(allow.waitForExistence(timeout: 5)); tapElement(allow)
+        let output = app.staticTexts["hanlin-skill-execution-output"].firstMatch
+        let started = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label CONTAINS %@", "STARTED_" + fixtureID), object: output)
+        XCTAssertEqual(XCTWaiter.wait(for: [started], timeout: 90), .completed)
+        let cancel = app.buttons["hanlin-skill-cancel-execution"].firstMatch
+        XCTAssertTrue(cancel.isEnabled); tapElement(cancel)
+        let receipt = app.staticTexts["hanlin-skill-execution-receipt"].firstMatch
+        let cancelled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label CONTAINS 'CANCELLED'"), object: receipt)
+        XCTAssertEqual(XCTWaiter.wait(for: [cancelled], timeout: 15), .completed)
+        XCTAssertTrue(output.label.contains("STARTED_" + fixtureID))
+        XCTAssertFalse(output.label.contains("UNEXPECTED_LATE"))
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "skill-cancel-real-node-job-partial-output"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     func testImportInstructionOnlyMarkdownShowsParseOnlyWithoutExecution() throws {
         openSkillCenter()
         tapElement(app.buttons["hanlin-skill-center-import-button"].firstMatch)

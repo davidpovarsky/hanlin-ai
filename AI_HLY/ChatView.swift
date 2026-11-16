@@ -492,6 +492,7 @@ struct ChatView: View {
         }
         #if HANLIN_A2UI_POC
         .environment(\.hanlinA2UIAppPresentation, a2uiPresentation)
+        .environment(\.hanlinA2UIResultProjectionSource, a2uiPresentation?.toolSource)
         #if DEBUG && targetEnvironment(simulator)
         .safeAreaInset(edge: .top) {
             if HanlinNativeA2UIAcceptanceProvider.isEnabled {
@@ -512,6 +513,9 @@ struct ChatView: View {
                 try await agentSessionOwner.restoreHistory(conversation: originalConversation,
                     conversationID: originalID, sceneID: originalScene,
                     temporary: originalTemporary, modelContext: context)
+                for run in chatTemps.compactMap(\.agentRun) where run.id != activeAgentRun?.id {
+                    a2uiPresentation?.synchronizeTools(run, isLive: false)
+                }
             } catch is CancellationError {
                 return
             } catch let error as HanlinHostError where error == .staleContext || error == .cancelled {
@@ -1602,6 +1606,9 @@ struct ChatView: View {
         )
         var agentProjection = ClassicChatAgentProjection(runID: agentCoordinator.runID)
         groupBeginMessage.agentRun = agentCoordinator.run
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
         activeAgentCoordinator = agentCoordinator
         activeAgentRun = agentCoordinator.run
         activeAgentMessage = groupBeginMessage
@@ -1673,6 +1680,9 @@ struct ChatView: View {
                         let agentEvents = agentProjection.deduplicateEvents(rawAgentEvents)
                         agentCoordinator.consume(agentEvents)
                         activeAgentRun = agentCoordinator.run
+                        #if HANLIN_A2UI_POC
+                        a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                        #endif
                         
                         var updated = false
                         
@@ -2003,6 +2013,9 @@ struct ChatView: View {
                             agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
                             Task { await requestAPIManager.completeAgentDiagnostics(status: "failed") }
                             groupBeginMessage.agentRun = agentCoordinator.run
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
                             operationalState = ""
                             operationalDescription = ""
                             assistantMessage.text = currentLanguage.hasPrefix("zh") ? "⚠️ 生成内容为空，请重新尝试！" : "⚠️ Generated content is empty, please try again!"
@@ -2015,6 +2028,9 @@ struct ChatView: View {
                             agentCoordinator.complete()
                             Task { await requestAPIManager.completeAgentDiagnostics(status: "completed") }
                             groupBeginMessage.agentRun = agentCoordinator.run
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
                             
                             // 一切正常，进行数据库保存操作
                             do {
@@ -2090,6 +2106,9 @@ struct ChatView: View {
                     agentCoordinator.fail(error)
                     Task { await requestAPIManager.completeAgentDiagnostics(status: "failed", error: error) }
                     groupBeginMessage.agentRun = agentCoordinator.run
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
                     context.insert(groupBeginMessage)
                     try? context.save()
                     activeAgentRun = agentCoordinator.run
@@ -2131,6 +2150,9 @@ struct ChatView: View {
         if let coordinator = activeAgentCoordinator {
             activeAgentRun = coordinator.run
             activeAgentMessage?.agentRun = coordinator.run
+            #if HANLIN_A2UI_POC
+            a2uiPresentation?.synchronizeTools(coordinator.run, isLive: true)
+            #endif
             if let activeAgentMessage {
                 let hasText = !(activeAgentMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
                 let hasReasoning = !(activeAgentMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)

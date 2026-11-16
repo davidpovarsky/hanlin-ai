@@ -808,6 +808,13 @@ private struct ControlledTextModel: LanguageModelV3 {
         #expect(host.externalEffects == 1 && host.rejectedForgedIdentity)
         let event = try #require(callback)
         #expect(event.resultID == host.reservedResultID && event.call.session == identity)
+        let messageID = UUID()
+        let origin = try session.admitHostResultInteraction(event, messageID: messageID)
+        #expect(origin.session == identity && origin.runID == event.call.runID && origin.partID == event.resultID)
+        let forged = try HanlinHostResultEvent(resultID: UUID(), call: event.call, result: event.result)
+        do { _ = try session.admitHostResultInteraction(forged, messageID: messageID); Issue.record("Forged receipt authorized a control") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+
         let loaded = try await store.load(identity.conversationID, namespace: ns)
         let record = try #require(loaded)
         #expect(record.entries.contains { if case .hostResultIdentity(let id, let call) = $0.payload { return id == event.resultID && call == event.call }; return false })
