@@ -84,6 +84,10 @@ public enum HanlinHostNavigationResult: Codable, Hashable, Sendable {
     public var presentationAcknowledged: Bool { if case .presented = self { return true }; return false }
 }
 
+/// Keep the callback's concurrency convention defined by this SDK module. Consumers
+/// may enable NonisolatedNonsendingByDefault without changing the protocol witness type.
+public typealias HanlinHostProgressHandler = @Sendable (HanlinToolProgressEvent) async -> Void
+
 /// The host is the live authority. No SDK grant store or implicit always-allow adapter.
 public protocol HanlinHostIntegration: Sendable {
     var apiVersion: HanlinAPIVersion { get }
@@ -93,7 +97,7 @@ public protocol HanlinHostIntegration: Sendable {
     /// at the last available dispatch boundary. Conditional mutations require native atomic support.
     /// After dispatch, record/return uncertain outcomes rather than asserting rollback on cancellation.
     func execute(_ invocation: HanlinHostInvocation,
-                 progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async throws -> HanlinHostExecutionResult
+                 progress: @escaping HanlinHostProgressHandler) async throws -> HanlinHostExecutionResult
     func cancel(_ invocation: HanlinToolInvocationID) async
     /// A queued return is NOT successful presentation; await an exact scene/UI acknowledgement.
     func open(_ destination: HanlinHostDestination) async throws -> HanlinHostNavigationResult

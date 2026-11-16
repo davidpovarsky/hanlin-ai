@@ -12,6 +12,21 @@ spec.loader.exec_module(module)
 
 
 class DiagnosticProvenanceTests(unittest.TestCase):
+    def test_raw_resolution_is_exact_and_never_exports_authenticated_locations(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            lock, output = root / "Package.resolved", root / "evidence.resolved"
+            raw = b'{"pins":[{"identity":"sdk","location":"https://github.com/owner/sdk.git","state":{"revision":"abc"}}]}'
+            lock.write_bytes(raw)
+            module.retain_safe_lock(lock, output)
+            self.assertEqual(output.read_bytes(), raw)
+            for unsafe in ["https://secret@github.com/owner/sdk", "https://github.com/owner/sdk?token=secret", "file:///private/sdk"]:
+                output.unlink(missing_ok=True)
+                lock.write_text(json.dumps({"pins": [{"location": unsafe}]}))
+                with self.assertRaisesRegex(ValueError, "non-public location"):
+                    module.retain_safe_lock(lock, output)
+                self.assertFalse(output.exists())
+
     def test_exact_checkout_pins_without_authenticated_locations_and_stable_mtime(self):
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)

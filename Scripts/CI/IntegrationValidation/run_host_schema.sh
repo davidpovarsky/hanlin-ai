@@ -34,7 +34,7 @@ scratch,evidence=map(Path,sys.argv[1:])
 paths=subprocess.check_output(['git','ls-files','Packages/HanlinAgentSDK','Packages/HanlinPlatform'],text=True).splitlines()
 (evidence/'tested-source-sha256.json').write_text(json.dumps({p:hashlib.sha256((scratch/p).read_bytes()).hexdigest() for p in paths},indent=2))
 expected=[]
-for rel,suite in [('HanlinAgentCoreTests/HostSchemaValidationTests.swift','HostSchemaValidationTests'),('HanlinAgentCoreTests/AgentSessionTests.swift','AgentSessionTests'),('HanlinHostContractsTests/ContextTests.swift','ContextTests')]:
+for rel,suite in [('HanlinAgentCoreTests/HostSchemaValidationTests.swift','HostSchemaValidationTests'),('HanlinAgentCoreTests/AgentSessionTests.swift','AgentSessionTests'),('HanlinHostContractsTests/ContextTests.swift','ContextTests'),('HanlinHostConcurrencyTests/HostCallbackConventionTests.swift','HostCallbackConventionTests')]:
     source=(scratch/'Packages/HanlinAgentSDK/Tests'/rel).read_text();pending=False;current=None
     for line in source.splitlines():
         decl=re.search(r'^(?:@Suite\s+)?(?:private\s+)?(?:struct|actor|class)\s+(\w+)',line)
@@ -85,7 +85,8 @@ print(next(x for x in ['HanlinAgentSDK-Package','HanlinAgentSDK'] if x in names)
 PY_SCHEME
 )"
 selected_tests=(-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests
-  -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests)
+  -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests
+  -only-testing:HanlinHostConcurrencyTests/HostCallbackConventionTests)
 if [[ "${HANLIN_SDK_ASSOCIATION_ONLY:-0}" == 1 ]]; then
   selected_tests=('-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()'
     -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests)

@@ -45,7 +45,15 @@ class AppDataManager: ObservableObject {
                 || ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_E2E"] != nil
                 || ProcessInfo.processInfo.environment["HANLIN_SCRIPTUI_E2E"] != nil
             let nativeAcceptance = HanlinNativeA2UIAcceptanceProvider.isEnabled
-            let config = ModelConfiguration(isStoredInMemoryOnly: nativeAcceptance, cloudKitDatabase: (isTesting || nativeAcceptance) ? .none : .automatic)
+            let config: ModelConfiguration
+            if let fixtureID = AgentRuntimeUIAcceptanceProvider.phase2StoreID {
+                let root = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                    .appending(path: "Phase2Acceptance/" + fixtureID.uuidString, directoryHint: .isDirectory)
+                try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+                config = ModelConfiguration(url: root.appending(path: "Chat.store"), cloudKitDatabase: .none)
+            } else {
+                config = ModelConfiguration(isStoredInMemoryOnly: nativeAcceptance, cloudKitDatabase: (isTesting || nativeAcceptance) ? .none : .automatic)
+            }
             modelContainer = try ModelContainer(
                 for: ChatMessages.self,
                 ChatSavedExcerpt.self,
@@ -73,6 +81,10 @@ class AppDataManager: ObservableObject {
         if HanlinNativeA2UIAcceptanceProvider.isEnabled {
             do { try HanlinNativeA2UIAcceptanceProvider.configureIfRequested(context: context) }
             catch { fatalError("Native A2UI isolated fixture bootstrap failed") }
+            return
+        }
+        if AgentRuntimeUIAcceptanceProvider.phase2StoreID != nil {
+            AgentRuntimeUIAcceptanceProvider.configureIfRequested(context: context)
             return
         }
         // 确保模型数据优先加载完成

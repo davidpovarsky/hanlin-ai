@@ -39,6 +39,17 @@ enum AgentRuntimeUIAcceptanceProvider {
 #endif
     }
 
+    /// An opt-in, task-owned disk container for authentic cold-reopen UI proof.
+    /// Shipping storage and legacy fixture resets retain their existing behavior.
+    static var phase2StoreID: UUID? {
+#if DEBUG && targetEnvironment(simulator)
+        guard isEnabled, let value = ProcessInfo.processInfo.environment["HANLIN_PHASE2_STORE_ID"] else { return nil }
+        return UUID(uuidString: value)
+#else
+        nil
+#endif
+    }
+
     static func sampleMCPArchiveURL() -> URL {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("hanlin-echo-mcp-acceptance.tgz")
         if FileManager.default.fileExists(atPath: url.path) {
@@ -110,6 +121,7 @@ enum AgentRuntimeUIAcceptanceProvider {
     static func configureIfRequested(context: ModelContext) {
         guard isEnabled else { return }
         do {
+            if phase2StoreID != nil, try !context.fetch(FetchDescriptor<ChatRecords>()).isEmpty { return }
             for chat in try context.fetch(FetchDescriptor<ChatRecords>()) {
                 context.delete(chat)
             }
@@ -143,7 +155,8 @@ enum AgentRuntimeUIAcceptanceProvider {
                 key: "acceptance-only",
                 requestURL: "https://agent.acceptance/v1/chat/completions",
                 isHidden: false,
-                apiType: .openAI
+                apiType: .openAI,
+                autoProbeCapabilities: phase2StoreID == nil
             ))
             let now = Date()
             context.insert(ChatRecords(
@@ -291,12 +304,19 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
     private static let lock = NSLock()
     private nonisolated(unsafe) static var responseIndex = 0
     private nonisolated(unsafe) static var ui07FailCount = 0
+    private nonisolated(unsafe) static var phase2Requests = 0
     private var isStopped = false
+
+    static var observedPhase2Requests: Int {
+        lock.lock(); defer { lock.unlock() }
+        return phase2Requests
+    }
 
     static func reset() {
         lock.lock()
         responseIndex = 0
         ui07FailCount = 0
+        phase2Requests = 0
         lock.unlock()
     }
 
@@ -309,6 +329,9 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
     override func startLoading() {
+        if AgentRuntimeUIAcceptanceProvider.phase2StoreID != nil {
+            Self.lock.lock(); Self.phase2Requests += 1; Self.lock.unlock()
+        }
         if request.url?.host == "skills.acceptance" {
             handleSkillsDownload()
             return
@@ -331,6 +354,22 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let messages = body?["messages"] as? [[String: Any]]
         let content = messages?.last(where: { $0["role"] as? String == "user" })?["content"]
         let currentText = (content as? String) ?? (content as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined(separator: "\n") ?? ""
+        if let marker = currentText.range(of: "PHASE2_REAL_PYTHON_[0-9A-F-]{36}", options: .regularExpression) {
+            let nonce = String(currentText[marker]).replacingOccurrences(of: "PHASE2_REAL_PYTHON_", with: "")
+            let resultMarker = "PHASE2_RESULT_" + nonce + ":3.14.6:42"
+            let toolID = "phase2-python-" + nonce, loadID = "phase2-code-" + nonce
+            let outputs = (messages ?? []).filter { $0["role"] as? String == "tool" }
+            if let output = outputs.last(where: { $0["tool_call_id"] as? String == toolID }) {
+                let text = (output["content"] as? String) ?? ""
+                emitFinalAnswer(text.contains(resultMarker) ? "PHASE2_VERIFIED_" + nonce + ":3.14.6:42" : "PHASE2_EXECUTION_NOT_VERIFIED")
+            } else if outputs.contains(where: { $0["tool_call_id"] as? String == loadID }) {
+                let source = "import sys; print('PHASE2_RESULT_\(nonce):' + sys.version.split()[0] + ':' + str(6*7))"
+                let arguments = try? JSONSerialization.data(withJSONObject: ["source": source])
+                emitToolCall(id: toolID, name: "execute_local_python_code", arguments: String(decoding: arguments ?? Data(), as: UTF8.self))
+            } else { emitToolCall(id: loadID, name: "load_skill", arguments: #"{"skill_id":"code"}"#) }
+            return
+        }
+
         if let marker = currentText.range(of: "DIAGNOSTIC_CAPTURE_[0-9A-F-]{36}", options: .regularExpression) {
             emitFinalAnswer("CAPTURED_" + String(currentText[marker]))
             return

@@ -3,6 +3,46 @@ import UIKit
 
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
+    func testPhase2ActualPythonToolApprovalAndColdConversationRestoration() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication(), nonce = UUID().uuidString
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        app.launch()
+        openChat(in: app)
+        sendPrompt("PHASE2_REAL_PYTHON_" + nonce, in: app)
+        let request = app.staticTexts["hanlin-tool-consent-original-request"].firstMatch
+        XCTAssertTrue(request.waitForExistence(timeout: 45), "The actual code request must require review before dispatch")
+        XCTAssertTrue(request.label.contains(nonce) && request.label.contains("import sys"))
+        tapElement(app.buttons["hanlin-tool-consent-allow-once"].firstMatch)
+        let answer = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@", "PHASE2_VERIFIED_" + nonce + ":3.14.6:42")).firstMatch
+        XCTAssertTrue(answer.waitForExistence(timeout: 90), "The HTTP fixture requires the original tool response to contain the actual Python version and nonce result")
+        let toggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
+        XCTAssertTrue(toggle.waitForExistence(timeout: 10)); tapElement(toggle)
+        let activity = app.descendants(matching: .any)["hanlin-agent-activity-phase2-python-" + nonce].firstMatch
+        XCTAssertTrue(activity.waitForExistence(timeout: 10), "Original tool activity must remain inspectable")
+        let originalChat = app.staticTexts["hanlin-phase2-chat-id"].label
+        XCTAssertNotNil(UUID(uuidString: originalChat))
+        let draft = "UNSENT_PHASE2_" + nonce
+        let input = chatInputElement(in: app)
+        tapElement(input); input.typeText(draft)
+        openSettings(in: app) // A real navigation action flushes the original conversation draft.
+        let proof = XCTAttachment(screenshot: app.screenshot())
+        proof.name = "actual-python-tool-completed-before-cold-reopen"; proof.lifetime = .keepAlways; add(proof)
+        app.terminate(); app.launch()
+        openChat(in: app)
+        XCTAssertTrue(answer.waitForExistence(timeout: 20))
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-chat-id"].label, originalChat)
+        XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0", "Restoration must not replay the model or tool request")
+        XCTAssertFalse(app.buttons["hanlin-tool-consent-allow-once"].exists)
+        let restored = XCTAttachment(screenshot: app.screenshot())
+        restored.name = "cold-original-conversation-draft-and-history-without-replay"; restored.lifetime = .keepAlways; add(restored)
+    }
+
     func testDiagnosticsReviewsTheAutomaticallyCapturedRunWithoutSharingItsKey() throws {
         continueAfterFailure = false
         let app = XCUIApplication()

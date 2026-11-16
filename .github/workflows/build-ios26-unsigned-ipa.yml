@@ -2113,7 +2113,7 @@ jobs:
       - name: Record resolved diagnostics build provenance
         run: |
           set -euo pipefail
-          python3 Scripts/CI/write_diagnostics_build_provenance.py
+          python3 Scripts/CI/write_diagnostics_build_provenance.py --retain-safe-lock "$LOG_DIR/Resolved-Package.resolved"
           cp AI_HLY/Downstream/AgentDiagnostics/HanlinDiagnosticsBuildProvenance.json "$LOG_DIR/06-diagnostics-build-provenance.json"
 
       - name: Save validated simulator Swift package dependencies

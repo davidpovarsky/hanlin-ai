@@ -8,6 +8,18 @@ import subprocess
 from urllib.parse import urlsplit
 
 
+def retain_safe_lock(lock: pathlib.Path, destination: pathlib.Path) -> None:
+    """Retain exact resolver bytes only when they contain public, credential-free URLs."""
+    raw = lock.read_bytes()
+    for pin in json.loads(raw)["pins"]:
+        url = urlsplit(pin["location"])
+        if (url.scheme != "https" or url.hostname != "github.com" or url.username is not None
+                or url.password is not None or url.query or url.fragment):
+            raise ValueError("Raw package resolution contains a non-public location; retain redacted provenance only")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_bytes(raw)
+
+
 def canonical_repository(value: str) -> str:
     url = urlsplit(value)
     return (str(url.hostname) + url.path.removesuffix(".git").rstrip("/")).lower()
@@ -53,4 +65,11 @@ def write_provenance(root: pathlib.Path) -> pathlib.Path:
 
 
 if __name__ == "__main__":
-    write_provenance(pathlib.Path(__file__).resolve().parents[2])
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--retain-safe-lock", type=pathlib.Path)
+    args = parser.parse_args()
+    root = pathlib.Path(__file__).resolve().parents[2]
+    write_provenance(root)
+    if args.retain_safe_lock:
+        retain_safe_lock(root / "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved", args.retain_safe_lock)

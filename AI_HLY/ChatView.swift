@@ -15,6 +15,8 @@ import HanlinHostContracts
 @MainActor
 struct ChatView: View {
     var chatRecord: ChatRecords
+    @Environment(\.scenePhase) private var chatScenePhase
+    @State private var draftSaveTask: Task<Void, Never>?
     // 输入与会话状态相关
     @State private var message = ""                        // 用户输入的消息
     @State private var isResponding = false                // 是否处于系统响应状态
@@ -481,14 +483,13 @@ struct ChatView: View {
     var body: some View {
         chatWorkspaceStack
         .chatMotionPreferences()
-        .confirmationDialog("Allow tool operation?", isPresented: Binding(
-            get: { agentSessionOwner.consent.pending != nil },
-            set: { if !$0 { agentSessionOwner.consent.revoke() } }
-        ), titleVisibility: .visible, presenting: agentSessionOwner.consent.pending) { request in
-            Button("Allow once") { agentSessionOwner.consent.answer(id: request.id, allowed: true) }
-            Button("Cancel", role: .cancel) { agentSessionOwner.consent.answer(id: request.id, allowed: false) }
-        } message: { request in
-            Text(request.tool)
+        .sheet(item: Binding(
+            get: { agentSessionOwner.consent.pending },
+            set: { if case .none = $0 { agentSessionOwner.consent.revoke() } }
+        )) { request in
+            HanlinToolConsentSheet(request: request) { allowed in
+                agentSessionOwner.consent.answer(id: request.id, allowed: allowed)
+            }
         }
         #if HANLIN_A2UI_POC
         .environment(\.hanlinA2UIAppPresentation, a2uiPresentation)
@@ -497,6 +498,8 @@ struct ChatView: View {
         .safeAreaInset(edge: .top) {
             if HanlinNativeA2UIAcceptanceProvider.isEnabled {
                 HanlinA2UIAcceptanceStatusView(isResponding: isResponding, conversationID: chatRecord.id)
+            } else if AgentRuntimeUIAcceptanceProvider.phase2StoreID != nil {
+                HanlinPhase2AcceptanceStatusView(isResponding: isResponding, conversationID: chatRecord.id)
             }
         }
         #endif
@@ -571,7 +574,25 @@ struct ChatView: View {
                 NotificationCenter.default.post(name: .hideTabBar, object: true) // 仅在紧凑模式下隐藏 TabBar
             }
         }
+        .onChange(of: message) { _, draft in
+            draftSaveTask?.cancel()
+            guard !TemporaryRecord else { return }
+            let original = chatRecord, originalID = chatRecord.id
+            original.input = draft
+            draftSaveTask = Task { @MainActor in
+                do { try await Task.sleep(for: .milliseconds(500)) } catch { return }
+                guard !Task.isCancelled, original.modelContext === context, original.id == originalID else { return }
+                try? context.save()
+            }
+        }
+        .onChange(of: chatScenePhase) { _, phase in
+            if phase != .active, !TemporaryRecord {
+                draftSaveTask?.cancel()
+                openHistory()
+            }
+        }
         .onChange(of: TemporaryRecord) { _, newValue in
+            draftSaveTask?.cancel()
             if isResponding { handleCancellation() }
             agentSessionOwner.cancel()
             sessionBridge?.setTemporaryChat(newValue, for: effectiveChatSessionID)
@@ -584,6 +605,7 @@ struct ChatView: View {
             syncComposerEndpointWithBridge()
         }
         .onDisappear {
+            draftSaveTask?.cancel()
             // The workspace router supplies actual selection ownership. A sheet/full-screen
             // result that leaves that original selection mounted does not revoke its Session.
             if let sessionBridge, sessionBridge.expectedActiveSessionID != effectiveChatSessionID {

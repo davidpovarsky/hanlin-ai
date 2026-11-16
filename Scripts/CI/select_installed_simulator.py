@@ -40,11 +40,13 @@ if __name__ == "__main__":
         original = selected["device"]
         identifier = read(["xcrun", "simctl", "create", args.create_owned,
                            original["deviceTypeIdentifier"], selected["runtime"]["identifier"]]).strip()
+        observed = json.loads(read(["xcrun", "simctl", "list", "devices", "available", "-j"]))
+        created = [device for rows in observed["devices"].values() for device in rows if device["udid"] == identifier]
+        if len(created) != 1 or created[0]["name"] != args.create_owned:
+            raise RuntimeError("New owned simulator identity was not observed")
         selected["source_device"] = original
         selected["model"] = original["name"]
-        selected["device"] = {**original, "udid": identifier, "name": args.create_owned, "state": "Shutdown"}
-        selected["device"].pop("dataPath", None)
-        selected["device"].pop("logPath", None)
+        selected["device"] = created[0]
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps({**selected, "observed_runtimes": runtimes}, indent=2))
     device, runtime = selected["device"], selected["runtime"]

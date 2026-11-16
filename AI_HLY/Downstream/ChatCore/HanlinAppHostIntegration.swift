@@ -92,7 +92,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
     }
 
     func execute(_ invocation: HanlinHostInvocation,
-                 progress: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async throws -> HanlinHostExecutionResult {
+                 progress: @escaping HanlinHostProgressHandler) async throws -> HanlinHostExecutionResult {
         let entry: HanlinHostTool
         let definition: HanlinAISDKToolDefinition
         let original: Data

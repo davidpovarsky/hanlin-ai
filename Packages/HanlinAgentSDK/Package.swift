@@ -35,6 +35,8 @@ let package = Package(
         .executableTarget(name: "HanlinFixtureHost", dependencies: ["HanlinAgentCore", "HanlinPersistenceAdapters", "HanlinSDKTestFixtures"], path: "Examples/FixtureHost"),
         .executableTarget(name: "HanlinSDKPortableProof", dependencies: ["HanlinAgentCore", "HanlinPersistenceAdapters", "HanlinSDKTestFixtures"], path: "Tests/PortableProof"),
         .testTarget(name: "HanlinHostContractsTests", dependencies: ["HanlinHostContracts"]),
+        .testTarget(name: "HanlinHostConcurrencyTests", dependencies: ["HanlinHostContracts", .product(name: "HanlinPlatformContracts", package: "HanlinPlatform")],
+                    swiftSettings: [.enableUpcomingFeature("NonisolatedNonsendingByDefault")]),
         .testTarget(name: "HanlinAgentCoreTests", dependencies: ["HanlinAgentCore", "HanlinPersistenceAdapters", "HanlinSDKTestFixtures", .product(name: "AISDKProvider", package: "swift-ai-sdk")]),
         .testTarget(name: "HanlinPersistenceAdaptersTests", dependencies: ["HanlinPersistenceAdapters"])
     ],
