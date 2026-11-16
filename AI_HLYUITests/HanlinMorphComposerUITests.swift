@@ -48,7 +48,11 @@ final class HanlinMorphComposerUITests: XCTestCase {
         app.launch()
         defer { app.terminate() }
 
-        let input = app.descendants(matching: .any)["hanlin-chat-input"].firstMatch
+        // The retained iOS 27.2 hierarchy exposes the real UIKit editor with
+        // its parent surface ID. Keep the query typed and the draft assertions.
+        let input = app.textViews.matching(NSPredicate(
+            format: "identifier == 'hanlin-chat-input' OR identifier == 'hanlin-composer-surface'"
+        )).firstMatch
         if !input.waitForExistence(timeout: 5) {
             let chat = app.descendants(matching: .any).matching(
                 NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")

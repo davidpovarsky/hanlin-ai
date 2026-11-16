@@ -86,3 +86,13 @@ failure attachments through the existing manual workflow's isolated
 `native_result_inspection` group with the existing artifact-run input; it skips
 planning, builds and tests and preserves the25-input GitHub dispatch limit.
 Inspect actual evidence before choosing a navigation or product repair.
+
+Inspection `43803240773` exported the actual Composer hierarchy: the correct
+chat was selected and its real UITextView was visible, but SwiftUI propagated
+`hanlin-composer-surface` over the input identifier. The existing smoke now
+queries that typed editor under either recorded identifier; all draft/model
+and cancellation assertions remain. Product accessibility refactoring stays
+in Phase2. Only the two metadata-affected NativeScript cases and the failed
+Composer case need fresh execution; the17 app unit identities and Expo smoke
+have authentic passing raw results at `9ef84ab8` and require an unchanged-input
+closure audit rather than another execution.
