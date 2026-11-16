@@ -450,7 +450,8 @@ private struct AppPartModel: LanguageModelV3 {
     #endif
 
     @Test func appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome() async throws {
-        for (nativeOutcome, approved) in [(NativeToolExecutionOutcome.succeeded, true), (.rejectedByCapability, true), (.failed, true), (.succeeded, false)] {
+        for (nativeOutcome, approved, expires) in [(NativeToolExecutionOutcome.succeeded, true, false),
+            (.rejectedByCapability, true, false), (.failed, true, false), (.succeeded, false, false), (.succeeded, true, true)] {
             let container = try database(), context = container.mainContext
             let row = ChatRecords(name: "Host", type: "chat")
             context.insert(row); try context.save()
@@ -474,22 +475,30 @@ private struct AppPartModel: LanguageModelV3 {
                 callbacks: .init(onAgentEvent: { _ in callbackCount += 1 }))
             let host = HanlinAppHostIntegration(identity: identity, store: store, isCurrent: { true })
             host.toolAdapter = adapter
-            host.confirmInvocation = { _ in approved }
+            host.confirmInvocation = { invocation in
+                if expires {
+                    let remaining = max(0, invocation.request.deadline?.timeIntervalSinceNow ?? 0)
+                    try? await Task.sleep(for: .seconds(remaining + 0.01))
+                }
+                return approved
+            }
             let catalog = try await host.catalog(for: identity.context)
             let tool = try #require(catalog.tools.first(where: { $0.route.alias == alias }))
             #expect(tool.descriptor.risk == .read) // Current shadow metadata is not a no-write guarantee.
             #expect(tool.writeGuarantee == .hostManagedMutation)
             let dispatcher = HanlinHostDispatcher(host: host), run = UUID()
+            let limits = try HanlinToolInvocationLimits(timeoutMilliseconds: expires ? 100 : 30_000)
             let first = try await dispatcher.dispatchEvent(alias: alias, argumentsJSON: "{}", providerCallID: "original",
-                runID: run, step: 2, session: identity, catalog: catalog, limits: .init())
+                runID: run, step: 2, session: identity, catalog: catalog, limits: limits)
             let countBeforeReplay = callbackCount
             let replay = try await dispatcher.dispatchEvent(alias: alias, argumentsJSON: "{}", providerCallID: "original",
-                runID: run, step: 2, session: identity, catalog: catalog, limits: .init())
-            #expect(calls == (approved ? 1 : 0) && callbackCount == countBeforeReplay)
-            #expect(approved ? callbackCount > 0 : callbackCount == 0)
+                runID: run, step: 2, session: identity, catalog: catalog, limits: limits)
+            let dispatched = approved && !expires
+            #expect(calls == (dispatched ? 1 : 0) && callbackCount == countBeforeReplay)
+            #expect(dispatched ? callbackCount > 0 : callbackCount == 0)
             #expect(first.resultID == replay.resultID && first.call == replay.call)
-            #expect(adapter.completedCallIDs.contains("original") == approved)
-            let expected: HanlinHostEffectState = !approved ? .notDispatched : nativeOutcome == .succeeded ? .confirmedCommitted
+            #expect(adapter.completedCallIDs.contains("original") == dispatched)
+            let expected: HanlinHostEffectState = !dispatched ? .notDispatched : nativeOutcome == .succeeded ? .confirmedCommitted
                 : nativeOutcome == .rejectedByCapability ? .confirmedNoEffect : .uncertain
             #expect(first.result.effectState == expected)
             #expect(first.call.session == identity && first.call.step == 2)

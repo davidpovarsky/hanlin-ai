@@ -1,8 +1,6 @@
 {
-  "sourceCommit": "70079a927cc16e05c856d2e59695a35af7d682d2",
-  "uncommittedSourcePaths": [
-    "Scripts/NativeScript/metadata_public_headers.py"
-  ],
+  "sourceCommit": "3b6138be596ffdfc05758264ec36bec0e3c8a4af",
+  "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
     "package": "@typescript/typescript6",
@@ -5825,11 +5823,11 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
-      "sha256": "c8b63f62896fc0a6835e481d69644d06e72314b58bbe3661f41542de9c9c4a2f"
+      "sha256": "575951b9056255d1708c414959464c24d2947b973426a5edd5005825fa5fd316"
     },
     {
       "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
-      "sha256": "c9440f793065d74e617d67fa5b0efaae81008618f4b9389ce8309632799ce899"
+      "sha256": "649671e40292cbcdfded8a34869e581f6d9ad51839f241c45b312510208ae0c8"
     },
     {
       "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
@@ -5861,11 +5859,11 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift",
-      "sha256": "5c5da45ded51ab824d71221a58eeba736bbf7f387a251b6b4961630a8172a49a"
+      "sha256": "4ea7dbd64875d5ebad1e5731b72449b5a25ff4bd52cec5b2bc966bd93b322ae6"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
-      "sha256": "51e977e2972dfc0fb4bd67bb04a26050146f91b4be080ba6a2326c821dd4aafd"
+      "sha256": "01c77d58cb3fe68963400f8b5b230d6255b175a495daa9659e1078f4250cf219"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
@@ -5873,7 +5871,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostServicesBridge.swift",
-      "sha256": "dda5b6bc45ab6939fa97c2b8ed55ada3dae7173d1779fac5f5658a3a7ea34695"
+      "sha256": "0127d340d0c0a18c2c83e25d558f1ecaa74a473ce47f27de61397cb29ea8c6ab"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
@@ -5881,7 +5879,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
-      "sha256": "82760eab2126410e611b9e369cbdf24f407a0281dc662d0fb183022133a616d1"
+      "sha256": "eefae45be2782fc2b0cde311c664a774dcd351ebf1e8fbea66ae0f390ff1f588"
     },
     {
       "path": "Packages/HanlinExpoUI/package.json",
@@ -5889,15 +5887,15 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
-      "sha256": "13e6b22a0c800fe9944b5deab24066daf112227b841588d339e864105d772d8b"
+      "sha256": "a3665bd2a5d11204debc8123a4030dc03a60db22662a42778ac9d84344e0d406"
     },
     {
       "path": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
-      "sha256": "6df5c320d64b6014e3094cd5acf3724aa2d6c4215d055384a7e9cdaa15d10e23"
+      "sha256": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483"
     },
     {
       "path": "Packages/HanlinExpoUI/src/generated/views.tsx",
-      "sha256": "4eaa99afdce01daf9f7c5c32f18bf2c60ac897025407194e063c64a81e154d68"
+      "sha256": "4c9170e65f2248556544092000d9a25cd4c25a2cc19ac393281dcbe7cd29281a"
     },
     {
       "path": "Packages/HanlinExpoUI/src/host-services.ts",
@@ -5905,7 +5903,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/index.ts",
-      "sha256": "fea6f582087bbe16fba03304a1e606d02337df220d60b93fd425602224e0cf78"
+      "sha256": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922"
     },
     {
       "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
@@ -5913,7 +5911,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/modifiers.ts",
-      "sha256": "77ed8a18a38510e4e94c191d49f0c3a4bb8beaf5512371ed4797f972a7f7fd45"
+      "sha256": "581daed29172040e28de21b4bedec61baf074c41a945f313e3bb827c008b5dec"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Package.swift",
@@ -5957,11 +5955,11 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
-      "sha256": "216b6cdb6f78791a0c8022672c5452d3edaafbb6eec328b566ebbd112019f33f"
+      "sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-      "sha256": "238a068fb6436153bdabdd70cb7a35edc49eb8a8821738b373ff64c2440b9905"
+      "sha256": "9443a12286831f386d9a7db06b833902d041fe46d990e2014885a10d99b612fb"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
@@ -6013,15 +6011,15 @@
     },
     {
       "path": "Scripts/NativeScript/build-metadata-tool.py",
-      "sha256": "c9928a68e4fda3e49c2aec8aa84f5e7ff0a42bf1bd03ab6ebaf7bd4642d06b52"
+      "sha256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5"
     },
     {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "556c5187c4613f178ed602389bf1a9e1e7c8f46d4f5c00b9cb777c13309ee81f"
+      "sha256": "4dbef40b5f3892a3fee323e974ea6827d5011f7f1b2871a3963130fb0ab8c789"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",
-      "sha256": "117ae6521cd70fcb6a3edb3756ce4db75edfecbd9a76c9045620c1e8d5c43661"
+      "sha256": "7e03d1d97c25f13d1242667f4bba8635391452028cb4e3fb38c0ab215ad2ff8f"
     },
     {
       "path": "Scripts/NativeScript/host-services.ts",
@@ -6029,7 +6027,7 @@
     },
     {
       "path": "Scripts/NativeScript/metadata_public_headers.py",
-      "sha256": "0ded5cfec90f7373f1ed0090b80b703b513aaf0b9f7564a0a7349d4e436027f8"
+      "sha256": "1ed52995d6b4b90a295d852f12917914a7a194e6302b65df437c8332f659532a"
     },
     {
       "path": "Scripts/NativeScript/package.json",
@@ -6041,11 +6039,11 @@
     },
     {
       "path": "Tools/SwiftUIBridge/configuration.json",
-      "sha256": "eff6879d1f7000b2bd8a78513b55fd9cb8ee4e2602b5a3f45bd40983dae6db33"
+      "sha256": "678d09bd72df34c3a09711aff689ad92daf6a58b5eb0f397026117da332ef2c6"
     },
     {
       "path": "Tools/SwiftUIBridge/expo-reviewed-capabilities.json",
-      "sha256": "b8b265ad02a0b2f4cac2c7bee4d078442b9b73a4297f79b0a1fc3d542a251a0a"
+      "sha256": "0812fbfcc16110af5d9c9f6d47b63b16aa20813648ad4bdac0467993b9f8f8b5"
     }
   ]
 }
