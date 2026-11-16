@@ -1896,7 +1896,6 @@ struct ChatBubbleView: View {
         }
         .padding(.bottom, 6)
         .foregroundColor(.primary)
-        .modifier(ChatLinkPresentation())
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity, alignment: .leading)
         .sheet(isPresented: $isTextSelectionSheetPresented) {

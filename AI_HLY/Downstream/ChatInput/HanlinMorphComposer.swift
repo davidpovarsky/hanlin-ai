@@ -211,6 +211,9 @@ struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Input: View
                 .strokeBorder(blue.opacity(0.26), lineWidth: 0.7)
                 .allowsHitTesting(false)
         }
+        // Keep the panel addressable without replacing the native toolbar and
+        // page controls' own identifiers in the accessibility hierarchy.
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("morphing-action-panel")
     }
 

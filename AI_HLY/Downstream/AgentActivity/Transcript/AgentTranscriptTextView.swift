@@ -7,7 +7,6 @@ struct AgentTranscriptTextView: View {
 
     var body: some View {
         ChatMarkdownView(text: text)
-        .modifier(ChatLinkPresentation())
         .frame(maxWidth: .infinity, alignment: .leading)
         .textSelection(.enabled)
         .contextMenu {

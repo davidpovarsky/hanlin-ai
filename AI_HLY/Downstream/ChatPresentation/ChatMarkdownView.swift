@@ -26,6 +26,9 @@ struct ChatMarkdownView: View {
             if let messageID = source?.messageID { markdownDidRender?(messageID) }
         })
         MarkdownView(text: text, config: config, listener: listener)
+            // The native paragraph retains its OpenURLAction. Keep its presenter
+            // with the renderer rather than an independently updating bubble.
+            .modifier(ChatLinkPresentation())
             .markdownCodeBlockRenderer { block in
                 guard block.isFenceClosed == true else { return nil }
                 let language = block.language?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()

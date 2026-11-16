@@ -50,7 +50,6 @@ struct ChatSavedExcerptsView: View {
                 Button("OK", role: .cancel) { error = nil }
             } message: { Text(error ?? "") }
         }
-        .modifier(ChatLinkPresentation())
     }
 
     private func delete(_ excerpt: ChatSavedExcerpt) {
