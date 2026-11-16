@@ -12,6 +12,7 @@ struct SkillExecutionPlanSection: View {
     @State private var plan: SkillRuntimeContract.ExecutionPlan?
     @State private var receipt: SkillRuntimeService.Receipt?
     @State private var output = ""
+    @State private var findings: [SkillSyntaxFinding] = []
     @State private var error: String?
     @State private var working = false
     @State private var confirmRun = false
@@ -53,6 +54,13 @@ struct SkillExecutionPlanSection: View {
                     Text(issue.code.rawValue).font(.footnote).foregroundStyle(.secondary)
                 }
             }
+            ForEach(Array(findings.prefix(64).enumerated()), id: \.offset) { _, finding in
+                VStack(alignment: .leading) {
+                    Text("\(finding.source.file):\(finding.source.line):\(finding.source.utf8Column)")
+                    Text(finding.value ?? finding.reason).textSelection(.enabled)
+                    Text("\(finding.confidence.rawValue) · \(finding.reason)").foregroundStyle(.secondary)
+                }.font(.caption)
+            }
             LabeledContent(SkillL10n.string("Last tested"), value: lastTest)
                 .accessibilityValue(lastTest)
                 .accessibilityIdentifier("hanlin-skill-detail-compatibility-last-tested")
@@ -83,7 +91,7 @@ struct SkillExecutionPlanSection: View {
                 .font(.footnote).foregroundStyle(.secondary)
         }
         .task(id: selectionID) {
-            operation?.cancel(); revision = UUID(); working = false; plan = nil; receipt = nil; output = ""; error = nil
+            operation?.cancel(); revision = UUID(); working = false; plan = nil; receipt = nil; findings = []; output = ""; error = nil
             let token = revision
             do {
                 let value = try await SkillRuntimeService.shared.plan(skillID: skillID,
@@ -91,6 +99,7 @@ struct SkillExecutionPlanSection: View {
                     engine: path.isEmpty ? nil : SkillRuntimeRequirements.engine(engine))
                 guard !Task.isCancelled, revision == token else { return }
                 plan = value
+                findings = SkillRuntimeService.shared.findings(skillID: skillID, path: path.isEmpty ? nil : path)
                 receipt = try SkillRuntimeService.shared.receipt(skillID: skillID, path: path)
                 if let receipt, receipt.test?.sourceFingerprint == value.action.sourceFingerprint,
                    receipt.test?.actionFingerprint == value.action.actionFingerprint {
@@ -173,6 +182,7 @@ struct SkillExecutionPlanSection: View {
                 plan = try await SkillRuntimeService.shared.plan(skillID: skillID, path: selectedPath,
                     engine: SkillRuntimeRequirements.engine(selectedEngine))
                 receipt = try SkillRuntimeService.shared.receipt(skillID: skillID, path: selectedPath)
+                findings = SkillRuntimeService.shared.findings(skillID: skillID, path: selectedPath)
             } catch { if revision == token { self.error = error.localizedDescription } }
         }
     }

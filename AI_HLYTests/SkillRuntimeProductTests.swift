@@ -38,7 +38,7 @@ struct SkillRuntimeProductTests {
 
     static let fixtures = ["instructions", "node", "python", "typescript", "jsc", "argv", "unicode",
         "missing-module", "unknown-engine", "disabled", "denied", "wrong-engine", "failure",
-        "cancel", "restart", "reinstall", "openclaw"]
+        "cancel", "restart", "reinstall", "openclaw", "shell", "requirements", "toml", "package-manifest", "hidden-resource"]
 
     @Test(arguments: fixtures)
     func importedSkillPlanExecuteAndReopen(_ fixture: String) async throws {
@@ -48,11 +48,12 @@ struct SkillRuntimeProductTests {
         let store = SkillStore(rootDirectoryURL: root.appending(path: "store"), onCatalogChange: {})
         let name = "phase2-" + UUID().uuidString.lowercased()
         let nonce = UUID().uuidString.lowercased()
-        let ext = fixture == "python" || fixture == "unicode" ? "py" : fixture == "typescript" ? "ts" : "js"
+        let ext = ["python", "unicode", "requirements", "toml"].contains(fixture) ? "py" : fixture == "typescript" ? "ts" : fixture == "shell" ? "sh" : "js"
         let path = "scripts/run." + ext
         let source: String
         switch fixture {
-        case "python", "unicode": source = "print('\(nonce) שלום مرحبا')\n"
+        case "python", "unicode", "requirements", "toml": source = "print('\(nonce) שלום مرحبا')\n"
+        case "shell": source = "echo \"\(nonce)\"\n"
         case "typescript": source = "const value: string = '\(nonce)'; console.log(value); export default value;"
         case "argv": source = "if(JSON.stringify(process.argv.slice(2))!==JSON.stringify(['\(nonce)','עברית']))throw Error('argv changed'); console.log('\(nonce)');"
         case "failure": source = "throw new Error('EXPECTED_FAILURE_\(nonce)');"
@@ -67,6 +68,10 @@ struct SkillRuntimeProductTests {
         let archive = try Archive(url: archiveURL, accessMode: .create)
         var files = [("SKILL.md", Data(markdown.utf8))]
         if fixture != "instructions" { files.append((path, Data(source.utf8))) }
+        if fixture == "requirements" { files.append(("requirements.txt", Data("hanlin-never-installed>=1\n".utf8))) }
+        if fixture == "toml" { files.append(("pyproject.toml", Data("[project]\ndynamic = ['dependencies']\n".utf8))) }
+        if fixture == "package-manifest" { files.append(("package.json", Data(#"{"dependencies":{"hanlin-never-installed":"^1"}}"#.utf8))) }
+        if fixture == "hidden-resource" { files.append((".helper.txt", Data("first source".utf8))) }
         for (file, bytes) in files {
             try archive.addEntry(with: file, type: .file, uncompressedSize: UInt32(bytes.count)) { position, size in
                 bytes.subdata(in: position..<(position + size))
@@ -87,8 +92,8 @@ struct SkillRuntimeProductTests {
             print("SKILL_PRODUCT PARSE_ONLY \(fixture) \(id.rawValue)")
             return
         }
-        let engine: RuntimeKind = fixture == "python" || fixture == "unicode" ? .localPython
-            : fixture == "typescript" ? .typeScript : fixture == "jsc" ? .javaScriptCore : .node
+        let engine: RuntimeKind = ["python", "unicode", "requirements", "toml"].contains(fixture) ? .localPython
+            : fixture == "typescript" ? .typeScript : fixture == "jsc" ? .javaScriptCore : fixture == "shell" ? .shell : .node
         let initial = try await service.plan(skillID: id, path: path,
             engine: SkillRuntimeRequirements.engine(engine), catalog: catalog, store: store)
         #expect(initial.lastTest == nil, "Import must not manufacture an execution test")
@@ -123,7 +128,7 @@ struct SkillRuntimeProductTests {
             task.cancel()
         }
         let result = await task.value
-        if ["missing-module", "unknown-engine", "disabled", "denied", "wrong-engine", "failure", "cancel"].contains(fixture) {
+        if ["missing-module", "unknown-engine", "disabled", "denied", "wrong-engine", "failure", "cancel", "requirements", "toml", "package-manifest"].contains(fixture) {
             #expect(!result.outcome.isSuccess, "\(fixture) incorrectly succeeded: \(result.modelText)")
             #expect(!result.modelText.contains("UNEXPECTED_LATE_" + nonce))
             if fixture == "cancel" {
@@ -140,6 +145,12 @@ struct SkillRuntimeProductTests {
         let receipt = try #require(reopened.receipt(skillID: id, path: path, store: store))
         #expect(receipt.status == .executionPass && receipt.result.stdout.contains(nonce))
         #expect(receipt.test?.actionFingerprint == SkillRuntimeRequirements.digest(Data(source.utf8)))
+        if fixture == "hidden-resource" {
+            try store.addOrUpdateTextResource(for: id, relativePath: ".helper.txt", content: "changed helper")
+            let changed = try await reopened.plan(skillID: id, path: path,
+                engine: SkillRuntimeRequirements.engine(engine), catalog: catalog, store: store)
+            #expect(changed.lastTest == nil, "A hidden helper change cannot reuse an old execution pass")
+        }
         if fixture == "reinstall" {
             try store.addOrUpdateTextResource(for: id, relativePath: path, content: "console.log('changed-source');")
             let plan = try await reopened.plan(skillID: id, path: path,

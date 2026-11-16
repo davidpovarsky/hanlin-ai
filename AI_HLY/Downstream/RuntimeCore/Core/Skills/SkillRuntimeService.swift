@@ -37,6 +37,29 @@ final class SkillRuntimeService {
         } catch { preconditionFailure("Original engine identifiers must be unique") }
     }
 
+    func sourceFingerprint(skillID: HanlinSkillID, catalog: HanlinSkillCatalog = .shared,
+                           store: SkillStore = .shared) async throws -> String {
+        guard let document = catalog.markdownDocument(for: skillID) else { throw RuntimeCoreError.invalidDependencyManifest }
+        let urls = try store.sourceResourceURLs(for: skillID)
+        let original = document.originalSource
+        return try await Task.detached {
+            var identity = original
+            var total = original.count
+            for (path, url) in urls {
+                try Task.checkCancellation()
+                let bytes = try Data(contentsOf: url, options: .mappedIfSafe)
+                if path == "SKILL.md", bytes != original { throw RuntimeCoreError.invalidRequest("Skill metadata changed; reopen the current catalog entry") }
+                total += bytes.count
+                guard total <= 64 * 1_048_576 else { throw RuntimeCoreError.invalidRequest("Skill source byte budget exceeded") }
+                identity.append(0); identity.append(contentsOf: path.utf8); identity.append(0)
+                identity.append(contentsOf: SkillRuntimeRequirements.digest(bytes).utf8)
+            }
+            return SkillRuntimeRequirements.digest(identity)
+        }.value
+    }
+
+    private func analysisKey(path: String, bytes: Data) -> String { path + ":" + SkillRuntimeRequirements.digest(bytes) }
+
     func plan(skillID: HanlinSkillID, path: String? = nil, engine: C.EngineID? = nil,
               arguments: [String] = [], catalog: HanlinSkillCatalog = .shared,
               store: SkillStore = .shared, forExecution: Bool = false) async throws -> C.ExecutionPlan {
@@ -52,13 +75,32 @@ final class SkillRuntimeService {
         let syntax: SkillSyntaxReport?
         if let path, ["sh", "bash"].contains((path as NSString).pathExtension) {
             syntax = await bash.scan(file: path, utf8: bytes)
-        } else { syntax = analyses[SkillRuntimeRequirements.digest(bytes)] }
+        } else { syntax = analyses[analysisKey(path: path ?? "SKILL.md", bytes: bytes)] }
         let sourceHash = SkillRuntimeRequirements.digest(document.originalSource)
         let signature = await environmentSignature()
         let upstream = eligibility[sourceHash].flatMap { $0.1 == signature ? $0 : nil }
+        let packageFingerprint = try await sourceFingerprint(skillID: skillID, catalog: catalog, store: store)
+        var combined = syntax
+        var manifestFindings: [SkillSyntaxFinding] = []
+        var manifestsComplete = true
+        if path != nil {
+            for manifest in ["requirements.txt", "pyproject.toml", "package.json"] {
+                guard let url = catalog.resolveResourceURL(skillID: skillID, relativePath: manifest) else { continue }
+                let bytes = try Data(contentsOf: url)
+                guard bytes.count <= 1_048_576, let report = analyses[analysisKey(path: manifest, bytes: bytes)] else { manifestsComplete = false; continue }
+                manifestsComplete = manifestsComplete && report.completion == .complete
+                manifestFindings += report.findings
+            }
+            if let original = syntax {
+                combined = .init(file: original.file, sourceSHA256: original.sourceSHA256,
+                    completion: manifestsComplete ? original.completion : .partial, provenance: original.provenance,
+                    findings: original.findings + manifestFindings, visitedNodes: original.visitedNodes,
+                    inputBytes: original.inputBytes, limitations: original.limitations)
+            }
+        }
         let action = try SkillRuntimeRequirements.action(skillID: skillID.rawValue, document: document,
             path: path, bytes: bytes, engine: engine, arguments: arguments, environmentID: "skill/" + skillID.rawValue,
-            syntax: syntax, openClawKnown: upstream?.0.known == true)
+            syntax: combined, openClawKnown: upstream?.0.known == true, packageFingerprint: packageFingerprint)
         let last = forExecution ? nil : try receipt(skillID: skillID, path: path, store: store)?.test
         return await registry.plan(action: action, lastTest: last,
             freshness: .init(notBefore: .now.addingTimeInterval(-86_400), now: .now), supplement: { facts in
@@ -94,11 +136,28 @@ final class SkillRuntimeService {
         guard catalog.resolveResourceURL(skillID: skillID, relativePath: path) == url,
               try Data(contentsOf: url) == bytes else { throw RuntimeCoreError.invalidRequest("Skill changed during analysis") }
         if analyses.count >= 64 { analyses.removeAll() }
-        analyses[SkillRuntimeRequirements.digest(bytes)] = report
+        analyses[analysisKey(path: path, bytes: bytes)] = report
+        for manifest in ["requirements.txt", "pyproject.toml", "package.json"] {
+            guard let url = catalog.resolveResourceURL(skillID: skillID, relativePath: manifest) else { continue }
+            let bytes = try Data(contentsOf: url)
+            let facts = try await SkillRuntimeAnalysis.scan(path: manifest, bytes: bytes)
+            try Task.checkCancellation()
+            guard catalog.resolveResourceURL(skillID: skillID, relativePath: manifest) == url,
+                  try Data(contentsOf: url) == bytes else { throw RuntimeCoreError.invalidRequest("Skill manifest changed during analysis") }
+            analyses[analysisKey(path: manifest, bytes: bytes)] = facts
+        }
         if let document = catalog.markdownDocument(for: skillID),
            let inspected = try await SkillRuntimeOpenClaw.inspect(document) {
             if eligibility.count >= 64 { eligibility.removeAll() }
             eligibility[SkillRuntimeRequirements.digest(document.originalSource)] = (inspected, await environmentSignature(), .now)
+        }
+    }
+
+    func findings(skillID: HanlinSkillID, path: String?, catalog: HanlinSkillCatalog = .shared) -> [SkillSyntaxFinding] {
+        ([path].compactMap { $0 } + ["requirements.txt", "pyproject.toml", "package.json"]).flatMap { file in
+            guard let url = catalog.resolveResourceURL(skillID: skillID, relativePath: file),
+                  let bytes = try? Data(contentsOf: url) else { return [] as [SkillSyntaxFinding] }
+            return analyses[analysisKey(path: file, bytes: bytes)]?.findings ?? []
         }
     }
 

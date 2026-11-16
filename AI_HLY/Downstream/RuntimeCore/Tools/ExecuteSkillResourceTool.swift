@@ -191,7 +191,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                   plan.action.actionFingerprint == SkillRuntimeRequirements.digest(Data(scriptContent.utf8)),
                   (catalog ?? .shared).resolveResourceURL(skillID: skillID, relativePath: cleanPath) == resourceURL,
                   SkillRuntimeRequirements.digest(try Data(contentsOf: resourceURL)) == plan.action.actionFingerprint,
-                  (catalog ?? .shared).markdownDocument(for: skillID).map({ SkillRuntimeRequirements.digest($0.originalSource) }) == plan.action.sourceFingerprint,
+                  try await SkillRuntimeService.shared.sourceFingerprint(skillID: skillID, catalog: catalog ?? .shared, store: store ?? .shared) == plan.action.sourceFingerprint,
                   (store ?? .shared).isSkillEnabled(id: skillID), session.isSkillLoaded(skillID) else {
                 throw HanlinHostServiceError.invalidRequest("Skill requirements are not verified for this engine. Recheck compatibility in Skill Center.")
             }
@@ -225,7 +225,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             // Retain Skill identity and legacy capability metadata; the host applies its autonomous policy.
             let skillCallContext = HanlinHostCallContext.forSkill(
                 skillID: skillID,
-                capabilities: [requiredCapability, "files"],
+                capabilities: [selectedKind == .javaScriptCore ? "runtime.javascript" : requiredCapability, "files"],
                 workspaceIdentifier: workspaceID,
                 sessionID: try HanlinAppSessionID(validating: session.id.uuidString.lowercased())
             )

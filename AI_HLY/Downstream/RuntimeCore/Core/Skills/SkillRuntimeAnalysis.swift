@@ -12,9 +12,11 @@ enum SkillRuntimeAnalysis {
         try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: workspace) }
         let result: RuntimeExecutionResult
-        if ext == "py" {
+        if ["requirements.txt", "pyproject.toml"].contains((path as NSString).lastPathComponent) {
+            result = try await AppRuntimeCore.shared.python.analyzeSkillManifest(payload: payload, workspace: workspace)
+        } else if ext == "py" {
             result = try await AppRuntimeCore.shared.python.analyzeSkillSyntax(payload: payload, workspace: workspace)
-        } else if ["js", "mjs", "cjs", "ts"].contains(ext) {
+        } else if ["js", "mjs", "cjs", "ts"].contains(ext) || (path as NSString).lastPathComponent == "package.json" {
             result = try await AppRuntimeCore.shared.node.analyzeSkillSyntax(payload: payload, workspace: workspace)
         } else { throw RuntimeCoreError.invalidRequest("No original syntax helper for this language") }
         try Task.checkCancellation()

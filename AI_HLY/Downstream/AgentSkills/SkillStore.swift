@@ -266,6 +266,29 @@ public final class SkillStore {
         return result.sorted(by: { $0.relativePath < $1.relativePath })
     }
 
+    /// Integrity inventory for execution receipts. Includes hidden and metadata files;
+    /// the visible resource list intentionally has different presentation filtering.
+    func sourceResourceURLs(for skillID: HanlinSkillID) throws -> [(String, URL)] {
+        guard let base = directoryURL(for: skillID) else { return [] }
+        let keys: Set<URLResourceKey> = [.isRegularFileKey, .isDirectoryKey, .isSymbolicLinkKey]
+        guard let files = fileManager.enumerator(at: base, includingPropertiesForKeys: Array(keys)) else {
+            throw SkillImportError.stagingFailed("Unable to inspect Skill sources.")
+        }
+        var result: [(String, URL)] = []
+        for case let url as URL in files {
+            let values = try url.resourceValues(forKeys: keys)
+            guard values.isSymbolicLink != true else { throw SkillImportError.stagingFailed("Symbolic Skill sources are not executable.") }
+            if values.isDirectory == true { continue }
+            guard values.isRegularFile == true, result.count < 512 else {
+                throw SkillImportError.stagingFailed("Unsupported Skill source or source file budget exceeded.")
+            }
+            let prefix = base.standardizedFileURL.path + "/"
+            guard url.standardizedFileURL.path.hasPrefix(prefix) else { throw SkillImportError.stagingFailed("Invalid Skill source path.") }
+            result.append((String(url.standardizedFileURL.path.dropFirst(prefix.count)), url))
+        }
+        return result.sorted { $0.0 < $1.0 }
+    }
+
     // MARK: - Mutations
 
     public func saveCustomSkill(

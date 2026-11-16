@@ -46,12 +46,12 @@ enum SkillRuntimeRequirements {
     static func action(skillID: String, document: SkillMarkdownDocument, path: String?,
                        bytes: Data, engine: C.EngineID?, arguments: [String],
                        environmentID: String, syntax: SkillSyntaxReport? = nil,
-                       openClawKnown: Bool = false) throws -> C.Action {
-        let sourceHash = digest(document.originalSource)
+                       openClawKnown: Bool = false, packageFingerprint: String? = nil) throws -> C.Action {
+        let sourceHash = packageFingerprint ?? digest(document.originalSource)
         let actionHash = digest(bytes)
         let evidence = C.SourceEvidence(kind: .declared, producer: "HanlinSkillFormat/Yams",
             producerVersion: "6.2.2", sourceID: skillID, sourceVersion: nil,
-            sourceFingerprint: sourceHash, observedAt: nil, artifactReference: "SKILL.md")
+            sourceFingerprint: digest(document.originalSource), observedAt: nil, artifactReference: "SKILL.md")
         var requirements: [C.SkillRequirement] = []
         var complete = document.findings.isEmpty && (path == nil || syntax != nil)
         func add(_ kind: C.RequirementKind, _ name: String) {
@@ -102,6 +102,7 @@ enum SkillRuntimeRequirements {
                     switch finding.kind {
                     case .moduleReference: add(.module, value)
                     case .command: add(.command, value)
+                    case .dependencyDeclaration: add(.unknown, "declared: " + value); complete = false
                     default: break
                     }
                 }

@@ -1,6 +1,41 @@
 import Foundation
+import CryptoKit
 
 actor PythonRuntimeService {
+    /// Original requirements/TOML helper and pinned packaging parser only. No Skill
+    /// path is added to sys.path and no declaration is installed or imported.
+    func analyzeSkillManifest(payload: Data, workspace: URL) async throws -> RuntimeExecutionResult {
+        guard let helperURL = Bundle.main.url(forResource: "hanlin_python_manifest", withExtension: "py"),
+              let wheel = Bundle.main.url(forResource: "packaging-26.3-py3-none-any", withExtension: "whl") else {
+            throw RuntimeCoreError.invalidRequest("Bundled original manifest parser unavailable")
+        }
+        let wheelBytes = try Data(contentsOf: wheel)
+        let hash = SHA256.hash(data: wheelBytes).map { String(format: "%02x", $0) }.joined()
+        guard hash == "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c" else {
+            throw RuntimeCoreError.invalidDependencyManifest
+        }
+        let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+        let helper = try String(contentsOf: helperURL, encoding: .utf8)
+        let source = helper + """
+
+        import json, base64, os
+        _wheel = \(try literal(wheel.path))
+        for _name, _module in list(sys.modules.items()):
+            if _name == 'packaging' or _name.startswith('packaging.'):
+                if not str(getattr(_module, '__file__', '')).startswith(_wheel + '/'):
+                    raise RuntimeError('Untrusted packaging module origin')
+        sys.path.insert(0, _wheel)
+        import packaging
+        from packaging.requirements import Requirement
+        if packaging.__version__ != '26.3' or not packaging.__file__.startswith(_wheel + '/'):
+            raise RuntimeError('Original packaging provenance mismatch')
+        _input = json.loads(base64.b64decode(\(try literal(payload.base64EncodedString()))))
+        _report = analyze_python_manifest(_input['file'], base64.b64decode(_input['base64']), requirement_parser=Requirement, packaging_version=packaging.__version__)
+        print(json.dumps(_report))
+        """
+        return try await execute(.init(source: source, workspace: workspace))
+    }
+
     private struct BridgeResponse: Decodable {
         let stdout: String?
         let stderr: String?
