@@ -207,6 +207,7 @@ struct SettingsView: View {
                     }
                 }
             }
+            .accessibilityIdentifier("hanlin-settings-list")
             .navigationTitle(String(localized: "设置"))
             .onAppear {
                 nativeAssistantToolGroups = NativeToolCatalog.shared.settingsGroups()

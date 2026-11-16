@@ -689,8 +689,24 @@ final class HanlinSkillCenterUITests: XCTestCase {
     private func openSkillCenter() {
         XCTAssertTrue(selectSettingsTab(), "Failed to navigate to Settings tab")
         let skillCenterLink = app.descendants(matching: .any)["hanlin-skill-center-link"].firstMatch
-        if !skillCenterLink.waitForExistence(timeout: 5) {
-            app.swipeUp()
+        let settings = app.descendants(matching: .any)["hanlin-settings-list"].firstMatch
+        for attempt in 0..<2 {
+            if skillCenterLink.waitForExistence(timeout: 5) && skillCenterLink.isHittable {
+                tapElement(skillCenterLink)
+                return
+            }
+            if settings.exists && settings.isHittable { settings.swipeUp() }
+            if skillCenterLink.exists && skillCenterLink.isHittable {
+                tapElement(skillCenterLink)
+                return
+            }
+            if attempt == 0 {
+                // Native TabView can still expose the outgoing tab's AX snapshot
+                // during a transition. Revisit the actual tabs, never tap an
+                // offscreen Settings link through that stale snapshot.
+                XCTAssertTrue(selectTab(identifier: "hanlin-home-tab", labels: ["List", "Chats"]))
+                XCTAssertTrue(selectSettingsTab())
+            }
         }
         XCTAssertTrue(skillCenterLink.waitForExistence(timeout: 10), "Skill Center link not found in Settings")
         tapElement(skillCenterLink)
@@ -731,10 +747,13 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
     private func tapElement(_ element: XCUIElement, file: StaticString = #filePath, line: UInt = #line) {
         for _ in 0..<6 where !element.isHittable {
-            let containers = ["hanlin-skill-detail-list", "hanlin-skill-center-list", "hanlin-skill-import-preview-list"]
+            let containers = ["hanlin-skill-detail-list", "hanlin-skill-center-list", "hanlin-skill-import-preview-list", "hanlin-settings-list"]
             guard let list = containers.map({ app.descendants(matching: .any)[$0].firstMatch })
                 .first(where: { $0.exists && $0.isHittable }) else { break }
-            list.swipeUp()
+            let above = element.exists && element.frame.maxY < list.frame.minY
+            let start = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.3 : 0.7))
+            let end = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.7 : 0.3))
+            start.press(forDuration: 0.1, thenDragTo: end)
         }
         let hittable = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
             element.exists && element.isHittable
