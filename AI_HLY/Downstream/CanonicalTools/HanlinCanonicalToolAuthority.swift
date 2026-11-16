@@ -219,6 +219,7 @@ struct HanlinCanonicalToolAuthority {
   let backendRouteIndex: HanlinCanonicalToolBackendRouteIndex
   let modelSchemas: [[String: Any]]
   let schemasByAlias: [String: [String: Any]]
+  var originalInputSchemasByAlias: [String: Data] = [:]
 
   var backendRoutes: [BackendRouteEntry] {
     routingTable.routes.compactMap { route in
@@ -522,13 +523,20 @@ struct HanlinCanonicalToolAuthority {
     for item in resolved {
       schemasByAlias[item.alias] = item.modelSchema
     }
-    return Self(
+    var authority = Self(
       catalog: catalog,
       routingTable: routingTable,
       backendRouteIndex: backendRouteIndex,
       modelSchemas: resolved.map(\.modelSchema),
       schemasByAlias: schemasByAlias
     )
+    for item in resolved {
+      if case .mcp(let serverID, let name) = item.candidate.backend,
+         let original = mcpTools.first(where: { $0.serverID == serverID && $0.originalName == name && $0.originalInputSchemaVerified == true }) {
+        authority.originalInputSchemasByAlias[item.alias] = original.inputSchemaJSON
+      }
+    }
+    return authority
   }
 
   private struct Candidate {

@@ -100,6 +100,7 @@ actor MCPClientSession {
     }
 
     private func loadTools() async throws -> [MCPToolDescriptor] {
+        await transport.beginSchemaObservation()
         var result: [Tool] = []
         var cursor: String?
         repeat {
@@ -108,13 +109,15 @@ actor MCPClientSession {
             cursor = page.nextCursor
         } while cursor != nil
 
-        return try result.map { tool in
+        var descriptors: [MCPToolDescriptor] = []
+        for tool in result {
             let exposed = MCPToolNameCodec.exposedName(
                 serverSlug: server.slug,
                 toolName: tool.name,
                 discriminator: "\(server.id.uuidString):\(tool.name)"
             )
-            return MCPToolDescriptor(
+            let originalSchema = await transport.originalSchema(toolName: tool.name)
+            descriptors.append(MCPToolDescriptor(
                 serverID: server.id,
                 serverSlug: server.slug,
                 serverDisplayName: server.displayName,
@@ -122,9 +125,11 @@ actor MCPClientSession {
                 exposedName: exposed,
                 title: tool.title,
                 summary: tool.description,
-                inputSchemaJSON: try JSONEncoder().encode(tool.inputSchema)
-            )
+                inputSchemaJSON: try originalSchema ?? JSONEncoder().encode(tool.inputSchema),
+                originalInputSchemaVerified: originalSchema != nil
+            ))
         }
+        return descriptors
     }
 
     private func finishDisconnect() {

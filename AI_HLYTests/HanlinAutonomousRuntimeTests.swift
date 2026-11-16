@@ -2,6 +2,7 @@ import Foundation
 import CryptoKit
 import HanlinExpoNativeAPI
 import HanlinPlatformContracts
+import HanlinSkillFormat
 import Testing
 @testable import AI_Hanlin
 
@@ -67,6 +68,7 @@ struct HanlinAutonomousRuntimeTests {
         catalog.register(
             skill: try HanlinSkillDescriptor(id: skillID, title: "Runtime Probe", summary: "Canonical resource", instructions: .inline("Read, then execute the resource.")),
             tier: .installedPackage,
+            markdownDocument: try SkillDocumentParser.parse(Data("---\nname: \(skillID.rawValue)\ndescription: Canonical runtime probe\n---\nRead then execute".utf8)),
             resourceResolver: { path in path == relativePath ? file : nil }
         )
         let session = AssistantCapabilitySession()
@@ -83,10 +85,12 @@ struct HanlinAutonomousRuntimeTests {
             "skill_id": skillID.rawValue, "relative_path": relativePath,
             "arguments": [nonce, "עברית"], "timeout_seconds": 60
         ])
-        let result = await ExecuteSkillResourceTool(catalog: catalog).execute(
+        let result = await SkillRuntimeAuthorization.$approved.withValue(true) {
+            await ExecuteSkillResourceTool(catalog: catalog).execute(
             argumentsJSON: String(decoding: arguments, as: UTF8.self),
             context: NativeToolExecutionContext(localeIdentifier: "he", toolCallID: "same-call-id", capabilitySession: session)
         )
+        }
         #expect(result.outcome == .succeeded, "\(fileExtension): \(result.modelText)")
         #expect(result.modelText.contains("SKILL_EXECUTED=\(nonce)"))
         #expect(FileManager.default.fileExists(atPath: sentinel.path), "The actual runtime must execute the resource")

@@ -149,6 +149,9 @@ actor RuntimeEnvironmentStore {
 
     /// Requested scope order is precedence, independent of saved-item ordering.
     func resolved(scopes: [RuntimeEnvironmentScope], overrides: [String: String] = [:]) async throws -> [String: String] {
+        // Imported code receives only its explicit invocation environment. Shared Keychain
+        // values and another engine's configured secrets are never implicitly inherited.
+        if overrides["SKILL_ID"] != nil { return try RuntimePolicy.validatedEnvironment(overrides) }
         var result: [String: String] = [:]
         let all = try items()
         for scope in scopes {

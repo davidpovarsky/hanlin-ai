@@ -413,6 +413,22 @@ actor NodeRuntimeService {
         return try await connection.decode(RuntimeJSONValue.self, path: "/v1/runtime/capabilities")
     }
 
+    /// Trusted parser and actual pinned Host compiler only; payload contains data, never code.
+    func analyzeSkillSyntax(payload: Data, workspace: URL) async throws -> RuntimeExecutionResult {
+        guard let helper = Bundle.main.url(forResource: "hanlin_typescript_ast", withExtension: "mjs") else {
+            throw RuntimeCoreError.invalidRequest("Bundled TypeScript syntax helper unavailable")
+        }
+        let compiler = try prepareHostRuntime().appending(path: "node_modules/typescript/lib/typescript.js")
+        let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+        let source = """
+        import ts from \(try literal(compiler.absoluteString));
+        import {analyzeTypeScriptSource} from \(try literal(helper.absoluteString));
+        const input = JSON.parse(Buffer.from(\(try literal(payload.base64EncodedString())), 'base64').toString('utf8'));
+        console.log(JSON.stringify(analyzeTypeScriptSource(ts, {file:input.file, utf8:Buffer.from(input.base64,'base64')})));
+        """
+        return try await executeJavaScript(.init(source: source, workspace: workspace))
+    }
+
     /// Uses the same Node job/stdio/journal path. External commands require the
     /// command broker; built-in portable-shell operations execute in the Worker.
     func validatePackage(name: String, packageRoot: URL, workspace: URL) async throws -> RuntimeExecutionResult {

@@ -1448,6 +1448,7 @@ struct ChatViewBottom: View {
         } message: {
             Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。")
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-surface")
     }
 

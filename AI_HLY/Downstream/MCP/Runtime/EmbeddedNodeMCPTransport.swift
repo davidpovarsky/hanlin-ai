@@ -1,6 +1,7 @@
 import Foundation
 import Logging
 import MCP
+import HanlinAgentCore
 
 struct MCPTransportTermination: Sendable {
     let message: String
@@ -32,6 +33,14 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
     private var hostStarted = false
     private var continuationFinished = false
     private var terminationFinished = false
+    private var originalSchemas: [String: Data] = [:]
+    private var schemaRequestIDs: Set<Data> = []
+
+    func beginSchemaObservation() { originalSchemas.removeAll(); schemaRequestIDs.removeAll() }
+
+    func originalSchema(toolName: String) -> Data? {
+        originalSchemas[Data(toolName.utf8).base64EncodedString()]
+    }
 
     init(server: MCPServerConfiguration, connection: RuntimeHostConnection) {
         self.server = server
@@ -110,6 +119,11 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
             throw MCPError.runtimeUnavailable("The server transport is disconnected.")
         }
         guard let generation else { throw MCPError.invalidHostResponse }
+        if let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+           object["method"] as? String == "tools/list", let id = object["id"],
+           let key = try? JSONSerialization.data(withJSONObject: ["id": id], options: [.sortedKeys]) {
+            schemaRequestIDs.insert(key)
+        }
         var framed = data
         framed.append(0x0A)
         let id = UUID()
@@ -210,6 +224,15 @@ actor EmbeddedNodeMCPTransport: MCP.Transport {
                 if channel == "stdout",
                    let encoded = event["data"] as? String,
                    let message = Data(base64Encoded: encoded) {
+                    if let object = try? JSONSerialization.jsonObject(with: message) as? [String: Any],
+                       let id = object["id"],
+                       let key = try? JSONSerialization.data(withJSONObject: ["id": id], options: [.sortedKeys]),
+                       schemaRequestIDs.remove(key) != nil,
+                       let schemas = try? HanlinHostSchemaValidation.mcpToolSchemas(responseJSON: message) {
+                        for (name, schema) in schemas {
+                            if originalSchemas.count < 256 || originalSchemas[name] != nil { originalSchemas[name] = schema }
+                        }
+                    }
                     continuation.yield(message)
                 } else if channel == "lifecycle",
                           let eventName = event["event"] as? String,

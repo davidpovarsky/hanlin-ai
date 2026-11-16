@@ -702,6 +702,12 @@ def plan_affected_validation(
         if is_unit:
             selected_groups["app_unit_tests"].append(f"exact selector: {exact_test_selector}")
 
+        # Exact test selection narrows execution, not its bundled implementation inputs.
+        # A changed Host archive must be rebuilt before those app tests consume it.
+        if any("runtimecore_host" in matches for matches in file_to_components.values()):
+            step_outputs["run_runtimecore_host"] = True
+            selected_groups["runtimecore_host"].append("changed original Host/resource inputs required by the selected app tests")
+
         step_outputs["selected_groups"] = ",".join(sorted(selected_groups.keys()))
 
         sim_config = "Release" if "HanlinNativeScriptProductionE2ETests" in exact_test_selector else "Debug"

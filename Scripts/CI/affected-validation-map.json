@@ -1518,6 +1518,33 @@
         "AI_HLYTests/SkillRuntimeProductTests"
       ],
       "consumers": []
+    },
+    "skills_openclaw_original": {
+      "description": "Pinned original OpenClaw requirements and embedded diagnostic payload",
+      "patterns": [
+        "Scripts/Skills/OpenClaw/**"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_host",
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/SkillRuntimeProductTests"
+      ],
+      "consumers": []
+    },
+    "canonical_agent_sdk": {
+      "description": "Canonical SDK Host schemas and source consumers",
+      "patterns": [
+        "Packages/HanlinAgentSDK/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {

@@ -4,9 +4,11 @@ import HanlinPlatformContracts
 struct ExecuteSkillResourceTool: NativeTool {
     let name = "execute_skill_resource"
     private let catalog: HanlinSkillCatalog?
+    private let store: SkillStore?
 
-    init(catalog: HanlinSkillCatalog? = nil) {
+    init(catalog: HanlinSkillCatalog? = nil, store: SkillStore? = nil) {
         self.catalog = catalog
+        self.store = store
     }
 
     var catalogEntry: NativeToolCatalogEntry {
@@ -37,6 +39,7 @@ struct ExecuteSkillResourceTool: NativeTool {
                     "skill_id": NativeToolSchema.string(description: "The unique identifier of the active skill."),
                     "relative_path": NativeToolSchema.string(description: "Relative path to the executable script inside the skill package (e.g. 'scripts/search.py')."),
                     "arguments": NativeToolSchema.stringArray(description: "Command-line arguments after the script name: sys.argv[1:] in Python and process.argv.slice(2) in Node/TypeScript."),
+                    "engine": NativeToolSchema.string(description: "Explicit original engine: node, typeScript, localPython, javaScriptCore or shell. Omit to use the declared resource-language route; availability is always checked."),
                     "timeout_seconds": NativeToolSchema.integer(description: "Optional deadline in seconds. Omit for no deadline; user cancellation and actual errors still stop execution.", minimum: 1)
                 ],
                 required: ["skill_id", "relative_path"]
@@ -45,10 +48,12 @@ struct ExecuteSkillResourceTool: NativeTool {
     }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+        var receiptContext: (SkillRuntimeContract.ExecutionPlan, HanlinSkillID, String, RuntimeKind)?
+        var observedJob: RuntimeJobSnapshot?
         do {
             let arguments = try NativeToolJSON.validatedDictionary(
                 from: argumentsJSON,
-                allowedKeys: ["skill_id", "relative_path", "arguments", "timeout_seconds"]
+                allowedKeys: ["skill_id", "relative_path", "arguments", "timeout_seconds", "engine"]
             )
             let skillIDRaw = try NativeToolJSON.strictRequiredString(arguments, "skill_id")
             let relPath = try NativeToolJSON.strictRequiredString(arguments, "relative_path")
@@ -77,11 +82,15 @@ struct ExecuteSkillResourceTool: NativeTool {
                 )
             }
 
-            guard await MainActor.run(body: { SkillStore.shared.isSkillEnabled(id: skillID) }) else {
+            guard (store ?? SkillStore.shared).isSkillEnabled(id: skillID) else {
                 return RuntimeToolSupport.failure(
                     HanlinHostServiceError.invalidRequest("Skill '\(skillIDRaw)' is currently disabled."),
                     title: "Skill Disabled"
                 )
+            }
+
+            guard SkillRuntimeAuthorization.approved else {
+                throw HanlinHostServiceError.capabilityNotGranted("Skill execution requires one-use user approval in the active chat or Skill Center.")
             }
 
             // Path security validation: reject leading slash, empty, null bytes before normalization
@@ -139,7 +148,8 @@ struct ExecuteSkillResourceTool: NativeTool {
                 )
             }
 
-            // Determine runtime kind from file extension
+            // Resource language selects a route, never readiness. An explicit selection is
+            // checked for compatibility and then verified against the live original engine.
             let ext = resourceURL.pathExtension.lowercased()
             let runtimeKind: RuntimeKind
             let requiredCapability: String
@@ -153,11 +163,37 @@ struct ExecuteSkillResourceTool: NativeTool {
             case "ts":
                 runtimeKind = .typeScript
                 requiredCapability = "runtime.typescript"
+            case "sh", "bash":
+                runtimeKind = .shell
+                requiredCapability = "runtime.shell"
             default:
                 return RuntimeToolSupport.failure(
                     HanlinHostServiceError.invalidRequest("Unsupported script file extension '.\(ext)'. Only .py, .js, and .ts are executable."),
                     title: "Unsupported Runtime"
                 )
+            }
+
+            let selectedKind: RuntimeKind
+            if let explicit = arguments["engine"] as? String {
+                guard let value = RuntimeKind(rawValue: explicit),
+                      value == runtimeKind || (runtimeKind == .node && value == .javaScriptCore && ext == "js") else {
+                    throw HanlinHostServiceError.invalidRequest("The selected engine cannot run this resource language.")
+                }
+                selectedKind = value
+            } else { selectedKind = runtimeKind }
+            _ = try await AppRuntimeCore.shared.ensureStarted(selectedKind)
+            try Task.checkCancellation()
+            try await SkillRuntimeService.shared.analyze(skillID: skillID, path: cleanPath, catalog: catalog ?? .shared)
+            let plan = try await SkillRuntimeService.shared.plan(skillID: skillID, path: cleanPath,
+                engine: SkillRuntimeRequirements.engine(selectedKind), arguments: argv,
+                catalog: catalog ?? .shared, store: store ?? .shared, forExecution: true)
+            guard plan.isExecutable,
+                  plan.action.actionFingerprint == SkillRuntimeRequirements.digest(Data(scriptContent.utf8)),
+                  (catalog ?? .shared).resolveResourceURL(skillID: skillID, relativePath: cleanPath) == resourceURL,
+                  SkillRuntimeRequirements.digest(try Data(contentsOf: resourceURL)) == plan.action.actionFingerprint,
+                  (catalog ?? .shared).markdownDocument(for: skillID).map({ SkillRuntimeRequirements.digest($0.originalSource) }) == plan.action.sourceFingerprint,
+                  (store ?? .shared).isSkillEnabled(id: skillID), session.isSkillLoaded(skillID) else {
+                throw HanlinHostServiceError.invalidRequest("Skill requirements are not verified for this engine. Recheck compatibility in Skill Center.")
             }
 
             // Build isolated per-session/per-run workspace with automatic cleanup
@@ -194,23 +230,45 @@ struct ExecuteSkillResourceTool: NativeTool {
                 sessionID: try HanlinAppSessionID(validating: session.id.uuidString.lowercased())
             )
 
-            let result = try await AgentHostServicesAdapter.executeRuntime(
-                runtimeKind,
+            receiptContext = (plan, skillID, cleanPath, selectedKind)
+            try Task.checkCancellation()
+            let priorReporter = RuntimeJobProgress.reporter
+            let result = try await RuntimeJobProgress.$reporter.withValue({ job in
+                observedJob = job
+                await priorReporter?(job)
+            }) {
+                try await AgentHostServicesAdapter.executeRuntime(
+                selectedKind,
                 source: scriptContent,
                 arguments: argv,
                 environment: scriptEnv,
                 limits: executionLimits,
                 context: skillCallContext
-            )
+                )
+            }
+
+            try SkillRuntimeService.shared.record(result, plan: plan, skillID: skillID, path: cleanPath, store: store ?? .shared)
 
             return RuntimeToolSupport.result(
                 result,
                 title: "Skill Resource: \(components.last ?? "")",
                 systemImage: "terminal",
-                runtimeKind: runtimeKind,
+                runtimeKind: selectedKind,
                 argumentKeys: Array(arguments.keys)
             )
         } catch {
+            // Observation cancellation never replays source. Preserve an actual settled Node
+            // cancellation receipt from the existing journal, including partial output.
+            if let (plan, id, path, kind) = receiptContext, kind == .node, let observedJob,
+               error is CancellationError || Task.isCancelled {
+                let result = await Task { @MainActor in
+                    await AppRuntimeCore.shared.node.cancelExecution(id: observedJob.executionID)
+                    return try? await AppRuntimeCore.shared.jobs.snapshot(id: observedJob.executionID, kind: kind)?.result
+                }.value
+                if let result {
+                    try? SkillRuntimeService.shared.record(result, plan: plan, skillID: id, path: path, store: store ?? .shared)
+                }
+            }
             return RuntimeToolSupport.failure(error, title: "Skill resource execution failed")
         }
     }

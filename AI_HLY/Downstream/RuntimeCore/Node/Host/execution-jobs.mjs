@@ -374,7 +374,10 @@ export class ExecutionJobs {
     const workerURL = body.environment?.HANLIN_NODE_TRACE_WARNINGS === '1' && this.diagnosticWorkerURL ? this.diagnosticWorkerURL : this.workerURL;
     // User values are applied inside the loaded context, not interpreted as
     // NODE_OPTIONS/PYTHONHOME/etc while bootstrapping the shared runtime.
-    const environment = { ...this.workerEnvironment };
+    const skillExecution = typeof body.environment?.SKILL_ID === 'string';
+    const environment = skillExecution
+      ? Object.fromEntries(['PATH','LANG','LC_ALL'].filter(key => this.workerEnvironment[key] !== undefined).map(key => [key,this.workerEnvironment[key]]))
+      : { ...this.workerEnvironment };
     if (cli) {
       // Internal bootstrap is separate from the CLI's user environment. A job
       // cannot replace the preload needed to establish its virtual cwd.
@@ -390,7 +393,7 @@ export class ExecutionJobs {
     const startGate = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT);
     let worker;
     try { worker = new Worker(cli ? entryPoint : workerURL, {
-      workerData: { hanlinManagedExecution: true, launchNodeOptions: this.workerEnvironment.NODE_OPTIONS,
+      workerData: { hanlinManagedExecution: true, launchNodeOptions: skillExecution ? undefined : this.workerEnvironment.NODE_OPTIONS,
         executionID:header.executionID,
         entryPoint, executionMode: body.executionMode, workspace: body.workspace, moduleKind: body.moduleKind,
         arguments: body.arguments ?? [], environment: body.environment ?? {}, maximumOutputBytes: previewBytes,

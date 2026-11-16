@@ -1,0 +1,144 @@
+import Foundation
+import HanlinPlatformContracts
+
+/// Runtime05's application accessor. The original catalog/store/engines/job scheduler
+/// remain authoritative. Rendering plans performs no engine start or script execution.
+@MainActor
+final class SkillRuntimeService {
+    static let shared = SkillRuntimeService()
+    typealias C = SkillRuntimeContract
+
+    struct Receipt: Codable, Sendable {
+        enum Status: String, Codable { case executionPass = "EXECUTION_PASS", failed = "FAILED", cancelled = "CANCELLED" }
+        let status: Status
+        let test: C.ExecutionTest?
+        let result: RuntimeExecutionResult
+        let recordedAt: Date
+    }
+
+    private let registry: SkillRuntimeRegistry
+    private let bash = BashSkillSyntaxAnalyzer()
+    private var analyses: [String: SkillSyntaxReport] = [:]
+    private var eligibility: [String: (SkillRuntimeOpenClaw.Report, String, Date)] = [:]
+
+    private func environmentSignature() async -> String {
+        let values = await AppRuntimeCore.shared.snapshots().map {
+            $0.kind.rawValue + ":" + ($0.version ?? "unknown") + ":" + String([.ready, .executing].contains($0.state))
+        }
+        return SkillRuntimeRequirements.digest(Data(values.joined(separator: "\n").utf8))
+    }
+
+    init() {
+        // Static, trusted original engine registrations, never supplied by imported metadata.
+        do {
+            registry = try SkillRuntimeRegistry(providers: RuntimeKind.allCases.map {
+                SkillRuntimeFactsProvider(engineID: SkillRuntimeRequirements.engine($0))
+            })
+        } catch { preconditionFailure("Original engine identifiers must be unique") }
+    }
+
+    func plan(skillID: HanlinSkillID, path: String? = nil, engine: C.EngineID? = nil,
+              arguments: [String] = [], catalog: HanlinSkillCatalog = .shared,
+              store: SkillStore = .shared, forExecution: Bool = false) async throws -> C.ExecutionPlan {
+        guard let document = catalog.markdownDocument(for: skillID) else { throw RuntimeCoreError.invalidDependencyManifest }
+        let bytes: Data
+        if let path {
+            guard let url = catalog.resolveResourceURL(skillID: skillID, relativePath: path),
+                  try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey]).isRegularFile == true,
+                  try url.resourceValues(forKeys: [.isSymbolicLinkKey]).isSymbolicLink != true else { throw RuntimeCoreError.invalidPath }
+            bytes = try Data(contentsOf: url)
+            guard bytes.count <= 1_048_576 else { throw RuntimeCoreError.invalidRequest("Skill analysis source exceeds 1 MiB.") }
+        } else { bytes = document.originalSource }
+        let syntax: SkillSyntaxReport?
+        if let path, ["sh", "bash"].contains((path as NSString).pathExtension) {
+            syntax = await bash.scan(file: path, utf8: bytes)
+        } else { syntax = analyses[SkillRuntimeRequirements.digest(bytes)] }
+        let sourceHash = SkillRuntimeRequirements.digest(document.originalSource)
+        let signature = await environmentSignature()
+        let upstream = eligibility[sourceHash].flatMap { $0.1 == signature ? $0 : nil }
+        let action = try SkillRuntimeRequirements.action(skillID: skillID.rawValue, document: document,
+            path: path, bytes: bytes, engine: engine, arguments: arguments, environmentID: "skill/" + skillID.rawValue,
+            syntax: syntax, openClawKnown: upstream?.0.known == true)
+        let last = forExecution ? nil : try receipt(skillID: skillID, path: path, store: store)?.test
+        return await registry.plan(action: action, lastTest: last,
+            freshness: .init(notBefore: .now.addingTimeInterval(-86_400), now: .now), supplement: { facts in
+                guard let upstream, upstream.0.known, let binding = facts.binding else { return [] }
+                return [.init(requirement: .init(kind: .capability, name: "openclaw.requirements", versionConstraint: nil),
+                    binding: binding, status: upstream.0.rawUpstreamResult.eligible ? .available : .unsupported,
+                    resolvedVersion: "847611dc/requirements-only", resolvedPath: nil,
+                    evidence: .init(kind: .observed, producer: "OriginalOpenClawRequirements/NodeJob",
+                        producerVersion: "847611dc", sourceID: binding.engineID.rawValue,
+                        sourceVersion: binding.engineVersion, sourceFingerprint: binding.engineFingerprint,
+                        observedAt: upstream.2, artifactReference: nil))]
+            })
+    }
+
+    /// Explicit user action only. Starts the selected ORIGINAL engine, then reads facts.
+    /// This does not execute imported code or turn a plan into execution evidence.
+    func recheck(skillID: HanlinSkillID, path: String?, engine: C.EngineID?,
+                 catalog: HanlinSkillCatalog = .shared, store: SkillStore = .shared) async throws -> C.ExecutionPlan {
+        if let engine {
+            guard let kind = SkillRuntimeRequirements.kind(engine) else { throw RuntimeCoreError.invalidRequest("Engine unavailable") }
+            _ = try await AppRuntimeCore.shared.start(kind)
+        }
+        try Task.checkCancellation()
+        if let path { try await analyze(skillID: skillID, path: path, catalog: catalog) }
+        return try await plan(skillID: skillID, path: path, engine: engine, catalog: catalog, store: store)
+    }
+
+    func analyze(skillID: HanlinSkillID, path: String, catalog: HanlinSkillCatalog = .shared) async throws {
+        guard let url = catalog.resolveResourceURL(skillID: skillID, relativePath: path) else { throw RuntimeCoreError.invalidPath }
+        let bytes = try Data(contentsOf: url)
+        let report = try await SkillRuntimeAnalysis.scan(path: path, bytes: bytes)
+        try Task.checkCancellation()
+        guard catalog.resolveResourceURL(skillID: skillID, relativePath: path) == url,
+              try Data(contentsOf: url) == bytes else { throw RuntimeCoreError.invalidRequest("Skill changed during analysis") }
+        if analyses.count >= 64 { analyses.removeAll() }
+        analyses[SkillRuntimeRequirements.digest(bytes)] = report
+        if let document = catalog.markdownDocument(for: skillID),
+           let inspected = try await SkillRuntimeOpenClaw.inspect(document) {
+            if eligibility.count >= 64 { eligibility.removeAll() }
+            eligibility[SkillRuntimeRequirements.digest(document.originalSource)] = (inspected, await environmentSignature(), .now)
+        }
+    }
+
+    func record(_ result: RuntimeExecutionResult, plan: C.ExecutionPlan,
+                skillID: HanlinSkillID, path: String, store: SkillStore = .shared) throws {
+        let passed = result.exitCode == 0 && !result.wasCancelled && !result.didTimeOut
+        let status: Receipt.Status = result.wasCancelled ? .cancelled : passed ? .executionPass : .failed
+        let test: C.ExecutionTest?
+        if let binding = plan.binding, let invocation = plan.action.invocationFingerprint {
+            test = .init(actionID: plan.action.id, sourceFingerprint: plan.action.sourceFingerprint,
+                actionFingerprint: plan.action.actionFingerprint, invocationFingerprint: invocation,
+                binding: binding, outcome: passed ? .passed : .failed,
+                evidence: .init(kind: .tested, producer: "ExecuteSkillResourceTool/AppRuntimeCore/JobStore",
+                    producerVersion: "1", sourceID: skillID.rawValue, sourceVersion: nil,
+                    sourceFingerprint: plan.action.actionFingerprint, observedAt: .now,
+                    artifactReference: result.executionID.uuidString))
+        } else { test = nil }
+        let receipt = Receipt(status: status, test: test, result: result, recordedAt: .now)
+        let url = receiptURL(skillID: skillID, path: path, store: store)
+        try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try JSONEncoder().encode(receipt).write(to: url, options: [.atomic, .completeFileProtection])
+    }
+
+    func receipt(skillID: HanlinSkillID, path: String?, store: SkillStore = .shared) throws -> Receipt? {
+        guard let path else { return nil }
+        let url = receiptURL(skillID: skillID, path: path, store: store)
+        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        return try JSONDecoder().decode(Receipt.self, from: Data(contentsOf: url))
+    }
+
+    private func receiptURL(skillID: HanlinSkillID, path: String, store: SkillStore) -> URL {
+        // Outside imported trees. Imported archives cannot supply a forged historical receipt.
+        let key = SkillRuntimeRequirements.digest(Data((skillID.rawValue + "\0" + path).utf8))
+        return store.rootDirectoryURL.appending(path: "execution-evidence", directoryHint: .isDirectory)
+            .appending(path: key + ".json")
+    }
+}
+
+/// Carried only by the authorized original Host invocation or the explicit Run button.
+/// Imported metadata and historical transcripts cannot manufacture a live approval.
+enum SkillRuntimeAuthorization {
+    @TaskLocal static var approved = false
+}

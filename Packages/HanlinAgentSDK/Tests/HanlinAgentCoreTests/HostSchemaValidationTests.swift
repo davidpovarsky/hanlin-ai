@@ -26,6 +26,20 @@ private actor RawBoundaryHost: HanlinHostIntegration {
 }
 
 @Suite struct HostSchemaValidationTests {
+    @Test func originalMCPWireSchemasPreserveExactNumbersAndScalarKeys() throws {
+        let response = Data(#"{"jsonrpc":"2.0","id":1,"result":{"tools":[{"name":"exact","inputSchema":{"type":"object","properties":{"n":{"const":9007199254740993},"é":{"type":"string"},"é":{"type":"number"}}}}]}}"#.utf8)
+        let schemas = try HanlinHostSchemaValidation.mcpToolSchemas(responseJSON: response)
+        let data = try #require(schemas[Data("exact".utf8).base64EncodedString()])
+        let plan = try HanlinHostSchemaValidation(schemaJSON: data)
+        try plan.validate(argumentsJSON: Data(#"{"n":9007199254740993,"é":"text","é":5}"#.utf8))
+        #expect(throws: (any Error).self) { try plan.validate(argumentsJSON: Data(#"{"n":9007199254740992,"é":"text","é":5}"#.utf8)) }
+    }
+
+    @Test func originalMCPWireRejectsRepeatedNamesAndNonSchemaResponsesDoNotRegister() throws {
+        let repeated = Data(#"{"result":{"tools":[{"name":"x","inputSchema":{}},{"name":"x","inputSchema":{}}]}}"#.utf8)
+        #expect(throws: (any Error).self) { try HanlinHostSchemaValidation.mcpToolSchemas(responseJSON: repeated) }
+        #expect(try HanlinHostSchemaValidation.mcpToolSchemas(responseJSON: Data(#"{"method":"notifications/tools/list_changed"}"#.utf8)).isEmpty)
+    }
     private func bytes(_ value: String) -> Data { Data(value.utf8) }
     private func validator(_ schema: String) throws -> HanlinHostSchemaValidation { try .init(schemaJSON: bytes(schema)) }
 

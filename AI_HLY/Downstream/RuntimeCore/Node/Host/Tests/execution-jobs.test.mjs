@@ -382,3 +382,18 @@ test('user PATH HOME and NODE_OPTIONS apply to the job without reconfiguring Wor
   assert.match(completed.result.stdout,/JOB_ENV_WITHOUT_BOOTSTRAP_RECONFIGURATION/);
   assert.equal(process.env.NODE_OPTIONS,original);
 });
+
+test('approved Skill job does not inherit host secrets and keeps its explicit environment', async t => {
+  const key='HANLIN_PHASE2_HOST_ONLY_SENTINEL';
+  const before=process.env[key];process.env[key]='host-only-fixture';
+  t.after(()=>{if(before===undefined)delete process.env[key];else process.env[key]=before;});
+  const {jobs,body}=await fixture(t);
+  const header=await jobs.start({...body,environment:{SKILL_ID:'phase2-fixture',EXPLICIT_SKILL_VALUE:'visible'},
+    source:`if(process.env.${key}!==undefined)throw Error('host environment escaped');
+      if(process.env.EXPLICIT_SKILL_VALUE!=='visible')throw Error('explicit environment lost');
+      console.log('SKILL_ENV_ISOLATED');`});
+  const finished=await jobs.wait(header.executionID);
+  assert.equal(finished.state,'completed',finished.result?.stderr);
+  assert.match(finished.result.stdout,/SKILL_ENV_ISOLATED/);
+  assert.equal(process.env[key],'host-only-fixture');
+});

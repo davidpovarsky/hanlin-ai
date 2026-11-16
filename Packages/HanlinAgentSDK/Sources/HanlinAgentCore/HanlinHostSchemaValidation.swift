@@ -37,6 +37,26 @@ public struct HanlinHostSchemaValidation: Sendable {
         try Task.checkCancellation()
     }
 
+    /// Capture exact schema values at the original MCP wire boundary, before MCP.Value
+    /// or Foundation dictionaries can round numbers or coalesce Unicode keys.
+    /// Keys are base64 UTF-8 tool names, preserving scalar spelling across Swift dictionaries.
+    public static func mcpToolSchemas(responseJSON: Data) throws -> [String: Data] {
+        let root = try parse(responseJSON)
+        guard case .object(let envelope) = root,
+              case .object(let result)? = envelope["result"],
+              case .array(let tools)? = result["tools"] else { return [:] }
+        guard tools.count <= 256 else { throw Failure.inputTooLarge }
+        var schemas: [String: Data] = [:]
+        for item in tools {
+            guard case .object(let tool) = item, case .string(let name)? = tool["name"],
+                  !name.isEmpty, let schema = tool["inputSchema"] else { throw Failure.invalidArguments }
+            let key = Data(name.utf8).base64EncodedString()
+            guard schemas[key] == nil else { throw Failure.invalidArguments }
+            schemas[key] = try JSONWriter().write(schema)
+        }
+        return schemas
+    }
+
     /// Proves semantic identity using exact decimals and scalar keys/strings with a finite budget.
     /// Only the named top-level host metadata keys may be removed by the existing executor adapter.
     public static func requireSameValue(originalJSON: Data, projectedJSON: Data,

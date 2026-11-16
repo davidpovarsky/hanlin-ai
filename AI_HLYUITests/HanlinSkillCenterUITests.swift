@@ -106,10 +106,10 @@ final class HanlinSkillCenterUITests: XCTestCase {
         return result == .completed
     }
 
-    private func assertUnknownCompatibility(scope: String, file: StaticString = #filePath, line: UInt = #line) {
+    private func assertUnknownCompatibility(scope: String, expectedStatus: String = "Unknown", file: StaticString = #filePath, line: UInt = #line) {
         let status = app.descendants(matching: .any)["hanlin-skill-\(scope)-compatibility-status"].firstMatch
         XCTAssertTrue(status.waitForExistence(timeout: 5), file: file, line: line)
-        let unknown = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "Unknown"), object: status)
+        let unknown = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", expectedStatus), object: status)
         XCTAssertEqual(XCTWaiter.wait(for: [unknown], timeout: 5), .completed, file: file, line: line)
         let lastTested = app.descendants(matching: .any)["hanlin-skill-\(scope)-compatibility-last-tested"].firstMatch
         XCTAssertTrue(lastTested.waitForExistence(timeout: 5), file: file, line: line)
@@ -160,13 +160,13 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(createdRow)
 
         // 3. Disable
-        assertUnknownCompatibility(scope: "detail")
+        assertUnknownCompatibility(scope: "detail", expectedStatus: "PARSE_ONLY")
         let enableToggle = skillDetailToggle()
         XCTAssertTrue(enableToggle.waitForExistence(timeout: 10), "Enable toggle not found in detail view")
         XCTAssertTrue(isToggleOn(enableToggle), "Skill should initially be enabled")
         tapToggle(enableToggle)
         XCTAssertTrue(waitForToggle(enableToggle, toBe: false, timeout: 10), "Skill should be toggled off")
-        assertUnknownCompatibility(scope: "detail")
+        assertUnknownCompatibility(scope: "detail", expectedStatus: "PARSE_ONLY")
 
         // 4. Leave and reopen to assert disabled persisted
         let backButton = app.navigationBars.buttons.firstMatch
@@ -183,7 +183,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         // 5. Re-enable
         tapToggle(reopenedToggle)
         XCTAssertTrue(waitForToggle(reopenedToggle, toBe: true, timeout: 10), "Skill should be re-enabled")
-        assertUnknownCompatibility(scope: "detail")
+        assertUnknownCompatibility(scope: "detail", expectedStatus: "PARSE_ONLY")
 
         // 6. Edit
         let editButton = app.buttons["hanlin-skill-detail-edit-button"].firstMatch
@@ -363,10 +363,10 @@ final class HanlinSkillCenterUITests: XCTestCase {
         if !importedRow.waitForExistence(timeout: 5) { app.swipeUp() }
         XCTAssertTrue(importedRow.waitForExistence(timeout: 10), "Imported skill row not found in catalog")
         tapElement(importedRow)
-        assertUnknownCompatibility(scope: "detail")
+        assertUnknownCompatibility(scope: "detail", expectedStatus: "PARSE_ONLY")
     }
 
-    func testImportInstructionOnlyMarkdownKeepsCompatibilityUnknown() throws {
+    func testImportInstructionOnlyMarkdownShowsParseOnlyWithoutExecution() throws {
         openSkillCenter()
         tapElement(app.buttons["hanlin-skill-center-import-button"].firstMatch)
         let install = stageMarkdownFixture()
@@ -374,7 +374,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         let row = app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(markdownFixtureID)"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 10))
         tapElement(row)
-        assertUnknownCompatibility(scope: "detail")
+        assertUnknownCompatibility(scope: "detail", expectedStatus: "PARSE_ONLY")
         let toggle = skillDetailToggle()
         XCTAssertTrue(toggle.waitForExistence(timeout: 5))
         XCTAssertTrue(isToggleOn(toggle))

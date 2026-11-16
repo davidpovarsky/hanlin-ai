@@ -26,6 +26,32 @@ actor PythonRuntimeService {
         self.jobs = jobs ?? RuntimeJobStore(fileLayout: fileLayout)
     }
     func snapshot() -> RuntimeSnapshot { snapshotValue }
+
+    private(set) var observedSkillAnalysisModules: [String] = []
+
+    /// Trusted parser imports occur before inspecting user bytes and outside Skill paths.
+    func analyzeSkillSyntax(payload: Data, workspace: URL) async throws -> RuntimeExecutionResult {
+        guard let url = Bundle.main.url(forResource: "hanlin_python_ast", withExtension: "py") else {
+            throw RuntimeCoreError.invalidRequest("Bundled Python syntax helper unavailable")
+        }
+        let helper = try String(contentsOf: url, encoding: .utf8)
+        let literal = String(decoding: try JSONEncoder().encode(payload.base64EncodedString()), as: UTF8.self)
+        let source = helper + """
+
+        import json, base64, os
+        _hanlin = json.loads(base64.b64decode(\(literal)))
+        _report = analyze_python_source(_hanlin['file'], base64.b64decode(_hanlin['base64']))
+        _report['observedTrustedModules'] = ['sys', 'ast', 'hashlib', 'time', 'json', 'base64', 'os']
+        print(json.dumps(_report))
+        """
+        let result = try await execute(.init(source: source, workspace: workspace))
+        if result.exitCode == 0,
+           let value = try? JSONSerialization.jsonObject(with: Data(result.stdout.utf8)) as? [String: Any],
+           let names = value["observedTrustedModules"] as? [String] {
+            observedSkillAnalysisModules = names
+        }
+        return result
+    }
     func prepare() throws -> RuntimeSnapshot {
         try fileLayout.prepareIfNeeded()
         let version = try PythonRuntimeBridge.version()

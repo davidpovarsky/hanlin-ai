@@ -16,6 +16,25 @@ RUNNER = Path(__file__).resolve().parents[3] / "AI_HLY/Downstream/RuntimeCore/Py
 
 
 class PythonExecutionTests(unittest.TestCase):
+    def test_skill_environment_is_explicit_and_host_is_restored_after_success_and_error(self):
+        key = "HANLIN_PHASE2_HOST_ONLY_SENTINEL"
+        before = os.environ.get(key)
+        os.environ[key] = "host-only-fixture"
+        try:
+            for fail in (False, True):
+                source = "import os\nassert '" + key + "' not in os.environ\nassert os.environ['EXPLICIT_SKILL_VALUE'] == 'visible'\nprint('SKILL_ENV_ISOLATED')\n"
+                if fail:
+                    source += "raise ValueError('EXPECTED_SKILL_FAILURE')\n"
+                result = self.execute(source, environment={"SKILL_ID": "phase2-fixture", "EXPLICIT_SKILL_VALUE": "visible"})
+                self.assertIn("SKILL_ENV_ISOLATED", result["stdout"])
+                self.assertEqual(result["exitCode"], 1 if fail else 0)
+                self.assertEqual(os.environ[key], "host-only-fixture")
+        finally:
+            if before is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = before
+
     @classmethod
     def setUpClass(cls):
         # Compile the actual production thread-state owner, not a mocked list of

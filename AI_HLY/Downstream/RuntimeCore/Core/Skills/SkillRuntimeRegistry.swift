@@ -83,10 +83,13 @@ struct SkillRuntimeRegistry: Sendable {
     }
 
     func plan(action: C.Action, lastTest: C.ExecutionTest? = nil,
-              freshness: C.Freshness) async -> C.ExecutionPlan {
+              freshness: C.Freshness,
+              supplement: (@Sendable (C.EngineFacts) -> [C.CapabilityFact])? = nil) async -> C.ExecutionPlan {
         let facts: C.EngineFacts?
         if action.kind != .instructions, let engine = action.engineID, let provider = providers[engine] {
-            facts = await provider.snapshot(environmentID: action.environmentID)
+            let observed = await provider.snapshot(environmentID: action.environmentID)
+            facts = .init(engineID: observed.engineID, binding: observed.binding,
+                facts: observed.facts + (supplement?(observed) ?? []))
         } else {
             facts = nil
         }

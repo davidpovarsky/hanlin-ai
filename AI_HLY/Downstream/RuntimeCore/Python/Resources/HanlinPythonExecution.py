@@ -37,6 +37,7 @@ def _run(request, cancelled, owned_thread_count):
     old_stdin = sys.stdin
     old_thread_trace = threading.gettrace()
     modified_environment = []
+    skill_environment = dict(os.environ) if "SKILL_ID" in request.get("environment", {}) else None
 
     def trace(frame, event, argument):
         if cancelled():
@@ -51,6 +52,8 @@ def _run(request, cancelled, owned_thread_count):
         try:
             workspace = request["workspace"]
             os.chdir(workspace)
+            if skill_environment is not None:
+                os.environ.clear()
             for name, setting in request.get("environment", {}).items():
                 name = str(name)
                 modified_environment.append((name, os.environ.get(name)))
@@ -127,6 +130,9 @@ def _run(request, cancelled, owned_thread_count):
                         os.environ.pop(name, None)
                     else:
                         os.environ[name] = previous
+                if skill_environment is not None:
+                    os.environ.clear()
+                    os.environ.update(skill_environment)
 
     def artifact(filename):
         digest = hashlib.sha256()

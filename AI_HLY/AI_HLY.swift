@@ -44,7 +44,8 @@ class AppDataManager: ObservableObject {
                 || ProcessInfo.processInfo.environment["HANLIN_EXPO_E2E"] != nil
                 || ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_E2E"] != nil
                 || ProcessInfo.processInfo.environment["HANLIN_SCRIPTUI_E2E"] != nil
-            let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: isTesting ? .none : .automatic)
+            let nativeAcceptance = HanlinNativeA2UIAcceptanceProvider.isEnabled
+            let config = ModelConfiguration(isStoredInMemoryOnly: nativeAcceptance, cloudKitDatabase: (isTesting || nativeAcceptance) ? .none : .automatic)
             modelContainer = try ModelContainer(
                 for: ChatMessages.self,
                 ChatSavedExcerpt.self,
@@ -107,6 +108,10 @@ struct MyApp: App {
             MainTabView(deepLinkTarget: $deepLinkTarget)
                 .modelContainer(appDataManager.modelContainer)
                 .task {
+                    if HanlinNativeA2UIAcceptanceProvider.isEnabled {
+                        appDataManager.preloadDataIfNeeded()
+                        return
+                    }
                     HanlinExpoSession.ensureAppDefinesLoaded()
                     ChavrusaSystemIntegrationBootstrap.configure()
                     HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
@@ -117,6 +122,7 @@ struct MyApp: App {
                     await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
                 }
                 .onChange(of: scenePhase) { _, newPhase in
+                    guard !HanlinNativeA2UIAcceptanceProvider.isEnabled else { return }
                     Task {
                         await RuntimeLifecycleBridge.handleScenePhase(newPhase)
                         if newPhase == .active {
@@ -125,6 +131,7 @@ struct MyApp: App {
                     }
                 }
                 .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
+                    guard !HanlinNativeA2UIAcceptanceProvider.isEnabled else { return }
                     Task {
                         await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
                     }

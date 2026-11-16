@@ -1,4 +1,5 @@
 import {fetchImplementation,webAssemblyAvailable} from './fetch-compatibility.mjs';
+import {builtinModules} from 'node:module';
 
 /** Facts about this process and explicit integration contracts, never grants. */
 export function runtimeCapabilities() {
@@ -8,7 +9,7 @@ export function runtimeCapabilities() {
     observed:{node:process.versions.node,v8:process.versions.v8,platform:process.platform,architecture:process.arch,
       pointerCompression:Number(process.config.variables.v8_enable_pointer_compression)===1,
       v8Sandbox:Number(process.config.variables.v8_enable_sandbox)===1,
-      webAssemblyAvailable,fetchImplementation},
+      webAssemblyAvailable,fetchImplementation,builtInModules:builtinModules},
     executionBoundary:'same-process-worker-threads',
     finiteCommandAdapter:{module:'hanlin:runtime',method:'runCommand',engines:['node','python','linked-bsd'],
       contexts:['managed-source-jobs','managed-cli-jobs','package-lifecycle-jobs'],

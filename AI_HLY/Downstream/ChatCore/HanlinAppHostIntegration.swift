@@ -109,11 +109,13 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
                   let expiry = invocation.request.deadline, expiry > Date(),
                   let bytes = invocation.originalArgumentsJSON else { throw HanlinHostError.staleContext }
             entry = found; definition = foundDefinition; deadline = expiry; original = bytes
-            // External MCP schemas currently reach this app through an already parsed String/Any
-            // dictionary. Re-encoding cannot prove original numeric/key fidelity. Keep this path
-            // explicitly unavailable until the original upstream schema boundary is retained.
+            // MCP must retain the schema from its original wire, and the original adapter
+            // must prove the provider projection preserves that exact business schema.
             if let backend = toolAdapter?.preparedTools.authority.resolution(alias: entry.route.alias)?.backend,
-               case .mcp = backend { throw HanlinHostSchemaValidation.Failure.unsupportedSchema }
+               case .mcp = backend,
+               toolAdapter?.preparedTools.authority.originalInputSchemasByAlias[entry.route.alias] == nil {
+                throw HanlinHostSchemaValidation.Failure.unsupportedSchema
+            }
             let plan: HanlinHostSchemaValidation
             if let cached = validationPlans[definition.inputSchemaData] { plan = cached }
             else {
@@ -136,7 +138,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
         } catch { return noDispatch(invocation, error: error) }
         if entry.writeGuarantee != .readOnly {
             guard let confirmInvocation, await confirmInvocation(invocation) else {
-                return noDispatch(invocation, error: HanlinHostError.cancelled)
+                return noDispatch(invocation, error: HanlinHostError.denied)
             }
             // The sheet can stay open while selection, source, or deadline changes.
             do {
@@ -190,7 +192,9 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
             // Metadata tools have no prepared business executor; their existing implementation
             // is read-only. All general operations mark entry at the adapter's actual boundary.
             if entry.writeGuarantee == .readOnly { observation.enteredExecutor = true }
-            return try await definition.execute(arguments, callID)
+            return try await SkillRuntimeAuthorization.$approved.withValue(entry.writeGuarantee != .readOnly) {
+                try await definition.execute(arguments, callID)
+            }
         }
         executions[invocation.request.id] = task
         let output: HanlinAISDKToolExecutionOutput
@@ -243,6 +247,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
         let code: HanlinErrorCode
         switch error {
         case is CancellationError: code = .cancelled
+        case HanlinHostError.denied: code = .permissionDenied
         case HanlinHostSchemaValidation.Failure.invalidArguments: code = .invalidArguments
         case HanlinHostSchemaValidation.Failure.lossyProjection: code = .schemaProjectionWidensInput
         case HanlinHostSchemaValidation.Failure.inputTooLarge: code = .sizeLimitExceeded

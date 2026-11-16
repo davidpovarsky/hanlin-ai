@@ -2,6 +2,7 @@ import Foundation
 import SwiftData
 import HanlinPlatformContracts
 import HanlinChatCore
+import HanlinAgentCore
 
 /// Adapts canonical Hanlin tools into SDK `HanlinAISDKToolDefinition`s,
 /// routing execution through `AssistantToolBridge.PreparedTools`, meta-tools (`LoadSkillTool`,
@@ -672,7 +673,14 @@ final class HanlinAISDKToolAdapter {
         let function = schema["function"] as? [String: Any]
         let description = function?["description"] as? String ?? schema["description"] as? String ?? ""
         let parameters = function?["parameters"] as? [String: Any] ?? schema["parameters"] as? [String: Any] ?? ["type": "object", "properties": [:]]
-        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
+        let inputSchemaData: Data
+        if let original = preparedTools.authority.originalInputSchemasByAlias[alias] {
+            // Host metadata is appended at the existing decorator boundary. The original
+            // business schema must survive that projection exactly before it can execute.
+            try HanlinHostSchemaValidation.requireSameValue(originalJSON: original,
+                projectedJSON: JSONSerialization.data(withJSONObject: (preparedTools.authority.schemasByAlias[alias]?["function"] as? [String: Any])?["parameters"] ?? parameters, options: [.sortedKeys]))
+            inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
+        } else { inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys]) }
 
         return HanlinAISDKToolDefinition(
             name: alias,

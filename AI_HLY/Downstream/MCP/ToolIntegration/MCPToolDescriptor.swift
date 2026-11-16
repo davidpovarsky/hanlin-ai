@@ -10,6 +10,7 @@ struct MCPToolDescriptor: Codable, Hashable, Sendable, Identifiable {
     var title: String?
     var summary: String?
     var inputSchemaJSON: Data
+    var originalInputSchemaVerified: Bool? = nil
 
     func openAIToolSchema() throws -> [String: Any] {
         let parameters = try JSONSerialization.jsonObject(with: inputSchemaJSON)

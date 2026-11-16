@@ -33,7 +33,7 @@ struct SkillDetailView: View {
         List {
             headerSection
             statusSection
-            SkillCompatibilityUnknownSection(identifierScope: "detail")
+            SkillExecutionPlanSection(skillID: skillID, resources: resources)
             summarySection
             instructionsSection
             preferredToolsSection

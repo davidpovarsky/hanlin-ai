@@ -2657,7 +2657,7 @@ class APIManager {
                         supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse
                     )
 
-                    if (modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse && preparedAssistantTools != nil)
+                    if modelInfo.agentCapabilities.supportsNativeToolCalling
                         || self.agentSessionOwner.canRequestNativeStructured(chatConfig) {
                         if depth == 0, let userOperation { RuntimeBackgroundContinuation.shared.begin(userOperation) }
                         await self.agentDiagnosticsRecorder?.setAgentEngineKind("swift_ai_sdk")

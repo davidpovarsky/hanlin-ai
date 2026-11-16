@@ -1,0 +1,32 @@
+{
+  "repository": "openclaw/openclaw",
+  "tag": "v2026.11.3",
+  "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+  "publishedAt": "2026-11-10T18:53:07Z",
+  "license": "MIT",
+  "sources": [
+    {
+      "path": "src/shared/requirements.ts",
+      "gitBlob": "5b0133bc8751fbdbac6d417aceb62225ad17193b",
+      "sha256": "a2c463262c46b35f90cbb701acd519513c1296013267a8007b80d4440e6ae9fe"
+    },
+    {
+      "path": "LICENSE",
+      "gitBlob": "ed064819ab537575d0cad902f7e5af4a3488b1d0",
+      "sha256": "9efd316ecf1c4c60f6fd5d26433142fff2b6794d7d328e9bc6179b29bf9c82a4"
+    },
+    {
+      "path": "package.json",
+      "gitBlob": "21fc33030bc2e98045b72aca06c3f1d51a9481f6",
+      "sha256": "1b71992484beb1355a7375755c6864edfbc5104421a2c120a7f924afabd9e484"
+    },
+    {
+      "path": "src/shared/requirements.test.ts",
+      "gitBlob": "6300311b2fefdd2d7866497fc6a4d20775076f6d",
+      "sha256": "2590453375d323c8900c8466b029ba14c27a2e3d23ba8fcd3a4c519c187061a3"
+    }
+  ],
+  "originalPackageNodeEngine": ">=24.16.0 <25 || >=26.1.0",
+  "hanlinEmbeddedNode": "24.5.0",
+  "scope": "Pure runtime requirements module; inclusion/enablement/install-hint layers under audit, not yet integrated."
+}
