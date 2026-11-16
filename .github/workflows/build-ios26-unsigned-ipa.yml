@@ -3,6 +3,11 @@ name: Build iOS 26 Unsigned IPA
 on:
   workflow_dispatch:
     inputs:
+      phase2_motion_after_boot:
+        description: Run the two affected original Motion cases on the same prepared app simulator after selected app tests
+        required: false
+        default: false
+        type: boolean
       composer_validation_only:
         description: Verify the actual Morph shell and coordinator source closure in an isolated iOS simulator package
         required: false
@@ -137,7 +142,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.phase2_motion_after_boot && 'phase2-combined-native' || (inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
@@ -2723,6 +2728,13 @@ jobs:
             fi
           fi
 
+      - name: Verify affected Motion on the prepared app simulator
+        if: ${{ !cancelled() && inputs.phase2_motion_after_boot }}
+        env:
+          HANLIN_MOTION_SCOPE: affected
+          HANLIN_MOTION_DEVICE_STRATEGY: ready
+        run: bash docs/chat-motion/run_motion_ui.sh
+
       - name: Analyze performance benchmark results
         if: ${{ always() }}
         run: |
@@ -3186,6 +3198,7 @@ jobs:
           path: |
             simulator-logs
             build/acceptance
+            build/chat-motion-ui-evidence
           if-no-files-found: error
           retention-days: 14
 

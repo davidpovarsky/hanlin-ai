@@ -10,6 +10,21 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class Phase2WiringTests(unittest.TestCase):
+    def test_motion_reuses_prepared_simulator_only_by_explicit_manual_input(self):
+        workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
+        triggers = workflow.get("on", workflow.get(True))
+        option = triggers["workflow_dispatch"]["inputs"]["phase2_motion_after_boot"]
+        self.assertIs(option["default"], False)
+        simulator = next(job for job in workflow["jobs"].values() if job.get("name") == "Launch full app on iPad Simulator")
+        steps = simulator["steps"]
+        motion = next(step for step in steps if step.get("name") == "Verify affected Motion on the prepared app simulator")
+        self.assertIn("inputs.phase2_motion_after_boot", motion["if"])
+        self.assertIn("!cancelled()", motion["if"])
+        self.assertNotIn("continue-on-error", motion)
+        self.assertEqual(motion["env"]["HANLIN_MOTION_SCOPE"], "affected")
+        self.assertEqual(motion["env"]["HANLIN_MOTION_DEVICE_STRATEGY"], "ready")
+        self.assertGreater(steps.index(motion), next(i for i, step in enumerate(steps) if step.get("name") == "Run simulator test suite"))
+
     def test_skill_exposure_does_not_stage_unrelated_expo_fixtures(self):
         from Scripts.CI.plan_affected_validation import plan_affected_validation
         mapping = json.loads((ROOT / "Scripts/CI/affected-validation-map.json").read_text())
