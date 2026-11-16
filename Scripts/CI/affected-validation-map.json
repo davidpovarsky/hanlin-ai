@@ -1479,6 +1479,45 @@
         "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/failedNativeScriptBootstrapRollsBackEnvironmentWithoutKeepingAFalseOwner()"
       ],
       "consumers": []
+    },
+    "agent_app_session_tests": {
+      "description": "Original app product integration and execution acceptance",
+      "patterns": [
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
+      ],
+      "consumers": []
+    },
+    "agent_original_a2ui_ui_tests": {
+      "description": "Original app product integration and execution acceptance",
+      "patterns": [
+        "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeA2UIChatUITests"
+      ],
+      "consumers": []
+    },
+    "skill_product_execution_tests": {
+      "description": "Original app product integration and execution acceptance",
+      "patterns": [
+        "AI_HLYTests/SkillRuntimeProductTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/SkillRuntimeProductTests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {
