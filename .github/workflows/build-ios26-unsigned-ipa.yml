@@ -168,7 +168,7 @@ jobs:
           assert len(bundles) == 1, bundles
           with (out/'export-help.txt').open('w') as log:
               subprocess.run(['xcrun', 'xcresulttool', 'export', 'attachments', '--help'], stdout=log, stderr=subprocess.STDOUT, check=True)
-          subprocess.run(['xcrun', 'xcresulttool', 'export', 'attachments', '--path', str(bundles[0]), '--output-path', str(out/'attachments'), '--only-failures'], check=True)
+          subprocess.run(['xcrun', 'xcresulttool', 'export', 'attachments', '--path', str(bundles[0]), '--output-path', str(out/'attachments'), '--test-id', 'HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()'], check=True)
           with (out/'composer-activities.json').open('w') as log:
               result = subprocess.run(['xcrun', 'xcresulttool', 'get', 'test-results', 'activities', '--path', str(bundles[0]), '--test-id', 'HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()', '--format', 'json'], stdout=log, stderr=subprocess.STDOUT)
           (out/'activities-exit-status.txt').write_text(str(result.returncode))
