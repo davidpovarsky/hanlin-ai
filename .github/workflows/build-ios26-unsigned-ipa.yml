@@ -137,7 +137,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
@@ -147,32 +147,14 @@ jobs:
     runs-on: xcode-27
     timeout-minutes: 10
     steps:
+      - uses: actions/checkout@v7.0.1
       - name: Export original xcresult failure attachments
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import json, os, pathlib, subprocess
-          run = os.environ['SOURCE_RUN_ID']
-          assert run.isdigit(), 'Expected numeric source run ID'
-          repo = os.environ['GITHUB_REPOSITORY']
-          out = pathlib.Path('native-result-inspection'); out.mkdir(exist_ok=True)
-          source = json.loads(subprocess.check_output(['gh', 'api', f'repos/{repo}/actions/runs/{run}']))
-          assert source['status'] == 'completed'
-          (out/'source-run.json').write_text(json.dumps({'run': run, 'head': source['head_sha'], 'conclusion': source['conclusion']}, indent=2))
-          raw = pathlib.Path(os.environ['RUNNER_TEMP'])/f'native-result-{run}'
-          subprocess.run(['gh', 'run', 'download', run, '--repo', repo, '--name', 'AI_Hanlin-iOS26-simulator-smoke-logs', '--dir', str(raw)], check=True)
-          bundles = list(raw.rglob('NativeScriptProductionE2EResult.xcresult'))
-          assert len(bundles) == 1, bundles
-          with (out/'export-help.txt').open('w') as log:
-              subprocess.run(['xcrun', 'xcresulttool', 'export', 'attachments', '--help'], stdout=log, stderr=subprocess.STDOUT, check=True)
-          subprocess.run(['xcrun', 'xcresulttool', 'export', 'attachments', '--path', str(bundles[0]), '--output-path', str(out/'attachments'), '--test-id', 'HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()'], check=True)
-          with (out/'composer-activities.json').open('w') as log:
-              result = subprocess.run(['xcrun', 'xcresulttool', 'get', 'test-results', 'activities', '--path', str(bundles[0]), '--test-id', 'HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()', '--format', 'json'], stdout=log, stderr=subprocess.STDOUT)
-          (out/'activities-exit-status.txt').write_text(str(result.returncode))
-          PY
+          python3 Scripts/CI/inspect_native_result.py
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
