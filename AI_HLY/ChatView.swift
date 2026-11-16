@@ -480,7 +480,8 @@ struct ChatView: View {
         }
     }
 
-    var body: some View {
+    // Opaque boundaries keep the original modifier order without adding layout containers.
+    private var agentConnectedWorkspace: some View {
         chatWorkspaceStack
         .chatMotionPreferences()
         .sheet(item: Binding(
@@ -551,6 +552,10 @@ struct ChatView: View {
             a2uiOriginalModelChoice = nil
         }
         #endif
+    }
+
+    private var lifecycleWorkspace: some View {
+        agentConnectedWorkspace
         .toolbar((horizontalSizeClass == .compact || isExternalCompactComposerHost) ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
         .onAppear {
@@ -631,6 +636,10 @@ struct ChatView: View {
                 }
             }
         }
+    }
+
+    private var navigationWorkspace: some View {
+        lifecycleWorkspace
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             // 群聊名称（中间，带有可编辑功能）
@@ -806,6 +815,10 @@ struct ChatView: View {
                 }
             }
         }
+    }
+
+    var body: some View {
+        navigationWorkspace
         .confirmationDialog("选择导出格式", isPresented: $showingExportOptions, titleVisibility: .visible) {
             Button("纯文本 (.txt)") {
                 exportUTType = UTType.plainText
@@ -867,37 +880,7 @@ struct ChatView: View {
             allowedContentTypes: [.json],
             allowsMultipleSelection: false
         ) { result in
-            switch result {
-            case .success(let urls):
-                if let url = urls.first {
-                    guard url.startAccessingSecurityScopedResource() else {
-                        importError = "无法访问所选文件的权限。"
-                        isShowingImportErrorAlert = true
-                        return
-                    }
-                    defer { url.stopAccessingSecurityScopedResource() }
-                    do {
-                        let data = try Data(contentsOf: url)
-                        // 尝试先按多模态 JSON 格式解析
-                        if let importedMessages = try? JSONDecoder().decode([ExportMessage].self, from: data) {
-                            importMessages(importedMessages: importedMessages)
-                        }
-                        // 如果失败，再尝试解析纯文本 JSON 格式
-                        else if let simpleMessages = try? JSONDecoder().decode([[String: String]].self, from: data) {
-                            importSimpleMessages(simpleMessages: simpleMessages)
-                        } else {
-                            importError = "文件格式错误，请检查文件是否为导出时的正确格式。"
-                            isShowingImportErrorAlert = true
-                        }
-                    } catch {
-                        importError = error.localizedDescription
-                        isShowingImportErrorAlert = true
-                    }
-                }
-            case .failure(let error):
-                importError = error.localizedDescription
-                isShowingImportErrorAlert = true
-            }
+            receiveChatImport(result)
         }
         .alert(isPresented: $isShowingImportErrorAlert) {
             Alert(title: Text("导入错误"),
@@ -924,6 +907,40 @@ struct ChatView: View {
         }
         .tint(TemporaryRecord ? .primary : nil)
     }
+    private func receiveChatImport(_ result: Result<[URL], Error>) {
+        switch result {
+        case .success(let urls):
+            if let url = urls.first {
+                guard url.startAccessingSecurityScopedResource() else {
+                    importError = "无法访问所选文件的权限。"
+                    isShowingImportErrorAlert = true
+                    return
+                }
+                defer { url.stopAccessingSecurityScopedResource() }
+                do {
+                    let data = try Data(contentsOf: url)
+                    // 尝试先按多模态 JSON 格式解析
+                    if let importedMessages = try? JSONDecoder().decode([ExportMessage].self, from: data) {
+                        importMessages(importedMessages: importedMessages)
+                    }
+                    // 如果失败，再尝试解析纯文本 JSON 格式
+                    else if let simpleMessages = try? JSONDecoder().decode([[String: String]].self, from: data) {
+                        importSimpleMessages(simpleMessages: simpleMessages)
+                    } else {
+                        importError = "文件格式错误，请检查文件是否为导出时的正确格式。"
+                        isShowingImportErrorAlert = true
+                    }
+                } catch {
+                    importError = error.localizedDescription
+                    isShowingImportErrorAlert = true
+                }
+            }
+        case .failure(let error):
+            importError = error.localizedDescription
+            isShowingImportErrorAlert = true
+        }
+    }
+
     /// 用于触发滚动的状态集合
     private struct ScrollTriggerState: Equatable {
         var lastID: UUID?
