@@ -271,7 +271,7 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let panel = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
         XCTAssertTrue(panel.waitForExistence(timeout: 10))
         let sampleImage = app.buttons["hanlin-attach-sample-image"].firstMatch
-        revealInComposer(sampleImage)
+        revealInComposer(sampleImage, in: app)
         XCTAssertTrue(sampleImage.isHittable)
         sampleImage.tap()
         let attachment = app.descendants(matching: .any)["hanlin-composer-image-attachment"].firstMatch
@@ -290,7 +290,7 @@ final class HanlinMorphComposerUITests: XCTestCase {
         XCTAssertLessThanOrEqual(input.frame.maxX, window.frame.maxX + 1)
         XCTAssertLessThanOrEqual(input.frame.maxY, window.frame.maxY + 1)
         let prompts = app.buttons["hanlin-general-prompts-button"].firstMatch
-        revealInComposer(prompts)
+        revealInComposer(prompts, in: app)
         XCTAssertTrue(prompts.isHittable)
         prompts.tap()
         let back = app.buttons["hanlin-general-subpage-back"].firstMatch
@@ -307,14 +307,14 @@ final class HanlinMorphComposerUITests: XCTestCase {
         XCTAssertTrue(tools.waitForExistence(timeout: 5))
         tools.tap()
         let skills = app.buttons["hanlin-tools-open-skills"].firstMatch
-        revealInComposer(skills)
+        revealInComposer(skills, in: app)
         XCTAssertTrue(skills.isHittable)
         skills.tap()
         let toolsBack = app.buttons["hanlin-tools-subpage-back"].firstMatch
         XCTAssertTrue(toolsBack.waitForExistence(timeout: 5))
         XCTAssertTrue(panel.exists)
         let manage = app.buttons["hanlin-tools-open-full-skill-center"].firstMatch
-        revealInComposer(manage)
+        revealInComposer(manage, in: app)
         XCTAssertTrue(manage.isHittable)
         manage.tap()
         let management = app.descendants(matching: .any)["hanlin-tools-management-skills"].firstMatch
@@ -328,7 +328,7 @@ final class HanlinMorphComposerUITests: XCTestCase {
         XCTAssertEqual(input.value as? String, draft)
     }
 
-    private func revealInComposer(_ element: XCUIElement) {
+    private func revealInComposer(_ element: XCUIElement, in app: XCUIApplication) {
         let viewport = app.scrollViews["hanlin-composer-page-scroll"].firstMatch
         XCTAssertTrue(viewport.waitForExistence(timeout: 5))
         for _ in 0..<10 {
