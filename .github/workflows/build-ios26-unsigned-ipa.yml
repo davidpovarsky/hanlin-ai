@@ -2468,7 +2468,16 @@ jobs:
           printf '%s\n' "$BUNDLE_ID" > "$LOG_DIR/bundle-id.txt"
           printf '%s\n' "$APP_EXECUTABLE" > "$LOG_DIR/app-executable.txt"
 
-          if { [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ]; then
+          defer_native_fixtures=false
+          if [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] && [ "$RUN_SIMULATOR_UNIT" = "true" ] && [ "$FAST_VALIDATION_ONLY" != "true" ] \
+            && [ -n "${SIMULATOR_UNIT_FILTER:-}" ] && [ "$SIMULATOR_E2E_ONLY" != "true" ] \
+            && [ "$NATIVESCRIPT_POC_ONLY" != "true" ] && [ "$RUN_FULL_VALIDATION" != "true" ]; then
+            # Install the exact build-for-testing host once through Xcode. Its
+            # actual data container is populated below before the requested UI.
+            defer_native_fixtures=true
+            echo "STAGE_NATIVESCRIPT_AFTER_UNIT=true" >> "$GITHUB_ENV"
+          fi
+          if { [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && [ "$FAST_VALIDATION_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ] && [ "$defer_native_fixtures" != "true" ]; then
             python3 Scripts/CI/stage_simulator_fixtures.py \
               --simulator-udid "$SIMULATOR_UDID" \
               --bundle-id "$BUNDLE_ID" \
@@ -2491,13 +2500,17 @@ jobs:
           if result.returncode:
               raise SystemExit(f"Simulator boot failed or timed out: {result.returncode}")
           PY
-            printf '%s\n' "NativeScript fixture staging skipped (NativeScript not affected)." > "$LOG_DIR/08-nativescript-files-staging-skipped.txt"
+            if [ "$defer_native_fixtures" = "true" ]; then
+              printf '%s\n' "NativeScript fixtures deferred until actual Xcode unit-host installation." > "$LOG_DIR/08-nativescript-files-staging-deferred.txt"
+            else
+              printf '%s\n' "NativeScript fixture staging skipped (NativeScript not affected)." > "$LOG_DIR/08-nativescript-files-staging-skipped.txt"
+            fi
           fi
 
           if [ "$STAGE_SCRIPTUI_FIXTURES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinScriptUIProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinExpoProductionE2ETests"* ]] || [[ "$SIMULATOR_UI_FILTER" == *"HanlinUIPerformanceUITests"* ]]; then
             if [ "$RUN_SIMULATOR_UNIT" = "true" ] && [ -n "${SIMULATOR_UNIT_FILTER:-}" ] \
               && [ "$SIMULATOR_E2E_ONLY" != "true" ] && [ "$NATIVESCRIPT_POC_ONLY" != "true" ] \
-              && [ "$RUN_FULL_VALIDATION" != "true" ] && [ "$RUN_NATIVESCRIPT_DEPENDENCIES" != "true" ]; then
+              && [ "$RUN_FULL_VALIDATION" != "true" ]; then
               # Xcode installs the exact build-for-testing host for unit execution.
               # Seed its Documents afterwards instead of first installing a different,
               # pruned runtime copy and then replacing it during test-without-building.
@@ -2581,6 +2594,16 @@ jobs:
               fi
             else
               printf '%s\n' "Downstream unit tests skipped by affected-validation router." > "$LOG_DIR/08-downstream-unit-tests-skipped.txt"
+            fi
+
+            if [ "${STAGE_NATIVESCRIPT_AFTER_UNIT:-false}" = "true" ]; then
+              staging_started_at="$(date +%s)"
+              python3 Scripts/CI/stage_simulator_fixtures.py \
+                --simulator-udid "$SIMULATOR_UDID" \
+                --bundle-id "$(cat "$LOG_DIR/bundle-id.txt")" \
+                --fixtures-dir "build/NativeScriptE2E" \
+                --log-dir "$LOG_DIR"
+              echo "$(( $(date +%s) - staging_started_at ))" > "$LOG_DIR/08-nativescript-staging-after-unit-duration-seconds.txt"
             fi
 
             if [ "${STAGE_SCRIPTUI_AFTER_UNIT:-false}" = "true" ]; then

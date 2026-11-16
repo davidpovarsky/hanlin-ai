@@ -1,8 +1,11 @@
 """Source-wiring regressions that stop the exact observed pre-build failures early."""
 import json
+import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
+import tempfile
 import unittest
 import yaml
 
@@ -10,6 +13,36 @@ ROOT = Path(__file__).resolve().parents[3]
 
 
 class Phase2WiringTests(unittest.TestCase):
+    def test_native_fixtures_follow_the_actual_xcode_host_install(self):
+        workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
+        job = next(j for j in workflow["jobs"].values() if j.get("name") == "Launch full app on iPad Simulator")
+        boot = next(s["run"] for s in job["steps"] if s.get("name") == "Boot iPad Simulator and stage fixtures")
+        decision = boot.split("defer_native_fixtures=false", 1)[1].split('if { [ "$RUN_NATIVESCRIPT_DEPENDENCIES"', 1)[0]
+        base = dict(RUN_NATIVESCRIPT_DEPENDENCIES="true", RUN_SIMULATOR_UNIT="true", SIMULATOR_UNIT_FILTER="AI_HLYTests/SkillStoreAndImportTests",
+            FAST_VALIDATION_ONLY="false", SIMULATOR_E2E_ONLY="false", NATIVESCRIPT_POC_ONLY="false", RUN_FULL_VALIDATION="false")
+        shell = "bash"
+        if os.name == "nt":
+            # Windows' system32/bash.exe enters WSL; use the native Git shell
+            # for this portable workflow decision without starting a distro.
+            git = Path(shutil.which("git") or "")
+            shell = str(git.parent.parent / "bin/bash.exe")
+            self.assertTrue(Path(shell).is_file(), "Native Git Bash is required for this Windows check")
+        with tempfile.TemporaryDirectory() as folder:
+            for overrides in [{}, {"RUN_SIMULATOR_UNIT": "false"}, {"SIMULATOR_UNIT_FILTER": ""},
+                {"FAST_VALIDATION_ONLY": "true"}, {"SIMULATOR_E2E_ONLY": "true"}, {"NATIVESCRIPT_POC_ONLY": "true"},
+                {"RUN_FULL_VALIDATION": "true"}, {"RUN_NATIVESCRIPT_DEPENDENCIES": "false"}]:
+                with self.subTest(overrides=overrides):
+                    result = subprocess.run([shell, "-c", 'defer_native_fixtures=false\n' + decision + '\nprintf "%s" "$defer_native_fixtures"'],
+                        env={**os.environ, **base, **overrides, "GITHUB_ENV": (Path(folder) / "environment").as_posix()},
+                        capture_output=True, text=True, timeout=10)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertEqual(result.stdout, "false" if overrides else "true")
+        run = next(s["run"] for s in job["steps"] if s.get("name") == "Run simulator test suite")
+        staged = run.split('if [ "${STAGE_NATIVESCRIPT_AFTER_UNIT:-false}"', 1)[1].split('if [ "${STAGE_SCRIPTUI_AFTER_UNIT:-false}"', 1)[0]
+        self.assertIn("stage_simulator_fixtures.py", staged)
+        self.assertNotIn("--app-path", staged, "Never install a second app over the Xcode host")
+        self.assertLess(run.index('"${STAGE_NATIVESCRIPT_AFTER_UNIT:-false}"'), run.index('"$LOG_DIR/NativeScriptProductionE2EResult.xcresult"'))
+
     def test_explicit_compact_validation_does_not_cancel_native_ipad_acceptance(self):
         workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
         group = workflow["concurrency"]["group"]
