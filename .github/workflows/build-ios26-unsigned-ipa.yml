@@ -2714,6 +2714,7 @@ jobs:
 
       - name: Verify affected Motion on the prepared app simulator
         if: ${{ !cancelled() && (inputs.target_validation_group == 'phase2_app_with_motion') }}
+        timeout-minutes: 25
         env:
           HANLIN_MOTION_SCOPE: affected
           HANLIN_MOTION_DEVICE_STRATEGY: ready
