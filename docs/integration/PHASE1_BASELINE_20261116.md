@@ -62,3 +62,9 @@ shipping build settings and runtime behavior are unchanged. No test is skipped, 
 `DEBUG` is not enabled for the Release NativeScript host. This is test-host compilation,
 not a claim that Voice cases executed. The selected original app obligations remain
 missing until the next scoped native run actually executes them.
+
+Run `43792243077` cleared the import/probe diagnostics and exposed two existing
+throwing receipt reads inside `#require`. Those reads now carry their own `try`,
+matching the original package tests; the outer `try` still unwraps the required
+value. Error propagation and both assertions are retained. This is another test
+bundle compiler repair, with zero selected app cases executed in the failed run.

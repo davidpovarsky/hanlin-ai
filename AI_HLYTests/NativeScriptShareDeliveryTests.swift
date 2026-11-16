@@ -80,7 +80,7 @@ extension HanlinUnifiedHostServicesE2ETests {
                     // Same-package foreground VM still owns the isolate. Share
                     // actions are deliberately headless, so remain unstarted.
                     try await Task.sleep(for: .milliseconds(100))
-                    let queued = try #require(queue.receipt(for: id))
+                    let queued = try #require(try queue.receipt(for: id))
                     #expect(queued.status == .queued && queued.attempt == 0)
                     platform.dismissActiveApplication()
                 }
@@ -89,7 +89,7 @@ extension HanlinUnifiedHostServicesE2ETests {
                     try #require(ContinuousClock.now < deadline, "Actual Share action did not produce a terminal receipt")
                     try await Task.sleep(for: .milliseconds(25))
                 }
-                let receipt = try #require(HanlinScriptExtensionStore().receipt(for: id))
+                let receipt = try #require(try HanlinScriptExtensionStore().receipt(for: id))
                 #expect(receipt.status == .succeeded && receipt.attempt == 1)
                 guard case .object(let result) = receipt.value,
                       case .object(let input) = result["input"], case .array(let items) = input["items"],
