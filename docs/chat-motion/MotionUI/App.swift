@@ -73,7 +73,6 @@ private struct MotionProofContent: View {
                                     .accessibilityIdentifier("proof-tool-output")
                             } label: { Text("Repeated tool name") }
                                 .disclosureGroupStyle(HanlinMotionDisclosureStyle())
-                                .accessibilityIdentifier("proof-tool")
                             Text("source call-2: Repeated tool name — cancelled")
                             Text("source call-3: Repeated tool name — failed; no output")
                         }

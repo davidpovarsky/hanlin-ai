@@ -85,7 +85,9 @@ final class MotionUITests: XCTestCase {
         waitForGeometry("expanded")
         selectPreset("Height reveal", id: "v1.height-reveal")
         waitForGeometry("expanded")
-        app.buttons["proof-tool"].tap()
+        // An identifier on the whole native DisclosureGroup propagates to its
+        // output and masks proof-tool-output. Address the actual header by label.
+        app.buttons["Repeated tool name"].tap()
         XCTAssertTrue(app.staticTexts["proof-tool-output"].waitForExistence(timeout: 5))
         toggle.tap(); waitForGeometry("collapsed"); toggle.tap(); waitForGeometry("expanded")
         XCTAssertTrue(app.staticTexts["proof-tool-output"].exists)
