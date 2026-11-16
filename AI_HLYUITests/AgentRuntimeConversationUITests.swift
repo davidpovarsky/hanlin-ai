@@ -1438,20 +1438,21 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         openChat(in: app)
 
         let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
-        let drawerHandle = app.buttons["hanlin-organizer-drawer-handle"].firstMatch
         let resizeHandle = app.descendants(matching: .any)["hanlin-composer-resize-handle"].firstMatch
         XCTAssertTrue(generalBtn.waitForExistence(timeout: 10))
-        XCTAssertTrue(drawerHandle.waitForExistence(timeout: 10))
         XCTAssertTrue(resizeHandle.waitForExistence(timeout: 10))
 
-        // Open drawer, then focus text input -> drawer must automatically collapse to yield space to keyboard
+        // The approved Morph palette replaces the former organizer drawer.
         tapElement(generalBtn)
-        let generalContent = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
+        let generalContent = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
         XCTAssertTrue(generalContent.waitForExistence(timeout: 5))
 
         let input = chatInputElement(in: app)
         tapElement(input)
-        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5), "Focusing text editor must automatically collapse open drawer")
+        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5), "Focusing the native editor must dismiss the Morph palette")
+        let draft = "שלום مرحبا — RTL keyboard draft"
+        input.typeText(draft)
+        XCTAssertEqual(input.value as? String, draft)
         attachScreenshot("7B-11_RTL_KeyboardAutoCollapse_Accessibility", in: app)
     }
 

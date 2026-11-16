@@ -1367,6 +1367,7 @@ struct HanlinComposerToolsRootView: View {
                     .buttonStyle(.plain)
                     .matchedTransitionSource(id: "hanlin-tools-subroute-catalog", in: zoomNamespace)
                     .accessibilityIdentifier("hanlin-tools-open-catalog")
+                    .accessibilityValue(enabledCapabilities.contains(.tools) ? String(localized: "Enabled") : String(localized: "Open settings"))
 
                     // 2. Agent Skills
                     Button {
@@ -1383,6 +1384,7 @@ struct HanlinComposerToolsRootView: View {
                     .buttonStyle(.plain)
                     .matchedTransitionSource(id: "hanlin-tools-subroute-skills", in: zoomNamespace)
                     .accessibilityIdentifier("hanlin-tools-open-skills")
+                    .accessibilityValue(enabledCapabilities.contains(.skills) ? String(localized: "Enabled") : String(localized: "Open settings"))
 
                     // 3. MCP Servers
                     Button {
@@ -1399,6 +1401,7 @@ struct HanlinComposerToolsRootView: View {
                     .buttonStyle(.plain)
                     .matchedTransitionSource(id: "hanlin-tools-subroute-mcp", in: zoomNamespace)
                     .accessibilityIdentifier("hanlin-tools-open-mcp")
+                    .accessibilityValue(enabledCapabilities.contains(.mcp) ? String(localized: "Enabled") : String(localized: "Open settings"))
 
                     // 4. Runtimes
                     Button {
@@ -1415,6 +1418,7 @@ struct HanlinComposerToolsRootView: View {
                     .buttonStyle(.plain)
                     .matchedTransitionSource(id: "hanlin-tools-subroute-runtime", in: zoomNamespace)
                     .accessibilityIdentifier("hanlin-tools-open-runtime")
+                    .accessibilityValue(enabledCapabilities.contains(.runtimes) ? String(localized: "Enabled") : String(localized: "Open settings"))
                 }
             }
             .padding(.horizontal, 12)
@@ -1920,7 +1924,6 @@ struct HanlinComposerToolsRootView: View {
                 .strokeBorder(enabled ? accentColor.opacity(0.6) : Color.clear, lineWidth: 1)
                 .allowsHitTesting(false)
         }
-        .accessibilityValue(enabled ? String(localized: "Enabled") : String(localized: "Open settings"))
         .contentShape(.rect(cornerRadius: 12))
     }
 

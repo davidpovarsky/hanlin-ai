@@ -387,7 +387,14 @@ final class HanlinSkillCenterUITests: XCTestCase {
         for _ in 0..<5 where !run.isHittable { app.swipeUp() }
         XCTAssertTrue(run.waitForExistence(timeout: 5)); tapElement(run)
         let cancel = app.buttons["Cancel"].firstMatch
-        XCTAssertTrue(cancel.waitForExistence(timeout: 5)); tapElement(cancel)
+        if cancel.waitForExistence(timeout: 1) {
+            tapElement(cancel)
+        } else {
+            // Native iPad confirmation popovers omit the cancel action. A tap
+            // outside dismisses the unapproved operation without executing it.
+            app.navigationBars.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+        XCTAssertTrue(app.buttons["Allow once"].firstMatch.waitForNonExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["hanlin-skill-execution-output"].exists)
         tapElement(run)
         let allow = app.buttons["Allow once"].firstMatch
