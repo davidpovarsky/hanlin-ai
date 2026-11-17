@@ -17,6 +17,7 @@ struct NativeOpenUINode: View {
     private var enabled: Bool { node["enabled"] == .bool(true) }
 
     var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
         Group {
             if let custom = configuration.nativeComponent?(
                 .init(id: id, typeName: type, properties: props, isEnabled: enabled),
@@ -33,6 +34,11 @@ struct NativeOpenUINode: View {
             }
         }
         .accessibilityIdentifier("openui-native-\(type)-\(text("name", fallback: id))")
+        if !text("validationError").isEmpty {
+            Text(text("validationError")).font(.caption).foregroundStyle(.red)
+                .accessibilityLabel(text("validationError"))
+        }
+        }
     }
 
     @ViewBuilder private var layout: some View {
@@ -107,20 +113,28 @@ struct NativeOpenUINode: View {
                 }
             }.pickerStyle(.menu).disabled(!enabled)
         case "DatePicker":
-            DatePicker(text("name"), selection: Binding(get: {
-                ISO8601DateFormatter().date(from: text("currentValue")) ?? .now
-            }, set: { runtime.field(id, value: .string(ISO8601DateFormatter().string(from: $0))) }), displayedComponents: [.date])
-                .disabled(!enabled)
+            if text("mode") == "range" {
+                VStack(alignment: .leading) {
+                    DatePicker("Start date", selection: dateBinding(key: "from"), displayedComponents: [.date])
+                    DatePicker("End date", selection: dateBinding(key: "to"),
+                        in: (date(props["currentValue"]?.object?["from"]) ?? .distantPast)..., displayedComponents: [.date])
+                }.disabled(!enabled)
+            } else {
+                DatePicker(text("name"), selection: dateBinding(), displayedComponents: [.date]).disabled(!enabled)
+            }
         case "Slider":
             let minimum = number("min", fallback: 0)
             let maximum = max(minimum + 0.0001, number("max", fallback: 100))
             VStack(alignment: .leading) {
                 if !text("label").isEmpty { Text(text("label")) }
-                Slider(value: Binding(get: {
-                    min(maximum, max(minimum, props["currentValue"]?.array?.first?.number ?? props["currentValue"]?.number ?? minimum))
-                }, set: { runtime.field(id, value: .array([.number($0)])) }),
+                Slider(value: sliderBinding(index: 0, minimum: minimum, maximum: maximum),
                     in: minimum...maximum, step: max(0.0001, number("step", fallback: 1)))
                     .accessibilityLabel(text("label", fallback: text("name"))).disabled(!enabled)
+                if (props["currentValue"]?.array?.count ?? 0) > 1 {
+                    Slider(value: sliderBinding(index: 1, minimum: minimum, maximum: maximum),
+                        in: minimum...maximum, step: max(0.0001, number("step", fallback: 1)))
+                        .accessibilityLabel("\(text("label", fallback: text("name"))) upper value").disabled(!enabled)
+                }
             }
         case "CheckBoxGroup", "SwitchGroup":
             VStack(alignment: .leading) {
@@ -173,7 +187,9 @@ struct NativeOpenUINode: View {
         case "SourceQuote":
             VStack(alignment: .leading, spacing: 6) {
                 Text(.init(text("text"))).textSelection(.enabled)
-                Button(text("reference")) { runtime.action(id) }.font(.caption).disabled(!enabled)
+                if props["hasAction"] == .bool(true) {
+                    Button(text("reference")) { runtime.action(id) }.font(.caption).disabled(!enabled)
+                } else { Text(text("reference")).font(.caption) }
             }.padding(.leading, 10).overlay(alignment: .leading) { Rectangle().fill(.secondary.opacity(0.4)).frame(width: 2) }
         default: EmptyView()
         }
@@ -212,10 +228,10 @@ struct NativeOpenUINode: View {
             VStack(alignment: .leading, spacing: 12) {
                 ForEach(Array(array("items").enumerated()), id: \.offset) { index, item in
                     let p = item.object?["props"]?.object ?? [:]
-                    HStack(alignment: .top) {
-                        Text("\(index + 1).").foregroundStyle(.secondary)
-                        VStack(alignment: .leading) { Text(p["title"]?.string ?? "").fontWeight(.medium); Text(p["subtitle"]?.string ?? p["details"]?.string ?? "") }
-                    }
+                    if p["hasAction"] == .bool(true), let itemID = item.object?["id"]?.string {
+                        Button { runtime.action(itemID) } label: { listRow(p, index: index) }
+                            .buttonStyle(.plain).disabled(!enabled)
+                    } else { listRow(p, index: index) }
                 }
             }
         case "Comparison":
@@ -290,6 +306,56 @@ struct NativeOpenUINode: View {
     private var gap: CGFloat { ["none": 0, "xs": 4, "s": 8, "m": 12, "l": 16, "xl": 24, "2xl": 32][text("gap")] ?? 12 }
     private var stringBinding: Binding<String> {
         Binding(get: { text("currentValue", fallback: text("defaultValue")) }, set: { runtime.field(id, value: .string($0)) })
+    }
+    private func date(_ value: PresentationValue?) -> Date? {
+        guard let raw = value?.object?["__hanlinOpenUIDate"]?.string ?? value?.string else { return nil }
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        if let value = formatter.date(from: raw) { return value }
+        formatter.formatOptions = [.withInternetDateTime]
+        return formatter.date(from: raw)
+    }
+    private func dateValue(_ value: Date) -> PresentationValue {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return .object(["__hanlinOpenUIDate": .string(formatter.string(from: value))])
+    }
+    private func dateBinding(key: String? = nil) -> Binding<Date> {
+        Binding(get: {
+            date(key.map { props["currentValue"]?.object?[$0] } ?? props["currentValue"]) ?? .now
+        }, set: { next in
+            if let key {
+                var range = props["currentValue"]?.object ?? [:]
+                range[key] = dateValue(next)
+                if key == "from", let end = date(range["to"]), end < next { range["to"] = dateValue(next) }
+                runtime.field(id, value: .object(range))
+            } else { runtime.field(id, value: dateValue(next)) }
+        })
+    }
+    private func sliderBinding(index: Int, minimum: Double, maximum: Double) -> Binding<Double> {
+        Binding(get: {
+            let values = props["currentValue"]?.array ?? []
+            return min(maximum, max(minimum, values.indices.contains(index) ? values[index].number ?? minimum : minimum))
+        }, set: { next in
+            var values = props["currentValue"]?.array ?? [.number(minimum)]
+            guard values.indices.contains(index) else { return }
+            let lower = index > 0 ? values[index - 1].number ?? minimum : minimum
+            let upper = index + 1 < values.count ? values[index + 1].number ?? maximum : maximum
+            values[index] = .number(min(upper, max(lower, next)))
+            runtime.field(id, value: .array(values))
+        })
+    }
+    private func listRow(_ props: [String: PresentationValue], index: Int) -> some View {
+        HStack(alignment: .top) {
+            if text("variant") == "image", let item = props["image"]?.object {
+                image(url: item["src"]?.string ?? "", alt: item["alt"]?.string ?? "").frame(width: 44)
+            } else { Text("\(index + 1).").foregroundStyle(.secondary) }
+            VStack(alignment: .leading) {
+                Text(props["title"]?.string ?? "").fontWeight(.medium)
+                children(props["subtitle"] ?? props["details"])
+                if let label = props["actionLabel"]?.string { Text(label).font(.caption).foregroundStyle(.tint) }
+            }
+        }
     }
     @ViewBuilder private func children(_ value: PresentationValue?) -> some View {
         if let values = value?.array {

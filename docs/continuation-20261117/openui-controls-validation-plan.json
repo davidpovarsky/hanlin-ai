@@ -1,0 +1,35 @@
+{
+  "scope": "native-original-OpenUI-control-semantics",
+  "changes": [
+    "Use upstream parseStructuredRules/validate before primary form submit",
+    "Preserve original current form payload",
+    "Dispatch existing list item actions",
+    "Persist JavaScript Date and range values across native/React/saved JSON",
+    "Keep both slider range values"
+  ],
+  "executed": [
+    {
+      "command": "node --test bridge.test.mjs",
+      "result": "6 passed, 1 failed due new fixture Form positional order; original failure retained"
+    },
+    {
+      "command": "node --test --test-name-pattern=required-field bridge.test.mjs",
+      "result": "1 passed after correcting fixture to actual upstream Form schema"
+    },
+    {
+      "command": "node --test --test-name-pattern=required-field|local actions bridge.test.mjs",
+      "result": "2 passed after original form payload alignment; other five unchanged-case outcomes retained"
+    },
+    {
+      "command": "node build.mjs",
+      "result": "success; actual pinned original asset bundle regenerated"
+    },
+    {
+      "command": "swiftc -frontend -parse NativeOpenUINode.swift",
+      "result": "success; syntax only"
+    }
+  ],
+  "native_compile": "PENDING",
+  "app_UI": "PENDING",
+  "numeric_host_provenance_guard": "unchanged"
+}
