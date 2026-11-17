@@ -15,5 +15,15 @@
   "ios": "27 only",
   "signing": "unsigned simulator build; existing entitlement declarations only",
   "testflight": false,
-  "release": false
+  "release": false,
+  "superseded_runs": [
+    {
+      "run": 44201259540,
+      "reason": "Stopped before acceptance after source review found generic project serialization could double-escape original shell programs; replaced by object-span edits preserving every original script byte"
+    },
+    {
+      "run": 44201263974,
+      "reason": "Stopped before acceptance after source review found generic project serialization could double-escape original shell programs; replaced by object-span edits preserving every original script byte"
+    }
+  ]
 }
