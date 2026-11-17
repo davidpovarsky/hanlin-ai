@@ -71,6 +71,8 @@ private struct AppPartModel: LanguageModelV3 {
                 originalArgumentsJSON: Data("{}".utf8))
         }
         let consent = HanlinAppToolConsent()
+        var changes: [(UUID, String, Bool?)] = []
+        consent.onChange = { request, choice in changes.append((request.id, request.invocation.providerCallID, choice)) }
         #expect(await consent.request(try invocation(deadline: .now.addingTimeInterval(-1))) == false)
         #expect(consent.pending == nil)
         let expiring = try invocation(deadline: .now.addingTimeInterval(0.15))
@@ -93,6 +95,10 @@ private struct AppPartModel: LanguageModelV3 {
         consent.revoke()
         #expect(await replacement.value == false)
         #expect(consent.pending == nil)
+        #expect(changes.filter { $0.0 == currentID }.map { $0.1 } == [live.providerCallID, live.providerCallID])
+        #expect(changes.filter { $0.0 == currentID }.first?.2 == nil)
+        #expect(changes.filter { $0.0 == currentID }.last?.2 == false)
+        #expect(!changes.contains { $0.2 == true }, "A stale answer never creates an approval event")
     }
 
     private func database() throws -> ModelContainer {

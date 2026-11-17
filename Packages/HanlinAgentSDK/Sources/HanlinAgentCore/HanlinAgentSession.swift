@@ -274,7 +274,9 @@ public final class HanlinAgentSession {
     /// pending-before-effect journal and ordered persistence as model tools.
     /// No second agent loop or permission broker is introduced.
     public func executePresentationTool(_ request: HanlinHostInteractionRequest,
-                                        alias: String, argumentsJSON: String) async throws -> HanlinAISDKToolExecutionOutput {
+                                        alias: String, argumentsJSON: String,
+                                        presentationReference: String? = nil,
+                                        onStarted: (@MainActor @Sendable (HanlinAgentEvent) throws -> Void)? = nil) async throws -> HanlinAISDKToolExecutionOutput {
         guard interactionRequests.insert(request.requestID).inserted else { throw HanlinHostError.duplicateInvocation }
         try await requireInteraction(request.origin)
         guard let model = record?.model else { throw HanlinHostError.staleContext }
@@ -288,21 +290,36 @@ public final class HanlinAgentSession {
             }
         }
         guard pending.isEmpty else { throw HanlinHostError.unresolvedWrite }
+        guard presentationReference.map({ !$0.isEmpty && $0.utf8.count <= 4096 }) ?? true else { throw HanlinHostError.invalidArguments }
         let run = UUID()
         activeRun = run; step = 0; preparationError = nil; persistenceTail = nil
         defer { if activeRun == run { activeRun = nil } }
-        try await requireCurrent(run: run)
-        let catalog = try await host.catalog(for: identity.context)
-        try await requireCurrent(run: run)
-        try catalog.validate()
-        guard catalog.context == identity.context else { throw HanlinHostError.staleContext }
-        currentCatalog = catalog
-        guard let definition = try makeDefinitions(catalog: catalog, run: run, model: model).first(where: { $0.name == alias }) else {
-            throw HanlinHostError.unknownTool
+        do {
+            try await requireCurrent(run: run)
+            let catalog = try await host.catalog(for: identity.context)
+            try await requireCurrent(run: run)
+            try catalog.validate()
+            guard catalog.context == identity.context else { throw HanlinHostError.staleContext }
+            currentCatalog = catalog
+            guard let definition = try makeDefinitions(catalog: catalog, run: run, model: model).first(where: { $0.name == alias }) else {
+                throw HanlinHostError.unknownTool
+            }
+            if let presentationReference { try append(.presentationReference(version: 1, opaqueReference: presentationReference), run: run) }
+            try onStarted?(.init(session: identity, interactionOrigin: request.origin, runID: run,
+                step: 0, sequence: 0, event: .runStarted))
+            // The bridge has normalized JSON. Preserve the original input guard;
+            // do not manufacture a provider-original provenance assertion.
+            let result = try await definition.execute(argumentsJSON, request.requestID.uuidString)
+            try await requireCurrent(run: run)
+            activeRun = nil
+            onRunCompletion?(.init(session: identity, runID: run, outcome: .completed))
+            return result
+        } catch {
+            let safe = (error as? HanlinHostError) ?? (Task.isCancelled ? .cancelled : .denied)
+            onRunCompletion?(.init(session: identity, runID: run, outcome: .failed(safe)))
+            if !invalidated { try append(.failed(code: safe), run: run); try await persist(model: model) }
+            throw error
         }
-        // The bridge has normalized JSON. Preserve the original input guard;
-        // do not manufacture a provider-original provenance assertion.
-        return try await definition.execute(argumentsJSON, request.requestID.uuidString)
     }
 
     /// The original Host receipt must already have passed the ordered durable writer.

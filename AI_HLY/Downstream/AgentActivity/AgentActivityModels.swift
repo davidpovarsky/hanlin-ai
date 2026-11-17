@@ -238,6 +238,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
   var transcriptItems: [AgentTranscriptItem]
   var evidenceItems: [AgentEvidenceItem]
   var finalAnswer: String?
+  var approvals: [AgentToolApproval] = []
 
   init(
     schemaVersion: Int = currentSchemaVersion,
@@ -273,7 +274,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
 
   private enum CodingKeys: String, CodingKey {
     case schemaVersion, id, groupID, providerID, modelID, startedAt, completedAt
-    case status, steps, transcriptItems, evidenceItems, finalAnswer
+    case status, steps, transcriptItems, evidenceItems, finalAnswer, approvals
   }
 
   init(from decoder: Decoder) throws {
@@ -298,6 +299,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
     )
     evidenceItems =
       try container.decodeIfPresent([AgentEvidenceItem].self, forKey: .evidenceItems) ?? []
+    approvals = try container.decodeIfPresent([AgentToolApproval].self, forKey: .approvals) ?? []
     let transcriptFinalAnswer = AgentTranscriptValidation.finalAnswer(in: transcriptItems)
     let persistedFinalAnswer = try container.decodeIfPresent(String.self, forKey: .finalAnswer)
     finalAnswer =

@@ -3877,10 +3877,13 @@ class APIManager {
                 }
                 #endif
 
-            case .toolApprovalRequest(_, _, let toolName):
+            case .toolApprovalRequest(let approvalID, let callID, let toolName):
                 continuation.yield(StreamData(
                     toolContent: currentLanguagePrefix ? "请求执行工具：\(toolName)" : "Requesting approval for tool: \(toolName)",
-                    toolName: toolName
+                    toolName: toolName,
+                    agentEvents: [.toolApprovalChanged(.init(id: approvalID, canonicalRunID: nil,
+                        callID: callID, toolName: toolName, reviewText: "",
+                        disposition: .providerRequired))]
                 ))
 
             case .toolOutputDenied(let toolCallID, let toolName):
@@ -3890,6 +3893,8 @@ class APIManager {
                     toolContent: deniedText,
                     toolName: toolName,
                     agentEvents: [
+                        .toolApprovalChanged(.init(id: "provider-denial:" + toolCallID, canonicalRunID: nil,
+                            callID: toolCallID, toolName: toolName, reviewText: "", disposition: .notApproved)),
                         .toolExecutionFailed(id: executionID, error: AgentSafeError(message: deniedText))
                     ]
                 ))

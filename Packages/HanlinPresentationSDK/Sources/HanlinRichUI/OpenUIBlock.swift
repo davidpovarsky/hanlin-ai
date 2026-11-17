@@ -20,7 +20,9 @@ public struct OpenUIBlock: View {
         self.part = part; self.state = state; self.configuration = configuration; self.perform = perform
     }
     public var body: some View {
-        if case .openUI(let program, let target) = part.payload {
+        if case .openUI(let program, let target) = part.payload,
+           part.identity == state.identity, state.profile.renderTargets.contains(target),
+           Set(part.catalogVersions).isSubset(of: Set(state.profile.catalogs.map(\.reference))) {
             VStack(alignment: .leading, spacing: 8) {
                 if target == .swiftui, let tree = runtime.tree {
                     NativeOpenUINode(value: tree, runtime: runtime, configuration: configuration)
@@ -52,8 +54,10 @@ final class OpenUIBridgeModel {
     }
     func action(_ id: String) { invoke("return window.hanlinOpenUI.action(id)", arguments: ["id": id]) }
     private func invoke(_ script: String, arguments: [String: Any]) {
-        webView?.callAsyncJavaScript(script, arguments: arguments, in: nil, contentWorld: .page) { [weak self] result in
-            if case .failure(let error) = result { self?.error = error.localizedDescription }
+        Task { @MainActor [weak self] in
+            guard let self, let webView else { return }
+            do { _ = try await webView.callAsyncJavaScript(script, arguments: arguments, in: nil, contentWorld: .page) }
+            catch { self.error = error.localizedDescription }
         }
     }
 }
@@ -111,9 +115,11 @@ private struct OpenUIWebRuntime: UIViewRepresentable {
             let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
             guard let data = try? encoder.encode(input), data != lastInput else { return }
             lastInput = data
-            view.callAsyncJavaScript("window.hanlinOpenUI.update(input)",
-                arguments: ["input": PresentationValue.object(input).bridgeObject], in: nil, contentWorld: .page) { [weak self] result in
-                if case .failure(let error) = result { self?.parent.runtime.error = error.localizedDescription }
+            Task { @MainActor [weak self] in
+                guard let self, ready else { return }
+                do { _ = try await view.callAsyncJavaScript("window.hanlinOpenUI.update(input)",
+                    arguments: ["input": PresentationValue.object(input).bridgeObject], in: nil, contentWorld: .page) }
+                catch { if ready { parent.runtime.error = error.localizedDescription } }
             }
         }
 
@@ -155,7 +161,7 @@ private struct OpenUIWebRuntime: UIViewRepresentable {
         }
 
         func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
-                     decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+                     decisionHandler: @escaping @MainActor @Sendable (WKNavigationActionPolicy) -> Void) {
             if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
                 let action = PresentationAction(identity: parent.part.identity, partID: parent.part.id,
                     name: "action", parameters: ["event": .object(["type": .string("open_url"), "params": .object(["url": .string(url.absoluteString)])])])

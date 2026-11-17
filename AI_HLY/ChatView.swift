@@ -329,7 +329,7 @@ struct ChatView: View {
             showPhotoSourceOptions: $showPhotoSourceOptions,
             showModelSuggestions: $showModelSuggestions,
             filteredModels: $filteredModels,
-            isResponding: $isResponding,
+            isResponding: agentBusyBinding,
             isFeedBack: $isFeedBack,
             ifKnowledge: $ifKnowledge,
             ifSearch: $ifSearch,
@@ -371,11 +371,15 @@ struct ChatView: View {
         var ifPlanning: Bool
     }
 
+    private var agentBusyBinding: Binding<Bool> {
+        Binding(get: { isResponding || agentSessionOwner.inlineToolIsRunning }, set: { isResponding = $0 })
+    }
+
     private var composerBridgeSyncState: ComposerBridgeSyncState {
         ComposerBridgeSyncState(
             temporaryRecord: TemporaryRecord,
             respondIndex: respondIndex,
-            isResponding: isResponding,
+            isResponding: isResponding || agentSessionOwner.inlineToolIsRunning,
             message: message,
             selectedImagesCount: selectedImages.count,
             selectedDocumentURLs: selectedDocumentURLs,
@@ -463,7 +467,7 @@ struct ChatView: View {
                         showPhotoSourceOptions: $showPhotoSourceOptions,
                         showModelSuggestions: $showModelSuggestions,
                         filteredModels: $filteredModels,
-                        isResponding: $isResponding,
+                        isResponding: agentBusyBinding,
                         isFeedBack: $isFeedBack,
                         ifKnowledge: $ifKnowledge,
                         ifSearch: $ifSearch,
@@ -1038,13 +1042,6 @@ struct ChatView: View {
                             .id(msg.id)
                     }
 
-                    if let request = agentSessionOwner.consent.pending {
-                        HanlinInlineToolApproval(requestID: request.id.uuidString, toolName: request.tool,
-                            reviewText: AgentDiagnosticsRedactor.sanitize(request.invocation.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}")) { allowed in
-                            agentSessionOwner.consent.answer(id: request.id, allowed: allowed)
-                        }
-                        .id("tool-consent-" + request.invocation.providerCallID)
-                    }
                     Spacer()
 
                     // 底部留白
@@ -1196,9 +1193,36 @@ struct ChatView: View {
             guard modelTemp.indices.contains(selectedModelIndex), source.modelName == modelTemp[selectedModelIndex].name,
                   let alias = action.parameters["name"]?.string else { throw HanlinHostError.staleContext }
             let arguments = try HanlinJSONValue.decodeCanonicalJSON(JSONEncoder().encode(action.parameters["args"] ?? .object([:])))
-            let result = try await agentSessionOwner.executeInlineTool(rowID: source.id, partID: action.partID,
-                alias: alias, arguments: arguments)
-            return (try? JSONDecoder().decode(PresentationValue.self, from: Data(result.utf8))) ?? .string(result)
+            guard let row = chatTemps.first(where: { $0.groupID == source.groupID && $0.agentRun != nil }),
+                  row.agentRun != nil else { throw HanlinHostError.staleContext }
+            var coordinator: AgentRunCoordinator?
+            var deniedThisInvocation = false
+            func publish() {
+                guard let coordinator else { return }
+                row.agentRun = coordinator.run
+                if activeAgentRun?.id == coordinator.runID { activeAgentRun = coordinator.run }
+                #if HANLIN_A2UI_POC
+                a2uiPresentation?.synchronizeTools(coordinator.run, isLive: true)
+                #endif
+            }
+            do {
+                let result = try await agentSessionOwner.executeInlineTool(rowID: source.id, partID: action.partID,
+                    alias: alias, arguments: arguments) { event in
+                        if case .toolApprovalChanged(let approval) = event, approval.disposition == .notApproved { deniedThisInvocation = true }
+                        if coordinator == nil, let latest = row.agentRun { coordinator = AgentRunCoordinator(continuingActivity: latest) }
+                        coordinator?.consume([event]); publish()
+                    }
+                coordinator?.complete(); publish()
+                if !TemporaryRecord { try context.save() }
+                return (try? JSONDecoder().decode(PresentationValue.self, from: Data(result.utf8))) ?? .string(result)
+            } catch {
+                if Task.isCancelled || error as? HanlinHostError == .cancelled { coordinator?.cancel() }
+                else if deniedThisInvocation { coordinator?.complete() }
+                else { coordinator?.fail(error) }
+                publish()
+                if !TemporaryRecord { try? context.save() }
+                throw error
+            }
         }
         guard let event = action.parameters["event"]?.object,
               let type = event["type"]?.string else { throw HanlinHostError.invalidArguments }
@@ -1328,7 +1352,8 @@ struct ChatView: View {
         #endif
         
         // 1. 构造基础气泡
-        let bubble = ChatBubbleView(
+        let bubble = VStack(alignment: .leading, spacing: 8) {
+        ChatBubbleView(
             temporaryRecord: TemporaryRecord,
             containerWidth: chatContainerWidth,
             id: msg.id,
@@ -1398,6 +1423,14 @@ struct ChatView: View {
                 }
             }
         )
+        if agentSessionOwner.pendingApprovalRowID == msg.id, let request = agentSessionOwner.consent.pending {
+            HanlinInlineToolApproval(requestID: request.id.uuidString, toolName: request.tool,
+                reviewText: AgentDiagnosticsRedactor.sanitize(request.invocation.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}")) { allowed in
+                agentSessionOwner.consent.answer(id: request.id, allowed: allowed)
+            }
+            .id("tool-consent-" + request.invocation.providerCallID)
+        }
+        }
         .environment(\.hanlinRichMessageContext, richMessageContext(for: msg))
         .environment(\.chatExcerptSource, ChatExcerptSource(
             chatRecordID: chatRecord.id, messageID: msg.id, groupID: msg.groupID,
@@ -1597,6 +1630,7 @@ struct ChatView: View {
     
     // 处理消息发送
     private func handleMessageSending(ifObservingMode: Bool, continuationText: String? = nil, richInteraction: HanlinHostInteractionRequest? = nil) {
+        guard !agentSessionOwner.inlineToolIsRunning else { return }
         guard modelTemp.indices.contains(selectedModelIndex) else { return }
         let requestModelName = modelTemp[selectedModelIndex].name ?? "Unknown"
         let requestModelCompany = modelTemp[selectedModelIndex].company
@@ -1724,6 +1758,12 @@ struct ChatView: View {
         activeAgentCoordinator = agentCoordinator
         activeAgentRun = agentCoordinator.run
         activeAgentMessage = groupBeginMessage
+        agentSessionOwner.onApprovalEvent = { rowID, approval in
+            guard rowID == groupBeginMessage.id, activeAgentCoordinator === agentCoordinator else { return }
+            agentCoordinator.consume([.toolApprovalChanged(approval)])
+            groupBeginMessage.agentRun = agentCoordinator.run
+            activeAgentRun = agentCoordinator.run
+        }
         
         // 进行API请求
         // Register the already-created original row, not a second SDK-specific message.

@@ -102,7 +102,11 @@ struct HanlinMixedOriginalText<Markdown: View>: View {
                         isComplete: originalPart.isComplete)
                     switch part.payload {
                     case .markdown(let text): markdown(text)
-                    case .openUI: OpenUIBlock(part: part, state: context.state, perform: context.perform)
+                    case .openUI:
+                        OpenUIBlock(part: part, state: context.state, configuration: .init(nativeComponent: { element, _ in
+                            guard ["TextContent", "MarkDownRenderer", "Paragraph"].contains(element.typeName) else { return nil }
+                            return AnyView(markdown(element.properties["text"]?.string ?? element.properties["textMarkdown"]?.string ?? ""))
+                        }), perform: context.perform)
                     }
                 }
             }

@@ -148,7 +148,7 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
         case .reasoningStarted, .reasoningDelta, .reasoningCompleted,
              .progressMessage, .toolCallStarted, .toolCallArgumentsDelta,
              .toolCallCompleted, .toolExecutionStarted, .toolExecutionProgress,
-             .toolExecutionCompleted, .toolExecutionFailed,
+             .toolExecutionCompleted, .toolExecutionFailed, .toolApprovalChanged,
              .searchStarted, .searchCompleted:
             return true
         case .runStarted, .modelRoundStarted, .answerSegmentStarted, .answerSegmentDelta,

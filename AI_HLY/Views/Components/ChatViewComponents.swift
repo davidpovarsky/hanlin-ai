@@ -2233,20 +2233,31 @@ struct ChatBubbleView: View {
             }
             .padding(.vertical, 4)
         } label: {
-            HStack(spacing: 8) {
-                Image(systemName: activity.systemImage ?? (activity.status == .failed ? "exclamationmark.circle" : "wrench.and.screwdriver"))
-                if activity.status == .running || activity.status == .pending {
-                    LoadingGradientText(text: activity.title, font: .subheadline)
-                } else { Text(activity.title).font(.subheadline) }
-                Spacer()
-                Text(activity.status.rawValue.capitalized).font(.caption2).foregroundStyle(.secondary)
-                    .contentTransition(.opacity)
-                    .animation(chatMotion.updateAnimation, value: activity.status)
-            }
+            let approval = agentRun?.approvals.last(where: { $0.callID == activity.id })
+            HanlinToolActivityHeader(title: activity.title,
+                status: approval?.disposition == .notApproved ? String(localized: "Not approved")
+                    : approval?.disposition == .awaiting || approval?.disposition == .providerRequired
+                        ? String(localized: "Awaiting approval") : activity.status.rawValue.capitalized,
+                symbol: activity.systemImage ?? (activity.status == .failed ? "exclamationmark.circle" : "wrench.and.screwdriver"),
+                family: trustedActivityFamily(activity),
+                isActive: activity.status == .running && approval?.disposition != .awaiting && approval?.disposition != .providerRequired)
         }
         .disclosureGroupStyle(HanlinMotionDisclosureStyle())
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-agent-activity-\(activity.id)")
+    }
+
+    private func trustedActivityFamily(_ activity: AgentDisplayActivity) -> HanlinToolActivityHeader.Family {
+        switch activity.executionPresentation?.familyID {
+        case .webSearch?: .webSearch
+        case .sourceSearch?: .sourceSearch
+        case .fileOperation?: .fileOperation
+        case .codeExecution?: .codeExecution
+        case .command?: .command
+        case .imageGeneration?: .imageGeneration
+        case .map?: .map
+        default: .generic
+        }
     }
 
     @ViewBuilder
@@ -2255,18 +2266,8 @@ struct ChatBubbleView: View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 6) {
                 switch entry.status {
-                case .running, .pending:
-                    if chatMotion.isAnimated {
-                        ProgressView()
-                            .controlSize(.mini)
-                            .frame(width: 14, height: 14)
-                    } else {
-                        Image(systemName: "hourglass").font(.caption)
-                    }
-                case .completed:
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundColor(.hlGreen)
+                case .running, .pending, .completed:
+                    EmptyView()
                 case .failed:
                     Image(systemName: "exclamationmark.triangle.fill")
                         .font(.system(size: 13, weight: .semibold))
@@ -2306,6 +2307,7 @@ struct ChatBubbleView: View {
             }
 
             if !entry.output.isEmpty {
+                ScrollView(.horizontal) {
                 Text(AgentDiagnosticsRedactor.sanitize(entry.output))
                     .font(.caption.monospaced())
                     .foregroundColor(.primary)
@@ -2317,6 +2319,7 @@ struct ChatBubbleView: View {
                     )
                     .textSelection(.enabled)
                     .accessibilityIdentifier("hanlin-tool-content-expanded-text")
+                }
             }
 
             if let errorDesc = entry.errorDescription, !errorDesc.isEmpty {

@@ -13,6 +13,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launch()
         openChat(in: app)
         sendPrompt("PHASE2_TOOL_A2UI_" + nonce, in: app)
+        let reviewToggle = app.descendants(matching: .any)["hanlin-tool-consent-review-toggle"].firstMatch
+        XCTAssertTrue(reviewToggle.waitForExistence(timeout: 45))
+        XCTAssertFalse(app.staticTexts["hanlin-tool-consent-original-request"].exists, "Raw parameters stay closed until reviewed")
+        tapElement(reviewToggle)
         let review = app.staticTexts["hanlin-tool-consent-original-request"].firstMatch
         XCTAssertTrue(review.waitForExistence(timeout: 45))
         XCTAssertTrue(review.label.contains("createSurface") && review.label.contains("Tool name"))
@@ -51,6 +55,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launch()
         openChat(in: app)
         sendPrompt("PHASE2_REAL_PYTHON_" + nonce, in: app)
+        let reviewToggle = app.descendants(matching: .any)["hanlin-tool-consent-review-toggle"].firstMatch
+        XCTAssertTrue(reviewToggle.waitForExistence(timeout: 45))
+        XCTAssertFalse(app.staticTexts["hanlin-tool-consent-original-request"].exists, "Raw parameters stay closed until reviewed")
+        tapElement(reviewToggle)
         let request = app.staticTexts["hanlin-tool-consent-original-request"].firstMatch
         XCTAssertTrue(request.waitForExistence(timeout: 45), "The actual code request must require review before dispatch")
         XCTAssertTrue(request.label.contains(nonce) && request.label.contains("import sys"))

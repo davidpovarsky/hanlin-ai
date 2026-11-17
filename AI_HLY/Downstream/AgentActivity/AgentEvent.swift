@@ -111,6 +111,17 @@ enum AgentAnswerDisposition: String, Codable, Hashable, Sendable {
   case interim
   case final
 }
+/// A receipt of a real approval request. Persisted presentation never grants
+/// permission; only the current Host consent continuation can answer it.
+struct AgentToolApproval: Codable, Hashable, Sendable, Identifiable {
+  enum Disposition: String, Codable, Sendable { case awaiting, allowedOnce, notApproved, providerRequired }
+  let id: String
+  let canonicalRunID: UUID?
+  let callID: String
+  let toolName: String
+  let reviewText: String
+  var disposition: Disposition
+}
 enum AgentEvent: @unchecked Sendable {
   case runStarted(AgentRunMetadata)
   case modelRoundStarted(id: String)
@@ -125,6 +136,7 @@ enum AgentEvent: @unchecked Sendable {
   case toolExecutionProgress(id: String, message: String)
   case toolExecutionCompleted(id: String, result: AgentToolResult)
   case toolExecutionFailed(id: String, error: AgentSafeError)
+  case toolApprovalChanged(AgentToolApproval)
   case answerSegmentStarted(AgentItemMetadata)
   case answerSegmentDelta(id: String, text: String)
   case answerSegmentEnded(id: String, disposition: AgentAnswerDisposition)

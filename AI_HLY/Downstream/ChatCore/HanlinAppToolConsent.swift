@@ -11,6 +11,7 @@ final class HanlinAppToolConsent {
         let invocation: HanlinHostInvocation
     }
     private(set) var pending: Request?
+    @ObservationIgnored var onChange: ((Request, Bool?) -> Void)?
     @ObservationIgnored private var continuation: CheckedContinuation<Bool, Never>?
     @ObservationIgnored private var deadlineTask: Task<Void, Never>?
 
@@ -24,6 +25,7 @@ final class HanlinAppToolConsent {
                 guard !Task.isCancelled else { reply.resume(returning: false); return }
                 continuation = reply
                 pending = .init(id: id, tool: invocation.request.aliasUsed, invocation: invocation)
+                if let pending { onChange?(pending, nil) }
                 deadlineTask = Task { @MainActor [weak self] in
                     do { try await Task.sleep(for: .seconds(remaining)) }
                     catch { return }
@@ -37,6 +39,7 @@ final class HanlinAppToolConsent {
 
     func answer(id: UUID, allowed: Bool) {
         guard pending?.id == id else { return }
+        if let pending { onChange?(pending, allowed) }
         let reply = continuation
         deadlineTask?.cancel(); deadlineTask = nil
         pending = nil; continuation = nil

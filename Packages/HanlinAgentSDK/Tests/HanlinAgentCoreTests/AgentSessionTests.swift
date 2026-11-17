@@ -847,10 +847,17 @@ private struct ControlledTextModel: LanguageModelV3 {
         let admitted = HanlinHostInteractionRequest(origin: origin, actionID: "openui.query", arguments: .null)
         var receipt: HanlinHostResultEvent?
         session.onHostResult = { receipt = $0 }
-        _ = try await session.executePresentationTool(admitted, alias: "fixture_create", argumentsJSON: #"{"text":"test"}"#)
+        var started: HanlinAgentEvent?
+        _ = try await session.executePresentationTool(admitted, alias: "fixture_create", argumentsJSON: #"{"text":"test"}"#,
+            onStarted: { event in
+                #expect(host.externalEffects == 0)
+                #expect(event.session == identity && event.interactionOrigin == origin)
+                started = event
+            })
         #expect(host.externalEffects == 1 && host.rejectedForgedIdentity)
         let event = try #require(receipt)
         #expect(event.call.providerCallID == admitted.requestID.uuidString)
+        #expect(event.call.runID == started?.runID)
         #expect(event.call.session == identity && event.call.runID != origin.runID)
         let saved = try #require(await store.load(identity.conversationID, namespace: ns))
         #expect(saved.entries.contains { if case .hostResultIdentity(let id, let call) = $0.payload { return id == event.resultID && call == event.call }; return false })

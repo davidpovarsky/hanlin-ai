@@ -7,7 +7,8 @@ import HanlinPresentationKit
 @MainActor public struct OpenUIRendererConfiguration {
     public let resourceDirectory: URL?
     public let nativeComponent: ((OpenUINativeElement, OpenUINativeActions) -> AnyView?)?
-    public init(resourceDirectory: URL?, nativeComponent: ((OpenUINativeElement, OpenUINativeActions) -> AnyView?)? = nil) {
+    public init(resourceDirectory: URL? = OpenUICatalogs.resourceDirectory,
+                nativeComponent: ((OpenUINativeElement, OpenUINativeActions) -> AnyView?)? = nil) {
         self.resourceDirectory = resourceDirectory; self.nativeComponent = nativeComponent
     }
     public static var bundled: Self { .init(resourceDirectory: OpenUICatalogs.resourceDirectory) }

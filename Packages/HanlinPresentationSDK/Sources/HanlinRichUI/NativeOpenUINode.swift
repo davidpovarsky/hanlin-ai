@@ -294,7 +294,9 @@ struct NativeOpenUINode: View {
     @ViewBuilder private func children(_ value: PresentationValue?) -> some View {
         if let values = value?.array {
             ForEach(Array(values.enumerated()), id: \.offset) { _, child in
-                AnyView(NativeOpenUINode(value: child, runtime: runtime, configuration: configuration))
+                if child.object?["typeName"] != nil {
+                    AnyView(NativeOpenUINode(value: child, runtime: runtime, configuration: configuration))
+                } else if child != .null { Text(child.displayText).textSelection(.enabled) }
             }
         } else if let value, value.object?["typeName"] != nil { AnyView(NativeOpenUINode(value: value, runtime: runtime, configuration: configuration)) }
         else if let value, value != .null { Text(value.displayText).textSelection(.enabled) }

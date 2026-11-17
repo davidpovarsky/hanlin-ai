@@ -283,20 +283,45 @@ struct AgentEventAccumulator {
         }
       }
 
+    case .toolApprovalChanged(let approval):
+      if let index = run.approvals.firstIndex(where: { $0.id == approval.id }) {
+        guard run.approvals[index].callID == approval.callID else { return }
+        run.approvals[index] = approval
+      } else { run.approvals.append(approval) }
+      let externalID = "call:\(approval.callID)"
+      if stepIndexByExternalID[externalID] == nil {
+        apply(.toolCallStarted(.parse(id: approval.callID, name: approval.toolName, argumentsJSON: "{}")))
+      }
+      updateStep(externalID: externalID) { step in
+        step.input = approval.reviewText
+        switch approval.disposition {
+        case .awaiting, .providerRequired:
+          step.status = .pending
+          step.userFacingSummary = String(localized: "Awaiting approval")
+        case .allowedOnce: step.userFacingSummary = String(localized: "Allowed once")
+        case .notApproved:
+          step.status = .cancelled; step.completedAt = Date()
+          step.userFacingSummary = String(localized: "Not approved")
+          step.errorDescription = nil
+        }
+      }
+
     case .toolExecutionFailed(let id, let error):
       let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
+      let notApproved = run.approvals.contains { $0.callID == callID && $0.disposition == .notApproved }
       let failedTitle = profileByCallID[callID]?.activity.failedTitle
       updateStep(externalID: "execution:\(id)") { step in
-        step.status = .failed
+        step.status = notApproved ? .cancelled : .failed
         if let failedTitle { step.title = failedTitle }
-        step.errorDescription = error.message
+        step.errorDescription = notApproved ? nil : error.message
+        if notApproved { step.title = String(localized: "Not approved"); step.userFacingSummary = step.title }
         step.completedAt = Date()
       }
       if let transcriptID = toolTranscriptIDByCallID[callID] {
         transcript.update(externalID: transcriptID) { item in
-          item.text = error.message
+          item.text = notApproved ? String(localized: "Not approved") : error.message
         }
-        transcript.complete(externalID: transcriptID, status: .failed)
+        transcript.complete(externalID: transcriptID, status: notApproved ? .cancelled : .failed)
       }
 
     case .answerSegmentStarted(let metadata):
@@ -577,6 +602,15 @@ final class AgentRunCoordinator {
           modelID: modelID,
           startedAt: run.startedAt
         )))
+  }
+
+  /// A user action in an existing rich message adds real tool events to that
+  /// message's original display transcript; it does not create another engine.
+  init(continuingActivity original: AgentRun) {
+    var run = original
+    run.status = .running; run.completedAt = nil
+    runID = run.id
+    accumulator = AgentEventAccumulator(run: run)
   }
 
   func consume(_ events: [AgentEvent]) {

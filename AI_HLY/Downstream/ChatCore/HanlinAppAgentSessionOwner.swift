@@ -18,6 +18,7 @@ final class HanlinAppAgentSessionOwner {
     let consent = HanlinAppToolConsent()
     private(set) var session: HanlinAgentSession?
     private(set) var bindings: [HanlinAppAgentRowBinding] = []
+    private(set) var inlineToolIsRunning = false
     @ObservationIgnored weak var presentation: (any HanlinAppAgentPresentationConsumer)? {
         didSet { if let session { presentation?.installed(session: session) } }
     }
@@ -34,11 +35,28 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var inlineOrigins: [String: HanlinHostInteractionOrigin] = [:]
     @ObservationIgnored private var inlineToolTail: Task<Void, Never>?
     @ObservationIgnored private var inlineToolTasks: [UUID: Task<String, Error>] = [:]
+    @ObservationIgnored private var inlineToolRowID: UUID?
+    @ObservationIgnored var onApprovalEvent: ((UUID?, AgentToolApproval) -> Void)?
+
+    var pendingApprovalRowID: UUID? {
+        consent.pending == nil ? nil : inlineToolRowID ?? activeReference?.messageID
+    }
+
+    init() {
+        consent.onChange = { [weak self] request, allowed in
+            guard let self else { return }
+            let review = request.invocation.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}"
+            onApprovalEvent?(pendingApprovalRowID, .init(id: request.id.uuidString,
+                canonicalRunID: request.invocation.runID, callID: request.invocation.providerCallID,
+                toolName: request.tool, reviewText: AgentDiagnosticsRedactor.sanitize(review),
+                disposition: allowed.map { $0 ? .allowedOnce : .notApproved } ?? .awaiting))
+        }
+    }
 
     func inlineInteraction(rowID: UUID, partID: String, actionID: String,
                            arguments: HanlinJSONValue) throws -> HanlinHostInteractionRequest {
         guard let session, contextGeneration == session.identity.context.generation,
-              let binding = bindings.last(where: { $0.session == session.identity && $0.reference.messageID == rowID }) else {
+              let binding = bindings.first(where: { $0.session == session.identity && $0.reference.messageID == rowID }) else {
             throw HanlinHostError.staleContext
         }
         let key = rowID.uuidString + "/" + partID
@@ -49,7 +67,8 @@ final class HanlinAppAgentSessionOwner {
         return .init(origin: origin, actionID: actionID, arguments: arguments)
     }
 
-    func executeInlineTool(rowID: UUID, partID: String, alias: String, arguments: HanlinJSONValue) async throws -> String {
+    func executeInlineTool(rowID: UUID, partID: String, alias: String, arguments: HanlinJSONValue,
+                           onEvent: @escaping @MainActor (AgentEvent) -> Void) async throws -> String {
         // A program may declare several independent Query blocks. Serialize them
         // through the one existing Session; each obtains fresh Host admission.
         let previous = inlineToolTail
@@ -59,9 +78,31 @@ final class HanlinAppAgentSessionOwner {
             try Task.checkCancellation()
             guard let self else { throw HanlinHostError.cancelled }
             let request = try inlineInteraction(rowID: rowID, partID: partID, actionID: alias, arguments: arguments)
-            guard let session else { throw HanlinHostError.staleContext }
+            guard let session, let adapter = host?.toolAdapter,
+                  let binding = bindings.first(where: { $0.session == session.identity && $0.reference.messageID == rowID }) else { throw HanlinHostError.staleContext }
+            inlineToolRowID = rowID
+            inlineToolIsRunning = true
+            activeUIRunID = binding.reference.uiRunID; activeReference = binding.reference; completion = nil
+            let previousCallbacks = adapter.callbacks
+            let previousApproval = onApprovalEvent
+            adapter.callbacks.onAgentEvent = onEvent
+            adapter.callbacks.onStreamData = { data in for event in data.agentEvents { onEvent(event) } }
+            adapter.callbacks.onProgressMessage = nil
+            onApprovalEvent = { _, approval in onEvent(.toolApprovalChanged(approval)) }
+            defer {
+                adapter.callbacks = previousCallbacks; onApprovalEvent = previousApproval
+                inlineToolRowID = nil; inlineToolIsRunning = false
+                activeUIRunID = nil; activeReference = nil
+            }
+            let reference = "hanlin.app.row.v1:" + (try JSONEncoder().encode(HanlinAppAgentStoredRowReference(reference: binding.reference, session: session.identity))).base64EncodedString()
             let output = try await session.executePresentationTool(request, alias: alias,
-                argumentsJSON: String(decoding: arguments.canonicalJSONData(), as: UTF8.self))
+                argumentsJSON: String(decoding: arguments.canonicalJSONData(), as: UTF8.self),
+                presentationReference: reference, onStarted: { [weak self] event in
+                    guard let self else { throw HanlinHostError.cancelled }
+                    try receive(event, uiRunID: binding.reference.uiRunID)
+                    onEvent(.modelRoundStarted(id: event.runID.uuidString))
+                })
+            try producerStreamDrained(uiRunID: binding.reference.uiRunID)
             guard !output.isError else { throw HanlinInlineToolError(message: output.modelText) }
             return output.modelText
         }

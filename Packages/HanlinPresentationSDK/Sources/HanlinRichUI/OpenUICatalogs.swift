@@ -20,7 +20,12 @@ public enum OpenUICatalogs {
     }
 
     public static func instructions(for profile: ResolvedPresentationProfile) -> String {
-        profile.catalogs.map(\.modelInstructions).joined(separator: "\n\n")
+        let mode = profile.profile.answerMode == .fullOpenUI
+            ? "The selected conversation uses full OpenUI: place the complete answer in one openui-lang fence."
+            : "The selected conversation uses mixed Markdown and OpenUI: keep prose as Markdown and embed rich blocks where useful."
+        let targets = profile.renderTargets.map(\.rawValue).sorted().joined(separator: ", ")
+        return profile.catalogs.map(\.modelInstructions).joined(separator: "\n\n")
+            + "\n\n" + mode + " Host-approved render targets for this conversation: " + targets + "."
     }
 
     static var resourceDirectory: URL? { Bundle.module.url(forResource: "OpenUI", withExtension: nil) }

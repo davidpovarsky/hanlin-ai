@@ -4,6 +4,38 @@ import Testing
 
 @Suite("Source-correlated Thinking hierarchy")
 struct AgentRoundPresentationTests {
+    @Test func actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay() throws {
+        var accumulator = AgentEventAccumulator(run: .init(groupID: UUID(), providerID: "fixture", modelID: "fixture"))
+        let callID = "opaque/approval-call"
+        var approval = AgentToolApproval(id: "actual-approval", canonicalRunID: UUID(), callID: callID,
+            toolName: "send_fixture", reviewText: "redacted review", disposition: .awaiting)
+        accumulator.apply(.toolApprovalChanged(approval))
+        #expect(accumulator.run.steps.filter { $0.toolCallID == callID }.count == 1)
+        #expect(accumulator.run.steps.first?.status == .pending)
+        approval.disposition = .notApproved
+        accumulator.apply(.toolApprovalChanged(approval))
+        accumulator.apply(.toolExecutionStarted(.init(id: callID + ":execution", callID: callID, name: "send_fixture", startedAt: .now)))
+        accumulator.apply(.toolExecutionFailed(id: callID + ":execution", error: .init(message: "Provider denied the call")))
+        let execution = try #require(accumulator.run.steps.first { $0.isExecutionLifecycleStep })
+        #expect(execution.status == .cancelled && execution.errorDescription == nil)
+        #expect(accumulator.run.approvals == [approval])
+        let restored = try JSONDecoder().decode(AgentRun.self, from: JSONEncoder().encode(accumulator.run))
+        #expect(restored.approvals == [approval])
+        #expect(restored.transcriptItems.filter { $0.callID == callID }.count == 1)
+    }
+
+    @MainActor @Test func richToolFollowupPreservesPriorAnswerAndStableActivityIdentity() throws {
+        let original = AgentRunCoordinator(groupID: UUID(), providerID: "fixture", modelID: "fixture")
+        original.consume([.answerSegmentStarted(.init(id: "answer", title: "Answer", startedAt: .now)),
+            .answerSegmentDelta(id: "answer", text: "Original final answer"), .answerSegmentEnded(id: "answer", disposition: .final)])
+        original.complete()
+        let followup = AgentRunCoordinator(continuingActivity: original.run)
+        let round = UUID().uuidString
+        followup.consume([.modelRoundStarted(id: round), .toolCallStarted(.parse(id: "new-query", name: "search", argumentsJSON: "{}"))])
+        #expect(followup.runID == original.runID)
+        #expect(followup.run.transcriptItems.first(where: { $0.callID == "new-query" })?.roundID == round)
+        #expect(followup.run.transcriptItems.contains(where: { $0.text == "Original final answer" }))
+    }
     @MainActor @Test func asyncCancellationCannotClearANewerRunWhileRecorderDrains() async throws {
         let recorder = try #require(await AgentDiagnosticsRecorder.start(runID: UUID(), groupID: UUID(), providerID: "fixture", modelID: "fixture"))
         let gate = RecorderDrainGate()
