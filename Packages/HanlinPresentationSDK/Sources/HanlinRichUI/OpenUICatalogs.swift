@@ -28,7 +28,7 @@ public enum OpenUICatalogs {
             + "\n\n" + mode + " Host-approved render targets for this conversation: " + targets + "."
     }
 
-    static var resourceDirectory: URL? { Bundle.module.url(forResource: "OpenUI", withExtension: nil) }
+    public static var resourceDirectory: URL? { Bundle.module.url(forResource: "OpenUI", withExtension: nil) }
     private static func catalog(_ key: String, prompt: String) throws -> ComponentCatalogDescriptor {
         guard let directory = resourceDirectory else { throw CocoaError(.fileNoSuchFile) }
         let data = try Data(contentsOf: directory.appending(path: "catalog-manifest.json"))
