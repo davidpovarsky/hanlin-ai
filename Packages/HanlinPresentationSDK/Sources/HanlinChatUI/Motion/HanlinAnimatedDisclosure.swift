@@ -1,26 +1,30 @@
+#if canImport(SwiftUI)
 import SwiftUI
 
 /// Original implementation informed by Fatbobman's height/spacing discussion:
 /// https://fatbobman.com/en/posts/taming-row-height-and-spacing-jumps/
 /// No Gist source is incorporated (no explicit license was found).
 /// The chat's LazyVStack remains the scrolling/layout owner.
-struct HanlinAnimatedDisclosure<Content: View>: View {
+public struct HanlinAnimatedDisclosure<Content: View>: View {
     let isExpanded: Bool
     var spacing: CGFloat = 6
     @ViewBuilder let content: () -> Content
+
+    public init(isExpanded: Bool, spacing: CGFloat = 6, @ViewBuilder content: @escaping () -> Content) {
+        self.isExpanded = isExpanded; self.spacing = spacing; self.content = content
+    }
 
     @Environment(\.chatMotion) private var motion
     @State private var mounted = false
     @State private var progress: CGFloat = 0
     @State private var revision = 0
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             if mounted {
                 ChatDisclosureLayout(progress: progress, spacing: spacing) {
                     VStack(alignment: .leading, spacing: 6, content: content)
                         .opacity(motion.collapsedOpacity + (1 - motion.collapsedOpacity) * Double(progress))
-                        .scaleEffect(x: 1, y: motion.collapsedScale + (1 - motion.collapsedScale) * Double(progress), anchor: .top)
                 }
                 .clipped()
                 .contentShape(Rectangle())
@@ -77,10 +81,11 @@ struct HanlinAnimatedDisclosure<Content: View>: View {
 }
 
 /// Keep native DisclosureGroup ownership/identity, sharing only its presentation.
-struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
+public struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
+    public init() {}
     @Environment(\.chatMotion) private var motion
 
-    func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Button {
                 configuration.isExpanded.toggle()
@@ -128,3 +133,5 @@ private struct ChatDisclosureLayout: Layout {
             anchor: .topLeading, proposal: naturalProposal)
     }
 }
+
+#endif

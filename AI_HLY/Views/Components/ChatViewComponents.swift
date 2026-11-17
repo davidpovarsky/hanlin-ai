@@ -20,6 +20,8 @@ import RichTextKit
 import LaTeXSwiftUI
 import AVFoundation
 import HanlinPlatformContracts
+import HanlinChatUI
+import HanlinPresentationKit
 
 
 struct LoadingGradientText: View {
@@ -41,41 +43,14 @@ struct LoadingGradientText: View {
     var isActive: Bool = true
 
     var body: some View {
-        if reduceMotion || scenePhase != .active || !isActive || !motion.showsShimmer {
-            Text(text).font(font).foregroundStyle(textColor)
-        } else {
-        Text(text)
-            .font(font)
-            .foregroundColor(textColor)
-            .overlay(
-                GeometryReader { geo in
-                    TimelineView(.animation) { timeline in
-                        let time = timeline.date.timeIntervalSinceReferenceDate
-                        let duration = motion.shimmerDuration
-                        let progress = time.truncatingRemainder(dividingBy: duration) / duration
-                        let offset = CGFloat(progress) * geo.size.width * 2
-
-                        LinearGradient(
-                            gradient: Gradient(colors: gradientColors),
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                        .frame(width: geo.size.width)
-                        .offset(x: -geo.size.width + offset)
-                        .mask(
-                            Text(text)
-                                .font(font)
-                                .frame(width: geo.size.width)
-                        )
-                    }
-                }
-            )
-        }
+        Text(text).font(font).foregroundStyle(textColor)
+            .chatShimmer(isActive: isActive, colors: gradientColors)
     }
 }
 
 // MARK: - 组件化对话气泡
 struct ChatBubbleView: View {
+    @Environment(\.hanlinRichMessageContext) private var richMessageContext
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
     @Environment(\.chatExcerptSource) private var excerptSource
@@ -1784,9 +1759,11 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private var existingAssistantMarkdown: some View {
         if !text.isEmpty {
-            ChatMarkdownView(text: text,
-                savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
-                saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
+            HanlinMixedOriginalText(text: text) { segment in
+                ChatMarkdownView(text: segment,
+                    savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
+                    saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
+            }
             .padding(.vertical, 4)
             .contentShape(Rectangle())
             .contextMenu {
@@ -2240,14 +2217,15 @@ struct ChatBubbleView: View {
 
     private func activityDisclosure(_ activity: AgentDisplayActivity, entries: [ClassicProjectedToolCallEntry]) -> some View {
         DisclosureGroup(isExpanded: Binding(
-            get: { expandedActivityIDs.contains(activity.id) },
+            get: { richMessageContext?.state.expandedActivityIDs.contains(activity.id) ?? expandedActivityIDs.contains(activity.id) },
             set: { expanded in
-                if expanded { expandedActivityIDs.insert(activity.id) }
+                if let state = richMessageContext?.state { state.setExpanded(expanded, activityID: activity.id) }
+                else if expanded { expandedActivityIDs.insert(activity.id) }
                 else { expandedActivityIDs.remove(activity.id) }
             }
         )) {
             VStack(alignment: .leading, spacing: 6) {
-                if let input = activity.inputPreview { Text(input).font(.caption.monospaced()).textSelection(.enabled) }
+                if let input = activity.inputPreview { ScrollView(.horizontal) { Text(AgentDiagnosticsRedactor.sanitize(input)).font(.caption.monospaced()).textSelection(.enabled) } }
                 if let error = activity.errorDescription { Text(error).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
                 let matching = entries.filter { $0.callID == activity.id }
                 if matching.isEmpty, let output = activity.outputPreview { Text(output).font(.footnote).textSelection(.enabled) }

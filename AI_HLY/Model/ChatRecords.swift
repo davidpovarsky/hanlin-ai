@@ -23,6 +23,8 @@ struct CanvasData: Codable, Hashable {
 
 @Model
 class ChatRecords {
+    /// Conversation-specific versioned presentation. Nil keeps the original default.
+    var presentationAssignmentData: Data? = nil
     var id: UUID? = UUID()
     @Attribute(.spotlight)
     var name: String?

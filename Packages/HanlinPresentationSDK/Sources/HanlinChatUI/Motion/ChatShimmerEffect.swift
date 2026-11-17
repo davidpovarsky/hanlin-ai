@@ -1,3 +1,4 @@
+#if canImport(SwiftUI)
 //
 //  ChatShimmerEffect.swift
 //  AI_HLY
@@ -9,13 +10,15 @@ import SwiftUI
 
 struct ChatShimmerModifier: ViewModifier {
     let isActive: Bool
+    let colors: [Color]?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.chatMotion) private var motion
 
-    init(isActive: Bool = true) {
+    init(isActive: Bool = true, colors: [Color]? = nil) {
         self.isActive = isActive
+        self.colors = colors
     }
 
     func body(content: Content) -> some View {
@@ -32,13 +35,8 @@ struct ChatShimmerModifier: ViewModifier {
                         let phase = time.truncatingRemainder(dividingBy: motion.shimmerDuration) / motion.shimmerDuration * 2 - 1
 
                         LinearGradient(
-                            stops: [
-                                .init(color: shimmerColor.opacity(0.0), location: 0.0),
-                                .init(color: shimmerColor.opacity(0.35), location: 0.35),
-                                .init(color: shimmerColor.opacity(0.85), location: 0.5),
-                                .init(color: shimmerColor.opacity(0.35), location: 0.65),
-                                .init(color: shimmerColor.opacity(0.0), location: 1.0)
-                            ],
+                            colors: colors ?? [shimmerColor.opacity(0), shimmerColor.opacity(0.35),
+                                shimmerColor.opacity(0.85), shimmerColor.opacity(0.35), shimmerColor.opacity(0)],
                             startPoint: .leading,
                             endPoint: .trailing
                         )
@@ -52,9 +50,11 @@ struct ChatShimmerModifier: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     /// Applies a glowing shimmer sweep animation passing across the view.
-    func chatShimmer(isActive: Bool = true) -> some View {
-        modifier(ChatShimmerModifier(isActive: isActive))
+    func chatShimmer(isActive: Bool = true, colors: [Color]? = nil) -> some View {
+        modifier(ChatShimmerModifier(isActive: isActive, colors: colors))
     }
 }
+
+#endif

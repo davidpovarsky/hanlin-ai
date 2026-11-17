@@ -92,14 +92,58 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         record("surface-only-original-assistant-row")
     }
 
-    private func launch(continuation: Bool, surfaceOnly: Bool = false) throws {
+    func testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft() throws {
+        let output = """
+        OPENUI_BEFORE
+        ```openui-lang renderTarget=react
+        $budget = [1200]
+        $nights = "3"
+        nights = Input("nights", "React nights", "text", null, $nights)
+        root = Stack([TextContent("Original React controls"), nights])
+        ```
+        OPENUI_BETWEEN
+        ```openui-lang renderTarget=swiftui
+        nights = Input("nativeNights", "Native nights", "text", null, $nights)
+        send = Button("Use these dates", @ToAssistant("Use these dates"))
+        root = Stack([TextContent("Budget: " + $budget[0] + ", nights: " + $nights), nights, Buttons([send])])
+        ```
+        OPENUI_AFTER
+        """
+        try launch(continuation: true, openUI: output)
+        input().tap(); input().typeText(prompt)
+        app.buttons["hanlin-chat-send"].firstMatch.tap()
+        let native = app.textFields["openui-native-Input-nativeNights"].firstMatch
+        XCTAssertTrue(native.waitForExistence(timeout: 45), "The original streamed text must mount native SwiftUI controls")
+        assertText("OPENUI_BEFORE"); assertText("OPENUI_BETWEEN"); assertText("OPENUI_AFTER")
+        assertTransport(count: 1)
+        let react = app.webViews.textFields["React nights"].firstMatch
+        XCTAssertTrue(react.waitForExistence(timeout: 15), "The original React library must render inside the same assistant message")
+        native.tap()
+        native.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: (native.value as? String ?? "").count) + "7")
+        XCTAssertTrue(wait(NSPredicate(format: "value == '7'"), on: react))
+        react.tap()
+        react.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: (react.value as? String ?? "").count) + "9")
+        XCTAssertTrue(wait(NSPredicate(format: "value == '9'"), on: native))
+        assertText("Budget: 1200, nights: 9")
+        assertTransport(count: 1) // Cross-renderer state updates must remain local.
+        input().tap(); input().typeText("UNSENT_DRAFT_MUST_STAY_LOCAL")
+        let submit = app.buttons["Use these dates"].firstMatch
+        if !submit.isHittable { app.swipeUp() }
+        submit.tap()
+        assertText("NATIVE_A2UI_CONTINUATION_OK")
+        assertTransport(count: 2)
+        XCTAssertEqual(input().value as? String, "UNSENT_DRAFT_MUST_STAY_LOCAL")
+        record("original-mixed-openui-react-native-state-and-action")
+    }
+
+    private func launch(continuation: Bool, surfaceOnly: Bool = false, openUI: String? = nil) throws {
         let bundle = Bundle(for: Self.self)
         let url = bundle.url(forResource: "A2UIReplayMedia", withExtension: "jsonl", subdirectory: "Fixtures")
             ?? bundle.url(forResource: "A2UIReplayMedia", withExtension: "jsonl")
         let fixture = try XCTUnwrap(url, "The synchronized UI target must include the real JSONL fixture resource")
         let frames = try String(contentsOf: fixture, encoding: .utf8).split(separator: "\n").map(String.init)
         var parts: [[String: Any]] = []
-        if !surfaceOnly { parts.append(textPart("before", "NATIVE_A2UI_BEFORE\n")) }
+        if !surfaceOnly { parts.append(textPart("before", openUI ?? "NATIVE_A2UI_BEFORE\n")) }
         parts += frames.map { ["part": "form", "kind": "a2ui", "text": NSNull(), "a2uiJSON": $0] }
         if !surfaceOnly { parts.append(textPart("after", "NATIVE_A2UI_AFTER\n")) }
         func wire(_ parts: [[String: Any]]) throws -> String {
@@ -109,9 +153,9 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
             "expectedActionID": NSNull(), "expectedSubmittedValue": NSNull(),
             "structuredObjectJSON": try wire(parts), "delayMilliseconds": 0]]
         if continuation {
-            steps.append(["expectedInputContains": ["Grace"],
+            steps.append(["expectedInputContains": [openUI == nil ? "Grace" : "9"],
                 "forbiddenInputContains": ["UNSENT_DRAFT_MUST_STAY_LOCAL"],
-                "expectedActionID": "submit", "expectedSubmittedValue": "Grace",
+                "expectedActionID": openUI == nil ? "submit" : "continue_conversation", "expectedSubmittedValue": openUI == nil ? "Grace" : "9",
                 "structuredObjectJSON": try wire([textPart("answer", "NATIVE_A2UI_CONTINUATION_OK")]),
                 "delayMilliseconds": 0])
         }

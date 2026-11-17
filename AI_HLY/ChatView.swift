@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import HanlinChatUI
+import HanlinPresentationKit
+import HanlinRichUI
 import AVFoundation
 import SwiftData
 import UniformTypeIdentifiers
@@ -92,6 +95,10 @@ struct ChatView: View {
     @State private var operationalDescription: String = ""  // 操作描述文本
     @State private var apiManager: APIManager?
     @State private var agentSessionOwner = HanlinAppAgentSessionOwner()
+    @State private var richPresentation = HanlinAppRichPresentation()
+    @State private var showsResearchSources = false
+    @Environment(\.openURL) private var openRichURL
+
     #if HANLIN_A2UI_POC
     @State private var a2uiPresentation: HanlinA2UIAppPresentation?
     @State private var a2uiSubmittingAction: HanlinA2UIAppPresentation.PendingAction?
@@ -394,26 +401,36 @@ struct ChatView: View {
         }
     }
 
+    private var resolvedChatShell: ShellDescriptor {
+        (try? richPresentation.profile(for: chatRecord, conversationID: effectiveChatSessionID).shell)
+            ?? .init(id: "hanlin.standard", title: "Hanlin")
+    }
+
     @ViewBuilder
     private var chatWorkspaceStack: some View {
-        VStack {
-            ZStack(alignment: .bottom) {
-                // 第一部分：可滚动聊天区
-                ScrollViewReader { scrollViewProxy in
-                    buildScrollContent(scrollViewProxy)
-                        .padding(.bottom, 6)
+        if resolvedChatShell.usesSourcesSidebar {
+            HanlinResearchShell(showsSources: $showsResearchSources) {
+                canonicalChatWorkspace
+            } sources: {
+                List(researchSources, id: \.link) { source in
+                    if let url = URL(string: source.link) { Link(source.title, destination: url) }
                 }
+                .navigationTitle("Sources")
+            }
+        } else { canonicalChatWorkspace }
+    }
 
-                // 渐变背景
-                LinearGradient(
-                    gradient: Gradient(colors: [Color(.systemBackground).opacity(0), Color(.systemBackground)]),
-                    startPoint: .top,
-                    endPoint: .center
-                )
-                .frame(height: 120)
-                .allowsHitTesting(false)
-                .zIndex(0)
+    private var researchSources: [Resource] {
+        var seen = Set<String>()
+        return chatTemps.flatMap { $0.resources ?? [] }.filter { seen.insert($0.link).inserted }
+    }
 
+    private var canonicalChatWorkspace: some View {
+        HanlinChatView(shell: resolvedChatShell) {
+            ScrollViewReader { scrollViewProxy in
+                buildScrollContent(scrollViewProxy).padding(.bottom, 6)
+            }
+        } composer: {
                 if !isExternalCompactComposerHost {
                     ChatViewBottom(
                         chatRecord: chatRecord,
@@ -465,7 +482,7 @@ struct ChatView: View {
                         availableWorkspaceSize: measuredWorkspaceSize
                     )
                 }
-            }
+        }
             .onGeometryChange(for: CGSize.self) { proxy in
                 proxy.size
             } action: { newSize in
@@ -477,19 +494,22 @@ struct ChatView: View {
                 guard newHeight > 0, abs(measuredComposerHeight - newHeight) > 1 else { return }
                 measuredComposerHeight = newHeight
             }
-        }
     }
 
     // Opaque boundaries keep the original modifier order without adding layout containers.
     private var agentConnectedWorkspace: some View {
         chatWorkspaceStack
         .chatMotionPreferences()
-        .sheet(item: Binding(
-            get: { agentSessionOwner.consent.pending },
-            set: { if case .none = $0 { agentSessionOwner.consent.revoke() } }
-        )) { request in
-            HanlinToolConsentSheet(request: request) { allowed in
-                agentSessionOwner.consent.answer(id: request.id, allowed: allowed)
+        .toolbar {
+            ToolbarItem(placement: .secondaryAction) {
+                Menu {
+                    Button("Standard conversation") { richPresentation.select("hanlin.standard", conversation: chatRecord,
+                        conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord) }
+                    Button("Research conversation") { richPresentation.select("hanlin.research", conversation: chatRecord,
+                        conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord) }
+                    if resolvedChatShell.usesSourcesSidebar { Button("Sources") { showsResearchSources.toggle() } }
+                } label: { Label("Conversation presentation", systemImage: "rectangle.3.group") }
+                .disabled(isResponding)
             }
         }
         #if HANLIN_A2UI_POC
@@ -1018,6 +1038,13 @@ struct ChatView: View {
                             .id(msg.id)
                     }
 
+                    if let request = agentSessionOwner.consent.pending {
+                        HanlinInlineToolApproval(requestID: request.id.uuidString, toolName: request.tool,
+                            reviewText: AgentDiagnosticsRedactor.sanitize(request.invocation.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}")) { allowed in
+                            agentSessionOwner.consent.answer(id: request.id, allowed: allowed)
+                        }
+                        .id("tool-consent-" + request.invocation.providerCallID)
+                    }
                     Spacer()
 
                     // 底部留白
@@ -1025,6 +1052,9 @@ struct ChatView: View {
                         .padding(.bottom, dynamicBottomPadding())
                         .animation(.easeInOut(duration: 0.5), value: dynamicBottomPadding())
                         .id("BottomPadding")
+                }
+                .onChange(of: agentSessionOwner.consent.pending?.id) { _, _ in
+                    scheduleAutoFollow(using: scrollViewProxy, animated: true)
                 }
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity)
@@ -1148,6 +1178,48 @@ struct ChatView: View {
             guard force || nativeSelectionIDs.isEmpty else { return }
             scrollToLastMessage(using: scrollViewProxy, animated: animate)
         }
+    }
+
+    private func richMessageContext(for row: ChatMessages) -> HanlinRichMessageContext? {
+        guard row.role == "assistant", let state = richPresentation.state(for: row, conversation: chatRecord,
+            conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord) else { return nil }
+        return .init(state: state, isStreaming: isResponding && row.groupID == chatTemps.last(where: { $0.role == "assistant" })?.groupID,
+            perform: performRichAction)
+    }
+
+    @MainActor
+    private func performRichAction(_ action: PresentationAction) async throws -> PresentationValue {
+        guard action.identity.appID == "hanlin", action.identity.conversationID == effectiveChatSessionID,
+              let source = chatTemps.first(where: { $0.id == action.identity.messageID && $0.role == "assistant" }),
+              !isResponding else { throw HanlinHostError.staleContext }
+        if action.name == "tool" {
+            guard modelTemp.indices.contains(selectedModelIndex), source.modelName == modelTemp[selectedModelIndex].name,
+                  let alias = action.parameters["name"]?.string else { throw HanlinHostError.staleContext }
+            let arguments = try HanlinJSONValue.decodeCanonicalJSON(JSONEncoder().encode(action.parameters["args"] ?? .object([:])))
+            let result = try await agentSessionOwner.executeInlineTool(rowID: source.id, partID: action.partID,
+                alias: alias, arguments: arguments)
+            return (try? JSONDecoder().decode(PresentationValue.self, from: Data(result.utf8))) ?? .string(result)
+        }
+        guard let event = action.parameters["event"]?.object,
+              let type = event["type"]?.string else { throw HanlinHostError.invalidArguments }
+        if type == "open_url" {
+            guard let destination = event["params"]?.object?["url"]?.string, let url = URL(string: destination),
+                  ["https", "http"].contains(url.scheme?.lowercased() ?? "") else { throw HanlinHostError.invalidArguments }
+            return await withCheckedContinuation { continuation in
+                openRichURL(url) { accepted in continuation.resume(returning: .bool(accepted)) }
+            }
+        }
+        guard type == "continue_conversation" else { throw HanlinHostError.unknownTool }
+        let arguments = try HanlinJSONValue.decodeCanonicalJSON(JSONEncoder().encode(PresentationValue.object(event)))
+        let request: HanlinHostInteractionRequest?
+        if agentSessionOwner.session != nil {
+            request = try agentSessionOwner.inlineInteraction(rowID: source.id, partID: action.partID,
+                actionID: type, arguments: arguments)
+        } else { request = nil }
+        let label = event["humanFriendlyMessage"]?.string ?? String(localized: "Form submitted")
+        let data = String(decoding: try arguments.canonicalJSONData(), as: UTF8.self)
+        handleMessageSending(ifObservingMode: false, continuationText: label + "\n" + data, richInteraction: request)
+        return .object(["submitted": .bool(true)])
     }
 
     // 创建聊天信息
@@ -1326,6 +1398,7 @@ struct ChatView: View {
                 }
             }
         )
+        .environment(\.hanlinRichMessageContext, richMessageContext(for: msg))
         .environment(\.chatExcerptSource, ChatExcerptSource(
             chatRecordID: chatRecord.id, messageID: msg.id, groupID: msg.groupID,
             runID: activityRun?.id, title: chatRecord.name ?? String(localized: "Conversation")
@@ -1523,7 +1596,7 @@ struct ChatView: View {
     }
     
     // 处理消息发送
-    private func handleMessageSending(ifObservingMode: Bool, continuationText: String? = nil) {
+    private func handleMessageSending(ifObservingMode: Bool, continuationText: String? = nil, richInteraction: HanlinHostInteractionRequest? = nil) {
         guard modelTemp.indices.contains(selectedModelIndex) else { return }
         let requestModelName = modelTemp[selectedModelIndex].name ?? "Unknown"
         let requestModelCompany = modelTemp[selectedModelIndex].company
@@ -1540,9 +1613,9 @@ struct ChatView: View {
             guard a2uiPresentation?.isCurrent(originalAction) == true,
                   a2uiModelChoice == a2uiOriginalModelChoice else { return }
         } else { a2uiOriginalModelChoice = a2uiModelChoice }
-        nativeInteraction = originalAction?.request
+        nativeInteraction = richInteraction ?? originalAction?.request
         #else
-        nativeInteraction = nil
+        nativeInteraction = richInteraction
         #endif
         if nativeInteraction != nil { isRetry = false; isObserving = false; retryMessagesOverride = nil }
         
@@ -1662,6 +1735,8 @@ struct ChatView: View {
                 temporary: TemporaryRecord, interaction: nativeInteraction)
         } else { originalSDKRequest = nil }
         let requestAPIManager = APIManager(context: context, agentSessionOwner: agentSessionOwner)
+        requestAPIManager.presentationInstructions = richPresentation.instructions(conversation: chatRecord, conversationID: effectiveChatSessionID)
+        _ = richPresentation.state(for: assistantPlaceholder, conversation: chatRecord, conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord)
         self.apiManager = requestAPIManager
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"

@@ -31,6 +31,45 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var completion: HanlinAgentRunCompletion?
     @ObservationIgnored private var starting = false
     @ObservationIgnored private var historyGeneration: UUID?
+    @ObservationIgnored private var inlineOrigins: [String: HanlinHostInteractionOrigin] = [:]
+    @ObservationIgnored private var inlineToolTail: Task<Void, Never>?
+    @ObservationIgnored private var inlineToolTasks: [UUID: Task<String, Error>] = [:]
+
+    func inlineInteraction(rowID: UUID, partID: String, actionID: String,
+                           arguments: HanlinJSONValue) throws -> HanlinHostInteractionRequest {
+        guard let session, contextGeneration == session.identity.context.generation,
+              let binding = bindings.last(where: { $0.session == session.identity && $0.reference.messageID == rowID }) else {
+            throw HanlinHostError.staleContext
+        }
+        let key = rowID.uuidString + "/" + partID
+        let origin = inlineOrigins[key] ?? .init(session: session.identity, runID: binding.canonicalRunID,
+            messageID: rowID, partID: UUID())
+        try session.admitInlinePresentation(origin)
+        inlineOrigins[key] = origin
+        return .init(origin: origin, actionID: actionID, arguments: arguments)
+    }
+
+    func executeInlineTool(rowID: UUID, partID: String, alias: String, arguments: HanlinJSONValue) async throws -> String {
+        // A program may declare several independent Query blocks. Serialize them
+        // through the one existing Session; each obtains fresh Host admission.
+        let previous = inlineToolTail
+        let id = UUID()
+        let work = Task { @MainActor [weak self] in
+            await previous?.value
+            try Task.checkCancellation()
+            guard let self else { throw HanlinHostError.cancelled }
+            let request = try inlineInteraction(rowID: rowID, partID: partID, actionID: alias, arguments: arguments)
+            guard let session else { throw HanlinHostError.staleContext }
+            let output = try await session.executePresentationTool(request, alias: alias,
+                argumentsJSON: String(decoding: arguments.canonicalJSONData(), as: UTF8.self))
+            guard !output.isError else { throw HanlinInlineToolError(message: output.modelText) }
+            return output.modelText
+        }
+        inlineToolTasks[id] = work
+        inlineToolTail = Task { _ = try? await work.value }
+        defer { inlineToolTasks.removeValue(forKey: id) }
+        return try await withTaskCancellationHandler { try await work.value } onCancel: { work.cancel() }
+    }
 
     /// Read-only history on conversation open. No engine, Host, Session or interaction admission
     /// is created. The caller supplies its original row/context, never a current-selection lookup.
@@ -233,6 +272,9 @@ final class HanlinAppAgentSessionOwner {
     /// Synchronous authority revocation precedes any asynchronous cancellation/host cleanup.
     func revoke() {
         consent.revoke()
+        inlineOrigins.removeAll()
+        for task in inlineToolTasks.values { task.cancel() }
+        inlineToolTasks.removeAll(); inlineToolTail = nil
         historyGeneration = nil
         contextGeneration = nil
         if let session { presentation?.invalidated(session.identity) }

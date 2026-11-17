@@ -73,6 +73,7 @@ struct RequestMessage {
 // MARK: - APIManager
 @MainActor
 class APIManager {
+    var presentationInstructions: String = ""
     let agentSessionOwner: HanlinAppAgentSessionOwner
     private var agentSDKRequest: HanlinAppAgentSessionOwner.Request?
     
@@ -1485,7 +1486,7 @@ class APIManager {
                     continuation.yield(StreamData(operationalState: isChinese ? "处理对话内容" : "Processing dialogue content"))
                     
                     // 构造系统提示（默认或自定义）
-                    let finalSystemMessage: String = systemMessage == "Default" ?
+                    var finalSystemMessage: String = systemMessage == "Default" ?
                     getSystemMessageText(
                         modelDisplayName: modelInfo.displayName ?? "Unknown",
                         modelInfo: modelInfo,
@@ -1500,6 +1501,8 @@ class APIManager {
                         toolUseEnabled: false
                     )
                     
+                    if !presentationInstructions.isEmpty { finalSystemMessage += "\n\n" + presentationInstructions }
+
                     // 利用模板格式化对话记录，转换为 Chat 数组
                     let chats = try await buildLocalFormattedMessages(
                         from: messages,
@@ -1715,6 +1718,8 @@ class APIManager {
             )
         }
         
+        if !presentationInstructions.isEmpty { finalSystemMessage += "\n\n" + presentationInstructions }
+
         if !finalSystemMessage.isEmpty {
             if updatedMessages.first?.role != "system" {
                 let systemMessage = RequestMessage(

@@ -821,6 +821,76 @@ private struct ControlledTextModel: LanguageModelV3 {
         #expect(record.entries.contains { if case .toolResult(_, let result) = $0.payload { return result.result.invocationID == event.call.invocationID }; return false })
     }
 
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func inlinePresentationUsesOriginalWriterAndCannotRestoreOrReuseAuthority() async throws {
+        let ns = try HanlinConversationNamespace(app: "inline-fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let store = AssociationStore(), host = AssociationHost(context: context, store: store)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [
+            .textStart(id: "answer", providerMetadata: nil),
+            .textDelta(id: "answer", delta: "A live inline block", providerMetadata: nil),
+            .textEnd(id: "answer", providerMetadata: nil)
+        ])))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        host.session = session
+        var runID: UUID?
+        let stream = try await session.stream(messages: [.init(role: .user, text: "Render")],
+            modelReference: .init(provider: "fixture", modelID: "fixture"))
+        for try await event in stream { runID = event.runID }
+        let origin = HanlinHostInteractionOrigin(session: identity, runID: try #require(runID), messageID: UUID(), partID: UUID())
+        let request = HanlinHostInteractionRequest(origin: origin, actionID: "openui.query", arguments: .null)
+        do { _ = try await session.executePresentationTool(request, alias: "fixture_create", argumentsJSON: #"{"text":"test"}"#); Issue.record("Unadmitted inline content executed") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        try session.admitInlinePresentation(origin)
+        let admitted = HanlinHostInteractionRequest(origin: origin, actionID: "openui.query", arguments: .null)
+        var receipt: HanlinHostResultEvent?
+        session.onHostResult = { receipt = $0 }
+        _ = try await session.executePresentationTool(admitted, alias: "fixture_create", argumentsJSON: #"{"text":"test"}"#)
+        #expect(host.externalEffects == 1 && host.rejectedForgedIdentity)
+        let event = try #require(receipt)
+        #expect(event.call.providerCallID == admitted.requestID.uuidString)
+        #expect(event.call.session == identity && event.call.runID != origin.runID)
+        let saved = try #require(await store.load(identity.conversationID, namespace: ns))
+        #expect(saved.entries.contains { if case .hostResultIdentity(let id, let call) = $0.payload { return id == event.resultID && call == event.call }; return false })
+        do { _ = try await session.executePresentationTool(admitted, alias: "fixture_create", argumentsJSON: #"{"text":"test"}"#); Issue.record("Repeated query request executed twice") }
+        catch { #expect(error as? HanlinHostError == .duplicateInvocation) }
+        let restored = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        #expect(throws: HanlinHostError.staleContext) { try restored.admitInlinePresentation(origin) }
+        await session.invalidate()
+        #expect(throws: HanlinHostError.staleContext) { try session.admitInlinePresentation(origin) }
+        #expect(host.externalEffects == 1 && !session.isRunning)
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func inlinePresentationFailedDurableAssociationPreventsHostEffect() async throws {
+        let ns = try HanlinConversationNamespace(app: "inline-fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let store = AssociationStore(rejectAssociation: true), host = AssociationHost(context: context, store: store)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(StructuredScriptModel(parts: [
+            .textStart(id: "answer", providerMetadata: nil),
+            .textDelta(id: "answer", delta: "A live inline block", providerMetadata: nil),
+            .textEnd(id: "answer", providerMetadata: nil)
+        ])))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        host.session = session
+        var runID: UUID?
+        let stream = try await session.stream(messages: [.init(role: .user, text: "Render")],
+            modelReference: .init(provider: "fixture", modelID: "fixture"))
+        for try await event in stream { runID = event.runID }
+        let origin = HanlinHostInteractionOrigin(session: identity, runID: try #require(runID), messageID: UUID(), partID: UUID())
+        try session.admitInlinePresentation(origin)
+        do {
+            _ = try await session.executePresentationTool(.init(origin: origin, actionID: "openui.query", arguments: .null),
+                alias: "fixture_create", argumentsJSON: #"{"text":"test"}"#)
+            Issue.record("Failed durable association was accepted")
+        } catch { /* Original writer prevents the external effect. */ }
+        #expect(host.externalEffects == 0 && !session.isRunning)
+    }
+
     @Test @MainActor func failedAssociationSaveNeverStartsExternalEffect() async throws {
         let ns = try HanlinConversationNamespace(app: "a", account: "a", workspace: "w", space: "s")
         let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())

@@ -347,6 +347,24 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+  presentation-sdk-proof:
+    if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && !inputs.testflight_upload }}
+    name: Compile reusable presentation on iOS 27 and test isolated state
+    runs-on: xcode-27
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Test exact presentation source without application dependencies
+        run: bash Scripts/CI/IntegrationValidation/run_presentation_sdk.sh
+      - name: Retain presentation compilation and test evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: presentation-sdk-apple-${{ github.run_id }}
+          path: build/presentation-sdk-evidence
+          if-no-files-found: error
+          retention-days: 30
+
   agent-sdk-lock-resolution:
     if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (inputs.target_validation_group == 'agent_sdk_resolve_locks' && !inputs.testflight_upload))) ) }}
     name: Resolve exact SDK producer in all six existing Apple package graphs

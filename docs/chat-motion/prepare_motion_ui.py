@@ -3,7 +3,7 @@ import argparse, hashlib, json, shutil, sys, textwrap
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
-PRODUCTION=[f'AI_HLY/Downstream/ChatPresentation/{name}.swift' for name in
+PRODUCTION=[f'Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/{name}.swift' for name in
     ['ChatMotionConfiguration','ChatMotionPreferences','HanlinAnimatedDisclosure','ChatShimmerEffect']]
 SOURCE='AI_HLY/Views/Components/ChatViewComponents.swift'
 APP='docs/chat-motion/MotionUI/App.swift'; TEST='docs/chat-motion/MotionUI/MotionUITests.swift'

@@ -48,6 +48,7 @@ public final class HanlinAgentSession {
     private var interactionOrigins = Set<HanlinHostInteractionOrigin>()
     private var observedInteractionOrigins = Set<HanlinHostInteractionOrigin>()
     private var interactionRequests = Set<UUID>()
+    private var completedLiveRuns = Set<UUID>()
 
     public init(identity: HanlinHostSession, host: any HanlinHostIntegration, engine: HanlinAISDKAgentEngine,
                 store: any HanlinConversationStore, capabilities: (any HanlinHostCapabilitySource)? = nil,
@@ -195,6 +196,8 @@ public final class HanlinAgentSession {
                         if wasCancelled {
                             self.revokeInteractions(run: run)
                             if let interactionOrigin { self.revokeInteraction(interactionOrigin) }
+                        } else {
+                            self.completedLiveRuns.insert(run)
                         }
                         self.onRunCompletion?(.init(session: self.identity, runID: run,
                             outcome: wasCancelled ? .cancelled : .completed))
@@ -233,6 +236,7 @@ public final class HanlinAgentSession {
         invalidated = true
         interactionOrigins.removeAll()
         observedInteractionOrigins.removeAll()
+        completedLiveRuns.removeAll()
         producerTask?.cancel()
         if firstInvalidation { onSessionInvalidated?(identity) }
         await dispatcher.invalidate(identity)
@@ -249,6 +253,56 @@ public final class HanlinAgentSession {
     public func admitInteraction(_ origin: HanlinHostInteractionOrigin) throws {
         guard !invalidated, origin.session == identity, observedInteractionOrigins.contains(origin) else { throw HanlinHostError.staleContext }
         interactionOrigins.insert(origin)
+    }
+
+    /// The trusted host binds a marked inline block to its original live response
+    /// row. Unlike restored JSON, only an actually completed run of THIS session
+    /// can supply this origin. Admission is provenance, never tool permission.
+    public func admitInlinePresentation(_ origin: HanlinHostInteractionOrigin) throws {
+        guard !invalidated, origin.session == identity, completedLiveRuns.contains(origin.runID),
+              entries.contains(where: { entry in
+                  guard entry.runID == origin.runID else { return false }
+                  if case .text = entry.payload { return true }
+                  if case .structuredPart = entry.payload { return true }
+                  return false
+              }) else { throw HanlinHostError.staleContext }
+        observedInteractionOrigins.insert(origin)
+        interactionOrigins.insert(origin)
+    }
+
+    /// Query/Mutation uses the same catalog, original dispatcher, Host consent,
+    /// pending-before-effect journal and ordered persistence as model tools.
+    /// No second agent loop or permission broker is introduced.
+    public func executePresentationTool(_ request: HanlinHostInteractionRequest,
+                                        alias: String, argumentsJSON: String) async throws -> HanlinAISDKToolExecutionOutput {
+        guard interactionRequests.insert(request.requestID).inserted else { throw HanlinHostError.duplicateInvocation }
+        try await requireInteraction(request.origin)
+        guard let model = record?.model else { throw HanlinHostError.staleContext }
+        var pending = Set<String>()
+        for entry in entries {
+            switch entry.payload {
+            case .toolCall(let id, _, _): pending.insert(entry.runID.uuidString + id)
+            case .toolResult(let id, let result):
+                if result.effectState != .uncertain { pending.remove(entry.runID.uuidString + id) }
+            default: break
+            }
+        }
+        guard pending.isEmpty else { throw HanlinHostError.unresolvedWrite }
+        let run = UUID()
+        activeRun = run; step = 0; preparationError = nil; persistenceTail = nil
+        defer { if activeRun == run { activeRun = nil } }
+        try await requireCurrent(run: run)
+        let catalog = try await host.catalog(for: identity.context)
+        try await requireCurrent(run: run)
+        try catalog.validate()
+        guard catalog.context == identity.context else { throw HanlinHostError.staleContext }
+        currentCatalog = catalog
+        guard let definition = try makeDefinitions(catalog: catalog, run: run, model: model).first(where: { $0.name == alias }) else {
+            throw HanlinHostError.unknownTool
+        }
+        // The bridge has normalized JSON. Preserve the original input guard;
+        // do not manufacture a provider-original provenance assertion.
+        return try await definition.execute(argumentsJSON, request.requestID.uuidString)
     }
 
     /// The original Host receipt must already have passed the ordered durable writer.

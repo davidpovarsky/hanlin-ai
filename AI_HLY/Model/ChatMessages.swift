@@ -101,6 +101,8 @@ struct KnowledgeCard: Identifiable, Codable, Hashable {
 
 @Model
 class ChatMessages {
+    /// Optional presentation state in the original message row; lightweight migration.
+    var presentationSnapshotData: Data? = nil
     /// Optional for lightweight migration of existing conversations.
     var modelFinishReason: String? = nil
     var id: UUID = UUID()

@@ -1,17 +1,17 @@
 import Foundation
 
 /// Persist only this versioned identifier. Preset tuning stays in one mapping below.
-enum ChatMotionPreset: String, CaseIterable, Codable, Identifiable, Sendable {
+public enum ChatMotionPreset: String, CaseIterable, Codable, Identifiable, Sendable {
     case relaxed = "v1.relaxed"
     case heightReveal = "v1.height-reveal"
     case gentleSqueeze = "v1.gentle-squeeze"
     case quietFade = "v1.quiet-fade"
     case none = "v1.none"
 
-    static let storageKey = "hanlin.chat.motion.preset"
-    var id: String { rawValue }
+    public static let storageKey = "hanlin.chat.motion.preset"
+    public var id: String { rawValue }
 
-    static func fromStoredID(_ value: String) -> Self {
+    public static func fromStoredID(_ value: String) -> Self {
         if let current = Self(rawValue: value) { return current }
         // The unversioned spellings are the only supported legacy schema.
         switch value {
@@ -25,23 +25,23 @@ enum ChatMotionPreset: String, CaseIterable, Codable, Identifiable, Sendable {
     }
 }
 
-struct ChatMotionConfiguration: Equatable, Sendable {
-    enum Curve: Sendable { case easeInOut, easeOut }
-    let openingDuration: Double
-    let closingDuration: Double
-    let updateDuration: Double
-    let resultDuration: Double
-    let shimmerDuration: Double
-    let collapsedOpacity: Double
-    let collapsedScale: Double
-    let resultScale: Double
-    let numericCounts: Bool
-    let curve: Curve
+public struct ChatMotionConfiguration: Equatable, Sendable {
+    public enum Curve: Sendable { case easeInOut, easeOut }
+    public let openingDuration: Double
+    public let closingDuration: Double
+    public let updateDuration: Double
+    public let resultDuration: Double
+    public let shimmerDuration: Double
+    public let collapsedOpacity: Double
+    public let collapsedScale: Double
+    public let resultScale: Double
+    public let numericCounts: Bool
+    public let curve: Curve
 
-    var isAnimated: Bool { openingDuration > 0 }
-    var showsShimmer: Bool { shimmerDuration > 0 }
+    public var isAnimated: Bool { openingDuration > 0 }
+    public var showsShimmer: Bool { shimmerDuration > 0 }
 
-    static func forPreset(_ preset: ChatMotionPreset, reduceMotion: Bool = false) -> Self {
+    public static func forPreset(_ preset: ChatMotionPreset, reduceMotion: Bool = false) -> Self {
         if reduceMotion || preset == .none {
             return Self(openingDuration: 0, closingDuration: 0, updateDuration: 0,
                 resultDuration: 0, shimmerDuration: 0, collapsedOpacity: 1,

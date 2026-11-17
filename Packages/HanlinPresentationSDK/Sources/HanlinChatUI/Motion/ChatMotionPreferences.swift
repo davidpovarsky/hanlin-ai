@@ -1,17 +1,18 @@
+#if canImport(SwiftUI)
 import SwiftUI
 
 private struct ChatMotionKey: EnvironmentKey {
     static let defaultValue = ChatMotionConfiguration.forPreset(.relaxed)
 }
 
-extension EnvironmentValues {
+public extension EnvironmentValues {
     var chatMotion: ChatMotionConfiguration {
         get { self[ChatMotionKey.self] }
         set { self[ChatMotionKey.self] = newValue }
     }
 }
 
-extension ChatMotionConfiguration {
+public extension ChatMotionConfiguration {
     private func animation(duration: Double) -> Animation? {
         guard duration > 0 else { return nil }
         switch curve {
@@ -46,15 +47,16 @@ private struct ChatMotionPreferences: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func chatMotionPreferences() -> some View { modifier(ChatMotionPreferences()) }
 }
 
 /// The sole user-facing control, embedded in the existing General Settings.
-struct ChatMotionPresetPicker: View {
+public struct ChatMotionPresetPicker: View {
+    public init() {}
     @AppStorage(ChatMotionPreset.storageKey) private var storedID = ChatMotionPreset.relaxed.rawValue
 
-    var body: some View {
+    public var body: some View {
         Picker(selection: Binding(
             get: { ChatMotionPreset.fromStoredID(storedID) },
             set: { storedID = $0.rawValue }
@@ -74,3 +76,5 @@ struct ChatMotionPresetPicker: View {
         }
     }
 }
+
+#endif

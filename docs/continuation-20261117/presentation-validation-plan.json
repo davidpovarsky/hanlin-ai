@@ -1,0 +1,49 @@
+{
+  "base_sha": "d8f301546b8fb16b6203cc26a80dc5f9715d893d",
+  "scope": "Hanlin phase 2: original OpenUI / reusable presentation / same Host tool path",
+  "reason": "New SwiftUI package and Host interaction methods require native typechecking and original Session authority/persistence tests",
+  "source_binding": "Use the commit containing this plan as tested source; retain actual commit in each result artifact",
+  "planned_group": "agent_sdk_session_only_proof",
+  "selected_suites": [
+    "HanlinAgentCoreTests/AgentSessionTests",
+    "HanlinHostContractsTests/ContextTests",
+    "HanlinPersistenceAdaptersTests/StoreTests",
+    "HanlinPresentationKitTests"
+  ],
+  "new_original_app_test": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+  "native_app_test_status": "NOT_RUN; dispatch after baseline 44184135947 completes to preserve its evidence",
+  "portable_evidence": {
+    "original_openui_node_tests": {
+      "passed": 4
+    },
+    "presentation_foundation_windows_swift_tests": {
+      "passed": 10
+    },
+    "changed_swift_syntax_parse": "PASS"
+  },
+  "do_not_claim": [
+    "Native app acceptance before Xcode results",
+    "Physical device acceptance",
+    "Otzaria host integration",
+    "Complete V17 citations/tool visuals",
+    "Release approval"
+  ],
+  "upstream": {
+    "runtime_bundle_run": 42926628418,
+    "swift_ai_sdk_producer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+    "openui_core": "1.1.1",
+    "openui_react": "1.1.1",
+    "openui_ui": "0.18.9"
+  },
+  "resources_sha256": {
+    ".gitattributes": "ef8722d0d0dd44cfb82678da6fd1056f9e9a9c6d943e9125bcd6f6a5460e88e6",
+    "bridge.css": "cab51495b9923c124d303b80f64aee322eaad5133f07cf34fcb02ac7cc1b9a1d",
+    "bridge.js": "d24bc96baf441b64ee912cd79ce28434a2817d3fc441ed8b6bd849861a09552a",
+    "bridge.js.LEGAL.txt": "cc72edf544f42b902a91e479860f87404d8408e74e7908b33ff2b78173bc81df",
+    "catalog-manifest.json": "f0c755d157dd18c5503ddf84710b58f6f7b38c6ba2b65a7cf3810d4d43fcc3df",
+    "index.html": "460c6bdfd6dd964f251954900bbbb34481e3c0f0b25ca3165031fafd643d1b54",
+    "original-prompt.txt": "aad61ab2488e864b43169df4be7710bea6524efed01df5bf86c7d2172f41e03c",
+    "THIRD_PARTY_NOTICES.md": "84f847d0d98c2956481dafbfa2f42f47e3d2a3e15c1c376fd6a4ab802cca9b56",
+    "torah-prompt.txt": "abc486ddfe23182bbe6f967296645a448a3b2f45e5e7b65a0c30ca8480f59fd9"
+  }
+}

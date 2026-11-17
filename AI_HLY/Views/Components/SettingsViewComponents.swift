@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HanlinChatUI
 import SwiftData
 import MarkdownUI
 import Foundation
