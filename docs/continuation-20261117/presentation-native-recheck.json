@@ -1,0 +1,12 @@
+{
+  "prior_run": 44188087516,
+  "prior_sha": "49d71b5ae42fe8d879b0a03b9d25402f061846d0",
+  "prior_agent_sdk": "PASS",
+  "prior_presentation": "FAIL: WKScriptMessageHandlerWithReply callback requires MainActor Sendable",
+  "scope": "Recompile presentation package, including original-motion activity header and explicit consent disclosure accessibility; Foundation regression only",
+  "group": "agent_sdk_session_only_proof",
+  "selector": "HanlinPresentationSDK",
+  "skipped_unchanged": "AgentSession/Host/Store suites already passed on unchanged source; artifact retained",
+  "expected_source": "commit containing this manifest",
+  "release": false
+}

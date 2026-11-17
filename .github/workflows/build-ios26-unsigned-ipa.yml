@@ -319,7 +319,7 @@ jobs:
           retention-days: 14
 
   agent-sdk-proof:
-    if: ${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) ) }}
+    if: ${{ inputs.exact_test_selector != 'HanlinPresentationSDK' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) ) }}
     name: Exact-source Agent SDK Apple tests
     env:
       HANLIN_SDK_SESSION_ONLY: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && '1' || '0' }}

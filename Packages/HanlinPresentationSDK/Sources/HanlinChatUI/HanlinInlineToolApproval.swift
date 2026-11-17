@@ -30,6 +30,7 @@ public struct HanlinInlineToolApproval: View {
                 }
             }
             .disclosureGroupStyle(HanlinMotionDisclosureStyle())
+            .accessibilityIdentifier("hanlin-tool-consent-review-toggle")
             HStack(spacing: 16) {
                 Button("Deny", role: .cancel) { answer(false) }
                     .accessibilityIdentifier("hanlin-tool-consent-deny")

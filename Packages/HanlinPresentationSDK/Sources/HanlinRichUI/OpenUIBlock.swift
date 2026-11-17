@@ -118,7 +118,7 @@ private struct OpenUIWebRuntime: UIViewRepresentable {
         }
 
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage,
-                                   replyHandler: @escaping (Any?, String?) -> Void) {
+                                   replyHandler: @escaping @MainActor @Sendable (Any?, String?) -> Void) {
             guard message.frameInfo.isMainFrame, let body = message.body as? [String: Any],
                   let kind = body["kind"] as? String else { replyHandler(nil, "Invalid bridge message"); return }
             do {
