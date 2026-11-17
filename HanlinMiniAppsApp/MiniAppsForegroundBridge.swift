@@ -56,13 +56,20 @@ final class MiniAppsForegroundBridge {
 
     func cancelAndClose() async {
         guard let presentation, let context = admittedContext, !returning else { return }
+        returning = true
+        defer { returning = false }
         do {
             let mailbox = try HanlinSplitMailbox()
             let receiver = SplitDurableReceiver(persistence: mailbox, source: mailbox)
-            _ = try await receiver.interrupt(reference: presentation.id, reason: .cancelled, context: context)
+            let cancelled = try await receiver.interrupt(reference: presentation.id, reason: .cancelled, context: context)
+            guard cancelled.phase == .completed else { throw SplitDurabilityError.outcomeUnknown }
+            // Cancellation is an original terminal receipt too. Wake the saved
+            // origin immediately; don't leave its Host invocation waiting on a
+            // timer. Keep this view on failure so the persisted receipt can retry.
+            try await returnURL(reference: presentation.id)
+            self.presentation = nil
+            admittedContext = nil
         } catch { self.error = message(for: error) }
-        self.presentation = nil
-        admittedContext = nil
     }
 
     func returnToOrigin() async {
@@ -93,13 +100,19 @@ final class MiniAppsForegroundBridge {
                 }
                 _ = try await receiver.complete(reference: request.id, attempt: attempt, outcome: outcome, context: context)
             }
-            let url = SplitForegroundRoute.returnToAI.url(reference: presentation.id)
-            let opened = await withCheckedContinuation { continuation in
-                UIApplication.shared.open(url, options: [:]) { continuation.resume(returning: $0) }
-            }
-            guard opened else { throw SplitBridgeFailure.companionMissing }
+            try await returnURL(reference: presentation.id)
+            self.presentation = nil
+            admittedContext = nil
             // Dispatch only; AI must consume the matching result and original origin.
         } catch { self.error = message(for: error) }
+    }
+
+    private func returnURL(reference: UUID) async throws {
+        let url = SplitForegroundRoute.returnToAI.url(reference: reference)
+        let opened = await withCheckedContinuation { continuation in
+            UIApplication.shared.open(url, options: [:]) { continuation.resume(returning: $0) }
+        }
+        guard opened else { throw SplitBridgeFailure.companionMissing }
     }
 
     private func message(for error: any Error) -> String {

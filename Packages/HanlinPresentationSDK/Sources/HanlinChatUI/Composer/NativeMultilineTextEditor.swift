@@ -298,17 +298,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
         guard uiView.markedTextRange == nil else { return }
 
-        let isEditing = context.coordinator.isEditing
-
-        if text.isEmpty && !isEditing {
-            uiView.text = placeholderText
-            uiView.textColor = .placeholderText
-        } else if !text.isEmpty && uiView.textColor == .placeholderText {
-            uiView.text = text
-            uiView.textColor = .label
-        } else if uiView.textColor != .placeholderText && uiView.text != text && !isEditing {
-            uiView.text = text
-        }
+        context.coordinator.synchronizeText(in: uiView)
 
         let clampedHeight = measuredHeight(for: uiView, isEmpty: text.isEmpty)
         if abs(textHeight - clampedHeight) > 1 {
@@ -328,6 +318,28 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
         public init(_ parent: NativeMultilineTextEditor) {
             self.parent = parent
+        }
+
+        /// The binding also receives programmatic sends, restored drafts and
+        /// navigation changes while UIKit can still own first responder. Reconcile
+        /// those changes without replacing an unchanged selection or marked text.
+        public func synchronizeText(in textView: UITextView) {
+            guard textView.markedTextRange == nil else { return }
+            let placeholder = parent.text.isEmpty && !isEditing
+            let desired = placeholder ? parent.placeholderText : parent.text
+            let wasPlaceholder = textView.textColor == .placeholderText
+            if textView.text != desired || (wasPlaceholder && !placeholder) {
+                let selection = textView.selectedRange
+                textView.text = desired
+                if isEditing {
+                    let count = (desired as NSString).length
+                    let start = min(selection.location, count)
+                    textView.selectedRange = NSRange(location: start,
+                        length: min(selection.length, count - start))
+                }
+            }
+            let desiredColor: UIColor = placeholder ? .placeholderText : .label
+            if textView.textColor != desiredColor { textView.textColor = desiredColor }
         }
 
         public func textViewDidBeginEditing(_ textView: UITextView) {

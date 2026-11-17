@@ -62,6 +62,44 @@ struct NativeComposerLineSizingTests {
         #expect(draft == "   ")
     }
 
+    @Test("Sending clears an editing UIKit draft and restored text keeps a valid cursor")
+    func programmaticDraftUpdatesWhileEditing() {
+        var draft = "Sent message"
+        let editor = NativeMultilineTextEditor(
+            text: Binding(get: { draft }, set: { draft = $0 }),
+            textHeight: .constant(0), placeholderText: "Message", maxHeight: 1000
+        )
+        let coordinator = NativeMultilineTextEditor.Coordinator(editor)
+        let view = UITextView()
+        view.textColor = .label
+        view.text = draft
+        view.selectedRange = NSRange(location: 4, length: 3)
+        coordinator.textViewDidBeginEditing(view)
+        coordinator.synchronizeText(in: view)
+        #expect(view.selectedRange == NSRange(location: 4, length: 3))
+
+        draft = ""
+        coordinator.synchronizeText(in: view)
+        #expect(view.text == "")
+        #expect(view.textColor == .label)
+        #expect(view.selectedRange == NSRange(location: 0, length: 0))
+
+        draft = "שלום 👋"
+        coordinator.synchronizeText(in: view)
+        #expect(view.text == draft)
+        view.selectedRange = NSRange(location: (draft as NSString).length, length: 0)
+        draft = "אב"
+        coordinator.synchronizeText(in: view)
+        #expect(view.text == draft)
+        #expect(view.selectedRange == NSRange(location: 2, length: 0))
+
+        draft = ""
+        coordinator.textViewDidEndEditing(view)
+        coordinator.synchronizeText(in: view)
+        #expect(view.text == "Message")
+        #expect(draft.isEmpty)
+    }
+
     @Test("Wrapped text grows through six lines and scrolls at seven, including RTL")
     func wrappedLinesAndScrolling() {
         let editor = NativeMultilineTextEditor(text: .constant(""), textHeight: .constant(0), maxHeight: 1000, usesAutomaticLineLimits: true)

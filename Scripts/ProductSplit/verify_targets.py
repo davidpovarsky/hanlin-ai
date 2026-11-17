@@ -2,6 +2,7 @@
 from pathlib import Path
 import json
 import plistlib
+import re
 import sys
 import xml.etree.ElementTree as ET
 
@@ -12,7 +13,8 @@ from project_graph import parse_project, validate_graph, validate_agent_sdk_link
 
 def main():
     # The parser rejects duplicate IDs/keys and reads quoted and ordinary OpenStep alike.
-    project = parse_project((ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8"))
+    project_text = (ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8")
+    project = parse_project(project_text)
     objects = project["objects"]
     root = objects[project["rootObject"]]
     targets = {objects[key]["name"]: (key, objects[key]) for key in root["targets"]}
@@ -34,6 +36,24 @@ def main():
         if resource != "AI_HLY/RuntimeHostResources.zip":
             assert (ROOT / resource).is_file(), resource
     mini_id, mini = targets["HanlinMiniApps"]
+    # Validate the executable OpenStep string literals, which the graph
+    # parser does not newline-decode. Generic JSON serialization previously
+    # double-escaped the copied MiniApps scripts.
+    def script_literal(identifier):
+        object_start = re.search(r'"?' + identifier + r'"?[^\n]*= \{', project_text)
+        assert object_start, identifier
+        value = re.search(r'"?shellScript"? = ("(?:\\.|[^"\\])*")', project_text[object_start.end():])
+        assert value, identifier
+        return value.group(1)
+
+    ai = objects["D7B6C3C02D50A55D004E3AD6"]
+    scripts = lambda target: {objects[key]["name"]: key for key in target["buildPhases"]
+                              if objects[key].get("isa") == "PBXShellScriptBuildPhase"}
+    ai_scripts, mini_scripts = scripts(ai), scripts(mini)
+    for name in ["Generate NativeScript metadata", "Process Python libraries"]:
+        original = script_literal(ai_scripts[name])
+        assert script_literal(mini_scripts[name]) == original, name + " script encoding drift"
+        assert "\n" in json.loads(original), name + " lost executable line breaks"
     for name in ["HanlinMiniAppsTests", "HanlinMiniAppsUITests", "HanlinMiniAppsBootstrapTests"]:
         target_id, target = targets[name]
         if name != "HanlinMiniAppsBootstrapTests":
