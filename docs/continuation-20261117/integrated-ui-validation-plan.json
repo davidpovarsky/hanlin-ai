@@ -1,0 +1,21 @@
+{
+  "scope": "affected integrated original iPad app, canonical UI extraction, V17, mixed OpenUI and citation bridge",
+  "previous_native_build": "44184135947 app build PASS, two parametrized Skills methods PASS, streaming stop and Markdown Skill import UI PASS; four UI cases FAIL",
+  "parent": "9c66a724c724133e110cd0e0cd74ac4e8a9f1e9c",
+  "selectors": [
+    "AI_HLYTests/AgentRoundPresentationTests",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+    "AI_HLYTests/NativeComposerLineSizingTests",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests",
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat",
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2ActualPythonToolApprovalAndColdConversationRestoration",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft"
+  ],
+  "runtime_bundle_artifact_run_id": "42926628418",
+  "runtime_bundle_sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+  "presentation_package_compile": "44194935277 PASS",
+  "markdown_native_tests": "44193348464 9 PASS",
+  "core_provider_tests": "44193344010 21 PASS; corrected result summarizer, original job failure retained",
+  "no_release": true,
+  "device": "one freshly created owned iPad, no personal simulator"
+}

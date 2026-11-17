@@ -1486,6 +1486,7 @@ struct HanlinComposerToolsRootView: View {
                 }
                 .padding(12)
             }
+            .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-tools-catalog-page")
 
             Color.clear
@@ -1572,6 +1573,7 @@ struct HanlinComposerToolsRootView: View {
                 .padding(.horizontal, 12)
                 .padding(.bottom, 10)
             }
+            .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-tools-skills-page")
 
             Color.clear
@@ -1731,6 +1733,7 @@ struct HanlinComposerToolsRootView: View {
                 }
                 .padding(12)
             }
+            .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-tools-mcp-page")
 
             Color.clear
@@ -1805,6 +1808,7 @@ struct HanlinComposerToolsRootView: View {
                 }
                 .padding(12)
             }
+            .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-tools-runtime-page")
 
             Color.clear

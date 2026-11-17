@@ -186,7 +186,9 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
     private func sendFirstPrompt(expectText: Bool = true) {
         input().tap(); input().typeText(prompt)
         app.buttons["hanlin-chat-send"].firstMatch.tap()
-        XCTAssertTrue(surface().waitForExistence(timeout: 45), "The real native-schema/validator/owner path did not render its Surface")
+        let rendered = surface().waitForExistence(timeout: 45)
+        if !rendered { record("missing-original-native-surface") }
+        XCTAssertTrue(rendered, "The real native-schema/validator/owner path did not render its Surface")
         if expectText { assertText("NATIVE_A2UI_BEFORE"); assertText("NATIVE_A2UI_AFTER") }
         assertTransport(count: 1)
         XCTAssertFalse(app.webViews.firstMatch.exists)
