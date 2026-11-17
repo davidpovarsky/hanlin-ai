@@ -45,6 +45,21 @@ struct AgentEventAccumulator {
     }
 
     switch event {
+    case .sourceObserved(let source):
+      evidence.insert(contentsOf: [source])
+    case .sourceCitations(let segmentID, let citations):
+      for citation in citations {
+        var source = citation.source
+        if let segmentID, let text = transcript.item(externalID: segmentID)?.text,
+           text.hasSuffix(citation.text), !citation.text.isEmpty,
+           citation.range.lowerBound >= 0, citation.range.upperBound <= citation.text.utf16.count {
+          let base = text.utf16.count - citation.text.utf16.count
+          source.claimAnchors = [.init(providerTextPartID: citation.textPartID, transcriptSegmentID: segmentID,
+            prefixSHA256: ChatSavedExcerpt.digest(text), prefixUTF16Length: text.utf16.count,
+            startUTF16: base + citation.range.lowerBound, endUTF16: base + citation.range.upperBound)]
+        }
+        evidence.insert(contentsOf: [source])
+      }
     case .modelRoundStarted(let id):
       transcript.setModelRound(id)
     case .runStarted(let metadata):

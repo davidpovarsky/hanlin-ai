@@ -7,7 +7,9 @@ source_sha="$(git rev-parse HEAD)"
 producer_sha=e7bf34111e603ca977becd007dd4e5bb109af857
 evidence="$root/build/agent-sdk-validation-evidence"
 mkdir -p "$evidence"
-if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" == 1 ]]; then
+if [[ "${HANLIN_SDK_CORE_ONLY:-0}" == 1 ]]; then
+  printf '["CoreTests"]\n' > "$evidence/selected-results.json"
+elif [[ "${HANLIN_SDK_SESSION_ONLY:-0}" == 1 ]]; then
   printf '["SDKTests"]\n' > "$evidence/selected-results.json"
 else
   printf '["ProducerTests","SDKTests","CoreTests"]\n' > "$evidence/selected-results.json"
@@ -134,6 +136,7 @@ producer_status=$?
 else
 producer_status=null
 fi
+if [[ "${HANLIN_SDK_CORE_ONLY:-0}" != 1 ]]; then
 (cd "$sdk" && xcodebuild test -scheme "$sdk_scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/SDKDerivedData" -resultBundlePath "$evidence/SDKTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
@@ -141,7 +144,10 @@ fi
   -only-testing:HanlinHostContractsTests/ContextTests \
   -only-testing:HanlinPersistenceAdaptersTests/StoreTests) > "$evidence/sdk-tests.log" 2>&1
 sdk_status=$?
-if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 ]]; then
+else
+sdk_status=null
+fi
+if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 || "${HANLIN_SDK_CORE_ONLY:-0}" == 1 ]]; then
 (cd "$core" && xcodebuild test -scheme "$core_scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/CoreDerivedData" -resultBundlePath "$evidence/CoreTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
@@ -149,12 +155,15 @@ if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 ]]; then
   -only-testing:HanlinChatCoreTests/HanlinAISDKProviderFactoryTests \
   -only-testing:HanlinChatCoreTests/HanlinAISDKAgentEngineTests) > "$evidence/core-tests.log" 2>&1
 core_status=$?
+else
+core_status=null
+fi
+if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 ]]; then
 (cd "$sdk" && xcodebuild build -scheme HanlinAgentCore -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath "$scratch/IOSDerivedData" -resultBundlePath "$evidence/IOSBuild.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO) > "$evidence/ios-build.log" 2>&1
 ios_status=$?
 else
-core_status=null
 ios_status=null
 fi
 set -e

@@ -2983,7 +2983,7 @@
         C60000000000000000000003 /* XCRemoteSwiftPackageReference "hanlin-streaming-markdown" */ = {
             isa = XCRemoteSwiftPackageReference;
             repositoryURL = "https://github.com/davidpovarsky/hanlin-streaming-markdown";
-            requirement = { kind = revision; revision = f59bd0d533b6d94e01408bf6bdf9f5b09db57891; };
+            requirement = { kind = revision; revision = 4072507bf5c5a1c9786d4c9a607873e65be59cc8; };
         };
 		A10000000000000000000040 /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;

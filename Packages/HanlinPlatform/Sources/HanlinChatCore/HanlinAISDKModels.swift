@@ -146,6 +146,30 @@ public struct HanlinAISDKToolCall: Hashable, Sendable {
     }
 }
 
+/// Provider-owned annotation on one completed text part. OpenAI Responses
+/// indexes are Unicode scalar offsets, as in the provider's Python slicing example.
+/// This is transient stream metadata, not another conversation/source store.
+public struct HanlinAISDKTextCitation: Sendable {
+    public let textPartID: String
+    public let text: String
+    public let startIndex: Int
+    public let endIndex: Int
+    public let url: String
+    public let title: String
+
+    public init(textPartID: String, text: String, startIndex: Int, endIndex: Int, url: String, title: String) {
+        self.textPartID = textPartID; self.text = text; self.startIndex = startIndex
+        self.endIndex = endIndex; self.url = url; self.title = title
+    }
+
+    public var utf16Range: Range<Int>? {
+        guard startIndex >= 0, endIndex > startIndex, endIndex <= text.unicodeScalars.count else { return nil }
+        let start = text.unicodeScalars.index(text.unicodeScalars.startIndex, offsetBy: startIndex)
+        let end = text.unicodeScalars.index(text.unicodeScalars.startIndex, offsetBy: endIndex)
+        return start.utf16Offset(in: text)..<end.utf16Offset(in: text)
+    }
+}
+
 public enum HanlinAISDKStreamEvent: Sendable {
     case runStarted
     /// Emitted only when this run actually requests the native schema response contract.
@@ -155,6 +179,7 @@ public enum HanlinAISDKStreamEvent: Sendable {
     case structuredPart(HanlinChatStructuredPart)
     case reasoningDelta(String)
     case source(id: String, url: String, title: String?)
+    case textCitations([HanlinAISDKTextCitation])
     case file(mediaType: String, data: Data)
     case toolCallArgumentsStarted(id: String, name: String)
     case toolCallArgumentsDelta(id: String, delta: String)

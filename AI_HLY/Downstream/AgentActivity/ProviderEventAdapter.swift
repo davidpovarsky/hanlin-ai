@@ -47,7 +47,11 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
             endActiveReasoning(into: &events)
             lastSemanticEventKind = .toolActivity
         }
-        events.append(contentsOf: data.agentEvents)
+        for event in data.agentEvents {
+            if case .sourceCitations(let segmentID, let citations) = event {
+                events.append(.sourceCitations(segmentID: segmentID ?? activeAnswerSegmentID, citations: citations))
+            } else { events.append(event) }
+        }
 
         if let reasoning = data.reasoning, !reasoning.isEmpty {
             endActiveAnswerSegment(as: .interim, into: &events)
@@ -151,7 +155,8 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
              .toolExecutionCompleted, .toolExecutionFailed, .toolApprovalChanged,
              .searchStarted, .searchCompleted:
             return true
-        case .runStarted, .modelRoundStarted, .answerSegmentStarted, .answerSegmentDelta,
+        case .sourceObserved, .sourceCitations,
+             .runStarted, .modelRoundStarted, .answerSegmentStarted, .answerSegmentDelta,
              .answerSegmentEnded, .runCompleted, .runFailed, .runCancelled:
             return false
         }

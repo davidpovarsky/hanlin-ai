@@ -50,7 +50,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davidpovarsky/hanlin-streaming-markdown",
       "state" : {
-        "revision" : "f59bd0d533b6d94e01408bf6bdf9f5b09db57891"
+        "revision" : "4072507bf5c5a1c9786d4c9a607873e65be59cc8"
       }
     },
     {

@@ -4,6 +4,32 @@ import Testing
 
 @Suite("Source-correlated Thinking hierarchy")
 struct AgentRoundPresentationTests {
+    @Test func providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText() throws {
+        let run = AgentRun(groupID: UUID(), providerID: "fixture", modelID: "fixture")
+        var adapter = HanlinStreamEventAdapter(runID: run.id)
+        var accumulator = AgentEventAccumulator(run: run)
+        let answer = "A sourced answer."
+        let evidence = AgentEvidenceItem(id: "provider-source", kind: .webPage, title: "Real source",
+            url: "https://example.com/source", wasReturnedToModel: true)
+        for event in adapter.events(from: .init(content: answer)) { accumulator.apply(event) }
+        for event in adapter.events(from: .init(agentEvents: [.sourceObserved(evidence),
+            .sourceCitations(segmentID: nil, citations: [.init(textPartID: "provider-text-1", text: answer,
+                range: 0..<answer.utf16.count, source: evidence)])])) { accumulator.apply(event) }
+        #expect(accumulator.run.transcriptItems.filter { $0.kind == .assistantText }.count == 1)
+        #expect(accumulator.run.steps.filter { $0.kind == .webSearch }.isEmpty)
+        #expect(accumulator.run.evidenceItems.count == 1)
+        let source = try #require(accumulator.run.evidenceItems.first)
+        #expect(source.claimAnchors?.count == 1)
+        let restored = try JSONDecoder().decode(AgentRun.self, from: JSONEncoder().encode(accumulator.run))
+        let projection = HanlinMessageCitations(messageID: UUID(), evidence: restored.evidenceItems, transcript: restored.transcriptItems)
+        #expect(projection.projection(for: answer).groups.count == 1)
+        #expect(projection.projection(for: "An unrelated answer.").groups.isEmpty)
+        var changed = restored.transcriptItems
+        changed[0].text = "A changed answer."
+        #expect(HanlinMessageCitations(messageID: UUID(), evidence: restored.evidenceItems, transcript: changed)
+            .projection(for: "A changed answer.").groups.isEmpty)
+    }
+
     @Test func actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay() throws {
         var accumulator = AgentEventAccumulator(run: .init(groupID: UUID(), providerID: "fixture", modelID: "fixture"))
         let callID = "opaque/approval-call"

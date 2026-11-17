@@ -1,6 +1,9 @@
 import SwiftUI
 import SwiftStreamingMarkdown
 import UIKit
+import ImageIO
+import HanlinPresentationKit
+import HanlinChatUI
 
 /// The shared renderer inside the original message bubble and translated/transcript text.
 struct ChatMarkdownView: View {
@@ -12,23 +15,30 @@ struct ChatMarkdownView: View {
     var saveKnowledge: (@MainActor @Sendable (String) -> Void)?
     var onRendered: (@MainActor @Sendable () -> Void)?
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(\.hanlinMessageCitations) private var citations
     @Environment(\.chatExcerptSource) private var source
     @Environment(\.chatSourceDestination) private var destination
     @Environment(\.chatMarkdownSelectionActivity) private var selectionActivity
     @Environment(\.chatMarkdownDidRender) private var markdownDidRender
     @State private var highlightedRequestID: UUID?
     @State private var listener = ChatMarkdownListener()
+    @State private var citationIcons: [String: Data] = [:]
 
     var body: some View {
         let _ = dynamicTypeSize
+        let citationProjection = citations?.projection(for: text)
         let _ = listener.update(savePersonal: scopedSavePersonal, saveKnowledge: saveKnowledge, onRendered: {
             onRendered?()
             if let messageID = source?.messageID { markdownDidRender?(messageID) }
         })
-        MarkdownView(text: text, config: config, listener: listener)
+        MarkdownView(text: citationProjection?.markdown ?? text, config: config, listener: listener)
             // The native paragraph retains its OpenURLAction. Keep its presenter
             // with the renderer rather than an independently updating bubble.
-            .modifier(ChatLinkPresentation())
+            .modifier(ChatLinkPresentation(citationGroups: citationProjection?.groups ?? []))
+            .task(id: citationProjection?.groups.map(\.url)) {
+                await loadCitationIcons(citationProjection?.groups ?? [])
+            }
             .markdownCodeBlockRenderer { block in
                 guard block.isFenceClosed == true else { return nil }
                 let language = block.language?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
@@ -101,6 +111,9 @@ struct ChatMarkdownView: View {
         let imageConfig = ImageConfig.disabled
         #endif
         return MarkdownRenderConfig.default
+            .withCitationConfig(value: .init(font: UIFont.preferredFont(forTextStyle: .caption2),
+                textColor: .secondary, backgroundColor: Color.secondary.opacity(0.10),
+                iconsByCitationURL: citationIcons, iconOnTrailingEdge: layoutDirection == .rightToLeft))
             .withImageConfig(imageConfig)
             .withShouldAnimateText(value: false)
             .withBlockSpacing(value: 12)
@@ -115,6 +128,32 @@ struct ChatMarkdownView: View {
             .withTextContextMenu(value: items.isEmpty ? nil : TextContextMenu(menuGroups: [
                 TextContextMenuGroup(title: nil, image: nil, displayInline: true, items: items)
             ]))
+    }
+
+    @MainActor private func loadCitationIcons(_ groups: [HanlinCitationGroup]) async {
+        for group in groups.prefix(24) {
+            guard citationIcons[group.url.absoluteString] == nil,
+                  let url = group.sources.first?.iconURL, url.scheme == "https" else { continue }
+            do {
+                var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 6)
+                request.httpShouldHandleCookies = false
+                let (bytes, response) = try await URLSession.shared.bytes(for: request)
+                guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { continue }
+                var data = Data()
+                for try await byte in bytes {
+                    try Task.checkCancellation()
+                    guard data.count < 131_072 else { throw CocoaError(.fileReadTooLarge) }
+                    data.append(byte)
+                }
+                guard let source = CGImageSourceCreateWithData(data as CFData, nil),
+                      let icon = CGImageSourceCreateThumbnailAtIndex(source, 0, [
+                        kCGImageSourceCreateThumbnailFromImageAlways: true,
+                        kCGImageSourceThumbnailMaxPixelSize: 32,
+                        kCGImageSourceShouldCacheImmediately: false,
+                      ] as CFDictionary), let png = UIImage(cgImage: icon).pngData() else { continue }
+                citationIcons[group.url.absoluteString] = png
+            } catch { if Task.isCancelled { return } }
+        }
     }
 }
 
@@ -152,16 +191,29 @@ private final class ChatMarkdownListener: MarkdownListener {
 
 /// Web links use the app's existing Safari controller; other URL schemes retain system routing.
 struct ChatLinkPresentation: ViewModifier {
+    var citationGroups: [HanlinCitationGroup] = []
     @State private var link: URL?
+    @State private var citationGroup: HanlinCitationGroup?
+    @State private var citationLink: URL?
 
     func body(content: Content) -> some View {
         content
             .environment(\.openURL, OpenURLAction { url in
+                if url.scheme == "hanlin-citation" {
+                    citationGroup = citationGroups.first(where: { $0.url == url })
+                    return .handled
+                }
                 guard Self.isWebURL(url) else { return .systemAction }
                 link = url
                 return .handled
             })
             .sheet(item: $link) { SafariView(url: $0).ignoresSafeArea() }
+            .sheet(item: $citationGroup) { group in
+                HanlinSourcesList(sources: group.sources, title: String(localized: "reference_materials")) { source in
+                    if let url = source.url, Self.isWebURL(url) { citationLink = url }
+                }
+                .sheet(item: $citationLink) { SafariView(url: $0).ignoresSafeArea() }
+            }
     }
 
     static func isWebURL(_ url: URL) -> Bool {

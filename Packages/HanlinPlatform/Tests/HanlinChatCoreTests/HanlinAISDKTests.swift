@@ -521,6 +521,48 @@ struct HanlinNonEmptyLanguageModelTests {
 
 @Suite("HanlinAISDKAgentEngine Integration Tests")
 struct HanlinAISDKAgentEngineTests {
+    @Test("Provider text-end citations retain exact part and Unicode scalar ranges")
+    func testProviderTextCitationsKeepExactPartAndUnicodeRange() async throws {
+        let answer = "😀 מקור מדויק."
+        let annotation: JSONValue = .object([
+            "type": .string("url_citation"), "start_index": .number(0),
+            "end_index": .number(Double(answer.unicodeScalars.count)),
+            "url": .string("https://example.com/source"), "title": .string("Original source"),
+        ])
+        let invalid: JSONValue = .object([
+            "type": .string("url_citation"), "start_index": .number(-1), "end_index": .number(9000),
+            "url": .string("file:///private"), "title": .string("Invalid"),
+        ])
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                continuation.yield(.textStart(id: "provider-part-1", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "provider-part-1", delta: "😀 מקור ", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "provider-part-1", delta: "מדויק.", providerMetadata: nil))
+                continuation.yield(.textEnd(id: "provider-part-1", providerMetadata: ["openai": ["annotations": .array([annotation, invalid])]]))
+                continuation.yield(.finish(finishReason: .init(unified: .stop, raw: "stop"),
+                    usage: .init(inputTokens: .init(total: 10), outputTokens: .init(total: 5)), providerMetadata: nil))
+                continuation.finish()
+            }
+        }
+        let config = HanlinChatModelConfiguration(modelID: "fixture-model", company: "OpenAI", apiType: "openai",
+            endpoint: "https://api.openai.com/v1/responses", credential: "fixture-unused")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock),
+            descriptor: .init(kind: .openAIResponses, modelID: "fixture-model", baseURL: URL(string: "https://api.openai.com/v1")!))
+        let stream = try await engine.stream(messages: [.init(role: .user, text: "Cite")], baseSystemPrompt: nil,
+            tools: [], prepareStep: { .init(activeToolAliases: []) })
+        var citations: [HanlinAISDKTextCitation] = [], visible = ""
+        for try await event in stream {
+            if case .textCitations(let values) = event { citations += values }
+            if case .textDelta(let delta) = event { visible += delta }
+        }
+        #expect(visible == answer)
+        #expect(citations.count == 1)
+        #expect(citations.first?.textPartID == "provider-part-1")
+        #expect(citations.first?.text == answer)
+        #expect(citations.first?.utf16Range == 0..<answer.utf16.count)
+    }
+
 
     @Test("Default agent continues beyond 40 actual tool steps, including dynamic discovery")
     func defaultRunContinuesPastFortyWithDiscovery() async throws {

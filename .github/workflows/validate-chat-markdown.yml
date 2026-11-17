@@ -64,18 +64,8 @@ jobs:
           } > build/markdown-evidence/preflight.txt
           xcrun simctl list runtimes -j > build/markdown-evidence/runtimes.json
           echo "build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
-          major="$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)"
+          device="$(python3 Scripts/CI/select_installed_simulator.py --family iPhone --output build/markdown-evidence/owned-simulator.json --create-owned "Hanlin-Phase2-Markdown-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}")"
           xcrun simctl list devices available -j > build/markdown-devices.json
-          device="$(python3 - "$major" <<'PY'
-          import json, sys
-          data = json.load(open('build/markdown-devices.json'))
-          devices = [d for runtime, entries in data['devices'].items() if f'iOS-{sys.argv[1]}-' in runtime
-                     for d in entries if d.get('isAvailable') and d['name'].startswith('iPhone')]
-          if not devices:
-              raise SystemExit('No available iPhone matches the selected stable SDK')
-          print(devices[0]['udid'])
-          PY
-          )"
           echo "device=$device" >> "$GITHUB_OUTPUT"
           cp build/markdown-devices.json build/markdown-evidence/devices.json
           echo "$device" > build/markdown-evidence/selected-device.txt
@@ -85,12 +75,27 @@ jobs:
         with:
           path: build/MarkdownSourcePackages
           key: chat-markdown-spm-v2-${{ runner.arch }}-${{ steps.toolchain.outputs.build }}-${{ hashFiles('build/MarkdownRenderer/Package.swift', 'build/MarkdownRenderer/Package.resolved') }}
-      - name: Compile the real package and execute affected code-block tests
+      - name: Compile the real package and execute citation, media and code-block tests
         timeout-minutes: 16
         shell: bash
         env:
           MARKDOWN_DEVICE: ${{ steps.toolchain.outputs.device }}
         run: bash Scripts/CI/IntegrationValidation/run_chat_markdown_consumer.sh
+      - name: Remove this run's owned simulator after retaining results
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          p = Path('build/markdown-evidence/owned-simulator.json')
+          if p.exists():
+              device = json.loads(p.read_text())['device']
+              expected = f"Hanlin-Phase2-Markdown-{os.environ['GITHUB_RUN_ID']}-{os.environ['GITHUB_RUN_ATTEMPT']}"
+              assert device['name'] == expected
+              subprocess.run(['xcrun','simctl','shutdown',device['udid']], check=False)
+              subprocess.run(['xcrun','simctl','delete',device['udid']], check=True)
+          PY
       - uses: actions/cache/save@v6.1.0
         if: ${{ success() && steps.packages.outputs.cache-hit != 'true' }}
         with:

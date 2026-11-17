@@ -82,9 +82,9 @@ def main():
     subprocess.run(['git', '-C', str(renderer), 'archive', '--format=tar.gz', '-o',
                     str(evidence/'original-renderer-source.tar.gz'), 'HEAD'], check=True)
     expected = {suite+'/'+name for suite, names in contract['expected_cases'].items() for name in names}
-    assert len(expected) == 6
-    test_files = list((renderer/'Tests').rglob('CodeBlockRendererTests.swift')) + list((renderer/'Tests').rglob('CodeBlockConfigTests.swift'))
-    assert len(test_files) == 2
+    assert len(expected) == 9
+    test_files = [p for suite in contract['expected_cases'] for p in (renderer/'Tests').rglob(suite+'.swift')]
+    assert len(test_files) == 3
     (evidence/'test-inputs.json').write_text(json.dumps({'renderer': revision,
         'contract_sha256': sha(CONTRACT.read_bytes()), 'files': [
             {'path': p.relative_to(renderer).as_posix(), 'sha256': sha(p.read_bytes())} for p in test_files]}, indent=2), encoding='utf-8')

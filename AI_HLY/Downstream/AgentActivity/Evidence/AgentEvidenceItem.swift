@@ -1,5 +1,23 @@
 import Foundation
 
+/// The original transcript prefix is hashed at admission. Appending later text
+/// does not move the anchor, and edited/replaced/history-mismatched text cannot borrow it.
+struct AgentSourceClaimAnchor: Codable, Hashable, Sendable {
+    let providerTextPartID: String
+    let transcriptSegmentID: String
+    let prefixSHA256: String
+    let prefixUTF16Length: Int
+    let startUTF16: Int
+    let endUTF16: Int
+}
+
+struct AgentSourceCitation: Sendable {
+    let textPartID: String
+    let text: String
+    let range: Range<Int>
+    let source: AgentEvidenceItem
+}
+
 enum AgentEvidenceKind: String, Codable, Hashable, Sendable {
     case webPage
     case wikipediaArticle
@@ -37,6 +55,7 @@ struct AgentEvidenceItem: Codable, Hashable, Identifiable, Sendable {
     var timestamp: Date?
 
     var wasReturnedToModel: Bool
+    var claimAnchors: [AgentSourceClaimAnchor]?
 
     init(
         id: String = UUID().uuidString,
@@ -53,7 +72,8 @@ struct AgentEvidenceItem: Codable, Hashable, Identifiable, Sendable {
         externalID: String? = nil,
         snippet: String? = nil,
         timestamp: Date? = nil,
-        wasReturnedToModel: Bool
+        wasReturnedToModel: Bool,
+        claimAnchors: [AgentSourceClaimAnchor]? = nil
     ) {
         self.id = id
         self.kind = kind
@@ -70,6 +90,7 @@ struct AgentEvidenceItem: Codable, Hashable, Identifiable, Sendable {
         self.snippet = snippet
         self.timestamp = timestamp
         self.wasReturnedToModel = wasReturnedToModel
+        self.claimAnchors = claimAnchors
     }
 
     var primaryURL: URL? {

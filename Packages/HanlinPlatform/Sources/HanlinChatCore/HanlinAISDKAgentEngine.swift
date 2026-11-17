@@ -206,6 +206,8 @@ public actor HanlinAISDKAgentEngine {
                         var meaningfulEventCount = 0
                         var shouldReloadToolsAndContinue = false
                         var completeResponseText = ""
+                        var citationTextParts: [String: String] = [:]
+                        var oversizedCitationParts: Set<String> = []
 
                         for try await part in result.fullStream {
                             try Task.checkCancellation()
@@ -217,7 +219,8 @@ public actor HanlinAISDKAgentEngine {
                                 meaningfulEventCount = 0
                                 finalVisibleCharacters = 0
                                 completeResponseText = ""
-                            case .textDelta(_, let text, _):
+                                citationTextParts.removeAll(); oversizedCitationParts.removeAll()
+                            case .textDelta(let partID, let text, _):
                                 if structuredResponse != nil {
                                     guard text.utf8.count <= 1_048_576 - completeResponseText.utf8.count else {
                                         throw HanlinNativeStructuredResponseError.outputLimitExceeded
@@ -227,9 +230,32 @@ public actor HanlinAISDKAgentEngine {
                                 }
                                 finalVisibleCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
                                 if !text.isEmpty {
+                                    if !oversizedCitationParts.contains(partID) {
+                                        if text.utf8.count <= 1_048_576 - (citationTextParts[partID]?.utf8.count ?? 0) {
+                                            citationTextParts[partID, default: ""] += text
+                                        } else { citationTextParts.removeValue(forKey: partID); oversizedCitationParts.insert(partID) }
+                                    }
                                     meaningfulEventCount += 1
                                     continuation.yield(.textDelta(text))
                                 }
+                            case .textEnd(let partID, let metadata):
+                                guard structuredResponse == nil,
+                                      self.resolvedProvider.descriptor.kind == .openAIResponses,
+                                      let text = citationTextParts.removeValue(forKey: partID),
+                                      case .array(let annotations) = metadata?["openai"]?["annotations"] else { break }
+                                let citations = annotations.prefix(256).compactMap { annotation -> HanlinAISDKTextCitation? in
+                                    guard case .object(let fields) = annotation,
+                                          fields["type"] == .string("url_citation"),
+                                          case .number(let start) = fields["start_index"],
+                                          case .number(let end) = fields["end_index"],
+                                          start.isFinite, end.isFinite, start.rounded() == start, end.rounded() == end,
+                                          start >= 0, end > start, end <= Double(text.unicodeScalars.count),
+                                          case .string(let url) = fields["url"],
+                                          let parsed = URL(string: url), ["https", "http"].contains(parsed.scheme?.lowercased() ?? ""), parsed.host != nil,
+                                          case .string(let title) = fields["title"] else { return nil }
+                                    return .init(textPartID: partID, text: text, startIndex: Int(start), endIndex: Int(end), url: url, title: title)
+                                }
+                                if !citations.isEmpty { continuation.yield(.textCitations(citations)) }
                             case .custom(let kind, let metadata):
                                 // Native schema mode has one authoritative output path, not an
                                 // additional injected custom stream that can bypass final validation.
@@ -366,7 +392,7 @@ public actor HanlinAISDKAgentEngine {
                                     toolCallID: denied.toolCallId,
                                     toolName: denied.toolName
                                 ))
-                            case .textStart, .textEnd, .reasoningStart, .reasoningEnd,
+                            case .textStart, .reasoningStart, .reasoningEnd,
                                  .toolInputEnd, .raw:
                                 break
                             }

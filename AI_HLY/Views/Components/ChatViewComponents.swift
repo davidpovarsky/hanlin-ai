@@ -85,6 +85,7 @@ struct ChatBubbleView: View {
     var nativeUIBlocks: [NativeUIBlock] = []
     var agentRun: AgentRun? = nil
     var showsAgentActivitySummary: Bool = false
+    var showsAllSources: Bool = true
     var isAgentTranscriptOwner: Bool = false
     var isRenderedByAgentTranscript: Bool = false
     let searchEngine: String?
@@ -110,7 +111,7 @@ struct ChatBubbleView: View {
     
     @StateObject var context = RichTextContext() // 富文本
     
-    @State private var isResourcesExpanded: Bool = false  // 资源文本折叠状态
+    @State private var isSourcesSheetPresented = false
     @State private var expandedActivityIDs: Set<String> = []
     @Environment(\.chatMotion) private var chatMotion
     @State private var isTranslateExpanded: Bool = false  // 翻译文本折叠状态
@@ -178,6 +179,7 @@ struct ChatBubbleView: View {
         nativeUIBlocks: [NativeUIBlock] = [],
         agentRun: AgentRun? = nil,
         showsAgentActivitySummary: Bool = false,
+        showsAllSources: Bool = true,
         isAgentTranscriptOwner: Bool = false,
         isRenderedByAgentTranscript: Bool = false,
         searchEngine: String?,
@@ -227,6 +229,7 @@ struct ChatBubbleView: View {
         self.nativeUIBlocks = nativeUIBlocks
         self.agentRun = agentRun
         self.showsAgentActivitySummary = showsAgentActivitySummary
+        self.showsAllSources = showsAllSources
         self.isAgentTranscriptOwner = isAgentTranscriptOwner
         self.isRenderedByAgentTranscript = isRenderedByAgentTranscript
         self.searchEngine = searchEngine
@@ -1871,6 +1874,8 @@ struct ChatBubbleView: View {
                 .transition(.opacity.combined(with: .move(edge: .top)))
 
         }
+        .environment(\.hanlinMessageCitations, HanlinMessageCitations(messageID: id,
+            evidence: agentRun?.evidenceItems ?? [], transcript: agentRun?.transcriptItems ?? []))
         .padding(.bottom, 6)
         .foregroundColor(.primary)
         .fixedSize(horizontal: false, vertical: true)
@@ -2440,32 +2445,22 @@ struct ChatBubbleView: View {
     // MARK: - 参考资料区域
     @ViewBuilder
     private func resourcesView() -> some View {
-        let deduplicatedResources = resolvedResourcesForDisplay
-        if !deduplicatedResources.isEmpty {
-            VStack(alignment: .leading, spacing: 0) {
-                
-                ToggleButton(
-                    title: String(localized: "reference_materials"),
-                    timeText: String(deduplicatedResources.count),
-                    isExpanded: $isResourcesExpanded,
-                    numericCount: deduplicatedResources.count,
-                    usesAnimatedDisclosure: true
-                )
-
-                HanlinAnimatedDisclosure(isExpanded: isResourcesExpanded) {
-                    VStack(alignment: .leading) {
-                        ForEach(deduplicatedResources.indices, id: \.self) { index in
-                            resourceItemView(resource: deduplicatedResources[index], index: index)
-                        }
-                    }
-                    .padding(.horizontal, 6)
-                    .textSelection(.enabled)
-                    .padding(.bottom, 5)
-                }
+        let references = resolvedResourcesForDisplay.map { resource in
+            HanlinSourceReference(id: resource.link + "|" + resource.title, title: resource.title,
+                url: URL(string: resource.link), iconURL: URL(string: resource.icon))
+        }
+        if showsAllSources, !references.isEmpty {
+            HanlinSourcesButton(sources: references, title: String(localized: "reference_materials")) {
+                isSourcesSheetPresented = true
             }
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier("hanlin-reference-materials")
-            .sheet(item: $selectedLink) { url in SafariView(url: url).ignoresSafeArea() }
+            .accessibilityElement(children: .contain).accessibilityIdentifier("hanlin-reference-materials")
+            .sheet(isPresented: $isSourcesSheetPresented) {
+                HanlinSourcesList(sources: references, title: String(localized: "reference_materials")) { source in
+                    if let url = source.url, ChatLinkPresentation.isWebURL(url) { selectedLink = url }
+                    else { openKnowledgeRecord(with: source.title) }
+                }
+                .sheet(item: $selectedLink) { url in SafariView(url: url).ignoresSafeArea() }
+            }
         }
     }
 

@@ -40,13 +40,14 @@ if __name__ == "__main__":
     parser.add_argument("--tsv", action="store_true")
     parser.add_argument("--create-owned")
     parser.add_argument("--selectors", default="")
+    parser.add_argument("--family", choices=["iPad", "iPhone"])
     args = parser.parse_args()
     def read(command):
         return subprocess.check_output(command, text=True, timeout=20)
     sdk = read(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"]).strip()
     devices = json.loads(read(["xcrun", "simctl", "list", "devices", "available", "-j"]))
     runtimes = json.loads(read(["xcrun", "simctl", "list", "runtimes", "-j"]))
-    selected = select(devices, runtimes, sdk, family_for_selectors(args.selectors))
+    selected = select(devices, runtimes, sdk, args.family or family_for_selectors(args.selectors))
     if args.create_owned:
         if not args.create_owned.startswith("Hanlin-Phase2-") or len(args.create_owned) > 120:
             raise ValueError("A bounded Phase2-owned simulator name is required")

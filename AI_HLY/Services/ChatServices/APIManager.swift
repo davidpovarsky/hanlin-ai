@@ -3861,14 +3861,23 @@ class APIManager {
                 }
                 continuation.yield(StreamData(reasoning: text))
 
-            case .source(_, let url, let title):
+            case .source(let sourceID, let url, let title):
                 if let parsedURL = URL(string: url),
                    let scheme = parsedURL.scheme?.lowercased(),
                    (scheme == "http" || scheme == "https"),
                    parsedURL.host()?.lowercased() != "search.local" {
-                    let resource = Resource(icon: url, title: title ?? url, link: url)
-                    continuation.yield(StreamData(resources: [resource]))
+                    continuation.yield(StreamData(agentEvents: [.sourceObserved(.init(id: sourceID,
+                        kind: .webPage, title: title ?? url, url: url, wasReturnedToModel: true))]))
                 }
+
+            case .textCitations(let citations):
+                let admitted = citations.compactMap { citation -> AgentSourceCitation? in
+                    guard let range = citation.utf16Range else { return nil }
+                    return .init(textPartID: citation.textPartID, text: citation.text, range: range,
+                        source: .init(id: citation.textPartID + ":" + String(citation.startIndex), kind: .webPage,
+                            title: citation.title, url: citation.url, wasReturnedToModel: true))
+                }
+                continuation.yield(StreamData(agentEvents: [.sourceCitations(segmentID: nil, citations: admitted)]))
 
             case .file(let mediaType, let data):
                 #if canImport(UIKit)

@@ -137,6 +137,8 @@ enum AgentEvent: @unchecked Sendable {
   case toolExecutionCompleted(id: String, result: AgentToolResult)
   case toolExecutionFailed(id: String, error: AgentSafeError)
   case toolApprovalChanged(AgentToolApproval)
+  case sourceObserved(AgentEvidenceItem)
+  case sourceCitations(segmentID: String?, citations: [AgentSourceCitation])
   case answerSegmentStarted(AgentItemMetadata)
   case answerSegmentDelta(id: String, text: String)
   case answerSegmentEnded(id: String, disposition: AgentAnswerDisposition)
