@@ -15,11 +15,11 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--suite", choices=["initial", "durable", "correction"], default="initial")
+    parser.add_argument("--suite", choices=["initial", "durable", "correction", "foreground"], default="initial")
     parser.add_argument("--rebuild-canonical", action="store_true")
     args = parser.parse_args()
     report_name = {"initial": "portable-results.json", "durable": "durable-results.json",
-                   "correction": "durable-correction-results.json"}[args.suite]
+                   "correction": "durable-correction-results.json", "foreground": "foreground-results.json"}[args.suite]
     evidence = ROOT / "docs/product-split" / report_name
     run = EvidenceRun(ROOT, args.suite)
     evidence.write_text(json.dumps({"status": "IN_PROGRESS", "raw_evidence_directory": str(run.directory)}) + "\n", encoding="utf-8", newline="\n")
@@ -64,7 +64,8 @@ def main():
     for group in groups:
         binary_name, file_name = {"initial": ("ProductSplitTests", "PortableSplitTests.swift"),
             "durable": ("DurableSplitTests", "DurableSplitTests.swift"),
-            "correction": ("DurabilityCorrectionTests", "DurabilityCorrectionTests.swift")}[group]
+            "correction": ("DurabilityCorrectionTests", "DurabilityCorrectionTests.swift"),
+            "foreground": ("ForegroundSchemeTests", "ForegroundSchemeTests.swift")}[group]
         test_source = ROOT / "Packages/HanlinProductSplit/Tests" / file_name
         test_sources.append(test_source)
         executable = build / (binary_name + (".exe" if os.name == "nt" else ""))
@@ -159,7 +160,7 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as error:
-        target = "durable-correction-results.json" if "correction" in sys.argv else "durable-results.json" if "durable" in sys.argv else "portable-results.json"
+        target = "foreground-results.json" if "foreground" in sys.argv else "durable-correction-results.json" if "correction" in sys.argv else "durable-results.json" if "durable" in sys.argv else "portable-results.json"
         path = ROOT / "docs/product-split" / target
         previous = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
         path.write_text(json.dumps({**previous, "status": "FAILED", "error": str(error)}, indent=2) + "\n", encoding="utf-8", newline="\n")

@@ -1,5 +1,6 @@
 import HanlinMiniAppCore
 import HanlinPlatformContracts
+import HanlinProductSplit
 import HanlinScriptStore
 import SwiftUI
 
@@ -34,10 +35,13 @@ final class HanlinMiniAppsProvider {
         try requirePackageServices()
         await host.refresh(installedPackages: platform.installedPackages)
         if let error = host.lastError { throw Failure.unavailable(error) }
+        if Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier {
+            try? HanlinSplitLiveTarget.exportCatalog()
+        }
         return host.visibleItems
     }
 
-    func launch(_ selected: HanlinMiniAppCatalogItem) async throws -> AnyView {
+    func launch(_ selected: HanlinMiniAppCatalogItem, includesDismissControl: Bool = true) async throws -> AnyView {
         guard !launching else { throw Failure.launchInProgress }
         launching = true
         defer { launching = false }
@@ -46,7 +50,8 @@ final class HanlinMiniAppsProvider {
         guard let item = current.first(where: { $0 == selected }) else { throw Failure.staleSelection }
         switch item.engine {
         case .swift:
-            return try AnyView(HanlinMiniAppsSwiftPresentation(content: host.swiftDestination(for: item).view))
+            let view = try host.swiftDestination(for: item).view
+            return includesDismissControl ? AnyView(HanlinMiniAppsSwiftPresentation(content: view)) : view
         case .nativeScript, .expo, .scriptingJSC:
             guard let package = platform.installedPackages.first(where: {
                 $0.appID == item.id || $0.record.packageID.rawValue == item.id.rawValue

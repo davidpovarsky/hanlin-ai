@@ -11,6 +11,8 @@ import SwiftData
 struct MainTabView: View {
     
     @Binding var deepLinkTarget: String?
+    @Environment(\.hanlinAIReceivingWindowID) private var receivingWindowID
+    private let splitCoordinator = HanlinAppSplitOriginCoordinator.shared
     @ObservedObject private var torahRouter = TorahStudyNavigationRouter.shared
     @State private var selectedTab: Int = {
         let environment = ProcessInfo.processInfo.environment
@@ -85,12 +87,20 @@ struct MainTabView: View {
                 hideTabBar = isHidden
             }
         }
+        .onChange(of: splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id, initial: true) {
+            if splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID) != nil { selectedTab = 0 }
+        }
         .onChange(of: deepLinkTarget) {
             if deepLinkTarget == "vision" {
                 selectedTab = 1
                 deepLinkTarget = nil // 清除状态，避免重复跳转
             }
         }
+        .alert("Mini App result unavailable", isPresented: Binding(
+            get: { splitCoordinator.failure(forReceivingWindowID: receivingWindowID) != nil },
+            set: { if !$0 { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
+        )) { Button("OK") { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
+        message: { Text("Open the original conversation to check this request. Its result could not be returned to this window.") }
         // background修饰符对于TabView不是必需的，但保留以防有特定需要
         .background(Color(.systemBackground))
         .sheet(isPresented: $torahRouter.isPresentingReader) {

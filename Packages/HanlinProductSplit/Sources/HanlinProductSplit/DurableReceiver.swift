@@ -28,7 +28,7 @@ public struct SplitReceiverContext: Sendable {
         self.authorized = authorized; self.routeAvailable = routeAvailable; self.online = online
     }
 
-    func validate(_ request: SplitBridgeRequest) throws {
+    public func validate(_ request: SplitBridgeRequest) throws {
         guard request.version == 1, request.entryPoint == .app else { throw SplitBridgeFailure.unsupportedRoute }
         guard request.caller == caller, request.target == target, request.installedPackage == package,
               request.session == session, request.chat == chat else { throw SplitBridgeFailure.correlationMismatch }
@@ -110,6 +110,13 @@ public struct SplitReceiverDatabase: Codable, Equatable, Sendable {
             guard id == record.request.id else { throw SplitDurabilityError.corruptState }
             try record.validate()
         }
+    }
+
+    /// Sender revocation may share the production persistence transaction with
+    /// its ledger update. It never reserves or starts an execution attempt.
+    public mutating func interruptIfPresent(_ request: SplitBridgeRequest, reason: SplitBridgeFailure) throws -> SplitReceiverRecord? {
+        guard records[request.id] != nil else { return nil }
+        return try update(request) { $0.interrupt(reason) }
     }
 
     mutating func reserve(_ request: SplitBridgeRequest) throws -> SplitReceiverRecord {

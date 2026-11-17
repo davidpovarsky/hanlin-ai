@@ -16,6 +16,7 @@ private struct HanlinAppAgentStoredRowReference: Codable {
 @MainActor @Observable
 final class HanlinAppAgentSessionOwner {
     let consent = HanlinAppToolConsent()
+    @ObservationIgnored private let splitCoordinator: HanlinAppSplitOriginCoordinator
     private(set) var session: HanlinAgentSession?
     private(set) var bindings: [HanlinAppAgentRowBinding] = []
     private(set) var inlineToolIsRunning = false
@@ -42,7 +43,8 @@ final class HanlinAppAgentSessionOwner {
         consent.pending == nil ? nil : inlineToolRowID ?? activeReference?.messageID
     }
 
-    init() {
+    init(splitCoordinator: HanlinAppSplitOriginCoordinator = .shared) {
+        self.splitCoordinator = splitCoordinator
         consent.onChange = { [weak self] request, allowed in
             guard let self else { return }
             let review = request.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}"
@@ -228,7 +230,14 @@ final class HanlinAppAgentSessionOwner {
             }
             let originalSession = HanlinAgentSession(identity: identity, host: originalHost, engine: originalEngine,
                 store: originalStore, capabilities: originalHost)
+            try splitCoordinator.register(session: originalSession, modelContext: modelContext)
             store = originalStore; host = originalHost; session = originalSession; engine = originalEngine; modelConfiguration = configuration
+            originalHost.splitCoordinator = splitCoordinator
+            originalHost.splitSession = originalSession
+            originalHost.splitRowReference = { [weak self] in
+                guard self?.session?.identity == identity, self?.contextGeneration == generation else { return nil }
+                return self?.activeReference
+            }
             originalSession.onProviderToolApproval = { [weak self] approval in
                 guard let self, self.contextGeneration == generation,
                       self.session?.identity == approval.session else { return false }
@@ -250,6 +259,7 @@ final class HanlinAppAgentSessionOwner {
             let priorResult = originalSession.onHostResult
             originalSession.onHostResult = { [weak self] value in
                 priorResult?(value)
+                self?.splitCoordinator.receiptCommitted(value)
                 self?.presentation?.hostResult(value)
             }
             let priorProgress = originalSession.onHostProgress
@@ -325,6 +335,7 @@ final class HanlinAppAgentSessionOwner {
         inlineToolTasks.removeAll(); inlineToolTail = nil
         historyGeneration = nil
         contextGeneration = nil
+        if let session { splitCoordinator.invalidate(session: session.identity) }
         if let session { presentation?.invalidated(session.identity) }
         activeUIRunID = nil; activeReference = nil
     }

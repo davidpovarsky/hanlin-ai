@@ -1,0 +1,240 @@
+name: Validate standalone MiniApps target
+
+on:
+  workflow_call:
+    inputs:
+      host_proof_run_id:
+        type: string
+        required: false
+        default: ''
+      runtime_bundle_artifact_run_id:
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      host_proof_run_id:
+        description: Completed original Host proof/archive to validate before reuse
+        type: string
+        default: ''
+        required: false
+      runtime_bundle_artifact_run_id:
+        description: Existing successful checksum-pinned RuntimeCore candidate
+        type: string
+        default: '42926628418'
+        required: true
+
+concurrency:
+  group: standalone-miniapps-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  miniapps:
+    runs-on: xcode-27
+    timeout-minutes: 60
+    env:
+      SPLIT_EVIDENCE: ${{ github.workspace }}/build/app-split-evidence
+      GH_TOKEN: ${{ github.token }}
+      RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
+      HOST_PROOF_RUN_ID: ${{ inputs.host_proof_run_id }}
+      SPLIT_DERIVED_DATA: ${{ github.workspace }}/build/AppSplitDerivedData
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24.5.0'
+      - name: Verify actual Mac toolchain, disk and installed simulator tooling
+        id: split-platform
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$SPLIT_EVIDENCE"
+          split_phase_start=$SECONDS
+          trap 'printf "%s\n" "$(( SECONDS - split_phase_start ))" > "$SPLIT_EVIDENCE/preflight-duration-seconds.txt"' EXIT
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
+          {
+            sw_vers
+            uname -m
+            xcodebuild -version
+            xcodebuild -showsdks
+            xcrun simctl list runtimes -j
+            xcrun simctl list devicetypes -j
+            command -v python3
+            python3 --version
+            command -v xcodebuild
+            command -v xcrun
+            df -Pk . "$RUNNER_TEMP"
+            command -v idb && idb --version || true
+            command -v maestro && maestro --version || true
+          } > "$SPLIT_EVIDENCE/preflight.log" 2>&1
+          cat "$SPLIT_EVIDENCE/preflight.log"
+          test "$(df -Pk . | awk 'NR==2 {print $4}')" -gt 15000000
+          test "$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)" -ge 27
+          echo "arch=$(uname -m)" >> "$GITHUB_OUTPUT"
+          echo "xcode_build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
+          echo "sdk=$(xcrun --sdk iphonesimulator --show-sdk-version)" >> "$GITHUB_OUTPUT"
+          skill_script="$HOME/.codex/skills/ios-simulator-skill/scripts/sim_health_check.sh"
+          if [ -f "$skill_script" ]; then
+            bash "$skill_script" --json > "$SPLIT_EVIDENCE/skill-health.json" 2>&1 || true
+          else
+            echo 'NOT_AVAILABLE: ios-simulator-skill scripts on this Mac; XCUITest remains available.' > "$SPLIT_EVIDENCE/skill-health.txt"
+          fi
+          plutil -lint AI_HLY.xcodeproj/project.pbxproj HanlinMiniAppsApp/HanlinMiniApps.entitlements
+          python3 Scripts/ProductSplit/verify_targets.py
+      - name: Restore existing Swift package dependency cache
+        id: split-sourcepackages
+        continue-on-error: true
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: build/SourcePackages
+          key: ios-sourcepackages-v3-${{ runner.os }}-${{ steps.split-platform.outputs.arch }}-${{ steps.split-platform.outputs.xcode_build }}-${{ hashFiles('AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'RuntimeDependencies.lock.json') }}
+          restore-keys: |
+            ios-sourcepackages-v3-${{ runner.os }}-${{ steps.split-platform.outputs.arch }}-${{ steps.split-platform.outputs.xcode_build }}-
+      - name: Restore compatible standalone compiler state
+        id: split-derived
+        continue-on-error: true
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: |
+            build/AppSplitDerivedData/Build
+            build/AppSplitDerivedData/ModuleCache.noindex
+            build/AppSplitDerivedData/SDKStatCaches.noindex
+            build/AppSplitDerivedData/CacheMetadata/xcode-build-inputs.json
+          key: split-derived-v1-${{ runner.os }}-${{ steps.split-platform.outputs.arch }}-${{ steps.split-platform.outputs.xcode_build }}-${{ steps.split-platform.outputs.sdk }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'RuntimeDependencies.lock.json', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'Scripts/CI/xcode_cache_inputs.py') }}-${{ hashFiles('AI_HLY/**/*.swift', 'HanlinMiniAppsApp/**/*.swift', 'HanlinMiniAppsUITests/**/*.swift', 'HanlinMiniAppsTests/**/*.swift', 'Packages/**/*.swift') }}
+          restore-keys: |
+            split-derived-v1-${{ runner.os }}-${{ steps.split-platform.outputs.arch }}-${{ steps.split-platform.outputs.xcode_build }}-${{ steps.split-platform.outputs.sdk }}-
+      - name: Validate authentic unchanged Host proof before reuse
+        id: host-proof
+        shell: bash
+        run: python3 Scripts/ProductSplit/restore_host_proof.py
+      - name: Execute strict foreground route and ledger cases on the actual Mac
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/ProductSplit/run_portable.py --suite foreground | tee "$SPLIT_EVIDENCE/foreground.log"
+          python3 - <<'PY'
+          import json, os, pathlib, shutil
+          root = pathlib.Path.cwd()
+          report = root / 'docs/product-split/foreground-results.json'
+          data = json.loads(report.read_text())
+          assert data['status'] == 'EXECUTED_PASS' and data['count'] == 42
+          origin = pathlib.Path(data['raw_evidence_manifest']['path']).parent.resolve()
+          assert origin.is_relative_to((root / 'docs/product-split/evidence').resolve())
+          destination = pathlib.Path(os.environ['SPLIT_EVIDENCE']) / 'foreground'
+          destination.mkdir()
+          shutil.copy2(report, destination / report.name)
+          shutil.copytree(origin, destination / 'raw-origin')
+          PY
+      - name: Reproduce and verify affected package lifecycle on the actual Mac first
+        if: steps.host-proof.outputs.reused != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          split_phase_start=$SECONDS
+          trap 'printf "%s\n" "$(( SECONDS - split_phase_start ))" > "$SPLIT_EVIDENCE/package-lifecycle-duration-seconds.txt"' EXIT
+          test "$(node --version)" = 'v24.5.0'
+          host_root="$PWD/AI_HLY/Downstream/RuntimeCore/Node/Host"
+          grammar_root="$PWD/Scripts/Runtime/HostGrammarTools"
+          export HANLIN_HOST_GRAMMAR_COMPILER_ROOT="$grammar_root"
+          npm ci --prefix "$grammar_root" --ignore-scripts --workspaces=false --no-audit --no-fund
+          npm ci --prefix "$host_root" --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund
+          (cd "$host_root" && node apply-host-dependency-patches.mjs)
+          node Scripts/Runtime/generate-yarn-unicode-patch.mjs --root "$host_root"
+          node Scripts/Runtime/generate-yarn-multiline-patch.mjs --root "$host_root" --compiler-root "$grammar_root"
+          {
+            node --version
+            shasum -a 256 "$host_root/global-package-state.mjs" "$host_root/Tests/package-lifecycle.test.mjs" "$host_root/package-lock.json"
+            node --test "$host_root/Tests/package-lifecycle.test.mjs"
+          } 2>&1 | tee "$SPLIT_EVIDENCE/package-lifecycle.log"
+      - name: Prepare the existing pinned metadata tool
+        uses: ./.github/actions/prepare-nativescript-metadata-tool
+      - name: Prepare existing native dependencies and Runtime host
+        shell: bash
+        run: |
+          set -euo pipefail
+          split_phase_start=$SECONDS
+          trap 'printf "%s\n" "$(( SECONDS - split_phase_start ))" > "$SPLIT_EVIDENCE/native-dependencies-duration-seconds.txt"' EXIT
+          {
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/Expo
+          node Scripts/Expo/prepare-ios-dependencies.mjs
+          bash Scripts/Runtime/prepare-runtime-core.sh
+          bash Scripts/Runtime/prepare-runtime-host.sh
+          cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+          cat > Config.xcconfig <<'EOF'
+          SWIFT_ENABLE_EXPLICIT_MODULES = NO
+          SWIFT_OBJC_INTEROP_MODE = objcxx
+          CLANG_CXX_LANGUAGE_STANDARD = gnu++20
+          CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES
+          CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
+          EOF
+          } 2>&1 | tee "$SPLIT_EVIDENCE/native-dependencies.log"
+      - name: Restore verified input timestamps for incremental compilation
+        continue-on-error: true
+        shell: bash
+        run: python3 Scripts/CI/xcode_cache_inputs.py --repository "$GITHUB_WORKSPACE" restore --manifest "$SPLIT_DERIVED_DATA/CacheMetadata/xcode-build-inputs.json"
+      - name: Capture exact standalone compiler inputs
+        id: split-inputs
+        continue-on-error: true
+        shell: bash
+        run: |
+          python3 Scripts/CI/xcode_cache_inputs.py --repository "$GITHUB_WORKSPACE" capture \
+            --manifest "$SPLIT_DERIVED_DATA/CacheMetadata/xcode-build-inputs.json" --head "$GITHUB_SHA" \
+            --directory-root . AI_HLY HanlinMiniAppsApp HanlinMiniAppsUITests HanlinMiniAppsTests Packages AI_HLY.xcodeproj Vendor Config.xcconfig RuntimeDependencies.lock.json
+      - name: Execute actual standalone target XCUITests
+        shell: bash
+        run: python3 Scripts/ProductSplit/run_native_acceptance.py
+      - name: Save changed compiler state without treating it as test evidence
+        if: ${{ always() && steps.split-inputs.outcome == 'success' && steps.split-derived.outputs.cache-hit != 'true' && steps.split-derived.outputs.cache-primary-key != '' }}
+        continue-on-error: true
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: |
+            build/AppSplitDerivedData/Build
+            build/AppSplitDerivedData/ModuleCache.noindex
+            build/AppSplitDerivedData/SDKStatCaches.noindex
+            build/AppSplitDerivedData/CacheMetadata/xcode-build-inputs.json
+          key: ${{ steps.split-derived.outputs.cache-primary-key }}
+      - name: Save changed Swift package dependency cache
+        if: ${{ always() && steps.split-sourcepackages.outputs.cache-hit != 'true' && steps.split-sourcepackages.outputs.cache-primary-key != '' }}
+        continue-on-error: true
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: build/SourcePackages
+          key: ${{ steps.split-sourcepackages.outputs.cache-primary-key }}
+      - name: Keep original logs, status and xcresult even after early failure
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p "$SPLIT_EVIDENCE"
+          if [ ! -f "$SPLIT_EVIDENCE/acceptance.json" ]; then
+            python3 - <<'PY'
+          import json, os, pathlib
+          path = pathlib.Path(os.environ['SPLIT_EVIDENCE']) / 'acceptance.json'
+          path.write_text(json.dumps({'status': 'INFRA_ERROR', 'ui': 'NOT_RUN',
+              'xcresult': 'NOT_CREATED: native test step not reached',
+              'sha': os.environ['GITHUB_SHA'], 'reason': 'preflight/dependency preparation failed; inspect original job logs'})+'\n')
+          PY
+          fi
+          python3 Scripts/CI/generate_performance_report.py \
+            --log-dir "$SPLIT_EVIDENCE" --run-id "$GITHUB_RUN_ID" --commit-sha "$GITHUB_SHA" \
+            --output-json "$SPLIT_EVIDENCE/ci-performance-report.json" --step-summary "$GITHUB_STEP_SUMMARY"
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: app-split-${{ github.run_id }}
+          path: |
+            build/app-split-evidence
+            build/runtime-host/RuntimeHostResources.zip
+            build/runtime-host/host-metadata.json
+            build/runtime-host/runtime-host.sha256
+          if-no-files-found: error
+          retention-days: 14

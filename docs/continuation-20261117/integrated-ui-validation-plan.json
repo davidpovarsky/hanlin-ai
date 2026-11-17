@@ -9,24 +9,26 @@
     "AI_HLYUITests/HanlinNativeA2UIChatUITests",
     "AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat",
     "AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2ActualPythonToolApprovalAndColdConversationRestoration",
-    "AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft"
+    "AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft",
+    "AI_HLYTests/HanlinAppSplitOriginTests"
   ],
   "runtime_bundle_artifact_run_id": "42926628418",
   "runtime_bundle_sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
-  "presentation_package_compile": "44194935277 PASS",
+  "presentation_package_compile": "44199353299 SUCCESS; native iOS27 includes latest actual OpenUI control semantics",
   "markdown_native_tests": "44193348464 9 PASS",
   "core_provider_tests": "44193344010 21 PASS; corrected result summarizer, original job failure retained",
   "no_release": true,
   "device": "one freshly created owned iPad, no personal simulator",
   "last_attempt": {
-    "run": 44196111409,
-    "sha": "0b66cad6f127f8efb8f7b9da0cf068a8315c1aed",
-    "result": "BUILD_FAILED missing HanlinPlatformContracts import; UI did not execute",
-    "correction": "Import canonical type; wait for actual enabled and hittable Send before single UI tap based on baseline request-count-zero evidence"
+    "run": 44199348584,
+    "source": "16934250",
+    "result": "ROUTING_FAILED before native job: new PresentationSDK/OpenUI sources unmapped",
+    "correction": "Explicit affected-source mappings for original Presentation SDK and ProductSplit, preserving fail-on-unmapped routing"
   },
   "provider_approval_apple_proof": {
     "run": 44197039335,
     "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
     "result": "SUCCESS; Core+Session and native AgentCore iOS27 compilation"
-  }
+  },
+  "split_origin_delivery": "71ba9d73941c27c582ebb71e05bee36ec02dd8a7 integrated with existing consent, actual origin row and receiving-window mount ACK"
 }

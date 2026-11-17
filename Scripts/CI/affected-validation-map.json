@@ -1545,6 +1545,46 @@
         "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
       ],
       "consumers": []
+    },
+    "canonical_presentation_sdk": {
+      "description": "Reusable original Composer/Markdown/OpenUI source; native SDK compilation uses dedicated proof and its real app consumer uses these suites",
+      "patterns": [
+        "Packages/HanlinPresentationSDK/**",
+        "Scripts/OpenUI/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "simulator_targeted_ui"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentRoundPresentationTests",
+        "AI_HLYTests/NativeComposerLineSizingTests"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeA2UIChatUITests"
+      ],
+      "consumers": []
+    },
+    "canonical_product_split": {
+      "description": "Canonical two-app leaves, production shell and standalone workflow; origin consumer tests here, standalone UI/storage via validate-app-split.yml",
+      "patterns": [
+        "Packages/HanlinProductSplit/**",
+        "AI_HLY/Downstream/ProductSplit/**",
+        "AI_HLY/Downstream/ProductSplitIntegration/**",
+        "Scripts/ProductSplit/**",
+        "HanlinMiniAppsApp/**",
+        "HanlinMiniAppsTests/**",
+        "HanlinMiniAppsUITests/**",
+        "Tests/ProductSplit/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinAppSplitOriginTests",
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {

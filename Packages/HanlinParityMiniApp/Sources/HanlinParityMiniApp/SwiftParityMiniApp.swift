@@ -21,7 +21,7 @@ public struct SwiftParityMiniAppRegistration: HanlinStaticMiniAppRegistration, S
             let shareCapability = try HanlinCapabilityID(validating: "inter-app.share")
             descriptor = HanlinAppDescriptor(
                 schemaVersion: .init(major: 1, minor: 0),
-                descriptorRevision: try HanlinDescriptorRevision(1),
+                descriptorRevision: try HanlinDescriptorRevision(2),
                 id: appID,
                 name: try LocalizedValue(["en": "Swift Parity", "he": "מקבילת Swift"]),
                 summary: try LocalizedValue(["en": "Native SwiftPM Mini App", "he": "Mini App מקבילת SwiftPM"]),
@@ -36,6 +36,12 @@ public struct SwiftParityMiniAppRegistration: HanlinStaticMiniAppRegistration, S
                     .init(kind: .app, handler: "SwiftParityMiniAppView", allowedContexts: [.mainApplication]),
                     .init(kind: .widget, handler: "SwiftParityMiniAppExposures.widget", allowedContexts: [.widget]),
                     .init(kind: .appIntentBridge, handler: "SwiftParityMiniAppExposures.performIntent", allowedContexts: [.appIntent])
+                ],
+                actions: [
+                    .init(id: try HanlinActionID(validating: "share.value"),
+                          title: try LocalizedValue(["en": "Share current value", "he": "שתף את הערך הנוכחי"]),
+                          inputSchema: try HanlinJSONSchemaDocument(dialect: .draft2020_12, root: .object([:])),
+                          capabilities: [shareCapability], risk: .sensitiveRead)
                 ],
                 capabilities: [
                     .init(id: try HanlinCapabilityID(validating: "storage"), reason: try LocalizedValue(["en": "Persist demo state privately."]), constraints: .object([:]), risk: .write),

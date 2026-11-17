@@ -57,7 +57,10 @@
     "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
     "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
     "AI_HLY/NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift",
-    "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift"
+    "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
+    "AI_HLY/Downstream/ProductSplit/HanlinSplitForegroundTransport.swift",
+    "AI_HLY/Downstream/ProductSplit/HanlinSplitLiveTarget.swift",
+    "AI_HLY/Downstream/ProductSplit/HanlinSplitMailbox.swift"
   ],
   "native_sources": [
     "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRunner.mm",
@@ -138,5 +141,7 @@
   "bootstrap_test_target": "FA34D7A774EB6BF57D06CAA6",
   "bootstrap_source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
   "bootstrap_test_source": "Scripts/CI/IntegrationValidation/MiniAppsBootstrapTests.swift",
-  "host_jsc_discovery_cut": "6c4d30c87b16635a53f168d37737d63e18c1d2bc"
+  "host_jsc_discovery_cut": "6c4d30c87b16635a53f168d37737d63e18c1d2bc",
+  "product_stage": "standalone-production-bundle-unsigned",
+  "bundle_id": "com.itorah.hanlinminiapps"
 }

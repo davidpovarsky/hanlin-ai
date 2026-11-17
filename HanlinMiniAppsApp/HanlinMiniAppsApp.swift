@@ -4,13 +4,20 @@ import SwiftUI
 /// model or assistant credential adapter is configured in the MiniApps target.
 @main
 struct HanlinMiniAppsApplication: App {
+    var body: some Scene { WindowGroup { HanlinMiniAppsWindow() } }
+}
+
+private struct HanlinMiniAppsWindow: View {
+    @State private var foreground = MiniAppsForegroundBridge()
+    @State private var incomingURL: URL?
+    @State private var showsImport = false
     @State private var bootstrap = HanlinMiniAppsBootstrap {
         try await AppRuntimeCore.shared.prepareStorage()
         HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
     }
 
-    var body: some Scene {
-        WindowGroup {
+    var body: some View {
+        Group {
             Group {
                 switch bootstrap.phase {
                 case .idle, .preparing:
@@ -31,6 +38,40 @@ struct HanlinMiniAppsApplication: App {
             .task {
                 if bootstrap.phase == .idle { await bootstrap.prepare() }
             }
+            .onOpenURL { incomingURL = $0 }
+            .task(id: bootstrap.phase == .ready ? incomingURL : nil) {
+                guard bootstrap.phase == .ready, let url = incomingURL else { return }
+                if url.isFileURL {
+                    await HanlinScriptingPlatform.shared.importPackage(from: url)
+                    showsImport = true
+                } else {
+                    await foreground.open(url)
+                }
+                if incomingURL == url { incomingURL = nil }
+            }
+            .sheet(isPresented: $showsImport) {
+                NavigationStack { ScriptingPackageImportView(platform: .shared) }
+            }
+            .fullScreenCover(item: $foreground.presentation) { destination in
+                NavigationStack {
+                    destination.view.toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") { Task { await foreground.cancelAndClose() } }
+                                .disabled(foreground.returning)
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Return to Hanlin") { Task { await foreground.returnToOrigin() } }
+                                .disabled(foreground.returning)
+                                .accessibilityIdentifier("miniapps.return-to-origin")
+                        }
+                    }
+                }
+                .interactiveDismissDisabled()
+            }
+            .alert("Hanlin request unavailable", isPresented: Binding(
+                get: { foreground.error != nil }, set: { if !$0 { foreground.error = nil } }
+            )) { Button("OK") { foreground.error = nil } }
+            message: { Text(foreground.error ?? "") }
         }
     }
 }

@@ -14,6 +14,7 @@ import HanlinNativeScriptRuntime
 import HanlinExpoRuntime
 import HanlinExpoNativeAPI
 import HanlinMiniAppCore
+import HanlinProductSplit
 import Observation
 import OSLog
 import UIKit
@@ -42,7 +43,7 @@ final class HanlinScriptingPlatform {
         static var live: Self {
             .init(
                 registerExpoDefines: { HanlinExpoSession.ensureAppDefinesLoaded() },
-                makeExtensionStore: { try HanlinScriptExtensionStore() },
+                makeExtensionStore: { try HanlinScriptingPlatform.productExtensionStore() },
                 enqueuePublication: { work in Task { @MainActor in work() } }
             )
         }
@@ -167,6 +168,19 @@ final class HanlinScriptingPlatform {
             stagingRoot = nil
             bootstrapError = Self.safeMessage(error)
         }
+    }
+
+    static func productExtensionStore() throws -> HanlinScriptExtensionStore {
+        guard Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier else {
+            return try HanlinScriptExtensionStore()
+        }
+        let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: HanlinScriptExtensionStore.appGroupIdentifier
+        )
+        let root = try SplitAppStorageLayout.extensionStoreRoot(
+            trustedBundleIdentifier: Bundle.main.bundleIdentifier, appGroupContainer: container
+        )
+        return HanlinScriptExtensionStore(root: root)
     }
 
     func restore() async {

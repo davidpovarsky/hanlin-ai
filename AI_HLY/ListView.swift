@@ -3,6 +3,8 @@ import SwiftData
 
 struct ListView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.hanlinAIReceivingWindowID) private var receivingWindowID
+    private let splitCoordinator = HanlinAppSplitOriginCoordinator.shared
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Query private var chatRecords: [ChatRecords]
     @Query private var allModels: [AllModels]
@@ -155,6 +157,18 @@ struct ListView: View {
                     sessionBridge: sessionBridge
                 )
             }
+        }
+        .task(id: splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id) {
+            guard !Task.isCancelled,
+                  let request = splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID) else { return }
+            let id = request.chat
+            guard let rows = try? modelContext.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id })),
+                  rows.count == 1, let original = rows.first,
+                  splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id == request.id else { return }
+            selectedChatRecord = original
+            sessionBridge.expectedActiveSessionID = id
+            if useCompactWorkspace { compactWorkspacePath = [.chat(id)] }
+            // ChatViewWrapper acknowledges only after this exact existing chat mounts.
         }
         .environment(\.hanlinComposerSessionBridge, sessionBridge)
         .sheet(isPresented: $showsSavedMessages) { ChatSavedExcerptsView() }

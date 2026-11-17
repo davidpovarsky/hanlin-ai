@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 
 struct ChatRowView: View {
@@ -157,11 +158,25 @@ struct ChatRowView: View {
 }
 
 struct ChatViewWrapper: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.hanlinAIReceivingWindowID) private var receivingWindowID
+    private let splitCoordinator = HanlinAppSplitOriginCoordinator.shared
     var chatRecord: ChatRecords
     var matchedMessageID: UUID?
 
     var body: some View {
         ChatView(chatRecord: chatRecord, matchedMessageID: matchedMessageID)
+            .task(id: splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id) {
+                guard let request = splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID),
+                      request.chat == chatRecord.id else { return }
+                await Task.yield()
+                let id = request.chat
+                guard !Task.isCancelled,
+                      splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id == request.id,
+                      let rows = try? modelContext.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id })),
+                      rows.count == 1, rows.first === chatRecord else { return }
+                splitCoordinator.acknowledgeAcceptedOrigin(requestID: request.id, receivingWindowID: receivingWindowID)
+            }
     }
 }
 

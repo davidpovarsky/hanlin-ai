@@ -1,0 +1,19 @@
+{
+  "scope": "Current production MiniApps target with original provider/bootstrap and preserved transport/storage",
+  "source_delivery": "226330c70cd8691219c0d192f147c0bf03bb55f7",
+  "origin_delivery": "71ba9d73941c27c582ebb71e05bee36ec02dd8a7",
+  "runtime_artifact_run": 42926628418,
+  "host_proof_requested": 43726905638,
+  "source_check": "verify_targets.py validates 63 current shared files and 21 real products, original AI/SDK boundaries, no automatic signature/account change",
+  "native_obligations": {
+    "portable_foreground_cases": 42,
+    "hosted_storage_mailbox": 17,
+    "bootstrap_cases": 3,
+    "ui_cases": 7
+  },
+  "two_process_return": "separate combined proof, PENDING",
+  "ios": "27 only",
+  "signing": "unsigned simulator build; existing entitlement declarations only",
+  "testflight": false,
+  "release": false
+}

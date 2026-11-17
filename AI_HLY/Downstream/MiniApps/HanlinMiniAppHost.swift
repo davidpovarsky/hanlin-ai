@@ -142,6 +142,10 @@ final class HanlinMiniAppHost {
         return HanlinScriptPackageDiscovery(snapshots: eligible)
     }
 
+    func authorize(_ request: HanlinMiniAppRequest) async -> Bool {
+        await authorization.authorize(request)
+    }
+
     func refresh(installedPackages: [HanlinStoredPackageSnapshot]) async {
         do {
             BuiltinCanonicalRegistrations.ensureRegistered()

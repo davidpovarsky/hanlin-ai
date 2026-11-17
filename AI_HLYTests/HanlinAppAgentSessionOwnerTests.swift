@@ -4,9 +4,7 @@ import HanlinAgentCore
 import HanlinChatCore
 import HanlinHostContracts
 import HanlinPlatformContracts
-#if HANLIN_PRODUCT_SPLIT_ACCEPTANCE
 import HanlinProductSplit
-#endif
 import SwiftData
 import Testing
 @testable import AI_Hanlin
@@ -242,7 +240,6 @@ private struct AppPartModel: LanguageModelV3 {
         #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
     }
 
-    #if HANLIN_PRODUCT_SPLIT_ACCEPTANCE
     @Test func historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes() async throws {
         let container = try database(), context = container.mainContext
         let row = ChatRecords(name: "Historical original", type: "chat")
@@ -377,8 +374,6 @@ private struct AppPartModel: LanguageModelV3 {
         coordinator.navigateToOriginalConversation(first)
         #expect(coordinator.acceptedOrigin(forReceivingWindowID: window) == nil && coordinator.lastFailure == .correlationMismatch)
     }
-
-    #endif
 
     @Test func actualNativeBoundaryRejectsLossyOrInvalidInputAndChangedContextBeforeEffects() async throws {
         let cases: [(input: String, invalidate: Bool, calls: Int, code: HanlinErrorCode?)] = [

@@ -106,11 +106,16 @@ def validate_graph(project, provider_manifest=None):
             assert settings["IPHONEOS_DEPLOYMENT_TARGET"] == "27.0"
             assert settings["SWIFT_VERSION"] == "6.0"
             if target is mini:
-                assert settings["PRODUCT_BUNDLE_IDENTIFIER"] == "com.itorah.hanlinminiapps.integration"
-                assert settings["SUPPORTED_PLATFORMS"] == "iphonesimulator"
+                production = provider_manifest and provider_manifest.get("product_stage") == "standalone-production-bundle-unsigned"
+                assert settings["PRODUCT_BUNDLE_IDENTIFIER"] == ("com.itorah.hanlinminiapps" if production else "com.itorah.hanlinminiapps.integration")
+                assert settings["SUPPORTED_PLATFORMS"] == ("iphoneos iphonesimulator" if production else "iphonesimulator")
                 assert settings["CODE_SIGNING_ALLOWED"] == "NO"
                 assert settings["CODE_SIGNING_REQUIRED"] == "NO"
-                assert "CODE_SIGN_ENTITLEMENTS" not in settings
+                if production:
+                    assert settings["CODE_SIGN_ENTITLEMENTS"] == "HanlinMiniAppsApp/HanlinMiniApps.entitlements"
+                    assert settings["INFOPLIST_FILE"] == "HanlinMiniAppsApp/Info.plist"
+                else:
+                    assert "CODE_SIGN_ENTITLEMENTS" not in settings
                 assert "DEVELOPMENT_TEAM" not in settings
                 assert "baseConfigurationReference" not in objects[key]
             else:

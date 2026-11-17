@@ -100,6 +100,7 @@ struct MiniAppsLibrary: View {
                     destination.view.toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Done") { presentation = nil }
+                                .accessibilityIdentifier("hanlin-miniapps-management-close")
                         }
                     }
                 }
