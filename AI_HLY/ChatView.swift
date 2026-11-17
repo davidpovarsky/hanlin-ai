@@ -13,6 +13,7 @@ import AVFoundation
 import SwiftData
 import UniformTypeIdentifiers
 import HanlinHostContracts
+import HanlinPlatformContracts
 
 // 聊天界面
 @MainActor

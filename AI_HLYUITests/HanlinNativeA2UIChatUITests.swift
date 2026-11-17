@@ -111,7 +111,7 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         """
         try launch(continuation: true, openUI: output)
         input().tap(); input().typeText(prompt)
-        app.buttons["hanlin-chat-send"].firstMatch.tap()
+        sendReadyPrompt()
         let native = app.textFields["openui-native-Input-nativeNights"].firstMatch
         XCTAssertTrue(native.waitForExistence(timeout: 45), "The original streamed text must mount native SwiftUI controls")
         assertText("OPENUI_BEFORE"); assertText("OPENUI_BETWEEN"); assertText("OPENUI_AFTER")
@@ -185,7 +185,7 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
     }
     private func sendFirstPrompt(expectText: Bool = true) {
         input().tap(); input().typeText(prompt)
-        app.buttons["hanlin-chat-send"].firstMatch.tap()
+        sendReadyPrompt()
         let rendered = surface().waitForExistence(timeout: 45)
         if !rendered { record("missing-original-native-surface") }
         XCTAssertTrue(rendered, "The real native-schema/validator/owner path did not render its Surface")
@@ -193,6 +193,14 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         assertTransport(count: 1)
         XCTAssertFalse(app.webViews.firstMatch.exists)
         record("original-native-response")
+    }
+    private func sendReadyPrompt() {
+        let send = app.buttons["hanlin-chat-send"].firstMatch
+        // The editor commits its binding on the next UI turn. A tap while the
+        // keyboard/Composer is still settling must not masquerade as a send.
+        XCTAssertTrue(wait(NSPredicate(format: "exists == true AND enabled == true AND hittable == true"), on: send),
+                      "The original send control must be enabled and hittable before the single tap")
+        send.tap()
     }
     private func submitEditedForm() throws {
         let field = app.textFields["Replay name"].firstMatch

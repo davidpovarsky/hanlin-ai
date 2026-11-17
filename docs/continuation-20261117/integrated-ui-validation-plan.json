@@ -17,5 +17,16 @@
   "markdown_native_tests": "44193348464 9 PASS",
   "core_provider_tests": "44193344010 21 PASS; corrected result summarizer, original job failure retained",
   "no_release": true,
-  "device": "one freshly created owned iPad, no personal simulator"
+  "device": "one freshly created owned iPad, no personal simulator",
+  "last_attempt": {
+    "run": 44196111409,
+    "sha": "0b66cad6f127f8efb8f7b9da0cf068a8315c1aed",
+    "result": "BUILD_FAILED missing HanlinPlatformContracts import; UI did not execute",
+    "correction": "Import canonical type; wait for actual enabled and hittable Send before single UI tap based on baseline request-count-zero evidence"
+  },
+  "provider_approval_apple_proof": {
+    "run": 44197039335,
+    "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
+    "result": "SUCCESS; Core+Session and native AgentCore iOS27 compilation"
+  }
 }
