@@ -1,0 +1,45 @@
+{
+  "scope": "canonical Composer/native editor/chips/Markdown extraction",
+  "parent_sha": "958d84ae428697ccf9f25fa33fba9ddbb740b93a",
+  "source_paths": [
+    "AI_HLY/Downstream/ChatInput/HanlinDetachedCapabilityChips.swift",
+    "AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift",
+    "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
+    "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+    "Packages/HanlinPresentationSDK/Package.swift",
+    "Packages/HanlinPresentationSDK/README.md",
+    "Scripts/CI/IntegrationValidation/verify_agent_sdk.py",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinDetachedCapabilityChips.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift"
+  ],
+  "source_sha256": {
+    "AI_HLY/Downstream/ChatInput/HanlinDetachedCapabilityChips.swift": "f1510dd63f28873e59e2531d255b5347a0c8b2d692da121083c54fcf51ee4f4c",
+    "AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift": "ac2e8bc2607fbe3de9f6a9c231caa12aab484a545cf2c3ac138e1bc0348afb74",
+    "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift": "9992172f9762ea17f7aff350cf1028e602c4e6aa6bad2f48b14a826013c7a37a",
+    "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift": "82e3eaa4f10e8569613403e71c0dbffec4e63e09ffcf0297357293cb6ebc868d",
+    "Packages/HanlinPresentationSDK/Package.swift": "7062efd438f1434ce1dab7dac714f4e03e944bb940f1890199ac308285ef670a",
+    "Packages/HanlinPresentationSDK/README.md": "fe217f153b59be2576c7c46fa6d59d5d5231ebd32a4857a55bd5d3933096a26a",
+    "Scripts/CI/IntegrationValidation/verify_agent_sdk.py": "710eac66410c05ebe2832ff53327da727be6d731a512a65b8d5c43edc06a0112",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinDetachedCapabilityChips.swift": "526e1ba3ec46da5d900188b02b4469425714dbda59052223a23d7182cfa1c415",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift": "769baa617e282b957b33c51e34c413ee1696673d399345faddb4fb2264b5b764",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift": "ab1fc60ea3f0b1125e081ddcddd09db06c5ed101402f68d5ae75d5942dc42691",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift": "669df071b0db6ba706891551276508ec4e2e9c501a12f0db03b28bc4102b43ab"
+  },
+  "validation": [
+    "Windows Swift frontend parse of nine changed Swift sources",
+    "isolated original PresentationSDK iOS27 build",
+    "existing app Composer and selection tests after native package compile"
+  ],
+  "retained_core_evidence": {
+    "source": "958d84ae428697ccf9f25fa33fba9ddbb740b93a",
+    "run": "44193344010",
+    "artifact_sha256": "72091dfeadebc29fb2c3d897543ae9b8b0dbe1e12f9a1496695269afdf4d2978",
+    "actual_cases_passed": 21,
+    "original_job_conclusion": "failure: result selection unsupported",
+    "corrected_verifier": "actual CoreTests selection accepted; no test rerun; iOS compile remains NOT_RUN"
+  },
+  "unrelated_work": "protected original trees and runtime producer unchanged",
+  "release": false
+}

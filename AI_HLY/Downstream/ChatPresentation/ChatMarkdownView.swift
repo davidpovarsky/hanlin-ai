@@ -1,7 +1,6 @@
 import SwiftUI
 import SwiftStreamingMarkdown
 import UIKit
-import ImageIO
 import HanlinPresentationKit
 import HanlinChatUI
 
@@ -14,31 +13,30 @@ struct ChatMarkdownView: View {
     var savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?
     var saveKnowledge: (@MainActor @Sendable (String) -> Void)?
     var onRendered: (@MainActor @Sendable () -> Void)?
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-    @Environment(\.layoutDirection) private var layoutDirection
     @Environment(\.hanlinMessageCitations) private var citations
     @Environment(\.chatExcerptSource) private var source
     @Environment(\.chatSourceDestination) private var destination
     @Environment(\.chatMarkdownSelectionActivity) private var selectionActivity
     @Environment(\.chatMarkdownDidRender) private var markdownDidRender
     @State private var highlightedRequestID: UUID?
-    @State private var listener = ChatMarkdownListener()
-    @State private var citationIcons: [String: Data] = [:]
 
     var body: some View {
-        let _ = dynamicTypeSize
         let citationProjection = citations?.projection(for: text)
-        let _ = listener.update(savePersonal: scopedSavePersonal, saveKnowledge: saveKnowledge, onRendered: {
-            onRendered?()
-            if let messageID = source?.messageID { markdownDidRender?(messageID) }
-        })
-        MarkdownView(text: citationProjection?.markdown ?? text, config: config, listener: listener)
+        HanlinMarkdownView(text: citationProjection?.markdown ?? text,
+            imageConfig: imageConfig, citationGroups: citationProjection?.groups ?? [],
+            contextMenuItems: contextMenuItems,
+            onRendered: {
+                onRendered?()
+                if let messageID = source?.messageID { markdownDidRender?(messageID) }
+            }, onSelectionAction: { id, selection in
+                if id == "hanlin.savePersonal" {
+                    scopedSavePersonal?(ChatTextQuote(text: selection.text, renderedText: selection.renderedText,
+                        range: selection.range, sourceBlockID: selection.sourceBlockID))
+                } else if id == "hanlin.saveKnowledge" { saveKnowledge?(selection.text) }
+            })
             // The native paragraph retains its OpenURLAction. Keep its presenter
             // with the renderer rather than an independently updating bubble.
             .modifier(ChatLinkPresentation(citationGroups: citationProjection?.groups ?? []))
-            .task(id: citationProjection?.groups.map(\.url)) {
-                await loadCitationIcons(citationProjection?.groups ?? [])
-            }
             .markdownCodeBlockRenderer { block in
                 guard block.isFenceClosed == true else { return nil }
                 let language = block.language?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
@@ -86,107 +84,21 @@ struct ChatMarkdownView: View {
         }
     }
 
-    private var config: MarkdownRenderConfig {
+    private var contextMenuItems: [TextContextMenuItem] {
         var items: [TextContextMenuItem] = []
         if savePersonal != nil { items.append(TextContextMenuItem(id: "hanlin.savePersonal", title: String(localized: "Save for myself"), image: UIImage(systemName: "bookmark"))) }
         if saveKnowledge != nil { items.append(TextContextMenuItem(id: "hanlin.saveKnowledge", title: String(localized: "Save to knowledge"), image: UIImage(systemName: "backpack"))) }
-        func fonts(_ style: UIFont.TextStyle) -> TextFonts {
-            let normal = UIFont.preferredFont(forTextStyle: style)
-            func variant(_ traits: UIFontDescriptor.SymbolicTraits) -> UIFont? {
-                normal.fontDescriptor.withSymbolicTraits(traits).map { UIFont(descriptor: $0, size: 0) }
-            }
-            return TextFonts(normal: normal, italic: variant(.traitItalic), bold: variant(.traitBold),
-                boldItalic: variant([.traitBold, .traitItalic]), preferredLetterSpacing: nil, preferredLineHeight: nil)
-        }
-        let body = MarkdownRenderConfig.MarkdownTextStyle(textFonts: fonts(.body), textColor: .primary)
-        let codeStyle = CodeBlockConfig.default
-        let codeFonts = TextFonts(normal: UIFont.monospacedSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .callout).pointSize, weight: .regular),
-            italic: nil, bold: nil, boldItalic: nil, preferredLetterSpacing: nil, preferredLineHeight: nil)
+        return items
+    }
+
+    private var imageConfig: ImageConfig {
         #if HANLIN_A2UI_POC
-        // The pinned renderer owns parsing, loading/failure presentation and fullscreen zoom.
-        // Keep this in the existing rich-content prototype until network/resource gates pass.
-        let imageConfig = ImageConfig(enabled: true,
+        return ImageConfig(enabled: true,
             allowedImageTypes: [.remote(allowedDomains: [])], fullscreenViewerEnabled: true)
         #else
-        let imageConfig = ImageConfig.disabled
+        return .disabled
         #endif
-        return MarkdownRenderConfig.default
-            .withCitationConfig(value: .init(font: UIFont.preferredFont(forTextStyle: .caption2),
-                textColor: .secondary, backgroundColor: Color.secondary.opacity(0.10),
-                iconsByCitationURL: citationIcons, iconOnTrailingEdge: layoutDirection == .rightToLeft))
-            .withImageConfig(imageConfig)
-            .withShouldAnimateText(value: false)
-            .withBlockSpacing(value: 12)
-            .withParagraphStyle(value: body)
-            .withCodeBlockConfig(value: .init(theme: codeStyle.theme, backgroundColor: codeStyle.backgroundColor,
-                foregroundColor: codeStyle.foregroundColor, codeTextFonts: codeFonts, chromeTextFonts: fonts(.caption1)))
-            .withOrderedListStyle(value: body)
-            .withBlockQuoteStyle(value: body)
-            .withHeadingStyle(value: .init(h1Font: fonts(.title1), h2Font: fonts(.title2), h3Font: fonts(.title3),
-                h4Font: fonts(.headline), h5Font: fonts(.subheadline), h6Font: fonts(.subheadline), textColor: .primary))
-            .withTextSelectionConfig(value: .init(isEnabled: false))
-            .withTextContextMenu(value: items.isEmpty ? nil : TextContextMenu(menuGroups: [
-                TextContextMenuGroup(title: nil, image: nil, displayInline: true, items: items)
-            ]))
     }
-
-    @MainActor private func loadCitationIcons(_ groups: [HanlinCitationGroup]) async {
-        for group in groups.prefix(24) {
-            guard citationIcons[group.url.absoluteString] == nil,
-                  let url = group.sources.first?.iconURL, url.scheme == "https" else { continue }
-            do {
-                var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 6)
-                request.httpShouldHandleCookies = false
-                let (bytes, response) = try await URLSession.shared.bytes(for: request)
-                guard let http = response as? HTTPURLResponse, http.statusCode == 200 else { continue }
-                var data = Data()
-                for try await byte in bytes {
-                    try Task.checkCancellation()
-                    guard data.count < 131_072 else { throw CocoaError(.fileReadTooLarge) }
-                    data.append(byte)
-                }
-                guard let source = CGImageSourceCreateWithData(data as CFData, nil),
-                      let icon = CGImageSourceCreateThumbnailAtIndex(source, 0, [
-                        kCGImageSourceCreateThumbnailFromImageAlways: true,
-                        kCGImageSourceThumbnailMaxPixelSize: 32,
-                        kCGImageSourceShouldCacheImmediately: false,
-                      ] as CFDictionary), let png = UIImage(cgImage: icon).pngData() else { continue }
-                citationIcons[group.url.absoluteString] = png
-            } catch { if Task.isCancelled { return } }
-        }
-    }
-}
-
-/// The renderer retains its listener while streaming. Update callbacks without replacing
-/// the native text view, so menu actions always save against the current source snapshot.
-@MainActor
-private final class ChatMarkdownListener: MarkdownListener {
-    private var savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?
-    private var saveKnowledge: (@MainActor @Sendable (String) -> Void)?
-    private var onRendered: (@MainActor @Sendable () -> Void)?
-
-    func update(savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?,
-                saveKnowledge: (@MainActor @Sendable (String) -> Void)?,
-                onRendered: (@MainActor @Sendable () -> Void)?) {
-        self.savePersonal = savePersonal
-        self.saveKnowledge = saveKnowledge
-        self.onRendered = onRendered
-    }
-    func onRender(markdown: RenderableDocument) async {
-        if markdown != .empty { onRendered?() }
-    }
-    func onTextSelectionAction(id: String, selection: MarkdownTextSelection) async {
-        guard !selection.text.isEmpty else { return }
-        if id == "hanlin.savePersonal" {
-            savePersonal?(ChatTextQuote(text: selection.text, renderedText: selection.renderedText,
-                range: selection.range, sourceBlockID: selection.sourceBlockID))
-        } else if id == "hanlin.saveKnowledge" { saveKnowledge?(selection.text) }
-    }
-    func onContextMenuAppear(id: String, selectedContent: String) async {}
-    func onContextMenuTap(id: String, selectedContent: String) async {}
-    func onTableCopyTap(content: String) async { UIPasteboard.general.string = content }
-    func onTableDownloadTap(content: String) async { UIPasteboard.general.string = content }
-    func onImageTap(image: MarkdownImage) async {}
 }
 
 /// Web links use the app's existing Safari controller; other URL schemes retain system routing.

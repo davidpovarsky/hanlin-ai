@@ -48,6 +48,43 @@ native view through this hook. Neither prompts nor model output may install code
 Keep previous catalog IDs and assets when registering a new version, so saved
 messages continue using their original `ResolvedPresentationProfile` snapshot.
 
+## Canonical Composer and Markdown
+
+`HanlinChatUI` now owns the original `HanlinMorphComposer`,
+`NativeMultilineTextEditor`, `HanlinDetachedCapabilityChips` and
+`HanlinMarkdownView`, alongside motion, tool headers and inline consent.
+Hanlin's old file paths contain compatibility aliases or host adapters, not a
+second implementation. Drafts, selected models, capabilities, SwiftData,
+selection destinations and source navigation remain with the importing host.
+
+```swift
+import SwiftUI
+import HanlinChatUI
+
+struct HostInput: View {
+    @Binding var draft: String
+    @State private var height: CGFloat = 38
+    let send: () -> Void
+
+    var body: some View {
+        NativeMultilineTextEditor(text: $draft, textHeight: $height,
+            maxHeight: 180, usesAutomaticLineLimits: true,
+            onSendMessage: send)
+            .frame(height: height)
+    }
+}
+
+// Uses the exact original SwiftStreamingMarkdown dependency and LaTeX renderer.
+// Host menus, selection, code-fence and source-link modifiers stay injectable.
+// HanlinMarkdownView(text: answer, onRendered: didRender)
+```
+
+The Markdown dependency is pinned to the same commit as the app. Existing media,
+fonts, selection menus and citation rendering have one implementation. A host
+explicitly supplies its image policy and scoped citations; the SDK stores no
+source or conversation database. Favicon decoding is bounded and performed away
+from the main actor.
+
 ## Stream and state
 
 Use the existing model text stream. No Thesys API key is required:

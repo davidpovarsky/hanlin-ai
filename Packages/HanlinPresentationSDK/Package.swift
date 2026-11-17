@@ -9,11 +9,17 @@ let package = Package(
         .library(name: "HanlinRichUI", targets: ["HanlinRichUI"]),
         .library(name: "HanlinChatUI", targets: ["HanlinChatUI"])
     ],
+    dependencies: [
+        .package(url: "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+                 revision: "4072507bf5c5a1c9786d4c9a607873e65be59cc8")
+    ],
     targets: [
         .target(name: "HanlinPresentationKit"),
         .target(name: "HanlinRichUI", dependencies: ["HanlinPresentationKit"],
                 resources: [.copy("Resources/OpenUI")]),
-        .target(name: "HanlinChatUI", dependencies: ["HanlinPresentationKit", "HanlinRichUI"]),
+        .target(name: "HanlinChatUI", dependencies: ["HanlinPresentationKit", "HanlinRichUI",
+                .product(name: "SwiftStreamingMarkdown", package: "hanlin-streaming-markdown",
+                         condition: .when(platforms: [.iOS]))]),
         .testTarget(name: "HanlinPresentationKitTests", dependencies: ["HanlinPresentationKit"])
     ],
     swiftLanguageModes: [.v6]
