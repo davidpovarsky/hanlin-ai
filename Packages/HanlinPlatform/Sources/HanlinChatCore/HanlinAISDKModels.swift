@@ -99,19 +99,23 @@ public struct HanlinAISDKToolDefinition: Sendable {
     public let inputSchemaData: Data
     public let execute: Executor
     public let executeWithInputProvenance: ProvenanceExecutor?
+    /// Uses the original SDK approval protocol; host execution policy still applies.
+    public let requiresApproval: Bool
 
     public init(
         name: String,
         description: String,
         inputSchemaData: Data,
         execute: @escaping Executor,
-        executeWithInputProvenance: ProvenanceExecutor? = nil
+        executeWithInputProvenance: ProvenanceExecutor? = nil,
+        requiresApproval: Bool = false
     ) {
         self.name = name
         self.description = description
         self.inputSchemaData = inputSchemaData
         self.execute = execute
         self.executeWithInputProvenance = executeWithInputProvenance
+        self.requiresApproval = requiresApproval
     }
 }
 
@@ -143,6 +147,22 @@ public struct HanlinAISDKToolCall: Hashable, Sendable {
         self.id = id
         self.name = name
         self.argumentsJSON = argumentsJSON
+    }
+}
+
+/// One actual producer approval request. It carries no restored execution grant.
+public struct HanlinAISDKToolApprovalRequest: Hashable, Sendable {
+    public let approvalID: String
+    public let toolCallID: String
+    public let toolName: String
+    public let argumentsJSON: String
+    public let providerExecuted: Bool
+
+    public init(approvalID: String, toolCallID: String, toolName: String,
+                argumentsJSON: String, providerExecuted: Bool = false) {
+        self.approvalID = approvalID; self.toolCallID = toolCallID
+        self.toolName = toolName; self.argumentsJSON = argumentsJSON
+        self.providerExecuted = providerExecuted
     }
 }
 
@@ -185,7 +205,8 @@ public enum HanlinAISDKStreamEvent: Sendable {
     case toolCallArgumentsDelta(id: String, delta: String)
     case toolCall(HanlinAISDKToolCall)
     case toolResult(callID: String, name: String, modelText: String, resultReference: String?, isError: Bool)
-    case toolApprovalRequest(approvalID: String, toolCallID: String, toolName: String)
+    case toolApprovalRequest(HanlinAISDKToolApprovalRequest)
+    case toolApprovalResolved(HanlinAISDKToolApprovalRequest, allowed: Bool)
     case toolOutputDenied(toolCallID: String, toolName: String)
     case stepFinished(index: Int, finishReason: String, usage: HanlinChatTokenUsage, meaningfulEventCount: Int)
     case finished(reason: String, usage: HanlinChatTokenUsage)

@@ -1426,10 +1426,10 @@ struct ChatView: View {
         )
         if agentSessionOwner.pendingApprovalRowID == msg.id, let request = agentSessionOwner.consent.pending {
             HanlinInlineToolApproval(requestID: request.id.uuidString, toolName: request.tool,
-                reviewText: AgentDiagnosticsRedactor.sanitize(request.invocation.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}")) { allowed in
+                reviewText: AgentDiagnosticsRedactor.sanitize(request.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}")) { allowed in
                 agentSessionOwner.consent.answer(id: request.id, allowed: allowed)
             }
-            .id("tool-consent-" + request.invocation.providerCallID)
+            .id("tool-consent-" + request.providerCallID)
         }
         }
         .environment(\.hanlinRichMessageContext, richMessageContext(for: msg))

@@ -3886,14 +3886,23 @@ class APIManager {
                 }
                 #endif
 
-            case .toolApprovalRequest(let approvalID, let callID, let toolName):
+            case .toolApprovalRequest(let request):
                 continuation.yield(StreamData(
-                    toolContent: currentLanguagePrefix ? "请求执行工具：\(toolName)" : "Requesting approval for tool: \(toolName)",
-                    toolName: toolName,
-                    agentEvents: [.toolApprovalChanged(.init(id: approvalID, canonicalRunID: nil,
-                        callID: callID, toolName: toolName, reviewText: "",
-                        disposition: .providerRequired))]
+                    toolContent: currentLanguagePrefix ? "请求执行工具：\(request.toolName)" : "Requesting approval for tool: \(request.toolName)",
+                    toolName: request.toolName,
+                    agentEvents: [.toolApprovalChanged(.init(id: request.approvalID,
+                        canonicalRunID: agentEvent.runID, callID: request.toolCallID,
+                        toolName: request.toolName,
+                        reviewText: AgentDiagnosticsRedactor.sanitize(request.argumentsJSON),
+                        disposition: .awaiting))]
                 ))
+
+            case .toolApprovalResolved(let request, let allowed):
+                continuation.yield(StreamData(agentEvents: [.toolApprovalChanged(.init(
+                    id: request.approvalID, canonicalRunID: agentEvent.runID,
+                    callID: request.toolCallID, toolName: request.toolName,
+                    reviewText: AgentDiagnosticsRedactor.sanitize(request.argumentsJSON),
+                    disposition: allowed ? .allowedOnce : .notApproved))]))
 
             case .toolOutputDenied(let toolCallID, let toolName):
                 let executionID = "\(toolCallID):execution"
@@ -3902,7 +3911,7 @@ class APIManager {
                     toolContent: deniedText,
                     toolName: toolName,
                     agentEvents: [
-                        .toolApprovalChanged(.init(id: "provider-denial:" + toolCallID, canonicalRunID: nil,
+                        .toolApprovalChanged(.init(id: "provider-denial:" + toolCallID, canonicalRunID: agentEvent.runID,
                             callID: toolCallID, toolName: toolName, reviewText: "", disposition: .notApproved)),
                         .toolExecutionFailed(id: executionID, error: AgentSafeError(message: deniedText))
                     ]

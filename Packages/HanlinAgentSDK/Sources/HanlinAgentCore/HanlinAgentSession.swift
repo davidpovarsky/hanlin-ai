@@ -19,6 +19,14 @@ public struct HanlinAgentRunCompletion: Sendable {
     public let outcome: Outcome
 }
 
+public struct HanlinAgentToolApproval: Sendable {
+    public let session: HanlinHostSession
+    public let runID: UUID
+    public let step: Int
+    public let request: HanlinAISDKToolApprovalRequest
+    public let deadline: Date
+}
+
 /// A DI/persistence facade over ONE HanlinAISDKAgentEngine. No app singleton, SwiftData or renderer.
 @MainActor
 public final class HanlinAgentSession {
@@ -26,6 +34,7 @@ public final class HanlinAgentSession {
     public var onHostProgress: (@MainActor @Sendable (HanlinHostProgressEvent) -> Void)?
     public var onHostResult: (@MainActor @Sendable (HanlinHostResultEvent) -> Void)?
     public var onRunCompletion: (@MainActor @Sendable (HanlinAgentRunCompletion) -> Void)?
+    public var onProviderToolApproval: (@MainActor @Sendable (HanlinAgentToolApproval) async -> Bool)?
     public var onSessionInvalidated: (@MainActor @Sendable (HanlinHostSession) -> Void)?
     private let host: any HanlinHostIntegration
     private let engine: HanlinAISDKAgentEngine
@@ -133,6 +142,20 @@ public final class HanlinAgentSession {
                     }
                 },
                 structuredResponse: structuredResponse,
+                requestApproval: { [weak self] request in
+                    guard let self else { throw HanlinHostError.cancelled }
+                    try await self.requireCurrent(run: run)
+                    guard self.currentCatalog?.tools.contains(where: { $0.route.alias == request.toolName }) == true else {
+                        return false // Unadvertised provider tools never acquire host authority.
+                    }
+                    let limits = try HanlinToolInvocationLimits()
+                    let review = HanlinAgentToolApproval(session: self.identity, runID: run, step: self.step,
+                        request: request, deadline: Date().addingTimeInterval(Double(limits.timeoutMilliseconds) / 1_000))
+                    let allowed = await self.onProviderToolApproval?(review) ?? false
+                    try Task.checkCancellation()
+                    try await self.requireCurrent(run: run)
+                    return allowed
+                },
                 prepareStep: { [weak self] index in
                     guard let self, !self.invalidated, self.activeRun == run else { return .init(activeToolAliases: []) }
                     self.step = index

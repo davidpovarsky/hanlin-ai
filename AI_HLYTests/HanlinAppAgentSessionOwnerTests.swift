@@ -72,7 +72,7 @@ private struct AppPartModel: LanguageModelV3 {
         }
         let consent = HanlinAppToolConsent()
         var changes: [(UUID, String, Bool?)] = []
-        consent.onChange = { request, choice in changes.append((request.id, request.invocation.providerCallID, choice)) }
+        consent.onChange = { request, choice in changes.append((request.id, request.providerCallID, choice)) }
         #expect(await consent.request(try invocation(deadline: .now.addingTimeInterval(-1))) == false)
         #expect(consent.pending == nil)
         let expiring = try invocation(deadline: .now.addingTimeInterval(0.15))

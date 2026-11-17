@@ -45,9 +45,9 @@ final class HanlinAppAgentSessionOwner {
     init() {
         consent.onChange = { [weak self] request, allowed in
             guard let self else { return }
-            let review = request.invocation.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}"
-            onApprovalEvent?(pendingApprovalRowID, .init(id: request.id.uuidString,
-                canonicalRunID: request.invocation.runID, callID: request.invocation.providerCallID,
+            let review = request.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}"
+            onApprovalEvent?(pendingApprovalRowID, .init(id: request.activityID,
+                canonicalRunID: request.canonicalRunID, callID: request.providerCallID,
                 toolName: request.tool, reviewText: AgentDiagnosticsRedactor.sanitize(review),
                 disposition: allowed.map { $0 ? .allowedOnce : .notApproved } ?? .awaiting))
         }
@@ -229,6 +229,13 @@ final class HanlinAppAgentSessionOwner {
             let originalSession = HanlinAgentSession(identity: identity, host: originalHost, engine: originalEngine,
                 store: originalStore, capabilities: originalHost)
             store = originalStore; host = originalHost; session = originalSession; engine = originalEngine; modelConfiguration = configuration
+            originalSession.onProviderToolApproval = { [weak self] approval in
+                guard let self, self.contextGeneration == generation,
+                      self.session?.identity == approval.session else { return false }
+                let allowed = await self.consent.request(approval)
+                return allowed && self.contextGeneration == generation
+                    && self.session?.identity == approval.session && !Task.isCancelled
+            }
             let priorCompletion = originalSession.onRunCompletion
             originalSession.onRunCompletion = { [weak self] value in
                 priorCompletion?(value)

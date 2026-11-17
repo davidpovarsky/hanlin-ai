@@ -1,0 +1,14 @@
+{
+  "scope": "original-provider-approval-and-session-continuation",
+  "reason": "New typed approval wait/resume path changes the original engine and session. Verify actual allow/deny/cancellation and preserve raw input; existing producer and presentation sources unchanged.",
+  "test_scope": [
+    "HanlinAgentCoreTests/AgentSessionTests",
+    "HanlinHostContractsTests/ContextTests",
+    "HanlinPersistenceAdaptersTests/StoreTests",
+    "HanlinChatCoreTests/HanlinInjectedProviderTests",
+    "HanlinChatCoreTests/HanlinAISDKProviderFactoryTests",
+    "HanlinChatCoreTests/HanlinAISDKAgentEngineTests"
+  ],
+  "native_compile": "HanlinAgentCore generic iOS Simulator 27",
+  "excluded": "Main merge, release/TestFlight, unchanged producer and Presentation regression reruns"
+}

@@ -15,7 +15,7 @@ struct HanlinToolConsentSheet: View {
                         .font(.footnote).foregroundStyle(.secondary)
                 }
                 Section("Request") {
-                    Text(String(decoding: request.invocation.originalArgumentsJSON ?? Data(), as: UTF8.self))
+                    Text(String(decoding: request.originalArgumentsJSON ?? Data(), as: UTF8.self))
                         .font(.system(.footnote, design: .monospaced))
                         .textSelection(.enabled)
                         .accessibilityIdentifier("hanlin-tool-consent-original-request")

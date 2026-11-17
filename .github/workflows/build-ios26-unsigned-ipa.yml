@@ -324,6 +324,7 @@ jobs:
     env:
       HANLIN_SDK_SESSION_ONLY: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && '1' || '0' }}
       HANLIN_SDK_CORE_ONLY: ${{ inputs.exact_test_selector == 'HanlinChatCoreTests' && '1' || '0' }}
+      HANLIN_SDK_CORE_AND_SESSION: ${{ inputs.exact_test_selector == 'HanlinAgentCoreTests,HanlinChatCoreTests' && '1' || '0' }}
     runs-on: xcode-27
     timeout-minutes: 60
     steps:
@@ -349,7 +350,7 @@ jobs:
           retention-days: 30
 
   presentation-sdk-proof:
-    if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && !inputs.testflight_upload }}
+    if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector != 'HanlinAgentCoreTests,HanlinChatCoreTests' && !inputs.testflight_upload }}
     name: Compile reusable presentation on iOS 27 and test isolated state
     runs-on: xcode-27
     timeout-minutes: 15

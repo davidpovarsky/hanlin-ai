@@ -521,6 +521,109 @@ struct HanlinNonEmptyLanguageModelTests {
 
 @Suite("HanlinAISDKAgentEngine Integration Tests")
 struct HanlinAISDKAgentEngineTests {
+    @Test("Original SDK approval pauses effects and resumes the same exact call once", arguments: [true, false])
+    @MainActor
+    func providerApprovalWaitsAndResumesOriginalCall(_ approved: Bool) async throws {
+        let originalInput = #"{ "amount": 1.2500e+2, "note": "שלום" }"#
+        let executions = ManagedAtomicArray<String>()
+        let gate = HanlinApprovalReviewGate()
+        let mock = Self.approvalModel(input: originalInput)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", company: "OpenAI", apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions", credential: "fixture-unused")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
+        let tool = HanlinAISDKToolDefinition(name: "reviewed_write", description: "A reviewed fixture effect",
+            inputSchemaData: Data(#"{"type":"object","properties":{"amount":{"type":"number"},"note":{"type":"string"}},"required":["amount","note"]}"#.utf8),
+            execute: { _, _ in throw HanlinAISDKError.invalidToolSchema(name: "missing-original-provenance") },
+            executeWithInputProvenance: { input, callID, provenance in
+                #expect(callID == "approval_call_1")
+                #expect(provenance == .acceptedOriginal)
+                executions.append(input)
+                return .init(modelText: "REVIEWED_EFFECT_COMPLETED")
+            }, requiresApproval: true)
+        let stream = try await engine.stream(messages: [.init(role: .user, text: "Review the write")],
+            baseSystemPrompt: nil, tools: [tool], requestApproval: { await gate.review($0) },
+            prepareStep: { .init(activeToolAliases: ["reviewed_write"]) })
+        let consumer = Task { () throws -> [HanlinAISDKStreamEvent] in
+            var events: [HanlinAISDKStreamEvent] = []
+            for try await event in stream { events.append(event) }
+            return events
+        }
+        defer { gate.answer(false); consumer.cancel() }
+        let deadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while gate.request == nil && ContinuousClock.now < deadline { try await Task.sleep(for: .milliseconds(10)) }
+        let review = try #require(gate.request)
+        #expect(review.toolCallID == "approval_call_1")
+        #expect(review.toolName == "reviewed_write")
+        #expect(review.argumentsJSON == originalInput)
+        #expect(!review.approvalID.isEmpty)
+        #expect(executions.count == 0, "No side effect is allowed while the original review is pending")
+        #expect(mock.callCount == 1)
+        gate.answer(approved)
+        let events = try await consumer.value
+        #expect(executions.all == (approved ? [originalInput] : []))
+        #expect(mock.callCount == 2, "Continue through the original SDK, including its original tool result")
+        #expect(events.filter { if case .toolApprovalRequest = $0 { true } else { false } }.count == 1)
+        #expect(events.filter {
+            if case .toolApprovalResolved(let value, let allowed) = $0 { value == review && allowed == approved }
+            else { false }
+        }.count == 1)
+        #expect(events.filter { if case .toolOutputDenied = $0 { true } else { false } }.count == (approved ? 0 : 1))
+        #expect(events.filter { if case .toolResult = $0 { true } else { false } }.count == (approved ? 1 : 0))
+        #expect(events.contains { if case .textDelta("REVIEW_FINISHED") = $0 { true } else { false } })
+    }
+
+    @Test("Cancelling an original SDK approval never executes or continues the provider")
+    @MainActor
+    func cancellationWhileProviderApprovalIsPendingHasNoEffect() async throws {
+        let reviews = ManagedAtomicInt(), cancellations = ManagedAtomicInt(), effects = ManagedAtomicInt()
+        let mock = Self.approvalModel(input: "{}")
+        let config = HanlinChatModelConfiguration(modelID: "fixture", company: "OpenAI", apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions", credential: "fixture-unused")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
+        let tool = HanlinAISDKToolDefinition(name: "reviewed_write", description: "Cancelled fixture effect",
+            inputSchemaData: Data(#"{"type":"object","properties":{}}"#.utf8), execute: { _, _ in
+                effects.increment(); return .init(modelText: "MUST_NOT_EXECUTE")
+            }, requiresApproval: true)
+        let stream = try await engine.stream(messages: [.init(role: .user, text: "Wait for approval")],
+            baseSystemPrompt: nil, tools: [tool], requestApproval: { _ in
+                reviews.increment()
+                do { try await Task.sleep(for: .seconds(60)) }
+                catch { cancellations.increment(); throw error }
+                return true
+            }, prepareStep: { .init(activeToolAliases: ["reviewed_write"]) })
+        let consumer = Task { do { for try await _ in stream {} } catch {} }
+        defer { consumer.cancel() }
+        let deadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while reviews.count == 0 && ContinuousClock.now < deadline { try await Task.sleep(for: .milliseconds(10)) }
+        try #require(reviews.count == 1)
+        consumer.cancel()
+        await consumer.value
+        let cancellationDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while cancellations.count == 0 && ContinuousClock.now < cancellationDeadline { try await Task.sleep(for: .milliseconds(10)) }
+        #expect(cancellations.count == 1)
+        #expect(effects.count == 0)
+        #expect(mock.callCount == 1)
+    }
+
+    private static func approvalModel(input: String) -> MockLanguageModelV3 {
+        MockLanguageModelV3 { call in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                if call == 1 {
+                    continuation.yield(.toolCall(LanguageModelV3ToolCall(toolCallId: "approval_call_1",
+                        toolName: "reviewed_write", input: input)))
+                } else {
+                    continuation.yield(.textStart(id: "approval_answer", providerMetadata: nil))
+                    continuation.yield(.textDelta(id: "approval_answer", delta: "REVIEW_FINISHED", providerMetadata: nil))
+                    continuation.yield(.textEnd(id: "approval_answer", providerMetadata: nil))
+                }
+                continuation.yield(.finish(finishReason: .init(unified: call == 1 ? .toolCalls : .stop, raw: call == 1 ? "tool_calls" : "stop"),
+                    usage: .init(inputTokens: .init(total: 1), outputTokens: .init(total: 1)), providerMetadata: nil))
+                continuation.finish()
+            }
+        }
+    }
+
     @Test("Provider text-end citations retain exact part and Unicode scalar ranges")
     func testProviderTextCitationsKeepExactPartAndUnicodeRange() async throws {
         let answer = "😀 מקור מדויק."
@@ -1390,6 +1493,17 @@ struct HanlinAISDKAgentEngineTests {
 }
 
 // MARK: - Thread-safe Helpers for Testing
+
+@MainActor
+private final class HanlinApprovalReviewGate {
+    private(set) var request: HanlinAISDKToolApprovalRequest?
+    private var reply: CheckedContinuation<Bool, Never>?
+    func review(_ request: HanlinAISDKToolApprovalRequest) async -> Bool {
+        self.request = request
+        return await withCheckedContinuation { reply = $0 }
+    }
+    func answer(_ approved: Bool) { let pending = reply; reply = nil; pending?.resume(returning: approved) }
+}
 
 private final class ManagedAtomicArray<T>: @unchecked Sendable {
     private var elements: [T] = []

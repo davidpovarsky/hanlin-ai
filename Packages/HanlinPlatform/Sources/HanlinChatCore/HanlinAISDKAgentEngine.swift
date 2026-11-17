@@ -5,6 +5,7 @@ import HanlinPlatformContracts
 import SwiftAISDK
 
 public actor HanlinAISDKAgentEngine {
+    public typealias ApprovalHandler = @MainActor @Sendable (HanlinAISDKToolApprovalRequest) async throws -> Bool
     public typealias StepPreparation = @MainActor @Sendable (_ stepNumber: Int) async -> HanlinAISDKStepPreparation
 
     private let configuration: HanlinChatModelConfiguration
@@ -72,6 +73,7 @@ public actor HanlinAISDKAgentEngine {
         maxSteps: Int? = nil,
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         structuredResponse: HanlinNativeStructuredResponse? = nil,
+        requestApproval: ApprovalHandler? = nil,
         prepareStep: @escaping @MainActor @Sendable () -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
@@ -81,6 +83,7 @@ public actor HanlinAISDKAgentEngine {
             maxSteps: maxSteps,
             dynamicTools: dynamicTools,
             structuredResponse: structuredResponse,
+            requestApproval: requestApproval,
             prepareStep: { (_: Int) in prepareStep() }
         )
     }
@@ -92,6 +95,7 @@ public actor HanlinAISDKAgentEngine {
         maxSteps: Int? = nil,
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         structuredResponse: HanlinNativeStructuredResponse? = nil,
+        requestApproval: ApprovalHandler? = nil,
         prepareStep: @escaping @MainActor @Sendable () async -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
@@ -101,6 +105,7 @@ public actor HanlinAISDKAgentEngine {
             maxSteps: maxSteps,
             dynamicTools: dynamicTools,
             structuredResponse: structuredResponse,
+            requestApproval: requestApproval,
             prepareStep: { (_: Int) async in await prepareStep() }
         )
     }
@@ -112,6 +117,7 @@ public actor HanlinAISDKAgentEngine {
         maxSteps: Int? = nil,
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         structuredResponse: HanlinNativeStructuredResponse? = nil,
+        requestApproval: ApprovalHandler? = nil,
         prepareStep: @escaping StepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         if structuredResponse != nil, !HanlinNativeStructuredResponse.supports(resolvedProvider.descriptor) {
@@ -158,6 +164,9 @@ public actor HanlinAISDKAgentEngine {
                     var hasSuccessfulToolAction = false
                     var structuredParts = HanlinChatStructuredPartSequence()
                     var hasStructuredContent = false
+                    var hasDeniedToolAction = false
+                    var seenApprovalIDs = Set<String>()
+                    var seenApprovalCallIDs = Set<String>()
 
                     while true {
                         let currentNames = Set(currentDefinitions.map(\.name))
@@ -208,6 +217,7 @@ public actor HanlinAISDKAgentEngine {
                         var completeResponseText = ""
                         var citationTextParts: [String: String] = [:]
                         var oversizedCitationParts: Set<String> = []
+                        var approvalResponses: [ToolContentPart] = []
 
                         for try await part in result.fullStream {
                             try Task.checkCancellation()
@@ -307,6 +317,26 @@ public actor HanlinAISDKAgentEngine {
                                 ))
                             case .finish(let reason, let rawReason, let usage):
                                 let nextOffset = offsetSnapshot + max(localStepIndex + 1, 1)
+                                if !approvalResponses.isEmpty {
+                                    // The SDK owns the exact original request/call/raw-input association.
+                                    // Resume by appending its response messages and typed approval answers,
+                                    // never by invoking a tool directly or fabricating another model turn.
+                                    guard limit.map({ nextOffset < $0 }) ?? true else {
+                                        throw HanlinAISDKError.incompleteProviderResponse(reason: "approval-continuation-step-limit")
+                                    }
+                                    for step in try await result.steps {
+                                        for message in step.response.messages {
+                                            switch message {
+                                            case .assistant(let value): currentMessages.append(.assistant(value))
+                                            case .tool(let value): currentMessages.append(.tool(value))
+                                            }
+                                        }
+                                    }
+                                    currentMessages.append(.tool(ToolModelMessage(content: approvalResponses)))
+                                    stepOffset = nextOffset
+                                    shouldReloadToolsAndContinue = true
+                                    break
+                                }
                                 if reason == .toolCalls,
                                    limit.map({ nextOffset < $0 }) ?? true,
                                    let dynamicTools {
@@ -340,7 +370,7 @@ public actor HanlinAISDKAgentEngine {
                                         continuation.yield(.structuredPart(part))
                                     }
                                 }
-                                guard finalVisibleCharacters > 0 || hasSuccessfulToolAction || hasStructuredContent else {
+                                guard finalVisibleCharacters > 0 || hasSuccessfulToolAction || hasStructuredContent || hasDeniedToolAction else {
                                     throw HanlinAISDKError.incompleteProviderResponse(reason: rawReason ?? reason.rawValue)
                                 }
                                 continuation.yield(.finished(
@@ -381,11 +411,20 @@ public actor HanlinAISDKAgentEngine {
                                 }
                             case .toolApprovalRequest(let request):
                                 meaningfulEventCount += 1
-                                continuation.yield(.toolApprovalRequest(
-                                    approvalID: request.approvalId,
-                                    toolCallID: request.toolCall.toolCallId,
-                                    toolName: request.toolCall.toolName
-                                ))
+                                let approval = try Self.approvalRequest(from: request)
+                                guard seenApprovalIDs.insert(approval.approvalID).inserted,
+                                      seenApprovalCallIDs.insert(approval.toolCallID).inserted else {
+                                    throw HanlinAISDKError.invalidConversation("Ambiguous tool approval request.")
+                                }
+                                continuation.yield(.toolApprovalRequest(approval))
+                                let allowed = try await requestApproval?(approval) ?? false
+                                try Task.checkCancellation()
+                                continuation.yield(.toolApprovalResolved(approval, allowed: allowed))
+                                if !allowed { hasDeniedToolAction = true }
+                                approvalResponses.append(.toolApprovalResponse(ToolApprovalResponse(
+                                    approvalId: approval.approvalID, approved: allowed,
+                                    reason: allowed ? nil : "Not approved by the user.",
+                                    providerExecuted: approval.providerExecuted)))
                             case .toolOutputDenied(let denied):
                                 meaningfulEventCount += 1
                                 continuation.yield(.toolOutputDenied(
@@ -415,6 +454,30 @@ public actor HanlinAISDKAgentEngine {
                 stopper.stop()
             }
         }
+    }
+
+    private static func approvalRequest(from request: ToolApprovalRequestOutput) throws -> HanlinAISDKToolApprovalRequest {
+        let call = request.toolCall
+        guard !request.approvalId.isEmpty, request.approvalId.utf8.count <= 512,
+              !call.toolCallId.isEmpty, call.toolCallId.utf8.count <= 512,
+              !call.toolName.isEmpty, call.toolName.utf8.count <= 512 else {
+            throw HanlinAISDKError.invalidConversation("Invalid tool approval identity.")
+        }
+        let arguments: String
+        if let raw = call.rawInput {
+            guard raw.toolCallId == call.toolCallId, raw.toolName == call.toolName,
+                  raw.json.utf8.count <= ToolCallRawInput.maximumUTF8Bytes,
+                  try JSONDecoder().decode(JSONValue.self, from: Data(raw.json.utf8)) == call.input else {
+                throw HanlinAISDKError.invalidToolSchema(name: call.toolName)
+            }
+            arguments = raw.json
+        } else { arguments = try jsonString(call.input) }
+        guard arguments.utf8.count <= ToolCallRawInput.maximumUTF8Bytes else {
+            throw HanlinAISDKError.invalidToolSchema(name: call.toolName)
+        }
+        return .init(approvalID: request.approvalId, toolCallID: call.toolCallId,
+                     toolName: call.toolName, argumentsJSON: arguments,
+                     providerExecuted: call.providerExecuted == true)
     }
 
     private static func makeTools(
@@ -447,6 +510,7 @@ public actor HanlinAISDKAgentEngine {
             let sdkTool = Tool(
                 description: definition.description,
                 inputSchema: FlexibleSchema(rawSchema),
+                needsApproval: definition.requiresApproval ? .always : nil,
                 execute: { input, options in
                     try Task.checkCancellation()
                     let arguments: String

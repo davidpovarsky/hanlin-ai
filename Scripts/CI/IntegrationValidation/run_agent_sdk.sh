@@ -7,7 +7,9 @@ source_sha="$(git rev-parse HEAD)"
 producer_sha=e7bf34111e603ca977becd007dd4e5bb109af857
 evidence="$root/build/agent-sdk-validation-evidence"
 mkdir -p "$evidence"
-if [[ "${HANLIN_SDK_CORE_ONLY:-0}" == 1 ]]; then
+if [[ "${HANLIN_SDK_CORE_AND_SESSION:-0}" == 1 ]]; then
+  printf '["SDKTests","CoreTests"]\n' > "$evidence/selected-results.json"
+elif [[ "${HANLIN_SDK_CORE_ONLY:-0}" == 1 ]]; then
   printf '["CoreTests"]\n' > "$evidence/selected-results.json"
 elif [[ "${HANLIN_SDK_SESSION_ONLY:-0}" == 1 ]]; then
   printf '["SDKTests"]\n' > "$evidence/selected-results.json"
@@ -124,7 +126,7 @@ print(next(x for x in ['SwiftAISDK-Package','SwiftAISDK'] if x in names))
 PY
 )"
 set +e
-if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 ]]; then
+if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 && "${HANLIN_SDK_CORE_AND_SESSION:-0}" != 1 ]]; then
 (cd "$producer" && AGENT=1 xcodebuild test -scheme "$producer_scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/ProducerDerivedData" -resultBundlePath "$evidence/ProducerTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
@@ -147,7 +149,7 @@ sdk_status=$?
 else
 sdk_status=null
 fi
-if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 || "${HANLIN_SDK_CORE_ONLY:-0}" == 1 ]]; then
+if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 || "${HANLIN_SDK_CORE_ONLY:-0}" == 1 || "${HANLIN_SDK_CORE_AND_SESSION:-0}" == 1 ]]; then
 (cd "$core" && xcodebuild test -scheme "$core_scheme" -destination 'platform=macOS' \
   -derivedDataPath "$scratch/CoreDerivedData" -resultBundlePath "$evidence/CoreTests.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
@@ -158,7 +160,7 @@ core_status=$?
 else
 core_status=null
 fi
-if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 ]]; then
+if [[ "${HANLIN_SDK_SESSION_ONLY:-0}" != 1 || "${HANLIN_SDK_CORE_AND_SESSION:-0}" == 1 ]]; then
 (cd "$sdk" && xcodebuild build -scheme HanlinAgentCore -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath "$scratch/IOSDerivedData" -resultBundlePath "$evidence/IOSBuild.xcresult" \
   -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO) > "$evidence/ios-build.log" 2>&1
