@@ -137,7 +137,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'phase2_app_with_motion') && 'phase2-combined-native' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'HanlinMorphComposerUITests/testCompact')) && 'explicit-compact-composer' || (inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.markdown_renderer_validation_only && 'markdown-renderer' || inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ (inputs.target_validation_group == 'phase2_app_with_motion') && 'phase2-combined-native' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'HanlinMorphComposerUITests/testCompact')) && 'explicit-compact-composer' || (inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'a2ui_media_replay_ui' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.markdown_renderer_validation_only && 'markdown-renderer' || inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
@@ -176,6 +176,24 @@ jobs:
         with:
           name: chat-motion-ui-${{ github.run_id }}
           path: build/chat-motion-ui-evidence
+          if-no-files-found: error
+          retention-days: 30
+  a2ui-media-replay-ui:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'a2ui_media_replay_ui' && !inputs.testflight_upload }}
+    name: Verify original media lifecycle controls on current native sources
+    runs-on: xcode-27
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Execute selected original media replay controls
+        env:
+          A2UI_MEDIA_UI_TESTS: ${{ inputs.exact_test_selector }}
+        run: bash docs/a2ui/run_media_replay_ui.sh
+      - uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: a2ui-media-replay-ui-${{ github.run_id }}
+          path: build/a2ui-media-replay-ui-evidence
           if-no-files-found: error
           retention-days: 30
   inspect-existing-native-result:
@@ -502,7 +520,7 @@ jobs:
           retention-days: 14
 
   plan-affected-validation:
-    if: ${{ inputs.target_validation_group != 'simulator_environment_probe' && inputs.target_validation_group != 'chat_motion_product' && inputs.target_validation_group != 'native_result_inspection' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '')))) ) }}
+    if: ${{ inputs.target_validation_group != 'simulator_environment_probe' && inputs.target_validation_group != 'chat_motion_product' && inputs.target_validation_group != 'a2ui_media_replay_ui' && inputs.target_validation_group != 'native_result_inspection' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '')))) ) }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15

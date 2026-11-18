@@ -41,6 +41,10 @@ if (e/'selected-device.txt').exists():
     try:
         subprocess.run(['xcrun','simctl','io',device,'screenshot',str(e/'final.png')],check=False,timeout=5,capture_output=True)
     except (OSError,subprocess.TimeoutExpired): pass
+    if (e/'owned-device.txt').exists() and (e/'owned-device.txt').read_text().strip()==device:
+        try:
+            subprocess.run(['xcrun','simctl','shutdown',device],check=False,timeout=30,capture_output=True)
+        except (OSError,subprocess.TimeoutExpired): pass
 PY
   finish_phase complete
   python3 Scripts/CI/generate_performance_report.py --log-dir "$evidence" \
@@ -71,12 +75,22 @@ if ! command -v xcodegen >/dev/null; then brew install xcodegen > "$evidence/xco
 xcodegen --version > "$evidence/xcodegen-version.txt"
 xcrun simctl list runtimes -j > "$evidence/runtimes.json"
 xcrun simctl list devices available -j > "$evidence/devices.json"
-python3 - "$evidence/devices.json" <<'PY' > "$evidence/selected-device.txt"
-import json,sys
-d=json.load(open(sys.argv[1]))['devices']
-eligible=[x for runtime,rows in d.items() if '.iOS-27-' in runtime for x in rows if x.get('isAvailable') and x['name'].startswith('iPhone')]
-assert eligible,'No iPhone/iOS27 simulator'
-print(eligible[0]['udid'])
+python3 - "$evidence" <<'PY' > "$evidence/selected-device.txt"
+import json,os,subprocess,sys
+from pathlib import Path
+e=Path(sys.argv[1])
+sdk=subprocess.check_output(['xcrun','--sdk','iphonesimulator','--show-sdk-version'],text=True).strip()
+assert int(sdk.split('.')[0])==27,sdk
+runtime=next(r for r in json.loads((e/'runtimes.json').read_text())['runtimes']
+    if r.get('isAvailable') and not r.get('isInternal') and r['identifier'].endswith('iOS-'+sdk.replace('.','-')))
+types=json.loads(subprocess.check_output(['xcrun','simctl','list','devicetypes','-j']))
+supported={t['identifier'] for t in runtime['supportedDeviceTypes']}
+device=next(t for t in types['devicetypes'] if t.get('productFamily')=='iPhone' and t['identifier'] in supported)
+udid=subprocess.check_output(['xcrun','simctl','create','HanlinMedia-'+os.environ.get('GITHUB_RUN_ID','local'),
+    device['identifier'],runtime['identifier']],text=True).strip()
+(e/'owned-device.txt').write_text(udid+'\n')
+(e/'verified-environment.json').write_text(json.dumps({'sdk':sdk,'runtime':runtime,'device':device,'udid':udid},indent=2))
+print(udid)
 PY
 device="$(cat "$evidence/selected-device.txt")"
 finish_phase preparation
@@ -107,7 +121,6 @@ from prepare_exact_pin_proof import verify_pin
 verify_pin(json.load(open(sys.argv[1])))
 print('{"status":"EXACT_PIN_VERIFIED"}')
 PY
-xcodebuild -list -json -project "$project" > "$evidence/schemes.json"
 finish_phase build-and-test
 selectors=(CODE_SIGNING_ALLOWED=NO)
 while IFS= read -r name; do selectors+=("-only-testing:MediaReplayUITests/MediaReplayUITests/$name"); done < "$evidence/selected-cases.txt"
