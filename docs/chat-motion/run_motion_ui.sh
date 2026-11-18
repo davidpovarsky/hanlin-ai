@@ -6,6 +6,19 @@ phase=preflight;phase_started=$SECONDS
 finish_phase(){ printf '%s\n' "$((SECONDS-phase_started))" > "$evidence/$phase-duration-seconds.txt";phase="$1";phase_started=$SECONDS; }
 retain(){
   code=$?;last_phase="$phase";finish_phase diagnostics
+  if [[ "${device_strategy:-}" == fresh && -n "${device:-}" ]]; then
+    cleanup_code=0
+    python3 - "$device" "$evidence/verified-environment.json" "Hanlin-Phase2-Motion-${GITHUB_RUN_ID:-local}" > "$evidence/owned-simulator-cleanup.log" 2>&1 <<'PY' || cleanup_code=$?
+import json,subprocess,sys
+from pathlib import Path
+selected=json.loads(Path(sys.argv[2]).read_text())['device']
+assert selected['udid']==sys.argv[1] and selected['name']==sys.argv[3], 'Only this run-owned simulator can be removed'
+subprocess.run(['xcrun','simctl','shutdown',selected['udid']],check=False,timeout=20)
+subprocess.run(['xcrun','simctl','delete',selected['udid']],check=True,timeout=20)
+print(json.dumps({'status':'OWNED_SIMULATOR_REMOVED','device':selected['udid']}))
+PY
+    if [[ "$code" == 0 && "$cleanup_code" != 0 ]]; then code="$cleanup_code"; fi
+  fi
   printf 'exit_code=%s\nphase=%s\n' "$code" "$last_phase" > "$evidence/process-status.txt"
   python3 "$root/Scripts/CI/generate_performance_report.py" --log-dir "$evidence" \
     --run-id "${GITHUB_RUN_ID:-}" --commit-sha "$(git -C "$root" rev-parse HEAD)" --event-name workflow_dispatch \

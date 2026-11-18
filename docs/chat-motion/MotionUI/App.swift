@@ -21,6 +21,7 @@ private struct MotionProofContent: View {
     @AppStorage(ChatMotionPreset.storageKey) private var storedID = ChatMotionPreset.relaxed.rawValue
     @Environment(\.chatMotion) private var motion
     @State private var expanded = false
+    @State private var expandedActionCount = 0
     @State private var toolExpanded = false
     @State private var count = 0
     @State private var running = true
@@ -31,6 +32,15 @@ private struct MotionProofContent: View {
     @State private var visibleHeight: CGFloat = 0
     @State private var samples: [[String: String]] = []
     @State private var transitionStarted = ProcessInfo.processInfo.systemUptime
+
+    // Observe only writes made by the unchanged production ToggleButton. This
+    // distinguishes an undelivered rapid tap from a completed layout reversal.
+    private var observedExpansion: Binding<Bool> {
+        Binding(get: { expanded }, set: { value in
+            expandedActionCount += 1
+            expanded = value
+        })
+    }
 
     private var geometryState: String {
         if !expanded && visibleHeight < 0.25 { return "collapsed" }
@@ -51,12 +61,13 @@ private struct MotionProofContent: View {
                 Button("Large type") { largeType.toggle() }.accessibilityIdentifier("proof-type")
             }.buttonStyle(.bordered)
             Text(geometryState).accessibilityIdentifier("proof-geometry-state")
+                .accessibilityValue("actions=\(expandedActionCount);expanded=\(expanded);natural=\(naturalHeight);visible=\(visibleHeight)")
             Text("shimmer=\(running && motion.showsShimmer);numeric=\(motion.numericCounts)")
                 .accessibilityIdentifier("proof-effective-motion")
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     // Exact original production ToggleButton, visibility lifted only by the preparer.
-                    ToggleButton(title: "Thinking", timeText: String(count), isExpanded: $expanded,
+                    ToggleButton(title: "Thinking", timeText: String(count), isExpanded: observedExpansion,
                         isActive: running, numericCount: count, usesAnimatedDisclosure: true)
                         .accessibilityIdentifier("proof-thinking")
                     HanlinAnimatedDisclosure(isExpanded: expanded) {

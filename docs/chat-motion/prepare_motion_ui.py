@@ -22,7 +22,7 @@ def snippets():
 def spec():
     common={'GENERATE_INFOPLIST_FILE':'YES','SWIFT_VERSION':'6.0','CODE_SIGNING_ALLOWED':'NO',
         'TARGETED_DEVICE_FAMILY':'1,2','ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS':'YES'}
-    return {'name':'ChatMotionProof','options':{'deploymentTarget':{'iOS':'26.0'}},'settings':{'base':common},
+    return {'name':'ChatMotionProof','options':{'deploymentTarget':{'iOS':'27.0'}},'settings':{'base':common},
         'targets':{
             'ChatMotionProof':{'type':'application','platform':'iOS','sources':['Production','App'],
                 'settings':{'base':{'PRODUCT_BUNDLE_IDENTIFIER':'ai.hanlin.motion-proof',

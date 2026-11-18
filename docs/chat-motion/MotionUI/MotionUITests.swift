@@ -9,6 +9,10 @@ final class MotionUITests: XCTestCase {
         if let originalReduceMotion {
             setSystemReduceMotion(originalReduceMotion)
         }
+        XCUIDevice.shared.orientation = .portrait
+        // Preserve an assertion failure while ending this test-owned process;
+        // the next cold launch must not inherit a failed case's live application.
+        app?.terminate()
     }
 
     private func setSystemReduceMotion(_ enabled: Bool) {
@@ -46,7 +50,8 @@ final class MotionUITests: XCTestCase {
     private func waitForGeometry(_ value: String, timeout: TimeInterval = 5) {
         let state = app.staticTexts["proof-geometry-state"]
         let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", value), object: state)
-        XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: timeout), .completed)
+        XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: timeout), .completed,
+                       "Actual geometry: \(state.label); native action receipt: \(String(describing: state.value))")
     }
 
     private func selectPreset(_ title: String, id: String) {
@@ -81,7 +86,15 @@ final class MotionUITests: XCTestCase {
 
     func testBRapidReversalPresetSwitchAndPersistence() {
         let toggle = app.buttons["proof-thinking"]
+        XCTAssertTrue(toggle.isHittable)
         toggle.tap(withNumberOfTaps: 3, numberOfTouches: 1)
+        let state = app.staticTexts["proof-geometry-state"]
+        let receipt = XCTAttachment(string: "Triple tap delivered: \(String(describing: state.value)); geometry: \(state.label)")
+        receipt.name = "original-toggle-rapid-action-receipt"
+        receipt.lifetime = .keepAlways
+        add(receipt)
+        XCTAssertTrue((state.value as? String)?.hasPrefix("actions=3;expanded=true;") == true,
+                      "The original production button must receive all three rapid actions")
         waitForGeometry("expanded")
         selectPreset("Height reveal", id: "v1.height-reveal")
         waitForGeometry("expanded")
