@@ -480,8 +480,10 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 guard search.contains("create_web_view") else {
                     emitFinalAnswer("EMBEDDED_TOOL_DISCOVERY_NOT_VERIFIED"); return
                 }
+                // The original advertised schema requires progress_summary for
+                // this tool-capable model. Keep the Host's pre-consent validation.
                 emitToolCall(id: "ui-web-call", name: "create_web_view",
-                    arguments: #"{"code":"<h1>Acceptance Web Surface</h1><p>Embedded result rendered</p>","result_presentation":"card"}"#)
+                    arguments: #"{"code":"<h1>Acceptance Web Surface</h1><p>Embedded result rendered</p>","result_presentation":"card","progress_summary":"Render the requested web preview."}"#)
             } else if let skill = result("ui-load-skill-call") {
                 let names = ((body?["tools"] as? [[String: Any]]) ?? []).compactMap {
                     ($0["function"] as? [String: Any])?["name"] as? String
@@ -847,7 +849,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                     ]]
                 ]
             } else if index == 2 {
-                let arguments = #"{"code":"<h1>Acceptance Web Surface</h1><p>Embedded result rendered</p>","result_presentation":"card"}"#
+                let arguments = #"{"code":"<h1>Acceptance Web Surface</h1><p>Embedded result rendered</p>","result_presentation":"card","progress_summary":"Render the requested web preview."}"#
                 payload = [
                     "choices": [[
                         "delta": [

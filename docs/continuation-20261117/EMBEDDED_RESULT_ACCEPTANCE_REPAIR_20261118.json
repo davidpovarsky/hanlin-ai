@@ -28,11 +28,18 @@
     "ui_methods": 2,
     "evidence_limit": "HTTP model and embedded view provider are declared fixtures. This does not prove live cloud provider or a companion process."
   },
-  "validation": "SOURCE_AND_SWIFT_PARSE_ONLY_NATIVE_PENDING",
+  "validation": "NATIVE_BUILD_COMPONENT21_PASS_UI2_FAIL_REPAIR_PARSE_ONLY",
   "phase2": "IN_PROGRESS",
   "phase3": "IN_PROGRESS",
   "release": "NO_GO",
   "native_run": 44264369849,
   "superseded_unexecuted_run": 44261561706,
-  "superseded_reason": "Queued native job carried missing runtime artifact input; replaced before native execution"
+  "superseded_reason": "Queued native job carried missing runtime artifact input; replaced before native execution",
+  "native_outcome": {
+    "run": 44264369849,
+    "sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+    "unit_pass": 21,
+    "ui_failed": 2,
+    "report": "docs/continuation-20261117/acceptance/EMBEDDED_NATIVE_DIAGNOSIS_20261118.json"
+  }
 }

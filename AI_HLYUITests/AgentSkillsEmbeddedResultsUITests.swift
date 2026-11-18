@@ -18,12 +18,16 @@ final class AgentSkillsEmbeddedResultsUITests: XCTestCase {
         // This opt-in provider only finishes after the actual load_skill result,
         // newly exposed schema, tool_search result and successful web receipt.
         let allow = app.buttons["hanlin-tool-consent-allow-once"].firstMatch
-        let final = app.staticTexts.matching(NSPredicate(
+        // The original selectable Markdown paragraph is a native TextView.
+        // Run 44264369849's real snapshot reports elementType 52, not StaticText.
+        let final = app.textViews.matching(NSPredicate(
             format: "label CONTAINS 'AGENT_SKILLS_EMBEDDED_ACCEPTANCE_COMPLETE'")).firstMatch
         let nextStep = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
             final.exists || allow.exists
         }, object: app)
-        XCTAssertEqual(XCTWaiter.wait(for: [nextStep], timeout: 60), .completed,
+        let nextStepResult = XCTWaiter.wait(for: [nextStep], timeout: 60)
+        if nextStepResult != .completed { attachHierarchy(in: app, name: "original-embedded-flow-wait-failure") }
+        XCTAssertEqual(nextStepResult, .completed,
                        "Original model/Host did not reach its next visible step")
         if allow.exists {
             let request = app.descendants(matching: .any)["hanlin-tool-consent-original-request"].firstMatch
@@ -73,9 +77,11 @@ final class AgentSkillsEmbeddedResultsUITests: XCTestCase {
         let app = launchSkillsApp(fallback: true)
         defer { app.terminate() }
         _ = openOriginalChat(in: app)
-        let original = app.staticTexts.matching(NSPredicate(
+        let original = app.textViews.matching(NSPredicate(
             format: "label CONTAINS 'UNRESOLVED_RESULT_ORIGINAL_MESSAGE'")).firstMatch
-        XCTAssertTrue(original.waitForExistence(timeout: 10), "The seeded original result must actually be visible")
+        let originalAppeared = original.waitForExistence(timeout: 10)
+        if !originalAppeared { attachHierarchy(in: app, name: "original-embedded-fallback-wait-failure") }
+        XCTAssertTrue(originalAppeared, "The seeded original result must actually be visible")
         let fallback = app.staticTexts.matching(NSPredicate(
             format: "label CONTAINS 'UNRESOLVED_HANDLER_NATIVE_FALLBACK_CONTENT'")).firstMatch
         XCTAssertTrue(fallback.waitForExistence(timeout: 10), "Unavailable handler must preserve native fallback content")
@@ -111,6 +117,13 @@ final class AgentSkillsEmbeddedResultsUITests: XCTestCase {
         if field.exists { return field }
         XCTAssertTrue(editor.waitForExistence(timeout: 20), "Original native Composer must be available")
         return editor
+    }
+
+    private func attachHierarchy(in app: XCUIApplication, name: String) {
+        let attachment = XCTAttachment(string: app.debugDescription)
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 
     private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
