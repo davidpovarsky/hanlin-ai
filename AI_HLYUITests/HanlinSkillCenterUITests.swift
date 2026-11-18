@@ -765,6 +765,18 @@ final class HanlinSkillCenterUITests: XCTestCase {
     }
 
     private func selectTab(identifier: String, labels: [String] = []) -> Bool {
+        // Profile is the owner's approved native sheet. Return through its
+        // real Done control before selecting a primary destination beneath it.
+        if identifier == "hanlin-home-tab" || identifier == "hanlin-library-tab" {
+            let done = app.buttons["hanlin-profile-done"].firstMatch
+            if done.exists {
+                XCTAssertTrue(done.isHittable, "The original Profile close control must be usable")
+                guard done.isHittable else { return false }
+                done.tap()
+                XCTAssertTrue(done.waitForNonExistence(timeout: 5), "Profile must actually dismiss before primary navigation")
+                guard !done.exists else { return false }
+            }
+        }
         var candidates: [XCUIElement] = [
             app.tabBars.buttons[identifier].firstMatch,
             app.buttons[identifier].firstMatch,
