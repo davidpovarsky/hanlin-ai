@@ -74,9 +74,18 @@ def validate_graph(project, provider_manifest=None):
             clone_id = "F9" + hashlib.sha256(("phase:" + original_id).encode()).hexdigest()[:22].upper()
             expected_clones.add(clone_id)
             clone, original = objects[clone_id], objects[original_id]
-            assert {k: v for k, v in clone.items() if k != "files"} == {
-                k: v for k, v in original.items() if k != "files"
-            }, "Native preparation must reuse the existing build command"
+            # The standalone target keeps the exact native command and flags.
+            # Only its two sandboxed scripts declare target-specific filesystem IO.
+            expected = {k: v for k, v in original.items() if k != "files"}
+            io_stem = {"A10000000000000000000051": "metadata",
+                       "A10000000000000000000050": "python"}.get(original_id)
+            if io_stem:
+                for kind in ("input", "output"):
+                    expected[kind + "FileListPaths"] = [
+                        "$(SRCROOT)/Scripts/ProductSplit/BuildIO/" +
+                        io_stem + "-" + kind + "s.xcfilelist"]
+            assert {k: v for k, v in clone.items() if k != "files"} == expected, \
+                "Native preparation must reuse the existing build command and declared IO"
             if "files" in original:
                 assert [objects[key] for key in clone["files"]] == [objects[key] for key in original["files"]]
         actual_clones = {key for key in mini["buildPhases"]

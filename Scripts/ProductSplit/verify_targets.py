@@ -54,6 +54,25 @@ def main():
         original = script_literal(ai_scripts[name])
         assert script_literal(mini_scripts[name]) == original, name + " script encoding drift"
         assert "\n" in json.loads(original), name + " lost executable line breaks"
+    # Keep the standalone build scripts sandboxed with explicit IO.
+    io_root = ROOT / "Scripts/ProductSplit/BuildIO"
+    io_manifest = json.loads((io_root / "manifest.json").read_text())
+    runtime_lock = json.loads((ROOT / "RuntimeDependencies.lock.json").read_text())
+    assert io_manifest["python_archive_sha256"] == runtime_lock["python"]["archive"]["sha256"]
+    for filename, expected in io_manifest["file_lists"].items():
+        actual = (io_root / filename).read_text().splitlines()
+        assert actual == expected and len(actual) == len(set(actual)), filename
+        assert all(path.startswith("$(") for path in actual), filename
+        assert "$(SRCROOT)" not in actual and "/" not in actual, filename
+    for name, stem in [("Generate NativeScript metadata", "metadata"), ("Process Python libraries", "python")]:
+        phase = objects[mini_scripts[name]]
+        for kind in ["input", "output"]:
+            assert phase[kind + "FileListPaths"] == [
+                "$(SRCROOT)/Scripts/ProductSplit/BuildIO/" + stem + "-" + kind + "s.xcfilelist"], name
+    for config_id in objects[mini["buildConfigurationList"]]["buildConfigurations"]:
+        settings = objects[config_id]["buildSettings"]
+        assert settings["ENABLE_USER_SCRIPT_SANDBOXING"] == "YES"
+        assert settings["PYTHONDONTWRITEBYTECODE"] == "1"
     for name in ["HanlinMiniAppsTests", "HanlinMiniAppsUITests", "HanlinMiniAppsBootstrapTests"]:
         target_id, target = targets[name]
         if name != "HanlinMiniAppsBootstrapTests":

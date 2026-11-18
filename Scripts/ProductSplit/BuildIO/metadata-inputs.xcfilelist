@@ -1,0 +1,8 @@
+$(SRCROOT)/Scripts/NativeScript
+$(SRCROOT)/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include
+$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks
+$(SRCROOT)/build/nativescript-metadata-tool
+$(OBJROOT)/GeneratedModuleMaps-$(PLATFORM_NAME)
+$(OBJECT_FILE_DIR_normal)
+$(CONFIGURATION_BUILD_DIR)
+$(SDKROOT)
