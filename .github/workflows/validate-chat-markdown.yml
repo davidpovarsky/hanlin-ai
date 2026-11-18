@@ -75,7 +75,7 @@ jobs:
         with:
           path: build/MarkdownSourcePackages
           key: chat-markdown-spm-v2-${{ runner.arch }}-${{ steps.toolchain.outputs.build }}-${{ hashFiles('build/MarkdownRenderer/Package.swift', 'build/MarkdownRenderer/Package.resolved') }}
-      - name: Compile the real package and execute citation, media and code-block tests
+      - name: Compile the real package and execute citation, code-block and retained host-link tests
         timeout-minutes: 16
         shell: bash
         env:

@@ -1,7 +1,7 @@
 {
-  "scope": "Six original renderer consumer methods plus three citation/media regressions; exact app-selected renderer revision and authenticated runtime dependency closure.",
+  "scope": "Six original renderer consumer methods, three citation/media regressions and one retained native paragraph host-action regression; exact app-selected renderer revision and authenticated runtime dependency closure.",
   "renderer_repository": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
-  "renderer_revision": "4072507bf5c5a1c9786d4c9a607873e65be59cc8",
+  "renderer_revision": "6bde022876ef4af738c154b3d5c871984ef76195",
   "app_evidence": {
     "run": 43761037885,
     "source": "c1a539774072b70047f128b5fde89d155fe7d986",
@@ -211,10 +211,18 @@
       "testOriginalCitationInitializerFunctionTypeRemainsCompatible",
       "testFormattingBuildersPreserveImagesCitationsAndSelection",
       "testHostSuppliedIconRendersInsideTheOriginalCitationAttachmentInBothDirections"
+    ],
+    "ParagraphLinkHostTests": [
+      "testMountedParagraphUsesUpdatedHostLinkAction"
     ]
   },
   "continuation_basis": {
     "base_renderer_revision": "f59bd0d533b6d94e01408bf6bdf9f5b09db57891",
     "reason": "Native V17 citation icons in the original attachment; discovered imageConfig reset by formatting builders. Existing six assertions retained."
+  },
+  "retained_host_action_continuation": {
+    "base_renderer_revision": "4072507bf5c5a1c9786d4c9a607873e65be59cc8",
+    "reason": "Refresh the original mounted ParagraphUIView URL callback when its host environment changes. Preserve all nine existing renderer/citation assertions.",
+    "native_status": "NOT_RUN_AT_CANDIDATE"
   }
 }

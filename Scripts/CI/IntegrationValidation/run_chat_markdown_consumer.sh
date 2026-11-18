@@ -1,5 +1,5 @@
 #!/bin/bash
-# Original six renderer cases plus three citation/media regression cases, using app-resolved runtime pins.
+# Original six renderer cases, three citation/media cases and the retained native host-link regression.
 set -euo pipefail
 root="$(git rev-parse --show-toplevel)"
 evidence="$root/build/markdown-evidence"
@@ -27,11 +27,11 @@ def visit(n):
     elif isinstance(n,list):
         for v in n:visit(v)
 if (e/'tests.json').exists():visit(json.loads((e/'tests.json').read_text()))
-actual=[x for x in nodes if x.get('nodeIdentifier','').startswith(('CodeBlockRendererTests/','CodeBlockConfigTests/','CitationIconTests/'))]
+actual=[x for x in nodes if x.get('nodeIdentifier','').startswith(('CodeBlockRendererTests/','CodeBlockConfigTests/','CitationIconTests/','ParagraphLinkHostTests/'))]
 log=(e/'xcodebuild.log').read_text(errors='replace') if (e/'xcodebuild.log').exists() else ''
 status='EXECUTED_PASS' if code==0 else 'TEST_FAILED' if actual else 'BUILD_FAILED' if ': error:' in log else 'INFRA_ERROR'
 (e/'process-status.json').write_text(json.dumps({'status':status,'exit_code':code,'executed_cases':len(actual),
- 'system_failure_nodes':len(nodes)-len(actual),'scope':'six original renderer methods and three citation/media methods; app/UI/playback NOT_RUN'},indent=2))
+ 'system_failure_nodes':len(nodes)-len(actual),'scope':'six original renderer, three citation/media and one native host-link method; app/UI/playback NOT_RUN'},indent=2))
 PY
   cd "$root"
   python3 Scripts/CI/generate_performance_report.py --log-dir "$evidence" \
@@ -73,6 +73,7 @@ xcodebuild test -scheme SwiftStreamingMarkdown \
   -only-testing:SwiftStreamingMarkdownTests/CodeBlockRendererTests \
   -only-testing:SwiftStreamingMarkdownTests/CodeBlockConfigTests \
   -only-testing:SwiftStreamingMarkdownTests/CitationIconTests \
+  -only-testing:SwiftStreamingMarkdownTests/ParagraphLinkHostTests \
   -disableAutomaticPackageResolution -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
   2>&1 | tee "$evidence/xcodebuild.log"
 test_code=${PIPESTATUS[0]}
@@ -110,12 +111,12 @@ def visit(n):
         for v in n:visit(v)
 visit(json.loads((e/'tests.json').read_text()))
 expected={suite+'/'+name+'()' for suite,names in c['expected_cases'].items() for name in names}
-assert len(found)==len(expected)==9 and all(n.get('result')=='Passed' for n in found)
+assert len(found)==len(expected)==10 and all(n.get('result')=='Passed' for n in found)
 assert {n['nodeIdentifier'] for n in found}==expected
 assert (renderer/'Package.resolved').read_bytes()==(e/'resolved-before-tests.json').read_bytes()
 assert (renderer/'Package.swift').read_bytes()==(e/'renderer-Package.swift').read_bytes()
 assert subprocess.check_output(['git','-C',str(renderer),'diff','--name-only']).decode().splitlines()==['Package.resolved']
-(e/'result-validation.json').write_text(json.dumps({'status':'RESULT_CONTENTS_VALID','exact_methods':9,
+(e/'result-validation.json').write_text(json.dumps({'status':'RESULT_CONTENTS_VALID','exact_methods':10,
  'actual_runtime_pins':'MATCH_AUTHENTICATED_APP_CLOSURE','renderer_source_changes':False,'app_OR_UI':'NOT_RUN'},indent=2))
 PY
 finish_phase complete

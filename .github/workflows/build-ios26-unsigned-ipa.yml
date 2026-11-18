@@ -24,7 +24,7 @@ on:
         default: false
         type: boolean
       markdown_renderer_validation_only:
-        description: Compile the app-pinned Markdown fork and execute its six affected code-block cases without building the app or runtimes
+        description: Compile the exact app-pinned Markdown fork and execute ten renderer, citation and retained host-link cases without building the app or runtimes
         required: false
         default: false
         type: boolean
