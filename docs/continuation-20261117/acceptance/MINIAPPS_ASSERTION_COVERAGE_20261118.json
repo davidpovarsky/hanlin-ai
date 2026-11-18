@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-18T08:43:39.837066+00:00",
+  "source_sha": "d968c63c76d24decf8db2399a45e8d1809c038ad",
+  "native_run": {
+    "id": 44233498638,
+    "sha": "e56dcc8693bebe0d4febcadaf86ec3bd58962377",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44233498638",
+    "ui_passed": 7,
+    "ui_failed": 0,
+    "ui_skipped": 0,
+    "acceptance_json_sha256": "fa40bfb6b0d2531e59a85075810293d1273ea56d403fcd820c9022ce5d6b14de",
+    "all_passed_ui": [
+      "HanlinMiniAppsUITests/testInstalledScriptUIAppearsAndRunsAfterRestart",
+      "HanlinMiniAppsUITests/testPackageImportUsesExistingPreviewScreen",
+      "HanlinMiniAppsUITests/testPrivateStateSurvivesStandaloneProcessRelaunch",
+      "HanlinMiniAppsUITests/testStandaloneCatalogOpensRealCompiledApp",
+      "MiniAppsProviderUITests/testCanonicalLibraryLaunchesRealCompiledSwiftApp",
+      "MiniAppsProviderUITests/testManagementPresentsExistingPackageImportScreen",
+      "MiniAppsProviderUITests/testOrdinaryInstalledScriptUICatalogAndStatefulLaunch"
+    ],
+    "device": "iPhone 18 Pro / iOS 27.2 (24B8117)"
+  },
+  "mapping": [
+    {
+      "feature_id": "MINI-01",
+      "test_ids": [
+        "HanlinMiniAppsUITests/testStandaloneCatalogOpensRealCompiledApp",
+        "MiniAppsProviderUITests/testCanonicalLibraryLaunchesRealCompiledSwiftApp",
+        "HanlinMiniAppsUITests/testInstalledScriptUIAppearsAndRunsAfterRestart",
+        "MiniAppsProviderUITests/testOrdinaryInstalledScriptUICatalogAndStatefulLaunch"
+      ],
+      "assertion": "The original standalone catalog exposes and launches a compiled Swift app and actual installed default-JSC ScriptUI packages; ScriptUI state callbacks execute and installed catalog survives relaunch.",
+      "limits": "Two engine types and explicit fixtures only; NativeScript/Expo are separate current UI gates. Does not prove the entire four-engine gallery."
+    },
+    {
+      "feature_id": "MINI-03",
+      "test_ids": [
+        "HanlinMiniAppsUITests/testStandaloneCatalogOpensRealCompiledApp",
+        "MiniAppsProviderUITests/testCanonicalLibraryLaunchesRealCompiledSwiftApp",
+        "HanlinMiniAppsUITests/testInstalledScriptUIAppearsAndRunsAfterRestart",
+        "MiniAppsProviderUITests/testOrdinaryInstalledScriptUICatalogAndStatefulLaunch"
+      ],
+      "assertion": "Actual catalog rows/detail/Open launch the original compiled Swift and installed ScriptUI views; Swift exposes canonical app ID, Save and Reload; the provider case closes back to the detail view.",
+      "limits": "No blanket claim for every catalog item, engine, presentation style, accessibility setting or device."
+    },
+    {
+      "feature_id": "MINI-05",
+      "test_ids": [
+        "HanlinMiniAppsUITests/testPackageImportUsesExistingPreviewScreen",
+        "MiniAppsProviderUITests/testManagementPresentsExistingPackageImportScreen",
+        "HanlinMiniAppsUITests/testInstalledScriptUIAppearsAndRunsAfterRestart",
+        "MiniAppsProviderUITests/testOrdinaryInstalledScriptUICatalogAndStatefulLaunch"
+      ],
+      "assertion": "Original management opens the existing importer; two real staged ScriptUI packages pass preview, install into the canonical catalog and execute an Increment callback.",
+      "limits": "The two importer-screen tests alone do not install anything; actual installation evidence is supplied only by the two named ScriptUI tests. Other archive formats, hostile-input and permission cases remain separate."
+    }
+  ],
+  "mapped_unique_ui_cases": 6,
+  "source_review": [
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "test": "testStandaloneCatalogOpensRealCompiledApp",
+      "recorded_body_sha256": "0ce47ec6bc1568ad036246d8dcbb82e4907d43aafe221580771b0bf9aec7eeaa",
+      "current_body_sha256": "0ce47ec6bc1568ad036246d8dcbb82e4907d43aafe221580771b0bf9aec7eeaa",
+      "body_unchanged": true
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "test": "testInstalledScriptUIAppearsAndRunsAfterRestart",
+      "recorded_body_sha256": "dd231774a2a16bc6b239290ab46cf2fc8b59a2de7e5b28e630f6155864dab7a2",
+      "current_body_sha256": "dd231774a2a16bc6b239290ab46cf2fc8b59a2de7e5b28e630f6155864dab7a2",
+      "body_unchanged": true
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "test": "testPackageImportUsesExistingPreviewScreen",
+      "recorded_body_sha256": "3b84b8618eb8fdca2ad870e1b76637452cf5fc12d4cf1a2df5a46f2b573e8c33",
+      "current_body_sha256": "3b84b8618eb8fdca2ad870e1b76637452cf5fc12d4cf1a2df5a46f2b573e8c33",
+      "body_unchanged": true
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift",
+      "test": "testCanonicalLibraryLaunchesRealCompiledSwiftApp",
+      "recorded_body_sha256": "4097013852afe84e7eb85edfb75dbe949c868051e8027b675b9376a7fbbe99c9",
+      "current_body_sha256": "4097013852afe84e7eb85edfb75dbe949c868051e8027b675b9376a7fbbe99c9",
+      "body_unchanged": true
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift",
+      "test": "testOrdinaryInstalledScriptUICatalogAndStatefulLaunch",
+      "recorded_body_sha256": "dcfe62a6bc886479865bff0270a5dd0ae4c2b285d6d012c61de7ad7a696ae994",
+      "current_body_sha256": "dcfe62a6bc886479865bff0270a5dd0ae4c2b285d6d012c61de7ad7a696ae994",
+      "body_unchanged": true
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift",
+      "test": "testManagementPresentsExistingPackageImportScreen",
+      "recorded_body_sha256": "97ef5fe1e18fc1d7eadc4aaf501a08b9ea5f8248b856acf71cfdff27a2bfaf22",
+      "current_body_sha256": "97ef5fe1e18fc1d7eadc4aaf501a08b9ea5f8248b856acf71cfdff27a2bfaf22",
+      "body_unchanged": true
+    }
+  ],
+  "limits": [
+    "Original native UI results at the recorded SHA, not new execution.",
+    "The prior harness disabled simulator signing. These seven cases did not establish real OS App Groups; current production-runtime and paired-product gates separately require them.",
+    "Test-body comparison is explicitly narrower than whole app/dependency identity. App-level changes since the original run are not declared accepted by this document.",
+    "Private-state process-relaunch case remains an independently recorded seventh UI success, not added to these three feature claims.",
+    "No physical-device, live-model, full NativeScript/Expo or complete 278-feature acceptance."
+  ]
+}
