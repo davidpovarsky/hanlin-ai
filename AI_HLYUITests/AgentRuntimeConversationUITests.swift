@@ -4,6 +4,8 @@ import UIKit
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
     func testLiveGeminiPythonConsentAndColdReopen() throws {
+        try XCTSkipUnless(ProcessInfo.processInfo.environment["HANLIN_LIVE_PROVIDER_CASE"] == "1",
+            "Live provider acceptance requires its explicitly staged, owner-authorized account; ordinary fixture suites do not provide credentials")
         continueAfterFailure = false
         executionTimeAllowance = 420
         let app = XCUIApplication()

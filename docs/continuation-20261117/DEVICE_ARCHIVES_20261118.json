@@ -1,0 +1,48 @@
+{
+  "sha": "00a932d63db76549dff0a228a6b75711fcad8a22",
+  "run_id": "44243216104",
+  "status": "SIGNING_OR_BUILD_FAILED",
+  "products": [
+    {
+      "role": "miniapps",
+      "bundle_id": "com.itorah.hanlinminiapps",
+      "archive": "EXECUTED_PASS",
+      "export": "EXECUTED_FAIL",
+      "entitlements": "NOT_RUN",
+      "version": "0.1.0",
+      "build": "1"
+    },
+    {
+      "role": "ai",
+      "bundle_id": "com.itorah.chavrusachat",
+      "archive": "EXECUTED_PASS",
+      "export": "EXECUTED_FAIL",
+      "entitlements": "NOT_RUN",
+      "version": "0.7.3",
+      "build": "1"
+    }
+  ],
+  "physical_device": "NOT_RUN",
+  "publication": "NOT_REQUESTED",
+  "release_decision": "NO_GO",
+  "scope": "Actual original iOS device archives and local App Store export only; separate product/device acceptance gates still apply.",
+  "existing_distribution_identity": {
+    "status": "READY_RESOURCE",
+    "checks": {
+      "private_key_matches": true,
+      "valid_dates": true,
+      "team_matches": true,
+      "distribution_identity": true
+    },
+    "expiration": "2027-09-07T07:25:00+00:00",
+    "public_certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b"
+  },
+  "cleanup": "PASS",
+  "evidence_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44243216104",
+  "artifact_id": 14403920370,
+  "artifact_api_zip_sha256": "b045a5325087e93dd146d24cf4b774e21f59a42ce066986dd6dd5498d8eade21",
+  "acceptance_sha256": "adbc498ff8795a046c91df443d9f911373fe5ecd7de9fdb42c5825eb0568bc63",
+  "diagnosis": "Both original device Release archives passed. Local Xcode automatic export failed for both: Cloud signing permission error and missing matching App Store profiles. Existing distribution identity validated; no certificate was created/exported and no product was uploaded.",
+  "next_step": "Read actual current portal capabilities and compatible existing local distribution profiles. Do not drop required entitlements or bypass Apple signing permissions.",
+  "source_scope": "Archive evidence is at 00a932d63db76549dff0a228a6b75711fcad8a22; later Unicode/display-name changes were not included."
+}

@@ -2713,6 +2713,7 @@ jobs:
               ui_time_allowance=300
               if [ "${{ inputs.exact_test_selector }}" = "AI_HLYUITests/AgentRuntimeConversationUITests/testLiveGeminiPythonConsentAndColdReopen" ]; then
                 ui_time_allowance=420
+                export TEST_RUNNER_HANLIN_LIVE_PROVIDER_CASE=1
                 # The credential and runtime receipt belong to this owned device,
                 # never to a parallel XCTest simulator clone.
                 ui_test_args+=("-parallel-testing-enabled" "NO")
