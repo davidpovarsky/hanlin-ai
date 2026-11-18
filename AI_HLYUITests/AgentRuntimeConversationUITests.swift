@@ -928,15 +928,15 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertFalse(row3.exists, "At most 3 recent conversations may be shown on compact Home")
         XCTAssertTrue(row0.label.contains("Agent Acceptance Chat"), "Newest conversation must be row 0")
 
-        // Persistent OrganizerDock anchored at the bottom of compact Home
-        let dock = app.descendants(matching: .any)["hanlin-organizer-dock"].firstMatch
+        // The original Morph input stays anchored at the bottom of compact Home
+        let dock = app.descendants(matching: .any)["hanlin-composer-surface"].firstMatch
         let input = chatInputElement(in: app)
-        XCTAssertTrue(dock.waitForExistence(timeout: 10), "Persistent OrganizerDock must exist on compact Home")
+        XCTAssertTrue(dock.waitForExistence(timeout: 10), "Persistent Morph composer must exist on compact Home")
         XCTAssertTrue(input.waitForExistence(timeout: 10), "Persistent chat input must exist on compact Home")
         XCTAssertGreaterThan(
             dock.frame.maxY,
             app.windows.firstMatch.frame.height * 0.65,
-            "Persistent OrganizerDock must be anchored near the bottom of the screen"
+            "Persistent Morph composer must be anchored near the bottom of the screen"
         )
 
         attachScreenshot("7B-01_CompactHome_ThreeRecent_PersistentComposer", in: app)
@@ -962,7 +962,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(olderRow.waitForExistence(timeout: 10), "4th conversation must be visible in full library")
 
         // Persistent bottom composer is hidden while browsing the full conversation library
-        let dock = app.descendants(matching: .any)["hanlin-organizer-dock"].firstMatch
+        let dock = app.descendants(matching: .any)["hanlin-composer-surface"].firstMatch
         XCTAssertFalse(dock.exists && dock.isHittable, "Persistent composer dock must be hidden on the full conversation library screen")
 
         // Simulate a short cancelled interactive edge-swipe back (dx 0.02 -> 0.16)
@@ -1000,97 +1000,69 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("7B-03b_WidthAdaptiveWorkspace_Wide1024pt", in: wideApp)
     }
 
+    // Keep the original selector for acceptance traceability. The approved
+    // Morph design places its panel above the persistent input; the retired
+    // Organizer ZStack and its drag-to-open handle are not shipping controls.
     func testDrawerGrowsFromComposerNotPopover() throws {
         let app = launchDockAcceptanceApp()
         openChat(in: app)
 
-        let drawer = app.descendants(matching: .any)["hanlin-organizer-drawer"].firstMatch
-        let composerShell = app.descendants(matching: .any)["hanlin-organizer-composer-shell"].firstMatch
-        let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+        let panel = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
+        let composer = app.descendants(matching: .any)["hanlin-composer-surface"].firstMatch
+        let general = app.buttons["hanlin-composer-general-menu"].firstMatch
+        XCTAssertTrue(composer.waitForExistence(timeout: 10))
+        XCTAssertTrue(general.waitForExistence(timeout: 10) && general.isHittable)
+        XCTAssertFalse(panel.exists, "A collapsed Morph composer must not mount a detached panel")
+        let collapsedFrame = composer.frame
+        attachScreenshot("7B-04a_MorphCollapsed", in: app)
 
-        XCTAssertTrue(drawer.waitForExistence(timeout: 10), "Back drawer layer must exist")
-        XCTAssertTrue(composerShell.waitForExistence(timeout: 10), "Front composer shell must exist")
-        XCTAssertTrue(generalBtn.waitForExistence(timeout: 10), "General `+` button must exist")
+        general.tap()
+        XCTAssertTrue(panel.waitForExistence(timeout: 5))
+        let content = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
+        XCTAssertTrue(content.waitForExistence(timeout: 5))
+        XCTAssertLessThan(panel.frame.minY, collapsedFrame.minY - 180,
+                          "The original action panel must grow upward above the input")
+        XCTAssertLessThanOrEqual(panel.frame.maxY, composer.frame.minY + 1,
+                                 "The approved Morph panel must stay above the persistent input")
+        XCTAssertLessThan(abs(composer.frame.maxY - collapsedFrame.maxY), 16,
+                          "Opening the palette must preserve the input's bottom anchor")
+        XCTAssertEqual(app.popovers.count, 0, "The action panel must remain in the original composer")
+        let saved = app.descendants(matching: .any)["hanlin-drawer-saved-prompts-slot"].firstMatch
+        XCTAssertTrue(saved.waitForExistence(timeout: 5), "The original saved-prompt gallery must remain available")
+        attachScreenshot("7B-04b_MorphExpanded", in: app)
 
-        let collapsedDrawerFrame = drawer.frame
-        let collapsedComposerFrame = composerShell.frame
-        attachScreenshot("7B-04a_DockCollapsed", in: app)
-
-        // Tap `+` to expand the integrated drawer upward behind the composer
-        tapElement(generalBtn)
-        let generalDrawerContent = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
-        XCTAssertTrue(generalDrawerContent.waitForExistence(timeout: 5), "General drawer content must appear inside dock")
-        attachScreenshot("7B-04b_DockExpanded_General", in: app)
-
-        let expandedDrawerFrame = drawer.frame
-        let expandedComposerFrame = composerShell.frame
-
-        // Prove upward growth from the SAME bottom dock (not a detached floating popover)
-        XCTAssertLessThan(
-            expandedDrawerFrame.minY,
-            collapsedDrawerFrame.minY - 180,
-            "Expanded drawer top edge (\(expandedDrawerFrame.minY)) must grow upward well above collapsed top edge (\(collapsedDrawerFrame.minY))"
-        )
-        XCTAssertLessThan(
-            abs(expandedDrawerFrame.maxY - expandedComposerFrame.maxY),
-            16,
-            "Drawer and composer must share the bottom edge of ZStack(alignment: .bottom)"
-        )
-        XCTAssertLessThan(
-            abs(expandedComposerFrame.maxY - collapsedComposerFrame.maxY),
-            16,
-            "Composer bottom edge must remain anchored while drawer expands behind it"
-        )
-        XCTAssertEqual(app.popovers.count, 0, "General drawer must NOT present a floating UIPopover")
-
-        // Verify R7 Saved Prompts horizontal gallery slot is rendered inside the General drawer
-        let savedPromptsSlot = app.descendants(matching: .any)["hanlin-drawer-saved-prompts-slot"].firstMatch
-        XCTAssertTrue(savedPromptsSlot.waitForExistence(timeout: 5), "Saved Prompts horizontal gallery slot must exist in General drawer")
-
-        // Collapse drawer
-        tapElement(generalBtn)
-        XCTAssertTrue(generalDrawerContent.waitForNonExistence(timeout: 5))
+        let close = app.buttons["composer-toolbar-close"].firstMatch
+        XCTAssertTrue(close.exists && close.isHittable)
+        close.tap()
+        XCTAssertTrue(panel.waitForNonExistence(timeout: 5))
+        XCTAssertTrue(composer.exists, "Closing the palette must preserve the same input")
     }
 
     func testDrawerHandleDragCloseOpenAndComposerResize() throws {
         let app = launchDockAcceptanceApp()
         openChat(in: app)
 
-        let drawerHandle = app.buttons["hanlin-organizer-drawer-handle"].firstMatch
         let resizeHandle = app.descendants(matching: .any)["hanlin-composer-resize-handle"].firstMatch
-        let composerShell = app.descendants(matching: .any)["hanlin-organizer-composer-shell"].firstMatch
-        let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
+        let composerShell = app.descendants(matching: .any)["hanlin-composer-surface"].firstMatch
+        let generalBtn = app.buttons["hanlin-composer-general-menu"].firstMatch
+        let panel = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
+        XCTAssertTrue(resizeHandle.waitForExistence(timeout: 10), "The original input resize handle must exist")
+        XCTAssertTrue(composerShell.waitForExistence(timeout: 10))
+        XCTAssertTrue(generalBtn.exists && generalBtn.isHittable)
 
-        XCTAssertTrue(drawerHandle.waitForExistence(timeout: 10), "Drawer handle must exist")
-        XCTAssertTrue(resizeHandle.waitForExistence(timeout: 10), "Composer resize handle must exist")
-        XCTAssertTrue(composerShell.waitForExistence(timeout: 10), "Composer shell must exist")
-
-        // 1. Open drawer via `+`, then drag drawer handle downward (> 34pt) to collapse
-        tapElement(generalBtn)
-        let generalContent = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
-        XCTAssertTrue(generalContent.waitForExistence(timeout: 5))
-
-        let handleStart = drawerHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        let handleDragDown = handleStart.withOffset(CGVector(dx: 0, dy: 120))
-        handleStart.press(forDuration: 0.05, thenDragTo: handleDragDown)
-        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5), "Dragging drawer handle downward (>34pt) must collapse the drawer")
-        attachScreenshot("7B-05a_AfterDrawerDragClose", in: app)
-
-        // 2. Drag drawer handle upward (< -34pt) to reopen last expanded mode (no tap fallback)
-        let collapsedHandleStart = drawerHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        let handleDragUp = collapsedHandleStart.withOffset(CGVector(dx: 0, dy: -120))
-        collapsedHandleStart.press(forDuration: 0.05, thenDragTo: handleDragUp)
-        XCTAssertTrue(generalContent.waitForExistence(timeout: 5), "Dragging drawer handle upward (<-34pt) must reopen last expanded mode")
-
-        // 3. Verify tap-to-close and tap-to-open on drawer handle
-        tapElement(drawerHandle)
-        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5), "Tapping drawer handle while open must collapse the drawer")
-        tapElement(drawerHandle)
-        XCTAssertTrue(generalContent.waitForExistence(timeout: 5), "Tapping drawer handle while collapsed must reopen last expanded mode")
-
-        // Close drawer before testing composer resize handle
-        tapElement(generalBtn)
-        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5))
+        // Use the approved Morph launcher/close controls. The former drawer
+        // handle is absent from this design; input drag-resizing remains real.
+        generalBtn.tap()
+        XCTAssertTrue(panel.waitForExistence(timeout: 5))
+        let close = app.buttons["composer-toolbar-close"].firstMatch
+        XCTAssertTrue(close.exists && close.isHittable)
+        close.tap()
+        XCTAssertTrue(panel.waitForNonExistence(timeout: 5))
+        generalBtn.tap()
+        XCTAssertTrue(panel.waitForExistence(timeout: 5), "The original palette must reopen")
+        generalBtn.tap()
+        XCTAssertTrue(panel.waitForNonExistence(timeout: 5))
+        attachScreenshot("7B-05a_AfterMorphCloseReopen", in: app)
 
         // 4. Drag composer resize handle upward to increase both composer shell and inner text editor height
         let input = chatInputElement(in: app)
@@ -1138,35 +1110,37 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let app = launchDockAcceptanceApp()
         openChat(in: app)
 
-        let toolsDirect = app.descendants(matching: .any)["hanlin-composer-tools-direct"].firstMatch
-        let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
-        let drawer = app.descendants(matching: .any)["hanlin-organizer-drawer"].firstMatch
-
-        XCTAssertTrue(toolsDirect.waitForExistence(timeout: 10), "Direct Tools button must exist")
-        tapElement(toolsDirect)
-
-        // 1 tap opens Tools/Skills/MCP/Runtime root directly in the integrated dock
+        let tools = app.buttons["hanlin-composer-tools-direct"].firstMatch
+        let panel = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
+        let composer = app.descendants(matching: .any)["hanlin-composer-surface"].firstMatch
+        XCTAssertTrue(tools.waitForExistence(timeout: 10) && tools.isHittable)
+        tools.tap()
         let toolsContent = app.descendants(matching: .any)["hanlin-composer-tools-popover"].firstMatch
-        XCTAssertTrue(toolsContent.waitForExistence(timeout: 5), "1 tap on Tools button must open Tools root in dock")
-        XCTAssertEqual(app.popovers.count, 0, "Tools drawer must not be a floating UIPopover")
+        XCTAssertTrue(toolsContent.waitForExistence(timeout: 5), "One tap must open the original Tools root")
+        XCTAssertTrue(panel.exists)
+        XCTAssertEqual(app.popovers.count, 0)
+        let inputFrame = composer.frame
+        attachScreenshot("7B-06a_DirectToolsInMorph", in: app)
 
-        let drawerFrameInTools = drawer.frame
-        attachScreenshot("7B-06a_DirectToolsInDock", in: app)
+        // The original Morph back control returns to its home page. The plus
+        // launcher closes an open palette; it is not a mode-switch button.
+        let back = app.buttons["hanlin-tools-subpage-back"].firstMatch
+        XCTAssertTrue(back.exists && back.isHittable)
+        back.tap()
+        let home = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
+        XCTAssertTrue(home.waitForExistence(timeout: 5))
+        XCTAssertFalse(toolsContent.exists)
+        XCTAssertTrue(panel.exists, "Back must retain the original expanded palette")
+        XCTAssertLessThanOrEqual(panel.frame.maxY, composer.frame.minY + 1)
+        XCTAssertLessThan(abs(composer.frame.maxY - inputFrame.maxY), 16,
+                          "Changing palette pages must preserve the input anchor")
+        XCTAssertEqual(app.popovers.count, 0)
+        attachScreenshot("7B-06b_MorphBackToHome", in: app)
 
-        // Switching directly from Tools to `+` swaps mode inside the SAME expanded dock
-        tapElement(generalBtn)
-        let generalContent = app.descendants(matching: .any)["hanlin-composer-general-popover"].firstMatch
-        XCTAssertTrue(generalContent.waitForExistence(timeout: 5), "Tapping `+` while Tools is open must swap to General in the same dock")
-        XCTAssertFalse(toolsContent.exists, "Tools content must be replaced by General content")
-        XCTAssertLessThan(
-            abs(drawer.frame.height - drawerFrameInTools.height),
-            24,
-            "Dock panel height must remain continuously expanded when swapping between Tools and General"
-        )
-        attachScreenshot("7B-06b_SwappedToGeneralInSameDock", in: app)
-
-        tapElement(generalBtn)
-        XCTAssertTrue(generalContent.waitForNonExistence(timeout: 5))
+        let close = app.buttons["composer-toolbar-close"].firstMatch
+        XCTAssertTrue(close.exists && close.isHittable)
+        close.tap()
+        XCTAssertTrue(panel.waitForNonExistence(timeout: 5))
     }
 
     func testClassicHanlinIconAndVisualParity() throws {
@@ -1229,7 +1203,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             let fullLink = app.buttons[linkID].firstMatch
             XCTAssertTrue(fullLink.waitForExistence(timeout: 5))
             if !fullLink.isHittable {
-                app.descendants(matching: .any)["hanlin-composer-tools-popover"].firstMatch.swipeUp()
+                app.scrollViews["hanlin-composer-page-scroll"].firstMatch.swipeUp()
             }
             tapElement(fullLink)
             let presented = app.descendants(matching: .any)["hanlin-tools-management-\(destination)"].firstMatch
