@@ -46,5 +46,19 @@
     "scope": "Five gallery/link cases affected by redirect callback plus the single launch-timeout player lifecycle case; the other six unchanged player cases retain their own native results.",
     "status": "PENDING",
     "test_sha256": "beecee0ef3a355357728dc0f611dcc9a9a0d898cc96bfe97663091b629d280c9"
+  },
+  "core_native": {
+    "run": 44233494834,
+    "source_sha": "e56dcc8693bebe0d4febcadaf86ec3bd58962377",
+    "status": "EXECUTED_PASS",
+    "cases": 46,
+    "suites": 2,
+    "failed": 0,
+    "skipped": 0,
+    "platform": "macOS 27 / Apple Swift 6.4.2",
+    "scope": "Original pinned A2UI enabled SDK + framing consumer, including the updated gallery/link model and schema cases; not a whole app or media UI acceptance.",
+    "log_sha256": "e1a632f43f0a077ee427e05e1a1d2af2b09a528509c15d50f5311485f7994c09",
+    "resolved_lock_sha256": "af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae",
+    "identities": "Existing verifier confirmed all 46 expected identities and exact SDK pin."
   }
 }

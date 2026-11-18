@@ -3,6 +3,11 @@ name: Validate standalone MiniApps target
 on:
   workflow_call:
     inputs:
+      audit_release_resources:
+        description: Read existing Apple signing and registration metadata without signing or publishing
+        type: boolean
+        required: false
+        default: false
       host_proof_run_id:
         type: string
         required: false
@@ -16,6 +21,11 @@ on:
         default: false
   workflow_dispatch:
     inputs:
+      audit_release_resources:
+        description: Read existing Apple signing and registration metadata without signing or publishing
+        type: boolean
+        required: false
+        default: false
       paired_product_acceptance:
         description: Exercise both original products and their actual App Group on one simulator
         type: boolean
@@ -35,7 +45,7 @@ on:
 concurrency:
   # Separate acceptance scopes use distinct job checkouts and owned simulators.
   # A paired run must not cancel standalone storage/UI evidence still being collected.
-  group: standalone-miniapps-${{ github.ref }}-${{ inputs.paired_product_acceptance && 'paired' || 'standalone' }}
+  group: standalone-miniapps-${{ github.ref }}-${{ inputs.audit_release_resources && 'release-audit' || inputs.paired_product_acceptance && 'paired' || 'standalone' }}
   cancel-in-progress: true
 
 permissions:
@@ -43,7 +53,44 @@ permissions:
   contents: read
 
 jobs:
+  release-resource-audit:
+    if: ${{ inputs.audit_release_resources }}
+    runs-on: xcode-27
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Prepare the existing release JWT library in an isolated environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/hanlin-release-audit"
+          "$RUNNER_TEMP/hanlin-release-audit/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+      - name: Inspect existing signing, registration and device metadata
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_MAIN_PROVISIONING_PROFILE_B64: ${{ secrets.APPLE_MAIN_PROVISIONING_PROFILE_B64 }}
+          APPLE_MINIAPPS_PROVISIONING_PROFILE_B64: ${{ secrets.APPLE_MINIAPPS_PROVISIONING_PROFILE_B64 }}
+          APPLE_SHARE_PROVISIONING_PROFILE_B64: ${{ secrets.APPLE_SHARE_PROVISIONING_PROFILE_B64 }}
+          APPLE_WIDGETS_PROVISIONING_PROFILE_B64: ${{ secrets.APPLE_WIDGETS_PROVISIONING_PROFILE_B64 }}
+          APPLE_TRANSLATION_PROVISIONING_PROFILE_B64: ${{ secrets.APPLE_TRANSLATION_PROVISIONING_PROFILE_B64 }}
+          APPLE_NOTIFICATION_SERVICE_PROVISIONING_PROFILE_B64: ${{ secrets.APPLE_NOTIFICATION_SERVICE_PROVISIONING_PROFILE_B64 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: '"$RUNNER_TEMP/hanlin-release-audit/bin/python" Scripts/ProductSplit/audit_release_resources.py'
+      - name: Retain sanitized resource facts only
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: release-resource-audit-${{ github.run_id }}
+          path: build/release-resource-audit/sanitized-report.json
+          if-no-files-found: error
+          retention-days: 14
+
   miniapps:
+    if: ${{ !inputs.audit_release_resources }}
     runs-on: xcode-27
     timeout-minutes: ${{ inputs.paired_product_acceptance && 90 || 60 }}
     env:
