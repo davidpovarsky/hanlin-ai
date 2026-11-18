@@ -40,6 +40,7 @@ public final class HanlinAgentSession {
     private let engine: HanlinAISDKAgentEngine
     private let store: any HanlinConversationStore
     private let capabilities: (any HanlinHostCapabilitySource)?
+    private let interactions: (any HanlinHostInteractionSource)?
     private let diagnostics: (any HanlinDiagnosticsSink)?
     public let dispatcher: HanlinHostDispatcher
     public var isRunning: Bool { activeRun != nil }
@@ -61,9 +62,13 @@ public final class HanlinAgentSession {
 
     public init(identity: HanlinHostSession, host: any HanlinHostIntegration, engine: HanlinAISDKAgentEngine,
                 store: any HanlinConversationStore, capabilities: (any HanlinHostCapabilitySource)? = nil,
+                interactions: (any HanlinHostInteractionSource)? = nil,
                 diagnostics: (any HanlinDiagnosticsSink)? = nil) {
         self.identity = identity; self.host = host; self.engine = engine; self.store = store
         self.capabilities = capabilities; self.diagnostics = diagnostics
+        // Hosts can pass their original interaction interface explicitly, just
+        // like step capabilities. Keep inference for existing SDK clients.
+        self.interactions = interactions ?? (host as? any HanlinHostInteractionSource)
         self.dispatcher = HanlinHostDispatcher(host: host)
     }
 
@@ -377,7 +382,7 @@ public final class HanlinAgentSession {
                                     systemPrompt: String? = nil,
                                     structuredResponse: HanlinNativeStructuredResponse? = nil,
                                     presentationReference: String? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
-        guard let source = host as? any HanlinHostInteractionSource else { throw HanlinHostError.unsupportedProviderCapability }
+        guard let source = interactions else { throw HanlinHostError.unsupportedProviderCapability }
         guard interactionRequests.insert(request.requestID).inserted else { throw HanlinHostError.duplicateInvocation }
         try await requireInteraction(request.origin)
         guard !request.actionID.isEmpty, request.actionID.utf8.count <= 512,

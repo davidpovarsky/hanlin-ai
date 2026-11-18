@@ -11,9 +11,11 @@ import Testing
 
 private actor AppPartQueue {
     var parts: [HanlinChatStructuredPart]
+    var receivedPrompts: [String] = []
     init(_ parts: [HanlinChatStructuredPart]) { self.parts = parts }
-    func next() throws -> HanlinChatStructuredPart {
+    func next(promptDescription: String) throws -> HanlinChatStructuredPart {
         guard !parts.isEmpty else { throw HanlinHostError.invalidArguments }
+        receivedPrompts.append(promptDescription)
         return parts.removeFirst()
     }
 }
@@ -26,7 +28,7 @@ private struct AppPartModel: LanguageModelV3 {
         throw HanlinHostError.unsupportedProviderCapability
     }
     func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult {
-        let content = try await queue.next().providerContent()
+        let content = try await queue.next(promptDescription: String(describing: options.prompt)).providerContent()
         return .init(stream: AsyncThrowingStream { c in
             c.yield(.custom(content))
             c.yield(.finish(finishReason: .init(unified: .stop), usage: .init(), providerMetadata: nil))
@@ -225,6 +227,51 @@ private struct AppPartModel: LanguageModelV3 {
         #expect(restored.replayed == originalBindings)
         #expect(restored.installed.first != originalBindings.first?.session)
         #expect(restored.live.first?.reference.rowID == rows[2])
+    }
+
+    @Test func originalHostActionContinuesThroughTheSameOwnerEngineAndCanonicalStore() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original action conversation", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), scene = UUID()
+        let rows = [UUID(), UUID()], runs = [UUID(), UUID()]
+        let queue = AppPartQueue(try rows.map {
+            try HanlinChatStructuredPart(messageID: $0, partID: UUID(), sequence: 0, payload: .textDelta("Original reply"))
+        })
+        let owner = HanlinAppAgentSessionOwner(), recorder = AppPresentationRecorder()
+        owner.presentation = recorder
+        let config = configuration()
+        var constructions = 0
+        for index in 0..<2 {
+            let interaction: HanlinHostInteractionRequest?
+            if index == 1 {
+                interaction = try owner.inlineInteraction(rowID: rows[0], partID: "original-form",
+                    actionID: "phase2-tool-submit", arguments: .object(["name": .string("Grace")]))
+            } else { interaction = nil }
+            let stream = try await owner.stream(request: .init(conversation: row, conversationID: id,
+                sceneID: scene, rowID: rows[index], uiRunID: runs[index], temporary: false, interaction: interaction),
+                modelContext: context, configuration: config,
+                engineFactory: { constructions += 1; return factory(config, queue: queue) },
+                toolAdapter: nil, messages: [.init(role: .user, text: "Show the original form")], systemPrompt: nil)
+            for try await event in stream {
+                #expect(event.interactionOrigin == interaction?.origin)
+                try owner.receive(event, uiRunID: runs[index])
+            }
+            try owner.producerStreamDrained(uiRunID: runs[index])
+        }
+        #expect(constructions == 1)
+        #expect(recorder.installed.count == 1)
+        #expect(recorder.live.map(\.reference.rowID) == rows)
+        #expect(Set(recorder.live.map(\.canonicalRunID)).count == 2)
+        let prompts = await queue.receivedPrompts
+        #expect(prompts.count == 2)
+        #expect(prompts[1].contains("phase2-tool-submit"))
+        #expect(prompts[1].contains("Grace"))
+        await owner.invalidate()
+        #expect(throws: HanlinHostError.staleContext) {
+            try owner.inlineInteraction(rowID: rows[0], partID: "original-form",
+                actionID: "phase2-tool-submit", arguments: .object(["name": .string("Grace")]))
+        }
     }
 
     @Test func temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite() async throws {

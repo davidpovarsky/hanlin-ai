@@ -313,16 +313,22 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         defer { secondOwner.cancel() }
         let model = SplitComponentModel()
         let config = HanlinChatModelConfiguration(modelID: "second-owner", endpoint: URL(filePath: "/fixture"), apiKey: "", supportsToolUse: false)
+        var attemptedEngineCreation = false
         do {
             _ = try await secondOwner.stream(request: .init(conversation: harness.row, conversationID: original.chat,
                 sceneID: UUID(), rowID: secondRow.id, uiRunID: UUID(), temporary: false, interaction: nil),
                 modelContext: context, configuration: config,
-                engineFactory: { HanlinAISDKAgentEngine(configuration: config, model: .v3(model)) },
+                engineFactory: {
+                    attemptedEngineCreation = true
+                    return HanlinAISDKAgentEngine(configuration: config, model: .v3(model))
+                },
                 toolAdapter: nil, messages: [.init(role: .user, text: "Do not conceal the pending original writer")], systemPrompt: nil)
             Issue.record("Unreconciled original operation allowed another model turn")
         } catch { #expect(error as? HanlinHostError == .unresolvedWrite) }
+        #expect(!attemptedEngineCreation)
         #expect(harness.coordinator.hasRunningSession(for: original.chat))
-        #expect(harness.owner.session?.isRunning == true && secondOwner.session?.isRunning == false)
+        #expect(harness.owner.session?.isRunning == true)
+        #expect(secondOwner.session == nil)
         #expect(harness.probe.count == 1)
     }
 

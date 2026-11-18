@@ -195,6 +195,11 @@ final class HanlinAppAgentSessionOwner {
                 messages: [HanlinAISDKMessage], systemPrompt: String?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
         guard request.conversation.id == request.conversationID else { throw HanlinHostError.staleContext }
+        // Preserve the existing canonical writer before loading/replaying its
+        // record into another owner or constructing another model engine.
+        guard !splitCoordinator.hasRunningSession(for: request.conversationID) else {
+            throw HanlinHostError.unresolvedWrite
+        }
         historyGeneration = nil
         starting = true
         defer { starting = false }
@@ -229,7 +234,7 @@ final class HanlinAppAgentSessionOwner {
                 return await self.consent.request(invocation)
             }
             let originalSession = HanlinAgentSession(identity: identity, host: originalHost, engine: originalEngine,
-                store: originalStore, capabilities: originalHost)
+                store: originalStore, capabilities: originalHost, interactions: originalHost)
             try splitCoordinator.register(session: originalSession, modelContext: modelContext)
             store = originalStore; host = originalHost; session = originalSession; engine = originalEngine; modelConfiguration = configuration
             originalHost.splitCoordinator = splitCoordinator
@@ -290,6 +295,11 @@ final class HanlinAppAgentSessionOwner {
         var effectiveSystemPrompt = systemPrompt
         if let instructions = presentation?.modelInstructions, !instructions.isEmpty {
             effectiveSystemPrompt = [systemPrompt, instructions].compactMap { $0 }.joined(separator: "\n\n")
+        }
+        // Engine preparation and history loading can suspend. Recheck the
+        // original coordinator immediately before admitting this new turn.
+        guard !splitCoordinator.hasRunningSession(for: request.conversationID) else {
+            throw HanlinHostError.unresolvedWrite
         }
         activeUIRunID = request.uiRunID; activeReference = reference; completion = nil
         do {
