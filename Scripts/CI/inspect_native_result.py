@@ -20,11 +20,14 @@ requested = os.environ.get("SELECTED_TESTS", "").strip()
 motion = run == "43771756937" or bool(requested) and all(s.strip().startswith("MotionUITests/") for s in requested.split(","))
 available = json.loads(subprocess.check_output(["gh", "api", f"repos/{repo}/actions/runs/{run}/artifacts"]))
 names = {a["name"] for a in available["artifacts"] if not a["expired"]}
-artifact = f"chat-motion-ui-{run}" if motion and f"chat-motion-ui-{run}" in names else "AI_Hanlin-iOS26-simulator-smoke-logs"
+split = not motion and bool(requested) and f"app-split-{run}" in names
+artifact = (f"app-split-{run}" if split else f"chat-motion-ui-{run}"
+            if motion and f"chat-motion-ui-{run}" in names else "AI_Hanlin-iOS26-simulator-smoke-logs")
 assert artifact in names, "Original native evidence artifact is unavailable"
 subprocess.run(["gh", "run", "download", run, "--repo", repo, "--name", artifact, "--dir", str(raw)], check=True)
 for name in ["08-downstream-unit-test-results.json", "08-downstream-unit-tests.log",
-             "08-nativescript-production-ui-tests.log", "06-diagnostics-build-provenance.json"]:
+             "08-nativescript-production-ui-tests.log", "06-diagnostics-build-provenance.json",
+             "acceptance.json", "storage-summary.json", "test-summary.json", "fixture-provenance.log"]:
     matches = list(raw.rglob(name))
     assert len(matches) <= 1, "Ambiguous original evidence file: " + name
     if matches:
@@ -33,13 +36,16 @@ if motion:
     archive = next(raw.rglob("Motion.xcresult.tar.gz"))
     with tarfile.open(archive) as packed:
         packed.extractall(raw / "expanded", filter="data")
-bundles = list(raw.rglob("Motion.xcresult" if motion else "NativeScriptProductionE2EResult.xcresult"))
+bundles = list(raw.rglob("MiniApps.xcresult" if split else "Motion.xcresult" if motion else "NativeScriptProductionE2EResult.xcresult"))
 assert len(bundles) == 1
 tests = ["MotionUITests/testBRapidReversalPresetSwitchAndPersistence()", "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()"] if motion else ["HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()"]
 if requested:
     tests = []
     for selected in requested.split(","):
-        selected = selected.strip().removeprefix("AI_HLYUITests/").removesuffix("()")
+        selected = selected.strip().removesuffix("()")
+        if selected.count("/") == 2:
+            target, selected = selected.split("/", 1)
+            assert target == ("HanlinMiniAppsUITests" if split else "AI_HLYUITests"), "Wrong native test target"
         assert re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*/[A-Za-z_][A-Za-z_0-9]*", selected), "Select exact original UI methods"
         tests.append(selected + "()")
 assert 1 <= len(tests) <= 20, "Bound the original attachment inspection"
