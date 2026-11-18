@@ -116,7 +116,10 @@ def main():
         build = base + ['build-for-testing', '-resultBundlePath', str(EVIDENCE/'Build.xcresult')]
         state['build_command'] = build
         state['status'] = 'BUILD_FAILED'
-        command(build, 'build.log', timeout=1200)
+        # Run 44270714044 exhausted the 20-minute cold compilation budget while
+        # Swift package compilation still progressed on a 3-core/7-GiB runner.
+        # Bound build preparation separately; UI/startup deadlines stay unchanged.
+        command(build, 'build.log', timeout=2400)
         state['build'] = 'EXECUTED_PASS'
         state['status'] = 'PACKAGING_FAILED'
         app_product = derived/'Build/Products/Debug-iphonesimulator/HanlinMiniApps.app'

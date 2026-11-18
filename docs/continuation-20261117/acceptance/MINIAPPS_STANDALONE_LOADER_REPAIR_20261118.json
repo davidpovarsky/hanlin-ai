@@ -48,11 +48,18 @@
     "python_syntax": "PASS",
     "original_target_graph_validator": "PASS",
     "git_diff_check": "PASS",
-    "native_after_repair": "PENDING"
+    "native_after_repair": "NOT_RUN_BUILD_TIMEOUT_44270714044"
   },
   "reference": "https://developer.apple.com/forums/thread/736719",
   "unchanged": [
     "Original runtime engines, package fixtures, all UI assertions, identifiers, entitlements and data remain unchanged.",
     "No simulator first-launch error is ignored or retried and no synthetic group directories are introduced."
-  ]
+  ],
+  "subsequent_attempt": {
+    "run": 44270714044,
+    "sha": "f6eafaac1d5a7bb50015a142a0e4882e1d5017d6",
+    "build": "TIMED_OUT_AFTER_1200_SECONDS",
+    "startup_and_ui": "NOT_RUN",
+    "report": "docs/continuation-20261117/acceptance/MINIAPPS_COLD_BUILD_BUDGET_20261118.json"
+  }
 }

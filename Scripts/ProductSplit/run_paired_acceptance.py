@@ -127,8 +127,10 @@ def main():
             # No team, provisioning profile, application ID or distribution signing is changed.
             "CODE_SIGNING_ALLOWED=YES", "CODE_SIGNING_REQUIRED=YES", "CODE_SIGN_IDENTITY=-"]
         state["status"] = "BUILD_FAILED"
+        # Same bounded cold MiniApps compilation budget as standalone acceptance.
+        # This does not extend first-launch, routing, cancellation or UI deadlines.
         command(base + ["-scheme", "HanlinMiniApps", "build",
-            "-resultBundlePath", str(EVIDENCE / "MiniBuild.xcresult")], "mini-build.log", timeout=1500)
+            "-resultBundlePath", str(EVIDENCE / "MiniBuild.xcresult")], "mini-build.log", timeout=2400)
         state["mini_build"] = "EXECUTED_PASS"
         # The original full-app workflow uses this exact pinned upstream generator:
         # Xcode 27.2 advertises its outputs but can omit the generator build commands.

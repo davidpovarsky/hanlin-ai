@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-18T09:50:03.735691+00:00",
+  "base_sha": "c0ebf13e69601fa50dfd04ababf362803500af87",
+  "run": {
+    "id": 44270714044,
+    "sha": "f6eafaac1d5a7bb50015a142a0e4882e1d5017d6",
+    "status": "BUILD_TIMEOUT_BEFORE_STARTUP_OR_UI",
+    "ui": "NOT_RUN",
+    "standalone_loader_repair": "NOT_YET_EXERCISED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44270714044"
+  },
+  "original_artifact": {
+    "id": 14415051422,
+    "bytes": 16554320,
+    "api_zip_sha256": "39aa25eb447905db41446f027db1488179bd504cb73f84e8bdde5016594481f5",
+    "full_zip_digest_recomputed": false,
+    "selected_entry_integrity": "Authenticated same-run API range extraction with ZIP CRC and per-file SHA-256",
+    "files": {
+      "acceptance.json": "62c66d2b78017483aec01269906b75ba3903d4d29c92d31cdeff26ad1933bbd4",
+      "commands.jsonl": "348091ee5779c6069371c271c68531482f33d44ee8e769a78cbda318fbcd8d29",
+      "build.log": "0823da13ae2926692481519135261cafad7db1de35f21774ba9ac2d5ce7ec738",
+      "failure-processes.txt": "14277898e537152a3cf6dc64bcdd4f3b59175efcdc878b374f03fb0c6757cde1",
+      "failure-memory.txt": "bf9d7c253ac8914ae58165178dd7d07b839b2bdd179ccf8020f1785ba0da73af",
+      "before-boot-host-resources.txt": "8f1c8925647f04af1a1be4971bf5da70ce32f357a192f0373e4d2580881772fb"
+    }
+  },
+  "observed": {
+    "build_timeout_seconds": 1200,
+    "recorded_build_duration_seconds": 1203.075017625,
+    "runner_cpu_count": 3,
+    "runner_memory_bytes": 7516192768,
+    "last_build_actions": "SwiftAISDK provider utilities compiling/linking; original Expo headers emit nullability warnings.",
+    "compiler_error_diagnostics_in_retained_build_log": 0,
+    "inference": "The finite build-preparation budget expired before startup. This does not establish successful compilation, a runtime regression, or a fixed loader."
+  },
+  "repair": {
+    "standalone_miniapps_build_budget_seconds": 2400,
+    "paired_miniapps_build_budget_seconds": 2400,
+    "preserved": [
+      "Every existing test selector and semantic assertion",
+      "UI, launch, App Group, cancellation and product-performance deadlines",
+      "Original runtime engines, fixture data, source identities and cache ownership"
+    ]
+  },
+  "validation": {
+    "python_syntax": "EXECUTED_PASS",
+    "native_retry": "BLOCKED_PENDING_EXPLICIT_PUBLIC_SOURCE_PUBLICATION_APPROVAL"
+  }
+}
