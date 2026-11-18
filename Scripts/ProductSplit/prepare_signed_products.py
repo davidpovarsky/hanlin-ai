@@ -1,4 +1,4 @@
-"""Archive/export the original products using owner-authorized Xcode automatic signing.
+"""Archive/export the original products using the owner's existing local identity.
 
 No upload, tester invitation, notification, profile revocation or device registration.
 Build unsigned device archives, then export using only the existing distribution
@@ -25,6 +25,9 @@ import time
 import zipfile
 
 from audit_release_resources import ROLES, certificate, decode, evaluate_profile
+from resolve_signing_profiles import (
+    resolve_original_profiles, install_profile, remove_installed_profiles,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(os.environ["SPLIT_EVIDENCE"]) / "signed-products"
@@ -54,6 +57,7 @@ def main():
         keychain = folder / "owner.keychain-db"
         old_default = None
         old_search = None
+        installed_profiles = []
 
         def run(argv, label, timeout=60, required=True):
             started = time.monotonic()
@@ -100,10 +104,6 @@ def main():
                 os.environ["APPLE_CERTIFICATE_PASSWORD"].encode())
             # Export must use this already-existing identity, never request a new one.
             distribution_identity = distribution_cert.fingerprint(hashes.SHA1()).hex().upper()
-            key_path = folder / "AuthKey.p8"
-            key_path.write_bytes(decode(os.environ["ASC_KEY_P8"]))
-            key_path.chmod(0o600)
-            private_values.append(key_path.read_text())
             cert_path = folder / "distribution.p12"
             cert_path.write_bytes(decode(os.environ["APPLE_CERTIFICATE_P12_B64"]))
             cert_path.chmod(0o600)
@@ -121,6 +121,21 @@ def main():
             quiet(["security", "list-keychains", "-d", "user", "-s", keychain, *old_search])
             quiet(["security", "default-keychain", "-d", "user", "-s", keychain])
             cert_path.unlink()
+            identities = quiet(["security", "find-identity", "-v", "-p", "codesigning", keychain])
+            if not re.search(r'(?m)^\s*\d+\)\s+' + distribution_identity + r'\s+"', identities):
+                raise RuntimeError("The existing distribution identity is not trusted for local code signing")
+            state["existing_distribution_identity"]["os_codesigning_trust"] = "VERIFIED"
+            state["provisioning_profiles"] = []
+            profiles = resolve_original_profiles(cert_sha, folder, state["provisioning_profiles"])
+            # Xcode's current cache and the established legacy cache both receive
+            # the same verified bytes. Cleanup removes only this job's own files.
+            profile_directories = [
+                Path.home() / "Library/Developer/Xcode/UserData/Provisioning Profiles",
+                Path.home() / "Library/MobileDevice/Provisioning Profiles",
+            ]
+            for profile in profiles:
+                install_profile(profile, profile_directories, installed_profiles)
+            profile_mapping = {profile["bundle"]: profile["uuid"] for profile in profiles}
             _, sdk = run(["xcrun", "--sdk", "iphoneos", "--show-sdk-version"], "device-sdk")
             if int(sdk.strip().split(".")[0]) != 27:
                 raise RuntimeError("The current stable iOS 27 SDK is required")
@@ -135,21 +150,23 @@ def main():
             run([sys.executable, "Scripts/CI/stage_a2ui_schemas.py", "--source-packages-path", packages,
                  "--derived-data-path", derived, "--evidence", OUT / "original-a2ui-schemas"],
                  "original-schema-generator", 360)
-            auth = ["-allowProvisioningUpdates", "-authenticationKeyPath", key_path,
-                    "-authenticationKeyID", os.environ["ASC_KEY_ID"],
-                    "-authenticationKeyIssuerID", os.environ["ASC_ISSUER_ID"]]
             export_options = folder / "ExportOptions.plist"
-            export_options.write_bytes(plistlib.dumps({
+            options = {
                 "method": "app-store-connect", "destination": "export",
-                "signingStyle": "automatic", "teamID": os.environ["APPLE_TEAM_ID"],
+                "signingStyle": "manual", "teamID": os.environ["APPLE_TEAM_ID"],
                 "signingCertificate": distribution_identity, "uploadSymbols": False,
                 "manageAppVersionAndBuildNumber": False, "stripSwiftSymbols": True
-            }))
+            }
             for role, scheme, bundle in [("miniapps", "HanlinMiniApps", "com.itorah.hanlinminiapps"),
                                          ("ai", "AI_HLY", "com.itorah.chavrusachat")]:
                 product = {"role": role, "bundle_id": bundle, "archive": "NOT_RUN", "export": "NOT_RUN",
                            "entitlements": "NOT_RUN"}
                 state["products"].append(product)
+                selected_bundles = {b for r, b, _, _ in ROLES
+                                    if (r == "miniapps") == (role == "miniapps")}
+                options["provisioningProfiles"] = {b: profile_mapping[b] for b in selected_bundles}
+                export_options.write_bytes(plistlib.dumps(options))
+                export_options.chmod(0o600)
                 archive = ROOT / "build/ReleaseArchives" / (scheme + ".xcarchive")
                 archive.parent.mkdir(exist_ok=True)
                 export = OUT / role
@@ -170,7 +187,7 @@ def main():
                 product["version"] = application.get("CFBundleShortVersionString")
                 product["build"] = application.get("CFBundleVersion")
                 result, _ = run(["xcodebuild", "-exportArchive", "-archivePath", archive,
-                    "-exportPath", export, "-exportOptionsPlist", export_options, *auth],
+                    "-exportPath", export, "-exportOptionsPlist", export_options],
                     role + "-export", 600, required=False)
                 product["export"] = "EXECUTED_PASS" if result == 0 else "EXECUTED_FAIL"
                 if result:
@@ -235,6 +252,10 @@ def main():
                 state["status"] = "PREPARATION_FAILED"
         finally:
             cleanup_errors = []
+            try:
+                remove_installed_profiles(installed_profiles)
+            except Exception as error:
+                cleanup_errors.append(sanitize(str(error)))
             for argv in [
                 ["security", "default-keychain", "-d", "user", "-s", old_default] if old_default else None,
                 ["security", "list-keychains", "-d", "user", "-s", *old_search] if old_search else None,
