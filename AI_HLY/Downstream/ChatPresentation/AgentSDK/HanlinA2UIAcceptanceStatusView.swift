@@ -1,4 +1,4 @@
-#if HANLIN_A2UI_POC && DEBUG && targetEnvironment(simulator)
+#if HANLIN_A2UI_POC && (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
 import SwiftUI
 
 /// Only the isolated native HTTP fixture exposes this observation. Values come from the
