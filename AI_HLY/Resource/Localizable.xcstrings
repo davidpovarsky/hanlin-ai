@@ -14402,6 +14402,28 @@
           }
         }
       }
+    },
+    "Your mini app visibility could not be saved. Your previous choices have been kept.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your mini app visibility could not be saved. Your previous choices have been kept."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן לשמור את הגדרות ההצגה של המיני־אפליקציות. הבחירות הקודמות שלך נשמרו."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法保存迷你应用的显示设置。你之前的选择已保留。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

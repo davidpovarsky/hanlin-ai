@@ -197,7 +197,12 @@ final class HanlinScriptingPlatform {
             transactionRoot: productTransferTransactionRoot())
     }
 
+    func recordCompiledMiniAppStorageUse() {
+        needsFreshProcessForTransfer = true
+    }
+
     private func beginProductTransfer() throws {
+        try HanlinMiniAppHost.shared.validateVisibilityStorage()
         guard !needsFreshProcessForTransfer else { throw HanlinProductTransferError.restartRequired }
         let idle: Bool
         switch activity {

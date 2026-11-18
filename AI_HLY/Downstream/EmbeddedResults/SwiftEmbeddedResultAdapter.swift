@@ -10,6 +10,7 @@ public enum SwiftEmbeddedResultAdapter {
         handler: String,
         payload: HanlinEmbeddedResultPayload?
     ) -> (any HanlinEmbeddedResultSession)? {
+        guard !HanlinScriptingPlatform.shared.isTransferringProductData else { return nil }
         BuiltinCanonicalRegistrations.ensureRegistered()
         guard let provider = HanlinCompiledMiniAppRegistry.shared.provider(for: appID) else {
             return nil
@@ -40,6 +41,7 @@ public enum SwiftEmbeddedResultAdapter {
             return nil
         }
 
+        HanlinScriptingPlatform.shared.recordCompiledMiniAppStorageUse()
         return AnyEmbeddedResultSession(
             engine: .swift,
             appID: appID,

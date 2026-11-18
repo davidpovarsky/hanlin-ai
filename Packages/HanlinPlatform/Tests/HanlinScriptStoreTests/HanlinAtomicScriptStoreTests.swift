@@ -288,6 +288,8 @@ struct HanlinProductTransferTests {
         #expect(received == receipt)
         let reopened = try HanlinAtomicScriptStore(root: fixture.targetRoot)
         #expect(try await reopened.restore() == originalPackages)
+        let visibility = try HanlinMiniAppVisibilityStore(dataRoot: fixture.targetData, legacyHiddenIDs: [])
+        #expect(try visibility.hiddenIDs() == [fixture.appID, fixture.otherAppID])
         let storage = try HanlinMiniAppDataStore(root: fixture.targetData)
         #expect(try await storage.read(appID: fixture.appID, area: .state, path: "saved/value.json")
                 == Data("ערך מקורי — 汉林".utf8))
@@ -299,6 +301,7 @@ struct HanlinProductTransferTests {
                                                    transactionRoot: fixture.transactionRoot)
         #expect(try fixture.bytes(fixture.targetRoot) == destinationBefore)
         #expect(try fixture.bytes(fixture.targetData) == destinationDataBefore)
+        #expect(try visibility.hiddenIDs() == [fixture.otherAppID])
         #expect(try fixture.bytes(fixture.base.storeRoot) == sourceBefore)
     }
 
@@ -339,6 +342,14 @@ struct HanlinProductTransferTests {
         defer { receivedSQLite.closeAll() }
         _ = try receivedSQLite.open(handle: "received", name: "notes.sqlite3")
         #expect(try receivedSQLite.fetchAll(handle: "received", sql: "SELECT value FROM notes").first?["value"] as? String == "kept")
+        // If a read-only reopen changes durable bytes, preserve the complete
+        // failing inventory in native diagnostics before rejecting rollback.
+        HanlinSQLiteService.closeConnections(under: fixture.targetData)
+        let journal = try #require(HanlinProductTransferRecovery.load(fixture.transactionRoot))
+        let readInstalled = try HanlinTransferTree.capture(fixture.targetRoot)
+        let readData = try HanlinTransferTree.capture(fixture.targetData)
+        #expect(readInstalled == journal.afterInstalled)
+        #expect(readData == journal.afterData)
         try await fixture.target.rollbackProductTransfer(dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot)
         #expect(receivedSQLite.openDatabaseCount == 0)
         #expect(try fixture.bytes(fixture.targetData) == before)
@@ -544,6 +555,8 @@ private struct ProductTransferFixture {
     }
 
     func seed() async throws {
+        _ = try HanlinMiniAppVisibilityStore(dataRoot: sourceData, legacyHiddenIDs: [appID])
+        _ = try HanlinMiniAppVisibilityStore(dataRoot: targetData, legacyHiddenIDs: [otherAppID])
         _ = try await source.install(plan: base.plan(version: "1.0.0",
             sourceDigest: base.first.manifest.packageContentDigest),
             artifactDirectory: base.first.url, artifactManifest: base.first.manifest)

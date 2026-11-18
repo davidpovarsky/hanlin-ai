@@ -49,7 +49,8 @@ final class HanlinMiniAppHost {
     let requestBroker: HanlinMiniAppRequestBroker
     private let authorization: HanlinMiniAppAuthorizationPolicy
     private let defaults: UserDefaults
-    private let hiddenKey = "hanlin.canonical-mini-apps.hidden.v1"
+    private static let hiddenKey = "hanlin.canonical-mini-apps.hidden.v1"
+    private let visibilityStore: HanlinMiniAppVisibilityStore?
     private var registeredRouteTargets: Set<HanlinAppID> = []
 
     private init(defaults: UserDefaults = .standard) {
@@ -60,13 +61,23 @@ final class HanlinMiniAppHost {
             await policy.authorize(request)
         }
         do {
-            dataStore = try HanlinMiniAppDataStore(root: HanlinMiniAppDataStore.applicationSupportRoot())
+            let root = try HanlinMiniAppDataStore.applicationSupportRoot()
+            dataStore = try HanlinMiniAppDataStore(root: root)
         } catch {
             preconditionFailure("Canonical Mini App storage is unavailable: \(error)")
         }
-        if let data = defaults.data(forKey: hiddenKey),
-           let rawIDs = try? JSONDecoder().decode([String].self, from: data) {
-            hiddenAppIDs = Set(rawIDs.compactMap(HanlinAppID.init(rawValue:)))
+        do {
+            let legacy = try defaults.data(forKey: Self.hiddenKey).map { try JSONDecoder().decode([String].self, from: $0) } ?? []
+            let visibility = try HanlinMiniAppVisibilityStore(dataRoot: HanlinMiniAppDataStore.applicationSupportRoot(),
+                legacyHiddenIDs: Set(legacy.compactMap(HanlinAppID.init(rawValue:))))
+            let hidden = try visibility.hiddenIDs()
+            visibilityStore = visibility
+            hiddenAppIDs = hidden
+        } catch {
+            // A corrupt preference must not crash the AI app or silently reset
+            // the owner's choices. Catalog/transfer admission reports the error.
+            visibilityStore = nil
+            lastError = String(localized: "Your mini app visibility could not be saved. Your previous choices have been kept.")
         }
         Task {
             await registerFallbackRoutes()
@@ -147,6 +158,9 @@ final class HanlinMiniAppHost {
             ])
             let refreshed = try await HanlinCanonicalMiniAppCatalog(discovery: discovery).items()
             items = refreshed
+            guard let visibilityStore else { throw HanlinMiniAppVisibilityError.invalidState }
+            hiddenAppIDs = try visibilityStore.hiddenIDs()
+            defaults.set(try JSONEncoder().encode(hiddenAppIDs.map(\.rawValue).sorted()), forKey: Self.hiddenKey)
             await authorization.replace(with: refreshed)
             await registerFallbackRoutes()
             lastError = nil
@@ -156,12 +170,24 @@ final class HanlinMiniAppHost {
     }
 
     func setHidden(_ hidden: Bool, appID: HanlinAppID) {
-        if hidden { hiddenAppIDs.insert(appID) } else { hiddenAppIDs.remove(appID) }
-        let values = hiddenAppIDs.map(\.rawValue).sorted()
-        defaults.set(try? JSONEncoder().encode(values), forKey: hiddenKey)
+        guard !HanlinScriptingPlatform.shared.isTransferringProductData else { return }
+        do {
+            guard let visibilityStore else { throw HanlinMiniAppVisibilityError.invalidState }
+            try visibilityStore.setHidden(hidden, appID: appID)
+            hiddenAppIDs = try visibilityStore.hiddenIDs()
+            defaults.set(try JSONEncoder().encode(hiddenAppIDs.map(\.rawValue).sorted()), forKey: Self.hiddenKey)
+        } catch {
+            lastError = String(localized: "Your mini app visibility could not be saved. Your previous choices have been kept.")
+        }
     }
 
     func isHidden(_ appID: HanlinAppID) -> Bool { hiddenAppIDs.contains(appID) }
+
+    func validateVisibilityStorage() throws {
+        guard let visibilityStore else { throw HanlinMiniAppVisibilityError.invalidState }
+        _ = try visibilityStore.hiddenIDs()
+    }
+
 
     func swiftDestination(for item: HanlinMiniAppCatalogItem) throws -> SwiftDestination {
         guard !HanlinScriptingPlatform.shared.isTransferringProductData else {
@@ -189,6 +215,9 @@ final class HanlinMiniAppHost {
                 }
             }
         )
+        // A compiled view can launch its own Tasks. Dismissal does not prove
+        // those writes finished; a later transfer requires a fresh process.
+        HanlinScriptingPlatform.shared.recordCompiledMiniAppStorageUse()
         return SwiftDestination(
             appID: item.id,
             view: provider.makeRootView(context: context)
