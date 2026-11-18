@@ -155,11 +155,16 @@ final class MediaReplayUITests: XCTestCase {
                       "The real Quick Look image must replace the gallery presentation")
         XCTAssertGreaterThan(previewImage.frame.width, 1)
         XCTAssertGreaterThan(previewImage.frame.height, 1)
-        let close = app.buttons.matching(NSPredicate(format: "label == 'Done' OR label == 'Close'")).firstMatch
+        // The actual iOS 27 Quick Look AX tree exposes a lowercase localized
+        // label ("close") and this stable native control identifier.
+        let close = preview.buttons["QLOverlayDoneButtonAccessibilityIdentifier"].firstMatch
         if !close.exists { previewImage.tap() }
         XCTAssertTrue(close.waitForExistence(timeout: 10), "Native Quick Look must expose its close control")
+        XCTAssertTrue(close.isHittable)
         record("gallery-native-quicklook")
         close.tap()
+        XCTAssertTrue(preview.waitForNonExistence(timeout: 10),
+                      "The native close control must dismiss the actual Quick Look presentation")
         let gallery = app.scrollViews.matching(NSPredicate(format: "label == 'Image gallery'")).firstMatch
         XCTAssertTrue(gallery.exists)
         gallery.swipeLeft()
