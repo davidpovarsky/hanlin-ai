@@ -21,7 +21,10 @@ extension HanlinSkillCatalog {
     func refreshInvocationPolicies(store: SkillStore = .shared) async throws {
         let descriptors = allSkills()
         let documents = descriptors.compactMap { descriptor -> (HanlinSkillID, SkillMarkdownDocument)? in
-            markdownDocument(for: descriptor.id).map { (descriptor.id, $0) }
+            guard let document = markdownDocument(for: descriptor.id),
+                  SkillRuntimeOpenClaw.requiresPolicy(document)
+                    || SkillRuntimeOpenClaw.hasInvocationMetadata(document) else { return nil }
+            return (descriptor.id, document)
         }
         guard !documents.isEmpty else {
             invocationPolicyCache = .init()
@@ -50,7 +53,12 @@ extension HanlinSkillCatalog {
     func permitsInvocation(_ id: HanlinSkillID, source: SkillInvocationSource,
                            store: SkillStore = .shared) async throws -> Bool {
         guard resolve(id: id) != nil, store.isSkillEnabled(id: id) else { return false }
-        guard markdownDocument(for: id) != nil else { return true }
+        guard let document = markdownDocument(for: id) else { return true }
+        guard document.findings.isEmpty else { return false }
+        // Ordinary instructions have no original-policy dependency. An unrelated
+        // policy failure must not start an engine or block their explicit load.
+        guard SkillRuntimeOpenClaw.requiresPolicy(document)
+                || SkillRuntimeOpenClaw.hasInvocationMetadata(document) else { return true }
         try await refreshInvocationPolicies(store: store)
         return cachedInvocationPermitted(id, source: source)
     }
@@ -68,6 +76,9 @@ extension HanlinSkillCatalog {
 
     private func cachedInvocationPermitted(_ id: HanlinSkillID, source: SkillInvocationSource) -> Bool {
         guard let document = markdownDocument(for: id) else { return resolve(id: id) != nil }
+        guard document.findings.isEmpty else { return false }
+        guard SkillRuntimeOpenClaw.requiresPolicy(document)
+                || SkillRuntimeOpenClaw.hasInvocationMetadata(document) else { return true }
         guard let cached = invocationPolicyCache.entries[id], cached.source == document.originalSource,
               cached.report.known, cached.report.rawUpstreamResult?.eligible == true else { return false }
         switch source {

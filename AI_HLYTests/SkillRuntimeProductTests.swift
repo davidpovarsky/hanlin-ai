@@ -80,6 +80,120 @@ struct SkillRuntimeProductTests {
         print("OPENCLAW_EMBEDDED_ORIGINAL_SIX " + String(decoding: try JSONSerialization.data(withJSONObject: report), as: UTF8.self))
     }
 
+
+    /// A selected fresh-process run additionally verifies the printed cold receipt.
+    /// Exclude other engine-using suites; .serialized does not isolate peer suites.
+    /// A warm full-suite invocation never claims to prove cold startup.
+    @Test func ordinaryInstructionsLoadReadAndContinueWithoutRuntimeWork() async throws {
+        let before = await AppRuntimeCore.shared.snapshots()
+        let work = InstructionRuntimeWorkWitness()
+        try await RuntimeJobProgress.$reporter.withValue({ job in
+            work.executionIDs.insert(job.executionID)
+        }) {
+            try await importedSkillPlanExecuteAndReopen("instructions")
+        }
+        let after = await AppRuntimeCore.shared.snapshots()
+        #expect(work.executionIDs.isEmpty, "Instruction loading must not submit runtime work")
+        #expect(before.count == RuntimeKind.allCases.count && after.count == before.count)
+        for snapshot in after {
+            let original = try #require(before.first { $0.kind == snapshot.kind })
+            #expect(snapshot.state == original.state,
+                "Instruction loading changed \(snapshot.kind.rawValue) from \(original.state) to \(snapshot.state)")
+            #expect(snapshot.activeExecutionCount == original.activeExecutionCount)
+        }
+        func states(_ snapshots: [RuntimeSnapshot]) -> [[String: Any]] {
+            snapshots.map { ["kind": $0.kind.rawValue, "state": $0.state.rawValue,
+                             "active_executions": $0.activeExecutionCount] }
+        }
+        let cold = before.allSatisfy { $0.state == .stopped && $0.activeExecutionCount == 0 }
+            && after.allSatisfy { $0.state == .stopped && $0.activeExecutionCount == 0 }
+            && work.executionIDs.isEmpty
+        let receipt: [String: Any] = ["schema": 1, "cold_start_observed": cold,
+            "before": states(before), "after": states(after), "observed_job_count": work.executionIDs.count,
+            "route": "real ZIP import / model catalog / load / read / SDK / disable / re-enable"]
+        print("SKILL_INSTRUCTIONS_RUNTIME_WITNESS " +
+            String(decoding: try JSONSerialization.data(withJSONObject: receipt, options: [.sortedKeys]), as: UTF8.self))
+    }
+
+    @Test func ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "instruction-policy-failure-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = SkillStore(rootDirectoryURL: root.appending(path: "store"), onCatalogChange: {})
+        let catalog = HanlinSkillCatalog()
+        let id = try HanlinSkillID(validating: "ordinary-" + UUID().uuidString.lowercased())
+        let instructions = "ORDINARY_INSTRUCTIONS_" + UUID().uuidString
+        let resource = "ORDINARY_RESOURCE_" + UUID().uuidString
+        let guide = root.appending(path: "guide.md")
+        try Data(resource.utf8).write(to: guide)
+        let ordinary = try SkillDocumentParser.parse(Data(
+            "---\nname: \(id.rawValue)\ndescription: Ordinary instruction isolation\n---\n\(instructions)\n".utf8))
+        #expect(ordinary.findings.isEmpty)
+        let descriptor = try HanlinSkillDescriptor(id: id, title: "Ordinary instructions",
+            summary: "Available independently of other policies", instructions: .inline(instructions))
+        catalog.register(descriptor: descriptor, markdownDocument: ordinary,
+            resourceResolver: { $0 == "guide.md" ? guide : nil })
+
+        // Each valid Yams document fits its original 1 MiB limit; the genuine
+        // combined policy DTO exceeds the existing 2 MiB execution boundary.
+        var dependentIDs: Set<HanlinSkillID> = []
+        for index in 0..<3 {
+            let dependent = try HanlinSkillID(validating: "oversized-policy-\(index)")
+            let markdown = "---\nname: \(dependent.rawValue)\ndescription: Bounded policy failure\nmetadata:\n  openclaw:\n    requires:\n      bins: [node]\n    padding: "
+                + String(repeating: "x", count: 720 * 1024) + "\n---\nPolicy-dependent instructions\n"
+            let document = try SkillDocumentParser.parse(Data(markdown.utf8))
+            #expect(document.findings.isEmpty && SkillRuntimeOpenClaw.requiresPolicy(document))
+            catalog.register(descriptor: try HanlinSkillDescriptor(id: dependent, title: "Dependent \(index)",
+                summary: "Must stay unavailable after inspection fails",
+                instructions: .inline("Policy-dependent instructions")), markdownDocument: document)
+            dependentIDs.insert(dependent)
+        }
+        let visible = await catalog.modelVisibleSkills(store: store)
+        #expect(visible.map(\.id) == [id])
+        #expect(catalog.invocationPolicyError?.contains("byte budget") == true)
+        #expect(Set(visible.map(\.id)).isDisjoint(with: dependentIDs))
+        try await exerciseInstructionOnlySkill(id: id, catalog: catalog, store: store,
+            instructions: instructions, relativePath: "guide.md", expectedResource: resource)
+        print("SKILL_INSTRUCTIONS_POLICY_FAILURE_ISOLATED real_policy_byte_budget / load / read / SDK / enablement")
+    }
+
+    private func exerciseInstructionOnlySkill(id: HanlinSkillID, catalog: HanlinSkillCatalog,
+        store: SkillStore, instructions: String, relativePath: String, expectedResource: String) async throws {
+        let visible = await catalog.modelVisibleSkills(store: store)
+        #expect(visible.contains { $0.id == id })
+        #expect(try await catalog.permitsInvocation(id, source: .user, store: store))
+        let session = AssistantCapabilitySession(isTemporaryChat: true)
+        let args = String(decoding: try JSONSerialization.data(withJSONObject: ["skill_id": id.rawValue]), as: UTF8.self)
+        let loaded = await LoadSkillTool.execute(argumentsJSON: args, session: session, catalog: catalog, store: store)
+        #expect(!loaded.hasPrefix("Error:") && loaded.contains(instructions) && session.isSkillLoaded(id))
+        let readArgs = String(decoding: try JSONSerialization.data(withJSONObject:
+            ["skill_id": id.rawValue, "relative_path": relativePath]), as: UTF8.self)
+        let read = await ReadSkillResourceTool.execute(argumentsJSON: readArgs, session: session, catalog: catalog, store: store)
+        #expect(!read.hasPrefix("Error:") && read.contains(expectedResource))
+        let authority = try HanlinCanonicalToolAuthority.build(nativeSources: [], mcpTools: [])
+        let executors = AssistantToolBridge.Executors(
+            executeNative: { _, _, _, _ in NativeToolResult(modelText: "No execution in an instruction-only Skill", outcome: .failed) },
+            executeScripting: { _, _ in NativeToolResult(modelText: "No execution in an instruction-only Skill", outcome: .failed) })
+        let adapter = HanlinAISDKToolAdapter(session: session,
+            preparedTools: .init(authority: authority, executors: executors), catalog: catalog, skillStore: store)
+        let prepared = await adapter.prepareStep(stepNumber: 0)
+        #expect(prepared.loadedSkillIDs == [id.rawValue])
+        #expect(prepared.loadedSkillInstructions.contains { $0.contains(instructions) })
+
+        store.setSkillEnabled(id: id, enabled: false)
+        #expect(try await !catalog.permitsInvocation(id, source: .user, store: store))
+        #expect(try await !catalog.permitsInvocation(id, source: .model, store: store))
+        let deniedRead = await ReadSkillResourceTool.execute(argumentsJSON: readArgs, session: session, catalog: catalog, store: store)
+        #expect(deniedRead.hasPrefix("Error:") && !deniedRead.contains(expectedResource))
+        let deniedLoad = await LoadSkillTool.execute(argumentsJSON: args, session: session, catalog: catalog, store: store)
+        #expect(deniedLoad.hasPrefix("Error:"))
+        let disabled = await adapter.prepareStep(stepNumber: 1)
+        #expect(disabled.loadedSkillIDs.isEmpty && disabled.loadedSkillInstructions.isEmpty)
+        store.setSkillEnabled(id: id, enabled: true)
+        #expect(try await catalog.permitsInvocation(id, source: .model, store: store))
+        #expect(!session.isSkillLoaded(id), "Re-enabling must require a new explicit load")
+    }
+
     nonisolated static let fixtures = ["instructions", "node", "python", "typescript", "jsc", "argv", "unicode",
         "missing-module", "unknown-engine", "disabled", "denied", "wrong-engine", "failure",
         "cancel", "restart", "reinstall", "openclaw", "shell", "requirements", "toml", "package-manifest", "hidden-resource"]
@@ -140,7 +254,9 @@ struct SkillRuntimeProductTests {
         if fixture == "instructions" {
             let plan = try await service.plan(skillID: id, catalog: catalog, store: store)
             #expect(plan.action.kind == .instructions && !plan.isExecutable && plan.lastTest == nil)
-            print("SKILL_PRODUCT PARSE_ONLY \(fixture) \(id.rawValue)")
+            try await exerciseInstructionOnlySkill(id: id, catalog: catalog, store: store,
+                instructions: "Use the imported resource.", relativePath: "SKILL.md", expectedResource: name)
+            print("SKILL_PRODUCT INSTRUCTIONS_LOADED \(fixture) \(id.rawValue)")
             return
         }
         let engine: RuntimeKind = ["python", "unicode", "requirements", "toml"].contains(fixture) ? .localPython
@@ -244,4 +360,9 @@ struct SkillRuntimeProductTests {
             staged.cleanup(); Issue.record("Hostile fixture was admitted: \(fixture)")
         } catch { #expect(!FileManager.default.fileExists(atPath: root.appending(path: "escape.txt").path)) }
     }
+}
+
+@MainActor
+private final class InstructionRuntimeWorkWitness {
+    var executionIDs: Set<UUID> = []
 }
