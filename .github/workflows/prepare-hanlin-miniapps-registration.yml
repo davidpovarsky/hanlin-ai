@@ -1,0 +1,43 @@
+name: Prepare original Hanlin MiniApps registration
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_bundle_id:
+        description: Original MiniApps bundle ID to register using the existing Apple account
+        required: true
+        type: string
+        default: com.itorah.hanlinminiapps
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hanlin-miniapps-registration
+  cancel-in-progress: false
+
+jobs:
+  register-original-product:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Prepare the existing release authentication library
+        run: |
+          python3 -m venv "$RUNNER_TEMP/hanlin-registration"
+          "$RUNNER_TEMP/hanlin-registration/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+      - name: Register exact original bundle and read back permitted capability settings
+        env:
+          EXPECTED_MINIAPPS_BUNDLE: ${{ inputs.expected_bundle_id }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: '"$RUNNER_TEMP/hanlin-registration/bin/python" Scripts/ProductSplit/register_miniapps_bundle.py'
+      - name: Retain sanitized registration facts
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: miniapps-registration-${{ github.run_id }}
+          path: build/miniapps-registration/sanitized-report.json
+          if-no-files-found: error
+          retention-days: 14
