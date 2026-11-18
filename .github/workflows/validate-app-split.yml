@@ -3,6 +3,11 @@ name: Validate standalone MiniApps target
 on:
   workflow_call:
     inputs:
+      signed_release_archives:
+        description: Archive original products and export locally using the existing distribution identity
+        type: boolean
+        required: false
+        default: false
       audit_release_resources:
         description: Read existing Apple signing and registration metadata without signing or publishing
         type: boolean
@@ -21,6 +26,11 @@ on:
         default: false
   workflow_dispatch:
     inputs:
+      signed_release_archives:
+        description: Archive original products and export locally using the existing distribution identity
+        type: boolean
+        required: false
+        default: false
       audit_release_resources:
         description: Read existing Apple signing and registration metadata without signing or publishing
         type: boolean
@@ -45,7 +55,7 @@ on:
 concurrency:
   # Separate acceptance scopes use distinct job checkouts and owned simulators.
   # A paired run must not cancel standalone storage/UI evidence still being collected.
-  group: standalone-miniapps-${{ github.ref }}-${{ inputs.audit_release_resources && 'release-audit' || inputs.paired_product_acceptance && 'paired' || 'standalone' }}
+  group: standalone-miniapps-${{ github.ref }}-${{ inputs.audit_release_resources && 'release-audit' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && 'paired' || 'standalone' }}
   cancel-in-progress: true
 
 permissions:
@@ -92,7 +102,7 @@ jobs:
   miniapps:
     if: ${{ !inputs.audit_release_resources }}
     runs-on: xcode-27
-    timeout-minutes: ${{ inputs.paired_product_acceptance && 90 || 60 }}
+    timeout-minutes: ${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 90 || 60 }}
     env:
       SPLIT_EVIDENCE: ${{ github.workspace }}/build/app-split-evidence
       GH_TOKEN: ${{ github.token }}
@@ -168,10 +178,12 @@ jobs:
           restore-keys: |
             split-derived-v2-${{ runner.os }}-${{ steps.split-platform.outputs.arch }}-${{ steps.split-platform.outputs.xcode_build }}-${{ steps.split-platform.outputs.sdk }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'RuntimeDependencies.lock.json', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'Scripts/CI/xcode_cache_inputs.py') }}-
       - name: Validate authentic unchanged Host proof before reuse
+        if: ${{ !inputs.signed_release_archives }}
         id: host-proof
         shell: bash
         run: python3 Scripts/ProductSplit/restore_host_proof.py
       - name: Execute strict foreground route and ledger cases on the actual Mac
+        if: ${{ !inputs.signed_release_archives }}
         shell: bash
         run: |
           set -euo pipefail
@@ -190,7 +202,7 @@ jobs:
           shutil.copytree(origin, destination / 'raw-origin')
           PY
       - name: Reproduce and verify affected package lifecycle on the actual Mac first
-        if: steps.host-proof.outputs.reused != 'true'
+        if: ${{ !inputs.signed_release_archives && steps.host-proof.outputs.reused != 'true' }}
         shell: bash
         run: |
           set -euo pipefail
@@ -251,13 +263,30 @@ jobs:
             --manifest "$SPLIT_DERIVED_DATA/CacheMetadata/xcode-build-inputs.json" --head "$GITHUB_SHA" \
             --directory-root . AI_HLY AI_HLYTests AI_HLYUITests HanlinMiniAppsApp HanlinMiniAppsUITests HanlinMiniAppsTests Packages AI_HLY.xcodeproj Vendor Config.xcconfig RuntimeDependencies.lock.json
       - name: Execute actual standalone target XCUITests
-        if: ${{ !inputs.paired_product_acceptance }}
+        if: ${{ !inputs.paired_product_acceptance && !inputs.signed_release_archives }}
         shell: bash
         run: python3 Scripts/ProductSplit/run_native_acceptance.py
       - name: Exercise actual request, return, cancellation and transfer across both products
-        if: ${{ inputs.paired_product_acceptance }}
+        if: ${{ inputs.paired_product_acceptance && !inputs.signed_release_archives }}
         shell: bash
         run: python3 Scripts/ProductSplit/run_paired_acceptance.py
+      - name: Prepare isolated signing inspection dependencies
+        if: ${{ inputs.signed_release_archives }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/hanlin-signing-python"
+          "$RUNNER_TEMP/hanlin-signing-python/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+      - name: Build original device archives and export with the existing distribution identity
+        if: ${{ inputs.signed_release_archives }}
+        env:
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: '"$RUNNER_TEMP/hanlin-signing-python/bin/python" Scripts/ProductSplit/prepare_signed_products.py'
       - name: Save changed compiler state without treating it as test evidence
         if: ${{ always() && steps.split-inputs.outcome == 'success' && steps.split-derived.outputs.cache-hit != 'true' && steps.split-derived.outputs.cache-primary-key != '' }}
         continue-on-error: true

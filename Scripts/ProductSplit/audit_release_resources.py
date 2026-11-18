@@ -214,11 +214,13 @@ def apple_resources(cert_sha=None):
             item["identifier_filter_candidate_count"] = len(data.get("data", []))
             item["bundle_list_complete"] = not bool(data.get("links", {}).get("next"))
             if len(bundles) == 1 and item["bundle_list_complete"]:
-                capability_data = apple_get("/v1/bundleIds/" + bundles[0]["id"] + "/bundleIdCapabilities",
-                    {"fields[bundleIdCapabilities]": "capabilityType", "limit": 50})
-                item["capability_types"] = sorted(c["attributes"]["capabilityType"]
-                    for c in capability_data.get("data", []) if c.get("attributes", {}).get("capabilityType"))
-                item["capability_list_complete"] = not bool(capability_data.get("links", {}).get("next"))
+                try:
+                    capability_data = apple_get("/v1/bundleIds/" + bundles[0]["id"] + "/bundleIdCapabilities", {})
+                    item["capability_types"] = sorted(c["attributes"]["capabilityType"]
+                        for c in capability_data.get("data", []) if c.get("attributes", {}).get("capabilityType"))
+                    item["capability_list_complete"] = not bool(capability_data.get("links", {}).get("next"))
+                except Exception as error:
+                    item["capability_read_error"] = str(error) if isinstance(error, AppleReadFailure) else type(error).__name__
                 data = apple_get("/v1/bundleIds/" + bundles[0]["id"] + "/profiles",
                     {"fields[profiles]": "profileState,profileType,expirationDate", "limit": 200})
                 available = [p.get("attributes", {}) for p in data.get("data", [])]

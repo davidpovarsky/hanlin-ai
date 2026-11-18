@@ -1,0 +1,12 @@
+# Existing-identity release archive gate — 2026-11-18
+
+The owner authorized Phase 2/3 integration, testing and release preparation. The manually selected signed_release_archives input reuses the original dependency preparation and builds the original HanlinMiniApps/AI_HLY device archives. Archive construction is unsigned and does not authenticate to the Developer Portal. Xcode's local App Store export uses the existing, verified Apple Distribution certificate fingerprint and the existing App Store Connect API credential to resolve provisioning. It does not upload or invite testers. Both original products and all four existing extensions must retain their source entitlements in the exported signature and embedded profile.
+
+Private signing inputs remain in an isolated temporary directory/keychain. Its prior search/default keychain settings are restored. Retained logs redact credential values and JWT/private-key blocks. No private key is exported, backed up, or added to repository secrets; no development certificate is requested by archive construction. No existing profile or certificate is deleted/revoked. Source signing settings are unchanged.
+
+A proposed separate encrypted credential-backup path was rejected by automatic approval review because it would persist a sensitive credential to GitHub without separate explicit authorization. That proposal was not applied. This materially narrower path uses only the existing distribution identity and retains product artifacts and sanitized evidence.
+
+Local validation: Python/YAML parsing, 8 profile/identity checks and 34 existing CI/cache regression checks passed. Actual signed export remains NOT_RUN until the workflow completes. Even a successful archive/export does not satisfy native UI, physical-device or live-provider acceptance and cannot by itself set release GO.
+
+Second read-only audit 44238917473 at 27cdeac2412bb4d2708819ff924e92435106641a confirms exactly one AI iOS product ID among ten prefix-filter candidates, and no visible MiniApps product ID/Store record. The capability request returned HTTP 400 before portal-profile inspection; this is retained as an audit limitation. The revised audit isolates that optional request so profile checks can proceed independently, and removes unsupported sparse-field query parameters.
+Sanitized report SHA-256: f48617780917ff47590f86c0afdd0e1d9110cb0176ebbf43c5c7495006258f1f.
