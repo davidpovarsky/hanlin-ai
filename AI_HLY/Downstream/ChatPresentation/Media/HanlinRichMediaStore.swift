@@ -256,8 +256,13 @@ actor HanlinRichMediaStore {
 /// Every redirect requires a new user-approved source; never forward cookies,
 /// credentials or a signed source query to a redirect destination.
 private final class HanlinMediaNoRedirect: NSObject, URLSessionTaskDelegate {
+    // Use the original delegate completion handler: the async Objective-C thunk
+    // crashes Swift 6.4.2 SIL generation when the full app enables C++ interop.
     func urlSession(_ session: URLSession, task: URLSessionTask,
                     willPerformHTTPRedirection response: HTTPURLResponse,
-                    newRequest request: URLRequest) async -> URLRequest? { nil }
+                    newRequest request: URLRequest,
+                    completionHandler: @escaping @Sendable (URLRequest?) -> Void) {
+        completionHandler(nil)
+    }
 }
 #endif
