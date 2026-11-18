@@ -60,5 +60,19 @@ class ProfileChecks(unittest.TestCase):
         self.assertFalse(audit.entitlement_allows(1, True))
         self.assertFalse(audit.entitlement_allows(["group.other"], ["group.required"]))
 
+class BundleIdentityChecks(unittest.TestCase):
+    def test_exact_product_excludes_prefix_extensions_and_other_platform(self):
+        def row(identifier, platform, identity):
+            return {"id": identity, "attributes": {"identifier": identifier, "platform": platform}}
+        bundle = "com.itorah.chavrusachat"
+        exact = row(bundle, "IOS", "actual")
+        response = {"data": [row(bundle + ".share", "IOS", "extension"),
+                             row(bundle, "MAC_OS", "mac"), exact]}
+        self.assertEqual(audit.exact_bundles(response, bundle), [exact])
+
+    def test_missing_or_unknown_platform_cannot_establish_a_product(self):
+        response = {"data": [{"id": "unknown", "attributes": {"identifier": "com.itorah.hanlinminiapps"}}]}
+        self.assertEqual(audit.exact_bundles(response, "com.itorah.hanlinminiapps"), [])
+
 if __name__ == "__main__":
     unittest.main()

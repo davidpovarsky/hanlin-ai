@@ -152,13 +152,49 @@ def apple_get(path, parameters):
     except urllib.error.HTTPError as error:
         raise AppleReadFailure("HTTP_" + str(error.code)) from None
 
-def apple_resources():
+def exact_bundles(data, bundle):
+    # Apple identifier filtering can include prefix matches such as extensions.
+    # Count only the actual iOS/universal product, never its sibling IDs.
+    return [item for item in data.get("data", [])
+            if item.get("attributes", {}).get("identifier") == bundle
+            and item.get("attributes", {}).get("platform") in {"IOS", "UNIVERSAL"}]
+
+def portal_profile_checks(profiles_data, required, bundle, cert_sha):
+    candidates = [p for p in profiles_data.get("data", [])
+                  if p.get("attributes", {}).get("profileType") == "IOS_APP_STORE"
+                  and p.get("attributes", {}).get("profileState") == "ACTIVE"]
+    checks = []
+    for candidate in candidates[:8]:
+        try:
+            response = apple_get("/v1/profiles/" + candidate["id"], {"fields[profiles]": "profileContent"})
+            encoded = response["data"]["attributes"]["profileContent"]
+            with tempfile.TemporaryDirectory(prefix="hanlin-portal-profile-") as folder:
+                path = Path(folder) / "input.mobileprovision"
+                path.write_bytes(decode(encoded))
+                path.chmod(0o600)
+                result = subprocess.run(["security", "cms", "-D", "-i", str(path)],
+                                        capture_output=True, timeout=20)
+                if result.returncode:
+                    raise ValueError("Portal CMS profile could not be read")
+                profile = plistlib.loads(result.stdout)
+            evaluated = evaluate_profile(profile, required, bundle, os.environ.get("APPLE_TEAM_ID", ""),
+                                         cert_sha, datetime.now(timezone.utc))
+            evaluated["profile_sha256"] = hashlib.sha256(decode(encoded)).hexdigest()
+            checks.append(evaluated)
+        except Exception as error:
+            checks.append({"status": "UNREADABLE",
+                           "error_kind": str(error) if isinstance(error, AppleReadFailure) else type(error).__name__})
+    return {"checked_profiles": checks,
+            "compatible_profile_count": sum(p.get("status") == "READY_RESOURCE" for p in checks),
+            "complete": len(candidates) <= 8 and not bool(profiles_data.get("links", {}).get("next"))}
+
+def apple_resources(cert_sha=None):
     required = ["ASC_KEY_P8", "ASC_KEY_ID", "ASC_ISSUER_ID"]
     missing = [name for name in required if not os.environ.get(name)]
     if missing:
         return {"status": "MISSING", "secret_names": missing}
     result = []
-    for role, bundle, _, _ in ROLES[:2]:
+    for role, bundle, _, entitlement_path in ROLES[:2]:
         item = {"role": role, "bundle_id": bundle}
         try:
             data = apple_get("/v1/apps", {"filter[bundleId]": bundle, "fields[apps]": "bundleId", "limit": 2})
@@ -172,15 +208,24 @@ def apple_resources():
             item["app_store_read_error"] = str(error) if isinstance(error, AppleReadFailure) else type(error).__name__
         try:
             data = apple_get("/v1/bundleIds", {"filter[identifier]": bundle,
-                "fields[bundleIds]": "identifier,platform", "limit": 2})
-            bundles = data.get("data", [])
+                "fields[bundleIds]": "identifier,platform", "limit": 200})
+            bundles = exact_bundles(data, bundle)
             item["visible_registered_bundle_count"] = len(bundles)
-            if len(bundles) == 1:
+            item["identifier_filter_candidate_count"] = len(data.get("data", []))
+            item["bundle_list_complete"] = not bool(data.get("links", {}).get("next"))
+            if len(bundles) == 1 and item["bundle_list_complete"]:
+                capability_data = apple_get("/v1/bundleIds/" + bundles[0]["id"] + "/bundleIdCapabilities",
+                    {"fields[bundleIdCapabilities]": "capabilityType", "limit": 50})
+                item["capability_types"] = sorted(c["attributes"]["capabilityType"]
+                    for c in capability_data.get("data", []) if c.get("attributes", {}).get("capabilityType"))
+                item["capability_list_complete"] = not bool(capability_data.get("links", {}).get("next"))
                 data = apple_get("/v1/bundleIds/" + bundles[0]["id"] + "/profiles",
                     {"fields[profiles]": "profileState,profileType,expirationDate", "limit": 200})
                 available = [p.get("attributes", {}) for p in data.get("data", [])]
                 item["app_store_profiles"] = [p for p in available if p.get("profileType") == "IOS_APP_STORE"]
                 item["profile_list_complete"] = not bool(data.get("links", {}).get("next"))
+                item["portal_profile_compatibility"] = portal_profile_checks(
+                    data, plistlib.loads((ROOT / entitlement_path).read_bytes()), bundle, cert_sha)
         except Exception as error:
             item["developer_portal_read_error"] = str(error) if isinstance(error, AppleReadFailure) else type(error).__name__
         result.append(item)
@@ -221,7 +266,7 @@ def main():
         "schema_version": 1, "source_sha": os.environ.get("GITHUB_SHA"),
         "run_id": os.environ.get("GITHUB_RUN_ID"), "timestamp": datetime.now(timezone.utc).isoformat(),
         "scope": "Read-only resource metadata; no signing, installation, upload, distribution, account change or notification.",
-        "certificate": cert, "profiles": profile_results, "apple": apple_resources(),
+        "certificate": cert, "profiles": profile_results, "apple": apple_resources(digest),
         "device_inventory": device_inventory(),
         "signing_inputs_ready": cert["status"] == "READY_RESOURCE"
             and all(p["status"] == "READY_RESOURCE" for p in profile_results),
