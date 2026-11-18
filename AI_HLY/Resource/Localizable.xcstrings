@@ -1,6 +1,28 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "No chat model is ready. Enable a provider or make an on-device model available in Settings." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No chat model is ready. Enable a provider or make an on-device model available in Settings."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אין מודל צ׳אט זמין. יש להפעיל ספק או להכין מודל מקומי במכשיר דרך ההגדרות."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无可用的聊天模型。请在设置中启用模型服务商，或准备好设备端模型。"
+          }
+        }
+      }
+    },
     "Enable Hanlin Notifications": {
       "extractionState": "manual",
       "localizations": {

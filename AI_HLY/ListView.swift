@@ -62,13 +62,6 @@ struct ListView: View {
     // 添加一个强制刷新状态，当需要更新列表时切换该状态
     @State private var forceRefresh: Bool = false
 
-    // 检测是否有开启且有有效密钥的大模型厂商
-    private var noAPIKeys: Bool {
-        apiKeys
-            .filter { $0.company != "LOCAL" }
-            .allSatisfy { $0.isHidden || ($0.key?.isEmpty ?? true) }
-    }
-
     static func filterAndSortChatRecords(_ records: [ChatRecords], searchText: String) -> [ChatRecords] {
         let baseRecords: [ChatRecords]
         if searchText.isEmpty {
@@ -664,37 +657,29 @@ struct ListView: View {
 
     @discardableResult
     private func createAuthorizedNewChatRecord() -> ChatRecords? {
-        // 验证是否有开启的大模型厂商
-        if noAPIKeys {
-            validationAlertMessage = "暂无开启的大模型厂商，请前往“设置-模型-模型厂商”设置大模型密钥并启用厂商。"
-            validationSettingType = .apiKeys
-            showValidationAlert = true
-            return nil
-        }
-
-        // Optimization is optional. The selected chat model owns the ordinary
-        // conversation; optimizer-specific actions validate their own configuration.
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-
-        let chatName: String = currentLanguage.hasPrefix("zh") ? "新群聊" : "New Group Chat"
-        let welcomeText: String = currentLanguage.hasPrefix("zh") ? "欢迎加入新群聊👏" : "Welcome to the new group chat! 👏"
-
-        let newChat = ChatRecords(
-            name: chatName,
-            type: "chat",
-            lastEdited: Date()
-        )
-
-        let welcomeMessage = ChatMessages(
-            role: "information",
-            text: welcomeText,
-            reasoning: "",
-            modelDisplayName: "System",
-            timestamp: Date(),
-            record: newChat
-        )
-
         do {
+            // Use the SAME original catalog order as ChatView's saved useModel index.
+            // A ready native provider needs no remote API key; downloaded LOCAL models
+            // still require their original provider to be enabled.
+            let models = try modelContext.fetch(FetchDescriptor<AllModels>(
+                sortBy: [SortDescriptor(\AllModels.position, order: .forward)]))
+            guard let selectedIndex = HanlinDefaultChatPolicy.creationModelIndex(
+                in: models, providers: apiKeys) else {
+                validationAlertMessage = String(localized: "No chat model is ready. Enable a provider or make an on-device model available in Settings.")
+                validationSettingType = .apiKeys
+                showValidationAlert = true
+                return nil
+            }
+
+            // Optimization remains optional; its own actions validate their model.
+            let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
+            let chatName = currentLanguage.hasPrefix("zh") ? "新群聊" : "New Group Chat"
+            let welcomeText = currentLanguage.hasPrefix("zh")
+                ? "欢迎加入新群聊👏" : "Welcome to the new group chat! 👏"
+            let newChat = ChatRecords(name: chatName, type: "chat", lastEdited: Date(),
+                                      useModel: selectedIndex)
+            let welcomeMessage = ChatMessages(role: "information", text: welcomeText,
+                reasoning: "", modelDisplayName: "System", timestamp: Date(), record: newChat)
             modelContext.insert(newChat)
             modelContext.insert(welcomeMessage)
             try modelContext.save()

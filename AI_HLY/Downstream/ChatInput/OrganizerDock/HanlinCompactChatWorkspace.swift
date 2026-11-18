@@ -39,6 +39,7 @@ struct HanlinCompactChatWorkspace: View {
     let onOpenMiniApps: () -> Void
     let onOpenVision: () -> Void
     @State private var showsHistory = false
+    @Query private var apiKeys: [APIKeys]
 
     @Namespace private var libraryZoom
     @State private var dockHeight: CGFloat = 176
@@ -145,7 +146,7 @@ struct HanlinCompactChatWorkspace: View {
             }
             .onAppear {
                 sessionBridge.expectedActiveSessionID = activeChatID
-                if let defaultIndex = HanlinDefaultChatPolicy.defaultModelIndex(in: allModels) {
+                if let defaultIndex = HanlinDefaultChatPolicy.creationModelIndex(in: allModels, providers: apiKeys) {
                     sessionBridge.homeSelectedModelIndex = defaultIndex
                 }
             }

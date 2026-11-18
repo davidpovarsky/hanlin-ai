@@ -1101,6 +1101,44 @@ struct ModelPopoverZoomOrderTests {
         #endif
     }
 
+    @Test("New conversations use the available native row without requiring a remote credential")
+    func nativeOnlyConversationCreationRespectsActualAvailabilityAndCatalogIndices() {
+        let cloud = AllModels(name: "cloud", position: 0, company: "OPENAI")
+        let native = AllModels(id: HanlinAppleModelCatalogAdapter.catalogID,
+            name: "apple-system-on-device", position: 9, company: "APPLE", systemProvision: false)
+        let models = [cloud, native]
+        let originalIDs = models.map(\.id)
+        #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [],
+            nativeAvailable: true, downloadedLocalModels: []) == 1)
+        #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [],
+            nativeAvailable: false, downloadedLocalModels: []) == nil)
+        let provider = APIKeys(company: "OPENAI", key: "fixture-only", isHidden: false)
+        #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [provider],
+            nativeAvailable: true, downloadedLocalModels: []) == 0)
+        provider.isHidden = true
+        #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [provider],
+            nativeAvailable: true, downloadedLocalModels: []) == 1)
+        native.isHidden = true
+        #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [],
+            nativeAvailable: true, downloadedLocalModels: []) == nil)
+        #expect(models.map(\.id) == originalIDs)
+    }
+
+    @Test("Local-only creation requires the original enabled provider and an actual downloaded model")
+    func downloadedLocalConversationCreationDoesNotTreatCatalogPresenceAsReadiness() {
+        let missing = AllModels(name: "not-downloaded", position: 0, company: "LOCAL", systemProvision: false)
+        let installed = AllModels(name: "installed", position: 3, company: "LOCAL", systemProvision: false)
+        let models = [missing, installed]
+        let local = APIKeys(company: "LOCAL", key: "LOCAL", requestURL: "LOCAL", isHidden: false)
+        #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [local],
+            nativeAvailable: false, downloadedLocalModels: ["installed"]) == 1)
+        #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [local],
+            nativeAvailable: false, downloadedLocalModels: []) == nil)
+        local.isHidden = true
+        #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [local],
+            nativeAvailable: false, downloadedLocalModels: ["installed"]) == nil)
+    }
+
     @Test("Native picker visibility preserves original indices and explicit selection")
     func nativeVisibilityKeepsOriginalIndices() {
         let nativeID = UUID()

@@ -10,6 +10,8 @@ enum HanlinAppleModelCatalogAdapter {
 
     static func isNative(_ model: AllModels) -> Bool { model.id == catalogID }
 
+    static var isAvailable: Bool { HanlinAppleOnDeviceProvider.availability == .available }
+
     /// Append once after existing rows. Never remove/reorder rows or rewrite saved useModel indices.
     /// Remains in the catalog when unavailable so a saved selection cannot shift to another model.
     @discardableResult
