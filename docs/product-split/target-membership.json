@@ -93,7 +93,8 @@
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt",
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json",
-    "AI_HLY/RuntimeHostResources.zip"
+    "AI_HLY/RuntimeHostResources.zip",
+    "AI_HLY/Assets.xcassets"
   ],
   "integration_base": "16934250"
 }

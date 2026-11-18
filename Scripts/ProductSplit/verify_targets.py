@@ -33,7 +33,13 @@ def main():
     assert not set(membership["excludes"]).intersection(sources)
     assert set(membership["shared_resources"]) == set(provider["resources"])
     for resource in membership["shared_resources"]:
-        if resource != "AI_HLY/RuntimeHostResources.zip":
+        if resource == "AI_HLY/Assets.xcassets":
+            catalog = ROOT / resource
+            assert catalog.is_dir() and (catalog / "Contents.json").is_file()
+            icon = catalog / "AppIcon.appiconset"
+            images = json.loads((icon / "Contents.json").read_text())["images"]
+            assert images and all((icon / item["filename"]).is_file() for item in images)
+        elif resource != "AI_HLY/RuntimeHostResources.zip":
             assert (ROOT / resource).is_file(), resource
     mini_id, mini = targets["HanlinMiniApps"]
     # Validate the executable OpenStep string literals, which the graph
@@ -82,6 +88,7 @@ def main():
         original = original_build_settings[configuration["name"]]
         assert settings["ENABLE_USER_SCRIPT_SANDBOXING"] == original["ENABLE_USER_SCRIPT_SANDBOXING"] == "NO"
         assert settings["PYTHONDONTWRITEBYTECODE"] == "1"
+        assert settings["ASSETCATALOG_COMPILER_APPICON_NAME"] == original["ASSETCATALOG_COMPILER_APPICON_NAME"] == "AppIcon"
         assert "@executable_path/Frameworks" in settings.get("LD_RUNPATH_SEARCH_PATHS", []), "Standalone product must find its own embedded frameworks"
     for name in ["HanlinMiniAppsTests", "HanlinMiniAppsUITests", "HanlinMiniAppsBootstrapTests"]:
         target_id, target = targets[name]

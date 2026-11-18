@@ -123,6 +123,12 @@ def main():
         info = plistlib.loads((app_product/'Info.plist').read_bytes())
         if info['CFBundleIdentifier'] != 'com.itorah.hanlinminiapps' or info.get('CFBundleDisplayName') != 'Hanlin MiniApps':
             raise RuntimeError('Built product identity differs from the original companion target')
+        icon = info.get('CFBundleIcons', {}).get('CFBundlePrimaryIcon', {})
+        assets = app_product / 'Assets.car'
+        if icon.get('CFBundleIconName') != 'AppIcon' or not assets.is_file() or assets.stat().st_size == 0:
+            raise RuntimeError('Built MiniApps must contain its compiled original Hanlin app icon')
+        state['app_icon'] = {'name': icon['CFBundleIconName'],
+                             'compiled_catalog_sha256': hashlib.sha256(assets.read_bytes()).hexdigest()}
         executable_name = info['CFBundleExecutable']
         if Path(executable_name).name != executable_name:
             raise RuntimeError('Built executable must remain inside its original app bundle')
@@ -152,8 +158,8 @@ def main():
         membership = json.loads((ROOT/'docs/product-split/target-membership.json').read_text())
         for resource in membership.get('shared_resources', []):
             source = ROOT/resource
-            if source.suffix == '.xcstrings':
-                continue  # Xcode compiles string catalogs into localized resources.
+            if source.suffix in {'.xcstrings', '.xcassets'}:
+                continue  # Xcode compiles catalogs; the app icon/Assets.car are verified above.
             destination = app_product/source.name
             if not destination.is_file() or hashlib.sha256(destination.read_bytes()).digest() != hashlib.sha256(source.read_bytes()).digest():
                 raise RuntimeError('Built app is missing or changed an existing Runtime resource: '+resource)

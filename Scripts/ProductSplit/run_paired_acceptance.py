@@ -160,6 +160,13 @@ def main():
                 raise RuntimeError("Installed product display name differs from the approved two-app identity")
             state["product_identity"][bundle] = {"display_name": info["CFBundleDisplayName"],
                 "info_plist_sha256": hashlib.sha256((product / "Info.plist").read_bytes()).hexdigest()}
+            icon = info.get("CFBundleIcons", {}).get("CFBundlePrimaryIcon", {})
+            assets = product / "Assets.car"
+            if icon.get("CFBundleIconName") != "AppIcon" or not assets.is_file() or assets.stat().st_size == 0:
+                raise RuntimeError("Built product must contain its compiled original Hanlin app icon")
+            state["product_identity"][bundle]["app_icon"] = {
+                "name": icon["CFBundleIconName"],
+                "compiled_catalog_sha256": hashlib.sha256(assets.read_bytes()).hexdigest()}
             command(["codesign", "--verify", "--deep", "--strict", str(product)], bundle + "-signature.log")
             executable_name = info["CFBundleExecutable"]
             if Path(executable_name).name != executable_name:

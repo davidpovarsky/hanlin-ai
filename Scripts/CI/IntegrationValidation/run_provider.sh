@@ -80,7 +80,14 @@ python3 - <<'PY' > "$evidence/prepared-resource-sha256.json"
 import hashlib,json
 from pathlib import Path
 manifest=json.loads(Path('Scripts/CI/IntegrationValidation/miniapps_provider_sources.json').read_text())
-paths=[Path(path) for path in manifest['resources']]
+paths=[]
+for resource in manifest['resources']:
+    path=Path(resource)
+    if path.suffix == '.xcassets':
+        assert path.is_dir() and (path/'Contents.json').is_file(),f'Missing original catalog: {path}'
+        paths += sorted(item for item in path.rglob('*') if item.is_file())
+    else:
+        paths.append(path)
 for root in ['Packages/HanlinNativeScriptRuntime/Artifacts','Packages/HanlinExpoRuntime/Artifacts']:
     paths+=list(Path(root).rglob('.artifact-manifest.json'))
 for path in paths:
