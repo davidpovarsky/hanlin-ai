@@ -1,4 +1,5 @@
 import SwiftUI
+import HanlinProductSplit
 
 /// Independent composition of the existing Host in this process. No AI data
 /// model or assistant credential adapter is configured in the MiniApps target.
@@ -41,7 +42,10 @@ private struct HanlinMiniAppsWindow: View {
             .onOpenURL { incomingURL = $0 }
             .task(id: bootstrap.phase == .ready ? incomingURL : nil) {
                 guard bootstrap.phase == .ready, let url = incomingURL else { return }
-                if url.isFileURL {
+                if SplitCompanionCatalogRoute.matches(url) {
+                    // The existing root is already the catalog. Never execute an
+                    // action or discard an in-flight operation on a catalog wake.
+                } else if url.isFileURL {
                     await HanlinScriptingPlatform.shared.importPackage(from: url)
                     showsImport = true
                 } else {

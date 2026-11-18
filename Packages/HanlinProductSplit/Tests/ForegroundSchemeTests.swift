@@ -47,6 +47,28 @@ private enum ForegroundSchemeTests {
                 }
             }
         }
+        try test("catalog.acceptExactNonExecutingWakeOnly") {
+            try check(SplitCompanionCatalogRoute.matches(SplitCompanionCatalogRoute.url))
+            for route in SplitForegroundRoute.allCases {
+                do { _ = try route.reference(in: SplitCompanionCatalogRoute.url) }
+                catch SplitBridgeFailure.malformed { continue }
+                throw Failure(detail: "catalog wake decoded as an executable request")
+            }
+        }
+        let catalog = SplitCompanionCatalogRoute.url.absoluteString
+        let catalogVariants: [(String, String)] = [
+            ("wrongProduct", "chavrusachat://catalog"),
+            ("operation", SplitForegroundRoute.openMiniApps.url(reference: id).absoluteString),
+            ("payload", catalog + "?payload=execute"), ("emptyQuery", catalog + "?"),
+            ("fragment", catalog + "#origin"), ("trailingSlash", catalog + "/"),
+            ("extraPath", catalog + "/execute"), ("userinfo", "hanlinminiapps://caller@catalog"),
+            ("port", "hanlinminiapps://catalog:443"), ("case", "hanlinminiapps://Catalog")
+        ]
+        for (name, value) in catalogVariants {
+            try test("catalog.reject." + name) {
+                try check(!SplitCompanionCatalogRoute.matches(URL(string: value)!))
+            }
+        }
         let now = Date(timeIntervalSince1970: 1_800_000_000)
         let request = SplitBridgeRequest(id: id, caller: try .init(validating: "hanlin.host"),
             target: try .init(validating: "fixture.target"), installedPackage: try .init(validating: "fixture.package"),

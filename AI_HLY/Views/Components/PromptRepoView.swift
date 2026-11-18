@@ -32,6 +32,8 @@ struct PromptRepoView: View {
             promptListView
         }
         .navigationTitle(String(localized: "提示词库"))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-prompt-library")
         .searchable(text: $searchText, prompt: String(localized: "搜索提示词"))
         .toolbar { toolbarContent }
         .sheet(isPresented: $showRenameDialog) {

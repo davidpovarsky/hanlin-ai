@@ -38,6 +38,10 @@ struct HanlinCompactChatWorkspace: View {
     let onDeleteRecord: (ChatRecords) -> Void
     let onRefresh: () -> Void
     @Bindable var sessionBridge: HanlinActiveComposerSessionBridge
+    let onOpenProfile: () -> Void
+    let onOpenMiniApps: () -> Void
+    let onOpenVision: () -> Void
+    @State private var showsHistory = false
 
     @Namespace private var libraryZoom
     @State private var dockHeight: CGFloat = 176
@@ -145,6 +149,18 @@ struct HanlinCompactChatWorkspace: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-compact-chat-workspace")
+        .sheet(isPresented: $showsHistory) {
+            NavigationStack {
+                destinationView(for: .allConversations)
+                    .navigationTitle("History")
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Done") { showsHistory = false }
+                                .accessibilityIdentifier("hanlin-history-done")
+                        }
+                    }
+            }
+        }
     }
 
     // MARK: - Navigation Root (ContentView.swift lines 349-380)
@@ -152,9 +168,17 @@ struct HanlinCompactChatWorkspace: View {
     private func navigationRoot(availableHeight: CGFloat) -> some View {
         NavigationStack(path: $path) {
             compactHomeScreen(availableHeight: availableHeight)
-                .navigationTitle("Hylic.AI")
+                .navigationTitle("Hanlin")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
+                    HanlinWorkspaceActions(onOpenProfile: onOpenProfile,
+                        onOpenMiniApps: onOpenMiniApps, onOpenVision: onOpenVision)
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button { showsHistory = true } label: {
+                            Label("History", systemImage: "clock.arrow.circlepath")
+                        }
+                        .accessibilityIdentifier("hanlin-history-open")
+                    }
                     ToolbarItem(placement: .navigationBarLeading) {
                         if loadHistoryMessages {
                             HStack(spacing: 4) {
@@ -204,11 +228,13 @@ struct HanlinCompactChatWorkspace: View {
                     if let matchedMsgID {
                         matchedMessageIDByChat[id] = matchedMsgID
                     }
+                    showsHistory = false
                     path = [.chat(id)]
                 },
                 onAddNewChat: {
                     if let created = onCreateAuthorizedNewChat(),
                        let id = created.id {
+                        showsHistory = false
                         path = [.chat(id)]
                     }
                 },
@@ -265,7 +291,7 @@ struct HanlinCompactChatWorkspace: View {
                         path.append(.chat(id))
                     },
                     onOpenLibrary: {
-                        path.append(.allConversations)
+                        showsHistory = true
                     },
                     onTogglePin: onTogglePin,
                     onEditRecord: onEditRecord,

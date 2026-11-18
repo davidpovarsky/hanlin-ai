@@ -1,112 +1,114 @@
 //
-//  MainTabView.swift
-//  AI_HLY
+//  MainTabView.swift
+//  AI_HLY
 //
-//  Created by 哆啦好多梦 on 10/2/25.
+//  Created by 哆啦好多梦 on 10/2/25.
 //
 
 import SwiftUI
 import SwiftData
+import HanlinProductSplit
 
 struct MainTabView: View {
-    
     @Binding var deepLinkTarget: String?
     @Environment(\.hanlinAIReceivingWindowID) private var receivingWindowID
+    @Environment(\.openURL) private var openURL
     private let splitCoordinator = HanlinAppSplitOriginCoordinator.shared
     @ObservedObject private var torahRouter = TorahStudyNavigationRouter.shared
-    @State private var selectedTab: Int = {
-        let environment = ProcessInfo.processInfo.environment
-        if environment["HANLIN_RUNTIME_INSTALL_ACCEPTANCE"] != nil { return 5 }
-        return environment["HANLIN_SCRIPT_RESTART_REPRO_PHASE"] != nil
-            || environment["HANLIN_NATIVESCRIPT_E2E"] != nil
-            || environment["HANLIN_EXPO_E2E"] != nil
-            || environment["HANLIN_SCRIPTUI_E2E"] != nil ? 4 : 0
+    @State private var selectedTab = 0
+    @State private var requestedConversation: HanlinConversationSelection?
+    @State private var showsVision = false
+    @State private var companionUnavailable = false
+    @State private var modal: WorkspaceModal? = {
+        #if DEBUG
+        let env = ProcessInfo.processInfo.environment
+        if env["HANLIN_RUNTIME_INSTALL_ACCEPTANCE"] != nil { return .profile }
+        // Existing engine-specific component probes still exercise the original
+        // host. Product navigation uses the separate companion in every build.
+        if ["HANLIN_SCRIPT_RESTART_REPRO_PHASE", "HANLIN_NATIVESCRIPT_E2E",
+            "HANLIN_EXPO_E2E", "HANLIN_SCRIPTUI_E2E"].contains(where: { env[$0] != nil }) {
+            return .runtimeComponent
+        }
+        #endif
+        return nil
     }()
-    @State private var hideTabBar: Bool = false
-    
+
+    private enum WorkspaceModal: String, Identifiable {
+        case profile
+        #if DEBUG
+        case runtimeComponent
+        #endif
+        var id: String { rawValue }
+    }
+
     var body: some View {
-        // 使用系统原生的TabView
         TabView(selection: $selectedTab) {
-            // 第一个Tab: ListView
-            ListView()
+            ListView(requestedSelection: $requestedConversation,
+                onOpenProfile: { modal = .profile }, onOpenMiniApps: openCompanion,
+                onOpenVision: { showsVision = true })
                 .tabItem {
-                    Label(String(localized: "列表"), systemImage: "list.bullet")
+                    Label(String(localized: "Chat"), systemImage: "bubble.left.and.bubble.right")
                         .accessibilityIdentifier("hanlin-home-tab")
                 }
                 .tag(0)
-            
-            // 第二个Tab: VisionView
-            VisionView(selectedTab: $selectedTab)
-                .toolbar(.hidden, for: .tabBar)
+            HanlinPersonalLibraryView(onOpenProfile: { modal = .profile },
+                onOpenMiniApps: openCompanion, onOpenVision: { showsVision = true },
+                onOpenConversation: { request in
+                    requestedConversation = request
+                    selectedTab = 0
+                })
                 .tabItem {
-                    Label(String(localized: "视觉"), systemImage: "eye")
-                        .accessibilityIdentifier("hanlin-vision-tab")
-                }
-                .tag(1)
-            
-            // 第三个Tab: KnowledgeListView
-            KnowledgeListView()
-                .tabItem {
-                    Label(String(localized: "知识库"), systemImage: "books.vertical")
-                        .accessibilityIdentifier("hanlin-knowledge-tab")
+                    Label("Library", systemImage: "books.vertical")
+                        .accessibilityIdentifier("hanlin-library-tab")
                 }
                 .tag(2)
-            
-            // 第四个Tab: ModelsView
-            ModelsView()
-                .tabItem {
-                    Label(String(localized: "模型"), systemImage: "square.stack.3d.up")
-                        .accessibilityIdentifier("hanlin-models-tab")
-                }
-                .tag(3)
-            
-            NativeAppsHubView()
-                .tabItem {
-                    Label(String(localized: "Apps"), systemImage: "square.grid.2x2")
-                        .accessibilityIdentifier("hanlin-apps-tab")
-                }
-                .tag(4)
-            
-            // 第五个Tab: SettingsView
-            SettingsView()
-                .tabItem {
-                    Label(String(localized: "设置"), systemImage: "gearshape")
-                        .accessibilityIdentifier("hanlin-settings-tab")
-                }
-                .tag(5)
         }
-        .animation(.easeInOut(duration: 0.4), value: selectedTab)
-        .onAppear {
-            let env = ProcessInfo.processInfo.environment
-            if env["HANLIN_EXPO_E2E"] != nil || env["HANLIN_NATIVESCRIPT_E2E"] != nil || env["HANLIN_SCRIPTUI_E2E"] != nil {
-                selectedTab = 4
+        .sheet(item: $modal) { destination in
+            switch destination {
+            case .profile:
+                SettingsView(onDone: { modal = nil })
+            #if DEBUG
+            case .runtimeComponent:
+                NativeAppsHubView()
+            #endif
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .hideTabBar)) { notification in
-            if let isHidden = notification.object as? Bool {
-                hideTabBar = isHidden
-            }
+        .fullScreenCover(isPresented: $showsVision) {
+            VisionView(selectedTab: Binding(get: { 1 }, set: { if $0 != 1 { showsVision = false } }))
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .openVisionView)) { _ in
+            showsVision = true
         }
         .onChange(of: splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id, initial: true) {
             if splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID) != nil { selectedTab = 0 }
         }
         .onChange(of: deepLinkTarget) {
             if deepLinkTarget == "vision" {
-                selectedTab = 1
-                deepLinkTarget = nil // 清除状态，避免重复跳转
+                showsVision = true
+                deepLinkTarget = nil
             }
+        }
+        .alert("MiniApps unavailable", isPresented: $companionUnavailable) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("Install Hanlin MiniApps to open its catalog. Your conversation stays here.")
         }
         .alert("Mini App result unavailable", isPresented: Binding(
             get: { splitCoordinator.failure(forReceivingWindowID: receivingWindowID) != nil },
             set: { if !$0 { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
         )) { Button("OK") { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
         message: { Text("Open the original conversation to check this request. Its result could not be returned to this window.") }
-        // background修饰符对于TabView不是必需的，但保留以防有特定需要
         .background(Color(.systemBackground))
         .sheet(isPresented: $torahRouter.isPresentingReader) {
             if let link = torahRouter.activeDeepLink {
                 TorahSourceReaderView(deepLink: link)
             }
+        }
+    }
+
+    private func openCompanion() {
+        openURL(SplitCompanionCatalogRoute.url) { accepted in
+            if !accepted { companionUnavailable = true }
         }
     }
 }
@@ -116,33 +118,19 @@ extension Notification.Name {
     static let hideTabBar = Notification.Name("hideTabBar")
 }
 
-// 毛玻璃背景封装组件
+// Shared native material used by existing screens.
 struct BlurView: UIViewRepresentable {
     let style: UIBlurEffect.Style
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: style))
-        return view
-    }
-    
+    func makeUIView(context: Context) -> UIVisualEffectView { UIVisualEffectView(effect: style) }
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
 }
 
-// Custom glass effect view that works on earlier iOS versions
 struct GlassView: View {
     let style: UIBlurEffect.Style
-    
     var body: some View {
-        Group {
-            if #available(iOS 26.0, *) {
-                Rectangle()
-                    .fill(Color.clear)
-                    .glassEffect(in: .rect(cornerRadius: 26))
-            } else {
-                // Fallback implementation for earlier iOS versions
-                BlurView(style: style)
-            }
-        }
-        .allowsHitTesting(false)
+        Rectangle()
+            .fill(Color.clear)
+            .glassEffect(in: .rect(cornerRadius: 26))
+            .allowsHitTesting(false)
     }
 }

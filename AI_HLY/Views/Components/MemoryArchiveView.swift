@@ -52,6 +52,8 @@ struct MemoryArchiveView: View {
             memoryListView
         }
         .navigationTitle(String(localized: "记忆档案"))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-memory-archive")
         .searchable(text: $searchText, prompt: String(localized: "搜索记忆"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

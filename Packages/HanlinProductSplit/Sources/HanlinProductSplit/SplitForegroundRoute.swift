@@ -25,3 +25,12 @@ public enum SplitForegroundRoute: String, Codable, CaseIterable, Sendable {
         return id
     }
 }
+
+/// Opening the catalog carries no operation, origin, result or authorization.
+/// Execution requests continue through the separate opaque-reference route.
+public enum SplitCompanionCatalogRoute {
+    public static let url = URL(string: "hanlinminiapps://catalog")!
+    public static func matches(_ candidate: URL) -> Bool {
+        candidate.absoluteString == url.absoluteString
+    }
+}

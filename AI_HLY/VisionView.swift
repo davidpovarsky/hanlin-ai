@@ -197,7 +197,9 @@ extension VisionView {
                             .shadow(color: Color(.systemBackground), radius: 1)
                     )
             }
-            
+            .accessibilityIdentifier("hanlin-vision-close")
+            .accessibilityLabel(String(localized: "完成"))
+
             Spacer()
             
             // 关闭按钮

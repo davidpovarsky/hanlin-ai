@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct KnowledgeListView: View {
+    var isPresentedInSheet = false
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Query private var knowledgeRecords: [KnowledgeRecords]
     
@@ -30,10 +32,18 @@ struct KnowledgeListView: View {
         NavigationStack(path: $navigationPath) {
             content
                 .navigationTitle(String(localized: "知识背包"))
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("hanlin-knowledge-list")
                 .safeAreaInset(edge: .bottom) {
                     Color.clear.frame(height: 75)
                 }
                 .toolbar {
+                    if isPresentedInSheet {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { dismiss() }
+                                .accessibilityIdentifier("hanlin-library-knowledge-done")
+                        }
+                    }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             addNewKnowledge()

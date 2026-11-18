@@ -326,6 +326,27 @@ final class HanlinMorphComposerUITests: XCTestCase {
         tools.tap()
         XCTAssertTrue(panel.waitForNonExistence(timeout: 5))
         XCTAssertEqual(input.value as? String, draft)
+
+        if !expectWide {
+            let history = app.buttons["hanlin-history-open"].firstMatch
+            XCTAssertTrue(history.waitForExistence(timeout: 5))
+            history.tap()
+            XCTAssertTrue(app.descendants(matching: .any)["hanlin-compact-conversation-library"].firstMatch.waitForExistence(timeout: 10))
+            app.buttons["hanlin-history-done"].firstMatch.tap()
+            XCTAssertEqual(input.value as? String, draft, "Closing History must retain the original compact draft")
+            XCTAssertTrue(attachment.exists)
+        }
+        let libraryTab = app.tabBars.buttons["hanlin-library-tab"].firstMatch
+        XCTAssertTrue(libraryTab.waitForExistence(timeout: 5))
+        libraryTab.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["hanlin-personal-library"].firstMatch.waitForExistence(timeout: 10))
+        app.buttons["hanlin-settings-tab"].firstMatch.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["hanlin-settings-list"].firstMatch.waitForExistence(timeout: 10))
+        app.buttons["hanlin-profile-done"].firstMatch.tap()
+        app.tabBars.buttons["hanlin-home-tab"].firstMatch.tap()
+        XCTAssertTrue(input.waitForExistence(timeout: 10))
+        XCTAssertEqual(input.value as? String, draft, "Library/Profile navigation must retain the same draft")
+        XCTAssertTrue(attachment.exists, "Library/Profile navigation must retain the real attachment")
     }
 
     private func revealInComposer(_ element: XCUIElement, in app: XCUIApplication) {

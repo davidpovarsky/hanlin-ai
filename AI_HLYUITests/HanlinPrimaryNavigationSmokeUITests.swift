@@ -1,5 +1,7 @@
 import XCTest
 
+/// Product navigation accepted by the owner on 2026-11-18. Engine component
+/// proofs and installed two-process round trips have separate selectors.
 @MainActor
 final class HanlinPrimaryNavigationSmokeUITests: XCTestCase {
     private let app = XCUIApplication()
@@ -11,110 +13,96 @@ final class HanlinPrimaryNavigationSmokeUITests: XCTestCase {
         app.launch()
     }
 
-    @discardableResult
-    private func selectTab(identifier: String, labels: [String] = []) -> Bool {
-        var candidates: [XCUIElement] = [
-            app.tabBars.buttons[identifier].firstMatch,
-            app.buttons[identifier].firstMatch,
-            app.tabs[identifier].firstMatch
-        ]
-        for label in labels {
-            candidates.append(app.tabBars.buttons[label].firstMatch)
-            candidates.append(app.buttons[label].firstMatch)
-            candidates.append(app.tabs[label].firstMatch)
-        }
+    override func tearDownWithError() throws { app.terminate() }
 
-        // 1. Try directly on current tab page
-        for candidate in candidates {
-            if candidate.waitForExistence(timeout: 2) && candidate.isHittable {
-                candidate.tap()
-                return true
-            }
-        }
+    private func item(_ identifier: String) -> XCUIElement {
+        app.descendants(matching: .any)[identifier].firstMatch
+    }
 
-        // 2. If tab bar is paged (e.g. iPad mini floating tab bar with Next Page / Previous Page)
-        let nextPage = app.buttons["Next Page"].firstMatch
-        if nextPage.waitForExistence(timeout: 2) && nextPage.isHittable {
-            nextPage.tap()
-            for candidate in candidates {
-                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
-                    candidate.tap()
-                    return true
-                }
-            }
-        }
+    private func tap(_ identifier: String) {
+        let target = item(identifier)
+        XCTAssertTrue(target.waitForExistence(timeout: 15), "Missing product control: \(identifier)")
+        XCTAssertTrue(target.isHittable, "Product control is not reachable: \(identifier)")
+        target.tap()
+    }
 
-        let prevPage = app.buttons["Previous Page"].firstMatch
-        if prevPage.waitForExistence(timeout: 2) && prevPage.isHittable {
-            prevPage.tap()
-            for candidate in candidates {
-                if candidate.waitForExistence(timeout: 3) && candidate.isHittable {
-                    candidate.tap()
-                    return true
-                }
-            }
+    private func revealSettings(_ identifier: String) {
+        let list = item("hanlin-settings-list")
+        for _ in 0..<6 {
+            if item(identifier).isHittable { return }
+            list.swipeUp()
         }
+        XCTFail("Settings entry was not reachable: \(identifier)")
+    }
 
-        // 3. Fallback to broad hierarchy predicate
-        let labelClauses = labels.map { "label CONTAINS '\($0)'" }
-        let format = (["identifier == '\(identifier)'"] + labelClauses).joined(separator: " OR ")
-        let fallback = app.descendants(matching: .any).matching(NSPredicate(format: format)).firstMatch
-        if fallback.waitForExistence(timeout: 5) && fallback.isHittable {
-            fallback.tap()
-            return true
-        }
-        return false
+    private func returnToLibrary() {
+        let back = app.navigationBars.buttons["Library"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 5))
+        back.tap()
+        XCTAssertTrue(item("hanlin-personal-library").waitForExistence(timeout: 5))
     }
 
     func testWholeAppPrimaryNavigationSmoke() throws {
-        // 1. Root: Home / Chat List (Tab 0)
-        XCTAssertTrue(selectTab(identifier: "hanlin-home-tab", labels: ["列表", "List", "Chats", "对话"]), "Home tab button was absent")
-        let homeRootPredicate = NSPredicate(format: "label CONTAINS 'ChavrusaChat' OR identifier CONTAINS 'ChavrusaChat' OR title CONTAINS 'ChavrusaChat' OR label CONTAINS 'Conversations' OR label CONTAINS 'Chats' OR label CONTAINS '对话'")
-        let homeRoot = app.descendants(matching: .any).matching(homeRootPredicate).firstMatch
-        XCTAssertTrue(homeRoot.waitForExistence(timeout: 15), "Primary navigation to Home/ChatList failed: root 'ChavrusaChat' was absent")
-
-        // 2. Vision View (Tab 1)
-        XCTAssertTrue(selectTab(identifier: "hanlin-vision-tab", labels: ["视觉", "Vision"]), "Vision tab button was absent")
-        let alert = app.alerts.firstMatch
-        let visionReturnPredicate = NSPredicate(format: "label CONTAINS 'chevron.down.circle.fill' OR identifier CONTAINS 'chevron.down.circle.fill'")
-        let visionReturnButton = app.descendants(matching: .any).matching(visionReturnPredicate).firstMatch
-
-        if alert.waitForExistence(timeout: 5) {
-            let dismissAlert = alert.buttons.firstMatch
-            if dismissAlert.exists {
-                dismissAlert.tap()
-            }
-        } else if visionReturnButton.waitForExistence(timeout: 10) {
-            visionReturnButton.tap()
+        tap("hanlin-home-tab")
+        XCTAssertTrue(app.navigationBars["Hanlin"].firstMatch.waitForExistence(timeout: 15))
+        XCTAssertEqual(app.tabBars.buttons.count, 2, "Chat and Library are the only permanent destinations")
+        for legacy in ["hanlin-vision-tab", "hanlin-models-tab", "hanlin-apps-tab", "hanlin-settings-tab"] {
+            XCTAssertFalse(app.tabBars.buttons[legacy].exists, "Contextual entry unexpectedly became a permanent tab")
         }
-        XCTAssertTrue(homeRoot.waitForExistence(timeout: 15), "Return navigation from Vision to Home failed")
 
-        // 3. Knowledge Base / Backpack (Tab 2)
-        XCTAssertTrue(selectTab(identifier: "hanlin-knowledge-tab", labels: ["知识库", "Knowledge"]), "Knowledge tab button was absent")
-        let knowledgePredicate = NSPredicate(format: "label CONTAINS 'Knowledge' OR label CONTAINS '知识'")
-        let knowledgeRoot = app.descendants(matching: .any).matching(knowledgePredicate).firstMatch
-        XCTAssertTrue(knowledgeRoot.waitForExistence(timeout: 15), "Primary navigation to Knowledge failed: root was absent")
+        tap("hanlin-library-tab")
+        XCTAssertTrue(item("hanlin-personal-library").waitForExistence(timeout: 10))
+        for key in ["knowledge", "memory", "prompts", "canvas", "saved"] {
+            XCTAssertTrue(item("hanlin-library-" + key).exists)
+        }
 
-        // 4. Models / Agents (Tab 3)
-        XCTAssertTrue(selectTab(identifier: "hanlin-models-tab", labels: ["模型", "Models", "智能体"]), "Models tab button was absent")
-        let modelsPredicate = NSPredicate(format: "label CONTAINS 'Models' OR label CONTAINS '模型' OR label CONTAINS '智能体'")
-        let modelsRoot = app.descendants(matching: .any).matching(modelsPredicate).firstMatch
-        XCTAssertTrue(modelsRoot.waitForExistence(timeout: 15), "Primary navigation to Models failed: root was absent")
+        tap("hanlin-library-knowledge")
+        XCTAssertTrue(item("hanlin-knowledge-list").waitForExistence(timeout: 10))
+        tap("hanlin-library-knowledge-done")
+        tap("hanlin-library-memory")
+        XCTAssertTrue(item("hanlin-memory-archive").waitForExistence(timeout: 10))
+        returnToLibrary()
+        tap("hanlin-library-prompts")
+        XCTAssertTrue(item("hanlin-prompt-library").waitForExistence(timeout: 10))
+        returnToLibrary()
+        tap("hanlin-library-canvas")
+        XCTAssertTrue(item("hanlin-canvas-library").waitForExistence(timeout: 10))
+        returnToLibrary()
+        tap("hanlin-library-saved")
+        XCTAssertTrue(app.navigationBars["Saved messages"].firstMatch.waitForExistence(timeout: 10))
+        app.buttons["Done"].firstMatch.tap()
 
-        // 5. Apps Hub (Tab 4)
-        XCTAssertTrue(selectTab(identifier: "hanlin-apps-tab", labels: ["Apps"]), "Apps tab button was absent")
-        let appsRoot = app.navigationBars["Apps"].firstMatch
-        let addAppButton = app.buttons["hanlin-apps-add"].firstMatch
-        XCTAssertTrue(appsRoot.waitForExistence(timeout: 15) || addAppButton.waitForExistence(timeout: 15), "Primary navigation to Apps failed: Apps root was absent")
+        tap("hanlin-settings-tab")
+        XCTAssertTrue(item("hanlin-settings-list").waitForExistence(timeout: 10))
+        revealSettings("hanlin-models-tab")
+        tap("hanlin-models-tab")
+        XCTAssertTrue(item("hanlin-models-list").waitForExistence(timeout: 10))
+        tap("hanlin-models-done")
+        revealSettings("hanlin-mcp-servers-link")
+        XCTAssertTrue(item("hanlin-mcp-servers-link").isHittable)
+        revealSettings("hanlin-skill-center-link")
+        XCTAssertTrue(item("hanlin-skill-center-link").isHittable)
+        tap("hanlin-profile-done")
 
-        // 6. Settings (Tab 5)
-        XCTAssertTrue(selectTab(identifier: "hanlin-settings-tab", labels: ["设置", "Settings"]), "Settings tab button was absent")
-        let settingsPredicate = NSPredicate(format: "label CONTAINS 'Settings' OR label CONTAINS '设置'")
-        let settingsRoot = app.descendants(matching: .any).matching(settingsPredicate).firstMatch
-        XCTAssertTrue(settingsRoot.waitForExistence(timeout: 15), "Primary navigation to Settings failed: Settings root was absent")
+        tap("hanlin-workspace-actions")
+        tap("hanlin-vision-tab")
+        let missingModel = app.alerts.firstMatch
+        if missingModel.waitForExistence(timeout: 5) {
+            missingModel.buttons.firstMatch.tap()
+        } else {
+            tap("hanlin-vision-close")
+        }
+        XCTAssertTrue(item("hanlin-personal-library").waitForExistence(timeout: 10))
 
-        // 7. Return to Apps Hub (proving full navigation cycle)
-        XCTAssertTrue(selectTab(identifier: "hanlin-apps-tab", labels: ["Apps"]), "Return to Apps tab button was absent")
-        XCTAssertTrue(appsRoot.waitForExistence(timeout: 15) || addAppButton.waitForExistence(timeout: 15), "Return navigation to Apps failed")
+        // This fresh, AI-only simulator deliberately has no companion installed.
+        // A missing companion must preserve the original workspace and explain it.
+        tap("hanlin-workspace-actions")
+        tap("hanlin-open-miniapps")
+        let missingCompanion = app.alerts["MiniApps unavailable"].firstMatch
+        XCTAssertTrue(missingCompanion.waitForExistence(timeout: 10))
+        missingCompanion.buttons["OK"].tap()
+        XCTAssertTrue(item("hanlin-personal-library").exists)
+        tap("hanlin-home-tab")
+        XCTAssertTrue(app.navigationBars["Hanlin"].firstMatch.waitForExistence(timeout: 10))
     }
 }

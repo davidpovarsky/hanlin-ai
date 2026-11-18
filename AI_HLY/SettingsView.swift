@@ -11,6 +11,8 @@ import SafariServices
 
 @MainActor
 struct SettingsView: View {
+    var onDone: (() -> Void)? = nil
+    @State private var showsModels = false
     
     @State private var isPushed: Bool = false  // 监听是否进入子页面
     @State private var showSafariGuide: Bool = false
@@ -77,6 +79,10 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text(String(localized: "模型"))) {
+                    Button { showsModels = true } label: {
+                        Label("Models", systemImage: "square.stack.3d.up")
+                    }
+                    .accessibilityIdentifier("hanlin-models-tab")
                     NavigationLink(destination: APIKeysView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "模型厂商"), systemImage: "key.2.on.ring")
                     }
@@ -209,6 +215,14 @@ struct SettingsView: View {
             }
             .accessibilityIdentifier("hanlin-settings-list")
             .navigationTitle(String(localized: "设置"))
+            .toolbar {
+                if let onDone {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done", action: onDone).accessibilityIdentifier("hanlin-profile-done")
+                    }
+                }
+            }
+            .sheet(isPresented: $showsModels) { ModelsView(isPresentedInSheet: true) }
             .onAppear {
                 nativeAssistantToolGroups = NativeToolCatalog.shared.settingsGroups()
                 NativeToolTraceLogger.shared.log(

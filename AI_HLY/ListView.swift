@@ -2,6 +2,21 @@ import SwiftUI
 import SwiftData
 
 struct ListView: View {
+    @Binding var requestedSelection: HanlinConversationSelection?
+    let onOpenProfile: () -> Void
+    let onOpenMiniApps: () -> Void
+    let onOpenVision: () -> Void
+    @State private var conversationUnavailable = false
+
+    init(requestedSelection: Binding<HanlinConversationSelection?> = .constant(nil),
+         onOpenProfile: @escaping () -> Void = {},
+         onOpenMiniApps: @escaping () -> Void = {},
+         onOpenVision: @escaping () -> Void = {}) {
+        self._requestedSelection = requestedSelection
+        self.onOpenProfile = onOpenProfile
+        self.onOpenMiniApps = onOpenMiniApps
+        self.onOpenVision = onOpenVision
+    }
     @Environment(\.modelContext) private var modelContext
     @Environment(\.hanlinAIReceivingWindowID) private var receivingWindowID
     private let splitCoordinator = HanlinAppSplitOriginCoordinator.shared
@@ -117,7 +132,7 @@ struct ListView: View {
             if !useCompactWorkspace {
                 NavigationSplitView {
                     sidebarContent
-                        .navigationTitle("Hylic.AI")
+                        .navigationTitle("Hanlin")
                         .safeAreaInset(edge: .bottom) {
                             Color.clear.frame(height: 75)
                         }
@@ -154,10 +169,46 @@ struct ListView: View {
                     onEditRecord: { record in beginEditingRecord(record) },
                     onDeleteRecord: { record in deleteChat(record) },
                     onRefresh: { handleOnAppear() },
-                    sessionBridge: sessionBridge
+                    sessionBridge: sessionBridge,
+                    onOpenProfile: onOpenProfile, onOpenMiniApps: onOpenMiniApps,
+                    onOpenVision: onOpenVision
                 )
             }
         }
+        .task(id: requestedSelection?.id) {
+            guard let request = requestedSelection else { return }
+            guard splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID) == nil else {
+                requestedSelection = nil
+                return
+            }
+            let id = request.conversationID
+            do {
+                let matches = try modelContext.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id }))
+                guard matches.count == 1, let record = matches.first else {
+                    conversationUnavailable = true
+                    requestedSelection = nil
+                    return
+                }
+                savedSourceDestination = request.source
+                if let source = request.source {
+                    matchedSnippets[id] = (AttributedString(source.quote), source.messageID)
+                } else if let messageID = request.messageID {
+                    matchedSnippets[id] = (AttributedString(""), messageID)
+                } else {
+                    matchedSnippets.removeValue(forKey: id)
+                }
+                selectedChatRecord = record
+                sessionBridge.expectedActiveSessionID = id
+                if useCompactWorkspace { compactWorkspacePath = [.chat(id)] }
+                requestedSelection = nil
+            } catch {
+                conversationUnavailable = true
+                requestedSelection = nil
+            }
+        }
+        .alert("Conversation unavailable", isPresented: $conversationUnavailable) {
+            Button("OK", role: .cancel) {}
+        } message: { Text("The original conversation could not be opened. Your library item is kept.") }
         .task(id: splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id) {
             guard !Task.isCancelled,
                   let request = splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID) else { return }
@@ -317,6 +368,8 @@ struct ListView: View {
 
     @ToolbarContentBuilder
     private var commonToolbar: some ToolbarContent {
+        HanlinWorkspaceActions(onOpenProfile: onOpenProfile,
+            onOpenMiniApps: onOpenMiniApps, onOpenVision: onOpenVision)
         ToolbarItem(placement: .topBarTrailing) {
             Button { showsSavedMessages = true } label: {
                 Label("Saved messages", systemImage: "bookmark")

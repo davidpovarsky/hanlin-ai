@@ -88,6 +88,8 @@ struct ModelsView: View {
                 }
             }
             .navigationTitle(selectedIdentity.lowercased() == "agent" ? String(localized: "智能体") : String(localized: "模型"))
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("hanlin-models-list")
             .safeAreaInset(edge: .bottom) {
                 // 底部额外留白区域
                 Color.clear.frame(height: 75)
@@ -99,6 +101,7 @@ struct ModelsView: View {
                         Button(String(localized: "完成")) {
                             dismiss()
                         }
+                        .accessibilityIdentifier("hanlin-models-done")
                     }
                 }
                 // 中间 Picker 选择身份
