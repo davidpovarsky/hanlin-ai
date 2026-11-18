@@ -219,11 +219,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launch()
         openChat(in: app)
-        let input = chatInputElement(in: app)
-        XCTAssertTrue(input.waitForExistence(timeout: 20))
-        tapElement(input)
-        input.typeText("RENDER_CODE_FENCES")
-        tapElement(app.buttons["hanlin-chat-send"].firstMatch)
+        sendPrompt("RENDER_CODE_FENCES", in: app)
 
         let diagram = app.descendants(matching: .any).matching(
             NSPredicate(format: "identifier BEGINSWITH %@", "hanlin-code-fence-mermaid-")
@@ -290,14 +286,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // 2. Switch to Chat and prompt the Agent to execute Python
         openChat(in: app)
 
-        let input = chatInputElement(in: app)
-        XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
-        tapElement(input)
-        input.typeText("Run the local Python acceptance tool and report the result.")
-
-        let send = app.buttons["hanlin-chat-send"].firstMatch
-        XCTAssertTrue(send.waitForExistence(timeout: 10), "The real chat send button did not appear.")
-        tapElement(send)
+        sendPrompt("Run the local Python acceptance tool and report the result.", in: app)
 
         let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'AGENT_UI_ACCEPTANCE_COMPLETE'")
@@ -354,14 +343,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         // 2. Open Chat and send prompt (single user turn, no second nudge required)
         openChat(in: app)
-        let input = chatInputElement(in: app)
-        XCTAssertTrue(input.waitForExistence(timeout: 20), "The real chat input did not appear.")
-        tapElement(input)
-        input.typeText("Use Python to calculate 6*7 and tell me the result.")
-
-        let send = app.buttons["hanlin-chat-send"].firstMatch
-        XCTAssertTrue(send.waitForExistence(timeout: 10))
-        tapElement(send)
+        sendPrompt("Use Python to calculate 6*7 and tell me the result.", in: app)
 
         // 3. Final answer renders in the same user turn without extra user nudge
         let finalAnswer = app.descendants(matching: .any).matching(
@@ -460,9 +442,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         input.typeText("Draft preserved across switch")
 
         // Open sidebar / list view and create a new conversation
-        ensureChatListVisible(in: app)
-        let newChatButton = app.buttons["hanlin-new-chat-button"].firstMatch
-        XCTAssertTrue(newChatButton.waitForExistence(timeout: 10), "New chat button was not visible in ListView")
+        let newChatButton = chatListToolbarButton("hanlin-new-chat-button", in: app)
         tapElement(newChatButton)
 
         // Verify the newly created chat opens with an information welcome bubble and empty draft
@@ -550,9 +530,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("Chat_OriginalOpaquePreview", in: app)
         tapElement(wholeCopy)
 
-        ensureChatListVisible(in: app)
-        let saved = app.buttons["hanlin-saved-messages-open"].firstMatch
-        XCTAssertTrue(saved.waitForExistence(timeout: 10), "Saved messages entry missing: \(app.debugDescription)")
+        let saved = chatListToolbarButton("hanlin-saved-messages-open", in: app)
         tapElement(saved)
         let excerpt = app.staticTexts["hanlin-saved-excerpt-text"].firstMatch
         XCTAssertTrue(excerpt.waitForExistence(timeout: 10))
@@ -769,8 +747,11 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         tapElement(retryButton)
 
         let assistantBubbles = app.otherElements.matching(identifier: "hanlin-assistant-bubble")
-        let recoveredAnswers = assistantBubbles.descendants(matching: .staticText).matching(
-            NSPredicate(format: "label CONTAINS 'UI07_RETRY_RECOVERY_COMPLETE'")
+        // Count canonical assistant rows containing the actual native paragraph.
+        // UITextView exposes both an outer and an inner accessibility text node;
+        // neither node duplication nor the sidebar preview is a second message.
+        let recoveredAnswers = assistantBubbles.containing(
+            .textView, identifier: "UI07_RETRY_RECOVERY_COMPLETE"
         )
         XCTAssertTrue(recoveredAnswers.firstMatch.waitForExistence(timeout: 30), "Retry did not recover with UI07_RETRY_RECOVERY_COMPLETE")
 
@@ -1005,8 +986,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let wideApp = launchDockAcceptanceApp(simulatedWidth: "1024")
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: wideApp)
         ensureChatListVisible(in: wideApp)
-        let newChatBtn = wideApp.buttons["hanlin-new-chat-button"].firstMatch
-        XCTAssertTrue(newChatBtn.waitForExistence(timeout: 15), "Wide iPad (>=640pt) must preserve NavigationSplitView sidebar")
+        let sidebar = wideApp.navigationBars["Hanlin"].firstMatch
+        let originalRow = wideApp.buttons["hanlin-chat-row-Agent Acceptance Chat"].firstMatch
+        XCTAssertTrue(sidebar.exists && sidebar.isHittable, "Wide iPad must preserve the native sidebar")
+        XCTAssertTrue(originalRow.exists && originalRow.isHittable, "The original conversation must remain reachable in the sidebar")
         attachScreenshot("7B-03b_WidthAdaptiveWorkspace_Wide1024pt", in: wideApp)
     }
 
@@ -1558,32 +1541,64 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         return app.descendants(matching: .any)["hanlin-chat-input"].firstMatch
     }
 
-    private func sendPrompt(_ text: String, in app: XCUIApplication) {
+    private func sendPrompt(_ text: String, in app: XCUIApplication,
+                            file: StaticString = #filePath, line: UInt = #line) {
         let input = chatInputElement(in: app)
-        XCTAssertTrue(input.waitForExistence(timeout: 20), "Chat input field did not appear")
-        tapElement(input)
+        XCTAssertTrue(input.waitForExistence(timeout: 20), "Chat input field did not appear", file: file, line: line)
+        guard input.exists else { return }
+        XCTAssertTrue(input.isHittable, "The original editor must be reachable", file: file, line: line)
+        guard input.isHittable else { return }
+        input.tap()
         input.typeText(text)
+        XCTAssertEqual(input.value as? String, text,
+                       "Native editing must preserve the complete prompt before submission", file: file, line: line)
+        guard input.value as? String == text else { return }
         let send = app.buttons["hanlin-chat-send"].firstMatch
-        XCTAssertTrue(send.waitForExistence(timeout: 10), "Chat send button did not appear")
-        tapElement(send)
+        XCTAssertTrue(send.waitForExistence(timeout: 10), "Chat send button did not appear", file: file, line: line)
+        guard send.exists else { return }
+        XCTAssertTrue(send.isEnabled && send.isHittable,
+                      "Send must remain reachable above the keyboard", file: file, line: line)
+        guard send.isEnabled && send.isHittable else { return }
+        send.tap()
     }
 
-    private func ensureChatListVisible(in app: XCUIApplication) {
-        let newChatButton = app.buttons["hanlin-new-chat-button"].firstMatch
-        if newChatButton.exists && newChatButton.isHittable { return }
+    private func ensureChatListVisible(in app: XCUIApplication,
+                                       file: StaticString = #filePath, line: UInt = #line) {
+        let sidebar = app.navigationBars["Hanlin"].firstMatch
+        if sidebar.exists && sidebar.isHittable { return }
 
         let sidebarToggle = app.navigationBars.buttons.matching(
-            NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
+            NSPredicate(format: "identifier == 'ToggleSidebar' OR label == 'Show Sidebar'")
         ).firstMatch
-        if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
+        if sidebarToggle.exists && sidebarToggle.isHittable {
             sidebarToggle.tap()
-            if newChatButton.waitForExistence(timeout: 3) && newChatButton.isHittable { return }
+            if sidebar.waitForExistence(timeout: 5) && sidebar.isHittable { return }
         }
 
-        let backButton = app.navigationBars.buttons.element(boundBy: 0)
-        if backButton.waitForExistence(timeout: 2) && backButton.isHittable {
-            backButton.tap()
-        }
+        // A compact conversation returns through its real Back control. Never
+        // tap the first toolbar item: on iPad that item is the software guide.
+        let back = app.navigationBars.buttons.matching(
+            NSPredicate(format: "identifier == 'BackButton' OR label == 'Back'")
+        ).firstMatch
+        if back.exists && back.isHittable { back.tap() }
+        XCTAssertTrue(sidebar.waitForExistence(timeout: 5) && sidebar.isHittable,
+                      "The original chat list must be visible", file: file, line: line)
+    }
+
+    private func chatListToolbarButton(_ identifier: String, in app: XCUIApplication,
+                                       file: StaticString = #filePath, line: UInt = #line) -> XCUIElement {
+        ensureChatListVisible(in: app, file: file, line: line)
+        let button = app.buttons[identifier].firstMatch
+        if button.exists && button.isHittable { return button }
+        // The 320-point iPad sidebar puts New Chat and Saved Messages in its
+        // native overflow menu. The detail column has a different More button.
+        let overflow = app.navigationBars["Hanlin"].buttons["TopOverflowBarButtonItem"].firstMatch
+        XCTAssertTrue(overflow.waitForExistence(timeout: 5) && overflow.isHittable,
+                      "The sidebar's native overflow control must be reachable", file: file, line: line)
+        if overflow.exists && overflow.isHittable { overflow.tap() }
+        XCTAssertTrue(button.waitForExistence(timeout: 5) && button.isHittable,
+                      "Missing original chat-list action: \(identifier)", file: file, line: line)
+        return button
     }
 
     private func selectChatRow(named name: String, in app: XCUIApplication) {

@@ -215,6 +215,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertTrue(editedTitle.waitForExistence(timeout: 10), "Edited title was not visible in detail view")
 
         let editedInstructions = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'EDITED_UI_SKILL_INSTRUCTIONS'")).firstMatch
+        revealInSkillList(editedInstructions, identifier: "hanlin-skill-detail-list")
         XCTAssertTrue(editedInstructions.waitForExistence(timeout: 10), "Edited instructions were not visible in detail view")
 
         // 8. Delete
@@ -284,6 +285,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(codeRow)
 
         let markerText = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'UI_OVERRIDE_MARKER'")).firstMatch
+        revealInSkillList(markerText, identifier: "hanlin-skill-detail-list")
         XCTAssertTrue(markerText.waitForExistence(timeout: 10), "UI_OVERRIDE_MARKER was not persisted in instructions")
 
         let activeResetButton = app.buttons["hanlin-skill-detail-reset-button"].firstMatch
@@ -313,7 +315,10 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertFalse(markerText.waitForExistence(timeout: 3), "UI_OVERRIDE_MARKER should be gone after reset")
 
         let baseInstructions = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'execute_local_python_code'")).firstMatch
+        revealInSkillList(baseInstructions, identifier: "hanlin-skill-detail-list")
         XCTAssertTrue(baseInstructions.waitForExistence(timeout: 10), "Base instructions should be restored after reset")
+        XCTAssertFalse(baseInstructions.label.contains("UI_OVERRIDE_MARKER"),
+                       "The visible restored instructions must no longer contain the override")
 
         let restoredOverrideButton = app.buttons["hanlin-skill-detail-override-button"].firstMatch
         if !restoredOverrideButton.waitForExistence(timeout: 3) {
