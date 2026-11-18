@@ -1,6 +1,6 @@
 # Hanlin release checklist
 
-Decision: NO_GO. Source snapshot: 3542cc20e2ad842edc38af13d92805943febb6dd. Updated: 2026-11-18T08:11:32.503417+00:00.
+Decision: NO_GO. Source snapshot: 7f5a846561d8d642e94436e56415b9cb0655f712. Updated: 2026-11-18T09:13:43.502249+00:00.
 This is a reviewable candidate checklist, not an accepted release or publication approval.
 
 ## Immutable identities
@@ -28,10 +28,10 @@ Original shared groups group.com.itorah.chavrusachat and group.com.itorah.shared
 - [ ] Finish actual current app/Motion, compact, standalone runtime and paired-product gates.
 - [ ] Accept original UI45 +Runtime/Skills +Motion B/C in corrected run44264360254; predecessor44256319287 executed no tests because its runtime artifact input was missing.
 - [x] Record native Unicode/model20 PASS and compact UI2 FAIL from44250279050, without claiming whole-workflow success.
-- [ ] Accept compact viewport repairUI2 in44263129438, Host24/UI19 in44264365612 and EmbeddedResolver21/UI2 in44264369849.
-- [ ] Accept independent NS/ExpoUI2 in44263872088 after original simulator entitlements and both OS App Groups are verified; prior44257287918 UI2 failed at real import with appGroupUnavailable.
-- [ ] Accept paired product/share8 in44259936836.
-- [ ] Map behavior-specific evidence to every required feature/UX row. Do not count 278 source anchors as 278 passes.
+- [ ] Accept compact keyboard repairUI2 in44273341845, Host24/UI19 in44271250054 and EmbeddedResolver21/UI2 in44264369849.
+- [ ] Accept independent startup/NS/ExpoUI2 in44270714044 after original simulator entitlements and both OS App Groups are verified; prior44257287918 UI2 failed at real import with appGroupUnavailable.
+- [ ] Accept original paired product/share8 after MiniApps startup is repaired:44259936836 passed both builds and real primary shared container but executed zero tests because MiniApps exited.
+- [ ] Map behavior-specific evidence to every required feature/UX row. Current mapping has20 partially evidenced rows and0 fully accepted capabilities out of278; no product pass percentage.
 - [ ] Complete one approved live model/tool/persistence run; credential export is currently rejected by automatic review.
 - [ ] Produce local signed exports with exact required entitlements and compatible profiles for both apps and all four extensions.
 - [ ] Verify final branded/Unicode candidate archives, rather than reuse older 00a932d6 archives as if current.
@@ -69,3 +69,7 @@ Automatic review rejected the proposed Windows Gemini credential transfer to a n
 Apple's actual export returned Cloud signing permission error and no matching App Store profiles. Both original archives compiled. The completed local profile audit confirms the existing Distribution identity is valid, but the AI profile lacks Extended Virtual Addressing and MiniApps still needs compatible group/capability/profile configuration. Required entitlements will not be removed.
 
 The connected development host is Windows. Current native CI inventory has no physical device. Simulator or resource metadata cannot substitute for signed physical-device acceptance.
+
+## Latest failed gates retained
+
+44263129438: build PASS, compact UI2 FAIL (focus/keyboard); 44264365612: NativeScript baseline PASS, Release app build FAIL, Host24/UI19 NOT_RUN; 44263872088: build/signature PASS, independent startup failed, UI2 NOT_RUN; 44259936836: both builds and actual primary group PASS, MiniApps exited, original8 NOT_RUN. These failures are retained separately from pending repaired runs.
