@@ -2814,6 +2814,7 @@ jobs:
         env:
           HANLIN_MOTION_SCOPE: affected
           HANLIN_MOTION_DEVICE_STRATEGY: ready
+          HANLIN_MOTION_PREPARED_DEVICE_FILE: simulator-logs/simulator-udid.txt
         run: bash docs/chat-motion/run_motion_ui.sh
 
       - name: Analyze performance benchmark results

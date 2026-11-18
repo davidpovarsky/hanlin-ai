@@ -15,7 +15,7 @@ def family_for_selectors(selectors: str) -> str:
     return "iPad"
 
 
-def select(devices: dict, runtimes: dict, sdk: str, family: str = "iPad") -> dict:
+def select(devices: dict, runtimes: dict, sdk: str, family: str = "iPad", udid: str | None = None) -> dict:
     if family not in {"iPad", "iPhone"}:
         raise ValueError("Unsupported simulator device family")
     canonical = "com.apple.CoreSimulator.SimRuntime.iOS-" + sdk.replace(".", "-")
@@ -26,7 +26,10 @@ def select(devices: dict, runtimes: dict, sdk: str, family: str = "iPad") -> dic
         if not Path(runtime["runtimeRoot"]).is_dir() or not (Path(runtime["bundlePath"]) / "Contents/Info.plist").is_file():
             continue
         for device in devices["devices"].get(runtime["identifier"], []):
-            if device.get("isAvailable") and family in device.get("name", ""):
+            # Owned simulators have task names, not marketing device names.
+            # Verify the OS-provided hardware identity before reusing one.
+            identity = device.get("deviceTypeIdentifier") or device.get("name", "")
+            if device.get("isAvailable") and family in identity and (udid is None or device.get("udid") == udid):
                 priority = (runtime["identifier"] == canonical, "iPad Pro 13" in device["name"], device["name"], device["udid"])
                 candidates.append((priority, {"sdk": sdk, "runtime": runtime, "device": device}))
     if not candidates:
@@ -41,13 +44,16 @@ if __name__ == "__main__":
     parser.add_argument("--create-owned")
     parser.add_argument("--selectors", default="")
     parser.add_argument("--family", choices=["iPad", "iPhone"])
+    parser.add_argument("--udid", help="Use only this OS-observed matching device; never fall back to another simulator")
     args = parser.parse_args()
     def read(command):
         return subprocess.check_output(command, text=True, timeout=20)
     sdk = read(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"]).strip()
     devices = json.loads(read(["xcrun", "simctl", "list", "devices", "available", "-j"]))
     runtimes = json.loads(read(["xcrun", "simctl", "list", "runtimes", "-j"]))
-    selected = select(devices, runtimes, sdk, args.family or family_for_selectors(args.selectors))
+    if args.udid and args.create_owned:
+        raise ValueError("Existing device reuse and owned device creation are distinct operations")
+    selected = select(devices, runtimes, sdk, args.family or family_for_selectors(args.selectors), args.udid)
     if args.create_owned:
         if not args.create_owned.startswith("Hanlin-Phase2-") or len(args.create_owned) > 120:
             raise ValueError("A bounded Phase2-owned simulator name is required")

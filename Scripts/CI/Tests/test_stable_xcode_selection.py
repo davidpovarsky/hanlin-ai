@@ -46,6 +46,25 @@ class StableEnvironmentTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "No available iPad"):
                 select_simulator(devices, {"runtimes": records}, "27.2")
 
+    def test_owned_renamed_device_reuse_preserves_exact_hardware_runtime_and_identity(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder); (root / "Contents").mkdir(); (root / "Contents/Info.plist").touch()
+            identity = "com.apple.CoreSimulator.SimRuntime.iOS-27-2"
+            runtime = {"platform": "iOS", "version": "27.2", "isAvailable": True,
+                "identifier": identity, "runtimeRoot": str(root), "bundlePath": str(root)}
+            prepared = {"isAvailable": True, "name": "Hanlin-Phase2-owned-123", "udid": "prepared",
+                "state": "Booted", "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5"}
+            devices = {"devices": {identity: [
+                {"isAvailable": True, "name": "iPad Pro 13-inch (M5)", "udid": "unused", "state": "Shutdown"},
+                prepared]}}
+            chosen = select_simulator(devices, {"runtimes": [runtime]}, "27.2", "iPad", "prepared")
+            self.assertEqual(chosen["device"], prepared)
+            for family, udid in [("iPhone", "prepared"), ("iPad", "missing")]:
+                with self.assertRaises(RuntimeError):
+                    select_simulator(devices, {"runtimes": [runtime]}, "27.2", family, udid)
+            with self.assertRaises(RuntimeError):
+                select_simulator(devices, {"runtimes": [runtime]}, "27.1", "iPad", "prepared")
+
     def test_actual_beta_build_behind_stable_spelling_cannot_win(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

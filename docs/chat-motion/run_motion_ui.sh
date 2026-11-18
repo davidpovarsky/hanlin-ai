@@ -25,7 +25,14 @@ if [[ "$device_strategy" == fresh ]]; then
   device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json" --create-owned "Hanlin-Phase2-Motion-${GITHUB_RUN_ID:-local}")"
 else
   [[ "$device_strategy" == ready ]]
-  device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json")"
+  selected_device_args=()
+  if [[ -n "${HANLIN_MOTION_PREPARED_DEVICE_FILE:-}" ]]; then
+    test -f "$HANLIN_MOTION_PREPARED_DEVICE_FILE"
+    prepared_device="$(tr -d '\r\n' < "$HANLIN_MOTION_PREPARED_DEVICE_FILE")"
+    test -n "$prepared_device"
+    selected_device_args=(--udid "$prepared_device")
+  fi
+  device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json" "${selected_device_args[@]+"${selected_device_args[@]}"}")"
 fi
 printf '%s\n' "$device_strategy" > "$evidence/device-strategy.txt"
 python3 - "$device" "$evidence/verified-environment.json" "$device_strategy" <<'PY'
