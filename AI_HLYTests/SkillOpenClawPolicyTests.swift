@@ -39,6 +39,13 @@ struct SkillOpenClawPolicyTests {
         #expect(report["upstreamCases"] as? Int == 28)
         let cases = try #require(report["cases"] as? [[String: Any]])
         #expect(cases.count == 11 && cases.allSatisfy { $0["status"] as? String == "EXECUTED_PASS" })
+        let offline = try #require(report["offlinePolicyBoundary"] as? [String: Any])
+        #expect(offline["status"] as? String == "EXECUTED_PASS")
+        #expect(offline["installedBeforePolicyImport"] as? Bool == true)
+        #expect(offline["selfChecksPassed"] as? Int == 6)
+        #expect(offline["networkAttempts"] as? Int == 0 && offline["installerAttempts"] as? Int == 0
+            && offline["processLaunchAttempts"] as? Int == 0)
+        #expect(offline["restored"] as? Bool == true)
         let identity = try #require(report["artifactIdentity"] as? [String: Any])
         #expect(identity["artifactSHA256"] as? String == SkillRuntimeOpenClaw.artifactSHA256)
         print("OPENCLAW_ORIGINAL_POLICY_NATIVE " + String(decoding: try JSONSerialization.data(withJSONObject: report), as: UTF8.self))

@@ -356,6 +356,6 @@
     "./generated/upstream-policy-tests.mjs": "a38f3b14d6d759606404ac480aeb32e2a10bc5de23eb6e3fffb2633b8c708814",
     "./generated/policy-original-test-selection.json": "9db023cdfc6236621f80aaf5db559a52833c38500516cfdac424dca3c07add79",
     "./Tests/policy-upstream-shim.mjs": "f3b9a74f2f4ff61e6e64235d3b089b74d986718d5c9d0a4dce7fee89f202339d",
-    "./native-policy-probe.mjs": "9d2210b00136aa1a269dcb2f1ac22d5f72bdeeb03558a389a9f7d842b6775dfd"
+    "./native-policy-probe.mjs": "8097f6302ed346434d5404d929c6fec4a10e50cc8e32bb8616f07d2594048f59"
   }
 }
