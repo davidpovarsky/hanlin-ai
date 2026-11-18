@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T05:40:08.797164+00:00",
+  "generated_at": "2026-11-18T05:54:19.744990+00:00",
   "status": "IN_PROGRESS_NOT_A_PHASE_COMPLETION",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
   "source_sha": "1d579b7903905c5cf2ba0fc7a683aabd1bb7cdd6",
@@ -99,7 +99,7 @@
     },
     {
       "id": "COMPACT1D57",
-      "status": "QUEUED",
+      "status": "RUNNING",
       "run": 44245400237,
       "sha": "1d579b7903905c5cf2ba0fc7a683aabd1bb7cdd6",
       "scope": "ModelPopoverZoomOrderTests including new local-only creation policy, plus both affected native iPhone Composer UI methods",
@@ -107,19 +107,23 @@
     },
     {
       "id": "PAIRED00A9",
-      "status": "FAILED_NATIVE_GATE_AWAITING_DIAGNOSTICS",
+      "status": "BUILDS_PASS_OS_SETUP_TIMEOUT_TESTS_NOT_RUN",
       "run": 44243200117,
       "sha": "00a932d63db76549dff0a228a6b75711fcad8a22",
       "scope": "Three actual two-product request/return/cancel/transfer UI scenarios with signed simulator binaries, embedded actual App Group entitlements and OS-owned shared-container checks",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44243200117"
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44243200117",
+      "native_test_status": "NOT_RUN",
+      "diagnosis": "Both original app builds, codesign verification and embedded source App Group entitlements passed. OS installation timed out before UI."
     },
     {
       "id": "SHARE00A9",
-      "status": "FAILED_NATIVE_GATE_AWAITING_DIAGNOSTICS",
+      "status": "BUILDS_PASS_OS_SETUP_TIMEOUT_TESTS_NOT_RUN",
       "run": 44243208006,
       "sha": "00a932d63db76549dff0a228a6b75711fcad8a22",
       "scope": "Four original Inbox Host methods and one original Composer/Agent/persistence UI method; UI seed is not an OS share-sheet invocation",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44243208006"
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44243208006",
+      "native_test_status": "NOT_RUN",
+      "diagnosis": "Both builds and actual binary signatures/groups passed; AI installation succeeded in 176.55s; OS shared-container lookup timed out before tests."
     },
     {
       "id": "ARCHIVE00A9",
@@ -131,11 +135,15 @@
     },
     {
       "id": "QUICKLOOK50AC",
-      "status": "RUNNING",
+      "status": "PASS_AT_RECORDED_SHA",
       "run": 44244741189,
       "sha": "50ac3b1e46dce08e2a25e0ce1050c4e569826cb2",
       "scope": "Only failed gallery method with actual native close identifier and verified dismissal",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44244741189"
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44244741189",
+      "report": "docs/continuation-20261117/QUICKLOOK_NATIVE_PASS_20261118.json",
+      "test_count": 1,
+      "skipped": 0,
+      "tests_sha256": "998c0196ce5e7fb463289c839da927284b8233dbae86bd5935c9ad6620cc60e1"
     },
     {
       "id": "APPLE_READONLY",
@@ -144,6 +152,14 @@
       "scope": "Existing Distribution identity/private key valid; AI stored profile lacks extended virtual addressing, Mini profile missing; four extension profiles present; no physical runner device",
       "report": "docs/continuation-20261117/APPLE_RESOURCE_AUDIT_20261118.md",
       "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44234890729"
+    },
+    {
+      "id": "MINI_RUNTIME_2FE2",
+      "status": "RUNNING",
+      "run": 44246642312,
+      "sha": "2fe24c583888c676a2b152dcf27fb4eabcc20260",
+      "scope": "Two actual standalone MiniApps NativeScript/Expo UI methods, original archives and runtime controls; real engine/HTTPS/state and React event assertions",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44246642312"
     }
   ],
   "source_tasks": [

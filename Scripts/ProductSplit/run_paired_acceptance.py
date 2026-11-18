@@ -103,6 +103,12 @@ def main():
             device["identifier"], runtime["identifier"]], "created-simulator.txt")
         simulator = raw.strip()
         state.update(simulator=simulator, runtime=runtime["identifier"], device=device["name"])
+        # Boot the owned device before compilation. Its first-boot OS services can
+        # finish while Xcode builds; previously the first app install immediately
+        # followed a cold boot (176.55s on one runner, timed out on the other).
+        command(["xcrun", "simctl", "boot", simulator], "boot.log")
+        command(["xcrun", "simctl", "bootstatus", simulator, "-b"], "bootstatus.log", timeout=300)
+        command(["xcrun", "simctl", "help", "get_app_container"], "container-command-help.txt")
         derived = Path(os.environ["SPLIT_DERIVED_DATA"])
         base = ["xcodebuild", "-project", "AI_HLY.xcodeproj",
             "-destination", "platform=iOS Simulator,id=" + simulator,
@@ -155,14 +161,27 @@ def main():
             proof["source_entitlements_sha256"] = hashlib.sha256(source.read_bytes()).hexdigest()
             (EVIDENCE / (bundle + "-embedded-entitlements.json")).write_text(
                 json.dumps(proof, indent=2) + "\n")
-        command(["xcrun", "simctl", "boot", simulator], "boot.log")
-        command(["xcrun", "simctl", "bootstatus", simulator, "-b"], "bootstatus.log", timeout=180)
-        containers = {}
+        # Install both original products before asking either for shared state.
+        # One measured cold install already consumed 176.55s of the former 180s
+        # limit. This single bounded attempt retains its actual timing and exit.
         for bundle, product in products.items():
-            command(["xcrun", "simctl", "install", simulator, str(product)], bundle + "-install.log", timeout=180)
+            command(["xcrun", "simctl", "install", simulator, str(product)],
+                bundle + "-install.log", timeout=300)
+        containers = {}
+        for bundle in products:
+            # Let the shipping bootstrap request its real OS container. No group
+            # directory, response, grant, or acceptance result is synthesized.
+            command(["xcrun", "simctl", "launch", simulator, bundle,
+                "-AppleLanguages", "(en)", "-AppleLocale", "en_US"],
+                bundle + "-first-launch.log", timeout=120)
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator, bundle, GROUP],
-                bundle + "-group-container.txt")
-            containers[bundle] = str(Path(raw.strip()).resolve(strict=True))
+                bundle + "-group-container.txt", timeout=180)
+            container = Path(raw.strip()).resolve(strict=True)
+            if not container.is_dir():
+                raise RuntimeError("The OS did not return an existing shared container directory")
+            containers[bundle] = str(container)
+            command(["xcrun", "simctl", "terminate", simulator, bundle],
+                bundle + "-first-launch-terminate.log", timeout=60)
         if len(set(containers.values())) != 1:
             raise RuntimeError("The installed products do not share the OS-provided App Group container")
         state["app_group"] = {"status": "EXECUTED_PASS", "containers": containers}
@@ -203,11 +222,20 @@ def main():
         state["error"] = str(error)
         print(str(error), file=sys.stderr)
         if simulator:
-            try:
-                command(["xcrun", "simctl", "io", simulator, "screenshot",
-                    str(EVIDENCE / "failure.png")], "screenshot.log", timeout=30)
-            except Exception as capture:
-                state["capture_error"] = str(capture)
+            diagnostics = [
+                (["xcrun", "simctl", "list", "devices", "-j"], "failure-device-state.json"),
+                (["xcrun", "simctl", "listapps", simulator], "failure-installed-apps.plist"),
+                (["ps", "-axo", "pid,ppid,state,etime,comm"], "failure-processes.txt"),
+                (["vm_stat"], "failure-memory.txt"),
+                (["xcrun", "simctl", "io", simulator, "screenshot",
+                  str(EVIDENCE / "failure.png")], "screenshot.log"),
+            ]
+            state["diagnostic_errors"] = []
+            for argv, name in diagnostics:
+                try:
+                    command(argv, name, timeout=30)
+                except Exception as capture:
+                    state["diagnostic_errors"].append(str(capture))
     finally:
         state["result_bundles"] = [p.name for p in EVIDENCE.glob("*.xcresult")]
         state["duration_seconds"] = time.time() - state["started_at"]
