@@ -23,15 +23,23 @@ UI_PLANS = {
 
 
 def command(argv, name, timeout=60):
+    started = time.monotonic()
+    code = None
+    output = b''
     try:
         result = subprocess.run(argv, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout)
+        code, output = result.returncode, result.stdout
     except subprocess.TimeoutExpired as error:
-        (EVIDENCE / name).write_bytes(error.stdout or b'No output before subprocess timeout.')
+        code, output = -1, error.stdout or b'No output before subprocess timeout.'
         raise
-    (EVIDENCE / name).write_bytes(result.stdout)
-    if result.returncode:
-        raise RuntimeError(f'{argv[0]} exit {result.returncode}; see {name}')
-    return result.stdout.decode()
+    finally:
+        (EVIDENCE / name).write_bytes(output)
+        with (EVIDENCE / 'commands.jsonl').open('a', encoding='utf-8') as log:
+            log.write(json.dumps({'argv': argv, 'exit': code, 'seconds': time.monotonic()-started,
+                'log': name, 'sha256': hashlib.sha256(output).hexdigest()})+'\n')
+    if code:
+        raise RuntimeError(f'{argv[0]} exit {code}; see {name}')
+    return output.decode()
 
 
 def main():
@@ -86,6 +94,15 @@ def main():
         if state['architecture'] not in runtime['supportedArchitectures']:
             raise RuntimeError('Xcode destination architecture is unsupported by selected runtime')
         state['architecture_evidence'] = destination.strip()
+        # Run 44248480774 compiled successfully, but its immediate cold-boot install,
+        # screenshot and simulator log all timed out before either selected UI case.
+        # Start only this owned device before compilation so its first-boot services
+        # can settle during the real build; retain host/command timing for diagnosis.
+        command(['sysctl', 'hw.memsize', 'hw.ncpu'], 'before-boot-host-resources.txt')
+        command(['vm_stat'], 'before-boot-memory.txt')
+        command(['ps', '-axo', 'pid,ppid,%cpu,%mem,state,etime,comm'], 'before-boot-processes.txt')
+        command(['xcrun', 'simctl', 'boot', simulator], 'boot.log')
+        command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=300)
         derived = Path(os.environ['SPLIT_DERIVED_DATA'])
         base = ['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
                 '-destination', 'platform=iOS Simulator,id='+simulator, '-parallel-testing-enabled', 'NO',
@@ -109,8 +126,8 @@ def main():
         devices = json.loads(command(['xcrun','simctl','list','devices','-j'], 'device-state.json'))['devices']
         device_state = next(d for group in devices.values() for d in group if d['udid'] == simulator)['state']
         if device_state != 'Booted':
-            command(['xcrun', 'simctl', 'boot', simulator], 'boot.log')
-        command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=180)
+            raise RuntimeError('The exact prepared simulator stopped during compilation')
+        command(['xcrun', 'simctl', 'listapps', simulator], 'before-install-app-services.plist', timeout=60)
         if TEST_SCOPE == 'baseline':
             storage = base + ['test-without-building', '-resultBundlePath', str(EVIDENCE/'Storage.xcresult'),
                               '-only-testing:HanlinMiniAppsTests/SplitAppStorageLayoutTests',
@@ -151,7 +168,10 @@ def main():
             shutil.copy2(ordinary, destination)
         else:
             state['storage_boundary'] = 'NOT_SELECTED_PREVIOUS_20_NATIVE_PROOF_RECORDED_SEPARATELY'
-            command(['xcrun', 'simctl', 'install', simulator, str(app_product)], 'runtime-install.log', timeout=120)
+            # A measured original-product cold install took 176.55s in the paired
+            # gate. Use its bounded 300s install allowance, once; never retry a
+            # transport-uncertain mutation or count an unexecuted test as a pass.
+            command(['xcrun', 'simctl', 'install', simulator, str(app_product)], 'runtime-install.log', timeout=300)
             container = Path(command(['xcrun', 'simctl', 'get_app_container', simulator,
                 'com.itorah.hanlinminiapps', 'data'], 'runtime-data-container.txt').strip())
             documents = container/'Documents'
@@ -206,6 +226,10 @@ def main():
             raise RuntimeError('Native acceptance did not pass; see original result and build log')
     except Exception as error:
         state['error'] = str(error)
+        for argv, name in [(['vm_stat'], 'failure-memory.txt'),
+                           (['ps', '-axo', 'pid,ppid,%cpu,%mem,state,etime,comm'], 'failure-processes.txt')]:
+            try: command(argv, name, timeout=15)
+            except Exception as capture: state.setdefault('capture_errors', []).append(str(capture))
         if simulator:
             for argv,name in [(['xcrun','simctl','io',simulator,'screenshot',str(EVIDENCE/'failure.png')],'screenshot.log'),
                               (['xcrun','simctl','spawn',simulator,'log','show','--last','3m','--style','compact','--predicate','process == "HanlinMiniApps"'],'simulator.log')]:

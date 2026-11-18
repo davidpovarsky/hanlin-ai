@@ -1,0 +1,32 @@
+{
+  "sha": "394fdb379f3ab05d59ae15fd73d0588db08bc8c5",
+  "status": "INFRA_ERROR",
+  "ui": "NOT_RUN",
+  "build": "EXECUTED_PASS",
+  "test_scope": "production_runtimes",
+  "selectors": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"
+  ],
+  "error": "Command '['xcrun', 'simctl', 'install', 'AB797914-A2D8-426A-92D5-779ACBC1AFF7', '/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app']' timed out after 120 seconds",
+  "capture_errors": [
+    "Command '['xcrun', 'simctl', 'io', 'AB797914-A2D8-426A-92D5-779ACBC1AFF7', 'screenshot', '/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/failure.png']' timed out after 30 seconds",
+    "Command '['xcrun', 'simctl', 'spawn', 'AB797914-A2D8-426A-92D5-779ACBC1AFF7', 'log', 'show', '--last', '3m', '--style', 'compact', '--predicate', 'process == \"HanlinMiniApps\"']' timed out after 30 seconds"
+  ],
+  "duration_seconds": 1058.235759973526,
+  "run_id": 44248480774,
+  "artifact_id": 14405734031,
+  "api_zip_sha256": "5844d8b0632e7076410ff109e87a1aa4aeb6491c9e7430493618c2e7f75da4b8",
+  "acceptance_sha256": "4a208b0dd5c16bb5ff84783d40fb89ed0bd939a6a5dfc3286e9c7b5b0d118366",
+  "device": {
+    "name": "iPad mini (A20 Pro)",
+    "runtime": "27.2",
+    "udid": "AB797914-A2D8-426A-92D5-779ACBC1AFF7"
+  },
+  "current_fix": "Owned simulator boot before real compilation; inspect actual service response and measured install once; no source/assertion/fixture/permission changes. Native proof pending.",
+  "other_actual_results": {
+    "foreground_cases": 53,
+    "package_lifecycle_cases": 7,
+    "status": "PASS_AT_RECORDED_SHA"
+  }
+}
