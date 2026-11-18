@@ -1,0 +1,86 @@
+import XCTest
+
+/// The original App Group/store creates input; the real Composer, document
+/// processing, SDK request and saved conversation consume it. HTTP alone is scripted.
+/// OS share-sheet presentation is a separate device acceptance gate.
+@MainActor
+final class HanlinShareInboxUITests: XCTestCase {
+    func testSharedTextURLAndFileReachTheOriginalChatOnlyAfterSend() throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        let nonce = UUID().uuidString
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = nonce
+        app.launchEnvironment["HANLIN_SHARE_DRAFT_ACCEPTANCE_ID"] = nonce
+        app.launch()
+        defer {
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = "original-shared-draft"; screenshot.lifetime = .keepAlways; add(screenshot)
+            if testRun?.hasSucceeded == false {
+                let tree = XCTAttachment(string: app.debugDescription)
+                tree.name = "share-draft-accessibility"; tree.lifetime = .keepAlways; add(tree)
+            }
+            app.terminate()
+        }
+        if app.buttons["hanlin-compact-view-all-button"].waitForExistence(timeout: 10) {
+            let recent = app.buttons["hanlin-compact-recent-row-0"].firstMatch
+            XCTAssertTrue(recent.waitForExistence(timeout: 15))
+            XCTAssertTrue(recent.label.contains("Agent Acceptance Chat")); recent.tap()
+        } else if !app.staticTexts["hanlin-phase2-chat-id"].exists {
+            tap(app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Agent Acceptance Chat")).firstMatch)
+        }
+        let identity = app.staticTexts["hanlin-phase2-chat-id"]
+        XCTAssertTrue(identity.waitForExistence(timeout: 15))
+        let chatID = identity.label
+        let original = "UNSENT_PREEXISTING_" + nonce
+        tap(input(app)); input(app).typeText(original)
+        openInbox(app)
+        XCTAssertTrue(app.staticTexts["SHARE_DRAFT_" + nonce].waitForExistence(timeout: 20))
+        tap(app.buttons["hanlin-share-inbox-cancel"])
+        XCTAssertEqual(input(app).value as? String, original)
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0")
+        openInbox(app)
+        let addButton = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'hanlin-share-add-draft-'")).firstMatch
+        tap(addButton)
+        XCTAssertTrue(app.buttons["hanlin-share-inbox-cancel"].waitForNonExistence(timeout: 20))
+        let draft = try XCTUnwrap(input(app).value as? String)
+        XCTAssertTrue(draft.contains(original) && draft.contains("SHARE_DRAFT_" + nonce))
+        XCTAssertTrue(draft.contains("https://example.org/hanlin-share?case=" + nonce))
+        XCTAssertTrue(app.staticTexts["shared-note.txt"].waitForExistence(timeout: 10))
+        XCTAssertEqual(identity.label, chatID)
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0",
+                       "Reading or adding a shared batch must not contact a model")
+        tap(app.buttons["hanlin-chat-send"])
+        let delivered = "SHARED_DRAFT_DELIVERED_" + nonce
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", delivered))
+            .firstMatch.waitForExistence(timeout: 60),
+            "The original request must contain the draft, shared text, source URL and actual file contents")
+        XCTAssertEqual(identity.label, chatID)
+        app.terminate(); app.launch()
+        if app.buttons["hanlin-compact-view-all-button"].waitForExistence(timeout: 10) {
+            tap(app.buttons["hanlin-compact-recent-row-0"])
+        }
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", delivered))
+            .firstMatch.waitForExistence(timeout: 30))
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0")
+    }
+
+    private func input(_ app: XCUIApplication) -> XCUIElement {
+        let field = app.textFields["hanlin-chat-input"].firstMatch
+        return field.exists ? field : app.textViews["hanlin-chat-input"].firstMatch
+    }
+
+    private func openInbox(_ app: XCUIApplication) {
+        tap(app.buttons["hanlin-composer-general-menu"])
+        tap(app.buttons["hanlin-general-share-inbox"])
+    }
+
+    private func tap(_ element: XCUIElement) {
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(
+            format: "exists == true AND enabled == true AND hittable == true"), object: element)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 30), .completed)
+        element.tap()
+    }
+}

@@ -15,7 +15,11 @@ from simulator_entitlements import read_simulator_entitlements
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = Path(os.environ["SPLIT_EVIDENCE"]) / "paired-product"
 GROUP = "group.com.itorah.chavrusachat"
-SELECTOR = "AI_HLYUITests/HanlinPairedProductUITests"
+TEST_SCOPE = os.environ.get("PAIRED_TEST_SCOPE", "cross_product")
+TEST_PLANS = {
+    "cross_product": (["AI_HLYUITests/HanlinPairedProductUITests"], 3),
+    "shared_ingress": (["AI_HLYTests/ShareInboxHostIntegrationTests", "AI_HLYUITests/HanlinShareInboxUITests"], 5),
+}
 
 
 def command(argv, name, timeout=60, allow_failure=False):
@@ -67,6 +71,14 @@ def main():
         "started_at": time.time()}
     simulator = None
     try:
+        if TEST_SCOPE not in TEST_PLANS:
+            raise RuntimeError("Unknown original-product acceptance scope")
+        selectors, expected_tests = TEST_PLANS[TEST_SCOPE]
+        state["test_scope"] = TEST_SCOPE
+        state["selected_tests"] = selectors
+        if TEST_SCOPE == "shared_ingress":
+            state["scope"] = "Actual original App Group ingress, verified file copies, original Composer and SDK consumption"
+            state["os_share_sheet"] = "NOT_RUN; input uses original store APIs and NSItemProvider in the native host suite"
         _, raw = command(["git", "rev-parse", "HEAD"], "source-sha.txt")
         state["sha"] = raw.strip()
         _, sdk = command(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"], "sdk.txt")
@@ -148,18 +160,20 @@ def main():
         if len(set(containers.values())) != 1:
             raise RuntimeError("The installed products do not share the OS-provided App Group container")
         state["app_group"] = {"status": "EXECUTED_PASS", "containers": containers}
-        archive = fixture_archive(state["sha"])
-        _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
-            "com.itorah.chavrusachat", "data"], "ai-data-container.txt")
-        documents = Path(raw.strip()) / "Documents"
-        documents.mkdir(exist_ok=True)
-        if (documents / archive.name).exists():
-            raise RuntimeError("The fresh owned simulator already has a transfer package input")
-        shutil.copy2(archive, documents / archive.name)
+        if TEST_SCOPE == "cross_product":
+            archive = fixture_archive(state["sha"])
+            _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
+                "com.itorah.chavrusachat", "data"], "ai-data-container.txt")
+            documents = Path(raw.strip()) / "Documents"
+            documents.mkdir(exist_ok=True)
+            if (documents / archive.name).exists():
+                raise RuntimeError("The fresh owned simulator already has a transfer package input")
+            shutil.copy2(archive, documents / archive.name)
         result = EVIDENCE / "Paired.xcresult"
         argv = base + ["-scheme", "AI_HLY", "test-without-building",
-            "-resultBundlePath", str(result), "-only-testing:" + SELECTOR,
+            "-resultBundlePath", str(result),
             "-test-timeouts-enabled", "YES", "-maximum-test-execution-time-allowance", "600"]
+        argv += ["-only-testing:" + selector for selector in selectors]
         code, _ = command(argv, "paired-tests.log", timeout=2100, allow_failure=True)
         state["status"] = "INFRA_ERROR"
         if result.exists():
@@ -170,15 +184,15 @@ def main():
             command(["xcrun", "xcresulttool", "get", "test-results", "tests",
                 "--path", str(result)], "test-nodes.json")
             command([sys.executable, "Scripts/CI/verify_selected_tests.py",
-                "--results", str(EVIDENCE / "test-nodes.json"), "--selectors", SELECTOR],
+                "--results", str(EVIDENCE / "test-nodes.json"), "--selectors", ",".join(selectors)],
                 "requested-tests.log")
-            if code == 0 and summary.get("passedTests") == 3 and summary.get("failedTests", 0) == 0 \
+            if code == 0 and summary.get("passedTests") == expected_tests and summary.get("failedTests", 0) == 0 \
                     and summary.get("skippedTests", 0) == 0:
                 state.update(status="EXECUTED_PASS", ui="EXECUTED_PASS")
             elif summary.get("failedTests", 0):
                 state.update(status="TEST_FAILED", ui="TEST_FAILED")
         if state["status"] != "EXECUTED_PASS":
-            raise RuntimeError("Paired native acceptance did not pass all three original product scenarios")
+            raise RuntimeError("Original native acceptance did not pass every case in the recorded scope")
     except Exception as error:
         state["error"] = str(error)
         print(str(error), file=sys.stderr)

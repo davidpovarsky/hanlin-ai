@@ -1,6 +1,167 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "A draft can include up to five files. Remove an attachment before adding this batch.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A draft can include up to five files. Remove an attachment before adding this batch."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "טיוטה יכולה לכלול עד חמישה קבצים. יש להסיר קובץ מצורף לפני הוספת הקבוצה הזו."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "草稿最多可包含五个文件。请先移除一个附件，再添加这批内容。"
+          }
+        }
+      }
+    },
+    "This batch contains an item that could not be shared. The original items were kept.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This batch contains an item that could not be shared. The original items were kept."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הקבוצה כוללת פריט שלא ניתן היה לשתף. הפריטים המקוריים נשמרו."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这批内容包含无法共享的项目。原始项目已保留。"
+          }
+        }
+      }
+    },
+    "Choose a batch to add its text, links and files to your current draft. Nothing is sent until you tap Send.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a batch to add its text, links and files to your current draft. Nothing is sent until you tap Send."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו קבוצה כדי להוסיף את הטקסט, הקישורים והקבצים שלה לטיוטה הנוכחית. התוכן יישלח רק לאחר לחיצה על שליחה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择一批内容，将文字、链接和文件添加到当前草稿。点击发送之前不会发送任何内容。"
+          }
+        }
+      }
+    },
+    "No shared items yet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No shared items yet"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עדיין אין פריטים משותפים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂无共享项目"
+          }
+        }
+      }
+    },
+    "Add to draft": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to draft"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הוספה לטיוטה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加到草稿"
+          }
+        }
+      }
+    },
+    "The shared items could not be added. Your draft and the original items were kept.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The shared items could not be added. Your draft and the original items were kept."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן היה להוסיף את הפריטים המשותפים. הטיוטה והפריטים המקוריים נשמרו."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法添加共享项目。草稿和原始项目已保留。"
+          }
+        }
+      }
+    },
+    "Couldn’t add shared items": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t add shared items"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן להוסיף פריטים משותפים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法添加共享项目"
+          }
+        }
+      }
+    },
     "Hanlin guide": {
       "extractionState": "manual",
       "localizations": {

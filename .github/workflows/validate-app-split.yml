@@ -24,6 +24,11 @@ on:
         type: boolean
         required: false
         default: false
+      paired_test_scope:
+        description: Original cross-product flows or the shared ingress chat consumer
+        type: string
+        required: false
+        default: cross_product
   workflow_dispatch:
     inputs:
       signed_release_archives:
@@ -52,10 +57,17 @@ on:
         default: '42926628418'
         required: true
 
+      paired_test_scope:
+        description: Original cross-product flows or the shared ingress chat consumer
+        type: choice
+        options: [cross_product, shared_ingress]
+        required: false
+        default: cross_product
+
 concurrency:
   # Separate acceptance scopes use distinct job checkouts and owned simulators.
   # A paired run must not cancel standalone storage/UI evidence still being collected.
-  group: standalone-miniapps-${{ github.ref }}-${{ inputs.audit_release_resources && 'release-audit' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && 'paired' || 'standalone' }}
+  group: standalone-miniapps-${{ github.ref }}-${{ inputs.audit_release_resources && 'release-audit' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || 'standalone' }}
   cancel-in-progress: true
 
 permissions:
@@ -269,6 +281,8 @@ jobs:
       - name: Exercise actual request, return, cancellation and transfer across both products
         if: ${{ inputs.paired_product_acceptance && !inputs.signed_release_archives }}
         shell: bash
+        env:
+          PAIRED_TEST_SCOPE: ${{ inputs.paired_test_scope || 'cross_product' }}
         run: python3 Scripts/ProductSplit/run_paired_acceptance.py
       - name: Prepare isolated signing inspection dependencies
         if: ${{ inputs.signed_release_archives }}

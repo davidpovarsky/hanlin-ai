@@ -5,6 +5,7 @@ import SwiftUI
 
 struct ChavrusaShareInboxView: View {
     let platform: HanlinScriptingPlatform
+    var useInChat: ((UUID) async throws -> Void)? = nil
     @State private var batches: [HanlinShareBatch] = []
     @State private var legacyItems: [ChavrusaSharedItem] = []
     @State private var hasUnreadableItems = false
@@ -14,12 +15,24 @@ struct ChavrusaShareInboxView: View {
     @State private var commands: [UUID: HanlinScriptResumeCommand] = [:]
     @State private var submitting: Set<UUID> = []
     @State private var actionFailed = false
+    @State private var draftTask: Task<Void, Never>?
+    @State private var preparingDraft: UUID?
+    @State private var draftFailed = false
+    @State private var draftFailure = ""
 
     var body: some View {
         List {
             Section {
-                Text("These items are saved on this device. Choose a MiniApp action to send a batch. Its actual status and result appear below.")
-                    .font(.footnote).foregroundStyle(.secondary)
+                if useInChat != nil {
+                    Text("Choose a batch to add its text, links and files to your current draft. Nothing is sent until you tap Send.")
+                        .font(.footnote).foregroundStyle(.secondary)
+                } else {
+                    Text("These items are saved on this device. Choose a MiniApp action to send a batch. Its actual status and result appear below.")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+                if batches.isEmpty && legacyItems.isEmpty && !loadFailed {
+                    Text("No shared items yet").foregroundStyle(.secondary)
+                }
             }
             if loadFailed || hasUnreadableItems {
                 Section {
@@ -48,7 +61,27 @@ struct ChavrusaShareInboxView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    deliveryControls(for: batch)
+                    if let useInChat {
+                        Button {
+                            preparingDraft = batch.id
+                            draftTask = Task {
+                                defer { preparingDraft = nil; draftTask = nil }
+                                do { try await useInChat(batch.id) }
+                                catch is CancellationError { }
+                                catch {
+                                    draftFailure = (error as? ChavrusaShareDraftError)?.errorDescription
+                                        ?? String(localized: "The shared items could not be added. Your draft and the original items were kept.")
+                                    draftFailed = true
+                                }
+                            }
+                        } label: {
+                            Label("Add to draft", systemImage: "text.badge.plus")
+                        }
+                        .disabled(preparingDraft != nil)
+                        .accessibilityIdentifier("hanlin-share-add-draft-" + batch.id.uuidString.lowercased())
+                    } else {
+                        deliveryControls(for: batch)
+                    }
                 } header: { Text(batch.createdAt, style: .date) }
             }
             if !legacyItems.isEmpty {
@@ -63,7 +96,20 @@ struct ChavrusaShareInboxView: View {
         }
         .navigationTitle("Shared Items")
         .accessibilityIdentifier("hanlin-share-inbox")
-        .task { await reload() }
+        .task {
+#if DEBUG && targetEnvironment(simulator)
+            if let raw = ProcessInfo.processInfo.environment["HANLIN_SHARE_DRAFT_ACCEPTANCE_ID"],
+               let nonce = UUID(uuidString: raw) {
+                do { try await ChavrusaShareInbox.shared.seedDraftAcceptanceIfRequested(nonce) }
+                catch { loadFailed = true; return }
+            }
+#endif
+            await reload()
+        }
+        .onDisappear { draftTask?.cancel() }
+        .alert("Couldn’t add shared items", isPresented: $draftFailed) {
+            Button("OK", role: .cancel) {}
+        } message: { Text(draftFailure) }
         .task(id: observedInvocationIDs) {
             guard !observedInvocationIDs.isEmpty else { return }
             // Observe durable receipts only while this screen is visible. A

@@ -1625,6 +1625,19 @@
         "AI_HLYUITests/HanlinHelpUITests"
       ],
       "consumers": []
+    },
+    "share_inbox_chat_ui_tests": {
+      "description": "Original shared ingress to Composer, SDK request and retained conversation",
+      "patterns": [
+        "AI_HLYUITests/HanlinShareInboxUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinShareInboxUITests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {

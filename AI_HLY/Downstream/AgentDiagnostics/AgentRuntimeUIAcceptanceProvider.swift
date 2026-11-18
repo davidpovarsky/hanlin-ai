@@ -368,6 +368,16 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let messages = body?["messages"] as? [[String: Any]]
         let content = messages?.last(where: { $0["role"] as? String == "user" })?["content"]
         let currentText = (content as? String) ?? (content as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined(separator: "\n") ?? ""
+#if DEBUG && targetEnvironment(simulator)
+        if let marker = currentText.range(of: "SHARE_DRAFT_[0-9A-F-]{36}", options: .regularExpression) {
+            let nonce = String(currentText[marker].suffix(36))
+            let verified = currentText.contains("UNSENT_PREEXISTING_" + nonce)
+                && bodyString.contains("SHARED_FILE_" + nonce)
+                && currentText.contains("https://example.org/hanlin-share?case=" + nonce)
+            emitFinalAnswer(verified ? "SHARED_DRAFT_DELIVERED_" + nonce : "SHARED_DRAFT_CONTENT_MISSING")
+            return
+        }
+#endif
         // Only the HTTP model response is controlled. The real Host, consent,
         // OS URL delivery, App Group, MiniApps process and canonical broker run.
         if let marker = currentText.range(of: "PAIRED_(?:OPEN|CANCEL)_[0-9A-F-]{36}", options: .regularExpression) {

@@ -275,6 +275,8 @@ struct ChatViewBottom: View {
     @State private var showImagePicker = false
     @State private var showCameraPicker = false
     @State private var showDocumentPicker = false
+    @State private var showShareInbox = false
+    @State private var shareDraftContext: String?
     @State private var isSourceOptionsVisible = false
     @State private var debounceWorkItem: DispatchWorkItem?
     @State private var selectedViewImage: UIImage?
@@ -421,6 +423,8 @@ struct ChatViewBottom: View {
             }
         }
         .onChange(of: effectiveDockContextKey) { _, newKey in
+            showShareInbox = false
+            shareDraftContext = nil
             popupCoordinator.dockState.handleContextKeyChange(newKey)
             popupCoordinator.closeAll()
         }
@@ -852,6 +856,10 @@ struct ChatViewBottom: View {
             onOpenCamera: { showCameraPicker = true },
             onOpenPhotoLibrary: { showImagePicker = true },
             onOpenDocumentPicker: { showDocumentPicker = true },
+            onOpenShareInbox: {
+                shareDraftContext = effectiveDockContextKey
+                showShareInbox = true
+            },
             ifSearch: $ifSearch,
             ifKnowledge: $ifKnowledge,
             ifThink: $ifThink,
@@ -1432,6 +1440,42 @@ struct ChatViewBottom: View {
         }) {
             DocumentPicker(selectedDocumentURLs: $selectedDocumentURLs)
                 .ignoresSafeArea()
+        }
+        .sheet(isPresented: $showShareInbox) {
+            NavigationStack {
+                ChavrusaShareInboxView(platform: .shared, useInChat: { batchID in
+                    guard let originalContext = shareDraftContext,
+                          originalContext == effectiveDockContextKey, showShareInbox, !isResponding else {
+                        throw CancellationError()
+                    }
+                    let prepared = try await ChavrusaShareInbox.shared.prepareDraft(
+                        batchID: batchID, availableFileSlots: 5 - selectedDocumentURLs.count)
+                    do {
+                        try Task.checkCancellation()
+                        guard showShareInbox, originalContext == effectiveDockContextKey, !isResponding else {
+                            throw CancellationError()
+                        }
+                        guard selectedDocumentURLs.count + prepared.files.count <= 5 else {
+                            throw ChavrusaShareDraftError.fileLimit
+                        }
+                        if !prepared.text.isEmpty {
+                            message = message.isEmpty ? prepared.text : message + "\n\n" + prepared.text
+                        }
+                        selectedDocumentURLs.append(contentsOf: prepared.files)
+                        showShareInbox = false
+                        shareDraftContext = nil
+                    } catch {
+                        await ChavrusaShareInbox.shared.discardPreparedDraft(prepared)
+                        throw error
+                    }
+                })
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel") { showShareInbox = false; shareDraftContext = nil }
+                            .accessibilityIdentifier("hanlin-share-inbox-cancel")
+                    }
+                }
+            }
         }
         .sheet(isPresented: $showEmbeddingSettingSheet) {
             NavigationStack {

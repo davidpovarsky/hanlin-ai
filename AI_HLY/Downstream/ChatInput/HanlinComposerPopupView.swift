@@ -51,6 +51,7 @@ struct HanlinComposerGeneralActionsView: View {
     let onOpenCamera: () -> Void
     let onOpenPhotoLibrary: () -> Void
     let onOpenDocumentPicker: () -> Void
+    let onOpenShareInbox: () -> Void
 
     // Mode toggles
     @Binding var ifSearch: Bool
@@ -230,6 +231,18 @@ struct HanlinComposerGeneralActionsView: View {
                         onOpenDocumentPicker()
                     }
                 }
+
+                Button {
+                    coordinator.closeAll()
+                    onOpenShareInbox()
+                } label: {
+                    Label("Shared Items", systemImage: "tray.and.arrow.down")
+                        .font(.subheadline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 6)
+                }
+                .disabled(isResponding)
+                .accessibilityIdentifier("hanlin-general-share-inbox")
 
                 if !capability.supportsMultimodal && !capability.isLocal {
                     Text(String(localized: "Tip: The current model is not a native vision model; attached images will use visual assistance descriptions."))
