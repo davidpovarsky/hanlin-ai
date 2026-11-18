@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T06:35:04.726440+00:00",
-  "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+  "generated_at": "2026-11-18T08:15:23.225285+00:00",
+  "source_sha": "595163c98d654966d068b99787c767ccfc15caec",
   "baseline_path": "docs/product-split/feature-delta-278.json",
   "baseline_file_sha256": "ccba98e746ac1bd838b7f772b5c3391136d04b887ed5f372f8fec1fff95d2725",
   "historical_revision": "e792b0b5fab6a66ea8cbdaa9626def509744e33f",
   "historical_blob_sha256": "7252f34685839bd179314e8ce7b2266ea035eb73818ef378e9f28158709ce19e",
   "count": 278,
-  "warning": "Working evidence map, not 278 accepted capabilities. Aggregate and partial native results stay in ACCEPTANCE_REGISTER until mapped to exact assertions.",
+  "warning": "278 requirements remain individually mapped. Nine rows have scoped native component evidence, not full feature acceptance; no UI success is inferred from the twenty passing methods. Original compact UI2 failed in the same run.",
   "rows": [
     {
       "id": "NAV-01",
@@ -20,8 +20,9 @@
         {
           "path": "AI_HLY/MainTabView.swift",
           "exists": true,
-          "current_sha256": "577ee4f41b7f05021b04cd8345c3cab140cd8424062dd3ea5644814658062e65",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "cc6375e354ff210948bfada4392148653183fbf74c8b27bacfebb265f92ab3c5",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "577ee4f41b7f05021b04cd8345c3cab140cd8424062dd3ea5644814658062e65"
         },
         {
           "path": "AI_HLY/ListView.swift",
@@ -61,9 +62,25 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-NAV-02",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "register_id": "COMPACT_BF729",
+          "run": 44250279050,
+          "source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "ModelPopoverZoomOrderTests/nativeOnlyConversationCreationRespectsActualAvailabilityAndCatalogIndices()",
+            "ModelPopoverZoomOrderTests/downloadedLocalConversationCreationDoesNotTreatCatalogPresenceAsReadiness()"
+          ],
+          "assertions_covered": "Original creation policy selects an available native/downloaded local model without changing catalog indices.",
+          "remaining_obligations": "Actual new-chat action, welcome message and persisted record still require original app UI.",
+          "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+          "direct_source_closure_report": "acceptance/NATIVE_ASSERTION_COVERAGE_20261118.json",
+          "scope_limit": "No whole-workflow or whole-feature PASS; native original UI remains required."
+        }
+      ]
     },
     {
       "id": "NAV-03",
@@ -142,9 +159,24 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-NAV-05",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "register_id": "COMPACT_BF729",
+          "run": 44250279050,
+          "source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "CompactRecentConversationsTests/selectsTopThreeByLastEditedIgnoringPinnedAndTemp()"
+          ],
+          "assertions_covered": "Original recent-conversation function returns the latest three by lastEdited and excludes temporary/non-chat rows.",
+          "remaining_obligations": "Visible list, pin grouping, navigation and persisted edit ordering are broader UI obligations.",
+          "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+          "direct_source_closure_report": "acceptance/NATIVE_ASSERTION_COVERAGE_20261118.json",
+          "scope_limit": "No whole-workflow or whole-feature PASS; native original UI remains required."
+        }
+      ]
     },
     {
       "id": "NAV-06",
@@ -220,9 +252,25 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-NAV-08",
-      "native_execution_evidence": [],
+      "native_execution_evidence": [
+        {
+          "register_id": "COMPACT_BF729",
+          "run": 44250279050,
+          "source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "CompactRecentConversationsTests/historySnippetKeepsOriginalStringIndices()",
+            "CompactRecentConversationsTests/historySnippetHandlesShortAndAbsentMatches()"
+          ],
+          "assertions_covered": "Actual message snippet comparison matches mixed case without reusing indices from Unicode-folded strings.",
+          "remaining_obligations": "Whole title/body search, debounce and result navigation require original UI acceptance.",
+          "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+          "direct_source_closure_report": "acceptance/NATIVE_ASSERTION_COVERAGE_20261118.json",
+          "scope_limit": "No whole-workflow or whole-feature PASS; native original UI remains required."
+        }
+      ],
       "pending_evidence": [
         "COMPACT_BF729"
       ]
@@ -273,9 +321,26 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-NAV-10",
-      "native_execution_evidence": [],
+      "native_execution_evidence": [
+        {
+          "register_id": "COMPACT_BF729",
+          "run": 44250279050,
+          "source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "CompactRecentConversationsTests/historySnippetKeepsOriginalStringIndices()",
+            "CompactRecentConversationsTests/historySnippetPreservesUnicodeContext()",
+            "CompactRecentConversationsTests/historySnippetHandlesShortAndAbsentMatches()"
+          ],
+          "assertions_covered": "Original search helper keeps forty grapheme clusters around the match, complete emoji/pointed Hebrew and valid original String indices.",
+          "remaining_obligations": "Visible snippet and scrolling to the original matching message remain separate.",
+          "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+          "direct_source_closure_report": "acceptance/NATIVE_ASSERTION_COVERAGE_20261118.json",
+          "scope_limit": "No whole-workflow or whole-feature PASS; native original UI remains required."
+        }
+      ],
       "pending_evidence": [
         "COMPACT_BF729"
       ]
@@ -654,9 +719,25 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-NAV-25",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "register_id": "COMPACT_BF729",
+          "run": 44250279050,
+          "source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "ModelPopoverZoomOrderTests/nativeOnlyConversationCreationRespectsActualAvailabilityAndCatalogIndices()",
+            "ModelPopoverZoomOrderTests/downloadedLocalConversationCreationDoesNotTreatCatalogPresenceAsReadiness()"
+          ],
+          "assertions_covered": "Unavailable/hidden native or local model/provider cannot authorize original creation; catalog presence alone is not readiness.",
+          "remaining_obligations": "Actual failure prompt and navigation from prompt to settings have not been accepted.",
+          "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+          "direct_source_closure_report": "acceptance/NATIVE_ASSERTION_COVERAGE_20261118.json",
+          "scope_limit": "No whole-workflow or whole-feature PASS; native original UI remains required."
+        }
+      ]
     },
     {
       "id": "NAV-26",
@@ -1650,13 +1731,31 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-MODEL-01",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "register_id": "COMPACT_BF729",
+          "run": 44250279050,
+          "source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "ModelPopoverZoomOrderTests/nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift()",
+            "ModelPopoverZoomOrderTests/nativeVisibilityKeepsOriginalIndices()",
+            "ModelPopoverZoomOrderTests/compactNativeVisibilityKeepsFeaturedAndSelectedIndices()"
+          ],
+          "assertions_covered": "Original model identities and selected array indices survive native registration, hiding and availability filtering.",
+          "remaining_obligations": "Actual user selection and conversation persistence need native product UI acceptance.",
+          "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+          "direct_source_closure_report": "acceptance/NATIVE_ASSERTION_COVERAGE_20261118.json",
+          "scope_limit": "No whole-workflow or whole-feature PASS; native original UI remains required."
+        }
+      ]
     },
     {
       "id": "MODEL-02",
@@ -1675,8 +1774,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -1700,8 +1800,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -1725,13 +1826,29 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-MODEL-04",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "register_id": "COMPACT_BF729",
+          "run": 44250279050,
+          "source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "ModelPopoverZoomOrderTests/compactNativeVisibilityKeepsFeaturedAndSelectedIndices()"
+          ],
+          "assertions_covered": "Original compact picker keeps featured/selected native indices and excludes hidden/unavailable/duplicate native rows.",
+          "remaining_obligations": "Actual compact menu presentation and user selection remain UI obligations.",
+          "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+          "direct_source_closure_report": "acceptance/NATIVE_ASSERTION_COVERAGE_20261118.json",
+          "scope_limit": "No whole-workflow or whole-feature PASS; native original UI remains required."
+        }
+      ]
     },
     {
       "id": "MODEL-05",
@@ -1750,13 +1867,39 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-MODEL-05",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "register_id": "COMPACT_BF729",
+          "run": 44250279050,
+          "source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "ModelPopoverZoomOrderTests/nativeCallbacksAreDeferredAndSuperseded()",
+            "ModelPopoverZoomOrderTests/nativeSizeCompletionOwnsForwardNavigation()",
+            "ModelPopoverZoomOrderTests/staleNativeResizeCannotCompleteReopenedPresentation()",
+            "ModelPopoverZoomOrderTests/reenterWhileExpandedDoesNotWaitForAnotherResize()",
+            "ModelPopoverZoomOrderTests/reverseCompletesBeforeShrink()",
+            "ModelPopoverZoomOrderTests/staleReverseCannotShrinkNewPresentation()",
+            "ModelPopoverZoomOrderTests/staleCompletionCannotEndNewExpansion()",
+            "ModelPopoverZoomOrderTests/popoverFitsSmallContainer()",
+            "ModelPopoverZoomOrderTests/expandFirstThenPushAllModelsInCompletion()",
+            "ModelPopoverZoomOrderTests/generationTokenCancelsStaleCompletion()",
+            "ModelPopoverZoomOrderTests/reduceMotionNavigatesImmediately()"
+          ],
+          "assertions_covered": "Actual UIKit sizing callback is deferred and superseded; original coordinator enforces forward/reverse ordering, generation rejection, constrained size and Reduce Motion.",
+          "remaining_obligations": "Original presented model search screen, touches, dismissal and draft retention need UI acceptance.",
+          "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+          "direct_source_closure_report": "acceptance/NATIVE_ASSERTION_COVERAGE_20261118.json",
+          "scope_limit": "No whole-workflow or whole-feature PASS; native original UI remains required."
+        }
+      ]
     },
     {
       "id": "MODEL-06",
@@ -1775,8 +1918,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -1800,8 +1944,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -1825,8 +1970,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -1850,8 +1996,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -1875,13 +2022,31 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-MODEL-10",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "register_id": "COMPACT_BF729",
+          "run": 44250279050,
+          "source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "ModelPopoverZoomOrderTests/nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift()",
+            "ModelPopoverZoomOrderTests/nativeVisibilityKeepsOriginalIndices()",
+            "ModelPopoverZoomOrderTests/compactNativeVisibilityKeepsFeaturedAndSelectedIndices()"
+          ],
+          "assertions_covered": "Original visibility filtering skips hidden models and unavailable/duplicate native entries without index drift.",
+          "remaining_obligations": "User editing/reordering hidden models and persisted catalog UI are not proven by these methods.",
+          "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+          "direct_source_closure_report": "acceptance/NATIVE_ASSERTION_COVERAGE_20261118.json",
+          "scope_limit": "No whole-workflow or whole-feature PASS; native original UI remains required."
+        }
+      ]
     },
     {
       "id": "MODEL-11",
@@ -1900,8 +2065,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -1925,8 +2091,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -1950,8 +2117,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -1975,8 +2143,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2000,8 +2169,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2025,8 +2195,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2050,8 +2221,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2075,8 +2247,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2100,8 +2273,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2125,8 +2299,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2150,8 +2325,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2175,8 +2351,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2200,8 +2377,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2225,8 +2403,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2250,8 +2429,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2275,8 +2455,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2300,8 +2481,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2325,8 +2507,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2350,8 +2533,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2875,8 +3059,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2900,8 +3085,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2925,8 +3111,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2950,8 +3137,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -2975,8 +3163,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3000,8 +3189,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3025,8 +3215,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3050,8 +3241,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3075,8 +3267,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3100,8 +3293,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3125,8 +3319,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3150,8 +3345,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3175,8 +3371,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3200,8 +3397,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3225,8 +3423,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3250,8 +3449,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3275,8 +3475,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3300,8 +3501,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3325,8 +3527,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3350,8 +3553,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3375,8 +3579,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3400,8 +3605,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3425,8 +3631,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3450,8 +3657,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3475,8 +3683,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3500,8 +3709,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3525,8 +3735,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3550,8 +3761,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3575,8 +3787,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3600,8 +3813,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3625,8 +3839,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3650,8 +3865,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3675,8 +3891,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3700,8 +3917,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3725,8 +3943,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3750,8 +3969,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3775,8 +3995,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -3800,8 +4021,9 @@
         {
           "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
           "exists": true,
-          "current_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "b6bc7414c003c9225b14bbb9402acea88c6affcd57cc14151bada38197e36b9c",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6832,8 +7054,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -6863,8 +7086,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -6894,8 +7118,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -6925,8 +7150,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -6956,8 +7182,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -6987,8 +7214,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7018,8 +7246,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7049,8 +7278,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7080,8 +7310,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7111,8 +7342,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7142,8 +7374,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7173,8 +7406,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7204,8 +7438,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7235,8 +7470,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7266,8 +7502,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7297,8 +7534,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7328,8 +7566,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7359,8 +7598,9 @@
         {
           "path": "AI_HLY/SettingsView.swift",
           "exists": true,
-          "current_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "9392de641feb3b7a36f44b1c95e0760812b70f33c7d64d82b17093fcf4761a95"
         },
         {
           "path": "AI_HLY/Model/ChatRecords.swift",
@@ -7373,5 +7613,8 @@
       "test_obligation": "PARITY-SYS-18",
       "native_execution_evidence": []
     }
-  ]
+  ],
+  "previous_anchor_snapshot_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+  "accepted_capability_count": 0,
+  "partially_evidenced_capability_count": 9
 }

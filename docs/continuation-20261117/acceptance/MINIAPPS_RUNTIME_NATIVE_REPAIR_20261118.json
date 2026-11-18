@@ -30,7 +30,8 @@
     "Build with original simulator ad-hoc signing, same as existing paired acceptance",
     "Verify product identity, actual codesign, executable-embedded original App Groups and source entitlement hash",
     "Launch shipping bootstrap and require both original OS-provided App Group containers before runtime UI tests",
-    "Retain all product installer guards and actual import/install/runtime/relaunch assertions; surface real import errors immediately"
+    "Retain all product installer guards and actual import/install/runtime/relaunch assertions; surface real import errors immediately",
+    "The original app now explains unavailable shared storage in user-facing text instead of showing the raw appGroupUnavailable enum; the failure remains enforced."
   ],
   "native_repair_validation": "PENDING",
   "retry_run": 44263872088,

@@ -2386,7 +2386,11 @@ final class HanlinScriptingPlatform {
     }
 
     nonisolated private static func safeMessage(_ error: Error) -> String {
-        String(String(describing: error).prefix(512))
+        if let storageError = error as? HanlinScriptExtensionStoreError,
+           storageError == .appGroupUnavailable {
+            return String(localized: "Hanlin cannot access shared storage. This action is unavailable in this installation.")
+        }
+        return String(String(describing: error).prefix(512))
     }
 
     nonisolated private static func compiledPath(for sourcePath: String) throws -> String {
