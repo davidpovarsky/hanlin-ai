@@ -35,7 +35,7 @@ struct HanlinToolConsentSheet: View {
     }
 }
 
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
 struct HanlinPhase2AcceptanceStatusView: View {
     let isResponding: Bool
     let conversationID: UUID?

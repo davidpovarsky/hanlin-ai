@@ -97,7 +97,7 @@ struct ChavrusaShareInboxView: View {
         .navigationTitle("Shared Items")
         .accessibilityIdentifier("hanlin-share-inbox")
         .task {
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
             if let raw = ProcessInfo.processInfo.environment["HANLIN_SHARE_DRAFT_ACCEPTANCE_ID"],
                let nonce = UUID(uuidString: raw) {
                 do { try await ChavrusaShareInbox.shared.seedDraftAcceptanceIfRequested(nonce) }

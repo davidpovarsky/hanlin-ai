@@ -42,7 +42,7 @@ enum AgentRuntimeUIAcceptanceProvider {
     /// A separate opt-in simulator account seed. It never enables the HTTP
     /// acceptance protocol: the canonical SDK contacts the actual Google service.
     static var isLiveProviderEnabled: Bool {
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         ProcessInfo.processInfo.environment["HANLIN_LIVE_GEMINI_ACCEPTANCE"] == "1"
 #else
         false
@@ -52,7 +52,7 @@ enum AgentRuntimeUIAcceptanceProvider {
     /// An opt-in, task-owned disk container for authentic cold-reopen UI proof.
     /// Shipping storage and legacy fixture resets retain their existing behavior.
     static var phase2StoreID: UUID? {
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         guard isEnabled || isLiveProviderEnabled,
               let value = ProcessInfo.processInfo.environment["HANLIN_PHASE2_STORE_ID"] else { return nil }
         return UUID(uuidString: value)
@@ -130,7 +130,7 @@ enum AgentRuntimeUIAcceptanceProvider {
 
     @MainActor
     static func configureIfRequested(context: ModelContext) {
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         if isLiveProviderEnabled {
             configureLiveProviderIfRequested(context: context)
             return
@@ -182,7 +182,7 @@ enum AgentRuntimeUIAcceptanceProvider {
                 lastEdited: now,
                 useModel: 0
             )
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
             if ProcessInfo.processInfo.environment["HANLIN_CANVAS_ACCEPTANCE_FIXTURES"] == "1" {
                 let code = "print('CANVAS_LOCAL_RESULT_' + str(6 * 7))"
                 acceptanceChat.canvas = CanvasData(title: "Canvas runtime acceptance",
@@ -190,7 +190,7 @@ enum AgentRuntimeUIAcceptanceProvider {
             }
 #endif
             context.insert(acceptanceChat)
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
             if ProcessInfo.processInfo.environment["HANLIN_CONTEXTUAL_TEXT_ACCEPTANCE"] == "1" {
                 context.insert(ChatMessages(role: "assistant", text: "CONTEXT_TEXT_ORIGINAL_428: The selected message stays in its original conversation.",
                     modelDisplayName: "Agent Acceptance", record: acceptanceChat))
@@ -316,7 +316,7 @@ enum AgentRuntimeUIAcceptanceProvider {
         }
     }
 
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
     @MainActor
     private static func configureLiveProviderIfRequested(context: ModelContext) {
         guard isLiveProviderEnabled, !isEnabled, phase2StoreID != nil else {
@@ -429,7 +429,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let messages = body?["messages"] as? [[String: Any]]
         let content = messages?.last(where: { $0["role"] as? String == "user" })?["content"]
         let currentText = (content as? String) ?? (content as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined(separator: "\n") ?? ""
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         if let marker = currentText.range(of: "SHARE_DRAFT_[0-9A-F-]{36}", options: .regularExpression) {
             let nonce = String(currentText[marker].suffix(36))
             let verified = currentText.contains("UNSENT_PREEXISTING_" + nonce)

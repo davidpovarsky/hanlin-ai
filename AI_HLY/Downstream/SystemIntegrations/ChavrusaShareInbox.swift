@@ -146,7 +146,7 @@ actor ChavrusaShareInbox {
         try output.synchronize()
     }
 
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
     /// Test input only: real original App Group/store APIs; not an OS share-sheet claim.
     func seedDraftAcceptanceIfRequested(_ nonce: UUID) throws {
         let environment = ProcessInfo.processInfo.environment

@@ -20,7 +20,7 @@ struct MainTabView: View {
     @State private var showsVision = false
     @State private var companionUnavailable = false
     @State private var modal: WorkspaceModal? = {
-        #if DEBUG
+        #if DEBUG || (HANLIN_TESTING && targetEnvironment(simulator))
         let env = ProcessInfo.processInfo.environment
         if env["HANLIN_RUNTIME_INSTALL_ACCEPTANCE"] != nil { return .profile }
         // Existing engine-specific component probes still exercise the original
@@ -35,7 +35,7 @@ struct MainTabView: View {
 
     private enum WorkspaceModal: String, Identifiable {
         case profile
-        #if DEBUG
+        #if DEBUG || (HANLIN_TESTING && targetEnvironment(simulator))
         case runtimeComponent
         #endif
         var id: String { rawValue }
@@ -67,7 +67,7 @@ struct MainTabView: View {
             switch destination {
             case .profile:
                 SettingsView(onDone: { modal = nil })
-            #if DEBUG
+            #if DEBUG || (HANLIN_TESTING && targetEnvironment(simulator))
             case .runtimeComponent:
                 NativeAppsHubView()
             #endif

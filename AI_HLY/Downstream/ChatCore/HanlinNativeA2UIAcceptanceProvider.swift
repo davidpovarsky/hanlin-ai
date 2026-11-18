@@ -9,7 +9,7 @@ enum HanlinNativeA2UIAcceptanceProvider {
     static let planEnvironmentKey = "HANLIN_NATIVE_A2UI_FIXTURE_PLAN"
     static let chatName = "Native A2UI Acceptance"
     static var isEnabled: Bool {
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         ProcessInfo.processInfo.environment[environmentKey] == "1"
 #else
         false
@@ -50,7 +50,7 @@ enum HanlinNativeA2UIAcceptanceProvider {
     }
 
     static func makeChatEngine() -> HanlinChatEngine {
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [HanlinNativeA2UIAcceptanceURLProtocol.self]
         return HanlinChatEngine(sessionConfiguration: configuration)
@@ -60,7 +60,7 @@ enum HanlinNativeA2UIAcceptanceProvider {
     }
 
     static var observedRequestCount: Int {
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         HanlinNativeA2UIAcceptanceURLProtocol.snapshot().count
 #else
         0
@@ -73,7 +73,7 @@ enum HanlinNativeA2UIAcceptanceProvider {
         engineFailure = "engine:" + String(reflecting: type(of: error))
     }
     @MainActor static var lastRequestFailure: String? {
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         HanlinNativeA2UIAcceptanceURLProtocol.snapshot().failure ?? engineFailure
 #else
         nil
@@ -81,7 +81,7 @@ enum HanlinNativeA2UIAcceptanceProvider {
     }
 }
 
-#if DEBUG && targetEnvironment(simulator)
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
 private final class HanlinNativeA2UIAcceptanceURLProtocol: URLProtocol, @unchecked Sendable {
     private static let lock = NSLock()
     private nonisolated(unsafe) static var requestCount = 0

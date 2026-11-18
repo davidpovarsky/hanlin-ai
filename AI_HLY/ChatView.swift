@@ -520,7 +520,7 @@ struct ChatView: View {
         #if HANLIN_A2UI_POC
         .environment(\.hanlinA2UIAppPresentation, a2uiPresentation)
         .environment(\.hanlinA2UIResultProjectionSource, a2uiPresentation?.toolSource)
-        #if DEBUG && targetEnvironment(simulator)
+        #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         .safeAreaInset(edge: .top) {
             if HanlinNativeA2UIAcceptanceProvider.isEnabled {
                 HanlinA2UIAcceptanceStatusView(isResponding: isResponding, conversationID: chatRecord.id)
