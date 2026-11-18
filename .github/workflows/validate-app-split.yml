@@ -33,7 +33,9 @@ on:
         required: true
 
 concurrency:
-  group: standalone-miniapps-${{ github.ref }}
+  # Separate acceptance scopes use distinct job checkouts and owned simulators.
+  # A paired run must not cancel standalone storage/UI evidence still being collected.
+  group: standalone-miniapps-${{ github.ref }}-${{ inputs.paired_product_acceptance && 'paired' || 'standalone' }}
   cancel-in-progress: true
 
 permissions:
