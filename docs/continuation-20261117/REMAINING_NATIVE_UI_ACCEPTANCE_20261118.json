@@ -1,5 +1,5 @@
 {
-  "status": "READY_FOR_EXPLICIT_NATIVE_DISPATCH",
+  "status": "DISPATCHED_RESULTS_PENDING",
   "prepared_at": "2026-11-18T06:32:45.708304+00:00",
   "reason": "Required original chat/Morph/Skill Center obligations lack authenticated unchanged native pass evidence in the continuation artifacts. Shared app startup/navigation/Composer changed since baseline. Existing running selectors are excluded; the live credential gate remains separate.",
   "condition": "Inspect the already-running original app gate for shared failures before dispatch; fix shared root causes first.",
@@ -121,5 +121,8 @@
   "original_skill_suite_expected_invocations": 34,
   "motion": "Affected original B/C on the same prepared simulator; A unchanged/reused at recorded SHA",
   "excluded_known_failures": "Original host crash and Help/primary-tab/wide-navigation/Skill approval-resource cases remain in original result inspection 44254178627; no known-failing assertion weakened.",
-  "dispatched_run": null
+  "dispatched_run": 44256319287,
+  "dispatched_sha": "2b878353f53d303430321362bd2d1a51ed6deaa1",
+  "configuration": "Debug",
+  "source_checked_at": "2026-11-18T07:17:06.892726+00:00"
 }

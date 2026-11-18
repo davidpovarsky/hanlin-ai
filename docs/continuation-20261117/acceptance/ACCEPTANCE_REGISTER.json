@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T06:35:04.726440+00:00",
+  "generated_at": "2026-11-18T07:17:06.892726+00:00",
   "status": "IN_PROGRESS_NOT_A_PHASE_COMPLETION",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
-  "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+  "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
   "branch": "codex/hanlin-product-completion-20261117",
   "phase_2": "IN_PROGRESS",
   "phase_3": "IN_PROGRESS",
@@ -91,11 +91,12 @@
     },
     {
       "id": "WIDE00A9",
-      "status": "RUNNING",
+      "status": "BUILD_PASS_HOST32_PASS_1_CRASH_UI1_PASS_19_FAIL",
       "run": 44243185407,
       "sha": "00a932d63db76549dff0a228a6b75711fcad8a22",
-      "scope": "22 exact selectors: original app SDK/Host, Node/Python/OpenClaw/Skills, A2UI/OpenUI, NativeScript/Expo, wide Composer, Help/Canvas/text tools; Motion B/C",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44243185407"
+      "scope": "Full app build passed. 32 original Host component invocations passed and one crashed; requested runtime/Skills did not execute under the old selectors. UI 1 passed/19 failed. Motion B/C NOT_RUN: old selector chose no already-booted device.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44243185407",
+      "report": "docs/continuation-20261117/WIDE_NATIVE_FAILURES_20261118.json"
     },
     {
       "id": "COMPACT1D57",
@@ -169,35 +170,38 @@
     },
     {
       "id": "COMPACT_BF729",
-      "status": "QUEUED",
+      "status": "RUNNING",
       "run": 44250279050,
       "sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
-      "scope": "Original native/LOCAL model readiness, four history/Unicode cases and two exact compact UI obligations; supersedes uncompilable 1d57 and Unicode3376 runs.",
+      "scope": "Actual native full-app Debug compilation ongoing; model/Unicode/compact assertions pending.",
       "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44250279050"
     },
     {
       "id": "PAIRED_0C198",
-      "status": "RUNNING",
+      "status": "INFRA_ERROR_BEFORE_BUILD_TESTS_NOT_RUN",
       "run": 44248241361,
       "sha": "0c19842aa0ab0de1409db881df422d9166132a9e",
-      "scope": "Eight exact two-app and shared-inbox Host/UI methods, real binary entitlements and OS-owned App Group, original app names and new owned simulator warm-up.",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44248241361"
+      "scope": "Cold first boot stalled read-only simctl help; build and all eight native cases NOT_RUN. Preflight reordered at 16e0fba1, no assertion changed.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44248241361",
+      "report": "docs/continuation-20261117/PAIRED_BOOT_INFRASTRUCTURE_20261118.json"
     },
     {
       "id": "MINI_RUNTIME_394F",
-      "status": "QUEUED",
+      "status": "BUILD_PASS_INSTALL_INFRA_ERROR_UI_NOT_RUN",
       "run": 44248480774,
       "sha": "394fdb379f3ab05d59ae15fd73d0588db08bc8c5",
-      "scope": "Two original NativeScript/Expo packages in the actual independent MiniApps app; Swift 6 teardown corrected, exact runtime assertions retained.",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44248480774"
+      "scope": "Standalone app build PASS, both original engine UI methods NOT_RUN: simulator install, screenshot and system log timed out. 53 foreground and 7 lifecycle cases passed at this SHA.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44248480774",
+      "report": "docs/continuation-20261117/MINIAPPS_RUNTIME_INFRASTRUCTURE_20261118.json"
     },
     {
       "id": "APPLE_LOCAL_PROFILE_AUDIT",
-      "status": "QUEUED",
+      "status": "AUDIT_COMPLETE_SIGNING_BLOCKED",
       "run": 44250819961,
       "sha": "4458028a1b8f264963f1b96ffcea5faac1020dbc",
-      "scope": "Read-only actual portal capabilities and existing local distribution profile compatibility after the observed Cloud Signing export failure.",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44250819961"
+      "scope": "Existing Distribution identity valid. AI profile missing Extended Virtual Addressing; MiniApps had no exact bundle/profile/App Store record. Four original extension profiles covered required entitlements. No compatible AI/Mini release profiles.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44250819961",
+      "report": "docs/continuation-20261117/APPLE_SIGNING_RESOURCE_FACTS_20261118.json"
     },
     {
       "id": "LIVE_GEMINI_NATIVE",
@@ -219,9 +223,38 @@
     },
     {
       "id": "REMAINING_NATIVE_UI45",
-      "status": "PREPARED_NOT_DISPATCHED",
-      "scope": "45 original chat/Morph/Skill Center methods lack authenticated unchanged current native pass. Excludes the selectors already running and the blocked live account test. Inspect current app gate for shared failures before dispatch.",
-      "report": "docs/continuation-20261117/REMAINING_NATIVE_UI_ACCEPTANCE_20261118.json"
+      "status": "DISPATCHED_RESULTS_PENDING",
+      "scope": "45 original UI methods plus 7 exact real NativeScript wire methods, full SkillRuntimeProductTests (34 expected invocations), and affected Motion B/C. Not PASS.",
+      "report": "docs/continuation-20261117/REMAINING_NATIVE_UI_ACCEPTANCE_20261118.json",
+      "run": 44256319287,
+      "sha": "2b878353f53d303430321362bd2d1a51ed6deaa1",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44256319287"
+    },
+    {
+      "id": "APPLE_MINI_REGISTRATION",
+      "status": "REGISTRATION_SCOPE_VERIFIED",
+      "run": 44255527028,
+      "sha": "53cd2344b7d1723d7f512837e58e93475617d361",
+      "scope": "Exact original MiniApps Bundle ID created and APP_GROUPS/HEALTHKIT read back. No signing/export/publishing. Portal assignments, further capabilities and profiles remain required.",
+      "report": "docs/continuation-20261117/MINIAPPS_REGISTRATION_RESULT_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44255527028"
+    },
+    {
+      "id": "MINI_RUNTIME_C352",
+      "status": "DISPATCHED_RESULTS_PENDING",
+      "run": 44257287918,
+      "sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "scope": "Same two never-executed original runtime UI methods. Owned simulator boots before compilation; measured bounded install and actual Host reuse verifier. No product assertion/source/fixture weakened.",
+      "report": "docs/continuation-20261117/MINIAPPS_RUNTIME_INFRASTRUCTURE_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44257287918"
+    },
+    {
+      "id": "WIDE_ORIGINAL_INSPECTION",
+      "status": "QUEUED_OR_RUNNING_NOT_ACCEPTANCE",
+      "run": 44254178627,
+      "sha": "7bfbdfc45f89e1731b90486c9e3d1f9cd8e6a00c",
+      "scope": "Read-only extraction of exact original crash and seven UI failures from run44243185407; no new test execution.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44254178627"
     }
   ],
   "source_tasks": [
@@ -236,7 +269,7 @@
       "acceptance_status": "PRIOR_PHASE_RECORD_PRESERVED",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9"
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10"
     },
     {
       "gid": "1220546710401425",
@@ -249,7 +282,7 @@
       "acceptance_status": "PRIOR_PHASE_RECORD_PRESERVED",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9"
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10"
     },
     {
       "gid": "1219605220234118",
@@ -262,7 +295,7 @@
       "acceptance_status": "PRIOR_PHASE_RECORD_PRESERVED",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9"
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10"
     },
     {
       "gid": "1220546608370437",
@@ -275,7 +308,7 @@
       "acceptance_status": "PRIOR_PHASE_RECORD_PRESERVED",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9"
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10"
     },
     {
       "gid": "1220373608755846",
@@ -287,12 +320,14 @@
       "supporting_evidence": [
         "BASELINE00A9",
         "WIDE00A9",
-        "MINI_RUNTIME_394F"
+        "MINI_RUNTIME_394F",
+        "REMAINING_NATIVE_UI45",
+        "MINI_RUNTIME_C352"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "NativeScript ten original host/runtime behaviors in the integrated app and companion runtime controls."
     },
     {
@@ -304,12 +339,14 @@
       "implementation_summary": "Original Expo generated bridge, native-api and actual package UI.",
       "supporting_evidence": [
         "WIDE00A9",
-        "MINI_RUNTIME_394F"
+        "MINI_RUNTIME_394F",
+        "REMAINING_NATIVE_UI45",
+        "MINI_RUNTIME_C352"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Original Expo SwiftUI package and independent companion event/persistence assertions."
     },
     {
@@ -321,12 +358,13 @@
       "implementation_summary": "Original Node/TS/shell/runtime execution; final app engine assertions required.",
       "supporting_evidence": [
         "BASELINE00A9",
-        "WIDE00A9"
+        "WIDE00A9",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Native app TS/shell/runtime dispatch, bounded jobs and actual scheduler results."
     },
     {
@@ -337,12 +375,13 @@
       "url": "https://app.asana.com/0/0/1220546710400478",
       "implementation_summary": "Original passive facts/plans, genuine execution, approval, cancellation and persisted lastTest.",
       "supporting_evidence": [
-        "WIDE00A9"
+        "WIDE00A9",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "22 real imported fixtures, missing/denied/unknown engines, output/cancel/reopen and readiness assertions."
     },
     {
@@ -353,12 +392,13 @@
       "url": "https://app.asana.com/0/0/1220489383643571",
       "implementation_summary": "Canonical ordered model/tool envelopes and native app consumers.",
       "supporting_evidence": [
-        "WIDE00A9"
+        "WIDE00A9",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Original model/tool surface attribution and ordered original-app execution."
     },
     {
@@ -369,12 +409,13 @@
       "url": "https://app.asana.com/0/0/1220489258419968",
       "implementation_summary": "Pinned original renderer/bindings in the real conversation.",
       "supporting_evidence": [
-        "WIDE00A9"
+        "WIDE00A9",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "All selected original surface editing, binding, replay and layout cases."
     },
     {
@@ -386,12 +427,13 @@
       "implementation_summary": "Existing broker/RPC permission routing and safe action continuation.",
       "supporting_evidence": [
         "SDK53",
-        "WIDE00A9"
+        "WIDE00A9",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Original action denial, authorized continuation and exact persisted result identity."
     },
     {
@@ -404,12 +446,13 @@
       "supporting_evidence": [
         "SDK53",
         "WIDE00A9",
-        "MEDIA5"
+        "MEDIA5",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Original app cancellation/replay/history and no stale action invocation."
     },
     {
@@ -424,12 +467,13 @@
         "MEDIA5",
         "MEDIA_CLOSE_DIAGNOSIS",
         "QUICKLOOK50AC",
-        "WIDE00A9"
+        "WIDE00A9",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Twelve component method identities have passes at their own recorded SHAs; integrated original-chat media and physical presentation remain separate."
     },
     {
@@ -440,12 +484,13 @@
       "url": "https://app.asana.com/0/0/1220546608350406",
       "implementation_summary": "Original Tree-sitter/AST passive dependency observations and hostile-input controls.",
       "supporting_evidence": [
-        "WIDE00A9"
+        "WIDE00A9",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Actual embedded OpenClaw/AST and hostile path/manifests in imported skills."
     },
     {
@@ -456,12 +501,13 @@
       "url": "https://app.asana.com/0/0/1220546846740594",
       "implementation_summary": "Original disclosure/activity/shimmer; current rapid-reversal and RTL/type/rotation acceptance pending.",
       "supporting_evidence": [
-        "WIDE00A9"
+        "WIDE00A9",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Rapid reversal and long RTL/rotation B/C on actual native source; historical A100 cycles is separate."
     },
     {
@@ -480,7 +526,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Both compact cases, wide draft behavior and remaining five original Morph controls; visual reference/physical limits remain explicit."
     },
     {
@@ -499,7 +545,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Real native chip enable/disable/context menu/expanded state and RTL labels."
     },
     {
@@ -516,7 +562,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Twelve current original Skill Center methods, including original ten and two runtime lifecycle methods; import/approval/cancel/reopen must actually pass."
     },
     {
@@ -532,12 +578,13 @@
         "WIDE00A9",
         "PAIRED00A9",
         "PAIRED_0C198",
-        "LIVE_GEMINI_NATIVE"
+        "LIVE_GEMINI_NATIVE",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Integrated original chat/Host/Store acceptance and live provider/resource gate; Otzaria consumer work is outside this Hanlin task."
     },
     {
@@ -551,12 +598,13 @@
         "SDK53",
         "CORE46",
         "WIDE00A9",
-        "LIVE_GEMINI_NATIVE"
+        "LIVE_GEMINI_NATIVE",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Native consumer behavior in addition to the recorded component/provider session proofs."
     },
     {
@@ -571,12 +619,13 @@
         "WIDE00A9",
         "PAIRED00A9",
         "SHARE00A9",
-        "PAIRED_0C198"
+        "PAIRED_0C198",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Actual origin/receiving-window/permission enforcement, paired return and shared inbox consumption."
     },
     {
@@ -592,12 +641,13 @@
         "WIDE00A9",
         "PAIRED00A9",
         "SHARE00A9",
-        "PAIRED_0C198"
+        "PAIRED_0C198",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Original conversation draft/history reopen plus two-product persistence/migration and actual platform account boundaries."
     },
     {
@@ -616,7 +666,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Original importable presentation UI, Morph/Thinking/A2UI consumer acceptance and reference comparison."
     },
     {
@@ -627,12 +677,13 @@
       "url": "https://app.asana.com/0/0/1220546571007976",
       "implementation_summary": "Original OpenClaw subset with six real embedded-engine cases; no broad third-party runtime claim.",
       "supporting_evidence": [
-        "WIDE00A9"
+        "WIDE00A9",
+        "REMAINING_NATIVE_UI45"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Six exact original embedded Node/OpenClaw cases; no claim beyond the supported subset."
     },
     {
@@ -648,12 +699,14 @@
         "PAIRED00A9",
         "ARCHIVE00A9",
         "PAIRED_0C198",
-        "MINI_RUNTIME_394F"
+        "MINI_RUNTIME_394F",
+        "MINI_RUNTIME_C352",
+        "APPLE_MINI_REGISTRATION"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Two actually installed apps with paired flows, both runtime packages, signed candidate and physical acceptance."
     },
     {
@@ -669,12 +722,13 @@
         "PAIRED00A9",
         "SHARE00A9",
         "ARCHIVE00A9",
-        "PAIRED_0C198"
+        "PAIRED_0C198",
+        "APPLE_MINI_REGISTRATION"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Eight paired/shared-inbox cases and authentic entitlement/profile checks; existing source/data and receipt isolation preserved."
     },
     {
@@ -690,12 +744,13 @@
         "SHARE00A9",
         "COMPACT_BF729",
         "PAIRED_0C198",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "APPLE_MINI_REGISTRATION"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "278 feature obligations and 26 current UX resolutions must map to actual individual assertions/screens, not file presence."
     },
     {
@@ -710,12 +765,14 @@
         "PAIRED00A9",
         "ARCHIVE00A9",
         "PAIRED_0C198",
-        "MINI_RUNTIME_394F"
+        "MINI_RUNTIME_394F",
+        "MINI_RUNTIME_C352",
+        "APPLE_MINI_REGISTRATION"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "NativeScript and Expo in independent MiniApps plus actual return/relaunch/persistence."
     },
     {
@@ -737,12 +794,13 @@
         "QUICKLOOK50AC",
         "COMPACT_BF729",
         "PAIRED_0C198",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "APPLE_MINI_REGISTRATION"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Complete per-capability execution/eligible reuse evidence; 45 original native UI methods still await execution."
     },
     {
@@ -760,12 +818,13 @@
         "PAIRED00A9",
         "COMPACT_BF729",
         "PAIRED_0C198",
-        "LIVE_GEMINI_NATIVE"
+        "LIVE_GEMINI_NATIVE",
+        "APPLE_MINI_REGISTRATION"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
       "remaining_acceptance": "Original profiles/local signed exports, supported physical device, live model gate and release candidate; source currently targets iOS/iPadOS27 only."
     }
   ],
@@ -782,8 +841,8 @@
     },
     {
       "id": "SIGNED_PROVISIONING",
-      "status": "ACTUAL_EXPORT_FAILED_PROFILE_REVIEW_RUNNING",
-      "need": "Both device archives passed, both exports failed Cloud signing permission/profile matching. Inspect existing valid local profile path with unchanged required entitlements; do not claim signed IPA."
+      "status": "EXACT_APPLE_PORTAL_CONFIGURATION_REQUIRED",
+      "need": "Existing identity is valid. Original MiniApps Bundle ID plus App Groups/HealthKit capability toggles registered and read back. Need both actual group assignments, all original required capability approvals and compatible profiles (AI lacks Extended Virtual Addressing), plus the separate App Store record. Official API exposes no App Group assignment or create-app endpoint; the Browser plugin exposes no callable control JS in this session. No browser account session was probed."
     },
     {
       "id": "APPROVED_FULL_VISUAL_REFERENCE",
@@ -792,11 +851,12 @@
     }
   ],
   "remaining_internal_gates": [
-    "Finish and diagnose current wide/compact/original runtime/paired native gates; fix actual failures.",
-    "Execute the documented 45 missing original UI obligations after shared failures in the current gate are resolved.",
-    "Map individual original native assertions to all 278 features and 26 UX decisions; source hashes alone are not acceptance.",
-    "Finish actual local profile review and any authorized viable distribution export without creating or exporting a new signing key.",
-    "Refresh the seven canonical reports and every original Asana task after actual phase outcomes; retain honest incomplete status until all required criteria pass."
+    "Read original native crash/UI attachments, fix diagnosed Host/Help/primary-navigation/Skill failures and run their affected exact assertions.",
+    "Finish actual compact/model/Unicode run44250279050, missing 45 UI + 41 native invocations + Motion B/C run44256319287, and standalone two-engine run44257287918.",
+    "Run actual paired eight-case product/share acceptance after the owned first-boot correction and any shared Host fixes.",
+    "Execute affected original Release/HANLIN_TESTING fixture flows (A2UI/tool/Python/Canvas/text/NS/Expo) with unchanged acceptance requirements.",
+    "Map actual assertions to required feature and UX rows; physical/system/visual/live-provider scope remains separately stated.",
+    "Refresh all canonical reports and original Asana tasks against actual outcomes; no source-only phase closure."
   ],
-  "native_status_observed_at": "2026-11-18T06:34:59.109329+00:00"
+  "native_status_observed_at": "2026-11-18T07:17:06.892726+00:00"
 }

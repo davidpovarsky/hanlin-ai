@@ -1,6 +1,6 @@
 # Hanlin release checklist
 
-Decision: NO_GO. Source snapshot: a64249e970383b46c2326ac20544329ea07ac6a9. Updated: 2026-11-18T06:35:04.726440+00:00.
+Decision: NO_GO. Source snapshot: c3524b52ab399a40b35bf323ef162fe5d0a6da10. Updated: 2026-11-18T07:17:06.892726+00:00.
 This is a reviewable candidate checklist, not an accepted release or publication approval.
 
 ## Immutable identities
@@ -18,12 +18,15 @@ Original shared groups group.com.itorah.chavrusachat and group.com.itorah.shared
 
 ## Required gates
 
+- [x] Register the exact original MiniApps Bundle ID and read back APP_GROUPS/HEALTHKIT in 44255527028.
+- [ ] Assign both original Apple App Groups, enable every remaining source capability and obtain compatible AI/MiniApps profiles; registration alone is not signing.
+
 - [x] Preserve original worktrees, staged source and historical baseline; source manifest records the continuation range.
 - [x] Retain original SDK, Host, providers, engines, permission boundaries and storage.
 - [x] Authenticate recorded SDK53, Core46, transfer25, MiniApps27, editor6 and selected media native evidence at their actual SHAs.
 - [x] Build both actual original iOS27 device Release archives at 00a932d6.
 - [ ] Finish actual current app/Motion, compact, standalone runtime and paired-product gates.
-- [ ] Execute the 45 missing original UI cases in the versioned acceptance plan after resolving shared current failures.
+- [ ] Accept the 45 original UI cases and 41 expected native invocations now dispatched in 44256319287; collect Motion B/C from the same prepared simulator.
 - [ ] Map behavior-specific evidence to every required feature/UX row. Do not count 278 source anchors as 278 passes.
 - [ ] Complete one approved live model/tool/persistence run; credential export is currently rejected by automatic review.
 - [ ] Produce local signed exports with exact required entitlements and compatible profiles for both apps and all four extensions.
