@@ -345,7 +345,8 @@ struct HanlinProductTransferTests {
         // If a read-only reopen changes durable bytes, preserve the complete
         // failing inventory in native diagnostics before rejecting rollback.
         HanlinSQLiteService.closeConnections(under: fixture.targetData)
-        let journal = try #require(HanlinProductTransferRecovery.load(fixture.transactionRoot))
+        let savedJournal = try HanlinProductTransferRecovery.load(fixture.transactionRoot)
+        let journal = try #require(savedJournal)
         let readInstalled = try HanlinTransferTree.capture(fixture.targetRoot)
         let readData = try HanlinTransferTree.capture(fixture.targetData)
         #expect(readInstalled == journal.afterInstalled)
