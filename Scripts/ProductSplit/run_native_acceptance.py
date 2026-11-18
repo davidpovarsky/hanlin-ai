@@ -46,7 +46,11 @@ def main():
         (EVIDENCE / 'source-inputs.json').write_text(json.dumps(inputs, indent=2)+'\n')
         state['impact'] = 'Integrated preserved production transport and namespace into current provider/bootstrap. Only affected or previously unexecuted native cases selected; no prior Host proof counted as fresh UI evidence.'
         package_arguments = ['-clonedSourcePackagesDirPath', str(ROOT/'build/SourcePackages')]
-        command(['xcodebuild', '-list', '-json', '-project', 'AI_HLY.xcodeproj', *package_arguments], 'schemes.json', timeout=600)
+        # The actual build-for-testing below resolves and verifies this scheme.
+        # Do not launch an additional whole-project package resolution merely to
+        # list schemes; that query hung without output in run 44219206846.
+        scheme = ROOT/'AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme'
+        shutil.copy2(scheme, EVIDENCE/'HanlinMiniApps.xcscheme')
         resolved = ROOT/'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved'
         (EVIDENCE/'Package.resolved').write_bytes(resolved.read_bytes())
         runtimes = json.loads(command(['xcrun', 'simctl', 'list', 'runtimes', '-j'], 'runtimes.json'))['runtimes']
