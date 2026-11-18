@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T05:40:08.797164+00:00",
-  "source_sha": "1d579b7903905c5cf2ba0fc7a683aabd1bb7cdd6",
+  "generated_at": "2026-11-18T06:35:04.726440+00:00",
+  "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
   "baseline_path": "docs/product-split/feature-delta-278.json",
   "baseline_file_sha256": "ccba98e746ac1bd838b7f772b5c3391136d04b887ed5f372f8fec1fff95d2725",
   "historical_revision": "e792b0b5fab6a66ea8cbdaa9626def509744e33f",
@@ -26,7 +26,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -51,7 +51,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -88,7 +88,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
@@ -107,7 +107,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -132,7 +132,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -157,7 +157,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -177,12 +177,12 @@
       "historical_decision": "VISIBLE",
       "historical_acceptance": "NOT_RUN",
       "owner_target": "AI",
-      "implementation_review": "Original capability retained in source inventory; feature-specific behavioral acceptance not inferred.",
+      "implementation_review": "Original message search now uses same-string Unicode ranges and forty-grapheme context; fixes expanding-case String.Index crash. Three new native regressions in pending COMPACT_BF729.",
       "source_anchors": [
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -194,7 +194,10 @@
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
       "test_obligation": "PARITY-NAV-07",
-      "native_execution_evidence": []
+      "native_execution_evidence": [],
+      "pending_evidence": [
+        "COMPACT_BF729"
+      ]
     },
     {
       "id": "NAV-08",
@@ -202,12 +205,12 @@
       "historical_decision": "AUTO",
       "historical_acceptance": "NOT_RUN",
       "owner_target": "AI",
-      "implementation_review": "Original capability retained in source inventory; feature-specific behavioral acceptance not inferred.",
+      "implementation_review": "Original message search now uses same-string Unicode ranges and forty-grapheme context; fixes expanding-case String.Index crash. Three new native regressions in pending COMPACT_BF729.",
       "source_anchors": [
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -219,7 +222,10 @@
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
       "test_obligation": "PARITY-NAV-08",
-      "native_execution_evidence": []
+      "native_execution_evidence": [],
+      "pending_evidence": [
+        "COMPACT_BF729"
+      ]
     },
     {
       "id": "NAV-09",
@@ -232,7 +238,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -252,12 +258,12 @@
       "historical_decision": "CONTEXT",
       "historical_acceptance": "NOT_RUN",
       "owner_target": "AI",
-      "implementation_review": "Original capability retained in source inventory; feature-specific behavioral acceptance not inferred.",
+      "implementation_review": "Original message search now uses same-string Unicode ranges and forty-grapheme context; fixes expanding-case String.Index crash. Three new native regressions in pending COMPACT_BF729.",
       "source_anchors": [
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -269,7 +275,10 @@
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
       "test_obligation": "PARITY-NAV-10",
-      "native_execution_evidence": []
+      "native_execution_evidence": [],
+      "pending_evidence": [
+        "COMPACT_BF729"
+      ]
     },
     {
       "id": "NAV-11",
@@ -277,12 +286,12 @@
       "historical_decision": "CONTEXT",
       "historical_acceptance": "NOT_RUN",
       "owner_target": "AI",
-      "implementation_review": "Original capability retained in source inventory; feature-specific behavioral acceptance not inferred.",
+      "implementation_review": "Original message search now uses same-string Unicode ranges and forty-grapheme context; fixes expanding-case String.Index crash. Three new native regressions in pending COMPACT_BF729.",
       "source_anchors": [
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -294,7 +303,10 @@
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
       "test_obligation": "PARITY-NAV-11",
-      "native_execution_evidence": []
+      "native_execution_evidence": [],
+      "pending_evidence": [
+        "COMPACT_BF729"
+      ]
     },
     {
       "id": "NAV-12",
@@ -307,7 +319,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -332,7 +344,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -357,7 +369,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -382,7 +394,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -407,7 +419,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -432,7 +444,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -457,7 +469,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -482,7 +494,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -507,7 +519,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -532,7 +544,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -557,7 +569,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -582,7 +594,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -607,7 +619,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -632,7 +644,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -657,7 +669,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {
@@ -682,7 +694,7 @@
         {
           "path": "AI_HLY/ListView.swift",
           "exists": true,
-          "current_sha256": "3e95fed941b4c8c16298d5da9beb3fbc8d0cb6cb629ac0ccdbdbbeabbe5bb83b",
+          "current_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         },
         {

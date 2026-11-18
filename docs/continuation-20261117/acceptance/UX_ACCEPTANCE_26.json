@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T05:40:08.797164+00:00",
-  "source_sha": "1d579b7903905c5cf2ba0fc7a683aabd1bb7cdd6",
+  "generated_at": "2026-11-18T06:35:04.726440+00:00",
+  "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
   "count": 26,
   "reference_limit": "Hanlin_Classic_Native_UI_Inline_Sources_Composer_MASTER_PROMPT_2026-10-12.md not found in the worktree; exact full wording/visual acceptance not claimed",
   "decisions": [
@@ -15,7 +15,7 @@
       ],
       "resolution": "Retain native compact/wide behavior; two app targets do not require Chat layout replacement",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Retain original native iPhone stack and wide iPad split; compact/wide draft and narrow sizing are actual native obligations."
     },
     {
       "id": "LEGACY-UI-02",
@@ -26,7 +26,7 @@
       ],
       "resolution": "Conflict with proposed Chat/Library IA and separate MiniApps app; J decision pending; no tab rewrite",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Owner authorized current Chat/Library primary shell with History/Profile/Advanced contextual navigation. Former J-owner pause is superseded."
     },
     {
       "id": "LEGACY-UI-03",
@@ -39,7 +39,7 @@
       ],
       "resolution": "Preserve conversation/message grouping semantics; full original choice wording needed for exact visual mapping",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Retain pinned/recent conversations, message grouping and typed transcript identity. Search/selection must preserve the exact conversation."
     },
     {
       "id": "LEGACY-UI-04",
@@ -51,7 +51,7 @@
       ],
       "resolution": "Retain title/model identity and rename behavior; preserve approved host",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Retain original title, model identity and editing; no rename of stored IDs or account scope."
     },
     {
       "id": "LEGACY-UI-05",
@@ -65,7 +65,7 @@
       ],
       "resolution": "Catalog owner becomes MiniApps; AI tools and inline results remain available; J decides launch affordance",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Independent MiniApps owns catalog/import/run; AI exposes contextual original launch and inline results with existing Host consent."
     },
     {
       "id": "LEGACY-UI-06",
@@ -77,7 +77,7 @@
       ],
       "resolution": "Retain reasoning/tool details and their persisted visibility semantics",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Canonical native disclosure retains persisted thinking/tool detail state; no fabricated private reasoning."
     },
     {
       "id": "LEGACY-UI-07",
@@ -90,7 +90,7 @@
       ],
       "resolution": "Retain existing activity semantics; no separate speculative activity engine",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "One canonical original activity/header source; removed duplicate legacy three-row ticker without duplicating runtime state."
     },
     {
       "id": "LEGACY-UI-08",
@@ -101,7 +101,7 @@
       ],
       "resolution": "Retain detail/inspector and exact tool-result identity",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Retain original inspector and exact tool invocation/result ownership; actual inspector UI remains an acceptance obligation."
     },
     {
       "id": "LEGACY-UI-09",
@@ -114,7 +114,7 @@
       ],
       "resolution": "Retain original Evidence system and inline source integration; no new duplicate source store",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep original Evidence/inline sources, deduplication and source-link actions; no parallel source registry."
     },
     {
       "id": "LEGACY-UI-10",
@@ -126,7 +126,7 @@
       ],
       "resolution": "Retain status and Reduce Motion behavior, subject to current UI owner",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Use the original blue tool shimmer, terminal cancellation and Reduce Motion path; actual Motion B/C and native visual proof required."
     },
     {
       "id": "LEGACY-UI-11",
@@ -140,7 +140,7 @@
       ],
       "resolution": "AI retains embedded results and A2UI; never transfer all UI output to companion",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Preserve original inline A2UI/OpenUI and native rich results in AI. Full MiniApps remain independent."
     },
     {
       "id": "LEGACY-UI-12",
@@ -153,7 +153,7 @@
       ],
       "resolution": "Inline expansion stays AI; full app launches use authenticated foreground continuation",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Inline expansion preserves original message state; cross-app foreground follows authenticated continuation and receiving-window ACK."
     },
     {
       "id": "LEGACY-UI-13",
@@ -166,7 +166,7 @@
       ],
       "resolution": "Preserve current model picker and mention paths; do not force a permanent model bar against Morph design",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep original searchable model chooser and mention editor with real provider availability; removed obsolete inactive selector-style preference."
     },
     {
       "id": "LEGACY-UI-14",
@@ -180,7 +180,7 @@
       ],
       "resolution": "Preserve live attachments/drafts/paste and attachments-only send through Composer owner",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Preserve original attachment/draft/paste paths. Shared Inbox imports through original Composer with verified private copies and explicit Send."
     },
     {
       "id": "LEGACY-UI-15",
@@ -192,7 +192,7 @@
       ],
       "resolution": "Current literal restoration is authoritative; no split-owned row redesign",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep native original conversation/transcript row semantics; approved navigation relocation does not permit data/index changes."
     },
     {
       "id": "LEGACY-UI-16",
@@ -203,7 +203,7 @@
       ],
       "resolution": "Keep current approved chat visual identity; no change in split tranche",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep approved original chat colors; source presence is not a completed visual comparison."
     },
     {
       "id": "LEGACY-UI-17",
@@ -214,7 +214,7 @@
       ],
       "resolution": "Keep current chat geometry; full original specification needed for detailed visual parity",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep approved original corner geometry; no invented measurements from the missing complete October reference."
     },
     {
       "id": "LEGACY-UI-18",
@@ -226,7 +226,7 @@
       ],
       "resolution": "Preserve current width/accessibility/platform behavior; no split UI edit",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep original native bubble width, Dynamic Type and platform layout; compact/wide native proof is separate from physical review."
     },
     {
       "id": "LEGACY-UI-19",
@@ -239,7 +239,7 @@
       ],
       "resolution": "Preserve actions and precise origin identity; only cross-app destination changes later",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Retain exact-origin original message actions. Translate/polish/summarize are contextual selected-message tools."
     },
     {
       "id": "LEGACY-UI-20",
@@ -251,7 +251,7 @@
       ],
       "resolution": "Retain typed transcript/replay order and current presentation; no schema migration",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Retain ordered original Agent transcript and receipts; no new storage schema merely for display."
     },
     {
       "id": "LEGACY-UI-21",
@@ -263,7 +263,7 @@
       ],
       "resolution": "Preserve search-to-message, follow/stop and platform sizing; device acceptance remains open",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep original search-to-message, streaming follow/stop and scroll state; Unicode range repair preserves original match IDs."
     },
     {
       "id": "LEGACY-UI-22",
@@ -275,7 +275,7 @@
       ],
       "resolution": "Retain bounded inline result frames; full companion is distinct foreground presentation",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep bounded original inline result frames, with full companion presentation governed by existing foreground contract."
     },
     {
       "id": "LEGACY-UI-23",
@@ -287,7 +287,7 @@
       ],
       "resolution": "Authenticated Morph reference W1-002 belongs to Maya; split does not replace or infer active-tools styling",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Use authenticated approved Morph source and canonical shared SwiftUI Composer. Historical Maya ownership does not require a separate agent."
     },
     {
       "id": "LEGACY-UI-24",
@@ -299,7 +299,7 @@
       ],
       "resolution": "Maya owns reference measurement/overflow and approved host seam; no hand-coded competing composer",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Preserve original native text sizing and source width constraints; six TextKit tests passed at their recorded SHA, broader native geometry still pending."
     },
     {
       "id": "LEGACY-UI-25",
@@ -312,7 +312,7 @@
       ],
       "resolution": "Keep authentic outer bubble/page transition/lifecycle under Composer owner",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep the original floating outer bubble and its shared lifetime; one keyboard safe area and no competing editor."
     },
     {
       "id": "LEGACY-UI-26",
@@ -326,7 +326,7 @@
       ],
       "resolution": "Keep all content accessible with no duplicate presentation; detailed hiding rule remains J/owner acceptance",
       "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
-      "current_resolution": "Preserve original content and approved current shell. Refer to concrete source decisions and actual native evidence; historical lane-owner/lease wording is superseded by current single-agent owner authorization."
+      "current_resolution": "Keep all original content inspectable, native disclosure and history replay; remove duplicate presentations without dropping receipt data."
     }
   ]
 }
