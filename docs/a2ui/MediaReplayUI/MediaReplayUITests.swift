@@ -140,11 +140,21 @@ final class MediaReplayUITests: XCTestCase {
         app.links["Open source: SwiftUI"].tap()
         XCTAssertEqual(app.staticTexts["proof-source-result"].label, "https://developer.apple.com/swiftui/")
         first.tap()
-        // The actual iOS Quick Look screenshot/AX shows the preview with hidden
-        // chrome. Reveal its native controls by tapping the observed preview image.
-        let previewImage = app.images["Liftable subject available"].firstMatch
+        // Scope the query to Quick Look's actual remote image renderer. Its deeply
+        // nested image and optional image-analysis label are not a global AX contract.
+        let preview = app.otherElements["QLPreviewControllerView"].firstMatch
+        XCTAssertTrue(preview.waitForExistence(timeout: 10))
+        let renderer = preview.otherElements[
+            "QLMarkupImageItemViewControllerMarkupImageViewAccessibilityIdentifier"
+        ].firstMatch
+        XCTAssertTrue(renderer.waitForExistence(timeout: 20))
+        let canvas = renderer.otherElements["com.apple.paper.imageCanvasElementView"].firstMatch
+        XCTAssertTrue(canvas.waitForExistence(timeout: 10))
+        let previewImage = canvas.images.firstMatch
         XCTAssertTrue(previewImage.waitForExistence(timeout: 10),
                       "The real Quick Look image must replace the gallery presentation")
+        XCTAssertGreaterThan(previewImage.frame.width, 1)
+        XCTAssertGreaterThan(previewImage.frame.height, 1)
         let close = app.buttons.matching(NSPredicate(format: "label == 'Done' OR label == 'Close'")).firstMatch
         if !close.exists { previewImage.tap() }
         XCTAssertTrue(close.waitForExistence(timeout: 10), "Native Quick Look must expose its close control")

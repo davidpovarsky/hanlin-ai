@@ -1586,6 +1586,45 @@
         "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
       ],
       "consumers": []
+    },
+    "canvas_runtime_ui_tests": {
+      "description": "Original Canvas embedded Python execution and source restoration",
+      "patterns": [
+        "AI_HLYUITests/HanlinCanvasRuntimeUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinCanvasRuntimeUITests"
+      ],
+      "consumers": []
+    },
+    "contextual_text_tools_ui_tests": {
+      "description": "Original contextual text tools and conversation preservation",
+      "patterns": [
+        "AI_HLYUITests/HanlinContextualTextToolsUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinContextualTextToolsUITests"
+      ],
+      "consumers": []
+    },
+    "native_help_ui_tests": {
+      "description": "Native offline guide, costs and support navigation",
+      "patterns": [
+        "AI_HLYUITests/HanlinHelpUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinHelpUITests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {

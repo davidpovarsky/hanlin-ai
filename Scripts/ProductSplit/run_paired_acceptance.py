@@ -10,6 +10,8 @@ import sys
 import time
 import zipfile
 
+from simulator_entitlements import read_simulator_entitlements
+
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = Path(os.environ["SPLIT_EVIDENCE"]) / "paired-product"
 GROUP = "group.com.itorah.chavrusachat"
@@ -122,14 +124,19 @@ def main():
             if info["CFBundleIdentifier"] != bundle:
                 raise RuntimeError("Built product identity differs from its original target")
             command(["codesign", "--verify", "--deep", "--strict", str(product)], bundle + "-signature.log")
-            _, raw = command(["codesign", "--display", "--entitlements", "-", "--xml", str(product)],
-                bundle + "-entitlements.log")
-            start, end = raw.find("<?xml"), raw.find("</plist>")
-            if start < 0 or end < start:
-                raise RuntimeError("Built signature did not expose its real entitlements")
-            entitlements = plistlib.loads(raw[start:end + len("</plist>")].encode())
-            if GROUP not in entitlements.get("com.apple.security.application-groups", []):
-                raise RuntimeError("The original App Group entitlement is absent from the signed product")
+            executable_name = info["CFBundleExecutable"]
+            if Path(executable_name).name != executable_name:
+                raise RuntimeError("Built executable must be inside its original app bundle")
+            proof = read_simulator_entitlements(product / executable_name)
+            source = ROOT / ("AI_HLY/AI_HLY.entitlements" if bundle == "com.itorah.chavrusachat"
+                             else "HanlinMiniAppsApp/HanlinMiniApps.entitlements")
+            required = plistlib.loads(source.read_bytes())["com.apple.security.application-groups"]
+            actual = proof["entitlements"].get("com.apple.security.application-groups", [])
+            if GROUP not in required or not set(required).issubset(actual):
+                raise RuntimeError("Original App Groups are absent from the built simulator executable")
+            proof["source_entitlements_sha256"] = hashlib.sha256(source.read_bytes()).hexdigest()
+            (EVIDENCE / (bundle + "-embedded-entitlements.json")).write_text(
+                json.dumps(proof, indent=2) + "\n")
         command(["xcrun", "simctl", "boot", simulator], "boot.log")
         command(["xcrun", "simctl", "bootstatus", simulator, "-b"], "bootstatus.log", timeout=180)
         containers = {}
