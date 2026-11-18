@@ -114,6 +114,31 @@ public enum SwiftParityMiniAppExposures {
     }
 }
 
+// MARK: - Canonical sharing route
+
+/// Both the Host fallback and the mounted view register this exact route.
+/// The broker still checks the target capability and its Host authorizer first.
+public enum SwiftParityMiniAppSharing {
+    private static let appID = try! HanlinAppID(validating: "hanlin.demo.swift-parity")
+    private static let scriptID = try! HanlinAppID(validating: "hanlin.demo.script-parity")
+    private static let hostID = try! HanlinAppID(validating: "hanlin.host")
+    private static let action = try! HanlinActionID(validating: "share.value")
+    private static let capability = try! HanlinCapabilityID(validating: "inter-app.share")
+
+    public static func register(on broker: HanlinMiniAppRequestBroker,
+                                storage: HanlinMiniAppStorageContext) async {
+        await broker.register(target: appID, action: action, capability: capability) { request in
+            guard storage.appID == appID,
+                  request.caller == scriptID || request.caller == hostID else {
+                throw HanlinMiniAppRequestError.unauthorized
+            }
+            let data = try await storage.read(area: .state, path: "parity.json")
+            let state = try SwiftParityMiniAppExposures.decodeState(from: data)
+            return .object(["name": .string(state.name), "counter": .integer(Int64(state.counter))])
+        }
+    }
+}
+
 // MARK: - Provider
 
 public struct SwiftParityMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable {
@@ -226,17 +251,7 @@ private final class Model {
     }
 
     func activate() async {
-        let store = storage
-        await requestBroker.register(
-            target: Self.appID,
-            action: Self.action,
-            capability: Self.capability
-        ) { request in
-            guard request.caller == Self.scriptID else { throw HanlinMiniAppRequestError.unauthorized }
-            let data = try await store.read(area: .state, path: "parity.json")
-            let state = try SwiftParityMiniAppExposures.decodeState(from: data)
-            return .object(["name": .string(state.name), "counter": .integer(Int64(state.counter))])
-        }
+        await SwiftParityMiniAppSharing.register(on: requestBroker, storage: storage)
         await reload()
     }
 

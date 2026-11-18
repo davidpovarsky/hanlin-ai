@@ -80,19 +80,10 @@ final class HanlinMiniAppHost {
             await broker.unregisterAll(target: target)
         }
         registeredRouteTargets = currentTargets
-        if let swiftParityID = try? HanlinAppID(validating: "hanlin.demo.swift-parity"),
-           let shareCap = try? HanlinCapabilityID(validating: "inter-app.share"),
-           let shareAction = try? HanlinActionID(validating: "share.value") {
-            registeredRouteTargets.insert(swiftParityID)
-            await broker.register(target: swiftParityID, action: shareAction, capability: shareCap) { _ in
-                let storageContext = HanlinMiniAppStorageContext(appID: swiftParityID, store: store)
-                if let data = try? await storageContext.read(area: .state, path: "parity.json"),
-                   let val = try? JSONDecoder().decode(PersistedParityState.self, from: data) {
-                    return .object(["name": .string(val.name), "counter": .integer(Int64(val.counter))])
-                }
-                return .object(["name": .string("Hanlin"), "counter": .integer(0)])
-            }
-        }
+        let swiftParityID = SwiftParityMiniAppRegistration().appID
+        registeredRouteTargets.insert(swiftParityID)
+        await SwiftParityMiniAppSharing.register(on: broker,
+            storage: HanlinMiniAppStorageContext(appID: swiftParityID, store: store))
 
         // NativeScript actions keep a stable broker route. The JavaScript bundle
         // registers its implementation with the active host provider; it never
@@ -256,9 +247,4 @@ final class HanlinMiniAppHost {
               data.count <= 1_048_576 else { throw URLError(.badServerResponse) }
         return "HTTPS \(http.statusCode), \(data.count) bytes"
     }
-}
-
-private struct PersistedParityState: Codable, Sendable {
-    let counter: Int
-    let name: String
 }

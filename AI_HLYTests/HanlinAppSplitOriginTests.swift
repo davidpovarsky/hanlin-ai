@@ -3,6 +3,7 @@ import Foundation
 import HanlinAgentCore
 import HanlinChatCore
 import HanlinHostContracts
+import HanlinMiniAppCore
 import HanlinParityMiniApp
 import HanlinPlatformContracts
 import HanlinProductSplit
@@ -166,6 +167,65 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
 }
 
 @Suite @MainActor struct HanlinAppSplitOriginTests {
+    private func sharingFixture() throws -> (URL, HanlinMiniAppStorageContext) {
+        let root = FileManager.default.temporaryDirectory
+            .appending(path: "split-real-sharing-\(UUID().uuidString)", directoryHint: .isDirectory)
+            .resolvingSymlinksInPath()
+        let store = try HanlinMiniAppDataStore(root: root)
+        return (root, HanlinMiniAppStorageContext(appID: SwiftParityMiniAppRegistration().appID, store: store))
+    }
+
+    private func sharingRequest(caller: String, capability: String = "inter-app.share") throws -> HanlinMiniAppRequest {
+        .init(caller: try .init(validating: caller), target: SwiftParityMiniAppRegistration().appID,
+              action: try .init(validating: "share.value"), capability: try .init(validating: capability), payload: .null)
+    }
+
+    @Test func canonicalSharingSurvivesViewRegistrationAndReadsActualPrivateState() async throws {
+        let (root, storage) = try sharingFixture(); defer { try? FileManager.default.removeItem(at: root) }
+        let broker = HanlinMiniAppRequestBroker(limits: .personalHost) { _ in true }
+        try await storage.write(Data(#"{"counter":42,"name":"Original private value"}"#.utf8), area: .state, path: "parity.json")
+        for _ in 0..<2 {
+            // The Host fallback and mounted Swift view use the same registration.
+            await SwiftParityMiniAppSharing.register(on: broker, storage: storage)
+            for caller in ["hanlin.host", "hanlin.demo.script-parity"] {
+                let request = try sharingRequest(caller: caller)
+                let response = try await broker.request(request)
+                #expect(response.requestID == request.id)
+                #expect(response.value == .object(["name": .string("Original private value"), "counter": .integer(42)]))
+            }
+        }
+    }
+
+    @Test func canonicalSharingStillRejectsUnrelatedCallerAndWrongCapability() async throws {
+        let (root, storage) = try sharingFixture(); defer { try? FileManager.default.removeItem(at: root) }
+        let broker = HanlinMiniAppRequestBroker(limits: .personalHost) { _ in true }
+        await SwiftParityMiniAppSharing.register(on: broker, storage: storage)
+        do { _ = try await broker.request(sharingRequest(caller: "unrelated.application")); Issue.record("Unrelated caller received private state") }
+        catch { #expect(error as? HanlinMiniAppRequestError == .unauthorized) }
+        do { _ = try await broker.request(sharingRequest(caller: "hanlin.host", capability: "storage")); Issue.record("Wrong capability reached the route") }
+        catch { #expect(error as? HanlinMiniAppRequestError == .capabilityMismatch) }
+    }
+
+    @Test func canonicalSharingDoesNotBypassTheHostAuthorizer() async throws {
+        let (root, storage) = try sharingFixture(); defer { try? FileManager.default.removeItem(at: root) }
+        let broker = HanlinMiniAppRequestBroker(limits: .personalHost) { _ in false }
+        await SwiftParityMiniAppSharing.register(on: broker, storage: storage)
+        do { _ = try await broker.request(sharingRequest(caller: "hanlin.host")); Issue.record("Denied Host reached private storage") }
+        catch { #expect(error as? HanlinMiniAppRequestError == .unauthorized) }
+        let events = await broker.auditEvents()
+        #expect(events.count == 1 && events.first?.allowed == false && events.first?.outcome == "unauthorized")
+    }
+
+    @Test func canonicalSharingNeverRecastsCorruptPersistedStateAsAnEmptySuccess() async throws {
+        let (root, storage) = try sharingFixture(); defer { try? FileManager.default.removeItem(at: root) }
+        let broker = HanlinMiniAppRequestBroker(limits: .personalHost) { _ in true }
+        await SwiftParityMiniAppSharing.register(on: broker, storage: storage)
+        try await storage.write(Data("invalid persisted JSON".utf8), area: .state, path: "parity.json")
+        do { _ = try await broker.request(sharingRequest(caller: "hanlin.host")); Issue.record("Corrupt data became a successful default result") }
+        catch { #expect(error is DecodingError) }
+        #expect(try await storage.read(area: .state, path: "parity.json") == Data("invalid persisted JSON".utf8))
+    }
+
     @Test func actualSessionDispatchSavesBeforeOpenAndReceiptBeforeOneTimeAccept() async throws {
         let harness = try SplitAppHarness(); defer { harness.stop() }
         try harness.start()
