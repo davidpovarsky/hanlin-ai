@@ -29,9 +29,6 @@ struct HanlinCompactChatWorkspace: View {
     let forceRefresh: Bool
 
     let onOpenSafariGuide: () -> Void
-    let onOpenTranslation: () -> Void
-    let onOpenPolish: () -> Void
-    let onOpenSummary: () -> Void
     let onCreateAuthorizedNewChat: () -> ChatRecords?
     let onTogglePin: (ChatRecords) -> Void
     let onEditRecord: (ChatRecords) -> Void
@@ -282,8 +279,6 @@ struct HanlinCompactChatWorkspace: View {
     private func compactHomeScreen(availableHeight: CGFloat) -> some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 18) {
-                quickUtilitiesSection
-
                 welcomeHeroSection
 
                 Spacer(minLength: 16)
@@ -321,65 +316,6 @@ struct HanlinCompactChatWorkspace: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-compact-home-screen")
-    }
-
-    private var quickUtilitiesSection: some View {
-        HStack(spacing: 10) {
-            Button(action: onOpenTranslation) {
-                HStack(spacing: 6) {
-                    Image("translate")
-                        .renderingMode(.template)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .foregroundStyle(Color.hlBluefont)
-                    Text("即时翻译")
-                        .font(.subheadline.weight(.medium))
-                        .foregroundStyle(Color.hlBluefont)
-                        .lineLimit(1)
-                }
-                .padding(.vertical, 9)
-                .frame(maxWidth: .infinity)
-                .background(Color.hlBluefont.opacity(0.16), in: Capsule())
-            }
-            .buttonStyle(.plain)
-
-            Button(action: onOpenPolish) {
-                HStack(spacing: 6) {
-                    Image(systemName: "wand.and.sparkles.inverse")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 16, height: 16)
-                        .foregroundStyle(Color.hlGreen)
-                    Text("即时润色")
-                        .font(.subheadline.weight(.medium))
-                        .foregroundStyle(Color.hlGreen)
-                        .lineLimit(1)
-                }
-                .padding(.vertical, 9)
-                .frame(maxWidth: .infinity)
-                .background(Color.hlGreen.opacity(0.16), in: Capsule())
-            }
-            .buttonStyle(.plain)
-
-            Button(action: onOpenSummary) {
-                HStack(spacing: 6) {
-                    Image(systemName: "highlighter")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 16, height: 16)
-                        .foregroundStyle(Color.hlCyanite)
-                    Text("即时摘要")
-                        .font(.subheadline.weight(.medium))
-                        .foregroundStyle(Color.hlCyanite)
-                        .lineLimit(1)
-                }
-                .padding(.vertical, 9)
-                .frame(maxWidth: .infinity)
-                .background(Color.hlCyanite.opacity(0.16), in: Capsule())
-            }
-            .buttonStyle(.plain)
-        }
     }
 
     private var welcomeHeroSection: some View {

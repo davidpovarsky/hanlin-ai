@@ -30,9 +30,6 @@ struct ListView: View {
     @State private var loadHistoryMessages: Bool = false
     @State private var infoDescriptionCache: [UUID: String] = [:]
     @State private var newlyCreatedChat: ChatRecords?
-    @State private var showTranslationSheet: Bool = false
-    @State private var showPolishSheet: Bool = false
-    @State private var showSummarySheet: Bool = false
     
     @State private var showIconSheet = false
     @State private var editingRecord: ChatRecords? = nil
@@ -154,9 +151,6 @@ struct ListView: View {
                     loadHistoryMessages: loadHistoryMessages,
                     forceRefresh: forceRefresh,
                     onOpenSafariGuide: { showSafariGuide = true },
-                    onOpenTranslation: { showTranslationSheet = true },
-                    onOpenPolish: { showPolishSheet = true },
-                    onOpenSummary: { showSummarySheet = true },
                     onCreateAuthorizedNewChat: { createAuthorizedNewChatRecord() },
                     onTogglePin: { record in togglePin(record) },
                     onEditRecord: { record in beginEditingRecord(record) },
@@ -291,15 +285,6 @@ struct ListView: View {
                 sessionBridge.expectedActiveSessionID = selectedChatRecord?.id
             }
         }
-        .sheet(isPresented: $showTranslationSheet) {
-            TranslationView()
-        }
-        .sheet(isPresented: $showPolishSheet) {
-            PolishView()
-        }
-        .sheet(isPresented: $showSummarySheet) {
-            SummaryView()
-        }
         .sheet(isPresented: $showIconSheet) {
             IconAndColorPicker(
                 selectedIcon: $editingIcon,
@@ -406,7 +391,6 @@ struct ListView: View {
     @ViewBuilder
     private var sidebarContent: some View {
         List(selection: $selectedChatRecord) {
-            topButtonsSection
             chatRecordsSection
         }
         .listStyle(.plain)
@@ -430,7 +414,6 @@ struct ListView: View {
     @ViewBuilder
     private var content: some View {
         List {
-            topButtonsSection
             chatRecordsSection
         }
         .listStyle(.plain)
@@ -461,75 +444,6 @@ struct ListView: View {
         }
         .navigationDestination(for: ChatRecords.self) { chat in
             ChatViewWrapper(chatRecord: chat)
-        }
-    }
-    
-    // MARK: - 子视图：顶部 3 个按钮
-    private var topButtonsSection: some View {
-        Section {
-            HStack(spacing: 10) {
-                Button {
-                    showTranslationSheet = true
-                } label: {
-                    HStack {
-                        Image("translate")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
-                        Text("即时翻译")
-                            .foregroundColor(.hlBluefont)
-                    }
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.hlBluefont.opacity(0.2))
-                    .cornerRadius(20)
-                }
-                .buttonStyle(.plain)
-                
-                Button {
-                    showPolishSheet = true
-                } label: {
-                    HStack {
-                        Image(systemName: "wand.and.sparkles.inverse")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 18, height: 18)
-                            .foregroundColor(.hlGreen)
-                        Text("即时润色")
-                            .foregroundColor(.hlGreen)
-                    }
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.hlGreen.opacity(0.2))
-                    .cornerRadius(20)
-                }
-                .buttonStyle(.plain)
-                
-                Button {
-                    showSummarySheet = true
-                } label: {
-                    HStack {
-                        Image(systemName: "highlighter")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 18, height: 18)
-                            .foregroundColor(.hlCyanite)
-                        Text("即时摘要")
-                            .foregroundColor(.hlCyanite)
-                    }
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.hlCyanite.opacity(0.2))
-                    .cornerRadius(20)
-                }
-                .buttonStyle(.plain)
-            }
-            .listRowInsets(EdgeInsets())
-            .padding(.horizontal)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .listRowSeparator(.hidden)
         }
     }
     

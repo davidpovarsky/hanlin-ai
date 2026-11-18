@@ -173,6 +173,12 @@ enum AgentRuntimeUIAcceptanceProvider {
             }
 #endif
             context.insert(acceptanceChat)
+#if DEBUG && targetEnvironment(simulator)
+            if ProcessInfo.processInfo.environment["HANLIN_CONTEXTUAL_TEXT_ACCEPTANCE"] == "1" {
+                context.insert(ChatMessages(role: "assistant", text: "CONTEXT_TEXT_ORIGINAL_428: The selected message stays in its original conversation.",
+                    modelDisplayName: "Agent Acceptance", record: acceptanceChat))
+            }
+#endif
             if isDockFixturesEnabled {
                 for prompt in try context.fetch(FetchDescriptor<PromptRepo>()) {
                     context.delete(prompt)

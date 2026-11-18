@@ -13,6 +13,10 @@ import Foundation
 
 //MARK: 翻译工具
 struct TranslationView: View {
+    init(initialText: String = "") {
+        _inputText = State(initialValue: initialText)
+    }
+
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
     
@@ -94,6 +98,7 @@ struct TranslationView: View {
                     
                     // 输入框
                     TextEditor(text: $inputText)
+                        .accessibilityIdentifier("hanlin-writing-tool-input")
                         .padding(10)
                         .frame(height: 100)
                         .background(Color(.systemBackground))
@@ -437,6 +442,10 @@ struct TranslationView: View {
 
 //MARK: 润色工具
 struct PolishView: View {
+    init(initialText: String = "") {
+        _inputText = State(initialValue: initialText)
+    }
+
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     
@@ -511,6 +520,7 @@ struct PolishView: View {
                     
                     // 输入框
                     TextEditor(text: $inputText)
+                        .accessibilityIdentifier("hanlin-writing-tool-input")
                         .padding(10)
                         .frame(height: 100)
                         .background(Color(.systemBackground))
@@ -833,6 +843,10 @@ struct PolishView: View {
 
 //MARK: 摘要工具
 struct SummaryView: View {
+    init(initialText: String = "") {
+        _inputText = State(initialValue: initialText)
+    }
+
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     
@@ -886,6 +900,7 @@ struct SummaryView: View {
                     
                     // 输入框
                     TextEditor(text: $inputText)
+                        .accessibilityIdentifier("hanlin-writing-tool-input")
                         .padding(10)
                         .frame(height: 100)
                         .background(Color(.systemBackground))

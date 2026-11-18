@@ -3664,7 +3664,25 @@ private func highlightPythonCode(_ code: String) -> NSAttributedString {
 
 // MARK: 选择文本组件（带复制、全选及存为知识操作）
 struct TextSelectionView: View {
+    private enum WritingTool: String, CaseIterable {
+        case translation, polish, summary
+        var title: String {
+            switch self {
+            case .translation: String(localized: "即时翻译")
+            case .polish: String(localized: "即时润色")
+            case .summary: String(localized: "即时摘要")
+            }
+        }
+    }
+    private struct WritingRequest: Identifiable {
+        let id = UUID()
+        let tool: WritingTool
+        let text: String
+    }
+
     let text: String
+    @Environment(\.dismiss) private var dismiss
+    @State private var writingRequest: WritingRequest?
     @State private var selectedText: String?
     @Environment(\.modelContext) private var modelContext
     @State private var isCopy: Bool = false      // 复制按钮状态：true 表示复制成功
@@ -3685,10 +3703,34 @@ struct TextSelectionView: View {
             NavigationStack {
                 // 使用修改后的 TextSelectionTextView，传入绑定变量
                 TextSelectionTextView(text: text, shouldSelectAll: $shouldSelectAll, selectedText: $selectedText)
+                    .navigationTitle("选择文本")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { dismiss() }
+                                .accessibilityIdentifier("hanlin-text-selection-done")
+                        }
+                    }
             }
             
-            // 右下角按钮区域（3个按钮：全选、复制、存为知识）
+            // Text utilities belong to the selected message, not permanent Home buttons.
             HStack(spacing: 12) {
+                Menu {
+                    ForEach(WritingTool.allCases, id: \.rawValue) { tool in
+                        Button(tool.title) {
+                            let selection = selectedText.flatMap { $0.isEmpty ? nil : $0 } ?? text
+                            writingRequest = WritingRequest(tool: tool, text: selection)
+                        }
+                        .accessibilityIdentifier("hanlin-text-action-" + tool.rawValue)
+                    }
+                } label: {
+                    Image(systemName: "wand.and.stars")
+                        .font(.system(size: size_16, weight: .medium))
+                        .frame(width: buttonSize, height: buttonSize)
+                }
+                .accessibilityLabel(String(localized: "Text actions"))
+                .accessibilityIdentifier("hanlin-text-actions-menu")
+                .disabled(text.isEmpty)
                 // 全选按钮：点击后将 shouldSelectAll 置为 true
                 Button(action: {
                     shouldSelectAll = true
@@ -3745,6 +3787,19 @@ struct TextSelectionView: View {
                 }
             }
         }
+        .sheet(item: $writingRequest) { request in
+            NavigationStack {
+                contextualTool(request)
+                    .navigationTitle(request.tool.title)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { writingRequest = nil }
+                                .accessibilityIdentifier("hanlin-writing-tool-done")
+                        }
+                    }
+            }
+        }
         .alert("保存失败", isPresented: $showErrorAlert) {
             Button("确定", role: .cancel) { }
         } message: {
@@ -3752,6 +3807,15 @@ struct TextSelectionView: View {
         }
     }
     
+    @ViewBuilder
+    private func contextualTool(_ request: WritingRequest) -> some View {
+        switch request.tool {
+        case .translation: TranslationView(initialText: request.text)
+        case .polish: PolishView(initialText: request.text)
+        case .summary: SummaryView(initialText: request.text)
+        }
+    }
+
     // 复制操作：复制后状态切换2秒后恢复
     private func copyToClipboard() {
         UIPasteboard.general.string = selectedText ?? text
