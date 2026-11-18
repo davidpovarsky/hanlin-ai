@@ -47,7 +47,7 @@ struct HanlinTransferTree: Codable, Equatable, Sendable {
     var directories: Set<String>
     var files: [String: File]
 
-    static func capture(_ root: URL) throws -> Self {
+    static func capture(_ root: URL, durableSQLiteData: Bool = false) throws -> Self {
         let manager = FileManager.default
         let attributes: [FileAttributeKey: Any]
         do {
@@ -83,6 +83,31 @@ struct HanlinTransferTree: Codable, Equatable, Sendable {
             }
         }
         guard !failed else { throw HanlinProductTransferError.invalidCheckpoint }
+        guard durableSQLiteData else { return result }
+        // SQLite's WAL index is shared-memory coordination, not durable data.
+        // Apple's VFS may retain it and an empty WAL after the last clean close;
+        // even a read-only reopen changes that index. Keep every database byte
+        // and every nonempty WAL. Only omit reserved sidecars of an actual
+        // WAL-format SQLite database, after validating the entire tree above.
+        // https://www.sqlite.org/walformat.html
+        for (path, file) in result.files {
+            guard path.hasSuffix("-shm") || (path.hasSuffix("-wal") && file.bytes == 0) else { continue }
+            let databasePath = String(path.dropLast(4))
+            guard let database = result.files[databasePath], database.bytes >= 100 else { continue }
+            let stream = try FileHandle(forReadingFrom: child(root, databasePath))
+            let header: Data
+            do {
+                header = try stream.read(upToCount: 20) ?? Data()
+                try stream.close()
+            } catch {
+                try? stream.close()
+                throw error
+            }
+            guard header.count == 20,
+                  header.prefix(16) == Data("SQLite format 3\0".utf8),
+                  header[18] == 2, header[19] == 2 else { continue }
+            result.files.removeValue(forKey: path)
+        }
         return result
     }
 
@@ -159,7 +184,7 @@ struct HanlinTransferCheckpoint: Codable, Equatable, Sendable {
               value.receipt.packageCount >= 0,
               value.installed.exists,
               try HanlinTransferTree.capture(root.appending(path: "Installed")) == value.installed,
-              try HanlinTransferTree.capture(root.appending(path: "MiniApps")) == value.data,
+              try HanlinTransferTree.capture(root.appending(path: "MiniApps"), durableSQLiteData: true) == value.data,
               value.receipt.fileCount == value.installed.files.count + value.data.files.count,
               value.receipt.byteCount == value.installed.files.values.reduce(0, { $0 + $1.bytes })
                 + value.data.files.values.reduce(0, { $0 + $1.bytes }) else {
@@ -172,7 +197,7 @@ struct HanlinTransferCheckpoint: Codable, Equatable, Sendable {
                         packageCount: Int) throws -> Self {
         try HanlinProductTransferRecovery.distinct([installedRoot, dataRoot, outbox])
         let installed = try HanlinTransferTree.capture(installedRoot)
-        let data = try HanlinTransferTree.capture(dataRoot)
+        let data = try HanlinTransferTree.capture(dataRoot, durableSQLiteData: true)
         let latest = outbox.appending(path: "latest.json")
         if let bytes = try? Data(contentsOf: latest),
            let previous = try? JSONDecoder().decode(HanlinProductTransferReceipt.self, from: bytes),
@@ -195,7 +220,7 @@ struct HanlinTransferCheckpoint: Codable, Equatable, Sendable {
         try JSONEncoder().encode(checkpoint).write(to: staging.appending(path: "checkpoint.json"), options: .atomic)
         guard try read(staging) == checkpoint,
               try HanlinTransferTree.capture(installedRoot) == installed,
-              try HanlinTransferTree.capture(dataRoot) == data else {
+              try HanlinTransferTree.capture(dataRoot, durableSQLiteData: true) == data else {
             throw HanlinProductTransferError.invalidCheckpoint
         }
         try manager.moveItem(at: staging, to: final)
@@ -248,7 +273,8 @@ public enum HanlinProductTransferRecovery {
                 try promote(current: dataRoot, stage: transactionRoot.appending(path: "new-data"),
                     backup: transactionRoot.appending(path: "old-data"),
                     before: journal.beforeData, after: journal.afterData,
-                    afterBackup: .dataBackedUp, afterPromotion: .dataPromoted, faults: faults)
+                    afterBackup: .dataBackedUp, afterPromotion: .dataPromoted,
+                    durableSQLiteData: true, faults: faults)
                 journal.state = .committed
                 try persist(journal, at: transactionRoot)
                 try faults.check(.committed)
@@ -260,7 +286,7 @@ public enum HanlinProductTransferRecovery {
                 try faults.check(.installedRestored)
                 try restore(current: dataRoot, backup: transactionRoot.appending(path: "old-data"),
                     retained: transactionRoot.appending(path: "rolled-forward-data"),
-                    before: journal.beforeData, after: journal.afterData)
+                    before: journal.beforeData, after: journal.afterData, durableSQLiteData: true)
                 try faults.check(.dataRestored)
                 journal.state = .rolledBack
                 try persist(journal, at: transactionRoot)
@@ -281,7 +307,7 @@ public enum HanlinProductTransferRecovery {
             HanlinSQLiteService.closeConnections(under: dataRoot)
             guard journal.state == .committed,
                   try HanlinTransferTree.capture(installedRoot) == journal.afterInstalled,
-                  try HanlinTransferTree.capture(dataRoot) == journal.afterData else {
+                  try HanlinTransferTree.capture(dataRoot, durableSQLiteData: true) == journal.afterData else {
                 throw HanlinProductTransferError.rollbackWouldLoseChanges
             }
             journal.state = .rollingBack
@@ -321,22 +347,22 @@ public enum HanlinProductTransferRecovery {
     private static func promote(current: URL, stage: URL, backup: URL,
         before: HanlinTransferTree, after: HanlinTransferTree,
         afterBackup: HanlinProductTransferFaultPoint, afterPromotion: HanlinProductTransferFaultPoint,
-        faults: any HanlinProductTransferFaultInjector) throws {
+        durableSQLiteData: Bool = false, faults: any HanlinProductTransferFaultInjector) throws {
         let manager = FileManager.default
-        var actual = try HanlinTransferTree.capture(current)
+        var actual = try HanlinTransferTree.capture(current, durableSQLiteData: durableSQLiteData)
         if actual == after { return }
-        guard try HanlinTransferTree.capture(stage) == after else {
+        guard try HanlinTransferTree.capture(stage, durableSQLiteData: durableSQLiteData) == after else {
             throw HanlinProductTransferError.recoveryConflict
         }
         if actual.exists {
-            guard actual == before, !(try HanlinTransferTree.capture(backup)).exists else {
+            guard actual == before, !(try HanlinTransferTree.capture(backup, durableSQLiteData: durableSQLiteData)).exists else {
                 throw HanlinProductTransferError.recoveryConflict
             }
             try manager.moveItem(at: current, to: backup)
-            actual = try HanlinTransferTree.capture(current)
+            actual = try HanlinTransferTree.capture(current, durableSQLiteData: durableSQLiteData)
             try faults.check(afterBackup)
         }
-        let saved = try HanlinTransferTree.capture(backup)
+        let saved = try HanlinTransferTree.capture(backup, durableSQLiteData: durableSQLiteData)
         guard !actual.exists, !before.exists || saved == before else {
             throw HanlinProductTransferError.recoveryConflict
         }
@@ -344,33 +370,34 @@ public enum HanlinProductTransferRecovery {
             try manager.createDirectory(at: current.deletingLastPathComponent(), withIntermediateDirectories: true)
             try manager.moveItem(at: stage, to: current)
         }
-        guard try HanlinTransferTree.capture(current) == after else {
+        guard try HanlinTransferTree.capture(current, durableSQLiteData: durableSQLiteData) == after else {
             throw HanlinProductTransferError.recoveryConflict
         }
         try faults.check(afterPromotion)
     }
 
     private static func restore(current: URL, backup: URL, retained: URL,
-                                before: HanlinTransferTree, after: HanlinTransferTree) throws {
+                                before: HanlinTransferTree, after: HanlinTransferTree,
+                                durableSQLiteData: Bool = false) throws {
         let manager = FileManager.default
-        let actual = try HanlinTransferTree.capture(current)
+        let actual = try HanlinTransferTree.capture(current, durableSQLiteData: durableSQLiteData)
         if actual == before { return }
-        let saved = try HanlinTransferTree.capture(backup)
+        let saved = try HanlinTransferTree.capture(backup, durableSQLiteData: durableSQLiteData)
         guard !actual.exists || actual == after, !before.exists || saved == before else {
             throw HanlinProductTransferError.recoveryConflict
         }
         if actual.exists {
-            guard !(try HanlinTransferTree.capture(retained)).exists else {
+            guard !(try HanlinTransferTree.capture(retained, durableSQLiteData: durableSQLiteData)).exists else {
                 throw HanlinProductTransferError.recoveryConflict
             }
             try manager.moveItem(at: current, to: retained)
         } else if after.exists {
-            guard try HanlinTransferTree.capture(retained) == after else {
+            guard try HanlinTransferTree.capture(retained, durableSQLiteData: durableSQLiteData) == after else {
                 throw HanlinProductTransferError.recoveryConflict
             }
         }
         if before.exists { try manager.moveItem(at: backup, to: current) }
-        guard try HanlinTransferTree.capture(current) == before else {
+        guard try HanlinTransferTree.capture(current, durableSQLiteData: durableSQLiteData) == before else {
             throw HanlinProductTransferError.recoveryConflict
         }
     }

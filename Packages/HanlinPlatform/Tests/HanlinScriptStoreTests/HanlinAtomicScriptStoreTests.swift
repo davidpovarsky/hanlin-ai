@@ -348,7 +348,7 @@ struct HanlinProductTransferTests {
         let savedJournal = try HanlinProductTransferRecovery.load(fixture.transactionRoot)
         let journal = try #require(savedJournal)
         let readInstalled = try HanlinTransferTree.capture(fixture.targetRoot)
-        let readData = try HanlinTransferTree.capture(fixture.targetData)
+        let readData = try HanlinTransferTree.capture(fixture.targetData, durableSQLiteData: true)
         #expect(readInstalled == journal.afterInstalled)
         #expect(readData == journal.afterData)
         try await fixture.target.rollbackProductTransfer(dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot)
@@ -361,6 +361,32 @@ struct HanlinProductTransferTests {
         #expect(try reopened.value(for: "existing")?.content == #""new companion edit""#)
         #expect(try fixture.bytes(retained) == retainedBefore)
         #expect(try sourceKV.value(for: "private")?.content == #"{"saved":"שלום — 汉林"}"#)
+    }
+
+    @Test("Durable snapshots retain nonempty SQLite WAL and ordinary similarly named files")
+    func durableSQLiteSidecars() throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        let sqlite = HanlinSQLiteService(rootURL: fixture.sourceData)
+        defer { sqlite.closeAll() }
+        _ = try sqlite.open(handle: "database", name: "actual.sqlite3")
+        try sqlite.execute(handle: "database", sql: """
+            PRAGMA wal_autocheckpoint = 0;
+            CREATE TABLE records(value TEXT);
+            INSERT INTO records VALUES('first');
+            """)
+        try Data("ordinary user file".utf8).write(to: fixture.sourceData.appending(path: "notes-shm"))
+        try Data().write(to: fixture.sourceData.appending(path: "empty-wal"))
+        let before = try HanlinTransferTree.capture(fixture.sourceData, durableSQLiteData: true)
+        #expect((before.files["actual.sqlite3-wal"]?.bytes ?? 0) > 0)
+        #expect(before.files["actual.sqlite3-shm"] == nil)
+        // Installed package assets use byte-exact capture, including sidecars.
+        let packageAssets = try HanlinTransferTree.capture(fixture.sourceData)
+        #expect(packageAssets.files["actual.sqlite3-shm"] != nil)
+        #expect(before.files["notes-shm"] != nil)
+        #expect(before.files["empty-wal"] != nil)
+        try sqlite.execute(handle: "database", sql: "INSERT INTO records VALUES('later user edit')")
+        #expect(try HanlinTransferTree.capture(fixture.sourceData, durableSQLiteData: true) != before)
     }
 
     @Test("A later committed SQLite KV edit prevents rollback and survives a repeated import")

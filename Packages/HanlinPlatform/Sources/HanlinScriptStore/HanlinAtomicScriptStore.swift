@@ -436,7 +436,7 @@ public actor HanlinAtomicScriptStore {
             merged.revision = revision + 1
             HanlinSQLiteService.closeConnections(under: dataRoot)
             let beforeInstalled = try HanlinTransferTree.capture(root)
-            let beforeData = try HanlinTransferTree.capture(dataRoot)
+            let beforeData = try HanlinTransferTree.capture(dataRoot, durableSQLiteData: true)
             let catalogs: Set<String> = ["registry/catalog.json", "registry/catalog.backup.json"]
             try HanlinTransferTree.validateMerge(beforeInstalled, checkpoint.installed, excluding: catalogs)
             try HanlinTransferTree.validateMerge(beforeData, checkpoint.data)
@@ -457,13 +457,13 @@ public actor HanlinAtomicScriptStore {
             try checkpoint.data.copy(from: checkpointRoot.appending(path: "MiniApps"), to: stagedData)
             try verifyTransferRegistry(merged, at: stagedInstalled)
             guard try HanlinTransferTree.capture(root) == beforeInstalled,
-                  try HanlinTransferTree.capture(dataRoot) == beforeData,
+                  try HanlinTransferTree.capture(dataRoot, durableSQLiteData: true) == beforeData,
                   try HanlinTransferCheckpoint.read(checkpointRoot) == checkpoint else {
                 throw HanlinProductTransferError.destinationConflict
             }
             let journal = HanlinProductTransferRecovery.Journal(version: 1, checkpoint: checkpoint,
                 beforeInstalled: beforeInstalled, afterInstalled: try HanlinTransferTree.capture(stagedInstalled),
-                beforeData: beforeData, afterData: try HanlinTransferTree.capture(stagedData),
+                beforeData: beforeData, afterData: try HanlinTransferTree.capture(stagedData, durableSQLiteData: true),
                 state: .committing)
             try HanlinProductTransferRecovery.persist(journal, at: preparing)
             try fileManager.moveItem(at: preparing, to: transactionRoot)
