@@ -3,6 +3,11 @@ name: Validate standalone MiniApps target
 on:
   workflow_call:
     inputs:
+      prepare_miniapps_registration:
+        description: Register the original MiniApps bundle using the existing Apple account and read back declared capabilities
+        type: boolean
+        required: false
+        default: false
       signed_release_archives:
         description: Archive original products and export locally using the existing distribution identity
         type: boolean
@@ -36,6 +41,11 @@ on:
         default: cross_product
   workflow_dispatch:
     inputs:
+      prepare_miniapps_registration:
+        description: Register the original MiniApps bundle using the existing Apple account and read back declared capabilities
+        type: boolean
+        required: false
+        default: false
       signed_release_archives:
         description: Archive original products and export locally using the existing distribution identity
         type: boolean
@@ -78,16 +88,42 @@ on:
 concurrency:
   # Separate acceptance scopes use distinct job checkouts and owned simulators.
   # A paired run must not cancel standalone storage/UI evidence still being collected.
-  group: standalone-miniapps-${{ github.ref }}-${{ inputs.audit_release_resources && 'release-audit' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}
-  cancel-in-progress: true
+  group: standalone-miniapps-${{ github.ref }}-${{ inputs.prepare_miniapps_registration && 'registration' || inputs.audit_release_resources && 'release-audit' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}
+  cancel-in-progress: ${{ !inputs.prepare_miniapps_registration }}
 
 permissions:
   actions: read
   contents: read
 
 jobs:
+  register-original-product:
+    if: ${{ inputs.prepare_miniapps_registration }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Prepare the existing release authentication library
+        run: |
+          python3 -m venv "$RUNNER_TEMP/hanlin-registration"
+          "$RUNNER_TEMP/hanlin-registration/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+      - name: Register exact original bundle and read back permitted capability settings
+        env:
+          EXPECTED_MINIAPPS_BUNDLE: com.itorah.hanlinminiapps
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: '"$RUNNER_TEMP/hanlin-registration/bin/python" Scripts/ProductSplit/register_miniapps_bundle.py'
+      - name: Retain sanitized registration facts
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: miniapps-registration-${{ github.run_id }}
+          path: build/miniapps-registration/sanitized-report.json
+          if-no-files-found: error
+          retention-days: 14
+
   release-resource-audit:
-    if: ${{ inputs.audit_release_resources }}
+    if: ${{ inputs.audit_release_resources && !inputs.prepare_miniapps_registration }}
     runs-on: xcode-27
     timeout-minutes: 10
     steps:
@@ -123,7 +159,7 @@ jobs:
           retention-days: 14
 
   miniapps:
-    if: ${{ !inputs.audit_release_resources }}
+    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration }}
     runs-on: xcode-27
     timeout-minutes: ${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 90 || 60 }}
     env:
