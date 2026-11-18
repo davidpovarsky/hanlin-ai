@@ -1,13 +1,13 @@
 {
   "sourceLanguage": "en",
   "strings": {
-      "Run Python remotely?": {
+      "Run Python on the remote service?": {
         "extractionState": "manual",
         "localizations": {
           "en": {
             "stringUnit": {
               "state": "translated",
-              "value": "Run Python remotely?"
+              "value": "Run Python on the remote service?"
             }
           },
           "he": {

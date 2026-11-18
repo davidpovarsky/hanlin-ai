@@ -3985,7 +3985,7 @@ struct AICanvasView: View {
                 }
         }
         .overlay(bottomOverlay(), alignment: .bottomTrailing)
-        .confirmationDialog(RuntimeL10n.string("Run Python remotely?"),
+        .confirmationDialog(RuntimeL10n.string("Run Python on the remote service?"),
                             isPresented: $showRemotePythonConfirmation,
                             titleVisibility: .visible, presenting: pendingRemotePython) { code in
             Button(RuntimeL10n.string("Run on Piston")) {
