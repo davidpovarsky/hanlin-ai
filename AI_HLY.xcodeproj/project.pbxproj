@@ -2550,6 +2550,7 @@
 				"FRAMEWORK_SEARCH_PATHS" = ("$(inherited)", "$(CONFIGURATION_BUILD_DIR)", "\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"", );
 				"HEADER_SEARCH_PATHS" = ("$(inherited)", "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers", );
 				"LIBRARY_SEARCH_PATHS" = ("$(inherited)", "$(PROJECT_DIR)", );
+				"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)", "@executable_path/Frameworks", "@loader_path/Frameworks", );
 				"LD" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );
@@ -2600,6 +2601,7 @@
 				"FRAMEWORK_SEARCH_PATHS" = ("$(inherited)", "$(CONFIGURATION_BUILD_DIR)", "\"$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks\"", );
 				"HEADER_SEARCH_PATHS" = ("$(inherited)", "$(BUILT_PRODUCTS_DIR)/Python.framework/Headers", );
 				"LIBRARY_SEARCH_PATHS" = ("$(inherited)", "$(PROJECT_DIR)", );
+				"LD_RUNPATH_SEARCH_PATHS" = ("$(inherited)", "@executable_path/Frameworks", "@loader_path/Frameworks", );
 				"LD" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );

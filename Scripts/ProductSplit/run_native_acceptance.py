@@ -118,7 +118,7 @@ def main():
         state['status'] = 'BUILD_FAILED'
         command(build, 'build.log', timeout=1200)
         state['build'] = 'EXECUTED_PASS'
-        state['status'] = 'BUILD_FAILED'
+        state['status'] = 'PACKAGING_FAILED'
         app_product = derived/'Build/Products/Debug-iphonesimulator/HanlinMiniApps.app'
         info = plistlib.loads((app_product/'Info.plist').read_bytes())
         if info['CFBundleIdentifier'] != 'com.itorah.hanlinminiapps' or info.get('CFBundleDisplayName') != 'Hanlin MiniApps':
@@ -136,6 +136,19 @@ def main():
         proof['source_entitlements_sha256'] = hashlib.sha256(entitlement_source.read_bytes()).hexdigest()
         (EVIDENCE/'simulator-embedded-entitlements.json').write_text(json.dumps(proof, indent=2)+'\n')
         state['simulator_signing'] = 'ORIGINAL_ENTITLEMENTS_VERIFIED_AD_HOC_NOT_DISTRIBUTION_SIGNING'
+        # Verify the actual Mach-O loader paths, not only project-file intent.
+        # XCTest's environment must not hide missing bundled-framework paths.
+        load_commands = command(['xcrun', 'otool', '-l', str(app_product / executable_name)],
+                                'simulator-executable-load-commands.txt')
+        required_rpaths = {'@executable_path/Frameworks', '@loader_path/Frameworks'}
+        rpaths = set(re.findall(r'cmd LC_RPATH\s+cmdsize \d+\s+path (\S+) \(offset', load_commands))
+        if not required_rpaths.issubset(rpaths):
+            raise RuntimeError('Standalone MiniApps executable is missing its bundled Frameworks runpaths')
+        state['bundled_framework_runpaths'] = sorted(rpaths)
+        for binary in [app_product / executable_name, app_product / (executable_name + '.debug.dylib')]:
+            if binary.is_file():
+                command(['xcrun', 'otool', '-L', str(binary)], binary.name + '-dependencies.txt')
+
         membership = json.loads((ROOT/'docs/product-split/target-membership.json').read_text())
         for resource in membership.get('shared_resources', []):
             source = ROOT/resource
@@ -269,9 +282,35 @@ def main():
             except Exception as capture: state.setdefault('capture_errors', []).append(str(capture))
         if simulator:
             for argv,name in [(['xcrun','simctl','io',simulator,'screenshot',str(EVIDENCE/'failure.png')],'screenshot.log'),
-                              (['xcrun','simctl','spawn',simulator,'log','show','--last','3m','--style','compact','--predicate','process == "HanlinMiniApps"'],'simulator.log')]:
+                              (['xcrun','simctl','spawn',simulator,'log','show','--last','3m','--style','compact','--predicate',
+                                'process == "HanlinMiniApps" OR process == "runningboardd" OR process == "SpringBoard" OR process == "launchd_sim" OR eventMessage CONTAINS[c] "com.itorah.hanlinminiapps"'],
+                               'simulator.log')]:
                 try: command(argv,name,timeout=30)
                 except Exception as capture: state.setdefault('capture_errors',[]).append(str(capture))
+        # Keep only crash reports belonging to this disposable MiniApps run.
+        # A launch rejected before app logging may be explained only by dyld/RBS.
+        crash_roots = [Path.home() / 'Library/Logs/DiagnosticReports']
+        if simulator:
+            crash_roots.append(Path.home() / 'Library/Developer/CoreSimulator/Devices' / simulator / 'data/Library/Logs/CrashReporter')
+        captured = []
+        for crash_root in crash_roots:
+            if not crash_root.is_dir():
+                continue
+            for crash in sorted(crash_root.glob('HanlinMiniApps*')):
+                try:
+                    if not crash.is_file() or crash.suffix not in {'.ips', '.crash'} or crash.stat().st_mtime < state['started_at']:
+                        continue
+                    if len(captured) >= 12 or crash.stat().st_size > 10 * 1024 * 1024:
+                        continue
+                    data = crash.read_bytes()
+                    target = EVIDENCE / 'launch-crashes' / (str(len(captured)) + '-' + crash.name)
+                    target.parent.mkdir(exist_ok=True)
+                    target.write_bytes(data)
+                    captured.append({'file': target.relative_to(EVIDENCE).as_posix(),
+                                     'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)})
+                except OSError as capture:
+                    state.setdefault('capture_errors', []).append(str(capture))
+        state['launch_crash_reports'] = captured
         print(str(error), file=sys.stderr)
     finally:
         state['result_bundles'] = [p.name for p in EVIDENCE.glob('*.xcresult')]

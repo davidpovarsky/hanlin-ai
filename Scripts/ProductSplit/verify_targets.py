@@ -82,6 +82,7 @@ def main():
         original = original_build_settings[configuration["name"]]
         assert settings["ENABLE_USER_SCRIPT_SANDBOXING"] == original["ENABLE_USER_SCRIPT_SANDBOXING"] == "NO"
         assert settings["PYTHONDONTWRITEBYTECODE"] == "1"
+        assert "@executable_path/Frameworks" in settings.get("LD_RUNPATH_SEARCH_PATHS", []), "Standalone product must find its own embedded frameworks"
     for name in ["HanlinMiniAppsTests", "HanlinMiniAppsUITests", "HanlinMiniAppsBootstrapTests"]:
         target_id, target = targets[name]
         if name != "HanlinMiniAppsBootstrapTests":
