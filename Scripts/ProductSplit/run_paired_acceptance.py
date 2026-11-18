@@ -143,10 +143,17 @@ def main():
             "com.itorah.chavrusachat": derived / "Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
             "com.itorah.hanlinminiapps": derived / "Build/Products/Debug-iphonesimulator/HanlinMiniApps.app"
         }
+        expected_names = {"com.itorah.chavrusachat": "Hanlin AI",
+                          "com.itorah.hanlinminiapps": "Hanlin MiniApps"}
+        state["product_identity"] = {}
         for bundle, product in products.items():
             info = plistlib.loads((product / "Info.plist").read_bytes())
             if info["CFBundleIdentifier"] != bundle:
                 raise RuntimeError("Built product identity differs from its original target")
+            if info.get("CFBundleDisplayName") != expected_names[bundle]:
+                raise RuntimeError("Installed product display name differs from the approved two-app identity")
+            state["product_identity"][bundle] = {"display_name": info["CFBundleDisplayName"],
+                "info_plist_sha256": hashlib.sha256((product / "Info.plist").read_bytes()).hexdigest()}
             command(["codesign", "--verify", "--deep", "--strict", str(product)], bundle + "-signature.log")
             executable_name = info["CFBundleExecutable"]
             if Path(executable_name).name != executable_name:

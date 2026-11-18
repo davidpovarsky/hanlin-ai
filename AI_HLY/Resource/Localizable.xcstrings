@@ -3721,13 +3721,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "© 2026 ChavrusaChat All rights reserved"
+            "value" : "© 2026 Hanlin AI All rights reserved"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "© 2026 ChavrusaChat כל הזכויות שמורות"
+            "value" : "© 2026 Hanlin AI כל הזכויות שמורות"
           }
         }
       }
@@ -5400,13 +5400,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ChavrusaChat"
+            "value" : "Hanlin AI"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ChavrusaChat"
+            "value" : "Hanlin AI"
           }
         }
       }
@@ -7742,13 +7742,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thank you for using ChavrusaChat."
+            "value" : "Thank you for using Hanlin AI."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thank you for using ChavrusaChat."
+            "value" : "Thank you for using Hanlin AI."
           }
         }
       }
