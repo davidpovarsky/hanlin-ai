@@ -1,3 +1,7 @@
+## Current continuation — 2026-11-18
+
+The manual a2ui_exact_pin_proof route now archives and tests the exact requested workflow checkout. It no longer silently selects the historical c777b65e snapshot. All source hashes, the upstream A2UI pin, native method identities and result checks remain mandatory. The current contract contains 8 ingress and 38 SDK methods, including the new media schemas. Historical evidence below retains its original source and is not relabeled as current execution. Gallery/link SwiftUI and network behavior are tested separately by the 12-method media UI route.
+
 # Isolated exact-pin proof route
 
 The frozen961 source remains the34-case benchmark. The current mount/retired-ID
