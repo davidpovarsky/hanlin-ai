@@ -269,7 +269,8 @@
       "acceptance_status": "PRIOR_PHASE_RECORD_PRESERVED",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10"
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "is_primary_this_phase": false
     },
     {
       "gid": "1220546710401425",
@@ -282,7 +283,8 @@
       "acceptance_status": "PRIOR_PHASE_RECORD_PRESERVED",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10"
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "is_primary_this_phase": false
     },
     {
       "gid": "1219605220234118",
@@ -295,7 +297,8 @@
       "acceptance_status": "PRIOR_PHASE_RECORD_PRESERVED",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10"
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "is_primary_this_phase": false
     },
     {
       "gid": "1220546608370437",
@@ -308,7 +311,8 @@
       "acceptance_status": "PRIOR_PHASE_RECORD_PRESERVED",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10"
+      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "is_primary_this_phase": false
     },
     {
       "gid": "1220373608755846",
@@ -328,7 +332,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "NativeScript ten original host/runtime behaviors in the integrated app and companion runtime controls."
+      "remaining_acceptance": "NativeScript ten original host/runtime behaviors in the integrated app and companion runtime controls.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220373832827086",
@@ -347,7 +352,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Original Expo SwiftUI package and independent companion event/persistence assertions."
+      "remaining_acceptance": "Original Expo SwiftUI package and independent companion event/persistence assertions.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220374076374903",
@@ -365,7 +371,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Native app TS/shell/runtime dispatch, bounded jobs and actual scheduler results."
+      "remaining_acceptance": "Native app TS/shell/runtime dispatch, bounded jobs and actual scheduler results.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220546710400478",
@@ -382,7 +389,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "22 real imported fixtures, missing/denied/unknown engines, output/cancel/reopen and readiness assertions."
+      "remaining_acceptance": "22 real imported fixtures, missing/denied/unknown engines, output/cancel/reopen and readiness assertions.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220489383643571",
@@ -399,7 +407,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Original model/tool surface attribution and ordered original-app execution."
+      "remaining_acceptance": "Original model/tool surface attribution and ordered original-app execution.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220489258419968",
@@ -416,7 +425,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "All selected original surface editing, binding, replay and layout cases."
+      "remaining_acceptance": "All selected original surface editing, binding, replay and layout cases.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220489257946325",
@@ -434,7 +444,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Original action denial, authorized continuation and exact persisted result identity."
+      "remaining_acceptance": "Original action denial, authorized continuation and exact persisted result identity.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220489600044406",
@@ -453,7 +464,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Original app cancellation/replay/history and no stale action invocation."
+      "remaining_acceptance": "Original app cancellation/replay/history and no stale action invocation.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220491240486416",
@@ -474,7 +486,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Twelve component method identities have passes at their own recorded SHAs; integrated original-chat media and physical presentation remain separate."
+      "remaining_acceptance": "Twelve component method identities have passes at their own recorded SHAs; integrated original-chat media and physical presentation remain separate.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220546608350406",
@@ -491,7 +504,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Actual embedded OpenClaw/AST and hostile path/manifests in imported skills."
+      "remaining_acceptance": "Actual embedded OpenClaw/AST and hostile path/manifests in imported skills.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220546846740594",
@@ -508,7 +522,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Rapid reversal and long RTL/rotation B/C on actual native source; historical A100 cycles is separate."
+      "remaining_acceptance": "Rapid reversal and long RTL/rotation B/C on actual native source; historical A100 cycles is separate.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220539644804804",
@@ -527,7 +542,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Both compact cases, wide draft behavior and remaining five original Morph controls; visual reference/physical limits remain explicit."
+      "remaining_acceptance": "Both compact cases, wide draft behavior and remaining five original Morph controls; visual reference/physical limits remain explicit.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220541898122292",
@@ -546,7 +562,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Real native chip enable/disable/context menu/expanded state and RTL labels."
+      "remaining_acceptance": "Real native chip enable/disable/context menu/expanded state and RTL labels.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220546710417618",
@@ -563,7 +580,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Twelve current original Skill Center methods, including original ten and two runtime lifecycle methods; import/approval/cancel/reopen must actually pass."
+      "remaining_acceptance": "Twelve current original Skill Center methods, including original ten and two runtime lifecycle methods; import/approval/cancel/reopen must actually pass.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1219613181643838",
@@ -585,7 +603,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Integrated original chat/Host/Store acceptance and live provider/resource gate; Otzaria consumer work is outside this Hanlin task."
+      "remaining_acceptance": "Integrated original chat/Host/Store acceptance and live provider/resource gate; Otzaria consumer work is outside this Hanlin task.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220542419128390",
@@ -605,7 +624,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Native consumer behavior in addition to the recorded component/provider session proofs."
+      "remaining_acceptance": "Native consumer behavior in addition to the recorded component/provider session proofs.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220542199992529",
@@ -626,7 +646,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Actual origin/receiving-window/permission enforcement, paired return and shared inbox consumption."
+      "remaining_acceptance": "Actual origin/receiving-window/permission enforcement, paired return and shared inbox consumption.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220542199999956",
@@ -648,7 +669,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Original conversation draft/history reopen plus two-product persistence/migration and actual platform account boundaries."
+      "remaining_acceptance": "Original conversation draft/history reopen plus two-product persistence/migration and actual platform account boundaries.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220542174541940",
@@ -667,7 +689,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Original importable presentation UI, Morph/Thinking/A2UI consumer acceptance and reference comparison."
+      "remaining_acceptance": "Original importable presentation UI, Morph/Thinking/A2UI consumer acceptance and reference comparison.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1220546571007976",
@@ -684,7 +707,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Six exact original embedded Node/OpenClaw cases; no claim beyond the supported subset."
+      "remaining_acceptance": "Six exact original embedded Node/OpenClaw cases; no claim beyond the supported subset.",
+      "is_primary_this_phase": true
     },
     {
       "gid": "1219605220179926",
@@ -707,7 +731,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Two actually installed apps with paired flows, both runtime packages, signed candidate and physical acceptance."
+      "remaining_acceptance": "Two actually installed apps with paired flows, both runtime packages, signed candidate and physical acceptance.",
+      "is_primary_this_phase": false
     },
     {
       "gid": "1219656771637321",
@@ -729,7 +754,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Eight paired/shared-inbox cases and authentic entitlement/profile checks; existing source/data and receipt isolation preserved."
+      "remaining_acceptance": "Eight paired/shared-inbox cases and authentic entitlement/profile checks; existing source/data and receipt isolation preserved.",
+      "is_primary_this_phase": false
     },
     {
       "gid": "1219656771149125",
@@ -751,7 +777,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "278 feature obligations and 26 current UX resolutions must map to actual individual assertions/screens, not file presence."
+      "remaining_acceptance": "278 feature obligations and 26 current UX resolutions must map to actual individual assertions/screens, not file presence.",
+      "is_primary_this_phase": false
     },
     {
       "gid": "1219656771460030",
@@ -773,7 +800,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "NativeScript and Expo in independent MiniApps plus actual return/relaunch/persistence."
+      "remaining_acceptance": "NativeScript and Expo in independent MiniApps plus actual return/relaunch/persistence.",
+      "is_primary_this_phase": false
     },
     {
       "gid": "1219605235147314",
@@ -801,7 +829,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Complete per-capability execution/eligible reuse evidence; 45 original native UI methods still await execution."
+      "remaining_acceptance": "Complete per-capability execution/eligible reuse evidence; 45 original native UI methods still await execution.",
+      "is_primary_this_phase": false
     },
     {
       "gid": "1219605282038820",
@@ -825,7 +854,8 @@
       "asana_completed_observed": false,
       "closure_claim": false,
       "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Original profiles/local signed exports, supported physical device, live model gate and release candidate; source currently targets iOS/iPadOS27 only."
+      "remaining_acceptance": "Original profiles/local signed exports, supported physical device, live model gate and release candidate; source currently targets iOS/iPadOS27 only.",
+      "is_primary_this_phase": false
     }
   ],
   "external_gates": [
@@ -859,5 +889,14 @@
     "Refresh all canonical reports and original Asana tasks against actual outcomes; no source-only phase closure."
   ],
   "native_status_observed_at": "2026-11-18T07:17:06.892726+00:00",
-  "primary_phase": 2
+  "primary_phase": 2,
+  "all_source_task_count": 30,
+  "artifact_register": "acceptance/ACCEPTANCE_REGISTER.json",
+  "primary_task_count": 20,
+  "document": "PHASE_2_INTEGRATION_LEDGER",
+  "repo": "C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117",
+  "integration_manifest": "acceptance/INTEGRATION_CHANGE_MANIFEST.json",
+  "ux_matrix": "acceptance/UX_ACCEPTANCE_26.json",
+  "is_phase_completion": false,
+  "feature_matrix": "acceptance/FEATURE_ACCEPTANCE_278.json"
 }
