@@ -328,8 +328,10 @@ struct HanlinProductTransferTests {
         _ = try sqlite.open(handle: "notes", name: "notes.sqlite3")
         #expect(try sqlite.fetchAll(handle: "notes", sql: "SELECT value FROM notes").first?["value"] as? String == "kept")
         // Quiesce the existing destination before taking its durable baseline.
+        // A later read may rewrite Apple's retained WAL index, which is not
+        // user data. The actual database and every nonempty WAL remain hashed.
         HanlinSQLiteService.closeConnections(under: fixture.targetData)
-        let before = try fixture.bytes(fixture.targetData)
+        let before = try HanlinTransferTree.capture(fixture.targetData, durableSQLiteData: true)
         // Keep a real destination owner open across root replacement.
         #expect(try targetKV.contains(key: "existing"))
         _ = try await fixture.receive(receipt)
@@ -353,7 +355,8 @@ struct HanlinProductTransferTests {
         #expect(readData == journal.afterData)
         try await fixture.target.rollbackProductTransfer(dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot)
         #expect(receivedSQLite.openDatabaseCount == 0)
-        #expect(try fixture.bytes(fixture.targetData) == before)
+        #expect(try HanlinTransferTree.capture(fixture.targetData, durableSQLiteData: true) == before)
+        #expect(try targetKV.value(for: "existing")?.content == #""companion""#)
         let retained = fixture.transactionRoot.appending(path: "rolled-forward-data")
         let retainedBefore = try fixture.bytes(retained)
         try targetKV.set(.init(kind: .json, content: #""new companion edit""#), for: "existing")
