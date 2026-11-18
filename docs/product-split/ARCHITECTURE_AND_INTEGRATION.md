@@ -1,5 +1,7 @@
 # Product split W1-003: source tranche and integration contract
 
+> Historical W1-003 source record. Statements below about unconfigured services and pending integration describe that frozen tranche. For the current two-product implementation and actual outstanding native gates, use [CURRENT_BUILD_AND_RUN.md](CURRENT_BUILD_AND_RUN.md) and the [current release checklist](../continuation-20261117/RELEASE_CHECKLIST.md).
+
 Acting owner: [איתן | ARCH+DEV] [MAIN_SESSION], primary `01a1dc79-6761-7463-a196-34771f7929bd`.
 Worktree: `C:/Users/DAVID/Code/hanlin-app-split-wave1-20261115`; branch `codex/hanlin-app-split-wave1-20261115`.
 Frozen starting revision: `dd700c03e9fe9d22e95a031d4684275512ee6e6f`.

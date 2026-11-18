@@ -107,4 +107,4 @@ Before starting work, load and follow:
 - `docs/ai-team/ASANA_POLICY.md` — Authorized evidence-based task coordination and verified completion policy
 - `.agents/roles/<role>.md` — Role-specific scope and handoff rules
 
-Preserve all existing repository policies, frozen components, and explicit owner release gates.
+Apply the current owner authorization above to historical leases, pauses and release instructions. Preserve valid architecture, user-data integrity, actual platform access controls and evidence-based acceptance requirements.

@@ -1,6 +1,6 @@
 # Actual NativeScript and Expo inside the companion
 
-The original Hanlin AI engine tests intentionally open the original runtime component using a Debug-only probe. They are valid engine/Host component evidence, but do not establish importing/running those packages in the separately installed MiniApps product.
+The original Hanlin AI engine tests intentionally open the original runtime component using the simulator-only acceptance input (Debug, or Release with HANLIN_TESTING). They are valid engine/Host component evidence, but do not establish importing/running those packages in the separately installed MiniApps product.
 
 The new production_runtimes scope builds and launches the real com.itorah.hanlinminiapps target on an owned iPad simulator. It stages only the two original archive files in that app's real Documents container, with byte hashes. The UI must use the original catalog, package-management/import preview and existing consent control; packages are not installed by the test harness and no permission grants are seeded.
 
@@ -16,3 +16,5 @@ The new scope selects exactly these two methods. Original baseline scope still s
 The same workflow now uploads original logs/results before saving compiler caches. The current paired failures showed that caching otherwise delayed access to failure artifacts for several minutes. Cache data remains an optimization and is never test evidence.
 
 Current validation: Swift syntax parse, Python compile and YAML parse passed. No native pass is claimed before execution. Actual two-product App Group routing, signed physical device testing and live model-provider acceptance remain separate.
+
+The latest gate sequence is recorded in the continuation acceptance register. The signed standalone run 44263872088 built but failed independent startup before either UI case; paired run 44259936836 built both products and resolved their original primary shared container but MiniApps exited before tests. The original Frameworks runpath repair is under native validation in 44270714044. These are not successful engine/UI results. Native packaging now also requires the compiled original AppIcon and Assets.car; no artwork or original product identity is replaced.

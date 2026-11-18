@@ -94,7 +94,9 @@ open AI_HLY.xcodeproj
 - Handles `AI-Hanlin://` deep links
 
 **Main Navigation**: `AI_HLY/MainTabView.swift`
-- 5-tab interface: Chat List, Vision, Knowledge, Models, Settings
+- Chat and Library tabs; History, Profile and contextual Vision/MiniApps actions
+- Independent companion target: HanlinMiniApps, entry HanlinMiniAppsApp/HanlinMiniAppsApp.swift
+- Current build, native validation and release limits: docs/product-split/CURRENT_BUILD_AND_RUN.md
 
 ### Data Layer (SwiftData + CloudKit)
 

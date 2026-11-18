@@ -103,17 +103,18 @@ English | [中文](README_CN.md)
 
 ### Requirements
 
-- iOS 18.0+
-- Xcode 15.0+
-- Swift 5.9+
-- macOS 14.0+ (for development)
+- iOS/iPadOS 27 for the current Hanlin targets
+- Stable Xcode 27 and its supported macOS development environment
+- Swift 6 language mode
+
+The current work contains two native products, **Hanlin AI** and **Hanlin MiniApps**. See [current build and run instructions](docs/product-split/CURRENT_BUILD_AND_RUN.md) and the [release checklist](docs/continuation-20261117/RELEASE_CHECKLIST.md) for exact validation scope and unresolved gates. The continuation is not an accepted release.
 
 ### Installation Steps
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/CherryHQ/hanlin-ai.git
-   cd AI_HLY
+   git clone https://github.com/davidpovarsky/hanlin-ai.git
+   cd hanlin-ai
    ```
 
 2. **Open the project**
@@ -123,15 +124,17 @@ English | [中文](README_CN.md)
 
 3. **Configure signing**
    - Select your development team in Xcode
-   - Update the bundle identifier to a unique value
+   - Preserve the original bundle identifiers and App Groups for updates to an existing Hanlin installation
+   - Verify compatible profiles for both products and the existing extensions before physical installation
 
-4. **Run the app**
+4. **Run the selected product**
+   - Select scheme AI_HLY for Hanlin AI or HanlinMiniApps for the companion
    - Choose a target device or simulator
    - Press `Cmd + R`
 
 ### API Configuration
 
-1. Launch the app and open Settings
+1. Launch Hanlin AI and open Profile
 2. Configure the required API keys in "API Key Management"
    - OpenAI API key
    - Claude API key
@@ -146,21 +149,21 @@ English | [中文](README_CN.md)
 
 ### Basic Conversations
 
-1. Tap the list tab
+1. Open Chat; use History for existing conversations
 2. Create a new chat with the plus button
 3. Choose an AI model and parameters
 4. Start chatting
 
 ### Vision Analysis
 
-1. Tap the vision tab
+1. Open the workspace More menu and choose Vision
 2. Capture an image that includes text
 3. Review the extracted text
 4. Continue with AI analysis
 
 ### Knowledge Base Management
 
-1. Tap the knowledge base tab
+1. Open Library and choose Knowledge
 2. Create a new library
 3. Upload documents or enter knowledge manually
 4. Reference the library in chat
@@ -169,26 +172,17 @@ English | [中文](README_CN.md)
 
 ### Directory Layout
 
-```
-AI_HLY/
-├── AI_HLY/                    # Main app
-│   ├── Views/                 # UI components
-│   │   ├── MainTabView.swift
-│   │   ├── ChatView.swift
-│   │   ├── VisionView.swift
-│   │   └── ...
-│   ├── Models/                # Data models
-│   │   ├── ChatRecords.swift
-│   │   ├── AllModels.swift
-│   │   └── ...
-│   ├── Services/              # Service layer
-│   │   ├── APIServices/
-│   │   ├── ChatServices/
-│   │   └── ...
-│   └── Resources/             # Assets
-├── AI_HLY.xcodeproj/          # Xcode project
-└── README.md
-```
+| Path | Responsibility |
+| --- | --- |
+| AI_HLY/ | Original Hanlin AI application and data models |
+| AI_HLY/MainTabView.swift | Chat/Library navigation and Profile/Vision/companion entry points |
+| AI_HLY/Downstream/ChatCore/ | Original Agent SDK Host, conversation persistence and paired return |
+| AI_HLY/Downstream/ChatInput/ | Persistent native Composer and input controls |
+| AI_HLY/Downstream/ChatPresentation/ | Native transcript, A2UI, media and personal library |
+| HanlinMiniAppsApp/ | Independent MiniApps application entry and UI |
+| Packages/ | Shared Agent, presentation, runtime and product contracts |
+| AI_HLY.xcodeproj/ | Native application, extension and test targets |
+| Scripts/ProductSplit/ | Product validation, identity and packaging checks |
 
 ### Core Components
 
@@ -198,10 +192,10 @@ AI_HLY/
    - Deep link handling
 
 2. **Main UI** (`MainTabView.swift`)
-   - Five-tab navigation
+   - Chat and Library tabs, History, Profile and contextual Vision/MiniApps actions
    - Deep link routing
 
-3. **Data layer** (`Models/`)
+3. **Data layer** (`AI_HLY/Model/`)
    - SwiftData model definitions
    - CloudKit integration
    - Data persistence
