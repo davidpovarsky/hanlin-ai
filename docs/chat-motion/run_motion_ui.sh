@@ -93,6 +93,8 @@ finish_phase test
 motion_scope="${HANLIN_MOTION_SCOPE:-affected}"
 if [[ "$motion_scope" == cycles ]]; then
   selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach)
+elif [[ "$motion_scope" == input-diagnostic ]]; then
+  selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testDRapidInputDiagnosticOnly)
 else
   [[ "$motion_scope" == affected ]]
   selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence
@@ -124,12 +126,12 @@ def visit(n):
         for v in n:visit(v)
 visit(json.loads((e/'tests.json').read_text()))
 scope=(e/'selected-scope.txt').read_text().strip()
-names=['testAAllFivePresetsTwentyCompleteCyclesEach'] if scope=='cycles' else ['testBRapidReversalPresetSwitchAndPersistence','testCReadableLongContentRTLTypeOrientationAndCompletion']
+names=['testAAllFivePresetsTwentyCompleteCyclesEach'] if scope=='cycles' else ['testDRapidInputDiagnosticOnly'] if scope=='input-diagnostic' else ['testBRapidReversalPresetSwitchAndPersistence','testCReadableLongContentRTLTypeOrientationAndCompletion']
 expected={'MotionUITests/'+name+'()' for name in names}
 assert len(found)==len(expected) and {n['nodeIdentifier'] for n in found}==expected and all(n['result']=='Passed' for n in found)
 if scope=='cycles':
     timeline=json.loads((e/'motion-geometry-timeline.json').read_text());assert {n['preset'] for n in timeline}=={'v1.relaxed','v1.height-reveal','v1.gentle-squeeze','v1.quiet-fade','v1.none'}
 assert json.loads((e/'video-status.json').read_text())['exit_code']==0 and (e/'motion-first120s.mp4').stat().st_size>1024
-(e/'result-validation.json').write_text(json.dumps({'status':'EXECUTED_PASS','methods':len(found),'selected_scope':scope,'cycles_per_preset':20 if scope=='cycles' else None,'scope':'native components; original app/renderer/scroll/iPad26/physical NOT_RUN'}))
+(e/'result-validation.json').write_text(json.dumps({'status':'DIAGNOSTIC_CAPTURED' if scope=='input-diagnostic' else 'EXECUTED_PASS','methods':len(found),'selected_scope':scope,'cycles_per_preset':20 if scope=='cycles' else None,'scope':'input observations only; Motion acceptance A/B/C NOT_RUN' if scope=='input-diagnostic' else 'native components; original app/renderer/scroll/iPad26/physical NOT_RUN'}))
 PY
 finish_phase complete

@@ -13,7 +13,13 @@ struct MotionProofApp: App {
     }
 
     var body: some Scene {
-        WindowGroup { MotionProofContent().chatMotionPreferences() }
+        WindowGroup {
+            if ProcessInfo.processInfo.arguments.contains("--rapid-input-diagnostic") {
+                MotionRapidInputDiagnostic().chatMotionPreferences()
+            } else {
+                MotionProofContent().chatMotionPreferences()
+            }
+        }
     }
 }
 
@@ -112,5 +118,106 @@ private struct MotionProofContent: View {
         guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
               let data = try? JSONSerialization.data(withJSONObject: samples, options: [.sortedKeys]) else { return }
         try? data.write(to: directory.appendingPathComponent("motion-geometry-timeline.json"), options: .atomic)
+    }
+}
+
+// Opt-in input experiment only. The normal Motion proof screen and production
+// component bodies stay unchanged; this screen provides native reference controls.
+private struct MotionRapidInputDiagnostic: View {
+    private struct ProbeState {
+        var expanded = false
+        var visible: CGFloat = 0
+        var natural: CGFloat = 0
+    }
+    private struct Sample: Codable {
+        let control: String
+        let uptime: TimeInterval
+        let wasExpanded: Bool?
+        let isExpanded: Bool?
+        let visibleHeight: Double?
+        let naturalHeight: Double?
+    }
+    @State private var probes = ["static": ProbeState(), "animated": ProbeState()]
+    @State private var samples: [Sample] = []
+
+    private var receiptJSON: String {
+        guard let data = try? JSONEncoder().encode(samples) else { return "[]" }
+        return String(decoding: data, as: UTF8.self)
+    }
+
+    private func geometry(_ key: String) -> String {
+        let state = probes[key]!
+        if !state.expanded && state.visible < 0.25 { return "collapsed" }
+        if state.expanded && state.natural > 0 && abs(state.visible - state.natural - 6) < 0.5 {
+            return "expanded"
+        }
+        return "transitioning"
+    }
+
+    private func observed(_ key: String) -> Binding<Bool> {
+        Binding(get: { probes[key]!.expanded }, set: { value in
+            let state = probes[key]!
+            samples.append(Sample(control: "rapid-production-\(key)",
+                uptime: ProcessInfo.processInfo.systemUptime,
+                wasExpanded: state.expanded, isExpanded: value,
+                visibleHeight: Double(state.visible), naturalHeight: Double(state.natural)))
+            probes[key]!.expanded = value
+        })
+    }
+
+    private func nativeButton(_ title: String, id: String) -> some View {
+        Button {
+            samples.append(Sample(control: id, uptime: ProcessInfo.processInfo.systemUptime,
+                wasExpanded: nil, isExpanded: nil, visibleHeight: nil, naturalHeight: nil))
+        } label: {
+            Text(title).frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                .contentShape(Rectangle())
+        }
+        .accessibilityIdentifier(id)
+    }
+
+    private func productionProbe(_ key: String, preset: ChatMotionPreset) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ToggleButton(title: "Thinking", timeText: "0", isExpanded: observed(key),
+                isActive: true, numericCount: 0, usesAnimatedDisclosure: true)
+                .accessibilityIdentifier("rapid-production-\(key)")
+            HanlinAnimatedDisclosure(isExpanded: probes[key]!.expanded) {
+                Text("Diagnostic disclosure content\nSecond visible line\nThird visible line")
+                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {
+                        probes[key]!.natural = $0
+                    }
+            }
+            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {
+                probes[key]!.visible = $0
+            }
+        }
+        .environment(\.chatMotion, .forPreset(preset))
+    }
+
+    var body: some View {
+        VStack(spacing: 8) {
+            Button("Reset input observations") {
+                samples.removeAll()
+                for key in ["static", "animated"] { probes[key]!.expanded = false }
+            }
+            .accessibilityIdentifier("rapid-input-reset")
+            nativeButton("Native button outside ScrollView", id: "rapid-native-outside")
+                .padding(.horizontal)
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 8) {
+                    nativeButton("Native automatic button", id: "rapid-native-scroll")
+                    nativeButton("Native plain button", id: "rapid-native-plain").buttonStyle(.plain)
+                    productionProbe("static", preset: .none)
+                    productionProbe("animated", preset: .relaxed)
+                }.padding()
+            }
+            Text("Input diagnostic samples").lineLimit(1).frame(height: 24)
+                .accessibilityIdentifier("rapid-input-receipt")
+                .accessibilityLabel(String(samples.count))
+                .accessibilityValue(receiptJSON)
+            Text("static=\(geometry("static"));animated=\(geometry("animated"))")
+                .lineLimit(1).frame(height: 24)
+                .accessibilityIdentifier("rapid-input-geometry")
+        }
     }
 }

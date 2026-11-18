@@ -132,4 +132,89 @@ final class MotionUITests: XCTestCase {
         app.buttons["proof-thinking"].tap(); waitForGeometry("collapsed")
         attach("completed-closed-portrait")
     }
+
+    private struct RapidInputSample: Codable {
+        let control: String
+        let uptime: TimeInterval
+        let wasExpanded: Bool?
+        let isExpanded: Bool?
+        let visibleHeight: Double?
+        let naturalHeight: Double?
+    }
+
+    private struct RapidInputReport: Encodable {
+        let diagnosticOnly: Bool
+        let control: String
+        let delivery: String
+        let expectedActions: Int
+        let observedActions: Int
+        let receiptReachedThree: Bool
+        let actionTimeGaps: [TimeInterval]
+        let laterActionsAtIntermediateGeometry: [Bool]
+        let samples: [RapidInputSample]
+    }
+
+    // Passing this method means the observations were retained, not that rapid
+    // reversal passed. B still requires the original production button's exact
+    // three callbacks. Coordinate taps may idle between actions: retain actual
+    // uptime gaps and pre-action geometry instead of silently calling them rapid.
+    func testDRapidInputDiagnosticOnly() throws {
+        app.terminate()
+        app.launchArguments.append("--rapid-input-diagnostic")
+        app.launch()
+        let receipt = app.staticTexts["rapid-input-receipt"]
+        XCTAssertTrue(receipt.waitForExistence(timeout: 10))
+        let cases = [
+            ("rapid-native-outside", "multi-tap"),
+            ("rapid-native-scroll", "multi-tap"),
+            ("rapid-native-plain", "multi-tap"),
+            ("rapid-production-static", "multi-tap"),
+            ("rapid-production-animated", "multi-tap"),
+            ("rapid-production-animated", "independent-coordinate-taps")
+        ]
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        var reports: [RapidInputReport] = []
+        for (identifier, delivery) in cases {
+            app.buttons["rapid-input-reset"].tap()
+            let collapsed = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "label == %@", "static=collapsed;animated=collapsed"),
+                object: app.staticTexts["rapid-input-geometry"])
+            XCTAssertEqual(XCTWaiter.wait(for: [collapsed], timeout: 5), .completed)
+            let button = app.buttons[identifier]
+            XCTAssertTrue(button.waitForExistence(timeout: 5))
+            XCTAssertTrue(button.isHittable)
+            if delivery == "multi-tap" {
+                button.tap(withNumberOfTaps: 3, numberOfTouches: 1)
+            } else {
+                let coordinate = button.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+                for _ in 0..<3 { coordinate.tap() }
+            }
+            let reachedThree = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "label == %@", "3"), object: receipt)
+            let receiptReachedThree = XCTWaiter.wait(for: [reachedThree], timeout: 5) == .completed
+            let raw = try XCTUnwrap(receipt.value as? String)
+            let samples = try JSONDecoder().decode([RapidInputSample].self, from: Data(raw.utf8))
+            XCTAssertTrue(samples.allSatisfy { $0.control == identifier })
+            let gaps = zip(samples.dropFirst(), samples).map { $0.0.uptime - $0.1.uptime }
+            let intermediate = samples.dropFirst().map { sample in
+                guard let visible = sample.visibleHeight, let natural = sample.naturalHeight,
+                      natural > 0 else { return false }
+                return visible > 0.5 && visible < natural + 6 - 0.5
+            }
+            let report = RapidInputReport(diagnosticOnly: true, control: identifier, delivery: delivery,
+                expectedActions: 3, observedActions: samples.count, receiptReachedThree: receiptReachedThree,
+                actionTimeGaps: gaps, laterActionsAtIntermediateGeometry: intermediate, samples: samples)
+            reports.append(report)
+            let attachment = XCTAttachment(string: String(decoding: try encoder.encode(report), as: UTF8.self))
+            attachment.name = "\(identifier)-\(delivery)-input-observations"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+        }
+        let attachment = XCTAttachment(string: String(decoding: try encoder.encode(reports), as: UTF8.self))
+        attachment.name = "rapid-input-diagnostic-only"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+
 }
