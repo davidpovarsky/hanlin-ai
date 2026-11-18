@@ -116,6 +116,10 @@ final class SplitMailboxTests: XCTestCase {
             let link = group.appending(path: component)
             try FileManager.default.createDirectory(at: link.deletingLastPathComponent(), withIntermediateDirectories: true)
             try FileManager.default.createSymbolicLink(at: link, withDestinationURL: component.hasSuffix(".json") ? sentinel : ai)
+            if !component.hasSuffix(".json") {
+                XCTAssertThrowsError(try SplitAppStorageLayout.transportRoot(appGroupContainer: group))
+                XCTAssertThrowsError(try SplitAppStorageLayout.productTransferRoot(appGroupContainer: group))
+            }
             XCTAssertThrowsError(try HanlinSplitMailbox(trustedGroupContainer: group).original(UUID()))
             XCTAssertEqual(try Data(contentsOf: sentinel), original)
         }

@@ -51,7 +51,17 @@ final class SplitAppStorageLayoutTests: XCTestCase {
         await platform.restore()
         XCTAssertNil(platform.bootstrapError)
         XCTAssertTrue(platform.pendingResumeCommands.isEmpty)
-        XCTAssertEqual(try mini.load()?.intentEntities.count, 0)
+        // An empty installed-package store still publishes the original
+        // compiled Swift Parity intent. Assert its exact identity, while the
+        // foreign AI fixture and its queued command must remain isolated.
+        let snapshot = try XCTUnwrap(try mini.load())
+        XCTAssertEqual(snapshot.intentEntities.map(\.id), ["ReadSwiftParityState"])
+        XCTAssertEqual(snapshot.intentEntities.map { $0.identity.installedPackageID.rawValue },
+                       ["compiled.hanlin.demo.swift-parity"])
+        XCTAssertEqual(snapshot.intentEntities.map { $0.identity.packageID.rawValue },
+                       ["hanlin.demo.swift-parity"])
+        XCTAssertEqual(snapshot.intentEntities.map { $0.identity.generation }, [0])
+        XCTAssertTrue(try mini.pendingCommands().isEmpty)
         XCTAssertEqual(try ai.pendingCommands().map(\.id), [aiCommand.id])
         XCTAssertEqual(try bytes(ai.root), original)
     }

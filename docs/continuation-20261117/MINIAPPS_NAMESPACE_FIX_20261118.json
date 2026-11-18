@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "source_base": "9421a232201d0c959efec669a6e85214a56c74c2",
+  "native_run": 44222126809,
+  "native_source": "f962b54b9fcee0159d399479c24f9b9948256864",
+  "artifact_id": 14391923104,
+  "artifact_sha256": "98bcc5af96e76c9199bb5b7a40bff2dbc326f86617a196bca33b1813faf5fbbb",
+  "actual": {
+    "app_build": "EXECUTED_PASS",
+    "storage_passed": 18,
+    "storage_failed": 2,
+    "storage_skipped": 0,
+    "ui": "NOT_RUN"
+  },
+  "failure_1": {
+    "case": "SplitAppStorageLayoutTests/testRejectsNamespaceSymlinksDanglingLinksAndNonDirectories",
+    "cause": "Darwin lstat was passed a Foundation directory URL with a trailing slash, so linked directory targets were followed and dangling final links appeared absent.",
+    "correction": "Strip only trailing slash characters before lstat for each fixed namespace component; preserve returned directory URLs and reject non-directory/symlink types. Original adversarial cases unchanged; mailbox test additionally requires direct namespace rejection."
+  },
+  "failure_2": {
+    "case": "SplitAppStorageLayoutTests/testPlatformRestoreAndEmptyPublicationPreserveAIBytes",
+    "cause": "The test expected zero intents for an empty installed package store, omitting the intentionally registered compiled Swift Parity intent.",
+    "correction": "Require exactly ReadSwiftParityState with compiled.hanlin.demo.swift-parity / hanlin.demo.swift-parity / generation 0; require empty MiniApps command queue; retain byte-exact AI state and original queued command checks. Production intent behavior is unchanged."
+  },
+  "validation": "Swift 6 syntax parse and git diff --check PASS on Windows; Apple rerun pending.",
+  "scope": "No relaxation of namespace, isolation, receipt, authority or acceptance requirements."
+}

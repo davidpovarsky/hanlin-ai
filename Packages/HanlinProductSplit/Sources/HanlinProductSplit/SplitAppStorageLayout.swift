@@ -49,8 +49,15 @@ public enum SplitAppStorageLayout {
         for component in components {
             candidate.append(path: component, directoryHint: .isDirectory)
 #if canImport(Darwin)
+            // A directory URL carries a trailing slash. POSIX resolves that
+            // slash through a final symlink even for lstat, so inspect the
+            // actual namespace component without the directory suffix.
+            var componentPath = candidate.path(percentEncoded: false)
+            while componentPath.count > 1 && componentPath.hasSuffix("/") {
+                componentPath.removeLast()
+            }
             var info = stat()
-            if Darwin.lstat(candidate.path(percentEncoded: false), &info) == 0 {
+            if Darwin.lstat(componentPath, &info) == 0 {
                 guard info.st_mode & S_IFMT == S_IFDIR else { throw LayoutError.invalidNamespace }
             } else if errno != ENOENT {
                 throw LayoutError.invalidNamespace

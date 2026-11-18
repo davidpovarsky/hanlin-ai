@@ -2,7 +2,7 @@
 
 ## Authority and starting point
 
-Owner instruction in the current conversation on 2026-11-17 authorizes completing Phase 2 and then Phase 3, with original Asana updates after each phase. One coding agent works sequentially. Former agents remain stopped. The prior stop-before-Phase3 instruction is superseded by this explicit request; main merge and TestFlight/distribution still require separate release approval.
+Owner instruction in the current conversation on 2026-11-17 authorizes completing Phase 2 and then Phase 3, with original Asana updates after each phase. One coding agent works sequentially. Former agents remain stopped. The latest explicit owner authorization is recorded in OWNER_AUTHORIZATION_20261118.md and supersedes historical phase, file-ownership, run, push and separate release-permission pauses. Continue authorized work when its real acceptance prerequisites and existing platform credentials are available; authorization does not establish a test pass.
 
 - Baseline: bff3364d64f43b1d5235ead2b6e8f3756e890eed, verified clean.
 - Successor: codex/hanlin-product-completion-20261117 in C:/Users/DAVID/Code/hanlin-product-completion-20261117.
