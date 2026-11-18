@@ -191,7 +191,44 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         record("original-mixed-openui-react-native-state-and-action")
     }
 
-    private func launch(continuation: Bool, surfaceOnly: Bool = false, openUI: String? = nil, fixtureName: String = "A2UIReplayMedia") throws {
+    func testNewConversationWorksWithoutOptimizationModel() throws {
+        try launch(continuation: false, noOptimizer: true)
+        let seededID = element("hanlin-native-a2ui-chat-id").label
+        func returnHome() {
+            let back = app.navigationBars.buttons.matching(NSPredicate(
+                format: "identifier == 'BackButton' OR label == 'Hanlin' OR label == 'Hylic.AI' OR label == 'Back'"
+            )).firstMatch
+            XCTAssertTrue(back.waitForExistence(timeout: 10))
+            back.tap()
+            XCTAssertTrue(element("hanlin-compact-home-screen").waitForExistence(timeout: 10))
+        }
+        returnHome()
+        let create = app.buttons["hanlin-new-chat-button"].firstMatch
+        XCTAssertTrue(create.waitForExistence(timeout: 10) && create.isHittable)
+        create.tap()
+        XCTAssertTrue(input().waitForExistence(timeout: 15),
+                      "An optional optimization model must not block a configured ordinary chat")
+        XCTAssertFalse(app.alerts.firstMatch.exists)
+        let createdID = element("hanlin-native-a2ui-chat-id").label
+        XCTAssertNotNil(UUID(uuidString: createdID))
+        XCTAssertNotEqual(createdID, seededID)
+        sendFirstPrompt()
+        let originalPart = surface().identifier
+        returnHome()
+        let recent = app.buttons["hanlin-compact-recent-row-0"].firstMatch
+        XCTAssertTrue(recent.waitForExistence(timeout: 10))
+        recent.tap()
+        XCTAssertEqual(element("hanlin-native-a2ui-chat-id").label, createdID)
+        XCTAssertTrue(app.descendants(matching: .any)[originalPart].firstMatch.waitForExistence(timeout: 15))
+        let restoredSubmit = app.buttons["Submit replay form"].firstMatch
+        XCTAssertTrue(restoredSubmit.waitForExistence(timeout: 10))
+        XCTAssertFalse(restoredSubmit.isEnabled)
+        assertTransport(count: 1)
+        record("new-chat-without-optimizer-reopens-original-history")
+    }
+
+    private func launch(continuation: Bool, surfaceOnly: Bool = false, openUI: String? = nil,
+                        fixtureName: String = "A2UIReplayMedia", noOptimizer: Bool = false) throws {
         let bundle = Bundle(for: Self.self)
         let url = bundle.url(forResource: fixtureName, withExtension: "jsonl", subdirectory: "Fixtures")
             ?? bundle.url(forResource: fixtureName, withExtension: "jsonl")
@@ -226,6 +263,7 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         app.launchEnvironment["HANLIN_SIMULATE_CONTAINER_WIDTH"] = "390"
         app.launchEnvironment["HANLIN_NATIVE_A2UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_NATIVE_A2UI_FIXTURE_PLAN"] = plan
+        app.launchEnvironment["HANLIN_NATIVE_A2UI_NO_OPTIMIZER"] = noOptimizer ? "1" : "0"
         app.launch()
         let home = element("hanlin-home-tab")
         if home.waitForExistence(timeout: 10), home.isHittable { home.tap() }

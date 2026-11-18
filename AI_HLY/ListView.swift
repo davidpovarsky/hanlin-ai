@@ -24,7 +24,6 @@ struct ListView: View {
     @Query private var chatRecords: [ChatRecords]
     @Query private var allModels: [AllModels]
     @Query private var apiKeys: [APIKeys]
-    @Query private var userInfos: [UserInfo]
     
     @State private var searchText: String = ""
     @State private var showsSavedMessages = false
@@ -71,12 +70,6 @@ struct ListView: View {
         apiKeys
             .filter { $0.company != "LOCAL" }
             .allSatisfy { $0.isHidden || ($0.key?.isEmpty ?? true) }
-    }
-
-    // 检测是否缺少文本优化模型（视觉优化模型为可选项，不阻断普通文本会话）
-    private var noTextOptimizationModel: Bool {
-        let userInfo = userInfos.first
-        return (userInfo?.optimizationTextModel.isEmpty ?? true)
     }
 
     static func filterAndSortChatRecords(_ records: [ChatRecords], searchText: String) -> [ChatRecords] {
@@ -767,14 +760,8 @@ struct ListView: View {
             return nil
         }
 
-        // 验证是否选择了文本优化模型
-        if noTextOptimizationModel {
-            validationAlertMessage = "暂未设置文本优化模型，请前往“设置-模型-优化模型”设置文本优化模型。"
-            validationSettingType = .optimization
-            showValidationAlert = true
-            return nil
-        }
-
+        // Optimization is optional. The selected chat model owns the ordinary
+        // conversation; optimizer-specific actions validate their own configuration.
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
 
         let chatName: String = currentLanguage.hasPrefix("zh") ? "新群聊" : "New Group Chat"

@@ -36,8 +36,9 @@ enum HanlinNativeA2UIAcceptanceProvider {
         // Called only on the new in-memory container. Reopen in this process preserves history;
         // no rows, preferences, user keys or external stores are reset by this fixture.
         guard try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty else { return }
-        context.insert(UserInfo(optimizationTextModel: HanlinNativeStructuredResponse.modelID,
-            optimizationVisualModel: HanlinNativeStructuredResponse.modelID))
+        let optimizer = ProcessInfo.processInfo.environment["HANLIN_NATIVE_A2UI_NO_OPTIMIZER"] == "1"
+            ? "" : HanlinNativeStructuredResponse.modelID
+        context.insert(UserInfo(optimizationTextModel: optimizer, optimizationVisualModel: optimizer))
         context.insert(AllModels(name: HanlinNativeStructuredResponse.modelID, displayName: "Native A2UI Fixture",
             position: 0, company: "OPENAI", supportsTextGen: true, supportsToolUse: false))
         context.insert(APIKeys(name: "Isolated HTTP fixture", company: "OPENAI", key: "fixture-only-never-network",
