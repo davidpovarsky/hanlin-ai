@@ -4,7 +4,7 @@
 //
 //  Source-faithful compact workspace host ported from
 //  InteriorOrganizerV3_3.swiftpm/AppModule/ContentView.swift (lines 293-405).
-//  Owns one flexible NavigationStack with a native bottom safe-area inset,
+//  Owns one keyboard-resizing vertical stack around the original NavigationStack,
 //  `@Namespace private var libraryZoom`, and one persistent anchored composer dock
 //  shared across the compact Home screen (`composerKey == "new"`) and any pushed
 //  chat destination (`.chat(UUID)`), while hiding the dock in `.allConversations`.
@@ -114,22 +114,24 @@ struct HanlinCompactChatWorkspace: View {
     }
 
     var body: some View {
-        navigationRoot(availableHeight: max(0, workspaceSize.height - (composerVisible ? dockHeight : 0)))
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                if composerVisible {
-                    anchoredComposer(availableSize: workspaceSize)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                }
+        // The NavigationStack's UIKit-backed content avoids the keyboard, but
+        // its external safe-area inset remained at the window bottom in the
+        // original native snapshots. Give the navigation and the ONE persistent
+        // dock the same flexible SwiftUI proposal so both resize together.
+        VStack(spacing: 0) {
+            navigationRoot(availableHeight: max(0, workspaceSize.height - (composerVisible ? dockHeight : 0)))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            if composerVisible {
+                anchoredComposer(availableSize: workspaceSize)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
             }
-            // Observe the native container without making GeometryReader own its
-            // layout. The navigation container must receive the keyboard's safe
-            // area directly, including when the editor is in its persistent inset.
-            // Read outside our inset so its own height is not deducted twice.
+        }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            // The proposed content size already excludes its safe-area regions.
+            // Do not subtract keyboard or container insets a second time.
             .onGeometryChange(for: CGSize.self) { proxy in
-                CGSize(
-                    width: max(0, proxy.size.width - proxy.safeAreaInsets.leading - proxy.safeAreaInsets.trailing),
-                    height: max(0, proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom)
-                )
+                proxy.size
             } action: { newSize in
                 workspaceSize = newSize
             }
