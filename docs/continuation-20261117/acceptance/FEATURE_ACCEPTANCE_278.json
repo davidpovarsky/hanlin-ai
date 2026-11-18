@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T08:19:20.813541+00:00",
+  "generated_at": "2026-11-18T08:37:49.871919+00:00",
   "source_sha": "4f4f927db97aefc7ca3df558993a2fa769f8eea1",
   "baseline_path": "docs/product-split/feature-delta-278.json",
   "baseline_file_sha256": "ccba98e746ac1bd838b7f772b5c3391136d04b887ed5f372f8fec1fff95d2725",
   "historical_revision": "e792b0b5fab6a66ea8cbdaa9626def509744e33f",
   "historical_blob_sha256": "7252f34685839bd179314e8ce7b2266ea035eb73818ef378e9f28158709ce19e",
   "count": 278,
-  "warning": "278 requirements are individually mapped. Eleven rows have scoped native component assertions (twenty model/history and six editor methods), not full feature acceptance. Both contributing workflows retained compact UI failures. No UI or whole-feature success is inferred.",
+  "warning": "278 original feature IDs are preserved. File identity is not behavioral acceptance. Seventeen rows have partial native component evidence (20 Unicode/model cases, 6 native editor cases and 8 selected SDK cases, counted by unique test ID); no complete feature or whole product is accepted by this mapping. All historical evidence retains its actual SHA and scope.",
   "rows": [
     {
       "id": "NAV-01",
@@ -2624,9 +2624,21 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-RUN-02",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "run": 44197039335,
+          "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
+          "test_ids": [
+            "HanlinAISDKAgentEngineTests/cancellationWhileProviderApprovalIsPendingHasNoEffect()",
+            "HanlinAISDKAgentEngineTests/cancellationAfterFortyStopsTheActualTool()"
+          ],
+          "assertion": "Cancelling the canonical stream cancels the pending approval exactly once without executing the effect; after 45 actual scripted tool steps it cancels the executing tool and starts no step 46.",
+          "limitations": "Native SDK fixture transport only; app Stop control, lifecycle and a live provider are separate gates.",
+          "report": "docs/continuation-20261117/acceptance/SDK_ASSERTION_COVERAGE_20261118.json"
+        }
+      ]
     },
     {
       "id": "RUN-03",
@@ -2924,9 +2936,20 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-RUN-14",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "run": 44197039335,
+          "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
+          "test_ids": [
+            "AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()"
+          ],
+          "assertion": "Canonical session preserves text/A2UI/text sequence with original part identity and deduplicates exact replay.",
+          "limitations": "Does not prove all conversation grouping or the integrated transcript layout.",
+          "report": "docs/continuation-20261117/acceptance/SDK_ASSERTION_COVERAGE_20261118.json"
+        }
+      ]
     },
     {
       "id": "RUN-15",
@@ -3024,9 +3047,21 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-RUN-18",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "run": 44197039335,
+          "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
+          "test_ids": [
+            "AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+            "StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()"
+          ],
+          "assertion": "Original session writes one tool receipt with exact run/session/call identity; private on-disk store checkpoint restores original entries and draft without accepting a future format or symlink root.",
+          "limitations": "The host/session test uses its explicit in-memory fixture; the separate checkpoint test uses the real private-file store. Original SwiftData app reopen remains an independent gate.",
+          "report": "docs/continuation-20261117/acceptance/SDK_ASSERTION_COVERAGE_20261118.json"
+        }
+      ]
     },
     {
       "id": "RUN-19",
@@ -3360,9 +3395,20 @@
           "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-RESULT-11",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "run": 44197039335,
+          "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
+          "test_ids": [
+            "HanlinAISDKAgentEngineTests/testProviderTextCitationsKeepExactPartAndUnicodeRange()"
+          ],
+          "assertion": "Canonical provider events retain exact text-part ID and a valid Unicode/UTF-16 citation range while rejecting malformed source annotation.",
+          "limitations": "No proof of citation chip, icon/title, actual URL navigation or live provider.",
+          "report": "docs/continuation-20261117/acceptance/SDK_ASSERTION_COVERAGE_20261118.json"
+        }
+      ]
     },
     {
       "id": "RESULT-12",
@@ -3776,9 +3822,20 @@
           "previous_sha256": "69aaaaa08eeeb294bd88298b71393a1d9d80914ccad274e3798649a2a1d2cf5e"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-RESULT-27",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "run": 44197039335,
+          "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
+          "test_ids": [
+            "AgentSessionTests/generalMutationProgressAndReceiptKeepOriginalContextAndStep()"
+          ],
+          "assertion": "Original dispatcher progress and receipt preserve original session, run, step, provider call and invocation identity.",
+          "limitations": "Does not prove all activity variants, chronological UI display, inspector, or animation.",
+          "report": "docs/continuation-20261117/acceptance/SDK_ASSERTION_COVERAGE_20261118.json"
+        }
+      ]
     },
     {
       "id": "RESULT-28",
@@ -5789,9 +5846,20 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-AGENT-12",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "run": 44197039335,
+          "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
+          "test_ids": [
+            "HanlinAISDKAgentEngineTests/testDynamicToolExposure()"
+          ],
+          "assertion": "Step preparation initially exposes load_skill, then includes execute_python and the loaded skill ID.",
+          "limitations": "Scripted transport and preparation behavior only; does not prove production tool_search, installed skill execution or actual model decisions.",
+          "report": "docs/continuation-20261117/acceptance/SDK_ASSERTION_COVERAGE_20261118.json"
+        }
+      ]
     },
     {
       "id": "AGENT-13",
@@ -7669,5 +7737,5 @@
   ],
   "previous_anchor_snapshot_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
   "accepted_capability_count": 0,
-  "partially_evidenced_capability_count": 11
+  "partially_evidenced_capability_count": 17
 }
