@@ -19,8 +19,8 @@ enum ChavrusaSystemIntegrationBootstrap {
 }
 
 struct EnableChavrusaNotificationsIntent: AppIntent {
-    static let title: LocalizedStringResource = "Enable ChavrusaChat Notifications"
-    static let description = IntentDescription("Enables reminders, time-sensitive updates, and remote notifications for ChavrusaChat.")
+    static let title: LocalizedStringResource = "Enable Hanlin Notifications"
+    static let description = IntentDescription("Enables notifications for Hanlin after you grant system permission.")
     static let openAppWhenRun = true
 
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -39,8 +39,8 @@ struct ChavrusaAlarmMetadata: AlarmMetadata {
 }
 
 struct ScheduleChavrusaAlarmIntent: AppIntent {
-    static let title: LocalizedStringResource = "Schedule a ChavrusaChat Alarm"
-    static let description = IntentDescription("Schedules a prominent study alarm using the system alarm service.")
+    static let title: LocalizedStringResource = "Schedule an Alarm with Hanlin"
+    static let description = IntentDescription("Schedules a system alarm at the time you choose.")
     static let openAppWhenRun = false
 
     @Parameter(title: "Hour", inclusiveRange: (0, 23))
@@ -60,21 +60,9 @@ struct ScheduleChavrusaAlarmIntent: AppIntent {
 
         let time = Alarm.Schedule.Relative.Time(hour: hour, minute: minute)
         let schedule: Alarm.Schedule = .relative(.init(time: time, repeats: .never))
-        let alert: AlarmPresentation.Alert
-        if #available(iOS 26.1, *) {
-            alert = AlarmPresentation.Alert(title: "ChavrusaChat Alarm")
-        } else {
-            alert = AlarmPresentation.Alert(
-                title: "ChavrusaChat Alarm",
-                stopButton: AlarmButton(
-                    text: "Stop",
-                    textColor: .red,
-                    systemImageName: "stop.circle"
-                ),
-                secondaryButton: nil,
-                secondaryButtonBehavior: nil
-            )
-        }
+        let enteredTitle = alarmTitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        let displayTitle = enteredTitle.isEmpty ? String(localized: "Alarm") : enteredTitle
+        let alert = AlarmPresentation.Alert(title: "\(displayTitle)")
         let attributes = AlarmAttributes(
             presentation: AlarmPresentation(alert: alert),
             metadata: ChavrusaAlarmMetadata(note: alarmTitle),
@@ -93,8 +81,8 @@ struct ChavrusaChatShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: ScheduleChavrusaAlarmIntent(),
-            phrases: ["Schedule a study alarm in \(.applicationName)"],
-            shortTitle: "Study Alarm",
+            phrases: ["Schedule an alarm in \(.applicationName)"],
+            shortTitle: "Schedule Alarm",
             systemImageName: "alarm"
         )
         AppShortcut(

@@ -621,10 +621,7 @@ struct ContactUsView: View {
 // MARK: 通用设置界面
 struct GeneralSettingsView: View {
     @State private var isPushed: Bool = false
-    @Environment(\.modelContext) private var modelContext
-    @Query private var userInfos: [UserInfo]
 
-    @State private var modelSelectorStyle: String = "scroll"
 
     var body: some View {
         List {
@@ -661,22 +658,8 @@ struct GeneralSettingsView: View {
                 ChatMotionPresetPicker()
             }
 
-            Section(header: Text(String(localized: "发送栏"))) {
-                Picker(selection: $modelSelectorStyle) {
-                    Text(String(localized: "横向滑动")).tag("scroll")
-                    Text(String(localized: "菜单选择")).tag("menu")
-                } label: {
-                    Label(String(localized: "模型显示方式"), systemImage: "rectangle.stack")
-                }
-                .onChange(of: modelSelectorStyle) {
-                    saveModelSelectorStyle()
-                }
-            }
         }
         .navigationTitle(String(localized: "通用"))
-        .onAppear {
-            loadModelSelectorStyle()
-        }
     }
 
     /// 打开系统的"语言与地区"设置
@@ -688,24 +671,6 @@ struct GeneralSettingsView: View {
         UIApplication.shared.open(url)
     }
 
-    /// 加载模型选择器样式
-    private func loadModelSelectorStyle() {
-        if let user = userInfos.first {
-            modelSelectorStyle = user.modelSelectorStyle
-        }
-    }
-
-    /// 保存模型选择器样式
-    private func saveModelSelectorStyle() {
-        if let user = userInfos.first {
-            user.modelSelectorStyle = modelSelectorStyle
-            do {
-                try modelContext.save()
-            } catch {
-                print("保存模型选择器样式失败：\(error.localizedDescription)")
-            }
-        }
-    }
 }
 
 // 优化模型选择

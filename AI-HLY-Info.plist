@@ -77,7 +77,7 @@
 	<key>NSSupportsLiveActivitiesFrequentUpdates</key>
 	<true/>
 	<key>NSAlarmKitUsageDescription</key>
-	<string>ChavrusaChat schedules alarms and study reminders only when you ask it to.</string>
+	<string>Hanlin schedules system alarms only for the times you choose.</string>
 	<key>com.apple.developer.translation-ui-provider.network-access</key>
 	<true/>
 </dict>

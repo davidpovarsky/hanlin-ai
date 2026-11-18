@@ -720,35 +720,6 @@ struct ChatBubbleView: View {
                         .contentTransition(.opacity)
                         .animation(chatMotion.updateAnimation, value: operationalState)
                     
-                    if !operationalDescription.isEmpty {
-                        let allLines = operationalDescription
-                            .split(separator: "\n",
-                                   omittingEmptySubsequences: false)
-                            .map(String.init)
-                        let displayLines = Array(allLines.suffix(3))
-                        
-                        VStack(alignment: .leading, spacing: 2) {
-                            ForEach(Array(displayLines.enumerated()),
-                                    id: \.offset) { idx, line in
-                                Text(line)
-                                    .font(.system(size:
-                                                    idx == 2 ? 10 :
-                                                    (idx == 1 ? 9 : 8)))
-                                    .lineLimit(1)
-                                    .truncationMode(.middle)
-                                    .foregroundColor(
-                                        idx == 2 ? .hlBluefont : .gray
-                                    )
-                                    .frame(maxWidth: .infinity,
-                                           alignment: .leading)
-                                    .opacity(idx == 0 ? 0.4 :
-                                                idx == 1 ? 0.7 : 1.0)
-                                    .blur(radius: idx == 0 ? 1 : 0)
-                                    .padding(.horizontal, 5)
-                            }
-                        }
-                        .padding(.bottom, 5)
-                    }
                 }
             } else {
                 Image(systemName: "sparkle")
@@ -2006,15 +1977,6 @@ struct ChatBubbleView: View {
         }
     }
     
-    private var sanitizedReasoningLines: [String] {
-        reasoning
-            .split(whereSeparator: {
-                [".", "\n", "。"].contains(String($0))
-            })
-            .compactMap { ProgressSummarySanitizer.sanitizeProviderReasoningSummary(String($0)) }
-            .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
-    }
-
     private var sanitizedReasoningDisplay: String {
         let lines = reasoning
             .components(separatedBy: .newlines)
@@ -2024,15 +1986,6 @@ struct ChatBubbleView: View {
                 return ProgressSummarySanitizer.sanitizeProviderReasoningSummary(trimmed)
             }
         return lines.joined(separator: "\n")
-    }
-
-    private var displayReasoningLines: [String] {
-        let raw = sanitizedReasoningLines
-        let last3 = Array(raw.suffix(3))
-        if !last3.isEmpty && last3.count < 3 {
-            return Array(repeating: " ", count: 3 - last3.count) + last3
-        }
-        return last3
     }
 
     private var resolvedToolContentForDisplay: String {
@@ -2160,19 +2113,8 @@ struct ChatBubbleView: View {
                 )
                 .accessibilityIdentifier("hanlin-reasoning-toggle")
 
-                HanlinAnimatedDisclosure(isExpanded: !isReasoningExpanded && isMotionRunActive && isLastAssistantGroup) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { index, line in
-                            Text(line)
-                                .font(.system(size: index == 2 ? 10 : index == 1 ? 9 : 8))
-                                .lineLimit(1).truncationMode(.head)
-                                .foregroundStyle(index == 2 ? Color.hlBluefont : .gray)
-                                .opacity(index == 0 ? 0.4 : index == 1 ? 0.7 : 1)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }
-                    .padding(.horizontal, 5)
-                }
+                // The original header presents one concise activity summary.
+                // Full reasoning, tool output and failures remain in the user's disclosure.
 
                 // Failures remain discoverable when the details are collapsed.
                 if timeline?.status == .failed || timeline?.activities.contains(where: { $0.status == .failed }) == true {

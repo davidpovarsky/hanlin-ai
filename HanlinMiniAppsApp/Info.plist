@@ -25,7 +25,7 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
 	<key>NSAlarmKitUsageDescription</key>
-	<string>Hanlin MiniApps schedules alarms and study reminders only when you ask it to.</string>
+	<string>Hanlin MiniApps schedules system alarms only when you request them.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>

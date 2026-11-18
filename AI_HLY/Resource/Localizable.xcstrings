@@ -1,6 +1,167 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Enable Hanlin Notifications": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enable Hanlin Notifications"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הפעלת התראות Hanlin"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "启用 Hanlin 通知"
+          }
+        }
+      }
+    },
+    "Enables notifications for Hanlin after you grant system permission.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enables notifications for Hanlin after you grant system permission."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מפעיל התראות עבור Hanlin לאחר מתן הרשאה במערכת."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在您授予系统权限后启用 Hanlin 通知。"
+          }
+        }
+      }
+    },
+    "Schedule an Alarm with Hanlin": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule an Alarm with Hanlin"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תזמון שעון מעורר ב־Hanlin"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用 Hanlin 设置闹钟"
+          }
+        }
+      }
+    },
+    "Schedules a system alarm at the time you choose.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedules a system alarm at the time you choose."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מתזמן שעון מעורר במערכת לשעה שתבחרו."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在您选择的时间设置系统闹钟。"
+          }
+        }
+      }
+    },
+    "Schedule Alarm": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule Alarm"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תזמון שעון מעורר"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "设置闹钟"
+          }
+        }
+      }
+    },
+    "Open Hanlin Camera": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Hanlin Camera"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פתיחת מצלמת Hanlin"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开 Hanlin 相机"
+          }
+        }
+      }
+    },
+    "Opens Hanlin’s camera and visual analysis.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens Hanlin’s camera and visual analysis."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פותח את המצלמה ואת הניתוח החזותי של Hanlin."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开 Hanlin 相机和视觉分析。"
+          }
+        }
+      }
+    },
     "A draft can include up to five files. Remove an attachment before adding this batch.": {
       "extractionState": "manual",
       "localizations": {
