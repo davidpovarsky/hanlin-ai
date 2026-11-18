@@ -115,17 +115,23 @@ def validate_graph(project, provider_manifest=None):
             assert settings["IPHONEOS_DEPLOYMENT_TARGET"] == "27.0"
             assert settings["SWIFT_VERSION"] == "6.0"
             if target is mini:
-                production = provider_manifest and provider_manifest.get("product_stage") == "standalone-production-bundle-unsigned"
+                production = provider_manifest and provider_manifest.get("product_stage") == "standalone-production-bundle"
                 assert settings["PRODUCT_BUNDLE_IDENTIFIER"] == ("com.itorah.hanlinminiapps" if production else "com.itorah.hanlinminiapps.integration")
                 assert settings["SUPPORTED_PLATFORMS"] == ("iphoneos iphonesimulator" if production else "iphonesimulator")
-                assert settings["CODE_SIGNING_ALLOWED"] == "NO"
-                assert settings["CODE_SIGNING_REQUIRED"] == "NO"
                 if production:
+                    # The standalone product must retain its App Group entitlements
+                    # under a normal Xcode Run, not only under CI command overrides.
+                    assert settings["CODE_SIGNING_ALLOWED"] == "YES"
+                    assert settings["CODE_SIGNING_REQUIRED"] == "YES"
+                    assert settings["CODE_SIGN_STYLE"] == "Automatic"
+                    assert settings["DEVELOPMENT_TEAM"] == "NA6HPWARQ2"
                     assert settings["CODE_SIGN_ENTITLEMENTS"] == "HanlinMiniAppsApp/HanlinMiniApps.entitlements"
                     assert settings["INFOPLIST_FILE"] == "HanlinMiniAppsApp/Info.plist"
                 else:
+                    assert settings["CODE_SIGNING_ALLOWED"] == "NO"
+                    assert settings["CODE_SIGNING_REQUIRED"] == "NO"
                     assert "CODE_SIGN_ENTITLEMENTS" not in settings
-                assert "DEVELOPMENT_TEAM" not in settings
+                    assert "DEVELOPMENT_TEAM" not in settings
                 assert "baseConfigurationReference" not in objects[key]
             else:
                 assert settings["PRODUCT_BUNDLE_IDENTIFIER"] == "com.itorah.chavrusachat"

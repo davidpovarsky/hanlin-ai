@@ -143,6 +143,6 @@
   "bootstrap_source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
   "bootstrap_test_source": "Scripts/CI/IntegrationValidation/MiniAppsBootstrapTests.swift",
   "host_jsc_discovery_cut": "6c4d30c87b16635a53f168d37737d63e18c1d2bc",
-  "product_stage": "standalone-production-bundle-unsigned",
+  "product_stage": "standalone-production-bundle",
   "bundle_id": "com.itorah.hanlinminiapps"
 }

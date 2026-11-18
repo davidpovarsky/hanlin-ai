@@ -21,7 +21,7 @@ def main():
     assert len(targets) == len(root["targets"]), "Duplicate target names"
     provider = json.loads((ROOT / "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json").read_text())
     membership = json.loads((ROOT / "docs/product-split/target-membership.json").read_text())
-    assert provider["product_stage"] == "standalone-production-bundle-unsigned"
+    assert provider["product_stage"] == "standalone-production-bundle"
     graph_result = validate_graph(project, provider)
     sdk_result = validate_agent_sdk_linkage(project, ROOT)
     sources = membership["shared_sources"]

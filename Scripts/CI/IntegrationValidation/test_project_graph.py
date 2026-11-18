@@ -82,14 +82,16 @@ class ProjectGraphTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             validate_graph(self.project, self.manifest)
 
-    def test_reject_signing_or_lower_deployment(self):
+    def test_reject_invalid_signing_or_lower_deployment(self):
         for field, value in [("CODE_SIGN_ENTITLEMENTS", "production.entitlements"),
-                             ("CODE_SIGNING_ALLOWED", "YES"), ("IPHONEOS_DEPLOYMENT_TARGET", "26.0")]:
-            mutated = copy.deepcopy(self.project)
-            key = self.objects[self.mini["buildConfigurationList"]]["buildConfigurations"][0]
-            mutated["objects"][key]["buildSettings"][field] = value
-            with self.assertRaises(AssertionError):
-                validate_graph(mutated, self.manifest)
+                             ("CODE_SIGNING_ALLOWED", "NO"), ("CODE_SIGNING_REQUIRED", "NO"),
+                             ("DEVELOPMENT_TEAM", "OTHERTEAM"), ("IPHONEOS_DEPLOYMENT_TARGET", "26.0")]:
+            for key in self.objects[self.mini["buildConfigurationList"]]["buildConfigurations"]:
+                with self.subTest(field=field, configuration=key):
+                    mutated = copy.deepcopy(self.project)
+                    mutated["objects"][key]["buildSettings"][field] = value
+                    with self.assertRaises(AssertionError):
+                        validate_graph(mutated, self.manifest)
 
     def test_reject_declared_but_unlinked_product(self):
         phase = next(self.objects[key] for key in self.mini["buildPhases"]

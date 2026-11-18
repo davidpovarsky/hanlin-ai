@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-18T09:31:47.840644+00:00",
+  "base_sha": "3e1316c1bb7732aad444ea823915004ffe49431c",
+  "status": "SOURCE_CHECK_PASS_NATIVE_PENDING",
+  "problem": "The production MiniApps target still explicitly disabled code signing in both source configurations. Native simulator harness overrides already enabled signing to preserve original App Group entitlements; ordinary Xcode Run did not share those settings.",
+  "change": {
+    "targets": [
+      "HanlinMiniApps Debug",
+      "HanlinMiniApps Release"
+    ],
+    "signing_allowed": "YES",
+    "signing_required": "YES",
+    "style": "Automatic",
+    "development_team": "NA6HPWARQ2",
+    "changed_pbx_objects": [
+      "F80000000000000000000015",
+      "F80000000000000000000016"
+    ],
+    "product_stage": "standalone-production-bundle"
+  },
+  "preserved": [
+    "Original application and extension configurations",
+    "Original bundle identifiers and both App Group entitlement arrays",
+    "Original framework embedding and runtime engines",
+    "Existing unsigned archive then existing-resource export workflow",
+    "No certificate, key, profile, account or secret transfer"
+  ],
+  "validation": {
+    "source_graph": "EXECUTED_PASS",
+    "graph_regression_suite": {
+      "status": "EXECUTED_PASS",
+      "tests": 15,
+      "command": "python -m unittest discover -s Scripts/CI/IntegrationValidation -p test_project_graph.py",
+      "platform": "Windows Python; not Apple compilation"
+    },
+    "native": "PENDING_NEXT_REQUIRED_PAIRED_GATE",
+    "distribution": "BLOCKED_EXISTING_PROFILE_CAPABILITY_GATES"
+  },
+  "assurance": "The source validator now rejects accidental unsigned production settings or a changed owner team in either configuration. It continues to report signed_or_install_proof=false. No native success is inferred from source settings."
+}
