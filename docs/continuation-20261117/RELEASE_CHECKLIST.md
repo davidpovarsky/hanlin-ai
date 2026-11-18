@@ -1,6 +1,6 @@
 # Hanlin release checklist
 
-Decision: NO_GO. Source snapshot: 7f5a846561d8d642e94436e56415b9cb0655f712. Updated: 2026-11-18T09:13:43.502249+00:00.
+Decision: NO_GO. Source snapshot: 702bb52b1d544deff6ecfb88928645dbf757d2d1. Updated: 2026-11-18T10:04:29.425791+00:00.
 This is a reviewable candidate checklist, not an accepted release or publication approval.
 
 ## Immutable identities
@@ -28,13 +28,15 @@ Original shared groups group.com.itorah.chavrusachat and group.com.itorah.shared
 - [ ] Finish actual current app/Motion, compact, standalone runtime and paired-product gates.
 - [ ] Accept original UI45 +Runtime/Skills +Motion B/C in corrected run44264360254; predecessor44256319287 executed no tests because its runtime artifact input was missing.
 - [x] Record native Unicode/model20 PASS and compact UI2 FAIL from44250279050, without claiming whole-workflow success.
-- [ ] Accept compact keyboard repairUI2 in44273341845, Host24/UI19 in44271250054 and EmbeddedResolver21/UI2 in44264369849.
-- [ ] Accept independent startup/NS/ExpoUI2 in44270714044 after original simulator entitlements and both OS App Groups are verified; prior44257287918 UI2 failed at real import with appGroupUnavailable.
+- [ ] Accept compact keyboard repairUI2 in44273341845 and Host24/UI19 in44271250054; these existing runs await terminal results.
+- [x] Authenticate44264369849 build PASS/native21 PASS/UI2 FAIL, original videos/AX and full artifact SHA.
+- [ ] Accept the two original EmbeddedResults UI cases after local25fdded6 schema/AX repair; original assertions and permissions retained.
+- [ ] Accept independent startup/NS/ExpoUI2 after original simulator entitlements and both OS App Groups are verified.44270714044 timed out during cold build before startup/UI; local22f344f2 permits2400s preparation without changing product deadlines.
 - [ ] Accept original paired product/share8 after MiniApps startup is repaired:44259936836 passed both builds and real primary shared container but executed zero tests because MiniApps exited.
 - [ ] Map behavior-specific evidence to every required feature/UX row. Current mapping has20 partially evidenced rows and0 fully accepted capabilities out of278; no product pass percentage.
 - [ ] Complete one approved live model/tool/persistence run; credential export is currently rejected by automatic review.
 - [ ] Produce local signed exports with exact required entitlements and compatible profiles for both apps and all four extensions.
-- [ ] Verify final branded/Unicode candidate archives, rather than reuse older 00a932d6 archives as if current.
+- [ ] Verify final branded/Unicode/signed-default candidate archives. Original46a99c05 asset packaging and localc0ebf13e default signing still need actual native evidence; older00a932d6 archives are not current.
 - [ ] Install and test on an actually accessible supported physical iPad/iPhone; verify platform trust, permissions, VoiceOver, Stage Manager, lifecycle and measured performance.
 - [ ] Finish actual system Share/translation/widget/notification entrypoints and account/CloudKit conditions where required; Host-only fixtures are narrower evidence.
 - [ ] Resolve MiniApps App Store registration visibility and existing Apple signing permissions through the owner's account.
@@ -73,3 +75,15 @@ The connected development host is Windows. Current native CI inventory has no ph
 ## Latest failed gates retained
 
 44263129438: build PASS, compact UI2 FAIL (focus/keyboard); 44264365612: NativeScript baseline PASS, Release app build FAIL, Host24/UI19 NOT_RUN; 44263872088: build/signature PASS, independent startup failed, UI2 NOT_RUN; 44259936836: both builds and actual primary group PASS, MiniApps exited, original8 NOT_RUN. These failures are retained separately from pending repaired runs.
+
+## Newly observed failed and repaired scopes
+
+44264369849: build PASS, Resolver/Canonical native21 PASS, EmbeddedResults UI2 FAIL. Original recordings and native AX identify the real TextView element, and the original Host schema requires progress_summary missing from the deterministic provider. Local25fdded6 preserves source tool policy and UI assertions; reexecution is pending.
+
+44270714044: cold build exceeded1200s before startup, OS App Group or engine UI checks. Local22f344f2 raises only cold-build preparation to2400s. No loader fix is accepted yet.
+
+Original MiniApps branding and normal automatic signing are now wired in source; graph15 PASS is Windows evidence only.
+
+## מצב הפרסום והמשך ההרצה
+
+תמונת המקור המקומית: 702bb52b1d544deff6ecfb88928645dbf757d2d1. הענף הציבורי נשאר ב־46a99c050f18b91778eba571f2202b1ad08632c9. בדיקת האישור האוטומטית דחתה push של תיקוני המקור והתיעוד אל המאגר הציבורי davidpovarsky/hanlin-ai, משום שהאישור הכללי אינו מציין במפורש את היעד הציבורי ואת המטען המסוים. לא נעשה ניסיון פרסום חלופי. נדרש אישור מפורש ל־commits המוכנים לפני הרצתם ב־CI. הריצות שכבר התחילו ממשיכות; הן אינן כוללות את התיקונים המקומיים. שלבים 2 ו־3 נשארים IN_PROGRESS והשחרור NO_GO.
