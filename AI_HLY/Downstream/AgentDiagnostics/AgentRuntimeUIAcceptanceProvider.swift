@@ -191,6 +191,28 @@ enum AgentRuntimeUIAcceptanceProvider {
 #endif
             context.insert(acceptanceChat)
 #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+            if isSkillsEnabled,
+               ProcessInfo.processInfo.environment["HANLIN_EMBEDDED_FALLBACK_FIXTURE"] == "1" {
+                // Historical rendering fixture only: original message/AgentRun/
+                // native fallback views, no live model or invented tool effect.
+                let groupID = UUID()
+                let item = AgentTranscriptItem(sequence: 0, kind: .userVisibleToolResult,
+                    callID: "unresolved-original-result", toolName: "fixture_unavailable_handler",
+                    resultRendererKind: .modernNative, completedAt: now, status: .completed,
+                    nativeUIBlocks: [NativeUIBlock(type: .text,
+                        body: "UNRESOLVED_HANDLER_NATIVE_FALLBACK_CONTENT")],
+                    visibilityAfterCompletion: .remainInChat,
+                    canonicalEmbeddedPresentation: HanlinEmbeddedPresentationDescriptor(
+                        handler: "hanlin.acceptance.missing:card",
+                        expansion: HanlinExpansionDescriptor(supportedModes: [.sheet, .fullScreen],
+                            expandedHandler: "hanlin.acceptance.missing:expanded")),
+                    embeddedResultPayload: HanlinEmbeddedResultPayload(ownerID: "hanlin.acceptance.missing"))
+                let message = ChatMessages(role: "assistant", text: "UNRESOLVED_RESULT_ORIGINAL_MESSAGE",
+                    modelDisplayName: "Historical rendering fixture", groupID: groupID, record: acceptanceChat)
+                message.agentRun = AgentRun(groupID: groupID, completedAt: now, status: .completed,
+                    transcriptItems: [item], finalAnswer: message.text)
+                context.insert(message)
+            }
             if ProcessInfo.processInfo.environment["HANLIN_CONTEXTUAL_TEXT_ACCEPTANCE"] == "1" {
                 context.insert(ChatMessages(role: "assistant", text: "CONTEXT_TEXT_ORIGINAL_428: The selected message stays in its original conversation.",
                     modelDisplayName: "Agent Acceptance", record: acceptanceChat))
@@ -436,6 +458,41 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 && bodyString.contains("SHARED_FILE_" + nonce)
                 && currentText.contains("https://example.org/hanlin-share?case=" + nonce)
             emitFinalAnswer(verified ? "SHARED_DRAFT_DELIVERED_" + nonce : "SHARED_DRAFT_CONTENT_MISSING")
+            return
+        }
+#endif
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+        if AgentRuntimeUIAcceptanceProvider.isSkillsEnabled,
+           ProcessInfo.processInfo.environment["HANLIN_EMBEDDED_RESULT_STRICT_ACCEPTANCE"] == "1",
+           currentText.contains("EMBEDDED_FLOW_ACCEPTANCE") {
+            func result(_ callID: String) -> String? {
+                guard let output = (messages ?? []).last(where: {
+                    $0["role"] as? String == "tool" && $0["tool_call_id"] as? String == callID
+                }) else { return nil }
+                if let text = output["content"] as? String { return text }
+                return (output["content"] as? [[String: Any]])?
+                    .compactMap { $0["text"] as? String }.joined(separator: "\n")
+            }
+            if let web = result("ui-web-call") {
+                let valid = web.lowercased().contains("successfully") && web.lowercased().contains("render")
+                emitFinalAnswer(valid ? "AGENT_SKILLS_EMBEDDED_ACCEPTANCE_COMPLETE" : "EMBEDDED_WEB_RESULT_NOT_VERIFIED")
+            } else if let search = result("ui-tool-search-call") {
+                guard search.contains("create_web_view") else {
+                    emitFinalAnswer("EMBEDDED_TOOL_DISCOVERY_NOT_VERIFIED"); return
+                }
+                emitToolCall(id: "ui-web-call", name: "create_web_view",
+                    arguments: #"{"code":"<h1>Acceptance Web Surface</h1><p>Embedded result rendered</p>","result_presentation":"card"}"#)
+            } else if let skill = result("ui-load-skill-call") {
+                let names = ((body?["tools"] as? [[String: Any]]) ?? []).compactMap {
+                    ($0["function"] as? [String: Any])?["name"] as? String
+                }
+                guard skill.contains("loaded successfully"), names.contains("create_web_view") else {
+                    emitFinalAnswer("EMBEDDED_SKILL_EXPOSURE_NOT_VERIFIED"); return
+                }
+                emitToolCall(id: "ui-tool-search-call", name: "tool_search", arguments: #"{"query":"web"}"#)
+            } else {
+                emitToolCall(id: "ui-load-skill-call", name: "load_skill", arguments: #"{"skill_id":"acceptance_skill"}"#)
+            }
             return
         }
 #endif

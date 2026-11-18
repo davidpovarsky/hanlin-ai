@@ -234,7 +234,9 @@ enum ChatPresentationBridge {
         guard !expHandler.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
           continue
         }
-        if let canResolve = canResolveHandler, !canResolve(expHandler) {
+        // An explicitly different destination needs a resolver's positive
+        // answer. Missing resolution evidence must not create a dead control.
+        guard let canResolve = canResolveHandler, canResolve(expHandler) else {
           continue
         }
       }

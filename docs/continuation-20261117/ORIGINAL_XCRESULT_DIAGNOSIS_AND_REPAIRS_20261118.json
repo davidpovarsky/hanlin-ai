@@ -143,5 +143,20 @@
   "overall": "CHANGES_PREPARED_NATIVE_VERIFICATION_REQUIRED",
   "phase2": "IN_PROGRESS",
   "phase3": "IN_PROGRESS",
-  "release": "NO_GO"
+  "release": "NO_GO",
+  "repair_sha": "0b06c98e45c6757676f956aea49cba0d80ab2127",
+  "native_revalidation": {
+    "run": 44259931987,
+    "sha": "0b06c98e45c6757676f956aea49cba0d80ab2127",
+    "status": "DISPATCHED_RESULTS_PENDING",
+    "expected_unit_invocations": 24,
+    "expected_ui_cases": 19
+  },
+  "paired_revalidation": {
+    "run": 44259936836,
+    "sha": "0b06c98e45c6757676f956aea49cba0d80ab2127",
+    "status": "DISPATCHED_RESULTS_PENDING",
+    "expected_cases": 8,
+    "scope": "product_and_share"
+  }
 }

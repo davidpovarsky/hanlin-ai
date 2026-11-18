@@ -341,6 +341,16 @@ struct EmbeddedResultResolverTests {
         )
         #expect(rejected.isEmpty)
 
+        // The real modern-native fallback has no arbitrary-handler resolver.
+        // Absence of that resolver must be just as restrictive as a rejection.
+        let unverified = ChatPresentationBridge.resolveExpansions(descriptor: expDescriptor)
+        #expect(unverified.isEmpty)
+        let blank = ChatPresentationBridge.resolveExpansions(
+            descriptor: HanlinExpansionDescriptor(supportedModes: [.sheet], expandedHandler: "  "),
+            canResolveHandler: { _ in true }
+        )
+        #expect(blank.isEmpty)
+
         // 3. When expandedHandler resolves, expansion is included with expandedHandler
         let accepted = ChatPresentationBridge.resolveExpansions(
             descriptor: expDescriptor,
