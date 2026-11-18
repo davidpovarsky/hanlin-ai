@@ -36,6 +36,12 @@ public enum SplitAppStorageLayout {
                                components: ["HanlinSplit", "v1"])
     }
 
+    public static func productTransferRoot(appGroupContainer: URL?) throws -> URL {
+        guard let appGroupContainer else { throw LayoutError.appGroupUnavailable }
+        return try checkedRoot(container: appGroupContainer.resolvingSymlinksInPath().standardizedFileURL,
+                               components: ["HanlinSplit", "v1", "ProductTransfer"])
+    }
+
     private static func checkedRoot(container: URL, components: [String]) throws -> URL {
         var candidate = container
         // Check every fixed ancestor before the existing store canonicalizes its parent.

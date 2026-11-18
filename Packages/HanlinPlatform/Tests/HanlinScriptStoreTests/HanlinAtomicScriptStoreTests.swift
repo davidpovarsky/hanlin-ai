@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import HanlinPlatformContracts
+import HanlinMiniAppCore
 import HanlinScriptContracts
 import HanlinScriptStore
 import Testing
@@ -261,6 +262,257 @@ struct HanlinAtomicScriptStoreTests {
         #expect(unified.nativeCatalog.revision.rawValue == 9)
         #expect(unified.scriptPackages.map(\.record.installedPackageID) == [fixture.installedID])
         #expect(unified.revision == 9)
+    }
+}
+
+@Suite("Production MiniApps transfer using the original package and data stores")
+struct HanlinProductTransferTests {
+    @Test("Real identities, all generations, grants, disabled state and private bytes survive import and rollback")
+    func actualStoresRoundTrip() async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let sourceBefore = try fixture.bytes(fixture.base.storeRoot)
+        let sourceDataBefore = try fixture.bytes(fixture.sourceData)
+        let destinationBefore = try fixture.bytes(fixture.targetRoot)
+        let destinationDataBefore = try fixture.bytes(fixture.targetData)
+        let originalPackages = try await fixture.source.snapshots()
+        let receipt = try await fixture.export()
+        #expect(receipt.packageCount == 1)
+        #expect(try await fixture.export() == receipt)
+        let received = try await fixture.receive(receipt)
+        #expect(received == receipt)
+        let reopened = try HanlinAtomicScriptStore(root: fixture.targetRoot)
+        #expect(try await reopened.restore() == originalPackages)
+        let storage = try HanlinMiniAppDataStore(root: fixture.targetData)
+        #expect(try await storage.read(appID: fixture.appID, area: .state, path: "saved/value.json")
+                == Data("ערך מקורי — 汉林".utf8))
+        #expect(try await storage.read(appID: fixture.otherAppID, area: .documents, path: "keep.txt")
+                == Data("Existing companion data".utf8))
+        #expect(try fixture.bytes(fixture.base.storeRoot) == sourceBefore)
+        #expect(try fixture.bytes(fixture.sourceData) == sourceDataBefore)
+        try await reopened.rollbackProductTransfer(dataRoot: fixture.targetData,
+                                                   transactionRoot: fixture.transactionRoot)
+        #expect(try fixture.bytes(fixture.targetRoot) == destinationBefore)
+        #expect(try fixture.bytes(fixture.targetData) == destinationDataBefore)
+        #expect(try fixture.bytes(fixture.base.storeRoot) == sourceBefore)
+    }
+
+    @Test("A fresh process recovers each durable two-store promotion boundary",
+          arguments: [HanlinProductTransferFaultPoint.intentPersisted, .installedBackedUp,
+                      .installedPromoted, .dataBackedUp, .dataPromoted, .committed])
+    func recoverImport(point: HanlinProductTransferFaultPoint) async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let original = try await fixture.source.snapshots()
+        let sourceBefore = try fixture.bytes(fixture.base.storeRoot)
+        let receipt = try await fixture.export()
+        await #expect(throws: InjectedFailure.self) {
+            try await fixture.target.receiveProductTransfer(from: fixture.checkpoint(receipt),
+                dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot,
+                transferFaults: TransferFault(point: point))
+        }
+        try HanlinProductTransferRecovery.recover(installedRoot: fixture.targetRoot,
+            dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot)
+        let fresh = try HanlinAtomicScriptStore(root: fixture.targetRoot)
+        #expect(try await fresh.restore() == original)
+        #expect(try await fresh.receiveProductTransfer(from: fixture.checkpoint(receipt),
+            dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot) == receipt)
+        let storage = try HanlinMiniAppDataStore(root: fixture.targetData)
+        #expect(try await storage.read(appID: fixture.appID, area: .state, path: "saved/value.json")
+                == Data("ערך מקורי — 汉林".utf8))
+        #expect(try fixture.bytes(fixture.base.storeRoot) == sourceBefore)
+    }
+
+    @Test("Rollback resumes after every journaled restore boundary",
+          arguments: [HanlinProductTransferFaultPoint.rollbackIntentPersisted, .installedRestored, .dataRestored])
+    func recoverRollback(point: HanlinProductTransferFaultPoint) async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let before = try fixture.bytes(fixture.targetRoot)
+        let dataBefore = try fixture.bytes(fixture.targetData)
+        let receipt = try await fixture.export()
+        _ = try await fixture.receive(receipt)
+        await #expect(throws: InjectedFailure.self) {
+            try await fixture.target.rollbackProductTransfer(dataRoot: fixture.targetData,
+                transactionRoot: fixture.transactionRoot, transferFaults: TransferFault(point: point))
+        }
+        try HanlinProductTransferRecovery.recover(installedRoot: fixture.targetRoot,
+            dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot)
+        #expect(try fixture.bytes(fixture.targetRoot) == before)
+        #expect(try fixture.bytes(fixture.targetData) == dataBefore)
+        let fresh = try HanlinAtomicScriptStore(root: fixture.targetRoot)
+        #expect(try await fresh.restore().isEmpty)
+    }
+
+    @Test("Retry preserves later user edits, and rollback refuses to discard them")
+    func laterEdits() async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let receipt = try await fixture.export()
+        _ = try await fixture.receive(receipt)
+        let storage = try HanlinMiniAppDataStore(root: fixture.targetData)
+        try await storage.write(Data("Later user work".utf8), appID: fixture.appID,
+                                area: .state, path: "saved/value.json")
+        let edited = try fixture.bytes(fixture.targetData)
+        _ = try await fixture.receive(receipt)
+        try HanlinProductTransferRecovery.recover(installedRoot: fixture.targetRoot,
+            dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot)
+        #expect(try fixture.bytes(fixture.targetData) == edited)
+        await #expect(throws: HanlinProductTransferError.rollbackWouldLoseChanges) {
+            try await fixture.target.rollbackProductTransfer(dataRoot: fixture.targetData,
+                transactionRoot: fixture.transactionRoot)
+        }
+        #expect(try fixture.bytes(fixture.targetData) == edited)
+    }
+
+    @Test("Conflicting package identities or data are rejected before live changes",
+          arguments: ["package", "data"])
+    func destinationConflict(kind: String) async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let receipt = try await fixture.export()
+        if kind == "package" {
+            _ = try await fixture.target.install(
+                plan: fixture.base.plan(version: "9.0.0",
+                    sourceDigest: fixture.base.first.manifest.packageContentDigest),
+                artifactDirectory: fixture.base.first.url, artifactManifest: fixture.base.first.manifest)
+        } else {
+            let storage = try HanlinMiniAppDataStore(root: fixture.targetData)
+            try await storage.write(Data("Different existing data".utf8), appID: fixture.appID,
+                                    area: .state, path: "saved/value.json")
+        }
+        let before = try fixture.bytes(fixture.targetRoot)
+        let dataBefore = try fixture.bytes(fixture.targetData)
+        await #expect(throws: HanlinProductTransferError.destinationConflict) { try await fixture.receive(receipt) }
+        #expect(try fixture.bytes(fixture.targetRoot) == before)
+        #expect(try fixture.bytes(fixture.targetData) == dataBefore)
+    }
+
+    @Test("Tampered checkpoint bytes are rejected before destination writes")
+    func tamperedCheckpoint() async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let receipt = try await fixture.export()
+        let before = try fixture.bytes(fixture.targetRoot)
+        let dataBefore = try fixture.bytes(fixture.targetData)
+        let file = fixture.checkpoint(receipt).appending(path: "MiniApps/\(fixture.appID.rawValue)/State/saved/value.json")
+        try Data("Tampered".utf8).write(to: file)
+        await #expect(throws: HanlinProductTransferError.invalidCheckpoint) { try await fixture.receive(receipt) }
+        #expect(try fixture.bytes(fixture.targetRoot) == before)
+        #expect(try fixture.bytes(fixture.targetData) == dataBefore)
+    }
+
+    @Test("A symlink in private data cannot pull other files into the transfer")
+    func sourceSymlink() async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let outside = fixture.base.root.appending(path: "outside.txt")
+        try Data("Do not transfer".utf8).write(to: outside)
+        try FileManager.default.createSymbolicLink(at: fixture.sourceData.appending(path: "linked"),
+                                                   withDestinationURL: outside)
+        await #expect(throws: HanlinProductTransferError.unsafePath) { try await fixture.export() }
+        #expect(!FileManager.default.fileExists(atPath: fixture.outbox.appending(path: "latest.json").path))
+        #expect(try Data(contentsOf: outside) == Data("Do not transfer".utf8))
+    }
+
+    @Test("A read-only destination cannot change either source store")
+    func readOnlyOutbox() async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let before = try fixture.bytes(fixture.base.storeRoot)
+        let dataBefore = try fixture.bytes(fixture.sourceData)
+        try FileManager.default.createDirectory(at: fixture.outbox, withIntermediateDirectories: true)
+        try FileManager.default.setAttributes([.posixPermissions: 0o500], ofItemAtPath: fixture.outbox.path)
+        defer { try? FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: fixture.outbox.path) }
+        await #expect(throws: (any Error).self) { try await fixture.export() }
+        #expect(try fixture.bytes(fixture.base.storeRoot) == before)
+        #expect(try fixture.bytes(fixture.sourceData) == dataBefore)
+    }
+}
+
+private struct TransferFault: HanlinProductTransferFaultInjector {
+    let point: HanlinProductTransferFaultPoint
+    func check(_ candidate: HanlinProductTransferFaultPoint) throws {
+        if candidate == point { throw InjectedFailure() }
+    }
+}
+
+private struct ProductTransferFixture {
+    let base: Fixture
+    let source: HanlinAtomicScriptStore
+    let target: HanlinAtomicScriptStore
+    let sourceData: URL
+    let targetRoot: URL
+    let targetData: URL
+    let transactionRoot: URL
+    let outbox: URL
+    let appID: HanlinAppID
+    let otherAppID: HanlinAppID
+
+    init() throws {
+        base = try Fixture()
+        source = try HanlinAtomicScriptStore(root: base.storeRoot)
+        sourceData = base.root.appending(path: "source-private-data")
+        targetRoot = base.root.appending(path: "companion-installed")
+        targetData = base.root.appending(path: "companion-private-data")
+        transactionRoot = base.root.appending(path: "recovery/current")
+        outbox = base.root.appending(path: "shared-outbox")
+        target = try HanlinAtomicScriptStore(root: targetRoot)
+        appID = try #require(HanlinAppID(rawValue: "fixture.transfer"))
+        otherAppID = try #require(HanlinAppID(rawValue: "fixture.existing"))
+    }
+
+    func seed() async throws {
+        _ = try await source.install(plan: base.plan(version: "1.0.0",
+            sourceDigest: base.first.manifest.packageContentDigest),
+            artifactDirectory: base.first.url, artifactManifest: base.first.manifest)
+        _ = try await source.update(plan: base.plan(version: "2.0.0",
+            sourceDigest: base.second.manifest.packageContentDigest),
+            artifactDirectory: base.second.url, artifactManifest: base.second.manifest)
+        try await source.setCapabilityGranted(true, capability: HanlinCapabilityID(validating: "network"),
+                                              for: base.installedID)
+        try await source.setEnabled(false, for: base.installedID)
+        let sourceStore = try HanlinMiniAppDataStore(root: sourceData)
+        try await sourceStore.write(Data("ערך מקורי — 汉林".utf8), appID: appID,
+                                    area: .state, path: "saved/value.json")
+        try await sourceStore.write(Data([0, 255, 1, 12]), appID: appID,
+                                    area: .documents, path: "binary.dat")
+        let targetStore = try HanlinMiniAppDataStore(root: targetData)
+        try await targetStore.write(Data("Existing companion data".utf8), appID: otherAppID,
+                                    area: .documents, path: "keep.txt")
+    }
+
+    func export() async throws -> HanlinProductTransferReceipt {
+        try await source.createProductTransfer(dataRoot: sourceData, outbox: outbox)
+    }
+
+    func checkpoint(_ receipt: HanlinProductTransferReceipt) -> URL {
+        outbox.appending(path: receipt.id.uuidString.lowercased())
+    }
+
+    func receive(_ receipt: HanlinProductTransferReceipt) async throws -> HanlinProductTransferReceipt {
+        try await target.receiveProductTransfer(from: checkpoint(receipt), dataRoot: targetData,
+                                                transactionRoot: transactionRoot)
+    }
+
+    func bytes(_ directory: URL) throws -> [String: Data] {
+        let paths = try #require(FileManager.default.enumerator(at: directory,
+            includingPropertiesForKeys: [.isRegularFileKey]))
+        var values: [String: Data] = [:]
+        for case let file as URL in paths {
+            if try file.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true {
+                values[String(file.path.dropFirst(directory.path.count + 1))] = try Data(contentsOf: file)
+            }
+        }
+        return values
     }
 }
 

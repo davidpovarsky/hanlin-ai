@@ -12,7 +12,11 @@ private struct HanlinMiniAppsWindow: View {
     @State private var foreground = MiniAppsForegroundBridge()
     @State private var incomingURL: URL?
     @State private var showsImport = false
-    @State private var bootstrap = HanlinMiniAppsBootstrap {
+    @State private var bootstrap = HanlinMiniAppsBootstrap(preparation: Self.prepareStorage)
+
+    @MainActor
+    private static func prepareStorage() async throws {
+        try HanlinScriptingPlatform.prepareProductTransferRecovery()
         try await AppRuntimeCore.shared.prepareStorage()
         HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
     }

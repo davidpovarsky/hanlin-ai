@@ -79,7 +79,7 @@ private struct HanlinSafariController: UIViewControllerRepresentable {
     func updateUIViewController(_ controller: SFSafariViewController, context: Context) {}
 
     @MainActor
-    final class Coordinator: NSObject, SFSafariViewControllerDelegate {
+    final class Coordinator: NSObject, @MainActor SFSafariViewControllerDelegate {
         private let completion: (Result<HanlinScriptingSystemUIResult, any Error>) -> Void
         private var completed = false
 

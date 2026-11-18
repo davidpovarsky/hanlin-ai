@@ -12,6 +12,7 @@ struct MiniAppsLibrary: View {
     @State private var catalogError: String?
     @State private var error: String?
     @State private var presentation: PresentedContent?
+    @State private var showsTransfer = false
 
     private struct PresentedContent: Identifiable {
         let id = UUID()
@@ -50,6 +51,10 @@ struct MiniAppsLibrary: View {
                     catch { self.error = error.localizedDescription }
                 }
                 .accessibilityIdentifier("hanlin-miniapps-management")
+                Button("Transfer from Hanlin", systemImage: "arrow.down.doc") {
+                    showsTransfer = true
+                }
+                .accessibilityIdentifier("hanlin-miniapps-transfer")
             }
             .overlay {
                 if loading { ProgressView() }
@@ -90,6 +95,17 @@ struct MiniAppsLibrary: View {
             }
         }
         .task { await reload() }
+        .sheet(isPresented: $showsTransfer, onDismiss: { Task { await reload() } }) {
+            NavigationStack {
+                HanlinMiniAppTransferView(mode: .receive)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") { showsTransfer = false }
+                                .disabled(HanlinScriptingPlatform.shared.isTransferringProductData)
+                        }
+                    }
+            }
+        }
         .fullScreenCover(item: $presentation, onDismiss: {
             Task { await reload() }
         }) { destination in

@@ -3,6 +3,7 @@ import HanlinMiniAppCore
 import HanlinParityMiniApp
 import HanlinPlatformContracts
 import HanlinScriptStore
+import HanlinProductSplit
 import Observation
 import SwiftUI
 
@@ -163,6 +164,9 @@ final class HanlinMiniAppHost {
     func isHidden(_ appID: HanlinAppID) -> Bool { hiddenAppIDs.contains(appID) }
 
     func swiftDestination(for item: HanlinMiniAppCatalogItem) throws -> SwiftDestination {
+        guard !HanlinScriptingPlatform.shared.isTransferringProductData else {
+            throw HanlinProductTransferError.busy
+        }
         let plan = try HanlinMiniAppLaunchPlan(descriptor: item.descriptor)
         guard plan.engine == .swift else {
             throw HanlinMiniAppCatalogError.unsupportedImplementation(item.id)
@@ -246,5 +250,172 @@ final class HanlinMiniAppHost {
               (200...299).contains(http.statusCode),
               data.count <= 1_048_576 else { throw URLError(.badServerResponse) }
         return "HTTPS \(http.statusCode), \(data.count) bytes"
+    }
+}
+
+@MainActor
+struct HanlinMiniAppTransferView: View {
+    enum Mode: Equatable { case send, receive }
+    let mode: Mode
+    @Environment(\.openURL) private var openURL
+    @State private var receipt: HanlinProductTransferReceipt?
+    @State private var committed: HanlinProductTransferReceipt?
+    @State private var working = false
+    @State private var status: String?
+    @State private var failure: String?
+    @State private var confirmsRollback = false
+
+    var body: some View {
+        Form {
+            Section {
+                if mode == .send {
+                    Text("Copy your installed mini apps and their saved data to Hanlin MiniApps.")
+                    Text("Your original mini apps and AI conversations remain available in Hanlin.")
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text("Prepare a copy in Hanlin, then import it here.")
+                    Text("Existing data is kept. Conflicting data must be resolved before a copy can be imported.")
+                        .foregroundStyle(.secondary)
+                }
+            }
+            if let receipt {
+                Section("Transfer copy") {
+                    LabeledContent("Installed packages", value: receipt.packageCount.formatted())
+                    LabeledContent("Size", value: ByteCountFormatter.string(fromByteCount: receipt.byteCount,
+                                                                            countStyle: .file))
+                }
+            }
+            Section {
+                if mode == .send {
+                    Button("Prepare copy") { Task { await send() } }
+                        .accessibilityIdentifier("hanlin-transfer-prepare")
+                    if receipt != nil {
+                        Button("Open Hanlin MiniApps") {
+                            openURL(SplitCompanionCatalogRoute.url) { accepted in
+                                if !accepted {
+                                    failure = String(localized: "Install Hanlin MiniApps to receive this copy.")
+                                }
+                            }
+                        }
+                        .accessibilityIdentifier("hanlin-transfer-open-companion")
+                    }
+                } else {
+                    Button("Import copy") { Task { await receive() } }
+                        .disabled(receipt == nil)
+                        .accessibilityIdentifier("hanlin-transfer-import")
+                    Button("Refresh") { Task { await load() } }
+                    if committed != nil {
+                        Button("Restore data from before the transfer", role: .destructive) {
+                            confirmsRollback = true
+                        }
+                        .accessibilityIdentifier("hanlin-transfer-rollback")
+                    }
+                }
+                if working { ProgressView("Transferring mini apps…") }
+                if let status {
+                    Text(status).accessibilityIdentifier("hanlin-transfer-status")
+                }
+                if let failure {
+                    Text(failure).foregroundStyle(.red)
+                        .accessibilityIdentifier("hanlin-transfer-error")
+                }
+            }
+            .disabled(working)
+        }
+        .navigationTitle(mode == .send ? Text("Transfer mini apps") : Text("Transfer from Hanlin"))
+        .navigationBarBackButtonHidden(working)
+        .interactiveDismissDisabled(working)
+        .task { if mode == .receive { await load() } }
+        .confirmationDialog("Restore the data that was present before this transfer?",
+                            isPresented: $confirmsRollback, titleVisibility: .visible) {
+            Button("Restore previous data", role: .destructive) { Task { await rollback() } }
+        } message: {
+            Text("Restoration is available only while the imported data has not been changed.")
+        }
+    }
+
+    private func send() async {
+        working = true
+        failure = nil
+        status = nil
+        defer { working = false }
+        do {
+            receipt = try await HanlinScriptingPlatform.shared.createProductTransfer()
+            status = String(localized: "Copy ready. Open Hanlin MiniApps and choose Transfer from Hanlin.")
+        } catch { failure = message(error) }
+    }
+
+    private func load() async {
+        working = true
+        failure = nil
+        defer { working = false }
+        do {
+            let outbox = try HanlinScriptingPlatform.productTransferOutbox()
+            let transactions = try HanlinScriptingPlatform.productTransferTransactionRoot()
+            let result = try await Task.detached(priority: .userInitiated) {
+                let latest = outbox.appending(path: "latest.json")
+                let pending: HanlinProductTransferReceipt?
+                if FileManager.default.fileExists(atPath: latest.path) {
+                    let index = try JSONDecoder().decode(HanlinProductTransferReceipt.self,
+                        from: Data(contentsOf: latest))
+                    let verified = try HanlinProductTransferRecovery.checkpointReceipt(
+                        at: outbox.appending(path: index.id.uuidString.lowercased()))
+                    guard index == verified else { throw HanlinProductTransferError.invalidCheckpoint }
+                    pending = verified
+                } else {
+                    pending = nil
+                }
+                return (pending, try HanlinProductTransferRecovery.committedReceipt(at: transactions))
+            }.value
+            receipt = result.0
+            committed = result.1
+        } catch {
+            receipt = nil
+            failure = message(error)
+        }
+    }
+
+    private func receive() async {
+        guard let receipt else { return }
+        working = true
+        failure = nil
+        status = nil
+        defer { working = false }
+        do {
+            try await HanlinScriptingPlatform.shared.receiveProductTransfer(receipt)
+            committed = receipt
+            status = String(localized: "Transfer complete. Your mini apps are ready.")
+        } catch { failure = message(error) }
+    }
+
+    private func rollback() async {
+        working = true
+        failure = nil
+        status = nil
+        defer { working = false }
+        do {
+            try await HanlinScriptingPlatform.shared.rollbackProductTransfer()
+            committed = nil
+            status = String(localized: "Previous data restored. The original copy in Hanlin is unchanged.")
+        } catch { failure = message(error) }
+    }
+
+    private func message(_ error: Error) -> String {
+        switch error {
+        case HanlinProductTransferError.restartRequired:
+            String(localized: "Close and reopen this app, then transfer before opening a mini app or running an action.")
+        case HanlinProductTransferError.busy:
+            String(localized: "Close open mini apps and wait for active actions or imports to finish, then try again.")
+        case HanlinProductTransferError.destinationConflict:
+            String(localized: "Some existing mini app data differs from this copy. Your existing data has been kept.")
+        case HanlinProductTransferError.rollbackWouldLoseChanges:
+            String(localized: "Your mini app data has changed since the transfer. Restoration stopped to preserve your work.")
+        case HanlinProductTransferError.anotherTransferPending:
+            String(localized: "A transfer has already been recorded. Its data and recovery copy have been kept.")
+        case SplitAppStorageLayout.LayoutError.appGroupUnavailable:
+            String(localized: "Shared app storage is unavailable. Install both Hanlin apps from the same release and try again.")
+        default:
+            String(localized: "The transfer could not be completed. Your original data has been kept. Try again or prepare a new copy.")
+        }
     }
 }

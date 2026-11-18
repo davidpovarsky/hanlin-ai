@@ -135,7 +135,7 @@ let package = Package(
         ),
         .testTarget(
             name: "HanlinScriptStoreTests",
-            dependencies: ["HanlinScriptStore"]
+            dependencies: ["HanlinScriptStore", "HanlinMiniAppCore"]
         ),
         .target(
             name: "HanlinScriptRuntime",

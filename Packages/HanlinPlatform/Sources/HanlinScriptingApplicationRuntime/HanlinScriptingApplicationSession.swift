@@ -88,6 +88,11 @@ public struct HanlinScriptingAppIntentRegistration: Equatable, Sendable {
 
 @MainActor
 public final class HanlinScriptingApplicationSession {
+    private static var pendingDisposals = 0
+    /// A stopped session may still own a native task or an open SQLite handle.
+    /// A product checkpoint waits until those real owners have drained.
+    public static var hasPendingDisposals: Bool { pendingDisposals > 0 }
+
     public let model: HanlinScriptUIModel
     public private(set) var widgetPresentation: HanlinScriptingWidgetPresentation?
     public private(set) var appIntentRegistrations: [HanlinScriptingAppIntentRegistration] = []
@@ -330,8 +335,16 @@ public final class HanlinScriptingApplicationSession {
         sqliteStore.requestStop()
         sqliteOwners.removeAll()
         let closingSQLiteStore = sqliteStore
-        // A running C query must not block MainActor during disposal.
-        Task.detached { closingSQLiteStore.closeAll() }
+        // A running C query must not block MainActor during disposal. Retain
+        // cancelled task owners until they actually finish, so a checkpoint
+        // cannot mistake cancellation for completed filesystem/SQLite cleanup.
+        let closingNativeTasks = Array(nativeTasks.values)
+        Self.pendingDisposals += 1
+        Task.detached {
+            closingSQLiteStore.closeAll()
+            for task in closingNativeTasks { await task.value }
+            await MainActor.run { Self.pendingDisposals -= 1 }
+        }
         context.evaluateScript("globalThis.__hanlinDispose?.();")
         nativeTasks.values.forEach { $0.cancel() }
         nativeTasks.removeAll(keepingCapacity: false)

@@ -173,29 +173,35 @@ public actor HanlinAtomicScriptStore {
         self.faults = faults
         self.now = now
         registry = .init()
-        try Self.prepare(root: self.root, fileManager: fileManager)
-        registry = try Self.loadRegistry(root: self.root, fileManager: fileManager)
+        registry = try HanlinStoreFileAccess.withExclusiveAccess {
+            try Self.prepare(root: root.standardizedFileURL, fileManager: fileManager)
+            return try Self.loadRegistry(root: root.standardizedFileURL, fileManager: fileManager)
+        }
     }
 
     @discardableResult
     public func restore() throws -> [HanlinStoredPackageSnapshot] {
-        try recoverTransactions()
-        registry = try Self.loadRegistry(root: root, fileManager: fileManager)
-        try discardUnreferencedStaging()
-        return try snapshots()
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            try recoverTransactions()
+            registry = try Self.loadRegistry(root: root, fileManager: fileManager)
+            try discardUnreferencedStaging()
+            return try snapshots()
+        }
     }
 
     public func snapshots() throws -> [HanlinStoredPackageSnapshot] {
-        try registry.packages.values.map { entry in
-            .init(
-                record: entry.record,
-                entrypoints: entry.entrypoints,
-                enabled: entry.enabled,
-                availableGenerations: try generations(for: entry.record.installedPackageID),
-                grantedCapabilities: entry.grantedCapabilities ?? [],
-                manifest: entry.manifest
-            )
-        }.sorted { $0.record.installedPackageID.rawValue < $1.record.installedPackageID.rawValue }
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            try registry.packages.values.map { entry in
+                .init(
+                    record: entry.record,
+                    entrypoints: entry.entrypoints,
+                    enabled: entry.enabled,
+                    availableGenerations: try generations(for: entry.record.installedPackageID),
+                    grantedCapabilities: entry.grantedCapabilities ?? [],
+                    manifest: entry.manifest
+                )
+            }.sorted { $0.record.installedPackageID.rawValue < $1.record.installedPackageID.rawValue }
+        }
     }
 
     /// Returns the current persisted capability grants for one installed package.
@@ -205,21 +211,25 @@ public actor HanlinAtomicScriptStore {
     public func grantedCapabilities(
         for id: HanlinInstalledPackageID
     ) throws -> Set<HanlinCapabilityID> {
-        guard let entry = registry.packages[id.rawValue] else {
-            throw HanlinAtomicScriptStoreError.notInstalled(id)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            guard let entry = registry.packages[id.rawValue] else {
+                throw HanlinAtomicScriptStoreError.notInstalled(id)
+            }
+            return Set(entry.grantedCapabilities ?? [])
         }
-        return Set(entry.grantedCapabilities ?? [])
     }
 
     public func unifiedCatalog(native: HanlinCatalogSnapshot) -> HanlinUnifiedPackageCatalogSnapshot {
-        .init(
-            revision: max(registry.revision, native.revision.rawValue),
-            generatedAt: now(),
-            nativeCatalog: native,
-            scriptPackages: registry.packages.values.map {
-                .init(record: $0.record, entrypoints: $0.entrypoints, enabled: $0.enabled, manifest: $0.manifest)
-            }.sorted { $0.record.installedPackageID.rawValue < $1.record.installedPackageID.rawValue }
-        )
+        return HanlinStoreFileAccess.withExclusiveAccess {
+            .init(
+                revision: max(registry.revision, native.revision.rawValue),
+                generatedAt: now(),
+                nativeCatalog: native,
+                scriptPackages: registry.packages.values.map {
+                    .init(record: $0.record, entrypoints: $0.entrypoints, enabled: $0.enabled, manifest: $0.manifest)
+                }.sorted { $0.record.installedPackageID.rawValue < $1.record.installedPackageID.rawValue }
+            )
+        }
     }
 
     @discardableResult
@@ -228,16 +238,18 @@ public actor HanlinAtomicScriptStore {
         artifactDirectory: URL,
         artifactManifest: HanlinPackageArtifactManifest
     ) throws -> HanlinInstalledPackageRecord {
-        guard registry.packages[plan.installedPackageID.rawValue] == nil else {
-            throw HanlinAtomicScriptStoreError.alreadyInstalled(plan.installedPackageID)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            guard registry.packages[plan.installedPackageID.rawValue] == nil else {
+                throw HanlinAtomicScriptStoreError.alreadyInstalled(plan.installedPackageID)
+            }
+            return try promote(
+                kind: .install,
+                plan: plan,
+                artifactDirectory: artifactDirectory,
+                artifactManifest: artifactManifest,
+                installedAt: now()
+            )
         }
-        return try promote(
-            kind: .install,
-            plan: plan,
-            artifactDirectory: artifactDirectory,
-            artifactManifest: artifactManifest,
-            installedAt: now()
-        )
     }
 
     @discardableResult
@@ -246,53 +258,59 @@ public actor HanlinAtomicScriptStore {
         artifactDirectory: URL,
         artifactManifest: HanlinPackageArtifactManifest
     ) throws -> HanlinInstalledPackageRecord {
-        guard let current = registry.packages[plan.installedPackageID.rawValue] else {
-            throw HanlinAtomicScriptStoreError.notInstalled(plan.installedPackageID)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            guard let current = registry.packages[plan.installedPackageID.rawValue] else {
+                throw HanlinAtomicScriptStoreError.notInstalled(plan.installedPackageID)
+            }
+            return try promote(
+                kind: .update,
+                plan: plan,
+                artifactDirectory: artifactDirectory,
+                artifactManifest: artifactManifest,
+                installedAt: current.record.installedAt
+            )
         }
-        return try promote(
-            kind: .update,
-            plan: plan,
-            artifactDirectory: artifactDirectory,
-            artifactManifest: artifactManifest,
-            installedAt: current.record.installedAt
-        )
     }
 
     @discardableResult
     public func rollback(_ id: HanlinInstalledPackageID, to generation: UInt64) throws -> HanlinInstalledPackageRecord {
-        guard var entry = registry.packages[id.rawValue] else {
-            throw HanlinAtomicScriptStoreError.notInstalled(id)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            guard var entry = registry.packages[id.rawValue] else {
+                throw HanlinAtomicScriptStoreError.notInstalled(id)
+            }
+            _ = try loadAndVerifyManifest(at: generationURL(id, generation: generation))
+            let metadata = try decoder.decode(
+                GenerationMetadata.self,
+                from: Data(contentsOf: generationURL(id, generation: generation).appending(path: "generation.json"))
+            )
+            let timestamp = now()
+            entry.record = .init(
+                installedPackageID: entry.record.installedPackageID,
+                packageID: metadata.packageID,
+                version: metadata.version,
+                sourceDigest: metadata.sourceDigest,
+                artifactDigest: metadata.artifactDigest,
+                activeGeneration: generation,
+                installedAt: entry.record.installedAt,
+                updatedAt: timestamp
+            )
+            registry.packages[id.rawValue] = entry
+            registry.revision &+= 1
+            try persistRegistry()
+            return entry.record
         }
-        _ = try loadAndVerifyManifest(at: generationURL(id, generation: generation))
-        let metadata = try decoder.decode(
-            GenerationMetadata.self,
-            from: Data(contentsOf: generationURL(id, generation: generation).appending(path: "generation.json"))
-        )
-        let timestamp = now()
-        entry.record = .init(
-            installedPackageID: entry.record.installedPackageID,
-            packageID: metadata.packageID,
-            version: metadata.version,
-            sourceDigest: metadata.sourceDigest,
-            artifactDigest: metadata.artifactDigest,
-            activeGeneration: generation,
-            installedAt: entry.record.installedAt,
-            updatedAt: timestamp
-        )
-        registry.packages[id.rawValue] = entry
-        registry.revision &+= 1
-        try persistRegistry()
-        return entry.record
     }
 
     public func setEnabled(_ enabled: Bool, for id: HanlinInstalledPackageID) throws {
-        guard var entry = registry.packages[id.rawValue] else {
-            throw HanlinAtomicScriptStoreError.notInstalled(id)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            guard var entry = registry.packages[id.rawValue] else {
+                throw HanlinAtomicScriptStoreError.notInstalled(id)
+            }
+            entry.enabled = enabled
+            registry.packages[id.rawValue] = entry
+            registry.revision &+= 1
+            try persistRegistry()
         }
-        entry.enabled = enabled
-        registry.packages[id.rawValue] = entry
-        registry.revision &+= 1
-        try persistRegistry()
     }
 
     public func setCapabilityGranted(
@@ -300,57 +318,208 @@ public actor HanlinAtomicScriptStore {
         capability: HanlinCapabilityID,
         for id: HanlinInstalledPackageID
     ) throws {
-        guard var entry = registry.packages[id.rawValue] else {
-            throw HanlinAtomicScriptStoreError.notInstalled(id)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            guard var entry = registry.packages[id.rawValue] else {
+                throw HanlinAtomicScriptStoreError.notInstalled(id)
+            }
+            var grants = Set(entry.grantedCapabilities ?? [])
+            if granted { grants.insert(capability) } else { grants.remove(capability) }
+            entry.grantedCapabilities = grants.sorted { $0.rawValue < $1.rawValue }
+            registry.packages[id.rawValue] = entry
+            registry.revision &+= 1
+            try persistRegistry()
         }
-        var grants = Set(entry.grantedCapabilities ?? [])
-        if granted { grants.insert(capability) } else { grants.remove(capability) }
-        entry.grantedCapabilities = grants.sorted { $0.rawValue < $1.rawValue }
-        registry.packages[id.rawValue] = entry
-        registry.revision &+= 1
-        try persistRegistry()
     }
 
     public func uninstall(_ id: HanlinInstalledPackageID) throws {
-        guard registry.packages[id.rawValue] != nil else {
-            throw HanlinAtomicScriptStoreError.notInstalled(id)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            guard registry.packages[id.rawValue] != nil else {
+                throw HanlinAtomicScriptStoreError.notInstalled(id)
+            }
+            let transactionID = UUID()
+            var journal = Journal(
+                schemaVersion: 1,
+                transactionID: transactionID,
+                kind: .uninstall,
+                installedPackageID: id.rawValue,
+                generation: nil,
+                phase: .preparing
+            )
+            try persist(journal)
+            try faults.check(.journalPersisted)
+            let installed = packageURL(id)
+            let tombstone = tombstoneURL(transactionID)
+            if fileManager.fileExists(atPath: installed.path(percentEncoded: false)) {
+                try fileManager.moveItem(at: installed, to: tombstone)
+            }
+            journal.phase = .uninstallMoved
+            try persist(journal)
+            try faults.check(.uninstallMoved)
+            registry.packages.removeValue(forKey: id.rawValue)
+            registry.revision &+= 1
+            try persistRegistry()
+            journal.phase = .uninstallRegistryCommitted
+            try persist(journal)
+            try faults.check(.uninstallRegistryCommitted)
+            try? fileManager.removeItem(at: tombstone)
+            try? fileManager.removeItem(at: journalURL(transactionID))
         }
-        let transactionID = UUID()
-        var journal = Journal(
-            schemaVersion: 1,
-            transactionID: transactionID,
-            kind: .uninstall,
-            installedPackageID: id.rawValue,
-            generation: nil,
-            phase: .preparing
-        )
-        try persist(journal)
-        try faults.check(.journalPersisted)
-        let installed = packageURL(id)
-        let tombstone = tombstoneURL(transactionID)
-        if fileManager.fileExists(atPath: installed.path(percentEncoded: false)) {
-            try fileManager.moveItem(at: installed, to: tombstone)
-        }
-        journal.phase = .uninstallMoved
-        try persist(journal)
-        try faults.check(.uninstallMoved)
-        registry.packages.removeValue(forKey: id.rawValue)
-        registry.revision &+= 1
-        try persistRegistry()
-        journal.phase = .uninstallRegistryCommitted
-        try persist(journal)
-        try faults.check(.uninstallRegistryCommitted)
-        try? fileManager.removeItem(at: tombstone)
-        try? fileManager.removeItem(at: journalURL(transactionID))
     }
 
     public func activeArtifactURL(for id: HanlinInstalledPackageID) throws -> URL {
-        guard let entry = registry.packages[id.rawValue] else {
-            throw HanlinAtomicScriptStoreError.notInstalled(id)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            guard let entry = registry.packages[id.rawValue] else {
+                throw HanlinAtomicScriptStoreError.notInstalled(id)
+            }
+            let url = generationURL(id, generation: entry.record.activeGeneration)
+            _ = try loadAndVerifyManifest(at: url)
+            return url
         }
-        let url = generationURL(id, generation: entry.record.activeGeneration)
-        _ = try loadAndVerifyManifest(at: url)
-        return url
+    }
+
+    /// Call only after the application host has stopped admission of new engine
+    /// work and verified that no native session or invocation is active.
+    /// The source remains usable after this immutable copy is published.
+    public func createProductTransfer(dataRoot: URL, outbox: URL) throws -> HanlinProductTransferReceipt {
+        try HanlinStoreFileAccess.withExclusiveAccess {
+            _ = try restore()
+            try verifyTransferRegistry(registry, at: root)
+            return try HanlinTransferCheckpoint.publish(installedRoot: root, dataRoot: dataRoot,
+                outbox: outbox, packageCount: registry.packages.count).receipt
+        }
+    }
+
+    /// Imports exact package identities, all retained generations, grants and
+    /// private MiniApp files. Existing nonidentical entries are never replaced.
+    /// The application must run recovery before initializing either store.
+    public func receiveProductTransfer(from checkpointRoot: URL, dataRoot: URL, transactionRoot: URL,
+        transferFaults: any HanlinProductTransferFaultInjector = HanlinNoProductTransferFaults()
+    ) throws -> HanlinProductTransferReceipt {
+        try HanlinStoreFileAccess.withExclusiveAccess {
+            try HanlinProductTransferRecovery.distinct([root, dataRoot, transactionRoot, checkpointRoot])
+            let checkpoint = try HanlinTransferCheckpoint.read(checkpointRoot)
+            if let journal = try HanlinProductTransferRecovery.load(transactionRoot) {
+                guard journal.checkpoint == checkpoint else {
+                    throw HanlinProductTransferError.anotherTransferPending
+                }
+                guard journal.state != .rolledBack else {
+                    throw HanlinProductTransferError.anotherTransferPending
+                }
+                try HanlinProductTransferRecovery.recover(installedRoot: root, dataRoot: dataRoot,
+                    transactionRoot: transactionRoot, faults: transferFaults)
+                registry = try Self.loadRegistry(root: root, fileManager: fileManager)
+                return checkpoint.receipt
+            }
+            _ = try restore()
+            let sourceRoot = checkpointRoot.appending(path: "Installed")
+            let source = try decoder.decode(Registry.self,
+                from: Data(contentsOf: sourceRoot.appending(path: "registry/catalog.json")))
+            try verifyTransferRegistry(source, at: sourceRoot)
+            try verifyTransferRegistry(registry, at: root)
+            guard source.packages.count == checkpoint.receipt.packageCount else {
+                throw HanlinProductTransferError.invalidCheckpoint
+            }
+            var merged = registry
+            for (key, entry) in source.packages {
+                if let existing = merged.packages[key] {
+                    guard try encoder.encode(existing) == encoder.encode(entry) else {
+                        throw HanlinProductTransferError.destinationConflict
+                    }
+                } else {
+                    merged.packages[key] = entry
+                }
+            }
+            let revision = max(source.revision, registry.revision)
+            guard revision < UInt64.max else { throw HanlinProductTransferError.invalidCheckpoint }
+            merged.revision = revision + 1
+            let beforeInstalled = try HanlinTransferTree.capture(root)
+            let beforeData = try HanlinTransferTree.capture(dataRoot)
+            let catalogs: Set<String> = ["registry/catalog.json", "registry/catalog.backup.json"]
+            try HanlinTransferTree.validateMerge(beforeInstalled, checkpoint.installed, excluding: catalogs)
+            try HanlinTransferTree.validateMerge(beforeData, checkpoint.data)
+
+            // An incomplete preparation is not the active journal. It cannot
+            // change live data or prevent a later retry with another staging ID.
+            let preparing = transactionRoot.deletingLastPathComponent()
+                .appending(path: ".preparing-" + UUID().uuidString.lowercased())
+            let stagedInstalled = preparing.appending(path: "new-installed")
+            let stagedData = preparing.appending(path: "new-data")
+            try beforeInstalled.copy(from: root, to: stagedInstalled, excluding: catalogs)
+            try checkpoint.installed.copy(from: sourceRoot, to: stagedInstalled, excluding: catalogs)
+            let catalogData = try encoder.encode(merged)
+            for path in catalogs {
+                try catalogData.write(to: HanlinTransferTree.child(stagedInstalled, path), options: .atomic)
+            }
+            try beforeData.copy(from: dataRoot, to: stagedData)
+            try checkpoint.data.copy(from: checkpointRoot.appending(path: "MiniApps"), to: stagedData)
+            try verifyTransferRegistry(merged, at: stagedInstalled)
+            guard try HanlinTransferTree.capture(root) == beforeInstalled,
+                  try HanlinTransferTree.capture(dataRoot) == beforeData,
+                  try HanlinTransferCheckpoint.read(checkpointRoot) == checkpoint else {
+                throw HanlinProductTransferError.destinationConflict
+            }
+            let journal = HanlinProductTransferRecovery.Journal(version: 1, checkpoint: checkpoint,
+                beforeInstalled: beforeInstalled, afterInstalled: try HanlinTransferTree.capture(stagedInstalled),
+                beforeData: beforeData, afterData: try HanlinTransferTree.capture(stagedData),
+                state: .committing)
+            try HanlinProductTransferRecovery.persist(journal, at: preparing)
+            try fileManager.moveItem(at: preparing, to: transactionRoot)
+            try transferFaults.check(.intentPersisted)
+            try HanlinProductTransferRecovery.recover(installedRoot: root, dataRoot: dataRoot,
+                transactionRoot: transactionRoot, faults: transferFaults)
+            registry = try Self.loadRegistry(root: root, fileManager: fileManager)
+            return checkpoint.receipt
+        }
+    }
+
+    public func rollbackProductTransfer(dataRoot: URL, transactionRoot: URL,
+        transferFaults: any HanlinProductTransferFaultInjector = HanlinNoProductTransferFaults()) throws {
+        try HanlinStoreFileAccess.withExclusiveAccess {
+            try HanlinProductTransferRecovery.rollback(installedRoot: root, dataRoot: dataRoot,
+                transactionRoot: transactionRoot, faults: transferFaults)
+            registry = try Self.loadRegistry(root: root, fileManager: fileManager)
+        }
+    }
+
+    private func verifyTransferRegistry(_ value: Registry, at directory: URL) throws {
+        guard value.schemaVersion == 1 else { throw HanlinAtomicScriptStoreError.unsupportedRegistryVersion(value.schemaVersion) }
+        // A complete inventory rejects symlinks, including unreferenced files,
+        // before any path in a decoded registry or manifest is read.
+        let tree = try HanlinTransferTree.capture(directory)
+        guard tree.exists else { throw HanlinProductTransferError.invalidCheckpoint }
+        for (key, entry) in value.packages {
+            let id = try HanlinInstalledPackageID(validating: key)
+            _ = try HanlinPackageID(validating: entry.record.packageID.rawValue)
+            guard entry.record.installedPackageID == id, entry.record.activeGeneration > 0 else {
+                throw HanlinProductTransferError.invalidCheckpoint
+            }
+            let generationsRoot = directory.appending(path: "packages/\(key)/generations")
+            let directories = try fileManager.contentsOfDirectory(at: generationsRoot, includingPropertiesForKeys: nil)
+            var activeFound = false
+            for generation in directories {
+                guard let number = UInt64(generation.lastPathComponent), number > 0,
+                      String(number) == generation.lastPathComponent else {
+                    throw HanlinProductTransferError.invalidCheckpoint
+                }
+                let artifact = try loadAndVerifyManifest(at: generation)
+                let metadata = try decoder.decode(GenerationMetadata.self,
+                    from: Data(contentsOf: generation.appending(path: "generation.json")))
+                guard metadata.packageID == entry.record.packageID,
+                      metadata.sourceDigest == artifact.packageContentDigest,
+                      metadata.artifactDigest == artifact.cacheFingerprint else {
+                    throw HanlinProductTransferError.invalidCheckpoint
+                }
+                if number == entry.record.activeGeneration {
+                    guard metadata.version == entry.record.version,
+                          metadata.sourceDigest == entry.record.sourceDigest,
+                          metadata.artifactDigest == entry.record.artifactDigest else {
+                        throw HanlinProductTransferError.invalidCheckpoint
+                    }
+                    activeFound = true
+                }
+            }
+            guard activeFound else { throw HanlinProductTransferError.invalidCheckpoint }
+        }
     }
 
     private func promote(

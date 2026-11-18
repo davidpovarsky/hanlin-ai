@@ -87,6 +87,11 @@ final class HanlinScriptingPlatform {
     private var nativeScriptSession: HanlinNativeScriptSession?
     private var nativeScriptHostServices: NativeScriptHostServicesAdapter?
     private var expoSession: HanlinExpoSession?
+    private(set) var isTransferringProductData = false
+    private var activeStoreOperations = 0
+    // Native engine teardown can finish on another thread.
+    // A fresh process gives transfer an observable quiescence boundary.
+    private var needsFreshProcessForTransfer = false
     private var isLaunching = false
     private var isExecutingHeadlessNativeScriptAction = false
     private var isProcessingResumeCommands = false
@@ -154,6 +159,9 @@ final class HanlinScriptingPlatform {
             let staging = platformRoot.appending(path: "ImportStaging", directoryHint: .isDirectory)
             try FileManager.default.createDirectory(at: staging, withIntermediateDirectories: true)
             let installed = platformRoot.appending(path: "Installed", directoryHint: .isDirectory)
+            if rootOverride == nil, Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier {
+                try Self.prepareProductTransferRecovery()
+            }
             store = try HanlinAtomicScriptStore(root: installed)
             do {
                 let sharedStore = try initialization.makeExtensionStore()
@@ -170,6 +178,109 @@ final class HanlinScriptingPlatform {
         }
     }
 
+    static func productTransferOutbox() throws -> URL {
+        let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: HanlinScriptExtensionStore.appGroupIdentifier)
+        return try SplitAppStorageLayout.productTransferRoot(appGroupContainer: container)
+    }
+
+    static func productTransferTransactionRoot() throws -> URL {
+        try applicationSupportDirectory().appending(path: "ProductTransfer/current", directoryHint: .isDirectory)
+    }
+
+    static func prepareProductTransferRecovery() throws {
+        let installed = try applicationSupportDirectory()
+            .appending(path: "ScriptingPlatform/Installed", directoryHint: .isDirectory)
+        try HanlinProductTransferRecovery.recover(installedRoot: installed,
+            dataRoot: HanlinMiniAppDataStore.applicationSupportRoot(),
+            transactionRoot: productTransferTransactionRoot())
+    }
+
+    private func beginProductTransfer() throws {
+        guard !needsFreshProcessForTransfer else { throw HanlinProductTransferError.restartRequired }
+        let idle: Bool
+        switch activity {
+        case .idle, .failed: idle = true
+        case .importing, .previewReady, .installing: idle = false
+        }
+        guard idle, !isTransferringProductData, activeStoreOperations == 0,
+              !HanlinScriptingApplicationSession.hasPendingDisposals,
+              !isLaunching, !isExecutingHeadlessNativeScriptAction, !isProcessingResumeCommands,
+              queuedNativeScriptAdmissions.isEmpty, activeApplicationID == nil,
+              applicationSession == nil, nativeScriptSession == nil, expoSession == nil,
+              systemUIContinuation == nil else { throw HanlinProductTransferError.busy }
+        isTransferringProductData = true
+    }
+
+    private func endProductTransfer() {
+        isTransferringProductData = false
+        Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
+    }
+
+    func createProductTransfer() async throws -> HanlinProductTransferReceipt {
+        guard Bundle.main.bundleIdentifier == "com.itorah.chavrusachat",
+              let store else { throw HanlinProductTransferError.invalidCheckpoint }
+        try beginProductTransfer()
+        defer { endProductTransfer() }
+        return try await store.createProductTransfer(dataRoot: HanlinMiniAppDataStore.applicationSupportRoot(),
+                                                     outbox: Self.productTransferOutbox())
+    }
+
+    func receiveProductTransfer(_ receipt: HanlinProductTransferReceipt) async throws {
+        guard Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier,
+              let store else { throw HanlinProductTransferError.invalidCheckpoint }
+        try beginProductTransfer()
+        do {
+            let checkpoint = try Self.productTransferOutbox().appending(path: receipt.id.uuidString.lowercased())
+            let verified = try await Task.detached(priority: .userInitiated) {
+                try HanlinProductTransferRecovery.checkpointReceipt(at: checkpoint)
+            }.value
+            guard verified == receipt else { throw HanlinProductTransferError.invalidCheckpoint }
+            let accepted = try await store.receiveProductTransfer(from: checkpoint,
+                dataRoot: HanlinMiniAppDataStore.applicationSupportRoot(),
+                transactionRoot: Self.productTransferTransactionRoot())
+            guard accepted == receipt else { throw HanlinProductTransferError.invalidCheckpoint }
+            installedPackages = try await store.restore()
+            endProductTransfer()
+        } catch {
+            // Reconcile a durable intent before allowing engine admission. If
+            // recovery itself fails, keep admission closed until a safe restart.
+            do {
+                try Self.prepareProductTransferRecovery()
+                installedPackages = try await store.restore()
+                endProductTransfer()
+            } catch {
+                bootstrapError = Self.safeMessage(error)
+            }
+            throw error
+        }
+        try await refreshExtensionSnapshot()
+        await HanlinMiniAppHost.shared.refresh(installedPackages: installedPackages)
+    }
+
+    func rollbackProductTransfer() async throws {
+        guard Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier,
+              let store else { throw HanlinProductTransferError.invalidCheckpoint }
+        try beginProductTransfer()
+        do {
+            try await store.rollbackProductTransfer(dataRoot: HanlinMiniAppDataStore.applicationSupportRoot(),
+                transactionRoot: Self.productTransferTransactionRoot())
+            installedPackages = try await store.restore()
+            endProductTransfer()
+        } catch {
+            do {
+                try Self.prepareProductTransferRecovery()
+                installedPackages = try await store.restore()
+                endProductTransfer()
+            } catch {
+                bootstrapError = Self.safeMessage(error)
+            }
+            throw error
+        }
+        try await refreshExtensionSnapshot()
+        await HanlinMiniAppHost.shared.refresh(installedPackages: installedPackages)
+    }
+
     static func productExtensionStore() throws -> HanlinScriptExtensionStore {
         guard Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier else {
             return try HanlinScriptExtensionStore()
@@ -184,6 +295,9 @@ final class HanlinScriptingPlatform {
     }
 
     func restore() async {
+        guard !isTransferringProductData else { return }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard let store else { return }
         do {
             await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
@@ -286,6 +400,9 @@ final class HanlinScriptingPlatform {
     }
 
     func importPackage(from sourceURL: URL) async {
+        guard !isTransferringProductData else { return }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         print("HANLIN_IMPORT_PACKAGE_STARTED: url=\(sourceURL.path(percentEncoded: false))")
         discardPreview()
         guard let analyzer, let stagingRoot else {
@@ -322,6 +439,9 @@ final class HanlinScriptingPlatform {
     }
 
     func installPreview() async {
+        guard !isTransferringProductData else { return }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard activity != .installing else { return }
         print("HANLIN_INSTALL_PREVIEW_STARTED: canInstall=\(preview?.canInstall ?? false)")
         guard let preview, preview.canInstall, let stagedPackage,
@@ -458,6 +578,9 @@ final class HanlinScriptingPlatform {
     }
 
     func uninstall(_ id: HanlinInstalledPackageID) async {
+        guard !isTransferringProductData else { return }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard let store else { return }
         do {
             try invalidateExtensionWidgets(for: id)
@@ -472,6 +595,9 @@ final class HanlinScriptingPlatform {
     }
 
     func rollback(_ id: HanlinInstalledPackageID, to generation: UInt64) async {
+        guard !isTransferringProductData else { return }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard let store else { return }
         do {
             try invalidateExtensionWidgets(for: id)
@@ -485,6 +611,9 @@ final class HanlinScriptingPlatform {
     }
 
     func setEnabled(_ enabled: Bool, for id: HanlinInstalledPackageID) async {
+        guard !isTransferringProductData else { return }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard let store else { return }
         do {
             try invalidateExtensionWidgets(for: id)
@@ -550,6 +679,9 @@ final class HanlinScriptingPlatform {
         capability: HanlinCapabilityID,
         for id: HanlinInstalledPackageID
     ) async {
+        guard !isTransferringProductData else { return }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard let store else { return }
         do {
             await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
@@ -562,6 +694,7 @@ final class HanlinScriptingPlatform {
     }
 
     func launch(_ id: HanlinInstalledPackageID) async {
+        guard !isTransferringProductData else { return }
         guard !isLaunching else { return }
         if activeApplicationID == id { return }
         isLaunching = true
@@ -628,6 +761,7 @@ final class HanlinScriptingPlatform {
                 HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
                 HanlinNativeServicesBridge.register(adapter)
 
+                needsFreshProcessForTransfer = true
                 let session = try HanlinNativeScriptSession(
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
                     environment: env,
@@ -660,6 +794,7 @@ final class HanlinScriptingPlatform {
                 )
                 HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
                 let isNativeAPIGranted = true // Native API access follows the active runtime, not legacy grants.
+                needsFreshProcessForTransfer = true
                 let session = try HanlinExpoSession(
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
                     sessionID: sessionID,
@@ -807,6 +942,9 @@ final class HanlinScriptingPlatform {
         payload: HanlinValue,
         invocationID: UUID? = nil
     ) async throws -> HanlinValue {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard let store else {
             throw HanlinMiniAppRequestError.routeNotFound
         }
@@ -891,6 +1029,7 @@ final class HanlinScriptingPlatform {
             "HANLIN_ACTION_ID": action.rawValue
         ]
 
+        needsFreshProcessForTransfer = true
         let session = try HanlinNativeScriptSession(
             applicationRoot: handlerURL.deletingLastPathComponent(),
             environment: env,
@@ -985,6 +1124,9 @@ final class HanlinScriptingPlatform {
         root: HanlinScriptUINode,
         validUntil: Date?
     ) async throws {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard let package = installedPackages.first(where: {
             $0.record.installedPackageID == installedPackageID && ($0.appID == appID || $0.record.packageID.rawValue == appID.rawValue)
         }), package.enabled else {
@@ -1031,6 +1173,9 @@ final class HanlinScriptingPlatform {
     }
 
     func refreshExtensionSnapshot() async throws {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard let store, let extensionStore else { return }
 
         var widgets: [HanlinScriptWidgetSnapshot] = []
@@ -1457,6 +1602,7 @@ final class HanlinScriptingPlatform {
     }
 
     private func processPendingResumeCommands() async throws {
+        guard !isTransferringProductData else { return }
         guard let invocationExecutor else { return }
         guard !isProcessingResumeCommands else {
             resumeDrainRequested = true
@@ -1499,6 +1645,9 @@ final class HanlinScriptingPlatform {
     }
 
     func dispatchResumeCommand(_ command: HanlinScriptResumeCommand) async throws -> HanlinValue {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
         guard let store else { throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost) }
         installedPackages = try await store.restore()
         let identity = command.invocation.identity

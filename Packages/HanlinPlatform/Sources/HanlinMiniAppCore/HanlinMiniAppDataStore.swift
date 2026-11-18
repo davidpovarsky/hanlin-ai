@@ -64,7 +64,9 @@ public actor HanlinMiniAppDataStore {
         self.root = root.standardizedFileURL
         self.limits = limits
         self.fileManager = fileManager
-        try fileManager.createDirectory(at: self.root, withIntermediateDirectories: true)
+        try HanlinStoreFileAccess.withExclusiveAccess {
+            try fileManager.createDirectory(at: root.standardizedFileURL, withIntermediateDirectories: true)
+        }
     }
 
     public static func applicationSupportRoot(fileManager: FileManager = .default) throws -> URL {
@@ -75,25 +77,29 @@ public actor HanlinMiniAppDataStore {
     }
 
     public func prepareContainer(for appID: HanlinAppID) throws -> HanlinMiniAppContainerDirectories {
-        let appRoot = root.appending(path: appID.rawValue, directoryHint: .isDirectory)
-        try rejectSymbolicLinkIfPresent(appRoot, reportedPath: appID.rawValue)
-        let directories = HanlinMiniAppContainerDirectories(
-            root: appRoot,
-            data: appRoot.appending(path: HanlinMiniAppDataArea.data.rawValue, directoryHint: .isDirectory),
-            documents: appRoot.appending(path: HanlinMiniAppDataArea.documents.rawValue, directoryHint: .isDirectory),
-            state: appRoot.appending(path: HanlinMiniAppDataArea.state.rawValue, directoryHint: .isDirectory),
-            cache: appRoot.appending(path: HanlinMiniAppDataArea.cache.rawValue, directoryHint: .isDirectory)
-        )
-        for directory in [directories.data, directories.documents, directories.state, directories.cache] {
-            try rejectSymbolicLinkIfPresent(directory, reportedPath: directory.lastPathComponent)
-            try fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            let appRoot = root.appending(path: appID.rawValue, directoryHint: .isDirectory)
+            try rejectSymbolicLinkIfPresent(appRoot, reportedPath: appID.rawValue)
+            let directories = HanlinMiniAppContainerDirectories(
+                root: appRoot,
+                data: appRoot.appending(path: HanlinMiniAppDataArea.data.rawValue, directoryHint: .isDirectory),
+                documents: appRoot.appending(path: HanlinMiniAppDataArea.documents.rawValue, directoryHint: .isDirectory),
+                state: appRoot.appending(path: HanlinMiniAppDataArea.state.rawValue, directoryHint: .isDirectory),
+                cache: appRoot.appending(path: HanlinMiniAppDataArea.cache.rawValue, directoryHint: .isDirectory)
+            )
+            for directory in [directories.data, directories.documents, directories.state, directories.cache] {
+                try rejectSymbolicLinkIfPresent(directory, reportedPath: directory.lastPathComponent)
+                try fileManager.createDirectory(at: directory, withIntermediateDirectories: true)
+            }
+            return directories
         }
-        return directories
     }
 
     /// Alias for prepareContainer(for:) returning the active container directories.
     public func container(for appID: HanlinAppID) throws -> HanlinMiniAppContainerDirectories {
-        try prepareContainer(for: appID)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            try prepareContainer(for: appID)
+        }
     }
 
     public func read(
@@ -101,15 +107,17 @@ public actor HanlinMiniAppDataStore {
         area: HanlinMiniAppDataArea,
         path: String
     ) throws -> Data? {
-        let target = try containedURL(appID: appID, area: area, path: path)
-        guard fileManager.fileExists(atPath: target.path(percentEncoded: false)) else { return nil }
-        let values = try target.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey, .isSymbolicLinkKey])
-        guard values.isSymbolicLink != true else { throw HanlinMiniAppDataError.symbolicLink(path) }
-        guard values.isRegularFile == true else { throw HanlinMiniAppDataError.invalidPath(path) }
-        if let maxBytes = limits.maximumFileBytes, (values.fileSize ?? 0) > maxBytes {
-            throw HanlinMiniAppDataError.fileTooLarge
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            let target = try containedURL(appID: appID, area: area, path: path)
+            guard fileManager.fileExists(atPath: target.path(percentEncoded: false)) else { return nil }
+            let values = try target.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey, .isSymbolicLinkKey])
+            guard values.isSymbolicLink != true else { throw HanlinMiniAppDataError.symbolicLink(path) }
+            guard values.isRegularFile == true else { throw HanlinMiniAppDataError.invalidPath(path) }
+            if let maxBytes = limits.maximumFileBytes, (values.fileSize ?? 0) > maxBytes {
+                throw HanlinMiniAppDataError.fileTooLarge
+            }
+            return try Data(contentsOf: target, options: .mappedIfSafe)
         }
-        return try Data(contentsOf: target, options: .mappedIfSafe)
     }
 
     public func write(
@@ -118,56 +126,62 @@ public actor HanlinMiniAppDataStore {
         area: HanlinMiniAppDataArea,
         path: String
     ) throws {
-        if let maxFile = limits.maximumFileBytes, data.count > maxFile {
-            throw HanlinMiniAppDataError.fileTooLarge
-        }
-        let target = try containedURL(appID: appID, area: area, path: path)
-        try fileManager.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
-        let existing = (try? target.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
-        let areaRoot = try areaRoot(appID: appID, area: area)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            if let maxFile = limits.maximumFileBytes, data.count > maxFile {
+                throw HanlinMiniAppDataError.fileTooLarge
+            }
+            let target = try containedURL(appID: appID, area: area, path: path)
+            try fileManager.createDirectory(at: target.deletingLastPathComponent(), withIntermediateDirectories: true)
+            let existing = (try? target.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
+            let areaRoot = try areaRoot(appID: appID, area: area)
 
-        if area == .cache {
-            if let maxCache = limits.maximumCacheBytes {
-                let projected = try recursiveByteCount(at: areaRoot) - existing + data.count
-                guard projected <= maxCache else { throw HanlinMiniAppDataError.quotaExceeded(area) }
+            if area == .cache {
+                if let maxCache = limits.maximumCacheBytes {
+                    let projected = try recursiveByteCount(at: areaRoot) - existing + data.count
+                    guard projected <= maxCache else { throw HanlinMiniAppDataError.quotaExceeded(area) }
+                }
+            } else {
+                if let maxPersistent = limits.maximumPersistentBytes {
+                    let directories = try prepareContainer(for: appID)
+                    let projected = try [directories.data, directories.documents, directories.state]
+                        .reduce(data.count - existing) { total, directory in
+                            total + (try recursiveByteCount(at: directory))
+                        }
+                    guard projected <= maxPersistent else { throw HanlinMiniAppDataError.quotaExceeded(area) }
+                }
             }
-        } else {
-            if let maxPersistent = limits.maximumPersistentBytes {
-                let directories = try prepareContainer(for: appID)
-                let projected = try [directories.data, directories.documents, directories.state]
-                    .reduce(data.count - existing) { total, directory in
-                        total + (try recursiveByteCount(at: directory))
-                    }
-                guard projected <= maxPersistent else { throw HanlinMiniAppDataError.quotaExceeded(area) }
-            }
+            try data.write(to: target, options: [.atomic])
         }
-        try data.write(to: target, options: [.atomic])
     }
 
     public func remove(appID: HanlinAppID, area: HanlinMiniAppDataArea, path: String) throws {
-        let target = try containedURL(appID: appID, area: area, path: path)
-        guard fileManager.fileExists(atPath: target.path(percentEncoded: false)) else { return }
-        try fileManager.removeItem(at: target)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            let target = try containedURL(appID: appID, area: area, path: path)
+            guard fileManager.fileExists(atPath: target.path(percentEncoded: false)) else { return }
+            try fileManager.removeItem(at: target)
+        }
     }
 
     public func list(appID: HanlinAppID, area: HanlinMiniAppDataArea) throws -> [String] {
-        let areaRoot = try areaRoot(appID: appID, area: area)
-        guard let enumerator = fileManager.enumerator(
-            at: areaRoot,
-            includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey],
-            options: [.skipsHiddenFiles]
-        ) else { return [] }
-        var result: [String] = []
-        for case let item as URL in enumerator {
-            let values = try item.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
-            if values.isSymbolicLink == true { enumerator.skipDescendants(); continue }
-            if values.isRegularFile == true {
-                let areaRootPath = areaRoot.path(percentEncoded: false)
-                let prefixCount = areaRootPath.hasSuffix("/") ? areaRootPath.count : areaRootPath.count + 1
-                result.append(String(item.path(percentEncoded: false).dropFirst(prefixCount)))
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            let areaRoot = try areaRoot(appID: appID, area: area)
+            guard let enumerator = fileManager.enumerator(
+                at: areaRoot,
+                includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey],
+                options: [.skipsHiddenFiles]
+            ) else { return [] }
+            var result: [String] = []
+            for case let item as URL in enumerator {
+                let values = try item.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+                if values.isSymbolicLink == true { enumerator.skipDescendants(); continue }
+                if values.isRegularFile == true {
+                    let areaRootPath = areaRoot.path(percentEncoded: false)
+                    let prefixCount = areaRootPath.hasSuffix("/") ? areaRootPath.count : areaRootPath.count + 1
+                    result.append(String(item.path(percentEncoded: false).dropFirst(prefixCount)))
+                }
             }
+            return result.sorted()
         }
-        return result.sorted()
     }
 
     private func areaRoot(appID: HanlinAppID, area: HanlinMiniAppDataArea) throws -> URL {

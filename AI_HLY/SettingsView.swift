@@ -116,6 +116,13 @@ struct SettingsView: View {
                         Label(SkillL10n.string("Skill Center"), systemImage: "sparkles.rectangle.stack")
                     }
                     .accessibilityIdentifier("hanlin-skill-center-link")
+                    NavigationLink {
+                        HanlinMiniAppTransferView(mode: .send)
+                            .onAppear { isPushed = true }.onDisappear { isPushed = false }
+                    } label: {
+                        Label("Transfer mini apps", systemImage: "arrow.right.doc.on.clipboard")
+                    }
+                    .accessibilityIdentifier("hanlin-transfer-link")
                     NavigationLink(destination: SearchSettingView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "联网搜索"), systemImage: "magnifyingglass")
                     }
