@@ -1,5 +1,7 @@
 # AGENTS.md — Modern Apple Development Rules
 
+Explicit public repository consent (2026-11-18): The owner authorized normal, non-forced publication of the 17 pending local Hanlin continuation commits and subsequent in-scope fixes to https://github.com/davidpovarsky/hanlin-ai.git, branch codex/hanlin-product-completion-20261117, plus necessary bounded GitHub Actions CI and Asana evidence updates, without repeated per-push/per-run confirmation. See docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md for precise scope and safeguards. Historical local-only or per-phase pauses do not block this scoped work; external security approvals and secret protection remain mandatory.
+
 ## Current owner authorization — 2026-11-18
 
 Read [OWNER_AUTHORIZATION_20261118.md](docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md). The owner has authorized autonomous completion of the remaining Hanlin Phase 2 and Phase 3 work, including the presented navigation proposal and necessary integration, validation and release preparation. Historical pauses, frozen-file leases, per-phase confirmations and mandatory extra-team handoffs do not block this task. This records the direct owner instruction; actual tool/platform access and truthful acceptance evidence remain authoritative.
