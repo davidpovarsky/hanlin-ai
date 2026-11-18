@@ -451,6 +451,14 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let messages = body?["messages"] as? [[String: Any]]
         let content = messages?.last(where: { $0["role"] as? String == "user" })?["content"]
         let currentText = (content as? String) ?? (content as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined(separator: "\n") ?? ""
+        func toolResult(_ callID: String) -> String? {
+            guard let message = (messages ?? []).last(where: {
+                $0["role"] as? String == "tool" && $0["tool_call_id"] as? String == callID
+            }) else { return nil }
+            if let text = message["content"] as? String { return text }
+            return (message["content"] as? [[String: Any]])?
+                .compactMap { $0["text"] as? String }.joined(separator: "\n")
+        }
 #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         if let marker = currentText.range(of: "SHARE_DRAFT_[0-9A-F-]{36}", options: .regularExpression) {
             let nonce = String(currentText[marker].suffix(36))
@@ -678,12 +686,39 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             return
         }
 
-        // 5. Calculate 6*7 without user nudge
-        if bodyString.contains("6*7") || bodyString.contains("6 * 7") || bodyString.contains("compute 123 * 456") {
-            if bodyString.contains("42") {
-                emitFinalAnswer("42 / LOCAL_PYTHON_COMPLETE")
-            } else if bodyString.contains("tool_call_id") || bodyString.contains("\"role\":\"tool\"") {
-                emitToolCall(id: "ui-python-call", name: "execute_local_python_code", arguments: #"{"source":"print(6 * 7)"}"#)
+        // The controlled model must verify a fresh original tool result. Merely
+        // finding "42" in loaded Skill instructions never proves Python ran.
+        if currentText.contains("6*7") || currentText.contains("6 * 7") {
+            if let output = toolResult("ui-python-call") {
+                emitFinalAnswer(output.contains("HANLIN_LOCAL_PYTHON_RESULT:42")
+                    ? "42 / LOCAL_PYTHON_COMPLETE" : "LOCAL_PYTHON_EXECUTION_NOT_VERIFIED")
+            } else if let loaded = toolResult("ui-load-code-call") {
+                guard loaded.contains("loaded successfully") else {
+                    emitFinalAnswer("LOCAL_PYTHON_SKILL_NOT_VERIFIED"); return
+                }
+                emitToolCall(id: "ui-python-call", name: "execute_local_python_code",
+                    arguments: #"{"source":"print('HANLIN_LOCAL_PYTHON_RESULT:' + str(6 * 7))","progress_summary":"Calculate the requested result using local Python."}"#)
+            } else {
+                emitToolCall(id: "ui-load-code-call", name: "load_skill", arguments: #"{"skill_id":"code"}"#)
+            }
+            return
+        }
+
+        if currentText == "Run the local Python acceptance tool and report the result." {
+            if let output = toolResult("ui-python-recovery-call") {
+                emitFinalAnswer(output.contains("ui-tool-ok")
+                    ? "AGENT_UI_ACCEPTANCE_COMPLETE" : "LOCAL_PYTHON_RECOVERY_NOT_VERIFIED")
+            } else if toolResult("ui-python-invalid-call") != nil {
+                emitToolCall(id: "ui-python-recovery-call", name: "execute_local_python_code",
+                    arguments: #"{"source":"print('ui-' + 'tool-ok')","progress_summary":"Run the corrected local Python request."}"#)
+            } else if let loaded = toolResult("ui-load-code-call") {
+                guard loaded.contains("loaded successfully") else {
+                    emitFinalAnswer("LOCAL_PYTHON_SKILL_NOT_VERIFIED"); return
+                }
+                // Deliberately invalid extra argument; the valid recovery keeps
+                // the same advertised progress schema and original tool.
+                emitToolCall(id: "ui-python-invalid-call", name: "execute_local_python_code",
+                    arguments: #"{"source":"print('should-not-run')","unexpected":true,"progress_summary":"Validate the requested Python arguments."}"#)
             } else {
                 emitToolCall(id: "ui-load-code-call", name: "load_skill", arguments: #"{"skill_id":"code"}"#)
             }
@@ -714,34 +749,46 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 emitToolCall(
                     id: "ui03-read-2",
                     name: "read_web_page",
-                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin#section"}"#
+                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin#section","progress_summary":"Read the referenced section."}"#
                 )
             } else {
                 emitToolCall(
                     id: "ui03-read-1",
                     name: "read_web_page",
-                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin"}"#
+                    arguments: #"{"url":"https://agent.acceptance/wiki/hanlin","progress_summary":"Read the requested reference page."}"#
                 )
             }
             return
         }
 
-        // 8. UI-05 Rich code block, HTML card, and attachments
-        if bodyString.contains("PROMPT_UI05_RICH_CONTENT") {
-            if bodyString.contains("ui05-html-1") {
-                emitFinalAnswer("Rich content and attachments verified. UI05_RICH_COMPLETE")
-            } else if bodyString.contains("ui05-code-1") {
-                emitToolCall(
-                    id: "ui05-html-1",
-                    name: "create_web_view",
-                    arguments: #"{"code":"<h1>UI05 Interactive Card</h1><p>Rendered HTML surface</p>"}"#
-                )
+        // UI-05 follows the real Skill/discovery/schema contracts, and only
+        // reports completion after both original execution results arrive.
+        if currentText.contains("PROMPT_UI05_RICH_CONTENT") {
+            if let html = toolResult("ui05-html-1") {
+                let verified = html.lowercased().contains("successfully") && html.lowercased().contains("render")
+                    && toolResult("ui05-code-1")?.contains("Code output: 42") == true
+                emitFinalAnswer(verified ? "Rich content and attachments verified. UI05_RICH_COMPLETE"
+                    : "UI05_RENDER_RESULT_NOT_VERIFIED")
+            } else if let discovery = toolResult("ui05-web-discovery") {
+                guard discovery.contains("create_web_view") else {
+                    emitFinalAnswer("UI05_WEB_DISCOVERY_NOT_VERIFIED"); return
+                }
+                emitToolCall(id: "ui05-html-1", name: "create_web_view",
+                    arguments: #"{"code":"<h1>UI05 Interactive Card</h1><p>Rendered HTML surface</p>","result_presentation":"card","progress_summary":"Render the requested interactive HTML card."}"#)
+            } else if let code = toolResult("ui05-code-1") {
+                guard code.contains("Code output: 42") else {
+                    emitFinalAnswer("UI05_PYTHON_RESULT_NOT_VERIFIED"); return
+                }
+                emitToolCall(id: "ui05-web-discovery", name: "tool_search",
+                    arguments: #"{"query":"create_web_view","limit":1}"#)
+            } else if let loaded = toolResult("ui05-load-code") {
+                guard loaded.contains("loaded successfully") else {
+                    emitFinalAnswer("UI05_SKILL_NOT_VERIFIED"); return
+                }
+                emitToolCall(id: "ui05-code-1", name: "execute_local_python_code",
+                    arguments: #"{"source":"print('Code output: ' + str(6 * 7))","result_presentation":"card","progress_summary":"Run local Python and present its code result."}"#)
             } else {
-                emitToolCall(
-                    id: "ui05-code-1",
-                    name: "execute_local_python_code",
-                    arguments: #"{"source":"print('Code output: 42')"}"#
-                )
+                emitToolCall(id: "ui05-load-code", name: "load_skill", arguments: #"{"skill_id":"code"}"#)
             }
             return
         }
@@ -893,7 +940,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 ]]
             ]
         } else if index == 1 {
-            let arguments = #"{"source":"print('ui-tool-ok')"}"#
+            let arguments = #"{"source":"print('ui-tool-ok')","progress_summary":"Run the corrected local Python request."}"#
             payload = [
                 "choices": [[
                     "delta": [

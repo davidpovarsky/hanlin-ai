@@ -287,6 +287,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         openChat(in: app)
 
         sendPrompt("Run the local Python acceptance tool and report the result.", in: app)
+        approveOriginalToolRequest(["source": "print('ui-' + 'tool-ok')"], in: app)
 
         let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'AGENT_UI_ACCEPTANCE_COMPLETE'")
@@ -344,6 +345,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // 2. Open Chat and send prompt (single user turn, no second nudge required)
         openChat(in: app)
         sendPrompt("Use Python to calculate 6*7 and tell me the result.", in: app)
+        approveOriginalToolRequest(["source": "print('HANLIN_LOCAL_PYTHON_RESULT:' + str(6 * 7))"], in: app)
 
         // 3. Final answer renders in the same user turn without extra user nudge
         let finalAnswer = app.descendants(matching: .any).matching(
@@ -494,6 +496,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         openChat(in: app)
 
         sendPrompt("PROMPT_UI03_SEARCH_CITATIONS", in: app)
+        approveOriginalToolRequest(["url": "https://agent.acceptance/wiki/hanlin"], in: app)
+        approveOriginalToolRequest(["url": "https://agent.acceptance/wiki/hanlin#section"], in: app)
 
         let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI03_SEARCH_COMPLETE'")
@@ -564,6 +568,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         openChat(in: app)
 
         sendPrompt("PROMPT_UI04_REASONING_INSPECTOR", in: app)
+        approveOriginalToolRequest(["source": "print(6 * 7)"], in: app)
 
         let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI04_REASONING_COMPLETE'")
@@ -609,6 +614,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(app.descendants(matching: .any)["hanlin-composer-document-attachment"].firstMatch.waitForExistence(timeout: 5))
 
         sendPrompt("PROMPT_UI05_RICH_CONTENT", in: app)
+        approveOriginalToolRequest(["source": "print('Code output: ' + str(6 * 7))"], in: app)
+        approveOriginalToolRequest(["code": "<h1>UI05 Interactive Card</h1><p>Rendered HTML surface</p>"], in: app)
 
         let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI05_RICH_COMPLETE'")
@@ -1560,6 +1567,43 @@ final class AgentRuntimeConversationUITests: XCTestCase {
                       "Send must remain reachable above the keyboard", file: file, line: line)
         guard send.isEnabled && send.isHittable else { return }
         send.tap()
+    }
+
+    /// Approve only the exact fixture business request through the original UI.
+    /// This is not another chat turn, an injected grant, or a tool-result stub.
+    private func approveOriginalToolRequest(_ expected: [String: String], in app: XCUIApplication,
+                                            file: StaticString = #filePath, line: UInt = #line) {
+        let toggle = app.descendants(matching: .any)["hanlin-tool-consent-review-toggle"].firstMatch
+        XCTAssertTrue(toggle.waitForExistence(timeout: 45), "The original Host must request consent", file: file, line: line)
+        guard toggle.exists else { return }
+        let scroll = app.scrollViews.containing(.any, identifier: "hanlin-tool-consent-review-toggle").firstMatch
+        for _ in 0..<3 where !toggle.isHittable && scroll.exists { scroll.swipeUp() }
+        XCTAssertTrue(toggle.isHittable, "The original approval must be reachable", file: file, line: line)
+        guard toggle.isHittable else { return }
+        toggle.tap()
+        let review = app.staticTexts["hanlin-tool-consent-original-request"].firstMatch
+        XCTAssertTrue(review.waitForExistence(timeout: 10), file: file, line: line)
+        guard review.exists,
+              let actual = (try? JSONSerialization.jsonObject(with: Data(review.label.utf8))) as? [String: Any] else {
+            XCTFail("The original request must contain reviewable JSON", file: file, line: line); return
+        }
+        let allowed = Set(expected.keys).union(["progress_summary", "result_presentation"])
+        XCTAssertTrue(Set(actual.keys).isSubset(of: allowed), "Unexpected business arguments", file: file, line: line)
+        for (key, value) in expected { XCTAssertEqual(actual[key] as? String, value, file: file, line: line) }
+        guard Set(actual.keys).isSubset(of: allowed),
+              expected.allSatisfy({ actual[$0.key] as? String == $0.value }) else { return }
+        let owner = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH 'hanlin-tool-approval-'")).firstMatch
+        XCTAssertTrue(owner.exists, "The original immutable approval owner must exist", file: file, line: line)
+        guard owner.exists else { return }
+        let ownerID = owner.identifier
+        let allow = app.buttons["hanlin-tool-consent-allow-once"].firstMatch
+        for _ in 0..<3 where !allow.isHittable && scroll.exists { scroll.swipeUp() }
+        XCTAssertTrue(allow.exists && allow.isHittable, file: file, line: line)
+        guard allow.exists && allow.isHittable else { return }
+        allow.tap()
+        XCTAssertTrue(app.descendants(matching: .any)[ownerID].firstMatch.waitForNonExistence(timeout: 10),
+                      "The one-use request must disappear after approval", file: file, line: line)
     }
 
     private func ensureChatListVisible(in app: XCUIApplication,
