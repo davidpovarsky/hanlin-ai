@@ -2552,7 +2552,7 @@
 				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );
 				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
-				"ENABLE_USER_SCRIPT_SANDBOXING" = "YES";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
 				"PYTHONDONTWRITEBYTECODE" = "1";
 				"INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription" = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
 				"INFOPLIST_KEY_NSCameraUsageDescription" = "Hanlin MiniApps accesses the camera only when you ask it to take a photo.";
@@ -2602,7 +2602,7 @@
 				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );
 				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
-				"ENABLE_USER_SCRIPT_SANDBOXING" = "YES";
+				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
 				"PYTHONDONTWRITEBYTECODE" = "1";
 				"INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription" = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
 				"INFOPLIST_KEY_NSCameraUsageDescription" = "Hanlin MiniApps accesses the camera only when you ask it to take a photo.";

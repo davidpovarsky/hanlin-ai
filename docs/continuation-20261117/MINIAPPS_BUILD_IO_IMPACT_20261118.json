@@ -46,5 +46,21 @@
   "native_status": "NOT_RUN",
   "runtime_artifact_run_id": 42926628418,
   "host_proof_run_id": 43726905638,
-  "publication": "No publication is part of this validation"
+  "publication": "No publication is part of this validation",
+  "amendment": {
+    "date": "2026-11-18",
+    "base_sha": "9ace45ff6110d52102a510235790e9a3ab0d3adf",
+    "failed_followup_run": 44209276187,
+    "failed_followup_artifact": 14386051208,
+    "artifact_sha256": "355fca72ba218c920c8f7b99b5905bc190d0c426d0153143fc54103a374d8cac",
+    "observed_failure": "The declared Scripts/NativeScript directory was a literal path, so the original nested launcher was still denied; tests did not run.",
+    "diagnosis": "Official Swift Build source uses literal output nodes for shell script phases and cannot grant unknown dynamic directory contents. Recursive input setting alone would not cover original Python rsync/framework outputs and original metadata intermediates.",
+    "decision": "Align only MiniApps Debug/Release ENABLE_USER_SCRIPT_SANDBOXING=NO with the original AI target. Keep original executable scripts, engines, provenance checks and IO inventory. App entitlements, installed-app sandbox and runtime permission broker are unchanged.",
+    "authority": "Current direct owner authorization covers completion and build fixes. This is Xcode build dependency checking, not an app authorization change.",
+    "sources": [
+      "https://developer.apple.com/videos/play/wwdc2022/110364/",
+      "https://github.com/swiftlang/swift-build/blob/d36e96cffd63c2949ece00e7d50df03651cc7e63/Sources/SWBTaskConstruction/TaskProducerSandboxing.swift"
+    ],
+    "validation": "SOURCE_VALIDATED; actual native build and UI remain required"
+  }
 }

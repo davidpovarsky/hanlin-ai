@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "purpose": "Declared IO for the existing sandboxed MiniApps build scripts",
+  "purpose": "Dependency and provenance inventory for the original native build scripts; dynamic output trees require the original AI script execution configuration",
   "python_archive_sha256": "200ef60eb67be0483ceb638daa9048f84f41a9a952707a5ad4c3198037c7b583",
   "python_release": "3.14-b10",
   "python_extension_modules": [
@@ -164,5 +164,7 @@
     ]
   },
   "runtime_authorization": "unchanged",
-  "user_script_sandboxing": "YES"
+  "user_script_sandboxing": "NO: identical to original AI Debug and Release",
+  "application_sandbox_and_runtime_permissions": "unchanged",
+  "build_system_limitation_source": "https://github.com/swiftlang/swift-build/blob/d36e96cffd63c2949ece00e7d50df03651cc7e63/Sources/SWBTaskConstruction/TaskProducerSandboxing.swift"
 }

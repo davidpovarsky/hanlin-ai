@@ -54,7 +54,10 @@ def main():
         original = script_literal(ai_scripts[name])
         assert script_literal(mini_scripts[name]) == original, name + " script encoding drift"
         assert "\n" in json.loads(original), name + " lost executable line breaks"
-    # Keep the standalone build scripts sandboxed with explicit IO.
+    # Both products execute the same original metadata/Python scripts. These
+    # scripts create dynamic directory contents; Xcode's dependency sandbox
+    # cannot represent recursive output trees. Preserve original AI build
+    # semantics. This setting does not alter the iOS app sandbox or permissions.
     io_root = ROOT / "Scripts/ProductSplit/BuildIO"
     io_manifest = json.loads((io_root / "manifest.json").read_text())
     runtime_lock = json.loads((ROOT / "RuntimeDependencies.lock.json").read_text())
@@ -69,9 +72,15 @@ def main():
         for kind in ["input", "output"]:
             assert phase[kind + "FileListPaths"] == [
                 "$(SRCROOT)/Scripts/ProductSplit/BuildIO/" + stem + "-" + kind + "s.xcfilelist"], name
+    original_build_settings = {
+        objects[key]["name"]: objects[key]["buildSettings"]
+        for key in objects[ai["buildConfigurationList"]]["buildConfigurations"]
+    }
     for config_id in objects[mini["buildConfigurationList"]]["buildConfigurations"]:
-        settings = objects[config_id]["buildSettings"]
-        assert settings["ENABLE_USER_SCRIPT_SANDBOXING"] == "YES"
+        configuration = objects[config_id]
+        settings = configuration["buildSettings"]
+        original = original_build_settings[configuration["name"]]
+        assert settings["ENABLE_USER_SCRIPT_SANDBOXING"] == original["ENABLE_USER_SCRIPT_SANDBOXING"] == "NO"
         assert settings["PYTHONDONTWRITEBYTECODE"] == "1"
     for name in ["HanlinMiniAppsTests", "HanlinMiniAppsUITests", "HanlinMiniAppsBootstrapTests"]:
         target_id, target = targets[name]
