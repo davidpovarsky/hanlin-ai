@@ -116,15 +116,17 @@ struct HanlinCompactChatWorkspace: View {
 
     var body: some View {
         GeometryReader { proxy in
-            ZStack(alignment: .bottom) {
-                navigationRoot(availableHeight: proxy.size.height)
-
-                if composerVisible {
-                    anchoredComposer(availableSize: proxy.size)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
+            navigationRoot(availableHeight: proxy.size.height)
+                .frame(width: proxy.size.width, height: proxy.size.height)
+                .overlay(alignment: .bottom) {
+                    if composerVisible {
+                        anchoredComposer(availableSize: proxy.size)
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                    }
                 }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            // The navigation viewport owns the layout proposal. The floating
+            // composer must not enlarge it when Dynamic Type or the keyboard
+            // changes the hosted controls' intrinsic sizes.
             .animation(.spring(response: 0.36, dampingFraction: 0.88), value: composerVisible)
             .onChange(of: path) { oldPath, newPath in
                 isCompactComposerInputActive = false

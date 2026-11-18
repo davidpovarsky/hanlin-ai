@@ -591,6 +591,8 @@ struct ChatViewBottom: View {
             )
             .offset(y: isMultiSelectMode ? 0 : 60) // **初次进入时滑入**
             .opacity(isMultiSelectMode ? 1 : 0)    // **初次进入时淡入**
+            .accessibilityHidden(!isMultiSelectMode)
+            .allowsHitTesting(isMultiSelectMode)
             .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isMultiSelectMode)
             .padding(.vertical, 3)
             .padding(.horizontal, 15)
@@ -1699,7 +1701,8 @@ struct ChatViewBottom: View {
                 .foregroundStyle(accent.opacity(0.75))
         }
         .padding(.horizontal, 9)
-        .frame(height: 28)
+        .padding(.vertical, 5)
+        .frame(minHeight: 28)
         .background(
             (TemporaryRecord ? Color.primary : Color.hlBlue).opacity(isOpen ? 0.2 : 0.11),
             in: Capsule()

@@ -167,6 +167,10 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
         self.contentSize = contentSize
         super.init(nibName: nil, bundle: nil)
         sourceHost.sizingOptions = .intrinsicContentSize
+        // This host embeds a toolbar button, not a window root. Its enclosing
+        // SwiftUI composer already handles the keyboard and container insets.
+        // Applying those regions again made the source hundreds of points tall.
+        sourceHost.safeAreaRegions = []
     }
 
     @available(*, unavailable)
