@@ -1,0 +1,63 @@
+{
+  "document": "EDITOR_ASSERTION_COVERAGE_20261118",
+  "generated_at": "2026-11-18T08:19:20.813541+00:00",
+  "mapping_source_sha": "4f4f927db97aefc7ca3df558993a2fa769f8eea1",
+  "run": 44213013111,
+  "native_source_sha": "b44c764858654e272d7b75c094984f6a9ef41328",
+  "native_test_results_sha256": "f7427c56a534fa2404103c32269d9964fb94d991455f67d06db6c0731ae95d79",
+  "method_results": {
+    "NativeComposerLineSizingTests/editingKeepsDraftAndSelection()": "Passed",
+    "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()": "Passed",
+    "NativeComposerLineSizingTests/wrappedLinesAndScrolling()": "Passed",
+    "NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()": "Passed",
+    "NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()": "Passed",
+    "NativeComposerLineSizingTests/fontAndViewport()": "Passed"
+  },
+  "feature_method_mapping": {
+    "INPUT-01": {
+      "methods": [
+        "NativeComposerLineSizingTests/editingKeepsDraftAndSelection()",
+        "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+        "NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+        "NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()",
+        "NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()",
+        "NativeComposerLineSizingTests/fontAndViewport()"
+      ],
+      "covered": "Actual UITextView binding synchronization, original whitespace/selection, clear/restore behavior, native TextKit line coverage, font metrics and bounded height.",
+      "remaining": "Original whole-screen focus, keyboard avoidance, attachments and draft navigation remain product UI gates; compact UI failed in the native evidence run."
+    },
+    "INPUT-03": {
+      "methods": [
+        "NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+        "NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()",
+        "NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()",
+        "NativeComposerLineSizingTests/fontAndViewport()"
+      ],
+      "covered": "Original native editor wraps English/Hebrew through six lines, scrolls from seven, preserves TextKit2 ownership/paragraph coverage and applies accessibility font/available-height limits.",
+      "remaining": "Expanded editor presentation, real keyboard focus and whole-app compact/wide layout still require UI acceptance."
+    }
+  },
+  "direct_source_closure": [
+    {
+      "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "native_source_sha256": "dfc79b70105c56b57029c951de008335f969e32a9d8e10614c740284349f0242",
+      "current_source_sha256": "dfc79b70105c56b57029c951de008335f969e32a9d8e10614c740284349f0242",
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
+      "native_source_sha256": "9992172f9762ea17f7aff350cf1028e602c4e6aa6bad2f48b14a826013c7a37a",
+      "current_source_sha256": "9992172f9762ea17f7aff350cf1028e602c4e6aa6bad2f48b14a826013c7a37a",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "native_source_sha256": "861f6f611a2f937617e8407705fb1a9709ee4a6c379a93054ecd52f4f5cea6dd",
+      "current_source_sha256": "861f6f611a2f937617e8407705fb1a9709ee4a6c379a93054ecd52f4f5cea6dd",
+      "identical": true
+    }
+  ],
+  "scope_limit": "Actual six native component passes at the recorded SHA, direct editor/alias/test sources identical. This does not accept the surrounding app layout or the two failed compact UI cases.",
+  "fully_accepted_feature_rows": 0,
+  "phase_completion": false
+}

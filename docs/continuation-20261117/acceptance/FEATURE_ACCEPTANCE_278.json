@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T08:15:23.225285+00:00",
-  "source_sha": "595163c98d654966d068b99787c767ccfc15caec",
+  "generated_at": "2026-11-18T08:19:20.813541+00:00",
+  "source_sha": "4f4f927db97aefc7ca3df558993a2fa769f8eea1",
   "baseline_path": "docs/product-split/feature-delta-278.json",
   "baseline_file_sha256": "ccba98e746ac1bd838b7f772b5c3391136d04b887ed5f372f8fec1fff95d2725",
   "historical_revision": "e792b0b5fab6a66ea8cbdaa9626def509744e33f",
   "historical_blob_sha256": "7252f34685839bd179314e8ce7b2266ea035eb73818ef378e9f28158709ce19e",
   "count": 278,
-  "warning": "278 requirements remain individually mapped. Nine rows have scoped native component evidence, not full feature acceptance; no UI success is inferred from the twenty passing methods. Original compact UI2 failed in the same run.",
+  "warning": "278 requirements are individually mapped. Eleven rows have scoped native component assertions (twenty model/history and six editor methods), not full feature acceptance. Both contributing workflows retained compact UI failures. No UI or whole-feature success is inferred.",
   "rows": [
     {
       "id": "NAV-01",
@@ -810,9 +810,28 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-INPUT-01",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "register_id": "EDITOR6_B44",
+          "run": 44213013111,
+          "source_sha": "b44c764858654e272d7b75c094984f6a9ef41328",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "NativeComposerLineSizingTests/editingKeepsDraftAndSelection()",
+            "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+            "NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+            "NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()",
+            "NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()",
+            "NativeComposerLineSizingTests/fontAndViewport()"
+          ],
+          "assertions_covered": "Actual UITextView binding synchronization, original whitespace/selection, clear/restore behavior, native TextKit line coverage, font metrics and bounded height.",
+          "remaining_obligations": "Original whole-screen focus, keyboard avoidance, attachments and draft navigation remain product UI gates; compact UI failed in the native evidence run.",
+          "native_test_results_sha256": "f7427c56a534fa2404103c32269d9964fb94d991455f67d06db6c0731ae95d79",
+          "direct_source_closure_report": "acceptance/EDITOR_ASSERTION_COVERAGE_20261118.json"
+        }
+      ]
     },
     {
       "id": "INPUT-02",
@@ -860,9 +879,26 @@
           "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
         }
       ],
-      "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE",
       "test_obligation": "PARITY-INPUT-03",
-      "native_execution_evidence": []
+      "native_execution_evidence": [
+        {
+          "register_id": "EDITOR6_B44",
+          "run": 44213013111,
+          "source_sha": "b44c764858654e272d7b75c094984f6a9ef41328",
+          "result": "PASSED_COMPONENT_ASSERTIONS_ONLY",
+          "methods": [
+            "NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+            "NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()",
+            "NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()",
+            "NativeComposerLineSizingTests/fontAndViewport()"
+          ],
+          "assertions_covered": "Original native editor wraps English/Hebrew through six lines, scrolls from seven, preserves TextKit2 ownership/paragraph coverage and applies accessibility font/available-height limits.",
+          "remaining_obligations": "Expanded editor presentation, real keyboard focus and whole-app compact/wide layout still require UI acceptance.",
+          "native_test_results_sha256": "f7427c56a534fa2404103c32269d9964fb94d991455f67d06db6c0731ae95d79",
+          "direct_source_closure_report": "acceptance/EDITOR_ASSERTION_COVERAGE_20261118.json"
+        }
+      ]
     },
     {
       "id": "INPUT-04",
@@ -6533,8 +6569,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6564,8 +6601,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6595,8 +6633,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6626,8 +6665,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6657,8 +6697,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6688,8 +6729,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6719,8 +6761,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6750,8 +6793,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6781,8 +6825,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6812,8 +6857,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6843,8 +6889,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6874,8 +6921,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6905,8 +6953,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6936,8 +6985,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6967,8 +7017,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -6998,8 +7049,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -7029,8 +7081,9 @@
         {
           "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
           "exists": true,
-          "current_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae",
-          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR"
+          "current_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+          "proof_level": "FILE_IDENTITY_ONLY_NOT_BEHAVIOR",
+          "previous_sha256": "52a2a9816e14ee9c3eb1241b166137e6d13eecce7b51565fc6f132e6c0c426ae"
         }
       ],
       "acceptance_status": "PENDING_BEHAVIORAL_ACCEPTANCE",
@@ -7616,5 +7669,5 @@
   ],
   "previous_anchor_snapshot_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
   "accepted_capability_count": 0,
-  "partially_evidenced_capability_count": 9
+  "partially_evidenced_capability_count": 11
 }
