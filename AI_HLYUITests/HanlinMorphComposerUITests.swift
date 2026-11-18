@@ -261,6 +261,14 @@ final class HanlinMorphComposerUITests: XCTestCase {
             XCTAssertLessThan(actualWidth, 640, "Run the compact selector on an actual narrow viewport")
             XCTAssertTrue(app.descendants(matching: .any)["hanlin-compact-chat-workspace"].waitForExistence(timeout: 5))
         }
+        let initialHierarchy = XCTAttachment(string: app.debugDescription)
+        initialHierarchy.name = "original-composer-before-keyboard"
+        add(initialHierarchy)
+        XCTAssertGreaterThan(input.frame.height, 0, "The unfocused editor must retain visible height")
+        XCTAssertGreaterThanOrEqual(input.frame.minY, window.frame.minY - 1)
+        XCTAssertLessThanOrEqual(input.frame.maxY, window.frame.maxY + 1,
+            "The editor must be inside the real viewport before requesting keyboard focus")
+        XCTAssertTrue(input.isHittable, "The original editor must be reachable before typing")
         input.tap()
         let draft = "Morph keeps this draft"
         input.typeText(draft)

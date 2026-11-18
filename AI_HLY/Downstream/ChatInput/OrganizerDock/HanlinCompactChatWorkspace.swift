@@ -4,8 +4,8 @@
 //
 //  Source-faithful compact workspace host ported from
 //  InteriorOrganizerV3_3.swiftpm/AppModule/ContentView.swift (lines 293-405).
-//  Owns ONE `ZStack(alignment: .bottom)`, ONE `NavigationStack(path: $path)` with
-//  `@Namespace private var libraryZoom`, and ONE persistent anchored composer dock
+//  Owns one flexible NavigationStack with a native bottom safe-area inset,
+//  `@Namespace private var libraryZoom`, and one persistent anchored composer dock
 //  shared across the compact Home screen (`composerKey == "new"`) and any pushed
 //  chat destination (`.chat(UUID)`), while hiding the dock in `.allConversations`.
 //
@@ -114,12 +114,14 @@ struct HanlinCompactChatWorkspace: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let usableSize = CGSize(
-                width: proxy.size.width,
-                height: max(0, proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom)
-            )
+            // GeometryReader receives the current container proposal, already
+            // reduced by the keyboard. Subtracting safeAreaInsets again can
+            // collapse the editor budget when the keyboard appears.
+            let usableSize = proxy.size
             navigationRoot(availableHeight: max(0, usableSize.height - (composerVisible ? dockHeight : 0)))
-                .frame(width: proxy.size.width, height: proxy.size.height)
+                // Keep NavigationStack flexible so it accepts the inset's
+                // reduced safe area. A full-height frame inside this modifier
+                // pushes the persistent composer beyond the visible viewport.
                 .safeAreaInset(edge: .bottom, spacing: 0) {
                     if composerVisible {
                         anchoredComposer(availableSize: usableSize)
