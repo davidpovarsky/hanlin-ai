@@ -3,7 +3,7 @@ import Foundation
 import HanlinPlatformContracts
 import HanlinMiniAppCore
 import HanlinScriptContracts
-import HanlinScriptStore
+@testable import HanlinScriptStore
 import Testing
 
 @Suite("Atomic Scripting installation store")
