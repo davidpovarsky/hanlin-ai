@@ -60,7 +60,7 @@ on:
       paired_test_scope:
         description: Original cross-product flows or the shared ingress chat consumer
         type: choice
-        options: [cross_product, shared_ingress]
+        options: [cross_product, shared_ingress, product_and_share]
         required: false
         default: cross_product
 

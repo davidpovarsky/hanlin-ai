@@ -19,6 +19,9 @@ TEST_SCOPE = os.environ.get("PAIRED_TEST_SCOPE", "cross_product")
 TEST_PLANS = {
     "cross_product": (["AI_HLYUITests/HanlinPairedProductUITests"], 3),
     "shared_ingress": (["AI_HLYTests/ShareInboxHostIntegrationTests", "AI_HLYUITests/HanlinShareInboxUITests"], 5),
+    "product_and_share": (["AI_HLYUITests/HanlinPairedProductUITests",
+                          "AI_HLYTests/ShareInboxHostIntegrationTests",
+                          "AI_HLYUITests/HanlinShareInboxUITests"], 8),
 }
 
 
@@ -76,6 +79,9 @@ def main():
         selectors, expected_tests = TEST_PLANS[TEST_SCOPE]
         state["test_scope"] = TEST_SCOPE
         state["selected_tests"] = selectors
+        if TEST_SCOPE == "product_and_share":
+            state["scope"] += "; original share ingress to Composer and SDK"
+            state["os_share_sheet"] = "NOT_RUN; input uses original store APIs and NSItemProvider in the native host suite"
         if TEST_SCOPE == "shared_ingress":
             state["scope"] = "Actual original App Group ingress, verified file copies, original Composer and SDK consumption"
             state["os_share_sheet"] = "NOT_RUN; input uses original store APIs and NSItemProvider in the native host suite"
@@ -160,7 +166,7 @@ def main():
         if len(set(containers.values())) != 1:
             raise RuntimeError("The installed products do not share the OS-provided App Group container")
         state["app_group"] = {"status": "EXECUTED_PASS", "containers": containers}
-        if TEST_SCOPE == "cross_product":
+        if TEST_SCOPE in {"cross_product", "product_and_share"}:
             archive = fixture_archive(state["sha"])
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.chavrusachat", "data"], "ai-data-container.txt")

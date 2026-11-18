@@ -13,3 +13,5 @@ Native tests cover the actual original App Group, mixed text/link/file, source p
 The existing paired runner has separate exact scopes: cross_product still requires all three original product scenarios; shared_ingress requires four native host tests plus one UI scenario. Both scopes still build both original products, verify signatures, inspect embedded simulator entitlements, and require the OS-provided group containers to match.
 
 Seven source/test files passed Swift syntax parsing. This is not Apple compilation or a native test PASS. Original catalogue entries were preserved; seven new strings have English, Hebrew and Simplified Chinese translations.
+
+The product_and_share scope executes all eight cases after one shared pair of builds and one OS App Group check. It preserves every assertion and expected count while avoiding a second identical app build. Separate scopes remain available for targeted failure diagnosis.
