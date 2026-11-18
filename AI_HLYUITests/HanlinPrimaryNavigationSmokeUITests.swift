@@ -45,9 +45,23 @@ final class HanlinPrimaryNavigationSmokeUITests: XCTestCase {
     func testWholeAppPrimaryNavigationSmoke() throws {
         tap("hanlin-home-tab")
         XCTAssertTrue(app.navigationBars["Hanlin"].firstMatch.waitForExistence(timeout: 15))
-        XCTAssertEqual(app.tabBars.buttons.count, 2, "Chat and Library are the only permanent destinations")
+        // iPadOS 27 exposes the original top bar as Other with direct Button
+        // children; compact layouts may expose a TabBar. Inspect the actual
+        // shared container, including unexpected children, not just two queries.
+        let destinations: Set<String> = ["hanlin-home-tab", "hanlin-library-tab"]
+        let candidates = app.descendants(matching: .any)
+            .containing(.button, identifier: "hanlin-home-tab")
+            .containing(.button, identifier: "hanlin-library-tab")
+            .allElementsBoundByIndex
+        let primary = try XCTUnwrap(candidates.first { container in
+            let identifiers = Set(container.children(matching: .button).allElementsBoundByIndex.map(\.identifier))
+            return destinations.isSubset(of: identifiers)
+        }, "The original Chat and Library controls must share a primary navigation container")
+        let permanentButtons = primary.children(matching: .button)
+        XCTAssertEqual(permanentButtons.count, 2, "Chat and Library are the only permanent destinations")
+        XCTAssertEqual(Set(permanentButtons.allElementsBoundByIndex.map(\.identifier)), destinations)
         for legacy in ["hanlin-vision-tab", "hanlin-models-tab", "hanlin-apps-tab", "hanlin-settings-tab"] {
-            XCTAssertFalse(app.tabBars.buttons[legacy].exists, "Contextual entry unexpectedly became a permanent tab")
+            XCTAssertFalse(primary.descendants(matching: .button)[legacy].exists, "Contextual entry unexpectedly became a permanent tab")
         }
 
         tap("hanlin-library-tab")

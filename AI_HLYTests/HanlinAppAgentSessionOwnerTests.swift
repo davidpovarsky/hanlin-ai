@@ -137,6 +137,44 @@ private struct AppPartModel: LanguageModelV3 {
         #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
     }
 
+    @Test func originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns() async throws {
+        weak var originalStorage: ModelContainer?
+        func makeStore() throws -> (HanlinAppConversationStore, ChatRecords, HanlinConversationRecord) {
+            let container = try database(), context = container.mainContext
+            originalStorage = container
+            let row = ChatRecords(name: "Original deferred receipt", type: "chat", input: "Unsent original draft")
+            context.insert(row); try context.save()
+            let id = try #require(row.id)
+            let namespace = try HanlinConversationNamespace(app: "hanlin", account: "lifetime",
+                workspace: "original", space: id.uuidString)
+            let store = HanlinAppConversationStore(context: context, conversation: row,
+                namespace: namespace, conversationID: id, temporary: false)
+            let record = HanlinConversationRecord(namespace: namespace, conversationID: id, revision: 0,
+                entries: [.init(runID: UUID(), step: 0, sequence: 0, payload: .text("Deferred original receipt"))])
+            return (store, row, record)
+        }
+        let (store, row, record) = try makeStore()
+        // No creator-owned ModelContainer remains. Fail before a SwiftData fetch
+        // if the asynchronous adapter has lost the actual storage owner.
+        _ = try #require(originalStorage, "The original store must own its container while deferred writes remain")
+        let persistence = Task { @MainActor in
+            await Task.yield()
+            try await store.save(record, replacing: nil)
+        }
+        try await persistence.value
+        #expect(try await store.load(record.conversationID, namespace: record.namespace) == record)
+        #expect(try store.requireOriginalConversation() === row)
+        #expect(row.name == "Original deferred receipt" && row.input == "Unsent original draft")
+        let context = try #require(originalStorage).mainContext
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).count == 1)
+        context.delete(row); try context.save()
+        do {
+            _ = try await store.load(record.conversationID, namespace: record.namespace)
+            Issue.record("Retaining storage must never recreate a deleted conversation")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+    }
+
     @Test func identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession() async throws {
         let container = try database(), context = container.mainContext
         let row = ChatRecords(name: "History", type: "chat")

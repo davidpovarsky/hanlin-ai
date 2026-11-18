@@ -207,7 +207,6 @@ struct SettingsView: View {
                     }
                     .accessibilityIdentifier("hanlin-help-costs-link")
                 }
-                .accessibilityIdentifier("hanlin-help-section")
                 Section(header: Text(String(localized: "软件"))) {
                     NavigationLink(destination: SoftwareIntroView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "软件介绍"), systemImage: "text.book.closed")

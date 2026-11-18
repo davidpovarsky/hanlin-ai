@@ -343,14 +343,14 @@ final class HanlinMorphComposerUITests: XCTestCase {
             XCTAssertEqual(input.value as? String, draft, "Closing History must retain the original compact draft")
             XCTAssertTrue(attachment.exists)
         }
-        let libraryTab = app.tabBars.buttons["hanlin-library-tab"].firstMatch
+        let libraryTab = app.buttons["hanlin-library-tab"].firstMatch
         XCTAssertTrue(libraryTab.waitForExistence(timeout: 5))
         libraryTab.tap()
         XCTAssertTrue(app.descendants(matching: .any)["hanlin-personal-library"].firstMatch.waitForExistence(timeout: 10))
         app.buttons["hanlin-settings-tab"].firstMatch.tap()
         XCTAssertTrue(app.descendants(matching: .any)["hanlin-settings-list"].firstMatch.waitForExistence(timeout: 10))
         app.buttons["hanlin-profile-done"].firstMatch.tap()
-        app.tabBars.buttons["hanlin-home-tab"].firstMatch.tap()
+        app.buttons["hanlin-home-tab"].firstMatch.tap()
         XCTAssertTrue(input.waitForExistence(timeout: 10))
         XCTAssertEqual(input.value as? String, draft, "Library/Profile navigation must retain the same draft")
         XCTAssertTrue(attachment.exists, "Library/Profile navigation must retain the real attachment")

@@ -20,6 +20,10 @@ final class HanlinHelpUITests: XCTestCase {
                 if target.isHittable { return target }
                 settings.swipeUp()
             }
+            let hierarchy = XCTAttachment(string: app.debugDescription)
+            hierarchy.name = "unreachable-help-control-" + identifier
+            hierarchy.lifetime = .keepAlways
+            add(hierarchy)
             XCTFail("Profile destination is unreachable: \(identifier)")
             return target
         }

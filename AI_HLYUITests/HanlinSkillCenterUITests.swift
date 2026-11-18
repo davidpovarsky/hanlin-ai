@@ -377,25 +377,20 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(app.buttons["hanlin-skill-import-tab-zip"].firstMatch)
         tapElement(app.buttons["hanlin-skill-import-fixture-button"].firstMatch)
         let install = app.buttons["hanlin-skill-import-install-button"].firstMatch
-        XCTAssertTrue(install.waitForExistence(timeout: 10)); tapElement(install)
+        revealInSkillList(install, identifier: "hanlin-skill-import-preview-list")
+        tapElement(install)
         let row = app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(fixtureID)"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 10)); tapElement(row)
         let action = app.buttons["hanlin-skill-action-picker"].firstMatch
         XCTAssertTrue(action.waitForExistence(timeout: 10)); tapElement(action)
         tapElement(app.buttons["scripts/run.py"].firstMatch)
         let run = app.buttons["hanlin-skill-run"].firstMatch
-        for _ in 0..<5 where !run.isHittable { app.swipeUp() }
+        revealInSkillList(run, identifier: "hanlin-skill-detail-list")
         XCTAssertTrue(run.waitForExistence(timeout: 5)); tapElement(run)
-        let cancel = app.buttons["Cancel"].firstMatch
-        if cancel.waitForExistence(timeout: 1) {
-            tapElement(cancel)
-        } else {
-            // Native iPad confirmation popovers omit the cancel action. A tap
-            // outside dismisses the unapproved operation without executing it.
-            app.navigationBars.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-        }
-        XCTAssertTrue(app.buttons["Allow once"].firstMatch.waitForNonExistence(timeout: 5))
+        try dismissUnapprovedSkillConfirmation()
         XCTAssertFalse(app.staticTexts["hanlin-skill-execution-output"].exists)
+        XCTAssertFalse(app.staticTexts["hanlin-skill-execution-receipt"].exists,
+                       "Dismissing approval must not create an execution receipt")
         tapElement(run)
         let allow = app.buttons["Allow once"].firstMatch
         XCTAssertTrue(allow.waitForExistence(timeout: 5)); tapElement(allow)
@@ -426,14 +421,15 @@ final class HanlinSkillCenterUITests: XCTestCase {
         tapElement(app.buttons["hanlin-skill-import-tab-zip"].firstMatch)
         tapElement(app.buttons["hanlin-skill-import-fixture-button"].firstMatch)
         let install = app.buttons["hanlin-skill-import-install-button"].firstMatch
-        XCTAssertTrue(install.waitForExistence(timeout: 10)); tapElement(install)
+        revealInSkillList(install, identifier: "hanlin-skill-import-preview-list")
+        tapElement(install)
         let row = app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(fixtureID)"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 10)); tapElement(row)
         let action = app.buttons["hanlin-skill-action-picker"].firstMatch
         XCTAssertTrue(action.waitForExistence(timeout: 10)); tapElement(action)
         tapElement(app.buttons["scripts/slow.mjs"].firstMatch)
         let run = app.buttons["hanlin-skill-run"].firstMatch
-        for _ in 0..<5 where !run.isHittable { app.swipeUp() }
+        revealInSkillList(run, identifier: "hanlin-skill-detail-list")
         tapElement(run)
         let allow = app.buttons["Allow once"].firstMatch
         XCTAssertTrue(allow.waitForExistence(timeout: 5)); tapElement(allow)
@@ -632,6 +628,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
         // 1. Add text resource
         let addResButton = app.buttons["hanlin-skill-detail-add-resource-button"].firstMatch
+        revealInSkillList(addResButton, identifier: "hanlin-skill-detail-list")
         XCTAssertTrue(addResButton.waitForExistence(timeout: 10), "Add Resource button not found")
         tapElement(addResButton)
 
@@ -651,11 +648,13 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
         // 2. Import fixture resource
         let importFixtureBtn = app.buttons["hanlin-skill-detail-import-fixture-resource-button"].firstMatch
+        revealInSkillList(importFixtureBtn, identifier: "hanlin-skill-detail-list")
         XCTAssertTrue(importFixtureBtn.waitForExistence(timeout: 5), "Import fixture resource button not found")
         tapElement(importFixtureBtn)
 
         // 3. Edit text resource
         let editResBtn = app.buttons["hanlin-skill-detail-edit-resource-references/doc.md"].firstMatch
+        revealInSkillList(editResBtn, identifier: "hanlin-skill-detail-list")
         XCTAssertTrue(editResBtn.waitForExistence(timeout: 5), "Edit resource button not found")
         tapElement(editResBtn)
         let editContent = app.textViews["hanlin-skill-resource-edit-content-input"].firstMatch
@@ -668,6 +667,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
         // 4. Delete resource
         let deleteResBtn = app.buttons["hanlin-skill-detail-delete-resource-references/doc.md"].firstMatch
+        revealInSkillList(deleteResBtn, identifier: "hanlin-skill-detail-list")
         XCTAssertTrue(deleteResBtn.waitForExistence(timeout: 5), "Delete resource button not found")
         tapElement(deleteResBtn)
         let confirm = app.buttons["Delete"].firstMatch
@@ -677,11 +677,60 @@ final class HanlinSkillCenterUITests: XCTestCase {
 
         // Clean up skill
         let deleteSkill = app.buttons["hanlin-skill-detail-delete-button"].firstMatch
+        revealInSkillList(deleteSkill, identifier: "hanlin-skill-detail-list")
         XCTAssertTrue(deleteSkill.waitForExistence(timeout: 5), "Delete skill button not found")
         tapElement(deleteSkill)
         let confirmDelete = app.buttons["Delete"].firstMatch
         XCTAssertTrue(confirmDelete.waitForExistence(timeout: 5), "Delete skill confirm button not found")
         tapElement(confirmDelete)
+    }
+
+    /// The native List materializes rows only when visible. Scroll the front
+    /// list explicitly: an import sheet also exposes the catalog behind it.
+    private func revealInSkillList(_ target: XCUIElement, identifier: String,
+                                   file: StaticString = #filePath, line: UInt = #line) {
+        let list = app.descendants(matching: .any)[identifier].firstMatch
+        XCTAssertTrue(list.waitForExistence(timeout: 10), "Missing original Skill list: \(identifier)", file: file, line: line)
+        guard list.exists else { return }
+        for attempt in 0..<14 {
+            if target.exists && target.isHittable { return }
+            let above = target.exists && !target.frame.isEmpty
+                ? target.frame.maxY < list.frame.minY
+                : attempt >= 7
+            let start = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.25 : 0.8))
+            let end = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.8 : 0.25))
+            start.press(forDuration: 0.1, thenDragTo: end)
+        }
+        let capture = XCTAttachment(string: app.debugDescription)
+        capture.name = "skill-control-unreachable-" + target.identifier
+        capture.lifetime = .keepAlways
+        add(capture)
+        XCTFail("Original Skill control is not reachable: \(target.identifier)", file: file, line: line)
+    }
+
+    private func dismissUnapprovedSkillConfirmation() throws {
+        let allow = app.buttons["Allow once"].firstMatch
+        XCTAssertTrue(allow.waitForExistence(timeout: 5), "Run must present real approval before dismissal")
+        let cancel = app.buttons["Cancel"].firstMatch
+        if cancel.exists && cancel.isHittable {
+            cancel.tap()
+        } else {
+            let popover = app.popovers.containing(.button, identifier: "Allow once").firstMatch
+            XCTAssertTrue(popover.waitForExistence(timeout: 5), "Expected the native iPad approval popover")
+            let bounds = app.frame
+            let forbidden = popover.frame.insetBy(dx: -16, dy: -16)
+            let offsets = [CGVector(dx: 0.05, dy: 0.95), CGVector(dx: 0.95, dy: 0.95),
+                           CGVector(dx: 0.05, dy: 0.05), CGVector(dx: 0.95, dy: 0.05)]
+            let offset = try XCTUnwrap(offsets.first {
+                let point = CGPoint(x: bounds.minX + bounds.width * $0.dx,
+                                    y: bounds.minY + bounds.height * $0.dy)
+                return bounds.contains(point) && !forbidden.contains(point)
+            }, "No safe dismissal point outside the actual approval popover")
+            // The recorded navigation-bar center was inside Allow once.
+            // Use measured popup geometry, never an underlying control's center.
+            app.coordinate(withNormalizedOffset: offset).tap()
+        }
+        XCTAssertTrue(allow.waitForNonExistence(timeout: 5))
     }
 
     // MARK: - Navigation Helpers

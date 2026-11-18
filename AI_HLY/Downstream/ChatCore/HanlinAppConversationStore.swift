@@ -8,6 +8,10 @@ import SwiftData
 final class HanlinAppConversationStore: HanlinConversationStore {
     let namespace: HanlinConversationNamespace
     let conversationID: UUID
+    // A Session can finish its durable receipt after the scene/test owner exits.
+    // Keep the original storage owner alive for exactly this adapter's lifetime;
+    // retaining a main ModelContext alone is not a storage-lifetime contract.
+    private let storageOwner: ModelContainer
     private let context: ModelContext
     private weak var conversation: ChatRecords?
     private let temporary: Bool
@@ -15,6 +19,7 @@ final class HanlinAppConversationStore: HanlinConversationStore {
 
     init(context: ModelContext, conversation: ChatRecords, namespace: HanlinConversationNamespace,
          conversationID: UUID, temporary: Bool) {
+        self.storageOwner = context.container
         self.context = context; self.conversation = conversation; self.namespace = namespace
         self.conversationID = conversationID; self.temporary = temporary
     }
@@ -23,7 +28,9 @@ final class HanlinAppConversationStore: HanlinConversationStore {
         guard let conversation else { throw HanlinHostError.staleContext }
         if !temporary {
             let id = conversationID
-            let rows = try context.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id }))
+            let rows = try withExtendedLifetime(storageOwner) {
+                try context.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id }))
+            }
             guard rows.count == 1, rows.first === conversation else { throw HanlinHostError.staleContext }
         }
         guard conversation.id == conversationID else { throw HanlinHostError.staleContext }
