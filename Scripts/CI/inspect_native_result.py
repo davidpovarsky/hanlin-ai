@@ -36,25 +36,36 @@ if motion:
     archive = next(raw.rglob("Motion.xcresult.tar.gz"))
     with tarfile.open(archive) as packed:
         packed.extractall(raw / "expanded", filter="data")
-bundles = list(raw.rglob("MiniApps.xcresult" if split else "Motion.xcresult" if motion else "NativeScriptProductionE2EResult.xcresult"))
-assert len(bundles) == 1
-tests = ["MotionUITests/testBRapidReversalPresetSwitchAndPersistence()", "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()"] if motion else ["HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()"]
-if requested:
-    tests = []
-    for selected in requested.split(","):
-        selected = selected.strip().removesuffix("()")
-        if selected.count("/") == 2:
-            target, selected = selected.split("/", 1)
-            assert target == ("HanlinMiniAppsUITests" if split else "AI_HLYUITests"), "Wrong native test target"
-        assert re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*/[A-Za-z_][A-Za-z_0-9]*", selected), "Select exact original UI methods"
-        tests.append(selected + "()")
-assert 1 <= len(tests) <= 20, "Bound the original attachment inspection"
-(out / "selected-tests.json").write_text(json.dumps(tests, indent=2))
-with (out / "tests.json").open("w") as log:
-    subprocess.run(["xcrun", "xcresulttool", "get", "test-results", "tests", "--path", str(bundles[0]), "--format", "json"], stdout=log, check=True)
-for index, test in enumerate(tests):
+default_target = "HanlinMiniAppsUITests" if split else "MotionUITests" if motion else "AI_HLYUITests"
+default_tests = ["MotionUITests/testBRapidReversalPresetSwitchAndPersistence()", "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()"] if motion else ["HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()"]
+selections = []
+for selected in requested.split(",") if requested else default_tests:
+    selected = selected.strip().removesuffix("()")
+    target = default_target
+    if selected.count("/") == 2:
+        target, selected = selected.split("/", 1)
+    allowed = {"HanlinMiniAppsUITests"} if split else {"MotionUITests"} if motion else {"AI_HLYTests", "AI_HLYUITests"}
+    assert target in allowed, "Wrong original native test target"
+    assert re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*/[A-Za-z_][A-Za-z_0-9]*", selected), "Select exact original methods"
+    bundle_name = "MiniApps.xcresult" if split else "Motion.xcresult" if motion else "DownstreamTestsResult.xcresult" if target == "AI_HLYTests" else "NativeScriptProductionE2EResult.xcresult"
+    bundles = list(raw.rglob(bundle_name))
+    assert len(bundles) == 1, "Expected exactly one original native result: " + bundle_name
+    selections.append((target, selected + "()", bundles[0]))
+assert 1 <= len(selections) <= 20, "Bound the original attachment inspection"
+(out / "selected-tests.json").write_text(json.dumps([test for _, test, _ in selections], indent=2))
+(out / "selected-test-origins.json").write_text(json.dumps([
+    {"index": index, "target": target, "test": test, "bundle": bundle.name}
+    for index, (target, test, bundle) in enumerate(selections)
+], indent=2))
+exported_bundles = set()
+for index, (target, test, bundle) in enumerate(selections):
+    if bundle not in exported_bundles:
+        name = "tests.json" if not exported_bundles else target + "-tests.json"
+        with (out / name).open("w") as log:
+            subprocess.run(["xcrun", "xcresulttool", "get", "test-results", "tests", "--path", str(bundle), "--format", "json"], stdout=log, check=True)
+        exported_bundles.add(bundle)
     folder = out / f"case-{index}"
-    subprocess.run(["xcrun", "xcresulttool", "export", "attachments", "--path", str(bundles[0]), "--output-path", str(folder), "--test-id", test], check=True)
+    subprocess.run(["xcrun", "xcresulttool", "export", "attachments", "--path", str(bundle), "--output-path", str(folder), "--test-id", test], check=True)
     with (out / f"case-{index}-activities.json").open("w") as log:
-        result = subprocess.run(["xcrun", "xcresulttool", "get", "test-results", "activities", "--path", str(bundles[0]), "--test-id", test, "--format", "json"], stdout=log, stderr=subprocess.STDOUT)
+        result = subprocess.run(["xcrun", "xcresulttool", "get", "test-results", "activities", "--path", str(bundle), "--test-id", test, "--format", "json"], stdout=log, stderr=subprocess.STDOUT)
     assert result.returncode == 0
