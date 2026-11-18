@@ -106,9 +106,15 @@ def main():
         # Boot the owned device before compilation. Its first-boot OS services can
         # finish while Xcode builds; previously the first app install immediately
         # followed a cold boot (176.55s on one runner, timed out on the other).
+        # Resolve read-only CLI metadata and capture host resources BEFORE first
+        # boot. Run 44248241361 stalled even help/ps while the fresh OS initialized,
+        # so its product build and all eight acceptance cases never started.
+        command(["xcrun", "simctl", "help", "get_app_container"], "container-command-help.txt")
+        command(["sysctl", "hw.memsize", "hw.ncpu"], "before-boot-host-resources.txt")
+        command(["vm_stat"], "before-boot-memory.txt")
+        command(["ps", "-axo", "pid,ppid,%cpu,%mem,state,etime,comm"], "before-boot-processes.txt")
         command(["xcrun", "simctl", "boot", simulator], "boot.log")
         command(["xcrun", "simctl", "bootstatus", simulator, "-b"], "bootstatus.log", timeout=300)
-        command(["xcrun", "simctl", "help", "get_app_container"], "container-command-help.txt")
         derived = Path(os.environ["SPLIT_DERIVED_DATA"])
         base = ["xcodebuild", "-project", "AI_HLY.xcodeproj",
             "-destination", "platform=iOS Simulator,id=" + simulator,
