@@ -42,3 +42,9 @@ Every resolved address is checked against a conservative special-use address pol
 - https://www.iana.org/assignments/iana-ipv6-special-registry/
 
 Apple SDK-interface fallback via the installed apple-devtools failed before dispatch with HTTP 422 (Unexpected inputs: modules). No toolkit or unrelated repository was modified; readable official signatures and the actual focused project build are the validation authorities.
+
+## Original app integration acceptance added
+
+The original HanlinNativeA2UIChatUITests now also sends the gallery/link fixture through the real app HTTP/provider/schema/SDK/session/rendering path, loads real Apple image and HTML bytes inside the original assistant surface, retains original source links, reopens that exact conversation and rich part, and verifies that local media loading does not grant restored form authority or issue another model request. Existing five app journeys remain. This sixth test is authored and parse-checked; native execution is pending. The model transport is an explicit fixture, not live-provider evidence.
+
+Fixture: AI_HLYUITests/Fixtures/A2UIGalleryLinkReplay.jsonl; SHA-256 ac189f8a2f0b20e0c3c501ab627152f5b254ee5ce0cdb7a6d60340248226f1d2.

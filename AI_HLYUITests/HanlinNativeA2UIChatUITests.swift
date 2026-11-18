@@ -81,6 +81,61 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         record("same-original-chat-canonical-history-before-request")
     }
 
+    func testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory() throws {
+        try launch(continuation: false, fixtureName: "A2UIGalleryLinkReplay")
+        sendFirstPrompt()
+        let originalPart = surface().identifier
+        let originalChat = element("hanlin-native-a2ui-chat-id").label
+        XCTAssertNotNil(UUID(uuidString: originalChat))
+
+        func inspectExpandedMedia(readOnly: Bool) {
+            let expand = app.buttons["expansion_action_sheet"].firstMatch
+            XCTAssertTrue(expand.waitForExistence(timeout: 10))
+            expand.tap()
+            let done = app.navigationBars["Result"].buttons["Done"].firstMatch
+            XCTAssertTrue(done.waitForExistence(timeout: 10))
+            let submit = app.buttons["Submit replay form"].firstMatch
+            XCTAssertTrue(submit.exists)
+            XCTAssertEqual(submit.isEnabled, !readOnly)
+            let loadImages = app.buttons["Load images"].firstMatch
+            XCTAssertTrue(loadImages.waitForExistence(timeout: 10))
+            XCTAssertTrue(loadImages.isEnabled)
+            loadImages.tap()
+            XCTAssertTrue(app.buttons["SwiftUI framework icon"].firstMatch.waitForExistence(timeout: 30),
+                          "The original assistant surface must retrieve an actual bounded HTTPS image")
+            XCTAssertTrue(app.links["Open source: SwiftUI"].firstMatch.exists,
+                          "The image must retain its own original citation")
+            let loadLink = app.buttons["Load link preview"].firstMatch
+            if !loadLink.isHittable { app.swipeUp() }
+            XCTAssertTrue(loadLink.isHittable)
+            loadLink.tap()
+            XCTAssertTrue(app.staticTexts.matching(NSPredicate(
+                format: "label CONTAINS 'SwiftUI' AND label CONTAINS 'Apple'"
+            )).firstMatch.waitForExistence(timeout: 30),
+                          "Link metadata must come from the real cited page inside the original app")
+            XCTAssertTrue(app.links["Open linked source"].firstMatch.exists)
+            // Local loading is not permission to submit a restored model action.
+            if !submit.exists { app.swipeDown() }
+            XCTAssertEqual(submit.isEnabled, !readOnly)
+            record(readOnly ? "original-gallery-link-history" : "original-gallery-link-live")
+            done.tap()
+            assertTransport(count: 1)
+        }
+
+        inspectExpandedMedia(readOnly: false)
+        let back = app.navigationBars.buttons.matching(NSPredicate(
+            format: "identifier == 'BackButton' OR label == 'Hylic.AI' OR label == 'Back'"
+        )).firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 10))
+        back.tap()
+        XCTAssertTrue(element("hanlin-compact-home-screen").waitForExistence(timeout: 10))
+        app.buttons["hanlin-compact-recent-row-0"].firstMatch.tap()
+        XCTAssertTrue(app.descendants(matching: .any)[originalPart].firstMatch.waitForExistence(timeout: 20))
+        XCTAssertEqual(element("hanlin-native-a2ui-chat-id").label, originalChat)
+        inspectExpandedMedia(readOnly: true)
+        XCTAssertFalse(element("hanlin-a2ui-history-unavailable").exists)
+    }
+
     func testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow() throws {
         try launch(continuation: false, surfaceOnly: true)
         sendFirstPrompt(expectText: false)
@@ -136,10 +191,10 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         record("original-mixed-openui-react-native-state-and-action")
     }
 
-    private func launch(continuation: Bool, surfaceOnly: Bool = false, openUI: String? = nil) throws {
+    private func launch(continuation: Bool, surfaceOnly: Bool = false, openUI: String? = nil, fixtureName: String = "A2UIReplayMedia") throws {
         let bundle = Bundle(for: Self.self)
-        let url = bundle.url(forResource: "A2UIReplayMedia", withExtension: "jsonl", subdirectory: "Fixtures")
-            ?? bundle.url(forResource: "A2UIReplayMedia", withExtension: "jsonl")
+        let url = bundle.url(forResource: fixtureName, withExtension: "jsonl", subdirectory: "Fixtures")
+            ?? bundle.url(forResource: fixtureName, withExtension: "jsonl")
         let fixture = try XCTUnwrap(url, "The synchronized UI target must include the real JSONL fixture resource")
         let frames = try String(contentsOf: fixture, encoding: .utf8).split(separator: "\n").map(String.init)
         var parts: [[String: Any]] = []
