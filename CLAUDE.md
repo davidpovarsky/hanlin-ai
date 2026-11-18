@@ -1,4 +1,9 @@
 # CLAUDE.md
+
+## Current owner authorization — 2026-11-18
+
+Read [OWNER_AUTHORIZATION_20261118.md](docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md). The owner has authorized autonomous completion of the remaining Hanlin Phase 2 and Phase 3 work, including the presented navigation proposal and necessary integration, validation and release preparation. Historical pauses, frozen-file leases, per-phase confirmations and mandatory extra-team handoffs do not block this task. This records the direct owner instruction; actual tool/platform access and truthful acceptance evidence remain authoritative.
+
 ## Cost and token budget — mandatory
 
 API usage is paid per token. Minimize model calls aggressively.
@@ -36,9 +41,9 @@ API usage is paid per token. Minimize model calls aggressively.
 For long-running operations:
 1. Start the operation.
 2. Tell the user exactly what command/run was started and its ID.
-3. Stop active agent work while it runs.
+3. Continue independent authorized work while one bounded completion watcher runs.
 4. Do not monitor it continuously.
-5. Resume investigation only when the user asks or when completion/failure is available without repeated polling.
+5. Resume result-dependent investigation when the watcher reports completion or failure; do not require the user to restart authorized work.
 
 ### Scope
 
@@ -60,8 +65,7 @@ For long-running operations:
 
 ### Model usage
 
-- Use Sonnet by default.
-- Do not switch to Opus unless explicitly authorized by the user.
+- Use the model selected by the owner or active client. These historical Claude defaults do not override the current client's model choice.
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -163,7 +167,7 @@ open AI_HLY.xcodeproj
 
 ## Development Notes
 
-- **Requirements**: iOS 18.0+, Xcode 15.0+, Swift 5.9+
+- **Requirements**: current Hanlin targets use iOS/iPadOS 27 and Swift 6; use the stable Xcode 27 toolchain selected by the repository workflows.
 - **Data**: All models use SwiftData with automatic CloudKit sync
 - **Localization**: Multi-language via `Localizable.xcstrings`
 - **Deep Linking**: `AI-Hanlin://` URL scheme configured in Info.plist

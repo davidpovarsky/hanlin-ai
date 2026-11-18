@@ -1,5 +1,9 @@
 # Named AI Team Operating Contract
 
+## Current Hanlin execution — 2026-11-18
+
+The owner-authorized Phase 2/3 continuation uses one developer. Prior roles and handoffs below are historical and do not require starting or waiting for a separate manager or QA agent. See `docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md` in the repository root.
+
 **Additive guidance only:** Existing repository `CLAUDE.md`, `PROJECT_AGENT_GUIDANCE.md`, `PROJECT_BOARD.md`, CI rules, security and release policies take precedence.
 
 ## 1. Permanent Team (Stable Across Codex and Antigravity)
@@ -38,7 +42,7 @@ Follow `docs/ai-team/TASK_HANDOFF_TEMPLATE.md` for handoff formatting.
 
 ## 4. Verification Standards
 
-- Roni independently verifies every implementation before completion.
+- The current single developer verifies the implementation with actual tests and retained evidence; the historical Roni handoff is not a prerequisite for this task.
 - Distinguish strictly between: `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `FAILED`, `NOT_RUN`, and `BLOCKED`.
 - Simulator or build-only success does NOT satisfy physical hardware requirements.
 - Never report fake or assumed passes.

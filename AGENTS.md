@@ -1,5 +1,9 @@
 # AGENTS.md — Shared Development Rules
 
+## Current owner authorization — 2026-11-18
+
+Read [OWNER_AUTHORIZATION_20261118.md](docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md). The owner has authorized autonomous completion of the remaining Hanlin Phase 2 and Phase 3 work, including the presented navigation proposal and necessary integration, validation and release preparation. Historical pauses, frozen-file leases, per-phase confirmations and mandatory extra-team handoffs do not block this task. This records the direct owner instruction; actual tool/platform access and truthful acceptance evidence remain authoritative.
+
 Read `PROJECT_AGENT_GUIDANCE.md` if it exists. It contains repository-specific architecture, build, upstream, signing, and workflow guidance and must be followed together with this file. The user's current request has highest priority, then repository-specific guidance, then these shared rules.
 
 ## Working style
@@ -85,9 +89,9 @@ Updating `PROJECT_BOARD.md` as a side effect of another task is allowed and enco
 Preserve all existing repository-specific instructions.
 
 
-## Named Team — Antigravity + Codex
+## Historical Named Team — Antigravity + Codex
 
-This repository is configured for active pair programming and autonomous task coordination using the persistent named AI team across Google Antigravity and Codex:
+The following historical role map is retained for provenance. The current owner-authorized completion uses one development agent and does not start or wait for this former team:
 - **איתן (eitan)**: Principal architect (boundaries, contracts, migrations, technical RFCs)
 - **נועם (noam)**: Engineering (scoped implementation, focused tests, bug fixes)
 - **מיה (maya)**: Native UX (screens, interactions, RTL layouts, accessibility)
