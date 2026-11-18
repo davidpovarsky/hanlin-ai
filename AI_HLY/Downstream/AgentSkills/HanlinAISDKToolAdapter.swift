@@ -32,6 +32,7 @@ final class HanlinAISDKToolAdapter {
     let session: AssistantCapabilitySession
     var preparedTools: AssistantToolBridge.PreparedTools
     let catalog: HanlinSkillCatalog
+    let skillStore: SkillStore
     let modelContext: ModelContext?
     let currentLanguage: String
     let progressSummaryRequired: Bool
@@ -111,11 +112,13 @@ final class HanlinAISDKToolAdapter {
         callbacks: Callbacks = Callbacks(),
         reportProgressController: ReportProgressController = ReportProgressController(),
         diagnosticsRecorder: AgentDiagnosticsRecorder? = nil,
-        currentRoundID: UUID? = nil
+        currentRoundID: UUID? = nil,
+        skillStore: SkillStore = .shared
     ) {
         self.session = session
         self.preparedTools = preparedTools
         self.catalog = catalog
+        self.skillStore = skillStore
         self.modelContext = modelContext
         self.currentLanguage = currentLanguage
         self.progressSummaryRequired = progressSummaryRequired
@@ -207,6 +210,8 @@ final class HanlinAISDKToolAdapter {
     /// Generates step preparation metadata for `HanlinAISDKAgentEngine` and binds diagnostics round.
     func prepareStep(stepNumber: Int) async -> HanlinAISDKStepPreparation {
         currentStepIndex = stepNumber
+        let visibleSkills = await catalog.modelVisibleSkills(store: skillStore)
+        session.retainLoadedSkills(allowedIDs: Set(visibleSkills.map(\.id)))
         let active = currentActiveToolAliases()
         let sizes = preparedTools.schemaSizes()
         let visibleBytes = active.reduce(0) { $0 + (sizes[$1] ?? 400) }
@@ -325,7 +330,8 @@ final class HanlinAISDKToolAdapter {
                     session: self.session,
                     catalog: self.catalog,
                     schemaSizes: self.preparedTools.schemaSizes(),
-                    availableAliases: availableAliases
+                    availableAliases: availableAliases,
+                    store: self.skillStore
                 )
                 let duration = Date().timeIntervalSince(executionStart)
                 let isError = result.hasPrefix("Error:")
@@ -406,7 +412,8 @@ final class HanlinAISDKToolAdapter {
                 let result = await ReadSkillResourceTool.execute(
                     argumentsJSON: argumentsJSON,
                     session: self.session,
-                    catalog: self.catalog
+                    catalog: self.catalog,
+                    store: self.skillStore
                 )
                 let duration = Date().timeIntervalSince(executionStart)
                 let isError = result.hasPrefix("Error:")

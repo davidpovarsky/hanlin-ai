@@ -17,6 +17,8 @@ public final class AssistantCapabilitySession {
 
     public private(set) var loadedSkillIDs: Set<HanlinSkillID> = []
     public private(set) var loadedInstructionTexts: [String] = []
+    private var loadedInstructionsBySkill: [HanlinSkillID: String] = [:]
+    private var loadedToolHintsBySkill: [HanlinSkillID: Set<String>] = [:]
     public var loadedSkillInstructions: [String] { loadedInstructionTexts }
     public private(set) var activeSkillToolHints: Set<String> = []
     public private(set) var exposedToolAliases: Set<String> = []
@@ -50,12 +52,26 @@ public final class AssistantCapabilitySession {
     ) {
         let isNew = loadedSkillIDs.insert(id).inserted
         let trimmed = instructionText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if isNew { loadedInstructionsBySkill[id] = trimmed }
+        loadedToolHintsBySkill[id, default: []].formUnion(preferredToolIDs)
         if isNew && !trimmed.isEmpty && !loadedInstructionTexts.contains(trimmed) {
             loadedInstructionTexts.append(trimmed)
         }
         for hint in preferredToolIDs {
             activeSkillToolHints.insert(hint)
         }
+    }
+
+    /// Prune loaded instruction context when the current source is disabled or
+    /// excluded by its original invocation policy. Independently discovered tools
+    /// remain owned by the existing Tool catalog, not by a Skill's metadata.
+    func retainLoadedSkills(allowedIDs: Set<HanlinSkillID>) {
+        loadedSkillIDs.formIntersection(allowedIDs)
+        loadedInstructionsBySkill = loadedInstructionsBySkill.filter { allowedIDs.contains($0.key) }
+        loadedToolHintsBySkill = loadedToolHintsBySkill.filter { allowedIDs.contains($0.key) }
+        let retainedInstructions = Set(loadedInstructionsBySkill.values)
+        loadedInstructionTexts.removeAll { !retainedInstructions.contains($0) }
+        activeSkillToolHints = Set(loadedToolHintsBySkill.values.flatMap { $0 })
     }
 
     /// Expose tool aliases for model-visibility in subsequent recursive rounds.
@@ -102,6 +118,8 @@ public final class AssistantCapabilitySession {
     public func reset() {
         loadedSkillIDs.removeAll()
         loadedInstructionTexts.removeAll()
+        loadedInstructionsBySkill.removeAll()
+        loadedToolHintsBySkill.removeAll()
         activeSkillToolHints.removeAll()
         exposedToolAliases.removeAll()
         discoveredToolAliases.removeAll()

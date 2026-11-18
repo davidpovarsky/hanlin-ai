@@ -1,0 +1,361 @@
+{
+  "repository": "openclaw/openclaw",
+  "tag": "v2026.11.3",
+  "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+  "target": "node24.5",
+  "buildTools": {
+    "typescript": "6.0.3",
+    "esbuild": "0.28.2"
+  },
+  "compilerOptions": {
+    "alwaysStrict": true
+  },
+  "sourceLedgerSHA256": "3bf1c2ac60d5c18de8e91ce22072768b3eec1a6cb00373f0cbf6f295b4d10be8",
+  "extractionSHA256": "a18bb3f9bc96815ddc3b93e27ab335bdad1c06a532b85909f15270307db8e1ad",
+  "declarationClosureSHA256": "fb9956a6cd0210127db8e5060bceb5a69a02139955e09be2b3444410b432ed09",
+  "retainedDeclarations": 90,
+  "originalModuleCount": 21,
+  "artifactSHA256": "d6cc833943108245a2a68fc85ff4d67bf50719ade36e52fc63c784afedf9d565",
+  "artifactBytes": 136257,
+  "runtimeImports": [
+    "node:fs",
+    "node:module",
+    "node:path"
+  ],
+  "bundledDependencies": {
+    "json5": {
+      "version": "2.2.3",
+      "manifestSHA256": "1927c4592e3811cf9b8c86e568df1c41a373b628b4b322f88872395ef87e2ba5",
+      "licenseSHA256": "53e59feb13058722d977c699eb0407c7bce2f93c949b681bbd2ff31698535927"
+    },
+    "semver": {
+      "version": "7.8.5",
+      "manifestSHA256": "7c94cb7f2a53c27b20d76386ec144c062894dbcc909cfabd0f728c37874b1776",
+      "licenseSHA256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b"
+    }
+  },
+  "exports": [
+    "applyOpenClawManifestInstallCommonFields",
+    "evaluateRuntimeEligibility",
+    "isConfigPathTruthyWithDefaults",
+    "isSkillEntrySelected",
+    "parseFrontmatterBool",
+    "parseOpenClawManifestInstallBase",
+    "resolveBundledAllowlist",
+    "resolveOpenClawManifestBlock",
+    "resolveOpenClawManifestInstall",
+    "resolveOpenClawManifestOs",
+    "resolveOpenClawManifestRequires",
+    "resolveSkillInvocationPolicy",
+    "resolveSkillKey",
+    "resolveSkillManifestMetadata",
+    "resolveSkillsInstallPreferences",
+    "setActiveDegradedSecretOwners",
+    "shouldIncludeSkill"
+  ],
+  "scope": "Unchanged declaration closure of original skill selection, enablement, requirements, install-hint normalization and invocation policy; no OpenClaw application, YAML parser, installer, secret provider or new execution engine.",
+  "buildInputs": [
+    {
+      "name": "packages/normalization-core/src/string-coerce.ts",
+      "bytes": 776
+    },
+    {
+      "name": "packages/normalization-core/src/string-normalization.ts",
+      "bytes": 407
+    },
+    {
+      "name": "packages/normalization-core/src/expect.ts",
+      "bytes": 216
+    },
+    {
+      "name": "packages/normalization-core/src/record-coerce.ts",
+      "bytes": 348
+    },
+    {
+      "name": "src/secrets/ref-contract.ts",
+      "bytes": 715
+    },
+    {
+      "name": "src/config/types.secrets.ts",
+      "bytes": 2293
+    },
+    {
+      "name": "src/secrets/runtime-degraded-state.ts",
+      "bytes": 1160
+    },
+    {
+      "name": "src/infra/prototype-keys.ts",
+      "bytes": 180
+    },
+    {
+      "name": "src/shared/requirements.ts",
+      "bytes": 548
+    },
+    {
+      "name": "src/shared/config-eval.ts",
+      "bytes": 4028
+    },
+    {
+      "name": "src/skills/discovery/agent-filter.ts",
+      "bytes": 457
+    },
+    {
+      "name": "../../node_modules/semver/internal/constants.js",
+      "bytes": 873
+    },
+    {
+      "name": "../../node_modules/semver/internal/debug.js",
+      "bytes": 240
+    },
+    {
+      "name": "../../node_modules/semver/internal/re.js",
+      "bytes": 8139
+    },
+    {
+      "name": "../../node_modules/semver/internal/parse-options.js",
+      "bytes": 338
+    },
+    {
+      "name": "../../node_modules/semver/internal/identifiers.js",
+      "bytes": 525
+    },
+    {
+      "name": "../../node_modules/semver/classes/semver.js",
+      "bytes": 9891
+    },
+    {
+      "name": "../../node_modules/semver/functions/parse.js",
+      "bytes": 331
+    },
+    {
+      "name": "../../node_modules/semver/functions/valid.js",
+      "bytes": 176
+    },
+    {
+      "name": "../../node_modules/semver/functions/clean.js",
+      "bytes": 205
+    },
+    {
+      "name": "../../node_modules/semver/functions/inc.js",
+      "bytes": 478
+    },
+    {
+      "name": "../../node_modules/semver/functions/diff.js",
+      "bytes": 1423
+    },
+    {
+      "name": "../../node_modules/semver/functions/major.js",
+      "bytes": 136
+    },
+    {
+      "name": "../../node_modules/semver/functions/minor.js",
+      "bytes": 136
+    },
+    {
+      "name": "../../node_modules/semver/functions/patch.js",
+      "bytes": 136
+    },
+    {
+      "name": "../../node_modules/semver/functions/prerelease.js",
+      "bytes": 234
+    },
+    {
+      "name": "../../node_modules/semver/functions/compare.js",
+      "bytes": 170
+    },
+    {
+      "name": "../../node_modules/semver/functions/rcompare.js",
+      "bytes": 132
+    },
+    {
+      "name": "../../node_modules/semver/functions/compare-loose.js",
+      "bytes": 132
+    },
+    {
+      "name": "../../node_modules/semver/functions/compare-build.js",
+      "bytes": 281
+    },
+    {
+      "name": "../../node_modules/semver/functions/sort.js",
+      "bytes": 161
+    },
+    {
+      "name": "../../node_modules/semver/functions/rsort.js",
+      "bytes": 163
+    },
+    {
+      "name": "../../node_modules/semver/functions/gt.js",
+      "bytes": 124
+    },
+    {
+      "name": "../../node_modules/semver/functions/lt.js",
+      "bytes": 124
+    },
+    {
+      "name": "../../node_modules/semver/functions/eq.js",
+      "bytes": 126
+    },
+    {
+      "name": "../../node_modules/semver/functions/neq.js",
+      "bytes": 128
+    },
+    {
+      "name": "../../node_modules/semver/functions/gte.js",
+      "bytes": 127
+    },
+    {
+      "name": "../../node_modules/semver/functions/lte.js",
+      "bytes": 127
+    },
+    {
+      "name": "../../node_modules/semver/functions/cmp.js",
+      "bytes": 961
+    },
+    {
+      "name": "../../node_modules/semver/functions/coerce.js",
+      "bytes": 2004
+    },
+    {
+      "name": "../../node_modules/semver/functions/truncate.js",
+      "bytes": 1021
+    },
+    {
+      "name": "../../node_modules/semver/internal/lrucache.js",
+      "bytes": 802
+    },
+    {
+      "name": "../../node_modules/semver/classes/range.js",
+      "bytes": 15647
+    },
+    {
+      "name": "../../node_modules/semver/classes/comparator.js",
+      "bytes": 3631
+    },
+    {
+      "name": "../../node_modules/semver/functions/satisfies.js",
+      "bytes": 247
+    },
+    {
+      "name": "../../node_modules/semver/ranges/to-comparators.js",
+      "bytes": 282
+    },
+    {
+      "name": "../../node_modules/semver/ranges/max-satisfying.js",
+      "bytes": 593
+    },
+    {
+      "name": "../../node_modules/semver/ranges/min-satisfying.js",
+      "bytes": 591
+    },
+    {
+      "name": "../../node_modules/semver/ranges/min-version.js",
+      "bytes": 1514
+    },
+    {
+      "name": "../../node_modules/semver/ranges/valid.js",
+      "bytes": 326
+    },
+    {
+      "name": "../../node_modules/semver/ranges/outside.js",
+      "bytes": 2204
+    },
+    {
+      "name": "../../node_modules/semver/ranges/gtr.js",
+      "bytes": 231
+    },
+    {
+      "name": "../../node_modules/semver/ranges/ltr.js",
+      "bytes": 227
+    },
+    {
+      "name": "../../node_modules/semver/ranges/intersects.js",
+      "bytes": 224
+    },
+    {
+      "name": "../../node_modules/semver/ranges/simplify.js",
+      "bytes": 1355
+    },
+    {
+      "name": "../../node_modules/semver/ranges/subset.js",
+      "bytes": 7478
+    },
+    {
+      "name": "../../node_modules/semver/index.js",
+      "bytes": 2691
+    },
+    {
+      "name": "src/infra/semver.ts",
+      "bytes": 160
+    },
+    {
+      "name": "src/infra/npm-registry-spec.ts",
+      "bytes": 3901
+    },
+    {
+      "name": "../../node_modules/json5/lib/unicode.js",
+      "bytes": 15815
+    },
+    {
+      "name": "../../node_modules/json5/lib/util.js",
+      "bytes": 885
+    },
+    {
+      "name": "../../node_modules/json5/lib/parse.js",
+      "bytes": 22402
+    },
+    {
+      "name": "../../node_modules/json5/lib/stringify.js",
+      "bytes": 6983
+    },
+    {
+      "name": "../../node_modules/json5/lib/index.js",
+      "bytes": 143
+    },
+    {
+      "name": "src/compat/legacy-names.ts",
+      "bytes": 49
+    },
+    {
+      "name": "src/utils/boolean.ts",
+      "bytes": 894
+    },
+    {
+      "name": "src/infra/sealed-runtime-registry.ts",
+      "bytes": 118
+    },
+    {
+      "name": "src/utils/parse-json-compat.ts",
+      "bytes": 1574
+    },
+    {
+      "name": "src/shared/frontmatter.ts",
+      "bytes": 3674
+    },
+    {
+      "name": "src/skills/loading/frontmatter.ts",
+      "bytes": 5286
+    },
+    {
+      "name": "src/skills/loading/source.ts",
+      "bytes": 334
+    },
+    {
+      "name": "src/skills/loading/config.ts",
+      "bytes": 4328
+    },
+    {
+      "name": "original-policy-entry.ts",
+      "bytes": 718
+    }
+  ],
+  "acceptance": "BUILD_ONLY; original parity, native integration and device acceptance are separate",
+  "nativeResources": {
+    "./generated/policy.mjs": "d6cc833943108245a2a68fc85ff4d67bf50719ade36e52fc63c784afedf9d565",
+    "./policy-probe.mjs": "b1f021007db883226b65d3d5b70f83e009f00a259fc715e464ca2c7c8dfc73ec",
+    "./generated/native-policy-contract.mjs": "b9da6ef964550eeb68b432eda195448707b9bc945558aadcd986246a0bafdb19",
+    "./generated/upstream-policy-tests.mjs": "a38f3b14d6d759606404ac480aeb32e2a10bc5de23eb6e3fffb2633b8c708814",
+    "./generated/policy-original-test-selection.json": "9db023cdfc6236621f80aaf5db559a52833c38500516cfdac424dca3c07add79",
+    "./Tests/policy-upstream-shim.mjs": "f3b9a74f2f4ff61e6e64235d3b089b74d986718d5c9d0a4dce7fee89f202339d",
+    "./native-policy-probe.mjs": "9d2210b00136aa1a269dcb2f1ac22d5f72bdeeb03558a389a9f7d842b6775dfd"
+  }
+}

@@ -9,7 +9,7 @@ import ZIPFoundation
 @MainActor
 struct SkillRuntimeProductTests {
     @Test(arguments: ["scalar", "array", "bins-scalar", "unknown-requirement", "always-string", "valid"])
-    func openClawInputBoundaryRejectsUnsupportedShapes(_ fixture: String) throws {
+    func openClawInputBoundaryRejectsUnsupportedShapes(_ fixture: String) async throws {
         let metadata: String
         switch fixture {
         case "scalar": metadata = "metadata: opaque-legacy-value\n"
@@ -26,9 +26,9 @@ struct SkillRuntimeProductTests {
             findings: [], visitedNodes: 1, inputBytes: bytes.count, limitations: [])
         let action = try SkillRuntimeRequirements.action(skillID: "boundary-test", document: document,
             path: "run.js", bytes: bytes, engine: .node, arguments: [], environmentID: "boundary-test",
-            syntax: syntax, openClawKnown: true)
-        #expect(action.requirementsComplete == (fixture == "valid"),
-            "A previous diagnostic observation cannot make an unsupported input shape complete")
+            syntax: syntax, openClawReport: try await SkillRuntimeOpenClaw.inspect(document))
+        #expect(action.requirementsComplete == (fixture == "valid" || fixture == "bins-scalar"),
+            "Only the actual original policy can accept normalized CSV/list metadata; opaque, unknown and malformed shapes remain incomplete")
     }
 
     @Test(arguments: ["requirements.txt", "pyproject.toml"])

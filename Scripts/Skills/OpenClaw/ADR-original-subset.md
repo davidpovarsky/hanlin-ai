@@ -1,8 +1,32 @@
 # Original OpenClaw subset boundary
 
-Status: proposed source boundary; full product integration remains incomplete.
+Status: maintained original-source extraction implemented; expanded native/product acceptance pending.
 Owner: SKILL-OPENCLAW-03 / SDK-Host. Runtime-05 owns readiness, engine choice and
 ExecutionPlan. This decision does not authorize a merge or distribution.
+
+## 2026-11-18 decision update
+
+The historical direct-bundle rejection below still applies to loading the entire
+OpenClaw graph. Alternative 2 is now implemented as a maintained source extractor:
+90 unchanged declarations in 21 modules, explicit symbol closure, omitted-initializer
+rejection, exact JSON5/semver pins and original licenses. The policy is 136257 bytes,
+SHA256 d6cc833943108245a2a68fc85ff4d67bf50719ade36e52fc63c784afedf9d565.
+
+Selected original frontmatter/selection/config/invocation functions now connect
+through Yams, the original Node job boundary, Runtime05, catalog, Skill tools,
+SDK continuation and Skill Center. No function body was ported to Swift or replaced.
+Always supplying observed native binary callbacks prevents desktop PATH discovery.
+Material unknown config/binary facts remain unknown. Existing Skill environment
+isolation excludes shared secrets. Original secret-owner/bundled-selection policy
+is retained and tested; Hanlin invents no upstream config or SecretRef values.
+
+Portable Node24.5 JITless evidence: 11 cases contain 28 unchanged upstream test
+invocations and 64 assertions. The same in-process harness passed portably. New
+native app/UI acceptance is pending; physical iPad startup/RAM and live product
+gates remain open. See README and the continuation acceptance receipt.
+
+The statements below preserve the 2026-11-15 experiment and then-open proposal as
+decision history. They do not describe the current implementation.
 
 ## Decision supported by current evidence
 

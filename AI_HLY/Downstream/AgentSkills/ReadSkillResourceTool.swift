@@ -47,7 +47,8 @@ public enum ReadSkillResourceTool {
     public static func execute(
         argumentsJSON: String,
         session: AssistantCapabilitySession,
-        catalog: HanlinSkillCatalog = .shared
+        catalog: HanlinSkillCatalog = .shared,
+        store: SkillStore = .shared
     ) async -> String {
         guard let data = argumentsJSON.data(using: .utf8),
               let args = try? JSONDecoder().decode(Arguments.self, from: data) else {
@@ -60,6 +61,15 @@ public enum ReadSkillResourceTool {
 
         guard session.isSkillLoaded(skillID) else {
             return "Error: Skill '\(args.skill_id)' is not currently loaded. Call load_skill first."
+        }
+
+        do {
+            guard try await catalog.permitsInvocation(skillID, source: .model, store: store) else {
+                return "Error: This Skill is no longer available for model invocation."
+            }
+            try Task.checkCancellation()
+        } catch {
+            return "Error: Could not evaluate this Skill's current invocation policy."
         }
 
         let rawTrimmed = args.relative_path

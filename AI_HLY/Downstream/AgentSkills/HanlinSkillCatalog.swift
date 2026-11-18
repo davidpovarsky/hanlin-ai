@@ -84,6 +84,8 @@ public final class HanlinSkillCatalog {
     }
 
     private var skillEntries: [HanlinSkillID: SkillEntry] = [:]
+    var invocationPolicyCache = SkillInvocationPolicyCache()
+    var invocationPolicyError: String?
     public private(set) var currentDomainConfiguration: SkillDomainConfiguration = SkillDomainConfiguration()
 
     public init(loadProductionSkills: Bool = false) {
@@ -385,6 +387,8 @@ public final class HanlinSkillCatalog {
 
     /// Clears all registered skills (useful for isolated tests).
     public func reset() {
+        invocationPolicyCache = .init()
+        invocationPolicyError = nil
         skillEntries.removeAll()
     }
 

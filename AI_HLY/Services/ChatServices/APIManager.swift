@@ -2602,9 +2602,12 @@ class APIManager {
                             }
                         }
 
+                        let modelSkills = await HanlinSkillCatalog.shared.modelVisibleSkills()
+                        session.retainLoadedSkills(allowedIDs: Set(modelSkills.map(\.id)))
+
                         // Inject compact Skill Index once when depth == 0
                         if depth == 0 {
-                            let skillIndexPrompt = HanlinSkillIndex.prompt(for: HanlinSkillCatalog.shared.allSkills())
+                            let skillIndexPrompt = HanlinSkillIndex.prompt(for: modelSkills)
                             if !skillIndexPrompt.isEmpty && !finalFormattedMessages.contains(where: { ($0["content"] as? String)?.contains("## Available Skills") == true }) {
                                 finalFormattedMessages.append([
                                     "role": "system",

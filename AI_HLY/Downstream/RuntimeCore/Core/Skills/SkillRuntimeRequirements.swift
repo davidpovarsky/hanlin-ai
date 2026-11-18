@@ -46,7 +46,7 @@ enum SkillRuntimeRequirements {
     static func action(skillID: String, document: SkillMarkdownDocument, path: String?,
                        bytes: Data, engine: C.EngineID?, arguments: [String],
                        environmentID: String, syntax: SkillSyntaxReport? = nil,
-                       openClawKnown: Bool = false, packageFingerprint: String? = nil) throws -> C.Action {
+                       openClawReport: SkillRuntimeOpenClaw.Report? = nil, packageFingerprint: String? = nil) throws -> C.Action {
         let sourceHash = packageFingerprint ?? digest(document.originalSource)
         let actionHash = digest(bytes)
         let evidence = C.SourceEvidence(kind: .declared, producer: "HanlinSkillFormat/Yams",
@@ -64,11 +64,11 @@ enum SkillRuntimeRequirements {
         }
         if let engine { add(.engine, engine.rawValue) }
         if engine == .shell { add(.capability, "shell.portable-parser") }
-        let metadata = document.metadata?["openclaw"] ?? document.metadata?["clawdbot"]
         let declared = document.root["requires"]
-        if metadata != nil {
-            add(.capability, "openclaw.requirements")
-            complete = complete && openClawKnown
+        if SkillRuntimeOpenClaw.requiresPolicy(document) {
+            add(.capability, "openclaw.policy")
+            complete = complete && openClawReport?.known == true
+                && openClawReport?.metadataStatus == "supported"
         }
         if let declared {
             guard let mapping = declared.mapping else {

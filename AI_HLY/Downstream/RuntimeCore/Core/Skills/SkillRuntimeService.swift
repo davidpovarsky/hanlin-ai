@@ -21,11 +21,20 @@ final class SkillRuntimeService {
     private var analyses: [String: SkillSyntaxReport] = [:]
     private var eligibility: [String: (SkillRuntimeOpenClaw.Report, String, Date)] = [:]
 
-    private func environmentSignature() async -> String {
+    func policyEnvironmentSignature(store: SkillStore) async -> String {
         let values = await AppRuntimeCore.shared.snapshots().map {
             $0.kind.rawValue + ":" + ($0.version ?? "unknown") + ":" + String([.ready, .executing].contains($0.state))
         }
-        return SkillRuntimeRequirements.digest(Data(values.joined(separator: "\n").utf8))
+        var identity = Data((values.joined(separator: "\n") + "\nstore:" + String(store.revision) + "\n" + store.rootDirectoryURL.standardizedFileURL.path).utf8)
+        let layout = RuntimeFileLayout.default
+        for url in [layout.environmentRegistry, layout.nodeGlobalPackages.appending(path: "package-lock.json"),
+                    layout.registry.appending(path: "PythonPackages.json")] {
+            if let bytes = try? Data(contentsOf: url) {
+                identity.append(0)
+                identity.append(contentsOf: SkillRuntimeRequirements.digest(bytes).utf8)
+            }
+        }
+        return SkillRuntimeRequirements.digest(identity)
     }
 
     init() {
@@ -77,7 +86,7 @@ final class SkillRuntimeService {
             syntax = await bash.scan(file: path, utf8: bytes)
         } else { syntax = analyses[analysisKey(path: path ?? "SKILL.md", bytes: bytes)] }
         let sourceHash = SkillRuntimeRequirements.digest(document.originalSource)
-        let signature = await environmentSignature()
+        let signature = await policyEnvironmentSignature(store: store)
         let upstream = eligibility[sourceHash].flatMap { $0.1 == signature ? $0 : nil }
         let packageFingerprint = try await sourceFingerprint(skillID: skillID, catalog: catalog, store: store)
         var combined = syntax
@@ -100,16 +109,16 @@ final class SkillRuntimeService {
         }
         let action = try SkillRuntimeRequirements.action(skillID: skillID.rawValue, document: document,
             path: path, bytes: bytes, engine: engine, arguments: arguments, environmentID: "skill/" + skillID.rawValue,
-            syntax: combined, openClawKnown: upstream?.0.known == true, packageFingerprint: packageFingerprint)
+            syntax: combined, openClawReport: upstream?.0, packageFingerprint: packageFingerprint)
         let last = forExecution ? nil : try receipt(skillID: skillID, path: path, store: store)?.test
         return await registry.plan(action: action, lastTest: last,
             freshness: .init(notBefore: .now.addingTimeInterval(-86_400), now: .now),
             evaluationTime: { .now }, supplement: { facts in
                 guard let upstream, upstream.0.known, let binding = facts.binding else { return [] }
-                return [.init(requirement: .init(kind: .capability, name: "openclaw.requirements", versionConstraint: nil),
-                    binding: binding, status: upstream.0.rawUpstreamResult.eligible ? .available : .unsupported,
-                    resolvedVersion: "847611dc/requirements-only", resolvedPath: nil,
-                    evidence: .init(kind: .observed, producer: "OriginalOpenClawRequirements/NodeJob",
+                return [.init(requirement: .init(kind: .capability, name: "openclaw.policy", versionConstraint: nil),
+                    binding: binding, status: upstream.0.rawUpstreamResult?.eligible == true ? .available : .unsupported,
+                    resolvedVersion: "847611dc/policy", resolvedPath: nil,
+                    evidence: .init(kind: .observed, producer: "OriginalOpenClawPolicy/NodeJob",
                         producerVersion: "847611dc", sourceID: binding.engineID.rawValue,
                         sourceVersion: binding.engineVersion, sourceFingerprint: binding.engineFingerprint,
                         observedAt: upstream.2, artifactReference: nil))]
@@ -126,11 +135,13 @@ final class SkillRuntimeService {
             if kind == .shell { _ = try await AppRuntimeCore.shared.ensureStarted(.node) }
         }
         try Task.checkCancellation()
-        if let path { try await analyze(skillID: skillID, path: path, catalog: catalog) }
+        if let path { try await analyze(skillID: skillID, path: path, catalog: catalog, store: store) }
+        else { try await inspectPolicy(skillID: skillID, catalog: catalog, store: store) }
         return try await plan(skillID: skillID, path: path, engine: engine, catalog: catalog, store: store)
     }
 
-    func analyze(skillID: HanlinSkillID, path: String, catalog: HanlinSkillCatalog = .shared) async throws {
+    func analyze(skillID: HanlinSkillID, path: String, catalog: HanlinSkillCatalog = .shared,
+                 store: SkillStore = .shared) async throws {
         guard let url = catalog.resolveResourceURL(skillID: skillID, relativePath: path) else { throw RuntimeCoreError.invalidPath }
         let bytes = try Data(contentsOf: url)
         let report = try await SkillRuntimeAnalysis.scan(path: path, bytes: bytes)
@@ -148,11 +159,31 @@ final class SkillRuntimeService {
                   try Data(contentsOf: url) == bytes else { throw RuntimeCoreError.invalidRequest("Skill manifest changed during analysis") }
             analyses[analysisKey(path: manifest, bytes: bytes)] = facts
         }
-        if let document = catalog.markdownDocument(for: skillID),
-           let inspected = try await SkillRuntimeOpenClaw.inspect(document) {
+        try await inspectPolicy(skillID: skillID, catalog: catalog, store: store)
+    }
+
+    private func inspectPolicy(skillID: HanlinSkillID, catalog: HanlinSkillCatalog, store: SkillStore) async throws {
+        guard let document = catalog.markdownDocument(for: skillID),
+              SkillRuntimeOpenClaw.requiresPolicy(document) || SkillRuntimeOpenClaw.hasInvocationMetadata(document) else { return }
+        _ = try await AppRuntimeCore.shared.ensureStarted(.node)
+        let signature = await policyEnvironmentSignature(store: store)
+        if let inspected = try await SkillRuntimeOpenClaw.inspect(document, enabled: store.isSkillEnabled(id: skillID)) {
+            try Task.checkCancellation()
+            guard catalog.markdownDocument(for: skillID)?.originalSource == document.originalSource,
+                  signature == (await policyEnvironmentSignature(store: store)) else {
+                throw RuntimeCoreError.invalidRequest("Skill metadata or environment changed during policy inspection")
+            }
             if eligibility.count >= 64 { eligibility.removeAll() }
-            eligibility[SkillRuntimeRequirements.digest(document.originalSource)] = (inspected, await environmentSignature(), .now)
+            eligibility[SkillRuntimeRequirements.digest(document.originalSource)] = (inspected, signature, .now)
         }
+    }
+
+    func policyReport(skillID: HanlinSkillID, catalog: HanlinSkillCatalog = .shared,
+                      store: SkillStore = .shared) async -> SkillRuntimeOpenClaw.Report? {
+        guard let document = catalog.markdownDocument(for: skillID),
+              let cached = eligibility[SkillRuntimeRequirements.digest(document.originalSource)],
+              cached.1 == (await policyEnvironmentSignature(store: store)) else { return nil }
+        return cached.0
     }
 
     func findings(skillID: HanlinSkillID, path: String?, catalog: HanlinSkillCatalog = .shared) -> [SkillSyntaxFinding] {
@@ -202,4 +233,5 @@ final class SkillRuntimeService {
 /// Imported metadata and historical transcripts cannot manufacture a live approval.
 enum SkillRuntimeAuthorization {
     @TaskLocal static var approved = false
+    @TaskLocal static var invocationSource: SkillInvocationSource = .model
 }

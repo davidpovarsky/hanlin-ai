@@ -420,11 +420,30 @@ struct SkillImportView: View {
                 }
                 let requestedID = ProcessInfo.processInfo.environment["HANLIN_SKILL_ZIP_FIXTURE_ID"]
                 let fixtureID = requestedID.flatMap { $0.hasPrefix("ui-exec-") && $0.allSatisfy({ $0.isASCII && ($0.isLetter || $0.isNumber || $0 == "-") }) ? $0 : nil } ?? "ui-import-skill"
+                let policyMetadata: String
+                #if targetEnvironment(simulator) || DEBUG
+                policyMetadata = ProcessInfo.processInfo.environment["HANLIN_SKILL_OPENCLAW_FIXTURE"] == "1" ? """
+                user-invocable: false
+                disable-model-invocation: true
+                metadata:
+                  openclaw:
+                    requires:
+                      bins: node
+                    install:
+                      - kind: node
+                        package: "@hanlin-fixture/policy@1.0.0"
+                      - kind: node
+                        package: "file:../unsupported"
+
+                """ : ""
+                #else
+                policyMetadata = ""
+                #endif
                 let skillMD = """
                 ---
                 name: \(fixtureID)
                 description: Deterministic UI imported skill for acceptance testing.
-                ---
+                \(policyMetadata)---
 
                 # UI Import Skill Instructions
                 Execute tools as needed.

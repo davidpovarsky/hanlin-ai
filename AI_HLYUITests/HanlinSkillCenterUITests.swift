@@ -372,6 +372,51 @@ final class HanlinSkillCenterUITests: XCTestCase {
         assertUnknownCompatibility(scope: "detail", expectedStatus: "PARSE_ONLY")
     }
 
+    func testOriginalOpenClawPolicyAndInstallHintsUseTheRealImportedSource() throws {
+        let fixtureID = "ui-exec-" + UUID().uuidString.lowercased()
+        app.terminate()
+        app.launchEnvironment["HANLIN_SKILL_ZIP_FIXTURE_ID"] = fixtureID
+        app.launchEnvironment["HANLIN_SKILL_OPENCLAW_FIXTURE"] = "1"
+        app.launch()
+        openSkillCenter()
+        tapElement(app.buttons["hanlin-skill-center-import-button"].firstMatch)
+        tapElement(app.buttons["hanlin-skill-import-tab-zip"].firstMatch)
+        tapElement(app.buttons["hanlin-skill-import-fixture-button"].firstMatch)
+        let install = app.buttons["hanlin-skill-import-install-button"].firstMatch
+        revealInSkillList(install, identifier: "hanlin-skill-import-preview-list")
+        tapElement(install)
+        let row = app.descendants(matching: .any)["hanlin-skill-center-skill-row-\(fixtureID)"].firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 10)); tapElement(row)
+        let recheck = app.buttons["hanlin-skill-recheck"].firstMatch
+        revealInSkillList(recheck, identifier: "hanlin-skill-detail-list")
+        XCTAssertTrue(recheck.waitForExistence(timeout: 5)); tapElement(recheck)
+        let policy = app.descendants(matching: .any)["hanlin-skill-openclaw-policy"].firstMatch
+        let available = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == 'Available'"), object: policy)
+        XCTAssertEqual(XCTWaiter.wait(for: [available], timeout: 90), .completed)
+        let hint = app.descendants(matching: .any)["hanlin-skill-openclaw-install-hint"].firstMatch
+        revealInSkillList(hint, identifier: "hanlin-skill-detail-list")
+        XCTAssertTrue(hint.waitForExistence(timeout: 5))
+        XCTAssertTrue((hint.value as? String ?? hint.label).contains("@hanlin-fixture/policy@1.0.0"))
+        XCTAssertFalse(app.staticTexts["file:../unsupported"].exists)
+        XCTAssertFalse(app.staticTexts["hanlin-skill-execution-receipt"].exists,
+                       "Original policy inspection must not execute the imported resource")
+        let action = app.buttons["hanlin-skill-action-picker"].firstMatch
+        revealInSkillList(action, identifier: "hanlin-skill-detail-list")
+        tapElement(action); tapElement(app.buttons["scripts/run.py"].firstMatch)
+        // Explicit recheck binds the policy to the selected current engine as well.
+        revealInSkillList(recheck, identifier: "hanlin-skill-detail-list"); tapElement(recheck)
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value == 'Available'"), object: policy)], timeout: 90), .completed)
+        let run = app.buttons["hanlin-skill-run"].firstMatch
+        revealInSkillList(run, identifier: "hanlin-skill-detail-list")
+        XCTAssertTrue(run.waitForExistence(timeout: 5))
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "enabled == true"), object: recheck)], timeout: 90), .completed)
+        XCTAssertFalse(run.isEnabled, "Original user-invocable:false must disable the manual action after inspection ends")
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "original-openclaw-policy-and-manual-invocation"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
     func testImportedSkillExecutionRequiresApprovalAndPersistsAfterColdLaunch() throws {
         let fixtureID = "ui-exec-" + UUID().uuidString.lowercased()
         app.terminate()

@@ -93,6 +93,12 @@ struct ExecuteSkillResourceTool: NativeTool {
                 throw HanlinHostServiceError.capabilityNotGranted("Skill execution requires one-use user approval in the active chat or Skill Center.")
             }
 
+            guard try await (catalog ?? .shared).permitsInvocation(skillID,
+                source: SkillRuntimeAuthorization.invocationSource, store: store ?? .shared) else {
+                throw HanlinHostServiceError.invalidRequest("This Skill is not available for the current invocation source or environment.")
+            }
+            try Task.checkCancellation()
+
             // Path security validation: reject leading slash, empty, null bytes before normalization
             guard !relPath.isEmpty,
                   !relPath.hasPrefix("/"),
@@ -184,7 +190,7 @@ struct ExecuteSkillResourceTool: NativeTool {
             _ = try await AppRuntimeCore.shared.ensureStarted(selectedKind)
             if selectedKind == .shell { _ = try await AppRuntimeCore.shared.ensureStarted(.node) }
             try Task.checkCancellation()
-            try await SkillRuntimeService.shared.analyze(skillID: skillID, path: cleanPath, catalog: catalog ?? .shared)
+            try await SkillRuntimeService.shared.analyze(skillID: skillID, path: cleanPath, catalog: catalog ?? .shared, store: store ?? .shared)
             let plan = try await SkillRuntimeService.shared.plan(skillID: skillID, path: cleanPath,
                 engine: SkillRuntimeRequirements.engine(selectedKind), arguments: argv,
                 catalog: catalog ?? .shared, store: store ?? .shared, forExecution: true)

@@ -2,6 +2,15 @@ import Foundation
 
 enum SkillL10n {
     private static let zhTranslations: [String: String] = [
+        "Skill requirements": "技能要求",
+        "Available": "可用",
+        "Unavailable": "不可用",
+        "Check compatibility": "检查兼容性",
+        "Start engine and recheck": "启动引擎并重新检查",
+        "This Skill does not allow manual invocation.": "此技能不允许手动调用。",
+        "This Skill is hidden from automatic model invocation.": "此技能不允许模型自动调用。",
+        "Suggested installation": "建议安装",
+        "Installer suggestions do not install anything automatically. Use a package manager available for the selected runtime.": "安装建议不会自动安装任何内容。请使用所选运行时可用的包管理器。",
         "Skill Center": "技能中心",
         "Skills": "技能",
         "All": "全部",
@@ -62,6 +71,15 @@ enum SkillL10n {
     ]
 
     private static let heTranslations: [String: String] = [
+        "Skill requirements": "דרישות ה־Skill",
+        "Available": "זמין",
+        "Unavailable": "לא זמין",
+        "Check compatibility": "בדיקת תאימות",
+        "Start engine and recheck": "הפעלת מנוע ובדיקה מחדש",
+        "This Skill does not allow manual invocation.": "ה־Skill הזה אינו מאפשר הפעלה ידנית.",
+        "This Skill is hidden from automatic model invocation.": "ה־Skill הזה מוסתר מהפעלה אוטומטית של המודל.",
+        "Suggested installation": "התקנה מוצעת",
+        "Installer suggestions do not install anything automatically. Use a package manager available for the selected runtime.": "הצעות ההתקנה אינן מתקינות דבר אוטומטית. יש להשתמש במנהל חבילות הזמין במנוע שנבחר.",
         "Import File": "ייבוא קובץ",
         "Select ZIP or SKILL.md": "בחירת ZIP או SKILL.md",
         "Select a ZIP package or a SKILL.md file. Previewing does not run scripts.": "יש לבחור חבילת ZIP או קובץ SKILL.md. תצוגה מקדימה אינה מריצה סקריפטים.",

@@ -11,6 +11,7 @@ struct SkillExecutionPlanSection: View {
     @State private var engine: RuntimeKind = .node
     @State private var plan: SkillRuntimeContract.ExecutionPlan?
     @State private var receipt: SkillRuntimeService.Receipt?
+    @State private var originalPolicy: SkillRuntimeOpenClaw.Report?
     @State private var output = ""
     @State private var findings: [SkillSyntaxFinding] = []
     @State private var error: String?
@@ -56,6 +57,27 @@ struct SkillExecutionPlanSection: View {
                     Text(issue.code.rawValue).font(.footnote).foregroundStyle(.secondary)
                 }
             }
+            if let originalPolicy {
+                let availability = SkillL10n.string(originalPolicy.known
+                    ? (originalPolicy.rawUpstreamResult?.eligible == true ? "Available" : "Unavailable") : "Unknown")
+                LabeledContent(SkillL10n.string("Skill requirements"), value: availability)
+                    .accessibilityValue(availability)
+                    .accessibilityIdentifier("hanlin-skill-openclaw-policy")
+                if !originalPolicy.invocation.userInvocable { Text(SkillL10n.string("This Skill does not allow manual invocation.")).font(.footnote) }
+                if originalPolicy.invocation.disableModelInvocation { Text(SkillL10n.string("This Skill is hidden from automatic model invocation.")).font(.footnote) }
+                ForEach(originalPolicy.unobserved, id: \.self) { Text($0).font(.caption).foregroundStyle(.secondary) }
+                if !originalPolicy.installHints.isEmpty {
+                    Text(SkillL10n.string("Suggested installation")).font(.headline)
+                    ForEach(Array(originalPolicy.installHints.enumerated()), id: \.offset) { _, hint in
+                        LabeledContent(hint.label ?? hint.kind, value: hint.target)
+                            .accessibilityValue(hint.target)
+                            .textSelection(.enabled)
+                            .accessibilityIdentifier("hanlin-skill-openclaw-install-hint")
+                    }
+                    Text(SkillL10n.string("Installer suggestions do not install anything automatically. Use a package manager available for the selected runtime."))
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+            }
             ForEach(Array(findings.prefix(64).enumerated()), id: \.offset) { _, finding in
                 VStack(alignment: .leading) {
                     Text("\(finding.source.file):\(finding.source.line):\(finding.source.utf8Column)")
@@ -72,13 +94,16 @@ struct SkillExecutionPlanSection: View {
                     .accessibilityIdentifier("hanlin-skill-execution-receipt")
             }
             if let error { Text(error).foregroundStyle(.red).textSelection(.enabled) }
-            if !path.isEmpty {
-                Button("Start engine and recheck") { begin(run: false) }
+            if !path.isEmpty || HanlinSkillCatalog.shared.markdownDocument(for: skillID).map({ SkillRuntimeOpenClaw.requiresPolicy($0) || SkillRuntimeOpenClaw.hasInvocationMetadata($0) }) == true {
+                Button(SkillL10n.string(path.isEmpty ? "Check compatibility" : "Start engine and recheck")) { begin(run: false) }
                     .accessibilityIdentifier("hanlin-skill-recheck")
                     .disabled(working || !SkillStore.shared.isSkillEnabled(id: skillID))
+            }
+            if !path.isEmpty {
                 Button("Run with approval") { confirmRun = true }
                     .accessibilityIdentifier("hanlin-skill-run")
-                    .disabled(working || !SkillStore.shared.isSkillEnabled(id: skillID))
+                    .disabled(working || !SkillStore.shared.isSkillEnabled(id: skillID)
+                              || originalPolicy?.invocation.userInvocable == false)
             }
             if working {
                 ProgressView()
@@ -93,7 +118,7 @@ struct SkillExecutionPlanSection: View {
                 .font(.footnote).foregroundStyle(.secondary)
         }
         .task(id: selectionID) {
-            operation?.cancel(); revision = UUID(); working = false; plan = nil; receipt = nil; findings = []; output = ""; error = nil
+            operation?.cancel(); revision = UUID(); working = false; plan = nil; receipt = nil; originalPolicy = nil; findings = []; output = ""; error = nil
             let token = revision
             receipt = try? SkillRuntimeService.shared.receipt(skillID: skillID, path: path)
             guard SkillStore.shared.isSkillEnabled(id: skillID) else { return }
@@ -103,6 +128,7 @@ struct SkillExecutionPlanSection: View {
                     engine: path.isEmpty ? nil : SkillRuntimeRequirements.engine(engine))
                 guard !Task.isCancelled, revision == token else { return }
                 plan = value
+                originalPolicy = await SkillRuntimeService.shared.policyReport(skillID: skillID)
                 findings = SkillRuntimeService.shared.findings(skillID: skillID, path: path.isEmpty ? nil : path)
                 receipt = try SkillRuntimeService.shared.receipt(skillID: skillID, path: path)
                 if let receipt, receipt.test?.sourceFingerprint == value.action.sourceFingerprint,
@@ -173,16 +199,18 @@ struct SkillExecutionPlanSection: View {
                             output = String(decoding: bytes, as: UTF8.self)
                         }
                     }) {
-                        await SkillRuntimeAuthorization.$approved.withValue(true) {
-                            await ExecuteSkillResourceTool().execute(argumentsJSON: String(decoding: args, as: UTF8.self),
-                                context: .init(localeIdentifier: Locale.current.identifier, capabilitySession: session))
+                        await SkillRuntimeAuthorization.$invocationSource.withValue(.user) {
+                            await SkillRuntimeAuthorization.$approved.withValue(true) {
+                                await ExecuteSkillResourceTool().execute(argumentsJSON: String(decoding: args, as: UTF8.self),
+                                    context: .init(localeIdentifier: Locale.current.identifier, capabilitySession: session))
+                            }
                         }
                     }
                     guard revision == token else { return }
                     output = result.userText ?? result.modelText
                 } else {
-                    _ = try await SkillRuntimeService.shared.recheck(skillID: skillID, path: selectedPath,
-                        engine: SkillRuntimeRequirements.engine(selectedEngine))
+                    _ = try await SkillRuntimeService.shared.recheck(skillID: skillID, path: selectedPath.isEmpty ? nil : selectedPath,
+                        engine: selectedPath.isEmpty ? nil : SkillRuntimeRequirements.engine(selectedEngine))
                 }
                 guard revision == token else { return }
                 receipt = try SkillRuntimeService.shared.receipt(skillID: skillID, path: selectedPath)
@@ -192,17 +220,18 @@ struct SkillExecutionPlanSection: View {
                     // passive facts outside the cancelled observer, rather than compare it with
                     // the pre-start Unknown plan and falsely label it historical.
                     let refreshed = try await Task { @MainActor in
-                        try await SkillRuntimeService.shared.plan(skillID: skillID, path: selectedPath,
-                            engine: SkillRuntimeRequirements.engine(selectedEngine))
+                        try await SkillRuntimeService.shared.plan(skillID: skillID, path: selectedPath.isEmpty ? nil : selectedPath,
+                            engine: selectedPath.isEmpty ? nil : SkillRuntimeRequirements.engine(selectedEngine))
                     }.value
                     guard revision == token else { return }
                     plan = refreshed
                     return
                 }
-                plan = try await SkillRuntimeService.shared.plan(skillID: skillID, path: selectedPath,
-                    engine: SkillRuntimeRequirements.engine(selectedEngine))
+                plan = try await SkillRuntimeService.shared.plan(skillID: skillID, path: selectedPath.isEmpty ? nil : selectedPath,
+                    engine: selectedPath.isEmpty ? nil : SkillRuntimeRequirements.engine(selectedEngine))
                 receipt = try SkillRuntimeService.shared.receipt(skillID: skillID, path: selectedPath)
-                findings = SkillRuntimeService.shared.findings(skillID: skillID, path: selectedPath)
+                originalPolicy = await SkillRuntimeService.shared.policyReport(skillID: skillID)
+                findings = SkillRuntimeService.shared.findings(skillID: skillID, path: selectedPath.isEmpty ? nil : selectedPath)
             } catch { if revision == token { self.error = error.localizedDescription } }
         }
     }

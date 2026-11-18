@@ -1,53 +1,77 @@
 import Foundation
 import HanlinSkillFormat
 
-/// The pinned original requirements predicate, not OpenClaw's full selection/install policy.
+/// Pinned, unchanged OpenClaw policy in the ORIGINAL embedded Node engine.
+/// This diagnostic does not execute a Skill, install anything, or grant approval.
 enum SkillRuntimeOpenClaw {
+    static let artifactSHA256 = "d6cc833943108245a2a68fc85ff4d67bf50719ade36e52fc63c784afedf9d565"
+
+    struct InvocationPolicy: Codable, Hashable, Sendable {
+        let userInvocable: Bool
+        let disableModelInvocation: Bool
+    }
+
+    struct InstallHint: Codable, Hashable, Sendable {
+        let kind: String
+        let id: String?
+        let label: String?
+        let bins: [String]?
+        let os: [String]?
+        let formula: String?
+        let package: String?
+        let module: String?
+        let url: String?
+        let sha256: String?
+        let archive: String?
+        let extract: Bool?
+        let stripComponents: Double?
+        let targetDir: String?
+        var target: String { package ?? formula ?? module ?? url ?? "" }
+    }
+
     struct Report: Decodable, Sendable {
-        struct Result: Decodable, Sendable { let eligible: Bool }
-        let rawUpstreamResult: Result
+        struct Result: Decodable, Sendable {
+            let selected: Bool
+            let included: Bool
+            let optimisticIncluded: Bool
+            let eligible: Bool
+        }
+        let metadataStatus: String
+        let declaredMetadata: Bool
+        let rawUpstreamResult: Result?
+        let known: Bool
+        let invocation: InvocationPolicy
+        let installHints: [InstallHint]
         let unobserved: [String]
-        var known: Bool { unobserved.isEmpty }
+        let factScope: String
+        let executionVerified: Bool
     }
 
-    static func metadata(_ document: SkillMarkdownDocument) -> SkillMetadataNode? {
-        document.metadata?["openclaw"] ?? document.metadata?["clawdbot"]
+    static func requiresPolicy(_ document: SkillMarkdownDocument) -> Bool {
+        guard let metadata = document.metadata else { return false }
+        return metadata.mapping == nil || metadata["openclaw"] != nil || metadata["clawdbot"] != nil
     }
 
-    /// Validate the typed input boundary, not eligibility policy. An opaque or
-    /// malformed requirements object must not be mistaken for absent metadata.
+    static func hasInvocationMetadata(_ document: SkillMarkdownDocument) -> Bool {
+        document.root["user-invocable"] != nil || document.root["disable-model-invocation"] != nil
+    }
+
+    /// Typed projection only. The original parser/policy decides semantic support.
     static func supportsRequirementsInput(_ document: SkillMarkdownDocument) -> Bool {
-        guard let container = document.metadata else { return true }
-        guard let entries = container.mapping,
-              entries.allSatisfy({ $0.key.stringValue != nil }) else { return false }
-        for name in ["openclaw", "clawdbot"] {
-            guard let value = container[name] else { continue }
-            guard let mapping = value.mapping,
-                  mapping.allSatisfy({ $0.key.stringValue != nil }) else { return false }
-            if let always = value["always"], always.booleanValue == nil { return false }
-            if let os = value["os"], os.sequence?.allSatisfy({ $0.stringValue != nil }) != true { return false }
-            if let requires = value["requires"] {
-                guard let fields = requires.mapping else { return false }
-                for field in fields {
-                    guard let key = field.key.stringValue,
-                          ["bins", "anyBins", "env", "config"].contains(key),
-                          field.value.sequence?.allSatisfy({ $0.stringValue != nil }) == true else { return false }
-                }
-            }
-        }
-        return true
+        (try? SkillOpenClawProjection.input(document, enabled: true, bins: [:])) != nil
     }
 
-    static func inspect(_ document: SkillMarkdownDocument) async throws -> Report? {
-        guard supportsRequirementsInput(document) else { return nil }
-        guard let metadata = metadata(document) else { return nil }
-        guard let url = Bundle.main.url(forResource: "hanlin_openclaw_requirements", withExtension: "js") else {
-            throw RuntimeCoreError.invalidRequest("Original OpenClaw requirements artifact missing")
-        }
-        let artifact = try Data(contentsOf: url)
-        guard SkillRuntimeRequirements.digest(artifact) == "e492e2d611bb42e15b26411ab055afce87add4eea317789521c6fe36cc28970c" else {
-            throw RuntimeCoreError.invalidRequest("Original OpenClaw requirements provenance changed")
-        }
+    static func inspect(_ document: SkillMarkdownDocument, enabled: Bool = true) async throws -> Report? {
+        guard requiresPolicy(document) || hasInvocationMetadata(document) else { return nil }
+        return try await inspectPolicies([document], enabled: [enabled]).first
+    }
+
+    static func inspectPolicies(_ documents: [SkillMarkdownDocument], enabled: [Bool]) async throws -> [Report] {
+        guard documents.count == enabled.count else { throw RuntimeCoreError.invalidDependencyManifest }
+        guard !documents.isEmpty else { return [] }
+        // SKILL_ID uses the original imported-Skill environment boundary. Shared
+        // Keychain/provider values never establish facts for an imported Skill.
+        _ = try await AppRuntimeCore.shared.ensureStarted(.node)
         let snapshots = await AppRuntimeCore.shared.snapshots()
         var bins: [String: Bool] = [:]
         for (name, kind) in [("node", RuntimeKind.node), ("python3", .localPython)] {
@@ -55,39 +79,63 @@ enum SkillRuntimeOpenClaw {
                 bins[name] = true
             }
         }
-        let payload = try JSONSerialization.data(withJSONObject: ["metadata": try json(metadata), "bins": bins])
-        let literal = String(decoding: try JSONEncoder().encode(payload.base64EncodedString()), as: UTF8.self)
-        let source = String(decoding: artifact, as: UTF8.self) + """
-
-        const input=JSON.parse(Buffer.from(\(literal),'base64').toString('utf8'));
-        const unobserved=[];
-        const has=(kind,key)=>{if(kind==='bins'&&Object.hasOwn(input.bins,key))return input.bins[key];unobserved.push(kind+':'+key);return false;};
-        const rawUpstreamResult=HanlinOpenClawOriginalRequirements.evaluateRequirementsFromMetadataWithRemote({
-          metadata:input.metadata,always:input.metadata.always===true,localPlatform:process.platform,
-          hasLocalBin:key=>has('bins',key),isEnvSatisfied:key=>has('env',key),isConfigSatisfied:key=>has('config',key)});
-        console.log(JSON.stringify({rawUpstreamResult,unobserved}));
-        """
-        let workspace = FileManager.default.temporaryDirectory.appending(path: "openclaw-analysis-" + UUID().uuidString)
-        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
-        defer { try? FileManager.default.removeItem(at: workspace) }
-        let result = try await AppRuntimeCore.shared.node.executeJavaScript(.init(source: source, workspace: workspace))
-        try Task.checkCancellation()
-        guard result.exitCode == 0, !result.wasCancelled else { throw RuntimeCoreError.runtimeFailure("OpenClaw requirements inspection failed") }
-        return try JSONDecoder().decode(Report.self, from: Data(result.stdout.utf8))
+        let payload = zip(documents, enabled).map { document, enabled in
+            (try? SkillOpenClawProjection.input(document, enabled: enabled, bins: bins)) ??
+                .init(name: document.name, enabled: enabled, metadataPresence: "unsupported", frontmatter: [:], bins: bins)
+        }
+        let results: [Report] = try await execute(payload: JSONEncoder().encode(payload),
+            skillID: "hanlin-policy-inspection",
+            expression: "input.map(value => probeOriginalPolicy(original, value))")
+        guard results.count == documents.count, results.allSatisfy({ $0.factScope == "native" && !$0.executionVerified }) else {
+            throw RuntimeCoreError.invalidRequest("Original policy diagnostic returned an invalid scope")
+        }
+        return results
     }
 
-    private static func json(_ node: SkillMetadataNode) throws -> Any {
-        if let value = node.stringValue { return value }
-        if let value = node.booleanValue { return value }
-        if let sequence = node.sequence { return try sequence.map(json) }
-        if let entries = node.mapping {
-            var result: [String: Any] = [:]
-            for entry in entries {
-                guard let key = entry.key.stringValue, result[key] == nil else { throw RuntimeCoreError.invalidDependencyManifest }
-                result[key] = try json(entry.value)
+    /// Called for an explicit chat/Skill action, never while rendering a passive plan.
+    /// The same original policy normalizer handles both user and model visibility.
+    static func invocationPolicies(_ documents: [SkillMarkdownDocument]) async throws -> [InvocationPolicy] {
+        guard !documents.isEmpty else { return [] }
+        let frontmatter = try documents.map { try SkillOpenClawProjection.invocationFrontmatter($0) }
+        return try await execute(payload: JSONEncoder().encode(frontmatter),
+            skillID: "hanlin-policy-inspection",
+            expression: "input.map(frontmatter => original.resolveSkillInvocationPolicy(frontmatter))")
+    }
+
+    private static func execute<Result: Decodable & Sendable>(payload: Data, skillID: String,
+                                                               expression: String) async throws -> Result {
+        guard payload.count <= 2 * 1_048_576 else { throw RuntimeCoreError.invalidRequest("Skill policy input exceeds its byte budget") }
+        let workspace = FileManager.default.temporaryDirectory.appending(path: "openclaw-policy-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        for (resource, target, expected) in [
+            ("hanlin_openclaw_policy", "policy.mjs", artifactSHA256),
+            ("hanlin_openclaw_policy_probe", "policy-probe.mjs", SkillOpenClawProjection.probeSHA256)
+        ] {
+            guard let url = Bundle.main.url(forResource: resource, withExtension: "mjs") else {
+                throw RuntimeCoreError.invalidRequest("Original OpenClaw policy artifact missing")
             }
-            return result
+            let bytes = try Data(contentsOf: url)
+            guard SkillRuntimeRequirements.digest(bytes) == expected else {
+                throw RuntimeCoreError.invalidRequest("Original OpenClaw policy provenance changed")
+            }
+            try bytes.write(to: workspace.appending(path: target), options: .atomic)
         }
-        throw RuntimeCoreError.invalidDependencyManifest
+        let literal = String(decoding: try JSONEncoder().encode(payload.base64EncodedString()), as: UTF8.self)
+        let policyURL = String(decoding: try JSONEncoder().encode(workspace.appending(path: "policy.mjs").absoluteString), as: UTF8.self)
+        let probeURL = String(decoding: try JSONEncoder().encode(workspace.appending(path: "policy-probe.mjs").absoluteString), as: UTF8.self)
+        let source = """
+        import * as original from \(policyURL);
+        import { probeOriginalPolicy } from \(probeURL);
+        const input = JSON.parse(Buffer.from(\(literal), 'base64').toString('utf8'));
+        console.log(JSON.stringify(\(expression)));
+        """
+        let result = try await AppRuntimeCore.shared.node.executeJavaScript(
+            .init(source: source, workspace: workspace, environment: ["SKILL_ID": skillID]), moduleKind: "esm")
+        try Task.checkCancellation()
+        guard result.exitCode == 0, !result.wasCancelled, !result.didTimeOut else {
+            throw RuntimeCoreError.runtimeFailure("Original OpenClaw policy inspection failed")
+        }
+        return try JSONDecoder().decode(Result.self, from: Data(result.stdout.utf8))
     }
 }

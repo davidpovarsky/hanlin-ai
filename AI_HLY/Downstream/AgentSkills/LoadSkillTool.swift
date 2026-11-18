@@ -35,7 +35,8 @@ public enum LoadSkillTool {
         catalog: HanlinSkillCatalog = .shared,
         planner: AssistantToolExposurePlanner = AssistantToolExposurePlanner(),
         schemaSizes: [String: Int] = [:],
-        availableAliases: Set<String>? = nil
+        availableAliases: Set<String>? = nil,
+        store: SkillStore = .shared
     ) async -> String {
         guard let data = argumentsJSON.data(using: .utf8),
               let args = try? JSONDecoder().decode(Arguments.self, from: data) else {
@@ -47,11 +48,21 @@ public enum LoadSkillTool {
                 session.exposeTools(aliases: [args.skill_id])
                 return "Error: '\(args.skill_id)' is a callable tool name, not a skill_id. It is now exposed and ready to call directly as `\(args.skill_id)`."
             }
-            if let matchingSkill = catalog.allSkills().first(where: { $0.preferredToolIDs.contains(args.skill_id) }) {
+            let visible = await catalog.modelVisibleSkills(store: store)
+            if let matchingSkill = visible.first(where: { $0.preferredToolIDs.contains(args.skill_id) }) {
                 return "Error: '\(args.skill_id)' is a tool name belonging to skill '\(matchingSkill.id.rawValue)'. Call `load_skill(skill_id: \"\(matchingSkill.id.rawValue)\")` or call `\(args.skill_id)` directly."
             }
-            let available = catalog.allSkills().map { $0.id.rawValue }.joined(separator: ", ")
+            let available = visible.map { $0.id.rawValue }.joined(separator: ", ")
             return "Error: Skill '\(args.skill_id)' not found. Available skills: [\(available)]."
+        }
+
+        do {
+            guard try await catalog.permitsInvocation(descriptor.id, source: .model, store: store) else {
+                return "Error: This Skill is disabled for model invocation or its declared requirements are not available. Review it in Skill Center."
+            }
+            try Task.checkCancellation()
+        } catch {
+            return "Error: Could not evaluate this Skill's current invocation policy. Recheck it in Skill Center."
         }
 
         let candidateAliases: [String]
