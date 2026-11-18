@@ -1128,9 +1128,9 @@ struct ModelPopoverZoomOrderTests {
 
     @Test("New conversations use the available native row without requiring a remote credential")
     func nativeOnlyConversationCreationRespectsActualAvailabilityAndCatalogIndices() {
-        let cloud = AllModels(name: "cloud", position: 0, company: "OPENAI")
+        let cloud = AllModels(name: "cloud", displayName: "Cloud", position: 0, company: "OPENAI")
         let native = AllModels(id: HanlinAppleModelCatalogAdapter.catalogID,
-            name: "apple-system-on-device", position: 9, company: "APPLE", systemProvision: false)
+            name: "apple-system-on-device", displayName: "On-device", position: 9, company: "APPLE", systemProvision: false)
         let models = [cloud, native]
         let originalIDs = models.map(\.id)
         #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [],
@@ -1151,8 +1151,8 @@ struct ModelPopoverZoomOrderTests {
 
     @Test("Local-only creation requires the original enabled provider and an actual downloaded model")
     func downloadedLocalConversationCreationDoesNotTreatCatalogPresenceAsReadiness() {
-        let missing = AllModels(name: "not-downloaded", position: 0, company: "LOCAL", systemProvision: false)
-        let installed = AllModels(name: "installed", position: 3, company: "LOCAL", systemProvision: false)
+        let missing = AllModels(name: "not-downloaded", displayName: "Not downloaded", position: 0, company: "LOCAL", systemProvision: false)
+        let installed = AllModels(name: "installed", displayName: "Installed", position: 3, company: "LOCAL", systemProvision: false)
         let models = [missing, installed]
         let local = APIKeys(company: "LOCAL", key: "LOCAL", requestURL: "LOCAL", isHidden: false)
         #expect(HanlinDefaultChatPolicy.creationModelIndex(in: models, providers: [local],
