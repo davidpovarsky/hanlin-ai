@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import HanlinPlatformContracts
+import HanlinMiniAppCore
 
 public enum HanlinProductTransferError: Error, Equatable, Sendable {
     case busy
@@ -205,7 +206,8 @@ struct HanlinTransferCheckpoint: Codable, Equatable, Sendable {
 }
 
 /// A write-ahead journal covers both owned roots. Recovery runs before either
-/// store is initialized. Original source files are never removed or modified.
+/// store is initialized. Source user data stays in its original store; normal
+/// SQLite connection closure may checkpoint its WAL before the immutable copy.
 public enum HanlinProductTransferRecovery {
     struct Journal: Codable, Sendable {
         enum State: String, Codable, Sendable { case committing, committed, rollingBack, rolledBack }
@@ -238,6 +240,7 @@ public enum HanlinProductTransferRecovery {
             guard var journal = try load(transactionRoot) else { return }
             switch journal.state {
             case .committing:
+                HanlinSQLiteService.closeConnections(under: dataRoot)
                 try promote(current: installedRoot, stage: transactionRoot.appending(path: "new-installed"),
                     backup: transactionRoot.appending(path: "old-installed"),
                     before: journal.beforeInstalled, after: journal.afterInstalled,
@@ -250,6 +253,7 @@ public enum HanlinProductTransferRecovery {
                 try persist(journal, at: transactionRoot)
                 try faults.check(.committed)
             case .rollingBack:
+                HanlinSQLiteService.closeConnections(under: dataRoot)
                 try restore(current: installedRoot, backup: transactionRoot.appending(path: "old-installed"),
                     retained: transactionRoot.appending(path: "rolled-forward-installed"),
                     before: journal.beforeInstalled, after: journal.afterInstalled)
@@ -274,6 +278,7 @@ public enum HanlinProductTransferRecovery {
             try recover(installedRoot: installedRoot, dataRoot: dataRoot, transactionRoot: transactionRoot)
             guard var journal = try load(transactionRoot) else { throw HanlinProductTransferError.invalidCheckpoint }
             if journal.state == .rolledBack { return }
+            HanlinSQLiteService.closeConnections(under: dataRoot)
             guard journal.state == .committed,
                   try HanlinTransferTree.capture(installedRoot) == journal.afterInstalled,
                   try HanlinTransferTree.capture(dataRoot) == journal.afterData else {

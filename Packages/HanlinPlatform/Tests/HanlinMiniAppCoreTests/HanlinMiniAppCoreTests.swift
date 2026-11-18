@@ -55,7 +55,7 @@ private struct StaticDiscovery: HanlinMiniAppDiscovery {
 
 @Suite("Canonical Mini App core")
 struct HanlinMiniAppCoreTests {
-    @Test("Catalog combines Swift and NativeScript engines, de-duplicates stable IDs, and omits legacy Scripting")
+    @Test("Catalog preserves all four original engines and de-duplicates stable IDs")
     func catalog() async throws {
         let swift = try StaticRegistration(id: "demo.swift", implementation: .native(
             moduleID: HanlinModuleID(validating: "demo.swift")
@@ -63,17 +63,20 @@ struct HanlinMiniAppCoreTests {
         let nativeScript = try StaticRegistration(id: "demo.nativescript", implementation: .nativeScript(
             packageID: HanlinPackageID(validating: "demo.nativescript")
         ), runtime: .hanlinNativeScript)
-        let legacy = try StaticRegistration(id: "demo.legacy", implementation: .script(
-            packageID: HanlinPackageID(validating: "demo.legacy")
+        let scriptUI = try StaticRegistration(id: "demo.scriptui", implementation: .script(
+            packageID: HanlinPackageID(validating: "demo.scriptui")
         ), runtime: .scriptingJSC)
+        let expo = try StaticRegistration(id: "demo.expo", implementation: .script(
+            packageID: HanlinPackageID(validating: "demo.expo")
+        ), runtime: .hanlinExpo)
 
         let discovery = HanlinCompositeMiniAppDiscovery(providers: [
             StaticDiscovery([swift, nativeScript]),
-            StaticDiscovery([swift, legacy])
+            StaticDiscovery([swift, scriptUI, expo])
         ])
         let items = try await HanlinCanonicalMiniAppCatalog(discovery: discovery).items()
-        #expect(items.map(\.id.rawValue) == ["demo.nativescript", "demo.swift"])
-        #expect(items.map(\.engine) == [.nativeScript, .swift])
+        #expect(items.map(\.id.rawValue) == ["demo.expo", "demo.nativescript", "demo.scriptui", "demo.swift"])
+        #expect(items.map(\.engine) == [.expo, .nativeScript, .scriptingJSC, .swift])
     }
 
     @Test("Launch runtime is selected from the requested entrypoint")

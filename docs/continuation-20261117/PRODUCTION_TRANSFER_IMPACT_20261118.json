@@ -39,5 +39,34 @@
     "signed_app_group": "NOT_RUN",
     "physical_device": "NOT_RUN"
   },
-  "boundary": "Source implementation is not completed phase acceptance. No fabricated data, provider replacement, optional Full-SDK metadata expansion, or release upload."
+  "boundary": "Source implementation is not completed phase acceptance. No fabricated data, provider replacement, optional Full-SDK metadata expansion, or release upload.",
+  "storage_owner_followup": {
+    "date": "2026-11-18",
+    "owners": [
+      "Actual ScriptUI sessions, including embedded chat results",
+      "Pending native task disposal",
+      "Canonical SQLite and KV services"
+    ],
+    "changes": [
+      "Storage-root-scoped session admission and failed-initializer cleanup",
+      "Checkpoint and close live SQLite owners before export, import or rollback; retained KV owners reopen their canonical paths",
+      "Lock order keeps stop/interrupt independent from query completion",
+      "Restore original localization formatting without semantic changes"
+    ],
+    "tests_added": [
+      "Live SQLite/WAL and private/shared canonical KV round trip and rollback",
+      "Later committed KV edits preserved and rollback rejected",
+      "Three real JavaScriptCore storage-root/session lifecycle cases"
+    ],
+    "previous_run": {
+      "id": "44214908271",
+      "head": "0e7afb9e0c1ac19bc91bbc8a40ce357647a8b9d4",
+      "result": "FAILED",
+      "issues": [
+        "Transfer comparisons used in-memory pre-persistence timestamps; now compare complete cold-opened durable source snapshots",
+        "An older catalog assertion omitted ScriptUI despite existing intentional discovery in f632ef54; coverage now includes all four original engines"
+      ]
+    },
+    "acceptance": "Pending Apple compilation and test execution; Windows syntax parsing and source target graph passed only."
+  }
 }

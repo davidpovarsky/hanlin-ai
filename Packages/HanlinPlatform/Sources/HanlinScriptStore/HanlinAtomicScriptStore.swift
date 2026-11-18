@@ -1,6 +1,7 @@
 import CryptoKit
 import Foundation
 import HanlinPlatformContracts
+import HanlinMiniAppCore
 import HanlinScriptContracts
 import OSLog
 
@@ -383,6 +384,7 @@ public actor HanlinAtomicScriptStore {
     public func createProductTransfer(dataRoot: URL, outbox: URL) throws -> HanlinProductTransferReceipt {
         try HanlinStoreFileAccess.withExclusiveAccess {
             _ = try restore()
+            HanlinSQLiteService.closeConnections(under: dataRoot)
             try verifyTransferRegistry(registry, at: root)
             return try HanlinTransferCheckpoint.publish(installedRoot: root, dataRoot: dataRoot,
                 outbox: outbox, packageCount: registry.packages.count).receipt
@@ -432,6 +434,7 @@ public actor HanlinAtomicScriptStore {
             let revision = max(source.revision, registry.revision)
             guard revision < UInt64.max else { throw HanlinProductTransferError.invalidCheckpoint }
             merged.revision = revision + 1
+            HanlinSQLiteService.closeConnections(under: dataRoot)
             let beforeInstalled = try HanlinTransferTree.capture(root)
             let beforeData = try HanlinTransferTree.capture(dataRoot)
             let catalogs: Set<String> = ["registry/catalog.json", "registry/catalog.backup.json"]

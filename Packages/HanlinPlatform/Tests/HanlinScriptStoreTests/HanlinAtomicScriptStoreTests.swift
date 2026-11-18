@@ -276,7 +276,11 @@ struct HanlinProductTransferTests {
         let sourceDataBefore = try fixture.bytes(fixture.sourceData)
         let destinationBefore = try fixture.bytes(fixture.targetRoot)
         let destinationDataBefore = try fixture.bytes(fixture.targetData)
-        let originalPackages = try await fixture.source.snapshots()
+        // Compare the durable source, as opened by a new process. The store's
+        // existing millisecond JSON encoding does not promise in-memory Date
+        // bit patterns before its first persistence round trip.
+        let sourceOnDisk = try HanlinAtomicScriptStore(root: fixture.base.storeRoot)
+        let originalPackages = try await sourceOnDisk.restore()
         let receipt = try await fixture.export()
         #expect(receipt.packageCount == 1)
         #expect(try await fixture.export() == receipt)
@@ -298,6 +302,74 @@ struct HanlinProductTransferTests {
         #expect(try fixture.bytes(fixture.base.storeRoot) == sourceBefore)
     }
 
+    @Test("Live canonical KV and SQLite owners checkpoint, reopen, and follow rollback roots")
+    func liveDatabaseOwners() async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let sourceKV = try HanlinMiniAppKeyValueStore(root: fixture.sourceData, appID: fixture.appID)
+        let sharedKV = try HanlinMiniAppKeyValueStore(root: fixture.sourceData, appID: nil)
+        let targetKV = try HanlinMiniAppKeyValueStore(root: fixture.targetData, appID: fixture.otherAppID)
+        try sourceKV.set(.init(kind: .json, content: #"{"saved":"שלום — 汉林"}"#), for: "private")
+        try sharedKV.set(.init(kind: .data, content: "AAH+/w=="), for: "shared")
+        try targetKV.set(.init(kind: .json, content: #""companion""#), for: "existing")
+        let sqlite = HanlinSQLiteService(rootURL: fixture.sourceData.appending(path: "\(fixture.appID.rawValue)/Data"))
+        defer { sqlite.closeAll() }
+        _ = try sqlite.open(handle: "notes", name: "notes.sqlite3")
+        try sqlite.execute(handle: "notes",
+            sql: "CREATE TABLE notes(value TEXT); INSERT INTO notes VALUES(?)", arguments: ["kept"])
+        #expect(sqlite.openDatabaseCount == 1)
+        let receipt = try await fixture.export()
+        #expect(sqlite.openDatabaseCount == 0)
+        #expect(try sourceKV.value(for: "private")?.content == #"{"saved":"שלום — 汉林"}"#)
+        _ = try sqlite.open(handle: "notes", name: "notes.sqlite3")
+        #expect(try sqlite.fetchAll(handle: "notes", sql: "SELECT value FROM notes").first?["value"] as? String == "kept")
+        // Quiesce the existing destination before taking its durable baseline.
+        HanlinSQLiteService.closeConnections(under: fixture.targetData)
+        let before = try fixture.bytes(fixture.targetData)
+        // Keep a real destination owner open across root replacement.
+        #expect(try targetKV.contains(key: "existing"))
+        _ = try await fixture.receive(receipt)
+        let imported = try HanlinMiniAppKeyValueStore(root: fixture.targetData, appID: fixture.appID)
+        let sharedImported = try HanlinMiniAppKeyValueStore(root: fixture.targetData, appID: nil)
+        #expect(try imported.value(for: "private") == sourceKV.value(for: "private"))
+        #expect(try sharedImported.value(for: "shared") == sharedKV.value(for: "shared"))
+        #expect(try targetKV.value(for: "existing")?.content == #""companion""#)
+        let receivedSQLite = HanlinSQLiteService(rootURL: fixture.targetData.appending(path: "\(fixture.appID.rawValue)/Data"))
+        defer { receivedSQLite.closeAll() }
+        _ = try receivedSQLite.open(handle: "received", name: "notes.sqlite3")
+        #expect(try receivedSQLite.fetchAll(handle: "received", sql: "SELECT value FROM notes").first?["value"] as? String == "kept")
+        try await fixture.target.rollbackProductTransfer(dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot)
+        #expect(receivedSQLite.openDatabaseCount == 0)
+        #expect(try fixture.bytes(fixture.targetData) == before)
+        let retained = fixture.transactionRoot.appending(path: "rolled-forward-data")
+        let retainedBefore = try fixture.bytes(retained)
+        try targetKV.set(.init(kind: .json, content: #""new companion edit""#), for: "existing")
+        let reopened = try HanlinMiniAppKeyValueStore(root: fixture.targetData, appID: fixture.otherAppID)
+        #expect(try reopened.value(for: "existing")?.content == #""new companion edit""#)
+        #expect(try fixture.bytes(retained) == retainedBefore)
+        #expect(try sourceKV.value(for: "private")?.content == #"{"saved":"שלום — 汉林"}"#)
+    }
+
+    @Test("A later committed SQLite KV edit prevents rollback and survives a repeated import")
+    func laterDatabaseEdits() async throws {
+        let fixture = try ProductTransferFixture()
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let source = try HanlinMiniAppKeyValueStore(root: fixture.sourceData, appID: fixture.appID)
+        try source.set(.init(kind: .json, content: "1"), for: "value")
+        let receipt = try await fixture.export()
+        _ = try await fixture.receive(receipt)
+        let target = try HanlinMiniAppKeyValueStore(root: fixture.targetData, appID: fixture.appID)
+        try target.set(.init(kind: .json, content: "2"), for: "value")
+        _ = try await fixture.receive(receipt)
+        await #expect(throws: HanlinProductTransferError.rollbackWouldLoseChanges) {
+            try await fixture.target.rollbackProductTransfer(dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot)
+        }
+        #expect(try target.value(for: "value")?.content == "2")
+        #expect(try source.value(for: "value")?.content == "1")
+    }
+
     @Test("A fresh process recovers each durable two-store promotion boundary",
           arguments: [HanlinProductTransferFaultPoint.intentPersisted, .installedBackedUp,
                       .installedPromoted, .dataBackedUp, .dataPromoted, .committed])
@@ -305,7 +377,8 @@ struct HanlinProductTransferTests {
         let fixture = try ProductTransferFixture()
         defer { fixture.base.remove() }
         try await fixture.seed()
-        let original = try await fixture.source.snapshots()
+        let sourceOnDisk = try HanlinAtomicScriptStore(root: fixture.base.storeRoot)
+        let original = try await sourceOnDisk.restore()
         let sourceBefore = try fixture.bytes(fixture.base.storeRoot)
         let receipt = try await fixture.export()
         await #expect(throws: InjectedFailure.self) {

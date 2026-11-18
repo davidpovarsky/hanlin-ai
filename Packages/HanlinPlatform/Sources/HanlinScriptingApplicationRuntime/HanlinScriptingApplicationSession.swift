@@ -86,12 +86,44 @@ public struct HanlinScriptingAppIntentRegistration: Equatable, Sendable {
     }
 }
 
+public enum HanlinScriptingStorageCheckpointError: Error, Equatable, Sendable {
+    case busy
+}
+
 @MainActor
 public final class HanlinScriptingApplicationSession {
-    private static var pendingDisposals = 0
-    /// A stopped session may still own a native task or an open SQLite handle.
-    /// A product checkpoint waits until those real owners have drained.
-    public static var hasPendingDisposals: Bool { pendingDisposals > 0 }
+    private static var pendingDisposals: [String: Int] = [:]
+    private static let liveSessions = NSHashTable<HanlinScriptingApplicationSession>.weakObjects()
+    private static var storageCheckpoints: [UUID: String] = [:]
+    private let productStoragePath: String
+
+    /// Admission follows the real storage root. Isolated preview/test stores
+    /// neither block nor bypass a checkpoint for the production store.
+    public static func beginStorageCheckpoint(dataRoot: URL) throws -> UUID {
+        let path = dataRoot.resolvingSymlinksInPath().standardizedFileURL.path
+        guard !storageCheckpoints.values.contains(where: { overlaps($0, path) }),
+              !pendingDisposals.keys.contains(where: { overlaps($0, path) }),
+              !liveSessions.allObjects.contains(where: {
+                  !$0.disposed && overlaps($0.productStoragePath, path)
+              }) else {
+            throw HanlinScriptingStorageCheckpointError.busy
+        }
+        let token = UUID()
+        storageCheckpoints[token] = path
+        return token
+    }
+
+    public static func endStorageCheckpoint(_ token: UUID) {
+        storageCheckpoints[token] = nil
+    }
+
+    private static func overlaps(_ lhs: String, _ rhs: String) -> Bool {
+        lhs == rhs || lhs.hasPrefix(rhs + "/") || rhs.hasPrefix(lhs + "/")
+    }
+
+    /// Cancellation is not completed cleanup: native tasks and SQLite owners
+    /// must finish before their storage root becomes eligible for a checkpoint.
+    public static var hasPendingDisposals: Bool { !pendingDisposals.isEmpty }
 
     public let model: HanlinScriptUIModel
     public private(set) var widgetPresentation: HanlinScriptingWidgetPresentation?
@@ -194,6 +226,13 @@ public final class HanlinScriptingApplicationSession {
         systemUILoader: @escaping HanlinScriptingSystemUILoader = HanlinScriptingUnavailableSystemUILoader.load,
         imageJPEGEncoder: @escaping HanlinScriptingImageJPEGEncoder = HanlinScriptingUnavailableImageJPEGEncoder.encode
     ) throws {
+        let storageRoot = try runtimeRoot.map { $0.appending(path: "MiniApps", directoryHint: .isDirectory) }
+            ?? HanlinMiniAppDataStore.applicationSupportRoot()
+        let storagePath = storageRoot.resolvingSymlinksInPath().standardizedFileURL.path
+        productStoragePath = storagePath
+        guard !Self.storageCheckpoints.values.contains(where: { Self.overlaps($0, storagePath) }) else {
+            throw HanlinScriptingStorageCheckpointError.busy
+        }
         guard let virtualMachine = JSVirtualMachine(),
               let context = JSContext(virtualMachine: virtualMachine) else {
             throw HanlinScriptingApplicationError.runtimeInitializationFailed
@@ -245,23 +284,29 @@ public final class HanlinScriptingApplicationSession {
             router.dispatch(handlerID: handlerID, payload: payload)
         }
         router.session = self
+        Self.liveSessions.add(self)
 
-        installNativeBridges()
-        try evaluate(Self.bootstrap, filename: "hanlin-scripting-ui-runtime.js")
-        try evaluate(program, filename: filename)
-        switch entrypointContext {
-        case .application, .embeddedResult:
-            guard context.objectForKeyedSubscript("__hanlinHasPresentedUI")?.toBool() == true else {
-                throw HanlinScriptingApplicationError.missingPresentedUI
+        do {
+            installNativeBridges()
+            try evaluate(Self.bootstrap, filename: "hanlin-scripting-ui-runtime.js")
+            try evaluate(program, filename: filename)
+            switch entrypointContext {
+            case .application, .embeddedResult:
+                guard context.objectForKeyedSubscript("__hanlinHasPresentedUI")?.toBool() == true else {
+                    throw HanlinScriptingApplicationError.missingPresentedUI
+                }
+            case .intent:
+                break
+            case .widget:
+                guard widgetPresentation != nil else {
+                    throw HanlinScriptingApplicationError.missingWidgetPresentation
+                }
+            case .appIntentRegistration:
+                break
             }
-        case .intent:
-            break
-        case .widget:
-            guard widgetPresentation != nil else {
-                throw HanlinScriptingApplicationError.missingWidgetPresentation
-            }
-        case .appIntentRegistration:
-            break
+        } catch {
+            dispose()
+            throw error
         }
     }
 
@@ -339,11 +384,15 @@ public final class HanlinScriptingApplicationSession {
         // cancelled task owners until they actually finish, so a checkpoint
         // cannot mistake cancellation for completed filesystem/SQLite cleanup.
         let closingNativeTasks = Array(nativeTasks.values)
-        Self.pendingDisposals += 1
+        let closingStoragePath = productStoragePath
+        Self.pendingDisposals[closingStoragePath, default: 0] += 1
         Task.detached {
             closingSQLiteStore.closeAll()
             for task in closingNativeTasks { await task.value }
-            await MainActor.run { Self.pendingDisposals -= 1 }
+            await MainActor.run {
+                let remaining = (Self.pendingDisposals[closingStoragePath] ?? 1) - 1
+                Self.pendingDisposals[closingStoragePath] = remaining > 0 ? remaining : nil
+            }
         }
         context.evaluateScript("globalThis.__hanlinDispose?.();")
         nativeTasks.values.forEach { $0.cancel() }

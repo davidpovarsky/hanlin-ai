@@ -130,7 +130,8 @@ let package = Package(
             name: "HanlinScriptStore",
             dependencies: [
                 "HanlinPlatformContracts",
-                "HanlinScriptContracts"
+                "HanlinScriptContracts",
+                "HanlinMiniAppCore"
             ]
         ),
         .testTarget(

@@ -89,6 +89,7 @@ final class HanlinScriptingPlatform {
     private var expoSession: HanlinExpoSession?
     private(set) var isTransferringProductData = false
     private var activeStoreOperations = 0
+    private var scriptingStorageCheckpoint: UUID?
     // Native engine teardown can finish on another thread.
     // A fresh process gives transfer an observable quiescence boundary.
     private var needsFreshProcessForTransfer = false
@@ -209,10 +210,20 @@ final class HanlinScriptingPlatform {
               queuedNativeScriptAdmissions.isEmpty, activeApplicationID == nil,
               applicationSession == nil, nativeScriptSession == nil, expoSession == nil,
               systemUIContinuation == nil else { throw HanlinProductTransferError.busy }
+        do {
+            scriptingStorageCheckpoint = try HanlinScriptingApplicationSession.beginStorageCheckpoint(
+                dataRoot: HanlinMiniAppDataStore.applicationSupportRoot())
+        } catch {
+            throw HanlinProductTransferError.busy
+        }
         isTransferringProductData = true
     }
 
     private func endProductTransfer() {
+        if let token = scriptingStorageCheckpoint {
+            HanlinScriptingApplicationSession.endStorageCheckpoint(token)
+            scriptingStorageCheckpoint = nil
+        }
         isTransferringProductData = false
         Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
     }

@@ -1,4 +1,5 @@
 import Foundation
+import HanlinPlatformContracts
 
 /// Optional, explicit host budgets. The default preserves the caller's entire
 /// query; SQLite's actual ABI/resource limits and errors still apply.
@@ -40,6 +41,47 @@ import SQLite3
 /// underlying SQLite connections. Each database handle is opened with
 /// `SQLITE_OPEN_FULLMUTEX` for additional safety.
 public final class HanlinSQLiteService: @unchecked Sendable {
+    private final class WeakService {
+        weak var value: HanlinSQLiteService?
+        init(_ value: HanlinSQLiteService) { self.value = value }
+    }
+
+    private final class LiveServices: @unchecked Sendable {
+        private let lock = NSLock()
+        private var values: [UUID: WeakService] = [:]
+        func insert(_ service: HanlinSQLiteService, id: UUID) {
+            lock.lock(); defer { lock.unlock() }
+            values[id] = WeakService(service)
+        }
+        func remove(_ id: UUID) {
+            lock.lock(); defer { lock.unlock() }
+            values[id] = nil
+        }
+        func within(_ root: URL) -> [HanlinSQLiteService] {
+            lock.lock()
+            let owners = Array(values.values)
+            lock.unlock()
+            // Resolving a weak owner can release its last reference; its deinit
+            // unregisters here, so never resolve or release under this lock.
+            let path = root.resolvingSymlinksInPath().standardizedFileURL.path
+            return owners.compactMap(\.value).filter {
+                let candidate = $0.rootURL.resolvingSymlinksInPath().standardizedFileURL.path
+                return candidate == path || candidate.hasPrefix(path + "/")
+            }
+        }
+    }
+
+    private static let liveServices = LiveServices()
+    private let registrationID = UUID()
+
+    /// Checkpoint WAL and release old file handles before a product store moves.
+    /// The canonical KV owner reopens its handle on its next real operation.
+    public static func closeConnections(under root: URL) {
+        HanlinStoreFileAccess.withExclusiveAccess {
+            for service in liveServices.within(root) { service.closeAll() }
+        }
+    }
+
     private let lock = NSLock()
     private let registryLock = NSLock()
     private var databases: [String: OpaquePointer] = [:]
@@ -61,10 +103,14 @@ public final class HanlinSQLiteService: @unchecked Sendable {
     public init(rootURL: URL, resourceLimits: HanlinSQLiteResourceLimits = .init()) {
         self.rootURL = rootURL.standardizedFileURL
         self.resourceLimits = resourceLimits
+        Self.liveServices.insert(self, id: registrationID)
     }
 
     deinit {
-        for database in databases.values { sqlite3_close_v2(database) }
+        Self.liveServices.remove(registrationID)
+        HanlinStoreFileAccess.withExclusiveAccess {
+            for database in databases.values { sqlite3_close_v2(database) }
+        }
     }
 
     public var openDatabaseCount: Int {
@@ -118,132 +164,142 @@ public final class HanlinSQLiteService: @unchecked Sendable {
         walMode: Bool = true,
         busyTimeoutMs: Int32 = 5_000
     ) throws -> String {
-        lock.lock()
-        defer { lock.unlock() }
-        try resourceLimits.validate()
-        try ensureActive()
-        guard busyTimeoutMs >= 0 else { throw HanlinSQLiteServiceError.invalidArgument("SQLite busy milliseconds must be nonnegative.") }
-
-        guard handle.utf8.count <= 128, !handle.isEmpty else {
-            throw HanlinSQLiteServiceError.invalidHandle
-        }
-
-        if database(for: handle) != nil { return handle }
-
-        if let maximum = resourceLimits.maximumOpenDatabases, openDatabaseCount >= maximum {
-            throw HanlinSQLiteServiceError.tooManyDatabases
-        }
-
-        let url: URL
-        if name == ":memory:" {
-            url = URL(filePath: ":memory:")
-        } else {
-            // Validate path doesn't escape root
-            guard !name.contains(".."), !name.hasPrefix("/"), !name.hasPrefix("\\") else {
-                throw HanlinSQLiteServiceError.invalidPath(name)
-            }
-            url = rootURL.appending(path: name, directoryHint: .notDirectory)
-            // Verify resolved path is under root
-            let resolvedPath = url.standardizedFileURL.path(percentEncoded: false)
-            let rootPath = rootURL.path(percentEncoded: false)
-            guard resolvedPath.hasPrefix(rootPath) else {
-                throw HanlinSQLiteServiceError.invalidPath(name)
-            }
-            // Ensure parent directory exists
-            try FileManager.default.createDirectory(
-                at: url.deletingLastPathComponent(),
-                withIntermediateDirectories: true
-            )
-        }
-
-        var database: OpaquePointer?
-        let flags = readonly
-            ? SQLITE_OPEN_READONLY | SQLITE_OPEN_FULLMUTEX
-            : SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX
-
-        let openPath = name == ":memory:" ? ":memory:" : url.path(percentEncoded: false)
-        guard sqlite3_open_v2(openPath, &database, flags, nil) == SQLITE_OK,
-              let database else {
-            let message = database.map { String(cString: sqlite3_errmsg($0)) } ?? "open failed"
-            if let database { sqlite3_close_v2(database) }
-            throw HanlinSQLiteServiceError.openFailed(message)
-        }
-
-        registryLock.lock()
-        databases[handle] = database
-        registryLock.unlock()
-        sqlite3_progress_handler(database, 1_000, { pointer in
-            guard let pointer else { return 0 }
-            return Unmanaged<HanlinSQLiteService>.fromOpaque(pointer).takeUnretainedValue().isStopped ? 1 : 0
-        }, Unmanaged.passUnretained(self).toOpaque())
-        do {
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            lock.lock()
+            defer { lock.unlock() }
+            try resourceLimits.validate()
             try ensureActive()
-            sqlite3_busy_timeout(database, busyTimeoutMs)
+            guard busyTimeoutMs >= 0 else { throw HanlinSQLiteServiceError.invalidArgument("SQLite busy milliseconds must be nonnegative.") }
 
-            if foreignKeys {
-                try executeRaw(sql: "PRAGMA foreign_keys = ON", database: database)
-            }
-            if walMode, !readonly, name != ":memory:" {
-                try executeRaw(sql: "PRAGMA journal_mode = WAL", database: database)
+            guard handle.utf8.count <= 128, !handle.isEmpty else {
+                throw HanlinSQLiteServiceError.invalidHandle
             }
 
-            return handle
-        } catch {
+            if database(for: handle) != nil { return handle }
+
+            if let maximum = resourceLimits.maximumOpenDatabases, openDatabaseCount >= maximum {
+                throw HanlinSQLiteServiceError.tooManyDatabases
+            }
+
+            let url: URL
+            if name == ":memory:" {
+                url = URL(filePath: ":memory:")
+            } else {
+                // Validate path doesn't escape root
+                guard !name.contains(".."), !name.hasPrefix("/"), !name.hasPrefix("\\") else {
+                    throw HanlinSQLiteServiceError.invalidPath(name)
+                }
+                url = rootURL.appending(path: name, directoryHint: .notDirectory)
+                // Verify resolved path is under root
+                let resolvedPath = url.standardizedFileURL.path(percentEncoded: false)
+                let rootPath = rootURL.path(percentEncoded: false)
+                guard resolvedPath.hasPrefix(rootPath) else {
+                    throw HanlinSQLiteServiceError.invalidPath(name)
+                }
+                // Ensure parent directory exists
+                try FileManager.default.createDirectory(
+                    at: url.deletingLastPathComponent(),
+                    withIntermediateDirectories: true
+                )
+            }
+
+            var database: OpaquePointer?
+            let flags = readonly
+                ? SQLITE_OPEN_READONLY | SQLITE_OPEN_FULLMUTEX
+                : SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_FULLMUTEX
+
+            let openPath = name == ":memory:" ? ":memory:" : url.path(percentEncoded: false)
+            guard sqlite3_open_v2(openPath, &database, flags, nil) == SQLITE_OK,
+                  let database else {
+                let message = database.map { String(cString: sqlite3_errmsg($0)) } ?? "open failed"
+                if let database { sqlite3_close_v2(database) }
+                throw HanlinSQLiteServiceError.openFailed(message)
+            }
+
             registryLock.lock()
-            databases.removeValue(forKey: handle)
-            sqlite3_close_v2(database)
+            databases[handle] = database
             registryLock.unlock()
-            throw error
+            sqlite3_progress_handler(database, 1_000, { pointer in
+                guard let pointer else { return 0 }
+                return Unmanaged<HanlinSQLiteService>.fromOpaque(pointer).takeUnretainedValue().isStopped ? 1 : 0
+            }, Unmanaged.passUnretained(self).toOpaque())
+            do {
+                try ensureActive()
+                sqlite3_busy_timeout(database, busyTimeoutMs)
+
+                if foreignKeys {
+                    try executeRaw(sql: "PRAGMA foreign_keys = ON", database: database)
+                }
+                if walMode, !readonly, name != ":memory:" {
+                    try executeRaw(sql: "PRAGMA journal_mode = WAL", database: database)
+                }
+
+                return handle
+            } catch {
+                registryLock.lock()
+                databases.removeValue(forKey: handle)
+                sqlite3_close_v2(database)
+                registryLock.unlock()
+                throw error
+            }
         }
     }
 
     /// Close a database connection.
     public func close(handle: String) {
-        lock.lock()
-        defer { lock.unlock() }
-        registryLock.lock()
-        defer { registryLock.unlock() }
-        if let database = databases.removeValue(forKey: handle) {
-            sqlite3_close_v2(database)
+        return HanlinStoreFileAccess.withExclusiveAccess {
+            lock.lock()
+            defer { lock.unlock() }
+            registryLock.lock()
+            defer { registryLock.unlock() }
+            if let database = databases.removeValue(forKey: handle) {
+                sqlite3_close_v2(database)
+            }
         }
     }
 
     /// Close all open database connections.
     public func closeAll() {
-        lock.lock()
-        defer { lock.unlock() }
-        registryLock.lock()
-        defer { registryLock.unlock() }
-        for database in databases.values { sqlite3_close_v2(database) }
-        databases.removeAll()
+        return HanlinStoreFileAccess.withExclusiveAccess {
+            lock.lock()
+            defer { lock.unlock() }
+            registryLock.lock()
+            defer { registryLock.unlock() }
+            for database in databases.values { sqlite3_close_v2(database) }
+            databases.removeAll()
+        }
     }
 
     // MARK: - Execute
 
     /// Execute one or more SQL statements (no results returned).
     public func execute(handle: String, sql: String, arguments: Any? = nil) throws {
-        lock.lock()
-        defer { lock.unlock() }
-        try ensureActive()
-        guard let database = database(for: handle) else {
-            throw HanlinSQLiteServiceError.noSuchHandle(handle)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            lock.lock()
+            defer { lock.unlock() }
+            try ensureActive()
+            guard let database = database(for: handle) else {
+                throw HanlinSQLiteServiceError.noSuchHandle(handle)
+            }
+            try validateSQL(sql)
+            try executeImpl(sql: sql, arguments: arguments, database: database)
         }
-        try validateSQL(sql)
-        try executeImpl(sql: sql, arguments: arguments, database: database)
     }
 
     // MARK: - Fetch
 
     /// Execute a SELECT statement and return all result rows.
     public func fetchAll(handle: String, sql: String, arguments: Any? = nil) throws -> [[String: Any]] {
-        lock.lock()
-        defer { lock.unlock() }
-        try ensureActive()
-        guard let database = database(for: handle) else {
-            throw HanlinSQLiteServiceError.noSuchHandle(handle)
+        return try HanlinStoreFileAccess.withExclusiveAccess {
+            lock.lock()
+            defer { lock.unlock() }
+            try ensureActive()
+            guard let database = database(for: handle) else {
+                throw HanlinSQLiteServiceError.noSuchHandle(handle)
+            }
+            try validateSQL(sql)
+            return try fetchAllImpl(sql: sql, arguments: arguments, database: database)
         }
-        try validateSQL(sql)
-        return try fetchAllImpl(sql: sql, arguments: arguments, database: database)
     }
 
     // MARK: - Private Implementation
@@ -429,6 +485,7 @@ public final class HanlinSQLiteService: @unchecked Sendable {
 private let sqliteTransient = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 #else
 public final class HanlinSQLiteService: @unchecked Sendable {
+    public static func closeConnections(under root: URL) {}
     public static let maximumOpenDatabases = 16
     public static let maximumFetchRows = 10_000
     public static let maximumBindParameters = 1_024
