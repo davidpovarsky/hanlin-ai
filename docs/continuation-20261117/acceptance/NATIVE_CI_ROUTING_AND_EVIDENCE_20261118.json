@@ -1,0 +1,59 @@
+{
+  "recorded_at": "2026-11-18T17:22:39.588059+00:00",
+  "source_sha": "fd4149acc5dea3f7953f093b1b5dd8ebdd975440",
+  "observations": [
+    {
+      "run": "44356501045",
+      "status": "FAILED_PLANNER",
+      "native_tests": "NOT_RUN",
+      "reason": "New SkillOpenClawPolicyTests.swift lacked explicit affected-validation routing"
+    },
+    {
+      "run": "44349634595",
+      "status": "CANCELLED",
+      "native_tests": "NOT_RUN",
+      "reason": "Workflow manual exact selectors shared validation concurrency group; cancellation at17:14:54 coincides with44356501045 creation at17:14:52"
+    },
+    {
+      "run": "44342772767",
+      "status": "CANCELLED",
+      "build": "EXECUTED_PASS",
+      "native_tests": "NOT_RUN",
+      "reason": "Cancelled shortly after test-without-building invocation, before preserved test-case events. Cancellation cause not established.",
+      "artifact_id": 14451820613,
+      "whole_zip_sha256": "eba066fce84d8d3767c37a0ef4d24b49507a52e7105c33170432bd2a0759e054"
+    },
+    {
+      "run": "44345443838",
+      "status": "FAILED_TEST_RUNNER_PREPARATION",
+      "build": "EXECUTED_PASS",
+      "native_tests": "NOT_RUN",
+      "reason": "XCTest runner crashed at XCTWaiter handleStalledWait before any case; 30s result-reader timeout prevented original bundle archiving",
+      "artifact_id": 14447629956,
+      "whole_zip_sha256": "076972ff5f787f2a1bb3280186b42196c23c9809cc452ae49890b260b40aef79"
+    }
+  ],
+  "changes": [
+    "Explicit original-policy native suite mapping and upstream-change parity gate",
+    "Unique workflow concurrency group for each manually dispatched exact-selector run; automatic triggers unchanged",
+    "Archive Motion xcresult before bounded reader; retain failed reader status and only owned proof crash/process diagnostics; original assertions and proof sources unchanged"
+  ],
+  "portable_validation": {
+    "affected_routing_tests": 97,
+    "cache_controls": 34,
+    "status": "EXECUTED_PASS",
+    "yaml": "PARSED",
+    "motion_bash": "PARSED",
+    "motion_collector": "PYTHON_COMPILED",
+    "exact_policy_plan": "PASSED"
+  },
+  "next_native": "Rerun exact original-policy/app/Skill UI selectors after publication; run original Motion B/C once with preserved startup diagnostics. Wide failed UI remains unaccepted.",
+  "release": "NO_GO",
+  "validation_log_sha256": {
+    "affected_routing": "f6d317a14df12537a76232316fa4c8cab5f60b45ad40c5945b10d32e97a6b81d",
+    "cache_controls": "d11503ecbe802966fbf66d102951e34c8929f562d93aceb0ca203a823c39fabf",
+    "exact_policy_plan": "9bcfc8ef703f91f115748cb2926a036dc8031a4473795120b3b6a50b3da2a31e",
+    "motion_bash_parse": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diff_check": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

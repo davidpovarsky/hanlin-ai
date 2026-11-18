@@ -109,26 +109,13 @@ python3 "$root/docs/chat-motion/record_ui_run.py" --device "$device" --evidence 
   CODE_SIGNING_ALLOWED=NO "${selected_tests[@]}" 2>&1 | tee "$evidence/test.log"
 test_code=${PIPESTATUS[0]};set -e
 finish_phase results
-python3 - "$scratch/Motion.xcresult" "$device" "$evidence" <<'PY'
-import json,shutil,subprocess,sys
-from pathlib import Path
-bundle=Path(sys.argv[1]);e=Path(sys.argv[3])
-if bundle.exists():
-    result=subprocess.run(['xcrun','xcresulttool','get','test-results','tests','--path',str(bundle),'--format','json'],capture_output=True,text=True,timeout=30,check=True)
-    (e/'tests.json').write_text(result.stdout)
-    subprocess.run(['tar','-czf',str(e/'Motion.xcresult.tar.gz'),'-C',str(bundle.parent),bundle.name],timeout=90,check=True)
-    (e/'raw-result-status.json').write_text(json.dumps({'status':'FINALIZED_READABLE_ARCHIVED'}))
-try:
-    result=subprocess.run(['xcrun','simctl','get_app_container',sys.argv[2],'ai.hanlin.motion-proof','data'],capture_output=True,text=True,timeout=5,check=True)
-    timeline=Path(result.stdout.strip())/'Documents/motion-geometry-timeline.json'
-    if timeline.exists():shutil.copyfile(timeline,e/timeline.name)
-except (OSError,subprocess.SubprocessError):pass
-PY
+python3 "$root/docs/chat-motion/collect_motion_result.py" "$scratch/Motion.xcresult" "$device" "$evidence" "$test_code"
 [[ "$test_code" == 0 ]] || exit "$test_code"
 python3 - "$evidence" <<'PY'
 import json,sys
 from pathlib import Path
 e=Path(sys.argv[1]);found=[]
+assert json.loads((e/'raw-result-status.json').read_text())['status']=='FINALIZED_READABLE_ARCHIVED'
 def visit(n):
     if isinstance(n,dict):
         if n.get('nodeType')=='Test Case':found.append(n)

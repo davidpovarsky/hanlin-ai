@@ -1509,18 +1509,20 @@
     "skill_product_execution_tests": {
       "description": "Original app product integration and execution acceptance",
       "patterns": [
-        "AI_HLYTests/SkillRuntimeProductTests.swift"
+        "AI_HLYTests/SkillRuntimeProductTests.swift",
+        "AI_HLYTests/SkillOpenClawPolicyTests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
       ],
       "unit_suites": [
-        "AI_HLYTests/SkillRuntimeProductTests"
+        "AI_HLYTests/SkillRuntimeProductTests",
+        "AI_HLYTests/SkillOpenClawPolicyTests"
       ],
       "consumers": []
     },
     "skills_openclaw_original": {
-      "description": "Pinned original OpenClaw requirements and embedded diagnostic payload",
+      "description": "Pinned original OpenClaw policy source closure, parity and embedded product integration",
       "patterns": [
         "Scripts/Skills/OpenClaw/**"
       ],
@@ -1529,7 +1531,8 @@
         "app_unit_tests"
       ],
       "unit_suites": [
-        "AI_HLYTests/SkillRuntimeProductTests"
+        "AI_HLYTests/SkillRuntimeProductTests",
+        "AI_HLYTests/SkillOpenClawPolicyTests"
       ],
       "consumers": []
     },
