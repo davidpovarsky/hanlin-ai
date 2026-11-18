@@ -88,6 +88,9 @@ def main():
             "-destination", "platform=iOS Simulator,id=" + simulator,
             "-parallel-testing-enabled", "NO", "-derivedDataPath", str(derived),
             "-clonedSourcePackagesDirPath", str(ROOT / "build/SourcePackages"),
+            # Same already-pinned A2UI generator/macros as the original app CI.
+            # Noninteractive runners have no Xcode trust-confirmation UI.
+            "-skipPackagePluginValidation", "-skipMacroValidation",
             # Simulator ad-hoc signing includes the targets' existing entitlements.
             # No team, provisioning profile, application ID or distribution signing is changed.
             "CODE_SIGNING_ALLOWED=YES", "CODE_SIGNING_REQUIRED=YES", "CODE_SIGN_IDENTITY=-"]

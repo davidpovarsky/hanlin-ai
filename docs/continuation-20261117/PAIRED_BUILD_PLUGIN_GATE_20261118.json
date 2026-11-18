@@ -1,0 +1,13 @@
+{
+  "recorded_at": "2026-11-18T03:11:17.139254+00:00",
+  "run_id": 44223924068,
+  "source_sha": "9421a232201d0c959efec669a6e85214a56c74c2",
+  "result": "BUILD_FAILED_BEFORE_PAIRED_UI",
+  "reason": "The paired runner omitted the original app CI's noninteractive trust flags. Xcode rejected the already-pinned official A2UISchemaGeneratorPlugin before compiling AI.",
+  "artifact_id": 14392724530,
+  "artifact_sha256": "55ab3a624bd5a65f0b483d312cfa846ced2ffa1fd1947b0ebcb3bd1df05cc6c4",
+  "log_sha256": "5a922d1ca8d4c3fde6ed8f9cbed338ba23099a9dc8052fbefcce59951539fba8",
+  "change": "Add the same -skipPackagePluginValidation and -skipMacroValidation flags already used by the approved original app build. Dependency pins, generated schemas, signing identity/entitlements and all three UI assertions remain unchanged.",
+  "paired_ui_cases_executed": 0,
+  "acceptance": "NOT_ACCEPTED_PENDING_REEXECUTION"
+}
