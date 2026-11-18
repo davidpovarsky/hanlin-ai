@@ -366,6 +366,36 @@ struct HanlinProductTransferTests {
         #expect(try sourceKV.value(for: "private")?.content == #"{"saved":"שלום — 汉林"}"#)
     }
 
+    @Test("Unopened legacy ScriptUI defaults migrate before export without replacing newer canonical data")
+    func unopenedLegacyStorageTransfers() async throws {
+        let fixture = try ProductTransferFixture(installedPackageID: "legacy-transfer-\(UUID().uuidString.lowercased())")
+        defer { fixture.base.remove() }
+        try await fixture.seed()
+        let packages = try await fixture.source.restore()
+        let package = try #require(packages.first)
+        let suite = HanlinMiniAppKeyValueStore.legacyScriptingStorageIdentity(for: fixture.base.installedID)
+        let defaults = try #require(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        defaults.set(#""legacy — שלום — 汉林""#, forKey: "private")
+        defaults.set(Data([0,127,255]), forKey: "__hanlin_data__:bytes")
+        let database = fixture.sourceData.appending(path: "\(package.appID.rawValue)/State/KeyValue.sqlite3")
+        #expect(!FileManager.default.fileExists(atPath: database.path))
+        let receipt = try await fixture.export()
+        _ = try await fixture.receive(receipt)
+        let received = try HanlinMiniAppKeyValueStore(root: fixture.targetData, appID: package.appID)
+        #expect(try received.value(for: "private")?.content == #""legacy — שלום — 汉林""#)
+        #expect(try received.value(for: "bytes") == .init(kind: .data, content: Data([0,127,255]).base64EncodedString()))
+        #expect(defaults.string(forKey: "private") == #""legacy — שלום — 汉林""#)
+        #expect(defaults.data(forKey: "__hanlin_data__:bytes") == Data([0,127,255]))
+        let original = try HanlinMiniAppKeyValueStore(root: fixture.sourceData, appID: package.appID)
+        try original.set(.init(kind: .json, content: #""newer canonical edit""#), for: "private")
+        _ = try await fixture.export()
+        #expect(try original.value(for: "private")?.content == #""newer canonical edit""#)
+        try await fixture.target.rollbackProductTransfer(dataRoot: fixture.targetData, transactionRoot: fixture.transactionRoot)
+        #expect(!FileManager.default.fileExists(atPath: fixture.targetData.appending(path: package.appID.rawValue).path))
+        #expect(try original.value(for: "private")?.content == #""newer canonical edit""#)
+    }
+
     @Test("Durable snapshots retain nonempty SQLite WAL and ordinary similarly named files")
     func durableSQLiteSidecars() throws {
         let fixture = try ProductTransferFixture()
@@ -571,8 +601,8 @@ private struct ProductTransferFixture {
     let appID: HanlinAppID
     let otherAppID: HanlinAppID
 
-    init() throws {
-        base = try Fixture()
+    init(installedPackageID: String = "fixture-install") throws {
+        base = try Fixture(installedPackageID: installedPackageID)
         source = try HanlinAtomicScriptStore(root: base.storeRoot)
         sourceData = base.root.appending(path: "source-private-data")
         targetRoot = base.root.appending(path: "companion-installed")
@@ -659,14 +689,14 @@ private struct Fixture {
     let packageID: HanlinPackageID
     let entrypoint: HanlinPackageEntrypointDescriptor
 
-    init() throws {
+    init(installedPackageID: String = "fixture-install") throws {
         root = FileManager.default.temporaryDirectory.appending(
             path: "hanlin store tests \(UUID().uuidString.lowercased())",
             directoryHint: .isDirectory
         )
         storeRoot = root.appending(path: "store", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
-        installedID = try HanlinInstalledPackageID(validating: "fixture-install")
+        installedID = try HanlinInstalledPackageID(validating: installedPackageID)
         packageID = try HanlinPackageID(validating: "fixture-package")
         entrypoint = .init(
             id: "app",

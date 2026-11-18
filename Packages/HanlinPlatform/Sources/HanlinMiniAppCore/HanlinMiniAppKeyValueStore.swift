@@ -43,6 +43,24 @@ public final class HanlinMiniAppKeyValueStore: @unchecked Sendable {
         }
     }
 
+    public static func legacyScriptingStorageIdentity(for packageID: HanlinInstalledPackageID) -> String {
+        "com.hanlin.scripting.storage.\(packageID.rawValue)"
+    }
+
+    /// Adopt the original private suite even when its package has not been
+    /// launched since the canonical storage update. This reads only that
+    /// installed package's known legacy domain and never deletes its source.
+    public static func migrateUnopenedScriptingStorage(root: URL, appID: HanlinAppID,
+                                                       installedPackageID: HanlinInstalledPackageID) throws {
+        let identity = legacyScriptingStorageIdentity(for: installedPackageID)
+        guard let defaults = UserDefaults(suiteName: identity) else {
+            throw HanlinMiniAppKeyValueError.legacyStorageUnavailable
+        }
+        guard let values = defaults.persistentDomain(forName: identity), !values.isEmpty else { return }
+        let store = try Self(root: root, appID: appID)
+        try store.migrateLegacy(values, identity: identity)
+    }
+
     public func value(for key: String) throws -> Value? {
         return try HanlinStoreFileAccess.withExclusiveAccess {
             lock.lock(); defer { lock.unlock() }
@@ -168,8 +186,10 @@ public final class HanlinMiniAppKeyValueStore: @unchecked Sendable {
 public enum HanlinMiniAppKeyValueError: Error, LocalizedError, Sendable {
     case invalidRecord(String)
     case invalidLegacyValue(String)
+    case legacyStorageUnavailable
     public var errorDescription: String? {
         switch self {
+        case .legacyStorageUnavailable: "Legacy scripting storage could not be opened. Its original data was preserved."
         case .invalidRecord(let key): "The stored KV record is invalid: \(key)"
         case .invalidLegacyValue(let key): "Legacy KV migration could not preserve this value: \(key). The original defaults remain intact."
         }

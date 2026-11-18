@@ -18,7 +18,7 @@ final class HanlinScriptingPackageStorage: @unchecked Sendable {
         let digest = SHA256.hash(data: Data(installedPackageID.rawValue.utf8)).map { String(format: "%02x", $0) }.joined()
         let appID = try canonicalAppID ?? HanlinAppID(validating: "scripting.\(digest)")
         let store = try HanlinMiniAppKeyValueStore(root: resolvedRoot, appID: appID)
-        let legacySuite = "com.hanlin.scripting.storage.\(installedPackageID.rawValue)"
+        let legacySuite = HanlinMiniAppKeyValueStore.legacyScriptingStorageIdentity(for: installedPackageID)
         guard let defaults = UserDefaults(suiteName: legacySuite) else {
             throw HanlinScriptingNativeError(name: "Error", code: "storage_initialization_failed", message: "Legacy storage could not be opened; existing data was preserved.")
         }

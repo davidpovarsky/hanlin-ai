@@ -383,7 +383,11 @@ public actor HanlinAtomicScriptStore {
     /// The source remains usable after this immutable copy is published.
     public func createProductTransfer(dataRoot: URL, outbox: URL) throws -> HanlinProductTransferReceipt {
         try HanlinStoreFileAccess.withExclusiveAccess {
-            _ = try restore()
+            let packages = try restore()
+            for package in packages {
+                try HanlinMiniAppKeyValueStore.migrateUnopenedScriptingStorage(
+                    root: dataRoot, appID: package.appID, installedPackageID: package.record.installedPackageID)
+            }
             HanlinSQLiteService.closeConnections(under: dataRoot)
             try verifyTransferRegistry(registry, at: root)
             return try HanlinTransferCheckpoint.publish(installedRoot: root, dataRoot: dataRoot,
