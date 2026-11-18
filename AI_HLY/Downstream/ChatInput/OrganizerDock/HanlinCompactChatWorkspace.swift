@@ -116,17 +116,21 @@ struct HanlinCompactChatWorkspace: View {
 
     var body: some View {
         GeometryReader { proxy in
-            navigationRoot(availableHeight: proxy.size.height)
+            let usableSize = CGSize(
+                width: proxy.size.width,
+                height: max(0, proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom)
+            )
+            navigationRoot(availableHeight: max(0, usableSize.height - (composerVisible ? dockHeight : 0)))
                 .frame(width: proxy.size.width, height: proxy.size.height)
-                .overlay(alignment: .bottom) {
+                .safeAreaInset(edge: .bottom, spacing: 0) {
                     if composerVisible {
-                        anchoredComposer(availableSize: proxy.size)
+                        anchoredComposer(availableSize: usableSize)
                             .transition(.move(edge: .bottom).combined(with: .opacity))
                     }
                 }
-            // The navigation viewport owns the layout proposal. The floating
-            // composer must not enlarge it when Dynamic Type or the keyboard
-            // changes the hosted controls' intrinsic sizes.
+            // Native safe-area placement keeps this one persistent composer above
+            // the keyboard and tab bar. Its budget is already the usable viewport;
+            // the child must not subtract a screen-wide keyboard frame again.
             .animation(.spring(response: 0.36, dampingFraction: 0.88), value: composerVisible)
             .onChange(of: path) { oldPath, newPath in
                 isCompactComposerInputActive = false
@@ -261,7 +265,7 @@ struct HanlinCompactChatWorkspace: View {
                     matchedMessageID: matchedMessageIDByChat[id]
                 )
                 .environment(\.hanlinExternalCompactComposerHost, true)
-                .environment(\.hanlinExternalDockHeight, dockHeight)
+                .environment(\.hanlinExternalDockHeight, 0)
                 .environment(\.hanlinComposerSessionBridge, sessionBridge)
                 .id(id)
             } else {
@@ -308,7 +312,7 @@ struct HanlinCompactChatWorkspace: View {
             }
             .padding(.horizontal, 18)
             .padding(.top, 12)
-            .padding(.bottom, max(230, dockHeight + 28))
+            .padding(.bottom, 16)
             .frame(maxWidth: .infinity, minHeight: max(320, availableHeight - 16), alignment: .bottomLeading)
         }
         .scrollDismissesKeyboard(.interactively)
@@ -476,7 +480,8 @@ struct HanlinCompactChatWorkspace: View {
             imageReversePrompt: endpoint?.imageReversePrompt ?? $sessionBridge.homeImageReversePrompt,
             isInputActive: $isCompactComposerInputActive,
             dockContextKey: activeComposerKey,
-            availableWorkspaceSize: availableSize
+            availableWorkspaceSize: availableSize,
+            workspaceUsesKeyboardSafeArea: true
         )
         .onGeometryChange(for: CGFloat.self) { geo in
             geo.size.height

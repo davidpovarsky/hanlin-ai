@@ -259,6 +259,8 @@ struct ChatViewBottom: View {
     var isInputActive: FocusState<Bool>.Binding
     var dockContextKey: String? = nil
     var availableWorkspaceSize: CGSize = .zero
+    /// The persistent compact host supplies its usable native safe-area viewport.
+    var workspaceUsesKeyboardSafeArea: Bool = false
 
     @Environment(\.modelContext) private var context
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -433,7 +435,8 @@ struct ChatViewBottom: View {
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)) { notification in
-            guard let endFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+            guard !workspaceUsesKeyboardSafeArea,
+                  let endFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
             let screenHeight = UIScreen.main.bounds.height
             let overlap = max(0, screenHeight - endFrame.minY)
             popupCoordinator.dockState.updateKeyboardOverlap(
@@ -685,7 +688,10 @@ struct ChatViewBottom: View {
     }
 
     private var morphAvailableHeight: CGFloat {
-        max(0, popupCoordinator.dockState.availableHeight - popupCoordinator.dockState.keyboardHeight)
+        if workspaceUsesKeyboardSafeArea {
+            return max(0, availableWorkspaceSize.height)
+        }
+        return max(0, popupCoordinator.dockState.availableHeight - popupCoordinator.dockState.keyboardHeight)
     }
 
     private var showsDetachedCapabilities: Bool {
@@ -809,6 +815,9 @@ struct ChatViewBottom: View {
     private func syncDockGeometryAndContext() {
         popupCoordinator.dockState.handleContextKeyChange(effectiveDockContextKey)
         popupCoordinator.dockState.measuredInputHeight = textEditorHeight
+        if workspaceUsesKeyboardSafeArea {
+            popupCoordinator.dockState.updateKeyboardOverlap(0)
+        }
         popupCoordinator.dockState.attachmentOverheadHeight = max(measuredAttachmentPreviewHeight, attachmentOverheadHeightEstimate)
         if availableWorkspaceSize.height > 160 {
             popupCoordinator.dockState.availableHeight = availableWorkspaceSize.height

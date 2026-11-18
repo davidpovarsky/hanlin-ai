@@ -267,6 +267,13 @@ final class HanlinMorphComposerUITests: XCTestCase {
 
         let plus = app.buttons["hanlin-composer-general-menu"].firstMatch
         XCTAssertTrue(plus.waitForExistence(timeout: 10))
+        XCTAssertGreaterThan(input.frame.height, 0, "The focused editor must retain visible height")
+        XCTAssertTrue(plus.isHittable, "The keyboard must not cover the persistent composer launcher")
+        let keyboard = app.keyboards.firstMatch
+        if keyboard.exists {
+            XCTAssertLessThanOrEqual(plus.frame.maxY, keyboard.frame.minY + 1,
+                "The native composer must sit above the keyboard")
+        }
         plus.tap()
         let panel = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
         XCTAssertTrue(panel.waitForExistence(timeout: 10))
