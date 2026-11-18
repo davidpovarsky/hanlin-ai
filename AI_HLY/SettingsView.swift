@@ -194,6 +194,7 @@ struct SettingsView: View {
                             Image(systemName: "text.rectangle.page")
                         }
                     }
+                    .accessibilityIdentifier("hanlin-help-guide-link")
                     Button(action: {
                         showSafariCost = true
                     }) {
@@ -204,7 +205,9 @@ struct SettingsView: View {
                             Image(systemName: "creditcard")
                         }
                     }
+                    .accessibilityIdentifier("hanlin-help-costs-link")
                 }
+                .accessibilityIdentifier("hanlin-help-section")
                 Section(header: Text(String(localized: "软件"))) {
                     NavigationLink(destination: SoftwareIntroView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
                         Label(String(localized: "软件介绍"), systemImage: "text.book.closed")
@@ -216,8 +219,9 @@ struct SettingsView: View {
                         Label(String(localized: "软件信息"), systemImage: "info.circle")
                     }
                     NavigationLink(destination: ContactUsView().onAppear { isPushed = true }.onDisappear { isPushed = false }.toolbar(.hidden, for: .tabBar)) {
-                        Label(String(localized: "联系我们"), systemImage: "envelope")
+                        Label(String(localized: "Support information"), systemImage: "questionmark.circle")
                     }
+                    .accessibilityIdentifier("hanlin-support-link")
                 }
             }
             .accessibilityIdentifier("hanlin-settings-list")
@@ -254,15 +258,11 @@ struct SettingsView: View {
                     .frame(height: 70)
             }
         }
-        .fullScreenCover(isPresented: $showSafariGuide) {
-            SafariView(url: URL(string: "https://docs.qq.com/aio/DT2pMUFRVWVNsZmtj")!)
-                .background(BlurView(style: .systemThinMaterial))
-                .edgesIgnoringSafeArea(.all)
+        .sheet(isPresented: $showSafariGuide) {
+            NavigationStack { HanlinHelpView(topic: .guide) }
         }
-        .fullScreenCover(isPresented: $showSafariCost) {
-            SafariView(url: URL(string: "https://docs.qq.com/smartsheet/DT3dzT1JlSFVvU05n?viewId=vUQPXH&tab=db_KULEGz")!)
-                .background(BlurView(style: .systemThinMaterial))
-                .edgesIgnoringSafeArea(.all)
+        .sheet(isPresented: $showSafariCost) {
+            NavigationStack { HanlinHelpView(topic: .costs) }
         }
     }
 }

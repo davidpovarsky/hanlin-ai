@@ -10,7 +10,6 @@ import HanlinChatUI
 import SwiftData
 import MarkdownUI
 import Foundation
-import MessageUI
 
 // MARK: 用户信息界面
 struct UserInfoView: View {
@@ -184,7 +183,7 @@ struct VersionInfoView: View {
                     .frame(width: 140, height: 140)
                     .cornerRadius(20)
                     
-                Text("ChavrusaChat")
+                Text(Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "Hanlin")
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(.primary)
@@ -209,7 +208,7 @@ struct VersionInfoView: View {
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Text(String(localized: "感谢您使用 Hylic.AI"))
+                Text(String(localized: "Thank you for using Hanlin"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -612,317 +611,11 @@ struct SoftwareSection: Identifiable {
 }
 
 struct SoftwareIntroView: View {
-    
-    let sections: [SoftwareSection] = [
-        SoftwareSection(
-            title: String(localized: "core_features_title"),
-            content: String(localized: "core_features_content")
-        )
-    ]
-    
-    var body: some View {
-        ZStack {
-            // 背景渐变
-            LinearGradient(
-                gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-            
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 10) {
-                    // 软件 Logo & 标题
-                    headerView()
-                    
-                    Divider()
-                        .frame(width: 200)
-                        .padding()
-                    
-                    // 主要内容部分
-                    ForEach(sections) { section in
-                        sectionCard(for: section)
-                    }
-                    
-                    Divider()
-                        .frame(width: 200)
-                        .padding()
-                    
-                    // 加入内测
-                    betaInvitationView()
-                }
-                .padding()
-            }
-        }
-        .navigationTitle(String(localized: "软件介绍"))
-        .navigationBarTitleDisplayMode(.inline)
-    }
-    
-    /// **软件 Logo & 标题**
-    @ViewBuilder
-    private func headerView() -> some View {
-        VStack(spacing: 8) {
-            HStack {
-                Image("applogo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 45, height: 45)
-                    .cornerRadius(20)
-                    
-                Text("ChavrusaChat")
-                    .font(.largeTitle)
-                    .bold()
-            }
-            
-            Text(String(localized: "开启智能生活的次世代AI工作台"))
-                .font(.subheadline)
-        }
-        .padding(.top, 30)
-    }
-    
-    /// **软件介绍的内容卡片**
-    @ViewBuilder
-    private func sectionCard(for section: SoftwareSection) -> some View {
-        VStack(alignment: .leading, spacing: 5) {
-            Text(section.title)
-                .font(.headline)
-                .bold()
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            Markdown(section.content)
-                .foregroundColor(.primary)
-                .padding(.top, 5)
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .padding()
-        .frame(maxWidth: UIScreen.main.bounds.width * 0.9, alignment: .leading)
-        .background(.thinMaterial)
-        .background(.background.opacity(0.2))
-        .cornerRadius(20)
-    }
-    
-    /// **加入内测部分**
-    @ViewBuilder
-    private func betaInvitationView() -> some View {
-        VStack(spacing: 10) {
-            Text(String(localized: "「群智秒启，AI随行」"))
-                .font(.title3)
-                .bold()
-                .padding(.vertical)
-            
-            Text(String(localized: "百位AI翰林待诏候旨，作为智能时代的掌玺者，您将在21世纪最澎湃的算力浪潮中，见证思维内阁呈递的万方策论。而你，21世纪最富期待的科技革命的亲历者，AI翰林院诚邀您检阅百模智囊团，在史无前例的认知盛宴中，谱写您那属于数字时代的新华章！"))
-                .font(.body)
-                .multilineTextAlignment(.leading)
-        }
-        .padding(.bottom, 40)
-    }
+    var body: some View { HanlinHelpView(topic: .guide, showsDone: false) }
 }
 
-// 联系我们
 struct ContactUsView: View {
-    
-    @State private var showMailCompose = false
-    @State private var saveSuccess = false
-    @State private var showSaveAlert = false
-    @State private var showCopyAlert = false
-    @State private var mailResult: Result<MFMailComposeResult, Error>? = nil
-
-    var body: some View {
-        ZStack {
-            // 背景渐变
-            LinearGradient(
-                gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-
-            VStack(spacing: 24) {
-                
-                Spacer()
-                
-                Image("applogo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 120, height: 120)
-                    .cornerRadius(20)
-                
-                Text(String(localized: "如果您有任何问题或建议，可以通过邮件联系我们。此外，我们有一个微信社群，如果您感兴趣您可以邮件联系我，我将邀请您加入社群。"))
-                    .font(.body)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 16)
-                
-                Divider()
-                    .frame(width: 200)
-                    .background(Color.gray.opacity(0.5))
-                
-                HStack {
-                    Text(verbatim: "ai.hanlin@outlook.com")
-                        .font(.caption)
-                        .foregroundColor(.hlBluefont)
-                        .contextMenu {
-                            Button(action: copyEmailToClipboard) {
-                                Label(String(localized: "复制"), systemImage: "doc.on.doc")
-                            }
-                        }
-                }
-                .padding(.top, 10)
-                
-                // 发送邮件按钮
-                Button(action: {
-                    if MFMailComposeViewController.canSendMail() {
-                        showMailCompose = true
-                    } else {
-                        print("无法发送邮件，请检查您的邮件配置")
-                    }
-                }) {
-                    HStack {
-                        Image(systemName: "envelope.fill")
-                        Text(String(localized: "发送邮件"))
-                    }
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: 250)
-                    .background(Color.hlBlue)
-                    .cornerRadius(20)
-                }
-                .sheet(isPresented: $showMailCompose) {
-                    MailView(result: $mailResult)
-                }
-                
-                Spacer()
-            }
-            .padding()
-            .alert(isPresented: $showCopyAlert) {
-                Alert(title: Text(String(localized: "已复制")), message: Text(String(localized: "邮箱已复制到剪贴板")), dismissButton: .default(Text(String(localized: "确定"))))
-            }
-        }
-        .navigationTitle(String(localized: "联系我们"))
-        .navigationBarTitleDisplayMode(.inline)
-    }
-    
-    /// 保存二维码到相册
-    private func saveQRCodeToAlbum() {
-        guard let qrImage = UIImage(named: "community_qr") else {
-            saveSuccess = false
-            showSaveAlert = true
-            return
-        }
-        
-        UIImageWriteToSavedPhotosAlbum(qrImage, nil, nil, nil)
-        saveSuccess = true
-        showSaveAlert = true
-    }
-    
-    private func copyEmailToClipboard() {
-        UIPasteboard.general.string = "ai.hanlin@outlook.com"
-        showCopyAlert = true
-    }
-}
-
-/// **邮件发送视图**
-struct MailView: UIViewControllerRepresentable {
-    @Binding var result: Result<MFMailComposeResult, Error>?
-    
-    class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-        var parent: MailView
-        
-        init(parent: MailView) {
-            self.parent = parent
-        }
-        
-        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-            if let error = error {
-                parent.result = .failure(error)
-            } else {
-                parent.result = .success(result)
-            }
-            controller.dismiss(animated: true)
-        }
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(parent: self)
-    }
-    
-    func makeUIViewController(context: Context) -> MFMailComposeViewController {
-        let vc = MFMailComposeViewController()
-        vc.mailComposeDelegate = context.coordinator
-        vc.setToRecipients(["ai.hanlin@outlook.com"]) // 客服邮箱
-        
-        // 获取当前设备语言
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let isChinese = currentLanguage.contains("zh")
-        
-        // **主题自动适配**
-        let subject = isChinese ? "用户反馈（\(getCurrentDate())）" : "User Feedback (\(getCurrentDate()))"
-        vc.setSubject(subject)
-        
-        // **正文自动适配**
-        let emailBody = isChinese ? """
-            问题描述或建议描述：
-            
-            \(getCursorPlaceholder())
-            
-            ---
-            设备信息：
-            - iOS 版本：\(UIDevice.current.systemVersion)
-            - 设备型号：\(getDeviceModel())
-            - App 版本：\(getAppVersion())
-            """ : """
-            Issue description or suggestions:
-            
-            \(getCursorPlaceholder())
-            
-            ---
-            Device Info:
-            - iOS Version: \(UIDevice.current.systemVersion)
-            - Device Model: \(getDeviceModel())
-            - App Version: \(getAppVersion())
-            """
-        
-        vc.setMessageBody(emailBody, isHTML: false)
-        
-        return vc
-    }
-    
-    func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {}
-    
-    /// 获取当前日期（格式：YYYY-MM-DD）
-    private func getCurrentDate() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: Date())
-    }
-    
-    /// 获取设备型号
-    private func getDeviceModel() -> String {
-        var systemInfo = utsname()
-        uname(&systemInfo)
-        let machineMirror = Mirror(reflecting: systemInfo.machine)
-        let identifier = machineMirror.children.compactMap { element in
-            element.value as? Int8
-        }
-            .filter { $0 != 0 }
-            .map { String(UnicodeScalar(UInt8($0))) }
-            .joined()
-        return identifier
-    }
-    
-    /// 获取 App 版本号
-    private func getAppVersion() -> String {
-        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            return version
-        }
-        return "Unknown"
-    }
-    
-    /// 让光标定位到合适的位置
-    private func getCursorPlaceholder() -> String {
-        return "\u{200B}" // 零宽空格，邮件打开时光标会自动定位到这里
-    }
+    var body: some View { HanlinSupportView() }
 }
 
 // MARK: 通用设置界面

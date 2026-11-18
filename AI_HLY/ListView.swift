@@ -306,10 +306,8 @@ struct ListView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $showSafariGuide) {
-            SafariView(url: URL(string: "https://docs.qq.com/aio/DT2pMUFRVWVNsZmtj")!)
-                .background(BlurView(style: .systemThinMaterial))
-                .edgesIgnoringSafeArea(.all)
+        .sheet(isPresented: $showSafariGuide) {
+            NavigationStack { HanlinHelpView(topic: .guide) }
         }
         .alert("无法新建对话", isPresented: $showValidationAlert) {
             Button("前往设置") {
