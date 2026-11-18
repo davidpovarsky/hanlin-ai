@@ -1,0 +1,29 @@
+{
+  "run": "44234049504",
+  "source_sha": "8cf1919724f082081c60ea5f7c1012bd286026d3",
+  "result": {
+    "mini_build": "EXECUTED_PASS",
+    "ai_build": "EXECUTED_FAIL",
+    "ui": "NOT_RUN"
+  },
+  "failure": "Xcode 27.2 advertised but did not produce the pinned A2UIJSON schema plugin output.",
+  "missing_output": "GeneratedA2UIJSONSchemas.swift",
+  "repair": "Invoke existing Scripts/CI/stage_a2ui_schemas.py after dependencies resolve and before building AI. Same original generator, exact locked revision/input hash checks, original plugin output paths; no schema or renderer replacement.",
+  "generator_revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+  "artifact": {
+    "id": 14397406872,
+    "size": 13440744,
+    "api_sha256": "5ef119be6397494e170d0094375b1e8e9140fddf8ca22b7d87855aed37363ff3",
+    "full_zip_digest_recomputed": false
+  },
+  "ai_build_log": {
+    "bytes": 3777950,
+    "sha256": "e3b5f021357ad727fd9c6469cbc38d908451b85e1e8724d1fc2601994247d103",
+    "selected_zip_entry_crc_verified": true
+  },
+  "native_job_log": {
+    "bytes": 806244,
+    "sha256": "f7108a01f66b30400b161643dcb03bbd05d4ebde30fa42724eb8d9558b15628d"
+  },
+  "acceptance": "PENDING_NATIVE_REEXECUTION"
+}

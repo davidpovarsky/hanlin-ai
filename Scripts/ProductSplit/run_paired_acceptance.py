@@ -97,8 +97,20 @@ def main():
         state["status"] = "BUILD_FAILED"
         command(base + ["-scheme", "HanlinMiniApps", "build",
             "-resultBundlePath", str(EVIDENCE / "MiniBuild.xcresult")], "mini-build.log", timeout=1500)
+        state["mini_build"] = "EXECUTED_PASS"
+        # The original full-app workflow uses this exact pinned upstream generator:
+        # Xcode 27.2 advertises its outputs but can omit the generator build commands.
+        # The helper verifies every input against the resolved commit before running it.
+        command([sys.executable, "Scripts/CI/stage_a2ui_schemas.py",
+            "--source-packages-path", str(ROOT / "build/SourcePackages"),
+            "--derived-data-path", str(derived),
+            "--evidence", str(EVIDENCE / "original-a2ui-schemas")],
+            "original-a2ui-generator.log", timeout=360)
+        state["build"] = "EXECUTED_FAIL"
+        state["ai_build"] = "EXECUTED_FAIL"
         command(base + ["-scheme", "AI_HLY", "build-for-testing",
             "-resultBundlePath", str(EVIDENCE / "AIBuild.xcresult")], "ai-build.log", timeout=1800)
+        state["ai_build"] = "EXECUTED_PASS"
         state["build"] = "EXECUTED_PASS"
         state["status"] = "INFRA_ERROR"
         products = {
