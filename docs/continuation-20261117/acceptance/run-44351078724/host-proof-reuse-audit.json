@@ -1,0 +1,103 @@
+{
+  "document": "MINIAPPS_HOST_PROOF_REUSE_AUDIT_20261118",
+  "recorded_at": "2026-11-18T19:33:57.611Z",
+  "scope": "Original Host prerequisites/archive only; no reused iOS/UI acceptance",
+  "source_run": 44351078724,
+  "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+  "inspected_target_sha": "3fcdedbdf980c000fabf484ee4568b7c253d766e",
+  "official_artifact": {
+    "id": 14454531510,
+    "sha256": "8ebe0c0ec78b94ce960206551f474205a091cf8dabf24432a12773496aaa328d",
+    "full_zip_verified": true
+  },
+  "original_guard": {
+    "tests": 150,
+    "pass": 149,
+    "fail": 0,
+    "skipped": 1
+  },
+  "authenticated_counts": {
+    "tests": 153,
+    "pass": 152,
+    "fail": 0,
+    "skipped": 1
+  },
+  "focused_counts": {
+    "tests": 7,
+    "pass": 7,
+    "fail": 0,
+    "skipped": 0
+  },
+  "raw_host_log_sha256": "1bbdf3dc9187537ad3605ccb5eacb9c1285fe0521e9c673bb6c84f8936ec2bcf",
+  "passed_identity_count": 152,
+  "passed_identity_set_sha256": "ac39a056d0ef5b23b010e042ecd9c3689344cfeac8679f6ed3910314ec601da8",
+  "single_skipped_test": "actual Node job crosses 300 seconds with no hidden deadline",
+  "preservation": {
+    "base_sha": "c0bb36237166d25270d188a6bc11346e9386b541",
+    "original_file_count": 93,
+    "byte_identical_original_file_count": 91,
+    "changed_files": [
+      {
+        "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs",
+        "base_sha256": "fcdb75086eeed7e8d97c459492e7735eb911686b3046a8532db4154746c911ef",
+        "source_sha256": "6278094d448ab43c5f8bfdbd80dcc8f98ebd7d803892778878b54ae227bcc9fa",
+        "all_original_bytes_retained_with_insertions_only": true,
+        "matches_artifact_manifest": true
+      },
+      {
+        "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/portable-shell.test.mjs",
+        "base_sha256": "0d6469838a7451ba581c156e85ab293a997debbce5d32fbf0ef116e172a2bbbe",
+        "source_sha256": "709ad1b564b1f7a0daa87a35059d25dd8f4bd89db28bdcf4f4436a0706801b8a",
+        "all_original_bytes_retained_with_insertions_only": true,
+        "matches_artifact_manifest": true
+      },
+      {
+        "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime-capabilities.test.mjs",
+        "source_sha256": "2c8fd6849c15517c1af5eb347533a174ab76f4c2d7cd50bc6881f7a7aa51d0ae",
+        "new_file": true,
+        "matches_artifact_manifest": true
+      }
+    ],
+    "original_assertions_retained": true
+  },
+  "added_tests": [
+    {
+      "name": "approved Skill job does not inherit host secrets and keeps its explicit environment",
+      "commit": "6b4ba0549c016d5cac3dcf0905998dd345d796db",
+      "raw_result": "Passed"
+    },
+    {
+      "name": "source execution preserves explicit positional arguments through the original parser",
+      "commit": "804b82353a07a00f59e2ab047e0e31af829eebe7",
+      "raw_result": "Passed"
+    },
+    {
+      "name": "capability facts identify the actual Node process and its actual built-in namespace",
+      "commit": "6b4ba0549c016d5cac3dcf0905998dd345d796db",
+      "raw_result": "Passed"
+    }
+  ],
+  "host_dependency_closure": {
+    "changed_paths_from_source_to_target": [],
+    "paths": [
+      "AI_HLY/Downstream/RuntimeCore/Node/Host",
+      "Scripts/Runtime/prepare-runtime-host.sh",
+      "Scripts/Runtime/runtime_host_archive.py",
+      "Scripts/Runtime/generate-yarn-unicode-patch.mjs",
+      "Scripts/Runtime/generate-yarn-multiline-patch.mjs",
+      "Scripts/Runtime/HostGrammarTools/package.json",
+      "Scripts/Runtime/HostGrammarTools/package-lock.json",
+      "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle"
+    ]
+  },
+  "archive": {
+    "nodeVersion": "v24.5.0",
+    "archiveSha256": "1f33573abadf30c2d0bf3f8aef321eebe0402123fad78210216a09dd01abfa6c",
+    "sourceInputsHash": "33989c019212b08b6eb7080044a7f5652d32b3dde3ed10432f96efb2154aa585",
+    "jitlessArchiveSmoke": "passed",
+    "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "tests": "passed"
+  },
+  "recommendation": "Update only the exact complete-count guard to 153 tests / 152 pass / 0 fail / 1 skip. Preserve the exact focused guard, successful prerequisite steps, artifact digest, Node/platform/toolchain fingerprint, full input hash and packed-source checks. The three additions were all actually executed; no original tests or assertions were removed.",
+  "eligibility": "Candidate only until the actual target Mac passes the existing environment/input/archive verifier; this audit does not execute or waive that verifier."
+}

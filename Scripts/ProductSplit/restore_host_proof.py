@@ -70,7 +70,7 @@ def restore(run_id):
         if not ' '.join(raw['preflight.log'].split()).startswith(' '.join(current.split())+' '):
             raise ValueError('Mac OS/architecture/Xcode fingerprint changed')
         focused, complete = summary(raw['package-lifecycle.log']), summary(raw['native-dependencies.log'])
-        if focused != {'tests':7,'pass':7,'fail':0,'skipped':0} or complete != {'tests':150,'pass':149,'fail':0,'skipped':1}:
+        if focused != {'tests':7,'pass':7,'fail':0,'skipped':0} or complete != {'tests':153,'pass':152,'fail':0,'skipped':1}:
             raise ValueError('Original exact Host case counts changed or were incomplete')
         fingerprint = output('node','-p','JSON.stringify({versions:process.versions,platform:process.platform,arch:process.arch})').strip()
         subprocess.run(['python3','Scripts/Runtime/runtime_host_archive.py','reuse',str(host),
