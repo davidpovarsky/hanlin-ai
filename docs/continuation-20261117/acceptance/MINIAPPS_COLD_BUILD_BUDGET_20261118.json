@@ -41,10 +41,19 @@
       "Every existing test selector and semantic assertion",
       "UI, launch, App Group, cancellation and product-performance deadlines",
       "Original runtime engines, fixture data, source identities and cache ownership"
-    ]
+    ],
+    "outer_job_budget_minutes": {
+      "standalone": 90,
+      "paired": 150,
+      "signed_archives": 150
+    },
+    "outer_job_budget_reason": "A40-minute cold MiniApps build plus unchanged20-minute standalone UI scope cannot fit the old60-minute total with preparation/installation/evidence. Paired builds allow40+30 minutes and unchanged35-minute tests; the old90-minute total excluded required setup/evidence."
   },
   "validation": {
     "python_syntax": "EXECUTED_PASS",
-    "native_retry": "BLOCKED_PENDING_EXPLICIT_PUBLIC_SOURCE_PUBLICATION_APPROVAL"
+    "native_retry": "BLOCKED_PENDING_EXPLICIT_PUBLIC_SOURCE_PUBLICATION_APPROVAL",
+    "workflow_yaml": "EXECUTED_PASS; parsed semantic comparison confirms only the miniapps timeout expression changed",
+    "budget_followup_source_sha": "65da668ceb47a063c7763c066b2d6d7b72d8bbe5",
+    "budget_followup_recorded_at": "2026-11-18T10:09:07.327941+00:00"
   }
 }

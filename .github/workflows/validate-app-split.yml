@@ -161,7 +161,8 @@ jobs:
   miniapps:
     if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration }}
     runs-on: xcode-27
-    timeout-minutes: ${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 90 || 60 }}
+    # Include both bounded cold builds, unchanged UI deadlines and evidence upload.
+    timeout-minutes: ${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 150 || 90 }}
     env:
       SPLIT_EVIDENCE: ${{ github.workspace }}/build/app-split-evidence
       GH_TOKEN: ${{ github.token }}
