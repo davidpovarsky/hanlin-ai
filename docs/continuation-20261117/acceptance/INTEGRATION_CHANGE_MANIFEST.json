@@ -1,8 +1,10 @@
 {
-  "generated_at": "2026-11-18T10:04:29.425791+00:00",
+  "generated_at": "2026-11-18T10:10:03.327704+00:00",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
-  "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+  "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
   "commits": [
+    "d6f40e6fef30aeac64aead4edfc2eb51b88290c2\tfix(ci): reserve bounded time for native gates and retained evidence",
+    "65da668ceb47a063c7763c066b2d6d7b72d8bbe5\tdocs: retain native failures and explicit publication gates",
     "702bb52b1d544deff6ecfb88928645dbf757d2d1\tdocs: authenticate original A2UI native assertions by task",
     "22f344f2e053fb5681e34d41c46d0fd7ae3c3af6\tfix(ci): allow bounded cold MiniApps compilation before native gates",
     "25fdded6a6ec4750f1f1ec8265820aaef413a353\tfix(acceptance): match original embedded result schema and accessibility",

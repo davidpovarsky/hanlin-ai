@@ -1,8 +1,8 @@
 # Hanlin — Phase 3 acceptance matrix
 
-Status: IN_PROGRESS. Local source snapshot 702bb52b1d544deff6ecfb88928645dbf757d2d1. Snapshot 2026-11-18T10:04:29.425791+00:00. This is not phase acceptance.
+Status: IN_PROGRESS. Local source snapshot d6f40e6fef30aeac64aead4edfc2eb51b88290c2. Snapshot 2026-11-18T10:10:03.327704+00:00. This is not phase acceptance.
 
-Published branch source remains 46a99c050f18b91778eba571f2202b1ad08632c9. Five local commits await explicit public-source publication approval; existing native runs retain their actual SHAs.
+Published branch source remains 46a99c050f18b91778eba571f2202b1ad08632c9. Local commits after that snapshot await explicit public-source publication approval; existing native runs retain their actual SHAs.
 
 All thirty original tasks remain mapped. Every result retains its actual SHA and scope. Failed and unexecuted gates are not product passes.
 

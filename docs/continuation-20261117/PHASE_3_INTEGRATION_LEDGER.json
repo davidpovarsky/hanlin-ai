@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T10:04:29.425791+00:00",
+  "generated_at": "2026-11-18T10:10:03.327704+00:00",
   "status": "IN_PROGRESS_NOT_A_PHASE_COMPLETION",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
-  "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+  "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
   "branch": "codex/hanlin-product-completion-20261117",
   "phase_2": "IN_PROGRESS",
   "phase_3": "IN_PROGRESS",
@@ -419,8 +419,9 @@
       "id": "MINI_BUILD_BUDGET_LOCAL",
       "status": "LOCAL_REPAIR_NATIVE_RETRY_BLOCKED_PUBLICATION",
       "sha": "22f344f2e053fb5681e34d41c46d0fd7ae3c3af6",
-      "scope": "Bounded MiniApps cold build preparation budget2400s in standalone and paired harnesses. All launch/UI/groups/cancellation/performance deadlines and assertions retained. Python syntax passed.",
-      "report": "docs/continuation-20261117/acceptance/MINIAPPS_COLD_BUILD_BUDGET_20261118.json"
+      "scope": "Bounded MiniApps cold build preparation budget2400s in standalone and paired harnesses. All launch/UI/groups/cancellation/performance deadlines and assertions retained. Python syntax passed. Outer job budgets90min standalone/150min paired allow setup and evidence; only timeout expression changed, YAML semantic comparison PASS.",
+      "report": "docs/continuation-20261117/acceptance/MINIAPPS_COLD_BUILD_BUDGET_20261118.json",
+      "workflow_budget_followup_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2"
     }
   ],
   "source_tasks": [
@@ -501,7 +502,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "NativeScript ten original host/runtime behaviors in the integrated app and companion runtime controls."
     },
     {
@@ -528,7 +529,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Original Expo SwiftUI package and independent companion event/persistence assertions."
     },
     {
@@ -547,7 +548,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Native app TS/shell/runtime dispatch, bounded jobs and actual scheduler results."
     },
     {
@@ -565,7 +566,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "22 real imported fixtures, missing/denied/unknown engines, output/cancel/reopen and readiness assertions."
     },
     {
@@ -588,7 +589,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Original model/tool surface attribution and ordered original-app execution."
     },
     {
@@ -611,7 +612,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "All selected original surface editing, binding, replay and layout cases."
     },
     {
@@ -635,7 +636,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Original action denial, authorized continuation and exact persisted result identity."
     },
     {
@@ -660,7 +661,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Original app cancellation/replay/history and no stale action invocation."
     },
     {
@@ -682,7 +683,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Twelve component method identities have passes at their own recorded SHAs; integrated original-chat media and physical presentation remain separate."
     },
     {
@@ -700,7 +701,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Actual embedded OpenClaw/AST and hostile path/manifests in imported skills."
     },
     {
@@ -718,7 +719,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Rapid reversal and long RTL/rotation B/C on actual native source; historical A100 cycles is separate."
     },
     {
@@ -742,7 +743,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Original compact keyboard/focus/attachment/navigation cases after current layout repair; wide Morph and physical/reference obligations remain separate."
     },
     {
@@ -764,7 +765,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Real native chip enable/disable/context menu/expanded state and RTL labels."
     },
     {
@@ -784,7 +785,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Twelve current original Skill Center methods, including original ten and two runtime lifecycle methods; import/approval/cancel/reopen must actually pass."
     },
     {
@@ -812,7 +813,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Integrated original chat/Host/Store acceptance and live provider/resource gate; Otzaria consumer work is outside this Hanlin task."
     },
     {
@@ -835,7 +836,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Native consumer behavior in addition to the recorded component/provider session proofs."
     },
     {
@@ -860,7 +861,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Actual origin/receiving-window/permission enforcement, paired return and shared inbox consumption."
     },
     {
@@ -886,7 +887,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Original conversation draft/history reopen plus two-product persistence/migration and actual platform account boundaries."
     },
     {
@@ -912,7 +913,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Original importable presentation UI, Morph/Thinking/A2UI consumer acceptance and reference comparison."
     },
     {
@@ -930,7 +931,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Six exact original embedded Node/OpenClaw cases; no claim beyond the supported subset."
     },
     {
@@ -959,7 +960,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Two actually installed apps with paired flows, both runtime packages, signed candidate and physical acceptance."
     },
     {
@@ -985,7 +986,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Eight paired/shared-inbox cases and authentic entitlement/profile checks; existing source/data and receipt isolation preserved."
     },
     {
@@ -1012,7 +1013,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "278 feature obligations and 26 current UX resolutions must map to actual individual assertions/screens, not file presence."
     },
     {
@@ -1040,7 +1041,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Original signed-simulator App Groups, real NativeScript/Expo interactions and relaunch, paired product return and persistence."
     },
     {
@@ -1081,7 +1082,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Complete per-capability native proof or justified source-closure reuse; no PASS for queued/replaced/unexecuted runs."
     },
     {
@@ -1113,7 +1114,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+      "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
       "remaining_acceptance": "Original profiles/local signed exports, supported physical device, live model gate and release candidate; source currently targets iOS/iPadOS27 only."
     }
   ],
@@ -1152,7 +1153,7 @@
     "Map actual behavior assertions to every required feature/UX row.278-row feature matrix retains20 partial and0 fully accepted rows. A2UI16 mapped case identities are within original46, not extra executions.",
     "Keep30 source tasks, seven phase/release reports and HQ handoff copies synchronized. Live provider, actual Apple profiles/exports and physical-device acceptance remain independent required gates."
   ],
-  "native_status_observed_at": "2026-11-18T10:04:29.425791+00:00",
+  "native_status_observed_at": "2026-11-18T10:10:03.327704+00:00",
   "feature_coverage_snapshot": {
     "path": "docs/continuation-20261117/acceptance/FEATURE_ACCEPTANCE_278.json",
     "source_anchor_sha": "4f4f927db97aefc7ca3df558993a2fa769f8eea1",
@@ -1163,19 +1164,22 @@
   },
   "publication": {
     "published_source_sha": "46a99c050f18b91778eba571f2202b1ad08632c9",
-    "local_review_source_sha": "702bb52b1d544deff6ecfb88928645dbf757d2d1",
+    "local_review_source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
     "unpublished_commits": [
       "3e1316c1bb7732aad444ea823915004ffe49431c\tdocs: align current two-product run and authorization guidance",
       "c0ebf13e69601fa50dfd04ababf362803500af87\tfix(miniapps): enable original signing for normal product runs",
       "25fdded6a6ec4750f1f1ec8265820aaef413a353\tfix(acceptance): match original embedded result schema and accessibility",
       "22f344f2e053fb5681e34d41c46d0fd7ae3c3af6\tfix(ci): allow bounded cold MiniApps compilation before native gates",
-      "702bb52b1d544deff6ecfb88928645dbf757d2d1\tdocs: authenticate original A2UI native assertions by task"
+      "702bb52b1d544deff6ecfb88928645dbf757d2d1\tdocs: authenticate original A2UI native assertions by task",
+      "65da668ceb47a063c7763c066b2d6d7b72d8bbe5\tdocs: retain native failures and explicit publication gates",
+      "d6f40e6fef30aeac64aead4edfc2eb51b88290c2\tfix(ci): reserve bounded time for native gates and retained evidence"
     ],
     "status": "BLOCKED_EXPLICIT_PUBLIC_SOURCE_PUBLICATION_APPROVAL",
     "destination": "https://github.com/davidpovarsky/hanlin-ai.git",
     "branch": "codex/hanlin-product-completion-20261117",
     "reason": "Automatic review rejected public git push: the general owner authorization did not specifically identify the public destination and payload. No retry or alternative publishing was attempted. Local work and existing native runs continue.",
-    "scope": "Source/build/test/documentation commits only. No credentials, private keys, raw device data, ignored artifacts or original untracked work are proposed."
+    "scope": "Source/build/test/documentation commits only. No credentials, private keys, raw device data, ignored artifacts or original untracked work are proposed.",
+    "published_sha_verified_at": "2026-11-18T10:09:34.451265+00:00"
   },
   "primary_phase": 3,
   "all_source_task_count": 30,
