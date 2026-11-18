@@ -322,17 +322,39 @@ struct SkillRuntimeProductTests {
         let receipt = try #require(recorded)
         try #require(receipt.status == .executionPass && receipt.result.stdout.contains(nonce))
         #expect(receipt.test?.actionFingerprint == SkillRuntimeRequirements.digest(Data(source.utf8)))
-        if fixture == "hidden-resource" {
-            try store.addOrUpdateTextResource(for: id, relativePath: ".helper.txt", content: "changed helper")
+        if fixture == "hidden-resource" || fixture == "reinstall" {
+            // Reopen with the same actual invocation and completed analysis first:
+            // an empty analysis cache or different argv is not source invalidation.
+            try await reopened.analyze(skillID: id, path: path, catalog: catalog, store: store)
+            let originalTest = try #require(receipt.test)
+            let unchanged = try await reopened.plan(skillID: id, path: path,
+                engine: SkillRuntimeRequirements.engine(engine), arguments: [nonce, "עברית"],
+                catalog: catalog, store: store)
+            try #require(unchanged.readiness == .verified && unchanged.lastTest == originalTest,
+                "The unchanged invocation must reuse its genuine successful execution before mutation")
+            if fixture == "hidden-resource" {
+                try store.addOrUpdateTextResource(for: id, relativePath: ".helper.txt", content: "changed helper")
+            } else {
+                try store.addOrUpdateTextResource(for: id, relativePath: path, content: "console.log('changed-source');")
+            }
+            try await reopened.analyze(skillID: id, path: path, catalog: catalog, store: store)
             let changed = try await reopened.plan(skillID: id, path: path,
-                engine: SkillRuntimeRequirements.engine(engine), catalog: catalog, store: store)
-            #expect(changed.lastTest == nil, "A hidden helper change cannot reuse an old execution pass")
-        }
-        if fixture == "reinstall" {
-            try store.addOrUpdateTextResource(for: id, relativePath: path, content: "console.log('changed-source');")
-            let plan = try await reopened.plan(skillID: id, path: path,
-                engine: SkillRuntimeRequirements.engine(engine), catalog: catalog, store: store)
-            #expect(plan.lastTest == nil, "Old execution cannot verify changed source")
+                engine: SkillRuntimeRequirements.engine(engine), arguments: [nonce, "עברית"],
+                catalog: catalog, store: store)
+            #expect(changed.action.requirementsComplete && changed.readiness == .likely)
+            #expect(changed.lastTest == nil, "Changed source cannot retain an old execution pass")
+            #expect(changed.binding == unchanged.binding)
+            #expect(changed.action.invocationFingerprint == unchanged.action.invocationFingerprint)
+            #expect(changed.action.sourceFingerprint != unchanged.action.sourceFingerprint)
+            if fixture == "hidden-resource" {
+                #expect(changed.action.actionFingerprint == unchanged.action.actionFingerprint,
+                    "The executable is unchanged; the hidden helper invalidates the complete source identity")
+            } else {
+                #expect(changed.action.actionFingerprint != unchanged.action.actionFingerprint)
+            }
+            #expect(try reopened.receipt(skillID: id, path: path, store: store)?.test == originalTest,
+                "Invalidation must reject the old receipt without deleting or rewriting its evidence")
+            print("SKILL_PRODUCT CACHE_INVALIDATION \(fixture) verified_before=true same_argv=true receipt_preserved=true")
         }
         print("SKILL_PRODUCT EXECUTION_PASS \(fixture) job=\(receipt.result.executionID) source=\(receipt.test?.actionFingerprint ?? "missing")")
     }

@@ -27,7 +27,8 @@ final class SkillRuntimeService {
         }
         var identity = Data((values.joined(separator: "\n") + "\nstore:" + String(store.revision) + "\n" + store.rootDirectoryURL.standardizedFileURL.path).utf8)
         let layout = RuntimeFileLayout.default
-        for url in [layout.environmentRegistry, layout.nodeGlobalPackages.appending(path: "package-lock.json"),
+        for url in [layout.environmentRegistry, layout.nodeGlobalPackagePointer,
+                    layout.nodeGlobalPackages.appending(path: "package-lock.json"),
                     layout.registry.appending(path: "PythonPackages.json")] {
             if let bytes = try? Data(contentsOf: url) {
                 identity.append(0)

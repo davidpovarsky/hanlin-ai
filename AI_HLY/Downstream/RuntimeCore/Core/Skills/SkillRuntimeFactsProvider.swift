@@ -26,7 +26,8 @@ struct SkillRuntimeFactsProvider: SkillRuntimeCapabilityProvider {
         identity.append(contentsOf: (engineID.rawValue + ":" + version + ":" + (snapshot.source ?? "")).utf8)
         var environment = Data(environmentID.utf8)
         let layout = RuntimeFileLayout.default
-        for url in [layout.environmentRegistry, layout.nodeGlobalPackages.appending(path: "package-lock.json"),
+        for url in [layout.environmentRegistry, layout.nodeGlobalPackagePointer,
+                    layout.nodeGlobalPackages.appending(path: "package-lock.json"),
                     layout.registry.appending(path: "PythonPackages.json")] {
             if let bytes = try? Data(contentsOf: url) { environment.append(bytes) }
         }

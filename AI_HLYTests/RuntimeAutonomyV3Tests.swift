@@ -384,11 +384,41 @@ struct RuntimeAutonomyV3Tests {
     @Test(.timeLimit(.minutes(2)))
     func actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations() async throws {
         let core = AppRuntimeCore.shared
+        _ = try await core.ensureStarted(.node)
         let previous = try await core.nodePackages.installed().first { $0.name == "is-number" }
-        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "npm-generation-proof-\(UUID().uuidString)")
+        let layout = RuntimeFileLayout.default
+        let workspace = try layout.workspace(client: .tools, identifier: "npm-generation-proof-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: workspace) }
+        let store = SkillStore(rootDirectoryURL: workspace.appending(path: "skill-store"), onCatalogChange: {})
+        let skills = SkillRuntimeService()
+        func fingerprints() async throws -> [String: String] {
+            let facts = await SkillRuntimeFactsProvider(engineID: .node).snapshot(environmentID: "generation-proof")
+            let binding = try #require(facts.binding)
+            func digest(_ url: URL) throws -> String {
+                guard FileManager.default.fileExists(atPath: url.path) else { return "absent" }
+                return SkillRuntimeRequirements.digest(try Data(contentsOf: url))
+            }
+            let oldInputs = try [layout.environmentRegistry,
+                layout.nodeGlobalPackages.appending(path: "package-lock.json"),
+                layout.registry.appending(path: "PythonPackages.json")].map(digest).joined(separator: ":")
+            return ["policy": await skills.policyEnvironmentSignature(store: store),
+                "environment": binding.environmentFingerprint, "engine": binding.engineFingerprint,
+                "version": binding.engineVersion, "pointer": try digest(layout.nodeGlobalPackagePointer),
+                "oldInputs": oldInputs]
+        }
+        func expectPublishedChange(_ before: [String: String], _ after: [String: String]) {
+            #expect(before["pointer"] != after["pointer"])
+            #expect(before["policy"] != after["policy"])
+            #expect(before["environment"] != after["environment"])
+            #expect(before["oldInputs"] == after["oldInputs"],
+                "This regression must detect the active generation, not an unrelated legacy registry change")
+            #expect(before["engine"] == after["engine"] && before["version"] == after["version"])
+        }
+        let initialIdentity = try await fingerprints()
         do {
             let first = try await core.nodePackages.install(name: "is-number", version: "7.0.0")
+            let firstIdentity = try await fingerprints()
+            expectPublishedChange(initialIdentity, firstIdentity)
             let firstRoot = try #require(first.packageRoot)
             let source = """
             import isNumber from 'is-number';import {fileURLToPath} from 'node:url';
@@ -399,16 +429,31 @@ struct RuntimeAutonomyV3Tests {
             #expect(imported.exitCode == 0 && imported.value == .boolean(true), "\(imported.stderr)")
             #expect(imported.stdout.contains(firstRoot))
             let second = try await core.nodePackages.install(name: "is-number", version: "6.0.0")
+            let secondIdentity = try await fingerprints()
+            expectPublishedChange(firstIdentity, secondIdentity)
             let secondRoot = try #require(second.packageRoot)
             #expect(secondRoot != firstRoot)
             #expect(FileManager.default.fileExists(atPath: firstRoot + "/package.json"))
             let updated = try await core.node.executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
             #expect(updated.exitCode == 0 && updated.stdout.contains(secondRoot), "\(updated.stderr)")
+            await #expect(throws: (any Error).self) {
+                _ = try await core.nodePackages.install(name: "is-number", version: "9999.0.0")
+            }
+            let rejectedIdentity = try await fingerprints()
+            #expect(rejectedIdentity == secondIdentity,
+                "An unpublished failed transaction must preserve the active generation and its cache identity")
             try await core.nodePackages.uninstall(name: "is-number")
+            let removedIdentity = try await fingerprints()
+            expectPublishedChange(secondIdentity, removedIdentity)
             let remaining = try await core.nodePackages.installed()
             #expect(!remaining.contains { $0.name == "is-number" })
             let removed = try await core.node.executeJavaScript(RuntimeExecutionRequest(source: source, workspace: workspace), moduleKind: "esm")
             #expect(removed.exitCode != 0 && removed.stderr.contains("is-number"))
+            let receipt: [String: Any] = ["initial": initialIdentity, "installed": firstIdentity,
+                "updated": secondIdentity, "rejected": rejectedIdentity, "removed": removedIdentity,
+                "route": "original NodePackageManager / published generations / Runtime05 identities"]
+            print("SKILL_RUNTIME_PACKAGE_GENERATIONS " +
+                String(decoding: try JSONSerialization.data(withJSONObject: receipt, options: [.sortedKeys]), as: UTF8.self))
             if let previous { _ = try await core.nodePackages.install(name: previous.name, version: previous.version) }
         } catch {
             if let previous { _ = try? await core.nodePackages.install(name: previous.name, version: previous.version) }

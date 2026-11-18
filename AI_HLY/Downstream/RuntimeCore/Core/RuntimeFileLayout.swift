@@ -29,6 +29,8 @@ struct RuntimeFileLayout: Sendable {
     var pythonRuntime: URL { runtime.appending(path: "python", directoryHint: .isDirectory) }
     var packages: URL { directory("packages") }
     var nodeGlobalPackages: URL { packages.appending(path: "node-global", directoryHint: .isDirectory) }
+    /// The original Host atomically publishes immutable npm generations through this pointer.
+    var nodeGlobalPackagePointer: URL { packages.appending(path: "node-global-current.json") }
     var pythonPackages: URL { packages.appending(path: "python", directoryHint: .isDirectory) }
     var mcpPackages: URL { packages.appending(path: "mcp", directoryHint: .isDirectory) }
     var clients: URL { directory("clients") }
