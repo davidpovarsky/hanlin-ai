@@ -1,0 +1,65 @@
+{
+  "recorded_at": "2026-11-18T16:09:13.360868+00:00",
+  "status": "PUBLISHED_REMOTE_HEADS_VERIFIED",
+  "authorization_record": "docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md",
+  "main": {
+    "remote": "https://github.com/davidpovarsky/hanlin-ai.git",
+    "branch": "codex/hanlin-product-completion-20261117",
+    "sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad"
+  },
+  "upstream": {
+    "remote": "https://github.com/davidpovarsky/hanlin-streaming-markdown.git",
+    "branch": "codex/hanlin-markdown-link-continuation-20261118",
+    "sha": "6bde022876ef4af738c154b3d5c871984ef76195"
+  },
+  "native_runs": [
+    {
+      "run": 44340805844,
+      "scope": "Standalone MiniApps baseline",
+      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "status": "in_progress",
+      "conclusion": null,
+      "observed_at": "2026-11-18T16:07:45.635649+00:00",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44340805844",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44342772767,
+      "scope": "24 original failed wide UI methods and original EmbeddedResults suite",
+      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "status": "queued",
+      "conclusion": null,
+      "observed_at": "2026-11-18T16:07:45.644991+00:00",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342772767",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44342780366,
+      "scope": "Original Host/Origin/NativeComposer suites and 13 original UI methods",
+      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "status": "queued",
+      "conclusion": null,
+      "observed_at": "2026-11-18T16:07:45.438659+00:00",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342780366",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44343462395,
+      "scope": "Pinned renderer ten native methods including retained host-link regression",
+      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "status": "queued",
+      "conclusion": null,
+      "observed_at": "2026-11-18T16:07:45.419532+00:00",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44343462395",
+      "acceptance_claim": false
+    }
+  ],
+  "asana": {
+    "task": "1220548022593831",
+    "comment": "1220674580873051",
+    "exact_readback": true
+  },
+  "main_merge": false,
+  "testflight_upload": false,
+  "credential_export": false
+}

@@ -1,7 +1,7 @@
 # Hanlin — דוח שלב 2
 
-מצב: **IN_PROGRESS — אין עדיין קבלת שלב**. עודכן 18.11.2026 16:58 (Asia/Hebron).
-מקור התיקונים המאוחד: `4b765b447d7d47426498d1632581af59facd3f2f`.
+מצב: **IN_PROGRESS — אין עדיין קבלת שלב**. עודכן 18.11.2026 18:09 (Asia/Hebron).
+מקור התיקונים המאוחד: `cda167f4c9931d4246aba1ad88ef7b183569f8ad`.
 ענף: `codex/hanlin-product-completion-20261117`.
 
 ## מה שולב
@@ -35,7 +35,7 @@
 | `eebbb19c` | Native UI paths: Verify exact prompt text before sending; use sidebar-specific native overflow; count Retry canonical rows containing native text; scroll original Skill detail list to persisted instructions. | Native pending |
 | `0bbe4628` | Original tool fixture contracts: Use required progress schema, real Skill/discovery and exact one-use consent. Require returned Python/HTML results before fixture completion; no injected execution receipts. | Native pending |
 | `f7516cce` | Approved Morph acceptance: Exercise the existing Morph panel/back/close and real input resize. Historical test selectors retained (35 before/after); retired Organizer drag-to-open/shared-ZStack assertions explicitly superseded by approved source, not relabeled as passed. | Native pending |
-| `4b765b44` | Markdown host dependency: All three original pins reference local upstream6bde022. The retained native paragraph refreshes its current OpenURLAction; regression test added in the original dependency. Publication and iOS verification pending. | Native pending |
+| `4b765b44` | Markdown host dependency: All three original pins reference local upstream6bde022. The retained native paragraph refreshes its current OpenURLAction; regression test added in the original dependency. Publication verified; iOS verification pending. | Native pending |
 
 
 שינוי בדיקות Morph מפורש: נשמרו כל 35 שמות בדיקות השיחה. בדיקות המבנה הישן של Organizer עודכנו למסלול ה־Morph המאושר, לפי `docs/composer/MAPPING_WAVE1_2026-11-15.md` וה־reference hash `51bb10cdf71ee1c10cac8108f602eee4b34e78967de23dc437985aa89db9bbbb`. בדיקות drag של ידית המגירה שהוסרה אינן מדווחות כ־PASS; בדיקות resize אמיתי של שדה ההקלדה, עיגון, פאנל פנימי וניווט נשמרו. Native pending.
@@ -56,16 +56,18 @@ SDK53, Core/A2UI46, transfer25, MiniApps20+7, editor6, Unicode/model20, Resolver
 
 ## פרסום ואימות נוספים
 
-הקוד המקומי הוא `4b765b447d7d47426498d1632581af59facd3f2f`; הענף הציבורי המאומת עדיין `46a99c050f18b91778eba571f2202b1ad08632c9`. נשמרו 16 commits מקומיים אחרי הפרסום האחרון, לפני commit הדוחות הזה. קובץ הסקירה הסופי יכלול גם את commit הדוחות.
+האישור המפורש של בעל הפרויקט התקבל ונשמר. חסימת פרסום המקור נפתרה: ענף Hanlin פורסם ואומת על `cda167f4c9931d4246aba1ad88ef7b183569f8ad`, והתלות המקורית Markdown פורסמה ואומתה על `6bde022876ef4af738c154b3d5c871984ef76195`. שלוש ההפניות המקוריות ניתנות לפתרון מהשרת. הרשאת ההמשך לאותם יעדים ופעולות נשמרה בקובצי ההנחיות ואין לבקש אותה מחדש.
 
-מנגנון אישור אוטומטי דחה שוב push לאחר אישור כללי להמשיך, ונדרש אישור מפורש לתוכן וליעדי הפרסום הציבוריים. לא בוצע ניסיון חלופי אחרי הדחייה. היעדים הקונקרטיים הם:
+הדחיות האוטומטיות המתועדות בהיסטוריה קדמו לאישור המפורש הזה. הפרסום כולל קוד, בדיקות, CI ודוחות בלבד; לא הועברו credentials, מפתחות חתימה, נתוני משתמש, יומנים גולמיים או שלושת הנתיבים המקוריים הלא־מנוהלים. לא בוצעו main merge או TestFlight.
 
-1. `https://github.com/davidpovarsky/hanlin-streaming-markdown.git`, ענף `codex/hanlin-markdown-link-continuation-20261118`, commit `6bde022876ef4af738c154b3d5c871984ef76195` מעל `4072507bf5c5a1c9786d4c9a607873e65be59cc8`.
-2. `https://github.com/davidpovarsky/hanlin-ai.git`, ענף `codex/hanlin-product-completion-20261117`, חבילת הקוד/בדיקות/מסמכים שמעל `46a99c050f18b91778eba571f2202b1ad08632c9`.
+| ריצה | מקור | תחום | מצב בעת העדכון |
+| --- | --- | --- | --- |
+| [44340805844](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44340805844) | `87cf107c` | Standalone MiniApps baseline | in_progress; קבלה ממתינה |
+| [44342772767](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342772767) | `87cf107c` | 24 original failed wide UI methods and original EmbeddedResults suite | queued; קבלה ממתינה |
+| [44342780366](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342780366) | `87cf107c` | Original Host/Origin/NativeComposer suites and 13 original UI methods | queued; קבלה ממתינה |
+| [44343462395](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44343462395) | `cda167f4` | Pinned renderer ten native methods including retained host-link regression | queued; קבלה ממתינה |
 
-יש לפרסם את תלות Markdown תחילה: שלוש ההפניות המקוריות ב־Hanlin כבר תואמות ל־SHA המקומי החדש. זו תלות מקומית שטרם ניתנת לפתרון מהשרת הציבורי. החבילה אינה כוללת מפתחות, credentials, יומנים גולמיים, הקלטות, נתוני משתמש או את שלושת הנתיבים המקוריים הלא־מנוהלים.
-
-לאחר הפרסום המאושר יש לאמת את ראשי הענפים ולהריץ את שערי iOS27 הרלוונטיים. 15 קובצי Swift ששונו עברו frontend parse ב־Windows; בדיקת diff, JSON והתאמת pins עברו. אין בכך build, typecheck או PASS של iOS.
+בדיקות העבר נשמרות ב־SHA ובהיקף המקוריים. 15 בדיקות frontend parse מקומיות אינן הוכחת iOS. תנאי הקבלה של שני השלבים והשחרור עדיין לא הושלמו.
 
 ## מסמכי ראיות מחייבים
 

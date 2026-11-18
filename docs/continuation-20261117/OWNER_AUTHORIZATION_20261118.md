@@ -36,3 +36,9 @@ The owner gave explicit authorization in the active conversation to finish Hanli
 Safeguards that remain in effect: inspect outgoing diffs for credentials, personal data, proprietary/unrelated material, and generated local state; never publish secrets, signing keys, certificates or private user information. Do not force-push, rewrite shared history, merge into main, enable broad automatic CI triggers, change production credentials/billing, or distribute TestFlight/App Store builds as part of this public-branch consent. External platforms and tool-specific security gates must still be satisfied and cannot be disabled by repository instructions. Report blocked actions honestly, and distinguish authorization from a passing build or release acceptance.
 
 This records authorization supplied directly by the owner; it is not a mechanism for bypassing external approval systems.
+
+## Original Markdown dependency included in the reviewed publication
+
+The same explicit owner consent covers the second destination identified in the preceding reviewed package: https://github.com/davidpovarsky/hanlin-streaming-markdown.git, refs/heads/codex/hanlin-markdown-link-continuation-20261118, initially `6bde022876ef4af738c154b3d5c871984ef76195`. The reviewed source/test correction and necessary in-scope follow-up fixes may be committed and normally pushed to this original dependency branch without another request for the same publication approval. This preserves the original library; no replacement dependency or credential transfer is authorized by this entry.
+
+Both original branch destinations have now been published and read back. The publication rejection recorded in older reports is historical and resolved by the explicit owner consent. The current publication receipt is `acceptance/PUBLICATION_AND_NATIVE_CONTINUATION_20261118.json`. Phase acceptance and actual native test outcomes remain independent.

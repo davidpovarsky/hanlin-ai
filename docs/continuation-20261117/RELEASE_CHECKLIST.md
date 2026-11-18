@@ -1,7 +1,7 @@
 # Hanlin release checklist
 
-Decision: **NO_GO**. Source snapshot: `4b765b447d7d47426498d1632581af59facd3f2f`. Updated 18.11.2026 16:58 (Asia/Hebron).
-This is a reviewable local candidate, not phase acceptance or distribution approval.
+Decision: **NO_GO**. Source snapshot: `cda167f4c9931d4246aba1ad88ef7b183569f8ad`. Updated 18.11.2026 18:09 (Asia/Hebron).
+The source candidate is published; native phase acceptance and release gates remain open.
 
 ## Immutable identities
 
@@ -27,7 +27,7 @@ Original shared groups group.com.itorah.chavrusachat and group.com.itorah.shared
 - [x] Record historical SDK53/Core46/transfer25/MiniApps20+7/editor6/Unicode20/Resolver21 at their actual SHAs, without double counting.
 - [x] Build both original device Release archives at 00a932d6 (historical scope only).
 - [x] Register the original MiniApps Bundle ID and read back APP_GROUPS/HEALTHKIT in 44255527028.
-- [ ] Obtain exact public source publication approval; publish original Markdown 6bde022 before the dependent main candidate.
+- [x] Record explicit owner publication approval and verify both original public branch heads, including Markdown6bde022.
 - [ ] Build and test the current iOS27 candidate and its original Host interaction/writer regressions.
 - [ ] Accept original compact2, affected NativeA2UI7, long/RTL drafts, approved Morph interactions, and current wide UI failures.
 - [ ] Verify original Canvas and internal Safari UI; retain contextual-tools runner-teardown failure until resolved.
@@ -83,21 +83,22 @@ Use the current exact branch/SHA with existing manually dispatched workflows. Th
 - **LIVE_MODEL_PROVIDER — BLOCKED_CREDENTIAL_EXPORT_APPROVAL**: Existing host Gemini credential is available, but automatic review rejected creating a new secret in the public GitHub repository. Exact transfer requires explicit owner approval, or approved local Mac/device execution with its own existing account. No credential was transferred.
 - **SIGNED_PROVISIONING — EXACT_APPLE_PORTAL_CONFIGURATION_REQUIRED**: Existing identity is valid. Original MiniApps Bundle ID plus App Groups/HealthKit capability toggles registered and read back. Need both actual group assignments, all original required capability approvals and compatible profiles (AI lacks Extended Virtual Addressing), plus the separate App Store record. Official API exposes no App Group assignment or create-app endpoint; the Browser plugin exposes no callable control JS in this session. No browser account session was probed.
 - **APPROVED_FULL_VISUAL_REFERENCE — PARTIAL_REFERENCE**: Original 26-decision summary and authenticated Composer reference exist; full October master prompt was not found. Source/visual conclusions must state their actual references.
-- **PUBLIC_SOURCE_PUBLICATION — BLOCKED_AUTOMATIC_APPROVAL_REVIEW**: Explicit approval for reviewed source/build/test/documentation on public davidpovarsky/hanlin-ai branch codex/hanlin-product-completion-20261117 and original dependency davidpovarsky/hanlin-streaming-markdown branch codex/hanlin-markdown-link-continuation-20261118. Publish upstream6bde022 first because all main candidate pins reference it. No credential, ignored evidence or original untracked data publication.
+- **PUBLIC_SOURCE_PUBLICATION — RESOLVED**: Explicit owner consent recorded. Both reviewed public branches are published and verified; native acceptance remains separate.
 
 ## פרסום ואימות נוספים
 
-הקוד המקומי הוא `4b765b447d7d47426498d1632581af59facd3f2f`; הענף הציבורי המאומת עדיין `46a99c050f18b91778eba571f2202b1ad08632c9`. נשמרו 16 commits מקומיים אחרי הפרסום האחרון, לפני commit הדוחות הזה. קובץ הסקירה הסופי יכלול גם את commit הדוחות.
+האישור המפורש של בעל הפרויקט התקבל ונשמר. חסימת פרסום המקור נפתרה: ענף Hanlin פורסם ואומת על `cda167f4c9931d4246aba1ad88ef7b183569f8ad`, והתלות המקורית Markdown פורסמה ואומתה על `6bde022876ef4af738c154b3d5c871984ef76195`. שלוש ההפניות המקוריות ניתנות לפתרון מהשרת. הרשאת ההמשך לאותם יעדים ופעולות נשמרה בקובצי ההנחיות ואין לבקש אותה מחדש.
 
-מנגנון אישור אוטומטי דחה שוב push לאחר אישור כללי להמשיך, ונדרש אישור מפורש לתוכן וליעדי הפרסום הציבוריים. לא בוצע ניסיון חלופי אחרי הדחייה. היעדים הקונקרטיים הם:
+הדחיות האוטומטיות המתועדות בהיסטוריה קדמו לאישור המפורש הזה. הפרסום כולל קוד, בדיקות, CI ודוחות בלבד; לא הועברו credentials, מפתחות חתימה, נתוני משתמש, יומנים גולמיים או שלושת הנתיבים המקוריים הלא־מנוהלים. לא בוצעו main merge או TestFlight.
 
-1. `https://github.com/davidpovarsky/hanlin-streaming-markdown.git`, ענף `codex/hanlin-markdown-link-continuation-20261118`, commit `6bde022876ef4af738c154b3d5c871984ef76195` מעל `4072507bf5c5a1c9786d4c9a607873e65be59cc8`.
-2. `https://github.com/davidpovarsky/hanlin-ai.git`, ענף `codex/hanlin-product-completion-20261117`, חבילת הקוד/בדיקות/מסמכים שמעל `46a99c050f18b91778eba571f2202b1ad08632c9`.
+| ריצה | מקור | תחום | מצב בעת העדכון |
+| --- | --- | --- | --- |
+| [44340805844](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44340805844) | `87cf107c` | Standalone MiniApps baseline | in_progress; קבלה ממתינה |
+| [44342772767](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342772767) | `87cf107c` | 24 original failed wide UI methods and original EmbeddedResults suite | queued; קבלה ממתינה |
+| [44342780366](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342780366) | `87cf107c` | Original Host/Origin/NativeComposer suites and 13 original UI methods | queued; קבלה ממתינה |
+| [44343462395](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44343462395) | `cda167f4` | Pinned renderer ten native methods including retained host-link regression | queued; קבלה ממתינה |
 
-יש לפרסם את תלות Markdown תחילה: שלוש ההפניות המקוריות ב־Hanlin כבר תואמות ל־SHA המקומי החדש. זו תלות מקומית שטרם ניתנת לפתרון מהשרת הציבורי. החבילה אינה כוללת מפתחות, credentials, יומנים גולמיים, הקלטות, נתוני משתמש או את שלושת הנתיבים המקוריים הלא־מנוהלים.
-
-לאחר הפרסום המאושר יש לאמת את ראשי הענפים ולהריץ את שערי iOS27 הרלוונטיים. 15 קובצי Swift ששונו עברו frontend parse ב־Windows; בדיקת diff, JSON והתאמת pins עברו. אין בכך build, typecheck או PASS של iOS.
-
+בדיקות העבר נשמרות ב־SHA ובהיקף המקוריים. 15 בדיקות frontend parse מקומיות אינן הוכחת iOS. תנאי הקבלה של שני השלבים והשחרור עדיין לא הושלמו.
 
 ## מסמכי ראיות מחייבים
 
