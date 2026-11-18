@@ -30,7 +30,10 @@ def restore(run_id):
     if run['status'] != 'completed' or run['head_repository']['full_name'] != repository:
         raise ValueError('Origin must be a completed same-repository run')
     jobs = json.loads(output('gh', 'api', f'repos/{repository}/actions/runs/{run_id}/jobs?per_page=100'))['jobs']
-    job = next(j for j in jobs if j['name'].endswith('/ miniapps'))
+    matching_jobs = [j for j in jobs if j['name'] == 'miniapps' or j['name'].endswith('/ miniapps')]
+    if len(matching_jobs) != 1:
+        raise ValueError('Original standalone Host job is missing or ambiguous')
+    job = matching_jobs[0]
     steps = {s['name']: s['conclusion'] for s in job['steps']}
     for name in ['Verify actual Mac toolchain, disk and installed simulator tooling',
                  'Reproduce and verify affected package lifecycle on the actual Mac first',
