@@ -315,9 +315,11 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
     public final class Coordinator: NSObject, UITextViewDelegate {
         var parent: NativeMultilineTextEditor
         public var isEditing = false
+        private var lastSynchronizedModelText: String
 
         public init(_ parent: NativeMultilineTextEditor) {
             self.parent = parent
+            self.lastSynchronizedModelText = parent.text
         }
 
         /// The binding also receives programmatic sends, restored drafts and
@@ -325,10 +327,18 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         /// those changes without replacing an unchanged selection or marked text.
         public func synchronizeText(in textView: UITextView) {
             guard textView.markedTextRange == nil else { return }
-            let placeholder = parent.text.isEmpty && !isEditing
-            let desired = placeholder ? parent.placeholderText : parent.text
+            let incoming = parent.text
+            let modelChanged = incoming != lastSynchronizedModelText
+            lastSynchronizedModelText = incoming
+            let placeholder = incoming.isEmpty && !isEditing
+            let desired = placeholder ? parent.placeholderText : incoming
             let wasPlaceholder = textView.textColor == .placeholderText
-            if textView.text != desired || (wasPlaceholder && !placeholder) {
+            // UIKit can have changed its text storage before its delegate publishes
+            // the binding. An unrelated SwiftUI layout update must not replay the
+            // unchanged model value over that edit and move the insertion point.
+            // Actual sends, restored drafts and conversation changes still reconcile.
+            let shouldReconcile = modelChanged || wasPlaceholder != placeholder
+            if shouldReconcile && (textView.text != desired || (wasPlaceholder && !placeholder)) {
                 let selection = textView.selectedRange
                 textView.text = desired
                 if isEditing {

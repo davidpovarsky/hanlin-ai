@@ -62,6 +62,39 @@ struct NativeComposerLineSizingTests {
         #expect(draft == "   ")
     }
 
+    @Test("A layout update cannot replace a native edit before its delegate publishes the binding",
+          arguments: ["Model picker keeps this draft", "שלום 👋 טיוטה ארוכה", String(repeating: "Wrapped accessible draft text ", count: 35)])
+    func layoutDuringNativeEditPreservesCharactersAndCursor(_ input: String) {
+        var draft = ""
+        let editor = NativeMultilineTextEditor(
+            text: Binding(get: { draft }, set: { draft = $0 }),
+            textHeight: .constant(0), maxHeight: 300, usesAutomaticLineLimits: true
+        )
+        let coordinator = NativeMultilineTextEditor.Coordinator(editor)
+        let view = MultilineInnerTextView(frame: CGRect(x: 0, y: 0, width: 220, height: 100))
+        view.font = .preferredFont(forTextStyle: .body)
+        view.textColor = .label
+        coordinator.textViewDidBeginEditing(view)
+        // Keep the real UIKit mutation and delegate notification separate so a
+        // representable layout update can occur at the observed vulnerable boundary.
+        for character in input {
+            view.insertText(String(character))
+            let cursor = view.selectedRange
+            let nativeText = view.text
+            coordinator.synchronizeText(in: view)
+            #expect(view.text == nativeText)
+            #expect(view.selectedRange == cursor)
+            coordinator.textViewDidChange(view)
+            coordinator.synchronizeText(in: view)
+        }
+        #expect(view.text == input)
+        #expect(draft == input)
+        #expect(view.selectedRange == NSRange(location: (input as NSString).length, length: 0))
+        draft = ""
+        coordinator.synchronizeText(in: view)
+        #expect(view.text.isEmpty)
+    }
+
     @Test("Sending clears an editing UIKit draft and restored text keeps a valid cursor")
     func programmaticDraftUpdatesWhileEditing() {
         var draft = "Sent message"
