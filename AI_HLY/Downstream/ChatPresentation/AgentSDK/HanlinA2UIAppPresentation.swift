@@ -31,6 +31,8 @@ final class HanlinA2UIAppPresentation: HanlinAppAgentPresentationConsumer, Hanli
     private var toolReceipts: [String: HanlinHostResultEvent] = [:]
     private(set) var toolSource: HanlinA2UIResultProjectionSource?
 
+    var modelInstructions: String? { HanlinMediaCatalog.modelGuidance }
+
     func hostResult(_ result: HanlinHostResultEvent) {
         guard result.call.session == session?.identity, toolReceipts.count < 256 else { return }
         toolReceipts[result.call.runID.uuidString + ":" + result.call.providerCallID] = result

@@ -22,9 +22,11 @@ UPSTREAM = "https://github.com/a2ui-project/a2ui"
 REVISION = "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
 CONSUMER_MODULE = "AI_Hanlin"
 PORTABLE_CASE_COUNT = 8
-SDK_CASE_COUNT = 36
+SDK_CASE_COUNT = 38
 MEDIA_CASES = ["customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding",
-               "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields"]
+               "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields",
+               "galleryAndLinkSourcesResolveThroughTheOfficialCatalogAndBindings",
+               "richMediaSchemasRejectUnboundedCollectionsMissingSourcesAndScripts"]
 OWNERSHIP_CASES = [
     "successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
     "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",
@@ -119,6 +121,11 @@ def sha(data: bytes) -> str:
 
 def package_text(platform: str, consumer: bool = False) -> str:
     text = PACKAGE.replace('.macOS("27.0")', '.iOS("27.0")') if platform == "ios" else PACKAGE
+    if platform == "ios":
+        text = text.replace('let products: [Target.Dependency] = [', '''let products: [Target.Dependency] = [
+    .product(name: "SwiftSoup", package: "SwiftSoup"),''')
+        text = text.replace('dependencies: [', '''dependencies: [
+        .package(url: "https://github.com/scinfu/SwiftSoup.git", revision: "bba848db50462894e7fc0891d018dfecad4ef11e"),''', 1)
     if consumer:
         text = text.replace('swift-tools-version: 6.1', 'swift-tools-version: 6.2')
         text = text.replace('let products: [Target.Dependency] = [', '''let products: [Target.Dependency] = [
@@ -128,11 +135,10 @@ def package_text(platform: str, consumer: bool = False) -> str:
     .product(name: "HanlinPlatformContracts", package: "HanlinPlatform"),
     .product(name: "HanlinChatCore", package: "HanlinPlatform"),
     .product(name: "AISDKProvider", package: "swift-ai-sdk"),''')
-        text = text.replace('dependencies: [.package(url:', f'''dependencies: [
+        text = text.replace('dependencies: [', f'''dependencies: [
         .package(path: "../Packages/HanlinAgentSDK"),
         .package(path: "../Packages/HanlinPlatform"),
-        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "{PRODUCER_SHA}"),
-        .package(url:''')
+        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "{PRODUCER_SHA}"),''', 1)
     return text
 
 
@@ -155,8 +161,8 @@ def plan(platform: str = "macos", consumer: bool = False, app: bool = False) -> 
         paths += sorted((REPOSITORY / MEDIA_SOURCES).glob("*.swift"))
         paths += [REPOSITORY / MEDIA_POLICY_TEST]
         policy_cases = re.findall(r"@Test func (\w+)\(", (REPOSITORY / MEDIA_POLICY_TEST).read_text(encoding="utf-8"))
-        if len(set(policy_cases)) != 6:
-            raise ValueError("Expected six media source admission controls")
+        if len(set(policy_cases)) != 7:
+            raise ValueError("Expected seven media source/address admission controls")
         media_cases += policy_cases
     paths += [REPOSITORY / TEST] + sorted((REPOSITORY / FIXTURES).iterdir())
     if consumer:

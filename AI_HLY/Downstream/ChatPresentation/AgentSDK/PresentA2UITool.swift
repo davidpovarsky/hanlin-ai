@@ -8,8 +8,8 @@ struct PresentA2UITool: NativeTool {
     let name = "present_a2ui"
     var catalogEntry: NativeToolCatalogEntry {
         .init(name: name, title: "Show interactive content",
-            summary: "Display official A2UI 1.0 content in the current tool result.",
-            categories: ["presentation"], keywords: ["a2ui", "form", "interactive"],
+            summary: "Display interactive forms, source-linked image galleries and link previews in this conversation.",
+            categories: ["presentation"], keywords: ["a2ui", "form", "interactive", "image", "gallery", "media", "link preview"],
             systemImage: "rectangle.and.hand.point.up.left",
             presentationProfile: .modernNative(toolName: name, kind: .generic,
                 systemImage: "rectangle.and.hand.point.up.left",
@@ -19,7 +19,7 @@ struct PresentA2UITool: NativeTool {
 
     func openAIToolSchema() -> [String: Any] {
         NativeToolSchema.function(name: name,
-            description: "Display a complete batch of official A2UI 1.0 envelopes in this tool result. Use the official basic catalog or Hanlin media catalog. Each messages item is one exact JSON envelope. User actions return as a new chat turn; they never directly execute code.",
+            description: "Display a complete batch of official A2UI 1.0 envelopes in this tool result. Each messages item is one exact JSON envelope. User actions return as a new chat turn; they never directly execute code.\n" + HanlinMediaCatalog.modelGuidance,
             parameters: NativeToolSchema.object(properties: [
                 "messages": NativeToolSchema.stringArray(description: "Complete official JSON envelopes in order.", maximumItems: 64)
             ], required: ["messages"]))

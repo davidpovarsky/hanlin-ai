@@ -136,6 +136,10 @@ private final class HanlinNativeA2UIAcceptanceURLProtocol: URLProtocol, @uncheck
                   !step.expectedInputContains.isEmpty, step.structuredObjectJSON.utf8.count <= 131_072,
                   (0...2_000).contains(step.delayMilliseconds) else { throw FixtureError.invalidPlan }
             let input = Self.strings(body["input"] ?? NSNull()).joined(separator: "\n")
+            let guidance = input + Self.strings(body["instructions"] ?? NSNull()).joined(separator: "\n")
+            guard guidance.contains("https://hanlin.ai/a2ui/catalogs/media/v1"),
+                  guidance.contains("ImageGallery"), guidance.contains("LinkPreview"),
+                  guidance.contains("sourceUrl") else { throw FixtureError.wrongInput }
             let inputBytes = Data(input.utf8)
             func contains(_ marker: String) -> Bool { inputBytes.range(of: Data(marker.utf8)) != nil }
             guard step.expectedInputContains.allSatisfy({ !$0.isEmpty && $0.utf8.count <= 1024 && contains($0) }),

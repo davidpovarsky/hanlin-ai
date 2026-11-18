@@ -21,7 +21,9 @@ final class MediaReplayFixture: HanlinA2UIResultEventSink {
 
     init() {
         let args = ProcessInfo.processInfo.arguments
-        kind = args.contains("--audio") ? "AudioPlayer" : args.contains("--video") ? "Video" : "YouTube"
+        kind = args.contains("--gallery") || args.contains("--invalid-gallery") ? "ImageGallery"
+            : args.contains("--link") || args.contains("--invalid-link") ? "LinkPreview"
+            : args.contains("--audio") ? "AudioPlayer" : args.contains("--video") ? "Video" : "YouTube"
         historical = !args.contains("--live")
         do {
             projection = store.registerModelPart(runID: UUID(), messageID: UUID(), partID: UUID(),
@@ -35,13 +37,39 @@ final class MediaReplayFixture: HanlinA2UIResultEventSink {
                 if kind != "YouTube", var update = value["updateComponents"] as? [String: Any],
                    var components = update["components"] as? [[String: Any]],
                    let offset = components.firstIndex(where: { $0["id"] as? String == "media" }) {
-                    components[offset]["component"] = kind
+                    if kind == "ImageGallery" {
+                        components[offset] = ["id": "media", "component": kind, "items": [
+                            ["id": "swiftui", "url": args.contains("--invalid-gallery")
+                                ? ("https://127.0.0.1/private.png" as Any) : (["@path": "/source"] as Any),
+                             "sourceUrl": ["@path": "/sourcePage"], "title": ["@path": "/sourceTitle"],
+                             "description": ["@path": "/sourceDescription"]] as [String: Any],
+                            ["id": "swift", "url": "https://developer.apple.com/assets/elements/icons/swift/swift-96x96_2x.png",
+                             "sourceUrl": "https://developer.apple.com/swift/", "title": "Swift", "description": "Swift language icon"],
+                            ["id": "xcode", "url": "https://developer.apple.com/assets/elements/icons/xcode/xcode-96x96_2x.png",
+                             "sourceUrl": "https://developer.apple.com/xcode/", "title": "Xcode", "description": "Xcode development icon"]
+                        ]]
+                    } else if kind == "LinkPreview" {
+                        components[offset] = ["id": "media", "component": kind,
+                            "url": args.contains("--invalid-link") ? ("https://user:secret@developer.apple.com/" as Any) : (["@path": "/source"] as Any),
+                            "title": "Apple source"]
+                    } else {
+                        components[offset]["component"] = kind
+                    }
                     update["components"] = components
                     value["updateComponents"] = update
                 }
                 if kind != "YouTube", var update = value["updateDataModel"] as? [String: Any],
                    var model = update["value"] as? [String: Any] {
-                    model["source"] = "https://media.example.com/fixture." + (kind == "Video" ? "mp4" : "mp3")
+                    if kind == "ImageGallery" {
+                        model["source"] = "https://developer.apple.com/assets/elements/icons/swiftui/swiftui-96x96_2x.png"
+                        model["sourcePage"] = "https://developer.apple.com/swiftui/"
+                        model["sourceTitle"] = "SwiftUI"
+                        model["sourceDescription"] = "SwiftUI framework icon"
+                    } else if kind == "LinkPreview" {
+                        model["source"] = "https://developer.apple.com/swiftui/"
+                    } else {
+                        model["source"] = "https://media.example.com/fixture." + (kind == "Video" ? "mp4" : "mp3")
+                    }
                     update["value"] = model
                     value["updateDataModel"] = update
                 }
@@ -75,6 +103,24 @@ final class MediaReplayFixture: HanlinA2UIResultEventSink {
     func changeSource() {
         guard !historical else { return }
         changedSource.toggle()
+        if kind == "ImageGallery" || kind == "LinkPreview" {
+            let section = changedSource ? "swift" : "swiftui"
+            let value: [String: Any] = ["version": "1.0", "updateDataModel": [
+                "surfaceId": "replay-media", "path": "/", "value": [
+                    "name": "Ada",
+                    "source": kind == "ImageGallery"
+                        ? "https://developer.apple.com/assets/elements/icons/\(section)/\(section)-96x96_2x.png"
+                        : "https://developer.apple.com/\(section)/",
+                    "sourcePage": "https://developer.apple.com/\(section)/",
+                    "sourceTitle": changedSource ? "Swift" : "SwiftUI",
+                    "sourceDescription": changedSource ? "Updated Swift icon" : "SwiftUI framework icon"
+                ]]]
+            do {
+                try store.receive(String(decoding: JSONSerialization.data(withJSONObject: value), as: UTF8.self),
+                    sequence: changedSource ? 3 : 4, for: projection.key).get()
+            } catch { probeReceipt = "source-update-failed" }
+            return
+        }
         let source = kind == "YouTube"
             ? "https://youtu.be/\(changedSource ? "dQw4w9WgXcQ" : "M7lc1UVf-VE")"
             : "https://media.example.com/\(changedSource ? "second" : "fixture").\(kind == "Video" ? "mp4" : "mp3")"

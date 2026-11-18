@@ -287,6 +287,10 @@ final class HanlinAppAgentSessionOwner {
                 try presentation.validateCompleteParts(parts)
             })
         } else { native = nil }
+        var effectiveSystemPrompt = systemPrompt
+        if let instructions = presentation?.modelInstructions, !instructions.isEmpty {
+            effectiveSystemPrompt = [systemPrompt, instructions].compactMap { $0 }.joined(separator: "\n\n")
+        }
         activeUIRunID = request.uiRunID; activeReference = reference; completion = nil
         do {
             if let interaction = request.interaction {
@@ -294,9 +298,9 @@ final class HanlinAppAgentSessionOwner {
                     && $0.reference.messageID == interaction.origin.messageID }) else { throw HanlinHostError.staleContext }
                 return try await session.continueInteraction(interaction, messages: messages,
                     modelReference: .init(provider: descriptor.kind.rawValue, modelID: descriptor.modelID),
-                    systemPrompt: systemPrompt, structuredResponse: native, presentationReference: referenceData)
+                    systemPrompt: effectiveSystemPrompt, structuredResponse: native, presentationReference: referenceData)
             }
-            return try await session.stream(messages: messages, systemPrompt: systemPrompt,
+            return try await session.stream(messages: messages, systemPrompt: effectiveSystemPrompt,
                 modelReference: .init(provider: descriptor.kind.rawValue, modelID: descriptor.modelID),
                 structuredResponse: native, presentationReference: referenceData)
         } catch { activeUIRunID = nil; activeReference = nil; throw error }

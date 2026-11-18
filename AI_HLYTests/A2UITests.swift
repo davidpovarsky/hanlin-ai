@@ -317,7 +317,7 @@ struct A2UISDKTests {
         """).get()
         #expect(root.identity == identity)
         #expect(root.string(for: "url") == "https://www.youtube.com/shorts/M7lc1UVf-VE")
-        #expect(HanlinMediaCatalog.makeCatalog().components.count == 19)
+        #expect(HanlinMediaCatalog.makeCatalog().components.count == 21)
     }
 
     @Test func customMediaCannotAlterOfficialCatalogOrAdmitScriptFields() throws {
@@ -338,6 +338,65 @@ struct A2UISDKTests {
         """)
         if case .success = script { Issue.record("Unknown script property was accepted") }
         #expect(BasicCatalog.makeCatalog(version: .v10).components["YouTube"] == nil)
+    }
+
+    @Test func galleryAndLinkSourcesResolveThroughTheOfficialCatalogAndBindings() throws {
+        let session = HanlinA2UISession(onEvent: { _ in })
+        defer { session.close() }
+        try session.receive("""
+        {"version":"1.0","createSurface":{"surfaceId":"rich-media","catalogId":"https://hanlin.ai/a2ui/catalogs/media/v1"}}
+        """).get()
+        try session.receive("""
+        {"version":"1.0","updateDataModel":{"surfaceId":"rich-media","path":"/","value":{"image":"https://developer.apple.com/assets/elements/icons/swiftui/swiftui-96x96_2x.png","alt":"מקור תמונה אמיתי","source":"https://developer.apple.com/swiftui/"}}}
+        """).get()
+        try session.receive("""
+        {"version":"1.0","updateComponents":{"surfaceId":"rich-media","components":[
+          {"id":"root","component":"Column","children":["gallery","card"]},
+          {"id":"gallery","component":"ImageGallery","items":[{"id":"one","url":{"@path":"/image"},"sourceUrl":{"@path":"/source"},"description":{"@path":"/alt"}}]},
+          {"id":"card","component":"LinkPreview","url":{"@path":"/source"}}
+        ]}}
+        """).get()
+        let root = try #require(session.surface("rich-media")?.rootNode)
+        let gallery = try #require(root.children(for: "children").first(where: { $0.id == "gallery" }))
+        let card = try #require(root.children(for: "children").first(where: { $0.id == "card" }))
+        let values = try #require(gallery.array(for: "items"))
+        #expect(values.count == 1)
+        let item = try #require(values.first as? ResolvedDictionary)
+        let resolvedItem = Node(id: "one", type: "GalleryItem", properties: item.storage)
+        #expect(resolvedItem.string(for: "description") == "מקור תמונה אמיתי")
+        #expect(resolvedItem.string(for: "sourceUrl") == "https://developer.apple.com/swiftui/")
+        let identity = gallery.identity
+        try session.receive("""
+        {"version":"1.0","updateDataModel":{"surfaceId":"rich-media","path":"/source","value":"https://developer.apple.com/swift/"}}
+        """).get()
+        #expect(gallery.identity == identity)
+        #expect(card.string(for: "url") == "https://developer.apple.com/swift/")
+        #expect(resolvedItem.string(for: "sourceUrl") == "https://developer.apple.com/swift/")
+        #expect(BasicCatalog.makeCatalog(version: .v10).components["ImageGallery"] == nil)
+        #expect(BasicCatalog.makeCatalog(version: .v10).components["LinkPreview"] == nil)
+    }
+
+    @Test func richMediaSchemasRejectUnboundedCollectionsMissingSourcesAndScripts() throws {
+        let item: [String: Any] = ["id": "one", "url": "https://developer.apple.com/image.png",
+                                  "sourceUrl": "https://developer.apple.com/", "description": "Image"]
+        let payloads: [[String: Any]] = [
+            ["id": "root", "component": "ImageGallery", "items": Array(repeating: item, count: 11)],
+            ["id": "root", "component": "ImageGallery", "items": [
+                ["id": "one", "url": "https://developer.apple.com/image.png", "description": "Missing source"]]],
+            ["id": "root", "component": "LinkPreview", "url": "https://developer.apple.com/", "javascript": "untrusted"],
+            ["id": "root", "component": "ImageGallery", "items": [item], "onTap": "untrusted"]
+        ]
+        for payload in payloads {
+            let session = HanlinA2UISession(onEvent: { _ in })
+            defer { session.close() }
+            try session.receive("""
+            {"version":"1.0","createSurface":{"surfaceId":"reject","catalogId":"https://hanlin.ai/a2ui/catalogs/media/v1"}}
+            """).get()
+            let frame: [String: Any] = ["version": "1.0", "updateComponents": [
+                "surfaceId": "reject", "components": [payload]]]
+            let line = String(decoding: try JSONSerialization.data(withJSONObject: frame), as: UTF8.self)
+            if case .success = session.receive(line) { Issue.record("Invalid rich media component was accepted") }
+        }
     }
 
     @Test func successfulProducerEOFKeepsOriginalModelActionAndClosesInput() async throws {

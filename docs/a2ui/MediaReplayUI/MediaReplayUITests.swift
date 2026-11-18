@@ -129,6 +129,101 @@ final class MediaReplayUITests: XCTestCase {
         }
     }
 
+    func testHistoryGalleryLoadsThreeRealSourcesAndNativeQuickLook() {
+        launch("--gallery")
+        XCTAssertFalse(app.buttons["Submit replay form"].isEnabled)
+        XCTAssertFalse(app.buttons["SwiftUI framework icon"].exists)
+        app.buttons["Load images"].tap()
+        let first = app.buttons["SwiftUI framework icon"].firstMatch
+        XCTAssertTrue(first.waitForExistence(timeout: 30), "Actual bounded HTTPS image retrieval must finish")
+        XCTAssertTrue(app.buttons["Swift language icon"].waitForExistence(timeout: 30))
+        app.links["Open source: SwiftUI"].tap()
+        XCTAssertEqual(app.staticTexts["proof-source-result"].label, "https://developer.apple.com/swiftui/")
+        first.tap()
+        let close = app.buttons.matching(NSPredicate(format: "label == 'Done' OR label == 'Close'")).firstMatch
+        XCTAssertTrue(close.waitForExistence(timeout: 10), "The actual native Quick Look presentation must open")
+        record("gallery-native-quicklook")
+        close.tap()
+        let gallery = app.scrollViews.matching(NSPredicate(format: "label == 'Image gallery'")).firstMatch
+        XCTAssertTrue(gallery.exists)
+        gallery.swipeLeft()
+        let third = app.buttons["Xcode development icon"].firstMatch
+        XCTAssertTrue(third.waitForExistence(timeout: 30))
+        app.links["Open source: Xcode"].tap()
+        XCTAssertEqual(app.staticTexts["proof-source-result"].label, "https://developer.apple.com/xcode/")
+        XCTAssertEqual(app.staticTexts["proof-outbound"].label, "outbound:0")
+        record("gallery-three-real-sources")
+    }
+
+    func testHistoryLinkPreviewFetchesRealMetadataWithoutGrantingFormAuthority() {
+        launch("--link")
+        XCTAssertTrue(app.staticTexts["Apple source"].exists)
+        app.buttons["Load link preview"].tap()
+        let title = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'SwiftUI' AND label CONTAINS 'Apple'")).firstMatch
+        XCTAssertTrue(title.waitForExistence(timeout: 30), "The title must come from the actual bounded source HTML")
+        app.links["Open linked source"].tap()
+        XCTAssertEqual(app.staticTexts["proof-source-result"].label, "https://developer.apple.com/swiftui/")
+        XCTAssertFalse(app.buttons["Submit replay form"].isEnabled)
+        XCTAssertEqual(app.staticTexts["proof-outbound"].label, "outbound:0")
+        record("real-link-metadata")
+    }
+
+    func testGalleryAndLinkSourceReplacementRequireAnotherRequest() {
+        for kind in ["--gallery", "--link"] {
+            launch(kind, live: true)
+            let label = kind == "--gallery" ? "Load images" : "Load link preview"
+            app.buttons[label].tap()
+            if kind == "--gallery" {
+                XCTAssertTrue(app.buttons["SwiftUI framework icon"].waitForExistence(timeout: 30))
+            } else {
+                XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'SwiftUI' AND label CONTAINS 'Apple'")).firstMatch.waitForExistence(timeout: 30))
+            }
+            app.buttons["proof-change-source"].tap()
+            XCTAssertTrue(app.buttons[label].waitForExistence(timeout: 10), "New source identity must reset local loading permission")
+            XCTAssertFalse(app.buttons["SwiftUI framework icon"].exists)
+            if kind == "--gallery" { app.links["Open source: Swift"].firstMatch.tap() }
+            else { app.links["Open linked source"].tap() }
+            XCTAssertEqual(app.staticTexts["proof-source-result"].label, "https://developer.apple.com/swift/")
+            XCTAssertEqual(app.staticTexts["proof-outbound"].label, "outbound:0")
+            record("new-media-source-reset-\(kind)")
+        }
+    }
+
+    func testGalleryAndLinkParentDisableAndBackgroundRevokeLocalLoading() {
+        for kind in ["--gallery", "--link"] {
+            launch(kind)
+            let label = kind == "--gallery" ? "Load images" : "Load link preview"
+            app.buttons[label].tap()
+            if kind == "--gallery" { XCTAssertTrue(app.buttons["SwiftUI framework icon"].waitForExistence(timeout: 30)) }
+            else { XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'SwiftUI' AND label CONTAINS 'Apple'")).firstMatch.waitForExistence(timeout: 30)) }
+            app.buttons["proof-disable"].tap()
+            XCTAssertTrue(app.buttons[label].waitForExistence(timeout: 10))
+            XCTAssertFalse(app.buttons[label].isEnabled)
+            XCTAssertFalse(app.buttons["SwiftUI framework icon"].exists)
+            app.buttons["proof-disable"].tap()
+            XCTAssertTrue(app.buttons[label].isEnabled)
+            app.buttons[label].tap()
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            XCTAssertTrue(app.buttons[label].waitForExistence(timeout: 10))
+            XCTAssertFalse(app.buttons["SwiftUI framework icon"].exists)
+            XCTAssertFalse(app.buttons["Submit replay form"].isEnabled)
+            record("new-media-background-reset-\(kind)")
+        }
+    }
+
+    func testPrivateGalleryAndCredentialedLinkSourcesHaveNoLoadControl() {
+        for (kind, title) in [("--invalid-gallery", "Images unavailable"), ("--invalid-link", "Link unavailable")] {
+            launch(kind)
+            XCTAssertTrue(app.staticTexts[title].waitForExistence(timeout: 15))
+            XCTAssertFalse(app.buttons["Load images"].exists)
+            XCTAssertFalse(app.buttons["Load link preview"].exists)
+            XCTAssertFalse(app.links["Open linked source"].exists)
+            XCTAssertEqual(app.staticTexts["proof-outbound"].label, "outbound:0")
+            record("rejected-source-\(kind)")
+        }
+    }
+
     private func checkNativeHistory(_ kind: String) {
         launch(kind)
         XCTAssertFalse(player().exists)
@@ -154,7 +249,15 @@ final class MediaReplayUITests: XCTestCase {
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", kind]
         if live { app.launchArguments.append("--live") }
         app.launch()
-        XCTAssertTrue(load().waitForExistence(timeout: 20))
+        let initial: XCUIElement
+        switch kind {
+        case "--gallery": initial = app.buttons["Load images"]
+        case "--link": initial = app.buttons["Load link preview"]
+        case "--invalid-gallery": initial = app.staticTexts["Images unavailable"]
+        case "--invalid-link": initial = app.staticTexts["Link unavailable"]
+        default: initial = load()
+        }
+        XCTAssertTrue(initial.waitForExistence(timeout: 20))
     }
     private func element(_ id: String) -> XCUIElement { app.descendants(matching: .any)[id].firstMatch }
     // Official Surface assigns a2ui-root to descendants in the actual AX tree. Resolve the

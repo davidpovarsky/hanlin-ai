@@ -21,6 +21,7 @@ struct HanlinAppAgentRowBinding: Hashable, Sendable {
 /// The application owner calls these hooks outside View.body and preserves their original keys.
 @MainActor
 protocol HanlinAppAgentPresentationConsumer: AnyObject {
+    var modelInstructions: String? { get }
     func installed(session: HanlinAgentSession)
     func validateCompleteParts(_ parts: [HanlinChatStructuredPart]) throws
     func receive(_ event: HanlinAgentEvent, binding: HanlinAppAgentRowBinding) throws
@@ -33,6 +34,7 @@ protocol HanlinAppAgentPresentationConsumer: AnyObject {
 }
 
 extension HanlinAppAgentPresentationConsumer {
+    var modelInstructions: String? { nil }
     func hostResult(_ result: HanlinHostResultEvent) {}
     func hostProgress(_ progress: HanlinHostProgressEvent) {}
 }

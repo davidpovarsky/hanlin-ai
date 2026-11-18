@@ -117,8 +117,8 @@ cp "$lock" "$evidence/resolved-before.json"
 python3 - "$lock" <<'PY' > "$evidence/pin-validation.json"
 import json,sys
 sys.path.insert(0,'docs/a2ui')
-from prepare_exact_pin_proof import verify_pin
-verify_pin(json.load(open(sys.argv[1])))
+from prepare_media_replay_ui import verify_media_pins
+verify_media_pins(json.load(open(sys.argv[1])))
 print('{"status":"EXACT_PIN_VERIFIED"}')
 PY
 finish_phase build-and-test

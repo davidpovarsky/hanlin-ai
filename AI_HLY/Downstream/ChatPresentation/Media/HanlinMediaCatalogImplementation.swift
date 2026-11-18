@@ -33,6 +33,29 @@ enum HanlinMediaCatalogImplementation {
                 }
             }
         }
+        #if canImport(UIKit)
+        catalog.components[HanlinMediaCatalog.imageGallery.name] = ComponentImplementation(api: HanlinMediaCatalog.imageGallery) { node in
+            HanlinA2UILocalMedia {
+                let items = HanlinGalleryImage.items(in: node)
+                if !items.isEmpty {
+                    HanlinImageGallery(items: items).id(items)
+                } else {
+                    ContentUnavailableView("Images unavailable", systemImage: "photo.badge.exclamationmark",
+                        description: Text("The image sources are missing or unsupported."))
+                }
+            }
+        }
+        catalog.components[HanlinMediaCatalog.linkPreview.name] = ComponentImplementation(api: HanlinMediaCatalog.linkPreview) { node in
+            HanlinA2UILocalMedia {
+                if let descriptor = HanlinSourceCardDescriptor(node: node) {
+                    HanlinSourceCard(descriptor: descriptor).id(descriptor)
+                } else {
+                    ContentUnavailableView("Link unavailable", systemImage: "link.badge.plus",
+                        description: Text("This source link is not supported."))
+                }
+            }
+        }
+        #endif
         return catalog
     }
 }
