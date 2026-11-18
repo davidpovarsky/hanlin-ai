@@ -1164,6 +1164,24 @@ struct ModelPopoverZoomOrderTests {
             nativeAvailable: false, downloadedLocalModels: ["installed"]) == nil)
     }
 
+    @Test("Canvas presentation retains its original record and model across endpoint changes")
+    func canvasPresentationRetainsItsOriginalOrigin() throws {
+        let record = ChatRecords(name: "Original Canvas", type: "chat")
+        var canvas = CanvasData()
+        canvas.content = "print(6 * 7)"
+        record.canvas = canvas
+        let original = AllModels(name: "original", displayName: "Original", position: 0, company: "CUSTOM")
+        var models = [original]
+        let presentation = try #require(HanlinCanvasPresentation(record: record, models: models, selectedModelIndex: 0))
+        models.removeAll()
+        #expect(presentation.record === record)
+        #expect(presentation.model === original)
+        #expect(presentation.record.canvas?.content == "print(6 * 7)")
+        #expect(HanlinCanvasPresentation(record: record, models: models, selectedModelIndex: 0) == nil)
+        #expect(HanlinCanvasPresentation(record: record, models: [original], selectedModelIndex: -1) == nil)
+        #expect(HanlinCanvasPresentation(record: record, models: [original], selectedModelIndex: 1) == nil)
+    }
+
     @Test("Native picker visibility preserves original indices and explicit selection")
     func nativeVisibilityKeepsOriginalIndices() {
         let nativeID = UUID()

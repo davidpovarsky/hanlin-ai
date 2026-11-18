@@ -202,6 +202,21 @@ struct InputTextField: UIViewRepresentable {
 }
 
 
+/// Retain the actual Canvas origin while native sheet presentation can temporarily
+/// unmount the conversation endpoint or change the model-list indices.
+struct HanlinCanvasPresentation: Identifiable {
+    let id = UUID()
+    let record: ChatRecords
+    let model: AllModels
+
+    init?(record: ChatRecords, models: [AllModels], selectedModelIndex: Int) {
+        guard record.canvas?.content.isEmpty == false,
+              models.indices.contains(selectedModelIndex) else { return nil }
+        self.record = record
+        self.model = models[selectedModelIndex]
+    }
+}
+
 struct ChatViewBottom: View {
     var chatRecord: ChatRecords
     let modelTemp: [AllModels]
@@ -268,7 +283,7 @@ struct ChatViewBottom: View {
     @Query private var userInfos: [UserInfo]
 
     @State private var isViewLoaded = false
-    @State private var showCanvas = false
+    @State private var canvasPresentation: HanlinCanvasPresentation?
     @State private var inputExpanded = false
     @State private var showModelMenuSheet = false
     @State private var voiceExpanded = false
@@ -347,8 +362,11 @@ struct ChatViewBottom: View {
                 HStack(spacing: 12) {
                     Spacer()
 
-                    if chatRecord.canvas?.content.isEmpty == false && selectedModelIndex >= 0 {
-                        Button(action: { showCanvas.toggle() }) {
+                    if chatRecord.canvas?.content.isEmpty == false {
+                        Button(action: {
+                            canvasPresentation = HanlinCanvasPresentation(record: chatRecord,
+                                models: modelTemp, selectedModelIndex: selectedModelIndex)
+                        }) {
                             HStack(spacing: 6) {
                                 Image(systemName: "pencil.and.outline")
                                     .font(.system(size: size_16, weight: .medium))
@@ -373,18 +391,7 @@ struct ChatViewBottom: View {
                             value: chatRecord.canvas?.content.isEmpty == false
                         )
                         .accessibilityIdentifier("hanlin-canvas-open")
-                        .sheet(isPresented: $showCanvas) {
-                            AICanvasView(
-                                canvas: Binding(
-                                    get: { chatRecord.canvas ?? CanvasData() },
-                                    set: {
-                                        chatRecord.canvas = $0
-                                        try? context.save()
-                                    }
-                                ),
-                                model: modelTemp[selectedModelIndex]
-                            )
-                        }
+                        .disabled(!modelTemp.indices.contains(selectedModelIndex))
                     }
 
                     if showScrollToBottomButton {
@@ -413,6 +420,18 @@ struct ChatViewBottom: View {
 
             // 多选模式工具栏 + 底部输入面板
             buildMultiSelectAndInputControls()
+        }
+        .sheet(item: $canvasPresentation) { presentation in
+            AICanvasView(
+                canvas: Binding(
+                    get: { presentation.record.canvas ?? CanvasData() },
+                    set: {
+                        presentation.record.canvas = $0
+                        try? context.save()
+                    }
+                ),
+                model: presentation.model
+            )
         }
         .onAppear {
             syncDockGeometryAndContext()
