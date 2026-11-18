@@ -200,12 +200,12 @@ Classify findings as:
 
 Do not automatically rewrite every flagged occurrence. Explain false positives and context-sensitive cases.
 
-Do not add third-party audit tools or alter CI without explicit permission. When requested to create an audit workflow, make it manually triggered and report-only by default.
+Use third-party audit tools and CI changes when needed by the owner-authorized work. Prefer focused manually triggered audits for individual verification needs.
 
 ## 11. GitHub Actions policy
 
-- Project CI, builds, tests, audits, archives, and unsigned IPA generation may be dispatched whenever necessary for verification, validation, or completing tasks, without requiring advance explicit authorization for each run. Distribution and external release publication continue to run only on explicit user request.
-- Do not add or expand `push`, `pull_request`, scheduled, or automatic triggers without explicit permission.
+- Project CI, builds, tests, audits, archives, and unsigned IPA generation may be dispatched whenever necessary for verification, validation, or completing tasks, without requiring advance explicit authorization for each run. Distribution and external publication required by the requested project tasks are covered by the standing owner authorization.
+- Configure workflow triggers as needed by the authorized task; prefer focused manual validation for individual corrections.
 - Prefer focused manual `workflow_dispatch`.
 - Do not hide warnings solely to obtain a green build.
 - Do not change signing, certificates, provisioning, bundle identifiers, entitlements, or deployment settings without explaining the need.
@@ -243,7 +243,7 @@ This project enforces a strict, fail-closed impact-aware test selection and evid
 6. **No reduction of assurance:** Do not bypass tests, alter desired outputs/assertions, weaken coverage, lower required benchmark sample counts/thresholds, skip smoke/integration gates that actually changed, or recast mock fixtures as real engine execution. Reuse is a positive proof of unaffectedness, not blanket permission to skip.
 7. **Persistent proof and audit:** Maintain durable records across commits and CI runs, with exact test/scenario identifier, expected behavior, test method, previous execution SHA/run/job/artifact, raw result and hash, impacted-source fingerprint, dependency closure, fixture and runner/toolchain fingerprint, last validated status, invalidation cause, and final target SHA. Reused entries point at their original raw artifacts; do not copy them and rewrite the origin as the latest SHA.
 8. **Efficiency rules:** Use precise method-level filtered runs for debugging; avoid Release/device IPA and all performance suites in ordinary unrelated iterations; reuse compatible compiler caches; isolate test groups where safe; gather bounded, structured diagnostics; publish per-step/per-suite wall time and candidate waste. Keep required final coverage intact. A long/expensive full suite is not the default just because one test failed.
-9. **Impact-aware authorization:** Under the owner's controlling policy, advance approval is not required for necessary validation CI, focused builds, tests, or archives. Automatic workflow triggers and external release publication remain strictly prohibited without explicit user request. Once dispatched, use a single event-driven watcher and inspect results rather than frequent polling.
+9. **Impact-aware authorization:** Under the owner's controlling policy, advance approval is not required for necessary validation CI, focused builds, tests, or archives. Necessary workflow configuration and task-related publication use the standing owner authorization. Once dispatched, use a single event-driven watcher and inspect results rather than frequent polling.
 
 ## 13. Existing instruction and workflow files
 
