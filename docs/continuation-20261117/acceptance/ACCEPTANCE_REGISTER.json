@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T16:09:13.360868+00:00",
+  "generated_at": "2026-11-18T17:39:51.317232+00:00",
   "status": "IN_PROGRESS_NOT_A_PHASE_COMPLETION",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
-  "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+  "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
   "branch": "codex/hanlin-product-completion-20261117",
   "phase_2": "IN_PROGRESS",
   "phase_3": "IN_PROGRESS",
@@ -466,9 +466,9 @@
     },
     {
       "id": "MARKDOWN_HOST_ACTION_LOCAL",
-      "status": "PUBLISHED_DEPENDENCY_NATIVE_EXECUTION_PENDING",
+      "status": "PUBLISHED_NATIVE10_PASS_ORIGINAL_SAFARI_UI_PENDING",
       "sha": "4b765b447d7d47426498d1632581af59facd3f2f",
-      "scope": "Original UIKit paragraph refreshes current OpenURLAction; upstream6bde022 and all three app/package pins agree and are publicly available. Native ten-method regression gate44343462395 and original Safari UI gate44342772767 are dispatched; no new PASS claimed.",
+      "scope": "Original paragraph callback and all three6bde022 pins published; native10 actual methods passed44343462395. Original main-app Safari UI still pending after cancelled44342772767.",
       "report": "docs/continuation-20261117/acceptance/NATIVE_TERMINAL_RESULTS_AND_LOCAL_REPAIRS_20261118.json"
     },
     {
@@ -477,6 +477,67 @@
       "sha": "4b765b447d7d47426498d1632581af59facd3f2f",
       "scope": "15 changed Swift files across app and original Markdown dependency pass frontend parse; diff check, lock JSON and three-pin agreement pass. This is not Apple type checking, building or UI execution.",
       "report": "docs/continuation-20261117/acceptance/LOCAL_CANDIDATE_VALIDATION_20261118.json"
+    },
+    {
+      "id": "MINI_BASELINE_87CF",
+      "status": "EXECUTED_PASS",
+      "run": 44340805844,
+      "sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "scope": "Standalone MiniApps baseline: 20 storage + 7 UI, zero failures/skips",
+      "report": "docs/continuation-20261117/acceptance/NATIVE_RESULTS_AFTER_PUBLICATION_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44340805844"
+    },
+    {
+      "id": "MARKDOWN_NATIVE10_CDA",
+      "status": "EXECUTED_PASS",
+      "run": 44343462395,
+      "sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "scope": "Exact original Markdown native consumer: 10 methods. Main-app/Safari UI NOT_RUN",
+      "report": "docs/continuation-20261117/acceptance/NATIVE_RESULTS_AFTER_PUBLICATION_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44343462395"
+    },
+    {
+      "id": "OPENCLAW_POLICY_FD",
+      "status": "PUBLISHED_PORTABLE11_PASS_NATIVE_PENDING",
+      "run": 44358114755,
+      "sha": "fd4149acc5dea3f7953f093b1b5dd8ebdd975440",
+      "scope": "Maintained exact original90 declarations/21modules; portable11 cases incl28 original invocations/64assertions. Yams/Runtime05/catalog/tools/SDK/native UI wired. Expanded Apple/physical acceptance pending.",
+      "report": "docs/continuation-20261117/acceptance/OPENCLAW_POLICY_IMPLEMENTATION_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358114755"
+    },
+    {
+      "id": "NATIVE_ROUTING_A908",
+      "status": "PORTABLE_ROUTING97_CACHE34_PASS_NATIVE_PENDING",
+      "run": 44358114755,
+      "sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "scope": "Explicit new-test routing, independent manual exact-run concurrency, original-source parity gate, bounded Motion evidence retention.",
+      "report": "docs/continuation-20261117/acceptance/NATIVE_CI_ROUTING_AND_EVIDENCE_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358114755"
+    },
+    {
+      "id": "MOTION_STARTUP_0C",
+      "status": "BUILD_PASS_NATIVE_CASES_NOT_RUN",
+      "run": 44345443838,
+      "sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "scope": "Motion B/C not executed: XCTest runner stalled/crashed before a case; original failures remain open",
+      "report": "docs/continuation-20261117/acceptance/NATIVE_CI_ROUTING_AND_EVIDENCE_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44345443838"
+    },
+    {
+      "id": "PUBLISHED_NATIVE_INTERRUPTED",
+      "status": "BUILD_PASSES_NO_NATIVE_ACCEPTANCE",
+      "run": null,
+      "sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "scope": "Mixed-family run44342780366 failed before tests; wide44342772767 and iPad44349634595 cancelled. None closes original test failures.",
+      "report": "docs/continuation-20261117/acceptance/NATIVE_CI_ROUTING_AND_EVIDENCE_20261118.json"
+    },
+    {
+      "id": "APPLE_PORTAL_CONFIG6",
+      "status": "ORIGINAL_CONFIGURATION_SAVED_AND_READ_BACK",
+      "run": null,
+      "sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "scope": "Both original products' required capabilities and App Groups verified; four original extension group assignments unchanged and verified. Profiles/export/App Store record remain pending.",
+      "report": "docs/continuation-20261117/acceptance/APPLE_PORTAL_CONFIGURATION_20261118.json"
     }
   ],
   "source_tasks": [
@@ -553,12 +614,13 @@
         "MINI_ORIGINAL_BRANDING",
         "MINI_DEFAULT_SIGNING",
         "MINI_BUILD_BUDGET_LOCAL",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "MINI_BASELINE_87CF"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "NativeScript ten original host/runtime behaviors in the integrated app and companion runtime controls."
     },
     {
@@ -581,12 +643,13 @@
         "MINI_ORIGINAL_BRANDING",
         "MINI_DEFAULT_SIGNING",
         "MINI_BUILD_BUDGET_LOCAL",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "MINI_BASELINE_87CF"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Original Expo SwiftUI package and independent companion event/persistence assertions."
     },
     {
@@ -607,7 +670,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Native app TS/shell/runtime dispatch, bounded jobs and actual scheduler results."
     },
     {
@@ -621,12 +684,14 @@
         "WIDE00A9",
         "REMAINING_NATIVE_UI45",
         "REMAINING_NATIVE_UI45_RETRY",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "OPENCLAW_POLICY_FD",
+        "NATIVE_ROUTING_A908"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Actual SkillRuntimeProductTests34 invocations across5 methods pass at3542cc20, within combined41. Retain individual engine/OpenClaw scope; final integrated UI and current candidate acceptance remain required."
     },
     {
@@ -652,7 +717,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Original model/tool surface attribution and ordered original-app execution."
     },
     {
@@ -678,7 +743,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "All selected original surface editing, binding, replay and layout cases."
     },
     {
@@ -705,7 +770,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Original action denial, authorized continuation and exact persisted result identity."
     },
     {
@@ -733,7 +798,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Original app cancellation/replay/history and no stale action invocation."
     },
     {
@@ -758,7 +823,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Twelve component method identities have passes at their own recorded SHAs; integrated original-chat media and physical presentation remain separate."
     },
     {
@@ -777,7 +842,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Actual SkillRuntimeProductTests34 invocations across5 methods pass at3542cc20, within combined41. Retain individual engine/OpenClaw scope; final integrated UI and current candidate acceptance remain required."
     },
     {
@@ -791,12 +856,13 @@
         "WIDE00A9",
         "REMAINING_NATIVE_UI45",
         "REMAINING_NATIVE_UI45_RETRY",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "MOTION_STARTUP_0C"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "A historical100 cycles remains recorded. B fails first triple-tap with collapsed geometry; C lacks app process ID and times out. Inspect/run focused original B/C on a working native host; no current product Motion acceptance."
     },
     {
@@ -820,12 +886,13 @@
         "COMPOSER_NATIVE_TEXT_AND_VIEWPORT_LOCAL",
         "ORIGINAL_UI_CONTRACT_REPAIR_LOCAL",
         "CANVAS_ORIGINAL_OWNER_LOCAL",
-        "MARKDOWN_HOST_ACTION_LOCAL"
+        "MARKDOWN_HOST_ACTION_LOCAL",
+        "MARKDOWN_NATIVE10_CDA"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Original compact keyboard/focus/attachment/navigation cases after current layout repair; wide Morph and physical/reference obligations remain separate."
     },
     {
@@ -850,7 +917,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Real native chip enable/disable/context menu/expanded state and RTL labels."
     },
     {
@@ -867,12 +934,14 @@
         "HOST_ORIGINAL_REPAIR",
         "HOST_RELEASE_OBSERVATION_REPAIR",
         "NATIVE_TERMINAL_DIAGNOSIS",
-        "ORIGINAL_UI_CONTRACT_REPAIR_LOCAL"
+        "ORIGINAL_UI_CONTRACT_REPAIR_LOCAL",
+        "OPENCLAW_POLICY_FD",
+        "NATIVE_ROUTING_A908"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Original import/real execution/cold persistence, Node partial-output cancellation and resource CRUD passed atd7002ab1. Edited custom instructions and reset builtin instructions remain pending the native-list-scroll repair. Full iPad/compact/readiness/remediation acceptance stays open."
     },
     {
@@ -897,12 +966,14 @@
         "HOST_RELEASE_OBSERVATION_REPAIR",
         "EMBEDDED_NATIVE_FIX_LOCAL",
         "NATIVE_TERMINAL_DIAGNOSIS",
-        "HOST_WRITER_AND_INTERACTION_LOCAL"
+        "HOST_WRITER_AND_INTERACTION_LOCAL",
+        "OPENCLAW_POLICY_FD",
+        "NATIVE_ROUTING_A908"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Integrated original chat/Host/Store acceptance and live provider/resource gate; Otzaria consumer work is outside this Hanlin task."
     },
     {
@@ -921,12 +992,14 @@
         "REMAINING_NATIVE_UI45_RETRY",
         "HOST_ORIGINAL_REPAIR",
         "HOST_RELEASE_OBSERVATION_REPAIR",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "OPENCLAW_POLICY_FD",
+        "NATIVE_ROUTING_A908"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Native consumer behavior in addition to the recorded component/provider session proofs."
     },
     {
@@ -948,12 +1021,14 @@
         "PAIRED_ORIGINAL_REPAIR",
         "HOST_RELEASE_OBSERVATION_REPAIR",
         "NATIVE_TERMINAL_DIAGNOSIS",
-        "HOST_WRITER_AND_INTERACTION_LOCAL"
+        "HOST_WRITER_AND_INTERACTION_LOCAL",
+        "OPENCLAW_POLICY_FD",
+        "NATIVE_ROUTING_A908"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Actual origin/receiving-window/permission enforcement, paired return and shared inbox consumption."
     },
     {
@@ -981,7 +1056,7 @@
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Original conversation draft/history reopen plus two-product persistence/migration and actual platform account boundaries."
     },
     {
@@ -1007,12 +1082,13 @@
         "COMPOSER_NATIVE_TEXT_AND_VIEWPORT_LOCAL",
         "ORIGINAL_UI_CONTRACT_REPAIR_LOCAL",
         "CANVAS_ORIGINAL_OWNER_LOCAL",
-        "MARKDOWN_HOST_ACTION_LOCAL"
+        "MARKDOWN_HOST_ACTION_LOCAL",
+        "MARKDOWN_NATIVE10_CDA"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Original importable presentation UI, Morph/Thinking/A2UI consumer acceptance and reference comparison."
     },
     {
@@ -1021,18 +1097,20 @@
       "primary_phase": 2,
       "objective": "Original OpenClaw eligibility/gating subset and embedded node",
       "url": "https://app.asana.com/0/0/1220546571007976",
-      "implementation_summary": "Original OpenClaw subset with six real embedded-engine cases; no broad third-party runtime claim.",
+      "implementation_summary": "Maintained exact original policy extraction and Yams/Node/Runtime05/catalog/tools/SDK/native view integration published at fd4149ac; source/parity CI guard at a9085987.",
       "supporting_evidence": [
         "WIDE00A9",
         "REMAINING_NATIVE_UI45",
         "REMAINING_NATIVE_UI45_RETRY",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "OPENCLAW_POLICY_FD",
+        "NATIVE_ROUTING_A908"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
-      "remaining_acceptance": "Actual SkillRuntimeProductTests34 invocations across5 methods pass at3542cc20, within combined41. Retain individual engine/OpenClaw scope; final integrated UI and current candidate acceptance remain required."
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "remaining_acceptance": "Portable11 incl28 original invocations/64assertions pass. Expanded native policy/SDK/UI acceptance44358114755 pending; physical iPad startup/RAM and full product gates open."
     },
     {
       "gid": "1219605220179926",
@@ -1056,13 +1134,15 @@
         "MINI_ORIGINAL_BRANDING",
         "MINI_DEFAULT_SIGNING",
         "MINI_BUILD_BUDGET_LOCAL",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "MINI_BASELINE_87CF",
+        "APPLE_PORTAL_CONFIG6"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
-      "remaining_acceptance": "Two actually installed apps with paired flows, both runtime packages, signed candidate and physical acceptance."
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "remaining_acceptance": "Current standalone baseline20 storage+7 UI passes at87cf107c. Separate original NS/ExpoUI2, paired/share8, distribution/profile and physical-device gates remain."
     },
     {
       "gid": "1219656771637321",
@@ -1083,12 +1163,13 @@
         "MINI_ORIGINAL_BRANDING",
         "MINI_DEFAULT_SIGNING",
         "MINI_BUILD_BUDGET_LOCAL",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "MINI_BASELINE_87CF"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Eight paired/shared-inbox cases and authentic entitlement/profile checks; existing source/data and receipt isolation preserved."
     },
     {
@@ -1111,12 +1192,13 @@
         "HOST_ORIGINAL_REPAIR",
         "HOST_RELEASE_OBSERVATION_REPAIR",
         "COMPACT_KEYBOARD_LAYOUT_REPAIR",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "MARKDOWN_NATIVE10_CDA"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "278 feature obligations and 26 current UX resolutions must map to actual individual assertions/screens, not file presence."
     },
     {
@@ -1140,13 +1222,15 @@
         "MINI_ORIGINAL_BRANDING",
         "MINI_DEFAULT_SIGNING",
         "MINI_BUILD_BUDGET_LOCAL",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "MINI_BASELINE_87CF",
+        "APPLE_PORTAL_CONFIG6"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
-      "remaining_acceptance": "Original signed-simulator App Groups, real NativeScript/Expo interactions and relaunch, paired product return and persistence."
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "remaining_acceptance": "Current standalone baseline20 storage+7 UI passes at87cf107c. Separate original NS/ExpoUI2, paired/share8, distribution/profile and physical-device gates remain."
     },
     {
       "gid": "1219605235147314",
@@ -1182,12 +1266,14 @@
         "MINI_ORIGINAL_BRANDING",
         "MINI_DEFAULT_SIGNING",
         "MINI_BUILD_BUDGET_LOCAL",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "MINI_BASELINE_87CF",
+        "MARKDOWN_NATIVE10_CDA"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Complete per-capability native proof or justified source-closure reuse; no PASS for queued/replaced/unexecuted runs."
     },
     {
@@ -1215,12 +1301,14 @@
         "MINI_ORIGINAL_BRANDING",
         "MINI_DEFAULT_SIGNING",
         "MINI_BUILD_BUDGET_LOCAL",
-        "NATIVE_TERMINAL_DIAGNOSIS"
+        "NATIVE_TERMINAL_DIAGNOSIS",
+        "MINI_BASELINE_87CF",
+        "APPLE_PORTAL_CONFIG6"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "remaining_acceptance": "Original profiles/local signed exports, supported physical device, live model gate and release candidate; source currently targets iOS/iPadOS27 only."
     }
   ],
@@ -1232,13 +1320,13 @@
     },
     {
       "id": "LIVE_MODEL_PROVIDER",
-      "status": "BLOCKED_CREDENTIAL_EXPORT_APPROVAL",
-      "need": "Existing host Gemini credential is available, but automatic review rejected creating a new secret in the public GitHub repository. Exact transfer requires explicit owner approval, or approved local Mac/device execution with its own existing account. No credential was transferred."
+      "status": "CI_PROVIDER_SECRET_MISSING",
+      "need": "HANLIN_ACCEPTANCE_GEMINI_API_KEY is absent from CI. Prior automatic review rejected exporting the existing host credential; that history remains, and no secret was transferred. Complete on a host with an already authorized provider account or with the required CI secret supplied through an approved credential route."
     },
     {
       "id": "SIGNED_PROVISIONING",
-      "status": "EXACT_APPLE_PORTAL_CONFIGURATION_REQUIRED",
-      "need": "Existing identity is valid. Original MiniApps Bundle ID plus App Groups/HealthKit capability toggles registered and read back. Need both actual group assignments, all original required capability approvals and compatible profiles (AI lacks Extended Virtual Addressing), plus the separate App Store record. Official API exposes no App Group assignment or create-app endpoint; the Browser plugin exposes no callable control JS in this session. No browser account session was probed."
+      "status": "PROFILES_EXPORT_PENDING",
+      "need": "Apple Developer authentication completed. Both original groups are assigned to MiniApps and verified on AI plus all four extensions. Required missing capabilities were saved and read back: Extended Virtual Addressing on both apps, Time Sensitive Notifications and WeatherKit on MiniApps. Original certificate retained. Automatic profile regeneration, signed exports and separate Mini App Store record remain pending."
     },
     {
       "id": "APPROVED_FULL_VISUAL_REFERENCE",
@@ -1252,15 +1340,15 @@
     }
   ],
   "remaining_internal_gates": [
-    "Four current native workflows are dispatched at their recorded source SHAs. Read final native results and original artifacts before accepting any repair; dispatch/queue/build is not a product PASS.",
-    "On current candidate, verify original Host writer/action continuations and the new regressions; original compact2 and affected NativeA2UI7; original editor long/RTL drafts and relevant wide UI failures. Native parse on Windows is not completion.",
-    "Keep Canvas/Safari original UI and contextual-tools teardown failed until verified. Motion B/C require focused native diagnosis; triple-tap collapsed state and launch failure have no confirmed production repair.",
-    "Run original EmbeddedResultsUI2 after25fdded6. Prior native21 remains scoped to3542cc20; do not repeat unchanged component gates just for HEAD movement.",
-    "Finish standalone MiniApps build/startup/NS+ExpoUI2 with verified runtime artifact42926628418, original groups/signing/branding/loader and bounded budget2400. Only after standalone startup succeeds execute original paired/share8.",
-    "Complete required behavior-specific UX/feature mapping and final native acceptance across both apps; current278-row coverage remains20 partial and0 fully accepted. Do not add duplicate parameter method totals.",
-    "Live model, actual Apple group/profile/exports, physical-device/VoiceOver/Stage Manager/performance and complete visual-reference evidence remain independent gates. Keep all30 original tasks and the seven reports synchronized."
+    "Read the four remaining native runs at their exact SHAs and inspect raw cases. Original-policy/UI and Motion diagnostics were dispatched at a9085987; compact and standalone runtime runs remain separately scoped.",
+    "Reexecute interrupted original Host/Editor/A2UI/Canvas/contextual/Safari/wide/EmbeddedResults obligations after the new product candidate passes its focused native gate. Cancelled runs and compilation do not replace test acceptance.",
+    "Expanded original OpenClaw policy has portable11/28original/64assertion evidence, not current Apple acceptance. Preserve unknown facts, original Yams/Runtime05/Host boundaries and physical-iPad performance obligations.",
+    "Standalone MiniApps baseline20+7 passed at87cf107c. Finish original NativeScript/ExpoUI2 and paired/share8 using actual OS App Groups; simulator signing is not distribution signing.",
+    "Motion historical B/C failures remain open. New0c runner failed before any case; a908 retains raw bundles and scoped crash diagnostics even if the reader fails. Reuse historical A100 only within its proven unchanged scope.",
+    "Finish behavior-specific feature/UX coverage and current acceptance across both apps;278-row matrix remains20 partial and0 fully accepted until mapped proofs are reviewed. Never double count parameter summaries.",
+    "Apple sign-in/profiles/exports, live-provider secret/account, physical-device VoiceOver/StageManager/performance and full visual-reference scope remain independent gates. No phase closure, main merge or TestFlight."
   ],
-  "native_status_observed_at": "2026-11-18T16:09:13.360868+00:00",
+  "native_status_observed_at": "2026-11-18T17:28:36.269728+00:00",
   "feature_coverage_snapshot": {
     "path": "docs/continuation-20261117/acceptance/FEATURE_ACCEPTANCE_278.json",
     "source_anchor_sha": "4f4f927db97aefc7ca3df558993a2fa769f8eea1",
@@ -1270,22 +1358,23 @@
     "scope": "20 model/history native,6 editor native,8 selected SDK native and6 original MiniApps UI unique cases within their recorded runs; no new executions or full-product claim."
   },
   "publication": {
-    "published_source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
-    "local_review_source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+    "published_source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+    "local_review_source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
     "unpublished_commits": [],
     "status": "PUBLISHED_REMOTE_HEADS_VERIFIED",
     "destination": "https://github.com/davidpovarsky/hanlin-ai.git",
     "branch": "codex/hanlin-product-completion-20261117",
     "reason": "The owner explicitly approved the reviewed public destinations and payload. Both original branches are published and verified; no repeated authorization is needed for the same scoped continuation. Native acceptance remains pending.",
     "scope": "Source/build/test/documentation commits only. No credentials, private keys, raw device data, ignored artifacts or original untracked work are proposed.",
-    "published_sha_verified_at": "2026-11-18T16:09:13.360868+00:00",
+    "published_sha_verified_at": "2026-11-18T17:28:36.269728+00:00",
     "upstream_dependency": {
       "repo": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
       "branch": "codex/hanlin-markdown-link-continuation-20261118",
       "base": "4072507bf5c5a1c9786d4c9a607873e65be59cc8",
       "sha": "6bde022876ef4af738c154b3d5c871984ef76195",
-      "status": "PUBLISHED_REMOTE_HEAD_VERIFIED_NATIVE_PENDING",
-      "published_sha_verified_at": "2026-11-18T16:09:13.360868+00:00"
+      "status": "PUBLISHED_NATIVE_CONSUMER10_PASS_MAIN_APP_UI_PENDING",
+      "published_sha_verified_at": "2026-11-18T16:09:13.360868+00:00",
+      "native_run": 44343462395
     },
     "historical_rejection": {
       "status": "BLOCKED_EXPLICIT_PUBLIC_SOURCE_PUBLICATION_APPROVAL",
@@ -1296,43 +1385,108 @@
   },
   "pending_native_runs": [
     {
+      "run": 44349642458,
+      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "scope": "Two original compact Composer iPhone UI methods",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44349642458",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false,
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+    },
+    {
+      "run": 44351078724,
+      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "scope": "Standalone MiniApps original NativeScript/Expo UI2",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44351078724",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false,
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+    },
+    {
+      "run": 44358114755,
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "scope": "Original OpenClaw policy, affected Runtime05/catalog/SDK and Skill UI",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358114755",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false,
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+    },
+    {
+      "run": 44358121911,
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "scope": "Original Motion B/C with retained raw result and startup diagnostics",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358121911",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false,
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+    }
+  ],
+  "terminal_native_continuation_runs": [
+    {
       "run": 44340805844,
-      "scope": "Standalone MiniApps baseline",
       "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
-      "status": "in_progress",
-      "conclusion": null,
-      "observed_at": "2026-11-18T16:07:45.635649+00:00",
+      "status": "EXECUTED_PASS",
+      "scope": "Standalone MiniApps baseline: 20 storage + 7 UI, zero failures/skips",
+      "artifact_id": 14446748475,
+      "whole_zip_sha256": "59b71be313776ffe82f0b793ddfc5be46ad8fa5d7368667ab839733e00b2f22b",
       "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44340805844",
-      "acceptance_claim": false
-    },
-    {
-      "run": 44342772767,
-      "scope": "24 original failed wide UI methods and original EmbeddedResults suite",
-      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
-      "status": "queued",
-      "conclusion": null,
-      "observed_at": "2026-11-18T16:07:45.644991+00:00",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342772767",
-      "acceptance_claim": false
-    },
-    {
-      "run": 44342780366,
-      "scope": "Original Host/Origin/NativeComposer suites and 13 original UI methods",
-      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
-      "status": "queued",
-      "conclusion": null,
-      "observed_at": "2026-11-18T16:07:45.438659+00:00",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342780366",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
       "acceptance_claim": false
     },
     {
       "run": 44343462395,
-      "scope": "Pinned renderer ten native methods including retained host-link regression",
       "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
-      "status": "queued",
-      "conclusion": null,
-      "observed_at": "2026-11-18T16:07:45.419532+00:00",
+      "status": "EXECUTED_PASS",
+      "scope": "Exact original Markdown native consumer: 10 methods. Main-app/Safari UI NOT_RUN",
+      "artifact_id": 14445789902,
+      "whole_zip_sha256": "0b3d51923f32be69860692e239d3be420e0a822c45aa3359661f67d63e4ba0b1",
       "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44343462395",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44342780366,
+      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "status": "BUILD_PASS_TESTS_NOT_RUN",
+      "scope": "Device-family guard correctly rejected mixed iPad/compact iPhone selectors",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342780366",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44342772767,
+      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "status": "BUILD_PASS_CANCELLED_TESTS_NOT_RUN",
+      "scope": "Original wide UI/EmbeddedResults run cancelled before preserved case events; cancellation cause not established",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342772767",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44345443838,
+      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "status": "BUILD_PASS_RUNNER_PREPARATION_FAILED",
+      "scope": "Motion B/C not executed: XCTest runner stalled/crashed before a case; original failures remain open",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44345443838",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44349634595,
+      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "status": "CANCELLED_TESTS_NOT_RUN",
+      "scope": "Host/Editor/NativeA2UI iPad validation cancelled by shared manual validation concurrency",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44349634595",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44356501045,
+      "source_sha": "fd4149acc5dea3f7953f093b1b5dd8ebdd975440",
+      "status": "PLANNER_FAILED_TESTS_NOT_RUN",
+      "scope": "New OpenClaw test path lacked routing; corrected at a9085987 without weakening test coverage",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44356501045",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
       "acceptance_claim": false
     }
   ]

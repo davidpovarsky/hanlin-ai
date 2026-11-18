@@ -1,6 +1,6 @@
 # Hanlin release checklist
 
-Decision: **NO_GO**. Source snapshot: `cda167f4c9931d4246aba1ad88ef7b183569f8ad`. Updated 18.11.2026 18:09 (Asia/Hebron).
+Decision: **NO_GO**. Source snapshot: `a9085987ede10b605124e385ecf790557dcd5dfd`. Updated 18.11.2026 19:39 (Asia/Hebron).
 The source candidate is published; native phase acceptance and release gates remain open.
 
 ## Immutable identities
@@ -21,7 +21,7 @@ Original shared groups group.com.itorah.chavrusachat and group.com.itorah.shared
 
 - [x] Preserve original worktrees, original untracked data and the historical baseline.
 - [x] Retain the original SDK, Host, provider accounts, engines, permissions and stores.
-- [x] Preserve 30 original tasks, 4+20+6 mapping and all 46 evidence records.
+- [x] Preserve 30 original tasks, 4+20+6 mapping and all 53 evidence records.
 - [x] Read all three previously pending native runs to terminal status and retain their failures.
 - [x] Record Runtime/Skills 41/41 at 3542cc20; Host 23/24 and UI 9/19 at d7002ab1; wide UI 21/45 and Motion 0/2; compact UI 0/2.
 - [x] Record historical SDK53/Core46/transfer25/MiniApps20+7/editor6/Unicode20/Resolver21 at their actual SHAs, without double counting.
@@ -33,11 +33,15 @@ Original shared groups group.com.itorah.chavrusachat and group.com.itorah.shared
 - [ ] Verify original Canvas and internal Safari UI; retain contextual-tools runner-teardown failure until resolved.
 - [ ] Resolve Motion B/C: collapsed first triple-tap and launch without process ID are failures.
 - [ ] Accept original EmbeddedResultsUI2 after schema/AX repair; native21 component pass is narrower.
-- [ ] Verify standalone MiniApps startup with both original real OS App Groups, then original NativeScript/ExpoUI2. Keep the 2400s cold-build budget separate from product deadlines.
+- [x] Verify standalone MiniApps baseline startup/storage/catalog: actual20 storage+7 UI passed44340805844 at87cf107c, zero skips/failures, full artifact SHA256 verified.
+- [ ] Accept separate standalone NativeScript/ExpoUI2 and original distribution App Groups/profiles; simulator signing does not prove distribution.
+- [x] Verify exact original Markdown consumer10 native cases atcda167f4 with dependency6bde022; original Safari app UI remains open.
+- [ ] Accept expanded original OpenClaw policy, Runtime05/SDK consumers and Skill UI on Apple; portable11/28original/64assertions do not close this gate.
 - [ ] Accept original paired/share8 after standalone startup; earlier paired build/signature/container passes executed zero UI cases.
 - [ ] Finish behavior-specific feature/UX coverage. The 278 requirements currently have 20 partially evidenced rows and 0 fully accepted; do not treat this as code completion percentage.
 - [ ] Perform an approved actual live-model/tool/persistence run. No credential export has occurred.
-- [ ] Assign original Apple App Groups, required capabilities and compatible profiles for both apps and all four extensions.
+- [x] Assign/verify both original Apple App Groups for both products and all four extensions, and save/read back missing original required capabilities.
+- [ ] Regenerate compatible profiles and verify actual signed exports of both apps and four extensions.
 - [ ] Produce signed exports with exact entitlements; verify current branding and original automatic signing in final archives.
 - [ ] Finish the separate MiniApps App Store record through the existing owner account.
 - [ ] Install on an accessible supported physical iPad/iPhone and verify VoiceOver, Stage Manager, RTL, lifecycle and measured performance.
@@ -80,30 +84,34 @@ Use the current exact branch/SHA with existing manually dispatched workflows. Th
 ## Current independent blockers
 
 - **PHYSICAL_DEVICE — UNAVAILABLE**: Authorized supported physical iPad/iPhone accessible to the testing host; existing CI audit finds no physical device.
-- **LIVE_MODEL_PROVIDER — BLOCKED_CREDENTIAL_EXPORT_APPROVAL**: Existing host Gemini credential is available, but automatic review rejected creating a new secret in the public GitHub repository. Exact transfer requires explicit owner approval, or approved local Mac/device execution with its own existing account. No credential was transferred.
-- **SIGNED_PROVISIONING — EXACT_APPLE_PORTAL_CONFIGURATION_REQUIRED**: Existing identity is valid. Original MiniApps Bundle ID plus App Groups/HealthKit capability toggles registered and read back. Need both actual group assignments, all original required capability approvals and compatible profiles (AI lacks Extended Virtual Addressing), plus the separate App Store record. Official API exposes no App Group assignment or create-app endpoint; the Browser plugin exposes no callable control JS in this session. No browser account session was probed.
+- **LIVE_MODEL_PROVIDER — CI_PROVIDER_SECRET_MISSING**: HANLIN_ACCEPTANCE_GEMINI_API_KEY is absent from CI. Prior automatic review rejected exporting the existing host credential; that history remains, and no secret was transferred. Complete on a host with an already authorized provider account or with the required CI secret supplied through an approved credential route.
+- **SIGNED_PROVISIONING — PROFILES_EXPORT_PENDING**: Apple Developer authentication completed. Both original groups are assigned to MiniApps and verified on AI plus all four extensions. Required missing capabilities were saved and read back: Extended Virtual Addressing on both apps, Time Sensitive Notifications and WeatherKit on MiniApps. Original certificate retained. Automatic profile regeneration, signed exports and separate Mini App Store record remain pending.
 - **APPROVED_FULL_VISUAL_REFERENCE — PARTIAL_REFERENCE**: Original 26-decision summary and authenticated Composer reference exist; full October master prompt was not found. Source/visual conclusions must state their actual references.
-- **PUBLIC_SOURCE_PUBLICATION — RESOLVED**: Explicit owner consent recorded. Both reviewed public branches are published and verified; native acceptance remains separate.
+- **PUBLIC_SOURCE_PUBLICATION — RESOLVED**: Both reviewed original public branches are published and verified after explicit owner consent. Reuse the recorded authorization for the same scoped actions; native acceptance is separate.
 
-## פרסום ואימות נוספים
+## Latest verified native results and pending runs
 
-האישור המפורש של בעל הפרויקט התקבל ונשמר. חסימת פרסום המקור נפתרה: ענף Hanlin פורסם ואומת על `cda167f4c9931d4246aba1ad88ef7b183569f8ad`, והתלות המקורית Markdown פורסמה ואומתה על `6bde022876ef4af738c154b3d5c871984ef76195`. שלוש ההפניות המקוריות ניתנות לפתרון מהשרת. הרשאת ההמשך לאותם יעדים ופעולות נשמרה בקובצי ההנחיות ואין לבקש אותה מחדש.
+| Run / source | Actual result | Scope |
+| --- | --- | --- |
+| [44340805844](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44340805844) · `87cf107c` | EXECUTED_PASS | Standalone MiniApps baseline: 20 storage + 7 UI, zero failures/skips |
+| [44343462395](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44343462395) · `cda167f4` | EXECUTED_PASS | Exact original Markdown native consumer: 10 methods. Main-app/Safari UI NOT_RUN |
+| [44342780366](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342780366) · `87cf107c` | BUILD_PASS_TESTS_NOT_RUN | Device-family guard correctly rejected mixed iPad/compact iPhone selectors |
+| [44342772767](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342772767) · `87cf107c` | BUILD_PASS_CANCELLED_TESTS_NOT_RUN | Original wide UI/EmbeddedResults run cancelled before preserved case events; cancellation cause not established |
+| [44345443838](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44345443838) · `0c822902` | BUILD_PASS_RUNNER_PREPARATION_FAILED | Motion B/C not executed: XCTest runner stalled/crashed before a case; original failures remain open |
+| [44349634595](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44349634595) · `0c822902` | CANCELLED_TESTS_NOT_RUN | Host/Editor/NativeA2UI iPad validation cancelled by shared manual validation concurrency |
+| [44356501045](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44356501045) · `fd4149ac` | PLANNER_FAILED_TESTS_NOT_RUN | New OpenClaw test path lacked routing; corrected at a9085987 without weakening test coverage |
 
-הדחיות האוטומטיות המתועדות בהיסטוריה קדמו לאישור המפורש הזה. הפרסום כולל קוד, בדיקות, CI ודוחות בלבד; לא הועברו credentials, מפתחות חתימה, נתוני משתמש, יומנים גולמיים או שלושת הנתיבים המקוריים הלא־מנוהלים. לא בוצעו main merge או TestFlight.
-
-| ריצה | מקור | תחום | מצב בעת העדכון |
-| --- | --- | --- | --- |
-| [44340805844](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44340805844) | `87cf107c` | Standalone MiniApps baseline | in_progress; קבלה ממתינה |
-| [44342772767](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342772767) | `87cf107c` | 24 original failed wide UI methods and original EmbeddedResults suite | queued; קבלה ממתינה |
-| [44342780366](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342780366) | `87cf107c` | Original Host/Origin/NativeComposer suites and 13 original UI methods | queued; קבלה ממתינה |
-| [44343462395](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44343462395) | `cda167f4` | Pinned renderer ten native methods including retained host-link regression | queued; קבלה ממתינה |
-
-בדיקות העבר נשמרות ב־SHA ובהיקף המקוריים. 15 בדיקות frontend parse מקומיות אינן הוכחת iOS. תנאי הקבלה של שני השלבים והשחרור עדיין לא הושלמו.
+| Run / source | Pending scope | Status |
+| --- | --- | --- |
+| [44349642458](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44349642458) · `0c822902` | Two original compact Composer iPhone UI methods | DISPATCHED_AWAITING_TERMINAL_EVIDENCE |
+| [44351078724](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44351078724) · `0c822902` | Standalone MiniApps original NativeScript/Expo UI2 | DISPATCHED_AWAITING_TERMINAL_EVIDENCE |
+| [44358114755](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358114755) · `a9085987` | Original OpenClaw policy, affected Runtime05/catalog/SDK and Skill UI | DISPATCHED_AWAITING_TERMINAL_EVIDENCE |
+| [44358121911](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358121911) · `a9085987` | Original Motion B/C with retained raw result and startup diagnostics | DISPATCHED_AWAITING_TERMINAL_EVIDENCE |
 
 ## מסמכי ראיות מחייבים
 
 - `acceptance/NATIVE_TERMINAL_RESULTS_AND_LOCAL_REPAIRS_20261118.json`: תוצאות לפי method/case, מקור SHA, hashes, אבחנות ותיקונים ממתינים.
 - `acceptance/LOCAL_CANDIDATE_VALIDATION_20261118.json`: 15 בדיקות parse מקומיות והגבול שלהן.
-- `acceptance/ACCEPTANCE_REGISTER.json`: 46 רשומות ראיה, כל 30 משימות המקור, שערים ופרסום.
+- `acceptance/ACCEPTANCE_REGISTER.json`: 53 רשומות ראיה, כל 30 משימות המקור, שערים ופרסום.
 - `acceptance/INTEGRATION_CHANGE_MANIFEST.json`: commits ונתיבים מהבסיס המקורי, תוך שימור נתיבים לא־מנוהלים.
 - `PHASE_2_INTEGRATION_LEDGER.json`, `PHASE_3_INTEGRATION_LEDGER.json` ומטריצות הקבלה: חלוקה מלאה 4+20+6, ללא כפילות או מחיקה של משימות.
