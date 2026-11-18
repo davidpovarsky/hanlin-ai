@@ -1916,6 +1916,7 @@
 				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				SWIFT_OBJC_INTEROP_MODE = objc;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1934,6 +1935,7 @@
 				DEVELOPMENT_TEAM = NA6HPWARQ2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				SWIFT_OBJC_INTEROP_MODE = objc;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2632,6 +2634,7 @@
 				"CODE_SIGNING_REQUIRED" = "NO";
 				"GENERATE_INFOPLIST_FILE" = "YES";
 				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"SWIFT_OBJC_INTEROP_MODE" = "objc";
 				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.integration.uitests";
 				"PRODUCT_NAME" = "$(TARGET_NAME)";
 				"SDKROOT" = "iphoneos";
@@ -2649,6 +2652,7 @@
 				"CODE_SIGNING_REQUIRED" = "NO";
 				"GENERATE_INFOPLIST_FILE" = "YES";
 				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"SWIFT_OBJC_INTEROP_MODE" = "objc";
 				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.integration.uitests";
 				"PRODUCT_NAME" = "$(TARGET_NAME)";
 				"SDKROOT" = "iphoneos";
