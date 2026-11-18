@@ -13,7 +13,16 @@
       "testBackgroundDisappearanceAndDisposalUnloadEveryPlayer: Xcode application launch timeout, runner restarted"
     ],
     "log_sha256": "7dd5043f26df9279dbabaec740227bcb0cd4022fac9a13a125d041c51b266aff",
-    "native_results_inspection": "PENDING"
+    "native_results_inspection": {
+      "cases": 12,
+      "passed": 10,
+      "failed": 2,
+      "skipped": 0,
+      "quicklook": "Actual screenshot and accessibility tree show the real SwiftUI icon in a full-screen native preview with hidden chrome; not a missing preview.",
+      "screenshot_sha256": "50200a7bdbc4acf59cd7f4197134267e71e47a3a2548c7826bf3186ab088cb15",
+      "accessibility_sha256": "663cecfe9d93d54577e9c5fa32b688a90fa8788cd7ecc758093285c64ead1997",
+      "test_change": "Require the observed native preview image, reveal its controls with a real tap, then require and use the native close control; retain the third image/source and zero-outbound assertions."
+    }
   },
   "full_app_run": {
     "id": 44231641195,
@@ -32,5 +41,10 @@
     "windows_swift_parse": "PASS",
     "apple_module_emission": "PENDING"
   },
-  "acceptance": "No whole app, compact keyboard UI or complete media PASS claimed."
+  "acceptance": "No whole app, compact keyboard UI or complete media PASS claimed.",
+  "media_recheck": {
+    "scope": "Five gallery/link cases affected by redirect callback plus the single launch-timeout player lifecycle case; the other six unchanged player cases retain their own native results.",
+    "status": "PENDING",
+    "test_sha256": "beecee0ef3a355357728dc0f611dcc9a9a0d898cc96bfe97663091b629d280c9"
+  }
 }

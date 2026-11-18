@@ -140,8 +140,14 @@ final class MediaReplayUITests: XCTestCase {
         app.links["Open source: SwiftUI"].tap()
         XCTAssertEqual(app.staticTexts["proof-source-result"].label, "https://developer.apple.com/swiftui/")
         first.tap()
+        // The actual iOS Quick Look screenshot/AX shows the preview with hidden
+        // chrome. Reveal its native controls by tapping the observed preview image.
+        let previewImage = app.images["Liftable subject available"].firstMatch
+        XCTAssertTrue(previewImage.waitForExistence(timeout: 10),
+                      "The real Quick Look image must replace the gallery presentation")
         let close = app.buttons.matching(NSPredicate(format: "label == 'Done' OR label == 'Close'")).firstMatch
-        XCTAssertTrue(close.waitForExistence(timeout: 10), "The actual native Quick Look presentation must open")
+        if !close.exists { previewImage.tap() }
+        XCTAssertTrue(close.waitForExistence(timeout: 10), "Native Quick Look must expose its close control")
         record("gallery-native-quicklook")
         close.tap()
         let gallery = app.scrollViews.matching(NSPredicate(format: "label == 'Image gallery'")).firstMatch
