@@ -3834,6 +3834,12 @@ struct AICanvasView: View {
     @State private var pythonOutput = ""
     @State private var isExecutingPython = false
     @State private var pythonHasError = false
+    @State private var pythonOperation: RuntimeUserOperation?
+    @State private var pythonExecutionTask: Task<Void, Never>?
+    @State private var pythonRunsRemotely = false
+    @State private var pythonCancellationRequested = false
+    @State private var pendingRemotePython: String?
+    @State private var showRemotePythonConfirmation = false
     @State private var showWebView = false
     
     @State private var showDeleteAlert = false
@@ -3915,6 +3921,19 @@ struct AICanvasView: View {
                 }
         }
         .overlay(bottomOverlay(), alignment: .bottomTrailing)
+        .confirmationDialog(RuntimeL10n.string("Run Python remotely?"),
+                            isPresented: $showRemotePythonConfirmation,
+                            titleVisibility: .visible, presenting: pendingRemotePython) { code in
+            Button(RuntimeL10n.string("Run on Piston")) {
+                executePython(code: code, remotely: true)
+                pendingRemotePython = nil
+            }
+            .accessibilityIdentifier("hanlin-canvas-python-remote-confirm")
+            Button(RuntimeL10n.string("Cancel"), role: .cancel) { pendingRemotePython = nil }
+        } message: { _ in
+            Text(RuntimeL10n.string("The current code will be sent to emkc.org (Piston), outside your device. Piston requires provider authorization; network or service charges may apply."))
+        }
+        .onDisappear { cancelPythonExecution() }
         .sheet(isPresented: $isSheetPresented) {
             if let rec = recordToWrite {
                 NavigationStack {
@@ -3995,6 +4014,7 @@ struct AICanvasView: View {
                         Divider()
                         ScrollView {
                             Text(pythonOutput)
+                                .accessibilityIdentifier("hanlin-canvas-python-output")
                                 .font(.system(.footnote, design: .monospaced))
                                 .foregroundColor(pythonHasError ? .red : .primary)
                                 .multilineTextAlignment(.leading)
@@ -4059,6 +4079,8 @@ struct AICanvasView: View {
     
     @ViewBuilder
     private func toolbarTrailing() -> some View {
+        Button("Done") { dismiss() }
+            .accessibilityIdentifier("hanlin-canvas-done")
         Button { showDeleteAlert = true } label: {
             Image(systemName: "trash")
                 .font(.caption)
@@ -4279,16 +4301,40 @@ struct AICanvasView: View {
     
     @ViewBuilder
     private func pythonButtons() -> some View {
-        Button(action: executePython) {
-            Image(systemName: isExecutingPython ? "hourglass" : "play.fill")
-                .font(.system(size: size_16, weight: .medium))
-                .foregroundColor(isExecutingPython ? .gray : .hlBluefont)
-                .frame(width: buttonSize, height: buttonSize)
+        Group {
+            if isExecutingPython {
+                Button(action: cancelPythonExecution) {
+                    Image(systemName: pythonCancellationRequested ? "hourglass" : "stop.fill")
+                }
+                .accessibilityLabel(RuntimeL10n.string(pythonCancellationRequested
+                    ? "Cancellation requested" : "Cancel Python execution"))
+                .accessibilityIdentifier("hanlin-canvas-python-cancel")
+                .disabled(pythonCancellationRequested)
+            } else {
+                Menu {
+                    Button(RuntimeL10n.string("Run Python on this device")) {
+                        executePython(code: canvas.content, remotely: false)
+                    }
+                    .accessibilityIdentifier("hanlin-canvas-python-local")
+                    Button(RuntimeL10n.string("Run Python remotely")) {
+                        pendingRemotePython = canvas.content
+                        showRemotePythonConfirmation = true
+                    }
+                    .accessibilityIdentifier("hanlin-canvas-python-remote")
+                } label: {
+                    Image(systemName: "play.fill")
+                }
+                .accessibilityLabel(RuntimeL10n.string("Run Python"))
+                .accessibilityIdentifier("hanlin-canvas-python-menu")
+                .disabled(canvas.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
         }
+        .font(.system(size: size_16, weight: .medium))
+        .foregroundColor(isExecutingPython ? .gray : .hlBluefont)
+        .frame(width: buttonSize, height: buttonSize)
         .background(BlurView(style: .systemUltraThinMaterial)
                         .clipShape(Circle())
                         .shadow(color: .hlBlue, radius: 1))
-        .disabled(isExecutingPython)
         .transition(.opacity.combined(with: .move(edge: .leading)))
         .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isExecutingPython)
         .sensoryFeedback(.impact, trigger: isImpact)
@@ -4573,29 +4619,76 @@ struct AICanvasView: View {
         }
     }
     
-    private func executePython() {
+    private func executePython(code: String, remotely: Bool) {
+        guard !isExecutingPython, !code.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         isImpact.toggle()
-        guard !canvas.content.isEmpty else { return }
         isExecutingPython = true
+        pythonRunsRemotely = remotely
+        pythonCancellationRequested = false
         pythonOutput = ""
         pythonHasError = false
-        Task {
-            do {
-                let res = try await PistonExecutor.executePythonCode(code: canvas.content)
-                await MainActor.run {
-                    pythonOutput = res.output
-                    pythonHasError = res.hasError
+        let operation = RuntimeUserOperation()
+        pythonOperation = operation
+        pythonExecutionTask = RuntimeUserOperation.producerTask(operation: operation) {
+            defer {
+                operation.finish()
+                if pythonOperation?.id == operation.id {
+                    pythonOperation = nil
+                    pythonExecutionTask = nil
                     isExecutingPython = false
-                    isSuccess.toggle()
-                }
-            } catch {
-                await MainActor.run {
-                    pythonOutput = "执行失败：\(error.localizedDescription)"
-                    pythonHasError = true
-                    isExecutingPython = false
+                    pythonCancellationRequested = false
                 }
             }
+            do {
+                let res: CodeBlock
+                if remotely {
+                    // The confirmation captured this exact source. Never switch
+                    // to a remote provider after a local execution failure.
+                    res = try await PistonExecutor.executePythonCode(code: code)
+                } else {
+                    NativeToolCatalog.shared.ensureBuiltinsRegistered()
+                    if let entry = NativeToolCatalog.shared.entry(named: "execute_local_python_code"),
+                       !NativeToolCatalog.shared.isEffectivelyEnabled(entry) {
+                        throw RuntimeCoreError.invalidRequest(RuntimeL10n.string("Local Python is disabled in tool settings."))
+                    }
+                    // Existing Host and embedded CPython; no alternate runtime,
+                    // subprocess service, remote fallback or new permission system.
+                    let result = try await AgentHostServicesAdapter.executeRuntime(.localPython, source: code)
+                    var output = result.stdout + result.stderr
+                    if result.outputWasTruncated {
+                        output += "\n" + RuntimeL10n.string("Output preview truncated; the full output is retained in the runtime job.")
+                    }
+                    if output.isEmpty { output = RuntimeL10n.string("Completed without output.") }
+                    res = CodeBlock(codeType: "python", code: code, output: output,
+                        hasError: result.exitCode != 0 || result.didTimeOut || result.wasCancelled)
+                }
+                pythonOutput = res.output
+                pythonHasError = res.hasError
+                if let reason = operation.snapshot.reason {
+                    pythonOutput += "\n" + reason
+                    pythonHasError = true
+                } else if !res.hasError {
+                    try operation.markSucceeded()
+                    isSuccess.toggle()
+                } else {
+                    operation.markFailed()
+                }
+            } catch {
+                operation.markFailed()
+                pythonOutput = operation.snapshot.reason ?? error.localizedDescription
+                pythonHasError = true
+            }
         }
+    }
+
+    private func cancelPythonExecution() {
+        guard isExecutingPython, !pythonCancellationRequested else { return }
+        pythonCancellationRequested = true
+        pythonOperation?.interrupt(reason: RuntimeL10n.string("Python execution cancelled."))
+        // The existing local runtime acknowledges interruption after the real
+        // native worker stops and retains partial output. Remote cancellation
+        // stops waiting for HTTP; it cannot promise to stop work on the server.
+        if pythonRunsRemotely { pythonExecutionTask?.cancel() }
     }
     
     private func clearPythonOutput() {

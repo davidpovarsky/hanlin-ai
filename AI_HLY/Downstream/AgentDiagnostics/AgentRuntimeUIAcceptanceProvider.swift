@@ -159,12 +159,20 @@ enum AgentRuntimeUIAcceptanceProvider {
                 autoProbeCapabilities: phase2StoreID == nil
             ))
             let now = Date()
-            context.insert(ChatRecords(
+            let acceptanceChat = ChatRecords(
                 name: chatName,
                 type: "chat",
                 lastEdited: now,
                 useModel: 0
-            ))
+            )
+#if DEBUG && targetEnvironment(simulator)
+            if ProcessInfo.processInfo.environment["HANLIN_CANVAS_ACCEPTANCE_FIXTURES"] == "1" {
+                let code = "print('CANVAS_LOCAL_RESULT_' + str(6 * 7))"
+                acceptanceChat.canvas = CanvasData(title: "Canvas runtime acceptance",
+                    content: code, type: "python", history: [code], index: 0)
+            }
+#endif
+            context.insert(acceptanceChat)
             if isDockFixturesEnabled {
                 for prompt in try context.fetch(FetchDescriptor<PromptRepo>()) {
                     context.delete(prompt)

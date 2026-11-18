@@ -370,6 +370,7 @@ struct ChatViewBottom: View {
                             .spring(response: 0.5, dampingFraction: 0.7),
                             value: chatRecord.canvas?.content.isEmpty == false
                         )
+                        .accessibilityIdentifier("hanlin-canvas-open")
                         .sheet(isPresented: $showCanvas) {
                             AICanvasView(
                                 canvas: Binding(

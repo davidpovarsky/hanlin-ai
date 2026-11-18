@@ -1,6 +1,305 @@
 {
   "sourceLanguage": "en",
   "strings": {
+      "Run Python remotely?": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Run Python remotely?"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "להריץ Python בשירות מרוחק?"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "远程运行 Python？"
+            }
+          }
+        }
+      },
+      "Run on Piston": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Run on Piston"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הרצה ב־Piston"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "在 Piston 上运行"
+            }
+          }
+        }
+      },
+      "The current code will be sent to emkc.org (Piston), outside your device. Piston requires provider authorization; network or service charges may apply.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "The current code will be sent to emkc.org (Piston), outside your device. Piston requires provider authorization; network or service charges may apply."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הקוד הנוכחי יישלח אל emkc.org‏ (Piston), מחוץ למכשיר. Piston דורש הרשאה מהספק; ייתכנו עלויות רשת או שירות."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "当前代码将发送到设备之外的 emkc.org（Piston）。Piston 需要服务商授权；可能产生网络或服务费用。"
+            }
+          }
+        }
+      },
+      "Cancellation requested": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Cancellation requested"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "נשלחה בקשת ביטול"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "已请求取消"
+            }
+          }
+        }
+      },
+      "Cancel Python execution": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Cancel Python execution"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "ביטול הרצת Python"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "取消 Python 执行"
+            }
+          }
+        }
+      },
+      "Run Python on this device": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Run Python on this device"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הרצת Python במכשיר הזה"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "在此设备上运行 Python"
+            }
+          }
+        }
+      },
+      "Run Python remotely": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Run Python remotely"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הרצת Python בשירות מרוחק"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "远程运行 Python"
+            }
+          }
+        }
+      },
+      "Run Python": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Run Python"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הרצת Python"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "运行 Python"
+            }
+          }
+        }
+      },
+      "Local Python is disabled in tool settings.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Local Python is disabled in tool settings."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Python מקומי מושבת בהגדרות הכלים."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "本地 Python 已在工具设置中停用。"
+            }
+          }
+        }
+      },
+      "Output preview truncated; the full output is retained in the runtime job.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Output preview truncated; the full output is retained in the runtime job."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "תצוגת הפלט קוצרה; הפלט המלא נשמר ברשומת ההרצה."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "输出预览已截断；完整输出保留在运行任务中。"
+            }
+          }
+        }
+      },
+      "Completed without output.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Completed without output."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "ההרצה הסתיימה ללא פלט."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "已完成，无输出。"
+            }
+          }
+        }
+      },
+      "Python execution cancelled.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Python execution cancelled."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "הרצת Python בוטלה."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Python 执行已取消。"
+            }
+          }
+        }
+      },
+      "Piston requires provider authorization. No execution result was returned. You can run Python on this device instead.": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Piston requires provider authorization. No execution result was returned. You can run Python on this device instead."
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Piston דורש הרשאה מהספק. לא הוחזרה תוצאת הרצה. אפשר להריץ Python במכשיר הזה."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Piston 需要服务商授权。未返回执行结果。您可以改为在此设备上运行 Python。"
+            }
+          }
+        }
+      },
       "Run a structured native program or a command string in the assigned workspace. Command strings use the existing local portable shell for chaining, pipes and redirection; external commands use the shared runtime broker. Linked curl keeps its normal TLS behavior without a second internal network approval.": {
         "extractionState": "manual",
         "localizations": {
