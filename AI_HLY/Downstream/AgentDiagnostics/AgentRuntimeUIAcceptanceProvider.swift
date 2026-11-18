@@ -39,11 +39,22 @@ enum AgentRuntimeUIAcceptanceProvider {
 #endif
     }
 
+    /// A separate opt-in simulator account seed. It never enables the HTTP
+    /// acceptance protocol: the canonical SDK contacts the actual Google service.
+    static var isLiveProviderEnabled: Bool {
+#if DEBUG && targetEnvironment(simulator)
+        ProcessInfo.processInfo.environment["HANLIN_LIVE_GEMINI_ACCEPTANCE"] == "1"
+#else
+        false
+#endif
+    }
+
     /// An opt-in, task-owned disk container for authentic cold-reopen UI proof.
     /// Shipping storage and legacy fixture resets retain their existing behavior.
     static var phase2StoreID: UUID? {
 #if DEBUG && targetEnvironment(simulator)
-        guard isEnabled, let value = ProcessInfo.processInfo.environment["HANLIN_PHASE2_STORE_ID"] else { return nil }
+        guard isEnabled || isLiveProviderEnabled,
+              let value = ProcessInfo.processInfo.environment["HANLIN_PHASE2_STORE_ID"] else { return nil }
         return UUID(uuidString: value)
 #else
         nil
@@ -119,6 +130,12 @@ enum AgentRuntimeUIAcceptanceProvider {
 
     @MainActor
     static func configureIfRequested(context: ModelContext) {
+#if DEBUG && targetEnvironment(simulator)
+        if isLiveProviderEnabled {
+            configureLiveProviderIfRequested(context: context)
+            return
+        }
+#endif
         guard isEnabled else { return }
         do {
             if phase2StoreID != nil, try !context.fetch(FetchDescriptor<ChatRecords>()).isEmpty { return }
@@ -298,6 +315,50 @@ enum AgentRuntimeUIAcceptanceProvider {
             )
         }
     }
+
+#if DEBUG && targetEnvironment(simulator)
+    @MainActor
+    private static func configureLiveProviderIfRequested(context: ModelContext) {
+        guard isLiveProviderEnabled, !isEnabled, phase2StoreID != nil else {
+            fatalError("Live acceptance requires its own store and cannot enable an HTTP fixture")
+        }
+        do {
+            // Reopen the same real conversation without reseeding its account or history.
+            if try !context.fetch(FetchDescriptor<ChatRecords>()).isEmpty { return }
+            let support = try FileManager.default.url(for: .applicationSupportDirectory,
+                in: .userDomainMask, appropriateFor: nil, create: false)
+            let file = support.appending(path: "HanlinLiveProviderAcceptance/provider.json")
+            let attributes = try FileManager.default.attributesOfItem(atPath: file.path)
+            guard attributes[.type] as? FileAttributeType == .typeRegular,
+                  ((attributes[.size] as? NSNumber)?.intValue ?? Int.max) <= 8192 else {
+                fatalError("Live acceptance credential input is not a bounded regular file")
+            }
+            let data = try Data(contentsOf: file)
+            guard let input = try JSONSerialization.jsonObject(with: data) as? [String: String],
+                  let key = input["apiKey"], !key.isEmpty,
+                  input["model"] == "gemini-3.8-flash" else {
+                fatalError("Live acceptance credential input is unavailable")
+            }
+            // Only the existing APIKeys model receives the secret. The input is
+            // consumed once; the runner removes the entire owned simulator after proof.
+            try FileManager.default.removeItem(at: file)
+            context.insert(UserInfo())
+            context.insert(AllModels(name: "gemini-3.8-flash", displayName: "Gemini 3.8 Flash",
+                position: 0, company: "GOOGLE", supportsTextGen: true, supportsMultimodal: true,
+                supportsReasoning: true, supportReasoningChange: true, supportsToolUse: true))
+            context.insert(APIKeys(name: "Google live acceptance", company: "GOOGLE", key: key,
+                requestURL: "https://generativelanguage.googleapis.com/v1beta",
+                isHidden: false, apiType: .gemini, autoProbeCapabilities: false))
+            context.insert(ChatRecords(name: chatName, type: "chat", useModel: 0,
+                maxTokens: 4096, systemMessage: "Use the requested original tool with exactly the supplied arguments. Do not use remote execution, network, files, or other tools except tool_search to discover the requested tool. After its result, return the requested stdout verbatim.",
+                useSystemMessage: false))
+            try context.save()
+        } catch {
+            // Never print input, account fields, or a decoding error containing credentials.
+            fatalError("Live acceptance could not configure its isolated account")
+        }
+    }
+#endif
 
     static func makeSessionConfiguration() -> URLSessionConfiguration {
         let configuration = URLSessionConfiguration.ephemeral

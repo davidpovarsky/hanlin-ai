@@ -3,6 +3,66 @@ import UIKit
 
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
+    func testLiveGeminiPythonConsentAndColdReopen() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        let app = XCUIApplication()
+        defer { app.terminate() }
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
+            "-agentDiagnosticsAutomaticCaptureMigrationV1", "YES", "-agentDiagnosticsLevel", "off"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_LIVE_GEMINI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        // No fixture provider flag, response interceptor, secret launch argument,
+        // manufactured grant, tool response or preinstalled result.
+        app.launch()
+        openChat(in: app)
+        let identity = app.staticTexts["hanlin-phase2-chat-id"].firstMatch
+        XCTAssertTrue(identity.waitForExistence(timeout: 15))
+        let nonce = identity.label
+        XCTAssertNotNil(UUID(uuidString: nonce))
+        print("HANLIN_LIVE_PROVIDER_CHALLENGE=" + nonce)
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0")
+        let source = "import sys\nprint('LIVE_HANLIN_" + nonce + ":' + sys.version.split()[0] + ':' + str(129 * 673))"
+        let arguments: [String: Any] = ["source": source, "arguments": [String](), "timeout_seconds": 15]
+        let encoded = String(decoding: try JSONSerialization.data(withJSONObject: arguments, options: [.sortedKeys]), as: UTF8.self)
+        sendPrompt("Call execute_local_python_code exactly once with exactly this JSON: " + encoded
+            + ". You may use tool_search only if discovery is necessary. Wait for the actual result and then reply only with its stdout. Do not compute or invent a result.", in: app)
+        let reviewToggle = app.descendants(matching: .any)["hanlin-tool-consent-review-toggle"].firstMatch
+        XCTAssertTrue(reviewToggle.waitForExistence(timeout: 90), "The live model must request the original privileged Python tool")
+        tapElement(reviewToggle)
+        let review = app.staticTexts["hanlin-tool-consent-original-request"].firstMatch
+        XCTAssertTrue(review.waitForExistence(timeout: 15))
+        let submitted = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(review.label.utf8)) as? [String: Any])
+        // Approve only the bounded, known harmless script, even though the tool
+        // arguments arrived from a live model. Extra code cannot get consent.
+        XCTAssertEqual(submitted["source"] as? String, source)
+        XCTAssertTrue(Set(submitted.keys).isSubset(of: ["source", "arguments", "timeout_seconds"]))
+        XCTAssertTrue((submitted["arguments"] as? [String] ?? []).isEmpty)
+        if let limit = submitted["timeout_seconds"] as? Int { XCTAssertTrue((1...30).contains(limit)) }
+        tapElement(app.buttons["hanlin-tool-consent-allow-once"].firstMatch)
+        let expected = "LIVE_HANLIN_" + nonce + ":3.14.6:86817"
+        let answer = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@", expected)).firstMatch
+        XCTAssertTrue(answer.waitForExistence(timeout: 180), "Live Gemini must return the real original CPython tool result")
+        let stop = app.buttons["hanlin-chat-stop"].firstMatch
+        XCTAssertTrue(stop.waitForNonExistence(timeout: 30))
+        let draft = "UNSENT_LIVE_" + nonce
+        let input = chatInputElement(in: app)
+        tapElement(input); input.typeText(draft)
+        openSettings(in: app)
+        attachScreenshot("live-gemini-original-tool-before-cold-reopen", in: app)
+        app.terminate(); app.launch()
+        openChat(in: app)
+        XCTAssertTrue(answer.waitForExistence(timeout: 30))
+        XCTAssertEqual(identity.label, nonce)
+        XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+        XCTAssertFalse(app.buttons["hanlin-tool-consent-allow-once"].exists)
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0")
+        attachScreenshot("live-gemini-original-conversation-cold-reopen", in: app)
+        print("HANLIN_LIVE_PROVIDER_COMPLETED=" + nonce)
+    }
+
     func testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat() throws {
         continueAfterFailure = false
         let app = XCUIApplication(), nonce = UUID().uuidString
