@@ -51,7 +51,7 @@ final class HanlinMiniAppsProvider {
         switch item.engine {
         case .swift:
             let view = try host.swiftDestination(for: item).view
-            return includesDismissControl ? AnyView(HanlinMiniAppsSwiftPresentation(content: view)) : view
+            return AnyView(view.environment(\.hanlinMiniAppShowsDismissControl, includesDismissControl))
         case .nativeScript, .expo, .scriptingJSC:
             guard let package = platform.installedPackages.first(where: {
                 $0.appID == item.id || $0.record.packageID.rawValue == item.id.rawValue
@@ -84,20 +84,6 @@ final class HanlinMiniAppsProvider {
 
     private func requirePackageServices() throws {
         if let error = platform.bootstrapError { throw Failure.unavailable(error) }
-    }
-}
-
-private struct HanlinMiniAppsSwiftPresentation: View {
-    let content: AnyView
-    @Environment(\.dismiss) private var dismiss
-
-    var body: some View {
-        content.toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Done") { dismiss() }
-                    .accessibilityIdentifier("hanlin-miniapps-app-close")
-            }
-        }
     }
 }
 

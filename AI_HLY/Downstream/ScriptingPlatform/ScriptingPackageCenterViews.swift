@@ -65,6 +65,17 @@ struct ScriptingPackageImportView: View {
                 }
                 ScriptingImportPreviewSections(preview: preview, platform: platform)
             } else {
+                Section {
+                    Button {
+                        showsImporter = true
+                    } label: {
+                        Label("Import Script Package", systemImage: "doc.badge.plus")
+                    }
+                    .accessibilityIdentifier("hanlin-file-importer")
+                    Text("Choose a .scripting, .hanlinNativeScript, .hanlinExpo, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
                 let stagedFiles = stagedDocumentPackages
                 if !stagedFiles.isEmpty {
                     Section("Shared Packages") {
@@ -86,17 +97,6 @@ struct ScriptingPackageImportView: View {
                     }
                 }
 
-                Section {
-                    Button {
-                        showsImporter = true
-                    } label: {
-                        Label("Import Script Package", systemImage: "doc.badge.plus")
-                    }
-                    .accessibilityIdentifier("hanlin-file-importer")
-                    Text("Choose a .scripting, .hanlinNativeScript, .hanlinExpo, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                }
             }
         }
         .onAppear {
@@ -105,6 +105,7 @@ struct ScriptingPackageImportView: View {
             }
         }
         .id(platform.preview == nil ? "browse" : "preview")
+        .accessibilityIdentifier("hanlin-package-import-list")
         .navigationTitle("Script Package")
         .navigationBarTitleDisplayMode(.inline)
         .overlay {

@@ -26,7 +26,8 @@ final class HanlinMiniAppsUITests: XCTestCase {
         app.launch()
         try openParity()
         XCTAssertTrue(app.textFields["Name"].waitForExistence(timeout: 15))
-        XCTAssertTrue(app.staticTexts["hanlin.demo.swift-parity"].exists)
+        XCTAssertTrue(app.staticTexts["Mini App ID, hanlin.demo.swift-parity"].exists,
+                      "The real Swift view must expose its canonical identity through LabeledContent.")
         XCTAssertTrue(app.buttons["Save"].exists)
         XCTAssertTrue(app.buttons["Reload"].exists)
     }
@@ -74,7 +75,14 @@ final class HanlinMiniAppsUITests: XCTestCase {
         XCTAssertTrue(importPackage.waitForExistence(timeout: 15))
         importPackage.tap()
         let archive = app.buttons["HanlinScriptUIValid"]
-        XCTAssertTrue(archive.waitForExistence(timeout: 15), "The production package fixture must be staged in this app's Documents.")
+        let packages = app.collectionViews["hanlin-package-import-list"]
+        XCTAssertTrue(packages.waitForExistence(timeout: 15))
+        for _ in 0..<12 {
+            if archive.exists && archive.isHittable { break }
+            packages.swipeUp()
+        }
+        XCTAssertTrue(archive.exists && archive.isHittable,
+                      "The production package fixture must be reachable in this app's Documents list.")
         archive.tap()
         let install = app.buttons["hanlin-package-install"]
         XCTAssertTrue(install.waitForExistence(timeout: 30))

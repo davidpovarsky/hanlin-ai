@@ -371,7 +371,15 @@ struct A2UISDKTests {
         """).get()
         #expect(gallery.identity == identity)
         #expect(card.string(for: "url") == "https://developer.apple.com/swift/")
-        #expect(resolvedItem.string(for: "sourceUrl") == "https://developer.apple.com/swift/")
+        // array(for:) resolves nested dictionaries to snapshots. Read the retained
+        // gallery node again, as the renderer does when its observed model changes.
+        let updatedValues = try #require(gallery.array(for: "items"))
+        #expect(updatedValues.count == 1)
+        let updatedItem = try #require(updatedValues.first as? ResolvedDictionary)
+        let updatedResolvedItem = Node(id: "one", type: "GalleryItem", properties: updatedItem.storage)
+        #expect(updatedResolvedItem.string(for: "sourceUrl") == "https://developer.apple.com/swift/")
+        #expect(updatedResolvedItem.string(for: "description") == "מקור תמונה אמיתי")
+        #expect(resolvedItem.string(for: "sourceUrl") == "https://developer.apple.com/swiftui/")
         #expect(BasicCatalog.makeCatalog(version: .v10).components["ImageGallery"] == nil)
         #expect(BasicCatalog.makeCatalog(version: .v10).components["LinkPreview"] == nil)
     }

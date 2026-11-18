@@ -123,6 +123,7 @@ public struct SefariaMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable {
     public func makeRootView(context: HanlinMiniAppHostContext) -> AnyView {
         AnyView(NavigationStack {
             NativeAppSefariaRootView()
+                .hanlinMiniAppDismissControl()
         })
     }
     #endif

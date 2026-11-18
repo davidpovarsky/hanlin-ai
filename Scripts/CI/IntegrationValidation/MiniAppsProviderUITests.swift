@@ -53,7 +53,14 @@ final class MiniAppsProviderUITests: XCTestCase {
         app.buttons["hanlin-miniapps-management"].tap()
         app.buttons["hanlin-miniapps-package-import"].tap()
         let package = app.buttons["MiniApps-Ordinary-ScriptUI"]
-        XCTAssertTrue(package.waitForExistence(timeout: 10), "The actual package was not staged in this simulator app's Documents")
+        let packages = app.collectionViews["hanlin-package-import-list"]
+        XCTAssertTrue(packages.waitForExistence(timeout: 15))
+        for _ in 0..<12 {
+            if package.exists && package.isHittable { break }
+            packages.swipeUp()
+        }
+        XCTAssertTrue(package.exists && package.isHittable,
+                      "The actual package must be reachable in this simulator app's Documents list")
         package.tap()
         let install = app.buttons["hanlin-package-install"]
         XCTAssertTrue(install.waitForExistence(timeout: 90), "Canonical package preview/compilation did not succeed")

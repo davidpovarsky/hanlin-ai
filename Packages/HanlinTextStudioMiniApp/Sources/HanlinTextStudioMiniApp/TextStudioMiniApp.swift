@@ -116,6 +116,7 @@ public struct TextStudioMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable
     public func makeRootView(context: HanlinMiniAppHostContext) -> AnyView {
         AnyView(NavigationStack {
             NativeAppTextStudioRootView()
+                .hanlinMiniAppDismissControl()
         })
     }
     #endif

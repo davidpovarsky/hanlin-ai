@@ -160,6 +160,7 @@ public struct SwiftParityMiniAppProvider: HanlinCompiledMiniAppProvider, Sendabl
                 network: context.network,
                 onWidgetRefreshRequested: context.requestWidgetRefresh
             )
+            .hanlinMiniAppDismissControl()
         })
     }
     #endif

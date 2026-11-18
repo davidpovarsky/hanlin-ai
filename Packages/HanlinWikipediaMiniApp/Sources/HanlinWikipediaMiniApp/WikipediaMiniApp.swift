@@ -123,6 +123,7 @@ public struct WikipediaMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable 
     public func makeRootView(context: HanlinMiniAppHostContext) -> AnyView {
         AnyView(NavigationStack {
             NativeAppWikipediaRootView()
+                .hanlinMiniAppDismissControl()
         })
     }
     #endif

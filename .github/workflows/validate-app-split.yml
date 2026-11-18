@@ -179,6 +179,10 @@ jobs:
           bash Scripts/Runtime/prepare-runtime-core.sh
           bash Scripts/Runtime/prepare-runtime-host.sh
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+          # The verified ZIP above is the shipping payload. The lifecycle check's
+          # temporary npm tree must not enter Xcode's synchronized app resources.
+          rm -rf AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules
+          test ! -e AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules
           cat > Config.xcconfig <<'EOF'
           SWIFT_ENABLE_EXPLICIT_MODULES = NO
           SWIFT_OBJC_INTEROP_MODE = objcxx
