@@ -75,7 +75,7 @@ struct ListView: View {
                 let matchName = lowercasedRecordName.contains(lowercasedSearchText)
                 let matchNamePinyin = recordName.toPinyin().lowercased().contains(pinyinSearchText)
                 let matchMessages = record.messages?.contains { message in
-                    message.text?.lowercased().contains(lowercasedSearchText) ?? false
+                    message.text?.range(of: searchText, options: .caseInsensitive) != nil
                 } ?? false
                 return matchName || matchNamePinyin || matchMessages
             }
@@ -578,13 +578,12 @@ struct ListView: View {
         if searchText.isEmpty {
             matchedSnippets.removeAll()
         } else {
-            let lowercasedSearchText = searchText.lowercased()
             var newMatchedSnippets: [UUID: (AttributedString, UUID)] = [:]
             for record in chatRecords {
                 if let messages = record.messages {
                     if let snippetResult = findMatchSnippet(
                         messages: messages,
-                        searchText: lowercasedSearchText
+                        searchText: searchText
                     ) {
                         newMatchedSnippets[record.id ?? UUID()] = snippetResult
                     } else {
@@ -596,23 +595,27 @@ struct ListView: View {
         }
     }
     
+    /// Search and slice the same String: case folding may change UTF-8 length.
+    /// Context remains forty complete Characters on either side of the match.
+    nonisolated static func messageSearchSnippet(in text: String, searchText: String) -> String? {
+        guard !searchText.isEmpty,
+              let range = text.range(of: searchText, options: .caseInsensitive) else { return nil }
+        let start = text.index(range.lowerBound, offsetBy: -40, limitedBy: text.startIndex) ?? text.startIndex
+        let end = text.index(range.upperBound, offsetBy: 40, limitedBy: text.endIndex) ?? text.endIndex
+        return String(text[start..<end])
+    }
+
     /// 找到第一条包含 searchText 的消息，并返回 (带前后文高亮的片段, 消息ID)
     private func findMatchSnippet(messages: [ChatMessages], searchText: String) -> (AttributedString, UUID)? {
         for msg in messages.reversed() {
             guard let msgText = msg.text, !msgText.isEmpty else { continue }
-            let lowerMsgText = msgText.lowercased()
-            if let range = lowerMsgText.range(of: searchText) {
-                let snippetLength = 40
-                let startIndex = lowerMsgText.index(range.lowerBound, offsetBy: -snippetLength, limitedBy: lowerMsgText.startIndex) ?? lowerMsgText.startIndex
-                let endIndex = lowerMsgText.index(range.upperBound, offsetBy: snippetLength, limitedBy: lowerMsgText.endIndex) ?? lowerMsgText.endIndex
-                let snippetString = String(msgText[startIndex..<endIndex])
+            if let snippetString = Self.messageSearchSnippet(in: msgText, searchText: searchText) {
                 
                 var attributed = AttributedString(snippetString)
                 attributed.font = .caption
                 attributed.foregroundColor = Color(.systemGray)
                 
-                let snippetLower = snippetString.lowercased()
-                if let subRange = snippetLower.range(of: searchText) {
+                if let subRange = snippetString.range(of: searchText, options: .caseInsensitive) {
                     let nsRange = NSRange(subRange, in: snippetString)
                     if let attrRange = Range(nsRange, in: attributed) {
                         attributed[attrRange].foregroundColor = .hlBlue

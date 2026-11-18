@@ -467,6 +467,31 @@ struct HanlinComposerDrawerRouteTests {
 @Suite("7A.3 CompactRecentConversationsTests — Strictly 3 Most Recently Edited Saved Chats", .serialized)
 struct CompactRecentConversationsTests {
 
+    @Test("History search does not reuse indices after Unicode case folding changes byte length")
+    func historySnippetKeepsOriginalStringIndices() {
+        let message = "İ" + String(repeating: "x", count: 60) + "END"
+        #expect(message.utf8.count != message.lowercased().utf8.count)
+        #expect(ListView.messageSearchSnippet(in: message, searchText: "end")
+                == String(repeating: "x", count: 40) + "END")
+    }
+
+    @Test("History snippet retains complete emoji graphemes and pointed Hebrew at both context boundaries")
+    func historySnippetPreservesUnicodeContext() {
+        let before = "👩🏽‍💻"
+        let after = "🧑‍🚀"
+        let match = "שלוֹם"
+        let message = String(repeating: before, count: 60) + match + String(repeating: after, count: 60)
+        #expect(ListView.messageSearchSnippet(in: message, searchText: match)
+                == String(repeating: before, count: 40) + match + String(repeating: after, count: 40))
+    }
+
+    @Test("History snippet returns original short text and rejects absent or empty queries")
+    func historySnippetHandlesShortAndAbsentMatches() {
+        #expect(ListView.messageSearchSnippet(in: "Before HeLLo אחרי", searchText: "hello") == "Before HeLLo אחרי")
+        #expect(ListView.messageSearchSnippet(in: "שלום", searchText: "absent") == nil)
+        #expect(ListView.messageSearchSnippet(in: "שלום", searchText: "") == nil)
+    }
+
     @Test("3.1 Selects at most 3 persisted chat records sorted strictly by lastEdited descending, ignoring isPinned")
     func selectsTopThreeByLastEditedIgnoringPinnedAndTemp() {
         let now = Date()
