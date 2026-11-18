@@ -120,21 +120,23 @@ struct HanlinCompactChatWorkspace: View {
         // dock the same flexible SwiftUI proposal so both resize together.
         VStack(spacing: 0) {
             navigationRoot(availableHeight: max(0, workspaceSize.height - (composerVisible ? dockHeight : 0)))
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             if composerVisible {
                 anchoredComposer(availableSize: workspaceSize)
+                    .compactWorkspaceGeometryProbe("composer")
                     .fixedSize(horizontal: false, vertical: true)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            // The proposed content size already excludes its safe-area regions.
-            // Do not subtract keyboard or container insets a second time.
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            // Both flexible slots must accept a smaller keyboard-time proposal.
+            // Observe the proposal directly; do not infer a scene from screen bounds.
             .onGeometryChange(for: CGSize.self) { proxy in
                 proxy.size
             } action: { newSize in
                 workspaceSize = newSize
             }
+            .compactWorkspaceGeometryProbe("workspace")
             .animation(.spring(response: 0.36, dampingFraction: 0.88), value: composerVisible)
             .onChange(of: path) { oldPath, newPath in
                 isCompactComposerInputActive = false
@@ -177,6 +179,7 @@ struct HanlinCompactChatWorkspace: View {
     private func navigationRoot(availableHeight: CGFloat) -> some View {
         NavigationStack(path: $path) {
             compactHomeScreen(availableHeight: availableHeight)
+                .compactWorkspaceGeometryProbe("home-navigation-content")
                 .navigationTitle("Hanlin")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -219,6 +222,7 @@ struct HanlinCompactChatWorkspace: View {
                 }
                 .navigationDestination(for: HanlinCompactWorkspaceRoute.self) { route in
                     destinationView(for: route)
+                        .compactWorkspaceGeometryProbe("chat-navigation-content")
                 }
         }
     }
@@ -433,5 +437,32 @@ struct HanlinCompactChatWorkspace: View {
                 dockHeight = clamped
             }
         }
+    }
+}
+
+// Observation only: keep the real keyboard/layout path unchanged during acceptance.
+private extension View {
+    @ViewBuilder
+    func compactWorkspaceGeometryProbe(_ location: String) -> some View {
+        #if DEBUG || HANLIN_TESTING
+        if ProcessInfo.processInfo.environment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] == "1" {
+            self.onGeometryChange(for: String.self) { proxy in
+                let frame = proxy.frame(in: .global)
+                let insets = proxy.safeAreaInsets
+                let measurements = [
+                    proxy.size.width, proxy.size.height,
+                    frame.minX, frame.minY, frame.width, frame.height,
+                    insets.top, insets.leading, insets.bottom, insets.trailing
+                ]
+                return measurements.map { String(Int($0.rounded())) }.joined(separator: ",")
+            } action: { measurements in
+                print("[HANLIN_COMPACT_GEOMETRY] \(location) size,frame,insets=\(measurements)")
+            }
+        } else {
+            self
+        }
+        #else
+        self
+        #endif
     }
 }
