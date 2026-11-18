@@ -12,6 +12,15 @@ import time
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
 
+TEST_SCOPE = os.environ.get('SPLIT_NATIVE_TEST_SCOPE', 'baseline')
+UI_PLANS = {
+    'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
+                  'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
+    'production_runtimes': ([
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 2),
+}
+
 
 def command(argv, name, timeout=60):
     try:
@@ -32,6 +41,12 @@ def main():
              'reused_passes': [], 'started_at': time.time()}
     simulator = None
     try:
+        if TEST_SCOPE not in UI_PLANS:
+            raise RuntimeError('Unknown standalone native acceptance scope')
+        selectors, expected_tests = UI_PLANS[TEST_SCOPE]
+        state['test_scope'] = TEST_SCOPE
+        state['selectors'] = selectors
+        state['scope'] = 'Actual standalone MiniApps target: ' + TEST_SCOPE + '; paired/signing/device acceptance separate'
         state['sha'] = command(['git', 'rev-parse', 'HEAD'], 'source-sha.txt').strip()
         tracked = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
         sources = sorted(ROOT/p for p in tracked if p and Path(p).suffix in {
@@ -59,7 +74,8 @@ def main():
                        and r['identifier'].endswith('iOS-'+sdk.replace('.', '-')))
         types = json.loads(command(['xcrun', 'simctl', 'list', 'devicetypes', '-j'], 'devicetypes.json'))['devicetypes']
         supported = {t['identifier'] for t in runtime['supportedDeviceTypes']}
-        device = next(t for t in types if t.get('productFamily') == 'iPhone' and t['identifier'] in supported)
+        family = 'iPad' if TEST_SCOPE == 'production_runtimes' else 'iPhone'
+        device = next(t for t in types if t.get('productFamily') == family and t['identifier'] in supported)
         simulator = command(['xcrun', 'simctl', 'create', 'HanlinSplit-'+os.environ.get('GITHUB_RUN_ID','local'),
                              device['identifier'], runtime['identifier']], 'created-simulator.txt').strip()
         state.update(simulator=simulator, runtime=runtime, device=device)
@@ -95,46 +111,72 @@ def main():
         if device_state != 'Booted':
             command(['xcrun', 'simctl', 'boot', simulator], 'boot.log')
         command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=180)
-        storage = base + ['test-without-building', '-resultBundlePath', str(EVIDENCE/'Storage.xcresult'),
-                          '-only-testing:HanlinMiniAppsTests/SplitAppStorageLayoutTests',
-                          '-only-testing:HanlinMiniAppsTests/SplitMailboxTests',
-                          '-only-testing:HanlinMiniAppsBootstrapTests']
-        state['storage_command'] = storage
-        state['storage_boundary'] = 'INFRA_ERROR'
-        storage_result = subprocess.run(storage, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=900)
-        (EVIDENCE/'storage-tests.log').write_bytes(storage_result.stdout)
-        if (EVIDENCE/'Storage.xcresult').exists():
-            storage_summary = json.loads(command(['xcrun', 'xcresulttool', 'get', 'test-results', 'summary',
-                '--path', str(EVIDENCE/'Storage.xcresult')], 'storage-summary.json'))
-            state['storage_summary'] = storage_summary
-            if storage_result.returncode == 0 and storage_summary.get('passedTests') == 20 \
-                    and storage_summary.get('failedTests', 0) == 0 and storage_summary.get('skippedTests', 0) == 0:
-                state['storage_boundary'] = 'EXECUTED_PASS'
-            elif storage_summary.get('failedTests', 0):
-                state['storage_boundary'] = 'TEST_FAILED'
-        if state['storage_boundary'] != 'EXECUTED_PASS':
-            state['status'] = state['storage_boundary']
-            raise RuntimeError('Storage boundary acceptance did not pass; see original Storage.xcresult/log')
-        command([sys.executable, 'Scripts/CI/stage_scriptui_fixtures.py',
-                 '--simulator-udid', simulator,
-                 '--app-path', str(app_product),
-                 '--bundle-id', 'com.itorah.hanlinminiapps',
-                 '--fixtures-dir', str(EVIDENCE/'fixtures'),
-                 '--log-file', str(EVIDENCE/'fixture-provenance.log')], 'fixture-staging.log', timeout=240)
-        ordinary = EVIDENCE/'fixtures/MiniApps-Ordinary-ScriptUI.zip'
-        command([sys.executable, 'Scripts/CI/IntegrationValidation/prepare_ordinary_scriptui.py', str(ordinary)],
-                'ordinary-fixture-source.json')
-        container = Path(command(['xcrun', 'simctl', 'get_app_container', simulator,
-                                  'com.itorah.hanlinminiapps', 'data'], 'miniapps-data-container.txt').strip())
-        documents = container/'Documents'
-        documents.mkdir(exist_ok=True)
-        destination = documents/ordinary.name
-        if destination.exists() and destination.read_bytes() != ordinary.read_bytes():
-            raise RuntimeError('Owned fixture destination unexpectedly contains different bytes')
-        shutil.copy2(ordinary, destination)
+        if TEST_SCOPE == 'baseline':
+            storage = base + ['test-without-building', '-resultBundlePath', str(EVIDENCE/'Storage.xcresult'),
+                              '-only-testing:HanlinMiniAppsTests/SplitAppStorageLayoutTests',
+                              '-only-testing:HanlinMiniAppsTests/SplitMailboxTests',
+                              '-only-testing:HanlinMiniAppsBootstrapTests']
+            state['storage_command'] = storage
+            state['storage_boundary'] = 'INFRA_ERROR'
+            storage_result = subprocess.run(storage, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=900)
+            (EVIDENCE/'storage-tests.log').write_bytes(storage_result.stdout)
+            if (EVIDENCE/'Storage.xcresult').exists():
+                storage_summary = json.loads(command(['xcrun', 'xcresulttool', 'get', 'test-results', 'summary',
+                    '--path', str(EVIDENCE/'Storage.xcresult')], 'storage-summary.json'))
+                state['storage_summary'] = storage_summary
+                if storage_result.returncode == 0 and storage_summary.get('passedTests') == 20 \
+                        and storage_summary.get('failedTests', 0) == 0 and storage_summary.get('skippedTests', 0) == 0:
+                    state['storage_boundary'] = 'EXECUTED_PASS'
+                elif storage_summary.get('failedTests', 0):
+                    state['storage_boundary'] = 'TEST_FAILED'
+            if state['storage_boundary'] != 'EXECUTED_PASS':
+                state['status'] = state['storage_boundary']
+                raise RuntimeError('Storage boundary acceptance did not pass; see original Storage.xcresult/log')
+            command([sys.executable, 'Scripts/CI/stage_scriptui_fixtures.py',
+                     '--simulator-udid', simulator,
+                     '--app-path', str(app_product),
+                     '--bundle-id', 'com.itorah.hanlinminiapps',
+                     '--fixtures-dir', str(EVIDENCE/'fixtures'),
+                     '--log-file', str(EVIDENCE/'fixture-provenance.log')], 'fixture-staging.log', timeout=240)
+            ordinary = EVIDENCE/'fixtures/MiniApps-Ordinary-ScriptUI.zip'
+            command([sys.executable, 'Scripts/CI/IntegrationValidation/prepare_ordinary_scriptui.py', str(ordinary)],
+                    'ordinary-fixture-source.json')
+            container = Path(command(['xcrun', 'simctl', 'get_app_container', simulator,
+                                      'com.itorah.hanlinminiapps', 'data'], 'miniapps-data-container.txt').strip())
+            documents = container/'Documents'
+            documents.mkdir(exist_ok=True)
+            destination = documents/ordinary.name
+            if destination.exists() and destination.read_bytes() != ordinary.read_bytes():
+                raise RuntimeError('Owned fixture destination unexpectedly contains different bytes')
+            shutil.copy2(ordinary, destination)
+        else:
+            state['storage_boundary'] = 'NOT_SELECTED_PREVIOUS_20_NATIVE_PROOF_RECORDED_SEPARATELY'
+            command(['xcrun', 'simctl', 'install', simulator, str(app_product)], 'runtime-install.log', timeout=120)
+            container = Path(command(['xcrun', 'simctl', 'get_app_container', simulator,
+                'com.itorah.hanlinminiapps', 'data'], 'runtime-data-container.txt').strip())
+            documents = container/'Documents'
+            documents.mkdir(exist_ok=True)
+            fixtures = [
+                ROOT/'DemoMiniApps/hanlin-script-parity.hanlinNativeScript',
+                ROOT/'AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo',
+            ]
+            provenance = []
+            for source in fixtures:
+                if not source.is_file():
+                    raise RuntimeError('Missing original production runtime fixture: ' + str(source))
+                destination = documents/source.name
+                if destination.exists():
+                    raise RuntimeError('Fresh owned simulator unexpectedly already contains runtime fixture input')
+                shutil.copy2(source, destination)
+                digest = hashlib.sha256(source.read_bytes()).hexdigest()
+                if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+                    raise RuntimeError('Staged original runtime package bytes changed')
+                provenance.append({'source': source.relative_to(ROOT).as_posix(), 'sha256': digest,
+                                   'destination': str(destination), 'bytes': source.stat().st_size})
+            (EVIDENCE/'runtime-fixtures.json').write_text(json.dumps(provenance, indent=2)+'\n')
         argv = base + ['test-without-building',
-                '-resultBundlePath', str(EVIDENCE/'MiniApps.xcresult'),
-                '-only-testing:HanlinMiniAppsUITests']
+                '-resultBundlePath', str(EVIDENCE/'MiniApps.xcresult')]
+        argv += ['-only-testing:' + selector for selector in selectors]
         state['command'] = argv
         (EVIDENCE/'command.json').write_text(json.dumps(argv,indent=2)+'\n')
         with (EVIDENCE/'xcodebuild.log').open('wb') as log:
@@ -147,7 +189,12 @@ def main():
             summary = json.loads(raw)
             state['summary'] = summary
             passed, failed = summary.get('passedTests',0), summary.get('failedTests',0)
-            if process.returncode == 0 and passed == 7 and failed == 0 and summary.get('skippedTests',0) == 0:
+            command(['xcrun', 'xcresulttool', 'get', 'test-results', 'tests',
+                '--path', str(result)], 'test-nodes.json')
+            command([sys.executable, 'Scripts/CI/verify_selected_tests.py',
+                '--results', str(EVIDENCE/'test-nodes.json'), '--selectors', ','.join(selectors)],
+                'requested-tests.log')
+            if process.returncode == 0 and passed == expected_tests and failed == 0 and summary.get('skippedTests',0) == 0:
                 state.update(status='EXECUTED_PASS',ui='EXECUTED_PASS')
             elif failed:
                 state.update(status='TEST_FAILED',ui='TEST_FAILED')

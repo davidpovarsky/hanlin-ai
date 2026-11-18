@@ -24,6 +24,11 @@ on:
         type: boolean
         required: false
         default: false
+      native_test_scope:
+        description: Original standalone storage/UI or actual NativeScript and Expo companion controls
+        type: string
+        required: false
+        default: baseline
       paired_test_scope:
         description: Original cross-product flows or the shared ingress chat consumer
         type: string
@@ -57,6 +62,12 @@ on:
         default: '42926628418'
         required: true
 
+      native_test_scope:
+        description: Original standalone storage/UI or actual NativeScript and Expo companion controls
+        type: choice
+        options: [baseline, production_runtimes]
+        required: false
+        default: baseline
       paired_test_scope:
         description: Original cross-product flows or the shared ingress chat consumer
         type: choice
@@ -67,7 +78,7 @@ on:
 concurrency:
   # Separate acceptance scopes use distinct job checkouts and owned simulators.
   # A paired run must not cancel standalone storage/UI evidence still being collected.
-  group: standalone-miniapps-${{ github.ref }}-${{ inputs.audit_release_resources && 'release-audit' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || 'standalone' }}
+  group: standalone-miniapps-${{ github.ref }}-${{ inputs.audit_release_resources && 'release-audit' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}
   cancel-in-progress: true
 
 permissions:
@@ -121,6 +132,7 @@ jobs:
       RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
       HOST_PROOF_RUN_ID: ${{ inputs.host_proof_run_id }}
       SPLIT_DERIVED_DATA: ${{ github.workspace }}/build/AppSplitDerivedData
+      SPLIT_NATIVE_TEST_SCOPE: ${{ inputs.native_test_scope || 'baseline' }}
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0
@@ -301,24 +313,6 @@ jobs:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         run: '"$RUNNER_TEMP/hanlin-signing-python/bin/python" Scripts/ProductSplit/prepare_signed_products.py'
-      - name: Save changed compiler state without treating it as test evidence
-        if: ${{ always() && steps.split-inputs.outcome == 'success' && steps.split-derived.outputs.cache-hit != 'true' && steps.split-derived.outputs.cache-primary-key != '' }}
-        continue-on-error: true
-        uses: actions/cache/save@v6.1.0
-        with:
-          path: |
-            build/AppSplitDerivedData/Build
-            build/AppSplitDerivedData/ModuleCache.noindex
-            build/AppSplitDerivedData/SDKStatCaches.noindex
-            build/AppSplitDerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ${{ steps.split-derived.outputs.cache-primary-key }}
-      - name: Save changed Swift package dependency cache
-        if: ${{ always() && steps.split-sourcepackages.outputs.cache-hit != 'true' && steps.split-sourcepackages.outputs.cache-primary-key != '' }}
-        continue-on-error: true
-        uses: actions/cache/save@v6.1.0
-        with:
-          path: build/SourcePackages
-          key: ${{ steps.split-sourcepackages.outputs.cache-primary-key }}
       - name: Keep original logs, status and xcresult even after early failure
         if: always()
         shell: bash
@@ -351,3 +345,21 @@ jobs:
             build/runtime-host/runtime-host.sha256
           if-no-files-found: error
           retention-days: 14
+      - name: Save changed compiler state without treating it as test evidence
+        if: ${{ always() && steps.split-inputs.outcome == 'success' && steps.split-derived.outputs.cache-hit != 'true' && steps.split-derived.outputs.cache-primary-key != '' }}
+        continue-on-error: true
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: |
+            build/AppSplitDerivedData/Build
+            build/AppSplitDerivedData/ModuleCache.noindex
+            build/AppSplitDerivedData/SDKStatCaches.noindex
+            build/AppSplitDerivedData/CacheMetadata/xcode-build-inputs.json
+          key: ${{ steps.split-derived.outputs.cache-primary-key }}
+      - name: Save changed Swift package dependency cache
+        if: ${{ always() && steps.split-sourcepackages.outputs.cache-hit != 'true' && steps.split-sourcepackages.outputs.cache-primary-key != '' }}
+        continue-on-error: true
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: build/SourcePackages
+          key: ${{ steps.split-sourcepackages.outputs.cache-primary-key }}
