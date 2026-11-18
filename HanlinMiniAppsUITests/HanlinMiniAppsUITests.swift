@@ -148,7 +148,19 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        if testRun?.hasSucceeded == false { capture(name: "companion-runtime-failure") }
+        // XCTest's synchronous teardown is nonisolated even on this MainActor
+        // suite. Keep diagnostics inline, as in the compiled paired-product suite,
+        // instead of sending the entire XCTestCase to an actor-isolated helper.
+        if testRun?.hasSucceeded == false {
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = "companion-runtime-failure"
+            screenshot.lifetime = .keepAlways
+            add(screenshot)
+            let tree = XCTAttachment(string: app.debugDescription)
+            tree.name = "companion-runtime-failure-accessibility"
+            tree.lifetime = .keepAlways
+            add(tree)
+        }
         app.terminate()
     }
 
