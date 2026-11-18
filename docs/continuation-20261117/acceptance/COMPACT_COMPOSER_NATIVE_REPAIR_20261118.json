@@ -55,7 +55,7 @@
     ],
     "tests": "Retain original two complete product UI selectors; add original hierarchy and pre-focus viewport/hittability assertions"
   },
-  "native_repair_validation": "PENDING",
+  "native_repair_validation": "FAILED: build passed; both original compact UI cases failed. See COMPACT_COMPOSER_KEYBOARD_LAYOUT_20261118.json.",
   "retry_run": 44263129438,
   "platform_reference": "https://developer.apple.com/videos/play/wwdc2021/10021/",
   "phase2_complete": false,

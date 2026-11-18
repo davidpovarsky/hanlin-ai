@@ -43,6 +43,7 @@ struct HanlinCompactChatWorkspace: View {
 
     @Namespace private var libraryZoom
     @State private var dockHeight: CGFloat = 176
+    @State private var workspaceSize: CGSize = .zero
     @State private var matchedMessageIDByChat: [UUID: UUID] = [:]
     @FocusState private var isCompactComposerInputActive: Bool
 
@@ -113,24 +114,25 @@ struct HanlinCompactChatWorkspace: View {
     }
 
     var body: some View {
-        GeometryReader { proxy in
-            // GeometryReader receives the current container proposal, already
-            // reduced by the keyboard. Subtracting safeAreaInsets again can
-            // collapse the editor budget when the keyboard appears.
-            let usableSize = proxy.size
-            navigationRoot(availableHeight: max(0, usableSize.height - (composerVisible ? dockHeight : 0)))
-                // Keep NavigationStack flexible so it accepts the inset's
-                // reduced safe area. A full-height frame inside this modifier
-                // pushes the persistent composer beyond the visible viewport.
-                .safeAreaInset(edge: .bottom, spacing: 0) {
-                    if composerVisible {
-                        anchoredComposer(availableSize: usableSize)
-                            .transition(.move(edge: .bottom).combined(with: .opacity))
-                    }
+        navigationRoot(availableHeight: max(0, workspaceSize.height - (composerVisible ? dockHeight : 0)))
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                if composerVisible {
+                    anchoredComposer(availableSize: workspaceSize)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
-            // Native safe-area placement keeps this one persistent composer above
-            // the keyboard and tab bar. Its budget is already the usable viewport;
-            // the child must not subtract a screen-wide keyboard frame again.
+            }
+            // Observe the native container without making GeometryReader own its
+            // layout. The navigation container must receive the keyboard's safe
+            // area directly, including when the editor is in its persistent inset.
+            // Read outside our inset so its own height is not deducted twice.
+            .onGeometryChange(for: CGSize.self) { proxy in
+                CGSize(
+                    width: max(0, proxy.size.width - proxy.safeAreaInsets.leading - proxy.safeAreaInsets.trailing),
+                    height: max(0, proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom)
+                )
+            } action: { newSize in
+                workspaceSize = newSize
+            }
             .animation(.spring(response: 0.36, dampingFraction: 0.88), value: composerVisible)
             .onChange(of: path) { oldPath, newPath in
                 isCompactComposerInputActive = false
@@ -152,7 +154,6 @@ struct HanlinCompactChatWorkspace: View {
                     sessionBridge.homeSelectedModelIndex = defaultIndex
                 }
             }
-        }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-compact-chat-workspace")
         .sheet(isPresented: $showsHistory) {

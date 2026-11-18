@@ -272,6 +272,9 @@ final class HanlinMorphComposerUITests: XCTestCase {
         input.tap()
         let draft = "Morph keeps this draft"
         input.typeText(draft)
+        let focusedHierarchy = XCTAttachment(string: app.debugDescription)
+        focusedHierarchy.name = "original-composer-with-keyboard"
+        add(focusedHierarchy)
 
         let plus = app.buttons["hanlin-composer-general-menu"].firstMatch
         XCTAssertTrue(plus.waitForExistence(timeout: 10))
