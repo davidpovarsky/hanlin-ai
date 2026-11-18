@@ -1,0 +1,117 @@
+{
+  "generated_at": "2026-11-18T14:55:09.990096+00:00",
+  "source_sha": "4b765b447d7d47426498d1632581af59facd3f2f",
+  "upstream_sha": "6bde022876ef4af738c154b3d5c871984ef76195",
+  "host": "Windows",
+  "checks": [
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+      "sha256": "1c29734184ca20b321f4b10c37917c48611b644ad0bf469254106a0a8ce969c9",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "sha256": "71108409eb957acc4af5f9b51fa820bc0905802fcca2186f05853fa1cb496dd6",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+      "sha256": "259b3d79c4eb9a40aed39e8489323ae62d1f9428af3894caee7a4b16c6999e9b",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "sha256": "bf84eb6b8c238f3d3d25c87ce8e8c259e9e0350a49e51e29272d3130eb25330f",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "791792b1550860fdfc36bef8fca0ab2af09469fdb9f78140c1e9593bff4fdebe",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+      "sha256": "655054d7b6b695830389e70ddb8605cf6c80e07060f619a14de4c082103a121e",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "sha256": "df51b10a9b5df0ca7d220a5bde0700224c4f38c093a5eab307524dffdad27344",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "sha256": "ea5d1deb1ca79517c029351b7e11807bfc9d2ea6fddf07e6931208ad897100d3",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "sha256": "8f3109e12deac7500877442dab191df694e1a9ae3b4f35d3233f4849470666ef",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "AI_HLYUITests/HanlinSkillCenterUITests.swift",
+      "sha256": "2eb3c49137ebfe73dadeb7e8a8f8445b1a02f850559114c32002806978dec601",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "sha256": "36695f408a3bc147bd3394c6f445846e17e38146478a345745c1e28d7917f2d7",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "Packages/HanlinPresentationSDK/Package.swift",
+      "sha256": "59272c233aca8fbf72f50a9296539b2ed55b33f625ce34d208a2b1c4e3d569b8",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-product-completion-20261117",
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "sha256": "6d4e40ab5e3a841b3780a37b23bc678a1d98492d2ff435984235f9931cf60788",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-markdown-link-continuation-20261118",
+      "path": "Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphView+iOS.swift",
+      "sha256": "4088efee6a6508ec2ad4701ea163c617f7db94a9d70ac2b1faa891e7bf6971c0",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "repository": "hanlin-markdown-link-continuation-20261118",
+      "path": "Tests/MarkdownTextTests/ParagraphLinkHostTests.swift",
+      "sha256": "2d0603b3154095cdf87b42c432e409262ca0ec2d0e9d4f4dd3b69c06b5beb543",
+      "swift_frontend_parse_exit": 0,
+      "diagnostics": ""
+    }
+  ],
+  "diff_check": "PASS",
+  "dependency_pin_agreement": "PASS",
+  "apple_typecheck_build_or_native_test": false,
+  "status": "LOCAL_SYNTAX_ONLY_NATIVE_PENDING"
+}

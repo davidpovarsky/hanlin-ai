@@ -1,8 +1,17 @@
 {
-  "generated_at": "2026-11-18T10:10:03.327704+00:00",
+  "generated_at": "2026-11-18T14:58:02.958588+00:00",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
-  "source_sha": "d6f40e6fef30aeac64aead4edfc2eb51b88290c2",
+  "source_sha": "4b765b447d7d47426498d1632581af59facd3f2f",
   "commits": [
+    "4b765b447d7d47426498d1632581af59facd3f2f\tfix(markdown): pin the retained host link-action correction",
+    "f7516cce23e595be4963690eaf37266808aa6dae\ttest(composer): exercise approved Morph controls and anchored geometry",
+    "0bbe4628d73d3b381ac9132e39df8d4cf3446db8\ttest(host): require real tool receipts and original consent in UI fixtures",
+    "eebbb19cfeed9e7261cb43ed087db4279f006079\ttest(ui): verify native prompts and follow original overflow and list controls",
+    "684121f6a3fcb946713875389c5e1a028dff7e8e\tfix(canvas): retain original sheet origin across endpoint changes",
+    "1e752571aed680f79c7ac9f9c126193aa10f3f87\tfix(composer): preserve native edits during binding synchronization",
+    "dddec57ab18dcc3b2422dfaafe7bfaf8920b9f79\tfix(compact): resize the persistent composer with the keyboard viewport",
+    "fec75a681bf845a6be121780362cf97d7ac4cec9\tfix(host): preserve active writer and bind original interaction source",
+    "b49605669ce2856298ba38da7691a99c1d1e5dcf\tdocs: checkpoint exact local source and native acceptance handoff",
     "d6f40e6fef30aeac64aead4edfc2eb51b88290c2\tfix(ci): reserve bounded time for native gates and retained evidence",
     "65da668ceb47a063c7763c066b2d6d7b72d8bbe5\tdocs: retain native failures and explicit publication gates",
     "702bb52b1d544deff6ecfb88928645dbf757d2d1\tdocs: authenticate original A2UI native assertions by task",
@@ -455,5 +464,13 @@
     "docs/product-split/evidence/durability-fix/896f2f4e-8187-4f31-8a79-b2b8e91e42c6/manifest.json",
     "docs/product-split/foreground-results.json"
   ],
-  "published_source_sha": "46a99c050f18b91778eba571f2202b1ad08632c9"
+  "published_source_sha": "46a99c050f18b91778eba571f2202b1ad08632c9",
+  "upstream_dependency": {
+    "repo": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+    "branch": "codex/hanlin-markdown-link-continuation-20261118",
+    "base": "4072507bf5c5a1c9786d4c9a607873e65be59cc8",
+    "sha": "6bde022876ef4af738c154b3d5c871984ef76195",
+    "status": "LOCAL_ONLY_NATIVE_PENDING",
+    "publish_before_main_candidate": true
+  }
 }

@@ -1,7 +1,7 @@
 # Hanlin release checklist
 
-Decision: NO_GO. Source snapshot: d6f40e6fef30aeac64aead4edfc2eb51b88290c2. Updated: 2026-11-18T10:10:03.327704+00:00.
-This is a reviewable candidate checklist, not an accepted release or publication approval.
+Decision: **NO_GO**. Source snapshot: `4b765b447d7d47426498d1632581af59facd3f2f`. Updated 18.11.2026 16:58 (Asia/Hebron).
+This is a reviewable local candidate, not phase acceptance or distribution approval.
 
 ## Immutable identities
 
@@ -16,32 +16,35 @@ This is a reviewable candidate checklist, not an accepted release or publication
 
 Original shared groups group.com.itorah.chavrusachat and group.com.itorah.shared remain unchanged. No new product, account, Keychain identity or replacement provider store is introduced.
 
+
 ## Required gates
 
-- [x] Register the exact original MiniApps Bundle ID and read back APP_GROUPS/HEALTHKIT in 44255527028.
-- [ ] Assign both original Apple App Groups, enable every remaining source capability and obtain compatible AI/MiniApps profiles; registration alone is not signing.
-
-- [x] Preserve original worktrees, staged source and historical baseline; source manifest records the continuation range.
-- [x] Retain original SDK, Host, providers, engines, permission boundaries and storage.
-- [x] Authenticate recorded SDK53, Core46, transfer25, MiniApps27, editor6 and selected media native evidence at their actual SHAs.
-- [x] Build both actual original iOS27 device Release archives at 00a932d6.
-- [ ] Finish actual current app/Motion, compact, standalone runtime and paired-product gates.
-- [ ] Accept original UI45 +Runtime/Skills +Motion B/C in corrected run44264360254; predecessor44256319287 executed no tests because its runtime artifact input was missing.
-- [x] Record native Unicode/model20 PASS and compact UI2 FAIL from44250279050, without claiming whole-workflow success.
-- [ ] Accept compact keyboard repairUI2 in44273341845 and Host24/UI19 in44271250054; these existing runs await terminal results.
-- [x] Authenticate44264369849 build PASS/native21 PASS/UI2 FAIL, original videos/AX and full artifact SHA.
-- [ ] Accept the two original EmbeddedResults UI cases after local25fdded6 schema/AX repair; original assertions and permissions retained.
-- [ ] Accept independent startup/NS/ExpoUI2 after original simulator entitlements and both OS App Groups are verified.44270714044 timed out during cold build before startup/UI; local22f344f2 permits2400s preparation without changing product deadlines.
-- [ ] Accept original paired product/share8 after MiniApps startup is repaired:44259936836 passed both builds and real primary shared container but executed zero tests because MiniApps exited.
-- [ ] Map behavior-specific evidence to every required feature/UX row. Current mapping has20 partially evidenced rows and0 fully accepted capabilities out of278; no product pass percentage.
-- [ ] Complete one approved live model/tool/persistence run; credential export is currently rejected by automatic review.
-- [ ] Produce local signed exports with exact required entitlements and compatible profiles for both apps and all four extensions.
-- [ ] Verify final branded/Unicode/signed-default candidate archives. Original46a99c05 asset packaging and localc0ebf13e default signing still need actual native evidence; older00a932d6 archives are not current.
-- [ ] Install and test on an actually accessible supported physical iPad/iPhone; verify platform trust, permissions, VoiceOver, Stage Manager, lifecycle and measured performance.
-- [ ] Finish actual system Share/translation/widget/notification entrypoints and account/CloudKit conditions where required; Host-only fixtures are narrower evidence.
-- [ ] Resolve MiniApps App Store registration visibility and existing Apple signing permissions through the owner's account.
-- [ ] Review final release artifacts, version/build and rollback eligibility before any distribution.
-- [ ] Publish only after required acceptance is satisfied; no upload has occurred.
+- [x] Preserve original worktrees, original untracked data and the historical baseline.
+- [x] Retain the original SDK, Host, provider accounts, engines, permissions and stores.
+- [x] Preserve 30 original tasks, 4+20+6 mapping and all 46 evidence records.
+- [x] Read all three previously pending native runs to terminal status and retain their failures.
+- [x] Record Runtime/Skills 41/41 at 3542cc20; Host 23/24 and UI 9/19 at d7002ab1; wide UI 21/45 and Motion 0/2; compact UI 0/2.
+- [x] Record historical SDK53/Core46/transfer25/MiniApps20+7/editor6/Unicode20/Resolver21 at their actual SHAs, without double counting.
+- [x] Build both original device Release archives at 00a932d6 (historical scope only).
+- [x] Register the original MiniApps Bundle ID and read back APP_GROUPS/HEALTHKIT in 44255527028.
+- [ ] Obtain exact public source publication approval; publish original Markdown 6bde022 before the dependent main candidate.
+- [ ] Build and test the current iOS27 candidate and its original Host interaction/writer regressions.
+- [ ] Accept original compact2, affected NativeA2UI7, long/RTL drafts, approved Morph interactions, and current wide UI failures.
+- [ ] Verify original Canvas and internal Safari UI; retain contextual-tools runner-teardown failure until resolved.
+- [ ] Resolve Motion B/C: collapsed first triple-tap and launch without process ID are failures.
+- [ ] Accept original EmbeddedResultsUI2 after schema/AX repair; native21 component pass is narrower.
+- [ ] Verify standalone MiniApps startup with both original real OS App Groups, then original NativeScript/ExpoUI2. Keep the 2400s cold-build budget separate from product deadlines.
+- [ ] Accept original paired/share8 after standalone startup; earlier paired build/signature/container passes executed zero UI cases.
+- [ ] Finish behavior-specific feature/UX coverage. The 278 requirements currently have 20 partially evidenced rows and 0 fully accepted; do not treat this as code completion percentage.
+- [ ] Perform an approved actual live-model/tool/persistence run. No credential export has occurred.
+- [ ] Assign original Apple App Groups, required capabilities and compatible profiles for both apps and all four extensions.
+- [ ] Produce signed exports with exact entitlements; verify current branding and original automatic signing in final archives.
+- [ ] Finish the separate MiniApps App Store record through the existing owner account.
+- [ ] Install on an accessible supported physical iPad/iPhone and verify VoiceOver, Stage Manager, RTL, lifecycle and measured performance.
+- [ ] Verify actual Share/translation/widget/notification and account/CloudKit entrypoints wherever required; Host fixtures are narrower.
+- [ ] Resolve the full visual-reference gap with explicit reference scope.
+- [ ] Review final version/build, artifacts and rollback eligibility before distribution.
+- [ ] Release only after required acceptance is proven. No main merge or TestFlight upload has occurred.
 
 ## Backup and rollback procedure
 
@@ -54,6 +57,7 @@ Original shared groups group.com.itorah.chavrusachat and group.com.itorah.shared
 7. A binary rollback must preserve Bundle IDs, groups and storage. It must not uninstall a production app or clear iCloud/Keychain to make a regression disappear. Forward-written schemas or cloud state require a compatible recovery release and a verified backup; a previous binary alone is not a complete data rollback.
 8. Native disposable-store tests prove local transaction behavior at their recorded SHA. No real user restore, device rollback or CloudKit rollback was performed in this continuation.
 
+
 ## Reproducible validation entrypoints
 
 Use the current exact branch/SHA with existing manually dispatched workflows. The recorded dispatch JSON files contain exact selectors and original runtime artifact ID 42926628418.
@@ -64,30 +68,41 @@ Use the current exact branch/SHA with existing manually dispatched workflows. Th
 - validate-app-split.yml: audit_release_resources=true for read-only existing certificate/profile/device metadata.
 - validate-app-split.yml: signed_release_archives=true for actual archives and local export with the existing identity. Current export failure must be resolved before retry; no TestFlight flag is used.
 
-## Exact blockers
 
-Automatic review rejected the proposed Windows Gemini credential transfer to a new secret in the public owner repository. No secret was created and no alternative transfer was attempted. The approved live test is ready in source but not accepted.
+## Exact native results
 
-Apple's actual export returned Cloud signing permission error and no matching App Store profiles. Both original archives compiled. The completed local profile audit confirms the existing Distribution identity is valid, but the AI profile lacks Extended Virtual Addressing and MiniApps still needs compatible group/capability/profile configuration. Required entitlements will not be removed.
+| ריצה / מקור | תוצאות בפועל | משמעות |
+| --- | --- | --- |
+| [44264360254](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44264360254) · `3542cc20` | build PASS; Runtime/Skills: 41/41 invocations ב־12 מתודות; UI: 21/45 PASS, 24 FAIL; Motion B/C: 0/2 | 33 Arguments ועוד 8 מתודות ללא פרמטרים הם 41 הרצות. אין לספור גם את סיכומי המתודות. |
+| [44271250054](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44271250054) · `d7002ab1` | build PASS; Host: 23/24 PASS; UI: 9/19 PASS | עברו CPython אמיתי עם אישור ושחזור שיחה, NativeScript/Expo בתוך AI, ניווט ותרחישי Skill מקוריים. נותרו כשלים מפורשים. |
+| [44273341845](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44273341845) · `7f5a8465` | build PASS; compact UI: 0/2 | ה־AX מראה כפתורי Composer מתחת למקלדת. תיקון חדש ממתין ל־Native. |
 
-The connected development host is Windows. Current native CI inventory has no physical device. Simulator or resource metadata cannot substitute for signed physical-device acceptance.
+## Current independent blockers
 
-## Latest failed gates retained
+- **PHYSICAL_DEVICE — UNAVAILABLE**: Authorized supported physical iPad/iPhone accessible to the testing host; existing CI audit finds no physical device.
+- **LIVE_MODEL_PROVIDER — BLOCKED_CREDENTIAL_EXPORT_APPROVAL**: Existing host Gemini credential is available, but automatic review rejected creating a new secret in the public GitHub repository. Exact transfer requires explicit owner approval, or approved local Mac/device execution with its own existing account. No credential was transferred.
+- **SIGNED_PROVISIONING — EXACT_APPLE_PORTAL_CONFIGURATION_REQUIRED**: Existing identity is valid. Original MiniApps Bundle ID plus App Groups/HealthKit capability toggles registered and read back. Need both actual group assignments, all original required capability approvals and compatible profiles (AI lacks Extended Virtual Addressing), plus the separate App Store record. Official API exposes no App Group assignment or create-app endpoint; the Browser plugin exposes no callable control JS in this session. No browser account session was probed.
+- **APPROVED_FULL_VISUAL_REFERENCE — PARTIAL_REFERENCE**: Original 26-decision summary and authenticated Composer reference exist; full October master prompt was not found. Source/visual conclusions must state their actual references.
+- **PUBLIC_SOURCE_PUBLICATION — BLOCKED_AUTOMATIC_APPROVAL_REVIEW**: Explicit approval for reviewed source/build/test/documentation on public davidpovarsky/hanlin-ai branch codex/hanlin-product-completion-20261117 and original dependency davidpovarsky/hanlin-streaming-markdown branch codex/hanlin-markdown-link-continuation-20261118. Publish upstream6bde022 first because all main candidate pins reference it. No credential, ignored evidence or original untracked data publication.
 
-44263129438: build PASS, compact UI2 FAIL (focus/keyboard); 44264365612: NativeScript baseline PASS, Release app build FAIL, Host24/UI19 NOT_RUN; 44263872088: build/signature PASS, independent startup failed, UI2 NOT_RUN; 44259936836: both builds and actual primary group PASS, MiniApps exited, original8 NOT_RUN. These failures are retained separately from pending repaired runs.
+## פרסום ואימות נוספים
 
-## Newly observed failed and repaired scopes
+הקוד המקומי הוא `4b765b447d7d47426498d1632581af59facd3f2f`; הענף הציבורי המאומת עדיין `46a99c050f18b91778eba571f2202b1ad08632c9`. נשמרו 16 commits מקומיים אחרי הפרסום האחרון, לפני commit הדוחות הזה. קובץ הסקירה הסופי יכלול גם את commit הדוחות.
 
-44264369849: build PASS, Resolver/Canonical native21 PASS, EmbeddedResults UI2 FAIL. Original recordings and native AX identify the real TextView element, and the original Host schema requires progress_summary missing from the deterministic provider. Local25fdded6 preserves source tool policy and UI assertions; reexecution is pending.
+מנגנון אישור אוטומטי דחה שוב push לאחר אישור כללי להמשיך, ונדרש אישור מפורש לתוכן וליעדי הפרסום הציבוריים. לא בוצע ניסיון חלופי אחרי הדחייה. היעדים הקונקרטיים הם:
 
-44270714044: cold build exceeded1200s before startup, OS App Group or engine UI checks. Local22f344f2 raises only cold-build preparation to2400s. No loader fix is accepted yet.
+1. `https://github.com/davidpovarsky/hanlin-streaming-markdown.git`, ענף `codex/hanlin-markdown-link-continuation-20261118`, commit `6bde022876ef4af738c154b3d5c871984ef76195` מעל `4072507bf5c5a1c9786d4c9a607873e65be59cc8`.
+2. `https://github.com/davidpovarsky/hanlin-ai.git`, ענף `codex/hanlin-product-completion-20261117`, חבילת הקוד/בדיקות/מסמכים שמעל `46a99c050f18b91778eba571f2202b1ad08632c9`.
 
-Original MiniApps branding and normal automatic signing are now wired in source; graph15 PASS is Windows evidence only.
+יש לפרסם את תלות Markdown תחילה: שלוש ההפניות המקוריות ב־Hanlin כבר תואמות ל־SHA המקומי החדש. זו תלות מקומית שטרם ניתנת לפתרון מהשרת הציבורי. החבילה אינה כוללת מפתחות, credentials, יומנים גולמיים, הקלטות, נתוני משתמש או את שלושת הנתיבים המקוריים הלא־מנוהלים.
 
-## מצב הפרסום והמשך ההרצה
+לאחר הפרסום המאושר יש לאמת את ראשי הענפים ולהריץ את שערי iOS27 הרלוונטיים. 15 קובצי Swift ששונו עברו frontend parse ב־Windows; בדיקת diff, JSON והתאמת pins עברו. אין בכך build, typecheck או PASS של iOS.
 
-תמונת המקור המקומית: d6f40e6fef30aeac64aead4edfc2eb51b88290c2. הענף הציבורי נשאר ב־46a99c050f18b91778eba571f2202b1ad08632c9. בדיקת האישור האוטומטית דחתה push של תיקוני המקור והתיעוד אל המאגר הציבורי davidpovarsky/hanlin-ai, משום שהאישור הכללי אינו מציין במפורש את היעד הציבורי ואת המטען המסוים. לא נעשה ניסיון פרסום חלופי. נדרש אישור מפורש ל־commits המוכנים לפני הרצתם ב־CI. הריצות שכבר התחילו ממשיכות; הן אינן כוללות את התיקונים המקומיים. שלבים 2 ו־3 נשארים IN_PROGRESS והשחרור NO_GO.
 
-## תקציב תשתית ההרצה
+## מסמכי ראיות מחייבים
 
-ב־d6f40e6f הותאם גם תקציב ה־job הכולל: 90 דקות למסלול העצמאי ו־150 דקות למסלול שתי האפליקציות, כדי לאפשר את ההכנה הקרה, הבדיקות הקיימות ושמירת הראיות. תקציב archive נשאר 150 דקות. השוואת YAML מפוענח אישרה שרק ביטוי ה־timeout השתנה; כל מועדי התגובה וה־assertions של המוצר נשמרו. שינוי זה מקומי וטרם הופעל ב־CI.
+- `acceptance/NATIVE_TERMINAL_RESULTS_AND_LOCAL_REPAIRS_20261118.json`: תוצאות לפי method/case, מקור SHA, hashes, אבחנות ותיקונים ממתינים.
+- `acceptance/LOCAL_CANDIDATE_VALIDATION_20261118.json`: 15 בדיקות parse מקומיות והגבול שלהן.
+- `acceptance/ACCEPTANCE_REGISTER.json`: 46 רשומות ראיה, כל 30 משימות המקור, שערים ופרסום.
+- `acceptance/INTEGRATION_CHANGE_MANIFEST.json`: commits ונתיבים מהבסיס המקורי, תוך שימור נתיבים לא־מנוהלים.
+- `PHASE_2_INTEGRATION_LEDGER.json`, `PHASE_3_INTEGRATION_LEDGER.json` ומטריצות הקבלה: חלוקה מלאה 4+20+6, ללא כפילות או מחיקה של משימות.
