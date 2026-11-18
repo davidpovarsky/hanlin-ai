@@ -382,8 +382,11 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         if !install.isHittable { app.swipeDown() }
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled && install.isHittable })
         install.tap()
-        XCTAssertTrue(install.waitForNonExistence(timeout: 60),
+        let importError = app.staticTexts["hanlin-import-error-message"].firstMatch
+        XCTAssertTrue(waitUntil(timeout: 60) { !install.exists || importError.exists },
                       "The existing installer must complete in the companion's own namespace")
+        XCTAssertFalse(importError.exists, "The original installer failed: \(importError.exists ? importError.label : "")")
+        XCTAssertFalse(install.exists, "Successful installation must consume the original preview")
         let done = app.navigationBars["Script Package"].buttons["Done"].firstMatch
         XCTAssertTrue(done.waitForExistence(timeout: 10))
         done.tap()

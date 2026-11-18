@@ -1,0 +1,41 @@
+{
+  "document": "MINIAPPS_RUNTIME_NATIVE_REPAIR_20261118",
+  "recorded_at": "2026-11-18T08:03:46.049154+00:00",
+  "original_run": {
+    "id": 44257287918,
+    "sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+    "build": "PASS",
+    "ui_passed": 0,
+    "ui_failed": 2,
+    "ui_skipped": 0,
+    "actual_device": "iPad mini (A20 Pro)",
+    "runtime": "27.2",
+    "failure": "Both original production runtime imports reported appGroupUnavailable; runtime execution not reached"
+  },
+  "artifact": {
+    "id": 14409096088,
+    "size_bytes": 76645919,
+    "api_zip_sha256": "f0b7c2724c81f058bde98dbb718c3cca648092ded5b456603b299c2b8532a14a",
+    "full_zip_digest_recomputed": false,
+    "acceptance_json_sha256": "b11eb70d1d3049906d7361f71f8bfbbb170b45a1547945872c2a525edf314a87",
+    "test_nodes_sha256": "d907eef15f0b4a5981cdefb8c2f0e23513644710e8f60b501d1fcdd90f580520",
+    "decoded_attachment_manifest": "build/continuation-evidence/44257287918/decoded-original-attachments/manifest.json"
+  },
+  "source_diagnosis": [
+    "run_native_acceptance.py used CODE_SIGNING_ALLOWED=NO for the real target",
+    "Both retained original AX hierarchies expose hanlin-import-error-message with appGroupUnavailable",
+    "Original installer rejects widget entrypoints when the original extension App Group store is unavailable"
+  ],
+  "repair": [
+    "Build with original simulator ad-hoc signing, same as existing paired acceptance",
+    "Verify product identity, actual codesign, executable-embedded original App Groups and source entitlement hash",
+    "Launch shipping bootstrap and require both original OS-provided App Group containers before runtime UI tests",
+    "Retain all product installer guards and actual import/install/runtime/relaunch assertions; surface real import errors immediately"
+  ],
+  "native_repair_validation": "PENDING",
+  "retry_run": null,
+  "distribution_signing_ready": false,
+  "phase2_complete": false,
+  "phase3_complete": false,
+  "release_decision": "NO_GO"
+}

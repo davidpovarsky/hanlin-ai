@@ -3,11 +3,14 @@ from pathlib import Path
 import hashlib
 import json
 import os
+import plistlib
 import re
 import shutil
 import subprocess
 import sys
 import time
+
+from simulator_entitlements import read_simulator_entitlements
 
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
@@ -106,7 +109,10 @@ def main():
         derived = Path(os.environ['SPLIT_DERIVED_DATA'])
         base = ['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
                 '-destination', 'platform=iOS Simulator,id='+simulator, '-parallel-testing-enabled', 'NO',
-                '-derivedDataPath', str(derived), *package_arguments, 'CODE_SIGNING_ALLOWED=NO']
+                '-derivedDataPath', str(derived), *package_arguments,
+                # Preserve the original target's simulator entitlements. An
+                # unsigned build cannot exercise widget/package publication.
+                'CODE_SIGNING_ALLOWED=YES', 'CODE_SIGNING_REQUIRED=YES', 'CODE_SIGN_IDENTITY=-']
         build = base + ['build-for-testing', '-resultBundlePath', str(EVIDENCE/'Build.xcresult')]
         state['build_command'] = build
         state['status'] = 'BUILD_FAILED'
@@ -114,6 +120,22 @@ def main():
         state['build'] = 'EXECUTED_PASS'
         state['status'] = 'BUILD_FAILED'
         app_product = derived/'Build/Products/Debug-iphonesimulator/HanlinMiniApps.app'
+        info = plistlib.loads((app_product/'Info.plist').read_bytes())
+        if info['CFBundleIdentifier'] != 'com.itorah.hanlinminiapps' or info.get('CFBundleDisplayName') != 'Hanlin MiniApps':
+            raise RuntimeError('Built product identity differs from the original companion target')
+        executable_name = info['CFBundleExecutable']
+        if Path(executable_name).name != executable_name:
+            raise RuntimeError('Built executable must remain inside its original app bundle')
+        command(['codesign', '--verify', '--deep', '--strict', str(app_product)], 'simulator-signature.log')
+        entitlement_source = ROOT/'HanlinMiniAppsApp/HanlinMiniApps.entitlements'
+        required_groups = plistlib.loads(entitlement_source.read_bytes())['com.apple.security.application-groups']
+        proof = read_simulator_entitlements(app_product/executable_name)
+        actual_groups = proof['entitlements'].get('com.apple.security.application-groups', [])
+        if not required_groups or set(required_groups) != set(actual_groups):
+            raise RuntimeError('Built simulator executable does not preserve the original App Groups')
+        proof['source_entitlements_sha256'] = hashlib.sha256(entitlement_source.read_bytes()).hexdigest()
+        (EVIDENCE/'simulator-embedded-entitlements.json').write_text(json.dumps(proof, indent=2)+'\n')
+        state['simulator_signing'] = 'ORIGINAL_ENTITLEMENTS_VERIFIED_AD_HOC_NOT_DISTRIBUTION_SIGNING'
         membership = json.loads((ROOT/'docs/product-split/target-membership.json').read_text())
         for resource in membership.get('shared_resources', []):
             source = ROOT/resource
@@ -172,6 +194,21 @@ def main():
             # gate. Use its bounded 300s install allowance, once; never retry a
             # transport-uncertain mutation or count an unexecuted test as a pass.
             command(['xcrun', 'simctl', 'install', simulator, str(app_product)], 'runtime-install.log', timeout=300)
+            # Ask the shipping bootstrap and CoreSimulator for their own real
+            # containers. Do not synthesize directories or substitute storage.
+            command(['xcrun', 'simctl', 'launch', simulator, 'com.itorah.hanlinminiapps',
+                     '-AppleLanguages', '(en)', '-AppleLocale', 'en_US'], 'runtime-first-launch.log', timeout=120)
+            group_containers = {}
+            for group in required_groups:
+                raw = command(['xcrun', 'simctl', 'get_app_container', simulator,
+                    'com.itorah.hanlinminiapps', group], group+'-container.txt', timeout=180)
+                group_path = Path(raw.strip()).resolve(strict=True)
+                if not group_path.is_dir():
+                    raise RuntimeError('The OS did not provide the original shared container: '+group)
+                group_containers[group] = str(group_path)
+            command(['xcrun', 'simctl', 'terminate', simulator, 'com.itorah.hanlinminiapps'],
+                    'runtime-first-launch-terminate.log')
+            state['app_groups'] = {'status': 'OS_CONTAINERS_VERIFIED', 'containers': group_containers}
             container = Path(command(['xcrun', 'simctl', 'get_app_container', simulator,
                 'com.itorah.hanlinminiapps', 'data'], 'runtime-data-container.txt').strip())
             documents = container/'Documents'
