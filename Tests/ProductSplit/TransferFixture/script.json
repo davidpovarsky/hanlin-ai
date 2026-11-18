@@ -1,0 +1,6 @@
+{
+  "name": "Hanlin Transfer Acceptance",
+  "version": "1.0.0",
+  "entry": "index.tsx",
+  "runInApp": true
+}

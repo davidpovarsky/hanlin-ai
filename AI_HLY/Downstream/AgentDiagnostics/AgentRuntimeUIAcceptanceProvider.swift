@@ -354,6 +354,30 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let messages = body?["messages"] as? [[String: Any]]
         let content = messages?.last(where: { $0["role"] as? String == "user" })?["content"]
         let currentText = (content as? String) ?? (content as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined(separator: "\n") ?? ""
+        // Only the HTTP model response is controlled. The real Host, consent,
+        // OS URL delivery, App Group, MiniApps process and canonical broker run.
+        if let marker = currentText.range(of: "PAIRED_(?:OPEN|CANCEL)_[0-9A-F-]{36}", options: .regularExpression) {
+            let command = String(currentText[marker])
+            let nonce = String(command.suffix(36))
+            let cancel = command.hasPrefix("PAIRED_CANCEL_")
+            let callID = "paired-original-" + nonce
+            if let output = (messages ?? []).last(where: {
+                $0["role"] as? String == "tool" && $0["tool_call_id"] as? String == callID
+            }) {
+                let content = output["content"] as? String ?? ""
+                let verified = cancel
+                    ? content.contains("did not provide a successful operation receipt")
+                    : content.contains("PAIRED_VALUE_" + nonce)
+                emitFinalAnswer(verified
+                    ? (cancel ? "PAIRED_CANCEL_RETURN_" : "PAIRED_RETURN_VERIFIED_") + nonce
+                    : "PAIRED_RESULT_NOT_VERIFIED")
+            } else {
+                emitToolCall(id: callID, name: "open_mini_app",
+                    arguments: #"{"target":"hanlin.demo.swift-parity","action":"share.value","payload":null}"#)
+            }
+            return
+        }
+
         if let marker = bodyString.range(of: "PHASE2_TOOL_A2UI_[0-9A-F-]{36}", options: .regularExpression) {
             let nonce = String(bodyString[marker]).replacingOccurrences(of: "PHASE2_TOOL_A2UI_", with: "")
             let callID = "phase2-a2ui-" + nonce
