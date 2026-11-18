@@ -1,0 +1,37 @@
+{
+  "document": "NATIVE_DISPATCH_INPUT_REPAIR_20261118",
+  "at": "2026-11-18T08:11:32.503417+00:00",
+  "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+  "failure_run": 44256319287,
+  "failure_source_sha": "2b878353f53d303430321362bd2d1a51ed6deaa1",
+  "failure": "Prepare verified embedded RuntimeCore: release not found; runtime artifact input absent",
+  "native_tests_executed": 0,
+  "ui_tests_executed": 0,
+  "artifact": {
+    "id": 14408599303,
+    "size": 23476,
+    "api_zip_sha256": "8b923a10ae6381b833096f79dcf0d2b0df07891cc12a8ebc36987e6f45b5b92d"
+  },
+  "verified_runtime_artifact_run": 42926628418,
+  "corrected_runs": [
+    {
+      "old": 44256319287,
+      "new": 44264360254,
+      "old_status": "INFRA_ERROR_NO_TESTS"
+    },
+    {
+      "old": 44259931987,
+      "new": 44264365612,
+      "old_status": "NATIVE_JOBS_QUEUED_NOT_STARTED"
+    },
+    {
+      "old": 44261561706,
+      "new": 44264369849,
+      "old_status": "NATIVE_JOB_QUEUED_NOT_STARTED"
+    }
+  ],
+  "assertions_changed": false,
+  "full_tests_repeated": false,
+  "healthy_running_native_job_cancelled": false,
+  "phase_completion": false
+}

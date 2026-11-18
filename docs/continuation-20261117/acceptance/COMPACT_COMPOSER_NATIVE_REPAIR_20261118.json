@@ -56,7 +56,7 @@
     "tests": "Retain original two complete product UI selectors; add original hierarchy and pre-focus viewport/hittability assertions"
   },
   "native_repair_validation": "PENDING",
-  "retry_run": null,
+  "retry_run": 44263129438,
   "platform_reference": "https://developer.apple.com/videos/play/wwdc2021/10021/",
   "phase2_complete": false,
   "phase3_complete": false,

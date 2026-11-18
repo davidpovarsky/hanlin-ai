@@ -1,6 +1,6 @@
 # Hanlin release checklist
 
-Decision: NO_GO. Source snapshot: c3524b52ab399a40b35bf323ef162fe5d0a6da10. Updated: 2026-11-18T07:17:06.892726+00:00.
+Decision: NO_GO. Source snapshot: 3542cc20e2ad842edc38af13d92805943febb6dd. Updated: 2026-11-18T08:11:32.503417+00:00.
 This is a reviewable candidate checklist, not an accepted release or publication approval.
 
 ## Immutable identities
@@ -26,7 +26,11 @@ Original shared groups group.com.itorah.chavrusachat and group.com.itorah.shared
 - [x] Authenticate recorded SDK53, Core46, transfer25, MiniApps27, editor6 and selected media native evidence at their actual SHAs.
 - [x] Build both actual original iOS27 device Release archives at 00a932d6.
 - [ ] Finish actual current app/Motion, compact, standalone runtime and paired-product gates.
-- [ ] Accept the 45 original UI cases and 41 expected native invocations now dispatched in 44256319287; collect Motion B/C from the same prepared simulator.
+- [ ] Accept original UI45 +Runtime/Skills +Motion B/C in corrected run44264360254; predecessor44256319287 executed no tests because its runtime artifact input was missing.
+- [x] Record native Unicode/model20 PASS and compact UI2 FAIL from44250279050, without claiming whole-workflow success.
+- [ ] Accept compact viewport repairUI2 in44263129438, Host24/UI19 in44264365612 and EmbeddedResolver21/UI2 in44264369849.
+- [ ] Accept independent NS/ExpoUI2 in44263872088 after original simulator entitlements and both OS App Groups are verified; prior44257287918 UI2 failed at real import with appGroupUnavailable.
+- [ ] Accept paired product/share8 in44259936836.
 - [ ] Map behavior-specific evidence to every required feature/UX row. Do not count 278 source anchors as 278 passes.
 - [ ] Complete one approved live model/tool/persistence run; credential export is currently rejected by automatic review.
 - [ ] Produce local signed exports with exact required entitlements and compatible profiles for both apps and all four extensions.
@@ -62,6 +66,6 @@ Use the current exact branch/SHA with existing manually dispatched workflows. Th
 
 Automatic review rejected the proposed Windows Gemini credential transfer to a new secret in the public owner repository. No secret was created and no alternative transfer was attempted. The approved live test is ready in source but not accepted.
 
-Apple's actual export returned Cloud signing permission error and no matching App Store profiles. Both original archives compiled. A read-only local profile audit is in progress; required entitlements will not be removed.
+Apple's actual export returned Cloud signing permission error and no matching App Store profiles. Both original archives compiled. The completed local profile audit confirms the existing Distribution identity is valid, but the AI profile lacks Extended Virtual Addressing and MiniApps still needs compatible group/capability/profile configuration. Required entitlements will not be removed.
 
 The connected development host is Windows. Current native CI inventory has no physical device. Simulator or resource metadata cannot substitute for signed physical-device acceptance.

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T07:17:06.892726+00:00",
+  "generated_at": "2026-11-18T08:11:32.503417+00:00",
   "status": "IN_PROGRESS_NOT_A_PHASE_COMPLETION",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
-  "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+  "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
   "branch": "codex/hanlin-product-completion-20261117",
   "phase_2": "IN_PROGRESS",
   "phase_3": "IN_PROGRESS",
@@ -170,11 +170,18 @@
     },
     {
       "id": "COMPACT_BF729",
-      "status": "RUNNING",
+      "status": "PARTIAL_NATIVE20_PASS_UI2_FAIL",
       "run": 44250279050,
       "sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
-      "scope": "Actual native full-app Debug compilation ongoing; model/Unicode/compact assertions pending.",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44250279050"
+      "scope": "Actual iPhone Air iOS27.2: four Unicode/history and sixteen model-popover native cases passed; both original compact UI failed. Recordings and AX prove out-of-viewport/zero-height editor. Entire workflow failed.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44250279050",
+      "passed_native": 20,
+      "failed_native": 0,
+      "skipped_native": 0,
+      "passed_ui": 0,
+      "failed_ui": 2,
+      "skipped_ui": 0,
+      "report": "acceptance/COMPACT_COMPOSER_NATIVE_REPAIR_20261118.json"
     },
     {
       "id": "PAIRED_0C198",
@@ -223,12 +230,16 @@
     },
     {
       "id": "REMAINING_NATIVE_UI45",
-      "status": "DISPATCHED_RESULTS_PENDING",
-      "scope": "45 original UI methods plus 7 exact real NativeScript wire methods, full SkillRuntimeProductTests (34 expected invocations), and affected Motion B/C. Not PASS.",
+      "status": "INFRA_ERROR_NO_TESTS",
+      "scope": "Missing runtime artifact input made preparation request a nonexistent release; 45 UI, seven runtime wire methods, SkillRuntimeProductTests and Motion B/C did not execute.",
       "report": "docs/continuation-20261117/REMAINING_NATIVE_UI_ACCEPTANCE_20261118.json",
       "run": 44256319287,
       "sha": "2b878353f53d303430321362bd2d1a51ed6deaa1",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44256319287"
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44256319287",
+      "executed_native": 0,
+      "executed_ui": 0,
+      "artifact_id": 14408599303,
+      "api_zip_sha256": "8b923a10ae6381b833096f79dcf0d2b0df07891cc12a8ebc36987e6f45b5b92d"
     },
     {
       "id": "APPLE_MINI_REGISTRATION",
@@ -241,20 +252,81 @@
     },
     {
       "id": "MINI_RUNTIME_C352",
-      "status": "DISPATCHED_RESULTS_PENDING",
+      "status": "BUILD_PASS_UI2_FAIL",
       "run": 44257287918,
       "sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "scope": "Same two never-executed original runtime UI methods. Owned simulator boots before compilation; measured bounded install and actual Host reuse verifier. No product assertion/source/fixture weakened.",
-      "report": "docs/continuation-20261117/MINIAPPS_RUNTIME_INFRASTRUCTURE_20261118.json",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44257287918"
+      "scope": "Both original independent runtime UI cases reached the real installer, which reported appGroupUnavailable. Runtime interactions not reached. Unsigned simulator harness diagnosed from actual source and retained AX.",
+      "report": "acceptance/MINIAPPS_RUNTIME_NATIVE_REPAIR_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44257287918",
+      "build": "PASS",
+      "passed_ui": 0,
+      "failed_ui": 2,
+      "skipped_ui": 0
     },
     {
       "id": "WIDE_ORIGINAL_INSPECTION",
-      "status": "QUEUED_OR_RUNNING_NOT_ACCEPTANCE",
+      "status": "COMPLETED_DIAGNOSTIC_ONLY",
       "run": 44254178627,
       "sha": "7bfbdfc45f89e1731b90486c9e3d1f9cd8e6a00c",
-      "scope": "Read-only extraction of exact original crash and seven UI failures from run44243185407; no new test execution.",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44254178627"
+      "scope": "Original xcresult attachments exported on macOS; also independently decoded from original SQLite/Zstandard on Windows. No new test execution.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44254178627",
+      "artifact_id": 14408043308,
+      "api_zip_sha256": "707859e9186623dfee26ffa9c9cebf596abfef255de7a39816b7e6df9ff9cc13",
+      "report": "ORIGINAL_XCRESULT_DIAGNOSIS_AND_REPAIRS_20261118.json"
+    },
+    {
+      "id": "HOST_ORIGINAL_REPAIR",
+      "run": 44264365612,
+      "sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+      "status": "DISPATCHED_AWAITING_NATIVE_RESULT",
+      "scope": "24 original Host/Store native cases, including retained ModelContainer regression; nineteen repaired original UI cases (Release/HANLIN_TESTING).",
+      "report": "ORIGINAL_XCRESULT_DIAGNOSIS_AND_REPAIRS_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44264365612"
+    },
+    {
+      "id": "EMBEDDED_ORIGINAL_REPAIR",
+      "run": 44264369849,
+      "sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+      "status": "DISPATCHED_AWAITING_NATIVE_RESULT",
+      "scope": "21 native Resolver/Canonical cases and two original EmbeddedResults UI cases with actual tool results, mandatory expansion/dismissal and unresolved-handler native fallback.",
+      "report": "EMBEDDED_RESULT_ACCEPTANCE_REPAIR_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44264369849"
+    },
+    {
+      "id": "REMAINING_NATIVE_UI45_RETRY",
+      "run": 44264360254,
+      "sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+      "status": "DISPATCHED_AWAITING_NATIVE_RESULT",
+      "scope": "Same unexecuted 45 original UI cases, seven runtime-wire methods, SkillRuntimeProductTests and Motion B/C; verified runtime artifact 42926628418 explicitly supplied.",
+      "report": "acceptance/NATIVE_DISPATCH_INPUT_REPAIR_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44264360254"
+    },
+    {
+      "id": "PAIRED_ORIGINAL_REPAIR",
+      "run": 44259936836,
+      "sha": "0b06c98e45c6757676f956aea49cba0d80ab2127",
+      "status": "DISPATCHED_AWAITING_NATIVE_RESULT",
+      "scope": "Eight actual two-product/shared-inbox cases; real signed simulator binaries and OS-owned App Group required.",
+      "report": "ORIGINAL_XCRESULT_DIAGNOSIS_AND_REPAIRS_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44259936836"
+    },
+    {
+      "id": "COMPACT_VIEWPORT_REPAIR",
+      "run": 44263129438,
+      "sha": "2b5f2972d8b0f1b533ae205e0212a44fcd739375",
+      "status": "DISPATCHED_AWAITING_NATIVE_RESULT",
+      "scope": "Only two original compact Composer product UI cases after flexible native inset and nonduplicated viewport budget. No unchanged unit suite rerun.",
+      "report": "acceptance/COMPACT_COMPOSER_NATIVE_REPAIR_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44263129438"
+    },
+    {
+      "id": "MINI_RUNTIME_GROUPS_REPAIR",
+      "run": 44263872088,
+      "sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+      "status": "DISPATCHED_AWAITING_NATIVE_RESULT",
+      "scope": "Two actual standalone runtime UI cases with original simulator entitlements and both real OS App Group containers required.",
+      "report": "acceptance/MINIAPPS_RUNTIME_NATIVE_REPAIR_20261118.json",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44263872088"
     }
   ],
   "source_tasks": [
@@ -322,12 +394,15 @@
         "WIDE00A9",
         "MINI_RUNTIME_394F",
         "REMAINING_NATIVE_UI45",
-        "MINI_RUNTIME_C352"
+        "MINI_RUNTIME_C352",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "HOST_ORIGINAL_REPAIR",
+        "MINI_RUNTIME_GROUPS_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "NativeScript ten original host/runtime behaviors in the integrated app and companion runtime controls."
     },
     {
@@ -341,12 +416,15 @@
         "WIDE00A9",
         "MINI_RUNTIME_394F",
         "REMAINING_NATIVE_UI45",
-        "MINI_RUNTIME_C352"
+        "MINI_RUNTIME_C352",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "HOST_ORIGINAL_REPAIR",
+        "MINI_RUNTIME_GROUPS_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Original Expo SwiftUI package and independent companion event/persistence assertions."
     },
     {
@@ -359,12 +437,13 @@
       "supporting_evidence": [
         "BASELINE00A9",
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Native app TS/shell/runtime dispatch, bounded jobs and actual scheduler results."
     },
     {
@@ -376,12 +455,13 @@
       "implementation_summary": "Original passive facts/plans, genuine execution, approval, cancellation and persisted lastTest.",
       "supporting_evidence": [
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "22 real imported fixtures, missing/denied/unknown engines, output/cancel/reopen and readiness assertions."
     },
     {
@@ -393,12 +473,15 @@
       "implementation_summary": "Canonical ordered model/tool envelopes and native app consumers.",
       "supporting_evidence": [
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "EMBEDDED_ORIGINAL_REPAIR",
+        "HOST_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Original model/tool surface attribution and ordered original-app execution."
     },
     {
@@ -410,12 +493,15 @@
       "implementation_summary": "Pinned original renderer/bindings in the real conversation.",
       "supporting_evidence": [
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "EMBEDDED_ORIGINAL_REPAIR",
+        "HOST_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "All selected original surface editing, binding, replay and layout cases."
     },
     {
@@ -428,12 +514,15 @@
       "supporting_evidence": [
         "SDK53",
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "EMBEDDED_ORIGINAL_REPAIR",
+        "HOST_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Original action denial, authorized continuation and exact persisted result identity."
     },
     {
@@ -447,12 +536,15 @@
         "SDK53",
         "WIDE00A9",
         "MEDIA5",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "EMBEDDED_ORIGINAL_REPAIR",
+        "HOST_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Original app cancellation/replay/history and no stale action invocation."
     },
     {
@@ -468,12 +560,13 @@
         "MEDIA_CLOSE_DIAGNOSIS",
         "QUICKLOOK50AC",
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Twelve component method identities have passes at their own recorded SHAs; integrated original-chat media and physical presentation remain separate."
     },
     {
@@ -485,12 +578,13 @@
       "implementation_summary": "Original Tree-sitter/AST passive dependency observations and hostile-input controls.",
       "supporting_evidence": [
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Actual embedded OpenClaw/AST and hostile path/manifests in imported skills."
     },
     {
@@ -502,12 +596,13 @@
       "implementation_summary": "Original disclosure/activity/shimmer; current rapid-reversal and RTL/type/rotation acceptance pending.",
       "supporting_evidence": [
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Rapid reversal and long RTL/rotation B/C on actual native source; historical A100 cycles is separate."
     },
     {
@@ -521,13 +616,16 @@
         "COMPACT1D57",
         "WIDE00A9",
         "COMPACT_BF729",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "COMPACT_VIEWPORT_REPAIR",
+        "HOST_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Both compact cases, wide draft behavior and remaining five original Morph controls; visual reference/physical limits remain explicit."
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+      "remaining_acceptance": "Two compact cases after viewport repair, wide draft and original Morph/keyboard/attachment controls; actual visual and physical scope still separate."
     },
     {
       "gid": "1220541898122292",
@@ -540,12 +638,14 @@
         "COMPACT1D57",
         "WIDE00A9",
         "COMPACT_BF729",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "COMPACT_VIEWPORT_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Real native chip enable/disable/context menu/expanded state and RTL labels."
     },
     {
@@ -557,12 +657,14 @@
       "implementation_summary": "Original Skill Center import/preview, resources, approval, real run/cancel and persistence.",
       "supporting_evidence": [
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "HOST_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Twelve current original Skill Center methods, including original ten and two runtime lifecycle methods; import/approval/cancel/reopen must actually pass."
     },
     {
@@ -579,12 +681,16 @@
         "PAIRED00A9",
         "PAIRED_0C198",
         "LIVE_GEMINI_NATIVE",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "EMBEDDED_ORIGINAL_REPAIR",
+        "HOST_ORIGINAL_REPAIR",
+        "PAIRED_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Integrated original chat/Host/Store acceptance and live provider/resource gate; Otzaria consumer work is outside this Hanlin task."
     },
     {
@@ -599,12 +705,14 @@
         "CORE46",
         "WIDE00A9",
         "LIVE_GEMINI_NATIVE",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "HOST_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Native consumer behavior in addition to the recorded component/provider session proofs."
     },
     {
@@ -620,12 +728,15 @@
         "PAIRED00A9",
         "SHARE00A9",
         "PAIRED_0C198",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "HOST_ORIGINAL_REPAIR",
+        "PAIRED_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Actual origin/receiving-window/permission enforcement, paired return and shared inbox consumption."
     },
     {
@@ -642,12 +753,15 @@
         "PAIRED00A9",
         "SHARE00A9",
         "PAIRED_0C198",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "HOST_ORIGINAL_REPAIR",
+        "PAIRED_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Original conversation draft/history reopen plus two-product persistence/migration and actual platform account boundaries."
     },
     {
@@ -661,12 +775,16 @@
         "WIDE00A9",
         "COMPACT1D57",
         "COMPACT_BF729",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "COMPACT_VIEWPORT_REPAIR",
+        "EMBEDDED_ORIGINAL_REPAIR",
+        "HOST_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Original importable presentation UI, Morph/Thinking/A2UI consumer acceptance and reference comparison."
     },
     {
@@ -678,12 +796,13 @@
       "implementation_summary": "Original OpenClaw subset with six real embedded-engine cases; no broad third-party runtime claim.",
       "supporting_evidence": [
         "WIDE00A9",
-        "REMAINING_NATIVE_UI45"
+        "REMAINING_NATIVE_UI45",
+        "REMAINING_NATIVE_UI45_RETRY"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Six exact original embedded Node/OpenClaw cases; no claim beyond the supported subset."
     },
     {
@@ -701,12 +820,14 @@
         "PAIRED_0C198",
         "MINI_RUNTIME_394F",
         "MINI_RUNTIME_C352",
-        "APPLE_MINI_REGISTRATION"
+        "APPLE_MINI_REGISTRATION",
+        "MINI_RUNTIME_GROUPS_REPAIR",
+        "PAIRED_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Two actually installed apps with paired flows, both runtime packages, signed candidate and physical acceptance."
     },
     {
@@ -723,12 +844,13 @@
         "SHARE00A9",
         "ARCHIVE00A9",
         "PAIRED_0C198",
-        "APPLE_MINI_REGISTRATION"
+        "APPLE_MINI_REGISTRATION",
+        "PAIRED_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Eight paired/shared-inbox cases and authentic entitlement/profile checks; existing source/data and receipt isolation preserved."
     },
     {
@@ -745,12 +867,15 @@
         "COMPACT_BF729",
         "PAIRED_0C198",
         "REMAINING_NATIVE_UI45",
-        "APPLE_MINI_REGISTRATION"
+        "APPLE_MINI_REGISTRATION",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "COMPACT_VIEWPORT_REPAIR",
+        "HOST_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "278 feature obligations and 26 current UX resolutions must map to actual individual assertions/screens, not file presence."
     },
     {
@@ -767,13 +892,15 @@
         "PAIRED_0C198",
         "MINI_RUNTIME_394F",
         "MINI_RUNTIME_C352",
-        "APPLE_MINI_REGISTRATION"
+        "APPLE_MINI_REGISTRATION",
+        "MINI_RUNTIME_GROUPS_REPAIR",
+        "PAIRED_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "NativeScript and Expo in independent MiniApps plus actual return/relaunch/persistence."
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+      "remaining_acceptance": "Original signed-simulator App Groups, real NativeScript/Expo interactions and relaunch, paired product return and persistence."
     },
     {
       "gid": "1219605235147314",
@@ -795,13 +922,19 @@
         "COMPACT_BF729",
         "PAIRED_0C198",
         "REMAINING_NATIVE_UI45",
-        "APPLE_MINI_REGISTRATION"
+        "APPLE_MINI_REGISTRATION",
+        "REMAINING_NATIVE_UI45_RETRY",
+        "COMPACT_VIEWPORT_REPAIR",
+        "EMBEDDED_ORIGINAL_REPAIR",
+        "HOST_ORIGINAL_REPAIR",
+        "MINI_RUNTIME_GROUPS_REPAIR",
+        "PAIRED_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
-      "remaining_acceptance": "Complete per-capability execution/eligible reuse evidence; 45 original native UI methods still await execution."
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+      "remaining_acceptance": "Complete per-capability native proof or justified source-closure reuse; no PASS for queued/replaced/unexecuted runs."
     },
     {
       "gid": "1219605282038820",
@@ -819,12 +952,15 @@
         "COMPACT_BF729",
         "PAIRED_0C198",
         "LIVE_GEMINI_NATIVE",
-        "APPLE_MINI_REGISTRATION"
+        "APPLE_MINI_REGISTRATION",
+        "COMPACT_VIEWPORT_REPAIR",
+        "MINI_RUNTIME_GROUPS_REPAIR",
+        "PAIRED_ORIGINAL_REPAIR"
       ],
       "acceptance_status": "IN_PROGRESS",
       "asana_completed_observed": false,
       "closure_claim": false,
-      "source_sha": "c3524b52ab399a40b35bf323ef162fe5d0a6da10",
+      "source_sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
       "remaining_acceptance": "Original profiles/local signed exports, supported physical device, live model gate and release candidate; source currently targets iOS/iPadOS27 only."
     }
   ],
@@ -851,12 +987,13 @@
     }
   ],
   "remaining_internal_gates": [
-    "Read original native crash/UI attachments, fix diagnosed Host/Help/primary-navigation/Skill failures and run their affected exact assertions.",
-    "Finish actual compact/model/Unicode run44250279050, missing 45 UI + 41 native invocations + Motion B/C run44256319287, and standalone two-engine run44257287918.",
-    "Run actual paired eight-case product/share acceptance after the owned first-boot correction and any shared Host fixes.",
-    "Execute affected original Release/HANLIN_TESTING fixture flows (A2UI/tool/Python/Canvas/text/NS/Expo) with unchanged acceptance requirements.",
-    "Map actual assertions to required feature and UX rows; physical/system/visual/live-provider scope remains separately stated.",
-    "Refresh all canonical reports and original Asana tasks against actual outcomes; no source-only phase closure."
+    "Collect and repair actual 24 Host +19 UI run44264365612; original ModelContainer lifetime, iPad navigation/Help/Skill scrolling and Release fixtures now integrated.",
+    "Collect and repair compact UI2 run44263129438; Unicode/model20 already passed at bf729639 and is not repeated.",
+    "Collect actual original EmbeddedResults UI2 +native21 run44264369849; unresolved expanded handlers now require a resolver and fallback acceptance uses a real result.",
+    "Collect previously unexecuted UI45 +Runtime/Skills +Motion B/C run44264360254 with verified runtime input; prior44256319287 was infrastructure failure, not a product result.",
+    "Collect paired product/share8 run44259936836 and standalone runtimeUI2 run44263872088; original entitlements/OS containers stay required.",
+    "Map actual behavior assertions and source eligibility to required feature/UX rows, and retain distinct external live/device/signing gates.",
+    "Keep canonical reports and original Asana tasks synchronized with actual acceptance; no source-only phase closure."
   ],
-  "native_status_observed_at": "2026-11-18T07:17:06.892726+00:00"
+  "native_status_observed_at": "2026-11-18T08:11:32.503417+00:00"
 }
