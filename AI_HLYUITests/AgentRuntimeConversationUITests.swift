@@ -1614,9 +1614,29 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(overflow.waitForExistence(timeout: 5) && overflow.isHittable,
                       "The sidebar's native overflow control must be reachable", file: file, line: line)
         if overflow.exists && overflow.isHittable { overflow.tap() }
-        XCTAssertTrue(button.waitForExistence(timeout: 5) && button.isHittable,
+        if button.waitForExistence(timeout: 2) && button.isHittable { return button }
+
+        // UIKit's native overflow creates menu buttons with their visible
+        // labels, without forwarding the original toolbar identifiers. Scope
+        // the fallback to the single opened sidebar menu, never a global label.
+        let actionTitle: String
+        switch identifier {
+        case "hanlin-saved-messages-open": actionTitle = "Saved messages"
+        case "hanlin-new-chat-button": actionTitle = "New chat"
+        default:
+            XCTFail("No scoped overflow action is defined for \(identifier)", file: file, line: line)
+            return button
+        }
+        let overflowMenus = app.collectionViews.containing(.button, identifier: "Saved messages")
+        XCTAssertTrue(overflowMenus.firstMatch.waitForExistence(timeout: 5),
+                      "The opened sidebar overflow must contain Saved messages", file: file, line: line)
+        XCTAssertEqual(overflowMenus.count, 1,
+                       "The sidebar overflow must resolve to one native menu", file: file, line: line)
+        guard overflowMenus.count == 1 else { return button }
+        let menuAction = overflowMenus.firstMatch.buttons[actionTitle].firstMatch
+        XCTAssertTrue(menuAction.waitForExistence(timeout: 5) && menuAction.isHittable,
                       "Missing original chat-list action: \(identifier)", file: file, line: line)
-        return button
+        return menuAction
     }
 
     private func selectChatRow(named name: String, in app: XCUIApplication) {

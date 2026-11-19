@@ -349,7 +349,7 @@ struct ListView: View {
             Button {
                 addNewChat()
             } label: {
-                Image(systemName: "plus.bubble")
+                Label("New chat", systemImage: "plus.bubble")
             }
             .accessibilityIdentifier("hanlin-new-chat-button")
         }

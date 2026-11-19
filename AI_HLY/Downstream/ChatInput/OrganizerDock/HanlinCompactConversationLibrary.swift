@@ -76,7 +76,7 @@ struct HanlinCompactConversationLibrary: View {
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: onAddNewChat) {
-                    Image(systemName: "plus.bubble")
+                    Label("New chat", systemImage: "plus.bubble")
                 }
                 .accessibilityIdentifier("hanlin-new-chat-button")
             }

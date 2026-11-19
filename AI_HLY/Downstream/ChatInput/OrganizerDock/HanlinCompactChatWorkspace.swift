@@ -216,7 +216,7 @@ struct HanlinCompactChatWorkspace: View {
                                 path.append(.chat(id))
                             }
                         } label: {
-                            Image(systemName: "plus.bubble")
+                            Label("New chat", systemImage: "plus.bubble")
                         }
                         .accessibilityIdentifier("hanlin-new-chat-button")
                     }
