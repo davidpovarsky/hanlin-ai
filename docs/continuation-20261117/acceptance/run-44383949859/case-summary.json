@@ -1,0 +1,399 @@
+{
+  "run": 44383949859,
+  "sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+  "counts": {
+    "Failed": 15,
+    "Passed": 11
+  },
+  "cases": [
+    {
+      "id": "AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft()",
+      "result": "Failed",
+      "duration": 126.07994210720062,
+      "failures": [
+        {
+          "message": "XCTAssertTrue failed",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 1201
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 1204
+          }
+        },
+        {
+          "message": "Failed to swipe up \"hanlin-composer-page-scroll\" ScrollView: No matches found for first query match sequence: `Descendants matching type ScrollView` -> `Elements matching predicate '\"hanlin-composer-page-scroll\" IN identifiers'`, given input App element pid: 47349",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 1206
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testDiagnosticsReviewsTheAutomaticallyCapturedRunWithoutSharingItsKey()",
+      "result": "Passed",
+      "duration": 129.86026799678802,
+      "failures": []
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testDirectToolsOneTapAndRealState()",
+      "result": "Passed",
+      "duration": 66.79735994338989,
+      "failures": []
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testDockCompactHomeShowsThreeRecentWithOnePersistentComposer()",
+      "result": "Passed",
+      "duration": 77.60858905315399,
+      "failures": []
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testDraftAndAttachmentPersistenceAtoBAndFirstSend()",
+      "result": "Failed",
+      "duration": 143.02468705177307,
+      "failures": [
+        {
+          "message": "XCTAssertTrue failed - Send must remain reachable above the keyboard",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 1392
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - Sending from compact Home must create a new chat and complete first turn",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 1396
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testDrawerGrowsFromComposerNotPopover()",
+      "result": "Passed",
+      "duration": 48.87781596183777,
+      "failures": []
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testDrawerHandleDragCloseOpenAndComposerResize()",
+      "result": "Passed",
+      "duration": 76.22072100639343,
+      "failures": []
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testIpadNarrowShowsRecentAndWidePreservesSplitSidebar()",
+      "result": "Passed",
+      "duration": 52.156458020210266,
+      "failures": []
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testMarkdownLinkOpensAndClosesTheInternalSafariBrowser()",
+      "result": "Failed",
+      "duration": 99.16396808624268,
+      "failures": [
+        {
+          "message": "XCTAssertTrue failed - The original in-app Safari controller did not open: Attributes: Application, 0x11418c8c0, pid: 59983, label: 'Hanlin AI'",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 558
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - The internal browser has no web content",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 559
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testModelPopoverZoomWithKeyboardAndDraft()",
+      "result": "Failed",
+      "duration": 67.71334898471832,
+      "failures": [
+        {
+          "message": "XCTAssertTrue failed - Model picker popover must appear",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 1272
+          }
+        },
+        {
+          "message": "Failed to get matching snapshot: No matches found for first query match sequence: `Descendants matching type Any` -> `Elements matching predicate '\"hanlin-model-picker-popover\" IN identifiers'`, given input App element pid: 61449",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 1273
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview()",
+      "result": "Failed",
+      "duration": 96.49326002597809,
+      "failures": [
+        {
+          "message": "XCTAssertTrue failed - Missing original chat-list action: hanlin-saved-messages-open",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 537
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 540
+          }
+        },
+        {
+          "message": "Failed to get matching snapshot: No matches found for first query match sequence: `Descendants matching type StaticText` -> `Elements matching predicate '\"hanlin-saved-excerpt-text\" IN identifiers'`, given input App element pid: 63873",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 541
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions()",
+      "result": "Failed",
+      "duration": 125.90630507469177,
+      "failures": [
+        {
+          "message": "XCTAssertTrue failed - Actual local Diff WebKit output did not reach the original bubble",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 234
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testProductionCodeSkillLocalPythonNeedsNoUserNudge()",
+      "result": "Failed",
+      "duration": 165.318412899971,
+      "failures": [
+        {
+          "message": "Failed to determine hittability of \"hanlin-tool-consent-allow-once\" Button: Activation point invalid and no suggested hit points based on element frame",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 1577
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testRealChatUISendsPromptShowsToolActivityAndFinalAnswer()",
+      "result": "Failed",
+      "duration": 300,
+      "failures": [
+        {
+          "message": "XCTAssertEqual failed: (\"Optional(\"Runeptance tool and report the result. the local Py\")\") is not equal to (\"Optional(\"Run the local Python acceptance tool and report the result.\")\") - Native editing must preserve the complete prompt before submission",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 289
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - The original Host must request consent",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 290
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - The deterministic provider's final answer was not rendered.",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 295
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - The completed tool content toggle was not rendered.",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 298
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - The failed call must remain individually inspectable",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 302
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - Expanded tool content text did not appear: Attributes: Application, 0x1146d9a40, pid: 77227, label: 'Hanlin AI'",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 305
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - The intentional tool failure was not presented truthfully in the real chat UI.",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 310
+          }
+        },
+        {
+          "message": "Test exceeded execution time allowance of 5 minutes",
+          "source": null
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation()",
+      "result": "Failed",
+      "duration": 101.43137896060944,
+      "failures": [
+        {
+          "message": "XCTAssertTrue failed - Missing original chat-list action: hanlin-new-chat-button",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 447
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - New chat welcome information bubble did not appear",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 452
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - The original chat list must be visible",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 455
+          }
+        },
+        {
+          "message": "XCTAssertTrue failed - Expected draft 'Draft preserved across switch' to be preserved after switching chats, got: 'Draft itchpreserved across s'",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 461
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations()",
+      "result": "Failed",
+      "duration": 142.03150403499603,
+      "failures": [
+        {
+          "message": "Failed to determine hittability of \"hanlin-tool-consent-allow-once\" Button: Activation point invalid and no suggested hit points based on element frame",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 1577
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testUI04CollapsedProgressAndInspectorWithoutRawCoT()",
+      "result": "Failed",
+      "duration": 132.25788593292236,
+      "failures": [
+        {
+          "message": "XCTAssertFalse failed - Expanded original reasoning/tool sections must never display raw chain-of-thought monologue",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+            "lineNumber": 587
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testUI05RichCodeBlockHTMLCardAndAttachments()",
+      "result": "Passed",
+      "duration": 184.6918989419937,
+      "failures": []
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testUI07StopAndRetryRecoveryWithoutDuplicateBubbles()",
+      "result": "Passed",
+      "duration": 52.885634899139404,
+      "failures": []
+    },
+    {
+      "id": "AgentRuntimeConversationUITests/testViewAllZoomSourceToLibraryAndCancelledInteractiveBack()",
+      "result": "Passed",
+      "duration": 42.376179933547974,
+      "failures": []
+    },
+    {
+      "id": "AgentSkillsEmbeddedResultsUITests/testAgentSkillsDeferredExposureAndEmbeddedResultFlow()",
+      "result": "Failed",
+      "duration": 81.05750501155853,
+      "failures": [
+        {
+          "message": "XCTAssertTrue failed",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentSkillsEmbeddedResultsUITests.swift",
+            "lineNumber": 34
+          }
+        }
+      ]
+    },
+    {
+      "id": "AgentSkillsEmbeddedResultsUITests/testUnresolvableEmbeddedHandlerFallback()",
+      "result": "Passed",
+      "duration": 35.1883659362793,
+      "failures": []
+    },
+    {
+      "id": "HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette()",
+      "result": "Failed",
+      "duration": 49.53779697418213,
+      "failures": [
+        {
+          "message": "XCTAssertEqual failed: (\"Optional(\"Wrassible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinMorphComposerUITests.swift",
+            "lineNumber": 30
+          }
+        }
+      ]
+    },
+    {
+      "id": "HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel()",
+      "result": "Passed",
+      "duration": 57.50904095172882,
+      "failures": []
+    },
+    {
+      "id": "HanlinSkillCenterUITests/testCreateEditDisableDeleteCustomSkill()",
+      "result": "Failed",
+      "duration": 300,
+      "failures": [
+        {
+          "message": "Test exceeded execution time allowance of 5 minutes",
+          "source": null
+        }
+      ]
+    },
+    {
+      "id": "HanlinSkillCenterUITests/testOverrideAndResetBuiltInSkill()",
+      "result": "Failed",
+      "duration": 157.29813706874847,
+      "failures": [
+        {
+          "message": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Expected an accessible, hittable element",
+          "source": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinSkillCenterUITests.swift",
+            "lineNumber": 243
+          }
+        }
+      ]
+    }
+  ]
+}

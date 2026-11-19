@@ -1,0 +1,269 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "E0129B56-A0CB-4BE5-8EF0-6212E8DE401A",
+      "deviceName" : "Hanlin-Phase2-44383943178-1",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Multiple Runtime Warnings",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "3m 20s",
+                  "durationInSeconds" : 200.38945698738098,
+                  "name" : "testPhase2ActualPythonToolApprovalAndColdConversationRestoration()",
+                  "nodeIdentifier" : "AgentRuntimeConversationUITests/testPhase2ActualPythonToolApprovalAndColdConversationRestoration()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2ActualPythonToolApprovalAndColdConversationRestoration",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Multiple Runtime Warnings",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 46s",
+                  "durationInSeconds" : 106.54422998428345,
+                  "name" : "testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat()",
+                  "nodeIdentifier" : "AgentRuntimeConversationUITests/testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "AgentRuntimeConversationUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/AgentRuntimeConversationUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Failed to get matching snapshots: Lost connection to the application (pid 64382). (Underlying Error: Couldn’t communicate with a helper application. Try your operation again. If that fails, quit and relaunch the application and try again. The connection to service created from an endpoint was invalidated: Failed to check-in, peer may have been unloaded: mach_error=10000003.)",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinCanvasRuntimeUITests.swift",
+                        "lineNumber" : 26
+                      }
+                    }
+                  ],
+                  "duration" : "1m 27s",
+                  "durationInSeconds" : 87.81397807598114,
+                  "name" : "testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch()",
+                  "nodeIdentifier" : "HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "HanlinCanvasRuntimeUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinCanvasRuntimeUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Multiple Runtime Warnings",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 8s",
+                  "durationInSeconds" : 68.41025996208191,
+                  "name" : "testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation()",
+                  "nodeIdentifier" : "HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinContextualTextToolsUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinContextualTextToolsUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                        "lineNumber" : 294
+                      }
+                    }
+                  ],
+                  "duration" : "1m 7s",
+                  "durationInSeconds" : 67.4855260848999,
+                  "name" : "testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+                  "nodeIdentifier" : "HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                        "lineNumber" : 294
+                      }
+                    },
+                    {
+                      "name" : "This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 14s",
+                  "durationInSeconds" : 74.14566791057587,
+                  "name" : "testNewConversationWorksWithoutOptimizationModel()",
+                  "nodeIdentifier" : "HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                        "lineNumber" : 294
+                      }
+                    }
+                  ],
+                  "duration" : "1m 9s",
+                  "durationInSeconds" : 69.14015400409698,
+                  "name" : "testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+                  "nodeIdentifier" : "HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                        "lineNumber" : 294
+                      }
+                    }
+                  ],
+                  "duration" : "1m 6s",
+                  "durationInSeconds" : 66.90784895420074,
+                  "name" : "testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+                  "nodeIdentifier" : "HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                        "lineNumber" : 294
+                      }
+                    }
+                  ],
+                  "duration" : "1m 17s",
+                  "durationInSeconds" : 77.56558799743652,
+                  "name" : "testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+                  "nodeIdentifier" : "HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                        "lineNumber" : 294
+                      }
+                    }
+                  ],
+                  "duration" : "1m 13s",
+                  "durationInSeconds" : 73.09718990325928,
+                  "name" : "testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+                  "nodeIdentifier" : "HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                        "lineNumber" : 294
+                      }
+                    }
+                  ],
+                  "duration" : "1m 11s",
+                  "durationInSeconds" : 71.13704693317413,
+                  "name" : "testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+                  "nodeIdentifier" : "HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "HanlinNativeA2UIChatUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinNativeA2UIChatUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "AI_HLYUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "artifact_id": 14475051412,
+  "source_sha": "bc7b24414660e0481c2502c75eb9075e6f3d6a74",
+  "archive_size": 121322709,
+  "sha256": "783d6af426a3235a67af8fbbc8da42d4b7814b528c43b9b61a247b4b7b5156fe",
+  "expected_sha256": "783d6af426a3235a67af8fbbc8da42d4b7814b528c43b9b61a247b4b7b5156fe",
+  "full_archive_digest_verified": true,
+  "selected_members_rechecked_against_complete_archive": 22,
+  "partial_member_mismatches": []
+}

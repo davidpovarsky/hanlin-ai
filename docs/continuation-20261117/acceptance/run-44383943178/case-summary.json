@@ -1,0 +1,160 @@
+{
+  "08-downstream-unit-test-results.json": {
+    "methods": 32,
+    "invocations": 34,
+    "counts": {
+      "Passed": 32
+    },
+    "failed": []
+  },
+  "08-nativescript-production-ui-test-results.json": {
+    "methods": 11,
+    "invocations": 11,
+    "counts": {
+      "Passed": 3,
+      "Failed": 8
+    },
+    "failed": [
+      {
+        "nodeIdentifier": "HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch()",
+        "name": "testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch()",
+        "result": "Failed",
+        "durationInSeconds": 87.81397807598114,
+        "invocations": 1,
+        "failures": [
+          {
+            "name": "Failed to get matching snapshots: Lost connection to the application (pid 64382). (Underlying Error: Couldn’t communicate with a helper application. Try your operation again. If that fails, quit and relaunch the application and try again. The connection to service created from an endpoint was invalidated: Failed to check-in, peer may have been unloaded: mach_error=10000003.)",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinCanvasRuntimeUITests.swift",
+              "lineNumber": 26
+            }
+          }
+        ]
+      },
+      {
+        "nodeIdentifier": "HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+        "name": "testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+        "result": "Failed",
+        "durationInSeconds": 67.4855260848999,
+        "invocations": 1,
+        "failures": [
+          {
+            "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+              "lineNumber": 294
+            }
+          }
+        ]
+      },
+      {
+        "nodeIdentifier": "HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel()",
+        "name": "testNewConversationWorksWithoutOptimizationModel()",
+        "result": "Failed",
+        "durationInSeconds": 74.14566791057587,
+        "invocations": 1,
+        "failures": [
+          {
+            "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+              "lineNumber": 294
+            }
+          },
+          {
+            "name": "This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread.",
+            "nodeType": "Runtime Warning"
+          }
+        ]
+      },
+      {
+        "nodeIdentifier": "HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+        "name": "testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+        "result": "Failed",
+        "durationInSeconds": 69.14015400409698,
+        "invocations": 1,
+        "failures": [
+          {
+            "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+              "lineNumber": 294
+            }
+          }
+        ]
+      },
+      {
+        "nodeIdentifier": "HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+        "name": "testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+        "result": "Failed",
+        "durationInSeconds": 66.90784895420074,
+        "invocations": 1,
+        "failures": [
+          {
+            "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+              "lineNumber": 294
+            }
+          }
+        ]
+      },
+      {
+        "nodeIdentifier": "HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+        "name": "testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+        "result": "Failed",
+        "durationInSeconds": 77.56558799743652,
+        "invocations": 1,
+        "failures": [
+          {
+            "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+              "lineNumber": 294
+            }
+          }
+        ]
+      },
+      {
+        "nodeIdentifier": "HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+        "name": "testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+        "result": "Failed",
+        "durationInSeconds": 73.09718990325928,
+        "invocations": 1,
+        "failures": [
+          {
+            "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+              "lineNumber": 294
+            }
+          }
+        ]
+      },
+      {
+        "nodeIdentifier": "HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+        "name": "testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+        "result": "Failed",
+        "durationInSeconds": 71.13704693317413,
+        "invocations": 1,
+        "failures": [
+          {
+            "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+              "lineNumber": 294
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

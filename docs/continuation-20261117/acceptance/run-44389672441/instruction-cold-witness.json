@@ -1,0 +1,60 @@
+{
+  "after": [
+    {
+      "active_executions": 0,
+      "kind": "node",
+      "state": "stopped"
+    },
+    {
+      "active_executions": 0,
+      "kind": "localPython",
+      "state": "stopped"
+    },
+    {
+      "active_executions": 0,
+      "kind": "javaScriptCore",
+      "state": "stopped"
+    },
+    {
+      "active_executions": 0,
+      "kind": "shell",
+      "state": "stopped"
+    },
+    {
+      "active_executions": 0,
+      "kind": "typeScript",
+      "state": "stopped"
+    }
+  ],
+  "before": [
+    {
+      "active_executions": 0,
+      "kind": "node",
+      "state": "stopped"
+    },
+    {
+      "active_executions": 0,
+      "kind": "localPython",
+      "state": "stopped"
+    },
+    {
+      "active_executions": 0,
+      "kind": "javaScriptCore",
+      "state": "stopped"
+    },
+    {
+      "active_executions": 0,
+      "kind": "shell",
+      "state": "stopped"
+    },
+    {
+      "active_executions": 0,
+      "kind": "typeScript",
+      "state": "stopped"
+    }
+  ],
+  "cold_start_observed": true,
+  "observed_job_count": 0,
+  "route": "real ZIP import / model catalog / load / read / SDK / disable / re-enable",
+  "schema": 1
+}

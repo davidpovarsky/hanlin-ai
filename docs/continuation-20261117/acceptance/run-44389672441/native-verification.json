@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "verified_at_utc": "2026-11-18T23:46:59.849114+00:00",
+  "run_id": 44389672441,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44389672441",
+  "source_sha": "8c10ebd066826511e4d20d0c763491764eb44a95",
+  "artifact_id": 14478211965,
+  "artifact_sha256": "0952d89683356615ec40ac133f797198a75ad8787f66d23584f081aa6b54d9cb",
+  "artifact_digest_matches_github": true,
+  "workflow_conclusion": "success",
+  "counts": {
+    "selected_methods": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0
+  },
+  "methods": [
+    {
+      "duration": "0.0088s",
+      "durationInSeconds": 0.00875711441040039,
+      "name": "Canvas presentation retains its original record and model across endpoint changes",
+      "nodeIdentifier": "ModelPopoverZoomOrderTests/canvasPresentationRetainsItsOriginalOrigin()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ModelPopoverZoomOrderTests/canvasPresentationRetainsItsOriginalOrigin()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.65s",
+      "durationInSeconds": 0.6548399925231934,
+      "name": "ordinaryInstructionsLoadReadAndContinueWithoutRuntimeWork()",
+      "nodeIdentifier": "SkillRuntimeProductTests/ordinaryInstructionsLoadReadAndContinueWithoutRuntimeWork()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/ordinaryInstructionsLoadReadAndContinueWithoutRuntimeWork()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    }
+  ],
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "D0858274-0BFD-4096-A947-A9938948D394",
+      "deviceName": "Hanlin-Phase2-44389672441-1",
+      "modelName": "iPad Pro 13-inch (M5)",
+      "osBuildNumber": "24B8117",
+      "osVersion": "27.2",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "xcode": "27.2 (27B52)",
+  "instruction_cold_start": {
+    "after": [
+      {
+        "active_executions": 0,
+        "kind": "node",
+        "state": "stopped"
+      },
+      {
+        "active_executions": 0,
+        "kind": "localPython",
+        "state": "stopped"
+      },
+      {
+        "active_executions": 0,
+        "kind": "javaScriptCore",
+        "state": "stopped"
+      },
+      {
+        "active_executions": 0,
+        "kind": "shell",
+        "state": "stopped"
+      },
+      {
+        "active_executions": 0,
+        "kind": "typeScript",
+        "state": "stopped"
+      }
+    ],
+    "before": [
+      {
+        "active_executions": 0,
+        "kind": "node",
+        "state": "stopped"
+      },
+      {
+        "active_executions": 0,
+        "kind": "localPython",
+        "state": "stopped"
+      },
+      {
+        "active_executions": 0,
+        "kind": "javaScriptCore",
+        "state": "stopped"
+      },
+      {
+        "active_executions": 0,
+        "kind": "shell",
+        "state": "stopped"
+      },
+      {
+        "active_executions": 0,
+        "kind": "typeScript",
+        "state": "stopped"
+      }
+    ],
+    "cold_start_observed": true,
+    "observed_job_count": 0,
+    "route": "real ZIP import / model catalog / load / read / SDK / disable / re-enable",
+    "schema": 1
+  },
+  "limits": [
+    "This receipt proves the selected cold-process instruction-only product route on iPad Simulator, not physical-device or whole-product acceptance.",
+    "The Canvas case is a native state/identity unit test, not the Canvas UI end-to-end test."
+  ],
+  "ci_workspace_caveat": {
+    "trackedWorkspaceModified": true,
+    "description": "Official CI build preparation regenerates RuntimeManifest.json; the artifact does not retain a full dirty-worktree diff. Do not claim a byte-pristine checkout."
+  },
+  "build_provenance_source_matches": true,
+  "resolved_lock_matches_executed_source_bytes": true,
+  "resolved_lock_sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+  "resolved_pin_count": 39
+}

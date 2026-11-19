@@ -1,0 +1,46 @@
+{
+  "source_sha": "bc7b24414660e0481c2502c75eb9075e6f3d6a74",
+  "full_archive_digest_verified": true,
+  "raw_results": {
+    "app-split-evidence/reused-host-origin/44351078724/native-dependencies.log": {
+      "tests": 153,
+      "pass": 152,
+      "fail": 0,
+      "skipped": 1
+    },
+    "app-split-evidence/reused-host-origin/44351078724/package-lifecycle.log": {
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "skipped": 0
+    },
+    "app-split-evidence/paired-product/com.itorah.chavrusachat-group-container.txt": "/Users/runner/Library/Developer/CoreSimulator/Devices/5F3A79E5-EE50-43C7-949E-B29A3CFAAD42/data/Containers/Shared/AppGroup/6FA2C80D-3CE8-40E0-B61E-90A53862D160",
+    "app-split-evidence/paired-product/com.itorah.hanlinminiapps-group-container.txt": "/Users/runner/Library/Developer/CoreSimulator/Devices/5F3A79E5-EE50-43C7-949E-B29A3CFAAD42/data/Containers/Shared/AppGroup/6FA2C80D-3CE8-40E0-B61E-90A53862D160"
+  },
+  "members": [
+    {
+      "member": "app-split-evidence/reused-host-origin/44351078724/native-dependencies.log",
+      "sha256": "1bbdf3dc9187537ad3605ccb5eacb9c1285fe0521e9c673bb6c84f8936ec2bcf",
+      "zip_crc32_verified": true,
+      "size": 180867
+    },
+    {
+      "member": "app-split-evidence/reused-host-origin/44351078724/package-lifecycle.log",
+      "sha256": "1348728bba1b7e4ef0abdd211470f90b0067e32a6186fb74567af42a887340e4",
+      "zip_crc32_verified": true,
+      "size": 1412
+    },
+    {
+      "member": "app-split-evidence/paired-product/com.itorah.chavrusachat-group-container.txt",
+      "sha256": "62b5214921ad10c1a061a84aa22c5dc11de3dbc2f495a210af165b4724d23ff8",
+      "zip_crc32_verified": true,
+      "size": 160
+    },
+    {
+      "member": "app-split-evidence/paired-product/com.itorah.hanlinminiapps-group-container.txt",
+      "sha256": "62b5214921ad10c1a061a84aa22c5dc11de3dbc2f495a210af165b4724d23ff8",
+      "zip_crc32_verified": true,
+      "size": 160
+    }
+  ]
+}

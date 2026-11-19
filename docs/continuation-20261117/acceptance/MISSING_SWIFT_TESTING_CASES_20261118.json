@@ -1,0 +1,51 @@
+{
+  "recorded_at": "2026-11-18T19:26:25.811065+00:00",
+  "target_sha": "3fcdedbdf980c000fabf484ee4568b7c253d766e",
+  "reason": "44358114755 raw xcresult proves eight requested granular Swift Testing selectors were omitted. Retain all behavior and require actual executed case nodes. Correct exact method identities; no product change justified.",
+  "execute": [
+    "AI_HLYTests/SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:)",
+    "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)",
+    "AI_HLYTests/AgentSkillsExposureTests/skillCatalogRegistration()",
+    "AI_HLYTests/AgentSkillsExposureTests/capabilitySessionIsolation()",
+    "AI_HLYTests/AgentSkillsExposureTests/loadSkillToolExecution()",
+    "AI_HLYTests/AgentSkillsExposureTests/productionSkillCatalogSynchronization()",
+    "AI_HLYTests/AgentSkillsExposureTests/loadSkillInstructionContextPropagation()",
+    "AI_HLYTests/AgentSkillsExposureTests/fullSDKSkillToToolFlow()"
+  ],
+  "prior_run": 44358114755,
+  "prior_source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+  "already_executed_pass": {
+    "SkillOpenClawPolicyTests": 5,
+    "HanlinSkillCenterUITests": 3
+  },
+  "reuse_status": "Original authenticated results retained; final dependency reuse reconciliation separate. These passing cases are not requested in this targeted missing-case run.",
+  "source_delta": [
+    "docs/continuation-20261117/00_PHASE_2_RESULT.md",
+    "docs/continuation-20261117/00_PHASE_3_RESULT.md",
+    "docs/continuation-20261117/PHASE_2_ACCEPTANCE_MATRIX.md",
+    "docs/continuation-20261117/PHASE_2_INTEGRATION_LEDGER.json",
+    "docs/continuation-20261117/PHASE_3_ACCEPTANCE_MATRIX.md",
+    "docs/continuation-20261117/PHASE_3_INTEGRATION_LEDGER.json",
+    "docs/continuation-20261117/RELEASE_CHECKLIST.md",
+    "docs/continuation-20261117/acceptance/ACCEPTANCE_REGISTER.json",
+    "docs/continuation-20261117/acceptance/APPLE_PORTAL_CONFIGURATION_20261118.json",
+    "docs/continuation-20261117/acceptance/INTEGRATION_CHANGE_MANIFEST.json",
+    "docs/continuation-20261117/acceptance/NATIVE_RESULTS_AFTER_PUBLICATION_20261118.json"
+  ],
+  "platform": "Existing Xcode 27 / iOS 27.2 simulator workflow; actual fingerprint captured by run",
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYTests/SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:),AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:),AI_HLYTests/AgentSkillsExposureTests/skillCatalogRegistration(),AI_HLYTests/AgentSkillsExposureTests/capabilitySessionIsolation(),AI_HLYTests/AgentSkillsExposureTests/loadSkillToolExecution(),AI_HLYTests/AgentSkillsExposureTests/productionSkillCatalogSynchronization(),AI_HLYTests/AgentSkillsExposureTests/loadSkillInstructionContextPropagation(),AI_HLYTests/AgentSkillsExposureTests/fullSDKSkillToToolFlow()",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "compare_base_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+    "fast_validation_only": "true",
+    "simulator_e2e_only": "false",
+    "testflight_upload": "false",
+    "runtime_bundle_only": "false",
+    "runtime_publish_release": "false",
+    "full_validation": "false",
+    "force_clean_build": "false",
+    "measure_warm_rebuild": "false",
+    "nativescript_poc_only": "false"
+  }
+}

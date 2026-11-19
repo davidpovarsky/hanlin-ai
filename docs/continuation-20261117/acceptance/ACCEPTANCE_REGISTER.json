@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-18T17:39:51.317232+00:00",
+  "generated_at": "2026-11-19T00:13:13.651919+00:00",
   "status": "IN_PROGRESS_NOT_A_PHASE_COMPLETION",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
-  "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+  "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
   "branch": "codex/hanlin-product-completion-20261117",
   "phase_2": "IN_PROGRESS",
   "phase_3": "IN_PROGRESS",
   "release": "NO_GO",
-  "authority": "Owner authorized both phases; no repeat stage-start approval required. One development agent; original worktrees and data preserved.",
+  "authority": "On 19 November 2026, the owner explicitly authorized required actions, reads, runs, transfers and uploads across projects and repositories, and requested removal of obsolete local agent/claude permission and stop gates. Continue authorized completion without repeated approval. Actual access and truthful acceptance evidence remain factual requirements.",
   "rules": [
     "Each proof applies only to its named SHA and scope.",
     "RUNNING/QUEUED/NOT_RUN is not PASS.",
@@ -538,6 +538,149 @@
       "sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
       "scope": "Both original products' required capabilities and App Groups verified; four original extension group assignments unchanged and verified. Profiles/export/App Store record remain pending.",
       "report": "docs/continuation-20261117/acceptance/APPLE_PORTAL_CONFIGURATION_20261118.json"
+    },
+    {
+      "id": "MINI_RUNTIME_NATIVE2_44351078724",
+      "status": "EXECUTED_PASS",
+      "run": 44351078724,
+      "sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "scope": "Both actual standalone NativeScript and Expo UI cases passed without skipped or failed cases. Original OS App Groups and real runtime/React events verified. Paired, signing and physical acceptance remain separate.",
+      "report": "docs/continuation-20261117/acceptance/run-44351078724/native-verification.json",
+      "artifact_id": 14454531510,
+      "artifact_sha256": "8ebe0c0ec78b94ce960206551f474205a091cf8dabf24432a12773496aaa328d"
+    },
+    {
+      "id": "OPENCLAW_NATIVE5_SKILLUI3_44358114755",
+      "status": "COMPONENTS_EXECUTED_PASS_WORKFLOW_FAILED",
+      "run": 44358114755,
+      "sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "scope": "Five native policy methods and three real Skill UI methods passed. Actual Node24.5 iOS/arm64 JITless executed28 upstream cases,64 assertions and11 contract cases. The overall workflow failed because eight other selectors omitted signatures and did not execute.",
+      "report": "docs/continuation-20261117/acceptance/run-44358114755/artifact-provenance.json",
+      "artifact_id": 14463975669,
+      "artifact_sha256": "cd8fb4bbb31748910a5765aba2bb9298dc1f3d5b54f7e859191f9177f8902375"
+    },
+    {
+      "id": "SKILL_MISSING8_NATIVE34_44380551059",
+      "status": "EXECUTED_PASS",
+      "run": 44380551059,
+      "sha": "3fcdedbdf980c000fabf484ee4568b7c253d766e",
+      "scope": "Exactly eight corrected methods executed34 invocation leaves:6 metadata-boundary,22 imported-Skill and6 SDK/catalog/session cases. All passed, without skipped or failed cases. The retained reuse audit stops at282b6d7c, before the ordinary-policy changes.",
+      "report": "docs/continuation-20261117/acceptance/run-44380551059/native-verification.json",
+      "artifact_id": 14465637934,
+      "artifact_sha256": "525f34eeb23f003b4f9eeb1e6154724c699acbed3a484c3e53f8b0e4adc856ef"
+    },
+    {
+      "id": "MOTION_B_FAIL_C_PASS_44358121911",
+      "status": "PARTIAL_EXECUTED_PASS",
+      "run": 44358121911,
+      "sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "scope": "Original C passed long content, RTL, Dynamic Type, rotation and collapse. B failed one callback versus three required. Retained video and receipt show stable header coordinates.",
+      "report": "build/motion-review-44358121911/tests.json",
+      "artifact_id": 14458488592,
+      "raw_archive_sha256": "0f2c34377c0fa02d5d96594d5cb810036ab0713353d9213154462adbb1011b05"
+    },
+    {
+      "id": "SIGNING_MANUAL_PREPARATION_499",
+      "status": "BOTH_DEVICE_ARCHIVES_PASS_EXPORTS_FAIL",
+      "run": 44383723446,
+      "sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+      "scope": "Original distribution identity and all six profile resources validated; both iOS device archives passed. Both App Store exports failed because Xcode could not locate matching installed profiles. Exported entitlement verification NOT_RUN; cleanup PASS. Fourteen prior local preparation tests remain scoped local evidence.",
+      "report": "docs/continuation-20261117/acceptance/SIGNING_MANUAL_PREPARATION_20261118.json",
+      "artifact_id": 14476576495,
+      "artifact_sha256": "79b287d5888e831208e5c5b4784f388aed111dcc4825c0eeb1b185afd2cb303f",
+      "raw_report": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing\\members\\app-split-evidence\\signed-products\\acceptance.json"
+    },
+    {
+      "id": "LIVE_PROVIDER_AUTHORIZED_TRANSFER_44385752088",
+      "status": "SIMULATOR_PREPARATION_FAILED_LIVE_PRODUCT_NOT_RUN",
+      "run": 44385752088,
+      "sha": "282b6d7cd8525aac7cf54859f31c13af434c27c0",
+      "scope": "Owner-authorized encrypted Actions secret queue/delete was previously verified. Native owned_simulator failed at simctl list devices -j before any credential was staged. Witness is NOT_ACCEPTED with credential_exported false and NO_CREDENTIAL_STAGED. No provider authentication failure or functional live-provider pass is established.",
+      "report": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\live\\members\\acceptance.json",
+      "credential_value_retained": false,
+      "repository_secret_cleanup": "VERIFIED_ABSENT",
+      "artifact_id": 14477102458,
+      "artifact_sha256": "e02754127067c1afc491d538dbd448edf42bc156ef233dd4445a1ee6d887e7a8",
+      "credential_cleanup": "NO_CREDENTIAL_STAGED",
+      "functional_product_status": "NOT_RUN"
+    },
+    {
+      "id": "PHYSICAL_TRANSPORT_AVAILABILITY_20261118",
+      "status": "NO_DEVELOPER_USB_TRANSPORT_OBSERVED",
+      "run": null,
+      "sha": "6f294a8fe2047e028f5b5f75df485825027badf0",
+      "scope": "Connected Windows host exposes only iPad Bluetooth/audio profiles and no present Apple USB device. Scope is this host transport, not every owned device.",
+      "report": "docs/continuation-20261117/acceptance/PHYSICAL_DEVICE_AVAILABILITY_20261118.json"
+    },
+    {
+      "id": "INSTRUCTIONS_COLD_AND_CANVAS2_44389672441",
+      "status": "EXECUTED_PASS",
+      "run": 44389672441,
+      "sha": "8c10ebd066826511e4d20d0c763491764eb44a95",
+      "scope": "Actual ZIP import, catalog, load, resource read, SDK, disable and re-enable left all five engines stopped before and after, with zero active executions and zero observed jobs. Cold receipt is true. Native Canvas origin-identity unit also passed. Canvas UI and physical acceptance are separate.",
+      "report": "docs/continuation-20261117/acceptance/run-44389672441/native-verification.json",
+      "artifact_id": 14478211965,
+      "artifact_sha256": "0952d89683356615ec40ac133f797198a75ad8787f66d23584f081aa6b54d9cb"
+    },
+    {
+      "id": "NATIVE_TERMINAL_OBSERVATION_20261119",
+      "status": "TERMINAL_RAW_CASES_RECONCILED",
+      "run": null,
+      "sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "scope": "Eight historical runs are terminal. Raw paired 8, compact 2, Host units 34 plus UI 11, wide UI 26, signing archive/export, Motion D diagnostic and live preparation subresults are reconciled. Five newly dispatched native runs remain pending and are not passes.",
+      "report": "docs/continuation-20261117/acceptance/NATIVE_TERMINAL_OBSERVATION_20261119.json"
+    },
+    {
+      "id": "PAIRED_NATIVE8_44382101304",
+      "status": "FOUR_NATIVE_HOST_PASS_FOUR_UI_FAIL",
+      "run": 44382101304,
+      "sha": "bc7b24414660e0481c2502c75eb9075e6f3d6a74",
+      "scope": "Four original Share Inbox native host cases passed. Two companion cases stop at keyboard-covered send; share UI stops at launcher hittability; transfer stops before revealing the offscreen lazy ScriptUI card. Actual App Group and both builds passed.",
+      "artifact_id": 14475051412,
+      "artifact_sha256": "783d6af426a3235a67af8fbbc8da42d4b7814b528c43b9b61a247b4b7b5156fe",
+      "report": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\paired\\paired-native-verification.json"
+    },
+    {
+      "id": "COMPACT_KEYBOARD2_44382535232",
+      "status": "TWO_NATIVE_UI_FAILURES",
+      "run": 44382535232,
+      "sha": "26219eb8fa965097e761f9dc30e7ec51f97a16ae",
+      "scope": "Both compact Composer cases fail because the keyboard covers the persistent launcher. Exact AX/geometry and full archive retained. Keyboard ownership source correction awaits native rerun.",
+      "artifact_id": 14467388168,
+      "artifact_sha256": "8d59d581cbe6d99f9f89024f24afa3d9989e3d7a77b996b4ae8986ee5d1edb38",
+      "report": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\authenticated-ui-observations.json"
+    },
+    {
+      "id": "HOST_EDITOR_NATIVE34_UI11_44383943178",
+      "status": "UNITS34_PASS_UI3_PASS8_FAIL",
+      "run": 44383943178,
+      "sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+      "scope": "32 native unit methods / 34 invocations passed. Of 11 UI cases, 3 passed; 7 NativeA2UI cases stop before send and Canvas loses AX connection. Exact raw members authenticated; full ZIP digest pending.",
+      "artifact_id": 14472355631,
+      "artifact_official_sha256": "sha256:14f01a51a6f58b9d7c376e14aa4bc0e570fdf3ac506bc8c5b200e9571b9ff82f",
+      "full_archive_digest_verified": false,
+      "report": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\host-editor-44383943178\\case-summary.json"
+    },
+    {
+      "id": "WIDE_UI26_44383949859",
+      "status": "ELEVEN_PASS_FIFTEEN_FAIL",
+      "run": 44383949859,
+      "sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+      "scope": "Exactly 26 UI cases: 11 passed, 15 failed. Failures include keyboard reachability, native prompt corruption, navigation and distinct embedded/Markdown/reasoning/Skill Center assertions; retain per-case diagnosis. Exact raw members authenticated; full ZIP digest pending.",
+      "artifact_id": 14472548287,
+      "artifact_official_sha256": "sha256:8f74d043e90cf15d7b31572c2b1e158af276e6141fba57808d7519377b9b9a2a",
+      "full_archive_digest_verified": false,
+      "report": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\44383949859\\case-summary.json"
+    },
+    {
+      "id": "MOTION_D_DIAGNOSTIC6_44384450378",
+      "status": "DIAGNOSTIC_CAPTURED_ONLY",
+      "run": 44384450378,
+      "sha": "282b6d7cd8525aac7cf54859f31c13af434c27c0",
+      "scope": "One diagnostic native method captured six control/delivery conditions. Native reference controls inside ScrollView also lose a multitap; independent coordinate taps arrive only after animations end. Original B remains failed; this is not Motion acceptance.",
+      "artifact_id": 14469839211,
+      "artifact_sha256": "fb0da5c70ded87c1ea110e6dea3577b1f4c4a716bbd5cf5f3cb3c8aff4f955ba",
+      "report": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\authenticated-ui-observations.json"
     }
   ],
   "source_tasks": [
@@ -1315,18 +1458,23 @@
   "external_gates": [
     {
       "id": "PHYSICAL_DEVICE",
-      "status": "UNAVAILABLE",
-      "need": "Authorized supported physical iPad/iPhone accessible to the testing host; existing CI audit finds no physical device."
+      "status": "NO_DEVELOPER_USB_TRANSPORT_OBSERVED",
+      "need": "The connected Windows host shows only iPad Bluetooth/audio profiles and no Apple USB developer transport. Physical acceptance remains unverified where specifically required.",
+      "evidence": "acceptance/PHYSICAL_DEVICE_AVAILABILITY_20261118.json"
     },
     {
       "id": "LIVE_MODEL_PROVIDER",
-      "status": "CI_PROVIDER_SECRET_MISSING",
-      "need": "HANLIN_ACCEPTANCE_GEMINI_API_KEY is absent from CI. Prior automatic review rejected exporting the existing host credential; that history remains, and no secret was transferred. Complete on a host with an already authorized provider account or with the required CI secret supplied through an approved credential route."
+      "status": "SIMULATOR_PREPARATION_FAILED_NOT_AUTH_FAILURE",
+      "need": "Authorized original route remains available. The native run stopped on simctl list devices -j before staging any credential; witness NO_CREDENTIAL_STAGED. Repair simulator discovery and rerun the original product case.",
+      "run": 44385752088,
+      "evidence": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\live\\members\\acceptance.json"
     },
     {
       "id": "SIGNED_PROVISIONING",
-      "status": "PROFILES_EXPORT_PENDING",
-      "need": "Apple Developer authentication completed. Both original groups are assigned to MiniApps and verified on AI plus all four extensions. Required missing capabilities were saved and read back: Extended Virtual Addressing on both apps, Time Sensitive Notifications and WeatherKit on MiniApps. Original certificate retained. Automatic profile regeneration, signed exports and separate Mini App Store record remain pending."
+      "status": "PROFILES_READY_ARCHIVES_PASS_EXPORTS_FAIL",
+      "need": "Existing identity and six original profiles validated; both device archives passed. Xcode could not find the matching installed App Store profiles during export. Repair profile discovery, then verify exports and exported entitlements.",
+      "run": 44383723446,
+      "evidence": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing\\members\\app-split-evidence\\signed-products\\acceptance.json"
     },
     {
       "id": "APPROVED_FULL_VISUAL_REFERENCE",
@@ -1335,20 +1483,23 @@
     },
     {
       "id": "PUBLIC_SOURCE_PUBLICATION",
-      "status": "RESOLVED",
-      "need": "Both reviewed original public branches are published and verified after explicit owner consent. Reuse the recorded authorization for the same scoped actions; native acceptance is separate."
+      "status": "AUTHORIZED_PUBLISHED_BRANCH",
+      "need": "The current owner authorized required reads, actions, runs, transfers and uploads, and requested removal of local repeat-approval gates. The published branch SHA is recorded below; product acceptance is separate."
     }
   ],
   "remaining_internal_gates": [
-    "Read the four remaining native runs at their exact SHAs and inspect raw cases. Original-policy/UI and Motion diagnostics were dispatched at a9085987; compact and standalone runtime runs remain separately scoped.",
-    "Reexecute interrupted original Host/Editor/A2UI/Canvas/contextual/Safari/wide/EmbeddedResults obligations after the new product candidate passes its focused native gate. Cancelled runs and compilation do not replace test acceptance.",
-    "Expanded original OpenClaw policy has portable11/28original/64assertion evidence, not current Apple acceptance. Preserve unknown facts, original Yams/Runtime05/Host boundaries and physical-iPad performance obligations.",
-    "Standalone MiniApps baseline20+7 passed at87cf107c. Finish original NativeScript/ExpoUI2 and paired/share8 using actual OS App Groups; simulator signing is not distribution signing.",
-    "Motion historical B/C failures remain open. New0c runner failed before any case; a908 retains raw bundles and scoped crash diagnostics even if the reader fails. Reuse historical A100 only within its proven unchanged scope.",
-    "Finish behavior-specific feature/UX coverage and current acceptance across both apps;278-row matrix remains20 partial and0 fully accepted until mapped proofs are reviewed. Never double count parameter summaries.",
-    "Apple sign-in/profiles/exports, live-provider secret/account, physical-device VoiceOver/StageManager/performance and full visual-reference scope remain independent gates. No phase closure, main merge or TestFlight."
+    "Read all seven pending native runs and original raw cases at their recorded SHAs. Source fixes and queued jobs are not acceptance results.",
+    "Verify compact keyboard, native editor and paired search corrections through the three 90314963 native runs, preserving all original assertions.",
+    "Diagnose Canvas AX connection loss and the distinct failures in the wide 26-case suite; preserve its 11 genuine passes.",
+    "Complete original-policy offline and Runtime05 global-generation/cache native validation through the two 3de8cf6 runs.",
+    "Use Motion D to distinguish native input delivery from animation behavior; original B remains an unmet acceptance case.",
+    "Fix Xcode profile discovery for both original App Store exports. Identity/profile resources and archives passed; signed exports and exported entitlements remain unverified.",
+    "Repair live owned-simulator discovery before account staging, then execute the original live Gemini/Host/Python/cold-reopen route. NO_CREDENTIAL_STAGED is not an authentication failure.",
+    "Map actual assertions to all 278 preserved feature rows and 26 UX decisions; retain every original Definition of Done and all 30 source tasks.",
+    "Complete physical-device and OS entry-point obligations where required; the observed Windows host has no Apple USB developer transport.",
+    "Update original Asana tasks after verified milestones. Phase 2 and Phase 3 remain in progress because acceptance is incomplete."
   ],
-  "native_status_observed_at": "2026-11-18T17:28:36.269728+00:00",
+  "native_status_observed_at": "2026-11-19T00:10:28.614364+00:00",
   "feature_coverage_snapshot": {
     "path": "docs/continuation-20261117/acceptance/FEATURE_ACCEPTANCE_278.json",
     "source_anchor_sha": "4f4f927db97aefc7ca3df558993a2fa769f8eea1",
@@ -1358,15 +1509,15 @@
     "scope": "20 model/history native,6 editor native,8 selected SDK native and6 original MiniApps UI unique cases within their recorded runs; no new executions or full-product claim."
   },
   "publication": {
-    "published_source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
-    "local_review_source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+    "published_source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+    "local_review_source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
     "unpublished_commits": [],
-    "status": "PUBLISHED_REMOTE_HEADS_VERIFIED",
+    "status": "PUBLISHED_REMOTE_HEAD_VERIFIED",
     "destination": "https://github.com/davidpovarsky/hanlin-ai.git",
     "branch": "codex/hanlin-product-completion-20261117",
-    "reason": "The owner explicitly approved the reviewed public destinations and payload. Both original branches are published and verified; no repeated authorization is needed for the same scoped continuation. Native acceptance remains pending.",
-    "scope": "Source/build/test/documentation commits only. No credentials, private keys, raw device data, ignored artifacts or original untracked work are proposed.",
-    "published_sha_verified_at": "2026-11-18T17:28:36.269728+00:00",
+    "reason": "On 19 November 2026, the owner explicitly authorized required actions, reads, runs, transfers and uploads across projects and repositories, and requested removal of obsolete local agent/claude permission and stop gates. Continue authorized completion without repeated approval. Actual access and truthful acceptance evidence remain factual requirements.",
+    "scope": "Owner-authorized continuation across the original repositories. Publication, local checks and native acceptance are recorded separately.",
+    "published_sha_verified_at": "2026-11-19T00:13:13.651919+00:00",
     "upstream_dependency": {
       "repo": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
       "branch": "codex/hanlin-markdown-link-continuation-20261118",
@@ -1385,109 +1536,1662 @@
   },
   "pending_native_runs": [
     {
-      "run": 44349642458,
-      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
-      "scope": "Two original compact Composer iPhone UI methods",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44349642458",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "run": 44425850134,
+      "source_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+      "scope": "skills-policy-offline-cache",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425850134",
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
       "acceptance_claim": false,
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-3de8cf6c\\dispatched-runs.json"
     },
     {
-      "run": 44351078724,
-      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
-      "scope": "Standalone MiniApps original NativeScript/Expo UI2",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44351078724",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "run": 44425855469,
+      "source_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+      "scope": "isolated-global-npm-cache",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425855469",
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
       "acceptance_claim": false,
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-3de8cf6c\\dispatched-runs.json"
     },
     {
-      "run": 44358114755,
-      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
-      "scope": "Original OpenClaw policy, affected Runtime05/catalog/SDK and Skill UI",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358114755",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "run": 44426497443,
+      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "scope": "compact-keyboard-iphone",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426497443",
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
       "acceptance_claim": false,
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-90314963\\dispatched-runs.json"
     },
     {
-      "run": 44358121911,
-      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
-      "scope": "Original Motion B/C with retained raw result and startup diagnostics",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358121911",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "run": 44426508137,
+      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "scope": "editor-a2ui-ipad",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426508137",
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
       "acceptance_claim": false,
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-90314963\\dispatched-runs.json"
+    },
+    {
+      "run": 44426526923,
+      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "scope": "paired-products-original-eight",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426526923",
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-90314963\\dispatched-runs.json"
+    },
+    {
+      "run": 44426766800,
+      "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+      "scope": "original-signing-native-preflight",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426766800",
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T00:09:56.467655+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "acceptance/DISPATCHES_20261119.json"
+    },
+    {
+      "run": 44426771946,
+      "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+      "scope": "motion-scroll-touch-diagnostic",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426771946",
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T00:09:58.870196+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "acceptance/DISPATCHES_20261119.json"
     }
   ],
   "terminal_native_continuation_runs": [
     {
-      "run": 44340805844,
-      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "run": 44382101304,
+      "source_sha": "bc7b24414660e0481c2502c75eb9075e6f3d6a74",
+      "status": "NATIVE8_FOUR_PASS_FOUR_UI_FAIL",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "scope": "Original paired request, return, cancellation, transfer and shared ingress.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44382101304",
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "acceptance_claim": false,
+      "observation_source": "Original raw result members and artifact receipts reconciled on 19 November 2026; authentication scope recorded for each run.",
+      "cases": [
+        {
+          "identifier": "ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+          "result": "Passed",
+          "duration_seconds": 0.0333399772644043,
+          "failures": [],
+          "classification": "EXECUTED_PASS",
+          "scope": "Original native Share Inbox host integration; does not establish OS share sheet or downstream UI acceptance"
+        },
+        {
+          "identifier": "ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+          "result": "Passed",
+          "duration_seconds": 0.011714935302734375,
+          "failures": [],
+          "classification": "EXECUTED_PASS",
+          "scope": "Original native Share Inbox host integration; does not establish OS share sheet or downstream UI acceptance"
+        },
+        {
+          "identifier": "ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile()",
+          "result": "Passed",
+          "duration_seconds": 0.0070040225982666016,
+          "failures": [],
+          "classification": "EXECUTED_PASS",
+          "scope": "Original native Share Inbox host integration; does not establish OS share sheet or downstream UI acceptance"
+        },
+        {
+          "identifier": "ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+          "result": "Passed",
+          "duration_seconds": 0.28725481033325195,
+          "failures": [],
+          "classification": "EXECUTED_PASS",
+          "scope": "Original native Share Inbox host integration; does not establish OS share sheet or downstream UI acceptance"
+        },
+        {
+          "identifier": "HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState()",
+          "result": "Failed",
+          "duration_seconds": 112.38019895553589,
+          "failures": [
+            "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-chat-send"
+          ],
+          "classification": "PRODUCT_LAYOUT_FAILURE_BEFORE_CROSS_PRODUCT_REQUEST",
+          "finding": "Actual prompt reached the TextView, but send frame (327,731,32,32) is covered by visible keyboard frame (0,590,402,226).",
+          "not_exercised": [
+            "Host request dispatch",
+            "companion return or cancellation semantics"
+          ],
+          "attachment_ids": [
+            5,
+            25
+          ]
+        },
+        {
+          "identifier": "HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat()",
+          "result": "Failed",
+          "duration_seconds": 80.8337299823761,
+          "failures": [
+            "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-chat-send"
+          ],
+          "classification": "PRODUCT_LAYOUT_FAILURE_BEFORE_CROSS_PRODUCT_REQUEST",
+          "finding": "Actual prompt reached the TextView, but send frame (327,731,32,32) is covered by visible keyboard frame (0,590,402,226).",
+          "not_exercised": [
+            "Host request dispatch",
+            "companion return or cancellation semantics"
+          ],
+          "attachment_ids": [
+            31,
+            59
+          ]
+        },
+        {
+          "identifier": "HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback()",
+          "result": "Failed",
+          "duration_seconds": 105.86682689189911,
+          "failures": [
+            "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-package-card-Hanlin Transfer Acceptance"
+          ],
+          "classification": "HARNESS_NAVIGATION_GAP_WITH_PERSISTENCE_UNPROVEN",
+          "finding": "After import/relaunch the original catalog is at 0% of two pages, with only four lazy Swift cards realized. The test never scrolls or filters to the later ScriptUI section before requiring its exact card.",
+          "inference": "Offscreen lazy realization explains the missing match; archive does not independently establish whether the imported package persisted. Shipping catalog search must reach the exact card before the storage/transfer assertions can run.",
+          "not_exercised": [
+            "source runtime save",
+            "transfer preparation/import",
+            "rollback",
+            "original state verification"
+          ],
+          "attachment_ids": [
+            70,
+            114
+          ]
+        },
+        {
+          "identifier": "HanlinShareInboxUITests/testSharedTextURLAndFileReachTheOriginalChatOnlyAfterSend()",
+          "result": "Failed",
+          "duration_seconds": 51.67588007450104,
+          "failures": [
+            "Failed to determine hittability of \"hanlin-composer-general-menu\" Button: Activation point invalid and no suggested hit points based on element frame"
+          ],
+          "classification": "COMPOSER_HITTABILITY_FAILURE_BEFORE_SHARE_INBOX",
+          "finding": "After text entry the launcher remains at (33,719,52,52), consistent with the fixed composer affected by keyboard occlusion. The final failure snapshot reports (inf,inf,0,0) for the main window and launcher.",
+          "qualification": "The final invalid accessibility snapshot is recorded separately; it does not prove a separate product crash or explain away the preceding layout failure.",
+          "not_exercised": [
+            "share inbox draft UI",
+            "SDK request and saved conversation verification"
+          ],
+          "attachment_ids": [
+            120,
+            160
+          ]
+        }
+      ],
+      "counts": {
+        "total": 8,
+        "passed": 4,
+        "failed": 4,
+        "skipped": 0
+      },
+      "artifact_provenance": {
+        "artifact_id": 14475051412,
+        "source_sha": "bc7b24414660e0481c2502c75eb9075e6f3d6a74",
+        "archive_size": 121322709,
+        "sha256": "783d6af426a3235a67af8fbbc8da42d4b7814b528c43b9b61a247b4b7b5156fe",
+        "expected_sha256": "783d6af426a3235a67af8fbbc8da42d4b7814b528c43b9b61a247b4b7b5156fe",
+        "full_archive_digest_verified": true,
+        "selected_members_rechecked_against_complete_archive": 22,
+        "partial_member_mismatches": []
+      },
+      "host_reuse": {
+        "status": "REUSED_VERIFIED_PASS",
+        "origin_run": "44351078724",
+        "origin_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+        "origin_job": 134966552855,
+        "artifact_id": 14454531510,
+        "artifact_sha256": "sha256:8ebe0c0ec78b94ce960206551f474205a091cf8dabf24432a12773496aaa328d",
+        "focused": {
+          "tests": 7,
+          "pass": 7,
+          "fail": 0,
+          "skipped": 0
+        },
+        "host": {
+          "tests": 153,
+          "pass": 152,
+          "fail": 0,
+          "skipped": 1
+        },
+        "scope": "Host prerequisites/archive only; UI NOT_RUN",
+        "host_metadata": {
+          "nodeVersion": "v24.5.0",
+          "archiveSha256": "1f33573abadf30c2d0bf3f8aef321eebe0402123fad78210216a09dd01abfa6c",
+          "sourceInputsHash": "33989c019212b08b6eb7080044a7f5652d32b3dde3ed10432f96efb2154aa585",
+          "jitlessArchiveSmoke": "passed",
+          "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+          "tests": "passed"
+        }
+      },
+      "actual_shared_app_group": {
+        "status": "EXECUTED_PASS",
+        "containers": {
+          "com.itorah.chavrusachat": "/Users/runner/Library/Developer/CoreSimulator/Devices/5F3A79E5-EE50-43C7-949E-B29A3CFAAD42/data/Containers/Shared/AppGroup/6FA2C80D-3CE8-40E0-B61E-90A53862D160",
+          "com.itorah.hanlinminiapps": "/Users/runner/Library/Developer/CoreSimulator/Devices/5F3A79E5-EE50-43C7-949E-B29A3CFAAD42/data/Containers/Shared/AppGroup/6FA2C80D-3CE8-40E0-B61E-90A53862D160"
+        }
+      }
+    },
+    {
+      "run": 44382535232,
+      "source_sha": "26219eb8fa965097e761f9dc30e7ec51f97a16ae",
+      "status": "NATIVE2_FAILED_KEYBOARD_OCCLUSION",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "scope": "Two original compact iPhone Composer and keyboard cases after the minimum-height repair.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44382535232",
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "acceptance_claim": false,
+      "observation_source": "Original raw result members and artifact receipts reconciled on 19 November 2026; authentication scope recorded for each run.",
+      "counts": {
+        "total": 2,
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0
+      },
+      "diagnosis": {
+        "run": 44382535232,
+        "sha": "26219eb8fa965097e761f9dc30e7ec51f97a16ae",
+        "artifact": 14467388168,
+        "artifact_bytes": 49171630,
+        "artifact_sha256_verified": "8d59d581cbe6d99f9f89024f24afa3d9989e3d7a77b996b4ae8986ee5d1edb38",
+        "device": "iPhone Air / iOS27.2 / arm64 Simulator",
+        "methods": [
+          {
+            "name": "testCompactLargeTextWithAttachment",
+            "result": "Failed",
+            "seconds": 63.87675392627716
+          },
+          {
+            "name": "testCompactNavigationKeepsDraft",
+            "result": "Failed",
+            "seconds": 81.0538729429245
+          }
+        ],
+        "failure": "HanlinMorphComposerUITests.swift:282 The keyboard must not cover the persistent composer launcher",
+        "launcher_frame": [
+          33,
+          757,
+          52,
+          52
+        ],
+        "keyboard_frame": [
+          0,
+          609,
+          420,
+          245
+        ],
+        "workspace_probe": "420,761,0,68,420,761,68,0,83,0",
+        "composer_bottom": 829,
+        "navigation_keyboard_probe": "420,443,0,122,420,443,122,0,347,0",
+        "conclusion": "Keyboard avoidance updates NavigationStack content hosting only; external persistent composer/workspace never receives smaller height/bottom inset proposal."
+      },
+      "artifact_provenance": {
+        "repo": "davidpovarsky/hanlin-ai",
+        "run": 44382535232,
+        "head_sha": "26219eb8fa965097e761f9dc30e7ec51f97a16ae",
+        "status": "completed",
+        "conclusion": "failure",
+        "artifact_id": 14467388168,
+        "official_zip_digest": "sha256:8d59d581cbe6d99f9f89024f24afa3d9989e3d7a77b996b4ae8986ee5d1edb38",
+        "full_zip_digest_verification": "verified",
+        "ranges": [
+          [
+            49171608,
+            49171629
+          ],
+          [
+            49171588,
+            49171607
+          ],
+          [
+            48880934,
+            49171607
+          ]
+        ],
+        "members": [],
+        "full_zip_sha256": "8d59d581cbe6d99f9f89024f24afa3d9989e3d7a77b996b4ae8986ee5d1edb38",
+        "full_zip_file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\44382535232\\artifact-14467388168.zip"
+      }
+    },
+    {
+      "run": 44383723446,
+      "source_sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+      "status": "BOTH_DEVICE_ARCHIVES_PASS_BOTH_EXPORTS_FAIL",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "scope": "Both original device archives and manual distribution exports.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44383723446",
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "acceptance_claim": false,
+      "observation_source": "Original raw result members and artifact receipts reconciled on 19 November 2026; authentication scope recorded for each run.",
+      "products": [
+        {
+          "role": "miniapps",
+          "bundle_id": "com.itorah.hanlinminiapps",
+          "archive": "EXECUTED_PASS",
+          "export": "EXECUTED_FAIL",
+          "entitlements": "NOT_RUN",
+          "version": "0.1.0",
+          "build": "1"
+        },
+        {
+          "role": "ai",
+          "bundle_id": "com.itorah.chavrusachat",
+          "archive": "EXECUTED_PASS",
+          "export": "EXECUTED_FAIL",
+          "entitlements": "NOT_RUN",
+          "version": "0.7.3",
+          "build": "1"
+        }
+      ],
+      "identity_checks": {
+        "private_key_matches": true,
+        "valid_dates": true,
+        "team_matches": true,
+        "distribution_identity": true
+      },
+      "profile_resources": [
+        {
+          "role": "ai",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          }
+        },
+        {
+          "role": "miniapps",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          }
+        },
+        {
+          "role": "share",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          }
+        },
+        {
+          "role": "widgets",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          }
+        },
+        {
+          "role": "translation",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          }
+        },
+        {
+          "role": "notification",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          }
+        }
+      ],
+      "cleanup": "PASS",
+      "failure": "Xcode export could not locate the installed matching App Store profiles. Profile resource validation and device archives passed; exported entitlement validation did not run.",
+      "artifact_provenance": {
+        "artifact_id": 14476576495,
+        "official_sha256": "sha256:79b287d5888e831208e5c5b4784f388aed111dcc4825c0eeb1b185afd2cb303f",
+        "full_zip_sha256": "79b287d5888e831208e5c5b4784f388aed111dcc4825c0eeb1b185afd2cb303f",
+        "full_archive_digest_verified": true,
+        "size": 13660745,
+        "run": 44383723446,
+        "source_sha": "49923cf6736664587a9da1b3599739e794f94fb6"
+      }
+    },
+    {
+      "run": 44383943178,
+      "source_sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+      "status": "NATIVE_UNITS34_PASS_UI3_PASS8_FAIL",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "scope": "Original Host/editor units and A2UI, Canvas, contextual-text and Python-consent UI.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44383943178",
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "acceptance_claim": false,
+      "observation_source": "Original raw result members and artifact receipts reconciled on 19 November 2026; authentication scope recorded for each run.",
+      "case_summary": {
+        "08-downstream-unit-test-results.json": {
+          "methods": 32,
+          "invocations": 34,
+          "counts": {
+            "Passed": 32
+          },
+          "failed": []
+        },
+        "08-nativescript-production-ui-test-results.json": {
+          "methods": 11,
+          "invocations": 11,
+          "counts": {
+            "Passed": 3,
+            "Failed": 8
+          },
+          "failed": [
+            {
+              "nodeIdentifier": "HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch()",
+              "name": "testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch()",
+              "result": "Failed",
+              "durationInSeconds": 87.81397807598114,
+              "invocations": 1,
+              "failures": [
+                {
+                  "name": "Failed to get matching snapshots: Lost connection to the application (pid 64382). (Underlying Error: Couldn’t communicate with a helper application. Try your operation again. If that fails, quit and relaunch the application and try again. The connection to service created from an endpoint was invalidated: Failed to check-in, peer may have been unloaded: mach_error=10000003.)",
+                  "nodeType": "Failure Message",
+                  "sourceLocation": {
+                    "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinCanvasRuntimeUITests.swift",
+                    "lineNumber": 26
+                  }
+                }
+              ]
+            },
+            {
+              "nodeIdentifier": "HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+              "name": "testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+              "result": "Failed",
+              "durationInSeconds": 67.4855260848999,
+              "invocations": 1,
+              "failures": [
+                {
+                  "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                  "nodeType": "Failure Message",
+                  "sourceLocation": {
+                    "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                    "lineNumber": 294
+                  }
+                }
+              ]
+            },
+            {
+              "nodeIdentifier": "HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel()",
+              "name": "testNewConversationWorksWithoutOptimizationModel()",
+              "result": "Failed",
+              "durationInSeconds": 74.14566791057587,
+              "invocations": 1,
+              "failures": [
+                {
+                  "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                  "nodeType": "Failure Message",
+                  "sourceLocation": {
+                    "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                    "lineNumber": 294
+                  }
+                },
+                {
+                  "name": "This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread.",
+                  "nodeType": "Runtime Warning"
+                }
+              ]
+            },
+            {
+              "nodeIdentifier": "HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+              "name": "testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+              "result": "Failed",
+              "durationInSeconds": 69.14015400409698,
+              "invocations": 1,
+              "failures": [
+                {
+                  "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                  "nodeType": "Failure Message",
+                  "sourceLocation": {
+                    "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                    "lineNumber": 294
+                  }
+                }
+              ]
+            },
+            {
+              "nodeIdentifier": "HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+              "name": "testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+              "result": "Failed",
+              "durationInSeconds": 66.90784895420074,
+              "invocations": 1,
+              "failures": [
+                {
+                  "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                  "nodeType": "Failure Message",
+                  "sourceLocation": {
+                    "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                    "lineNumber": 294
+                  }
+                }
+              ]
+            },
+            {
+              "nodeIdentifier": "HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+              "name": "testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+              "result": "Failed",
+              "durationInSeconds": 77.56558799743652,
+              "invocations": 1,
+              "failures": [
+                {
+                  "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                  "nodeType": "Failure Message",
+                  "sourceLocation": {
+                    "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                    "lineNumber": 294
+                  }
+                }
+              ]
+            },
+            {
+              "nodeIdentifier": "HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+              "name": "testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+              "result": "Failed",
+              "durationInSeconds": 73.09718990325928,
+              "invocations": 1,
+              "failures": [
+                {
+                  "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                  "nodeType": "Failure Message",
+                  "sourceLocation": {
+                    "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                    "lineNumber": 294
+                  }
+                }
+              ]
+            },
+            {
+              "nodeIdentifier": "HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+              "name": "testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+              "result": "Failed",
+              "durationInSeconds": 71.13704693317413,
+              "invocations": 1,
+              "failures": [
+                {
+                  "name": "XCTAssertTrue failed - The original send control must be enabled and hittable before the single tap",
+                  "nodeType": "Failure Message",
+                  "sourceLocation": {
+                    "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                    "lineNumber": 294
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "qualification": "32 unit methods contain 34 invocation leaves, all passed. UI has 11 methods: 3 passed and 8 failed. Seven NativeA2UI cases stop at send enabled/hittable; Canvas loses the application AX connection. No evidence that all Host functions failed.",
+      "artifact_provenance": {
+        "repo": "davidpovarsky/hanlin-ai",
+        "run": 44383943178,
+        "head_sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+        "status": "completed",
+        "conclusion": "failure",
+        "artifact_id": 14472355631,
+        "official_zip_digest": "sha256:14f01a51a6f58b9d7c376e14aa4bc0e570fdf3ac506bc8c5b200e9571b9ff82f",
+        "full_zip_digest_verification": "pending; authenticated exact HTTP ranges + ZIP member CRC verified",
+        "ranges": [
+          [
+            142874650,
+            142874671
+          ],
+          [
+            142874630,
+            142874649
+          ],
+          [
+            142518255,
+            142874649
+          ],
+          [
+            266008,
+            266037
+          ],
+          [
+            266038,
+            266088
+          ],
+          [
+            266089,
+            269393
+          ],
+          [
+            282417,
+            282446
+          ],
+          [
+            282447,
+            282508
+          ],
+          [
+            282509,
+            284385
+          ],
+          [
+            284526,
+            284555
+          ],
+          [
+            284556,
+            284609
+          ],
+          [
+            284610,
+            301408
+          ],
+          [
+            3453,
+            3482
+          ],
+          [
+            3483,
+            3533
+          ],
+          [
+            3534,
+            5263
+          ]
+        ],
+        "members": [
+          {
+            "name": "simulator-logs/08-downstream-unit-test-results.json",
+            "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\host-editor-44383943178\\08-downstream-unit-test-results.json",
+            "bytes": 23947,
+            "sha256": "02ee6e50dbde98ef3e279b96922974961a52ce618d56548e88167cfc4d1c42d8",
+            "zip_crc32": "176f7c70",
+            "crc_verified_by_zipfile": true,
+            "compressed_bytes": 3305
+          },
+          {
+            "name": "simulator-logs/08-nativescript-production-ui-test-results.json",
+            "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\host-editor-44383943178\\08-nativescript-production-ui-test-results.json",
+            "bytes": 14430,
+            "sha256": "170f78bbefd627e41be19488f4873aca0a35001c4680a13a1e27d66f0d7b624d",
+            "zip_crc32": "f0ac92c7",
+            "crc_verified_by_zipfile": true,
+            "compressed_bytes": 1877
+          },
+          {
+            "name": "simulator-logs/08-nativescript-production-ui-tests.log",
+            "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\host-editor-44383943178\\08-nativescript-production-ui-tests.log",
+            "bytes": 177215,
+            "sha256": "060d93855dc457bef44fee3db7946d4da72a0bfdc14584638679eec0712afe1a",
+            "zip_crc32": "47bb46e8",
+            "crc_verified_by_zipfile": true,
+            "compressed_bytes": 16799
+          },
+          {
+            "name": "simulator-logs/06-diagnostics-build-provenance.json",
+            "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\host-editor-44383943178\\06-diagnostics-build-provenance.json",
+            "bytes": 6966,
+            "sha256": "f73b5b1c1508f44a2b245394e229871c52fc28acdf098f5d512bcb6abf955e0f",
+            "zip_crc32": "45c80b9f",
+            "crc_verified_by_zipfile": true,
+            "compressed_bytes": 1730
+          }
+        ]
+      }
+    },
+    {
+      "run": 44383949859,
+      "source_sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+      "status": "NATIVE_UI26_ELEVEN_PASS_FIFTEEN_FAIL",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "scope": "Twenty-six original wide-conversation, Morph, Skill Center and EmbeddedResults UI cases.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44383949859",
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "acceptance_claim": false,
+      "observation_source": "Original raw result members and artifact receipts reconciled on 19 November 2026; authentication scope recorded for each run.",
+      "case_summary": {
+        "run": 44383949859,
+        "sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+        "counts": {
+          "Failed": 15,
+          "Passed": 11
+        },
+        "cases": [
+          {
+            "id": "AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft()",
+            "result": "Failed",
+            "duration": 126.07994210720062,
+            "failures": [
+              {
+                "message": "XCTAssertTrue failed",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 1201
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 1204
+                }
+              },
+              {
+                "message": "Failed to swipe up \"hanlin-composer-page-scroll\" ScrollView: No matches found for first query match sequence: `Descendants matching type ScrollView` -> `Elements matching predicate '\"hanlin-composer-page-scroll\" IN identifiers'`, given input App element pid: 47349",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 1206
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testDiagnosticsReviewsTheAutomaticallyCapturedRunWithoutSharingItsKey()",
+            "result": "Passed",
+            "duration": 129.86026799678802,
+            "failures": []
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testDirectToolsOneTapAndRealState()",
+            "result": "Passed",
+            "duration": 66.79735994338989,
+            "failures": []
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testDockCompactHomeShowsThreeRecentWithOnePersistentComposer()",
+            "result": "Passed",
+            "duration": 77.60858905315399,
+            "failures": []
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testDraftAndAttachmentPersistenceAtoBAndFirstSend()",
+            "result": "Failed",
+            "duration": 143.02468705177307,
+            "failures": [
+              {
+                "message": "XCTAssertTrue failed - Send must remain reachable above the keyboard",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 1392
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - Sending from compact Home must create a new chat and complete first turn",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 1396
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testDrawerGrowsFromComposerNotPopover()",
+            "result": "Passed",
+            "duration": 48.87781596183777,
+            "failures": []
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testDrawerHandleDragCloseOpenAndComposerResize()",
+            "result": "Passed",
+            "duration": 76.22072100639343,
+            "failures": []
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testIpadNarrowShowsRecentAndWidePreservesSplitSidebar()",
+            "result": "Passed",
+            "duration": 52.156458020210266,
+            "failures": []
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testMarkdownLinkOpensAndClosesTheInternalSafariBrowser()",
+            "result": "Failed",
+            "duration": 99.16396808624268,
+            "failures": [
+              {
+                "message": "XCTAssertTrue failed - The original in-app Safari controller did not open: Attributes: Application, 0x11418c8c0, pid: 59983, label: 'Hanlin AI'",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 558
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - The internal browser has no web content",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 559
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testModelPopoverZoomWithKeyboardAndDraft()",
+            "result": "Failed",
+            "duration": 67.71334898471832,
+            "failures": [
+              {
+                "message": "XCTAssertTrue failed - Model picker popover must appear",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 1272
+                }
+              },
+              {
+                "message": "Failed to get matching snapshot: No matches found for first query match sequence: `Descendants matching type Any` -> `Elements matching predicate '\"hanlin-model-picker-popover\" IN identifiers'`, given input App element pid: 61449",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 1273
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview()",
+            "result": "Failed",
+            "duration": 96.49326002597809,
+            "failures": [
+              {
+                "message": "XCTAssertTrue failed - Missing original chat-list action: hanlin-saved-messages-open",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 537
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 540
+                }
+              },
+              {
+                "message": "Failed to get matching snapshot: No matches found for first query match sequence: `Descendants matching type StaticText` -> `Elements matching predicate '\"hanlin-saved-excerpt-text\" IN identifiers'`, given input App element pid: 63873",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 541
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions()",
+            "result": "Failed",
+            "duration": 125.90630507469177,
+            "failures": [
+              {
+                "message": "XCTAssertTrue failed - Actual local Diff WebKit output did not reach the original bubble",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 234
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testProductionCodeSkillLocalPythonNeedsNoUserNudge()",
+            "result": "Failed",
+            "duration": 165.318412899971,
+            "failures": [
+              {
+                "message": "Failed to determine hittability of \"hanlin-tool-consent-allow-once\" Button: Activation point invalid and no suggested hit points based on element frame",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 1577
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testRealChatUISendsPromptShowsToolActivityAndFinalAnswer()",
+            "result": "Failed",
+            "duration": 300,
+            "failures": [
+              {
+                "message": "XCTAssertEqual failed: (\"Optional(\"Runeptance tool and report the result. the local Py\")\") is not equal to (\"Optional(\"Run the local Python acceptance tool and report the result.\")\") - Native editing must preserve the complete prompt before submission",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 289
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - The original Host must request consent",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 290
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - The deterministic provider's final answer was not rendered.",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 295
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - The completed tool content toggle was not rendered.",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 298
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - The failed call must remain individually inspectable",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 302
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - Expanded tool content text did not appear: Attributes: Application, 0x1146d9a40, pid: 77227, label: 'Hanlin AI'",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 305
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - The intentional tool failure was not presented truthfully in the real chat UI.",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 310
+                }
+              },
+              {
+                "message": "Test exceeded execution time allowance of 5 minutes",
+                "source": null
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation()",
+            "result": "Failed",
+            "duration": 101.43137896060944,
+            "failures": [
+              {
+                "message": "XCTAssertTrue failed - Missing original chat-list action: hanlin-new-chat-button",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 447
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - New chat welcome information bubble did not appear",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 452
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - The original chat list must be visible",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 455
+                }
+              },
+              {
+                "message": "XCTAssertTrue failed - Expected draft 'Draft preserved across switch' to be preserved after switching chats, got: 'Draft itchpreserved across s'",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 461
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations()",
+            "result": "Failed",
+            "duration": 142.03150403499603,
+            "failures": [
+              {
+                "message": "Failed to determine hittability of \"hanlin-tool-consent-allow-once\" Button: Activation point invalid and no suggested hit points based on element frame",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 1577
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testUI04CollapsedProgressAndInspectorWithoutRawCoT()",
+            "result": "Failed",
+            "duration": 132.25788593292236,
+            "failures": [
+              {
+                "message": "XCTAssertFalse failed - Expanded original reasoning/tool sections must never display raw chain-of-thought monologue",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                  "lineNumber": 587
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testUI05RichCodeBlockHTMLCardAndAttachments()",
+            "result": "Passed",
+            "duration": 184.6918989419937,
+            "failures": []
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testUI07StopAndRetryRecoveryWithoutDuplicateBubbles()",
+            "result": "Passed",
+            "duration": 52.885634899139404,
+            "failures": []
+          },
+          {
+            "id": "AgentRuntimeConversationUITests/testViewAllZoomSourceToLibraryAndCancelledInteractiveBack()",
+            "result": "Passed",
+            "duration": 42.376179933547974,
+            "failures": []
+          },
+          {
+            "id": "AgentSkillsEmbeddedResultsUITests/testAgentSkillsDeferredExposureAndEmbeddedResultFlow()",
+            "result": "Failed",
+            "duration": 81.05750501155853,
+            "failures": [
+              {
+                "message": "XCTAssertTrue failed",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentSkillsEmbeddedResultsUITests.swift",
+                  "lineNumber": 34
+                }
+              }
+            ]
+          },
+          {
+            "id": "AgentSkillsEmbeddedResultsUITests/testUnresolvableEmbeddedHandlerFallback()",
+            "result": "Passed",
+            "duration": 35.1883659362793,
+            "failures": []
+          },
+          {
+            "id": "HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette()",
+            "result": "Failed",
+            "duration": 49.53779697418213,
+            "failures": [
+              {
+                "message": "XCTAssertEqual failed: (\"Optional(\"Wrassible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinMorphComposerUITests.swift",
+                  "lineNumber": 30
+                }
+              }
+            ]
+          },
+          {
+            "id": "HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel()",
+            "result": "Passed",
+            "duration": 57.50904095172882,
+            "failures": []
+          },
+          {
+            "id": "HanlinSkillCenterUITests/testCreateEditDisableDeleteCustomSkill()",
+            "result": "Failed",
+            "duration": 300,
+            "failures": [
+              {
+                "message": "Test exceeded execution time allowance of 5 minutes",
+                "source": null
+              }
+            ]
+          },
+          {
+            "id": "HanlinSkillCenterUITests/testOverrideAndResetBuiltInSkill()",
+            "result": "Failed",
+            "duration": 157.29813706874847,
+            "failures": [
+              {
+                "message": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Expected an accessible, hittable element",
+                "source": {
+                  "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinSkillCenterUITests.swift",
+                  "lineNumber": 243
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "artifact_provenance": {
+        "repo": "davidpovarsky/hanlin-ai",
+        "run": 44383949859,
+        "head_sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+        "status": "completed",
+        "conclusion": "failure",
+        "artifact_id": 14472548287,
+        "official_zip_digest": "sha256:8f74d043e90cf15d7b31572c2b1e158af276e6141fba57808d7519377b9b9a2a",
+        "full_zip_digest_verification": "pending; authenticated exact HTTP ranges + ZIP member CRC verified",
+        "ranges": [
+          [
+            708308437,
+            708308458
+          ],
+          [
+            708308417,
+            708308436
+          ],
+          [
+            707881356,
+            708308436
+          ],
+          [
+            315902,
+            315931
+          ],
+          [
+            315932,
+            315993
+          ],
+          [
+            315994,
+            327113
+          ],
+          [
+            327254,
+            327283
+          ],
+          [
+            327284,
+            327337
+          ],
+          [
+            327338,
+            379070
+          ],
+          [
+            3442,
+            3471
+          ],
+          [
+            3472,
+            3522
+          ],
+          [
+            3523,
+            5252
+          ]
+        ],
+        "members": [
+          {
+            "name": "simulator-logs/08-nativescript-production-ui-test-results.json",
+            "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\44383949859\\08-nativescript-production-ui-test-results.json",
+            "bytes": 86332,
+            "sha256": "ab830293b4efd28e07bd9756dd95386e689cfc9c1fec2675397ead1327dd3d04",
+            "zip_crc32": "58c37804",
+            "crc_verified_by_zipfile": true,
+            "compressed_bytes": 11120
+          },
+          {
+            "name": "simulator-logs/08-nativescript-production-ui-tests.log",
+            "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\44383949859\\08-nativescript-production-ui-tests.log",
+            "bytes": 493624,
+            "sha256": "0dce7c3df57ce25552398b0f5db5f1d2bce1c1b395628401e384982e89642edc",
+            "zip_crc32": "a79cd65c",
+            "crc_verified_by_zipfile": true,
+            "compressed_bytes": 51733
+          },
+          {
+            "name": "simulator-logs/06-diagnostics-build-provenance.json",
+            "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\44383949859\\06-diagnostics-build-provenance.json",
+            "bytes": 6966,
+            "sha256": "f73b5b1c1508f44a2b245394e229871c52fc28acdf098f5d512bcb6abf955e0f",
+            "zip_crc32": "45c80b9f",
+            "crc_verified_by_zipfile": true,
+            "compressed_bytes": 1730
+          }
+        ]
+      }
+    },
+    {
+      "run": 44384450378,
+      "source_sha": "282b6d7cd8525aac7cf54859f31c13af434c27c0",
+      "status": "DIAGNOSTIC_CAPTURED_ONLY_ORIGINAL_B_NOT_ACCEPTED",
+      "workflow_status": "completed",
+      "workflow_conclusion": "success",
+      "scope": "Motion D: six native input controls for diagnosis; this does not accept original B.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44384450378",
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "acceptance_claim": false,
+      "observation_source": "Original raw result members and artifact receipts reconciled on 19 November 2026; authentication scope recorded for each run.",
+      "diagnosis": {
+        "run": 44384450378,
+        "sha": "282b6d7cd8525aac7cf54859f31c13af434c27c0",
+        "artifact": 14469839211,
+        "artifact_bytes": 45261661,
+        "artifact_sha256_verified": "fb0da5c70ded87c1ea110e6dea3577b1f4c4a716bbd5cf5f3cb3c8aff4f955ba",
+        "test": "testDRapidInputDiagnosticOnly",
+        "result": "Passed",
+        "seconds": 84.39639103412628,
+        "acceptance": "DIAGNOSTIC_CAPTURED_ONLY; original B remains failed",
+        "controls": [
+          {
+            "control": "rapid-native-outside",
+            "delivery": "multi-tap",
+            "actions": 3,
+            "gaps": [
+              0.04994104166667057,
+              0.06636729166666555
+            ]
+          },
+          {
+            "control": "rapid-native-scroll",
+            "delivery": "multi-tap",
+            "actions": 2,
+            "gaps": [
+              0.09915850000004411
+            ]
+          },
+          {
+            "control": "rapid-native-plain",
+            "delivery": "multi-tap",
+            "actions": 2,
+            "gaps": [
+              0.1174858750000567
+            ]
+          },
+          {
+            "control": "rapid-production-static",
+            "delivery": "multi-tap",
+            "actions": 2,
+            "gaps": [
+              0.1332841666666127
+            ]
+          },
+          {
+            "control": "rapid-production-animated",
+            "delivery": "multi-tap",
+            "actions": 2,
+            "gaps": [
+              0.11558591666664597
+            ],
+            "later_intermediate_geometry": [
+              true
+            ],
+            "second_visible_height": 0.9121642112731934,
+            "natural_height": 64.5
+          },
+          {
+            "control": "rapid-production-animated",
+            "delivery": "independent-coordinate-taps",
+            "actions": 3,
+            "gaps": [
+              0.7664449999999761,
+              0.8005125833333295
+            ],
+            "later_intermediate_geometry": [
+              false,
+              false
+            ]
+          }
+        ],
+        "conclusion": "Native reference controls inside ScrollView also lose one multitap; separate coordinates deliver3 but after completed animations. No animation-specific cause is established."
+      },
+      "artifact_provenance": {
+        "repo": "davidpovarsky/hanlin-ai",
+        "run": 44384450378,
+        "head_sha": "282b6d7cd8525aac7cf54859f31c13af434c27c0",
+        "status": "completed",
+        "conclusion": "success",
+        "artifact_id": 14469839211,
+        "official_zip_digest": "sha256:fb0da5c70ded87c1ea110e6dea3577b1f4c4a716bbd5cf5f3cb3c8aff4f955ba",
+        "full_zip_digest_verification": "verified",
+        "ranges": [
+          [
+            45261639,
+            45261660
+          ],
+          [
+            45261619,
+            45261638
+          ],
+          [
+            45259428,
+            45261638
+          ]
+        ],
+        "members": [],
+        "full_zip_sha256": "fb0da5c70ded87c1ea110e6dea3577b1f4c4a716bbd5cf5f3cb3c8aff4f955ba",
+        "full_zip_file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\44384450378\\artifact-14469839211.zip"
+      }
+    },
+    {
+      "run": 44385752088,
+      "source_sha": "282b6d7cd8525aac7cf54859f31c13af434c27c0",
+      "status": "NOT_RUN_SIMULATOR_DISCOVERY_TIMEOUT_NO_CREDENTIAL_STAGED",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "scope": "Live Gemini through the original SDK, Host consent, Python and cold reopen.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44385752088",
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "acceptance_claim": false,
+      "observation_source": "Original raw result members and artifact receipts reconciled on 19 November 2026; authentication scope recorded for each run.",
+      "live_product_acceptance": "NOT_RUN",
+      "witness": {
+        "status": "NOT_ACCEPTED",
+        "scope": "Original iOS app, live Gemini, original CPython and persisted conversation",
+        "model": "gemini-3.8-flash",
+        "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testLiveGeminiPythonConsentAndColdReopen",
+        "credential_exported": false,
+        "error": "Live credential stage did not complete",
+        "credential_cleanup": "NO_CREDENTIAL_STAGED"
+      },
+      "failure": "simctl list devices -j timed out during owned_simulator before any credential was staged. This is simulator preparation failure, not provider authentication failure.",
+      "sanitized_log": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\live\\sanitized-stage-failure.log",
+      "sanitized_log_sha256": "bac5422f4e691a6fed0c189b88e7fb1d32295dc9bb94986f3d0b45715026b302",
+      "artifact_provenance": {
+        "repo": "davidpovarsky/hanlin-ai",
+        "run": 44385752088,
+        "head_sha": "282b6d7cd8525aac7cf54859f31c13af434c27c0",
+        "status": "completed",
+        "conclusion": "failure",
+        "artifact_id": 14477102458,
+        "official_zip_digest": "sha256:e02754127067c1afc491d538dbd448edf42bc156ef233dd4445a1ee6d887e7a8",
+        "full_zip_digest_verification": "verified",
+        "ranges": [
+          [
+            372,
+            393
+          ],
+          [
+            352,
+            371
+          ],
+          [
+            311,
+            371
+          ]
+        ],
+        "members": [],
+        "full_zip_sha256": "e02754127067c1afc491d538dbd448edf42bc156ef233dd4445a1ee6d887e7a8",
+        "full_zip_file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\live\\artifact-14477102458.zip"
+      }
+    },
+    {
+      "run": 44389672441,
+      "source_sha": "8c10ebd066826511e4d20d0c763491764eb44a95",
       "status": "EXECUTED_PASS",
-      "scope": "Standalone MiniApps baseline: 20 storage + 7 UI, zero failures/skips",
-      "artifact_id": 14446748475,
-      "whole_zip_sha256": "59b71be313776ffe82f0b793ddfc5be46ad8fa5d7368667ab839733e00b2f22b",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44340805844",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
-      "acceptance_claim": false
-    },
-    {
-      "run": 44343462395,
-      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
-      "status": "EXECUTED_PASS",
-      "scope": "Exact original Markdown native consumer: 10 methods. Main-app/Safari UI NOT_RUN",
-      "artifact_id": 14445789902,
-      "whole_zip_sha256": "0b3d51923f32be69860692e239d3be420e0a822c45aa3359661f67d63e4ba0b1",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44343462395",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
-      "acceptance_claim": false
-    },
-    {
-      "run": 44342780366,
-      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
-      "status": "BUILD_PASS_TESTS_NOT_RUN",
-      "scope": "Device-family guard correctly rejected mixed iPad/compact iPhone selectors",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342780366",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
-      "acceptance_claim": false
-    },
-    {
-      "run": 44342772767,
-      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
-      "status": "BUILD_PASS_CANCELLED_TESTS_NOT_RUN",
-      "scope": "Original wide UI/EmbeddedResults run cancelled before preserved case events; cancellation cause not established",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342772767",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
-      "acceptance_claim": false
-    },
-    {
-      "run": 44345443838,
-      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
-      "status": "BUILD_PASS_RUNNER_PREPARATION_FAILED",
-      "scope": "Motion B/C not executed: XCTest runner stalled/crashed before a case; original failures remain open",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44345443838",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
-      "acceptance_claim": false
-    },
-    {
-      "run": 44349634595,
-      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
-      "status": "CANCELLED_TESTS_NOT_RUN",
-      "scope": "Host/Editor/NativeA2UI iPad validation cancelled by shared manual validation concurrency",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44349634595",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
-      "acceptance_claim": false
-    },
-    {
-      "run": 44356501045,
-      "source_sha": "fd4149acc5dea3f7953f093b1b5dd8ebdd975440",
-      "status": "PLANNER_FAILED_TESTS_NOT_RUN",
-      "scope": "New OpenClaw test path lacked routing; corrected at a9085987 without weakening test coverage",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44356501045",
-      "observed_at": "2026-11-18T17:28:36.269728+00:00",
-      "acceptance_claim": false
+      "workflow_status": "completed",
+      "workflow_conclusion": "success",
+      "scope": "Cold instruction-only product route plus Canvas origin-identity unit; no Canvas UI acceptance claim.",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44389672441",
+      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "acceptance_claim": false,
+      "observation_source": "Original raw result members and artifact receipts reconciled on 19 November 2026; authentication scope recorded for each run.",
+      "counts": {
+        "total": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      }
     }
-  ]
+  ],
+  "historical_snapshots": [
+    {
+      "generated_at": "2026-11-18T17:39:51.317232+00:00",
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "pending_native_runs": [
+        {
+          "run": 44349642458,
+          "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+          "scope": "Two original compact Composer iPhone UI methods",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44349642458",
+          "observed_at": "2026-11-18T17:28:36.269728+00:00",
+          "acceptance_claim": false,
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+        },
+        {
+          "run": 44351078724,
+          "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+          "scope": "Standalone MiniApps original NativeScript/Expo UI2",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44351078724",
+          "observed_at": "2026-11-18T17:28:36.269728+00:00",
+          "acceptance_claim": false,
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+        },
+        {
+          "run": 44358114755,
+          "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+          "scope": "Original OpenClaw policy, affected Runtime05/catalog/SDK and Skill UI",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358114755",
+          "observed_at": "2026-11-18T17:28:36.269728+00:00",
+          "acceptance_claim": false,
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+        },
+        {
+          "run": 44358121911,
+          "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+          "scope": "Original Motion B/C with retained raw result and startup diagnostics",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358121911",
+          "observed_at": "2026-11-18T17:28:36.269728+00:00",
+          "acceptance_claim": false,
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+        }
+      ],
+      "external_gates": [
+        {
+          "id": "PHYSICAL_DEVICE",
+          "status": "UNAVAILABLE",
+          "need": "Authorized supported physical iPad/iPhone accessible to the testing host; existing CI audit finds no physical device."
+        },
+        {
+          "id": "LIVE_MODEL_PROVIDER",
+          "status": "CI_PROVIDER_SECRET_MISSING",
+          "need": "HANLIN_ACCEPTANCE_GEMINI_API_KEY is absent from CI. Prior automatic review rejected exporting the existing host credential; that history remains, and no secret was transferred. Complete on a host with an already authorized provider account or with the required CI secret supplied through an approved credential route."
+        },
+        {
+          "id": "SIGNED_PROVISIONING",
+          "status": "PROFILES_EXPORT_PENDING",
+          "need": "Apple Developer authentication completed. Both original groups are assigned to MiniApps and verified on AI plus all four extensions. Required missing capabilities were saved and read back: Extended Virtual Addressing on both apps, Time Sensitive Notifications and WeatherKit on MiniApps. Original certificate retained. Automatic profile regeneration, signed exports and separate Mini App Store record remain pending."
+        },
+        {
+          "id": "APPROVED_FULL_VISUAL_REFERENCE",
+          "status": "PARTIAL_REFERENCE",
+          "need": "Original 26-decision summary and authenticated Composer reference exist; full October master prompt was not found. Source/visual conclusions must state their actual references."
+        },
+        {
+          "id": "PUBLIC_SOURCE_PUBLICATION",
+          "status": "RESOLVED",
+          "need": "Both reviewed original public branches are published and verified after explicit owner consent. Reuse the recorded authorization for the same scoped actions; native acceptance is separate."
+        }
+      ],
+      "remaining_internal_gates": [
+        "Read the four remaining native runs at their exact SHAs and inspect raw cases. Original-policy/UI and Motion diagnostics were dispatched at a9085987; compact and standalone runtime runs remain separately scoped.",
+        "Reexecute interrupted original Host/Editor/A2UI/Canvas/contextual/Safari/wide/EmbeddedResults obligations after the new product candidate passes its focused native gate. Cancelled runs and compilation do not replace test acceptance.",
+        "Expanded original OpenClaw policy has portable11/28original/64assertion evidence, not current Apple acceptance. Preserve unknown facts, original Yams/Runtime05/Host boundaries and physical-iPad performance obligations.",
+        "Standalone MiniApps baseline20+7 passed at87cf107c. Finish original NativeScript/ExpoUI2 and paired/share8 using actual OS App Groups; simulator signing is not distribution signing.",
+        "Motion historical B/C failures remain open. New0c runner failed before any case; a908 retains raw bundles and scoped crash diagnostics even if the reader fails. Reuse historical A100 only within its proven unchanged scope.",
+        "Finish behavior-specific feature/UX coverage and current acceptance across both apps;278-row matrix remains20 partial and0 fully accepted until mapped proofs are reviewed. Never double count parameter summaries.",
+        "Apple sign-in/profiles/exports, live-provider secret/account, physical-device VoiceOver/StageManager/performance and full visual-reference scope remain independent gates. No phase closure, main merge or TestFlight."
+      ],
+      "publication": {
+        "published_source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+        "local_review_source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+        "unpublished_commits": [],
+        "status": "PUBLISHED_REMOTE_HEADS_VERIFIED",
+        "destination": "https://github.com/davidpovarsky/hanlin-ai.git",
+        "branch": "codex/hanlin-product-completion-20261117",
+        "reason": "The owner explicitly approved the reviewed public destinations and payload. Both original branches are published and verified; no repeated authorization is needed for the same scoped continuation. Native acceptance remains pending.",
+        "scope": "Source/build/test/documentation commits only. No credentials, private keys, raw device data, ignored artifacts or original untracked work are proposed.",
+        "published_sha_verified_at": "2026-11-18T17:28:36.269728+00:00",
+        "upstream_dependency": {
+          "repo": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+          "branch": "codex/hanlin-markdown-link-continuation-20261118",
+          "base": "4072507bf5c5a1c9786d4c9a607873e65be59cc8",
+          "sha": "6bde022876ef4af738c154b3d5c871984ef76195",
+          "status": "PUBLISHED_NATIVE_CONSUMER10_PASS_MAIN_APP_UI_PENDING",
+          "published_sha_verified_at": "2026-11-18T16:09:13.360868+00:00",
+          "native_run": 44343462395
+        },
+        "historical_rejection": {
+          "status": "BLOCKED_EXPLICIT_PUBLIC_SOURCE_PUBLICATION_APPROVAL",
+          "reason": "Automatic approval review rejected the public push again after a general continue instruction; explicit payload/destination approval is required. No push or alternate publication route followed that rejection. Local repairs and inspection of already-completed native runs continued.",
+          "resolved_by": "Explicit owner consent in the active conversation; recorded in OWNER_AUTHORIZATION_20261118.md"
+        },
+        "receipt": "docs/continuation-20261117/acceptance/PUBLICATION_AND_NATIVE_CONTINUATION_20261118.json"
+      }
+    }
+  ],
+  "continuation_20261119": {
+    "new_evidence_ids": [
+      "MINI_RUNTIME_NATIVE2_44351078724",
+      "OPENCLAW_NATIVE5_SKILLUI3_44358114755",
+      "SKILL_MISSING8_NATIVE34_44380551059",
+      "MOTION_B_FAIL_C_PASS_44358121911",
+      "SIGNING_MANUAL_PREPARATION_499",
+      "LIVE_PROVIDER_AUTHORIZED_TRANSFER_44385752088",
+      "PHYSICAL_TRANSPORT_AVAILABILITY_20261118",
+      "INSTRUCTIONS_COLD_AND_CANVAS2_44389672441",
+      "NATIVE_TERMINAL_OBSERVATION_20261119",
+      "PAIRED_NATIVE8_44382101304",
+      "COMPACT_KEYBOARD2_44382535232",
+      "HOST_EDITOR_NATIVE34_UI11_44383943178",
+      "WIDE_UI26_44383949859",
+      "MOTION_D_DIAGNOSTIC6_44384450378"
+    ],
+    "source_task_statuses": "All 30 original source task objects remain unchanged; task closure requires its original Definition of Done.",
+    "feature_mapping": "All 278 feature rows and 26 UX decisions remain unchanged.",
+    "source_changes_awaiting_native_proof": [
+      {
+        "sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+        "scope": "Original policy offline boundary and Runtime05 cache/generation invalidation fixes",
+        "source_status": "PUBLISHED",
+        "native_status": "PENDING",
+        "runs": [
+          44425850134,
+          44425855469
+        ]
+      },
+      {
+        "sha_prefix": "916f77",
+        "scope": "Compact workspace keyboard ownership",
+        "source_status": "PUBLISHED_AS_ANCESTOR_OF_90314963",
+        "native_status": "PENDING",
+        "runs": [
+          44426497443,
+          44426526923
+        ]
+      },
+      {
+        "sha": "ca15335af4f7a1b965296779df6b4852699e38b8",
+        "scope": "Native editor state ownership and paired catalog search reveal",
+        "source_status": "PUBLISHED_AS_ANCESTOR_OF_90314963",
+        "native_status": "PENDING",
+        "runs": [
+          44426508137,
+          44426526923
+        ]
+      },
+      {
+        "sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+        "scope": "Existing paired test file assigned to canonical_product_split routing; 97 local router tests passed per root verified receipt",
+        "source_status": "PUBLISHED_REMOTE_VERIFIED_BY_ROOT",
+        "native_status": "PENDING",
+        "runs": [
+          44426497443,
+          44426508137,
+          44426526923
+        ]
+      },
+      {
+        "sha": "b1b979e2",
+        "scope": "Bounded original-profile native discovery and sanitized Xcode diagnostic retention",
+        "source_status": "PUBLISHED",
+        "native_status": "PENDING",
+        "runs": [
+          44426766800
+        ]
+      },
+      {
+        "sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+        "scope": "Controlled Motion D comparison of the actual UIScrollView touch delay; original A/B/C unchanged",
+        "source_status": "PUBLISHED",
+        "native_status": "PENDING",
+        "runs": [
+          44426771946
+        ]
+      }
+    ],
+    "historical_terminal_runs": 8,
+    "new_pending_native_runs": 7,
+    "verified_asana_updates": [
+      {
+        "task": "1220539644804804",
+        "comment": "1220690159199126",
+        "exact_readback": true,
+        "completed": false
+      },
+      {
+        "task": "1219605220179926",
+        "comment": "1220690092051272",
+        "exact_readback": true,
+        "completed": false
+      },
+      {
+        "task": "1219605282038820",
+        "comment": "1220690220552068",
+        "exact_readback": true,
+        "completed": false
+      },
+      {
+        "task": "1220546710400478",
+        "comment": "1220690092053920",
+        "exact_readback": true,
+        "completed": false
+      },
+      {
+        "task": "1220546571007976",
+        "comment": "1220690236088266",
+        "exact_readback": true,
+        "completed": false
+      },
+      {
+        "task": "1219605220179926",
+        "comment": "1220690159257674",
+        "exact_readback": true,
+        "purpose": "Correct full artifact SHA256 transcription",
+        "completed": false
+      }
+    ]
+  }
 }

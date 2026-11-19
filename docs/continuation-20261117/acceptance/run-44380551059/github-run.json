@@ -1,0 +1,15 @@
+{
+  "conclusion": "success",
+  "created_at": "2026-11-18T19:26:27Z",
+  "event": "workflow_dispatch",
+  "head_branch": "codex/hanlin-product-completion-20261117",
+  "head_sha": "3fcdedbdf980c000fabf484ee4568b7c253d766e",
+  "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059",
+  "id": 44380551059,
+  "name": "Build iOS 26 Unsigned IPA",
+  "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+  "run_attempt": 1,
+  "run_started_at": "2026-11-18T19:26:27Z",
+  "status": "completed",
+  "updated_at": "2026-11-18T20:06:15Z"
+}

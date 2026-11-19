@@ -1,0 +1,197 @@
+{
+  "run": 44382101304,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44382101304",
+  "sha": "bc7b24414660e0481c2502c75eb9075e6f3d6a74",
+  "status": "TEST_FAILED",
+  "verified_at": "2026-11-19T00:05:53.916427+00:00",
+  "artifact": {
+    "artifact_id": 14475051412,
+    "source_sha": "bc7b24414660e0481c2502c75eb9075e6f3d6a74",
+    "archive_size": 121322709,
+    "sha256": "783d6af426a3235a67af8fbbc8da42d4b7814b528c43b9b61a247b4b7b5156fe",
+    "expected_sha256": "783d6af426a3235a67af8fbbc8da42d4b7814b528c43b9b61a247b4b7b5156fe",
+    "full_archive_digest_verified": true,
+    "selected_members_rechecked_against_complete_archive": 22,
+    "partial_member_mismatches": []
+  },
+  "selected": 8,
+  "passed": 4,
+  "failed": 4,
+  "skipped": 0,
+  "cases": [
+    {
+      "identifier": "ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+      "result": "Passed",
+      "duration_seconds": 0.0333399772644043,
+      "failures": [],
+      "classification": "EXECUTED_PASS",
+      "scope": "Original native Share Inbox host integration; does not establish OS share sheet or downstream UI acceptance"
+    },
+    {
+      "identifier": "ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+      "result": "Passed",
+      "duration_seconds": 0.011714935302734375,
+      "failures": [],
+      "classification": "EXECUTED_PASS",
+      "scope": "Original native Share Inbox host integration; does not establish OS share sheet or downstream UI acceptance"
+    },
+    {
+      "identifier": "ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile()",
+      "result": "Passed",
+      "duration_seconds": 0.0070040225982666016,
+      "failures": [],
+      "classification": "EXECUTED_PASS",
+      "scope": "Original native Share Inbox host integration; does not establish OS share sheet or downstream UI acceptance"
+    },
+    {
+      "identifier": "ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+      "result": "Passed",
+      "duration_seconds": 0.28725481033325195,
+      "failures": [],
+      "classification": "EXECUTED_PASS",
+      "scope": "Original native Share Inbox host integration; does not establish OS share sheet or downstream UI acceptance"
+    },
+    {
+      "identifier": "HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState()",
+      "result": "Failed",
+      "duration_seconds": 112.38019895553589,
+      "failures": [
+        "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-chat-send"
+      ],
+      "classification": "PRODUCT_LAYOUT_FAILURE_BEFORE_CROSS_PRODUCT_REQUEST",
+      "finding": "Actual prompt reached the TextView, but send frame (327,731,32,32) is covered by visible keyboard frame (0,590,402,226).",
+      "not_exercised": [
+        "Host request dispatch",
+        "companion return or cancellation semantics"
+      ],
+      "attachment_ids": [
+        5,
+        25
+      ]
+    },
+    {
+      "identifier": "HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat()",
+      "result": "Failed",
+      "duration_seconds": 80.8337299823761,
+      "failures": [
+        "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-chat-send"
+      ],
+      "classification": "PRODUCT_LAYOUT_FAILURE_BEFORE_CROSS_PRODUCT_REQUEST",
+      "finding": "Actual prompt reached the TextView, but send frame (327,731,32,32) is covered by visible keyboard frame (0,590,402,226).",
+      "not_exercised": [
+        "Host request dispatch",
+        "companion return or cancellation semantics"
+      ],
+      "attachment_ids": [
+        31,
+        59
+      ]
+    },
+    {
+      "identifier": "HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback()",
+      "result": "Failed",
+      "duration_seconds": 105.86682689189911,
+      "failures": [
+        "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-package-card-Hanlin Transfer Acceptance"
+      ],
+      "classification": "HARNESS_NAVIGATION_GAP_WITH_PERSISTENCE_UNPROVEN",
+      "finding": "After import/relaunch the original catalog is at 0% of two pages, with only four lazy Swift cards realized. The test never scrolls or filters to the later ScriptUI section before requiring its exact card.",
+      "inference": "Offscreen lazy realization explains the missing match; archive does not independently establish whether the imported package persisted. Shipping catalog search must reach the exact card before the storage/transfer assertions can run.",
+      "not_exercised": [
+        "source runtime save",
+        "transfer preparation/import",
+        "rollback",
+        "original state verification"
+      ],
+      "attachment_ids": [
+        70,
+        114
+      ]
+    },
+    {
+      "identifier": "HanlinShareInboxUITests/testSharedTextURLAndFileReachTheOriginalChatOnlyAfterSend()",
+      "result": "Failed",
+      "duration_seconds": 51.67588007450104,
+      "failures": [
+        "Failed to determine hittability of \"hanlin-composer-general-menu\" Button: Activation point invalid and no suggested hit points based on element frame"
+      ],
+      "classification": "COMPOSER_HITTABILITY_FAILURE_BEFORE_SHARE_INBOX",
+      "finding": "After text entry the launcher remains at (33,719,52,52), consistent with the fixed composer affected by keyboard occlusion. The final failure snapshot reports (inf,inf,0,0) for the main window and launcher.",
+      "qualification": "The final invalid accessibility snapshot is recorded separately; it does not prove a separate product crash or explain away the preceding layout failure.",
+      "not_exercised": [
+        "share inbox draft UI",
+        "SDK request and saved conversation verification"
+      ],
+      "attachment_ids": [
+        120,
+        160
+      ]
+    }
+  ],
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "5F3A79E5-EE50-43C7-949E-B29A3CFAAD42",
+    "deviceName": "HanlinPaired-44382101304",
+    "modelName": "iPhone 18 Pro",
+    "osBuildNumber": "24B8117",
+    "osVersion": "27.2",
+    "platform": "iOS Simulator"
+  },
+  "both_product_builds": "EXECUTED_PASS",
+  "actual_shared_app_group": {
+    "status": "EXECUTED_PASS",
+    "containers": {
+      "com.itorah.chavrusachat": "/Users/runner/Library/Developer/CoreSimulator/Devices/5F3A79E5-EE50-43C7-949E-B29A3CFAAD42/data/Containers/Shared/AppGroup/6FA2C80D-3CE8-40E0-B61E-90A53862D160",
+      "com.itorah.hanlinminiapps": "/Users/runner/Library/Developer/CoreSimulator/Devices/5F3A79E5-EE50-43C7-949E-B29A3CFAAD42/data/Containers/Shared/AppGroup/6FA2C80D-3CE8-40E0-B61E-90A53862D160"
+    }
+  },
+  "host_reuse": {
+    "status": "REUSED_VERIFIED_PASS",
+    "origin_run": "44351078724",
+    "origin_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+    "origin_job": 134966552855,
+    "artifact_id": 14454531510,
+    "artifact_sha256": "sha256:8ebe0c0ec78b94ce960206551f474205a091cf8dabf24432a12773496aaa328d",
+    "focused": {
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "skipped": 0
+    },
+    "host": {
+      "tests": 153,
+      "pass": 152,
+      "fail": 0,
+      "skipped": 1
+    },
+    "scope": "Host prerequisites/archive only; UI NOT_RUN",
+    "host_metadata": {
+      "nodeVersion": "v24.5.0",
+      "archiveSha256": "1f33573abadf30c2d0bf3f8aef321eebe0402123fad78210216a09dd01abfa6c",
+      "sourceInputsHash": "33989c019212b08b6eb7080044a7f5652d32b3dde3ed10432f96efb2154aa585",
+      "jitlessArchiveSmoke": "passed",
+      "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+      "tests": "passed"
+    }
+  },
+  "host_raw_audit": "host-reuse-independent-audit.json",
+  "source_gate_verification": {
+    "file": "source/Scripts/ProductSplit/restore_host_proof.py",
+    "exact_count_guard": "focused == {tests:7,pass:7,fail:0,skipped:0}; full == {tests:153,pass:152,fail:0,skipped:1}",
+    "result": "SUCCEEDED; raw copied origin logs independently reproduce the guarded counts"
+  },
+  "minimal_fix_proposal": {
+    "keyboard": "Apply the product keyboard ownership correction being prepared by motion_ui_results; retain real send/launcher hittability requirements.",
+    "transfer": "paired-card-reveal.patch uses the existing Search Apps field at both post-relaunch lookups, then requires the exact original package card.",
+    "metadata": "paired-card-reveal-proposal.json",
+    "native_validation": "NOT_RUN",
+    "required_rerun": "All original eight product_and_share cases on the corrected published source, retaining original request/return/cancel, saved source value, transfer and rollback assertions."
+  },
+  "limitations": [
+    "No success is claimed for the four failed UI workflows or their later unexecuted assertions.",
+    "Simulator App Group proof is not distribution provisioning or physical-device proof.",
+    "OS share sheet presentation was outside the recorded run scope."
+  ],
+  "canonical_source_modified": false,
+  "asana_modified": false
+}

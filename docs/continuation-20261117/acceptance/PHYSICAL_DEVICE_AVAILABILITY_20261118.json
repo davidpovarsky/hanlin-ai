@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-11-18T20:16:31.173791+00:00",
+  "connected_host": "Windows 11 original development host",
+  "checks": [
+    {
+      "method": "Get-PnpDevice -PresentOnly; Apple/iPad/iPhone friendly-name filter",
+      "result": "Only Bluetooth/audio iPad profiles present; these are not a developer installation/debug transport."
+    },
+    {
+      "method": "Get-PnpDevice -PresentOnly; USB instance plus Apple/iPad/iPhone match",
+      "result": "NO_PRESENT_APPLE_USB_DEVICE"
+    }
+  ],
+  "acceptance": "No physical iPad app installation, launch, startup/RAM, or full device acceptance is established by these reads. Existing native results identify iOS Simulator explicitly.",
+  "limit": "This is current transport availability on the connected Windows host, not a claim about all devices owned by the user."
+}

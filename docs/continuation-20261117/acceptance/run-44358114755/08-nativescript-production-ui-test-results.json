@@ -1,0 +1,71 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "416CB89D-A58E-4056-8B7E-FA66D92B7D8B",
+      "deviceName" : "Hanlin-Phase2-44358114755-1",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "3m 17s",
+                  "durationInSeconds" : 197.380823969841,
+                  "name" : "testCancelActuallyRunningImportedNodeSkillRetainsPartialOutput()",
+                  "nodeIdentifier" : "HanlinSkillCenterUITests/testCancelActuallyRunningImportedNodeSkillRetainsPartialOutput()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinSkillCenterUITests/testCancelActuallyRunningImportedNodeSkillRetainsPartialOutput",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "4m 30s",
+                  "durationInSeconds" : 270.1996259689331,
+                  "name" : "testImportedSkillExecutionRequiresApprovalAndPersistsAfterColdLaunch()",
+                  "nodeIdentifier" : "HanlinSkillCenterUITests/testImportedSkillExecutionRequiresApprovalAndPersistsAfterColdLaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinSkillCenterUITests/testImportedSkillExecutionRequiresApprovalAndPersistsAfterColdLaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "3m 24s",
+                  "durationInSeconds" : 204.65270400047302,
+                  "name" : "testOriginalOpenClawPolicyAndInstallHintsUseTheRealImportedSource()",
+                  "nodeIdentifier" : "HanlinSkillCenterUITests/testOriginalOpenClawPolicyAndInstallHintsUseTheRealImportedSource()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinSkillCenterUITests/testOriginalOpenClawPolicyAndInstallHintsUseTheRealImportedSource",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinSkillCenterUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinSkillCenterUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}
