@@ -52,7 +52,7 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: runtime-core-update-check
+  group: runtime-core-update-check-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:

@@ -1,0 +1,13 @@
+{
+  "before_sha256": "4994babcd88bfcfe2fa49e36a035bce44bab837241350e93158937cf77a1578d",
+  "after_sha256": "241fdacb86e405cf09e2b5483219977f360c7d6788799ee36585a589ac7d8c78",
+  "only_change": "Scope original producer concurrency to github.ref; keep cancel-in-progress false",
+  "yaml_concurrency": {
+    "group": "runtime-core-update-check-${{ github.ref }}",
+    "cancel-in-progress": false
+  },
+  "diff_check": 0,
+  "old_jobs_preserved": true,
+  "native_acceptance": "NOT_RUN",
+  "observed_at": "2026-11-19T01:59:26.188316+00:00"
+}
