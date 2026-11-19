@@ -22,7 +22,20 @@ struct ChatView: View {
     @Environment(\.scenePhase) private var chatScenePhase
     @State private var draftSaveTask: Task<Void, Never>?
     // 输入与会话状态相关
-    @State private var message = ""                        // 用户输入的消息
+    @State private var composerDraft = HanlinComposerDraft()
+
+    // One owner for native edits, restored drafts and send clears. Keeping the
+    // value behind the original ChatView's stable reference lets the external
+    // compact composer read it before SwiftUI refreshes a retained Binding.
+    private var message: String {
+        get { composerDraft.text }
+        nonmutating set { composerDraft.text = newValue }
+    }
+
+    private var messageBinding: Binding<String> {
+        let draft = composerDraft
+        return Binding(get: { draft.text }, set: { draft.text = $0 })
+    }
     @State private var isResponding = false                // 是否处于系统响应状态
     @State private var isCancelled = false                 // 是否被打断
     @State private var respondIndex = 0                    // 当前响应请求的索引
@@ -323,7 +336,7 @@ struct ChatView: View {
             maxTokens: $maxTokens,
             showMaxMessagesNumSlider: $showMaxMessagesNumSlider,
             maxMessagesNum: $maxMessagesNum,
-            message: $message,
+            message: messageBinding,
             selectedImages: $selectedImages,
             selectedDocumentURLs: $selectedDocumentURLs,
             selectedURLs: $selectedURLs,
@@ -351,7 +364,8 @@ struct ChatView: View {
             onCancel: handleCancellation,
             validateSendAcceptance: { [self] in
                 isResponding || chatTemps.contains(where: { $0.role == "user" })
-            }
+            },
+            readCurrentMessageState: { [composerDraft] in composerDraft.snapshot }
         )
     }
 
@@ -461,7 +475,7 @@ struct ChatView: View {
                         maxTokens: $maxTokens,
                         showMaxMessagesNumSlider: $showMaxMessagesNumSlider,
                         maxMessagesNum: $maxMessagesNum,
-                        message: $message,
+                        message: messageBinding,
                         selectedImages: $selectedImages,
                         selectedDocumentURLs: $selectedDocumentURLs,
                         selectedURLs: $selectedURLs,
@@ -485,7 +499,8 @@ struct ChatView: View {
                         imageReversePrompt: $imageReversePrompt,
                         isInputActive: $isInputActive,
                         dockContextKey: effectiveChatSessionID.uuidString,
-                        availableWorkspaceSize: measuredWorkspaceSize
+                        availableWorkspaceSize: measuredWorkspaceSize,
+                        readCurrentMessageState: { [composerDraft] in composerDraft.snapshot }
                     )
                 }
         }

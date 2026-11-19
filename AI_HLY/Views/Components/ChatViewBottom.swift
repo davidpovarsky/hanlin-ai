@@ -277,6 +277,8 @@ struct ChatViewBottom: View {
     /// The persistent compact host supplies its usable native safe-area viewport.
     var workspaceUsesKeyboardSafeArea: Bool = false
     var onNativeEditorLifecycle: ((UITextView, NativeMultilineTextEditor.LifecycleEvent) -> Void)? = nil
+    /// Synchronous read from the same owner written by the message Binding.
+    var readCurrentMessageState: (() -> NativeMultilineTextEditor.TextState?)? = nil
 
     @Environment(\.modelContext) private var context
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -1380,7 +1382,8 @@ struct ChatViewBottom: View {
                                 popupCoordinator.closeAll()
                             }
                         },
-                        onLifecycleEvent: onNativeEditorLifecycle
+                        onLifecycleEvent: onNativeEditorLifecycle,
+                        readCurrentTextState: readCurrentMessageState
                     )
                     .padding(.leading, 12)
                     .frame(

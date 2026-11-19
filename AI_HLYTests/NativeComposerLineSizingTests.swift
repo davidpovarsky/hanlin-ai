@@ -132,6 +132,284 @@ struct NativeComposerLineSizingTests {
         #expect(view.text == input)
     }
 
+    @Test("Retained render snapshots cannot replay over a newer native draft",
+          arguments: ["PAIRED_CANCEL_12345678-1234-1234-1234-123456789ABC",
+                      "PAIRED_OPEN_12345678-1234-1234-1234-123456789ABC",
+                      "שלום 👋🏽 טיוטה\nשורה שנייה"])
+    func retainedRenderSnapshotPreservesNativeDraftAndCursor(_ input: String) {
+        let draft = HanlinComposerDraft()
+        var renderedText = ""
+        let editor = NativeMultilineTextEditor(
+            text: Binding(get: { renderedText }, set: { draft.text = $0 }),
+            textHeight: .constant(0), maxHeight: 300, usesAutomaticLineLimits: true,
+            readCurrentTextState: { draft.snapshot }
+        )
+        let coordinator = NativeMultilineTextEditor.Coordinator(editor)
+        let view = MultilineInnerTextView(frame: CGRect(x: 0, y: 0, width: 220, height: 100))
+        view.font = .preferredFont(forTextStyle: .body)
+        view.textColor = .label
+        coordinator.textViewDidBeginEditing(view)
+
+        for character in input {
+            let precedingDraft = draft.text
+            view.insertText(String(character))
+            let nativeText = view.text
+            let selection = view.selectedRange
+            // A layout can arrive both before and after the real UIKit delegate.
+            coordinator.synchronizeText(in: view)
+            #expect(view.text == nativeText)
+            #expect(view.selectedRange == selection)
+            coordinator.textViewDidChange(view)
+            #expect(draft.text == nativeText)
+
+            // Exact observed boundary: the write has reached the owner, but the
+            // retained render still reads the preceding value (initially empty).
+            renderedText = precedingDraft
+            coordinator.synchronizeText(in: view)
+            #expect(view.text == nativeText)
+            #expect(view.selectedRange == selection)
+        }
+
+        renderedText = draft.text
+        coordinator.synchronizeText(in: view)
+        #expect(view.text == input)
+        #expect(draft.text == input)
+        #expect(view.selectedRange == NSRange(location: (input as NSString).length, length: 0))
+    }
+
+    @Test("A genuine clear before render acknowledgement and another draft are authoritative")
+    func liveOwnerClearAndReplacementBeforeRenderAcknowledgement() {
+        let draft = HanlinComposerDraft()
+        var renderedText = ""
+        let editor = NativeMultilineTextEditor(
+            text: Binding(get: { renderedText }, set: { draft.text = $0 }),
+            textHeight: .constant(0), placeholderText: "Message", maxHeight: 300,
+            readCurrentTextState: { draft.snapshot }
+        )
+        let coordinator = NativeMultilineTextEditor.Coordinator(editor)
+        let view = MultilineInnerTextView(frame: CGRect(x: 0, y: 0, width: 220, height: 100))
+        view.font = .preferredFont(forTextStyle: .body)
+        view.textColor = .label
+        coordinator.textViewDidBeginEditing(view)
+        view.insertText("P")
+        coordinator.textViewDidChange(view)
+        #expect(draft.text == "P")
+        #expect(renderedText.isEmpty)
+
+        // Unlike the stale render's identical empty value, this is an actual
+        // write to the current owner. No acknowledgement or timeout is needed.
+        draft.text = ""
+        coordinator.synchronizeText(in: view)
+        #expect(view.text.isEmpty)
+        #expect(view.selectedRange == NSRange(location: 0, length: 0))
+
+        draft.text = "שיחה אחרת 👋"
+        coordinator.synchronizeText(in: view)
+        #expect(view.text == draft.text)
+        view.selectedRange = NSRange(location: (draft.text as NSString).length, length: 0)
+        renderedText = draft.text
+        draft.text = "אב"
+        coordinator.synchronizeText(in: view)
+        #expect(view.text == "אב")
+        #expect(view.selectedRange == NSRange(location: 2, length: 0))
+
+        draft.text = "   "
+        coordinator.textViewDidEndEditing(view)
+        coordinator.synchronizeText(in: view)
+        #expect(view.text == "   ")
+        #expect(draft.text == "   ")
+    }
+
+    private func withFocusedNativeEditor(
+        _ body: (MultilineInnerTextView) throws -> Void
+    ) throws {
+        let scene = try #require(UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }.first)
+        let previousKeyWindow = scene.windows.first { $0.isKeyWindow }
+        let window = UIWindow(windowScene: scene)
+        let root = UIViewController()
+        window.rootViewController = root
+        window.makeKeyAndVisible()
+        root.loadViewIfNeeded()
+        let view = MultilineInnerTextView(frame: CGRect(x: 0, y: 0, width: 220, height: 100))
+        view.font = .preferredFont(forTextStyle: .body)
+        view.textColor = .label
+        root.view.addSubview(view)
+        defer {
+            view.resignFirstResponder()
+            window.isHidden = true
+            previousKeyWindow?.makeKey()
+        }
+        try #require(view.becomeFirstResponder())
+        try body(view)
+    }
+
+    private func editor(for draft: HanlinComposerDraft,
+                        onFocusChange: ((Bool) -> Void)? = nil) -> NativeMultilineTextEditor {
+        NativeMultilineTextEditor(
+            text: Binding(get: { draft.text }, set: { draft.text = $0 }),
+            textHeight: .constant(0), placeholderText: "Message", maxHeight: 300,
+            onFocusChange: onFocusChange,
+            readCurrentTextState: { draft.snapshot }
+        )
+    }
+
+    @Test("Equal-string A-to-B rebinding commits pending native input only to A")
+    func equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped() throws {
+        let a = HanlinComposerDraft(text: "Same")
+        let b = HanlinComposerDraft(text: "Same")
+        var focusA: [Bool] = []
+        var focusB: [Bool] = []
+        let editorA = editor(for: a, onFocusChange: { focusA.append($0) })
+        let editorB = editor(for: b, onFocusChange: { focusB.append($0) })
+        let coordinator = NativeMultilineTextEditor.Coordinator(editorA)
+        try withFocusedNativeEditor { view in
+            view.text = a.text
+            view.selectedRange = NSRange(location: 4, length: 0)
+            coordinator.textViewDidBeginEditing(view)
+            // The original native mutation has happened; its delegate has not.
+            view.insertText(" A")
+            #expect(view.text == "Same A")
+            #expect(a.text == "Same")
+            let untouchedB = b.snapshot
+            view.delegate = coordinator
+            coordinator.rebind(to: editorB, in: view)
+            #expect(a.text == "Same A")
+            #expect(b.snapshot == untouchedB)
+            #expect(view.text == "Same")
+            #expect(view.selectedRange == NSRange(location: 4, length: 0))
+            #expect(view.isFirstResponder && coordinator.isEditing)
+            let committedA = a.snapshot
+            // A queued UITextViewDelegate callback carries the same native view,
+            // not a captured old string. It must not write a new B revision.
+            coordinator.textViewDidChange(view)
+            #expect(a.snapshot == committedA)
+            #expect(b.snapshot == untouchedB)
+            #expect(focusA == [true])
+            #expect(focusB.isEmpty)
+            view.delegate = nil
+            view.insertText(" ב")
+            coordinator.textViewDidChange(view)
+            #expect(b.text == "Same ב")
+            #expect(a.snapshot == committedA)
+            coordinator.rebind(to: editorA, in: view)
+            #expect(view.text == "Same A")
+            #expect(view.isFirstResponder && coordinator.isEditing)
+        }
+    }
+
+    @Test("Canonically equivalent drafts preserve exact native bytes and UTF-16 selection")
+    func canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText() throws {
+        let composed = "\u{e9}"
+        let decomposed = "e\u{301}"
+        #expect(composed == decomposed)
+        #expect(!composed.utf8.elementsEqual(decomposed.utf8))
+        let a = HanlinComposerDraft(text: decomposed)
+        let b = HanlinComposerDraft(text: composed)
+        let coordinator = NativeMultilineTextEditor.Coordinator(editor(for: a))
+        try withFocusedNativeEditor { view in
+            view.text = decomposed
+            view.selectedRange = NSRange(location: 2, length: 0)
+            coordinator.textViewDidBeginEditing(view)
+            let unchangedA = a.snapshot
+            let untouchedB = b.snapshot
+            coordinator.rebind(to: editor(for: b), in: view)
+            #expect(view.text.utf8.elementsEqual(composed.utf8))
+            #expect(view.selectedRange == NSRange(location: 1, length: 0))
+            #expect(a.snapshot == unchangedA)
+            #expect(b.snapshot == untouchedB)
+            coordinator.textViewDidChange(view)
+            #expect(b.snapshot == untouchedB)
+
+            // This is a real native replacement with a canonically equivalent
+            // value whose bytes and UTF-16 length differ.
+            view.selectedRange = NSRange(location: 0, length: 1)
+            view.insertText(decomposed)
+            #expect(view.text.utf8.elementsEqual(decomposed.utf8))
+            #expect(view.selectedRange == NSRange(location: 2, length: 0))
+            coordinator.textViewDidChange(view)
+            #expect(b.text.utf8.elementsEqual(decomposed.utf8))
+            #expect(b.snapshot.revision != untouchedB.revision)
+            coordinator.synchronizeText(in: view)
+            #expect(view.text.utf8.elementsEqual(decomposed.utf8))
+            #expect(view.selectedRange == NSRange(location: 2, length: 0))
+
+            b.text = composed
+            coordinator.synchronizeText(in: view)
+            #expect(view.text.utf8.elementsEqual(composed.utf8))
+            #expect(view.selectedRange == NSRange(location: 1, length: 0))
+            #expect(a.snapshot == unchangedA)
+            #expect(view.isFirstResponder && coordinator.isEditing)
+        }
+    }
+
+    @Test("An explicit same-value clear defeats an older native mutation before its delegate",
+          arguments: [false, true])
+    func sameValueClearPrecedesLateNativeDelegate(_ switchOwner: Bool) throws {
+        let a = HanlinComposerDraft()
+        let b = HanlinComposerDraft()
+        let coordinator = NativeMultilineTextEditor.Coordinator(editor(for: a))
+        try withFocusedNativeEditor { view in
+            view.text = ""
+            coordinator.textViewDidBeginEditing(view)
+            view.insertText("P")
+            #expect(view.text == "P")
+            #expect(a.text.isEmpty)
+            let initialRevision = a.snapshot.revision
+            // This real owner write is distinct from an unchanged empty render.
+            a.text = ""
+            let clearedA = a.snapshot
+            let untouchedB = b.snapshot
+            #expect(clearedA.revision != initialRevision)
+            if switchOwner {
+                coordinator.rebind(to: editor(for: b), in: view)
+            }
+            coordinator.textViewDidChange(view)
+            #expect(view.text.isEmpty)
+            #expect(view.selectedRange == NSRange(location: 0, length: 0))
+            #expect(a.snapshot == clearedA)
+            #expect(b.snapshot == untouchedB)
+            #expect(view.isFirstResponder && coordinator.isEditing)
+            coordinator.textViewDidChange(view)
+            #expect(a.snapshot == clearedA)
+            #expect(b.snapshot == untouchedB)
+        }
+    }
+
+    @Test("Real marked text finishes in its original owner without crossing into another draft",
+          arguments: [false, true])
+    func markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_ clearOriginal: Bool) throws {
+        let a = HanlinComposerDraft(text: "A ")
+        let b = HanlinComposerDraft(text: "B")
+        let coordinator = NativeMultilineTextEditor.Coordinator(editor(for: a))
+        try withFocusedNativeEditor { view in
+            view.text = a.text
+            view.selectedRange = NSRange(location: 2, length: 0)
+            coordinator.textViewDidBeginEditing(view)
+            view.setMarkedText("אב", selectedRange: NSRange(location: 2, length: 0))
+            try #require(view.markedTextRange != nil)
+            #expect(view.text == "A אב")
+            coordinator.textViewDidChange(view)
+            #expect(a.text == "A ")
+            if clearOriginal { a.text = "" }
+            let originalBeforeSwitch = a.snapshot
+            let untouchedB = b.snapshot
+            // Install the real delegate for any synchronous unmark notification.
+            view.delegate = coordinator
+            coordinator.rebind(to: editor(for: b), in: view)
+            #expect(view.markedTextRange == nil)
+            #expect(a.text == (clearOriginal ? "" : "A אב"))
+            if clearOriginal { #expect(a.snapshot == originalBeforeSwitch) }
+            #expect(b.snapshot == untouchedB)
+            #expect(view.text == "B")
+            #expect(view.isFirstResponder && coordinator.isEditing)
+            let finishedA = a.snapshot
+            coordinator.textViewDidChange(view)
+            #expect(a.snapshot == finishedA)
+            #expect(b.snapshot == untouchedB)
+        }
+    }
+
     @Test("Sending clears an editing UIKit draft and restored text keeps a valid cursor")
     func programmaticDraftUpdatesWhileEditing() {
         var draft = "Sent message"

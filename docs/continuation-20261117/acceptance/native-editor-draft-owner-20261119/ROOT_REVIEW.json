@@ -1,0 +1,97 @@
+{
+  "base": "e32f2035dc4ffbeca43402fce2beac9f924c1a70",
+  "proposalBase": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "sourceFiles": [
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "before_sha256": "25b3ac311ba66de6a96e757b84378189bc357ca1cdff6a7912beefb4e3e44fcf",
+      "after_sha256": "9bb2ace4ba5e61f640587eb06fd1f9f73324c25477fce2f4764d5449d1c78387",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "before_sha256": "c4c6e9cdaf8d9ed28a5f7197a2098994a6c14872d45df3f98990652711f2b99c",
+      "after_sha256": "a14c170483378a93ab3caeac602b11f5bdbc77694329e6c94e14db5ea2bb2524",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+      "before_sha256": "55c2cf70194de76d92d3d6f0b820f2cf9972b92822bcb78c6f4aeccc1210da25",
+      "after_sha256": "1b3cfdfbbfa9cad53a963518188a20340bee5cc977d365f9e6fa001e3aaa5aaa",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+      "before_sha256": "78fa43d0ee72b9659db35608a4892e5c8a7b265236e48073a48e03d243977680",
+      "after_sha256": "01eb7b2b93d47a25c99ce8b40cb301d30a0e2b524e5733cf59c207bcc3c6d922",
+      "current_matches_before": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "before_sha256": "e708636e028a11e3ced6c0802aa526e0d0013e165dfbe868a188c21f522ebc0c",
+      "after_sha256": "712ec4feed1d36ee8c2305f6562d74bad8d86c31abe67424dc44f5ad46e9f2d2",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "before_sha256": "557d0d364d215d456dc5cbccf7e0e831b9793a83c46cd73d9a06ce9f40f89307",
+      "after_sha256": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "before_sha256": "bc4c8cb5fd24e91432c7615af18207f01817d5de7da4d6c98562f4ddc8ac5cd9",
+      "after_sha256": "56ec5d7ad37051c2a9970e4df728d4a0eaa7da599672257f1162b8a591e70197",
+      "current_matches_before": true
+    }
+  ],
+  "rootReview": "Read originalv1fullpatch, v2ownership/revision/IMEdelta and v3exactUTF8delta. Rootrequestedthecanonical-equivalenttextfix. Same originaldraft owns binding/native/bridge reads; retainedrendercannot overwrite latest native text. Rebinding finishes pending composition under oldowner, exact owner revision makes realclears authoritative and latecallbacks cannotresurrectoldtext. Nativeview/focus and alloriginalassertions preserved.",
+  "nativeNewMethods": {
+    "NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)": 3,
+    "NativeComposerLineSizingTests/liveOwnerClearAndReplacementBeforeRenderAcknowledgement()": 1,
+    "ChatComposerSessionBridgeTests/liveDraftOwnerKeepsBridgeSnapshotsCurrent()": 1,
+    "NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()": 1,
+    "NativeComposerLineSizingTests/sameValueClearPrecedesLateNativeDelegate(_:)": 2,
+    "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)": 2,
+    "NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()": 1
+  },
+  "newExpandedNativeCases": 11,
+  "validation": {
+    "hashes": "ALL_7_EXACT",
+    "gitApplyCheck": "PASS",
+    "gitDiffCheck": "PASS",
+    "agentWindowsSwiftParse": "ALL_7_PASS",
+    "AppleNative": "NOT_RUN"
+  },
+  "evidenceCopied": [
+    {
+      "name": "v3-source-receipt.json",
+      "sha256": "18c7563fccad012830ad71a87dc54928eec7a8203b5378ada735699f4c79f95e"
+    },
+    {
+      "name": "PROPOSAL_REVIEW.md",
+      "sha256": "94f66a5ee2440e3c0e4a8a8fb4871f52586a0a600269ff9c19151dad0b61e955"
+    },
+    {
+      "name": "v2-source-receipt.json",
+      "sha256": "a24bc623bc150bc7aea3cee74b655e6c57dad31810c6a49249657208f1981dee"
+    },
+    {
+      "name": "original-test-preservation-v2.json",
+      "sha256": "a1b9b2e19d2a2203027ad0ece0581dab76472a8bbdddc985eb4d564f16cb314b"
+    },
+    {
+      "name": "metadata-only-editor-trace.txt",
+      "sha256": "1e5960bb87bfb8aa2af96309cf35d0cf7d6550803e627866ec90555dae62ba59"
+    },
+    {
+      "name": "original-trace-receipt.json",
+      "sha256": "dcf590fc4d7534e67a1e75973a5c992709085825211827e16cdaad99b200e6d2"
+    }
+  ],
+  "limits": [
+    "Original paired8 and compact/wide A-to-B UI still required.",
+    "Pending IME commit uses original draft and existing lifecycle persistence; no second writer or unproved navigation-durability claim.",
+    "Text counts/selection metadata only in copied trace; no raw app stdout imported."
+  ]
+}

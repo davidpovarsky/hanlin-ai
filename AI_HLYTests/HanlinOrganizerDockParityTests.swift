@@ -746,6 +746,32 @@ struct ChatComposerSessionBridgeTests {
         #expect(bridge.activeEndpoint == nil)
     }
 
+    @Test("Current draft owner prevents stale render snapshots from restoring or caching old text")
+    func liveDraftOwnerKeepsBridgeSnapshotsCurrent() {
+        let bridge = HanlinActiveComposerSessionBridge()
+        let chatID = UUID()
+        let draft = HanlinComposerDraft(text: "Cached older draft")
+        var endpoint = Self.makeTestEndpoint(
+            sessionID: chatID,
+            message: Binding(get: { "" }, set: { draft.text = $0 })
+        )
+        endpoint.readCurrentMessageState = { draft.snapshot }
+        bridge.snapshotDraft(from: endpoint)
+
+        draft.text = "Latest native edit"
+        bridge.register(endpoint: endpoint)
+        #expect(draft.text == "Latest native edit")
+        #expect(bridge.activeEndpoint?.currentMessage == "Latest native edit")
+        #expect(bridge.perChatDrafts[chatID]?.message == "Latest native edit")
+
+        // Send clears the original owner before any render acknowledges it.
+        draft.text = ""
+        bridge.update(endpoint: endpoint)
+        #expect(bridge.perChatDrafts[chatID]?.message.isEmpty == true)
+        bridge.unregister(sessionID: chatID, token: endpoint.registrationToken)
+        #expect(bridge.perChatDrafts[chatID]?.message.isEmpty == true)
+    }
+
     @Test("5.2 Per-chat draft snapshots isolate text, attachments, and toggles across Chat A and Chat B")
     func perChatDraftSnapshotsIsolateState() {
         let bridge = HanlinActiveComposerSessionBridge()

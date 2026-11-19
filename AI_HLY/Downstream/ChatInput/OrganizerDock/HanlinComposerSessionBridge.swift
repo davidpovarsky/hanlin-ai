@@ -46,6 +46,25 @@ extension EnvironmentValues {
     }
 }
 
+// MARK: - Original ChatView Draft Owner
+
+@MainActor
+@Observable
+final class HanlinComposerDraft {
+    private(set) var snapshot: NativeMultilineTextEditor.TextState
+
+    var text: String {
+        get { snapshot.text }
+        set {
+            snapshot = .init(ownerID: snapshot.ownerID, revision: UUID(), text: newValue)
+        }
+    }
+
+    init(text: String = "") {
+        snapshot = .init(ownerID: UUID(), revision: UUID(), text: text)
+    }
+}
+
 // MARK: - Per-Chat Transient Draft & Attachment Cache
 
 @MainActor
@@ -134,6 +153,15 @@ final class HanlinActiveComposerSessionBridge {
         var onSendObserve: () -> Void
         var onCancel: () -> Void
         var validateSendAcceptance: (() -> Bool)? = nil
+
+        // A retained SwiftUI Binding may still carry the preceding render's
+        // value during a native edit. This getter reads the very same draft
+        // owner synchronously; it does not keep a second copy of the text.
+        var readCurrentMessageState: (() -> NativeMultilineTextEditor.TextState?)? = nil
+
+        var currentMessage: String {
+            readCurrentMessageState?()?.text ?? message.wrappedValue
+        }
     }
 
     /// Currently mounted chat endpoint (`nil` when on Home or Library).
@@ -191,7 +219,11 @@ final class HanlinActiveComposerSessionBridge {
         lastEdited: Date()
     )
 
-    var homeMessage: String = ""
+    let homeDraft = HanlinComposerDraft()
+    var homeMessage: String {
+        get { homeDraft.text }
+        set { homeDraft.text = newValue }
+    }
     var homeSelectedImages: [UIImage] = []
     var homeSelectedDocumentURLs: [URL] = []
     var homeSelectedURLs: [String] = []
@@ -231,7 +263,7 @@ final class HanlinActiveComposerSessionBridge {
               let cached = perChatDrafts[endpoint.sessionID] else {
             return
         }
-        if endpoint.message.wrappedValue.isEmpty && !cached.message.isEmpty {
+        if endpoint.currentMessage.isEmpty && !cached.message.isEmpty {
             endpoint.message.wrappedValue = cached.message
             if endpoint.chatRecord.modelContext != nil {
                 endpoint.chatRecord.input = cached.message
@@ -314,7 +346,7 @@ final class HanlinActiveComposerSessionBridge {
             temporaryChatIDs.remove(endpoint.sessionID)
         }
         perChatDrafts[endpoint.sessionID] = HanlinChatDraftSnapshot(
-            message: endpoint.message.wrappedValue,
+            message: endpoint.currentMessage,
             selectedImages: endpoint.selectedImages.wrappedValue,
             selectedDocumentURLs: endpoint.selectedDocumentURLs.wrappedValue,
             selectedURLs: endpoint.selectedURLs.wrappedValue,
@@ -350,7 +382,7 @@ final class HanlinActiveComposerSessionBridge {
             return false
         }
         guard ChatViewBottom.shouldEnableSend(
-            message: endpoint.message.wrappedValue,
+            message: endpoint.currentMessage,
             selectedImagesCount: endpoint.selectedImages.wrappedValue.count,
             selectedDocumentsCount: endpoint.selectedDocumentURLs.wrappedValue.count,
             selectedPromptsCount: endpoint.selectedPrompts.wrappedValue.count,

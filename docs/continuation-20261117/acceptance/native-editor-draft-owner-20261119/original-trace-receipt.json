@@ -1,0 +1,9 @@
+{
+  "raw_trace": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447129341\\child-editor-triage\\big-editor-trace-QkHpCApti0NJ.txt",
+  "raw_trace_sha256": "40cacb15c099da9f4ef6d8483b10bb57609757851a6fcd02fe23b7d98e263aa6",
+  "metadata_trace": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447129341\\child-editor-triage\\metadata-only-editor-trace.txt",
+  "metadata_trace_sha256": "1e5960bb87bfb8aa2af96309cf35d0cf7d6550803e627866ec90555dae62ba59",
+  "events": 936,
+  "grammar": "Only explicitly named numeric/boolean editor fields; unrelated coalesced stdout stripped without changing originals.",
+  "provenance": "big-editor-trace-provenance.json"
+}

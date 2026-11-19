@@ -432,6 +432,10 @@ struct HanlinCompactChatWorkspace: View {
             workspaceUsesKeyboardSafeArea: true,
             onNativeEditorLifecycle: { editor, event in
                 keyboardOwner.observe(editor, event: event)
+            },
+            readCurrentMessageState: {
+                if let endpoint { return endpoint.readCurrentMessageState?() }
+                return sessionBridge.homeDraft.snapshot
             }
         )
         .onGeometryChange(for: CGFloat.self) { geo in
