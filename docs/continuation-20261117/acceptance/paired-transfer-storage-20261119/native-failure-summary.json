@@ -1,0 +1,28 @@
+{
+  "runID": 44426526923,
+  "sourceSHA": "90314963",
+  "rawStdoutMember": "app-split-evidence/paired-product/Paired.xcresult/Data/data.0~ATVaPl6rKsx0Z5-V17X-5oRJ9U2fKnY4PQtDUhrj8S-m5qWxdPF8GDOPy8kyBWH04cvCQfBskSO3sccWDOttmg==",
+  "rawStdoutSHA256": "fb73438466a248b6d45584530c3fbb738afdf36a70e02ac3f9553fd448c25589",
+  "rawStdoutBytes": 54975950,
+  "selectedLines": [
+    {
+      "line": 192318,
+      "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=HanlinTransferAcceptance.zip"
+    },
+    {
+      "line": 192321,
+      "text": "HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=true entrypoints=1"
+    },
+    {
+      "line": 207525,
+      "text": "HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true"
+    },
+    {
+      "line": 213440,
+      "text": "HANLIN_INSTALL_PREVIEW_FAILED: compilerFailed([HanlinScriptCompiler.HanlinCompilerDiagnostic(code: 2305, category: \"error\", message: \"Module \\'\\\"scripting\\\"\\' has no exported member \\'Storage\\'.\", file: Optional(\"index.tsx\"), line: Optional(1), column: Optional(30), endLine: nil, endColumn: nil)])"
+    }
+  ],
+  "observed": "Original importer preview accepted the fixture; actual production compiler rejected Storage named import before any store install/update.",
+  "acceptance": "NOT_ACCEPTED",
+  "followup": "Paired UI, persistent Storage and cross-product transfer/rollback still require a new actual native result."
+}

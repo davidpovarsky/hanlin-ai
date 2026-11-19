@@ -1,0 +1,20 @@
+{
+  "exit": 0,
+  "source_commit": "ca49d1381d186dcc481eeb7c7eb753dd19bd0085",
+  "compiler_version": "6.0.3",
+  "compiler_integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+  "compiler_js_sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+  "host_helper_sha256": "c21a05fdc704305815e130ad913a2c63b4e705bf06b68bacf0a855e0aab2631e",
+  "profile_sha256": "2414111ee7934e21fae37895e81bdd955290183ec3c2da4cf3c62d6f489ab057",
+  "declaration_sha256": {
+    "global.d.ts": "d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c",
+    "node.d.ts": "05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602",
+    "safari-ext.d.ts": "b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae",
+    "scripting.d.ts": "92155306822de8d1b3c9c31acd604ab562f46c69f0fa70a4cdced63c4a7a5259",
+    "web-fetch.d.ts": "d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938"
+  },
+  "original_source_sha256": "217e911883138741fe3a391bad34686262879e6f84f2bcff999e5ec1bbb6d29c",
+  "corrected_source_sha256": "1e1ac0652ca1bbbff785ea24c1aed86eb1322a89a66867bd6b62313d8bae944d",
+  "canonical_edited": false,
+  "native_acceptance": "NOT_RUN"
+}

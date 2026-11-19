@@ -74,7 +74,13 @@ final class HanlinPairedProductUITests: XCTestCase {
         let install = ai.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(install.waitForExistence(timeout: 30) && install.isEnabled)
         install.tap()
-        XCTAssertTrue(install.waitForNonExistence(timeout: 60))
+        // The importer returns after the real install/update and snapshot read.
+        // A compiler failure can hide Install behind an alert without installing.
+        let importer = ai.buttons["hanlin-file-importer"].firstMatch
+        XCTAssertTrue(importer.waitForExistence(timeout: 60),
+                      "Original package installation did not complete. \(ai.alerts.debugDescription)")
+        XCTAssertFalse(item(ai, "hanlin-import-error-message").exists)
+        XCTAssertFalse(ai.alerts["Script App Error"].exists)
         ai.terminate(); ai.launch()
         openOriginalPackage(named: "Hanlin Transfer Acceptance")
         XCTAssertTrue(ai.staticTexts["Not saved"].waitForExistence(timeout: 30))

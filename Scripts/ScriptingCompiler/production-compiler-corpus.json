@@ -3,7 +3,8 @@
   "discoveryRoots": [
     "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus",
     "Reference/ScriptingCompatibility/Original/Examples",
-    "Scripts/ScriptingCompiler/Fixtures/RealWorldPackages"
+    "Scripts/ScriptingCompiler/Fixtures/RealWorldPackages",
+    "Tests/ProductSplit/TransferFixture"
   ],
   "expectations": {
     "Reference/ScriptingCompatibility/Original/Examples/Map Snapshot": {
@@ -14,6 +15,9 @@
       "reason": "The preserved upstream example currently contains a strict nullability error at lib/mapSnapshot.ts:448."
     },
     "Reference/ScriptingCompatibility/Original/Examples/Transit Nearby": {
+      "expected": "success"
+    },
+    "Tests/ProductSplit/TransferFixture": {
       "expected": "success"
     }
   }

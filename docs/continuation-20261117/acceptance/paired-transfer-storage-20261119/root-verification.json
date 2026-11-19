@@ -1,0 +1,19 @@
+{
+  "base": "bce2b729eee53212dcb9150dfb4b8797d5fa5280",
+  "patch_sha256": "d50d68bddae6624b2c2ab4687650fe1e5028add5ef6326c5dba89bd985c8240e",
+  "checks": [
+    {
+      "name": "paired-ui-syntax",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "name": "diff-check",
+      "exit": 0,
+      "output": ""
+    }
+  ],
+  "compiler_tested_source_matches": true,
+  "native_acceptance": "NOT_RUN",
+  "observed_at": "2026-11-19T01:57:48.112769+00:00"
+}

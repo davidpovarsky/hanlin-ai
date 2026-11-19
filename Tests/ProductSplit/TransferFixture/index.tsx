@@ -1,4 +1,4 @@
-import { Button, Navigation, Storage, Text, VStack, useState } from "scripting"
+import { Button, Navigation, Text, VStack, useState } from "scripting"
 
 function App() {
   const [value, setValue] = useState(Storage.get<string>("copy-value") ?? "Not saved")
