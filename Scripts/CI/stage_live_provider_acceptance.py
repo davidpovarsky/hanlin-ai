@@ -9,6 +9,12 @@ import shutil
 import subprocess
 import sys
 
+
+if __package__:
+    from .owned_simulator_receipts import verify_owned_simulator, verify_staged_owner
+else:
+    from owned_simulator_receipts import verify_owned_simulator, verify_staged_owner
+
 LOG = Path(os.environ["LOG_DIR"])
 EVIDENCE = Path("build/live-provider-evidence")
 SELECTOR = "AI_HLYUITests/AgentRuntimeConversationUITests/testLiveGeminiPythonConsentAndColdReopen"
@@ -24,13 +30,12 @@ def call(argv, timeout=60, required=True):
 
 
 def owned_simulator():
-    simulator = (LOG / "simulator-udid.txt").read_text(encoding="utf-8").strip()
-    devices = json.loads(call(["xcrun", "simctl", "list", "devices", "-j"]).stdout)["devices"]
-    device = next(d for group in devices.values() for d in group if d["udid"] == simulator)
-    expected = "Hanlin-Phase2-" + os.environ["GITHUB_RUN_ID"] + "-" + os.environ["GITHUB_RUN_ATTEMPT"]
-    if device["name"] != expected:
-        raise RuntimeError("Live credentials require this job's newly owned simulator")
-    return simulator
+    owner = verify_owned_simulator(
+        LOG, os.environ["GITHUB_RUN_ID"], os.environ["GITHUB_RUN_ATTEMPT"])
+    staged = EVIDENCE / "stage.json"
+    if staged.exists():
+        verify_staged_owner(json.loads(staged.read_text(encoding="utf-8")), owner)
+    return owner
 
 
 def container(simulator):
@@ -45,7 +50,8 @@ def stage():
     key = os.environ.get("HANLIN_LIVE_GEMINI_API_KEY", "")
     if not key:
         raise RuntimeError("Existing live provider credential is not configured")
-    simulator = owned_simulator()
+    owner = owned_simulator()
+    simulator = owner["simulator"]
     app = Path((LOG / "app-path.txt").read_text(encoding="utf-8").strip())
     info = plistlib.loads((app / "Info.plist").read_bytes())
     if info["CFBundleIdentifier"] != "com.itorah.chavrusachat":
@@ -57,7 +63,8 @@ def stage():
     (EVIDENCE / "stage.json").write_text(json.dumps({"status": "OWNED",
         "model": MODEL,
         "source_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-        "simulator": simulator, "scope": "Original SDK provider; secret only in owned private input",
+        "simulator": simulator, "ownership": owner,
+        "scope": "Original SDK provider; secret only in owned private input",
         "credential_exported": False}, indent=2) + "\n", encoding="utf-8")
     target = container(simulator) / "Library/Application Support/HanlinLiveProviderAcceptance"
     target.mkdir(mode=0o700, parents=True, exist_ok=False)
@@ -76,7 +83,8 @@ def finish():
     try:
         if not staged.exists():
             raise RuntimeError("Live credential stage did not complete")
-        simulator = owned_simulator()
+        owner = owned_simulator()
+        simulator = owner["simulator"]
         data = container(simulator)
         log = (LOG / "08-nativescript-production-ui-tests.log").read_text(encoding="utf-8", errors="replace")
         nonces = set(re.findall(r"HANLIN_LIVE_PROVIDER_CHALLENGE=([A-Fa-f0-9-]{36})", log))
@@ -125,7 +133,8 @@ def finish():
     finally:
         if staged.exists():
             try:
-                simulator = owned_simulator()
+                owner = owned_simulator()
+                simulator = owner["simulator"]
                 # Only this fresh CI device ever received the live account.
                 # Its private database is not retained or exported.
                 call(["xcrun", "simctl", "shutdown", simulator], 30, required=False)

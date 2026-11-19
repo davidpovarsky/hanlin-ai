@@ -2546,6 +2546,7 @@ jobs:
           from pathlib import Path
           import sys
           from Scripts.CI.stage_simulator_fixtures import BOOT_TIMEOUT_SECONDS, run_bounded
+          from Scripts.CI.owned_simulator_receipts import record_owned_boot
 
           simulator = sys.argv[1]
           run_bounded(["xcrun", "simctl", "boot", simulator], timeout_seconds=15.0)
@@ -2555,6 +2556,7 @@ jobs:
           print(output, flush=True)
           if result.returncode:
               raise SystemExit(f"Simulator boot failed or timed out: {result.returncode}")
+          record_owned_boot(Path(os.environ["LOG_DIR"]), simulator, result)
           PY
             if [ "$defer_native_fixtures" = "true" ]; then
               printf '%s\n' "NativeScript fixtures deferred until actual Xcode unit-host installation." > "$LOG_DIR/08-nativescript-files-staging-deferred.txt"

@@ -1,8 +1,15 @@
 """Choose the requested device family on an on-disk runtime matching the stable SDK."""
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
+
+
+if __package__:
+    from .owned_simulator_receipts import created_selection
+else:
+    from owned_simulator_receipts import created_selection
 
 
 def family_for_selectors(selectors: str) -> str:
@@ -61,12 +68,9 @@ if __name__ == "__main__":
         identifier = read(["xcrun", "simctl", "create", args.create_owned,
                            original["deviceTypeIdentifier"], selected["runtime"]["identifier"]]).strip()
         observed = json.loads(read(["xcrun", "simctl", "list", "devices", "available", "-j"]))
-        created = [device for rows in observed["devices"].values() for device in rows if device["udid"] == identifier]
-        if len(created) != 1 or created[0]["name"] != args.create_owned:
-            raise RuntimeError("New owned simulator identity was not observed")
-        selected["source_device"] = original
-        selected["model"] = original["name"]
-        selected["device"] = created[0]
+        selected = created_selection(
+            selected, devices, observed, args.create_owned, identifier,
+            os.environ.get("GITHUB_RUN_ID"), os.environ.get("GITHUB_RUN_ATTEMPT"))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps({**selected, "observed_runtimes": runtimes}, indent=2))
     device, runtime = selected["device"], selected["runtime"]

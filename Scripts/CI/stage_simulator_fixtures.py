@@ -123,6 +123,13 @@ def stage_simulator_fixtures(
             "logs": logs,
         }
 
+    if log_dir and (log_dir / "verified-simulator-environment.json").is_file():
+        if __package__:
+            from .owned_simulator_receipts import record_owned_boot
+        else:
+            from owned_simulator_receipts import record_owned_boot
+        record_owned_boot(log_dir, simulator_udid, bootstatus_res)
+
     # 2. Install application if app_path provided
     if app_path:
         if not app_path.exists():
