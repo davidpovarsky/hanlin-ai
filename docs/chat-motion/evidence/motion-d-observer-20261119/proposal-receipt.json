@@ -1,0 +1,40 @@
+{
+  "canonicalHead": "ae3948f27710888c19b0e0dfe9baa01db2b21452",
+  "file": "docs/chat-motion/MotionUI/MotionUITests.swift",
+  "beforeSHA256": "ada5ed4bb2f5c677d746fd460042b630a73a9359204259db32b47d326292b5cb",
+  "afterSHA256": "a0c550806ddba1df3044a50eb49a1ad576bfb54bf61dc8d0cbe8dcc69270c189",
+  "patch": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\44426771946\\phase-snapshot-proposal\\motion-d-coherent-observations.UNAPPLIED.patch",
+  "patchSHA256": "e585d46a8cab03d7255fc75487143ca4660ea24da6e3795ced23f6652d494a9e",
+  "swiftSyntaxExitCode": 0,
+  "swiftSyntaxStderr": "",
+  "gitApplyCheckExitCode": 0,
+  "gitApplyCheckStderr": "",
+  "nativeExecution": false,
+  "diagnosis": {
+    "run": 44426771946,
+    "source": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+    "artifact": 14488692094,
+    "fullArchiveSHA256": "dab9d37370b8acb81e8ce041f72de25a211704f77e82b1f5c226992428c43ffa",
+    "phaseAlreadyVisibleBeforeWait": true,
+    "outerWaiterStartedUTC": "01:10:38.243",
+    "firstAXQueryStartedUTC": "01:10:39.254",
+    "queryCanceledByOuterWaiterUTC": "01:10:43.498",
+    "nativeCorrectMatchRepliedUTC": "01:10:44.655",
+    "queryFailure": "XCTFuture1001 Interrupted by waiter",
+    "actualDiagnosticTapCasesRun": 0
+  },
+  "limits": [
+    "Diagnostic-only observer change; original A/B/C and original tap delivery byte-identical",
+    "One coherent native snapshot each for phase, reset geometry, input receipt and restoration",
+    "Receipt label count equals decoded sample count; explicit one-snapshot observation, not a delivery-deadline guarantee",
+    "Exact phase, original/cancel/enabled flags, hit testing, actual timestamp/geometry samples and restoration equality retained",
+    "Redundant5s button existence waiter removed; original native isHittable assertion retained",
+    "Initial10s receipt existence gate unchanged; no sleeps or increased timeout added",
+    "New native diagnostic execution remains pending; no B acceptance claim"
+  ],
+  "updatedAt": "2026-11-19T01:31:27.201934+00:00",
+  "ABCAndOriginalHelpersByteIdentical": true,
+  "ABCAndOriginalHelpersSHA256": "20b7d2681d8274fc3b90c2514069ffca87a8c42230c614b2afef5ecb997f4d9b",
+  "tripleTapDeliveryByteIdentical": true,
+  "remainingNestedFiveSecondWaitersInD": 0
+}

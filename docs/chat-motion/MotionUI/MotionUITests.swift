@@ -158,7 +158,9 @@ final class MotionUITests: XCTestCase {
         let delivery: String
         let expectedActions: Int
         let observedActions: Int
-        let receiptReachedThree: Bool
+        let observationSemantics: String
+        let receiptLabel: String
+        let receiptObservedThree: Bool
         let actionTimeGaps: [TimeInterval]
         let laterActionsAtIntermediateGeometry: [Bool]
         let samples: [RapidInputSample]
@@ -200,13 +202,13 @@ final class MotionUITests: XCTestCase {
                 configurationToggle.tap()
                 changedTouchDelay = true
             }
-            let configurationReady = XCTNSPredicateExpectation(
-                predicate: NSPredicate(format: "label == %@", phase), object: configurationElement)
-            XCTAssertEqual(XCTWaiter.wait(for: [configurationReady], timeout: 5), .completed,
+            let configurationSnapshot = try configurationElement.snapshot()
+            XCTAssertEqual(configurationSnapshot.label, phase,
                            "The actual containing UIScrollView must report the requested diagnostic phase")
-            let configurationRaw = try XCTUnwrap(configurationElement.value as? String)
+            let configurationRaw = try XCTUnwrap(configurationSnapshot.value as? String)
             let configuration = try JSONDecoder().decode(ScrollTouchConfiguration.self,
                                                           from: Data(configurationRaw.utf8))
+            XCTAssertEqual(configuration.phase, phase)
             let configurationAttachment = XCTAttachment(string: configurationRaw)
             configurationAttachment.name = "rapid-scroll-configuration-\(phase)"
             configurationAttachment.lifetime = .keepAlways
@@ -228,12 +230,9 @@ final class MotionUITests: XCTestCase {
 
             for (identifier, delivery) in cases {
                 app.buttons["rapid-input-reset"].tap()
-                let collapsed = XCTNSPredicateExpectation(
-                    predicate: NSPredicate(format: "label == %@", "static=collapsed;animated=collapsed"),
-                    object: app.staticTexts["rapid-input-geometry"])
-                XCTAssertEqual(XCTWaiter.wait(for: [collapsed], timeout: 5), .completed)
+                let geometrySnapshot = try app.staticTexts["rapid-input-geometry"].snapshot()
+                XCTAssertEqual(geometrySnapshot.label, "static=collapsed;animated=collapsed")
                 let button = app.buttons[identifier]
-                XCTAssertTrue(button.waitForExistence(timeout: 5))
                 XCTAssertTrue(button.isHittable)
                 if delivery == "multi-tap" {
                     button.tap(withNumberOfTaps: 3, numberOfTouches: 1)
@@ -241,11 +240,13 @@ final class MotionUITests: XCTestCase {
                     let coordinate = button.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
                     for _ in 0..<3 { coordinate.tap() }
                 }
-                let reachedThree = XCTNSPredicateExpectation(
-                    predicate: NSPredicate(format: "label == %@", "3"), object: receipt)
-                let receiptReachedThree = XCTWaiter.wait(for: [reachedThree], timeout: 5) == .completed
-                let raw = try XCTUnwrap(receipt.value as? String)
+                let receiptSnapshot = try receipt.snapshot()
+                let raw = try XCTUnwrap(receiptSnapshot.value as? String)
                 let samples = try JSONDecoder().decode([RapidInputSample].self, from: Data(raw.utf8))
+                let observedLabelCount = try XCTUnwrap(Int(receiptSnapshot.label))
+                XCTAssertEqual(observedLabelCount, samples.count,
+                               "The receipt label and samples must describe the same native snapshot")
+                let receiptObservedThree = observedLabelCount == 3
                 XCTAssertTrue(samples.allSatisfy { $0.control == identifier })
                 let gaps = zip(samples.dropFirst(), samples).map { $0.0.uptime - $0.1.uptime }
                 let intermediate = samples.dropFirst().map { sample in
@@ -255,7 +256,9 @@ final class MotionUITests: XCTestCase {
                 }
                 let report = RapidInputReport(diagnosticOnly: true, phase: phase,
                     scrollConfiguration: configuration, control: identifier, delivery: delivery,
-                    expectedActions: 3, observedActions: samples.count, receiptReachedThree: receiptReachedThree,
+                    expectedActions: 3, observedActions: samples.count,
+                    observationSemantics: "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+                    receiptLabel: receiptSnapshot.label, receiptObservedThree: receiptObservedThree,
                     actionTimeGaps: gaps, laterActionsAtIntermediateGeometry: intermediate, samples: samples)
                 reports.append(report)
                 let attachment = XCTAttachment(string: String(decoding: try encoder.encode(report), as: UTF8.self))
@@ -268,10 +271,9 @@ final class MotionUITests: XCTestCase {
 
         configurationToggle.tap()
         changedTouchDelay = false
-        let restored = XCTNSPredicateExpectation(
-            predicate: NSPredicate(format: "label == %@", "native-default"), object: configurationElement)
-        XCTAssertEqual(XCTWaiter.wait(for: [restored], timeout: 5), .completed)
-        let restoredRaw = try XCTUnwrap(configurationElement.value as? String)
+        let restoredSnapshot = try configurationElement.snapshot()
+        XCTAssertEqual(restoredSnapshot.label, "native-default")
+        let restoredRaw = try XCTUnwrap(restoredSnapshot.value as? String)
         let restoredConfiguration = try JSONDecoder().decode(ScrollTouchConfiguration.self,
                                                               from: Data(restoredRaw.utf8))
         XCTAssertEqual(restoredConfiguration, try XCTUnwrap(baselineConfiguration),
