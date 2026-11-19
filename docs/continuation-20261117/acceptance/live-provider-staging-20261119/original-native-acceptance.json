@@ -1,0 +1,9 @@
+{
+  "status": "NOT_ACCEPTED",
+  "scope": "Original iOS app, live Gemini, original CPython and persisted conversation",
+  "model": "gemini-3.8-flash",
+  "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testLiveGeminiPythonConsentAndColdReopen",
+  "credential_exported": false,
+  "error": "Live credential stage did not complete",
+  "credential_cleanup": "NO_CREDENTIAL_STAGED"
+}

@@ -1,0 +1,23 @@
+{
+  "before_sha256": "68bba8f8b15ead028b5750b77c64e6e977efdd9c948a393c75961acd3262a70d",
+  "after_sha256": "11a0dd0873ee5ddf9695b503192279c940093d0b5a5fd7c63a1761c91b8d7f22",
+  "checks": [
+    {
+      "name": "owned-simulator",
+      "exit": 0,
+      "sha256": "075fd1e2b2ee10dad8b160de2581b52642f0fe21e7dfd9b6d6ccc13a781ebfc9"
+    },
+    {
+      "name": "fixture-staging",
+      "exit": 5,
+      "sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce"
+    },
+    {
+      "name": "diff-check",
+      "exit": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "Portable ownership, native-failure preservation and credential cleanup; native install timeout remains unresolved",
+  "observed_at": "2026-11-19T02:05:46.947678+00:00"
+}

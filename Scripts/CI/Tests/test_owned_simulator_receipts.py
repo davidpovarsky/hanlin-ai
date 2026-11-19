@@ -215,6 +215,79 @@ class OwnedSimulatorReceiptTests(unittest.TestCase):
         provider = data / "Library/Application Support/HanlinLiveProviderAcceptance/provider.json"
         self.assertEqual(json.loads(provider.read_text())["apiKey"], "unit-test-placeholder")
 
+    def test_install_failure_preserves_bounded_redacted_evidence_and_cleans_only_owned_device(self):
+        module = self.load_stage_module()
+        app = self.root / "AI_HLY.app"
+        app.mkdir()
+        (app / "Info.plist").write_bytes(plistlib.dumps({"CFBundleIdentifier": "com.itorah.chavrusachat"}))
+        (self.log / "app-path.txt").write_text(str(app), encoding="utf-8")
+        key = "unit-test-placeholder"
+        calls = []
+        def native(argv, **kwargs):
+            calls.append(argv)
+            code = 124 if argv[2] == "install" else 0
+            return subprocess.CompletedProcess(argv, code, key + ("x" * 9000),
+                "Native install timed out: " + key if code else "")
+        with patch.dict(os.environ, {"GITHUB_RUN_ID": RUN, "GITHUB_RUN_ATTEMPT": ATTEMPT,
+                                     "HANLIN_LIVE_GEMINI_API_KEY": key}), \
+                patch("Scripts.CI.stage_simulator_fixtures.run_bounded", side_effect=native), \
+                patch.object(module.subprocess, "check_output", return_value="a" * 40):
+            with self.assertRaisesRegex(RuntimeError, "simctl install"):
+                module.stage()
+            stage = json.loads((module.EVIDENCE / "stage.json").read_text())
+            self.assertEqual(stage["status"], "PREPARING")
+            verify_staged_owner(stage, self.verify())
+            failures = list(module.EVIDENCE.glob("preparation-failure-*.json"))
+            self.assertEqual(len(failures), 1)
+            failure = json.loads(failures[0].read_text())
+            self.assertEqual(failure["command"], ["xcrun", "simctl", "install"])
+            self.assertEqual(failure["exit_code"], 124)
+            self.assertEqual(failure["timeout_seconds"], 300)
+            self.assertLessEqual(len(failure["stdout_tail"]), 8192)
+            self.assertNotIn(key, json.dumps(failure))
+            self.assertIn("<redacted>", failure["stderr_tail"])
+            self.assertEqual(module.finish(), 1)
+        self.assertEqual([command[2] for command in calls], ["install", "shutdown", "delete"])
+        self.assertTrue(all(command[3] == DEVICE for command in calls))
+        self.assertEqual(list(self.root.rglob("provider.json")), [])
+        acceptance = json.loads((module.EVIDENCE / "acceptance.json").read_text())
+        self.assertEqual(acceptance["status"], "NOT_ACCEPTED")
+        self.assertEqual(acceptance["credential_cleanup"], "OWNED_SIMULATOR_REMOVED")
+        self.assertNotIn(key.encode(), b"".join(file.read_bytes() for file in module.EVIDENCE.iterdir()))
+
+    def test_partial_private_write_keeps_atomic_ownership_for_cleanup(self):
+        module = self.load_stage_module()
+        app = self.root / "AI_HLY.app"
+        app.mkdir()
+        (app / "Info.plist").write_bytes(plistlib.dumps({"CFBundleIdentifier": "com.itorah.chavrusachat"}))
+        (self.log / "app-path.txt").write_text(str(app), encoding="utf-8")
+        data = self.root / "private-data"
+        data.mkdir()
+        calls = []
+        def native(argv, *args, **kwargs):
+            calls.append(argv)
+            return subprocess.CompletedProcess(argv, 0,
+                str(data) if "get_app_container" in argv else "", "")
+        def interrupted_write(value, output):
+            output.write('{"apiKey":"unit-test-placeholder"')
+            raise OSError("injected private-file failure")
+        with patch.dict(os.environ, {"GITHUB_RUN_ID": RUN, "GITHUB_RUN_ATTEMPT": ATTEMPT,
+                                     "HANLIN_LIVE_GEMINI_API_KEY": "unit-test-placeholder"}), \
+                patch.object(module, "call", side_effect=native), \
+                patch.object(module.subprocess, "check_output", return_value="a" * 40):
+            with patch.object(module.json, "dump", side_effect=interrupted_write):
+                with self.assertRaisesRegex(OSError, "private-file"):
+                    module.stage()
+            stage = json.loads((module.EVIDENCE / "stage.json").read_text())
+            self.assertEqual(stage["status"], "PREPARING")
+            verify_staged_owner(stage, self.verify())
+            self.assertEqual(module.finish(), 1)
+        self.assertEqual([command[2] for command in calls], ["install", "get_app_container", "shutdown", "delete"])
+        self.assertTrue(all(command[3] == DEVICE for command in calls))
+        self.assertNotIn(b"unit-test-placeholder",
+            b"".join(file.read_bytes() for file in module.EVIDENCE.iterdir()))
+        self.assertEqual(json.loads((module.EVIDENCE / "acceptance.json").read_text())["status"], "NOT_ACCEPTED")
+
     def test_changed_staged_owner_cannot_delete_another_simulator(self):
         module = self.load_stage_module()
         module.EVIDENCE.mkdir()

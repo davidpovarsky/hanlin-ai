@@ -1,0 +1,12 @@
+{
+  "run_id": 44428114202,
+  "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+  "artifact_id": 14489492821,
+  "official_zip_sha256": "00c7e6871615423a80f84470e597b805ff49436b9645e788ad84781e31c2e796",
+  "full_app_build": "PASS",
+  "owned_simulator_boot": "PASS",
+  "install": "FAILED_TIMEOUT_300_SECONDS",
+  "live_provider": "NOT_RUN",
+  "credential_cleanup": "NO_CREDENTIAL_STAGED",
+  "failed_jobs_log_sha256": "85646a48d2f9d7bc018946e7c286a3779bd367aefbb1adbcc0462d1fe8154ccd"
+}

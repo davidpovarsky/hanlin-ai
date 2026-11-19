@@ -8,6 +8,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 
 
 if __package__:
@@ -21,11 +22,39 @@ SELECTOR = "AI_HLYUITests/AgentRuntimeConversationUITests/testLiveGeminiPythonCo
 MODEL = "gemini-3.8-flash"
 
 
+def write_proof(path, value):
+    temporary = path.with_suffix(".tmp")
+    temporary.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+    temporary.replace(path)
+
+
 def call(argv, timeout=60, required=True):
-    from stage_simulator_fixtures import run_bounded
+    if __package__:
+        from .stage_simulator_fixtures import run_bounded
+    else:
+        from stage_simulator_fixtures import run_bounded
+    started = time.monotonic()
     result = run_bounded(argv, timeout_seconds=timeout)
     if required and result.returncode:
-        raise RuntimeError("Native live-provider preparation command failed: " + argv[1])
+        # Preserve the native failure before raising. The credential is never an
+        # argument; redact it before bounding any captured native output.
+        key = os.environ.get("HANLIN_LIVE_GEMINI_API_KEY", "")
+        def bounded(value):
+            value = value or ""
+            if key:
+                value = value.replace(key, "<redacted>")
+            return value[-8192:]
+        EVIDENCE.mkdir(parents=True, exist_ok=True)
+        write_proof(EVIDENCE / ("preparation-failure-" + str(time.monotonic_ns()) + ".json"), {
+            "command": [str(value) for value in argv[:3]],
+            "exit_code": result.returncode,
+            "timeout_seconds": timeout,
+            "elapsed_seconds": round(time.monotonic() - started, 3),
+            "stdout_tail": bounded(result.stdout),
+            "stderr_tail": bounded(result.stderr),
+            "credential_exported": False,
+        })
+        raise RuntimeError("Native live-provider preparation command failed: " + " ".join(argv[:3]))
     return result
 
 
@@ -56,22 +85,24 @@ def stage():
     info = plistlib.loads((app / "Info.plist").read_bytes())
     if info["CFBundleIdentifier"] != "com.itorah.chavrusachat":
         raise RuntimeError("Live seed requires the original AI product")
-    call(["xcrun", "simctl", "install", simulator, str(app)], 300)
-    # Record ownership before the first secret write, so cleanup also runs
-    # after a partial filesystem write or later input failure.
+    # Register the already-proven owned device before installation as well as
+    # before secret writes. A failed install must still clean up this device.
     EVIDENCE.mkdir(parents=True, exist_ok=True)
-    (EVIDENCE / "stage.json").write_text(json.dumps({"status": "OWNED",
-        "model": MODEL,
+    staged = {"status": "PREPARING", "model": MODEL,
         "source_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "simulator": simulator, "ownership": owner,
         "scope": "Original SDK provider; secret only in owned private input",
-        "credential_exported": False}, indent=2) + "\n", encoding="utf-8")
+        "credential_exported": False}
+    write_proof(EVIDENCE / "stage.json", staged)
+    call(["xcrun", "simctl", "install", simulator, str(app)], 300)
     target = container(simulator) / "Library/Application Support/HanlinLiveProviderAcceptance"
     target.mkdir(mode=0o700, parents=True, exist_ok=False)
     file = target / "provider.json"
     descriptor = os.open(file, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     with os.fdopen(descriptor, "w", encoding="utf-8") as output:
         json.dump({"apiKey": key, "model": MODEL}, output)
+    # Preserve the valid ownership receipt even if this state transition fails.
+    write_proof(EVIDENCE / "stage.json", {**staged, "status": "CREDENTIAL_STAGED"})
     print("Existing live provider credential staged privately; no secret in launch arguments or artifacts.")
 
 
@@ -84,6 +115,8 @@ def finish():
         if not staged.exists():
             raise RuntimeError("Live credential stage did not complete")
         owner = owned_simulator()
+        if json.loads(staged.read_text(encoding="utf-8")).get("status") != "CREDENTIAL_STAGED":
+            raise RuntimeError("Original app installation or private credential staging did not complete")
         simulator = owner["simulator"]
         data = container(simulator)
         log = (LOG / "08-nativescript-production-ui-tests.log").read_text(encoding="utf-8", errors="replace")

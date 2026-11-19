@@ -1,0 +1,18 @@
+{
+  "source_base": "7436f7dd5da56dc649421017e4fc186d53ba0cd0",
+  "implementation_files": [
+    "Scripts/CI/stage_live_provider_acceptance.py",
+    "Scripts/CI/Tests/test_owned_simulator_receipts.py"
+  ],
+  "checks": {
+    "owned_simulator": {
+      "exit": 0,
+      "tests": 17,
+      "log_sha256": "1abb67f09c05e6da7011246758cdd4f84b7c3be55efc334bd22ef0bda569926b"
+    },
+    "diff_check": 0
+  },
+  "prior_unmatched_fixture_pattern": "0 tests, exit5; retained and not counted as a pass",
+  "scope": "Portable controls; native300-second install timeout is not claimed resolved",
+  "observed_at": "2026-11-19T02:07:11.305647+00:00"
+}

@@ -1,0 +1,31 @@
+{"status": "NOT_ACCEPTED", "model": "gemini-3.8-flash", "credential_cleanup": "FAILED", "error": "Live credential ownership changed after staging"}
+[stage_simulator_fixtures] Verifying simulator boot state for 11111111-2222-3333-4444-555555555555...
+[stage_simulator_fixtures] Verifying simulator boot state for 11111111-2222-3333-4444-555555555555...
+[stage_simulator_fixtures] Probing Files container (com.apple.DocumentsApp) with 5s timeout (optional)...
+[stage_simulator_fixtures] Successfully staged 1 fixtures into app container (0 into Files container).
+{"status": "NOT_ACCEPTED", "model": "gemini-3.8-flash", "credential_cleanup": "OWNED_SIMULATOR_REMOVED", "error": "Original app installation or private credential staging did not complete"}
+{"status": "NOT_ACCEPTED", "model": "gemini-3.8-flash", "credential_cleanup": "OWNED_SIMULATOR_REMOVED", "error": "Original app installation or private credential staging did not complete"}
+Existing live provider credential staged privately; no secret in launch arguments or artifacts.
+test_boot_receipt_cannot_be_transplanted_or_relabelled (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_boot_receipt_cannot_be_transplanted_or_relabelled) ... ok
+test_changed_selection_cannot_reuse_an_older_successful_boot (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_changed_selection_cannot_reuse_an_older_successful_boot) ... ok
+test_changed_staged_owner_cannot_delete_another_simulator (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_changed_staged_owner_cannot_delete_another_simulator) ... ok
+test_create_cannot_claim_a_preexisting_device_even_with_the_expected_name (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_create_cannot_claim_a_preexisting_device_even_with_the_expected_name) ... ok
+test_failed_fixture_boot_cannot_emit_an_ownership_boot_receipt (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_failed_fixture_boot_cannot_emit_an_ownership_boot_receipt) ... [stage_simulator_fixtures] Fatal: Simulator bootstatus failed with code 124: Timed out
+ok
+test_failed_or_wrong_device_boot_cannot_produce_a_boot_receipt (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_failed_or_wrong_device_boot_cannot_produce_a_boot_receipt) ... ok
+test_fixture_staging_records_the_successful_targeted_boot_before_seeding (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_fixture_staging_records_the_successful_targeted_boot_before_seeding) ... ok
+test_fresh_creation_and_actual_boot_receipts_need_no_new_native_inventory (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_fresh_creation_and_actual_boot_receipts_need_no_new_native_inventory) ... ok
+test_install_failure_preserves_bounded_redacted_evidence_and_cleans_only_owned_device (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_install_failure_preserves_bounded_redacted_evidence_and_cleans_only_owned_device) ... ok
+test_invalid_ownership_stops_before_install_or_any_credential_write (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_invalid_ownership_stops_before_install_or_any_credential_write) ... ok
+test_missing_boot_receipt_cannot_authorize_staging (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_missing_boot_receipt_cannot_authorize_staging) ... ok
+test_native_readback_must_match_name_hardware_runtime_and_availability (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_native_readback_must_match_name_hardware_runtime_and_availability) ... ok
+test_other_run_or_attempt_cannot_reuse_receipts (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_other_run_or_attempt_cannot_reuse_receipts) ... ok
+test_partial_private_write_keeps_atomic_ownership_for_cleanup (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_partial_private_write_keeps_atomic_ownership_for_cleanup) ... ok
+test_stage_uses_only_exact_device_install_and_container_calls (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_stage_uses_only_exact_device_install_and_container_calls) ... ok
+test_staged_credential_owner_is_immutable_across_cleanup (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_staged_credential_owner_is_immutable_across_cleanup) ... ok
+test_wrong_udid_file_or_incomplete_creation_provenance_fails_closed (test_owned_simulator_receipts.OwnedSimulatorReceiptTests.test_wrong_udid_file_or_incomplete_creation_provenance_fails_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.261s
+
+OK
