@@ -6,9 +6,14 @@ on:
   workflow_dispatch:
     inputs:
       proof_run:
-        description: Original completed candidate workflow run
+        description: Original candidate workflow run
         type: string
         required: true
+      proof_attempt:
+        description: Exact producer attempt for an automatic handoff
+        type: string
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -28,6 +33,7 @@ jobs:
     env:
       TRUSTED_SOURCE_SHA: ${{ vars.HANLIN_UPSTREAM_TRUSTED_SHA }}
       PROOF_RUN: ${{ github.event.workflow_run.id || inputs.proof_run }}
+      EXPECTED_PRODUCER_ATTEMPT: ${{ github.event.workflow_run.run_attempt || inputs.proof_attempt }}
       ALLOW_AUTO_MERGE: ${{ vars.HANLIN_UPSTREAM_ACCEPTANCE_AUTOMERGE == 'true' && 'true' || 'false' }}
     steps:
       - name: Require an immutable reviewed consumer source
@@ -50,6 +56,7 @@ jobs:
       - name: Authenticate current-head schema2 evidence and all required gates
         env:
           GH_TOKEN: ${{ github.token }}
+          HANLIN_UPSTREAM_PROTECTION_READ_TOKEN: ${{ secrets.HANLIN_UPSTREAM_PROTECTION_READ_TOKEN }}
         run: >-
           node Scripts/Runtime/consume-upstream-run.mjs
           davidpovarsky/hanlin-ai "$PROOF_RUN"
