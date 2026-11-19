@@ -485,14 +485,17 @@ jobs:
               "sdk_verified": sys.argv[11] == sys.argv[5],
           }, indent=2) + "\n", encoding="utf-8")
           PY
-      - name: Build pinned Motion UI generically, boot owned iPadOS 27.2 simulator, and run selected scope
+      - name: Build pinned Motion UI generically and run selected scope via xcodebuild-owned iPadOS 27.2 boot
         env:
           HANLIN_MOTION_PRODUCT_ROOT: ${{ github.workspace }}/product
           HANLIN_MOTION_SUPPORT_ROOT: ${{ github.workspace }}
           HANLIN_MOTION_BUILD_BEFORE_BOOT: '1'
-          HANLIN_MOTION_DEVICE_STRATEGY: data-owned
+          HANLIN_MOTION_DEVICE_STRATEGY: xcodebuild-owned
           HANLIN_MOTION_DEVICE_TYPE: com.apple.CoreSimulator.SimDeviceType.iPad-A16
           HANLIN_MOTION_REQUIRED_SDK: '27.2'
+          HANLIN_MOTION_DESTINATION_TIMEOUT: '180'
+          HANLIN_MOTION_BUILD_TIMEOUT: '300'
+          HANLIN_MOTION_TEST_TIMEOUT: '960'
           HANLIN_MOTION_SCOPE: ${{ inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'cycles' || inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'input-diagnostic' || 'affected' }}
         run: |
           set -euo pipefail
@@ -543,12 +546,18 @@ jobs:
               run_attempt = os.environ.get("GITHUB_RUN_ATTEMPT")
               owned_name = f"Hanlin-Phase2-{run_id}-{run_attempt}"
               device_uuid = _uuid(udid_path.read_text(encoding="utf-8").strip())
-              _created_selection(selection_path, device_uuid, run_id, run_attempt, owned_name)
+              _, selection_sha = _created_selection(selection_path, device_uuid, run_id, run_attempt, owned_name)
+              sha_path = support_dir / "verified-selection.sha256"
+              if sha_path.is_file() and sha_path.read_text(encoding="utf-8").strip() != selection_sha:
+                  raise RuntimeError("Owned simulator selection digest changed before cleanup")
               receipt["verified_uuid"] = device_uuid
               receipt["owned_name"] = owned_name
+              receipt["selection_sha256"] = selection_sha
               sd = run_bounded(["xcrun", "simctl", "shutdown", device_uuid], 20.0)
               receipt["shutdown"] = sd
-              _created_selection(selection_path, device_uuid, run_id, run_attempt, owned_name)
+              _, post_shutdown_sha = _created_selection(selection_path, device_uuid, run_id, run_attempt, owned_name)
+              if post_shutdown_sha != selection_sha:
+                  raise RuntimeError("Owned simulator selection digest changed before delete")
               dl = run_bounded(["xcrun", "simctl", "delete", device_uuid], 20.0)
               receipt["delete"] = dl
               if dl["return_code"] == 0 and dl["timed_out"] is False:
