@@ -1,0 +1,50 @@
+{
+  "status": "SOURCE_VALIDATED",
+  "shared_source_count": 63,
+  "graph": {
+    "miniapps_products": [
+      "HanlinExpoNativeAPI",
+      "HanlinExpoRuntime",
+      "HanlinMiniAppCore",
+      "HanlinNativeScriptRuntime",
+      "HanlinParityMiniApp",
+      "HanlinPlatformContracts",
+      "HanlinProductSplit",
+      "HanlinScriptCompiler",
+      "HanlinScriptContracts",
+      "HanlinScriptDeviceServices",
+      "HanlinScriptExtensions",
+      "HanlinScriptStore",
+      "HanlinScriptUI",
+      "HanlinScriptingApplicationRuntime",
+      "HanlinScriptingSDK",
+      "HanlinSefariaMiniApp",
+      "HanlinTextStudioMiniApp",
+      "HanlinWikipediaMiniApp",
+      "IOSSystemLite",
+      "SWCompression",
+      "ZIPFoundation"
+    ],
+    "miniapps_source_groups": [
+      "HanlinMiniAppsApp"
+    ],
+    "deployment_target": "27.0",
+    "signed_or_install_proof": false
+  },
+  "sdk": {
+    "ai_products": [
+      "HanlinAgentCore",
+      "HanlinHostContracts",
+      "HanlinPersistenceAdapters"
+    ],
+    "unit_test_products": [
+      "HanlinAgentCore"
+    ],
+    "miniapps_sdk_products": [],
+    "synchronized_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+    "apple_compilation": "NOT_RUN"
+  },
+  "ios_build": "NOT_RUN",
+  "ios_ui": "NOT_RUN",
+  "signed_group": "NOT_RUN"
+}

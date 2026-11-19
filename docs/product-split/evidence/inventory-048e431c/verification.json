@@ -1,0 +1,134 @@
+{
+  "recorded_at": "2026-11-19T03:30:17.720045+00:00",
+  "target_revision": "048e431cc55b10290c03ec4b2c0162e5f9dfcf9c",
+  "prior_generator_defect": "Canonical generator still hardcoded all source anchors to dd700c03; original99af1a18 provenance fix was absent from this branch.",
+  "original_repair_revision": "99af1a183ad81ea2ef4269cc5a60403889ec1d2f",
+  "source_files": [
+    "Scripts/ProductSplit/parity_inventory.py",
+    "Tests/ProductSplit/test_parity_inventory.py"
+  ],
+  "prior_matrix_sha256": "ccba98e746ac1bd838b7f772b5c3391136d04b887ed5f372f8fec1fff95d2725",
+  "new_matrix_sha256": "153e5efbf7b126819251da4ede8e0509b5a181286b00c28b678461d515f63373",
+  "historical_rows_and_statuses_preserved": 278,
+  "feature_acceptance_promotions": 0,
+  "source_anchor_count": 623,
+  "unique_current_anchor_files": 28,
+  "coverage": {
+    "status": "EXECUTED_PASS",
+    "coverage_count": 278,
+    "acceptance_counts": {
+      "NOT_RUN": 269,
+      "BLOCKED": 9
+    },
+    "meaning": "Coverage/provenance validation only; no 278-feature behavior acceptance",
+    "errors": []
+  },
+  "adversarial": {
+    "status": "EXECUTED_PASS",
+    "tests_run": 12,
+    "passed": [
+      "test_parity_inventory.ParityValidatorTests.test_changed_historical_description_rejected",
+      "test_parity_inventory.ParityValidatorTests.test_complete_inventory",
+      "test_parity_inventory.ParityValidatorTests.test_duplicate_id_rejected",
+      "test_parity_inventory.ParityValidatorTests.test_missing_id_rejected",
+      "test_parity_inventory.ParityValidatorTests.test_missing_owner_or_evidence_rejected",
+      "test_parity_inventory.ParityValidatorTests.test_missing_required_status_fields_rejected",
+      "test_parity_inventory.ParityValidatorTests.test_source_anchor_must_match_selected_target_revision",
+      "test_parity_inventory.ParityValidatorTests.test_target_project_fingerprint_cannot_be_changed",
+      "test_parity_inventory.ParityValidatorTests.test_target_revision_must_be_exact_commit",
+      "test_parity_inventory.ParityValidatorTests.test_unexpected_id_rejected",
+      "test_parity_inventory.ParityValidatorTests.test_unproven_pass_rejected",
+      "test_parity_inventory.ParityValidatorTests.test_wrong_source_digest_rejected"
+    ],
+    "failures": 0,
+    "errors": 0,
+    "legacy_decision_count": 26,
+    "legacy_choice_counts": {
+      "KEEP": 14,
+      "RESTORE_TRIAL": 11,
+      "OPEN": 1
+    },
+    "scope": "Inventory validation, not UI or feature behavior acceptance"
+  },
+  "limits": [
+    "Current source/component anchors establish code location and hashes, not feature semantics or native acceptance.",
+    "Original278 per-feature statuses are unchanged; separate evidence overlay is being reconciled.",
+    "Original26 summary choices preserved; missing full historical visual prompt is not reconstructed."
+  ],
+  "current_target_validation": {
+    "status": "SOURCE_VALIDATED",
+    "shared_source_count": 63,
+    "graph": {
+      "miniapps_products": [
+        "HanlinExpoNativeAPI",
+        "HanlinExpoRuntime",
+        "HanlinMiniAppCore",
+        "HanlinNativeScriptRuntime",
+        "HanlinParityMiniApp",
+        "HanlinPlatformContracts",
+        "HanlinProductSplit",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptExtensions",
+        "HanlinScriptStore",
+        "HanlinScriptUI",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptingSDK",
+        "HanlinSefariaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinWikipediaMiniApp",
+        "IOSSystemLite",
+        "SWCompression",
+        "ZIPFoundation"
+      ],
+      "miniapps_source_groups": [
+        "HanlinMiniAppsApp"
+      ],
+      "deployment_target": "27.0",
+      "signed_or_install_proof": false
+    },
+    "sdk": {
+      "ai_products": [
+        "HanlinAgentCore",
+        "HanlinHostContracts",
+        "HanlinPersistenceAdapters"
+      ],
+      "unit_test_products": [
+        "HanlinAgentCore"
+      ],
+      "miniapps_sdk_products": [],
+      "synchronized_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+      "apple_compilation": "NOT_RUN"
+    },
+    "ios_build": "NOT_RUN",
+    "ios_ui": "NOT_RUN",
+    "signed_group": "NOT_RUN"
+  },
+  "retained_logs": [
+    {
+      "file": "generate-current.stderr.log",
+      "repository_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "external_original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalization": "line endings and final blank lines only; external original retained"
+    },
+    {
+      "file": "generate-current.stdout.log",
+      "repository_sha256": "cb932bc2df8946a95fee3bc8caa6d8300e75af9caccee393416e4b19958f41b4",
+      "external_original_sha256": "c5931a9bfa7d3d1a5564daf32b3e3c18f1fad681680daae23df615e4522003f6",
+      "normalization": "line endings and final blank lines only; external original retained"
+    },
+    {
+      "file": "inventory-tests.stderr.log",
+      "repository_sha256": "a07035a02da0555031ccb1c357334b695c4f3ef9372798730de1788e9c6735f7",
+      "external_original_sha256": "06934ea725f62fe95c9e89def6458b3400b67ff026da0e831dd625f690800408",
+      "normalization": "line endings and final blank lines only; external original retained"
+    },
+    {
+      "file": "inventory-tests.stdout.log",
+      "repository_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "external_original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalization": "line endings and final blank lines only; external original retained"
+    }
+  ]
+}
