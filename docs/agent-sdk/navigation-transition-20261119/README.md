@@ -37,3 +37,9 @@ Results and exact source manifests will be recorded after execution. Build or po
 The corrected source passed all **28** named Swift Testing cases on Windows Swift 6.3.3 with strict concurrency and zero compiler warnings. The complete raw XML, log, toolchain and 30 compiled original input hashes are retained under `portable/`. This is not an Apple graph or native UI pass. The earlier 27-case result is separately preserved as a historical source checkpoint; its initial report failed only because the wrapper looked for the XCTest XML filename instead of SwiftPM's `tests-swift-testing.xml`.
 
 The actual Apple plan selects 58 cases: one HostSchema original-byte correlation case, 22 AgentSession cases, six Context cases, one callback convention case and these 28 navigation cases, followed by the original iOS Simulator SDK build.
+
+## Integration with the existing original consumer
+
+The implementation was replayed without conflict onto the original SDK commit `6d62957852ffcb428810b065b4252e5384f1374b`, already consumed by Otzaria branch `codex/otzaria-hanlin-consumer-20261119` at `7be3af6b`. This preserves the original editor-ownership and transport/Keychain source instead of replacing it with an older SDK. Code commit: `d49801160dd7e84d84db3903a0c6f7dedfe9c017`.
+
+`SOURCE_FREEZE.json` verifies every one of the 30 portable compiled inputs against that integration source. All are byte-identical except the newly added contract file, whose CRLF-to-LF conversion is explicitly recorded and whose original bytes remain in the archive. The actual full SDK graph, including the original AgentSession/engine changes already present in the consumer base, is scheduled for fresh Apple verification; portable passes do not cover that graph.
