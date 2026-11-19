@@ -51,9 +51,38 @@ final class HanlinCanvasRuntimeUITests: XCTestCase {
         XCTAssertTrue(confirmation.waitForExistence(timeout: 10),
                       "Remote code transfer requires an explicit separate action")
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'emkc.org'")).firstMatch.exists)
-        app.buttons["Cancel"].firstMatch.tap()
+        let disclosure = XCTAttachment(screenshot: app.screenshot())
+        disclosure.name = "original-canvas-remote-consent-before-dismissal"
+        disclosure.lifetime = .keepAlways
+        add(disclosure)
+
+        let cancel = app.buttons["Cancel"].firstMatch
+        if cancel.exists && cancel.isHittable {
+            cancel.tap()
+        } else {
+            // In regular-width iOS, confirmationDialog presents a popover and
+            // omits Cancel. Dismiss it through the original outside-tap gesture.
+            let popover = app.popovers.containing(
+                .button, identifier: "hanlin-canvas-python-remote-confirm"
+            ).firstMatch
+            XCTAssertTrue(popover.waitForExistence(timeout: 5),
+                          "A missing Cancel is valid only for the native confirmation popover")
+            XCTAssertTrue(output.exists && !output.frame.isEmpty)
+            let outputCenter = CGPoint(x: output.frame.midX, y: output.frame.midY)
+            XCTAssertTrue(app.windows.firstMatch.frame.contains(outputCenter))
+            XCTAssertFalse(popover.frame.contains(outputCenter),
+                           "The dismissal point must be outside the remote confirmation")
+            // The noninteractive output is inside Canvas, so this gesture dismisses
+            // the confirmation without activating a different Canvas action.
+            output.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        }
+        XCTAssertTrue(confirmation.waitForNonExistence(timeout: 5))
+        XCTAssertTrue(app.navigationBars["Canvas runtime acceptance"].firstMatch.exists,
+                      "Dismissing consent must keep the original Canvas open")
         XCTAssertEqual(output.label, originalOutput)
         XCTAssertTrue(app.buttons["hanlin-canvas-python-menu"].firstMatch.isEnabled)
+        XCTAssertFalse(app.buttons["hanlin-canvas-python-cancel"].firstMatch.exists,
+                       "Dismissing remote consent must not start Python execution")
         let first = XCTAttachment(screenshot: app.screenshot())
         first.name = "original-canvas-embedded-python-and-remote-disclosure"
         first.lifetime = .keepAlways

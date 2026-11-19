@@ -13,6 +13,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US",
             "-agentDiagnosticsAutomaticCaptureMigrationV1", "YES", "-agentDiagnosticsLevel", "off"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_LIVE_GEMINI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
         // No fixture provider flag, response interceptor, secret launch argument,
@@ -442,6 +444,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(input.waitForExistence(timeout: 20), "Chat input did not appear in Agent Acceptance Chat")
         tapElement(input)
         input.typeText("Draft preserved across switch")
+        XCTAssertEqual(input.value as? String, "Draft preserved across switch",
+                       "Verify native typing before measuring navigation draft preservation")
 
         // Open sidebar / list view and create a new conversation
         let newChatButton = chatListToolbarButton("hanlin-new-chat-button", in: app)
@@ -1509,6 +1513,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launch()
         return app

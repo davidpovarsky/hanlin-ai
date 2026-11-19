@@ -7,6 +7,8 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
         app.launch()
@@ -43,6 +45,8 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
         app.launch()
@@ -82,6 +86,8 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(he)", "-AppleLocale", "he_IL"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
         app.launch()
@@ -126,6 +132,8 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
         app.launch()
@@ -195,6 +203,8 @@ final class HanlinMorphComposerUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(zh-Hans)", "-AppleLocale", "zh_CN"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
         app.launch()
@@ -236,6 +246,8 @@ final class HanlinMorphComposerUITests: XCTestCase {
             app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
         }
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_DOCK_ACCEPTANCE_FIXTURES"] = "1"
         app.launch()

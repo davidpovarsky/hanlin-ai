@@ -45,6 +45,7 @@ struct HanlinCompactChatWorkspace: View {
     @Namespace private var libraryZoom
     @State private var dockHeight: CGFloat = 176
     @State private var workspaceSize: CGSize = .zero
+    @State private var keyboardOwner = HanlinCompactKeyboardOwner()
     @State private var matchedMessageIDByChat: [UUID: UUID] = [:]
     @FocusState private var isCompactComposerInputActive: Bool
 
@@ -137,7 +138,7 @@ struct HanlinCompactChatWorkspace: View {
                 workspaceSize = newSize
             }
             .compactWorkspaceGeometryProbe("workspace")
-            .modifier(HanlinCompactKeyboardAvoidance())
+            .modifier(HanlinCompactKeyboardAvoidance(owner: keyboardOwner))
             .animation(.spring(response: 0.36, dampingFraction: 0.88), value: composerVisible)
             .onChange(of: path) { oldPath, newPath in
                 isCompactComposerInputActive = false
@@ -428,7 +429,10 @@ struct HanlinCompactChatWorkspace: View {
             isInputActive: $isCompactComposerInputActive,
             dockContextKey: activeComposerKey,
             availableWorkspaceSize: availableSize,
-            workspaceUsesKeyboardSafeArea: true
+            workspaceUsesKeyboardSafeArea: true,
+            onNativeEditorLifecycle: { editor, event in
+                keyboardOwner.observe(editor, event: event)
+            }
         )
         .onGeometryChange(for: CGFloat.self) { geo in
             geo.size.height
@@ -442,73 +446,96 @@ struct HanlinCompactChatWorkspace: View {
 }
 
 // The probe measures the unpadded workspace, so applying its inset does not
-// move its own reference bounds. Navigation and the ONE existing composer keep
-// their SwiftUI identity, environment, bindings and native editor first responder.
+// move its own reference bounds. There is one overlap writer for navigation
+// and the existing persistent composer; editor identity and bindings stay intact.
 @MainActor
 private struct HanlinCompactKeyboardAvoidance: ViewModifier {
+    let owner: HanlinCompactKeyboardOwner
     @State private var keyboardOverlap: CGFloat = 0
 
     func body(content: Content) -> some View {
         content
             .padding(.bottom, keyboardOverlap)
             .background {
-                HanlinCompactKeyboardGuideProbe { overlap in
+                HanlinCompactKeyboardFrameProbe(owner: owner) { overlap in
                     guard keyboardOverlap != overlap else { return }
                     keyboardOverlap = overlap
                 }
                 .accessibilityHidden(true)
                 .allowsHitTesting(false)
             }
-            // This owner already applies the actual keyboard intersection.
-            // Child NavigationStack hosts must not apply it a second time.
             .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
+// Registration comes from this workspace's actual ChatViewBottom editor.
+// A settings/sheet input or another pane in the same UIWindow is not an owner.
+// The weak reference needs no walk through SwiftUI's private hosting hierarchy.
 @MainActor
-private struct HanlinCompactKeyboardGuideProbe: UIViewRepresentable {
-    var onOverlapChanged: (CGFloat) -> Void
+final class HanlinCompactKeyboardOwner {
+    private(set) weak var editor: UITextView?
+    fileprivate weak var observer: HanlinCompactKeyboardFrameView?
 
-    func makeUIView(context: Context) -> HanlinCompactKeyboardGuideView {
-        let view = HanlinCompactKeyboardGuideView()
-        view.onOverlapChanged = onOverlapChanged
-        return view
-    }
-
-    func updateUIView(_ uiView: HanlinCompactKeyboardGuideView, context: Context) {
-        uiView.onOverlapChanged = onOverlapChanged
-        uiView.setNeedsLayout()
+    func observe(_ editor: UITextView, event: NativeMultilineTextEditor.LifecycleEvent) {
+        switch event {
+        case .attached:
+            guard self.editor !== editor else { return }
+            self.editor = editor
+            observer?.ownershipDidChange("editor-attached")
+        case .focusChanged(let focused):
+            guard self.editor === editor else { return }
+            observer?.ownershipDidChange(focused ? "editor-focused" : "editor-unfocused")
+        case .detached:
+            // A late teardown from a replaced editor cannot unregister its successor.
+            guard self.editor === editor else { return }
+            self.editor = nil
+            observer?.ownershipDidChange("editor-detached")
+        }
     }
 }
 
 @MainActor
-private final class HanlinCompactKeyboardGuideView: UIView {
+private struct HanlinCompactKeyboardFrameProbe: UIViewRepresentable {
+    let owner: HanlinCompactKeyboardOwner
+    var onOverlapChanged: (CGFloat) -> Void
+
+    func makeUIView(context: Context) -> HanlinCompactKeyboardFrameView {
+        let view = HanlinCompactKeyboardFrameView(owner: owner)
+        view.onOverlapChanged = onOverlapChanged
+        return view
+    }
+
+    func updateUIView(_ uiView: HanlinCompactKeyboardFrameView, context: Context) {
+        uiView.onOverlapChanged = onOverlapChanged
+        uiView.setNeedsLayout()
+    }
+
+    static func dismantleUIView(_ uiView: HanlinCompactKeyboardFrameView, coordinator: Void) {
+        uiView.disconnect()
+    }
+}
+
+@MainActor
+fileprivate final class HanlinCompactKeyboardFrameView: UIView {
     var onOverlapChanged: ((CGFloat) -> Void)?
-    private let keyboardTopMarker = UIView()
-    private var pendingOverlap: CGFloat = 0
+    private let owner: HanlinCompactKeyboardOwner
+    private weak var observedWindow: UIWindow?
+    private weak var keyboardScreen: UIScreen?
+    private var keyboardFrame: CGRect?
+    private var keyboardScreenBounds: CGRect?
+    private var observations: [NotificationCenter.ObservationToken] = []
     private var deliveredOverlap: CGFloat?
     private var deliveryScheduled = false
+    #if DEBUG || HANLIN_TESTING
+    private var lastLayoutWitness: String?
+    #endif
 
-    init() {
+    init(owner: HanlinCompactKeyboardOwner) {
+        self.owner = owner
         super.init(frame: .zero)
         isUserInteractionEnabled = false
         isAccessibilityElement = false
-
-        // A floating keyboard must not displace the whole workspace. UIKit
-        // owns docked/split/hardware-keyboard geometry for this actual view.
-        keyboardLayoutGuide.followsUndockedKeyboard = false
-        keyboardLayoutGuide.usesBottomSafeArea = false
-
-        keyboardTopMarker.translatesAutoresizingMaskIntoConstraints = false
-        keyboardTopMarker.isUserInteractionEnabled = false
-        keyboardTopMarker.isAccessibilityElement = false
-        addSubview(keyboardTopMarker)
-        NSLayoutConstraint.activate([
-            keyboardTopMarker.topAnchor.constraint(equalTo: keyboardLayoutGuide.topAnchor),
-            keyboardTopMarker.leadingAnchor.constraint(equalTo: leadingAnchor),
-            keyboardTopMarker.trailingAnchor.constraint(equalTo: trailingAnchor),
-            keyboardTopMarker.heightAnchor.constraint(equalToConstant: 0)
-        ])
+        owner.observer = self
     }
 
     required init?(coder: NSCoder) {
@@ -517,28 +544,165 @@ private final class HanlinCompactKeyboardGuideView: UIView {
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        setNeedsLayout()
+        if window !== observedWindow {
+            // Releasing typed tokens stops observation of the previous window.
+            observations.removeAll()
+            observedWindow = window
+            clearKeyboardFrame()
+            if window != nil { observeKeyboard() }
+        }
+        queueOverlapUpdate(reason: "window-changed")
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let overlap = min(bounds.height, max(0, bounds.maxY - keyboardTopMarker.frame.minY))
-        guard overlap.isFinite else { return }
-        pendingOverlap = overlap
-        guard deliveredOverlap != overlap, !deliveryScheduled else { return }
-        deliveryScheduled = true
+        queueOverlapUpdate(reason: "layout")
+    }
 
-        // Coalesce native layout passes and publish outside the current
-        // SwiftUI layout update. No keyboard notifications, screen bounds,
-        // assumed keyboard height or replacement editor are involved.
+    func ownershipDidChange(_ reason: String) {
+        queueOverlapUpdate(reason: reason)
+    }
+
+    func disconnect() {
+        observations.removeAll()
+        clearKeyboardFrame()
+        observedWindow = nil
+        if owner.observer === self { owner.observer = nil }
+        onOverlapChanged = nil
+    }
+
+    private func observeKeyboard() {
+        let center = NotificationCenter.default
+        observations = [
+            center.addObserver(of: nil, for: UIResponder.KeyboardWillChangeFrameMessage.self) { [weak self] message in
+                self?.receiveFrame(message.endFrame, screen: message.screen, isLocal: message.isLocal, reason: "will-change-frame")
+            },
+            center.addObserver(of: nil, for: UIResponder.KeyboardDidChangeFrameMessage.self) { [weak self] message in
+                self?.receiveFrame(message.endFrame, screen: message.screen, isLocal: message.isLocal, reason: "did-change-frame")
+            },
+            center.addObserver(of: nil, for: UIResponder.KeyboardWillHideMessage.self) { [weak self] message in
+                self?.receiveHide(on: message.screen, reason: "will-hide")
+            },
+            center.addObserver(of: nil, for: UIResponder.KeyboardDidHideMessage.self) { [weak self] message in
+                self?.receiveHide(on: message.screen, reason: "did-hide")
+            },
+            center.addObserver(of: nil, for: UIWindow.DidResignKeyMessage.self) { [weak self] message in
+                guard let self, self.observedWindow === message.window else { return }
+                self.clearKeyboardFrame()
+                self.queueOverlapUpdate(reason: "window-resigned-key")
+            },
+            center.addObserver(of: nil, for: UIScene.WillDeactivateMessage.self) { [weak self] message in
+                guard let self, self.observedWindow?.windowScene === message.scene else { return }
+                self.clearKeyboardFrame()
+                self.queueOverlapUpdate(reason: "scene-deactivated")
+            }
+        ]
+    }
+
+    private func receiveFrame(_ frame: CGRect, screen: UIScreen, isLocal: Bool, reason: String) {
+        guard let window, window === observedWindow, window.windowScene?.screen === screen else { return }
+        if isLocal {
+            keyboardScreen = screen
+            keyboardScreenBounds = screen.bounds
+            keyboardFrame = frame
+        } else {
+            clearKeyboardFrame()
+        }
+        queueOverlapUpdate(reason: isLocal ? reason : "nonlocal-frame")
+    }
+
+    private func receiveHide(on screen: UIScreen, reason: String) {
+        guard observedWindow?.windowScene?.screen === screen else { return }
+        // Clearing does not require first responder: UIKit may already have resigned it.
+        clearKeyboardFrame()
+        queueOverlapUpdate(reason: reason)
+    }
+
+    private func clearKeyboardFrame() {
+        keyboardFrame = nil
+        keyboardScreen = nil
+        keyboardScreenBounds = nil
+    }
+
+    private var ownsFirstResponder: Bool {
+        guard owner.observer === self,
+              let window, window === observedWindow, window.isKeyWindow,
+              window.windowScene?.activationState == .foregroundActive,
+              let editor = owner.editor, editor.window === window else { return false }
+        return editor.isFirstResponder
+    }
+
+    private func currentOverlap() -> CGFloat {
+        guard ownsFirstResponder,
+              let window, let screen = keyboardScreen,
+              window.windowScene?.screen === screen,
+              let frame = keyboardFrame, keyboardScreenBounds == screen.bounds else { return 0 }
+        // Keyboard endFrame is in this message's screen coordinate space.
+        // Convert through the actual window, including Split View/Stage Manager offsets.
+        let frameInWindow = screen.coordinateSpace.convert(frame, to: window)
+        let frameInView = convert(frameInWindow, from: window)
+        return HanlinCompactKeyboardGeometry.dockedOverlap(
+            bounds: bounds, keyboardFrameInView: frameInView,
+            keyboardFrameInScreen: frame, screenBounds: screen.bounds, displayScale: screen.scale)
+    }
+
+    private func queueOverlapUpdate(reason: String) {
+        witness(reason: reason)
+        guard !deliveryScheduled else { return }
+        deliveryScheduled = true
+        // Publish after SwiftUI's current update/layout. Re-read all ownership and
+        // geometry at delivery, so a queued frame cannot outlive hide/focus/window loss.
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.deliveryScheduled = false
-            guard self.window != nil,
-                  self.deliveredOverlap != self.pendingOverlap else { return }
-            self.deliveredOverlap = self.pendingOverlap
-            self.onOverlapChanged?(self.pendingOverlap)
+            guard self.owner.observer === self else { return }
+            let overlap = self.currentOverlap()
+            guard self.deliveredOverlap != overlap else { return }
+            self.deliveredOverlap = overlap
+            self.witness(reason: "publish")
+            self.onOverlapChanged?(overlap)
         }
+    }
+
+    private func witness(reason: String) {
+        #if DEBUG || HANLIN_TESTING
+        guard ProcessInfo.processInfo.environment["HANLIN_COMPACT_KEYBOARD_WITNESS"] == "1" else { return }
+        let localFrame: CGRect? = {
+            guard let window, let screen = keyboardScreen, let keyboardFrame else { return nil }
+            return convert(screen.coordinateSpace.convert(keyboardFrame, to: window), from: window)
+        }()
+        let facts = "bounds=\(bounds) screenFrame=\(String(describing: keyboardFrame)) localFrame=\(String(describing: localFrame)) registered=\(owner.editor != nil) firstResponder=\(owner.editor?.isFirstResponder == true) sameWindow=\(owner.editor?.window != nil && owner.editor?.window === window) keyWindow=\(window?.isKeyWindow == true) activeScene=\(window?.windowScene?.activationState == .foregroundActive) owns=\(ownsFirstResponder) overlap=\(currentOverlap())"
+        if reason == "layout" {
+            guard facts != lastLayoutWitness else { return }
+            lastLayoutWitness = facts
+        }
+        print("[HANLIN_COMPACT_KEYBOARD] event=\(reason) \(facts)")
+        #endif
+    }
+}
+
+// Pure intersection policy. Only a keyboard docked across its actual screen's
+// bottom can resize the workspace; floating/undocked keyboards remain overlays.
+enum HanlinCompactKeyboardGeometry {
+    static func dockedOverlap(
+        bounds: CGRect, keyboardFrameInView: CGRect, keyboardFrameInScreen: CGRect,
+        screenBounds: CGRect, displayScale: CGFloat
+    ) -> CGFloat {
+        let rectangles = [bounds, keyboardFrameInView, keyboardFrameInScreen, screenBounds]
+        guard displayScale.isFinite, displayScale > 0,
+              rectangles.allSatisfy({ rect in
+                  [rect.origin.x, rect.origin.y, rect.size.width, rect.size.height].allSatisfy(\.isFinite)
+                      && rect.width > 0 && rect.height > 0
+              }) else { return 0 }
+        let tolerance = 1 / displayScale
+        guard keyboardFrameInScreen.minX <= screenBounds.minX + tolerance,
+              keyboardFrameInScreen.maxX >= screenBounds.maxX - tolerance,
+              keyboardFrameInScreen.minY < screenBounds.maxY,
+              keyboardFrameInScreen.maxY >= screenBounds.maxY - tolerance else { return 0 }
+        let intersection = bounds.intersection(keyboardFrameInView)
+        guard !intersection.isNull, !intersection.isEmpty,
+              intersection.maxY >= bounds.maxY - tolerance else { return 0 }
+        return min(bounds.height, max(0, bounds.maxY - intersection.minY))
     }
 }
 

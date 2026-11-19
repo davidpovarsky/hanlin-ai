@@ -1,0 +1,46 @@
+{
+  "swift_syntax": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "canonical_apply_check": {
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "error: patch failed: Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift:355\nerror: Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift: patch does not apply\n"
+  },
+  "isolated_git_init": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "isolated_line_endings": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "isolated_apply": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "isolated_byte_roundtrip": {
+    "all_match": true
+  },
+  "portable_geometry_compile": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "   Creating library C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\compact-keyboard-window-fix\\geometry-check.lib and object C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\compact-keyboard-window-fix\\geometry-check.exp\n\n"
+  },
+  "portable_geometry_execution": {
+    "returncode": 0,
+    "stdout": "PASS: 9 exact production geometry cases (Foundation/Windows, not UIKit)\n",
+    "stderr": ""
+  },
+  "scope": {
+    "apple_framework_typecheck": false,
+    "native_ui_execution": false,
+    "canonical_modified": false,
+    "editor_text_focus_semantics_modified": false
+  }
+}

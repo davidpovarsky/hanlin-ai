@@ -13,6 +13,8 @@ final class HanlinPairedProductUITests: XCTestCase {
         for app in [ai, mini] {
             app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
             app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+            app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         }
     }
 
@@ -163,6 +165,7 @@ final class HanlinPairedProductUITests: XCTestCase {
         let originalChat = identity.label
         XCTAssertNotNil(UUID(uuidString: originalChat))
         input().tap(); input().typeText(prompt)
+        XCTAssertEqual(input().value as? String, prompt, "Native typing must preserve the original request before Send")
         tap(ai, "hanlin-chat-send")
         tap(ai, "hanlin-tool-consent-allow-once")
         XCTAssertTrue(mini.wait(for: .runningForeground, timeout: 45))

@@ -19,6 +19,13 @@ public struct ComposerHeightPreferenceKey: PreferenceKey {
 }
 
 public struct NativeMultilineTextEditor: UIViewRepresentable {
+    /// Reports the existing native view to its owning host without changing text or focus.
+    public enum LifecycleEvent: Sendable {
+        case attached
+        case focusChanged(Bool)
+        case detached
+    }
+
     @Binding var text: String
     @Binding var textHeight: CGFloat
     var placeholderText: String = String(localized: "Message")
@@ -30,6 +37,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
     var onSendMessage: (() -> Void)?
     var onMentionTriggered: (() -> Void)?
     var onFocusChange: ((Bool) -> Void)? = nil
+    var onLifecycleEvent: ((UITextView, LifecycleEvent) -> Void)? = nil
 
     public init(text: Binding<String>, textHeight: Binding<CGFloat>,
                 placeholderText: String = String(localized: "Message"),
@@ -39,7 +47,8 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
                 onPasteFile: ((URL) -> Void)? = nil,
                 onSendMessage: (() -> Void)? = nil,
                 onMentionTriggered: (() -> Void)? = nil,
-                onFocusChange: ((Bool) -> Void)? = nil) {
+                onFocusChange: ((Bool) -> Void)? = nil,
+                onLifecycleEvent: ((UITextView, LifecycleEvent) -> Void)? = nil) {
         _text = text; _textHeight = textHeight
         self.placeholderText = placeholderText
         self.minHeight = minHeight; self.maxHeight = maxHeight
@@ -47,6 +56,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         self.onPasteImage = onPasteImage; self.onPasteFile = onPasteFile
         self.onSendMessage = onSendMessage; self.onMentionTriggered = onMentionTriggered
         self.onFocusChange = onFocusChange
+        self.onLifecycleEvent = onLifecycleEvent
     }
 
     static let mentionRegex = try! NSRegularExpression(pattern: "@[^\\s]+", options: [])
@@ -287,11 +297,13 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             textView.textColor = .label
         }
 
+        onLifecycleEvent?(textView, .attached)
         return textView
     }
 
     public func updateUIView(_ uiView: MultilineInnerTextView, context: Context) {
         context.coordinator.parent = self
+        onLifecycleEvent?(uiView, .attached)
         uiView.onPasteImage = onPasteImage
         uiView.onPasteFile = onPasteFile
         uiView.onSendMessage = onSendMessage
@@ -308,6 +320,10 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         }
     }
 
+    public static func dismantleUIView(_ uiView: MultilineInnerTextView, coordinator: Coordinator) {
+        coordinator.parent.onLifecycleEvent?(uiView, .detached)
+    }
+
     public func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -316,6 +332,22 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         var parent: NativeMultilineTextEditor
         public var isEditing = false
         private var lastSynchronizedModelText: String
+        #if DEBUG || HANLIN_TESTING
+        private let editDiagnosticsEnabled = ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1"
+        private var editDiagnosticSequence = 0
+        private let editDiagnosticID = UUID().uuidString
+
+        /// Opt-in native acceptance trace. Never includes text, prompts or hashes.
+        private func traceEdit(_ event: String, in textView: UITextView,
+                               detail: String = "") {
+            guard editDiagnosticsEnabled, editDiagnosticSequence < 512 else { return }
+            editDiagnosticSequence += 1
+            let native = textView.text ?? ""
+            let model = parent.text
+            let selection = textView.selectedRange
+            print("HANLIN_COMPOSER_EDIT id=\(editDiagnosticID) sequence=\(editDiagnosticSequence) event=\(event) nativeUTF16=\(native.utf16.count) modelUTF16=\(model.utf16.count) synchronizedUTF16=\(lastSynchronizedModelText.utf16.count) nativeEqualsModel=\(native == model) selection=\(selection.location):\(selection.length) editing=\(isEditing) firstResponder=\(textView.isFirstResponder) marked=\(textView.markedTextRange != nil) \(detail)")
+        }
+        #endif
 
         public init(_ parent: NativeMultilineTextEditor) {
             self.parent = parent
@@ -329,6 +361,9 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             guard textView.markedTextRange == nil else { return }
             let incoming = parent.text
             let modelChanged = incoming != lastSynchronizedModelText
+            #if DEBUG || HANLIN_TESTING
+            traceEdit("model-update", in: textView, detail: "modelChanged=\(modelChanged)")
+            #endif
             lastSynchronizedModelText = incoming
             let placeholder = incoming.isEmpty && !isEditing
             let desired = placeholder ? parent.placeholderText : incoming
@@ -339,6 +374,9 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             // Actual sends, restored drafts and conversation changes still reconcile.
             let shouldReconcile = modelChanged || wasPlaceholder != placeholder
             if shouldReconcile && (textView.text != desired || (wasPlaceholder && !placeholder)) {
+                #if DEBUG || HANLIN_TESTING
+                traceEdit("model-reconcile", in: textView, detail: "placeholder=\(placeholder) wasPlaceholder=\(wasPlaceholder)")
+                #endif
                 let selection = textView.selectedRange
                 textView.text = desired
                 if isEditing {
@@ -354,7 +392,11 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
         public func textViewDidBeginEditing(_ textView: UITextView) {
             isEditing = true
+            #if DEBUG || HANLIN_TESTING
+            traceEdit("focus-begin", in: textView)
+            #endif
             parent.onFocusChange?(true)
+            parent.onLifecycleEvent?(textView, .focusChanged(true))
             if textView.textColor == .placeholderText {
                 textView.text = ""
                 textView.textColor = .label
@@ -363,7 +405,11 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
         public func textViewDidEndEditing(_ textView: UITextView) {
             isEditing = false
+            #if DEBUG || HANLIN_TESTING
+            traceEdit("focus-end", in: textView)
+            #endif
             parent.onFocusChange?(false)
+            parent.onLifecycleEvent?(textView, .focusChanged(false))
             if parent.text.isEmpty {
                 textView.text = parent.placeholderText
                 textView.textColor = .placeholderText
@@ -374,11 +420,17 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             guard textView.markedTextRange == nil else { return }
             if textView.textColor != .placeholderText {
                 let nativeText = textView.text ?? ""
+                #if DEBUG || HANLIN_TESTING
+                traceEdit("native-before-publish", in: textView)
+                #endif
                 // A later UIKit edit can begin before SwiftUI renders this
                 // binding write. Acknowledge it first so that layout cannot
                 // mistake our own earlier edit for an external draft change.
                 lastSynchronizedModelText = nativeText
                 parent.text = nativeText
+                #if DEBUG || HANLIN_TESTING
+                traceEdit("native-after-publish", in: textView)
+                #endif
                 if nativeText.hasSuffix("@") {
                     parent.onMentionTriggered?()
                 }
@@ -394,6 +446,10 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             shouldChangeTextIn range: NSRange,
             replacementText text: String
         ) -> Bool {
+            #if DEBUG || HANLIN_TESTING
+            traceEdit("native-should-change", in: textView,
+                      detail: "range=\(range.location):\(range.length) replacementUTF16=\(text.utf16.count)")
+            #endif
             guard text.isEmpty, textView.textColor != .placeholderText else { return true }
             let raw = textView.text ?? ""
             let ns = raw as NSString
@@ -405,6 +461,12 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             }
             return true
         }
+
+        #if DEBUG || HANLIN_TESTING
+        public func textViewDidChangeSelection(_ textView: UITextView) {
+            traceEdit("selection-change", in: textView)
+        }
+        #endif
 
         private static func matchContaining(index: Int, in text: String) -> NSTextCheckingResult? {
             let ns = text as NSString

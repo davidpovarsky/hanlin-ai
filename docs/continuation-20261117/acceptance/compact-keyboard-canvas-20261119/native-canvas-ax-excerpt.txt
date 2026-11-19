@@ -1,0 +1,10 @@
+7:         Other, 0x1134ff340, {{-1032.0, -1376.0}, {3096.0, 4128.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup' <AX element pid: 52409, elementOrHash.elementID: 5914516352.128>
+92:       Other, 0x11342f480, {{-1032.0, -1376.0}, {3096.0, 4128.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup' <AX element pid: 52409, elementOrHash.elementID: 5914523392.126>
+126:                             StaticText, 0x10af45f40, {{253.0, 732.5}, {177.0, 34.0}}, identifier: 'hanlin-canvas-python-output', label: 'CANVAS_LOCAL_RESULT_42
+147:       Other, 0x10af47840, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup' <AX element pid: 52409, elementOrHash.elementID: 5988864384.237>
+148:       Popover, 0x10af47980, {{372.0, 91.0}, {288.0, 267.0}} <AX element pid: 52409, elementOrHash.elementID: 5988869504.238>
+159:                             Sheet, 0x10a75c780, {{372.0, 91.0}, {288.0, 254.0}}, label: 'Run Python on the remote service?' <AX element pid: 52409, elementOrHash.elementID: 5963481088.249>
+166:                                         StaticText, 0x10a75d040, {{402.0, 113.5}, {228.0, 42.5}}, label: 'Run Python on the remote service?' <AX element pid: 52409, elementOrHash.elementID: 4694002688.262>
+167:                                         StaticText, 0x10a75d180, {{402.0, 162.5}, {228.0, 98.0}}, label: 'The current code will be sent to emkc.org (Piston), outside your device. Piston requires provider authorization; network or service charges may apply.' <AX element pid: 52409, elementOrHash.elementID: 4694013440.263>
+179:                                           Button, 0x10a75e080, {{388.0, 281.0}, {256.0, 48.0}}, identifier: 'hanlin-canvas-python-remote-confirm', label: 'Run on Piston' <AX element pid: 52409, elementOrHash.elementID: 5988873344.269>
+180:                                             Button, 0x10a75e1c0, {{388.0, 281.0}, {256.0, 48.0}}, identifier: 'hanlin-canvas-python-remote-confirm', label: 'Run on Piston' <AX element pid: 52409, elementOrHash.elementID: 5966795264.270>

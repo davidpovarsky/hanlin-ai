@@ -11,6 +11,8 @@ final class HanlinShareInboxUITests: XCTestCase {
         let nonce = UUID().uuidString
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = nonce
         app.launchEnvironment["HANLIN_SHARE_DRAFT_ACCEPTANCE_ID"] = nonce
@@ -36,6 +38,7 @@ final class HanlinShareInboxUITests: XCTestCase {
         let chatID = identity.label
         let original = "UNSENT_PREEXISTING_" + nonce
         tap(input(app)); input(app).typeText(original)
+        XCTAssertEqual(input(app).value as? String, original, "Native typing must preserve the draft before opening the inbox")
         openInbox(app)
         XCTAssertTrue(app.staticTexts["SHARE_DRAFT_" + nonce].waitForExistence(timeout: 20))
         tap(app.buttons["hanlin-share-inbox-cancel"])

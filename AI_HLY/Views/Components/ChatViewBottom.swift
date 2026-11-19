@@ -276,6 +276,7 @@ struct ChatViewBottom: View {
     var availableWorkspaceSize: CGSize = .zero
     /// The persistent compact host supplies its usable native safe-area viewport.
     var workspaceUsesKeyboardSafeArea: Bool = false
+    var onNativeEditorLifecycle: ((UITextView, NativeMultilineTextEditor.LifecycleEvent) -> Void)? = nil
 
     @Environment(\.modelContext) private var context
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -1378,7 +1379,8 @@ struct ChatViewBottom: View {
                             if focused && (popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools) {
                                 popupCoordinator.closeAll()
                             }
-                        }
+                        },
+                        onLifecycleEvent: onNativeEditorLifecycle
                     )
                     .padding(.leading, 12)
                     .frame(

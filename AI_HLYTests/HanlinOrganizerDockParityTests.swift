@@ -1617,3 +1617,61 @@ struct OriginalSourceNonRegressionTests {
         #expect(sourceRefText.contains("1,810") || sourceRefText.contains("1810"))
     }
 }
+
+@MainActor
+@Suite("Compact keyboard ownership and intersection")
+struct HanlinCompactKeyboardGeometryTests {
+    @Test("A full-screen keyboard uses the workspace intersection, not the screen height")
+    func dockedKeyboardUsesWorkspaceIntersection() {
+        let overlap = HanlinCompactKeyboardGeometry.dockedOverlap(
+            bounds: CGRect(x: 0, y: 0, width: 402, height: 778),
+            keyboardFrameInView: CGRect(x: 0, y: 528, width: 402, height: 284),
+            keyboardFrameInScreen: CGRect(x: 0, y: 590, width: 402, height: 284),
+            screenBounds: CGRect(x: 0, y: 0, width: 402, height: 874), displayScale: 3)
+        #expect(overlap == 250)
+    }
+
+    @Test("A translated smaller window uses only its local overlap")
+    func translatedWindowUsesLocalIntersection() {
+        let screen = CGRect(x: 0, y: 0, width: 1024, height: 1366)
+        let keyboard = CGRect(x: 0, y: 1000, width: 1024, height: 366)
+        #expect(HanlinCompactKeyboardGeometry.dockedOverlap(
+            bounds: CGRect(x: 0, y: 0, width: 500, height: 500),
+            keyboardFrameInView: keyboard.offsetBy(dx: -100, dy: -800),
+            keyboardFrameInScreen: keyboard, screenBounds: screen, displayScale: 2) == 300)
+        #expect(HanlinCompactKeyboardGeometry.dockedOverlap(
+            bounds: CGRect(x: 0, y: 0, width: 500, height: 500),
+            keyboardFrameInView: keyboard.offsetBy(dx: -100, dy: -100),
+            keyboardFrameInScreen: keyboard, screenBounds: screen, displayScale: 2) == 0)
+    }
+
+    @Test("Floating, undocked, dismissed and invalid keyboard rectangles do not resize")
+    func floatingDismissedAndInvalidFramesDoNotResize() {
+        let bounds = CGRect(x: 0, y: 0, width: 1024, height: 1366)
+        for frame in [
+            CGRect(x: 700, y: 1166, width: 324, height: 200),
+            CGRect(x: 0, y: 800, width: 1024, height: 300),
+            CGRect(x: 0, y: 1366, width: 1024, height: 366),
+            CGRect(x: 0, y: 1000, width: 1024, height: 0),
+            CGRect(x: CGFloat.nan, y: 1000, width: 1024, height: 366)
+        ] {
+            #expect(HanlinCompactKeyboardGeometry.dockedOverlap(
+                bounds: bounds, keyboardFrameInView: frame, keyboardFrameInScreen: frame,
+                screenBounds: bounds, displayScale: 2) == 0)
+        }
+    }
+
+    @Test("A late old editor detach cannot unregister the current workspace editor")
+    func lateEditorDetachPreservesCurrentOwner() {
+        let owner = HanlinCompactKeyboardOwner()
+        let oldEditor = UITextView()
+        let currentEditor = UITextView()
+        owner.observe(oldEditor, event: .attached)
+        owner.observe(currentEditor, event: .attached)
+        owner.observe(oldEditor, event: .focusChanged(false))
+        owner.observe(oldEditor, event: .detached)
+        #expect(owner.editor === currentEditor)
+        owner.observe(currentEditor, event: .detached)
+        #expect(owner.editor == nil)
+    }
+}

@@ -1,0 +1,62 @@
+{
+  "run_id": 44428104345,
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "E138EFAE-CDDC-4851-AA5A-D27667A54FF0",
+    "deviceName": "Hanlin-Phase2-44428104345-1",
+    "modelName": "iPad Pro 13-inch (M5)",
+    "osBuildNumber": "24B8117",
+    "osVersion": "27.2",
+    "platform": "iOS Simulator"
+  },
+  "tests": [
+    {
+      "kind": "UI",
+      "selector": "AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview()",
+      "result": "Passed",
+      "duration_seconds": 124.69180500507355,
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44428104345\\selected\\simulator-logs\\08-nativescript-production-ui-test-results.json",
+      "source_sha256": "43adfca855cfb27eb7eda2b8b7cf8e7a2551e78581f2d77227f5a16b9a54b57f"
+    },
+    {
+      "kind": "UI",
+      "selector": "AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation()",
+      "result": "Failed",
+      "duration_seconds": 60.178268909454346,
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44428104345\\selected\\simulator-logs\\08-nativescript-production-ui-test-results.json",
+      "source_sha256": "43adfca855cfb27eb7eda2b8b7cf8e7a2551e78581f2d77227f5a16b9a54b57f"
+    },
+    {
+      "kind": "UI",
+      "selector": "AgentRuntimeConversationUITests/testUI04CollapsedProgressAndInspectorWithoutRawCoT()",
+      "result": "Passed",
+      "duration_seconds": 79.88630199432373,
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44428104345\\selected\\simulator-logs\\08-nativescript-production-ui-test-results.json",
+      "source_sha256": "43adfca855cfb27eb7eda2b8b7cf8e7a2551e78581f2d77227f5a16b9a54b57f"
+    },
+    {
+      "kind": "UI",
+      "selector": "HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch()",
+      "result": "Failed",
+      "duration_seconds": 36.46157503128052,
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44428104345\\selected\\simulator-logs\\08-nativescript-production-ui-test-results.json",
+      "source_sha256": "43adfca855cfb27eb7eda2b8b7cf8e7a2551e78581f2d77227f5a16b9a54b57f"
+    },
+    {
+      "kind": "unit",
+      "selector": "ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews()",
+      "result": "Passed",
+      "duration_seconds": 0.012937068939208984,
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44428104345\\selected\\simulator-logs\\08-downstream-unit-test-results.json",
+      "source_sha256": "e5cc0222671840b0c75aac3027119c46d9a1e2a0f79c326312b932270f468728"
+    },
+    {
+      "kind": "unit",
+      "selector": "ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection()",
+      "result": "Passed",
+      "duration_seconds": 0.0026960372924804688,
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44428104345\\selected\\simulator-logs\\08-downstream-unit-test-results.json",
+      "source_sha256": "e5cc0222671840b0c75aac3027119c46d9a1e2a0f79c326312b932270f468728"
+    }
+  ]
+}
