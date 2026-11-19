@@ -365,6 +365,51 @@ def _write_probe_project(directory):
     return project
 
 
+def _redacted_settings_errors(data, argv, project, nonce, environment):
+    """Retain bounded error categories without identities or unrelated path values."""
+    raw = data if isinstance(data, bytes) else b""
+    text = raw[:65536].decode("utf-8", errors="replace")
+    selected = dict(value.split("=", 1) for value in argv
+                    if "=" in value and not value.startswith("-"))
+    replacements = {str(project): "[OWNED_PROJECT]", str(project.parent): "[OWNED_ROOT]",
+                    "ProfileDiscovery": "[OWNED_TARGET]", nonce: "[OWNED_NONCE]"}
+    for key, label in {
+        "DEVELOPMENT_TEAM": "[SELECTED_TEAM]", "CODE_SIGN_IDENTITY": "[SELECTED_CERTIFICATE]",
+        "PROVISIONING_PROFILE_SPECIFIER": "[SELECTED_PROFILE]",
+        "PROVISIONING_PROFILE": "[SELECTED_PROFILE]",
+        "PRODUCT_BUNDLE_IDENTIFIER": "[SELECTED_BUNDLE]",
+        "CODE_SIGN_ENTITLEMENTS": "[OWNED_ENTITLEMENTS]",
+    }.items():
+        if selected.get(key):
+            replacements[selected[key]] = label
+    for option in ["-derivedDataPath", "-archivePath"]:
+        if option in argv and argv.index(option) + 1 < len(argv):
+            replacements[argv[argv.index(option) + 1]] = "[OWNED_OUTPUT_PATH]"
+    for key in ["HOME", "CFFIXED_USER_HOME", "DEVELOPER_DIR", "XCODE_XCCONFIG_FILE", "SDKROOT"]:
+        if environment.get(key):
+            replacements[environment[key]] = "[ENVIRONMENT_PATH]"
+    errors = [line for line in text.splitlines()
+              if re.search(r"(?:^|\s)(?:xcodebuild:\s*)?(?:error|warning):", line, re.I)]
+    sanitized = []
+    for line in errors[:8]:
+        for value, label in sorted(replacements.items(), key=lambda item: len(item[0]), reverse=True):
+            line = line.replace(value, label)
+        # Cover additional identities/paths that Xcode may mention in the same error.
+        line = re.sub(r"\b[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}\b",
+                      "[PROFILE_UUID]", line)
+        line = re.sub(r"\b[0-9A-Fa-f]{40}\b", "[CERTIFICATE_SHA1]", line)
+        line = re.sub(r"[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", "[EMAIL]", line)
+        line = re.sub(r"""(['"])/(?:[^'"\r\n]*)\1""", "[PATH]", line)
+        line = re.sub(r"""(?<![\w:])/(?:[^\s'"<>]+)""", "[PATH]", line)
+        line = re.sub(r"""\b[A-Za-z]:[\\/][^\s'"<>]+""", "[PATH]", line)
+        sanitized.append(line)
+    retained = "\n".join(sanitized).encode("utf-8")
+    return {"text": retained[:4096].decode("utf-8", errors="ignore"),
+            "source_bytes": len(raw), "matching_lines": len(errors),
+            "truncated": len(raw) > 65536 or len(errors) > 8 or len(retained) > 4096,
+            "redaction": "owned identities, nonce, environment paths and other absolute paths"}
+
+
 def observe_owned_signing_build_settings(archive_argv, probe_root, nonce, deadline):
     """Inspect the failed tiny target once; never run another archive or admit a profile."""
     receipt = {"status": "NOT_RUN", "scope": "SIGNING_SETTINGS_ONLY_NOT_PROFILE_ACCEPTANCE",
@@ -388,8 +433,14 @@ def observe_owned_signing_build_settings(archive_argv, probe_root, nonce, deadli
         if remaining <= 0:
             receipt["status"] = "DEADLINE_EXHAUSTED"
             return receipt
-        settings_argv = [value for value in argv if value != "archive"]
-        settings_argv += ["-showBuildSettings", "-json"]
+        # -showBuildSettings is a query, not a build. Preserve the archive
+        # selector because this scheme includes its target only for archiving.
+        # Removing it selects the default build action and changes the target set.
+        settings_argv = [argv[0], "-showBuildSettings", "-json", *argv[1:]]
+        receipt["query_mode"] = "showBuildSettings"
+        receipt["selected_scheme_action"] = "archive"
+        receipt["settings_arguments_sha256"] = hashlib.sha256(
+            json.dumps(settings_argv).encode()).hexdigest()
         environment = dict(os.environ)
         # Only presence/hashes and equality facts are retained for inherited paths.
         # No user directory, xcconfig filename, or other environment value is logged.
@@ -408,6 +459,8 @@ def observe_owned_signing_build_settings(archive_argv, probe_root, nonce, deadli
         receipt["exit"] = result.returncode
         receipt["stdout_sha256"] = hashlib.sha256(result.stdout).hexdigest()
         receipt["stderr_sha256"] = hashlib.sha256(result.stderr).hexdigest()
+        receipt["stderr_errors"] = _redacted_settings_errors(
+            result.stderr, argv, project, nonce, environment)
         if result.returncode:
             receipt["status"] = "SETTINGS_COMMAND_FAILED"
             return receipt
@@ -424,7 +477,7 @@ def observe_owned_signing_build_settings(archive_argv, probe_root, nonce, deadli
         receipt["project_and_nonce_match"] = True
         selected = dict(value.split("=", 1) for value in argv
                         if "=" in value and not value.startswith("-"))
-        keys = ["CODE_SIGN_STYLE", "CODE_SIGN_IDENTITY", "EXPANDED_CODE_SIGN_IDENTITY",
+        keys = ["ACTION", "CODE_SIGN_STYLE", "CODE_SIGN_IDENTITY", "EXPANDED_CODE_SIGN_IDENTITY",
                 "DEVELOPMENT_TEAM", "PROVISIONING_PROFILE_SPECIFIER", "PROVISIONING_PROFILE",
                 "EXPANDED_PROVISIONING_PROFILE", "CONFIGURATION", "SDKROOT", "PLATFORM_NAME",
                 "SUPPORTED_PLATFORMS", "PRODUCT_BUNDLE_IDENTIFIER", "CODE_SIGNING_ALLOWED",
@@ -459,8 +512,10 @@ def observe_owned_signing_build_settings(archive_argv, probe_root, nonce, deadli
                     r"[A-Za-z0-9_. -]*", value) else "[SETTING_REDACTED]"
             projected[key] = item
         receipt.update(status="OBSERVED_SETTINGS", target=target, settings=projected)
-    except subprocess.TimeoutExpired:
+    except subprocess.TimeoutExpired as error:
         receipt["status"] = "SETTINGS_COMMAND_TIMED_OUT"
+        receipt["stderr_errors"] = _redacted_settings_errors(
+            error.stderr, argv, project, nonce, environment)
     except (OSError, ValueError, TypeError, IndexError) as error:
         receipt.update(status="DIAGNOSTIC_UNAVAILABLE", error=type(error).__name__)
     return receipt

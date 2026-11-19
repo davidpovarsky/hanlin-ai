@@ -432,12 +432,80 @@ class OwnedSigningBuildSettingsTests(unittest.TestCase):
             for private in [TEAM, "DO_NOT_RETAIN_THIS", "sensitive-key-name.p8", "Private human profile name"]:
                 self.assertNotIn(private, encoded)
             actual = invoked.call_args.args[0]
-            self.assertNotIn("archive", actual)
-            self.assertIn("-showBuildSettings", actual)
-            self.assertIn("-json", actual)
+            self.assertEqual(actual, ["xcodebuild", "-showBuildSettings", "-json",
+                                      *[str(value) for value in argv[1:]]])
+            self.assertEqual(receipt["selected_scheme_action"], "archive")
+            self.assertEqual(receipt["query_mode"], "showBuildSettings")
+            self.assertEqual(invoked.call_count, 1)
             self.assertLessEqual(invoked.call_args.kwargs["timeout"], 15)
             self.assertEqual(set(receipt["inherited_environment"]),
                              {"HOME", "CFFIXED_USER_HOME", "DEVELOPER_DIR", "XCODE_XCCONFIG_FILE", "SDKROOT"})
+
+    def test_command_failure_retains_redacted_error_category_and_original_status(self):
+        import json
+        import time
+        import signing_profile_preflight as native
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            project = root / "ProfileDiscovery.xcodeproj"
+            project.mkdir()
+            nonce = "a" * 32
+            profile = "0E5A9288-4FB6-4ADB-88E2-591A8D43F1B2"
+            certificate = "B" * 40
+            argv = ["xcodebuild", "-project", project, "-scheme", "ProfileDiscovery",
+                    "-configuration", "Release", "-archivePath", root / "tiny.xcarchive", "archive",
+                    "DEVELOPMENT_TEAM=" + TEAM, "PRODUCT_BUNDLE_IDENTIFIER=" + BUNDLE,
+                    "CODE_SIGN_IDENTITY=" + certificate, "PROVISIONING_PROFILE_SPECIFIER=" + profile,
+                    "HANLIN_PROFILE_DISCOVERY_NONCE=" + nonce]
+            stderr = (
+                "xcodebuild: error: Could not configure request to show build settings: "
+                f"Scheme 'ProfileDiscovery' at '{project}' is not configured for archive; "
+                f"team '{TEAM}', profile '{profile}', certificate '{certificate}', bundle '{BUNDLE}', "
+                f"nonce '{nonce}', config '/private/sensitive-key-name.p8'.\n"
+                "Usage: unrelated output is not retained.\n"
+            ).encode()
+            result = Mock(returncode=64, stdout=b"", stderr=stderr)
+            with patch.object(native.subprocess, "run", return_value=result) as invoked, patch.dict(
+                    os.environ, {"XCODE_XCCONFIG_FILE": "/private/sensitive-key-name.p8"}):
+                receipt = native.observe_owned_signing_build_settings(argv, root, nonce, time.monotonic() + 30)
+            self.assertEqual(receipt["status"], "SETTINGS_COMMAND_FAILED")
+            self.assertEqual(receipt["exit"], 64)
+            self.assertNotIn("settings", receipt)
+            text = receipt["stderr_errors"]["text"]
+            self.assertIn("Could not configure request to show build settings", text)
+            self.assertIn("not configured for archive", text)
+            self.assertIn("[OWNED_TARGET]", text)
+            self.assertIn("[SELECTED_PROFILE]", text)
+            self.assertNotIn("Usage:", text)
+            for private in [str(project), TEAM, BUNDLE, profile, certificate, nonce, "sensitive-key-name.p8"]:
+                self.assertNotIn(private, text)
+            self.assertEqual(receipt["stderr_sha256"], hashlib.sha256(stderr).hexdigest())
+            self.assertEqual(invoked.call_count, 1)
+
+    def test_error_retention_is_bounded_and_timeout_preserves_its_category(self):
+        import time
+        import subprocess
+        import signing_profile_preflight as native
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            project = root / "ProfileDiscovery.xcodeproj"
+            project.mkdir()
+            nonce = "a" * 32
+            argv = ["xcodebuild", "-project", project, "-scheme", "ProfileDiscovery", "archive",
+                    "HANLIN_PROFILE_DISCOVERY_NONCE=" + nonce]
+            raw = ("xcodebuild: error: query " + "x" * 800 + "\n") * 20
+            retained = native._redacted_settings_errors(raw.encode(), [str(x) for x in argv],
+                                                       project, nonce, {})
+            self.assertLessEqual(len(retained["text"].encode()), 4096)
+            self.assertLessEqual(len(retained["text"].splitlines()), 8)
+            self.assertTrue(retained["truncated"])
+            timeout = subprocess.TimeoutExpired(argv, 15, stderr=b"xcodebuild: error: query timed out")
+            with patch.object(native.subprocess, "run", side_effect=timeout) as invoked:
+                receipt = native.observe_owned_signing_build_settings(argv, root, nonce, time.monotonic() + 30)
+            self.assertEqual(receipt["status"], "SETTINGS_COMMAND_TIMED_OUT")
+            self.assertIn("query timed out", receipt["stderr_errors"]["text"])
+            self.assertNotIn("settings", receipt)
+            self.assertEqual(invoked.call_count, 1)
 
     def test_other_project_or_nonce_cannot_supply_owned_target_settings(self):
         import json

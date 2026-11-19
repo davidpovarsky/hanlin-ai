@@ -1,0 +1,54 @@
+{
+  "observedAt": "2026-11-19T03:33:20.806232+00:00",
+  "run": 44446182012,
+  "head": "8a505675eca035fbca3877afd1f8776f00f629d0",
+  "artifact": 14494619431,
+  "artifactSha256": "aac79ff67de7172a950a8b80db488c14901bb14b6e187bd86092948b9b759dc0",
+  "zipCRC": "PASS",
+  "status": "PREPARATION_FAILED",
+  "originalProducts": [],
+  "physicalDevice": "NOT_RUN",
+  "cleanup": "PASS",
+  "cmsSignatures": "CMS_SIGNATURES_VALID",
+  "all6NativeSignatureBooleansTrue": true,
+  "archiveError": "/Users/runner/work/_temp/hanlin-authorized-signing-ff_9rmh_/profile-discovery/ProfileDiscovery.xcodeproj: error: No profile for team '[REDACTED]' matching '340E5061-5117-4840-B518-677D08CE5FCF' found: Xcode couldn't find any provisioning profiles matching '[REDACTED]/340E5061-5117-4840-B518-677D08CE5FCF'. Install the profile (by dragging and dropping it onto Xcode's dock item) or select a different one in the Signing & Capabilities tab of the target editor. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')",
+  "profileTypeMismatchExplicitlyNamed": false,
+  "archiveLogSha256": "c0743782e9a9155897155764c9b535a90f4d8ac9a6098d06009d3a71abeccb9c",
+  "settingsDiagnostic": {
+    "status": "SETTINGS_COMMAND_FAILED",
+    "scope": "SIGNING_SETTINGS_ONLY_NOT_PROFILE_ACCEPTANCE",
+    "nonce": "b5d27af34bc4441986a0853c75271199",
+    "project_path_sha256": "bb5f65aa44bbdc209093639cd9ef72193ae6dc8859a0c0e864d29ad81cec2f98",
+    "archive_arguments_sha256": "78270282e3ea2383ae4c992638aa1b5a8355b9dca874fb5baadd5d6408812c46",
+    "inherited_environment": {
+      "HOME": {
+        "present": true,
+        "value_sha256": "9a09ac3910170055d9de7a25ac97f23402295686d31cd3e6f70765fe40872b4d",
+        "matches_python_home": true
+      },
+      "CFFIXED_USER_HOME": {
+        "present": false,
+        "value_sha256": null
+      },
+      "DEVELOPER_DIR": {
+        "present": true,
+        "value_sha256": "242d789333a5d449c0d71e21057c88c11db828690b8318f2d1d7a79d1a6840da"
+      },
+      "XCODE_XCCONFIG_FILE": {
+        "present": false,
+        "value_sha256": null
+      },
+      "SDKROOT": {
+        "present": false,
+        "value_sha256": null
+      }
+    },
+    "exit": 64,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "9b9d406b81d96776b1d7e776a8b057faeed3079df53c3f3973a82f7a487bac9b"
+  },
+  "nativeResolvedSettingsObserved": false,
+  "interpretation": "CMS parsing/boolean correction is confirmed native. Profile identity/discovery remains unproven. Exit64 diagnostic is command-level failure; raw prior stderr was intentionally not retained, so its exact category cannot be recovered.",
+  "unappliedProposal": "settings-query-action-proposal/settings-query-action.UNAPPLIED.patch",
+  "proposalSha256": "e17487687a0512729e9ff2762b6b4bd697eea4dcb74a340d908fb649dfe6df7b"
+}

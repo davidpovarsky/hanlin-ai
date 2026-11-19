@@ -1,0 +1,55 @@
+{
+  "reviewed_at": "2026-11-19T03:35:08.471561+00:00",
+  "parent_commit": "3869a1749518736ad4df542fe376a76d74be806f",
+  "patch_sha256": "e17487687a0512729e9ff2762b6b4bd697eea4dcb74a340d908fb649dfe6df7b",
+  "source_hashes": [
+    {
+      "path": "Scripts/ProductSplit/signing_profile_preflight.py",
+      "beforeSha256": "f95644defe938dca4c72c376f21356ab06d759dc2988b84174008554bd8f4624",
+      "proposedLFsha256": "c18c4f4b3950255d08ce724f8d81407e9f20f748fc33c0e150829c4e169a3403"
+    },
+    {
+      "path": "Scripts/ProductSplit/test_signing_profiles.py",
+      "beforeSha256": "69945200529692c20be0c910202286e4082cc9df43c6afa783a69c9dcea07b10",
+      "proposedLFsha256": "fbd74e74e0a44e28634e65ee8a6f34cb75c4360c4af16daac0aec4eebf8bc37b"
+    }
+  ],
+  "status": "APPLIED_LOCAL_TESTS_PASS_NATIVE_QUERY_NOT_RUN",
+  "portable_result": "30 tests,0fail",
+  "root_review": [
+    "The generated original scheme lists the tiny target for archiving only.",
+    "The query preserves original arguments and includes -showBuildSettings -json; archive construction/admission criteria and original single archive call are unchanged.",
+    "One query is bounded by min15seconds/original deadline and must match original project/target/nonce before settings are used.",
+    "Retained ACTION is evidence, not profile admission.",
+    "Error retention is bounded8lines/4KB from at most64KB of stderr; exact owned identities/environment paths and generic absolute paths/UUID/SHA1/email are redacted.",
+    "Prior raw exit64 stderr was not retained. Its exact message is not inferred or reconstructed."
+  ],
+  "previous_native": {
+    "run": 44446182012,
+    "artifact_id": 14494619431,
+    "sha256": "aac79ff67de7172a950a8b80db488c14901bb14b6e187bd86092948b9b759dc0",
+    "cms": "all6 true/valid",
+    "tiny_archive": "FAILED65",
+    "settings": "FAILED64"
+  },
+  "primary_docs": [
+    {
+      "url": "https://developer.apple.com/documentation/xcode-release-notes/xcode-16-release-notes",
+      "scope": "showBuildSettings uses actual build system and varies with scheme/destination; profiles new/old directory handling"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/xcode/customizing-the-build-schemes-for-a-project",
+      "scope": "scheme action selects targets"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/xcode/build-settings-reference",
+      "scope": "ACTION identifies selected build action"
+    }
+  ],
+  "not_claimed": [
+    "Native settings query success",
+    "Profile admission",
+    "Either product signed export",
+    "Physical acceptance"
+  ]
+}
