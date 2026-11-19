@@ -418,6 +418,8 @@ private struct A2UIBenchmarkFixture: Sendable {
             payloads.append((key, .a2uiMessage(protocolVersion: "1.0", json: Data(json.utf8))))
             wireParts.append(["part": key, "kind": "a2ui", "text": NSNull(), "a2uiJSON": json])
         }
+        let componentsPerMessage = HanlinA2UIIngress.maximumComponentsPerMessage
+        let messagesPerOwner = (scenario.nodes + componentsPerMessage - 1) / componentsPerMessage
         for owner in 0..<5 {
             let id = "benchmark-surface-\(owner)", key = "owner\(owner)"
             try frame(key, body: ["version": "1.0", "createSurface": [
@@ -445,8 +447,14 @@ private struct A2UIBenchmarkFixture: Sendable {
                 }
                 components.insert(["id": "root", "component": "Column", "children": children], at: 0)
             }
-            try frame(key, body: ["version": "1.0", "updateComponents": [
-                "surfaceId": id, "components": components]])
+            // For a split update, publish referenced children before the root
+            // so each batch respects the original ingress limit.
+            if messagesPerOwner > 1 { components.reverse() }
+            for start in stride(from: 0, to: components.count, by: componentsPerMessage) {
+                let end = min(start + componentsPerMessage, components.count)
+                try frame(key, body: ["version": "1.0", "updateComponents": [
+                    "surfaceId": id, "components": Array(components[start..<end])]])
+            }
         }
         let characters = Array(markdown)
         for update in 0..<10 {
@@ -471,7 +479,7 @@ private struct A2UIBenchmarkFixture: Sendable {
         }
         wire = String(decoding: try JSONSerialization.data(withJSONObject: ["parts": wireParts],
             options: [.sortedKeys, .withoutEscapingSlashes]), as: UTF8.self)
-        guard canonicalParts.count == 85, wireParts.count <= 128,
+        guard canonicalParts.count == 85 + 5 * (messagesPerOwner - 1), wireParts.count <= 128,
               wire.utf8.count <= 1_048_576, markdown.count == scenario.characters else {
             throw A2UIBenchmarkFailure.fixtureLimit
         }
