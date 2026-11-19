@@ -182,8 +182,8 @@ Use the checks available to the repository, preferably including:
 4. Swift 6 language-mode diagnostics when supported;
 5. `xcodebuild analyze`;
 6. tests;
-7. SwiftLint when already configured or explicitly approved;
-8. Periphery when already configured or explicitly approved;
+7. SwiftLint when already configured or needed for the authorized task;
+8. Periphery when already configured or needed for the authorized task;
 9. dependency update and obsolescence review;
 10. a targeted search for legacy Apple and Swift patterns.
 

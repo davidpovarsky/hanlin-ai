@@ -22,11 +22,11 @@ finish_openclaw_probe() {
 trap finish_openclaw_probe EXIT
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-openclaw.XXXXXXXX")"
 git rev-parse HEAD > "$evidence/tested-source-commit.txt"
-git archive HEAD Scripts/Skills/OpenClaw Scripts/Runtime RuntimeDependencies.lock.json Scripts/CI/stage_simulator_fixtures.py Scripts/CI/generate_performance_report.py > "$evidence/tested-source.tar"
+git archive HEAD Scripts/Skills/OpenClaw Scripts/Runtime RuntimeDependencies.lock.json Scripts/CI/stage_simulator_fixtures.py Scripts/CI/owned_simulator_receipts.py Scripts/CI/generate_performance_report.py > "$evidence/tested-source.tar"
 python3 - "$evidence" <<'PY_SOURCE'
 import hashlib,json,subprocess,sys
 from pathlib import Path
-out=Path(sys.argv[1]);paths=subprocess.check_output(['git','ls-files','Scripts/Skills/OpenClaw','Scripts/Runtime','RuntimeDependencies.lock.json','Scripts/CI/stage_simulator_fixtures.py','Scripts/CI/generate_performance_report.py'],text=True).splitlines()
+out=Path(sys.argv[1]);paths=subprocess.check_output(['git','ls-files','Scripts/Skills/OpenClaw','Scripts/Runtime','RuntimeDependencies.lock.json','Scripts/CI/stage_simulator_fixtures.py','Scripts/CI/owned_simulator_receipts.py','Scripts/CI/generate_performance_report.py'],text=True).splitlines()
 records={}
 for name in paths:
     raw=Path(name).read_bytes();assert raw==subprocess.check_output(['git','show','HEAD:'+name]),name
