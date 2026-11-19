@@ -139,6 +139,12 @@ private final class ProviderCredentialURLProtocol: URLProtocol, @unchecked Senda
 
 @MainActor
 private final class ProviderCredentialTestFixture {
+    struct PersistedRowIdentity: Equatable {
+        let entityName: String
+        let storeIdentifier: String
+        let encodedData: Data
+    }
+
     let directory: URL
     let databaseURL: URL
     let service: String
@@ -156,6 +162,23 @@ private final class ProviderCredentialTestFixture {
     func open(allowsSave: Bool = true) throws -> ModelContainer {
         try ModelContainer(for: APIKeys.self, SearchKeys.self, ToolKeys.self, AllModels.self, ChatRecords.self,
             configurations: ModelConfiguration(url: databaseURL, allowsSave: allowsSave, cloudKitDatabase: .none))
+    }
+
+    func rowIdentity(_ id: PersistentIdentifier) throws -> PersistedRowIdentity {
+        guard let storeIdentifier = id.storeIdentifier, !storeIdentifier.isEmpty else {
+            throw HanlinHostError.staleContext
+        }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys]
+        let encodedData = try encoder.encode(id)
+        let decoded = try JSONDecoder().decode(PersistentIdentifier.self, from: encodedData)
+        let roundTripped = try encoder.encode(decoded)
+        guard roundTripped == encodedData,
+              decoded.entityName == id.entityName,
+              decoded.storeIdentifier == storeIdentifier else {
+            throw HanlinHostError.resultMismatch
+        }
+        return PersistedRowIdentity(entityName: id.entityName, storeIdentifier: storeIdentifier, encodedData: encodedData)
     }
 
     func references() throws -> [String] {
@@ -269,6 +292,7 @@ private final class ProviderCredentialTestFixture {
         _ fixture: ProviderCredentialTestFixture, makeRecord: () -> Record
     ) throws {
         var originalID: PersistentIdentifier?
+        var originalIdentity: ProviderCredentialTestFixture.PersistedRowIdentity?
         var reference = ""
         do {
             let container = try fixture.open(), context = container.mainContext
@@ -276,6 +300,7 @@ private final class ProviderCredentialTestFixture {
             let record = makeRecord()
             context.insert(record); try context.save()
             originalID = record.persistentModelID
+            originalIdentity = try fixture.rowIdentity(record.persistentModelID)
             #expect(try fixture.credentials.resolve(record) == "synthetic-legacy")
             try fixture.credentials.save("synthetic-secured", for: record,
                 expectedStoredValue: "synthetic-legacy", in: context)
@@ -290,7 +315,7 @@ private final class ProviderCredentialTestFixture {
             let container = try fixture.open(), context = container.mainContext
             context.autosaveEnabled = false
             let record = try #require(context.fetch(FetchDescriptor<Record>()).first)
-            #expect(record.persistentModelID == originalID)
+            #expect(try fixture.rowIdentity(record.persistentModelID) == originalIdentity)
             #expect(record.storedCredential == reference)
             #expect(try fixture.credentials.resolve(record) == "synthetic-secured")
             #expect(try fixture.credentials.keychain.previousStoredValue(for: reference, kind: Record.credentialKind) == "synthetic-legacy")
@@ -299,7 +324,7 @@ private final class ProviderCredentialTestFixture {
         do {
             let container = try fixture.open()
             let restored = try #require(container.mainContext.fetch(FetchDescriptor<Record>()).first)
-            #expect(restored.persistentModelID == originalID)
+            #expect(try fixture.rowIdentity(restored.persistentModelID) == originalIdentity)
             #expect(restored.storedCredential == "synthetic-legacy")
             #expect(try fixture.credentials.resolve(restored) == "synthetic-legacy")
             #expect(try fixture.credentials.keychain.resolve(reference, kind: Record.credentialKind) == "synthetic-secured")
@@ -543,7 +568,7 @@ private final class ProviderCredentialTestFixture {
         context.autosaveEnabled = false
         let record = make()
         context.insert(record); try context.save()
-        let originalID = record.persistentModelID
+        let originalIdentity = try fixture.rowIdentity(record.persistentModelID)
         var draft = HanlinCredentialEditDraft()
         try draft.load(record, credentials: fixture.credentials)
         let changedDate = Date(timeIntervalSince1970: 12345)
@@ -577,7 +602,7 @@ private final class ProviderCredentialTestFixture {
         #expect(Data(try #require(try fixture.credentials.resolve(record)).utf8) == Data("synthetic-e\u{0301}".utf8))
         let reopened = try fixture.open()
         let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<Record>()).first)
-        #expect(saved.persistentModelID == originalID)
+        #expect(try fixture.rowIdentity(saved.persistentModelID) == originalIdentity)
         #expect(saved.storedCredential == record.storedCredential)
         #expect(timestamp(saved) == changedDate.addingTimeInterval(1))
         #expect(Data(try #require(try fixture.credentials.resolve(saved)).utf8) == Data("synthetic-e\u{0301}".utf8))
@@ -590,6 +615,7 @@ private final class ProviderCredentialTestFixture {
         let container = try fixture.open(), context = container.mainContext
         let record = APIKeys(name: "Original optional key", company: "FIXTURE", key: initial)
         context.insert(record); try context.save()
+        let originalIdentity = try fixture.rowIdentity(record.persistentModelID)
         var draft = HanlinCredentialEditDraft()
         try draft.load(record, credentials: fixture.credentials)
         draft.replaceText("")
@@ -601,7 +627,7 @@ private final class ProviderCredentialTestFixture {
         #expect(try fixture.references().isEmpty)
         let reopened = try fixture.open()
         let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first)
-        #expect(saved.persistentModelID == record.persistentModelID)
+        #expect(try fixture.rowIdentity(saved.persistentModelID) == originalIdentity)
         #expect(saved.key == initial)
         #expect(throws: Error.self) {
             try fixture.credentials.saveMetadata(for: record, expectedStoredValue: initial, in: context) {
@@ -639,6 +665,8 @@ private final class ProviderCredentialTestFixture {
         let record = make("synthetic-selected"), unrelated = make("synthetic-unrelated")
         context.insert(record); context.insert(unrelated); try context.save()
         let originalID = record.persistentModelID
+        let originalIdentity = try fixture.rowIdentity(originalID)
+        #expect(try fixture.rowIdentity(unrelated.persistentModelID) != originalIdentity)
         var draft = HanlinCredentialEditDraft()
         try draft.load(record, credentials: fixture.credentials)
         #expect(draft.hasCredentialReplacement == false)
@@ -655,8 +683,9 @@ private final class ProviderCredentialTestFixture {
         #expect(try fixture.references().count == 1)
         do {
             let reopened = try fixture.open()
-            let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<Record>())
-                .first(where: { $0.persistentModelID == originalID }))
+            let rows = try reopened.mainContext.fetch(FetchDescriptor<Record>())
+            #expect(rows.count == 2)
+            let saved = try #require(rows.first(where: { (try? fixture.rowIdentity($0.persistentModelID)) == originalIdentity }))
             #expect(saved.storedCredential == reference)
             #expect(try fixture.credentials.resolve(saved) == "synthetic-selected")
         }
@@ -667,8 +696,9 @@ private final class ProviderCredentialTestFixture {
         do {
             let readOnly = try fixture.open(allowsSave: false), reader = readOnly.mainContext
             reader.autosaveEnabled = false
-            let saved = try #require(reader.fetch(FetchDescriptor<Record>())
-                .first(where: { $0.persistentModelID == originalID }))
+            let rows = try reader.fetch(FetchDescriptor<Record>())
+            #expect(rows.count == 2)
+            let saved = try #require(rows.first(where: { (try? fixture.rowIdentity($0.persistentModelID)) == originalIdentity }))
             var migration = HanlinCredentialEditDraft()
             try migration.load(saved, credentials: fixture.credentials)
             #expect(migration.canMigrate(saved))
@@ -677,8 +707,9 @@ private final class ProviderCredentialTestFixture {
             }
         }
         let reopened = try fixture.open()
-        let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<Record>())
-            .first(where: { $0.persistentModelID == originalID }))
+        let rows = try reopened.mainContext.fetch(FetchDescriptor<Record>())
+        #expect(rows.count == 2)
+        let saved = try #require(rows.first(where: { (try? fixture.rowIdentity($0.persistentModelID)) == originalIdentity }))
         #expect(saved.storedCredential == "synthetic-selected")
         #expect(try fixture.references().count == 2, "A failed migration retains its staged checkpoint without replacing the original durable row")
     }
@@ -739,6 +770,7 @@ private final class ProviderCredentialTestFixture {
         let missing = "hanlin-keychain:v1:model:\(UUID().uuidString.lowercased())"
         let record = APIKeys(name: "Original unavailable", company: "FIXTURE", key: missing)
         context.insert(record); try context.save()
+        let originalIdentity = try fixture.rowIdentity(record.persistentModelID)
         var draft = HanlinCredentialEditDraft()
         #expect(throws: Error.self) { try draft.load(record, credentials: fixture.credentials) }
         #expect(draft.isReadyToSave == false)
@@ -755,7 +787,7 @@ private final class ProviderCredentialTestFixture {
         #expect(try fixture.references().count == 1)
         let reopened = try fixture.open()
         let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first)
-        #expect(saved.persistentModelID == record.persistentModelID)
+        #expect(try fixture.rowIdentity(saved.persistentModelID) == originalIdentity)
         #expect(saved.key == replacement)
         #expect(try fixture.credentials.resolve(saved) == value)
     }
@@ -1360,8 +1392,11 @@ private final class ProviderCredentialTestFixture {
             canonicalSchema: schema, modelSchema: schema, preferredAlias: alias)
         let authority = try HanlinCanonicalToolAuthority.build(nativeSources: [source], mcpTools: [])
         var reads = [Data]()
+        var observedRequestIDs = [String]()
         let executors = AssistantToolBridge.Executors(executeNative: { _, _, arguments, toolContext in
-            #expect(toolContext.requestID == diagnosticRound.uuidString)
+            observedRequestIDs.append(toolContext.requestID ?? "")
+            #expect(toolContext.requestID != request.uiRunID.uuidString)
+            #expect(toolContext.requestID != diagnosticRound.uuidString)
             do {
                 let object = try JSONSerialization.jsonObject(with: Data(arguments.utf8)) as? [String: String]
                 let requestedHandle = try #require(object?["handle"])
@@ -1377,15 +1412,26 @@ private final class ProviderCredentialTestFixture {
         let stream = try await owner.stream(request: request, modelContext: context, configuration: config,
             engineFactory: { factory(config, queue: queue) }, toolAdapter: adapter,
             messages: [.init(role: .user, text: "Read original image")], systemPrompt: nil)
+        let effectiveRoundID = try #require(adapter.currentRoundID)
+        #expect(effectiveRoundID != diagnosticRound)
+        #expect(effectiveRoundID != request.uiRunID)
         let definition = try #require(adapter.allToolDefinitions().first { $0.name == alias })
         let arguments = String(decoding: try JSONSerialization.data(withJSONObject: ["handle": handle]), as: UTF8.self)
         let output = try await definition.execute(arguments, "original-attachment")
         #expect(!output.isError && reads == [image])
+        #expect(observedRequestIDs == [effectiveRoundID.uuidString])
+        let otherTurnHandle = try await AuthorizedAttachmentRegistry.shared.register(data: image, mimeType: "image/png",
+            chatID: id.uuidString, requestID: UUID().uuidString)
+        let otherTurnArguments = String(decoding: try JSONSerialization.data(withJSONObject: ["handle": otherTurnHandle]), as: UTF8.self)
+        let otherTurnOutput = try await definition.execute(otherTurnArguments, "other-turn-attachment")
+        #expect(otherTurnOutput.isError && reads == [image])
         for try await event in stream { try owner.receive(event, uiRunID: request.uiRunID) }
         try owner.producerStreamDrained(uiRunID: request.uiRunID)
         owner.cancel()
         let revoked = try await definition.execute(arguments, "revoked-attachment")
         #expect(revoked.isError && reads == [image])
+        #expect(observedRequestIDs == [effectiveRoundID.uuidString, effectiveRoundID.uuidString, effectiveRoundID.uuidString])
+        await AuthorizedAttachmentRegistry.shared.revoke(handle: otherTurnHandle)
         await AuthorizedAttachmentRegistry.shared.revoke(handle: handle)
     }
 
