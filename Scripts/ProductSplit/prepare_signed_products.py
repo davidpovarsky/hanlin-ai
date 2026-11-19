@@ -29,6 +29,10 @@ from resolve_signing_profiles import (
     resolve_original_profiles, install_profile, remove_installed_profiles,
 )
 
+from signing_profile_preflight import (
+    installed_profile_receipt, retain_distribution_logs, run_profile_discovery_preflight,
+)
+
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(os.environ["SPLIT_EVIDENCE"]) / "signed-products"
 
@@ -69,12 +73,21 @@ def main():
                     result = process.returncode
                 except subprocess.TimeoutExpired:
                     result = -1
-            safe = sanitize(raw.read_text(errors="replace"))
+            raw_output = raw.read_text(errors="replace")
+            safe = sanitize(raw_output)
             raw.unlink(missing_ok=True)
             target = OUT / (label + ".log")
             target.write_text(safe, encoding="utf-8")
+            try:
+                distribution_logs = retain_distribution_logs(
+                    raw_output, OUT / (label + "-distribution-logs"), sanitize)
+            except Exception as error:
+                # Always retain the primary native failure even if diagnostics
+                # are unavailable; never replace it with a log-copy error.
+                distribution_logs = [{"status": "RETENTION_FAILED", "error": sanitize(str(error))}]
             commands.append({"operation": label, "exit": result, "seconds": time.monotonic() - started,
-                             "log_sha256": hashlib.sha256(target.read_bytes()).hexdigest()})
+                             "log_sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
+                             "distribution_logs": distribution_logs})
             if result and required:
                 raise RuntimeError(label + " failed; see sanitized log (exit " + str(result) + ")")
             return result, safe
@@ -136,20 +149,28 @@ def main():
             for profile in profiles:
                 install_profile(profile, profile_directories, installed_profiles)
             profile_mapping = {profile["bundle"]: profile["uuid"] for profile in profiles}
+            state["installed_profile_readback"] = {}
+            installed_profile_receipt(profiles, profile_directories, state["installed_profile_readback"])
+            preflight_only = os.environ.get("SPLIT_SIGNING_PREFLIGHT_ONLY", "false").lower() == "true"
             _, sdk = run(["xcrun", "--sdk", "iphoneos", "--show-sdk-version"], "device-sdk")
             if int(sdk.strip().split(".")[0]) != 27:
                 raise RuntimeError("The current stable iOS 27 SDK is required")
             run(["xcodebuild", "-version"], "xcode-version")
             run(["xcrun", "swiftc", "--version"], "swift-version")
+            state["provisioning_preflight"] = {}
+            run_profile_discovery_preflight(
+                folder, profiles, os.environ["APPLE_TEAM_ID"], distribution_identity,
+                cert_sha, run, state["provisioning_preflight"])
             derived = ROOT / "build/ReleaseDerivedData"
             packages = ROOT / "build/SourcePackages"
             common = ["xcodebuild", "-project", "AI_HLY.xcodeproj",
                       "-clonedSourcePackagesDirPath", packages,
                       "-skipPackagePluginValidation", "-skipMacroValidation"]
-            run(common + ["-scheme", "AI_HLY", "-resolvePackageDependencies"], "resolve-original-packages", 600)
-            run([sys.executable, "Scripts/CI/stage_a2ui_schemas.py", "--source-packages-path", packages,
-                 "--derived-data-path", derived, "--evidence", OUT / "original-a2ui-schemas"],
-                 "original-schema-generator", 360)
+            if not preflight_only:
+                run(common + ["-scheme", "AI_HLY", "-resolvePackageDependencies"], "resolve-original-packages", 600)
+                run([sys.executable, "Scripts/CI/stage_a2ui_schemas.py", "--source-packages-path", packages,
+                     "--derived-data-path", derived, "--evidence", OUT / "original-a2ui-schemas"],
+                     "original-schema-generator", 360)
             export_options = folder / "ExportOptions.plist"
             options = {
                 "method": "app-store-connect", "destination": "export",
@@ -157,8 +178,10 @@ def main():
                 "signingCertificate": distribution_identity, "uploadSymbols": False,
                 "manageAppVersionAndBuildNumber": False, "stripSwiftSymbols": True
             }
-            for role, scheme, bundle in [("miniapps", "HanlinMiniApps", "com.itorah.hanlinminiapps"),
-                                         ("ai", "AI_HLY", "com.itorah.chavrusachat")]:
+            product_archives = [] if preflight_only else [
+                ("miniapps", "HanlinMiniApps", "com.itorah.hanlinminiapps"),
+                ("ai", "AI_HLY", "com.itorah.chavrusachat")]
+            for role, scheme, bundle in product_archives:
                 product = {"role": role, "bundle_id": bundle, "archive": "NOT_RUN", "export": "NOT_RUN",
                            "entitlements": "NOT_RUN"}
                 state["products"].append(product)
@@ -186,6 +209,10 @@ def main():
                     raise RuntimeError("Archive identity does not match the original product")
                 product["version"] = application.get("CFBundleShortVersionString")
                 product["build"] = application.get("CFBundleVersion")
+                product["profile_cache_at_export"] = {}
+                installed_profile_receipt(
+                    [profile for profile in profiles if profile["bundle"] in selected_bundles],
+                    profile_directories, product["profile_cache_at_export"])
                 result, _ = run(["xcodebuild", "-exportArchive", "-archivePath", archive,
                     "-exportPath", export, "-exportOptionsPlist", export_options],
                     role + "-export", 600, required=False)
@@ -244,8 +271,12 @@ def main():
                     product["profile_checks"] = observed
                     raise RuntimeError("Exported profiles do not cover every original product entitlement")
                 product.update(entitlements="EXECUTED_PASS", profile_checks=observed)
-            state["status"] = "EXECUTED_PASS" if len(state["products"]) == 2 and all(
-                p["entitlements"] == "EXECUTED_PASS" for p in state["products"]) else "SIGNING_OR_BUILD_FAILED"
+            if preflight_only:
+                state["status"] = "PROVISIONING_PREFLIGHT_PASS"
+                state["scope"] = "Original identity and entitlement provisioning preflight only; original product archives were not run."
+            else:
+                state["status"] = "EXECUTED_PASS" if len(state["products"]) == 2 and all(
+                    p["entitlements"] == "EXECUTED_PASS" for p in state["products"]) else "SIGNING_OR_BUILD_FAILED"
         except Exception as error:
             state["error"] = sanitize(str(error))
             if state["status"] == "NOT_RUN":
@@ -271,7 +302,7 @@ def main():
             (OUT / "acceptance.json").write_text(json.dumps(state, indent=2) + "\n")
             shutil.copy2(OUT / "acceptance.json", OUT.parent / "acceptance.json")
             print(json.dumps(state))
-    return 0 if state["status"] == "EXECUTED_PASS" and state["cleanup"] == "PASS" else 1
+    return 0 if state["status"] in {"EXECUTED_PASS", "PROVISIONING_PREFLIGHT_PASS"} and state["cleanup"] == "PASS" else 1
 
 if __name__ == "__main__":
     sys.exit(main())

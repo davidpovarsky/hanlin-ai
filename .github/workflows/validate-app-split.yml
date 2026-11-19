@@ -13,6 +13,11 @@ on:
         type: boolean
         required: false
         default: false
+      signing_preflight_only:
+        description: With signed_release_archives, run bounded original-profile discovery and entitlement signing probes only
+        type: boolean
+        required: false
+        default: false
       audit_release_resources:
         description: Read existing Apple signing and registration metadata without signing or publishing
         type: boolean
@@ -48,6 +53,11 @@ on:
         default: false
       signed_release_archives:
         description: Archive original products and export locally using the existing distribution identity
+        type: boolean
+        required: false
+        default: false
+      signing_preflight_only:
+        description: With signed_release_archives, run bounded original-profile discovery and entitlement signing probes only
         type: boolean
         required: false
         default: false
@@ -88,7 +98,7 @@ on:
 concurrency:
   # Separate acceptance scopes use distinct job checkouts and owned simulators.
   # A paired run must not cancel standalone storage/UI evidence still being collected.
-  group: standalone-miniapps-${{ github.ref }}-${{ inputs.prepare_miniapps_registration && 'registration' || inputs.audit_release_resources && 'release-audit' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}
+  group: standalone-miniapps-${{ github.ref }}-${{ inputs.prepare_miniapps_registration && 'registration' || inputs.audit_release_resources && 'release-audit' || inputs.signing_preflight_only && 'signing-preflight' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}
   cancel-in-progress: ${{ !inputs.prepare_miniapps_registration }}
 
 permissions:
@@ -175,6 +185,12 @@ jobs:
       - uses: actions/setup-node@v7.1.0
         with:
           node-version: '24.5.0'
+      - name: Validate requested signing preflight scope
+        if: ${{ inputs.signing_preflight_only }}
+        shell: bash
+        env:
+          SIGNED_RELEASE_ARCHIVES: ${{ inputs.signed_release_archives }}
+        run: test "$SIGNED_RELEASE_ARCHIVES" = 'true'
       - name: Verify actual Mac toolchain, disk and installed simulator tooling
         id: split-platform
         shell: bash
@@ -217,6 +233,7 @@ jobs:
           plutil -lint AI_HLY.xcodeproj/project.pbxproj HanlinMiniAppsApp/HanlinMiniApps.entitlements
           python3 Scripts/ProductSplit/verify_targets.py
       - name: Restore existing Swift package dependency cache
+        if: ${{ !inputs.signing_preflight_only }}
         id: split-sourcepackages
         continue-on-error: true
         uses: actions/cache/restore@v6.1.0
@@ -226,6 +243,7 @@ jobs:
           restore-keys: |
             ios-sourcepackages-v3-${{ runner.os }}-${{ steps.split-platform.outputs.arch }}-${{ steps.split-platform.outputs.xcode_build }}-
       - name: Restore compatible standalone compiler state
+        if: ${{ !inputs.signing_preflight_only }}
         id: split-derived
         continue-on-error: true
         uses: actions/cache/restore@v6.1.0
@@ -284,8 +302,10 @@ jobs:
             node --test "$host_root/Tests/package-lifecycle.test.mjs"
           } 2>&1 | tee "$SPLIT_EVIDENCE/package-lifecycle.log"
       - name: Prepare the existing pinned metadata tool
+        if: ${{ !inputs.signing_preflight_only }}
         uses: ./.github/actions/prepare-nativescript-metadata-tool
       - name: Prepare existing native dependencies and Runtime host
+        if: ${{ !inputs.signing_preflight_only }}
         shell: bash
         run: |
           set -euo pipefail
@@ -312,10 +332,12 @@ jobs:
           EOF
           } 2>&1 | tee "$SPLIT_EVIDENCE/native-dependencies.log"
       - name: Restore verified input timestamps for incremental compilation
+        if: ${{ !inputs.signing_preflight_only }}
         continue-on-error: true
         shell: bash
         run: python3 Scripts/CI/xcode_cache_inputs.py --repository "$GITHUB_WORKSPACE" restore --manifest "$SPLIT_DERIVED_DATA/CacheMetadata/xcode-build-inputs.json"
       - name: Capture exact standalone compiler inputs
+        if: ${{ !inputs.signing_preflight_only }}
         id: split-inputs
         continue-on-error: true
         shell: bash
@@ -343,6 +365,7 @@ jobs:
       - name: Build original device archives and export with the existing distribution identity
         if: ${{ inputs.signed_release_archives }}
         env:
+          SPLIT_SIGNING_PREFLIGHT_ONLY: ${{ inputs.signing_preflight_only }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
           APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
