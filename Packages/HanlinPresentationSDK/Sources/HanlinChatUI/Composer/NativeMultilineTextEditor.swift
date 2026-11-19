@@ -368,10 +368,17 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
     }
 
     public final class Coordinator: NSObject, UITextViewDelegate {
+        private struct PendingVersionedEcho {
+            let ownerID: UUID
+            let baselineRevision: UUID
+            let publishedText: String
+        }
+
         var parent: NativeMultilineTextEditor
         public var isEditing = false
         private var lastSynchronizedModelText: String
         private var lastSynchronizedTextState: TextState?
+        private var pendingVersionedEcho: PendingVersionedEcho?
         private var isRebindingOwner = false
         #if DEBUG || HANLIN_TESTING
         private let editDiagnosticsEnabled = ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1"
@@ -419,25 +426,47 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
                ownerMatchesLastSynchronization() {
                 publishNativeTextIfChanged(textView.text ?? "")
             }
+            pendingVersionedEcho = nil
             parent = newParent
             synchronizeText(in: textView)
         }
 
         private func ownerMatchesLastSynchronization() -> Bool {
             let state = parent.currentTextState
+            if let pending = pendingVersionedEcho, let state {
+                if state.ownerID == pending.ownerID && state.revision == pending.baselineRevision {
+                    return true
+                }
+                pendingVersionedEcho = nil
+            }
             return state == lastSynchronizedTextState
                 && (state?.text ?? parent.text).utf8.elementsEqual(lastSynchronizedModelText.utf8)
         }
 
         @discardableResult
         private func publishNativeTextIfChanged(_ nativeText: String) -> Bool {
+            let beforeState = parent.currentTextState
             let changed = !nativeText.utf8.elementsEqual(parent.currentText.utf8)
             // Acknowledge before the binding write, which can invalidate a
             // rendered view synchronously. The state is then read from the
             // same owner; no render acknowledgement or timer is involved.
             lastSynchronizedModelText = nativeText
             if changed { parent.text = nativeText }
-            lastSynchronizedTextState = parent.currentTextState
+            let afterState = parent.currentTextState
+            if let beforeState, let afterState,
+               changed,
+               beforeState.ownerID == afterState.ownerID,
+               beforeState.revision == afterState.revision,
+               !afterState.text.utf8.elementsEqual(nativeText.utf8) {
+                pendingVersionedEcho = PendingVersionedEcho(
+                    ownerID: afterState.ownerID,
+                    baselineRevision: afterState.revision,
+                    publishedText: nativeText
+                )
+            } else {
+                pendingVersionedEcho = nil
+            }
+            lastSynchronizedTextState = afterState
             return changed
         }
 
@@ -447,6 +476,19 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         public func synchronizeText(in textView: UITextView) {
             guard textView.markedTextRange == nil else { return }
             let incomingState = parent.currentTextState
+            if let pending = pendingVersionedEcho {
+                if let incomingState,
+                   incomingState.ownerID == pending.ownerID,
+                   incomingState.revision == pending.baselineRevision,
+                   isEditing,
+                   textView.textColor != .placeholderText {
+                    #if DEBUG || HANLIN_TESTING
+                    traceEdit("model-pending-versioned-echo", in: textView)
+                    #endif
+                    return
+                }
+                pendingVersionedEcho = nil
+            }
             let incoming = incomingState?.text ?? parent.text
             let modelChanged = !incoming.utf8.elementsEqual(lastSynchronizedModelText.utf8)
                 || incomingState != lastSynchronizedTextState

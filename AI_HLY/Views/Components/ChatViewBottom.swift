@@ -879,6 +879,7 @@ struct ChatViewBottom: View {
             onOpenPhotoLibrary: { showImagePicker = true },
             onOpenDocumentPicker: { showDocumentPicker = true },
             onOpenShareInbox: {
+                popupCoordinator.closeAll()
                 shareDraftContext = effectiveDockContextKey
                 showShareInbox = true
             },

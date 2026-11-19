@@ -184,8 +184,8 @@ final class HanlinPairedProductUITests: XCTestCase {
     }
 
     private func input() -> XCUIElement {
-        let field = ai.textFields["hanlin-chat-input"].firstMatch
-        return field.exists ? field : ai.textViews["hanlin-chat-input"].firstMatch
+        let textView = ai.textViews["hanlin-chat-input"].firstMatch
+        return textView.exists ? textView : ai.textFields["hanlin-chat-input"].firstMatch
     }
 
     private func item(_ app: XCUIApplication, _ id: String) -> XCUIElement {

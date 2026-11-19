@@ -26,14 +26,14 @@ final class HanlinShareInboxUITests: XCTestCase {
             }
             app.terminate()
         }
-        if app.buttons["hanlin-compact-view-all-button"].waitForExistence(timeout: 10) {
+        if app.buttons["hanlin-compact-view-all-button"].firstMatch.waitForExistence(timeout: 10) {
             let recent = app.buttons["hanlin-compact-recent-row-0"].firstMatch
             XCTAssertTrue(recent.waitForExistence(timeout: 15))
             XCTAssertTrue(recent.label.contains("Agent Acceptance Chat")); recent.tap()
-        } else if !app.staticTexts["hanlin-phase2-chat-id"].exists {
+        } else if !app.staticTexts["hanlin-phase2-chat-id"].firstMatch.exists {
             tap(app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Agent Acceptance Chat")).firstMatch, app: app)
         }
-        let identity = app.staticTexts["hanlin-phase2-chat-id"]
+        let identity = app.staticTexts["hanlin-phase2-chat-id"].firstMatch
         XCTAssertTrue(identity.waitForExistence(timeout: 15))
         let chatID = identity.label
         let original = "UNSENT_PREEXISTING_" + nonce
@@ -41,39 +41,52 @@ final class HanlinShareInboxUITests: XCTestCase {
         typeNativeText(original, into: editor, app: app, failureMessage: "Native typing must preserve the draft before opening the inbox")
         XCTAssertEqual(editor.value as? String, original, "Native typing must preserve the draft before opening the inbox")
         openInbox(app)
-        XCTAssertTrue(app.staticTexts["SHARE_DRAFT_" + nonce].waitForExistence(timeout: 20))
-        tap(app.buttons["hanlin-share-inbox-cancel"], app: app)
+        let inbox = app.descendants(matching: .any)["hanlin-share-inbox"].firstMatch
+        XCTAssertTrue(inbox.waitForExistence(timeout: 20))
+        XCTAssertTrue(inbox.staticTexts["SHARE_DRAFT_" + nonce].firstMatch.waitForExistence(timeout: 20))
+        tap(app.buttons["hanlin-share-inbox-cancel"].firstMatch, app: app)
         XCTAssertEqual(input(app).value as? String, original)
-        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0")
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].firstMatch.label, "0")
         openInbox(app)
-        let addButton = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'hanlin-share-add-draft-'")).firstMatch
+        XCTAssertTrue(inbox.waitForExistence(timeout: 20))
+        let addButton = inbox.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'hanlin-share-add-draft-'")).firstMatch
+        let addReady = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: addButton)
+        XCTAssertEqual(XCTWaiter.wait(for: [addReady], timeout: 15), .completed)
+        revealInContainer(addButton, container: inbox)
         tap(addButton, app: app)
-        XCTAssertTrue(app.buttons["hanlin-share-inbox-cancel"].waitForNonExistence(timeout: 20))
-        let draft = try XCTUnwrap(input(app).value as? String)
+        XCTAssertTrue(app.buttons["hanlin-share-inbox-cancel"].firstMatch.waitForNonExistence(timeout: 20))
+        let updatedEditor = input(app)
+        let draftSynced = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value CONTAINS %@", "SHARE_DRAFT_" + nonce),
+            object: updatedEditor
+        )
+        XCTAssertEqual(XCTWaiter.wait(for: [draftSynced], timeout: 10), .completed,
+                       "Added shared text did not appear in native composer")
+        let draft = try XCTUnwrap(updatedEditor.value as? String)
         XCTAssertTrue(draft.contains(original) && draft.contains("SHARE_DRAFT_" + nonce))
         XCTAssertTrue(draft.contains("https://example.org/hanlin-share?case=" + nonce))
-        XCTAssertTrue(app.staticTexts["shared-note.txt"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["shared-note.txt"].firstMatch.waitForExistence(timeout: 10))
         XCTAssertEqual(identity.label, chatID)
-        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0",
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].firstMatch.label, "0",
                        "Reading or adding a shared batch must not contact a model")
-        tap(app.buttons["hanlin-chat-send"], app: app)
+        tap(app.buttons["hanlin-chat-send"].firstMatch, app: app)
         let delivered = "SHARED_DRAFT_DELIVERED_" + nonce
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", delivered))
             .firstMatch.waitForExistence(timeout: 60),
             "The original request must contain the draft, shared text, source URL and actual file contents")
         XCTAssertEqual(identity.label, chatID)
         app.terminate(); app.launch()
-        if app.buttons["hanlin-compact-view-all-button"].waitForExistence(timeout: 10) {
-            tap(app.buttons["hanlin-compact-recent-row-0"], app: app)
+        if app.buttons["hanlin-compact-view-all-button"].firstMatch.waitForExistence(timeout: 10) {
+            tap(app.buttons["hanlin-compact-recent-row-0"].firstMatch, app: app)
         }
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", delivered))
             .firstMatch.waitForExistence(timeout: 30))
-        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0")
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].firstMatch.label, "0")
     }
 
     private func input(_ app: XCUIApplication) -> XCUIElement {
-        let field = app.textFields["hanlin-chat-input"].firstMatch
-        return field.exists ? field : app.textViews["hanlin-chat-input"].firstMatch
+        let textView = app.textViews["hanlin-chat-input"].firstMatch
+        return textView.exists ? textView : app.textFields["hanlin-chat-input"].firstMatch
     }
 
     private func typeNativeText(
@@ -125,8 +138,33 @@ final class HanlinShareInboxUITests: XCTestCase {
     }
 
     private func openInbox(_ app: XCUIApplication) {
-        tap(app.buttons["hanlin-composer-general-menu"], app: app)
-        tap(app.buttons["hanlin-general-share-inbox"], app: app)
+        let panel = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
+        if !panel.exists {
+            tap(app.buttons["hanlin-composer-general-menu"].firstMatch, app: app)
+            let panelReady = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: panel)
+            XCTAssertEqual(XCTWaiter.wait(for: [panelReady], timeout: 15), .completed,
+                           "Action center panel did not open before querying Share Inbox")
+        }
+        let shareInboxButton = panel.buttons["hanlin-general-share-inbox"].firstMatch
+        let buttonExists = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: shareInboxButton)
+        XCTAssertEqual(XCTWaiter.wait(for: [buttonExists], timeout: 15), .completed,
+                       "Share Inbox button did not appear inside action center panel")
+        let viewport = panel.scrollViews["hanlin-composer-page-scroll"].firstMatch
+        if viewport.exists {
+            revealInContainer(shareInboxButton, container: viewport)
+        }
+        tap(shareInboxButton, app: app)
+    }
+
+    private func revealInContainer(_ element: XCUIElement, container: XCUIElement) {
+        for _ in 0..<10 {
+            if element.isHittable { return }
+            if element.exists, element.frame.height > 0, element.frame.midY < container.frame.midY {
+                container.swipeDown()
+            } else {
+                container.swipeUp()
+            }
+        }
     }
 
     private func tap(
@@ -139,11 +177,7 @@ final class HanlinShareInboxUITests: XCTestCase {
             format: "exists == true AND enabled == true AND hittable == true"), object: element)
         let result = XCTWaiter.wait(for: [ready], timeout: 30)
         if result != .completed {
-            let exists = element.exists
-            let enabled = exists ? element.isEnabled : false
-            let hittable = exists ? element.isHittable : false
-            let frame = exists ? String(describing: element.frame) : "none"
-            let diagnostics = "Tap readiness failed (waitResult=\(result.rawValue)) for \(element): exists=\(exists), enabled=\(enabled), hittable=\(hittable), frame=\(frame)"
+            let diagnostics = "Tap readiness failed (waitResult=\(result.rawValue)) for \(element)"
             let diagAttachment = XCTAttachment(string: diagnostics)
             diagAttachment.name = "tap-failure-diagnostics"
             diagAttachment.lifetime = .keepAlways
