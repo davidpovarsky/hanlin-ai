@@ -76,7 +76,7 @@ final class HanlinPairedProductUITests: XCTestCase {
         install.tap()
         XCTAssertTrue(install.waitForNonExistence(timeout: 60))
         ai.terminate(); ai.launch()
-        tap(ai, "hanlin-package-card-Hanlin Transfer Acceptance")
+        openOriginalPackage(named: "Hanlin Transfer Acceptance")
         XCTAssertTrue(ai.staticTexts["Not saved"].waitForExistence(timeout: 30))
         tap(ai, "Save transfer value")
         assertText(ai, "Saved by the original ScriptUI runtime")
@@ -113,8 +113,22 @@ final class HanlinPairedProductUITests: XCTestCase {
         XCTAssertFalse(imported.exists, "Rollback must restore the actual pre-transfer catalog")
 
         ai.terminate(); ai.launchEnvironment["HANLIN_SCRIPTUI_E2E"] = "1"; ai.launch()
-        tap(ai, "hanlin-package-card-Hanlin Transfer Acceptance")
+        openOriginalPackage(named: "Hanlin Transfer Acceptance")
         assertText(ai, "Saved by the original ScriptUI runtime")
+    }
+
+    private func openOriginalPackage(named name: String) {
+        // The original hub puts ScriptUI below the lazy Swift catalog. Reveal the
+        // installed card through its shipping search before testing its state.
+        let search = ai.searchFields["Search Apps"].firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 30))
+        tap(ai, "Search Apps")
+        search.typeText(name)
+        let filtered = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value == %@", name), object: search)
+        XCTAssertEqual(XCTWaiter.wait(for: [filtered], timeout: 10), .completed,
+                       "The original catalog must apply the exact package search")
+        tap(ai, "hanlin-package-card-\(name)")
     }
 
     private func beginOriginalRequest(_ prompt: String) throws -> String {
