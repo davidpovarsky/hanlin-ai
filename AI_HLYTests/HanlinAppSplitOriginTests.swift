@@ -49,6 +49,7 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
     }
 }
 @MainActor private final class SplitOwnerBox { weak var value: HanlinAppAgentSessionOwner? }
+@MainActor private final class SplitTestClock { var now = Date() }
 
 @MainActor private func splitBounded<T: Sendable>(_ operation: @escaping @MainActor @Sendable () async throws -> T) async throws -> T {
     try await withThrowingTaskGroup(of: T.self) { group in
@@ -75,7 +76,9 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
     var engineConstructions = 0
     var failure: String?
 
-    init(cancelWhileOpening: Bool = false) throws {
+    init(cancelWhileOpening: Bool = false,
+         now: (@MainActor () -> Date)? = nil,
+         onTargetContext: (@MainActor (SplitBridgeRequest, HanlinAppAgentSessionOwner?) async throws -> Void)? = nil) throws {
         let container = try ModelContainer(for: ChatRecords.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
         let context = container.mainContext
         let row = ChatRecords(name: "Original persisted Split conversation", type: "chat")
@@ -105,9 +108,10 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
                 return true
             } catch { Issue.record("Original dispatch lacked its committed canonical association: \(error)"); return false }
         }, targetContext: { request in
+            try await onTargetContext?(request, box.value)
             _ = try request.launchPlan(descriptor: descriptor, installedPackageID: registration.installedPackage, currentGeneration: registration.generation)
             return Self.context(request)
-        })
+        }, now: now ?? { Date() })
         let owner = HanlinAppAgentSessionOwner(splitCoordinator: coordinator)
         let priorApproval = owner.consent.onChange
         owner.consent.onChange = { [weak owner] request, choice in
@@ -230,6 +234,8 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         let harness = try SplitAppHarness(); defer { harness.stop() }
         try harness.start()
         let original = try await harness.opened()
+        let lifetime = original.expiresAt.timeIntervalSince(original.issuedAt)
+        #expect(lifetime > 60 && lifetime <= 120)
         #expect(original.chat == harness.row.id && original.session.rawValue == harness.owner.session?.identity.id.uuidString.lowercased())
         try await harness.complete(original)
         await harness.returnToAI(original)
@@ -363,5 +369,103 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         do { _ = try await coordinator.currentContext(for: request); Issue.record("Expired original accepted") }
         catch { #expect(error as? SplitBridgeFailure == .expired) }
         #expect(targetCalls == 0 && coordinator.acceptedOrigin(forReceivingWindowID: nil) == nil)
+    }
+
+    @Test func expiredHostAdmissionDeadlineStillRejectsBeforeDispatch() async throws {
+        let harness = try SplitAppHarness(); defer { harness.stop() }
+        let id = try #require(harness.row.id)
+        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library", workspace: "swiftdata", space: id.uuidString)
+        let context = HanlinHostContext(namespace: namespace, sceneID: harness.scene, generation: UUID(),
+            objectReference: id.uuidString, localeIdentifier: Locale.current.identifier)
+        let identity = HanlinHostSession(conversationID: id, context: context)
+        let store = HanlinAppConversationStore(context: harness.container.mainContext, conversation: harness.row,
+            namespace: namespace, conversationID: id, temporary: false)
+        let host = HanlinAppHostIntegration(identity: identity, store: store, isCurrent: { true })
+        let config = HanlinChatModelConfiguration(modelID: harness.model.modelId, endpoint: URL(filePath: "/fixture"), apiKey: "", supportsToolUse: true)
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(harness.model))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store, capabilities: host, interactions: host)
+        let invocationID = try HanlinToolInvocationID(validating: UUID().uuidString.lowercased())
+        let logicalToolID = HanlinLogicalToolID(providerInstanceID: try .init(validating: "hanlin.host"),
+            localToolID: try .init(validating: "open_mini_app"))
+        let request = HanlinToolInvocationRequest(id: invocationID, logicalToolID: logicalToolID, aliasUsed: "open_mini_app",
+            descriptorRevision: try .init(1), routingTableRevision: .init(1),
+            arguments: .object(["target": .string("hanlin.demo.swift-parity"), "action": .string("share.value"), "payload": .null]),
+            origin: .assistantModel, idempotencyKey: invocationID.rawValue,
+            deadline: Date().addingTimeInterval(-1), limits: try HanlinToolInvocationLimits())
+        let invocation = HanlinHostInvocation(request: request, session: identity, runID: UUID(), step: 0,
+            providerCallID: "expired-admission-call", writeGuarantee: .hostManagedMutation,
+            originalArgumentsJSON: Data(#"{"target":"hanlin.demo.swift-parity","action":"share.value","payload":null}"#.utf8))
+        let rowRef = HanlinAppAgentRowReference(rowID: harness.assistant.id, uiRunID: harness.uiRun, messageID: harness.assistant.id)
+        do {
+            _ = try await harness.coordinator.execute(invocation, host: host, session: session, row: rowRef)
+            Issue.record("Expired Host invocation deadline was dispatched")
+        } catch {
+            #expect(error as? SplitBridgeFailure == .denied)
+        }
+        #expect(harness.probe.count == 0)
+    }
+
+    @Test func preDispatchDeadlineExpiryDuringTargetContextBlocksMailboxAndOSOpen() async throws {
+        let clock = SplitTestClock()
+        var capturedRequestID: UUID?
+        let harness = try SplitAppHarness(now: { clock.now }, onTargetContext: { request, _ in
+            capturedRequestID = request.id
+            // Advance past the 30s SDK admission deadline while still within the 120s split lifetime.
+            clock.now = request.issuedAt.addingTimeInterval(35)
+        })
+        defer { harness.stop() }
+        try harness.start()
+        let task = try #require(harness.streamTask)
+        let completed = try await splitBounded { await task.value }
+        let requestID = try #require(capturedRequestID)
+        #expect(completed && harness.failure == nil)
+        #expect(harness.probe.count == 0)
+        #expect(harness.coordinator.lastFailure == .expired)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == nil)
+        do { _ = try harness.mailbox.original(requestID); Issue.record("Expired pre-dispatch request entered mailbox") }
+        catch { #expect(error as? SplitBridgeFailure == .correlationMismatch) }
+        let data = try #require(harness.row.agentSDKRecordData)
+        let record = try JSONDecoder().decode(HanlinConversationRecord.self, from: data)
+        #expect(record.entries.contains {
+            if case .toolResult(_, let receipt) = $0.payload { return receipt.effectState == .notDispatched }
+            return false
+        })
+    }
+
+    @Test func consentedReturnSucceedsPastOriginalAdmissionDeadlineWithinSplitLifetime() async throws {
+        let clock = SplitTestClock()
+        let harness = try SplitAppHarness(now: { clock.now })
+        defer { harness.stop() }
+        try harness.start()
+        let original = try await harness.opened()
+        #expect(original.expiresAt.timeIntervalSince(original.issuedAt) == 120)
+        try await harness.complete(original)
+        // Advance past the original 30s SDK admission deadline but within the minted 120s split lifetime.
+        clock.now = original.issuedAt.addingTimeInterval(45)
+        await harness.returnToAI(original)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == original)
+        #expect(harness.coordinator.lastFailure == nil)
+        let task = try #require(harness.streamTask)
+        let completed = try await splitBounded { await task.value }
+        #expect(completed && harness.failure == nil)
+    }
+
+    @Test func cancellationDuringTargetContextReturnsNotDispatchedWithoutMailboxWrite() async throws {
+        var capturedRequestID: UUID?
+        let harness = try SplitAppHarness(onTargetContext: { request, owner in
+            capturedRequestID = request.id
+            owner?.cancel()
+        })
+        defer { harness.stop() }
+        try harness.start()
+        let task = try #require(harness.streamTask)
+        let completed = try await splitBounded { await task.value }
+        let requestID = try #require(capturedRequestID)
+        #expect(!completed)
+        #expect(harness.probe.count == 0)
+        #expect(harness.coordinator.lastFailure == .cancelled)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == nil)
+        do { _ = try harness.mailbox.original(requestID); Issue.record("Cancelled pre-dispatch request entered mailbox") }
+        catch { #expect(error as? SplitBridgeFailure == .correlationMismatch) }
     }
 }

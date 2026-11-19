@@ -23,21 +23,25 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     @ObservationIgnored private let makeMailbox: @MainActor () throws -> HanlinSplitMailbox
     @ObservationIgnored private let makeTransport: @MainActor () throws -> HanlinSplitForegroundTransport
     @ObservationIgnored private let targetContext: @MainActor (SplitBridgeRequest) async throws -> SplitReceiverContext
+    @ObservationIgnored private let now: @MainActor () -> Date
 
     init(modelContext: ModelContext? = nil) {
         self.modelContext = modelContext
         makeMailbox = { try HanlinSplitMailbox() }
         makeTransport = { try HanlinSplitForegroundTransport() }
         targetContext = { request in try await HanlinSplitLiveTarget.current(request).1 }
+        now = { Date() }
     }
 
     /// Uses the same actual leaf/store/coordinator in hosted controls; only OS open and current
     /// target authority are injectable. This does not substitute a Session or row callback.
     init(mailbox: HanlinSplitMailbox, openURL: @escaping @MainActor (URL) async -> Bool,
-         targetContext: @escaping @MainActor (SplitBridgeRequest) async throws -> SplitReceiverContext) {
+         targetContext: @escaping @MainActor (SplitBridgeRequest) async throws -> SplitReceiverContext,
+         now: @escaping @MainActor () -> Date = { Date() }) {
         makeMailbox = { mailbox }
         makeTransport = { HanlinSplitForegroundTransport(mailbox: mailbox, openURL: openURL) }
         self.targetContext = targetContext
+        self.now = now
     }
 
     private final class WeakSession {
@@ -55,6 +59,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         let request: SplitBridgeRequest
         let origin: StoredOrigin
         let reference: String
+        let admissionDeadline: Date
         weak var host: HanlinAppHostIntegration?
         weak var session: HanlinAgentSession?
         var response: SplitBridgeReturn?
@@ -63,11 +68,12 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         var receiptWaiters: [CheckedContinuation<Void, Error>] = []
         var timer: Task<Void, Never>?
         var deliveryStarted = false
+        var dispatched = false
         var invalidated = false
         init(request: SplitBridgeRequest, origin: StoredOrigin, reference: String,
-             host: HanlinAppHostIntegration, session: HanlinAgentSession) {
+             admissionDeadline: Date, host: HanlinAppHostIntegration, session: HanlinAgentSession) {
             self.request = request; self.origin = origin; self.reference = reference
-            self.host = host; self.session = session
+            self.admissionDeadline = admissionDeadline; self.host = host; self.session = session
         }
     }
 
@@ -90,8 +96,10 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         guard pending.count < 64, invocation.session.context.namespace.workspace == "swiftdata", invocation.session == session.identity,
               invocation.session.conversationID == session.identity.conversationID, row.rowID == row.messageID,
               let original = invocation.originalArgumentsJSON, let deadline = invocation.request.deadline,
-              deadline > Date() else { throw SplitBridgeFailure.denied }
+              deadline > now() else { throw SplitBridgeFailure.denied }
         _ = try await host.context(for: invocation.session)
+        try Task.checkCancellation()
+        guard now() < deadline else { throw SplitBridgeFailure.expired }
         let plan = try HanlinHostSchemaValidation(schemaJSON: HanlinAppHostIntegration.splitSchema)
         try plan.validate(argumentsJSON: original)
         try HanlinHostSchemaValidation.requireSameValue(originalJSON: original,
@@ -104,13 +112,15 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         let mailbox = try makeMailbox()
         let targetID = try HanlinAppID(validating: target)
         let registration = try mailbox.registration(for: targetID)
-        let now = Date(), expiry = min(deadline, now.addingTimeInterval(120))
+        let issuedAt = now()
+        guard issuedAt < deadline else { throw SplitBridgeFailure.expired }
+        let expiry = issuedAt.addingTimeInterval(Self.foregroundRequestLifetime)
         let request = SplitBridgeRequest(caller: try .init(validating: "hanlin.host"), target: targetID,
             installedPackage: registration.installedPackage,
             session: try .init(validating: invocation.session.id.uuidString.lowercased()),
             chat: invocation.session.conversationID, generation: registration.generation,
             action: try .init(validating: action), capability: try .init(validating: "inter-app.share"),
-            issuedAt: now, expiresAt: expiry, payload: try HanlinValue(jsonValue: payload))
+            issuedAt: issuedAt, expiresAt: expiry, payload: try HanlinValue(jsonValue: payload))
         let call = HanlinHostCallIdentity(session: invocation.session, runID: invocation.runID, step: invocation.step,
             providerCallID: invocation.providerCallID, invocationID: invocation.request.id,
             logicalToolID: invocation.request.logicalToolID)
@@ -119,27 +129,30 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         try requireOriginalAssistant(origin)
         let reference = Self.originPrefix(request.id) + (try JSONEncoder().encode(origin)).base64EncodedString()
         guard reference.utf8.count <= 4096 else { throw SplitBridgeFailure.oversized }
-        let item = Pending(request: request, origin: origin, reference: reference, host: host, session: session)
+        let item = Pending(request: request, origin: origin, reference: reference,
+            admissionDeadline: deadline, host: host, session: session)
         pending[request.id] = item
-        item.timer = Task { [weak self] in
-            let seconds = max(0, request.expiresAt.timeIntervalSinceNow)
-            do { try await Task.sleep(for: .seconds(seconds)) } catch { return }
-            self?.invalidate(reference: request.id, reason: .timedOut)
-        }
         do {
-            // Association is committed by the existing ordered Session writer BEFORE dispatch.
-            try await session.associateHostInvocation(invocation, opaqueReference: reference)
-            try Task.checkCancellation()
-            guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
-            _ = try await host.context(for: invocation.session)
-            item.deliveryStarted = true
-            try await makeTransport().dispatch(request, origin: self)
-            try Task.checkCancellation()
-            guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
             let response = try await withTaskCancellationHandler(operation: {
+                // Association is committed by the existing ordered Session writer BEFORE dispatch.
+                try await session.associateHostInvocation(invocation, opaqueReference: reference)
+                try Task.checkCancellation()
+                guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
+                guard now() < deadline else { throw SplitBridgeFailure.expired }
+                _ = try await host.context(for: invocation.session)
+                try Task.checkCancellation()
+                guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
+                guard now() < deadline else { throw SplitBridgeFailure.expired }
+                try await makeTransport().dispatch(request, origin: self)
+                item.dispatched = true
                 try Task.checkCancellation()
                 guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
                 if let response = item.response { return response }
+                item.timer = Task { [weak self] in
+                    let seconds = max(0, request.expiresAt.timeIntervalSince(self?.now() ?? Date()))
+                    do { try await Task.sleep(for: .seconds(seconds)) } catch { return }
+                    self?.invalidate(reference: request.id, reason: .timedOut)
+                }
                 return try await withCheckedThrowingContinuation { item.waiter = $0 }
             }, onCancel: { Task { @MainActor in self.invalidate(reference: request.id, reason: .cancelled) } })
             return try Self.result(response, origin: origin)
@@ -152,8 +165,10 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
                  .companionMissing?, .oversized?, .capacityExceeded?, .outOfOrder?: knownAdmissionFailure = true
             default: knownAdmissionFailure = false
             }
+            let reason: SplitBridgeFailure = (error as? SplitBridgeFailure)
+                ?? (error is CancellationError ? .cancelled : .transportUnavailable)
             let effect: HanlinHostEffectState = item.deliveryStarted && !knownAdmissionFailure ? .uncertain : .notDispatched
-            invalidate(reference: request.id, reason: error as? SplitBridgeFailure ?? .transportUnavailable)
+            invalidate(reference: request.id, reason: reason)
             return .init(result: .init(invocationID: call.invocationID, logicalToolID: call.logicalToolID,
                 outcome: .failed(.init(code: effect == .uncertain ? .nativeFailure : .operationUnavailable,
                     userMessage: effect == .uncertain ? "The Mini App outcome is uncertain. Do not retry automatically." : "The Mini App was not dispatched.")),
@@ -164,28 +179,38 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
 
     func currentContext(for request: SplitBridgeRequest) async throws -> SplitReceiverContext {
         try Task.checkCancellation()
+        let currentNow = now()
         guard request.caller.rawValue == "hanlin.host", request.target.rawValue == "hanlin.demo.swift-parity",
               request.action.rawValue == "share.value", request.capability.rawValue == "inter-app.share",
-              request.issuedAt <= Date(), request.expiresAt > Date(),
-              request.expiresAt.timeIntervalSince(request.issuedAt) <= 120 else { throw SplitBridgeFailure.expired }
+              request.issuedAt <= currentNow, request.expiresAt > currentNow,
+              request.expiresAt.timeIntervalSince(request.issuedAt) <= Self.foregroundRequestLifetime else { throw SplitBridgeFailure.expired }
         if let item = pending[request.id] {
             guard !item.invalidated, item.request == request,
                   item.origin.requestDigest == (try Self.digest(request)), let host = item.host, let session = item.session,
                   session.identity == item.origin.call.session else { throw SplitBridgeFailure.cancelled }
+            if !item.dispatched { guard currentNow < item.admissionDeadline else { throw SplitBridgeFailure.expired } }
             _ = try await host.context(for: item.origin.call.session)
+            try Task.checkCancellation()
             try requireOriginalAssistant(item.origin)
             guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
+            if !item.dispatched { guard now() < item.admissionDeadline else { throw SplitBridgeFailure.expired } }
         } else { _ = try await coldOrigin(request) }
         let target = try await targetContext(request)
         try Task.checkCancellation()
         // Repeat original-origin checks after the actual target/authorization awaits.
         if let item = pending[request.id] {
             guard !item.invalidated, let host = item.host else { throw SplitBridgeFailure.cancelled }
+            if !item.dispatched { guard now() < item.admissionDeadline else { throw SplitBridgeFailure.expired } }
             _ = try await host.context(for: item.origin.call.session)
+            try Task.checkCancellation()
             try requireOriginalAssistant(item.origin)
             guard !item.invalidated else { throw SplitBridgeFailure.cancelled }
+            if !item.dispatched { guard now() < item.admissionDeadline else { throw SplitBridgeFailure.expired } }
         } else { _ = try await coldOrigin(request) }
+        let finalNow = now()
+        guard request.issuedAt <= finalNow, request.expiresAt > finalNow else { throw SplitBridgeFailure.expired }
         try target.validate(request)
+        if let item = pending[request.id], !item.dispatched { item.deliveryStarted = true }
         return target
     }
 
@@ -348,8 +373,12 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         item.timer?.cancel()
         // Local revocation precedes mailbox IO and release of any original waiters.
         var failure = reason
-        do { try makeTransport().invalidate(reference) }
-        catch { failure = .transportUnavailable }
+        if item.deliveryStarted {
+            do { try makeTransport().invalidate(reference) }
+            catch SplitBridgeFailure.duplicate where !item.dispatched {}
+            catch SplitBridgeFailure.correlationMismatch where !item.dispatched {}
+            catch { failure = .transportUnavailable }
+        }
         item.waiter?.resume(throwing: reason); item.waiter = nil
         let waiters = item.receiptWaiters; item.receiptWaiters = []
         for waiter in waiters { waiter.resume(throwing: reason) }
@@ -395,6 +424,9 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
               message.record?.id == origin.call.session.conversationID else { throw SplitBridgeFailure.correlationMismatch }
     }
 
+    /// Bounded interactive companion round-trip lifetime after Host consent/admission.
+    /// Distinct from `HanlinToolInvocationLimits`'s 30s pre-dispatch admission deadline.
+    private static let foregroundRequestLifetime: TimeInterval = 120
     private static func originPrefix(_ id: UUID) -> String { "hanlin.split.origin.v1:" + id.uuidString.lowercased() + ":" }
     private static func receiptReference(_ id: UUID) -> String { "hanlin.split.return.v1:" + id.uuidString.lowercased() }
     private static func digest<T: Encodable>(_ value: T) throws -> String {

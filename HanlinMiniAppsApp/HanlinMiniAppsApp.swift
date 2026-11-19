@@ -21,6 +21,16 @@ private struct HanlinMiniAppsWindow: View {
         }
     }
 
+    private var alertMessage: String {
+        let base = foreground.error ?? ""
+        #if DEBUG || HANLIN_TESTING
+        if let code = foreground.lastFailureCode, !code.isEmpty {
+            return "\(base)\n[diagnostic:\(code)]"
+        }
+        #endif
+        return base
+    }
+
     @MainActor
     private static func prepareStorage() async throws {
         try HanlinScriptingPlatform.prepareProductTransferRecovery()
@@ -83,13 +93,23 @@ private struct HanlinMiniAppsWindow: View {
                                 #endif
                         }
                     }
+                    #if DEBUG || HANLIN_TESTING
+                    .safeAreaInset(edge: .bottom) {
+                        if let code = foreground.lastFailureCode, !code.isEmpty {
+                            Text(code)
+                                .font(.caption2.monospaced())
+                                .foregroundStyle(.secondary)
+                                .accessibilityIdentifier("miniapps.last-failure-code")
+                        }
+                    }
+                    #endif
                 }
                 .interactiveDismissDisabled()
             }
             .alert("Hanlin request unavailable", isPresented: Binding(
                 get: { foreground.error != nil }, set: { if !$0 { foreground.error = nil } }
             )) { Button("OK") { foreground.error = nil } }
-            message: { Text(foreground.error ?? "") }
+            message: { Text(alertMessage) }
         }
     }
 }
