@@ -1,0 +1,34 @@
+{
+  "reviewer": "/root/upstream_v2_finish",
+  "reviewedAt": "2026-11-19T04:22:15.823172+00:00",
+  "canonicalHeadAtReceipt": "37a246f404cc2ed253200ddf6fd647f999637f68",
+  "files": [
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "sha256": "25b3ac311ba66de6a96e757b84378189bc357ca1cdff6a7912beefb4e3e44fcf"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+      "sha256": "1a6f020f3db2b21522d90be333cdb141c5429be3a648aaad6d61c45d8e598088"
+    },
+    {
+      "path": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "sha256": "18da6d0ffeb7225bf409190ee48c046fd804a544e46c52c47c0b6368bdda95c8"
+    }
+  ],
+  "scope": "Independent source diff review of original auto-follow geometry fix; no canonical edits",
+  "findings": [],
+  "verifiedReasoning": [
+    "Valid scroll offset range is contentHeight + topInset + bottomInset - viewportHeight, with a finite observed viewport and1pt tolerance. Composer clearance is already within contentHeight.",
+    "Both initial scheduling and post80ms action recheck latest geometry; force cannot manufacture a scrollable range.",
+    "Original weak owner, pendingID stale-task fencing, cancellation, explicit user interaction and text-selection pause logic remain.",
+    "Returned optional task handle is discardable and allows deterministic pending-shrink test completion.",
+    "All original four timer/ownership test assertions remain; explicit long geometry supplies their actual intended precondition. Four added tests cover fitting/unknown forced-scroll suppression, insets, pending shrink, and growth while preserving selection pause."
+  ],
+  "limits": [
+    "No Apple execution performed by this review. Unchanged original Safari and Skills native assertions remain required.",
+    "Observed108pt transcript movement is raw native evidence; a direct causal trace from scrollTo to that movement has not yet been proved."
+  ],
+  "sourceEvidence": "run-44431811538/decoded-original-attachments/SKILLS_FAILURE_GEOMETRY_REVIEW.json",
+  "sourceEvidenceSHA256": "d7e62bcef11e730a7a7805a077cbf96ba91f7721386d847982b191ecf2e30013"
+}

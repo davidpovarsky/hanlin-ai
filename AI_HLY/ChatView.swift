@@ -1145,8 +1145,10 @@ struct ChatView: View {
             .onScrollGeometryChange(for: ChatAutoFollowLayout.self) { geometry in
                 ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height).rounded(),
                     viewportHeight: Double(geometry.containerSize.height).rounded(),
+                    topInset: Double(geometry.contentInsets.top).rounded(),
                     bottomInset: Double(geometry.contentInsets.bottom).rounded())
-            } action: { _, _ in
+            } action: { _, layout in
+                autoFollowController.updateLayout(layout)
                 scheduleAutoFollow(using: scrollViewProxy, animated: false)
             }
             .onScrollPhaseChange { _, newPhase in

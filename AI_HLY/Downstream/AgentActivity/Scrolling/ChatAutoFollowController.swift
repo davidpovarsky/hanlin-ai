@@ -15,7 +15,18 @@ struct ChatAutoFollowState: Equatable, Sendable {
 struct ChatAutoFollowLayout: Equatable {
     let contentHeight: Double
     let viewportHeight: Double
+    let topInset: Double
     let bottomInset: Double
+
+    /// The valid offset range runs from -topInset to
+    /// contentHeight - viewportHeight + bottomInset. Composer clearance is
+    /// already part of contentHeight; it must not be added a second time.
+    var hasScrollableContent: Bool {
+        guard contentHeight.isFinite, viewportHeight.isFinite,
+              topInset.isFinite, bottomInset.isFinite,
+              contentHeight >= 0, viewportHeight > 0 else { return false }
+        return contentHeight + topInset + bottomInset > viewportHeight + 1
+    }
 }
 
 @MainActor
@@ -23,6 +34,8 @@ struct ChatAutoFollowLayout: Equatable {
 final class ChatAutoFollowController {
     private(set) var state = ChatAutoFollowState()
     private let waitBeforeScroll: @MainActor () async throws -> Void
+    @ObservationIgnored private(set) var latestLayout: ChatAutoFollowLayout?
+    @ObservationIgnored private var layoutTraceCount = 0
     @ObservationIgnored private var pendingScroll: Task<Void, Never>?
     @ObservationIgnored private var pendingID: UUID?
     @ObservationIgnored private var pendingAnimated = false
@@ -42,9 +55,23 @@ final class ChatAutoFollowController {
 
     func beginRun() {
         cancelPendingScroll()
+        layoutTraceCount = 0
         state.mode = .following
         state.isUserInteracting = false
         trace("autoFollowEnabled")
+    }
+
+    func updateLayout(_ layout: ChatAutoFollowLayout) {
+        guard latestLayout != layout else { return }
+        latestLayout = layout
+        if layoutTraceCount < 64 {
+            layoutTraceCount += 1
+            trace("autoFollowLayoutObserved", fields: [
+                "contentHeight": layout.contentHeight, "viewportHeight": layout.viewportHeight,
+                "topInset": layout.topInset, "bottomInset": layout.bottomInset,
+                "hasScrollableContent": layout.hasScrollableContent
+            ])
+        }
     }
 
     func updateNearBottom(_ isNearBottom: Bool) {
@@ -88,13 +115,18 @@ final class ChatAutoFollowController {
 
     /// A fixed coalescing window, not a trailing debounce. Continuous streaming
     /// cannot postpone scrolling indefinitely by restarting the timer.
-    func scheduleScroll(animated: Bool, force: Bool = false, action: @escaping @MainActor (Bool) -> Void) {
-        guard force || shouldRequestScrollForVisualUpdate() else { return }
+    @discardableResult
+    func scheduleScroll(animated: Bool, force: Bool = false,
+                        action: @escaping @MainActor (Bool) -> Void) -> Task<Void, Never>? {
+        // A forced resume can override a user pause, but cannot create an
+        // offset range in a transcript that already fits inside its viewport.
+        guard latestLayout?.hasScrollableContent == true,
+              force || shouldRequestScrollForVisualUpdate() else { return nil }
         requested += 1
         pendingAnimated = pendingAnimated || animated
         pendingForced = pendingForced || force
         pendingAction = action
-        guard pendingScroll == nil else { coalesced += 1; return }
+        guard pendingScroll == nil else { coalesced += 1; return pendingScroll }
         let id = UUID()
         pendingID = id
         pendingScroll = Task { [weak self, waitBeforeScroll] in
@@ -105,12 +137,16 @@ final class ChatAutoFollowController {
             guard let self, !Task.isCancelled, self.pendingID == id else { return }
             let animated = self.pendingAnimated, force = self.pendingForced, action = self.pendingAction
             self.clearPendingScroll()
-            guard force || self.shouldRequestScrollForVisualUpdate() else { return }
+            // Completion/collapse can make a formerly long transcript fit
+            // while the coalescing window is waiting. Use the latest geometry.
+            guard self.latestLayout?.hasScrollableContent == true,
+                  force || self.shouldRequestScrollForVisualUpdate() else { return }
             self.performed += 1
             self.trace("autoFollowScrollPerformed", fields: ["requested": self.requested,
                 "performed": self.performed, "coalesced": self.coalesced, "forced": force])
             action?(animated)
         }
+        return pendingScroll
     }
 
     func cancelPendingScroll() {

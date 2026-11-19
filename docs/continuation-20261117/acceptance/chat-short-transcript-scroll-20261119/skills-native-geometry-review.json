@@ -1,0 +1,120 @@
+{
+  "runID": 44431811538,
+  "headSHA": "e564dc29d24239309b113244bec4556c211c5b2d",
+  "sourceArtifact": 14496483983,
+  "sourceZIP_SHA256": "5bd093af27f7421ed8cc2df87d01670c1c26dc16cf2c59c4dd7df687c4159d64",
+  "testCase": "AgentSkillsEmbeddedResultsUITests/testAgentSkillsDeferredExposureAndEmbeddedResultFlow",
+  "failureLine": 51,
+  "recordingAttachment": {
+    "rowid": 47,
+    "lifetime": "deleteOnSuccess",
+    "uniformTypeIdentifier": "public.mpeg-4",
+    "userInfo_fk": 11,
+    "testIssue_fk": null,
+    "activity_fk": 1163,
+    "name": "kXCTAttachmentScreenRecording",
+    "inActivityIdentifier": 0,
+    "uuid": "D31E5945-1B27-446C-B1B6-63C65AD8AD16",
+    "timestamp": 816752460.5120001,
+    "filenameOverride": "kXCTAttachmentScreenRecording_0_B51681E6-7A87-4D04-94D0-8A13545E3663.mp4",
+    "xcResultKitPayloadRefId": "0~oLwwykKXfot00Bfk9KjgK3DYXfvYGBv9nZZhwOaGOVkl2nDgAZaehAmj5yOen9aG2_fcIs9Ph62ZXLX2Do3xWQ==",
+    "case": "testAgentSkillsDeferredExposureAndEmbeddedResultFlow()",
+    "label": "skills",
+    "activity": "Start Test at 2026-11-19 03:41:00.457",
+    "payloadPath": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\decoded-original-attachments\\skills-47.mp4",
+    "rawSource": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\extracted\\simulator-logs\\NativeScriptProductionE2EResult.xcresult\\Data\\data.0~oLwwykKXfot00Bfk9KjgK3DYXfvYGBv9nZZhwOaGOVkl2nDgAZaehAmj5yOen9aG2_fcIs9Ph62ZXLX2Do3xWQ==",
+    "compression": "none",
+    "rawSHA256": "44cd54d1b6b9199dc96e51a213e4dacdf9435c2aac81805867961c219b569795",
+    "decodedSHA256": "44cd54d1b6b9199dc96e51a213e4dacdf9435c2aac81805867961c219b569795",
+    "decodedBytes": 7225233
+  },
+  "eventAttachment": {
+    "rowid": 62,
+    "lifetime": "deleteOnSuccess",
+    "uniformTypeIdentifier": "com.apple.dt.xctest.synthesized-event-record",
+    "userInfo_fk": 16,
+    "testIssue_fk": null,
+    "activity_fk": 1276,
+    "name": "kXCTAttachmentLegacySynthesizedEvent",
+    "inActivityIdentifier": 0,
+    "uuid": "A11938F9-D93E-43D2-8207-FE9AB280F719",
+    "timestamp": 816752541.8280001,
+    "filenameOverride": "SynthesizedEvent_0_BA1C7AC5-7A07-4F6E-97A3-A54215DA153E",
+    "xcResultKitPayloadRefId": "0~UJquvboue1KuuDxv17hHkWKFLPwMV-bcNIIaSMXMVZr6tnrd2dILLBsMrTxQgni4TKARUmWVXvGw8J2gD9fZVw==",
+    "case": "testAgentSkillsDeferredExposureAndEmbeddedResultFlow()",
+    "label": "skills",
+    "activity": "Synthesize event",
+    "payloadPath": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\decoded-original-attachments\\skills-62.plist",
+    "rawSource": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\extracted\\simulator-logs\\NativeScriptProductionE2EResult.xcresult\\Data\\data.0~UJquvboue1KuuDxv17hHkWKFLPwMV-bcNIIaSMXMVZr6tnrd2dILLBsMrTxQgni4TKARUmWVXvGw8J2gD9fZVw==",
+    "compression": "zstd",
+    "rawSHA256": "a35d5e47239b83843a131ee1b804194b2a0ee265cfeba882983f21801d73366e",
+    "decodedSHA256": "bd947da5c8f31d43b4285d421e740ed4755ee2b42943bda8b57ee49d5aa37cfe",
+    "decodedBytes": 1893,
+    "decodedPlist": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\decoded-original-attachments\\skills-62.decoded.json"
+  },
+  "eventPoints": [
+    {
+      "eventType": 1,
+      "coordinate.x": 457.0,
+      "coordinate.y": 495.25,
+      "offset": 0.0
+    },
+    {
+      "eventType": 3,
+      "coordinate.x": 457.0,
+      "coordinate.y": 495.25,
+      "offset": 0.05
+    }
+  ],
+  "AXAttachment": {
+    "rowid": 68,
+    "lifetime": "deleteOnSuccess",
+    "uniformTypeIdentifier": "public.plain-text",
+    "userInfo_fk": null,
+    "testIssue_fk": null,
+    "activity_fk": 1302,
+    "name": "App UI hierarchy for com.itorah.chavrusachat",
+    "inActivityIdentifier": 0,
+    "uuid": "66657945-8151-494F-9D27-0ED7F96E5905",
+    "timestamp": 816752553.644,
+    "filenameOverride": "App UI hierarchy for com.itorah_0_FD4EA371-8201-4846-901F-B34FFABD5051.chavrusachat",
+    "xcResultKitPayloadRefId": "0~lA7ithnvuB73P5OFtSJKpi348Hvmhtz-Sq2xFdIzjncvVzA9TAaSq11QH3Pd1iU4Q0awJifoaLftUgTKkARhvw==",
+    "case": "testAgentSkillsDeferredExposureAndEmbeddedResultFlow()",
+    "label": "skills",
+    "activity": "Collecting debug information to assist test failure triage",
+    "payloadPath": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\decoded-original-attachments\\skills-68.txt",
+    "rawSource": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\extracted\\simulator-logs\\NativeScriptProductionE2EResult.xcresult\\Data\\data.0~lA7ithnvuB73P5OFtSJKpi348Hvmhtz-Sq2xFdIzjncvVzA9TAaSq11QH3Pd1iU4Q0awJifoaLftUgTKkARhvw==",
+    "compression": "zstd",
+    "rawSHA256": "c8e324a78d5488c00f02985d787dc0e49d7c1cf55bb718d2f19edfa7feaef99a",
+    "decodedSHA256": "eaf01a4ae185fdbdd23e043b310013ce3845da2d82b969e6ca7f4b2f71d8a726",
+    "decodedBytes": 32983
+  },
+  "AXRelevantLines": [
+    "                                            Other, 0x10abdef80, {{0.0, 140.0}, {1032.0, 60.0}}, label: 'Refreshing content' <AX element pid: 69611, elementOrHash.elementID: 5103893504.148>",
+    "                                                Other, 0x113c58500, {{336.0, 465.5}, {680.0, 167.0}}, identifier: 'hanlin-tool-approval-0E4B70A4-500C-4614-9664-B20D47CA8881' <AX element pid: 69611, elementOrHash.elementID: 5588709568.288>",
+    "                                                  Button, 0x113c58a00, {{348.0, 533.5}, {656.0, 42.5}}, identifier: 'hanlin-tool-consent-review-toggle', label: 'Request', value: Expanded <AX element pid: 69611, elementOrHash.elementID: 5588708928.292>",
+    "                                                  ScrollView, 0x113c58dc0, {{348.0, 560.0}, {656.0, 16.0}}, identifier: 'hanlin-tool-consent-review-toggle' <AX element pid: 69611, elementOrHash.elementID: 5587562496.299>",
+    "                                                      StaticText, 0x113c59040, {{332.0, 544.0}, {1310.0, 48.0}}, identifier: 'hanlin-tool-consent-original-request', label: '{\"code\":\"<h1>Acceptance Web Surface<\\/h1><p>Embedded result rendered<\\/p>\",\"progress_summary\":\"Render the requested web preview.\",\"result_presentation\":\"card\"}' <AX element pid: 69611, elementOrHash.elementID: 5611632384.301>",
+    "                                                  Button, 0x113c592c0, {{403.5, 586.0}, {107.0, 34.5}}, identifier: 'hanlin-tool-consent-allow-once', label: 'Allow once' <AX element pid: 69611, elementOrHash.elementID: 5588709248.294>"
+  ],
+  "observedVideoTransition": "At79s Allow once center is near(457,495.25) in point coordinates; at81s same whole transcript is108points lower; failure AX exact buttoncenter(457,603.25). Composer/navigation remain visually fixed. Pending consent remains visible throughout.",
+  "causalityLimit": "Correct visible pre-tap location is proved; whether geometry change occurs before pointer delivery, on touch, or via separate coalesced auto-follow requires native follow-up. No evidence of consent callback execution/consumption; no assertion or permission bypass proposed.",
+  "proposedReview": "Parent reviewing no-overflow auto-follow gate on original ScrollView. Preserve one-use consumption and actual tool completion checks.",
+  "frames": [
+    {
+      "seconds": 73,
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\decoded-original-attachments\\skills-frame-73.png",
+      "sha256": "1913ee7f2b663621d0cc2d522ac5d7a1c390b4a50098d7a2d493eef90afd1295"
+    },
+    {
+      "seconds": 79,
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\decoded-original-attachments\\skills-frame-79.png",
+      "sha256": "36434a51e25cf7914b10045967f16cec9155793e9a3dfbb1f25492a9cc6ce30e"
+    },
+    {
+      "seconds": 81,
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\decoded-original-attachments\\skills-frame-81.png",
+      "sha256": "f642b5af9a57dca687cd93092464d50d75c73693c6f8f53a4f837ed63a5125dc"
+    }
+  ]
+}

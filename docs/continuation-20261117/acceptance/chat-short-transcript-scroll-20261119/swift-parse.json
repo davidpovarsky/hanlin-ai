@@ -1,0 +1,20 @@
+{
+  "scope": "Windows Swift6.3.3 syntax only",
+  "results": [
+    {
+      "file": "AI_HLY/ChatView.swift",
+      "code": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+      "code": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "code": 0,
+      "diagnostic": ""
+    }
+  ]
+}

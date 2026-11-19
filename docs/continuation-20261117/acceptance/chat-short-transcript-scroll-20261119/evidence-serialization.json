@@ -1,0 +1,32 @@
+[
+  {
+    "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\chat-short-transcript-scroll-20261119\\source-review.json",
+    "file": "source-review.json",
+    "original_sha256": "0ed57df68c303ad7638700b765efdb9be6a7a82783032885f646578516f4a9b5",
+    "repository_sha256": "0ed57df68c303ad7638700b765efdb9be6a7a82783032885f646578516f4a9b5"
+  },
+  {
+    "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\chat-short-transcript-scroll-20261119\\swift-parse.json",
+    "file": "swift-parse.json",
+    "original_sha256": "8bc3edcba06b0788d6bef261a1e9864ec60ed1ee8f1b70a9574ba2f453b455c4",
+    "repository_sha256": "8bc3edcba06b0788d6bef261a1e9864ec60ed1ee8f1b70a9574ba2f453b455c4"
+  },
+  {
+    "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\artifact-verification.json",
+    "file": "original-native-artifact.json",
+    "original_sha256": "24830e55972a0d974f47d25c233d0c706ad1088fefa2110442f61b2fa40a75af",
+    "repository_sha256": "24830e55972a0d974f47d25c233d0c706ad1088fefa2110442f61b2fa40a75af"
+  },
+  {
+    "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\decoded-original-attachments\\safari-extracted-frames.json",
+    "file": "safari-frame-extraction.json",
+    "original_sha256": "2b49f59e9a5c1d3c34e8c74aa85558286aa83eb921836336dddc95d1eaf81d41",
+    "repository_sha256": "2b49f59e9a5c1d3c34e8c74aa85558286aa83eb921836336dddc95d1eaf81d41"
+  },
+  {
+    "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\decoded-original-attachments\\SKILLS_FAILURE_GEOMETRY_REVIEW.json",
+    "file": "skills-native-geometry-review.json",
+    "original_sha256": "d7e62bcef11e730a7a7805a077cbf96ba91f7721386d847982b191ecf2e30013",
+    "repository_sha256": "d7e62bcef11e730a7a7805a077cbf96ba91f7721386d847982b191ecf2e30013"
+  }
+]
