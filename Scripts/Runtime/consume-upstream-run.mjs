@@ -4,14 +4,14 @@ import {execFileSync, spawnSync} from 'node:child_process';
 import {mkdir, readFile, writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {ACTIONS_APP_ID, PROOF_CHECK, candidateForRun, requireCandidateProof, mayEnableAutoMerge}
+import {ACTIONS_APP_ID, PROOF_CHECK, isProtectedAcceptanceBase, candidateForRun, requireCandidateProof, mayEnableAutoMerge}
   from './upstream-run-consumer-policy.mjs';
 import {selectUpstreamCheckLineage} from './upstream-check-lineage.mjs';
 
 const [repository, runID, allowedBase, mode = 'inspect', allowAutoMerge = 'false',
   output = 'build/upstream-proof-consumer'] = process.argv.slice(2);
 if (repository !== 'davidpovarsky/hanlin-ai' || !/^\d+$/.test(runID ?? '')
-    || allowedBase !== 'codex/upstream-acceptance-base-20261119'
+    || !isProtectedAcceptanceBase(allowedBase)
     || !['inspect', 'publish'].includes(mode) || !['false', 'true'].includes(allowAutoMerge))
   throw Error('Invalid bounded upstream consumer arguments');
 if (mode === 'publish' && process.env.GITHUB_ACTIONS !== 'true')

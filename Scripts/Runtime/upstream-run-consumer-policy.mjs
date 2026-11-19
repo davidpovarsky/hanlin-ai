@@ -2,10 +2,16 @@
 // authenticates the raw schema2 artifact and every configured server check.
 export const PROOF_CHECK = 'Hanlin upstream schema2 proof';
 export const ACTIONS_APP_ID = 15368;
+const protectedAcceptanceBases = new Set([
+  'codex/upstream-acceptance-base-20261119',
+  'codex/upstream-acceptance-base-20261119-v2'
+]);
+export const isProtectedAcceptanceBase = value => protectedAcceptanceBases.has(value);
 const sourceChecks = new Set(['Hanlin upstream acceptance', 'upstream-validation / Hanlin upstream acceptance']);
 const sha = value => /^[a-f0-9]{40}$/.test(value ?? '');
 
 export function candidateForRun(run, pulls, repository, allowedBase) {
+  if (!isProtectedAcceptanceBase(allowedBase)) throw Error('Unrecognized protected acceptance base');
   if (run.repository?.full_name !== repository || run.head_repository?.full_name !== repository)
     throw Error('Foreign run repository');
   if (run.path !== '.github/workflows/check-runtime-dependency-updates.yml'

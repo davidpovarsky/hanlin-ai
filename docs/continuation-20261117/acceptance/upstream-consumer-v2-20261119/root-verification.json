@@ -1,0 +1,37 @@
+{
+  "parent": "a7d6762c4d2d9c18ca987dfe6ce3f077d4c4e164",
+  "patch_sha256": "41db2acad2021dac99f160a440d6aefc3c1db8b263a681fcb7ddb047b81a8c49",
+  "node": "v24.22.1",
+  "tests_exit": 0,
+  "tests_sha256": "36782219d03b463831b57be2517473a6dcd42388c2bedf6fe77d1e8d7e2b76c9",
+  "test_summary": [
+    "\u2139 tests 20",
+    "\u2139 suites 0",
+    "\u2139 pass 20",
+    "\u2139 fail 0",
+    "\u2139 cancelled 0",
+    "\u2139 skipped 0",
+    "\u2139 todo 0",
+    "\u2139 duration_ms 139.0324"
+  ],
+  "cli_syntax": "PASS",
+  "diff_check": "PASS",
+  "files": [
+    {
+      "path": "Scripts/Runtime/upstream-run-consumer-policy.mjs",
+      "preSHA256": "e2b79bb5d9434e97544502d07f5c81f7c5b932d87f210964e747f8740ce46df9",
+      "postSHA256": "907398f17d0d9f06f97700d2a43026f547cd8196d8d37d29c5fc8c30f1ba5eb8"
+    },
+    {
+      "path": "Scripts/Runtime/consume-upstream-run.mjs",
+      "preSHA256": "9da7dbdb29606362f1b3d4c5f3ac0165c69215f288ed340949e0d303627a08c7",
+      "postSHA256": "5e64e19e124fd949dfdd80d01d9ac70891c831dfc0f690054d60323b10405f2e"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+      "preSHA256": "bd01fc23822ebfa74b0b971900770782b612c104535417efb6878a2d916d8f9c",
+      "postSHA256": "c844caa577ffda86f8baa7386de0106542a2e1a0e4577957b5b8c228e3da3ea6"
+    }
+  ],
+  "native_producer": "not affected; immutable acceptance base7436 retained"
+}
