@@ -42,6 +42,14 @@ extension APIManager {
         let previousCanvasTitle = self.canvasInfo?.title
         let previousCanvasContent = self.canvasInfo?.content
 
+        if ["save_memory", "retrieve_memory", "update_memory"].contains(functionName) {
+            do { _ = try requireMemoryAccess(crossSession: functionName != "save_memory") }
+            catch {
+                return NativeToolResult(modelText: "Memory access is unavailable for this request.",
+                    outcome: .rejectedByCapability)
+            }
+        }
+
         switch functionName {
                                             case "save_memory":
                                                 // 记忆函数
@@ -49,6 +57,7 @@ extension APIManager {
                                                 
                                                 let content = extractValue(from: functionArguments, forKey: "content") ?? functionArguments
                                                 let success = saveMemory(content: content)
+                                                executionOutcome = success ? .succeeded : .failed
                                                 
                                                 toolResult = currentLanguagePrefix
                                                 ? (success ? "记忆已保存。" : "记忆保存失败。")
@@ -63,7 +72,12 @@ extension APIManager {
                                                 continuation?.yield(StreamData(operationalState: currentLanguagePrefix ? "正在回忆" : "Looking at the Notes"))
                                                 
                                                 let keyword = extractValue(from: functionArguments, forKey: "keyword") ?? functionArguments
-                                                let memory = retrieveMemory(keyword: keyword)
+                                                let memory = await retrieveMemory(keyword: keyword)
+                                                do { _ = try requireMemoryAccess(crossSession: true) }
+                                                catch {
+                                                    return NativeToolResult(modelText: "Memory access is unavailable for this request.",
+                                                        outcome: .rejectedByCapability)
+                                                }
                                                 
                                                 toolResult = currentLanguagePrefix
                                                 ? "记忆内容：\n\(memory)"

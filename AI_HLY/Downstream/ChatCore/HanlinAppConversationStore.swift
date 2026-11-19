@@ -26,11 +26,19 @@ final class HanlinAppConversationStore: HanlinConversationStore {
 
     func requireOriginalConversation() throws -> ChatRecords {
         guard let conversation else { throw HanlinHostError.staleContext }
+        return try withExtendedLifetime(storageOwner) {
+            try Self.requireOriginalConversation(context: context, conversation: conversation,
+                conversationID: conversationID, temporary: temporary)
+        }
+    }
+
+    /// The same original-row check is also used before the Session/engine exists.
+    /// Validation never constructs another store or creates a missing conversation.
+    static func requireOriginalConversation(context: ModelContext, conversation: ChatRecords,
+                                            conversationID: UUID, temporary: Bool) throws -> ChatRecords {
         if !temporary {
             let id = conversationID
-            let rows = try withExtendedLifetime(storageOwner) {
-                try context.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id }))
-            }
+            let rows = try context.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id }))
             guard rows.count == 1, rows.first === conversation else { throw HanlinHostError.staleContext }
         }
         guard conversation.id == conversationID else { throw HanlinHostError.staleContext }

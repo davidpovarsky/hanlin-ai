@@ -72,10 +72,12 @@ struct RequestMessage {
 
 // MARK: - APIManager
 @MainActor
-class APIManager {
+class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
     var presentationInstructions: String = ""
     let agentSessionOwner: HanlinAppAgentSessionOwner
     private var agentSDKRequest: HanlinAppAgentSessionOwner.Request?
+    private var dataAccess: HanlinAppAgentSessionOwner.DataAccess?
+    private var dataModel: HanlinModelReference?
     
     // MARK: 属性声明
     var searchResources: [Resource]?
@@ -167,9 +169,66 @@ class APIManager {
         return []
     }
     
+    enum DataPortError: Error, Equatable {
+        case legacyMemoryReplacementUnsupported
+    }
+
+    /// Uses the already selected model and original request. No account/Space provenance is
+    /// inferred for the legacy global APIKeys or MemoryArchive tables.
+    func bindDataAccess(request: HanlinAppAgentSessionOwner.Request, model: HanlinModelReference) throws {
+        let access = try agentSessionOwner.prepareDataAccess(request: request, modelContext: context)
+        agentSDKRequest = request
+        dataAccess = access
+        dataModel = model
+    }
+
+    private func requireDataAccess(namespace: HanlinConversationNamespace? = nil,
+                                   expected: HanlinAppAgentSessionOwner.DataAccess? = nil) throws -> HanlinAppAgentSessionOwner.DataAccess {
+        guard !isCancelled, let dataAccess, let request = agentSDKRequest,
+              namespace.map({ $0 == dataAccess.namespace }) ?? true,
+              expected.map({ $0 == dataAccess }) ?? true else { throw HanlinHostError.staleContext }
+        try agentSessionOwner.requireDataAccess(dataAccess, request: request, modelContext: context)
+        return dataAccess
+    }
+
+    func credential(for model: HanlinModelReference, namespace: HanlinConversationNamespace) throws -> String {
+        _ = try requireDataAccess(namespace: namespace)
+        guard model == dataModel else { throw HanlinHostError.staleContext }
+        // This is the original provider configuration owner. Keychain migration and CloudKit
+        // account fencing remain separate work; this port does not claim either has happened.
+        guard let key = getAPIConfiguration(for: model.provider)?.key, !key.isEmpty else {
+            throw HanlinHostError.denied
+        }
+        return key
+    }
+
+    func requireMemoryAccess(crossSession: Bool,
+                                     expected: HanlinAppAgentSessionOwner.DataAccess? = nil) throws -> HanlinAppAgentSessionOwner.DataAccess {
+        let access = try requireDataAccess(expected: expected)
+        guard isMemoryEnabled(), !crossSession || isCrossMemoryEnabled() else { throw HanlinHostError.denied }
+        return access
+    }
+
+    func read(namespace: HanlinConversationNamespace) throws -> [String] {
+        _ = try requireDataAccess(namespace: namespace)
+        _ = try requireMemoryAccess(crossSession: true)
+        // Rows have no conversation/account origin. Only the user's explicit legacy
+        // cross-conversation setting permits this global read; they are never relabelled.
+        return try context.fetch(FetchDescriptor<MemoryArchive>(
+            sortBy: [SortDescriptor(\.timestamp, order: .reverse)])).compactMap(\.content)
+    }
+
+    func replace(_ memories: [String], namespace: HanlinConversationNamespace) throws {
+        _ = try requireDataAccess(namespace: namespace)
+        // A namespace-scoped replace cannot safely delete or overwrite originless rows.
+        // Keep the existing explicit append/update owner and leave every legacy row intact.
+        throw DataPortError.legacyMemoryReplacementUnsupported
+    }
+
     // 记忆函数
     func saveMemory(content: String) -> Bool {
         do {
+            _ = try requireMemoryAccess(crossSession: false)
             let newMemory = MemoryArchive(content: content, timestamp: Date())
             context.insert(newMemory)
             try context.save()
@@ -182,7 +241,8 @@ class APIManager {
     }
 
     // 回忆函数
-    func retrieveMemory(keyword: String) -> String {
+    func retrieveMemory(keyword: String) async -> String {
+        guard let access = try? requireMemoryAccess(crossSession: true) else { return "" }
         
         print("召回记忆关键词已接收")
         
@@ -249,15 +309,14 @@ class APIManager {
         }
         
         do {
-            let descriptor = FetchDescriptor<MemoryArchive>(
-                sortBy: [SortDescriptor(\.timestamp, order: .reverse)]
-            )
-            let allMemories = try context.fetch(descriptor)
-            
-            var scored: [(MemoryArchive, Int)] = []
-            
-            for mem in allMemories {
-                guard let raw = mem.content, !raw.isEmpty else { continue }
+            let memories: any HanlinMemoryStore = self
+            let allMemories = try await memories.read(namespace: access.namespace)
+            _ = try requireMemoryAccess(crossSession: true, expected: access)
+
+            var scored: [(content: String, score: Int, originalIndex: Int)] = []
+
+            for (originalIndex, raw) in allMemories.enumerated() {
+                guard !raw.isEmpty else { continue }
                 let content = raw.lowercased()
                 let words = tokenize(content)
                 var score = 0
@@ -307,7 +366,7 @@ class APIManager {
                 }
                 
                 if score > 0 {
-                    scored.append((mem, score))
+                    scored.append((raw, score, originalIndex))
                 }
             }
             
@@ -317,11 +376,11 @@ class APIManager {
             }
             
             let sorted = scored.sorted {
-                $0.1 != $1.1 ? $0.1 > $1.1 : $0.0.timestamp > $1.0.timestamp
+                $0.score != $1.score ? $0.score > $1.score : $0.originalIndex < $1.originalIndex
             }
             
             let results = sorted.map {
-                $0.0.content!.trimmingCharacters(in: .whitespacesAndNewlines)
+                $0.content.trimmingCharacters(in: .whitespacesAndNewlines)
             }
             
             print("召回记忆完成，记录数：", results.count)
@@ -334,6 +393,9 @@ class APIManager {
     
     // 更新记忆
     func updateMemory(originalContent: String, updatedContent: String) -> String {
+        guard (try? requireMemoryAccess(crossSession: true)) != nil else {
+            return "Memory access is unavailable for this request."
+        }
         // 1. 使用 SwiftData 的类型安全谓词，匹配 content 等于 originalContent
         let descriptor = FetchDescriptor<MemoryArchive>(
             predicate: #Predicate { memory in
@@ -1063,7 +1125,7 @@ class APIManager {
         modelInfo: AllModels,
         query: String,
         toolUseEnabled: Bool
-    ) -> String {
+    ) async -> String {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let isZh = currentLanguage.hasPrefix("zh")
 
@@ -1171,7 +1233,7 @@ class APIManager {
         // 模块 6：记忆信息
         var memorySection = ""
         if !query.isEmpty {
-            let result = retrieveMemory(keyword: query).trimmingCharacters(in: .whitespacesAndNewlines)
+            let result = await retrieveMemory(keyword: query).trimmingCharacters(in: .whitespacesAndNewlines)
             
             let invalidPhrases = [
                 "没有找到与",
@@ -1230,7 +1292,7 @@ class APIManager {
         modelInfo: AllModels,
         query: String,
         toolUseEnabled: Bool
-    ) -> String {
+    ) async -> String {
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let isZh = currentLanguage.hasPrefix("zh")
@@ -1317,7 +1379,7 @@ class APIManager {
         // 模块 4：记忆信息（retrieveMemory）
         var memorySection = ""
         if !query.isEmpty {
-            let result = retrieveMemory(keyword: query).trimmingCharacters(in: .whitespacesAndNewlines)
+            let result = await retrieveMemory(keyword: query).trimmingCharacters(in: .whitespacesAndNewlines)
             
             let invalidPhrases = [
                 "没有找到与",
@@ -1372,6 +1434,8 @@ class APIManager {
     func cancelCurrentRequest() {
         let cancelledRunID = initializingRunID ?? activeAgentRunID
         isCancelled = true
+        dataAccess = nil
+        dataModel = nil
         agentSessionOwner.cancel()
         activeLocalLLMDriver?.stop()
         activeLocalLLMDriver = nil
@@ -1487,13 +1551,13 @@ class APIManager {
                     
                     // 构造系统提示（默认或自定义）
                     var finalSystemMessage: String = systemMessage == "Default" ?
-                    getSystemMessageText(
+                    await getSystemMessageText(
                         modelDisplayName: modelInfo.displayName ?? "Unknown",
                         modelInfo: modelInfo,
                         query: messages.last?.text ?? "",
                         toolUseEnabled: false
                     ) :
-                    getCustomSystemMessageText(
+                    await getCustomSystemMessageText(
                         modelDisplayName: modelInfo.displayName ?? "Unknown",
                         customSystemMessage: systemMessage,
                         modelInfo: modelInfo,
@@ -1702,14 +1766,14 @@ class APIManager {
         var finalSystemMessage: String
         
         if systemMessage == "Default" {
-            finalSystemMessage = getSystemMessageText(
+            finalSystemMessage = await getSystemMessageText(
                 modelDisplayName: modelInfo.displayName ?? "Unknown",
                 modelInfo: modelInfo,
                 query: messages.last?.text ?? "",
                 toolUseEnabled: toolUseEnabled
             )
         } else {
-            finalSystemMessage = getCustomSystemMessageText(
+            finalSystemMessage = await getCustomSystemMessageText(
                 modelDisplayName: modelInfo.displayName ?? "Unknown",
                 customSystemMessage: systemMessage,
                 modelInfo: modelInfo,
@@ -2366,6 +2430,10 @@ class APIManager {
             isTemporaryChat: assistantToolScope.isTemporaryChat
         )
         let currentRunID = runID ?? session.id
+        if let original = agentSDKRequest {
+            guard original.uiRunID == currentRunID, original.conversationID.uuidString == stableChatID,
+                  original.temporary == assistantToolScope.isTemporaryChat else { throw HanlinHostError.staleContext }
+        }
 
         // Register authentic image attachments for current chat turn synchronously and collect opaque handles
         var registeredAttachmentHandles: [String] = []
@@ -2543,11 +2611,16 @@ class APIManager {
                             continuation: continuation)
                         return
                     }
-                    guard let providerConfiguration = self.getAPIConfiguration(for: modelInfo.company ?? "Unknown"),
-                          let apiKey = providerConfiguration.key,
-                          !apiKey.isEmpty else {
-                        throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的 API Key"])
-                    }
+                    let access = try self.requireDataAccess()
+                    let selectedModel = HanlinModelReference(provider: modelInfo.company ?? "Unknown",
+                        modelID: modelInfo.name ?? "Unknown")
+                    let credentials: any HanlinCredentialResolver = self
+                    let apiKey = try await credentials.credential(for: selectedModel, namespace: access.namespace)
+                    _ = try self.requireDataAccess(expected: access)
+                    guard selectedModel == HanlinModelReference(provider: modelInfo.company ?? "Unknown",
+                        modelID: modelInfo.name ?? "Unknown") else { throw HanlinHostError.staleContext }
+                    guard let providerConfiguration = self.getAPIConfiguration(for: selectedModel.provider),
+                          providerConfiguration.key == apiKey else { throw HanlinHostError.staleContext }
                     guard let requestURLString = providerConfiguration.requestURL,
                           let requestURL = URL(string: requestURLString),
                           !requestURLString.isEmpty else {
@@ -3536,6 +3609,8 @@ class APIManager {
         initializingRunID = runID
         if let agentSDKRequest, agentSDKRequest.uiRunID != runID { throw HanlinHostError.resultMismatch }
         self.agentSDKRequest = agentSDKRequest
+        dataAccess = nil
+        dataModel = nil
         await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: nil)
         try Task.checkCancellation()
         guard AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) else { throw HanlinChatError.cancelled }
@@ -3559,6 +3634,11 @@ class APIManager {
             guard matchingModels.count == 1, HanlinAppleModelCatalogAdapter.isNative(modelInfo) else {
                 throw HanlinAISDKError.invalidConversation("The native model selection is ambiguous or unavailable.")
             }
+        }
+
+        if let agentSDKRequest {
+            try bindDataAccess(request: agentSDKRequest,
+                model: .init(provider: modelInfo.company ?? "Unknown", modelID: modelInfo.name ?? modelName))
         }
 
         let recorder = await AgentDiagnosticsRecorder.start(
@@ -3788,7 +3868,7 @@ class APIManager {
         agentEngine = try HanlinAISDKAgentEngine(configuration: sessionConfiguration, fetch: fetch)
         }
         return agentEngine
-        }, toolAdapter: toolAdapter, messages: sdkMessages, systemPrompt: baseSystemPrompt)
+        }, toolAdapter: toolAdapter, messages: sdkMessages, systemPrompt: baseSystemPrompt, dataAccess: try requireDataAccess())
 
         var currentStepID: UUID?
         var visibleFinalCharacters = 0

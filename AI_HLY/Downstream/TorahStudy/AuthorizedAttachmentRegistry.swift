@@ -1,5 +1,6 @@
 import Foundation
 import HanlinPlatformContracts
+import HanlinHostContracts
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -11,7 +12,7 @@ import ImageIO
 /// Authoritative in-memory registry for authorized chat image attachments.
 /// Guarantees that attachment handles are unguessable, scoped to a specific chat,
 /// expire with time-to-live, and cannot be accessed across different conversations.
-public actor AuthorizedAttachmentRegistry {
+public actor AuthorizedAttachmentRegistry: HanlinAttachmentStore {
     public static let shared = AuthorizedAttachmentRegistry()
 
     public struct Record: Sendable {
@@ -23,6 +24,7 @@ public actor AuthorizedAttachmentRegistry {
         public let createdAt: Date
         public let expiresAt: Date
         public var isRevoked: Bool
+        fileprivate var hostSession: HanlinHostSession? = nil
     }
 
     private var records: [String: Record] = [:]
@@ -98,6 +100,11 @@ public actor AuthorizedAttachmentRegistry {
         chatID: String,
         requestID: String? = nil
     ) throws -> Data {
+        try resolve(handle: handle, chatID: chatID, requestID: requestID, hostSession: nil)
+    }
+
+    private func resolve(handle: String, chatID: String, requestID: String?,
+                         hostSession: HanlinHostSession?) throws -> Data {
         cleanExpired()
 
         // Strict syntactic rejection of directory traversal, absolute paths, URLs, null bytes
@@ -117,6 +124,10 @@ public actor AuthorizedAttachmentRegistry {
 
         guard let record = records[handle] else {
             throw HanlinHostServiceError.invalidRequest("Attachment handle '\(handle)' not found or expired.")
+        }
+
+        if let bound = record.hostSession, bound != hostSession {
+            throw HanlinHostError.staleContext
         }
 
         guard !record.isRevoked else {
@@ -148,6 +159,58 @@ public actor AuthorizedAttachmentRegistry {
         }
 
         return record.data
+    }
+
+    /// Adopt an already registered original-turn image without copying or registering its
+    /// bytes again. Only the real HostSession plus the exact original turn can bind it.
+    public func reference(forLegacyHandle handle: String, session: HanlinHostSession,
+                          requestID: String) throws -> HanlinAttachmentReference {
+        guard !requestID.isEmpty, requestID != "default_request",
+              let uuid = Self.uuid(for: handle) else { throw HanlinHostError.invalidArguments }
+        _ = try resolve(handle: handle, chatID: session.conversationID.uuidString,
+            requestID: requestID, hostSession: session)
+        guard var record = records[handle] else { throw HanlinHostError.staleContext }
+        record.hostSession = session
+        records[handle] = record
+        return .init(handle: uuid, namespace: session.context.namespace,
+            mediaType: record.mimeType, byteCount: record.data.count)
+    }
+
+    public func importData(_ data: Data, mediaType: String,
+                           session: HanlinHostSession) throws -> HanlinAttachmentReference {
+        let handle = try register(data: data, mimeType: mediaType, chatID: session.conversationID.uuidString,
+            requestID: session.id.uuidString)
+        return try reference(forLegacyHandle: handle, session: session, requestID: session.id.uuidString)
+    }
+
+    public func read(_ reference: HanlinAttachmentReference, session: HanlinHostSession) throws -> Data {
+        guard reference.namespace == session.context.namespace else { throw HanlinHostError.staleContext }
+        let handle = Self.handle(for: reference.handle)
+        guard let record = records[handle], record.hostSession == session,
+              record.mimeType == reference.mediaType, record.data.count == reference.byteCount else {
+            throw HanlinHostError.staleContext
+        }
+        return try resolve(handle: handle, chatID: session.conversationID.uuidString,
+            requestID: record.requestID, hostSession: session)
+    }
+
+    public func remove(_ reference: HanlinAttachmentReference, session: HanlinHostSession) throws {
+        _ = try read(reference, session: session)
+        revoke(handle: Self.handle(for: reference.handle))
+    }
+
+    private static func handle(for uuid: UUID) -> String {
+        "att_" + uuid.uuidString.replacingOccurrences(of: "-", with: "").lowercased()
+    }
+
+    private static func uuid(for handle: String) -> UUID? {
+        guard handle.hasPrefix("att_"), handle.utf8.count == 36 else { return nil }
+        let hex = String(handle.dropFirst(4))
+        guard hex.utf8.allSatisfy({ (48...57).contains($0) || (97...102).contains($0) }) else { return nil }
+        let chars = Array(hex)
+        let uuid = String(chars[0..<8]) + "-" + String(chars[8..<12]) + "-"
+            + String(chars[12..<16]) + "-" + String(chars[16..<20]) + "-" + String(chars[20..<32])
+        return UUID(uuidString: uuid)
     }
 
     public func revoke(handle: String) {

@@ -114,6 +114,234 @@ private struct AppPartModel: LanguageModelV3 {
             modelID: config.modelID, baseURL: URL(filePath: "/fixture"), structuredPartChannel: HanlinChatStructuredPart.channel))
     }
 
+    private func dataDatabase() throws -> ModelContainer {
+        try ModelContainer(for: ChatRecords.self, APIKeys.self, MemoryArchive.self, UserInfo.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+    }
+
+    @Test func originalCredentialPortRejectsForeignModelNamespaceRequestAndDeletedOrigin() async throws {
+        let container = try dataDatabase(), context = container.mainContext
+        let row = ChatRecords(name: "Original data request", type: "chat")
+        let provider = APIKeys(name: "Original provider", company: "DATA_PORT_FIXTURE",
+            key: "synthetic-test-credential", requestURL: "https://example.invalid")
+        context.insert(row); context.insert(provider); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let model = HanlinModelReference(provider: "DATA_PORT_FIXTURE", modelID: "selected-original")
+        let api = APIManager(context: context, agentSessionOwner: owner)
+        try api.bindDataAccess(request: request, model: model)
+        let credentials: any HanlinCredentialResolver = api
+        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: "swiftdata", space: id.uuidString)
+        #expect(try await credentials.credential(for: model, namespace: namespace) == "synthetic-test-credential")
+        let foreign = try HanlinConversationNamespace(app: "hanlin", account: "foreign-account",
+            workspace: "swiftdata", space: id.uuidString)
+        for (requestedModel, requestedNamespace) in [
+            (HanlinModelReference(provider: "OTHER", modelID: model.modelID), namespace),
+            (HanlinModelReference(provider: model.provider, modelID: "other-model"), namespace),
+            (model, foreign)
+        ] {
+            do {
+                _ = try await credentials.credential(for: requestedModel, namespace: requestedNamespace)
+                Issue.record("A foreign credential request escaped the original scope")
+            } catch { #expect(error as? HanlinHostError == .staleContext) }
+        }
+
+        let access = try owner.prepareDataAccess(request: request, modelContext: context)
+        let foreignRequest = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id,
+            sceneID: request.sceneID, rowID: request.rowID, uiRunID: UUID(), temporary: false, interaction: nil)
+        #expect(throws: HanlinHostError.staleContext) {
+            try owner.requireDataAccess(access, request: foreignRequest, modelContext: context)
+        }
+        // Rebinding makes the previous API lease stale even for the same conversation/model.
+        do { _ = try await credentials.credential(for: model, namespace: namespace); Issue.record("An older request epoch survived") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        try api.bindDataAccess(request: request, model: model)
+        context.delete(row); try context.save()
+        do { _ = try await credentials.credential(for: model, namespace: namespace); Issue.record("Deleted origin returned a credential") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(provider.key == "synthetic-test-credential")
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+    }
+
+    @Test func originalMemoryPortRechecksOptInsAndCannotReplaceOriginlessRows() async throws {
+        let container = try dataDatabase(), context = container.mainContext
+        let row = ChatRecords(name: "Original memory request", type: "chat"), flags = UserInfo()
+        let older = MemoryArchive(content: "RecallToken older", timestamp: .init(timeIntervalSince1970: 10))
+        let newer = MemoryArchive(content: "RecallToken newer", timestamp: .init(timeIntervalSince1970: 20))
+        context.insert(row); context.insert(flags); context.insert(older); context.insert(newer); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id,
+            sceneID: UUID(), rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let api = APIManager(context: context, agentSessionOwner: owner)
+        try api.bindDataAccess(request: request, model: .init(provider: "fixture", modelID: "fixture"))
+        let memories: any HanlinMemoryStore = api
+        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: "swiftdata", space: id.uuidString)
+        #expect(try await memories.read(namespace: namespace) == ["RecallToken newer", "RecallToken older"])
+        #expect(await api.retrieveMemory(keyword: "RecallToken") == "RecallToken newer\n\nRecallToken older")
+        let originalIDs = Set(try context.fetch(FetchDescriptor<MemoryArchive>()).map(\.id))
+
+        flags.useCrossMemory = false
+        do { _ = try await memories.read(namespace: namespace); Issue.record("Global recall ignored cross-memory opt-out") }
+        catch { #expect(error as? HanlinHostError == .denied) }
+        #expect(await api.retrieveMemory(keyword: "RecallToken") == "")
+        _ = api.updateMemory(originalContent: "RecallToken older", updatedContent: "Must not change")
+        #expect(older.content == "RecallToken older")
+        flags.useCrossMemory = true; flags.useMemory = false
+        do { _ = try await memories.read(namespace: namespace); Issue.record("Global recall ignored memory opt-out") }
+        catch { #expect(error as? HanlinHostError == .denied) }
+        #expect(await api.retrieveMemory(keyword: "RecallToken") == "")
+        #expect(api.saveMemory(content: "Must not persist") == false)
+        let deniedTool = await api.executeLegacyTool(name: "save_memory",
+            argumentsJSON: #"{"content":"Must not persist through the original tool"}"#,
+            context: .init(localeIdentifier: "en", chatID: id.uuidString, requestID: request.uiRunID.uuidString),
+            continuation: nil)
+        #expect(deniedTool.outcome == .rejectedByCapability)
+
+        flags.useMemory = true
+        do { try await memories.replace(["Must not replace"], namespace: namespace); Issue.record("Originless rows were replaced") }
+        catch { #expect(error as? APIManager.DataPortError == .legacyMemoryReplacementUnsupported) }
+        #expect(Set(try context.fetch(FetchDescriptor<MemoryArchive>()).map(\.id)) == originalIDs)
+        #expect(older.content == "RecallToken older" && newer.content == "RecallToken newer")
+        #expect(api.saveMemory(content: "Explicit original append"))
+        #expect(try context.fetch(FetchDescriptor<MemoryArchive>()).count == 3)
+        owner.revoke()
+        do { _ = try await memories.read(namespace: namespace); Issue.record("Revoked owner returned memory") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(api.saveMemory(content: "Revoked write") == false)
+        #expect(try context.fetch(FetchDescriptor<MemoryArchive>()).count == 3)
+    }
+
+    @Test func originalDataEpochSurvivesEngineReplacementAndIsRevokedDuringPreparation() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original preparation", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner(), recorder = AppPresentationRecorder()
+        owner.presentation = recorder
+        let first = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let access = try owner.prepareDataAccess(request: first, modelContext: context)
+        let queue = AppPartQueue([try .init(messageID: first.rowID, partID: UUID(), sequence: 0, payload: .textDelta("Original"))])
+        let config = configuration()
+        let stream = try await owner.stream(request: first, modelContext: context, configuration: config,
+            engineFactory: { factory(config, queue: queue) }, toolAdapter: nil,
+            messages: [.init(role: .user, text: "Original")], systemPrompt: nil, dataAccess: access)
+        for try await event in stream { try owner.receive(event, uiRunID: first.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: first.uiRunID)
+        try owner.requireDataAccess(access, request: first, modelContext: context)
+        let committed = row.agentSDKRecordData
+
+        let next = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: first.sceneID,
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let nextAccess = try owner.prepareDataAccess(request: next, modelContext: context)
+        let changedConfig = HanlinChatModelConfiguration(modelID: "replacement", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        do {
+            _ = try await owner.stream(request: next, modelContext: context, configuration: changedConfig,
+                engineFactory: {
+                    owner.cancel() // The actual synchronous source revocation occurs while the factory can suspend.
+                    await Task.yield()
+                    return factory(changedConfig, queue: queue)
+                }, toolAdapter: nil, messages: [.init(role: .user, text: "Cancelled")],
+                systemPrompt: nil, dataAccess: nextAccess)
+            Issue.record("Cancellation during preparation admitted a new Session")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(throws: HanlinHostError.staleContext) {
+            try owner.requireDataAccess(nextAccess, request: next, modelContext: context)
+        }
+        #expect(owner.session == nil && row.agentSDKRecordData == committed)
+    }
+
+    @Test func originalTypedAttachmentStorePreservesBytesAndRejectsForeignSessionMetadataAndTurn() async throws {
+        let registry = AuthorizedAttachmentRegistry(), attachments: any HanlinAttachmentStore = registry
+        let image = try #require(Data(base64Encoded: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="))
+        let id = UUID(), namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: "swiftdata", space: id.uuidString)
+        let session = HanlinHostSession(conversationID: id, context: .init(namespace: namespace, sceneID: UUID(), generation: UUID()))
+        let reference = try await attachments.importData(image, mediaType: "image/png", session: session)
+        #expect(try await attachments.read(reference, session: session) == image)
+        let otherSession = HanlinHostSession(conversationID: id, context: session.context)
+        let foreignNamespace = try HanlinConversationNamespace(app: "hanlin", account: "foreign", workspace: "swiftdata", space: id.uuidString)
+        let alteredReferences = [
+            HanlinAttachmentReference(handle: reference.handle, namespace: foreignNamespace, mediaType: reference.mediaType, byteCount: reference.byteCount),
+            HanlinAttachmentReference(handle: reference.handle, namespace: namespace, mediaType: "image/jpeg", byteCount: reference.byteCount),
+            HanlinAttachmentReference(handle: reference.handle, namespace: namespace, mediaType: reference.mediaType, byteCount: reference.byteCount + 1)
+        ]
+        for changed in alteredReferences {
+            do { _ = try await attachments.read(changed, session: session); Issue.record("Forged attachment metadata read native bytes") }
+            catch { #expect(error as? HanlinHostError == .staleContext) }
+        }
+        do { _ = try await attachments.read(reference, session: otherSession); Issue.record("Another native Session read the attachment") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+
+        let requestID = UUID().uuidString
+        let originalHandle = try await registry.register(data: image, mimeType: "image/png", chatID: id.uuidString, requestID: requestID)
+        do {
+            _ = try await registry.reference(forLegacyHandle: originalHandle, session: session, requestID: UUID().uuidString)
+            Issue.record("A diagnostics/foreign turn adopted the original attachment")
+        } catch {}
+        let adopted = try await registry.reference(forLegacyHandle: originalHandle, session: session, requestID: requestID)
+        #expect(try await attachments.read(adopted, session: session) == image)
+        do {
+            _ = try await registry.resolve(handle: originalHandle, chatID: id.uuidString, requestID: requestID)
+            Issue.record("The legacy unbound path bypassed a HostSession binding")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+        try await attachments.remove(adopted, session: session)
+        do { _ = try await attachments.read(adopted, session: session); Issue.record("Removed original bytes remained readable") }
+        catch {}
+        #expect(try await attachments.read(reference, session: session) == image)
+    }
+
+    @Test func actualSDKAdapterUsesOriginalAttachmentTurnAcrossDiagnosticsRoundsAndRevocation() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original attachment owner", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner(), recorder = AppPresentationRecorder()
+        owner.presentation = recorder
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let image = try #require(Data(base64Encoded: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="))
+        let handle = try await AuthorizedAttachmentRegistry.shared.register(data: image, mimeType: "image/png",
+            chatID: id.uuidString, requestID: request.uiRunID.uuidString)
+        let alias = "fixture_original_attachment", diagnosticRound = UUID()
+        #expect(diagnosticRound != request.uiRunID)
+        let schema = NativeToolSchema.function(name: alias, description: "Read an original authorized image", parameters: [
+            "type": "object", "properties": ["handle": ["type": "string"]], "required": ["handle"]])
+        let source = HanlinCanonicalToolAuthority.NativeSource(
+            entry: .init(name: alias, title: "Original image", summary: "Original image", presentationProfile: .generic(toolName: alias)),
+            canonicalSchema: schema, modelSchema: schema, preferredAlias: alias)
+        let authority = try HanlinCanonicalToolAuthority.build(nativeSources: [source], mcpTools: [])
+        var reads = [Data]()
+        let executors = AssistantToolBridge.Executors(executeNative: { _, _, arguments, toolContext in
+            #expect(toolContext.requestID == diagnosticRound.uuidString)
+            do {
+                let object = try JSONSerialization.jsonObject(with: Data(arguments.utf8)) as? [String: String]
+                let requestedHandle = try #require(object?["handle"])
+                let bytes = try await toolContext.resolveAttachment(handle: requestedHandle)
+                reads.append(bytes)
+                return NativeToolResult(modelText: "Original image resolved", outcome: .succeeded)
+            } catch { return NativeToolResult(modelText: "Attachment authority unavailable", outcome: .failed) }
+        }, executeScripting: { _, _ in NativeToolResult(modelText: "Unexpected scripting", outcome: .failed) })
+        let adapter = HanlinAISDKToolAdapter(session: .init(chatID: id.uuidString, isTemporaryChat: false),
+            preparedTools: .init(authority: authority, executors: executors), currentRoundID: diagnosticRound)
+        let config = configuration()
+        let queue = AppPartQueue([try .init(messageID: request.rowID, partID: UUID(), sequence: 0, payload: .textDelta("Original"))])
+        let stream = try await owner.stream(request: request, modelContext: context, configuration: config,
+            engineFactory: { factory(config, queue: queue) }, toolAdapter: adapter,
+            messages: [.init(role: .user, text: "Read original image")], systemPrompt: nil)
+        let definition = try #require(adapter.allToolDefinitions().first { $0.name == alias })
+        let arguments = String(decoding: try JSONSerialization.data(withJSONObject: ["handle": handle]), as: UTF8.self)
+        let output = try await definition.execute(arguments, "original-attachment")
+        #expect(!output.isError && reads == [image])
+        for try await event in stream { try owner.receive(event, uiRunID: request.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: request.uiRunID)
+        owner.cancel()
+        let revoked = try await definition.execute(arguments, "revoked-attachment")
+        #expect(revoked.isError && reads == [image])
+        await AuthorizedAttachmentRegistry.shared.revoke(handle: handle)
+    }
+
     @Test func existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion() async throws {
         let container = try database(), context = container.mainContext
         let row = ChatRecords(name: "Original title", type: "chat", input: "Unsent draft")

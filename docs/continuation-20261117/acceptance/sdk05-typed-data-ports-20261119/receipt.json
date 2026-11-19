@@ -1,0 +1,96 @@
+{
+  "observed_at": "2026-11-19T02:51:57.985958+00:00",
+  "base_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+  "canonical_head_at_review": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "canonical_targets_unchanged": true,
+  "patch_path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-review-20261119\\typed-data-ports-proposal\\sdk05-original-typed-data-ports.UNAPPLIED.patch",
+  "patch_sha256": "d5d1c68abc74316408e0073f81f1079b8c015af8b07a3c9a37831358127cc9d5",
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "before_sha256": "ea99da484aed22dea9352bf8b44a3b8e66b06a7084d2604c021bdaaee715b515",
+      "after_sha256": "b6bcce0a80f381a372cfb5213092110b1b83f2bc589d849725616d2ff371de0b",
+      "changed": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "before_sha256": "71108409eb957acc4af5f9b51fa820bc0905802fcca2186f05853fa1cb496dd6",
+      "after_sha256": "02547a1a784cf9902054ba713f20cb5147d975e92c554d4974422c105f158e53",
+      "changed": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "before_sha256": "ce17bf0f8f0d3924d2b4a1680b125074495e282767112f53461e3dc50cbfc8a2",
+      "after_sha256": "792823155e9ee5964bdc286ff09672a209dbad405c4e4d07159e8332ad0a0aeb",
+      "changed": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+      "before_sha256": "fdbe917d4d99856d86ab82589ab5114d576a6b9a738afb17266c84abd4dd388a",
+      "after_sha256": "f16530c97ce00202ac54a037a1f2361deb474ccb351ef1c35092e584f876513e",
+      "changed": true
+    },
+    {
+      "path": "AI_HLY/Downstream/TorahStudy/AuthorizedAttachmentRegistry.swift",
+      "before_sha256": "9c5a88957f868b0301c8688e70f38035b52314940e783b3fd37e6483c1d8d3d4",
+      "after_sha256": "91d5e6ab0a0efecba7d6dc9ec30520b49063f17f8133ebd90462878dbbc93536",
+      "changed": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "before_sha256": "9765af93c16ef25d036455801fa238ae52d5fdb9795deed8cf194491772b2f1c",
+      "after_sha256": "517fda3f0b9e7e439a22df6862958260872a90266bcbc4e4793fc57747ee80cc",
+      "changed": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "before_sha256": "271881726aa6bda31acc5abb228c66fecf01e9e3dfa50982725d3e2175571fb0",
+      "after_sha256": "bf426a03afae01cc903c94714cdca4c9f276a07800f6f2852418b2b87db7af30",
+      "changed": true
+    }
+  ],
+  "swift_syntax_only": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+      "exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLY/Downstream/TorahStudy/AuthorizedAttachmentRegistry.swift",
+      "exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "exit": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "exit": 0,
+      "diagnostics": ""
+    }
+  ],
+  "apply_check": {
+    "exit": 0,
+    "output": ""
+  },
+  "apple_native_status": "NOT_RUN",
+  "new_regression_methods": 5,
+  "canonical_source_mutated": false
+}

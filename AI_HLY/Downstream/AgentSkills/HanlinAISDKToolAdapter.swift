@@ -42,6 +42,8 @@ final class HanlinAISDKToolAdapter {
     var latestToolProgressSummary: String?
     var diagnosticsRecorder: AgentDiagnosticsRecorder?
     var currentRoundID: UUID?
+    /// Installed only by the original Session owner with its authentic HostSession.
+    var sdkAttachmentResolver: (@MainActor @Sendable (String) async throws -> Data)?
     var currentStepIndex: Int = 0
     var completedCallIDs: Set<String> = []
     /// Transient observers on the existing execution path. They never execute a tool.
@@ -747,6 +749,7 @@ final class HanlinAISDKToolAdapter {
 
         let sessionChatID = session.chatID ?? session.id.uuidString
         let roundReqID = currentRoundID?.uuidString ?? callID
+        let boundAttachmentResolver = sdkAttachmentResolver
         let nativeContext = NativeToolExecutionContext(
             localeIdentifier: currentLanguage,
             modelContext: modelContext,
@@ -756,7 +759,8 @@ final class HanlinAISDKToolAdapter {
             requestID: roundReqID,
             capabilitySession: session,
             attachmentResolver: { handle in
-                try await AuthorizedAttachmentRegistry.shared.resolve(
+                if let boundAttachmentResolver { return try await boundAttachmentResolver(handle) }
+                return try await AuthorizedAttachmentRegistry.shared.resolve(
                     handle: handle,
                     chatID: sessionChatID,
                     requestID: roundReqID

@@ -33,6 +33,7 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var completion: HanlinAgentRunCompletion?
     @ObservationIgnored private var starting = false
     @ObservationIgnored private var historyGeneration: UUID?
+    @ObservationIgnored private var dataAccessBinding: DataAccessBinding?
     @ObservationIgnored private var inlineOrigins: [String: HanlinHostInteractionOrigin] = [:]
     @ObservationIgnored private var inlineToolTail: Task<Void, Never>?
     @ObservationIgnored private var inlineToolTasks: [UUID: Task<String, Error>] = [:]
@@ -169,6 +170,80 @@ final class HanlinAppAgentSessionOwner {
         let interaction: HanlinHostInteractionRequest?
     }
 
+    struct DataAccess: Equatable, Sendable {
+        let epoch: UUID
+        let namespace: HanlinConversationNamespace
+    }
+
+    private struct DataAccessBinding {
+        let access: DataAccess
+        let request: Request
+        let context: ModelContext
+        let storageOwner: ModelContainer
+    }
+
+    /// The existing request owner admits data preparation before constructing its engine.
+    /// This is a revocable request lease, not a fabricated HostSession or a new data store.
+    func prepareDataAccess(request: Request, modelContext: ModelContext) throws -> DataAccess {
+        try Task.checkCancellation()
+        guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
+        let namespace = try Self.namespace(conversationID: request.conversationID, temporary: request.temporary)
+        if let session {
+            guard contextGeneration == session.identity.context.generation,
+                  session.identity.conversationID == request.conversationID,
+                  session.identity.context.namespace == namespace,
+                  session.identity.context.sceneID == request.sceneID else { throw HanlinHostError.staleContext }
+        }
+        _ = try HanlinAppConversationStore.requireOriginalConversation(context: modelContext,
+            conversation: request.conversation, conversationID: request.conversationID, temporary: request.temporary)
+        let access = DataAccess(epoch: UUID(), namespace: namespace)
+        dataAccessBinding = .init(access: access, request: request, context: modelContext, storageOwner: modelContext.container)
+        return access
+    }
+
+    func requireDataAccess(_ access: DataAccess, request: Request, modelContext: ModelContext) throws {
+        try Task.checkCancellation()
+        guard let binding = dataAccessBinding, binding.access == access,
+              binding.context === modelContext, binding.request.conversation === request.conversation,
+              binding.request.conversationID == request.conversationID,
+              binding.request.sceneID == request.sceneID, binding.request.rowID == request.rowID,
+              binding.request.uiRunID == request.uiRunID, binding.request.temporary == request.temporary,
+              access.namespace == (try Self.namespace(conversationID: request.conversationID, temporary: request.temporary)) else {
+            throw HanlinHostError.staleContext
+        }
+        _ = try withExtendedLifetime(binding.storageOwner) {
+            try HanlinAppConversationStore.requireOriginalConversation(context: modelContext,
+                conversation: request.conversation, conversationID: request.conversationID, temporary: request.temporary)
+        }
+    }
+
+    /// Bind the actual tool adapter after the original HostSession exists. The row currently
+    /// admitted by the owner supplies the turn, including a legitimate inline action on an
+    /// older row. Diagnostics round IDs are never attachment authorization identities.
+    private func bindAttachments(to adapter: HanlinAISDKToolAdapter?, identity: HanlinHostSession) {
+        adapter?.sdkAttachmentResolver = { [weak self] handle in
+            guard let self else { throw HanlinHostError.staleContext }
+            let uiRunID = try self.requireAttachmentOrigin(identity: identity)
+            let registry = AuthorizedAttachmentRegistry.shared
+            let reference = try await registry.reference(forLegacyHandle: handle, session: identity,
+                requestID: uiRunID.uuidString)
+            guard try self.requireAttachmentOrigin(identity: identity) == uiRunID else { throw HanlinHostError.staleContext }
+            let attachments: any HanlinAttachmentStore = registry
+            let data = try await attachments.read(reference, session: identity)
+            guard try self.requireAttachmentOrigin(identity: identity) == uiRunID else { throw HanlinHostError.staleContext }
+            return data
+        }
+    }
+
+    private func requireAttachmentOrigin(identity: HanlinHostSession) throws -> UUID {
+        try Task.checkCancellation()
+        guard session?.identity == identity, contextGeneration == identity.context.generation,
+              let activeUIRunID, activeReference?.uiRunID == activeUIRunID,
+              let store, store.namespace == identity.context.namespace else { throw HanlinHostError.staleContext }
+        _ = try store.requireOriginalConversation()
+        return activeUIRunID
+    }
+
     func canRequestNativeStructured(_ configuration: HanlinChatModelConfiguration) -> Bool {
         guard presentation != nil else { return false }
         let descriptor = HanlinAISDKProviderFactory.descriptor(for: configuration)
@@ -192,9 +267,10 @@ final class HanlinAppAgentSessionOwner {
 
     func stream(request: Request, modelContext: ModelContext, configuration: HanlinChatModelConfiguration,
                 engineFactory: @MainActor () async throws -> HanlinAISDKAgentEngine, toolAdapter: HanlinAISDKToolAdapter?,
-                messages: [HanlinAISDKMessage], systemPrompt: String?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+                messages: [HanlinAISDKMessage], systemPrompt: String?, dataAccess: DataAccess? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
         guard request.conversation.id == request.conversationID else { throw HanlinHostError.staleContext }
+        if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
         // Preserve the existing canonical writer before loading/replaying its
         // record into another owner or constructing another model engine.
         guard !splitCoordinator.hasRunningSession(for: request.conversationID) else {
@@ -209,7 +285,8 @@ final class HanlinAppAgentSessionOwner {
             && Self.sameEngineConfiguration(modelConfiguration, configuration)
         if !matches {
             guard request.interaction == nil else { throw HanlinHostError.staleContext }
-            await invalidate()
+            await invalidate(preservingDataAccess: dataAccess)
+            if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
             let generation = UUID()
             contextGeneration = generation
             let originalEngine = try await engineFactory()
@@ -280,7 +357,9 @@ final class HanlinAppAgentSessionOwner {
             }
         }
         guard let session, let host, let engine, contextGeneration == session.identity.context.generation else { throw HanlinHostError.staleContext }
+        if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
         host.toolAdapter = toolAdapter
+        bindAttachments(to: toolAdapter, identity: session.identity)
         let reference = HanlinAppAgentRowReference(rowID: request.rowID, uiRunID: request.uiRunID, messageID: request.rowID)
         let referenceData = "hanlin.app.row.v1:" + (try JSONEncoder().encode(HanlinAppAgentStoredRowReference(reference: reference, session: session.identity))).base64EncodedString()
         let descriptor = await engine.providerDescriptor
@@ -301,6 +380,7 @@ final class HanlinAppAgentSessionOwner {
         guard !splitCoordinator.hasRunningSession(for: request.conversationID) else {
             throw HanlinHostError.unresolvedWrite
         }
+        if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
         activeUIRunID = request.uiRunID; activeReference = reference; completion = nil
         do {
             if let interaction = request.interaction {
@@ -343,6 +423,11 @@ final class HanlinAppAgentSessionOwner {
 
     /// Synchronous authority revocation precedes any asynchronous cancellation/host cleanup.
     func revoke() {
+        dataAccessBinding = nil
+        revokeSessionAuthority()
+    }
+
+    private func revokeSessionAuthority() {
         consent.revoke()
         inlineOrigins.removeAll()
         for task in inlineToolTasks.values { task.cancel() }
@@ -354,8 +439,14 @@ final class HanlinAppAgentSessionOwner {
         activeUIRunID = nil; activeReference = nil
     }
 
-    func invalidate() async {
-        revoke()
+    func invalidate() async { await invalidate(preservingDataAccess: nil) }
+
+    private func invalidate(preservingDataAccess access: DataAccess?) async {
+        // Replacing the model engine does not replace the already admitted request.
+        // Any external revoke/cancel still clears the lease synchronously, and stream
+        // checks its exact epoch again after this suspension.
+        if let access, dataAccessBinding?.access == access { revokeSessionAuthority() }
+        else { revoke() }
         if let session { await session.invalidate() }
         session = nil; host = nil; engine = nil; modelConfiguration = nil; completion = nil
     }
