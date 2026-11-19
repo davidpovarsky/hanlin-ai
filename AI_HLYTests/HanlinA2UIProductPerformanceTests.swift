@@ -94,7 +94,7 @@ final class HanlinA2UIProductPerformanceTests: XCTestCase {
                   let value = rendered.projection,
                   value.parts.contains(where: { part in
                       guard let surface = value.surface(for: part) else { return false }
-                      return surface.surfaceIDs.contains { surface.surface($0)?.components["root"] != nil }
+                      return surface.surfaceIDs.contains { surface.surface($0)?.componentsModel.components["root"] != nil }
                   }), host.view.bounds.width > 0, host.view.bounds.height > 0 else { return }
             firstNativeLayout = ProcessInfo.processInfo.systemUptime
         }
@@ -154,7 +154,7 @@ final class HanlinA2UIProductPerformanceTests: XCTestCase {
                                     XCTAssertEqual(previous, ObjectIdentifier(model),
                                         "A data update must retain the original official Surface model")
                                 } else { originalModels[id] = ObjectIdentifier(model) }
-                                if model.components["root"] != nil, firstSurfaceAdmitted == nil {
+                                if model.componentsModel.components["root"] != nil, firstSurfaceAdmitted == nil {
                                     firstSurfaceAdmitted = ProcessInfo.processInfo.systemUptime
                                 }
                             }
@@ -309,7 +309,7 @@ final class HanlinA2UIProductPerformanceTests: XCTestCase {
             let id = "benchmark-surface-\(index)"
             let projection = try XCTUnwrap(surfaces.first { $0.surfaceIDs == [id] })
             let model = try XCTUnwrap(projection.surface(id))
-            XCTAssertEqual(model.components.count, scenario.nodes)
+            XCTAssertEqual(model.componentsModel.components.count, scenario.nodes)
             XCTAssertEqual(model.dataModel.get("/value")?.stringValue, "A2UI_OWNER_\(index)_STEP_9")
             XCTAssertEqual(model.dataModel.get("/payload")?.stringValue, String(repeating: "u", count: 1_024))
             XCTAssertEqual(projection.isReadOnly, readOnly)

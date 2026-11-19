@@ -574,13 +574,13 @@ private final class ProviderCredentialTestFixture {
         try draft.save(to: record, in: context, credentials: fixture.credentials)
         #expect(record.storedCredential != first)
         #expect(try fixture.references().count == 2)
-        #expect(Data(try #require(fixture.credentials.resolve(record)).utf8) == Data("synthetic-e\u{0301}".utf8))
+        #expect(Data(try #require(try fixture.credentials.resolve(record)).utf8) == Data("synthetic-e\u{0301}".utf8))
         let reopened = try fixture.open()
         let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<Record>()).first)
         #expect(saved.persistentModelID == originalID)
         #expect(saved.storedCredential == record.storedCredential)
         #expect(timestamp(saved) == changedDate.addingTimeInterval(1))
-        #expect(Data(try #require(fixture.credentials.resolve(saved)).utf8) == Data("synthetic-e\u{0301}".utf8))
+        #expect(Data(try #require(try fixture.credentials.resolve(saved)).utf8) == Data("synthetic-e\u{0301}".utf8))
     }
 
     @Test(arguments: [Optional<String>.none, Optional<String>.some("")])
@@ -934,14 +934,14 @@ private final class ProviderCredentialTestFixture {
         let raw = try Data(contentsOf: url)
         #expect(raw.range(of: Data("synthetic-secured-compact".utf8)) == nil)
         #expect(raw.range(of: Data("synthetic-legacy-compact".utf8)) == nil)
-        let config = try #require(store.load())
+        let config = try #require(try store.load())
         #expect(config.apiKey.isEmpty)
         #expect(config.credentialReference == provider.key)
         #expect(config.chatModelConfiguration.apiKey.isEmpty)
         #expect(throws: Error.self) { _ = try config.resolvedChatModelConfiguration(using: nil) }
         let keychain = fixture.credentials.keychain
         let resolved = try config.resolvedChatModelConfiguration(using: { handle in
-            try #require(keychain.resolve(handle, kind: .model))
+            try #require(try keychain.resolve(handle, kind: .model))
         })
         #expect(resolved.apiKey == "synthetic-secured-compact")
         try store.clear()
