@@ -1,5 +1,7 @@
 # Hanlin — Phase 2 acceptance matrix
 
+> Current continuation: [2026-11-19 checkpoint](CONTINUATION_STATUS_20261119.md). SDK01 audit is complete; current UI/Skills/signing/native and source-bound replacement runs are recorded there. The earlier detailed phase snapshot below remains historical; no phase completion is claimed.
+
 ## Current continuation — 19 November 2026
 
 Current source, exact native results and pending obligations are reconciled in [CONTINUATION_STATUS_20261119.md](CONTINUATION_STATUS_20261119.md) and [the acceptance register](acceptance/ACCEPTANCE_REGISTER.json). The older snapshot below remains historical; every original acceptance criterion is preserved.

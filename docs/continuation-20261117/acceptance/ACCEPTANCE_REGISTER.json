@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-19T00:13:13.651919+00:00",
+  "generated_at": "2026-11-19T01:19:55.276264+00:00",
   "status": "IN_PROGRESS_NOT_A_PHASE_COMPLETION",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
-  "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+  "source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
   "branch": "codex/hanlin-product-completion-20261117",
   "phase_2": "IN_PROGRESS",
   "phase_3": "IN_PROGRESS",
@@ -681,6 +681,66 @@
       "artifact_id": 14469839211,
       "artifact_sha256": "fb0da5c70ded87c1ea110e6dea3577b1f4c4a716bbd5cf5f3cb3c8aff4f955ba",
       "report": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion_ui_results\\authenticated-ui-observations.json"
+    },
+    {
+      "id": "SDK01_CURRENT_AUDIT_COMPLETE_20261119",
+      "status": "SOURCE_DESIGN_COMPLETE",
+      "sha": "585f3196e973d22c2fec3c81d590a128818131c8",
+      "scope": "Original SDK01 audit DoD only; four manifests, 11 targets, 30 source fingerprints, consumer/API/platform design; Asana completed verified",
+      "report": "../agent-sdk/SDK_01_CURRENT_AUDIT_20261119.md"
+    },
+    {
+      "id": "CAIRO_FALSE_SUCCESS_REMOVED_20261119",
+      "status": "PORTABLE_4_PASS_NATIVE_SEPARATE",
+      "sha": "e0089cfb8c192530056aba39c7c8bbf945da75d3",
+      "scope": "Actual original browse script transport/JSON/argv error behavior; no external service invocation"
+    },
+    {
+      "id": "MAINTAINED_SKILLS_SOURCE_20261119",
+      "status": "SOURCE_BYTES_51_VERIFIED_NATIVE_PENDING",
+      "run": "44434893361",
+      "sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+      "scope": "23 complete maintained packages, original Git blob/SHA256 checks and .mjs/.cjs classification; 29 planned native invocations, not 23 external workflow executions",
+      "report": "acceptance/maintained-skill-corpus/root-original-byte-verification.json"
+    },
+    {
+      "id": "NATIVE_RUNTIME_INPUT_REPLACEMENTS_20261119",
+      "status": "DISPATCH_CORRECTED_NO_PRODUCT_PASS_IMPLIED",
+      "scope": "One missing-input failure and three cancelled unexecuted runs replaced with the authenticated producer42926628418; original selectors retained",
+      "report": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "id": "SIGNING_MINIMAL_PROFILE_ADMISSION_20261119",
+      "status": "EXECUTED_FAIL",
+      "run": "44426766800",
+      "sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+      "scope": "Xcode could not admit original matching profile even for minimal original identity archive; signature resources are not an accepted export",
+      "artifact_id": "14486100943",
+      "artifact_sha256": "394bac45d3b94112d5ad0a6c9c174109d2a73e06bb641fa5fb38e155c33375f7"
+    },
+    {
+      "id": "MOTION_PHASE_DIAGNOSTIC_20261119",
+      "status": "EXECUTED_FAIL",
+      "run": "44426771946",
+      "sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+      "scope": "Build passed; D failed its required actual ScrollView phase observation before controlled input conclusions; original B remains open",
+      "report": "acceptance/checkpoint-20261119-0119/motion-excerpt-provenance.json"
+    },
+    {
+      "id": "WIDE_UI_FULL_ARCHIVE_20261119",
+      "status": "FULL_ARCHIVE_DIGEST_VERIFIED",
+      "run": "44383949859",
+      "sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+      "scope": "Original 11 pass/15 fail UI outcomes unchanged; archive authentication is now complete",
+      "artifact_id": "14472548287",
+      "artifact_sha256": "8f74d043e90cf15d7b31572c2b1e158af276e6141fba57808d7519377b9b9a2a"
+    },
+    {
+      "id": "UI_AND_SIGNING_SOURCE_FOLLOWUPS_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+      "scope": "Canvas/MainActor, reasoning, links, WebKit startup, native approval/Skills navigation and CMS diagnostics; actual source-linked runs retain original checks",
+      "report": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
     }
   ],
   "source_tasks": [
@@ -1499,7 +1559,7 @@
     "Complete physical-device and OS entry-point obligations where required; the observed Windows host has no Apple USB developer transport.",
     "Update original Asana tasks after verified milestones. Phase 2 and Phase 3 remain in progress because acceptance is incomplete."
   ],
-  "native_status_observed_at": "2026-11-19T00:10:28.614364+00:00",
+  "native_status_observed_at": "2026-11-19T01:19:55.276264+00:00",
   "feature_coverage_snapshot": {
     "path": "docs/continuation-20261117/acceptance/FEATURE_ACCEPTANCE_278.json",
     "source_anchor_sha": "4f4f927db97aefc7ca3df558993a2fa769f8eea1",
@@ -1509,15 +1569,15 @@
     "scope": "20 model/history native,6 editor native,8 selected SDK native and6 original MiniApps UI unique cases within their recorded runs; no new executions or full-product claim."
   },
   "publication": {
-    "published_source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
-    "local_review_source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+    "published_source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+    "local_review_source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
     "unpublished_commits": [],
-    "status": "PUBLISHED_REMOTE_HEAD_VERIFIED",
+    "status": "PUBLISHED_VERIFIED",
     "destination": "https://github.com/davidpovarsky/hanlin-ai.git",
     "branch": "codex/hanlin-product-completion-20261117",
     "reason": "On 19 November 2026, the owner explicitly authorized required actions, reads, runs, transfers and uploads across projects and repositories, and requested removal of obsolete local agent/claude permission and stop gates. Continue authorized completion without repeated approval. Actual access and truthful acceptance evidence remain factual requirements.",
     "scope": "Owner-authorized continuation across the original repositories. Publication, local checks and native acceptance are recorded separately.",
-    "published_sha_verified_at": "2026-11-19T00:13:13.651919+00:00",
+    "published_sha_verified_at": "2026-11-19T01:19:55.276264+00:00",
     "upstream_dependency": {
       "repo": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
       "branch": "codex/hanlin-markdown-link-continuation-20261118",
@@ -1536,88 +1596,124 @@
   },
   "pending_native_runs": [
     {
-      "run": 44425850134,
-      "source_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
-      "scope": "skills-policy-offline-cache",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425850134",
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+      "run": "44434893361",
+      "source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+      "scope": "23 maintained original Skill packages +2 Cairo invalid-argv/plan cases +4 existing Yams app adoption controls",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
       "workflow_status": "queued",
       "workflow_conclusion": null,
-      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
       "acceptance_claim": false,
-      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-3de8cf6c\\dispatched-runs.json"
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
     },
     {
-      "run": 44425855469,
-      "source_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
-      "scope": "isolated-global-npm-cache",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425855469",
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+      "run": "44431826560",
+      "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+      "scope": "Original identity CMS and Xcode admission diagnostic only",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
       "workflow_status": "queued",
       "workflow_conclusion": null,
-      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
       "acceptance_claim": false,
-      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-3de8cf6c\\dispatched-runs.json"
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
     },
     {
-      "run": 44426497443,
+      "run": "44431811538",
+      "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+      "scope": "Code fence tests plus original eight affected UI/Skills/consent routes",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44429728630",
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "scope": "Corrected native editor/A2UI and two actual compact iPad keyboard routes",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44429703865",
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "scope": "Corrected original two compact iPhone controls",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44429680236",
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "scope": "Corrected original isolated npm lifecycle",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44429654565",
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "scope": "Corrected original native Skills/offline policy and cache: four methods/25 invocations",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44428114202",
+      "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+      "scope": "Actual live Gemini/Host consent/Python/cold reopen",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428114202",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44428104345",
+      "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+      "scope": "Reasoning/Canvas/UI01/Saved messages original native selectors",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44426526923",
       "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
-      "scope": "compact-keyboard-iphone",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426497443",
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
-      "workflow_status": "queued",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T00:10:28.614364+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-90314963\\dispatched-runs.json"
-    },
-    {
-      "run": 44426508137,
-      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
-      "scope": "editor-a2ui-ipad",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426508137",
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
-      "workflow_status": "queued",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T00:10:28.614364+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-90314963\\dispatched-runs.json"
-    },
-    {
-      "run": 44426526923,
-      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
-      "scope": "paired-products-original-eight",
+      "scope": "Original eight paired product/shared-ingress controls",
       "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426526923",
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
-      "workflow_status": "queued",
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "workflow_status": "in_progress",
       "workflow_conclusion": null,
-      "observed_at": "2026-11-19T00:10:28.614364+00:00",
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
       "acceptance_claim": false,
-      "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-90314963\\dispatched-runs.json"
-    },
-    {
-      "run": 44426766800,
-      "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
-      "scope": "original-signing-native-preflight",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426766800",
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
-      "workflow_status": "queued",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T00:09:56.467655+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/DISPATCHES_20261119.json"
-    },
-    {
-      "run": 44426771946,
-      "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
-      "scope": "motion-scroll-touch-diagnostic",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426771946",
-      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
-      "workflow_status": "queued",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T00:09:58.870196+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/DISPATCHES_20261119.json"
+      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
     }
   ],
   "terminal_native_continuation_runs": [
@@ -2964,6 +3060,78 @@
         "failed": 0,
         "skipped": 0
       }
+    },
+    {
+      "run": "44426771946",
+      "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+      "status": "FAILED_OR_CANCELLED_NO_ACCEPTANCE",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "scope": "Motion D diagnostic failed to observe its requested UIScrollView phase; original B remains open",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426771946",
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "observation_source": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44426766800",
+      "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+      "status": "FAILED_OR_CANCELLED_NO_ACCEPTANCE",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "scope": "Original identity minimal signing preflight; Xcode profile admission failed before compilation/export",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426766800",
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "observation_source": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44426508137",
+      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "status": "FAILED_OR_CANCELLED_NO_ACCEPTANCE",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "scope": "Native editor/A2UI; cancelled before product tests for missing Runtime input",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426508137",
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "observation_source": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44426497443",
+      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "status": "FAILED_OR_CANCELLED_NO_ACCEPTANCE",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "scope": "Original compact iPhone; cancelled before product tests for missing Runtime input",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426497443",
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "observation_source": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44425855469",
+      "source_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+      "status": "FAILED_OR_CANCELLED_NO_ACCEPTANCE",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "scope": "npm lifecycle; cancelled before product tests for missing Runtime input",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425855469",
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "observation_source": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": "44425850134",
+      "source_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+      "status": "FAILED_OR_CANCELLED_NO_ACCEPTANCE",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "scope": "Original offline Skills/native policy and cache; failed missing Runtime input before product tests",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425850134",
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "acceptance_claim": false,
+      "observation_source": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
     }
   ],
   "historical_snapshots": [
@@ -3054,6 +3222,166 @@
         "reason": "The owner explicitly approved the reviewed public destinations and payload. Both original branches are published and verified; no repeated authorization is needed for the same scoped continuation. Native acceptance remains pending.",
         "scope": "Source/build/test/documentation commits only. No credentials, private keys, raw device data, ignored artifacts or original untracked work are proposed.",
         "published_sha_verified_at": "2026-11-18T17:28:36.269728+00:00",
+        "upstream_dependency": {
+          "repo": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+          "branch": "codex/hanlin-markdown-link-continuation-20261118",
+          "base": "4072507bf5c5a1c9786d4c9a607873e65be59cc8",
+          "sha": "6bde022876ef4af738c154b3d5c871984ef76195",
+          "status": "PUBLISHED_NATIVE_CONSUMER10_PASS_MAIN_APP_UI_PENDING",
+          "published_sha_verified_at": "2026-11-18T16:09:13.360868+00:00",
+          "native_run": 44343462395
+        },
+        "historical_rejection": {
+          "status": "BLOCKED_EXPLICIT_PUBLIC_SOURCE_PUBLICATION_APPROVAL",
+          "reason": "Automatic approval review rejected the public push again after a general continue instruction; explicit payload/destination approval is required. No push or alternate publication route followed that rejection. Local repairs and inspection of already-completed native runs continued.",
+          "resolved_by": "Explicit owner consent in the active conversation; recorded in OWNER_AUTHORIZATION_20261118.md"
+        },
+        "receipt": "docs/continuation-20261117/acceptance/PUBLICATION_AND_NATIVE_CONTINUATION_20261118.json"
+      }
+    },
+    {
+      "generated_at": "2026-11-19T00:13:13.651919+00:00",
+      "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+      "pending_native_runs": [
+        {
+          "run": 44425850134,
+          "source_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+          "scope": "skills-policy-offline-cache",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425850134",
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T00:10:28.614364+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-3de8cf6c\\dispatched-runs.json"
+        },
+        {
+          "run": 44425855469,
+          "source_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+          "scope": "isolated-global-npm-cache",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425855469",
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T00:10:28.614364+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-3de8cf6c\\dispatched-runs.json"
+        },
+        {
+          "run": 44426497443,
+          "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+          "scope": "compact-keyboard-iphone",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426497443",
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T00:10:28.614364+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-90314963\\dispatched-runs.json"
+        },
+        {
+          "run": 44426508137,
+          "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+          "scope": "editor-a2ui-ipad",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426508137",
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T00:10:28.614364+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-90314963\\dispatched-runs.json"
+        },
+        {
+          "run": 44426526923,
+          "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+          "scope": "paired-products-original-eight",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426526923",
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T00:10:28.614364+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-90314963\\dispatched-runs.json"
+        },
+        {
+          "run": 44426766800,
+          "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+          "scope": "original-signing-native-preflight",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426766800",
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T00:09:56.467655+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/DISPATCHES_20261119.json"
+        },
+        {
+          "run": 44426771946,
+          "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+          "scope": "motion-scroll-touch-diagnostic",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426771946",
+          "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T00:09:58.870196+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/DISPATCHES_20261119.json"
+        }
+      ],
+      "external_gates": [
+        {
+          "id": "PHYSICAL_DEVICE",
+          "status": "NO_DEVELOPER_USB_TRANSPORT_OBSERVED",
+          "need": "The connected Windows host shows only iPad Bluetooth/audio profiles and no Apple USB developer transport. Physical acceptance remains unverified where specifically required.",
+          "evidence": "acceptance/PHYSICAL_DEVICE_AVAILABILITY_20261118.json"
+        },
+        {
+          "id": "LIVE_MODEL_PROVIDER",
+          "status": "SIMULATOR_PREPARATION_FAILED_NOT_AUTH_FAILURE",
+          "need": "Authorized original route remains available. The native run stopped on simctl list devices -j before staging any credential; witness NO_CREDENTIAL_STAGED. Repair simulator discovery and rerun the original product case.",
+          "run": 44385752088,
+          "evidence": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\live\\members\\acceptance.json"
+        },
+        {
+          "id": "SIGNED_PROVISIONING",
+          "status": "PROFILES_READY_ARCHIVES_PASS_EXPORTS_FAIL",
+          "need": "Existing identity and six original profiles validated; both device archives passed. Xcode could not find the matching installed App Store profiles during export. Repair profile discovery, then verify exports and exported entitlements.",
+          "run": 44383723446,
+          "evidence": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing\\members\\app-split-evidence\\signed-products\\acceptance.json"
+        },
+        {
+          "id": "APPROVED_FULL_VISUAL_REFERENCE",
+          "status": "PARTIAL_REFERENCE",
+          "need": "Original 26-decision summary and authenticated Composer reference exist; full October master prompt was not found. Source/visual conclusions must state their actual references."
+        },
+        {
+          "id": "PUBLIC_SOURCE_PUBLICATION",
+          "status": "AUTHORIZED_PUBLISHED_BRANCH",
+          "need": "The current owner authorized required reads, actions, runs, transfers and uploads, and requested removal of local repeat-approval gates. The published branch SHA is recorded below; product acceptance is separate."
+        }
+      ],
+      "remaining_internal_gates": [
+        "Read all seven pending native runs and original raw cases at their recorded SHAs. Source fixes and queued jobs are not acceptance results.",
+        "Verify compact keyboard, native editor and paired search corrections through the three 90314963 native runs, preserving all original assertions.",
+        "Diagnose Canvas AX connection loss and the distinct failures in the wide 26-case suite; preserve its 11 genuine passes.",
+        "Complete original-policy offline and Runtime05 global-generation/cache native validation through the two 3de8cf6 runs.",
+        "Use Motion D to distinguish native input delivery from animation behavior; original B remains an unmet acceptance case.",
+        "Fix Xcode profile discovery for both original App Store exports. Identity/profile resources and archives passed; signed exports and exported entitlements remain unverified.",
+        "Repair live owned-simulator discovery before account staging, then execute the original live Gemini/Host/Python/cold-reopen route. NO_CREDENTIAL_STAGED is not an authentication failure.",
+        "Map actual assertions to all 278 preserved feature rows and 26 UX decisions; retain every original Definition of Done and all 30 source tasks.",
+        "Complete physical-device and OS entry-point obligations where required; the observed Windows host has no Apple USB developer transport.",
+        "Update original Asana tasks after verified milestones. Phase 2 and Phase 3 remain in progress because acceptance is incomplete."
+      ],
+      "publication": {
+        "published_source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+        "local_review_source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+        "unpublished_commits": [],
+        "status": "PUBLISHED_REMOTE_HEAD_VERIFIED",
+        "destination": "https://github.com/davidpovarsky/hanlin-ai.git",
+        "branch": "codex/hanlin-product-completion-20261117",
+        "reason": "On 19 November 2026, the owner explicitly authorized required actions, reads, runs, transfers and uploads across projects and repositories, and requested removal of obsolete local agent/claude permission and stop gates. Continue authorized completion without repeated approval. Actual access and truthful acceptance evidence remain factual requirements.",
+        "scope": "Owner-authorized continuation across the original repositories. Publication, local checks and native acceptance are recorded separately.",
+        "published_sha_verified_at": "2026-11-19T00:13:13.651919+00:00",
         "upstream_dependency": {
           "repo": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
           "branch": "codex/hanlin-markdown-link-continuation-20261118",
@@ -3193,5 +3521,208 @@
         "completed": false
       }
     ]
+  },
+  "current_task_observations": {
+    "1220542174541844": {
+      "task": "1220542174541844",
+      "completed": true,
+      "completed_at": "2026-11-19T01:07:12.340Z",
+      "scope": "Original source/design audit deliverable only",
+      "report_commit": "585f3196e973d22c2fec3c81d590a128818131c8",
+      "report": "../../agent-sdk/SDK_01_CURRENT_AUDIT_20261119.md"
+    }
+  },
+  "source_task_observation_policy": "source_tasks preserves the original 30 source snapshots verbatim. current_task_observations records later scoped completion; it does not close parent/phase/product acceptance.",
+  "latest_checkpoint": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json",
+  "continuation_20261119_later": {
+    "checkpoint": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json",
+    "new_evidence_ids": [
+      "SDK01_CURRENT_AUDIT_COMPLETE_20261119",
+      "CAIRO_FALSE_SUCCESS_REMOVED_20261119",
+      "MAINTAINED_SKILLS_SOURCE_20261119",
+      "NATIVE_RUNTIME_INPUT_REPLACEMENTS_20261119",
+      "SIGNING_MINIMAL_PROFILE_ADMISSION_20261119",
+      "MOTION_PHASE_DIAGNOSTIC_20261119",
+      "WIDE_UI_FULL_ARCHIVE_20261119",
+      "UI_AND_SIGNING_SOURCE_FOLLOWUPS_20261119"
+    ],
+    "verified_asana_updates": [
+      {
+        "task_id": "1220542174541940",
+        "comment_id": "1220690944186802",
+        "created_at": "2026-11-19T01:02:10.040Z",
+        "text": "[ChatGPT | DEV/QA] תיקוני Safari / WebKit / אישור כלים פורסמו — 19.11.2026\nפורסמו תיקונים ממוקדים: 22dab4a2 משמר את מחוות הקישור ב-Markdown לצד סגירת המקלדת; fb183712 מפריד זמן עלייה של WebKit (30 שניות) מתקציב ביצוע JavaScript הקיים (8 שניות), מוסיף אבחון שגיאות ובדיקת cold-start מקבילית אמיתית; b7879a6a מתקן את בדיקת האישור כך שתזהה בעלות UUID יציבה ותלחץ על הכפתור העדכני ללא שאילתות נגישות חוזרות. דדליין האישור במוצר נשמר 30 שניות, וכל קריאות הכלים והטענות המקוריות נשמרו.\nריצת המקור e564dc29d24239309b113244bec4556c211c5b2d: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538 — ChatCodeFenceTests ועוד 8 תרחישי UI מקוריים: code fence, Safari, partial selection, Python consent, UI03, embedded result, Skills CRUD ו-override/reset. נשלחה עם RuntimeCore producer המקורי המאומת 42926628418; קבלה Native עדיין ממתינה.\nתיקון קישורי הריצות הקודמות: 44426497443 ו-44426508137 בוטלו לפני הבדיקות לאחר שאותר קלט Runtime חסר. ההחלפות הן https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865 (compact iPhone) ו-https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630 (editor/A2UI + שני מסלולי המקלדת ב-iPad). אין לייחס הצלחה לריצות שבוטלו או לבדיקת תחביר בלבד.",
+        "readback_verified": true,
+        "completed": false,
+        "completed_at": null
+      },
+      {
+        "task_id": "1220546710417618",
+        "comment_id": "1220690944152001",
+        "created_at": "2026-11-19T01:02:13.510Z",
+        "text": "[ChatGPT | DEV/QA] תיקוני ניווט Skill Center ותיקון מידע שגוי ב-Skill המקורי — 19.11.2026\nבדיקת הראיות של 44383949859 מצאה ש-CRUD הגיע למגבלת 300 שניות אחרי שאילתות נגישות מיותרות, ו-reset גלל לכיוון שגוי כששורת ה-Skill הוסתרה מתחת לסרגל החיפוש. פורסם 6167e2ee: לחיצה מיידית לאחר isHittable, חיפוש חוזר בתחומי הרשימה הנראים בפועל, ושמירת כל פעולות יצירה/עריכה/השבתה/מחיקה/reset המקוריות. שתי בדיקות המקור נכללות בהרצה https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538 על e564dc29d24239309b113244bec4556c211c5b2d. תוצאה Native עדיין ממתינה; המגבלה והדרישות לא הוחלשו.\nתיקון מוצר נוסף פורסם ב-e0089cfb8c192530056aba39c7c8bbf945da75d3: Skills/cairo-genizah-research/scripts/browse.py החזיר בעבר רשומת Cambridge ותמלול מומצאים בכל שגיאת רשת/JSON. כעת הוא מחזיר stderr ו-exit 1. ארבע בדיקות offline של הסקריפט המקורי עברו: כשל תעבורה/timeout/503 ללא retry, JSON שגוי, שמירת תגובה אמיתית או תוצאה ריקה, וחוסר מזהה ללא קריאת רשת. הבדיקות אינן טענה להרצת השירות החיצוני או להרצה ב-iOS.\nנבנית בדיקת corpus של חבילות Skills מקוריות ותחזוקתיות; 22 התרחישים הפרמטריים מההרצה הקודמת נשארים הוכחת fixtures ואינם מוצגים כ-22 Skills עסקיים אמיתיים. המשימה נשארת פתוחה עד השלמת שערי הקבלה.",
+        "readback_verified": true,
+        "completed": false,
+        "completed_at": null
+      },
+      {
+        "task_id": "1219605282038820",
+        "comment_id": "1220691093576198",
+        "created_at": "2026-11-19T01:02:16.993Z",
+        "text": "[ChatGPT | DEV/QA] בידוד כשל provisioning והמשך אבחון חתימה — 19.11.2026\nריצת האבחון https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426766800 על 7a9ad537 נכשלה גם בארכיון מזערי של זהות MiniApps המקורית: Xcode לא קיבל את פרופיל ה-UUID לפני compilation/export. כל ששת משאבי הפרופילים הותקנו ונקראו בחזרה מאותם bytes בשני מיקומי Apple, ובדיקות הזהות והניקוי עברו. לכן הכשל אינו מוסבר רק בגודל ארכיוני שתי האפליקציות. Artifact 14486100943 אומת מול SHA256 394bac45d3b94112d5ad0a6c9c174109d2a73e06bb641fa5fb38e155c33375f7.\nפורסם e564dc29d24239309b113244bec4556c211c5b2d: נוסף אימות חתימת CMS ושרשרת האמון באמצעות Security.framework, נפרד מפענוח plist, וכן לוג Xcode מסונן לפי PID וחלון הזמן של ההרצה. 23 בדיקות portable עברו. לא הוחלפו תעודות/פרופילים או דרישות entitlements.\nהרצת האבחון המעודכנת: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560 . היא ממתינה לתוצאת Apple. קבלת שני היצואים החתומים, ההתקנה הפיזית וההשוואה החזותית עדיין פתוחה; ההרצה המזערית אינה מחליפה אותן.",
+        "readback_verified": true,
+        "completed": false,
+        "completed_at": null
+      },
+      {
+        "task_id": "1220546571007976",
+        "comment_id": "1220691036621520",
+        "created_at": "2026-11-19T01:12:47.920Z",
+        "text": "[ChatGPT | DEV/QA] פורסם corpus של 23 חבילות מקוריות ונשלח ל-iOS — 19.11.2026\nמקור המימוש והבדיקה: c91732b21456f964c8e1cf612b06497277ae9fdf. הבדיקה כוללת 20 תיקיות Skills מקוריות ושלמות של OpenClaw ב-847611dcaa3bf0e2783335f961dd1fd0580e4d9f ועוד 3 תיקיות Skills מקוריות של Hanlin ב-e0089cfb8c192530056aba39c7c8bbf945da75d3. אימות עצמאי השווה את כל 51 קובצי המקור/הרישיונות לעץ Git הרשמי ול-bytes המקוריים, כולל שלמות התיקיות; לא נספרו fixtures שנוצרו או תיאורי כלים מובנים כ-Skills אמיתיים.\nמסלול הבדיקה משתמש ב-ZIP המקורי שנבנה מאותם bytes, SkillImporter, SkillStore, קטלוג, תכנון פסיבי ללא עבודות Runtime, המדיניות המקורית, load/read, הכנת שלב SDK ופתיחה מחדש של ה-store. דרישות OS/bin/env שלא נצפו נשארות חסומות/לא ידועות. ניתוח AST מתועד בנפרד מהרצת המשאב. תוקן גם סיווג .mjs/.cjs כטקסט JavaScript ב-import/store/read לאחר שהחבילה המקורית meme-maker חשפה את הפער.\n97 בדיקות ניתוב CI ובדיקת תחביר Swift עברו. ריצה https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361 כוללת 23 מקרי חבילות, 2 מקרי Cairo עם argv חסר ו-4 בדיקות חיבור Yams קיימות — 29 מקרים מתוכננים. מקור RuntimeCore המאומת42926628418 נשמר. תוצאות native טרם התקבלו; הצלחה עתידית במסלולי הייבוא/המדיניות לא תוצג כהצלחה של23 workflows חיצוניים.",
+        "readback_verified": true,
+        "completed": false,
+        "completed_at": null
+      },
+      {
+        "task_id": "1220546710401425",
+        "comment_id": "1220691095845399",
+        "created_at": "2026-11-19T01:12:52.149Z",
+        "text": "[ChatGPT | DEV/QA] אימות מקור Yams וחיבור לבדיקת הצרכן בפועל — 19.11.2026\nחבילת HanlinSkillFormat הנוכחית עדיין משתמשת ב-Yams6.2.2 המקורית, resolved revision a27b21e0c81c5bf42049b897a62aaf387e80f279. נבדקו כל9 קלטי החבילה — manifest/lock/README/ארבעת קובצי המקור/fixture/בדיקות — מול e44c57cf348b1037baa8416277a3414d7e93b805 של ריצת Apple43757913093; כולם זהים byte-for-byte. זוהי התאמת ראיות היסטוריות, לא הרצה native חדשה. manifest metadata עבר ב-Swift6.3.3; אין בכך הוכחת Apple compilation.\nארבע בדיקות האימוץ הקיימות באפליקציה נשלחו כעת ללא שינוי ל-https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361 על c91732b21456f964c8e1cf612b06497277ae9fdf: nestedMetadataSurvivesStoreSaveAndOverride, anchoredStoreEditDoesNotRewriteOriginal, zipNestedMetadataAndResourcesRemainLossless, catalogMetadataFollowsSelectedSource.\nבאותה ריצה נבדקות23 חבילות Skills תחזוקתיות מקוריות דרך ה-import/store/catalog בפועל. כך יאומת גם פענוח frontmatter המקור שלהן דרך Yams ולא דרך parser חלופי. תוצאת הצרכן native עדיין ממתינה; המשימה נשארת פתוחה.",
+        "readback_verified": true,
+        "completed": false,
+        "completed_at": null
+      },
+      {
+        "task_id": "1220542174541844",
+        "comment_id": "1220690945278605",
+        "created_at": "2026-11-19T01:07:10.532Z",
+        "text": "[ChatGPT | DEV/QA] תוצר ביקורת SDK-01 פורסם והושלם — 19.11.2026\nתוצר מקור עדכני: https://github.com/davidpovarsky/hanlin-ai/blob/585f3196e973d22c2fec3c81d590a128818131c8/docs/agent-sdk/SDK_01_CURRENT_AUDIT_20261119.md\nהדוח משלים את כל סעיפי ה-DELIVERABLE המקורי: SHAs נעולים של Hanlin/SwiftAISDK/Markdown/Yams/Anytype/Otzaria; DAG של המודולים והמוצרים; מפת מעבר מקור לחבילות; גבולות Session/Host/הרשאות/תוצאות/ניווט/אחסון/UI; אסטרטגיית Host API 1.1 ופורמט שיחה2; ומטריצת iOS26/27 בפועל. נשמרו המימושים המקוריים ללא שכפול agent loop או renderer.\nאימות ממוקד: 4 manifest evaluations מקוריים עברו ב-Swift6.3.3; גרפי התלות הפנימיים ללא מעגל; מיפוי PBX והקישוריות עברו לכל11 היעדים; כל5 קלטי manifest/PBX נבדקו ללא שינוי בין מקור ההערכה e564dc29 למקור הביקורת e0089cfb. נשמרו פלטים גולמיים, fingerprints של30 קובצי מקור ומפות הצרכנים. 9 קלטי Yams זהים byte-for-byte למקור Apple שנבדק קודם; זה מסומן שימוש חוזר בראיות בלבד.\nפערי יישום מתועדים במפורש: Anytype משתמש ב-HanlinAgentSession ו-HanlinChatUI על pin116cc6be; Otzaria כרגע מקשר רק HostContracts/PlatformContracts על gitlink080d1a2b, ללא חיבור AgentSession/ChatUI. Apple on-device עדיין אינו מצהיר תמיכה בכלים. המינימום של ה-SDK המלא הוא iOS27; iOS26 שייך לחבילת parser הנפרדת.\nהיקף הסגירה הוא משימת מחקר/עיצוב SDK-01 המקורית בלבד. אין כאן טענת build/Simulator/device חדשה. קבלת SDK-02/03/04/05/06/07, ה-epic, UI, המוצר והחתימה נשארת במשימותיהן הפתוחות. הדוחות ההיסטוריים נשמרו עם קישור ברור לדוח העדכני.",
+        "readback_verified": true,
+        "completed": true,
+        "completed_at": "2026-11-19T01:07:12.340Z"
+      },
+      {
+        "task_id": "1220542174541940",
+        "comment_id": "1220690509849094",
+        "created_at": "2026-11-19T00:27:24.740Z",
+        "text": "[ChatGPT | DEV/QA] תיקוני UI פורסמו והבדיקות הממוקדות נשלחו — 19.11.2026\nהתקדמות מאומתת במקור: תוקן מרוץ ה-UITextView שהחזיר טקסט ישן בזמן הקלדה; תוקנה בעלות פריסת המקלדת במסך compact; תוקן מסלול Reasoning המורחב כך שהוא משתמש בהיטל הסיכום המסונן; כפתור New chat קיבל Label נגיש, וניווט Saved messages תואם לתפריט UIKit המקורי.\nנמצא גם כשל מוצר ממשי ב-Canvas בריצה44383943178: Binding השייך ל-MainActor נקרא מתור background וגרם SIGTRAP. תיקון2809500f מצלם טקסט ושפה על MainActor לפני ההדגשה ברקע, ומונע מתוצאה ישנה לדרוס עריכה/בחירה עדכנית. מבחן Canvas המקורי לא הוחלש.\nפורסם ונבדק מול GitHub: d6cb7d0b704abf11d0296e77eea246700c390f5c. בדיקות תחביר Swift עברו; קבלה Native עדיין ממתינה.\nריצות:\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345 — Reasoning/Canvas/UI01/Saved messages על d6cb7d0b.\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44426497443 — שני תרחישי compact המקוריים על90314963.\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44426508137 — עורך/טיוטות/פריסה ו-7 תרחישי NativeA2UI על90314963.\nהוכחות קודמות שנשמרו:44383943178 — 34/34 unit invocations עברו;3/11 UI עברו,8 נכשלו. אין לייחס אותן לתיקונים החדשים. Safari, יתר כשלים והוכחות בין-אפליקטיביות נשארים פתוחים; המשימה אינה מסומנת הושלמה.",
+        "readback_verified": true,
+        "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+        "completed": false
+      },
+      {
+        "task_id": "1220548022593831",
+        "comment_id": "1220690400186045",
+        "created_at": "2026-11-19T00:27:26.570Z",
+        "text": "[ChatGPT | DEV/QA] המשך ביצוע על הקוד העדכני — 19.11.2026\nהשלמתי את הניקוי האחרון של שתי הפניות לאישור חוזר ב-PROJECT_AGENT_GUIDANCE.md ופרסמתי3a87634b8b478833ddd90c896fe494bd4becda82. באותו קומיט נשמר גם owned_simulator_receipts.py בארכיון המקור ובמניפסט ה-OpenClaw, כך שראיות ההרצה כוללות את תלות ההכנה החדשה.\nתיקוני Canvas/MainActor, Reasoning, הקלדה, מקלדת וניווט פורסמו עד d6cb7d0b. ריצת UI ממוקדת: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345 . ריצת הספק החי המקורית: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428114202 . שתיהן נשלחו על d6cb7d0b ותוצאות Native עדיין נדרשות.\nלריצת הספק החי הועבר המפתח הקיים דרך stdin לסוד CI זמני; הערך לא נרשם בלוג/בקוד. לאחר שליחת הריצה הסוד הזמני נמחק, והיעדרו אומת. לא נוצר מפתח חלופי.\nמסמכי הקבלה וכל30משימות המקור נשמרו בקומיט54098fc7 וב-HQ, כולל הריצות שנכשלו. ריצת Skills44425850134 נעצרה בהכנת RuntimeCore לפני בדיקות Native; הלוג נמצא בבדיקה. יתר הריצות ממשיכות ללא ביטול או שליחה כפולה. העבודה נמשכת; אין עדיין קבלת שלבים2/3 או release.",
+        "readback_verified": true,
+        "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+        "completed": false
+      },
+      {
+        "task_id": "1220546710400478",
+        "comment_id": "1220690632352301",
+        "created_at": "2026-11-19T00:43:16.447Z",
+        "text": "[ChatGPT | DEV/QA] תוקן מקור ה-Runtime בהרצות — 19.11.2026\n44425850134 נעצרה ב-Prepare verified embedded RuntimeCore לפני בניית האפליקציה/בדיקות: פרמטר runtime_bundle_artifact_run_id נשאר ריק וה-Release fallback לא קיים.44425855469 בוטלה לפני בדיקות מאותה סיבה מאומתת.\nאומת יצרן החבילה המקורי42926628418: inner archive SHA196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f תואם ל-RuntimeDependencies.lock.json; בדיקת native-input reuse עברה.\nנשלחו מחדש על3a87634b8b478833ddd90c896fe494bd4becda82 עם כל הבדיקות המקוריות ועם מזהה החבילה:\nSkills/cache: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565\nnpm generations: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236\nאין תוצאת Native חדשה מהריצות שהוחלפו. הקבלה נותרת פתוחה עד לתוצאות בפועל.",
+        "readback_verified": true,
+        "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+        "completed": false
+      },
+      {
+        "task_id": "1220546571007976",
+        "comment_id": "1220690488669072",
+        "created_at": "2026-11-19T00:43:18.341Z",
+        "text": "[ChatGPT | DEV/QA] הרצת OpenClaw הוחלפה לאחר אבחון הכנת Runtime — 19.11.2026\nהריצה44425850134 לא הגיעה לבדיקות: החסירו ממנה את מזהה חבילת RuntimeCore, והורדת Release fallback נכשלה. זה כשל בהכנת ההרצה; אין ממנו תוצאה על המדיניות החדשה.\nההרצה המתוקנת https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565 משתמשת בקוד3a87634b8b478833ddd90c896fe494bd4becda82 ובחבילה המאומתת42926628418, ושומרת את4המתודות/25ה-invocations המתוכננים, כולל בדיקת המדיניות המקורית בתוך Node המשובץ והמשך SDK.\nבאותו מקור הושלם גם שימור owned_simulator_receipts.py בארכיון ובמניפסט המקור של ה-probe.28בדיקות המקור/64assertions ו-11חוזי המתאם לא הוחלשו. תוצאות Native עדיין ממתינות; המשימה פתוחה.",
+        "readback_verified": true,
+        "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+        "completed": false
+      },
+      {
+        "task_id": "1220539644804804",
+        "comment_id": "1220690632371850",
+        "created_at": "2026-11-19T00:43:20.018Z",
+        "text": "[ChatGPT | DEV/QA] עודכנו ריצות קבלת המקלדת והעורך — 19.11.2026\nהריצות44426497443 ו-44426508137 הוחלפו לפני ביצוע בדיקות לאחר שאומת שחסר בהן מזהה חבילת RuntimeCore. כל הבדיקות המקוריות נשמרו, ונוסף המקור המאומת42926628418.\nקומיט נבדק מתוכנן:3a87634b8b478833ddd90c896fe494bd4becda82.\niPhone compact: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865\niPad editor/A2UI: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630\nבריצת iPad נוספו גם שני הכשלים המקוריים testCompactToolsManagementDestinationsPreserveDraft ו-testModelPopoverZoomWithKeyboardAndDraft: ה-AX המאומת הראה שהכפתורים נמצאו מתחת למקלדת ובאותו compact workspace שתוקן ב916f77eb. אין טענת קבלה עד שההרצות החדשות יסיימו.",
+        "readback_verified": true,
+        "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+        "completed": false
+      },
+      {
+        "task_id": "1220542414733348",
+        "comment_id": "1220691096843948",
+        "created_at": "2026-11-19T01:17:52.619Z",
+        "text": "[ChatGPT | DEV/QA] אומתה רגרסיית רכיבי SDK06 ונשלמה התאמת המקור — 19.11.2026\nהריצה המקורית https://github.com/davidpovarsky/anytype-swift/actions/runs/44411181882 על 89ea7976762b85b83d0c1b137a4cf74047cb2aea כוללת תת-קבוצה מדויקת של73 שיטות / 74 הרצות בפועל, כולן Passed וללא Failed/Skipped: HostAdapter35, ReadWrite17, Write15, SDKConsumer6. ה-pin המקורי הוא Hanlin116cc6be0654a5d11bc56ba00e0310031107ee36. הפיצול73/74 נובע משיטת budget עם שני ערכים. SHA256 של עץ התוצאות הגולמי:373d615d8ce8abddb73e007575d25571e39e67a1b47fb3ac12996efb83dfcb17.\nכל29 קלטי המקור הרלוונטיים לתת-הקבוצה —23 קובצי שילוב,4 קובצי מבחנים, מקור ה-SDK ופרויקט Xcode — הושוו ל-90fcb6033ca4f8aecf8e04d4959cf06fb104adf9 ונמצאו זהים byte-for-byte. זו התאמת שימוש חוזר ברגרסיית הרכיבים, לא הרצה חדשה או קבלת היישום המלא.\nהצלחת selected-block ב-iPad בריצה44277421934 נשארת משויכת למקורה10fb06193d17aca43bd020094beaaf61d466d031; לא שייכנו אותה אוטומטית לשינויים המאוחרים. הוגדרה תצורת הקבלה החסרה iPhone/en בהרצה https://github.com/davidpovarsky/anytype-swift/actions/runs/44435210654 על90fcb6033ca4f8aecf8e04d4959cf06fb104adf9; היא ממתינה.\nאבחנת UI22 והדרישות שנרשמו בעדכון הקודם נשמרות. תיקון גבול הביטול לפני ה-runner מטופל בעותק עבודה מבודד, תוך שמירת uncertain אחרי dispatch, הקוד של שאר העבודה ודרישות הקבלה המקוריות. המשימה עדיין פתוחה.",
+        "readback_verified": true,
+        "completed": false
+      }
+    ],
+    "source_changes_awaiting_native_proof": [
+      {
+        "sha": "353b09754b5b5e6b5bd3e98ea57539d4e68cd321",
+        "scope": "Expanded reasoning uses the existing filtered summary and exact step identities; raw legacy reasoning is rejected",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "2809500f42d6abaf4a4e539e12b9c3d08df599b1",
+        "scope": "Canvas snapshots MainActor-owned text/language before background highlighting; stale completion/selection guards retained",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "e58e9000a18fca4a00b6610367dbb3fb5a348c15",
+        "scope": "Live acceptance uses owned simulator boot receipt rather than repeated global device inventory",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+        "scope": "Accessible New chat Label and original native Saved messages menu lookup",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+        "scope": "Final guidance approval wording removed; original OpenClaw probe archives owned simulator helper",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "6167e2eee5269a2259cae06402a0419ceceb7f6f",
+        "scope": "Skill Center bounded actual visible-region navigation and embedded request disclosure",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "22dab4a23c02e9a238e3719aa61f538cef4710aa",
+        "scope": "Markdown link gesture coexists with transcript keyboard dismissal",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "fb18371264da75f6206205b626c834d6936e8055",
+        "scope": "Separate cold WebKit startup budget and original JavaScript budget; actual parallel engine regression",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "b7879a6a40939e2edefc148b86b27ac57cbabe4b",
+        "scope": "Immutable consent owner and immediate fresh-button tap; original product deadline retained",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+        "scope": "Actual CMS signer/trust and PID/time-bound Xcode signing diagnostics",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "e0089cfb8c192530056aba39c7c8bbf945da75d3",
+        "scope": "Cairo original browse script fails without inventing content; four portable regressions passed",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "585f3196e973d22c2fec3c81d590a128818131c8",
+        "scope": "SDK01 source/design deliverable complete; exact source/manifest/PBX/consumer proofs",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      },
+      {
+        "sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+        "scope": "23 original maintained Skill packages and .mjs/.cjs import/store/read classification; 51 original source/license files authenticated",
+        "native_status": "SEPARATELY_TRACKED_NOT_IMPLIED_BY_SOURCE"
+      }
+    ],
+    "original_task_objects_preserved": true,
+    "prior_evidence_records_preserved": 67
   }
 }

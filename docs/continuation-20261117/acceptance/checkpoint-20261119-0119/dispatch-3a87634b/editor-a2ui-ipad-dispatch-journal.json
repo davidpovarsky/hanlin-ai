@@ -1,0 +1,17 @@
+{
+  "name": "editor-a2ui-ipad",
+  "replaces_run": "44426508137",
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYTests/NativeComposerLineSizingTests,AI_HLYUITests/AgentRuntimeConversationUITests/testRealChatUISendsPromptShowsToolActivityAndFinalAnswer,AI_HLYUITests/AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation,AI_HLYUITests/HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette,AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel,AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft,AI_HLYUITests/HanlinNativeA2UIChatUITests,AI_HLYUITests/AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft,AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomWithKeyboardAndDraft",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+  "dispatch_started_at": "2026-11-19T00:31:46.777989+00:00"
+}

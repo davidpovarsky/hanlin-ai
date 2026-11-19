@@ -1,0 +1,9 @@
+{
+  "registered_at": "2026-11-19T00:50:29.254827+00:00",
+  "runs": [
+    "44431811538",
+    "44431826560"
+  ],
+  "interval_seconds": 45,
+  "maximum_observer_seconds": 3420
+}

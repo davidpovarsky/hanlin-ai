@@ -1,0 +1,16 @@
+{
+  "name": "skills-consent-safari-codefence",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYTests/ChatCodeFenceTests,AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions,AI_HLYUITests/AgentRuntimeConversationUITests/testMarkdownLinkOpensAndClosesTheInternalSafariBrowser,AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview,AI_HLYUITests/AgentRuntimeConversationUITests/testProductionCodeSkillLocalPythonNeedsNoUserNudge,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations,AI_HLYUITests/AgentSkillsEmbeddedResultsUITests/testAgentSkillsDeferredExposureAndEmbeddedResultFlow,AI_HLYUITests/HanlinSkillCenterUITests/testCreateEditDisableDeleteCustomSkill,AI_HLYUITests/HanlinSkillCenterUITests/testOverrideAndResetBuiltInSkill",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "dispatch_started_at": "2026-11-19T00:47:16.944966+00:00"
+}

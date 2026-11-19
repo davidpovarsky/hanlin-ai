@@ -1,0 +1,15 @@
+{
+  "name": "original-signing-cms-admission-preflight",
+  "workflow": "validate-app-split.yml",
+  "inputs": {
+    "signed_release_archives": "true",
+    "signing_preflight_only": "true",
+    "audit_release_resources": "false",
+    "prepare_miniapps_registration": "false",
+    "paired_product_acceptance": "false",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "native_test_scope": "baseline",
+    "paired_test_scope": "cross_product"
+  },
+  "dispatch_started_at": "2026-11-19T00:47:23.852227+00:00"
+}

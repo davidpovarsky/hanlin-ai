@@ -1,0 +1,17 @@
+{
+  "name": "compact-keyboard-iphone",
+  "replaces_run": "44426497443",
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft,AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+  "dispatch_started_at": "2026-11-19T00:31:35.587794+00:00"
+}

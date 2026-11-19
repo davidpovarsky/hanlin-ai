@@ -1,3 +1,46 @@
+# Continuation status — 2026-11-19
+
+## Current checkpoint
+
+Published source: c91732b21456f964c8e1cf612b06497277ae9fdf. The owner has authorized the required actions across the original repositories. Guidance-file approval/STOP restrictions have been removed and published. Actual source, authority and evidence remain traceable.
+
+**SDK-01 is complete as a source/design audit and its Asana completion was read back at 01:07 UTC.** The versioned dependency DAG, product/source migration map, canonical seams, API version strategy and actual iOS26/27 consumer matrix are in [the current audit](../agent-sdk/SDK_01_CURRENT_AUDIT_20261119.md), published at585f3196. This does not close the SDK epic, host/UI/device tasks or either product phase.
+
+Cairo browse no longer returns invented records on transport/JSON failure; the actual script's four portable regressions passed at e0089cfb. The maintained Skill corpus at c91732b2 contains23 complete original packages and51 independently authenticated source/license files. Its real import/store/policy/read/SDK paths, two bounded Cairo cases and four original Yams app adoption controls are queued for29 native invocations. External business workflows remain NOT_RUN.
+
+Additional published corrections cover Canvas MainActor access, reasoning projection, link gestures, cold WebKit startup, accessible native navigation, consent/Skills test navigation, owned simulator preparation and signer/trust diagnostics. Source checks are not native passes.
+
+### Current run identities
+
+| Run | Source | Workflow observation | Scope |
+| --- | --- | --- | --- |
+| 44434893361 | c91732b2 | queued/pending | 23 maintained original Skill packages +2 Cairo invalid-argv/plan cases +4 existing Yams app adoption controls |
+| 44431826560 | e564dc29 | queued/pending | Original identity CMS and Xcode admission diagnostic only |
+| 44431811538 | e564dc29 | queued/pending | Code fence tests plus original eight affected UI/Skills/consent routes |
+| 44429728630 | 3a87634b | queued/pending | Corrected native editor/A2UI and two actual compact iPad keyboard routes |
+| 44429703865 | 3a87634b | queued/pending | Corrected original two compact iPhone controls |
+| 44429680236 | 3a87634b | queued/pending | Corrected original isolated npm lifecycle |
+| 44429654565 | 3a87634b | queued/pending | Corrected original native Skills/offline policy and cache: four methods/25 invocations |
+| 44428114202 | d6cb7d0b | in_progress/pending | Actual live Gemini/Host consent/Python/cold reopen |
+| 44428104345 | d6cb7d0b | queued/pending | Reasoning/Canvas/UI01/Saved messages original native selectors |
+| 44426771946 | 7a9ad537 | completed/failure | Motion D diagnostic failed to observe its requested UIScrollView phase; original B remains open |
+| 44426766800 | 7a9ad537 | completed/failure | Original identity minimal signing preflight; Xcode profile admission failed before compilation/export |
+| 44426526923 | 90314963 | in_progress/pending | Original eight paired product/shared-ingress controls |
+| 44426508137 | 90314963 | completed/cancelled | Native editor/A2UI; cancelled before product tests for missing Runtime input |
+| 44426497443 | 90314963 | completed/cancelled | Original compact iPhone; cancelled before product tests for missing Runtime input |
+| 44425855469 | 3de8cf6c | completed/cancelled | npm lifecycle; cancelled before product tests for missing Runtime input |
+| 44425850134 | 3de8cf6c | completed/failure | Original offline Skills/native policy and cache; failed missing Runtime input before product tests |
+
+The missing-Runtime-input failure and three canceled runs are retained above. Their replacements name the verified unchanged producer42926628418. Motion D has a real diagnostic phase-observation failure; it did not establish the controlled touch-delay conclusion. The original Motion B acceptance remains open. The minimal signing preflight also failed original profile admission; the CMS/Xcode diagnostic successor is separate from complete product exports.
+
+The full original wide-UI archive14472548287 is now SHA256-verified:8f74d043e90cf15d7b31572c2b1e158af276e6141fba57808d7519377b9b9a2a. Its11-pass/15-fail result is unchanged. Earlier per-member proof remains preserved.
+
+Twelve task-comment readbacks and SDK01's actual completed field are preserved in [the checkpoint](acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json). All30 original source-task objects, all67 prior evidence records,278 feature rows and26 UX decisions remain unchanged. Eight new evidence records and a separate current task observation were appended. Phase2 and Phase3 remain IN_PROGRESS; signed products and physical-device acceptance remain open.
+
+## Historical earlier checkpoint
+
+The following source/run snapshot is preserved as history. The current checkpoint above supersedes its pending-run list and full-archive authentication status.
+
 # Continuation status — 19 November 2026
 
 Published source: `7a9ad537cbfd7dc5f459adea2a6bb658df2eae89` on `codex/hanlin-product-completion-20261117`. Phase 2 and Phase 3 remain **IN_PROGRESS**; release acceptance is **NO_GO** because original product checks remain incomplete. The owner has authorized the required actions and publication; no repeated routine approval is needed.

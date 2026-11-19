@@ -1,0 +1,25 @@
+{
+  "id": "44434893361",
+  "source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361",
+  "created_at": "2026-11-19T01:10:45Z",
+  "observed_status": "in_progress",
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYTests/MaintainedSkillCorpusTests/maintainedPackagesFollowOriginalImportPolicyAndReadiness(_:),AI_HLYTests/MaintainedSkillCorpusTests/cairoInvalidInputUsesTheCurrentRuntimePlan(_:),AI_HLYTests/SkillStoreAndImportTests/nestedMetadataSurvivesStoreSaveAndOverride(),AI_HLYTests/SkillStoreAndImportTests/anchoredStoreEditDoesNotRewriteOriginal(),AI_HLYTests/SkillStoreAndImportTests/zipNestedMetadataAndResourcesRemainLossless(),AI_HLYTests/SkillStoreAndImportTests/catalogMetadataFollowsSelectedSource()",
+    "fast_validation_only": "true",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "e0089cfb8c192530056aba39c7c8bbf945da75d3",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "runtime_artifact": {
+    "id": 13813704965,
+    "name": "hanlin-runtime-bundle-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "digest": "sha256:f329036ba1ed870b9afb43ed164418f987505361d2a3276bfef1a89826cab850",
+    "producer_run": 42926628418
+  },
+  "scope": "23 maintained package cases +2 Cairo invalid input/plan cases +4 original Yams app adoption controls; native results pending"
+}
