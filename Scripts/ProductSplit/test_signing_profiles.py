@@ -207,5 +207,169 @@ class ProfileCacheTests(unittest.TestCase):
             self.assertEqual(created[0][0].read_bytes(), b"changed-by-another-job")
 
 
+
+
+class SigningAdmissionDiagnosticTests(unittest.TestCase):
+    def test_cms_signature_status_binds_exact_original_bytes_and_never_claims_xcode_acceptance(self):
+        import json
+        import time
+        from signing_profile_preflight import profile_cms_diagnostics
+        profile = {"uuid": valid_profile()["UUID"], "bundle": BUNDLE, "content": b"original-cms"}
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            cache = home / "Library/Developer/Xcode/UserData/Provisioning Profiles"
+            cache.mkdir(parents=True)
+            (cache / (profile["uuid"] + ".mobileprovision")).write_bytes(profile["content"])
+            report = {"format_version": 1, "profiles": [{
+                "index": 0, "read_ok": True, "input_sha256": hashlib.sha256(profile["content"]).hexdigest(),
+                "decoder_status": 0, "signer_count_status": 0, "signer_count": 1,
+                "signers": [{"signature_and_certificate_valid": True}],
+            }]}
+            run = Mock(side_effect=[(0, ""), (0, json.dumps(report))])
+            with patch.object(Path, "home", return_value=home):
+                receipt = profile_cms_diagnostics(home, [profile], run, time.monotonic() + 60)
+            self.assertEqual(receipt["status"], "CMS_SIGNATURES_VALID")
+            self.assertIn("NOT_XCODE_ACCEPTANCE", receipt["scope"])
+            self.assertEqual(receipt["profiles"][0]["bundle_id"], BUNDLE)
+
+    def test_decodable_cms_without_valid_signature_or_signer_never_becomes_valid(self):
+        import json
+        import time
+        from signing_profile_preflight import profile_cms_diagnostics
+        profile = {"uuid": valid_profile()["UUID"], "bundle": BUNDLE, "content": b"original-cms"}
+        for signature_valid, count in [(False, 1), (True, 0)]:
+            with self.subTest(signature_valid=signature_valid, count=count), tempfile.TemporaryDirectory() as directory:
+                home = Path(directory)
+                cache = home / "Library/Developer/Xcode/UserData/Provisioning Profiles"
+                cache.mkdir(parents=True)
+                (cache / (profile["uuid"] + ".mobileprovision")).write_bytes(profile["content"])
+                report = {"format_version": 1, "profiles": [{
+                    "index": 0, "read_ok": True,
+                    "input_sha256": hashlib.sha256(profile["content"]).hexdigest(),
+                    "decoder_status": 0, "signer_count_status": 0, "signer_count": count,
+                    "signers": [{"signature_and_certificate_valid": signature_valid}] if count else [],
+                }]}
+                run = Mock(side_effect=[(0, ""), (0, json.dumps(report))])
+                with patch.object(Path, "home", return_value=home):
+                    receipt = profile_cms_diagnostics(home, [profile], run, time.monotonic() + 60)
+                self.assertEqual(receipt["status"], "CMS_SIGNATURE_OR_TRUST_REJECTED")
+
+    def test_diagnostic_for_different_profile_cannot_prove_selected_profile(self):
+        import json
+        import time
+        from signing_profile_preflight import profile_cms_diagnostics
+        profile = {"uuid": valid_profile()["UUID"], "bundle": BUNDLE, "content": b"original-cms"}
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            cache = home / "Library/Developer/Xcode/UserData/Provisioning Profiles"
+            cache.mkdir(parents=True)
+            (cache / (profile["uuid"] + ".mobileprovision")).write_bytes(profile["content"])
+            run = Mock(side_effect=[(0, ""), (0, json.dumps({"format_version": 1, "profiles": [
+                {"index": 0, "input_sha256": hashlib.sha256(b"other-cms").hexdigest()}
+            ]}))])
+            with patch.object(Path, "home", return_value=home):
+                receipt = profile_cms_diagnostics(home, [profile], run, time.monotonic() + 60)
+            self.assertEqual(receipt["status"], "DIAGNOSTIC_UNAVAILABLE")
+
+    def test_changed_installed_bytes_stop_before_signature_inspection(self):
+        import time
+        from signing_profile_preflight import profile_cms_diagnostics
+        profile = {"uuid": valid_profile()["UUID"], "bundle": BUNDLE, "content": b"original-cms"}
+        with tempfile.TemporaryDirectory() as directory:
+            home = Path(directory)
+            cache = home / "Library/Developer/Xcode/UserData/Provisioning Profiles"
+            cache.mkdir(parents=True)
+            (cache / (profile["uuid"] + ".mobileprovision")).write_bytes(b"changed")
+            run = Mock()
+            with patch.object(Path, "home", return_value=home):
+                with self.assertRaisesRegex(RuntimeError, "changed before"):
+                    profile_cms_diagnostics(home, [profile], run, time.monotonic() + 60)
+            run.assert_not_called()
+
+    def test_owned_log_scope_rejects_other_process_and_retains_no_unowned_data(self):
+        import json
+        from signing_profile_preflight import retain_owned_xcode_signing_logs
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "owned.json"
+            process = Mock(returncode=0, stdout=json.dumps([
+                {"processID": 999, "eventMessage": "profile from another job"}
+            ]).encode())
+            with patch("signing_profile_preflight.subprocess.run", return_value=process):
+                with self.assertRaisesRegex(RuntimeError, "unowned"):
+                    retain_owned_xcode_signing_logs(123, "2026-11-19 00:00:00", "2026-11-19 00:01:00",
+                                                   target, lambda value: value)
+            self.assertFalse(target.exists())
+
+    def test_owned_log_scope_preserves_only_sanitized_signing_events(self):
+        import json
+        from signing_profile_preflight import retain_owned_xcode_signing_logs
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory) / "owned.json"
+            process = Mock(returncode=0, stdout=json.dumps([
+                {"processID": 123, "eventMessage": "profile lookup SECRET", "category": "profile"},
+                {"processID": 123, "eventMessage": "unrelated work", "category": "other"},
+            ]).encode())
+            with patch("signing_profile_preflight.subprocess.run", return_value=process) as invoked:
+                receipt = retain_owned_xcode_signing_logs(
+                    123, "2026-11-19 00:00:00", "2026-11-19 00:01:00",
+                    target, lambda value: value.replace("SECRET", "[REDACTED]"))
+            self.assertEqual(receipt["events"], 1)
+            self.assertNotIn("SECRET", target.read_text())
+            self.assertNotIn("unrelated", target.read_text())
+            argv = invoked.call_args.args[0]
+            self.assertIn("processID == 123", argv[argv.index("--predicate") + 1])
+            self.assertIn("--start", argv)
+            self.assertIn("--end", argv)
+            self.assertEqual(invoked.call_args.kwargs["timeout"], 15)
+
+    def test_owned_process_records_actual_exit_and_pid(self):
+        import sys
+        from signing_profile_preflight import run_owned_process
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "child.log"
+            with output.open("wb") as stream:
+                code, pid = run_owned_process(
+                    [sys.executable, "-c", "print('owned-child'); raise SystemExit(7)"],
+                    directory, stream, 5)
+            self.assertEqual(code, 7)
+            self.assertGreater(pid, 1)
+            self.assertIn("owned-child", output.read_text())
+
+    def test_owned_process_timeout_finishes_its_child(self):
+        import sys
+        from signing_profile_preflight import run_owned_process
+        with tempfile.TemporaryDirectory() as directory:
+            with (Path(directory) / "child.log").open("wb") as stream:
+                code, pid = run_owned_process(
+                    [sys.executable, "-c", "import time; time.sleep(30)"],
+                    directory, stream, 0.05)
+            self.assertEqual(code, -1)
+            self.assertGreater(pid, 1)
+
+    def test_failed_native_archive_records_attempt_without_export_or_product_build(self):
+        import plistlib
+        import signing_profile_preflight as native
+        profile = {"uuid": valid_profile()["UUID"], "bundle": "com.itorah.hanlinminiapps",
+                   "content": b"original-cms"}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = next(item[3] for item in native.ROLES if item[1] == profile["bundle"])
+            entitlements = root / source
+            entitlements.parent.mkdir(parents=True)
+            entitlements.write_bytes(plistlib.dumps({}))
+            receipt = {}
+            run = Mock(return_value=(65, "No profile matching selected UUID found"))
+            with patch.object(native, "ROOT", root), patch.object(
+                    native, "profile_cms_diagnostics", return_value={"status": "CMS_SIGNATURES_VALID"}):
+                with self.assertRaisesRegex(RuntimeError, "failed before original"):
+                    native.run_profile_discovery_preflight(root, [profile], TEAM, "certificate-identity",
+                                                           CERTIFICATE_SHA, run, receipt)
+            self.assertEqual(receipt["status"], "EXECUTED_FAIL")
+            self.assertEqual(receipt["native_products"][0]["archive"], "EXECUTED_FAIL")
+            self.assertEqual(receipt["native_products"][0]["export"], "NOT_RUN")
+            self.assertEqual(run.call_count, 1)
+            self.assertIn("PROVISIONING_PROFILE_SPECIFIER=" + profile["uuid"], run.call_args.args[0])
+
+
 if __name__ == "__main__":
     unittest.main()

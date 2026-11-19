@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 import hashlib
+import json
 import os
 from pathlib import Path
 import plistlib
@@ -74,6 +75,181 @@ def installed_profile_receipt(profiles, directories, receipt):
                 raise RuntimeError("Installed profile UUID mismatch: " + profile["bundle"])
     receipt["status"] = "VERIFIED_FILESYSTEM_AND_CMS_ONLY"
     return receipt
+
+
+
+_CMS_DIAGNOSTIC_SOURCE = r"""
+#import <Foundation/Foundation.h>
+#import <Security/Security.h>
+#import <Security/CMSDecoder.h>
+#import <CommonCrypto/CommonDigest.h>
+#include <stdio.h>
+
+int main(int argc, const char *argv[]) {
+    @autoreleasepool {
+        if (argc < 2 || argc > 7) return 64;
+        NSMutableArray *records = [NSMutableArray array];
+        for (int index = 1; index < argc; index++) {
+            NSData *data = [NSData dataWithContentsOfFile:@(argv[index])];
+            NSMutableArray *signers = [NSMutableArray array];
+            NSMutableDictionary *record = [@{
+                @"index": @(index - 1), @"read_ok": @(data != nil),
+                @"signers": signers
+            } mutableCopy];
+            [records addObject:record];
+            if (!data || data.length > 1024 * 1024) continue;
+            unsigned char digest[CC_SHA256_DIGEST_LENGTH];
+            CC_SHA256(data.bytes, (CC_LONG)data.length, digest);
+            NSMutableString *hex = [NSMutableString string];
+            for (size_t j = 0; j < sizeof(digest); j++) [hex appendFormat:@"%02x", digest[j]];
+            record[@"input_sha256"] = hex;
+            CMSDecoderRef decoder = NULL;
+            OSStatus status = CMSDecoderCreate(&decoder);
+            if (status == errSecSuccess) status = CMSDecoderUpdateMessage(decoder, data.bytes, data.length);
+            if (status == errSecSuccess) status = CMSDecoderFinalizeMessage(decoder);
+            record[@"decoder_status"] = @(status);
+            size_t count = 0;
+            if (status == errSecSuccess) status = CMSDecoderGetNumSigners(decoder, &count);
+            record[@"signer_count_status"] = @(status);
+            record[@"signer_count"] = @(count);
+            if (status == errSecSuccess && count <= 8) {
+                for (size_t signer = 0; signer < count; signer++) {
+                    CMSSignerStatus signature = kCMSSignerUnsigned;
+                    OSStatus certificate = errSecSuccess;
+                    SecTrustRef trust = NULL;
+                    SecPolicyRef policy = SecPolicyCreateBasicX509();
+                    OSStatus result = CMSDecoderCopySignerStatus(
+                        decoder, signer, policy, true, &signature, &trust, &certificate);
+                    SecTrustResultType trustResult = kSecTrustResultInvalid;
+                    OSStatus trustStatus = trust ? SecTrustGetTrustResult(trust, &trustResult) : errSecParam;
+                    [signers addObject:@{
+                        @"index": @(signer), @"api_status": @(result),
+                        @"signer_status": @(signature), @"certificate_status": @(certificate),
+                        @"trust_result_status": @(trustStatus), @"trust_result": @(trustResult),
+                        @"signature_and_certificate_valid": @(
+                            result == errSecSuccess && signature == kCMSSignerValid &&
+                            certificate == errSecSuccess)
+                    }];
+                    if (trust) CFRelease(trust);
+                    if (policy) CFRelease(policy);
+                }
+            }
+            if (decoder) CFRelease(decoder);
+        }
+        NSData *json = [NSJSONSerialization dataWithJSONObject:@{
+            @"format_version": @1, @"profiles": records
+        } options:0 error:nil];
+        if (!json) return 65;
+        fwrite(json.bytes, 1, json.length, stdout);
+        fputc('\n', stdout);
+        return 0;
+    }
+}
+"""
+
+
+def profile_cms_diagnostics(folder, profiles, run, deadline):
+    """Observe CMS signature/trust separately; only native Xcode establishes admission."""
+    receipt = {"status": "NOT_RUN",
+               "scope": "CMS_SIGNATURE_AND_BASIC_X509_ONLY_NOT_XCODE_ACCEPTANCE"}
+    source = Path(folder) / "profile-cms-status.m"
+    executable = Path(folder) / "profile-cms-status"
+    source.write_text(_CMS_DIAGNOSTIC_SOURCE, encoding="utf-8")
+    paths = []
+    for profile in profiles:
+        identifier = str(uuid.UUID(profile["uuid"])).upper()
+        path = Path.home() / "Library/Developer/Xcode/UserData/Provisioning Profiles" / (
+            identifier + ".mobileprovision")
+        if path.is_symlink() or path.read_bytes() != profile["content"]:
+            raise RuntimeError("Installed profile changed before CMS signature diagnostics")
+        paths.append(path)
+    try:
+        remaining = int(deadline - time.monotonic())
+        if remaining <= 0:
+            raise RuntimeError("Profile-discovery deadline reached before CMS diagnostics")
+        code, _ = run(["xcrun", "--sdk", "macosx", "clang", "-Wno-deprecated-declarations",
+                       source, "-framework", "Foundation", "-framework", "Security",
+                       "-o", executable], "profile-cms-diagnostic-build",
+                      timeout=min(30, remaining), required=False)
+        if code:
+            receipt.update(status="DIAGNOSTIC_BUILD_FAILED", exit=code)
+            return receipt
+        remaining = int(deadline - time.monotonic())
+        if remaining <= 0:
+            raise RuntimeError("Profile-discovery deadline reached before CMS signature evaluation")
+        code, output = run([executable, *paths], "profile-cms-signature-status",
+                           timeout=min(30, remaining), required=False)
+        if code:
+            receipt.update(status="DIAGNOSTIC_EXECUTION_FAILED", exit=code)
+            return receipt
+        value = json.loads(output)
+        rows = value.get("profiles", [])
+        if value.get("format_version") != 1 or len(rows) != len(profiles):
+            raise RuntimeError("CMS diagnostic does not cover the exact selected profiles")
+        for index, (row, profile) in enumerate(zip(rows, profiles)):
+            if (row.get("index") != index or row.get("input_sha256") !=
+                    hashlib.sha256(profile["content"]).hexdigest()):
+                raise RuntimeError("CMS diagnostic input does not match the selected profile")
+            row["bundle_id"] = profile["bundle"]
+        valid = all(row.get("read_ok") is True and row.get("decoder_status") == 0
+                    and row.get("signer_count_status") == 0 and row.get("signer_count", 0) > 0
+                    and len(row.get("signers", [])) == row["signer_count"]
+                    and all(signer.get("signature_and_certificate_valid") is True
+                            for signer in row["signers"]) for row in rows)
+        receipt.update(status="CMS_SIGNATURES_VALID" if valid else "CMS_SIGNATURE_OR_TRUST_REJECTED",
+                       profiles=rows)
+    except (OSError, ValueError, RuntimeError) as error:
+        receipt.update(status="DIAGNOSTIC_UNAVAILABLE", error=type(error).__name__)
+    return receipt
+
+
+def run_owned_process(argv, cwd, stream, timeout):
+    """Return the PID of this exact child; timeout cleanup never targets other jobs."""
+    with subprocess.Popen([str(value) for value in argv], cwd=cwd, stdout=stream,
+                          stderr=subprocess.STDOUT) as process:
+        try:
+            result = process.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+            result = -1
+        return result, process.pid
+
+
+def retain_owned_xcode_signing_logs(pid, started_at, ended_at, destination, sanitize):
+    """Read only this invocation's PID/time interval and retain sanitized signing events."""
+    if type(pid) is not int or pid <= 1:
+        raise ValueError("A concrete owned xcodebuild PID is required")
+    predicate = (f"processID == {pid} AND (eventMessage CONTAINS[c] \"provision\" OR "
+                 "eventMessage CONTAINS[c] \"profile\" OR eventMessage CONTAINS[c] \"codesign\" OR "
+                 "eventMessage CONTAINS[c] \"signing\" OR eventMessage CONTAINS[c] \"trust\")")
+    result = subprocess.run(
+        ["/usr/bin/log", "show", "--style", "json", "--info", "--debug",
+         "--start", started_at, "--end", ended_at, "--predicate", predicate],
+        capture_output=True, timeout=15)
+    if result.returncode:
+        return {"status": "UNAVAILABLE", "exit": result.returncode,
+                "error": sanitize(result.stderr.decode("utf-8", errors="replace")[:1024])}
+    if len(result.stdout) > 1024 * 1024:
+        raise RuntimeError("Owned Xcode signing diagnostics exceed bounded retention")
+    events = json.loads(result.stdout or b"[]")
+    if not isinstance(events, list):
+        raise RuntimeError("Owned Xcode diagnostics have an unexpected format")
+    retained = []
+    for event in events:
+        if event.get("processID") != pid:
+            raise RuntimeError("Xcode diagnostics include an unowned process")
+        message = event.get("eventMessage", "")
+        if not re.search(r"provision|profile|codesign|signing|trust", message, re.I):
+            continue
+        retained.append({key: event[key] for key in
+                         ["timestamp", "processID", "eventMessage", "subsystem", "category"]
+                         if key in event})
+    target = Path(destination)
+    target.write_text(sanitize(json.dumps(retained, indent=2)) + "\n", encoding="utf-8")
+    return {"status": "CAPTURED" if retained else "NO_MATCHING_RECORDED_EVENTS",
+            "pid": pid, "start": started_at, "end": ended_at, "events": len(retained),
+            "sanitized_sha256": hashlib.sha256(target.read_bytes()).hexdigest()}
 
 
 def retain_distribution_logs(raw_output, destination, sanitize):
@@ -188,14 +364,26 @@ def run_profile_discovery_preflight(folder, profiles, team, identity, certificat
     work = Path(folder) / "profile-discovery"
     work.mkdir()
     project = _write_probe_project(work)
+    receipt["cms_signatures"] = profile_cms_diagnostics(work, profiles, run, deadline)
 
-    def bounded(argv, label):
+    def bounded(argv, label, entry=None, key=None):
         remaining = int(deadline - time.monotonic())
-        if remaining <= 0:
+        # Keep up to 15 seconds within the existing deadline for the owned
+        # Xcode failure diagnostics; a fresh native attempt must fit both.
+        if remaining <= 15:
             raise RuntimeError("Bounded Xcode profile-discovery deadline reached")
-        code, _ = run(argv, label, timeout=min(60, remaining), required=False)
-        if code:
-            raise RuntimeError(label + " failed before original product archives")
+        if entry is not None:
+            entry[key] = "RUNNING"
+        try:
+            code, _ = run(argv, label, timeout=min(60, remaining - 15), required=False)
+            if code:
+                raise RuntimeError(label + " failed before original product archives")
+        except Exception:
+            if entry is not None:
+                entry[key] = "EXECUTED_FAIL"
+            raise
+        if entry is not None:
+            entry[key] = "EXECUTED_PASS"
 
     def private_native(argv):
         remaining = int(deadline - time.monotonic())
@@ -225,8 +413,7 @@ def run_profile_discovery_preflight(folder, profiles, team, identity, certificat
                      "CODE_SIGN_IDENTITY=" + identity,
                      "PROVISIONING_PROFILE_SPECIFIER=" + profile["uuid"], "PROVISIONING_PROFILE=",
                      "CODE_SIGN_ENTITLEMENTS=" + str(entitlements), "APS_ENVIRONMENT=production"],
-                    "profile-discovery-" + role + "-archive")
-            entry["archive"] = "EXECUTED_PASS"
+                    "profile-discovery-" + role + "-archive", entry, "archive")
             options = work / (role + "-ExportOptions.plist")
             options.write_bytes(plistlib.dumps({
                 "method": "app-store-connect", "destination": "export", "signingStyle": "manual",
@@ -238,8 +425,7 @@ def run_profile_discovery_preflight(folder, profiles, team, identity, certificat
             exported = work / (role + "-export")
             bounded(["xcodebuild", "-exportArchive", "-archivePath", archive,
                      "-exportPath", exported, "-exportOptionsPlist", options],
-                    "profile-discovery-" + role + "-export")
-            entry["export"] = "EXECUTED_PASS"
+                    "profile-discovery-" + role + "-export", entry, "export")
             ipas = list(exported.glob("*.ipa"))
             if len(ipas) != 1:
                 raise RuntimeError("Profile-discovery export has no unique IPA")

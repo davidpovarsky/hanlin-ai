@@ -31,6 +31,7 @@ from resolve_signing_profiles import (
 
 from signing_profile_preflight import (
     installed_profile_receipt, retain_distribution_logs, run_profile_discovery_preflight,
+    retain_owned_xcode_signing_logs, run_owned_process,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -66,13 +67,10 @@ def main():
         def run(argv, label, timeout=60, required=True):
             started = time.monotonic()
             raw = folder / (label + ".raw")
+            wall_started = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S")
             with raw.open("wb") as stream:
-                try:
-                    process = subprocess.run([str(v) for v in argv], cwd=ROOT,
-                                             stdout=stream, stderr=subprocess.STDOUT, timeout=timeout)
-                    result = process.returncode
-                except subprocess.TimeoutExpired:
-                    result = -1
+                result, owned_pid = run_owned_process(argv, ROOT, stream, timeout)
+            wall_ended = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S")
             raw_output = raw.read_text(errors="replace")
             safe = sanitize(raw_output)
             raw.unlink(missing_ok=True)
@@ -85,9 +83,17 @@ def main():
                 # Always retain the primary native failure even if diagnostics
                 # are unavailable; never replace it with a log-copy error.
                 distribution_logs = [{"status": "RETENTION_FAILED", "error": sanitize(str(error))}]
+            native_signing_logs = None
+            if result and Path(str(argv[0])).name == "xcodebuild":
+                try:
+                    native_signing_logs = retain_owned_xcode_signing_logs(
+                        owned_pid, wall_started, wall_ended, OUT / (label + "-owned-signing.json"), sanitize)
+                except Exception as error:
+                    native_signing_logs = {"status": "RETENTION_FAILED", "error": sanitize(str(error))}
             commands.append({"operation": label, "exit": result, "seconds": time.monotonic() - started,
                              "log_sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
-                             "distribution_logs": distribution_logs})
+                             "distribution_logs": distribution_logs,
+                             "owned_pid": owned_pid, "native_signing_logs": native_signing_logs})
             if result and required:
                 raise RuntimeError(label + " failed; see sanitized log (exit " + str(result) + ")")
             return result, safe
