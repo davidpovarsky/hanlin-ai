@@ -1091,16 +1091,21 @@ struct ChatView: View {
                     scrollViewProxy.scrollTo(messageID, anchor: .center)
                 }
             })
-            .onTapGesture {
-                isInputActive = false
-                if nativeSelectionIDs.isEmpty {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            // The original text views own link and selection interactions.
+            // Dismiss composer controls alongside their tap recognizers instead
+            // of cancelling the native link tap before its delegate can route it.
+            .simultaneousGesture(
+                TapGesture().onEnded { _ in
+                    isInputActive = false
+                    if nativeSelectionIDs.isEmpty {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }
+                    showTemperatureSlider = false
+                    showTopPSlider = false
+                    showMaxTokensSlider = false
+                    showMaxMessagesNumSlider = false
                 }
-                showTemperatureSlider = false
-                showTopPSlider = false
-                showMaxTokensSlider = false
-                showMaxMessagesNumSlider = false
-            }
+            )
             .simultaneousGesture(
                 DragGesture().onChanged { _ in
                     isInputActive = false
