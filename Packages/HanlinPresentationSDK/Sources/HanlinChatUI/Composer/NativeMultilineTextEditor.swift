@@ -373,8 +373,13 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         public func textViewDidChange(_ textView: UITextView) {
             guard textView.markedTextRange == nil else { return }
             if textView.textColor != .placeholderText {
-                parent.text = textView.text
-                if textView.text.hasSuffix("@") {
+                let nativeText = textView.text ?? ""
+                // A later UIKit edit can begin before SwiftUI renders this
+                // binding write. Acknowledge it first so that layout cannot
+                // mistake our own earlier edit for an external draft change.
+                lastSynchronizedModelText = nativeText
+                parent.text = nativeText
+                if nativeText.hasSuffix("@") {
                     parent.onMentionTriggered?()
                 }
                 let clampedHeight = parent.measuredHeight(for: textView, isEmpty: textView.text.isEmpty)
@@ -394,7 +399,8 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             let ns = raw as NSString
             if let match = Self.matchContaining(index: range.location, in: raw) {
                 textView.text = ns.replacingCharacters(in: match.range, with: "")
-                parent.text = textView.text ?? ""
+                lastSynchronizedModelText = textView.text ?? ""
+                parent.text = lastSynchronizedModelText
                 return false
             }
             return true

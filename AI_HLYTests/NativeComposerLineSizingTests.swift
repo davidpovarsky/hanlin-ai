@@ -95,6 +95,43 @@ struct NativeComposerLineSizingTests {
         #expect(view.text.isEmpty)
     }
 
+    @Test("Consecutive native edits survive coalesced SwiftUI layout updates",
+          arguments: ["Run the local Python acceptance tool and report the result.",
+                      "Draft preserved across switch", "שלום 👋🏽 טיוטה ארוכה"])
+    func coalescedNativeEditsPreserveTextAndSelection(_ input: String) {
+        var draft = ""
+        let editor = NativeMultilineTextEditor(
+            text: Binding(get: { draft }, set: { draft = $0 }),
+            textHeight: .constant(0), maxHeight: 300, usesAutomaticLineLimits: true
+        )
+        let coordinator = NativeMultilineTextEditor.Coordinator(editor)
+        let view = MultilineInnerTextView(frame: CGRect(x: 0, y: 0, width: 220, height: 100))
+        view.font = .preferredFont(forTextStyle: .body)
+        view.textColor = .label
+        coordinator.textViewDidBeginEditing(view)
+
+        for character in input {
+            view.insertText(String(character))
+            let nativeText = view.text
+            let selection = view.selectedRange
+
+            // The previous edit has published its binding, but SwiftUI can
+            // coalesce that render until the next native edit is underway.
+            coordinator.synchronizeText(in: view)
+            #expect(view.text == nativeText)
+            #expect(view.selectedRange == selection)
+            coordinator.textViewDidChange(view)
+            // Intentionally no immediate synchronizeText here: the next loop
+            // exercises the production ordering missed by the earlier test.
+        }
+
+        #expect(view.text == input)
+        #expect(draft == input)
+        #expect(view.selectedRange == NSRange(location: (input as NSString).length, length: 0))
+        coordinator.synchronizeText(in: view)
+        #expect(view.text == input)
+    }
+
     @Test("Sending clears an editing UIKit draft and restored text keeps a valid cursor")
     func programmaticDraftUpdatesWhileEditing() {
         var draft = "Sent message"
