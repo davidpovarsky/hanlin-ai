@@ -1,0 +1,65 @@
+name: Authenticate Hanlin Upstream Candidate
+on:
+  workflow_run:
+    workflows: ['Check RuntimeCore Dependency Updates']
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      proof_run:
+        description: Original completed candidate workflow run
+        type: string
+        required: true
+
+permissions:
+  contents: write
+  actions: read
+  checks: write
+  pull-requests: write
+
+concurrency:
+  group: upstream-proof-${{ github.event.workflow_run.head_branch || inputs.proof_run }}
+  cancel-in-progress: false
+
+jobs:
+  evidence:
+    if: github.repository == 'davidpovarsky/hanlin-ai' && github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      TRUSTED_SOURCE_SHA: ${{ vars.HANLIN_UPSTREAM_TRUSTED_SHA }}
+      PROOF_RUN: ${{ github.event.workflow_run.id || inputs.proof_run }}
+      ALLOW_AUTO_MERGE: ${{ vars.HANLIN_UPSTREAM_ACCEPTANCE_AUTOMERGE == 'true' && 'true' || 'false' }}
+    steps:
+      - name: Require an immutable reviewed consumer source
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$TRUSTED_SOURCE_SHA" =~ ^[a-f0-9]{40}$ ]]
+          [[ "$PROOF_RUN" =~ ^[0-9]+$ ]]
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ vars.HANLIN_UPSTREAM_TRUSTED_SHA }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Verify the trusted checkout identity
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "$TRUSTED_SOURCE_SHA"
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24.22.1'
+      - name: Authenticate current-head schema2 evidence and all required gates
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          node Scripts/Runtime/consume-upstream-run.mjs
+          davidpovarsky/hanlin-ai "$PROOF_RUN"
+          codex/upstream-acceptance-base-20261119
+          publish "$ALLOW_AUTO_MERGE"
+      - name: Preserve the independent consumer and mutation journal
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: upstream-consumer-${{ github.run_id }}
+          path: build/upstream-proof-consumer
+          if-no-files-found: error
+          retention-days: 14
