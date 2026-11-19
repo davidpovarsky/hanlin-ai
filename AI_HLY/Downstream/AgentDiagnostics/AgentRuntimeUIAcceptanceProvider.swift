@@ -520,6 +520,11 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 let verified = cancel
                     ? content.contains("did not provide a successful operation receipt")
                     : content.contains("PAIRED_VALUE_" + nonce)
+                if !verified {
+                    let reason = Self.classifyPairedFailure(content: content)
+                    let mode = cancel ? "cancel" : "open"
+                    print("[AgentRuntimeUIAcceptanceProvider] paired_return_diagnostic mode=\(mode) reason=\(reason)")
+                }
                 emitFinalAnswer(verified
                     ? (cancel ? "PAIRED_CANCEL_RETURN_" : "PAIRED_RETURN_VERIFIED_") + nonce
                     : "PAIRED_RESULT_NOT_VERIFIED")
@@ -1088,6 +1093,15 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         client?.urlProtocol(self, didLoad: zipData)
         client?.urlProtocolDidFinishLoading(self)
+    }
+
+    private static func classifyPairedFailure(content: String) -> String {
+        if content.isEmpty { return "empty_tool_output" }
+        if content.contains("outcome is uncertain") { return "uncertain_outcome" }
+        if content.contains("was not dispatched") { return "not_dispatched" }
+        if content.contains("did not provide a successful operation receipt") { return "missing_operation_receipt" }
+        if content.contains("PAIRED_VALUE_") { return "mismatched_value_nonce" }
+        return "unexpected_tool_output"
     }
 
     private static func extractBodyData(from request: URLRequest) -> Data {

@@ -6,8 +6,10 @@ import XCTest
 final class HanlinPairedProductUITests: XCTestCase {
     private let ai = XCUIApplication(bundleIdentifier: "com.itorah.chavrusachat")
     private let mini = XCUIApplication(bundleIdentifier: "com.itorah.hanlinminiapps")
+    private var pairedRequestStartedAt: Date?
 
     override func setUpWithError() throws {
+        pairedRequestStartedAt = nil
         continueAfterFailure = false
         executionTimeAllowance = 600
         for app in [ai, mini] {
@@ -41,8 +43,11 @@ final class HanlinPairedProductUITests: XCTestCase {
         tap(mini, "Save")
         XCTAssertTrue(mini.staticTexts["Saved in canonical private container"].waitForExistence(timeout: 15))
         tap(mini, "miniapps.return-to-origin")
-        XCTAssertTrue(ai.wait(for: .runningForeground, timeout: 30))
-        assertText(ai, "PAIRED_RETURN_VERIFIED_" + nonce)
+        if !ai.wait(for: .runningForeground, timeout: 30) {
+            let summary = recordPairedFailureDiagnostics(caseKind: "open_return", stage: "foreground_return")
+            XCTFail("Hanlin did not return to foreground (\(summary))")
+        }
+        assertPairedResult("PAIRED_RETURN_VERIFIED_" + nonce, caseKind: "open_return")
         XCTAssertEqual(ai.staticTexts["hanlin-phase2-chat-id"].label, originalChat)
         XCTAssertFalse(ai.alerts["Mini App result unavailable"].exists)
         XCTAssertFalse(ai.buttons["hanlin-tool-consent-allow-once"].exists)
@@ -55,8 +60,11 @@ final class HanlinPairedProductUITests: XCTestCase {
         XCTAssertTrue(name.waitForExistence(timeout: 30))
         let before = name.value as? String
         tap(mini, "Cancel")
-        XCTAssertTrue(ai.wait(for: .runningForeground, timeout: 30))
-        assertText(ai, "PAIRED_CANCEL_RETURN_" + nonce)
+        if !ai.wait(for: .runningForeground, timeout: 30) {
+            let summary = recordPairedFailureDiagnostics(caseKind: "cancel_return", stage: "foreground_return")
+            XCTFail("Hanlin did not return to foreground (\(summary))")
+        }
+        assertPairedResult("PAIRED_CANCEL_RETURN_" + nonce, caseKind: "cancel_return")
         XCTAssertEqual(ai.staticTexts["hanlin-phase2-chat-id"].label, originalChat)
         mini.terminate(); mini.launch()
         tap(mini, "hanlin-miniapp-hanlin.demo.swift-parity")
@@ -168,6 +176,7 @@ final class HanlinPairedProductUITests: XCTestCase {
         XCTAssertEqual(input().value as? String, prompt, "Native typing must preserve the original request before Send")
         tap(ai, "hanlin-chat-send")
         tap(ai, "hanlin-tool-consent-allow-once")
+        pairedRequestStartedAt = Date()
         XCTAssertTrue(mini.wait(for: .runningForeground, timeout: 45))
         XCTAssertTrue(mini.buttons["miniapps.return-to-origin"].waitForExistence(timeout: 30))
         return originalChat
@@ -200,6 +209,63 @@ final class HanlinPairedProductUITests: XCTestCase {
         let text = app.descendants(matching: .any).matching(NSPredicate(
             format: "label CONTAINS %@ OR value CONTAINS %@", value, value)).firstMatch
         XCTAssertTrue(text.waitForExistence(timeout: 60), "Missing actual product result: \(value)")
+    }
+
+    private func assertPairedResult(_ expected: String, caseKind: String) {
+        let expectedElement = ai.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@ OR value CONTAINS %@", expected, expected)).firstMatch
+        let failedMarker = ai.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@ OR value CONTAINS %@", "PAIRED_RESULT_NOT_VERIFIED", "PAIRED_RESULT_NOT_VERIFIED")).firstMatch
+        let deadline = Date().addingTimeInterval(60)
+        while Date() < deadline {
+            if expectedElement.exists { return }
+            if failedMarker.exists { break }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.25))
+        }
+        let summary = recordPairedFailureDiagnostics(caseKind: caseKind, stage: "result_verification")
+        XCTFail("Missing actual product result: \(expected) (\(summary))")
+    }
+
+    @discardableResult
+    private func recordPairedFailureDiagnostics(caseKind: String, stage: String) -> String {
+        let elapsed = pairedRequestStartedAt.map { String(format: "%.2fs", Date().timeIntervalSince($0)) } ?? "unknown"
+        let aiOutcome = classifyAIOutcomeCategory()
+        let miniBanner = classifyMiniAppsBannerCategory()
+        let summary = "case=\(caseKind) stage=\(stage) elapsed=\(elapsed) ai_state=\(describeState(ai.state)) mini_state=\(describeState(mini.state)) ai_outcome=\(aiOutcome) mini_banner=\(miniBanner)"
+        let attachment = XCTAttachment(string: summary)
+        attachment.name = "paired-return-diagnostics"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        return summary
+    }
+
+    private func classifyAIOutcomeCategory() -> String {
+        let failedElement = ai.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@ OR value CONTAINS %@", "PAIRED_RESULT_NOT_VERIFIED", "PAIRED_RESULT_NOT_VERIFIED")).firstMatch
+        if failedElement.exists { return "paired_result_not_verified" }
+        if ai.alerts["Mini App result unavailable"].exists { return "alert_result_unavailable" }
+        if ai.buttons["hanlin-tool-consent-allow-once"].exists { return "consent_still_pending" }
+        return "pending_or_missing"
+    }
+
+    private func classifyMiniAppsBannerCategory() -> String {
+        let interrupted = "This action was interrupted. Its outcome must be checked before it can run again."
+        let returnFailed = "The request could not be opened or returned to Hanlin. Open Hanlin and try again."
+        if mini.staticTexts[interrupted].exists { return "outcome_unknown_banner" }
+        if mini.staticTexts[returnFailed].exists { return "open_or_return_failed_banner" }
+        if mini.staticTexts["Request unavailable"].exists { return "request_unavailable_view" }
+        return "none"
+    }
+
+    private func describeState(_ state: XCUIApplication.State) -> String {
+        switch state {
+        case .notRunning: return "notRunning"
+        case .runningBackgroundSuspended: return "runningBackgroundSuspended"
+        case .runningBackground: return "runningBackground"
+        case .runningForeground: return "runningForeground"
+        case .unknown: return "unknown"
+        @unknown default: return "unknown"
+        }
     }
 
     private func reveal(_ app: XCUIApplication, identifier: String, container: String) {
