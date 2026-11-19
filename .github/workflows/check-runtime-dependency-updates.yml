@@ -14,7 +14,7 @@ on:
       base_branch:
         description: Original maintained branch or isolated acceptance base
         type: choice
-        options: [codex/hanlin-product-completion-20261117, codex/upstream-acceptance-base-20261119-v2]
+        options: [codex/hanlin-product-completion-20261117, codex/upstream-acceptance-base-20261119-v3]
         default: codex/hanlin-product-completion-20261117
       candidate_pr:
         description: Existing same-repository proposal for candidate operations
@@ -62,7 +62,7 @@ jobs:
           number=os.environ.get("CANDIDATE_PR","")
           baseline=os.environ["RUNTIME_BASELINE_RUN_ID"]
           package=os.environ.get("PACKAGE_NAME","")
-          allowed={"codex/hanlin-product-completion-20261117","codex/upstream-acceptance-base-20261119-v2"}
+          allowed={"codex/hanlin-product-completion-20261117","codex/upstream-acceptance-base-20261119-v3"}
           if repo!="davidpovarsky/hanlin-ai" or base not in allowed or not baseline.isdigit():
               raise RuntimeError("Unrecognized original repository/base/native origin")
           def api(path,body=None):
