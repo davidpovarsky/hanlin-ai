@@ -172,8 +172,9 @@ final class HanlinPairedProductUITests: XCTestCase {
         XCTAssertTrue(identity.waitForExistence(timeout: 10))
         let originalChat = identity.label
         XCTAssertNotNil(UUID(uuidString: originalChat))
-        input().tap(); input().typeText(prompt)
-        XCTAssertEqual(input().value as? String, prompt, "Native typing must preserve the original request before Send")
+        let editor = input()
+        typeNativeText(prompt, into: editor, failureMessage: "Native typing must preserve the original request before Send")
+        XCTAssertEqual(editor.value as? String, prompt, "Native typing must preserve the original request before Send")
         tap(ai, "hanlin-chat-send")
         tap(ai, "hanlin-tool-consent-allow-once")
         pairedRequestStartedAt = Date()
@@ -200,9 +201,80 @@ final class HanlinPairedProductUITests: XCTestCase {
     }
 
     private func replace(_ field: XCUIElement, with value: String) {
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(
+            format: "exists == true AND enabled == true AND hittable == true"), object: field)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 30), .completed, "Unreachable text field")
         field.tap()
         let previous = field.value as? String ?? ""
-        field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: previous.count) + value)
+        if !previous.isEmpty {
+            field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: previous.count))
+            let cleared = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "value == '' OR value == %@ OR value == nil", "Name"), object: field)
+            XCTAssertEqual(XCTWaiter.wait(for: [cleared], timeout: 10), .completed, "Text field did not clear before native typing")
+        }
+        typeNativeSegments(value, into: field, failureMessage: "Native typing must preserve the companion value")
+        XCTAssertEqual(field.value as? String, value, "Native typing must preserve the companion value")
+    }
+
+    private func typeNativeText(
+        _ text: String,
+        into field: XCUIElement,
+        failureMessage: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(
+            format: "exists == true AND enabled == true AND hittable == true"), object: field)
+        XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 30), .completed,
+                       "Native text input was not ready before typing", file: file, line: line)
+        field.tap()
+        let placeholderCleared = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value != %@", "Message"), object: field)
+        XCTAssertEqual(XCTWaiter.wait(for: [placeholderCleared], timeout: 10), .completed,
+                       "Native text input did not gain focus and clear placeholder", file: file, line: line)
+        typeNativeSegments(text, into: field, failureMessage: failureMessage, file: file, line: line)
+    }
+
+    private func typeNativeSegments(
+        _ text: String,
+        into field: XCUIElement,
+        failureMessage: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        var expected = ""
+        for chunk in Self.nativeTypingSegments(text) {
+            field.typeText(chunk)
+            expected += chunk
+            let synced = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "value == %@", expected), object: field)
+            if XCTWaiter.wait(for: [synced], timeout: 10) != .completed {
+                let actual = field.value as? String
+                XCTAssertEqual(actual, expected,
+                               "\(failureMessage) (segment=\(chunk) expectedLength=\(expected.count) actualLength=\(actual?.count ?? -1))",
+                               file: file, line: line)
+                return
+            }
+        }
+    }
+
+    private static func nativeTypingSegments(_ text: String) -> [String] {
+        var chunks: [String] = []
+        var current = ""
+        for ch in text {
+            if ch == "_" {
+                if !current.isEmpty { chunks.append(current); current = "" }
+                chunks.append(String(ch))
+            } else {
+                current.append(ch)
+                if current.count >= 12 {
+                    chunks.append(current)
+                    current = ""
+                }
+            }
+        }
+        if !current.isEmpty { chunks.append(current) }
+        return chunks
     }
 
     private func assertText(_ app: XCUIApplication, _ value: String) {
@@ -231,7 +303,8 @@ final class HanlinPairedProductUITests: XCTestCase {
         let elapsed = pairedRequestStartedAt.map { String(format: "%.2fs", Date().timeIntervalSince($0)) } ?? "unknown"
         let aiOutcome = classifyAIOutcomeCategory()
         let miniBanner = classifyMiniAppsBannerCategory()
-        let summary = "case=\(caseKind) stage=\(stage) elapsed=\(elapsed) ai_state=\(describeState(ai.state)) mini_state=\(describeState(mini.state)) ai_outcome=\(aiOutcome) mini_banner=\(miniBanner)"
+        let miniFailure = classifyMiniAppsFailureCode()
+        let summary = "case=\(caseKind) stage=\(stage) elapsed=\(elapsed) ai_state=\(describeState(ai.state)) mini_state=\(describeState(mini.state)) ai_outcome=\(aiOutcome) mini_banner=\(miniBanner) mini_failure=\(miniFailure)"
         let attachment = XCTAttachment(string: summary)
         attachment.name = "paired-return-diagnostics"
         attachment.lifetime = .keepAlways
@@ -254,6 +327,14 @@ final class HanlinPairedProductUITests: XCTestCase {
         if mini.staticTexts[interrupted].exists { return "outcome_unknown_banner" }
         if mini.staticTexts[returnFailed].exists { return "open_or_return_failed_banner" }
         if mini.staticTexts["Request unavailable"].exists { return "request_unavailable_view" }
+        return "none"
+    }
+
+    private func classifyMiniAppsFailureCode() -> String {
+        let button = mini.buttons["miniapps.return-to-origin"].firstMatch
+        if button.exists, let code = button.value as? String, !code.isEmpty {
+            return code
+        }
         return "none"
     }
 

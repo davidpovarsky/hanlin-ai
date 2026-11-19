@@ -9,10 +9,17 @@ struct HanlinMiniAppsApplication: App {
 }
 
 private struct HanlinMiniAppsWindow: View {
+    @Environment(\.openURL) private var openURL
     @State private var foreground = MiniAppsForegroundBridge()
     @State private var incomingURL: URL?
     @State private var showsImport = false
     @State private var bootstrap = HanlinMiniAppsBootstrap(preparation: Self.prepareStorage)
+
+    private func openReturnURL(_ url: URL) async -> Bool {
+        await withCheckedContinuation { continuation in
+            openURL(url) { continuation.resume(returning: $0) }
+        }
+    }
 
     @MainActor
     private static func prepareStorage() async throws {
@@ -64,13 +71,16 @@ private struct HanlinMiniAppsWindow: View {
                 NavigationStack {
                     destination.view.toolbar {
                         ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancel") { Task { await foreground.cancelAndClose() } }
+                            Button("Cancel") { Task { await foreground.cancelAndClose(openURL: openReturnURL) } }
                                 .disabled(foreground.returning)
                         }
                         ToolbarItem(placement: .confirmationAction) {
-                            Button("Return to Hanlin") { Task { await foreground.returnToOrigin() } }
+                            Button("Return to Hanlin") { Task { await foreground.returnToOrigin(openURL: openReturnURL) } }
                                 .disabled(foreground.returning)
                                 .accessibilityIdentifier("miniapps.return-to-origin")
+                                #if DEBUG || HANLIN_TESTING
+                                .accessibilityValue(foreground.lastFailureCode ?? "")
+                                #endif
                         }
                     }
                 }

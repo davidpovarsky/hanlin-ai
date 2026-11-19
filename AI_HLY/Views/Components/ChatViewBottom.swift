@@ -1397,7 +1397,7 @@ struct ChatViewBottom: View {
                     .accessibilityIdentifier("hanlin-chat-input")
                     .onChange(of: message) {
                         popupCoordinator.dockState.handleDraftTextChange(message)
-                        if chatRecord.modelContext != nil {
+                        if chatRecord.modelContext != nil, chatRecord.input != message {
                             chatRecord.input = message
                         }
                         debounceWorkItem?.cancel()
@@ -1405,7 +1405,9 @@ struct ChatViewBottom: View {
                             updateModelSuggestions()
                             extractURLs(from: message)
                             if chatRecord.modelContext != nil {
-                                chatRecord.input = message
+                                if chatRecord.input != message {
+                                    chatRecord.input = message
+                                }
                                 do {
                                     try context.save()
                                 } catch {
@@ -1710,6 +1712,13 @@ struct ChatViewBottom: View {
                         || !selectedDocumentURLs.isEmpty
                         || !selectedPrompts.isEmpty
                         || !message.isEmpty {
+                let sendEnabled = Self.shouldEnableSend(
+                    message: message,
+                    selectedImagesCount: selectedImages.count,
+                    selectedDocumentsCount: selectedDocumentURLs.count,
+                    selectedPromptsCount: selectedPrompts.count,
+                    isResponding: isResponding
+                )
                 Button(action: onSendUser) {
                     Image(systemName: "arrowtriangle.up.circle.fill")
                         .resizable()
@@ -1717,16 +1726,8 @@ struct ChatViewBottom: View {
                         .foregroundColor(sendButtonColor)
                 }
                 .accessibilityIdentifier("hanlin-chat-send")
-                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: message)
-                .disabled(
-                    !Self.shouldEnableSend(
-                        message: message,
-                        selectedImagesCount: selectedImages.count,
-                        selectedDocumentsCount: selectedDocumentURLs.count,
-                        selectedPromptsCount: selectedPrompts.count,
-                        isResponding: isResponding
-                    )
-                )
+                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: sendEnabled)
+                .disabled(!sendEnabled)
             } else {
                 Button(action: onSendObserve) {
                     Image(systemName: "eye.circle.fill")
@@ -1735,7 +1736,7 @@ struct ChatViewBottom: View {
                         .foregroundColor(observeButtonColor)
                 }
                 .accessibilityIdentifier("hanlin-chat-observe")
-                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: message)
+                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: canObserveCurrentChat)
                 .disabled(!canObserveCurrentChat)
             }
         }

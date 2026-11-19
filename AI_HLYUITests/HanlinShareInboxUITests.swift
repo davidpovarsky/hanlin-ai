@@ -37,8 +37,9 @@ final class HanlinShareInboxUITests: XCTestCase {
         XCTAssertTrue(identity.waitForExistence(timeout: 15))
         let chatID = identity.label
         let original = "UNSENT_PREEXISTING_" + nonce
-        tap(input(app), app: app); input(app).typeText(original)
-        XCTAssertEqual(input(app).value as? String, original, "Native typing must preserve the draft before opening the inbox")
+        let editor = input(app)
+        typeNativeText(original, into: editor, app: app, failureMessage: "Native typing must preserve the draft before opening the inbox")
+        XCTAssertEqual(editor.value as? String, original, "Native typing must preserve the draft before opening the inbox")
         openInbox(app)
         XCTAssertTrue(app.staticTexts["SHARE_DRAFT_" + nonce].waitForExistence(timeout: 20))
         tap(app.buttons["hanlin-share-inbox-cancel"], app: app)
@@ -73,6 +74,54 @@ final class HanlinShareInboxUITests: XCTestCase {
     private func input(_ app: XCUIApplication) -> XCUIElement {
         let field = app.textFields["hanlin-chat-input"].firstMatch
         return field.exists ? field : app.textViews["hanlin-chat-input"].firstMatch
+    }
+
+    private func typeNativeText(
+        _ text: String,
+        into field: XCUIElement,
+        app: XCUIApplication,
+        failureMessage: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        tap(field, app: app, file: file, line: line)
+        let placeholderCleared = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value != %@", "Message"), object: field)
+        XCTAssertEqual(XCTWaiter.wait(for: [placeholderCleared], timeout: 10), .completed,
+                       "Native text input did not gain focus and clear placeholder", file: file, line: line)
+        var expected = ""
+        for chunk in Self.nativeTypingSegments(text) {
+            field.typeText(chunk)
+            expected += chunk
+            let synced = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "value == %@", expected), object: field)
+            if XCTWaiter.wait(for: [synced], timeout: 10) != .completed {
+                let actual = field.value as? String
+                XCTAssertEqual(actual, expected,
+                               "\(failureMessage) (segment=\(chunk) expectedLength=\(expected.count) actualLength=\(actual?.count ?? -1))",
+                               file: file, line: line)
+                return
+            }
+        }
+    }
+
+    private static func nativeTypingSegments(_ text: String) -> [String] {
+        var chunks: [String] = []
+        var current = ""
+        for ch in text {
+            if ch == "_" {
+                if !current.isEmpty { chunks.append(current); current = "" }
+                chunks.append(String(ch))
+            } else {
+                current.append(ch)
+                if current.count >= 12 {
+                    chunks.append(current)
+                    current = ""
+                }
+            }
+        }
+        if !current.isEmpty { chunks.append(current) }
+        return chunks
     }
 
     private func openInbox(_ app: XCUIApplication) {

@@ -284,7 +284,10 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             bounds.max = limit.maximum
             incompleteLayout = limit.forceScroll
         }
-        textView.isScrollEnabled = !isEmpty && (incompleteLayout || Self.shouldScrollInternally(fittingHeight: fitting, maxHeight: bounds.max))
+        let shouldScroll = !isEmpty && (incompleteLayout || Self.shouldScrollInternally(fittingHeight: fitting, maxHeight: bounds.max))
+        if textView.isScrollEnabled != shouldScroll {
+            textView.isScrollEnabled = shouldScroll
+        }
         let height = Self.calculatedHeight(fittingHeight: fitting, minHeight: bounds.min, maxHeight: bounds.max)
         observeMeasurement?(.init(fitting: fitting, minimum: bounds.min, maximum: bounds.max,
             lineCount: measuredLines?.count, sixthBottom: measuredLines?.sixthBottom,
@@ -347,7 +350,8 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
         context.coordinator.synchronizeText(in: uiView)
 
-        let clampedHeight = measuredHeight(for: uiView, isEmpty: currentText.isEmpty)
+        let editorIsEmpty = uiView.textColor == .placeholderText || (uiView.text ?? "").isEmpty
+        let clampedHeight = measuredHeight(for: uiView, isEmpty: editorIsEmpty)
         if abs(textHeight - clampedHeight) > 1 {
             DispatchQueue.main.async {
                 self.textHeight = clampedHeight
@@ -478,15 +482,15 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
         public func textViewDidBeginEditing(_ textView: UITextView) {
             isEditing = true
+            if textView.textColor == .placeholderText {
+                textView.text = ""
+                textView.textColor = .label
+            }
             #if DEBUG || HANLIN_TESTING
             traceEdit("focus-begin", in: textView)
             #endif
             parent.onFocusChange?(true)
             parent.onLifecycleEvent?(textView, .focusChanged(true))
-            if textView.textColor == .placeholderText {
-                textView.text = ""
-                textView.textColor = .label
-            }
         }
 
         public func textViewDidEndEditing(_ textView: UITextView) {
