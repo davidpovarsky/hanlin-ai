@@ -12,6 +12,7 @@
 
 import SwiftUI
 import SwiftData
+import UIKit
 
 enum HanlinCompactWorkspaceRoute: Hashable, Sendable {
     case allConversations
@@ -114,10 +115,9 @@ struct HanlinCompactChatWorkspace: View {
     }
 
     var body: some View {
-        // The NavigationStack's UIKit-backed content avoids the keyboard, but
-        // its external safe-area inset remained at the window bottom in the
-        // original native snapshots. Give the navigation and the ONE persistent
-        // dock the same flexible SwiftUI proposal so both resize together.
+        // NavigationStack receives keyboard insets in its own UIKit content
+        // host. The persistent sibling dock needs the same visible viewport;
+        // the outer workspace owns keyboard avoidance for both children.
         VStack(spacing: 0) {
             navigationRoot(availableHeight: max(0, workspaceSize.height - (composerVisible ? dockHeight : 0)))
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -137,6 +137,7 @@ struct HanlinCompactChatWorkspace: View {
                 workspaceSize = newSize
             }
             .compactWorkspaceGeometryProbe("workspace")
+            .modifier(HanlinCompactKeyboardAvoidance())
             .animation(.spring(response: 0.36, dampingFraction: 0.88), value: composerVisible)
             .onChange(of: path) { oldPath, newPath in
                 isCompactComposerInputActive = false
@@ -436,6 +437,107 @@ struct HanlinCompactChatWorkspace: View {
             if abs(dockHeight - clamped) > 1 {
                 dockHeight = clamped
             }
+        }
+    }
+}
+
+// The probe measures the unpadded workspace, so applying its inset does not
+// move its own reference bounds. Navigation and the ONE existing composer keep
+// their SwiftUI identity, environment, bindings and native editor first responder.
+@MainActor
+private struct HanlinCompactKeyboardAvoidance: ViewModifier {
+    @State private var keyboardOverlap: CGFloat = 0
+
+    func body(content: Content) -> some View {
+        content
+            .padding(.bottom, keyboardOverlap)
+            .background {
+                HanlinCompactKeyboardGuideProbe { overlap in
+                    guard keyboardOverlap != overlap else { return }
+                    keyboardOverlap = overlap
+                }
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+            }
+            // This owner already applies the actual keyboard intersection.
+            // Child NavigationStack hosts must not apply it a second time.
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+    }
+}
+
+@MainActor
+private struct HanlinCompactKeyboardGuideProbe: UIViewRepresentable {
+    var onOverlapChanged: (CGFloat) -> Void
+
+    func makeUIView(context: Context) -> HanlinCompactKeyboardGuideView {
+        let view = HanlinCompactKeyboardGuideView()
+        view.onOverlapChanged = onOverlapChanged
+        return view
+    }
+
+    func updateUIView(_ uiView: HanlinCompactKeyboardGuideView, context: Context) {
+        uiView.onOverlapChanged = onOverlapChanged
+        uiView.setNeedsLayout()
+    }
+}
+
+@MainActor
+private final class HanlinCompactKeyboardGuideView: UIView {
+    var onOverlapChanged: ((CGFloat) -> Void)?
+    private let keyboardTopMarker = UIView()
+    private var pendingOverlap: CGFloat = 0
+    private var deliveredOverlap: CGFloat?
+    private var deliveryScheduled = false
+
+    init() {
+        super.init(frame: .zero)
+        isUserInteractionEnabled = false
+        isAccessibilityElement = false
+
+        // A floating keyboard must not displace the whole workspace. UIKit
+        // owns docked/split/hardware-keyboard geometry for this actual view.
+        keyboardLayoutGuide.followsUndockedKeyboard = false
+        keyboardLayoutGuide.usesBottomSafeArea = false
+
+        keyboardTopMarker.translatesAutoresizingMaskIntoConstraints = false
+        keyboardTopMarker.isUserInteractionEnabled = false
+        keyboardTopMarker.isAccessibilityElement = false
+        addSubview(keyboardTopMarker)
+        NSLayoutConstraint.activate([
+            keyboardTopMarker.topAnchor.constraint(equalTo: keyboardLayoutGuide.topAnchor),
+            keyboardTopMarker.leadingAnchor.constraint(equalTo: leadingAnchor),
+            keyboardTopMarker.trailingAnchor.constraint(equalTo: trailingAnchor),
+            keyboardTopMarker.heightAnchor.constraint(equalToConstant: 0)
+        ])
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        setNeedsLayout()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let overlap = min(bounds.height, max(0, bounds.maxY - keyboardTopMarker.frame.minY))
+        guard overlap.isFinite else { return }
+        pendingOverlap = overlap
+        guard deliveredOverlap != overlap, !deliveryScheduled else { return }
+        deliveryScheduled = true
+
+        // Coalesce native layout passes and publish outside the current
+        // SwiftUI layout update. No keyboard notifications, screen bounds,
+        // assumed keyboard height or replacement editor are involved.
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.deliveryScheduled = false
+            guard self.window != nil,
+                  self.deliveredOverlap != self.pendingOverlap else { return }
+            self.deliveredOverlap = self.pendingOverlap
+            self.onOverlapChanged?(self.pendingOverlap)
         }
     }
 }
