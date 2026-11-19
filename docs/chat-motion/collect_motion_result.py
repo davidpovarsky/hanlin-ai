@@ -40,6 +40,24 @@ if bundle.exists():
 else:
     status["readability"] = "NO_RESULT_BUNDLE"
 
+# Retain the owned diagnostic action receipts even when a later setup assertion
+# fails. This exports existing XCTest evidence; it does not rerun any gesture.
+scope_path = evidence / "selected-scope.txt"
+if bundle.exists() and scope_path.exists() and scope_path.read_text().strip() == "input-diagnostic":
+    try:
+        result = subprocess.run(
+            ["xcrun", "xcresulttool", "export", "attachments", "--path", str(bundle),
+             "--output-path", str(evidence / "input-diagnostic-attachments"),
+             "--test-id", "MotionUITests/testDRapidInputDiagnosticOnly()"],
+            capture_output=True, timeout=90, check=False)
+        (evidence / "input-diagnostic-attachments-export.log").write_bytes(
+            result.stdout + b"\nSTDERR\n" + result.stderr)
+        status["diagnostic_attachments"] = {
+            "status": "EXPORTED" if result.returncode == 0 else "EXPORT_FAILED",
+            "exit_code": result.returncode}
+    except (OSError, subprocess.SubprocessError) as error:
+        status["diagnostic_attachments"] = {"status": "EXPORT_FAILED", "error": str(error)}
+
 if test_code or status["readability"] != "READABLE":
     diagnostics = evidence / "test-runner-diagnostics"
     diagnostics.mkdir(exist_ok=True)

@@ -1,0 +1,67 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "F750A6E7-4B8F-4473-A504-AF3960840DDE",
+      "deviceName" : "Hanlin-Phase2-Motion-44437763739",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertEqual failed: (\"static=collapsed;animated=transitioning\") is not equal to (\"static=collapsed;animated=collapsed\")",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-motion-ui.9h87TOkO/proof/UITests/MotionUITests.swift",
+                        "lineNumber" : 234
+                      }
+                    },
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "55s",
+                  "durationInSeconds" : 55.59066700935364,
+                  "name" : "testDRapidInputDiagnosticOnly()",
+                  "nodeIdentifier" : "MotionUITests/testDRapidInputDiagnosticOnly()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testDRapidInputDiagnosticOnly",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "MotionUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "ChatMotionProofUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "ChatMotionProof",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

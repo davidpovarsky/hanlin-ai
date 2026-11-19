@@ -125,7 +125,7 @@ private struct MotionProofContent: View {
 // Opt-in input experiment only. The normal Motion proof screen and production
 // component bodies stay unchanged; this screen provides native reference controls.
 private struct MotionRapidInputDiagnostic: View {
-    private struct ProbeState {
+    private struct ProbeState: Codable {
         var expanded = false
         var visible: CGFloat = 0
         var natural: CGFloat = 0
@@ -151,6 +151,11 @@ private struct MotionRapidInputDiagnostic: View {
 
     private var receiptJSON: String {
         guard let data = try? JSONEncoder().encode(samples) else { return "[]" }
+        return String(decoding: data, as: UTF8.self)
+    }
+
+    private var geometryReceiptJSON: String {
+        guard let data = try? JSONEncoder().encode(probes) else { return "{}" }
         return String(decoding: data, as: UTF8.self)
     }
 
@@ -242,6 +247,7 @@ private struct MotionRapidInputDiagnostic: View {
             Text("static=\(geometry("static"));animated=\(geometry("animated"))")
                 .lineLimit(1).frame(height: 24)
                 .accessibilityIdentifier("rapid-input-geometry")
+                .accessibilityValue(geometryReceiptJSON)
         }
     }
 }

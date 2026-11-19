@@ -1,0 +1,44 @@
+{
+  "scope": "Motion components; original app/renderer/engine/scroll regression NOT_RUN",
+  "files": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "sha256": "3481cd9d74a08f949a239b05f343ef644070dd5929bab236f72da6c994337061"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "sha256": "e63652e5b1184f06ce33f921672890b70d5949a0cb04803bf08a30207027fa52"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "sha256": "b4c30df7ecdab7b7ef1c35cc6108279f0d34bf7b928e0291f4b95572f9a44081"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "sha256": "b5b3163eb67a803a88857fc4d845d5fd7379d7377afa2f839c7c50aed3c08440"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "sha256": "132e8a34f732f3182fef9e6ba44db3ce386490474ef4eef8fd33904c5a17e9f2"
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/App.swift",
+      "sha256": "ff393f3c31583fd92d63c506f716c403eb616ff12e700f8bf3e6ccc0ed9eec6b"
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "sha256": "ff1e75ca92953ddfd2a6ca49d9663eb73aa116ad66a1339c7cd6b0ad9936f8c8"
+    },
+    {
+      "path": "AI_HLY/Assets.xcassets/HLBluefont.colorset/Contents.json",
+      "sha256": "26b4ae7db29ab464477bb180ee79ee8ed773d293ed33c70978885500b8300b08"
+    },
+    {
+      "path": "AI_HLY/Resource/Localizable.xcstrings",
+      "sha256": "8c2f85e53f3b4cc6a063a4a9a840885dbf6ed6ba2b1c833f768e4d381d8e6955"
+    }
+  ],
+  "extracted_snippets_sha256": "708e245aea825878c9436c1b63d3bc8ee583ee9ec4a5a2bbe7e99db87bf89f27",
+  "extraction": "Exact LoadingGradientText and original nested ToggleButton; imports narrowed to SwiftUI, outer ToggleButton access changed private to internal only; no body edits",
+  "project_spec_sha256": "5d76d096a60745f7b5da767bbf7612965e4d9f902501efef95562ee66aa5ad0a"
+}

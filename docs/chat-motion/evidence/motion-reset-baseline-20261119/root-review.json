@@ -1,0 +1,23 @@
+{
+  "base": "873607e45e021b40fe5b940c836d398c329f95c8",
+  "reviewed_at": "2026-11-19T03:48:22.197370+00:00",
+  "before": {
+    "docs/chat-motion/MotionUI/App.swift": "ee6be1339f02f0cf83d658660fcf947df6bcdf005497301df096e089f63fe63f",
+    "docs/chat-motion/MotionUI/MotionUITests.swift": "a0c550806ddba1df3044a50eb49a1ad576bfb54bf61dc8d0cbe8dcc69270c189",
+    "docs/chat-motion/collect_motion_result.py": "bb8988baf48e7010640cffa4c5ba81a1be89a90c869dfe2d2c55a8e08e042c6f"
+  },
+  "after": {
+    "docs/chat-motion/MotionUI/App.swift": "ff393f3c31583fd92d63c506f716c403eb616ff12e700f8bf3e6ccc0ed9eec6b",
+    "docs/chat-motion/MotionUI/MotionUITests.swift": "ff1e75ca92953ddfd2a6ca49d9663eb73aa116ad66a1339c7cd6b0ad9936f8c8",
+    "docs/chat-motion/collect_motion_result.py": "861478e73cae505bae1981f9b0e063fbd7a46d77a3b6be1a41f002754ac7156b"
+  },
+  "swift_parse": [
+    "docs/chat-motion/MotionUI/App.swift",
+    "docs/chat-motion/MotionUI/MotionUITests.swift"
+  ],
+  "collector_python_compile": "PASS",
+  "original_acceptance_A_B_C_bytes_unchanged": true,
+  "production_sources_unchanged": true,
+  "change": "Five-second reset precondition only; same single native snapshot after each unchanged gesture. Add quantitative reset state and export the original D attachments.",
+  "native": "NOT_RUN"
+}

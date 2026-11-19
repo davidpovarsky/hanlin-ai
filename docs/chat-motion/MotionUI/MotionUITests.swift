@@ -230,7 +230,22 @@ final class MotionUITests: XCTestCase {
 
             for (identifier, delivery) in cases {
                 app.buttons["rapid-input-reset"].tap()
-                let geometrySnapshot = try app.staticTexts["rapid-input-geometry"].snapshot()
+                let geometryElement = app.staticTexts["rapid-input-geometry"]
+                // Reset is a setup transition, not an input-delivery deadline.
+                // Allow the original disclosure to close before the next gesture;
+                // keep the post-gesture action receipt a single native snapshot.
+                let resetExpectation = XCTNSPredicateExpectation(
+                    predicate: NSPredicate(format: "label == %@", "static=collapsed;animated=collapsed"),
+                    object: geometryElement)
+                let resetResult = XCTWaiter.wait(for: [resetExpectation], timeout: 5)
+                let geometrySnapshot = try geometryElement.snapshot()
+                let baseline = XCTAttachment(string:
+                    "\(geometrySnapshot.label); geometry=\(String(describing: geometrySnapshot.value))")
+                baseline.name = "\(phase)-\(identifier)-\(delivery)-reset-baseline"
+                baseline.lifetime = .keepAlways
+                add(baseline)
+                XCTAssertEqual(resetResult, .completed,
+                               "The original disclosure must finish reset within five seconds: \(geometrySnapshot.label)")
                 XCTAssertEqual(geometrySnapshot.label, "static=collapsed;animated=collapsed")
                 let button = app.buttons[identifier]
                 XCTAssertTrue(button.isHittable)
