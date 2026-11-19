@@ -30,12 +30,26 @@ final class AgentSkillsEmbeddedResultsUITests: XCTestCase {
         XCTAssertEqual(nextStepResult, .completed,
                        "Original model/Host did not reach its next visible step")
         if allow.exists {
+            // The original request is inside a collapsed DisclosureGroup.
+            // Review it through the same visible control as a user before
+            // approving this immutable one-use Host request.
+            let toggle = app.buttons["hanlin-tool-consent-review-toggle"].firstMatch
+            XCTAssertTrue(toggle.waitForExistence(timeout: 10))
+            reveal(toggle, in: app)
+            toggle.tap()
             let request = app.descendants(matching: .any)["hanlin-tool-consent-original-request"].firstMatch
-            XCTAssertTrue(request.exists)
+            XCTAssertTrue(request.waitForExistence(timeout: 10))
             XCTAssertTrue(request.label.contains("Acceptance Web Surface"))
             XCTAssertTrue(app.staticTexts.matching(NSPredicate(
                 format: "label CONTAINS 'create_web_view'")).firstMatch.exists)
+            let owner = app.descendants(matching: .any).matching(
+                NSPredicate(format: "identifier BEGINSWITH 'hanlin-tool-approval-'")).firstMatch
+            XCTAssertTrue(owner.exists)
+            let ownerID = owner.identifier
+            reveal(allow, in: app)
             allow.tap()
+            XCTAssertTrue(app.descendants(matching: .any)[ownerID].firstMatch.waitForNonExistence(timeout: 10),
+                          "The original one-use approval must be consumed")
         }
         XCTAssertTrue(final.waitForExistence(timeout: 60), "Original tool/exposure flow did not complete: \(app.debugDescription)")
 

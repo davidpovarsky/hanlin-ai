@@ -744,12 +744,7 @@ final class HanlinSkillCenterUITests: XCTestCase {
         guard list.exists else { return }
         for attempt in 0..<14 {
             if target.exists && target.isHittable { return }
-            let above = target.exists && !target.frame.isEmpty
-                ? target.frame.maxY < list.frame.minY
-                : attempt >= 7
-            let start = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.25 : 0.8))
-            let end = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.8 : 0.25))
-            start.press(forDuration: 0.1, thenDragTo: end)
+            guard scrollToward(target, in: list, searchUp: attempt >= 7) else { break }
         }
         let capture = XCTAttachment(string: app.debugDescription)
         capture.name = "skill-control-unreachable-" + target.identifier
@@ -845,14 +840,17 @@ final class HanlinSkillCenterUITests: XCTestCase {
     }
 
     private func tapElement(_ element: XCUIElement, file: StaticString = #filePath, line: UInt = #line) {
-        for _ in 0..<6 where !element.isHittable {
+        for attempt in 0..<6 {
+            // A for/where loop still performs all six AX queries after the
+            // element becomes reachable. Tap once and stop.
+            if element.exists && element.isHittable {
+                element.tap()
+                return
+            }
             let containers = ["hanlin-skill-detail-list", "hanlin-skill-center-list", "hanlin-skill-import-preview-list", "hanlin-settings-list"]
             guard let list = containers.map({ app.descendants(matching: .any)[$0].firstMatch })
-                .first(where: { $0.exists && !$0.frame.isEmpty }) else { break }
-            let above = element.exists && element.frame.maxY < list.frame.minY
-            let start = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.3 : 0.7))
-            let end = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? 0.7 : 0.3))
-            start.press(forDuration: 0.1, thenDragTo: end)
+                .first(where: { $0.exists && !$0.frame.isEmpty }),
+                scrollToward(element, in: list, searchUp: attempt >= 3) else { break }
         }
         let hittable = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
             element.exists && element.isHittable
@@ -861,6 +859,38 @@ final class HanlinSkillCenterUITests: XCTestCase {
         XCTAssertEqual(result, .completed, "Expected an accessible, hittable element", file: file, line: line)
         guard result == .completed else { return }
         element.tap()
+    }
+
+    /// UIKit's list frame includes content behind the navigation/search bars.
+    /// Scroll in the actually visible region, including when a row has crossed
+    /// above that region but remains in the list's accessibility snapshot.
+    private func scrollToward(_ target: XCUIElement, in list: XCUIElement, searchUp: Bool) -> Bool {
+        let frame = list.frame
+        guard frame.width.isFinite, frame.height.isFinite, !frame.isEmpty else { return false }
+        var visible = frame.intersection(app.frame)
+        guard !visible.isNull, !visible.isEmpty else { return false }
+        for bar in app.navigationBars.allElementsBoundByIndex {
+            let barFrame = bar.frame
+            if barFrame.intersects(visible), barFrame.minY < visible.midY {
+                let top = min(visible.maxY, max(visible.minY, barFrame.maxY))
+                visible = CGRect(x: visible.minX, y: top, width: visible.width, height: visible.maxY - top)
+            }
+        }
+        let keyboard = app.keyboards.firstMatch
+        if keyboard.exists, keyboard.frame.intersects(visible) {
+            visible.size.height = max(0, min(visible.maxY, keyboard.frame.minY) - visible.minY)
+        }
+        guard visible.height > 0 else { return false }
+        let targetFrame = target.exists ? target.frame : .null
+        let hasFrame = !targetFrame.isNull && !targetFrame.isEmpty
+            && targetFrame.minY.isFinite && targetFrame.maxY.isFinite
+        let above = hasFrame ? targetFrame.midY < visible.midY : searchUp
+        let low = (visible.minY + visible.height * 0.25 - frame.minY) / frame.height
+        let high = (visible.minY + visible.height * 0.8 - frame.minY) / frame.height
+        let start = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? low : high))
+        let end = list.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: above ? high : low))
+        start.press(forDuration: 0.1, thenDragTo: end)
+        return true
     }
 
     private func selectTab(identifier: String, labels: [String] = []) -> Bool {
