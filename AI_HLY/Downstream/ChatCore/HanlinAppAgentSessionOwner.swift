@@ -421,6 +421,29 @@ final class HanlinAppAgentSessionOwner {
         activeUIRunID = nil; activeReference = nil
     }
 
+    /// User-requested clear history uses the same original store and revision chain.
+    /// Revoke synchronously before any visible or canonical mutation; queued old writes
+    /// still have to pass the store's CAS after the empty replacement revision is saved.
+    func clearHistory(conversation: ChatRecords, conversationID: UUID, modelContext: ModelContext,
+                      temporary: Bool, replacementText: String) throws -> ChatMessages {
+        let namespace = try Self.namespace(conversationID: conversationID, temporary: temporary)
+        let originalStore: HanlinAppConversationStore
+        if let store, store.namespace == namespace,
+           store.belongsTo(context: modelContext, conversation: conversation, temporary: temporary) {
+            originalStore = store
+        } else {
+            originalStore = HanlinAppConversationStore(context: modelContext, conversation: conversation,
+                namespace: namespace, conversationID: conversationID, temporary: temporary)
+        }
+        cancel()
+        let replacement = try originalStore.clearHistory(replacementText: replacementText)
+        store = originalStore
+        bindings = []
+        inlineToolRowID = nil
+        inlineToolIsRunning = false
+        return replacement
+    }
+
     /// Synchronous authority revocation precedes any asynchronous cancellation/host cleanup.
     func revoke() {
         dataAccessBinding = nil

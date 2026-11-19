@@ -50,6 +50,12 @@ final class HanlinAppConversationStore: HanlinConversationStore {
     }
 
     func load(_ id: UUID, namespace: HanlinConversationNamespace) async throws -> HanlinConversationRecord? {
+        try readOriginalRecord(id, namespace: namespace)
+    }
+
+    /// A read/check/write stays in one synchronous MainActor operation. A suspended caller
+    /// cannot validate an older revision and then overwrite a clear-history revision.
+    private func readOriginalRecord(_ id: UUID, namespace: HanlinConversationNamespace) throws -> HanlinConversationRecord? {
         guard id == conversationID, namespace == self.namespace else { throw HanlinHostError.staleContext }
         let row = try requireOriginalConversation()
         let record: HanlinConversationRecord?
@@ -67,7 +73,7 @@ final class HanlinAppConversationStore: HanlinConversationStore {
 
     func save(_ record: HanlinConversationRecord, replacing revision: UInt64?) async throws {
         try record.validate()
-        let old = try await load(record.conversationID, namespace: record.namespace)
+        let old = try readOriginalRecord(record.conversationID, namespace: record.namespace)
         guard old?.revision == revision,
               revision.map({ $0 < UInt64.max && record.revision == $0 + 1 }) ?? (record.revision == 0) else {
             throw HanlinHostError.storeConflict
@@ -83,7 +89,7 @@ final class HanlinAppConversationStore: HanlinConversationStore {
     }
 
     func delete(_ id: UUID, namespace: HanlinConversationNamespace, replacing revision: UInt64) async throws {
-        guard try await load(id, namespace: namespace)?.revision == revision else { throw HanlinHostError.storeConflict }
+        guard try readOriginalRecord(id, namespace: namespace)?.revision == revision else { throw HanlinHostError.storeConflict }
         let row = try requireOriginalConversation()
         if temporary { transientRecord = nil; return }
         let original = row.agentSDKRecordData
@@ -91,6 +97,50 @@ final class HanlinAppConversationStore: HanlinConversationStore {
         do { try context.save() }
         catch { row.agentSDKRecordData = original; throw error }
     }
+    /// Clears the original visible history and canonical history in the same save.
+    /// An empty canonical revision remains as the CAS barrier, including revision zero when
+    /// a producer has not yet made its first save. Resetting to nil would admit that old create.
+    /// This is logical conversation-history deletion, not physical-store or account erasure.
+    func clearHistory(replacementText: String) throws -> ChatMessages {
+        let row = try requireOriginalConversation()
+        let old = try readOriginalRecord(conversationID, namespace: namespace)
+        guard old?.revision != UInt64.max else { throw HanlinHostError.storageLimitExceeded }
+        let cleared = HanlinConversationRecord(namespace: namespace, conversationID: conversationID,
+            revision: old.map { $0.revision + 1 } ?? 0)
+        let bytes = try JSONEncoder().encode(cleared)
+        guard row.modelContext == nil || row.modelContext === context else { throw HanlinHostError.staleContext }
+
+        // A never-inserted temporary conversation remains entirely ephemeral.
+        if temporary && row.modelContext == nil {
+            let replacement = ChatMessages(role: "information", text: replacementText,
+                reasoning: "", modelDisplayName: "系统", record: row)
+            row.messages = [replacement]
+            row.infoDescription = replacementText
+            transientRecord = cleared
+            return replacement
+        }
+
+        // Preserve unrelated pending edits before establishing the rollback boundary.
+        // No await separates this checkpoint, the deletion and the final save.
+        if context.hasChanges { try context.save() }
+        do {
+            for message in row.messages ?? [] { context.delete(message) }
+            let replacement = ChatMessages(role: "information", text: replacementText,
+                reasoning: "", modelDisplayName: "系统", record: row)
+            context.insert(replacement)
+            row.messages = [replacement]
+            row.infoDescription = replacementText
+            if !temporary { row.agentSDKRecordData = bytes }
+            try context.save()
+            if temporary { transientRecord = cleared }
+            return replacement
+        } catch {
+            // The checkpoint above means this rollback does not discard pre-existing edits.
+            context.rollback()
+            throw error
+        }
+    }
+
     /// Cold historical reconciliation only, when composition proves no live Session writer is
     /// running. Uses this SAME adapter/CAS and metadata receipt; never creates a missing record.
     func persistHistoricalReceipt(_ event: HanlinHostResultEvent, originReference: String,

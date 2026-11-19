@@ -58,6 +58,22 @@ private struct AppPartModel: LanguageModelV3 {
     }
 }
 
+@MainActor private final class AppHistoryWriteGate {
+    private var blocked: CheckedContinuation<Void, Never>?
+    private var observer: CheckedContinuation<Void, Never>?
+    func pause() async {
+        await withCheckedContinuation { continuation in
+            blocked = continuation
+            observer?.resume(); observer = nil
+        }
+    }
+    func waitUntilPaused() async {
+        if blocked != nil { return }
+        await withCheckedContinuation { observer = $0 }
+    }
+    func release() { blocked?.resume(); blocked = nil }
+}
+
 @Suite @MainActor struct HanlinAppAgentSessionOwnerTests {
     @Test func originalConsentExpiresRevokesAndRejectsStaleSheetAnswers() async throws {
         let ns = try HanlinConversationNamespace(app: "hanlin", account: "consent", workspace: "test", space: UUID().uuidString)
@@ -365,6 +381,225 @@ private struct AppPartModel: LanguageModelV3 {
         do { _ = try await store.load(id, namespace: ns); Issue.record("Deleted conversation was recreated") }
         catch { #expect(error as? HanlinHostError == .staleContext) }
         #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+    }
+
+
+    @Test func clearHistoryCommitsCanonicalBarrierAndVisibleReplacementToOriginalDiskStore() async throws {
+        let root = FileManager.default.temporaryDirectory
+            .appending(path: "hanlin-clear-history-" + UUID().uuidString, directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let url = root.appending(path: "OriginalChat.store"), id = UUID(), messageID = UUID()
+        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: "swiftdata", space: id.uuidString)
+        let oldText = "History to remove שלום e\u{301}"
+        let marker = "History cleared"
+        let canvas = CanvasData(title: "Independent canvas", content: "Retained document", type: "text")
+
+        @MainActor func database() throws -> ModelContainer {
+            try ModelContainer(for: ChatRecords.self, ChatSavedExcerpt.self,
+                configurations: ModelConfiguration(url: url, cloudKitDatabase: .none))
+        }
+        @MainActor func clearOriginalStore() async throws {
+            let container = try database(), context = container.mainContext
+            let row = ChatRecords(id: id, name: "Retained title", type: "chat",
+                description: oldText, input: "Retained unsent draft", canvas: canvas)
+            let oldMessage = ChatMessages(id: messageID, role: "assistant", text: oldText, record: row)
+            context.insert(row); context.insert(oldMessage); try context.save()
+            try ChatSavedExcerpt.save(source: .init(chatRecordID: id, messageID: messageID, groupID: nil,
+                runID: nil, title: "Independent bookmark"), markdown: oldText, quote: oldText, in: context)
+            let store = HanlinAppConversationStore(context: context, conversation: row,
+                namespace: namespace, conversationID: id, temporary: false)
+            try await store.save(.init(namespace: namespace, conversationID: id, revision: 0,
+                model: .init(provider: "original-provider", modelID: "original-model"), draft: "Old canonical draft",
+                entries: [.init(runID: UUID(), step: 0, sequence: 0, payload: .text(oldText))]), replacing: nil)
+            let owner = HanlinAppAgentSessionOwner()
+            let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id,
+                sceneID: UUID(), rowID: messageID, uiRunID: UUID(), temporary: false, interaction: nil)
+            let access = try owner.prepareDataAccess(request: request, modelContext: context)
+            let unrelated = ChatRecords(name: "Unrelated pending edit", type: "chat", input: "Keep this pending draft")
+            context.insert(unrelated) // The clear checkpoint must preserve an unrelated pending insert.
+            let replacement = try owner.clearHistory(conversation: row, conversationID: id,
+                modelContext: context, temporary: false, replacementText: marker)
+            #expect(replacement.text == marker && replacement.record === row)
+            #expect(owner.session == nil && owner.bindings.isEmpty)
+            #expect(throws: HanlinHostError.staleContext) {
+                try owner.requireDataAccess(access, request: request, modelContext: context)
+            }
+            let cleared = try #require(await store.load(id, namespace: namespace))
+            #expect(cleared.revision == 1 && cleared.entries.isEmpty && cleared.model == nil && cleared.draft.isEmpty)
+        }
+        try await clearOriginalStore()
+        #expect(FileManager.default.fileExists(atPath: url.path))
+        let reopened = try database(), context = reopened.mainContext
+        let rows = try context.fetch(FetchDescriptor<ChatRecords>())
+        let row = try #require(rows.first(where: { $0.id == id }))
+        #expect(rows.count == 2 && rows.contains { $0.input == "Keep this pending draft" })
+        #expect(row.name == "Retained title" && row.input == "Retained unsent draft" && row.canvas == canvas)
+        #expect(row.infoDescription == marker)
+        let messages = try context.fetch(FetchDescriptor<ChatMessages>())
+        #expect(messages.count == 1 && messages[0].text == marker && messages[0].record?.id == id)
+        #expect(!messages.contains { $0.id == messageID })
+        let bookmarks = try context.fetch(FetchDescriptor<ChatSavedExcerpt>())
+        #expect(bookmarks.count == 1 && bookmarks[0].quote == oldText)
+        let store = HanlinAppConversationStore(context: context, conversation: row,
+            namespace: namespace, conversationID: id, temporary: false)
+        let cleared = try #require(await store.load(id, namespace: namespace))
+        #expect(cleared.revision == 1 && cleared.entries.isEmpty && cleared.model == nil && cleared.draft.isEmpty)
+        #expect(!String(decoding: try #require(row.agentSDKRecordData), as: UTF8.self).contains("History to remove"))
+    }
+
+    @Test(arguments: [false, true])
+    func clearHistoryRejectsAlreadySuspendedOriginalStoreWriter(hadCanonicalRecord: Bool) async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original row", type: "chat"), id = try #require(row.id)
+        context.insert(row); try context.save()
+        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: "swiftdata", space: id.uuidString)
+        let store = HanlinAppConversationStore(context: context, conversation: row,
+            namespace: namespace, conversationID: id, temporary: false)
+        if hadCanonicalRecord {
+            try await store.save(.init(namespace: namespace, conversationID: id, revision: 0,
+                entries: [.init(runID: UUID(), step: 0, sequence: 0, payload: .text("Earlier history"))]), replacing: nil)
+        }
+        let gate = AppHistoryWriteGate()
+        defer { gate.release() }
+        let writer = Task { @MainActor in
+            let observed = try await store.load(id, namespace: namespace)
+            #expect((observed != nil) == hadCanonicalRecord)
+            let stale = HanlinConversationRecord(namespace: namespace, conversationID: id,
+                revision: observed.map { $0.revision + 1 } ?? 0,
+                entries: [.init(runID: UUID(), step: 0, sequence: 0, payload: .text("Must not resurrect"))])
+            await gate.pause() // Actual suspension after capturing the original expected revision.
+            do {
+                try await store.save(stale, replacing: observed?.revision)
+                return false
+            } catch {
+                #expect(error as? HanlinHostError == .storeConflict)
+                return true
+            }
+        }
+        await gate.waitUntilPaused()
+        let owner = HanlinAppAgentSessionOwner()
+        _ = try owner.clearHistory(conversation: row, conversationID: id,
+            modelContext: context, temporary: false, replacementText: "History cleared")
+        let barrier = try #require(await store.load(id, namespace: namespace))
+        #expect(barrier.revision == (hadCanonicalRecord ? 1 : 0) && barrier.entries.isEmpty)
+        gate.release()
+        #expect(try await writer.value)
+        #expect(try await store.load(id, namespace: namespace) == barrier)
+        // The barrier also admits a genuinely new writer that read the new revision.
+        let next = HanlinConversationRecord(namespace: namespace, conversationID: id, revision: barrier.revision + 1,
+            entries: [.init(runID: UUID(), step: 0, sequence: 0, payload: .text("New user turn"))])
+        try await store.save(next, replacing: barrier.revision)
+        #expect(try await store.load(id, namespace: namespace) == next)
+    }
+
+    @Test func clearHistorySaveFailureRestoresOriginalDiskContentWithoutSuccessMarker() async throws {
+        let root = FileManager.default.temporaryDirectory
+            .appending(path: "hanlin-clear-readonly-" + UUID().uuidString, directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let url = root.appending(path: "OriginalChat.store"), id = UUID(), messageID = UUID()
+        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: "swiftdata", space: id.uuidString)
+        let original = HanlinConversationRecord(namespace: namespace, conversationID: id, revision: 0,
+            entries: [.init(runID: UUID(), step: 0, sequence: 0, payload: .text("Original canonical content"))])
+        @MainActor func database(allowsSave: Bool) throws -> ModelContainer {
+            try ModelContainer(for: ChatRecords.self,
+                configurations: ModelConfiguration(url: url, allowsSave: allowsSave, cloudKitDatabase: .none))
+        }
+        @MainActor func seed() async throws {
+            let container = try database(allowsSave: true), context = container.mainContext
+            let row = ChatRecords(id: id, name: "Original title", type: "chat", description: "Original preview")
+            let message = ChatMessages(id: messageID, role: "user", text: "Original visible content", record: row)
+            context.insert(row); context.insert(message); try context.save()
+            let store = HanlinAppConversationStore(context: context, conversation: row,
+                namespace: namespace, conversationID: id, temporary: false)
+            try await store.save(original, replacing: nil)
+        }
+        try await seed()
+        @MainActor func rejectReadOnlyClear() async throws {
+            let container = try database(allowsSave: false), context = container.mainContext
+            context.autosaveEnabled = false
+            let row = try #require(context.fetch(FetchDescriptor<ChatRecords>()).first)
+            #expect(!context.hasChanges)
+            let owner = HanlinAppAgentSessionOwner()
+            do {
+                _ = try owner.clearHistory(conversation: row, conversationID: id, modelContext: context,
+                    temporary: false, replacementText: "Must not appear")
+                Issue.record("A read-only original store reported a successful history deletion")
+            } catch { #expect(!context.hasChanges, "Failed clear rolls back its own pending changes") }
+            #expect(row.infoDescription == "Original preview")
+            let store = HanlinAppConversationStore(context: context, conversation: row,
+                namespace: namespace, conversationID: id, temporary: false)
+            #expect(try await store.load(id, namespace: namespace) == original)
+            let messages = try context.fetch(FetchDescriptor<ChatMessages>())
+            #expect(messages.count == 1 && messages[0].id == messageID && messages[0].text == "Original visible content")
+        }
+        try await rejectReadOnlyClear()
+        let reopened = try database(allowsSave: true), context = reopened.mainContext
+        let row = try #require(context.fetch(FetchDescriptor<ChatRecords>()).first)
+        let store = HanlinAppConversationStore(context: context, conversation: row,
+            namespace: namespace, conversationID: id, temporary: false)
+        #expect(try await store.load(id, namespace: namespace) == original)
+        #expect(try context.fetch(FetchDescriptor<ChatMessages>()).map(\.id) == [messageID])
+    }
+
+    @Test func temporaryClearHistoryDropsOriginalSessionHistoryWithoutInsertingStoreRows() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Temporary original", type: "chat")
+        let id = try #require(row.id), scene = UUID(), messageID = UUID(), uiRun = UUID()
+        let part = try HanlinChatStructuredPart(messageID: messageID, partID: UUID(), sequence: 0,
+            payload: .textDelta("Temporary content to clear"))
+        let owner = HanlinAppAgentSessionOwner(), recorder = AppPresentationRecorder(), queue = AppPartQueue([part])
+        owner.presentation = recorder
+        let config = configuration()
+        let stream = try await owner.stream(request: .init(conversation: row, conversationID: id, sceneID: scene,
+            rowID: messageID, uiRunID: uiRun, temporary: true, interaction: nil), modelContext: context,
+            configuration: config, engineFactory: { factory(config, queue: queue) }, toolAdapter: nil,
+            messages: [.init(role: .user, text: "Temporary original")], systemPrompt: nil)
+        for try await event in stream { try owner.receive(event, uiRunID: uiRun) }
+        try owner.producerStreamDrained(uiRunID: uiRun)
+        #expect(!owner.bindings.isEmpty)
+        let replacement = try owner.clearHistory(conversation: row, conversationID: id,
+            modelContext: context, temporary: true, replacementText: "Temporary history cleared")
+        #expect(replacement.text == "Temporary history cleared")
+        #expect(row.agentSDKRecordData == nil && row.modelContext == nil)
+        #expect(owner.session == nil && owner.bindings.isEmpty)
+        let previousReplays = recorder.replayed.count
+        try await owner.restoreHistory(conversation: row, conversationID: id, sceneID: scene,
+            temporary: true, modelContext: context)
+        #expect(owner.bindings.isEmpty && recorder.replayed.count == previousReplays)
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+        #expect(try context.fetch(FetchDescriptor<ChatMessages>()).isEmpty)
+    }
+
+    @Test(arguments: [false, true])
+    func clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord(futureFormat: Bool) async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original", type: "chat", description: "Original preview")
+        let id = try #require(row.id)
+        let message = ChatMessages(role: "user", text: "Original visible content", record: row)
+        context.insert(row); context.insert(message)
+        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: "swiftdata", space: id.uuidString)
+        let original = HanlinConversationRecord(formatVersion: futureFormat ? HanlinConversationRecord.currentFormat + 1 : HanlinConversationRecord.currentFormat,
+            namespace: namespace, conversationID: id, revision: futureFormat ? 0 : UInt64.max,
+            entries: [.init(runID: UUID(), step: 0, sequence: 0, payload: .text("Original canonical content"))])
+        let bytes = try JSONEncoder().encode(original)
+        row.agentSDKRecordData = bytes; try context.save()
+        let owner = HanlinAppAgentSessionOwner()
+        do {
+            _ = try owner.clearHistory(conversation: row, conversationID: id, modelContext: context,
+                temporary: false, replacementText: "Must not appear")
+            Issue.record("History clear erased metadata without an available canonical revision")
+        } catch {
+            #expect(error as? HanlinHostError == (futureFormat ? .unsupportedVersion : .storageLimitExceeded))
+        }
+        #expect(row.agentSDKRecordData == bytes && row.infoDescription == "Original preview")
+        let messages = try context.fetch(FetchDescriptor<ChatMessages>())
+        #expect(messages.count == 1 && messages[0].id == message.id)
     }
 
     @Test func diskBackedOriginalConversationReopensWithoutLosingLegacyOrCanonicalHistory() async throws {

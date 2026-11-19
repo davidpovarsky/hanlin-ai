@@ -168,6 +168,7 @@ struct ChatView: View {
     @State private var importError: String? = nil           // 导入错误信息
     @State private var isShowingImportErrorAlert = false    // 是否显示导入错误弹窗
     @State private var showClearChatConfirmation = false    // 清空聊天记录确认弹窗显示标志
+    @State private var showClearChatError = false
     @State private var showImportExplanationAlert = false   // 导入聊天记录说明弹窗显示标志
     
     // 便捷输入
@@ -921,6 +922,11 @@ struct ChatView: View {
             Text("是否要删除所有聊天记录？删除后不可恢复。")
                 .multilineTextAlignment(.leading)
         }
+        .alert("Unable to clear chat history", isPresented: $showClearChatError) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("The conversation was not cleared. Please try again.")
+        }
         .alert("导入聊天记录说明", isPresented: $showImportExplanationAlert) {
             Button("继续") {
                 isShowingImportPicker = true
@@ -1541,61 +1547,26 @@ struct ChatView: View {
     }
     
     private func newConversation() {
-        // 新建对话逻辑
-        deleteChatMessages()
-        insertDeleteMessage()
-    }
-    
-    // 插入清空消息
-    private func insertDeleteMessage() {
+        draftSaveTask?.cancel()
+        if isResponding { handleCancellation() }
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        
-        ifScroll = true
-        
-        // 适配清空聊天记录的提示
-        let clearChatText: String
-        if currentLanguage.hasPrefix("zh") {
-            clearChatText = "一切都是崭新的✨"
-        } else {
-            clearChatText = "Everything is brand new ✨"
-        }
-
-        // 创建清空聊天记录的消息
-        let welcomeMessage = ChatMessages(
-            role: "information",
-            text: clearChatText,
-            reasoning: "",
-            modelDisplayName: "系统",
-            timestamp: Date(),
-            record: chatRecord
-        )
-        
-        chatTemps.append(welcomeMessage)
-        context.insert(welcomeMessage)
+        let clearedText = currentLanguage.hasPrefix("zh")
+            ? "一切都是崭新的✨" : "Everything is brand new ✨"
         do {
-            try context.save()
+            guard let conversationID = chatRecord.id else { throw HanlinHostError.staleContext }
+            let replacement = try agentSessionOwner.clearHistory(conversation: chatRecord,
+                conversationID: conversationID, modelContext: context, temporary: TemporaryRecord,
+                replacementText: clearedText)
+            // Publish the success state only after the single original-store save succeeds.
+            chatTemps = [replacement]
+            selectedMessageIDs.removeAll()
+            isMultiSelectMode = false
+            ifScroll = true
         } catch {
-            print("Failed to save message: \(error)")
+            showClearChatError = true
         }
     }
-    
-    // 删除聊天记录
-    private func deleteChatMessages() {
-        chatTemps.removeAll()
-        
-        if let messages = chatRecord.messages {
-            for message in messages {
-                context.delete(message)
-            }
-        }
 
-        do {
-            try context.save()
-        } catch {
-            print("Failed to delete messages from database: \(error)")
-        }
-    }
-    
     // MARK: - 自动生成标题
     /// 异步独立执行，不阻塞主对话
     /// 触发条件：chatRecord.name == "新群聊" 且 user 消息数 >= 1 且 <= 3

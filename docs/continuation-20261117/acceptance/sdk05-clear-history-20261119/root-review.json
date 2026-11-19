@@ -1,0 +1,57 @@
+{
+  "reviewed_at": "2026-11-19T03:23:31.863954+00:00",
+  "parent_commit": "e3ccaeec5356f14891f2d6d26d3e34b5501e420e",
+  "source_base": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+  "patch_sha256": "9e844f56b27b35e21eca61cc867f1c1ff56af541f2f3fa315617b24a99a59696",
+  "source_hashes": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "base_sha256": "b6bcce0a80f381a372cfb5213092110b1b83f2bc589d849725616d2ff371de0b",
+      "proposed_sha256": "adad494a872a28a53b4143dcc7686fe77d8d23611a691f144b4ebe459ccd1593"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "base_sha256": "02547a1a784cf9902054ba713f20cb5147d975e92c554d4974422c105f158e53",
+      "proposed_sha256": "4f57a668dca2d6a06047498e9986751d31383e2f8e14f873052626bb9f31a2dd"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "base_sha256": "e328ce86d07d9a17e4f3d5e3d30895912604b65a452b1f3adc6bdd886fc684bd",
+      "proposed_sha256": "c042da669f660e20be9757da40a517b954bcb3c67b145238dee08dfba2636424"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "base_sha256": "bf426a03afae01cc903c94714cdca4c9f276a07800f6f2852418b2b87db7af30",
+      "proposed_sha256": "bd3c545b0605488adc795583b07dc0fc7ce2dcac89eca976befd6b1e70600764"
+    }
+  ],
+  "root_verified": [
+    "All four before/after file digests match the reviewed full patch.",
+    "Original clear confirmation is the sole newConversation call; no alternate database or parallel clear route.",
+    "Existing cancel synchronously revokes data/Session authority and detaches the Session before asynchronous invalidation.",
+    "Original history restoration checks historyGeneration/Session/row after suspension; clearing revokes that generation.",
+    "Same-owner old CAS writes face an empty incremented revision, including old nil/initial-create requests; replacement is admitted only after original-store save.",
+    "No await separates destructive mutation and save. Existing pending edits checkpoint before rollback boundary.",
+    "SwiftData disk reopen, actual read-only save failure, initial/existing late writers and temporary original Session paths are authored."
+  ],
+  "local_validation": {
+    "swift_parse": 0,
+    "git_apply_check": 0,
+    "git_diff_check": 0,
+    "native_execution": "NOT_RUN"
+  },
+  "limits": [
+    "No native compilation, SwiftData execution or UI interaction was run.",
+    "Read-only configuration rollback and temporary relationship behavior require the proposed actual SwiftData native tests.",
+    "This change clears history in the selected original owner/store; it does not implement account logout, CloudKit account fencing, all-window presentation cache invalidation, global erase, backup expiry or forensic SQLite/WAL erasure.",
+    "No credential migration, entitlement modification, account service or namespace schema is introduced."
+  ],
+  "native_selectors": [
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryCommitsCanonicalBarrierAndVisibleReplacementToOriginalDiskStore()",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryRejectsAlreadySuspendedOriginalStoreWriter(hadCanonicalRecord:)",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistorySaveFailureRestoresOriginalDiskContentWithoutSuccessMarker()",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/temporaryClearHistoryDropsOriginalSessionHistoryWithoutInsertingStoreRows()",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord(futureFormat:)"
+  ],
+  "status": "REVIEWED_APPLIED_LOCAL_PARSE_NATIVE_PENDING"
+}
