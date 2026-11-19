@@ -1,0 +1,36 @@
+{
+  "historicalRun": 44351078724,
+  "rawLogSHA256": "1bbdf3dc9187537ad3605ccb5eacb9c1285fe0521e9c673bb6c84f8936ec2bcf",
+  "before": null,
+  "after": {
+    "counts": {
+      "tests": 153,
+      "pass": 152,
+      "fail": 0,
+      "skipped": 1
+    },
+    "packedJitlessProbe": {
+      "passed": true,
+      "fetchImplementation": "node-fetch@3.3.2+native-web-api",
+      "webAssemblyAvailable": false,
+      "nonce": "4515d53c-6542-4440-a087-f6bc88a04590",
+      "contracts": [
+        "GET",
+        "Request POST Unicode",
+        "redirect",
+        "HTTP error",
+        "ReadableStream",
+        "clone",
+        "gzip",
+        "multipart File",
+        "abort",
+        "HEAD",
+        "204"
+      ]
+    },
+    "logSHA256": "1bbdf3dc9187537ad3605ccb5eacb9c1285fe0521e9c673bb6c84f8936ec2bcf"
+  },
+  "scope": "Authenticated historical raw-log parser replay only. No current candidate schema2 acceptance or fresh Host execution is claimed."
+}
+
+STDERR:

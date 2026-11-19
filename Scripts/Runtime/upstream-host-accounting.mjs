@@ -6,7 +6,7 @@ import { writeFile,mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 export const digest = value => createHash('sha256').update(value).digest('hex');
-export const EXPECTED_HOST_COUNTS = Object.freeze({tests:150,pass:149,fail:0,skipped:1});
+export const EXPECTED_HOST_COUNTS = Object.freeze({tests:153,pass:152,fail:0,skipped:1});
 const stages=['native-origin','host'];
 export const HOST_REUSE_LINE='Reusing verified current RuntimeHostResources.zip and its completed Host/JITless checks.';
 const sha256=value=>/^[a-f0-9]{64}$/.test(value??'');
