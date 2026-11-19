@@ -324,18 +324,71 @@ final class HanlinPairedProductUITests: XCTestCase {
     private func classifyMiniAppsBannerCategory() -> String {
         let interrupted = "This action was interrupted. Its outcome must be checked before it can run again."
         let returnFailed = "The request could not be opened or returned to Hanlin. Open Hanlin and try again."
-        if mini.staticTexts[interrupted].exists { return "outcome_unknown_banner" }
-        if mini.staticTexts[returnFailed].exists { return "open_or_return_failed_banner" }
-        if mini.staticTexts["Request unavailable"].exists { return "request_unavailable_view" }
+        if mini.alerts["Hanlin request unavailable"].firstMatch.exists { return "alert_request_unavailable" }
+        if mini.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", interrupted)).firstMatch.exists {
+            return "outcome_unknown_banner"
+        }
+        if mini.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", returnFailed)).firstMatch.exists {
+            return "open_or_return_failed_banner"
+        }
+        if mini.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Request unavailable")).firstMatch.exists {
+            return "request_unavailable_view"
+        }
         return "none"
     }
 
     private func classifyMiniAppsFailureCode() -> String {
-        let button = mini.buttons["miniapps.return-to-origin"].firstMatch
-        if button.exists, let code = button.value as? String, !code.isEmpty {
+        let alert = mini.alerts["Hanlin request unavailable"].firstMatch
+        if alert.exists {
+            for element in alert.staticTexts.allElementsBoundByIndex {
+                if let code = extractDiagnosticCode(from: element.label) {
+                    return code
+                }
+                if let value = element.value as? String, let code = extractDiagnosticCode(from: value) {
+                    return code
+                }
+            }
+        }
+        let failureText = mini.staticTexts["miniapps.last-failure-code"].firstMatch
+        if failureText.exists {
+            for candidate in [failureText.value as? String, failureText.label].compactMap({ $0 }) {
+                if let code = extractDiagnosticCode(from: candidate) {
+                    return code
+                }
+                let trimmed = candidate.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !trimmed.isEmpty,
+                   trimmed != "none",
+                   trimmed.allSatisfy({ $0.isASCII && ($0.isLetter || $0.isNumber || $0 == "_" || $0 == "-" || $0 == "." || $0 == ":") }) {
+                    return trimmed
+                }
+            }
+        }
+        let diagnosticBanner = mini.staticTexts.matching(
+            NSPredicate(format: "label CONTAINS %@", "[diagnostic:")
+        ).firstMatch
+        if diagnosticBanner.exists, let code = extractDiagnosticCode(from: diagnosticBanner.label) {
             return code
         }
+        let button = mini.buttons["miniapps.return-to-origin"].firstMatch
+        if button.exists, let code = button.value as? String, !code.isEmpty {
+            return extractDiagnosticCode(from: code) ?? code
+        }
         return "none"
+    }
+
+    private func extractDiagnosticCode(from text: String) -> String? {
+        guard let start = text.range(of: "[diagnostic:")?.upperBound,
+              let end = text[start...].firstIndex(of: "]") else {
+            return nil
+        }
+        let payload = text[start..<end]
+        let parts = payload.split(separator: ":", omittingEmptySubsequences: false)
+        guard parts.count == 2,
+              !parts[0].isEmpty, !parts[1].isEmpty,
+              parts.allSatisfy({ $0.allSatisfy { $0.isASCII && ($0.isLetter || $0.isNumber || $0 == "_" || $0 == "-" || $0 == ".") } }) else {
+            return nil
+        }
+        return "diagnostic:\(parts[0]):\(parts[1])"
     }
 
     private func describeState(_ state: XCUIApplication.State) -> String {
