@@ -1510,14 +1510,17 @@
       "description": "Original app product integration and execution acceptance",
       "patterns": [
         "AI_HLYTests/SkillRuntimeProductTests.swift",
-        "AI_HLYTests/SkillOpenClawPolicyTests.swift"
+        "AI_HLYTests/SkillOpenClawPolicyTests.swift",
+        "AI_HLYTests/MaintainedSkillCorpusTests.swift",
+        "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/**"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
       ],
       "unit_suites": [
         "AI_HLYTests/SkillRuntimeProductTests",
-        "AI_HLYTests/SkillOpenClawPolicyTests"
+        "AI_HLYTests/SkillOpenClawPolicyTests",
+        "AI_HLYTests/MaintainedSkillCorpusTests"
       ],
       "consumers": []
     },

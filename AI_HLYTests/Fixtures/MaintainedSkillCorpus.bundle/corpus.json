@@ -1,0 +1,647 @@
+{
+  "schema": 1,
+  "provenance": {
+    "openclawTag": "v2026.11.3",
+    "openclawCommit": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+    "hanlinCommit": "e0089cfb8c192530056aba39c7c8bbf945da75d3",
+    "openclawSourceVerification": "complete selected directories checked against original Git tree and Git blob SHA-1 plus SHA-256",
+    "scope": "23 genuinely maintained packages; original sources, names, resources and notices. Import/readiness is not external business execution."
+  },
+  "skills": [
+    {
+      "name": "apple-notes",
+      "directory": "openclaw/apple-notes",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/apple-notes",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "d280e7ffffeb182172da7afad23528ef9f73ee4905ab88ebb124046aa6e6aed7",
+          "gitBlob": "57740cad85399b3603568734207c1ad5b382d5d3",
+          "bytes": 1979
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "apple-reminders",
+      "directory": "openclaw/apple-reminders",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/apple-reminders",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "08413d063e71c7ad7e4691e81a1063b455b816957ce7898576c2653542e8303d",
+          "gitBlob": "ecb0220c22863c11a612f6c2d30b356536b140ce",
+          "bytes": 3039
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "control-ui",
+      "directory": "openclaw/control-ui",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/control-ui",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "aa54d5df5f8097fd3d2afeb0901502772919b226075d78b7fd9e5b12c25e0aea",
+          "gitBlob": "f0e0b4f5f5f08e8f6ad44515a213e5758e312a43",
+          "bytes": 7268
+        },
+        {
+          "path": "references/dashboards.md",
+          "sha256": "615ec9849acf53325a2552553951ff90fff71efdc1ca24d0128533a0835e07bf",
+          "gitBlob": "d98cb618d21a0d1d05f4fdd62589c486bec7b6ae",
+          "bytes": 4921
+        },
+        {
+          "path": "references/hosting.md",
+          "sha256": "e1a5045eb73101e2daeeeac489d25ee95399c35d6a499789b5fa38a607006fd6",
+          "gitBlob": "b71d4d886c5ff109b23c53c97d10434f5c521569",
+          "bytes": 4843
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "diagram-maker",
+      "directory": "openclaw/diagram-maker",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/diagram-maker",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "6195e03fcb04a1a68c4af72165e0c85efcd2719af79380d82e42996ea89ad74a",
+          "gitBlob": "006329dece78763d72231f1829de8480983648a4",
+          "bytes": 2357
+        },
+        {
+          "path": "references/excalidraw-patterns.md",
+          "sha256": "6fc8799815adc1ef0171f25f59431e7e60bfa072ad570a60c335383bd872bf56",
+          "gitBlob": "91b4dd1c88f68f8b70751e86d7c4b5d407913a0c",
+          "bytes": 1394
+        },
+        {
+          "path": "references/svg-template.md",
+          "sha256": "3a8b47dbaeb341377a4999ff227f088a3a7fe2bee7b1353929f11a1f30b20c71",
+          "gitBlob": "9c0ad6ea8a75bbf8e028d7aed21a745ad5fcc146",
+          "bytes": 1930
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "github",
+      "directory": "openclaw/github",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/github",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "04d13709b66a75f73774d47c1fb8446669623c8326c2d0af4e7d01017e2f29dc",
+          "gitBlob": "36336dadd380dfb06a71c382fffaa3e7b4962419",
+          "bytes": 5852
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "gog",
+      "directory": "openclaw/gog",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/gog",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "d54a8e52b1e00bb5d33b46915fd549f8b792ef3a383fe40e92b195d11d2d5255",
+          "gitBlob": "49b445a53acd36f40e0ba57e00bee6e74c19d1a9",
+          "bytes": 6679
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "healthcheck",
+      "directory": "openclaw/healthcheck",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/healthcheck",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "b41044aeb25afe95daa5c8ef6f2d6b8d197f6a0b113b0888deaa4dd69e42b59b",
+          "gitBlob": "699d1a6aa35d266bc69e5716a032165b0c5dd037",
+          "bytes": 2909
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "himalaya",
+      "directory": "openclaw/himalaya",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/himalaya",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "040f5f7304ec39c20e1ea61ed1fabc05108eb16820516ffd8c09b29528e188bb",
+          "gitBlob": "56a721720dbe3759394b0419425ad12bdc1ddaa2",
+          "bytes": 1693
+        },
+        {
+          "path": "references/configuration.md",
+          "sha256": "a1838b3f370abef2c6c45226115158aee095623701a4ffb48ea633bce14ccf0f",
+          "gitBlob": "005a657d5294af48ca89edb95fed6d4fcd7dd2c6",
+          "bytes": 4084
+        },
+        {
+          "path": "references/message-composition.md",
+          "sha256": "84d889972f5f4243d891405b83e67bddc7e835b2c4e434efd77fdc6bca9fe307",
+          "gitBlob": "2dbd7a99d481092b0c1217e2975585677cadae6f",
+          "bytes": 3799
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "meme-maker",
+      "directory": "openclaw/meme-maker",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/meme-maker",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "682db7cba34a3d3ca791f7cccaee9488810c731d6622d8886a9bcca77c59d2f3",
+          "gitBlob": "71582843a7b4c0870c2d4711dbd422e82fd942b3",
+          "bytes": 2566
+        },
+        {
+          "path": "references/templates.json",
+          "sha256": "414847dc28da8556bdd9a3ddf350f3d859d4668ecc237c1889b289d42d2879b8",
+          "gitBlob": "fdb08bb6a2b043bc6e111cb94de94036b9fd48c3",
+          "bytes": 13128
+        },
+        {
+          "path": "scripts/meme.mjs",
+          "sha256": "6211a37d19d90498b01fc31302506af0c0021e9949038054e1f7c34e71c4e1fd",
+          "gitBlob": "eb33081c598ad9b9b3b04b2d2c94735c234155a1",
+          "bytes": 13362
+        }
+      ],
+      "actions": [
+        {
+          "path": "scripts/meme.mjs",
+          "engine": "hanlin.node",
+          "limitation": "Optional playwright-core and original relative templates require current observed module/resource facts. No image generation or network request is run."
+        }
+      ]
+    },
+    {
+      "name": "model-usage",
+      "directory": "openclaw/model-usage",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/model-usage",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "f4e40f006365acc5f519a55f4efacb6c722788026792e498fcf46dc1a0f0c1d1",
+          "gitBlob": "eca1c6dd6403c0cea5b2896eb2cb0f83280a2e79",
+          "bytes": 2550
+        },
+        {
+          "path": "references/codexbar-cli.md",
+          "sha256": "58e57a7bf1359ed32b1fe80c7285e75f88127e82db6b0dbab2ec4dda6ffaca42",
+          "gitBlob": "e418631b49af202f84fc772ed574ebd000d346c4",
+          "bytes": 1299
+        },
+        {
+          "path": "scripts/model_usage.py",
+          "sha256": "cd13c65d9d10faaff20bdf40d5f45f6d26a29dacc3e13d8a1e481a3a8a0f4874",
+          "gitBlob": "ba6851735c9e3a7b0f7efa2ca9a18deddf895cb2",
+          "bytes": 11490
+        },
+        {
+          "path": "scripts/test_model_usage.py",
+          "sha256": "1bc6fceb436d836532e6901edb6eb473a68a16eda25f45f94322d99beea4a3b2",
+          "gitBlob": "ad7497d8396131cf95972777d79d462540d9445a",
+          "bytes": 5218
+        }
+      ],
+      "actions": [
+        {
+          "path": "scripts/model_usage.py",
+          "engine": "hanlin.python",
+          "limitation": "Original codexbar and OS requirements are not established by the iOS host; no account or usage query is run."
+        }
+      ]
+    },
+    {
+      "name": "node-connect",
+      "directory": "openclaw/node-connect",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/node-connect",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "334c20d3973238ba44a8b5885f0f6adf50342f5324940e1880bd75f61b86bfda",
+          "gitBlob": "8976d6d8383599b6588415400003bf974865c35e",
+          "bytes": 6553
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "node-inspect-debugger",
+      "directory": "openclaw/node-inspect-debugger",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/node-inspect-debugger",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "50d2f6828eaf4bbf7ccbaec5af928f9af978e93b7c679b0f3c8afe2a80ab7d52",
+          "gitBlob": "39238796ed0a4a1f253bf746dcbba11e8c7170d0",
+          "bytes": 3576
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "notion",
+      "directory": "openclaw/notion",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/notion",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "d45e2c1270d58c7878c13467ab27780530de2af89fb8b307c662b5d4859dc555",
+          "gitBlob": "e4bf37af84b0097d9b075765c22b1304efee1595",
+          "bytes": 3867
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "openai-whisper-api",
+      "directory": "openclaw/openai-whisper-api",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/openai-whisper-api",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "afff70c706a9bae250b046b741e9930340ca87cc1689a82d4415dd4d6b45bfa1",
+          "gitBlob": "bed6c3b63efba7015a52c6d75a83f412409cb701",
+          "bytes": 2073
+        },
+        {
+          "path": "scripts/transcribe.sh",
+          "sha256": "7840f2628e2e5d878434419592a8cfc5fbfcf2f560cc1511085387e38e429c78",
+          "gitBlob": "03025b604b1ccca41dbaa495166f7844aa2f894b",
+          "bytes": 3214
+        }
+      ],
+      "actions": [
+        {
+          "path": "scripts/transcribe.sh",
+          "engine": "hanlin.ios-system",
+          "limitation": "Original curl/node/API-key requirements remain authoritative; no audio upload or transcription request is run."
+        }
+      ]
+    },
+    {
+      "name": "python-debugpy",
+      "directory": "openclaw/python-debugpy",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/python-debugpy",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "dd4600a228fcdce153e4e318c2b8644e6f7f3964826958e89b5bae90db4877d3",
+          "gitBlob": "8d02ff3a0b467799ac72f8df18c2aaabd5af9a03",
+          "bytes": 2530
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "skill-creator",
+      "directory": "openclaw/skill-creator",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/skill-creator",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "7da0631cb21fbd87630b5dbeb48010f66776c28e396c276235f5d245903fa6ed",
+          "gitBlob": "cc0d1d7abe5eeb9f91d1a308affe577d6b71ee54",
+          "bytes": 2301
+        },
+        {
+          "path": "license.txt",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "gitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+          "bytes": 11358
+        },
+        {
+          "path": "scripts/package_skill.py",
+          "sha256": "fa2f7ba4915464221cd71c7048e6eb71a920cf94c793332b4172d2ac353dd65a",
+          "gitBlob": "a5442a463937680a5c9d14c245a451646ebc26f7",
+          "bytes": 4703
+        },
+        {
+          "path": "scripts/quick_validate.py",
+          "sha256": "580ccffbd9d4370bc35bca22c551da0353424e248d7499e8cd578eaec67dfd75",
+          "gitBlob": "6b04c4d715fcd00f36f3b8013875aa3ec58d8da2",
+          "bytes": 5419
+        },
+        {
+          "path": "scripts/test_package_skill.py",
+          "sha256": "806e5a5dbca711b9f30dded0b4bc31dc233b85a0ab301caabdd36900d5db9788",
+          "gitBlob": "a994a79dd1f70130cb49bf5388099d7a7eba558a",
+          "bytes": 7771
+        },
+        {
+          "path": "scripts/test_quick_validate.py",
+          "sha256": "349258a18c0130f0bf11dd60d361abffa493e426355bc14df4d1d3fc09a46f8a",
+          "gitBlob": "1289745137110fc028456199fa14741c1c7dd1d9",
+          "bytes": 4533
+        }
+      ],
+      "actions": [
+        {
+          "path": "scripts/quick_validate.py",
+          "engine": "hanlin.python",
+          "limitation": "Unobserved standard-library and optional yaml imports remain explicit requirements; no source is rewritten to force readiness."
+        },
+        {
+          "path": "scripts/package_skill.py",
+          "engine": "hanlin.python",
+          "limitation": "Original sibling-module and filesystem dependencies remain explicit; no external package publication is run."
+        }
+      ]
+    },
+    {
+      "name": "tmux",
+      "directory": "openclaw/tmux",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/tmux",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "8aeaa6f3dfe06d58e09721778b8c9e654bcbd47590f26f442c4dc87c9349c572",
+          "gitBlob": "854644bcaeb66e7eb8530f4e5e841882914d85b5",
+          "bytes": 2564
+        },
+        {
+          "path": "scripts/find-sessions.sh",
+          "sha256": "8df6ac8e5824b0fa4d791235bd944ce86b0d12dcbf98af7abeb6d6de50e96823",
+          "gitBlob": "57f664fe0717d0270ce39a09113df146d8e679eb",
+          "bytes": 2983
+        },
+        {
+          "path": "scripts/wait-for-text.sh",
+          "sha256": "b7efb785d3f2a4f1194e2ae18d7191135ad5a2fff4f08e6a4c7ad8412f3a7309",
+          "gitBlob": "05e754edf25459b256c86ddc1ca4cd6f457552b8",
+          "bytes": 2294
+        }
+      ],
+      "actions": [
+        {
+          "path": "scripts/find-sessions.sh",
+          "engine": "hanlin.ios-system",
+          "limitation": "Original tmux/OS requirements are unestablished; no host terminal sessions are inspected."
+        },
+        {
+          "path": "scripts/wait-for-text.sh",
+          "engine": "hanlin.ios-system",
+          "limitation": "Original tmux/OS requirements are unestablished; no host terminal session is read."
+        }
+      ]
+    },
+    {
+      "name": "trello",
+      "directory": "openclaw/trello",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/trello",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": false,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "dc524f73bd87b8089d061187bb26add41101ee82e288a1597a2d7b89fd934222",
+          "gitBlob": "e87e918c1af03f72ca2a185d1127bf1f83649591",
+          "bytes": 2956
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "visualize",
+      "directory": "openclaw/visualize",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/visualize",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "94259bbb4d06ab0927d540780c2ef095c6bfe17cbb7248ce485c82656290338a",
+          "gitBlob": "e14b09f97d5f1cd423dedcd5d535aceacc68db8c",
+          "bytes": 9412
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "weather",
+      "directory": "openclaw/weather",
+      "repository": "openclaw/openclaw",
+      "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+      "upstreamDirectory": "skills/weather",
+      "license": "MIT; skill-creator additionally includes its original Apache-2.0 license.txt",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "62ab4821aa873949d1c1091836be1659a42b32caadce4bd145f5505a1ceaeec1",
+          "gitBlob": "e84bbea68bae7416d27eede03154b7acd29b3559",
+          "bytes": 2905
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "yochai-study",
+      "directory": "hanlin/yochai-study",
+      "repository": "davidpovarsky/hanlin-ai",
+      "revision": "e0089cfb8c192530056aba39c7c8bbf945da75d3",
+      "upstreamDirectory": "Skills/yochai-study",
+      "license": "MIT",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "a95cd08bd9a3427f2e63380faf1048467fb35bd8c906489762410c168b27374c",
+          "gitBlob": "4a5c86d457ea3b38ad3cb25283c0a475ec398b2a",
+          "bytes": 439
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "torah-photo-study",
+      "directory": "hanlin/torah-photo-study",
+      "repository": "davidpovarsky/hanlin-ai",
+      "revision": "e0089cfb8c192530056aba39c7c8bbf945da75d3",
+      "upstreamDirectory": "Skills/torah-photo-study",
+      "license": "MIT",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "59da09661c62ab7b77453c7293b7fe515e145ed8cf43c0bc0ea2fa7e2af374c1",
+          "gitBlob": "d843cafb521a66cac7b8912923e13d524b0b33fd",
+          "bytes": 1928
+        },
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "84371855f48d805b87a142f8aac7ee7f7b2b843541bff44d23832d6808a2205a",
+          "gitBlob": "f6dd4015e399bc9312cea2e1ccdb1a8073e80275",
+          "bytes": 710
+        },
+        {
+          "path": "hanlin.json",
+          "sha256": "54e159944e256434b65823a166c8eb902b7fc6889a9d7fe94cf5b9030e3d5b96",
+          "gitBlob": "6540f159f78464badf910e15a9703a0cedbb4ade",
+          "bytes": 590
+        },
+        {
+          "path": "references/identity-and-ambiguity.md",
+          "sha256": "5b31d809da55f895e13f9db03df03c39e80b30beeeeecc0e637c1f92623bf2d5",
+          "gitBlob": "53c0b74c7eb00db1ea7a23756279b9cd9486a256",
+          "bytes": 730
+        },
+        {
+          "path": "references/privacy-and-providers.md",
+          "sha256": "c073e004596dd1550753f2cce2834b99e805e293ac0bbc29f81a96a98c424e80",
+          "gitBlob": "1271b3557760b3427cc006e75971bb8edc51579f",
+          "bytes": 469
+        },
+        {
+          "path": "references/tools-and-results.md",
+          "sha256": "9c1e3ff17c8ad95645f790b57cf1e0014d68ec7e2a75c2bbb4fa46e554771886",
+          "gitBlob": "73b2fce92a214558acf5a1dde9e9896121601f88",
+          "bytes": 763
+        }
+      ],
+      "actions": []
+    },
+    {
+      "name": "cairo-genizah-research",
+      "directory": "hanlin/cairo-genizah-research",
+      "repository": "davidpovarsky/hanlin-ai",
+      "revision": "e0089cfb8c192530056aba39c7c8bbf945da75d3",
+      "upstreamDirectory": "Skills/cairo-genizah-research",
+      "license": "MIT",
+      "invocationExpected": true,
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "428e11f5959d05e5ac271586a2757ee1250dffb5364f13f58ec4d85197660b92",
+          "gitBlob": "b1ce5b3e7e0d503153ee6044c803d97a64474fdb",
+          "bytes": 524
+        },
+        {
+          "path": "scripts/browse.py",
+          "sha256": "fe33872736b7a997b79d66bd4cc748922dd479dd131f7f9882bc0976b0b9e253",
+          "gitBlob": "1936b80e12b6470664f83efedc0ea52b6c0918ba",
+          "bytes": 794
+        },
+        {
+          "path": "scripts/search.py",
+          "sha256": "56377797dc055b71a1d5e99be86df3bdd25de99c177bc6ff9183e2db2f7045b3",
+          "gitBlob": "bea59f8a7fb447af1a8b21c082b86e56c1929ad4",
+          "bytes": 969
+        }
+      ],
+      "actions": [
+        {
+          "path": "scripts/browse.py",
+          "engine": "hanlin.python",
+          "limitation": "urllib.request and urllib.parse need actual original-Python module facts. A separate invalid-argv test may execute only after the real plan permits it; API requests remain NOT_RUN."
+        },
+        {
+          "path": "scripts/search.py",
+          "engine": "hanlin.python",
+          "limitation": "urllib.request and urllib.parse need actual original-Python module facts. A separate invalid-argv test may execute only after the real plan permits it; API requests remain NOT_RUN."
+        }
+      ]
+    }
+  ],
+  "licenses": [
+    {
+      "path": "licenses/OpenClaw-MIT.txt",
+      "sha256": "9efd316ecf1c4c60f6fd5d26433142fff2b6794d7d328e9bc6179b29bf9c82a4",
+      "gitBlob": "ed064819ab537575d0cad902f7e5af4a3488b1d0",
+      "bytes": 1076
+    },
+    {
+      "path": "licenses/Hanlin-MIT.txt",
+      "sha256": "2bdf2973d798073b983a9068a8e328400068c18d962e2059bfcde4042129f294",
+      "gitBlob": "086a5d9b1c58dff46fd273bf5c8248dc3da07a69",
+      "bytes": 1064
+    }
+  ]
+}

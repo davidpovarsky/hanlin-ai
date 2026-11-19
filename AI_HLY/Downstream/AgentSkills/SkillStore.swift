@@ -570,7 +570,7 @@ public final class SkillStore {
     private static func isBinaryFile(path: String) -> Bool {
         let ext = (path as NSString).pathExtension.lowercased()
         let textExtensions: Set<String> = [
-            "md", "txt", "json", "js", "ts", "py", "sh", "yaml", "yml", "csv", "xml", "html", "css"
+            "md", "txt", "json", "js", "mjs", "cjs", "ts", "py", "sh", "yaml", "yml", "csv", "xml", "html", "css"
         ]
         return !textExtensions.contains(ext)
     }
@@ -581,7 +581,7 @@ public final class SkillStore {
         case "md": return "text/markdown"
         case "txt": return "text/plain"
         case "json": return "application/json"
-        case "js": return "application/javascript"
+        case "js", "mjs", "cjs": return "application/javascript"
         case "ts": return "application/typescript"
         case "py": return "text/x-python"
         case "sh": return "text/x-shellscript"

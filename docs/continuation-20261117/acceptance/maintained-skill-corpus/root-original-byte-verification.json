@@ -1,0 +1,368 @@
+{
+  "observed_at": "2026-11-19T01:09:20.436169+00:00",
+  "source_before_commit": "585f3196e973d22c2fec3c81d590a128818131c8",
+  "manifest_sha256": "d280d4c87a4068484ae5e046a667391d3c2b22026f630539efb81ff440995114",
+  "upstream_commit": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+  "upstream_tree": "0eeda69b7e8b3b0e861b6009bb904e9859037d8d",
+  "complete_packages": 23,
+  "files": [
+    {
+      "file": "openclaw/apple-notes/SKILL.md",
+      "source_path": "skills/apple-notes/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "57740cad85399b3603568734207c1ad5b382d5d3",
+      "sha256": "d280e7ffffeb182172da7afad23528ef9f73ee4905ab88ebb124046aa6e6aed7"
+    },
+    {
+      "file": "openclaw/apple-reminders/SKILL.md",
+      "source_path": "skills/apple-reminders/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "ecb0220c22863c11a612f6c2d30b356536b140ce",
+      "sha256": "08413d063e71c7ad7e4691e81a1063b455b816957ce7898576c2653542e8303d"
+    },
+    {
+      "file": "openclaw/control-ui/SKILL.md",
+      "source_path": "skills/control-ui/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "f0e0b4f5f5f08e8f6ad44515a213e5758e312a43",
+      "sha256": "aa54d5df5f8097fd3d2afeb0901502772919b226075d78b7fd9e5b12c25e0aea"
+    },
+    {
+      "file": "openclaw/control-ui/references/dashboards.md",
+      "source_path": "skills/control-ui/references/dashboards.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "d98cb618d21a0d1d05f4fdd62589c486bec7b6ae",
+      "sha256": "615ec9849acf53325a2552553951ff90fff71efdc1ca24d0128533a0835e07bf"
+    },
+    {
+      "file": "openclaw/control-ui/references/hosting.md",
+      "source_path": "skills/control-ui/references/hosting.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "b71d4d886c5ff109b23c53c97d10434f5c521569",
+      "sha256": "e1a5045eb73101e2daeeeac489d25ee95399c35d6a499789b5fa38a607006fd6"
+    },
+    {
+      "file": "openclaw/diagram-maker/SKILL.md",
+      "source_path": "skills/diagram-maker/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "006329dece78763d72231f1829de8480983648a4",
+      "sha256": "6195e03fcb04a1a68c4af72165e0c85efcd2719af79380d82e42996ea89ad74a"
+    },
+    {
+      "file": "openclaw/diagram-maker/references/excalidraw-patterns.md",
+      "source_path": "skills/diagram-maker/references/excalidraw-patterns.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "91b4dd1c88f68f8b70751e86d7c4b5d407913a0c",
+      "sha256": "6fc8799815adc1ef0171f25f59431e7e60bfa072ad570a60c335383bd872bf56"
+    },
+    {
+      "file": "openclaw/diagram-maker/references/svg-template.md",
+      "source_path": "skills/diagram-maker/references/svg-template.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "9c0ad6ea8a75bbf8e028d7aed21a745ad5fcc146",
+      "sha256": "3a8b47dbaeb341377a4999ff227f088a3a7fe2bee7b1353929f11a1f30b20c71"
+    },
+    {
+      "file": "openclaw/github/SKILL.md",
+      "source_path": "skills/github/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "36336dadd380dfb06a71c382fffaa3e7b4962419",
+      "sha256": "04d13709b66a75f73774d47c1fb8446669623c8326c2d0af4e7d01017e2f29dc"
+    },
+    {
+      "file": "openclaw/gog/SKILL.md",
+      "source_path": "skills/gog/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "49b445a53acd36f40e0ba57e00bee6e74c19d1a9",
+      "sha256": "d54a8e52b1e00bb5d33b46915fd549f8b792ef3a383fe40e92b195d11d2d5255"
+    },
+    {
+      "file": "openclaw/healthcheck/SKILL.md",
+      "source_path": "skills/healthcheck/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "699d1a6aa35d266bc69e5716a032165b0c5dd037",
+      "sha256": "b41044aeb25afe95daa5c8ef6f2d6b8d197f6a0b113b0888deaa4dd69e42b59b"
+    },
+    {
+      "file": "openclaw/himalaya/SKILL.md",
+      "source_path": "skills/himalaya/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "56a721720dbe3759394b0419425ad12bdc1ddaa2",
+      "sha256": "040f5f7304ec39c20e1ea61ed1fabc05108eb16820516ffd8c09b29528e188bb"
+    },
+    {
+      "file": "openclaw/himalaya/references/configuration.md",
+      "source_path": "skills/himalaya/references/configuration.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "005a657d5294af48ca89edb95fed6d4fcd7dd2c6",
+      "sha256": "a1838b3f370abef2c6c45226115158aee095623701a4ffb48ea633bce14ccf0f"
+    },
+    {
+      "file": "openclaw/himalaya/references/message-composition.md",
+      "source_path": "skills/himalaya/references/message-composition.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "2dbd7a99d481092b0c1217e2975585677cadae6f",
+      "sha256": "84d889972f5f4243d891405b83e67bddc7e835b2c4e434efd77fdc6bca9fe307"
+    },
+    {
+      "file": "openclaw/meme-maker/SKILL.md",
+      "source_path": "skills/meme-maker/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "71582843a7b4c0870c2d4711dbd422e82fd942b3",
+      "sha256": "682db7cba34a3d3ca791f7cccaee9488810c731d6622d8886a9bcca77c59d2f3"
+    },
+    {
+      "file": "openclaw/meme-maker/references/templates.json",
+      "source_path": "skills/meme-maker/references/templates.json",
+      "repository": "openclaw/openclaw",
+      "git_blob": "fdb08bb6a2b043bc6e111cb94de94036b9fd48c3",
+      "sha256": "414847dc28da8556bdd9a3ddf350f3d859d4668ecc237c1889b289d42d2879b8"
+    },
+    {
+      "file": "openclaw/meme-maker/scripts/meme.mjs",
+      "source_path": "skills/meme-maker/scripts/meme.mjs",
+      "repository": "openclaw/openclaw",
+      "git_blob": "eb33081c598ad9b9b3b04b2d2c94735c234155a1",
+      "sha256": "6211a37d19d90498b01fc31302506af0c0021e9949038054e1f7c34e71c4e1fd"
+    },
+    {
+      "file": "openclaw/model-usage/SKILL.md",
+      "source_path": "skills/model-usage/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "eca1c6dd6403c0cea5b2896eb2cb0f83280a2e79",
+      "sha256": "f4e40f006365acc5f519a55f4efacb6c722788026792e498fcf46dc1a0f0c1d1"
+    },
+    {
+      "file": "openclaw/model-usage/references/codexbar-cli.md",
+      "source_path": "skills/model-usage/references/codexbar-cli.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "e418631b49af202f84fc772ed574ebd000d346c4",
+      "sha256": "58e57a7bf1359ed32b1fe80c7285e75f88127e82db6b0dbab2ec4dda6ffaca42"
+    },
+    {
+      "file": "openclaw/model-usage/scripts/model_usage.py",
+      "source_path": "skills/model-usage/scripts/model_usage.py",
+      "repository": "openclaw/openclaw",
+      "git_blob": "ba6851735c9e3a7b0f7efa2ca9a18deddf895cb2",
+      "sha256": "cd13c65d9d10faaff20bdf40d5f45f6d26a29dacc3e13d8a1e481a3a8a0f4874"
+    },
+    {
+      "file": "openclaw/model-usage/scripts/test_model_usage.py",
+      "source_path": "skills/model-usage/scripts/test_model_usage.py",
+      "repository": "openclaw/openclaw",
+      "git_blob": "ad7497d8396131cf95972777d79d462540d9445a",
+      "sha256": "1bc6fceb436d836532e6901edb6eb473a68a16eda25f45f94322d99beea4a3b2"
+    },
+    {
+      "file": "openclaw/node-connect/SKILL.md",
+      "source_path": "skills/node-connect/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "8976d6d8383599b6588415400003bf974865c35e",
+      "sha256": "334c20d3973238ba44a8b5885f0f6adf50342f5324940e1880bd75f61b86bfda"
+    },
+    {
+      "file": "openclaw/node-inspect-debugger/SKILL.md",
+      "source_path": "skills/node-inspect-debugger/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "39238796ed0a4a1f253bf746dcbba11e8c7170d0",
+      "sha256": "50d2f6828eaf4bbf7ccbaec5af928f9af978e93b7c679b0f3c8afe2a80ab7d52"
+    },
+    {
+      "file": "openclaw/notion/SKILL.md",
+      "source_path": "skills/notion/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "e4bf37af84b0097d9b075765c22b1304efee1595",
+      "sha256": "d45e2c1270d58c7878c13467ab27780530de2af89fb8b307c662b5d4859dc555"
+    },
+    {
+      "file": "openclaw/openai-whisper-api/SKILL.md",
+      "source_path": "skills/openai-whisper-api/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "bed6c3b63efba7015a52c6d75a83f412409cb701",
+      "sha256": "afff70c706a9bae250b046b741e9930340ca87cc1689a82d4415dd4d6b45bfa1"
+    },
+    {
+      "file": "openclaw/openai-whisper-api/scripts/transcribe.sh",
+      "source_path": "skills/openai-whisper-api/scripts/transcribe.sh",
+      "repository": "openclaw/openclaw",
+      "git_blob": "03025b604b1ccca41dbaa495166f7844aa2f894b",
+      "sha256": "7840f2628e2e5d878434419592a8cfc5fbfcf2f560cc1511085387e38e429c78"
+    },
+    {
+      "file": "openclaw/python-debugpy/SKILL.md",
+      "source_path": "skills/python-debugpy/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "8d02ff3a0b467799ac72f8df18c2aaabd5af9a03",
+      "sha256": "dd4600a228fcdce153e4e318c2b8644e6f7f3964826958e89b5bae90db4877d3"
+    },
+    {
+      "file": "openclaw/skill-creator/SKILL.md",
+      "source_path": "skills/skill-creator/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "cc0d1d7abe5eeb9f91d1a308affe577d6b71ee54",
+      "sha256": "7da0631cb21fbd87630b5dbeb48010f66776c28e396c276235f5d245903fa6ed"
+    },
+    {
+      "file": "openclaw/skill-creator/license.txt",
+      "source_path": "skills/skill-creator/license.txt",
+      "repository": "openclaw/openclaw",
+      "git_blob": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "file": "openclaw/skill-creator/scripts/package_skill.py",
+      "source_path": "skills/skill-creator/scripts/package_skill.py",
+      "repository": "openclaw/openclaw",
+      "git_blob": "a5442a463937680a5c9d14c245a451646ebc26f7",
+      "sha256": "fa2f7ba4915464221cd71c7048e6eb71a920cf94c793332b4172d2ac353dd65a"
+    },
+    {
+      "file": "openclaw/skill-creator/scripts/quick_validate.py",
+      "source_path": "skills/skill-creator/scripts/quick_validate.py",
+      "repository": "openclaw/openclaw",
+      "git_blob": "6b04c4d715fcd00f36f3b8013875aa3ec58d8da2",
+      "sha256": "580ccffbd9d4370bc35bca22c551da0353424e248d7499e8cd578eaec67dfd75"
+    },
+    {
+      "file": "openclaw/skill-creator/scripts/test_package_skill.py",
+      "source_path": "skills/skill-creator/scripts/test_package_skill.py",
+      "repository": "openclaw/openclaw",
+      "git_blob": "a994a79dd1f70130cb49bf5388099d7a7eba558a",
+      "sha256": "806e5a5dbca711b9f30dded0b4bc31dc233b85a0ab301caabdd36900d5db9788"
+    },
+    {
+      "file": "openclaw/skill-creator/scripts/test_quick_validate.py",
+      "source_path": "skills/skill-creator/scripts/test_quick_validate.py",
+      "repository": "openclaw/openclaw",
+      "git_blob": "1289745137110fc028456199fa14741c1c7dd1d9",
+      "sha256": "349258a18c0130f0bf11dd60d361abffa493e426355bc14df4d1d3fc09a46f8a"
+    },
+    {
+      "file": "openclaw/tmux/SKILL.md",
+      "source_path": "skills/tmux/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "854644bcaeb66e7eb8530f4e5e841882914d85b5",
+      "sha256": "8aeaa6f3dfe06d58e09721778b8c9e654bcbd47590f26f442c4dc87c9349c572"
+    },
+    {
+      "file": "openclaw/tmux/scripts/find-sessions.sh",
+      "source_path": "skills/tmux/scripts/find-sessions.sh",
+      "repository": "openclaw/openclaw",
+      "git_blob": "57f664fe0717d0270ce39a09113df146d8e679eb",
+      "sha256": "8df6ac8e5824b0fa4d791235bd944ce86b0d12dcbf98af7abeb6d6de50e96823"
+    },
+    {
+      "file": "openclaw/tmux/scripts/wait-for-text.sh",
+      "source_path": "skills/tmux/scripts/wait-for-text.sh",
+      "repository": "openclaw/openclaw",
+      "git_blob": "05e754edf25459b256c86ddc1ca4cd6f457552b8",
+      "sha256": "b7efb785d3f2a4f1194e2ae18d7191135ad5a2fff4f08e6a4c7ad8412f3a7309"
+    },
+    {
+      "file": "openclaw/trello/SKILL.md",
+      "source_path": "skills/trello/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "e87e918c1af03f72ca2a185d1127bf1f83649591",
+      "sha256": "dc524f73bd87b8089d061187bb26add41101ee82e288a1597a2d7b89fd934222"
+    },
+    {
+      "file": "openclaw/visualize/SKILL.md",
+      "source_path": "skills/visualize/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "e14b09f97d5f1cd423dedcd5d535aceacc68db8c",
+      "sha256": "94259bbb4d06ab0927d540780c2ef095c6bfe17cbb7248ce485c82656290338a"
+    },
+    {
+      "file": "openclaw/weather/SKILL.md",
+      "source_path": "skills/weather/SKILL.md",
+      "repository": "openclaw/openclaw",
+      "git_blob": "e84bbea68bae7416d27eede03154b7acd29b3559",
+      "sha256": "62ab4821aa873949d1c1091836be1659a42b32caadce4bd145f5505a1ceaeec1"
+    },
+    {
+      "file": "hanlin/yochai-study/SKILL.md",
+      "source_path": "Skills/yochai-study/SKILL.md",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "4a5c86d457ea3b38ad3cb25283c0a475ec398b2a",
+      "sha256": "a95cd08bd9a3427f2e63380faf1048467fb35bd8c906489762410c168b27374c"
+    },
+    {
+      "file": "hanlin/torah-photo-study/SKILL.md",
+      "source_path": "Skills/torah-photo-study/SKILL.md",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "d843cafb521a66cac7b8912923e13d524b0b33fd",
+      "sha256": "59da09661c62ab7b77453c7293b7fe515e145ed8cf43c0bc0ea2fa7e2af374c1"
+    },
+    {
+      "file": "hanlin/torah-photo-study/agents/openai.yaml",
+      "source_path": "Skills/torah-photo-study/agents/openai.yaml",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "f6dd4015e399bc9312cea2e1ccdb1a8073e80275",
+      "sha256": "84371855f48d805b87a142f8aac7ee7f7b2b843541bff44d23832d6808a2205a"
+    },
+    {
+      "file": "hanlin/torah-photo-study/hanlin.json",
+      "source_path": "Skills/torah-photo-study/hanlin.json",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "6540f159f78464badf910e15a9703a0cedbb4ade",
+      "sha256": "54e159944e256434b65823a166c8eb902b7fc6889a9d7fe94cf5b9030e3d5b96"
+    },
+    {
+      "file": "hanlin/torah-photo-study/references/identity-and-ambiguity.md",
+      "source_path": "Skills/torah-photo-study/references/identity-and-ambiguity.md",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "53c0b74c7eb00db1ea7a23756279b9cd9486a256",
+      "sha256": "5b31d809da55f895e13f9db03df03c39e80b30beeeeecc0e637c1f92623bf2d5"
+    },
+    {
+      "file": "hanlin/torah-photo-study/references/privacy-and-providers.md",
+      "source_path": "Skills/torah-photo-study/references/privacy-and-providers.md",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "1271b3557760b3427cc006e75971bb8edc51579f",
+      "sha256": "c073e004596dd1550753f2cce2834b99e805e293ac0bbc29f81a96a98c424e80"
+    },
+    {
+      "file": "hanlin/torah-photo-study/references/tools-and-results.md",
+      "source_path": "Skills/torah-photo-study/references/tools-and-results.md",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "73b2fce92a214558acf5a1dde9e9896121601f88",
+      "sha256": "9c1e3ff17c8ad95645f790b57cf1e0014d68ec7e2a75c2bbb4fa46e554771886"
+    },
+    {
+      "file": "hanlin/cairo-genizah-research/SKILL.md",
+      "source_path": "Skills/cairo-genizah-research/SKILL.md",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "b1ce5b3e7e0d503153ee6044c803d97a64474fdb",
+      "sha256": "428e11f5959d05e5ac271586a2757ee1250dffb5364f13f58ec4d85197660b92"
+    },
+    {
+      "file": "hanlin/cairo-genizah-research/scripts/browse.py",
+      "source_path": "Skills/cairo-genizah-research/scripts/browse.py",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "1936b80e12b6470664f83efedc0ea52b6c0918ba",
+      "sha256": "fe33872736b7a997b79d66bd4cc748922dd479dd131f7f9882bc0976b0b9e253"
+    },
+    {
+      "file": "hanlin/cairo-genizah-research/scripts/search.py",
+      "source_path": "Skills/cairo-genizah-research/scripts/search.py",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "bea59f8a7fb447af1a8b21c082b86e56c1929ad4",
+      "sha256": "56377797dc055b71a1d5e99be86df3bdd25de99c177bc6ff9183e2db2f7045b3"
+    },
+    {
+      "file": "licenses/OpenClaw-MIT.txt",
+      "source_path": "LICENSE",
+      "repository": "openclaw/openclaw",
+      "git_blob": "ed064819ab537575d0cad902f7e5af4a3488b1d0",
+      "sha256": "9efd316ecf1c4c60f6fd5d26433142fff2b6794d7d328e9bc6179b29bf9c82a4"
+    },
+    {
+      "file": "licenses/Hanlin-MIT.txt",
+      "source_path": "LICENSE",
+      "repository": "davidpovarsky/hanlin-ai",
+      "git_blob": "086a5d9b1c58dff46fd273bf5c8248dc3da07a69",
+      "sha256": "2bdf2973d798073b983a9068a8e328400068c18d962e2059bfcde4042129f294"
+    }
+  ],
+  "native_compilation": "NOT_RUN"
+}
