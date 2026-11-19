@@ -1412,25 +1412,52 @@ private final class ProviderCredentialTestFixture {
         let stream = try await owner.stream(request: request, modelContext: context, configuration: config,
             engineFactory: { factory(config, queue: queue) }, toolAdapter: adapter,
             messages: [.init(role: .user, text: "Read original image")], systemPrompt: nil)
-        let effectiveRoundID = try #require(adapter.currentRoundID)
-        #expect(effectiveRoundID != diagnosticRound)
-        #expect(effectiveRoundID != request.uiRunID)
+        // `HanlinAISDKAgentEngine.stream` prepares step 0 asynchronously in its producer task and
+        // yields `.stepStarted(index: 0, _)` strictly after `adapter.prepareStep(stepNumber: 0)`
+        // assigns the step-0 diagnostics round UUID. Synchronize on that lifecycle event rather
+        // than reading `adapter.currentRoundID` immediately after `owner.stream(...)` returns.
+        var iterator = stream.makeAsyncIterator()
+        var startedInitialStep = false
+        while let event = try await iterator.next() {
+            try owner.receive(event, uiRunID: request.uiRunID)
+            if case .stepStarted(let index, _) = event.event, index == 0 {
+                startedInitialStep = true
+                break
+            }
+        }
+        #expect(startedInitialStep)
+        let firstRoundID = try #require(adapter.currentRoundID)
+        #expect(firstRoundID != diagnosticRound)
+        #expect(firstRoundID != request.uiRunID)
         let definition = try #require(adapter.allToolDefinitions().first { $0.name == alias })
         let arguments = String(decoding: try JSONSerialization.data(withJSONObject: ["handle": handle]), as: UTF8.self)
         let output = try await definition.execute(arguments, "original-attachment")
         #expect(!output.isError && reads == [image])
-        #expect(observedRequestIDs == [effectiveRoundID.uuidString])
+        #expect(observedRequestIDs == [firstRoundID.uuidString])
+        _ = await adapter.prepareStep(stepNumber: 1)
+        let secondRoundID = try #require(adapter.currentRoundID)
+        #expect(secondRoundID != firstRoundID)
+        #expect(secondRoundID != diagnosticRound)
+        #expect(secondRoundID != request.uiRunID)
+        let secondRoundOutput = try await definition.execute(arguments, "second-round-attachment")
+        #expect(!secondRoundOutput.isError && reads == [image, image])
+        #expect(observedRequestIDs == [firstRoundID.uuidString, secondRoundID.uuidString])
         let otherTurnHandle = try await AuthorizedAttachmentRegistry.shared.register(data: image, mimeType: "image/png",
             chatID: id.uuidString, requestID: UUID().uuidString)
         let otherTurnArguments = String(decoding: try JSONSerialization.data(withJSONObject: ["handle": otherTurnHandle]), as: UTF8.self)
         let otherTurnOutput = try await definition.execute(otherTurnArguments, "other-turn-attachment")
-        #expect(otherTurnOutput.isError && reads == [image])
-        for try await event in stream { try owner.receive(event, uiRunID: request.uiRunID) }
+        #expect(otherTurnOutput.isError && reads == [image, image])
+        while let event = try await iterator.next() { try owner.receive(event, uiRunID: request.uiRunID) }
         try owner.producerStreamDrained(uiRunID: request.uiRunID)
         owner.cancel()
         let revoked = try await definition.execute(arguments, "revoked-attachment")
-        #expect(revoked.isError && reads == [image])
-        #expect(observedRequestIDs == [effectiveRoundID.uuidString, effectiveRoundID.uuidString, effectiveRoundID.uuidString])
+        #expect(revoked.isError && reads == [image, image])
+        #expect(observedRequestIDs == [
+            firstRoundID.uuidString,
+            secondRoundID.uuidString,
+            secondRoundID.uuidString,
+            secondRoundID.uuidString
+        ])
         await AuthorizedAttachmentRegistry.shared.revoke(handle: otherTurnHandle)
         await AuthorizedAttachmentRegistry.shared.revoke(handle: handle)
     }
