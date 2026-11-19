@@ -8,7 +8,7 @@ import WebKit
 final class ChatCodeFenceEngine: NSObject, WKNavigationDelegate {
     static let shared = ChatCodeFenceEngine()
 
-    enum Failure: Error { case unavailable, invalidOutput, timeout, busy }
+    enum Failure: Error { case unavailable, invalidOutput, timeout, startupTimeout, busy }
     private final class Cached: NSObject {
         let payload: ChatCodeFencePayload
         init(_ payload: ChatCodeFencePayload) { self.payload = payload }
@@ -148,8 +148,11 @@ final class ChatCodeFenceEngine: NSObject, WKNavigationDelegate {
                 self.navigationContinuation = continuation
                 self.navigation = view.loadHTMLString(prepared.1, baseURL: nil)
                 self.navigationDeadline = Task { [weak self] in
-                    do { try await Task.sleep(for: .seconds(15)) } catch { return }
-                    self?.completeNavigation(.failure(Failure.timeout))
+                    // A cold WebContent process can start after the JS execution
+                    // budget. Bound document readiness separately; the 8-second
+                    // invocation deadline still limits actual renderer execution.
+                    do { try await Task.sleep(for: .seconds(30)) } catch { return }
+                    self?.completeNavigation(.failure(Failure.startupTimeout))
                 }
             }
             return assets

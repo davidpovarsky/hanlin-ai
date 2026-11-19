@@ -99,6 +99,16 @@ struct ChatCodeFenceView: View {
                 guard !Task.isCancelled, current == request else { return }
                 failed = true
                 requiresRestart = ChatCodeFenceEngine.shared.requiresRestart
+                // Record the boundary that failed without copying user source,
+                // JavaScript exception messages, URLs or rendered markup.
+                let failure = error as? ChatCodeFenceEngine.Failure
+                let platformError = error as NSError
+                NativeToolTraceLogger.shared.log("chat_code_fence_render_failed", [
+                    "kind": current.kind, "blockID": blockID,
+                    "failure": failure.map { String(describing: $0) } ?? "platform",
+                    "errorDomain": platformError.domain, "errorCode": platformError.code,
+                    "requiresRestart": requiresRestart
+                ])
             }
         }
         .sheet(isPresented: $expanded) {

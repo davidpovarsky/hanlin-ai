@@ -53,6 +53,27 @@ struct ChatCodeFenceTests {
         }
     }
 
+    @Test func actualWebKitQueuesDiagramAndDiffAgainstOneColdStartup() async throws {
+        // The original message renders both fences concurrently. Both requests
+        // must finish through the shared cold engine before either is cached.
+        let engine = ChatCodeFenceEngine()
+        let diffSource = "--- a/auth.ts\n+++ b/auth.ts\n@@ -1 +1 @@\n-old(\"שלום\")\n+updated(\"שלום🙂\")\n"
+        let diagramSource = "flowchart LR\nA[\"שלום🙂\"] --> B[\"OAuth\"]"
+        async let diffRequest = engine.render(kind: "diff", source: diffSource,
+            dark: false, fontSize: 17, split: false)
+        async let diagramRequest = engine.render(kind: "mermaid", source: diagramSource,
+            dark: false, fontSize: 17, split: false)
+        let (diff, diagram) = try await (diffRequest, diagramRequest)
+        #expect(diff.html.contains("d2h-ins") && diff.html.contains("d2h-del"))
+        #expect(diff.html.contains("auth.ts") && diff.html.contains("שלום"))
+        #expect(diagram.html.contains("<svg") && diagram.html.contains("OAuth"))
+        #expect(diff.width > 0 && diff.height > 0 && diagram.width > 0 && diagram.height > 0)
+        #expect(!engine.requiresRestart)
+        let cachedDiff = try await engine.render(kind: "diff", source: diffSource,
+            dark: false, fontSize: 17, split: false)
+        #expect(cachedDiff.id == diff.id && cachedDiff.html == diff.html)
+    }
+
     @Test func assetsFailClosedOnTamperingAndVisibleDocumentDisablesScripts() async throws {
         let assets = try ChatCodeFenceDocument.loadAssets()
         let worker = ChatCodeFenceDocument.workerHTML(assets: assets)
