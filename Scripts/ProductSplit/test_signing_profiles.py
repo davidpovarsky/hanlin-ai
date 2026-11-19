@@ -210,6 +210,31 @@ class ProfileCacheTests(unittest.TestCase):
 
 
 class SigningAdmissionDiagnosticTests(unittest.TestCase):
+    def test_native_cms_integer_boolean_output_is_classified_without_claiming_xcode_admission(self):
+        import json
+        from signing_profile_preflight import _native_cms_signatures_valid
+        # The actual Security.framework program emitted these numeric flags on
+        # run44431826560. JSON booleans from explicit NSNumber BOOL are also valid.
+        row = json.loads('{"read_ok":1,"decoder_status":0,"signer_count_status":0,'
+                         '"signer_count":1,"signers":[{"api_status":0,"signer_status":1,'
+                         '"certificate_status":0,"trust_result_status":0,"trust_result":4,'
+                         '"signature_and_certificate_valid":1}]}')
+        self.assertTrue(_native_cms_signatures_valid([row]))
+        row["read_ok"] = True
+        row["signers"][0]["signature_and_certificate_valid"] = True
+        self.assertTrue(_native_cms_signatures_valid([row]))
+
+    def test_cms_flags_reject_truthy_non_boolean_values_and_missing_signature(self):
+        from signing_profile_preflight import _native_cms_signatures_valid
+        for value in [False, 0, -1, 2, 1.0, "1", "true", None, [], {}]:
+            with self.subTest(value=value):
+                row = {"read_ok": True, "decoder_status": 0, "signer_count_status": 0,
+                       "signer_count": 1, "signers": [{"signature_and_certificate_valid": value}]}
+                self.assertFalse(_native_cms_signatures_valid([row]))
+                row["read_ok"] = value
+                row["signers"][0]["signature_and_certificate_valid"] = True
+                self.assertFalse(_native_cms_signatures_valid([row]))
+
     def test_cms_signature_status_binds_exact_original_bytes_and_never_claims_xcode_acceptance(self):
         import json
         import time
@@ -360,15 +385,99 @@ class SigningAdmissionDiagnosticTests(unittest.TestCase):
             receipt = {}
             run = Mock(return_value=(65, "No profile matching selected UUID found"))
             with patch.object(native, "ROOT", root), patch.object(
-                    native, "profile_cms_diagnostics", return_value={"status": "CMS_SIGNATURES_VALID"}):
+                    native, "profile_cms_diagnostics", return_value={"status": "CMS_SIGNATURES_VALID"}), patch.object(
+                    native, "observe_owned_signing_build_settings", side_effect=ValueError("diagnostic failure")):
                 with self.assertRaisesRegex(RuntimeError, "failed before original"):
                     native.run_profile_discovery_preflight(root, [profile], TEAM, "certificate-identity",
                                                            CERTIFICATE_SHA, run, receipt)
             self.assertEqual(receipt["status"], "EXECUTED_FAIL")
             self.assertEqual(receipt["native_products"][0]["archive"], "EXECUTED_FAIL")
             self.assertEqual(receipt["native_products"][0]["export"], "NOT_RUN")
+            self.assertEqual(receipt["native_products"][0]["build_settings_diagnostic"]["status"],
+                             "DIAGNOSTIC_UNAVAILABLE")
             self.assertEqual(run.call_count, 1)
             self.assertIn("PROVISIONING_PROFILE_SPECIFIER=" + profile["uuid"], run.call_args.args[0])
+
+
+class OwnedSigningBuildSettingsTests(unittest.TestCase):
+    def test_owned_target_projection_keeps_only_bound_signing_facts(self):
+        import json
+        import time
+        import os
+        import signing_profile_preflight as native
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            project = root / "ProfileDiscovery.xcodeproj"
+            project.mkdir()
+            nonce = "a" * 32
+            argv = ["xcodebuild", "-project", project, "-scheme", "ProfileDiscovery", "archive",
+                    "DEVELOPMENT_TEAM=" + TEAM, "PRODUCT_BUNDLE_IDENTIFIER=" + BUNDLE,
+                    "HANLIN_PROFILE_DISCOVERY_NONCE=" + nonce]
+            settings = {"PROJECT_FILE_PATH": str(project), "HANLIN_PROFILE_DISCOVERY_NONCE": nonce,
+                        "CODE_SIGN_STYLE": "Manual", "DEVELOPMENT_TEAM": TEAM,
+                        "PRODUCT_BUNDLE_IDENTIFIER": BUNDLE, "SDKROOT": "/Applications/Xcode.app/iPhoneOS27.2.sdk",
+                        "PROVISIONING_PROFILE_SPECIFIER": "Private human profile name",
+                        "UNRELATED_SECRET": "DO_NOT_RETAIN_THIS"}
+            result = Mock(returncode=0, stdout=json.dumps([
+                {"target": "ProfileDiscovery", "buildSettings": settings}]).encode(), stderr=b"")
+            with patch.object(native.subprocess, "run", return_value=result) as invoked, patch.dict(
+                    os.environ, {"XCODE_XCCONFIG_FILE": "/private/sensitive-key-name.p8",
+                                 "UNRELATED_SECRET": "DO_NOT_RETAIN_THIS"}):
+                receipt = native.observe_owned_signing_build_settings(argv, root, nonce, time.monotonic() + 30)
+            self.assertEqual(receipt["status"], "OBSERVED_SETTINGS")
+            self.assertTrue(receipt["project_and_nonce_match"])
+            self.assertTrue(receipt["settings"]["DEVELOPMENT_TEAM"]["matches_selected_argument"])
+            self.assertEqual(receipt["settings"]["SDKROOT"]["value"], "iPhoneOS27.2.sdk")
+            encoded = json.dumps(receipt)
+            for private in [TEAM, "DO_NOT_RETAIN_THIS", "sensitive-key-name.p8", "Private human profile name"]:
+                self.assertNotIn(private, encoded)
+            actual = invoked.call_args.args[0]
+            self.assertNotIn("archive", actual)
+            self.assertIn("-showBuildSettings", actual)
+            self.assertIn("-json", actual)
+            self.assertLessEqual(invoked.call_args.kwargs["timeout"], 15)
+            self.assertEqual(set(receipt["inherited_environment"]),
+                             {"HOME", "CFFIXED_USER_HOME", "DEVELOPER_DIR", "XCODE_XCCONFIG_FILE", "SDKROOT"})
+
+    def test_other_project_or_nonce_cannot_supply_owned_target_settings(self):
+        import json
+        import time
+        import signing_profile_preflight as native
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            project = root / "ProfileDiscovery.xcodeproj"
+            project.mkdir()
+            nonce = "a" * 32
+            argv = ["xcodebuild", "-project", project, "-scheme", "ProfileDiscovery", "archive",
+                    "HANLIN_PROFILE_DISCOVERY_NONCE=" + nonce]
+            for path, actual_nonce in [(str(root / "Other.xcodeproj"), nonce), (str(project), "b" * 32)]:
+                with self.subTest(path=path, nonce=actual_nonce):
+                    result = Mock(returncode=0, stdout=json.dumps([{"target": "ProfileDiscovery",
+                        "buildSettings": {"PROJECT_FILE_PATH": path,
+                                          "HANLIN_PROFILE_DISCOVERY_NONCE": actual_nonce,
+                                          "DEVELOPMENT_TEAM": TEAM}}]).encode(), stderr=b"")
+                    with patch.object(native.subprocess, "run", return_value=result):
+                        receipt = native.observe_owned_signing_build_settings(
+                            argv, root, nonce, time.monotonic() + 30)
+                    self.assertEqual(receipt["status"], "DIAGNOSTIC_UNAVAILABLE")
+                    self.assertNotIn("settings", receipt)
+                    self.assertNotIn(TEAM, json.dumps(receipt))
+
+    def test_exhausted_deadline_starts_no_diagnostic_process(self):
+        import time
+        import signing_profile_preflight as native
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            project = root / "ProfileDiscovery.xcodeproj"
+            project.mkdir()
+            nonce = "a" * 32
+            argv = ["xcodebuild", "-project", project, "-scheme", "ProfileDiscovery", "archive",
+                    "HANLIN_PROFILE_DISCOVERY_NONCE=" + nonce]
+            with patch.object(native.subprocess, "run") as invoked:
+                receipt = native.observe_owned_signing_build_settings(
+                    argv, root, nonce, time.monotonic() - 1)
+            self.assertEqual(receipt["status"], "DEADLINE_EXHAUSTED")
+            invoked.assert_not_called()
 
 
 if __name__ == "__main__":

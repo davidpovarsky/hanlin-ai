@@ -93,7 +93,7 @@ int main(int argc, const char *argv[]) {
             NSData *data = [NSData dataWithContentsOfFile:@(argv[index])];
             NSMutableArray *signers = [NSMutableArray array];
             NSMutableDictionary *record = [@{
-                @"index": @(index - 1), @"read_ok": @(data != nil),
+                @"index": @(index - 1), @"read_ok": data != nil ? @YES : @NO,
                 @"signers": signers
             } mutableCopy];
             [records addObject:record];
@@ -126,9 +126,9 @@ int main(int argc, const char *argv[]) {
                         @"index": @(signer), @"api_status": @(result),
                         @"signer_status": @(signature), @"certificate_status": @(certificate),
                         @"trust_result_status": @(trustStatus), @"trust_result": @(trustResult),
-                        @"signature_and_certificate_valid": @(
+                        @"signature_and_certificate_valid": (
                             result == errSecSuccess && signature == kCMSSignerValid &&
-                            certificate == errSecSuccess)
+                            certificate == errSecSuccess) ? @YES : @NO
                     }];
                     if (trust) CFRelease(trust);
                     if (policy) CFRelease(policy);
@@ -146,6 +146,19 @@ int main(int argc, const char *argv[]) {
     }
 }
 """
+
+
+def _native_cms_signatures_valid(rows):
+    # NSJSONSerialization can encode a boxed C comparison as NSNumber 0/1.
+    # Accept that exact native wire form, never general Python truthiness.
+    def true_flag(value):
+        return value is True or (type(value) is int and value == 1)
+
+    return all(true_flag(row.get("read_ok")) and row.get("decoder_status") == 0
+               and row.get("signer_count_status") == 0 and row.get("signer_count", 0) > 0
+               and len(row.get("signers", [])) == row["signer_count"]
+               and all(true_flag(signer.get("signature_and_certificate_valid"))
+                       for signer in row["signers"]) for row in rows)
 
 
 def profile_cms_diagnostics(folder, profiles, run, deadline):
@@ -191,11 +204,7 @@ def profile_cms_diagnostics(folder, profiles, run, deadline):
                     hashlib.sha256(profile["content"]).hexdigest()):
                 raise RuntimeError("CMS diagnostic input does not match the selected profile")
             row["bundle_id"] = profile["bundle"]
-        valid = all(row.get("read_ok") is True and row.get("decoder_status") == 0
-                    and row.get("signer_count_status") == 0 and row.get("signer_count", 0) > 0
-                    and len(row.get("signers", [])) == row["signer_count"]
-                    and all(signer.get("signature_and_certificate_valid") is True
-                            for signer in row["signers"]) for row in rows)
+        valid = _native_cms_signatures_valid(rows)
         receipt.update(status="CMS_SIGNATURES_VALID" if valid else "CMS_SIGNATURE_OR_TRUST_REJECTED",
                        profiles=rows)
     except (OSError, ValueError, RuntimeError) as error:
@@ -356,6 +365,107 @@ def _write_probe_project(directory):
     return project
 
 
+def observe_owned_signing_build_settings(archive_argv, probe_root, nonce, deadline):
+    """Inspect the failed tiny target once; never run another archive or admit a profile."""
+    receipt = {"status": "NOT_RUN", "scope": "SIGNING_SETTINGS_ONLY_NOT_PROFILE_ACCEPTANCE",
+               "nonce": nonce}
+    try:
+        argv = [str(value) for value in archive_argv]
+        root = Path(probe_root).resolve()
+        if (argv.count("-project") != 1 or argv.count("-scheme") != 1
+                or argv.count("archive") != 1 or Path(argv[0]).name != "xcodebuild"
+                or not re.fullmatch(r"[a-f0-9]{32}", nonce)):
+            raise ValueError("Unbound profile-discovery command")
+        project = Path(argv[argv.index("-project") + 1]).resolve()
+        target = argv[argv.index("-scheme") + 1]
+        if (project.parent != root or project.name != "ProfileDiscovery.xcodeproj"
+                or target != "ProfileDiscovery"
+                or argv.count("HANLIN_PROFILE_DISCOVERY_NONCE=" + nonce) != 1):
+            raise ValueError("Command is outside this exact owned profile-discovery project")
+        receipt["project_path_sha256"] = hashlib.sha256(str(project).encode()).hexdigest()
+        receipt["archive_arguments_sha256"] = hashlib.sha256(json.dumps(argv).encode()).hexdigest()
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            receipt["status"] = "DEADLINE_EXHAUSTED"
+            return receipt
+        settings_argv = [value for value in argv if value != "archive"]
+        settings_argv += ["-showBuildSettings", "-json"]
+        environment = dict(os.environ)
+        # Only presence/hashes and equality facts are retained for inherited paths.
+        # No user directory, xcconfig filename, or other environment value is logged.
+        receipt["inherited_environment"] = {
+            key: {"present": key in environment,
+                  "value_sha256": hashlib.sha256(environment[key].encode()).hexdigest()
+                  if key in environment else None}
+            for key in ["HOME", "CFFIXED_USER_HOME", "DEVELOPER_DIR", "XCODE_XCCONFIG_FILE", "SDKROOT"]
+        }
+        for key in ["HOME", "CFFIXED_USER_HOME"]:
+            if environment.get(key):
+                receipt["inherited_environment"][key]["matches_python_home"] = (
+                    Path(environment[key]).resolve() == Path.home().resolve())
+        result = subprocess.run(settings_argv, cwd=ROOT, env=environment,
+                                capture_output=True, timeout=min(15, remaining))
+        receipt["exit"] = result.returncode
+        receipt["stdout_sha256"] = hashlib.sha256(result.stdout).hexdigest()
+        receipt["stderr_sha256"] = hashlib.sha256(result.stderr).hexdigest()
+        if result.returncode:
+            receipt["status"] = "SETTINGS_COMMAND_FAILED"
+            return receipt
+        if len(result.stdout) + len(result.stderr) > 512 * 1024:
+            raise ValueError("Owned build settings exceed bounded diagnostic retention")
+        values = json.loads(result.stdout)
+        if not isinstance(values, list) or len(values) != 1 or values[0].get("target") != target:
+            raise ValueError("Unexpected target inventory")
+        settings = values[0].get("buildSettings")
+        if (not isinstance(settings, dict)
+                or Path(settings.get("PROJECT_FILE_PATH", "")).resolve() != project
+                or settings.get("HANLIN_PROFILE_DISCOVERY_NONCE") != nonce):
+            raise ValueError("Build settings do not belong to this exact owned invocation")
+        receipt["project_and_nonce_match"] = True
+        selected = dict(value.split("=", 1) for value in argv
+                        if "=" in value and not value.startswith("-"))
+        keys = ["CODE_SIGN_STYLE", "CODE_SIGN_IDENTITY", "EXPANDED_CODE_SIGN_IDENTITY",
+                "DEVELOPMENT_TEAM", "PROVISIONING_PROFILE_SPECIFIER", "PROVISIONING_PROFILE",
+                "EXPANDED_PROVISIONING_PROFILE", "CONFIGURATION", "SDKROOT", "PLATFORM_NAME",
+                "SUPPORTED_PLATFORMS", "PRODUCT_BUNDLE_IDENTIFIER", "CODE_SIGNING_ALLOWED",
+                "CODE_SIGNING_REQUIRED", "PROVISIONING_PROFILE_REQUIRED"]
+        projected = {}
+        for key in keys:
+            if key not in settings:
+                projected[key] = {"observed": False}
+                continue
+            value = settings[key]
+            if not isinstance(value, str):
+                raise ValueError("Unexpected build-setting value type")
+            item = {"observed": True, "value_sha256": hashlib.sha256(value.encode()).hexdigest()}
+            if key in selected:
+                item["matches_selected_argument"] = value == selected[key]
+            if key == "DEVELOPMENT_TEAM":
+                item["value"] = "[SELECTED_TEAM]" if value == selected.get(key) else "[OTHER_TEAM]"
+            elif key in {"CODE_SIGN_IDENTITY", "EXPANDED_CODE_SIGN_IDENTITY"}:
+                item["value"] = value if (re.fullmatch(r"[A-Fa-f0-9]{40}", value)
+                    or value in {"", "-", "Apple Distribution", "Apple Development",
+                                 "iPhone Distribution", "iPhone Developer"}) else "[IDENTITY_NAME_REDACTED]"
+            elif key in {"PROVISIONING_PROFILE_SPECIFIER", "PROVISIONING_PROFILE",
+                         "EXPANDED_PROVISIONING_PROFILE"}:
+                item["value"] = value if (not value or re.fullmatch(
+                    r"[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}", value)) else "[PROFILE_NAME_REDACTED]"
+            elif key == "SDKROOT":
+                leaf = Path(value).name
+                item["value"] = leaf if re.fullmatch(
+                    r"(?:iPhoneOS|iPhoneSimulator|MacOSX)[0-9.]*\.sdk|iphoneos|iphonesimulator|macosx", leaf) else "[SDK_PATH_REDACTED]"
+            else:
+                item["value"] = value if len(value) <= 160 and re.fullmatch(
+                    r"[A-Za-z0-9_. -]*", value) else "[SETTING_REDACTED]"
+            projected[key] = item
+        receipt.update(status="OBSERVED_SETTINGS", target=target, settings=projected)
+    except subprocess.TimeoutExpired:
+        receipt["status"] = "SETTINGS_COMMAND_TIMED_OUT"
+    except (OSError, ValueError, TypeError, IndexError) as error:
+        receipt.update(status="DIAGNOSTIC_UNAVAILABLE", error=type(error).__name__)
+    return receipt
+
+
 def run_profile_discovery_preflight(folder, profiles, team, identity, certificate_sha, run, receipt):
     """At most four minutes, stopping on the first native failure."""
     receipt.update(status="RUNNING", scope="PROFILE_DISCOVERY_ONLY_NOT_PRODUCT_ACCEPTANCE",
@@ -364,6 +474,8 @@ def run_profile_discovery_preflight(folder, profiles, team, identity, certificat
     work = Path(folder) / "profile-discovery"
     work.mkdir()
     project = _write_probe_project(work)
+    nonce = uuid.uuid4().hex
+    receipt["probe_nonce"] = nonce
     receipt["cms_signatures"] = profile_cms_diagnostics(work, profiles, run, deadline)
 
     def bounded(argv, label, entry=None, key=None):
@@ -381,6 +493,14 @@ def run_profile_discovery_preflight(folder, profiles, team, identity, certificat
         except Exception:
             if entry is not None:
                 entry[key] = "EXECUTED_FAIL"
+                if key == "archive":
+                    try:
+                        entry["build_settings_diagnostic"] = observe_owned_signing_build_settings(
+                            argv, work, nonce, deadline)
+                    except Exception as diagnostic_error:
+                        # The diagnostic never replaces the original archive failure.
+                        entry["build_settings_diagnostic"] = {
+                            "status": "DIAGNOSTIC_UNAVAILABLE", "error": type(diagnostic_error).__name__}
             raise
         if entry is not None:
             entry[key] = "EXECUTED_PASS"
@@ -412,7 +532,8 @@ def run_profile_discovery_preflight(folder, profiles, team, identity, certificat
                      "CODE_SIGN_STYLE=Manual", "DEVELOPMENT_TEAM=" + team,
                      "CODE_SIGN_IDENTITY=" + identity,
                      "PROVISIONING_PROFILE_SPECIFIER=" + profile["uuid"], "PROVISIONING_PROFILE=",
-                     "CODE_SIGN_ENTITLEMENTS=" + str(entitlements), "APS_ENVIRONMENT=production"],
+                     "CODE_SIGN_ENTITLEMENTS=" + str(entitlements), "APS_ENVIRONMENT=production",
+                     "HANLIN_PROFILE_DISCOVERY_NONCE=" + nonce],
                     "profile-discovery-" + role + "-archive", entry, "archive")
             options = work / (role + "-ExportOptions.plist")
             options.write_bytes(plistlib.dumps({

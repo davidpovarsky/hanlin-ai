@@ -1,0 +1,78 @@
+{
+  "run": 44431826560,
+  "artifact_id": 14491642122,
+  "sha256": "554d2712c18d25f19fca6dab775e92438b0875abe5250cbb467de73bac74b7aa",
+  "archive_bytes": 17215,
+  "selected": [
+    {
+      "name": "app-split-evidence/acceptance.json",
+      "bytes": 21592,
+      "sha256": "833e80aa968624f6732dcc7408996f85d505aa04c716792345e5a9a9054917a1"
+    },
+    {
+      "name": "app-split-evidence/ci-performance-report.json",
+      "bytes": 2022,
+      "sha256": "1ee2af90113c1a05bb25163d0b0c710bda143d59601ae26d652d97dd1333764e"
+    },
+    {
+      "name": "app-split-evidence/preflight-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "f14b4987904bcb5814e4459a057ed4d20f58a633152288a761214dcd28780b56"
+    },
+    {
+      "name": "app-split-evidence/preflight.log",
+      "bytes": 128111,
+      "sha256": "51fc9eb6a93290223fcf832a7458c67b3733482bd63e588d0b4981760344d5af"
+    },
+    {
+      "name": "app-split-evidence/signed-products/acceptance.json",
+      "bytes": 21592,
+      "sha256": "833e80aa968624f6732dcc7408996f85d505aa04c716792345e5a9a9054917a1"
+    },
+    {
+      "name": "app-split-evidence/signed-products/commands.json",
+      "bytes": 1866,
+      "sha256": "7ee5a03217b06d4474f0f6b08cbd40b5cc5f0b53629b4a7f43044324438b5057"
+    },
+    {
+      "name": "app-split-evidence/signed-products/device-sdk.log",
+      "bytes": 5,
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    {
+      "name": "app-split-evidence/signed-products/profile-cms-diagnostic-build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "app-split-evidence/signed-products/profile-cms-signature-status.log",
+      "bytes": 1972,
+      "sha256": "1267e955fa5139ed80901d413623da0162f220b7833e05f31ffd0c55f8fc7415"
+    },
+    {
+      "name": "app-split-evidence/signed-products/profile-discovery-miniapps-archive-owned-signing.json",
+      "bytes": 1579,
+      "sha256": "edccf145b66778a411d889a41d814994a8c281c1d9e160ab3f8eae1fb77e14f7"
+    },
+    {
+      "name": "app-split-evidence/signed-products/profile-discovery-miniapps-archive.log",
+      "bytes": 3734,
+      "sha256": "0ee1b534bdc47f9dcbf1b2ab0649efad6e2f127de7d2c9339203270c5f827ef1"
+    },
+    {
+      "name": "app-split-evidence/signed-products/swift-version.log",
+      "bytes": 128,
+      "sha256": "448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06"
+    },
+    {
+      "name": "app-split-evidence/signed-products/xcode-version.log",
+      "bytes": 31,
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+    },
+    {
+      "name": "app-split-evidence/skill-health.txt",
+      "bytes": 84,
+      "sha256": "484ea42b543c850d718181e5c283d1b8ff4da076c7ed5b59cc2f38d179f15ee1"
+    }
+  ]
+}
