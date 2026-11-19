@@ -1,0 +1,8 @@
+{
+  "published_at": "2026-11-19T04:31:12.316945+00:00",
+  "head": "ffc876fd04fbac61abfb4d4538e75ccb39055c48",
+  "base": "7d5f0a47d7cfb98b28fd9f16d83a2b917618da95",
+  "remote_match": true,
+  "source_plan": "Debug; original2iPhoneUI selectors; no device/IPA",
+  "inputs_sha256": "96be3a2f0789b41a0970fb5a3600ee1f90b74cf5cca5669b88389e05642778a0"
+}

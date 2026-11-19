@@ -1,0 +1,187 @@
+{
+  "observed_at": "2026-11-19T04:46:25.568677+00:00",
+  "tasks": [
+    {
+      "gid": "1220542174541844",
+      "name": "[HANLIN-SDK-01][P0][AUDIT] מיפוי קוד, תלות ו־iOS 26/27; חוזי Swift Package ללא שכפול",
+      "completed": true,
+      "modified_at": "2026-11-19T01:07:12.401Z"
+    },
+    {
+      "gid": "1220546710401425",
+      "name": "[P0][SKILL-YAMS-02] Yams מקורית ב-SwiftPM — פענוח SKILL.md/Agent Skills frontmatter מלא ללא שכפול",
+      "completed": false,
+      "modified_at": "2026-11-19T03:51:07.392Z"
+    },
+    {
+      "gid": "1219605220234118",
+      "name": "[CURRENT WAVE A] Baseline + parity audit — מפת רכיבי Hanlin ומקור SwiftChat",
+      "completed": false,
+      "modified_at": "2026-11-19T03:40:44.528Z"
+    },
+    {
+      "gid": "1220546608370437",
+      "name": "[P0][SKILL-UPSTREAM-01] תשתית קליטת upstream חיה — SwiftPM, OpenClaw/Tree-sitter, Renovate/CI ומיזוג בטוח",
+      "completed": false,
+      "modified_at": "2026-11-19T04:35:28.573Z"
+    },
+    {
+      "gid": "1220373608755846",
+      "name": "[SDK-03][NATIVESCRIPT] TypeScript SDK מלא ומדויק ל-Core ו-Direct Native iOS APIs",
+      "completed": false,
+      "modified_at": "2026-11-16T16:05:18.855Z"
+    },
+    {
+      "gid": "1220373832827086",
+      "name": "[SDK-04][EXPO] TypeScript SDK מלא, Expo SwiftUI, Generated Bridge ו-native-api",
+      "completed": false,
+      "modified_at": "2026-11-16T16:05:18.792Z"
+    },
+    {
+      "gid": "1220374076374903",
+      "name": "[INT-03][NATIVESCRIPT] Generic runtime.execute + TypeScript/Shell, robust session scheduler and actions",
+      "completed": false,
+      "modified_at": "2026-11-16T16:05:18.838Z"
+    },
+    {
+      "gid": "1220546710400478",
+      "name": "[P0][SKILL-RUNTIME-05] Skill Compatibility/Readiness + Execution Planner — engine selection Native/iSH",
+      "completed": false,
+      "modified_at": "2026-11-19T03:51:05.937Z"
+    },
+    {
+      "gid": "1220489383643571",
+      "name": "[A2UI-02][P0] Unified Rich-Content envelope: A2UI מתוך תשובת Agent, לא רק ToolResult",
+      "completed": false,
+      "modified_at": "2026-11-18T09:51:43.100Z"
+    },
+    {
+      "gid": "1220489258419968",
+      "name": "[A2UI-03][P0] Native SwiftUI Surface והקטלוג הרשמי: רכיבים, Binding, RTL, נגישות ומצבי תצוגה",
+      "completed": false,
+      "modified_at": "2026-11-18T09:51:45.353Z"
+    },
+    {
+      "gid": "1220489257946325",
+      "name": "[A2UI-04][P0] דו־כיווניות: Events, RPC, action broker והרשאות מפעולות הממשק לסוכן",
+      "completed": false,
+      "modified_at": "2026-11-18T09:51:47.711Z"
+    },
+    {
+      "gid": "1220489600044406",
+      "name": "[A2UI-05][P1] Streaming A2UI סדור, מחזור חיים, ביצועים ו־Transcript replay",
+      "completed": false,
+      "modified_at": "2026-11-19T03:57:30.954Z"
+    },
+    {
+      "gid": "1220491240486416",
+      "name": "[A2UI-09][P0][TOP PRIORITY][MEDIA] תמונות אינטרנט, גלריות, MP4/HLS, YouTube וכרטיסי קישור בתוך Hanlin Chat",
+      "completed": false,
+      "modified_at": "2026-11-18T05:55:21.322Z"
+    },
+    {
+      "gid": "1220546608350406",
+      "name": "[P1][SKILL-AST-04] זיהוי תלויות לא מוצהרות מ-Skills — Tree-sitter Bash upstream + Python/TS AST קיימים",
+      "completed": false,
+      "modified_at": "2026-11-16T16:05:18.799Z"
+    },
+    {
+      "gid": "1220546846740594",
+      "name": "[P1][CHATUX-MOTION] Hanlin AI — ערכות אנימציה מוכנות לצ׳אט + בורר יחיד בהגדרות",
+      "completed": false,
+      "modified_at": "2026-11-19T03:51:04.303Z"
+    },
+    {
+      "gid": "1220539644804804",
+      "name": "[HANLIN][UI APPROVED] מימוש בועת ההודעה והכלים החדשה — התאמה 1:1 ל-MorphView Swift Playground",
+      "completed": false,
+      "modified_at": "2026-11-19T04:34:35.504Z"
+    },
+    {
+      "gid": "1220541898122292",
+      "name": "[HANLIN][Composer][Active Chips] להטמיע chips של הכלים המופעלים מעל בועת ההודעה — לפי קובץ Swift המאושר במחשב",
+      "completed": false,
+      "modified_at": "2026-11-16T16:05:18.934Z"
+    },
+    {
+      "gid": "1220546710417618",
+      "name": "[P1][SKILL-UX-QA-06] Skill Center — סטטוס תאימות אמיתי, remediation, בדיקות iPad ודו״ח קבלה",
+      "completed": false,
+      "modified_at": "2026-11-19T04:13:52.285Z"
+    },
+    {
+      "gid": "1219613181643838",
+      "name": "[P0][CURRENT WAVE][IN PROGRESS] Hanlin Chat & Agent SDK — SwiftUI משותף + Host API לאוצריא ול־Anytype",
+      "completed": false,
+      "modified_at": "2026-11-19T02:08:40.159Z"
+    },
+    {
+      "gid": "1220542419128390",
+      "name": "[HANLIN-SDK-02][P0][CORE] חבילת Swift ניתנת לייבוא — Agent/Chat/Streaming/Skills/MCP",
+      "completed": false,
+      "modified_at": "2026-11-16T16:05:18.896Z"
+    },
+    {
+      "gid": "1220542199992529",
+      "name": "[HANLIN-SDK-03][P0][HOST] HostIntegration API — הקשר, פעולות, הרשאות, תוצאות וניווט",
+      "completed": false,
+      "modified_at": "2026-11-19T01:46:23.818Z"
+    },
+    {
+      "gid": "1220542199999956",
+      "name": "[HANLIN-SDK-05][P0][DATA/SEC] ConversationStore, Keychain, App Group, CloudKit, בידוד והרשאות",
+      "completed": false,
+      "modified_at": "2026-11-19T04:34:39.375Z"
+    },
+    {
+      "gid": "1220542174541940",
+      "name": "[HANLIN-SDK-04][P0][UI] אותו ChatView/Composer/Thinking/A2UI בכל האפליקציות — SwiftUI",
+      "completed": false,
+      "modified_at": "2026-11-19T04:34:37.336Z"
+    },
+    {
+      "gid": "1220546571007976",
+      "name": "[P0][SKILL-OPENCLAW-03] קליטת מנגנון Eligibility/Gating המקורי של OpenClaw ב-Hanlin — מקור מתעדכן ומתאם דק",
+      "completed": false,
+      "modified_at": "2026-11-19T03:02:02.344Z"
+    },
+    {
+      "gid": "1219605220179926",
+      "name": "[CURRENT WAVE][SPLIT] Hanlin AI + Hanlin MiniApps — שתי אפליקציות עצמאיות ושימור יכולות",
+      "completed": false,
+      "modified_at": "2026-11-19T00:11:47.764Z"
+    },
+    {
+      "gid": "1219656771637321",
+      "name": "[CURRENT WAVE K][ARCH][SEC] שני Targets, Shared Contracts ומיגרציה בטוחה",
+      "completed": false,
+      "modified_at": "2026-11-19T02:57:15.526Z"
+    },
+    {
+      "gid": "1219656771149125",
+      "name": "[CURRENT WAVE J][UX] אישור IA ומסכי Hanlin AI הנקיים — Chat / Library / History / Advanced",
+      "completed": false,
+      "modified_at": "2026-11-18T05:21:26.223Z"
+    },
+    {
+      "gid": "1219656771460030",
+      "name": "[CURRENT WAVE L][DEV] Hanlin MiniApps עצמאית + גשר חזרה לסוכן",
+      "completed": false,
+      "modified_at": "2026-11-18T19:36:53.521Z"
+    },
+    {
+      "gid": "1219605235147314",
+      "name": "[CURRENT WAVE H] תרחישי קבלה, בדיקות סטטיות, non-regression ודוח קוד",
+      "completed": false,
+      "modified_at": "2026-11-18T08:08:58.393Z"
+    },
+    {
+      "gid": "1219605282038820",
+      "name": "[CURRENT WAVE I] אישור נפרד: Xcode 27 / iOS 27 / IPA / השוואה חזותית במכשיר",
+      "completed": false,
+      "modified_at": "2026-11-19T03:41:14.545Z"
+    }
+  ],
+  "completed": 1,
+  "open": 29
+}

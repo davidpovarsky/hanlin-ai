@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-19T04:40:07.653526+00:00",
+  "repository": "davidpovarsky/hanlin-ai",
+  "pr": 15,
+  "candidateHead": "c80f620ba8ed28243922728e00acffcdd439cc12",
+  "immutableBase": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+  "artifacts": [
+    {
+      "runID": "44455722821",
+      "artifactID": "14497894304",
+      "zipSHA256": "ab812eb32f94eddebc0d6a574efb1daadc8bf0da519f252cdf71a54a57dbcd9d",
+      "bytes": 360217,
+      "officialDigestMatched": true,
+      "officialRun": {
+        "id": 44455722821,
+        "head_sha": "c80f620ba8ed28243922728e00acffcdd439cc12",
+        "path": ".github/workflows/check-runtime-dependency-updates.yml",
+        "event": "workflow_dispatch",
+        "status": "completed",
+        "conclusion": "success",
+        "run_attempt": 1,
+        "created_at": "2026-11-19T04:04:04Z",
+        "updated_at": "2026-11-19T04:22:52Z"
+      },
+      "verificationReceipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\artifacts\\44455722821\\14497894304\\range-receipt.json",
+      "verificationReceiptSHA256": "16d8b4ae30647de6af6ec17097b7158d93a659ea38675289d2d8fd9bc566f254"
+    },
+    {
+      "runID": "44455722821",
+      "artifactID": "14498413320",
+      "zipSHA256": "3d0584fb2abff4d6eabecba018fdd0684616d76777b1544619492121b2b2e3c6",
+      "bytes": 12674939,
+      "officialDigestMatched": true,
+      "officialRun": {
+        "id": 44455722821,
+        "head_sha": "c80f620ba8ed28243922728e00acffcdd439cc12",
+        "path": ".github/workflows/check-runtime-dependency-updates.yml",
+        "event": "workflow_dispatch",
+        "status": "completed",
+        "conclusion": "success",
+        "run_attempt": 1,
+        "created_at": "2026-11-19T04:04:04Z",
+        "updated_at": "2026-11-19T04:22:52Z"
+      },
+      "verificationReceipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\artifacts\\44455722821\\14498413320\\range-receipt.json",
+      "verificationReceiptSHA256": "59807035c6b6afd8023c7cf82807af1b652ed3b782c2b7f3d5c77b6ffa669655"
+    },
+    {
+      "runID": "44458610092",
+      "artifactID": "14498878746",
+      "zipSHA256": "758475071570246b3329ceeb168408d2a47e2584780fcc96d807f6499f75b22c",
+      "bytes": 5464,
+      "officialDigestMatched": true,
+      "officialRun": {
+        "id": 44458610092,
+        "head_sha": "cbfae6eeeaa53969fa95fed18a5ba0a5548fd2ad",
+        "path": ".github/workflows/upstream-candidate-proof.yml",
+        "event": "workflow_dispatch",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_attempt": 1,
+        "created_at": "2026-11-19T04:28:54Z",
+        "updated_at": "2026-11-19T04:29:13Z"
+      },
+      "verificationReceipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\artifacts\\44458610092\\range-receipt.json",
+      "verificationReceiptSHA256": "12f977d9ddd655f69bf69a41ea1dc3e05e55cabb25c2f2f4885274efc91dfc2b"
+    }
+  ],
+  "nativeCandidate": {
+    "status": "EXECUTED_PASS",
+    "schemaVersion": 2,
+    "hostAccounting": {
+      "schemaVersion": 1,
+      "accepted": true,
+      "status": "EXECUTED_PASS",
+      "reasons": [],
+      "origin": {
+        "status": "EXECUTED_PASS",
+        "stage": "native-origin",
+        "run": {
+          "repository": "davidpovarsky/hanlin-ai",
+          "runId": "44455722821",
+          "attempt": "1",
+          "head": "c80f620ba8ed28243922728e00acffcdd439cc12",
+          "job": "upstream"
+        },
+        "counts": {
+          "tests": 153,
+          "pass": 152,
+          "fail": 0,
+          "skipped": 1
+        },
+        "packedJitlessProbe": {
+          "passed": true,
+          "fetchImplementation": "node-fetch@3.3.2+native-web-api",
+          "webAssemblyAvailable": false,
+          "nonce": "abfb3d05-4cca-424c-862b-e61468d1dd8a",
+          "contracts": [
+            "GET",
+            "Request POST Unicode",
+            "redirect",
+            "HTTP error",
+            "ReadableStream",
+            "clone",
+            "gzip",
+            "multipart File",
+            "abort",
+            "HEAD",
+            "204"
+          ]
+        },
+        "logSHA256": "2f2c2cdcbcb08e65547f24751c6354762883deb026483592fbd5a4182523476d",
+        "archiveSHA256": "2260ccc0f6a36d9ad02c6e4f79e900d3076182b60296e3e9a5d6a929339f3c6c",
+        "sourceInputsHash": "a4a9b76fc104ef316477bbb0249ca443699539fd2e47feee71df043ec94c9cb4",
+        "nodeFingerprint": {
+          "versions": {
+            "node": "24.5.0",
+            "acorn": "8.15.0",
+            "ada": "3.2.6",
+            "amaro": "1.1.1",
+            "ares": "1.34.5",
+            "brotli": "1.1.0",
+            "cjs_module_lexer": "2.1.0",
+            "cldr": "47.0",
+            "icu": "77.1",
+            "llhttp": "9.3.0",
+            "modules": "137",
+            "napi": "10",
+            "nbytes": "0.1.1",
+            "ncrypto": "0.0.1",
+            "nghttp2": "1.66.0",
+            "openssl": "3.5.1",
+            "simdjson": "3.13.0",
+            "simdutf": "6.4.0",
+            "sqlite": "3.50.3",
+            "tz": "2025b",
+            "undici": "7.12.0",
+            "unicode": "16.0",
+            "uv": "1.51.0",
+            "uvwasi": "0.0.21",
+            "v8": "13.6.233.10-node.21",
+            "zlib": "1.3.1-470d3a2",
+            "zstd": "1.5.7"
+          },
+          "platform": "darwin",
+          "arch": "arm64"
+        },
+        "callerEnvironment": {
+          "nonSecretInputHashes": {
+            "PATH": "50dfcb7d1d6c5451ce40ccc4dcbdd3bbe302b88e3678fb5450183f79202645f3",
+            "NODE_OPTIONS": null,
+            "NODE_EXTRA_CA_CERTS": null,
+            "TZ": null,
+            "LANG": "65ce8c93514741c928d27fcdbe7b0a754dfcaebcb2292111cd60305dc983f51f",
+            "LC_ALL": "65ce8c93514741c928d27fcdbe7b0a754dfcaebcb2292111cd60305dc983f51f",
+            "RUNNER_TEMP": "4625c10d52ae1888fac51ca6be7961a750a9cd6041dbf4266c302e11f246b0f4",
+            "TMPDIR": "c9a684d7955f664ef0556ca9dd4dd4966e73bf1ece809d8bac2534f20aae84b4",
+            "HOME": "9a09ac3910170055d9de7a25ac97f23402295686d31cd3e6f70765fe40872b4d",
+            "NODE_PATH": null,
+            "HANLIN_RUN_LONG_JOBS": null,
+            "HANLIN_RUNTIME_TEST_FIXTURES": null,
+            "HANLIN_HOST_GRAMMAR_COMPILER_ROOT": null
+          },
+          "repositoryCredentialsPresent": true,
+          "hostChildEnvironment": "Derived by the fingerprinted prepare-runtime-host.sh; not a claim that the caller environment equals the child environment"
+        },
+        "toolchain": {
+          "npm": "11.5.1",
+          "python": "Python 3.15.2",
+          "git": "git version 2.56.0",
+          "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434"
+        },
+        "captureSHA256": "a955ff15a5c0c47933afb5b11bcac525d21d494abcdb544c290ed4a04a95b945"
+      },
+      "directHostStage": {
+        "status": "REUSED_VERIFIED_PASS",
+        "testsExecutedHere": false,
+        "source": {
+          "run": {
+            "repository": "davidpovarsky/hanlin-ai",
+            "runId": "44455722821",
+            "attempt": "1",
+            "head": "c80f620ba8ed28243922728e00acffcdd439cc12",
+            "job": "upstream"
+          },
+          "stage": "native-origin",
+          "logSHA256": "2f2c2cdcbcb08e65547f24751c6354762883deb026483592fbd5a4182523476d"
+        }
+      },
+      "repositoryCredentialFreeHostTests": {
+        "status": "NOT_RUN"
+      },
+      "crossRunReuse": "NOT_ACCEPTED_WITHOUT_A_SEPARATE_AUTHENTICATED_ORIGIN_AND_COMPLETE_UNCHANGED_INPUT_CLOSURE"
+    },
+    "innerArchiveSHA256": "2260ccc0f6a36d9ad02c6e4f79e900d3076182b60296e3e9a5d6a929339f3c6c",
+    "innerArchiveMatchesOriginalReceipt": true,
+    "rawReceipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\artifacts\\44455722821\\14497894304\\selected\\candidate-receipt.json",
+    "rawReceiptSHA256": "24fff611f99bee45cdae0ef30a811f6f473b0a63ea948cfc7084fa013e58268c"
+  },
+  "trustedConsumer": {
+    "runID": "44458610092",
+    "status": "REJECTED",
+    "trustedSourceSHA": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+    "primaryFailure": "HTTP403 Resource not accessible by integration from authenticated REST branch protection read",
+    "secondaryError": "ENOENT: no such file or directory, open '/home/runner/work/hanlin-ai/hanlin-ai/build/upstream-proof-consumer/candidate-proof.json'",
+    "proofVerified": false,
+    "mergePerformed": false,
+    "actions": [
+      {
+        "kind": "create-proof-check",
+        "checkID": 135339754500,
+        "head": "c80f620ba8ed28243922728e00acffcdd439cc12",
+        "appID": 15368
+      },
+      {
+        "kind": "complete-proof-check",
+        "checkID": 135339754500,
+        "head": "c80f620ba8ed28243922728e00acffcdd439cc12",
+        "conclusion": "failure"
+      }
+    ],
+    "rawReceipt": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\artifacts\\44458610092\\selected\\consumer-receipt.json",
+    "rawReceiptSHA256": "3e4cc1d97a095ef50f5f25849cc9b28cb798fdb6872990656e50abe0eb2aeb83",
+    "rawCheckerLog": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\artifacts\\44458610092\\selected\\candidate-proof.log",
+    "rawCheckerLogSHA256": "23721a9080e37b2d57394d923232db0d0e8c5af5a6a3cda71e9004134f453039"
+  },
+  "scope": "Current-run Darwin Host execution and packed JITless; no native binary rebuild/iOS UI/repository-credential-free execution claim",
+  "deliberateNegativeExperiment": "NOT_YET_RUN",
+  "laterSameHeadGreenAndProtectedMerge": "NOT_YET_RUN",
+  "asanaReadback": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\v3\\asana-readback-candidate-0435.json"
+}

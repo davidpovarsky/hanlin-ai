@@ -1,0 +1,118 @@
+{
+  "status": "TEST_FAILED",
+  "ui": "TEST_FAILED",
+  "build": "EXECUTED_PASS",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Two shipping targets, actual App Group, original Host request/return/cancel, original ScriptUI import and private-data transfer/rollback; original share ingress to Composer and SDK",
+  "model_boundary": "Existing opt-in simulator HTTP acceptance provider; all Host, permission, OS transitions, storage and result handling are real.",
+  "started_at": 1795059379.940423,
+  "test_scope": "product_and_share",
+  "selected_tests": [
+    "AI_HLYUITests/HanlinPairedProductUITests",
+    "AI_HLYTests/ShareInboxHostIntegrationTests",
+    "AI_HLYUITests/HanlinShareInboxUITests"
+  ],
+  "os_share_sheet": "NOT_RUN; input uses original store APIs and NSItemProvider in the native host suite",
+  "sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "simulator": "5D535087-EF95-4D57-9F94-DC75EB747FC6",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+  "device": "iPhone 18 Pro",
+  "mini_build": "EXECUTED_PASS",
+  "ai_build": "EXECUTED_PASS",
+  "product_identity": {
+    "com.itorah.chavrusachat": {
+      "display_name": "Hanlin AI",
+      "info_plist_sha256": "7d6ed4bf7f4dd3e9da685355c8dfb4d3bdfd7b29c6e607a84524a8d0003eeb89",
+      "app_icon": {
+        "name": "AppIcon",
+        "compiled_catalog_sha256": "2c813d2520953d5d6878b9beb1b0c507d76f395f09c9403074a29a1621c1856e"
+      }
+    },
+    "com.itorah.hanlinminiapps": {
+      "display_name": "Hanlin MiniApps",
+      "info_plist_sha256": "7df60281f90f4566363467be3c46d010a067791e79b02bd9fe3f54385bd52228",
+      "app_icon": {
+        "name": "AppIcon",
+        "compiled_catalog_sha256": "4dfe55b8f68dc79315a939c7c3beb3a7a1f12b3e17b6c73c2749d7bb783989ba"
+      }
+    }
+  },
+  "app_group": {
+    "status": "EXECUTED_PASS",
+    "containers": {
+      "com.itorah.chavrusachat": "/Users/runner/Library/Developer/CoreSimulator/Devices/5D535087-EF95-4D57-9F94-DC75EB747FC6/data/Containers/Shared/AppGroup/237C3A1C-EFD1-41B6-AB27-3A64F8F79E1F",
+      "com.itorah.hanlinminiapps": "/Users/runner/Library/Developer/CoreSimulator/Devices/5D535087-EF95-4D57-9F94-DC75EB747FC6/data/Containers/Shared/AppGroup/237C3A1C-EFD1-41B6-AB27-3A64F8F79E1F"
+    }
+  },
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "5D535087-EF95-4D57-9F94-DC75EB747FC6",
+          "deviceName": "HanlinPaired-44447129341",
+          "modelName": "iPhone 18 Pro",
+          "osBuildNumber": "24B8117",
+          "osVersion": "27.2",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 3,
+        "passedTests": 5,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "AI_HLY \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 3,
+    "finishTime": 1795061848.361,
+    "passedTests": 5,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1795061229.646,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "XCTAssertEqual failed: (\"Optional(\"AIRED_CANCEL_F51EA657-B7EF-402B-8AF4-B107B7585459P\")\") is not equal to (\"Optional(\"PAIRED_CANCEL_F51EA657-B7EF-402B-8AF4-B107B7585459\")\") - Native typing must preserve the original request before Send",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 5,
+        "testIdentifierString": "HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState",
+        "testName": "testCompanionCancellationReturnsWithoutChangingPrivateState()"
+      },
+      {
+        "failureText": "XCTAssertEqual failed: (\"Optional(\"AIRED_OPEN_5EA3A293-PDCF\")\") is not equal to (\"Optional(\"PAIRED_OPEN_5EA3A293-5716-41D2-8387-736A20EDCF37\")\") - Native typing must preserve the original request before Send",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 6,
+        "testIdentifierString": "HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat",
+        "testName": "testCompanionReturnsActualPrivateValueToOriginalChat()"
+      },
+      {
+        "failureText": "XCTAssertEqual failed: (\"Optional(\"NSENT_PREEXISTING_D8BA137F-FF97-49BA-A1FD-03A9857B2CC6U\")\") is not equal to (\"Optional(\"UNSENT_PREEXISTING_D8BA137F-FF97-49BA-A1FD-03A9857B2CC6\")\") - Native typing must preserve the draft before opening the inbox",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 8,
+        "testIdentifierString": "HanlinShareInboxUITests/testSharedTextURLAndFileReachTheOriginalChatOnlyAfterSend()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinShareInboxUITests/testSharedTextURLAndFileReachTheOriginalChatOnlyAfterSend",
+        "testName": "testSharedTextURLAndFileReachTheOriginalChatOnlyAfterSend()"
+      }
+    ],
+    "title": "Test - AI_HLY",
+    "topInsights": [],
+    "totalTestCount": 8
+  },
+  "error": "Original native acceptance did not pass every case in the recorded scope",
+  "diagnostic_errors": [],
+  "result_bundles": [
+    "Paired.xcresult",
+    "AIBuild.xcresult",
+    "MiniBuild.xcresult"
+  ],
+  "duration_seconds": 2486.436173915863
+}

@@ -1,0 +1,13 @@
+{
+  "run": 44458939610,
+  "head": "ffc876fd04fbac61abfb4d4538e75ccb39055c48",
+  "artifact_id": 14499480096,
+  "sha256": "e08ef0473d92ff679369cb3fe2204f391fbf21527c0d5f0b9161f699979961a4",
+  "all_crc_pass": true,
+  "selected_count": 2,
+  "exact_selectors_match": true,
+  "configuration": "Debug",
+  "device": false,
+  "ipa": false,
+  "verified_at": "2026-11-19T04:36:04.371784+00:00"
+}

@@ -1,0 +1,170 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "5D535087-EF95-4D57-9F94-DC75EB747FC6",
+      "deviceName" : "HanlinPaired-44447129341",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0.022s",
+                  "durationInSeconds" : 0.022140979766845703,
+                  "name" : "mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+                  "nodeIdentifier" : "ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.028s",
+                  "durationInSeconds" : 0.028059005737304688,
+                  "name" : "invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+                  "nodeIdentifier" : "ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0055s",
+                  "durationInSeconds" : 0.0054738521575927734,
+                  "name" : "cancelledDraftPreparationKeepsTheOriginalFile()",
+                  "nodeIdentifier" : "ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.21s",
+                  "durationInSeconds" : 0.21347498893737793,
+                  "name" : "providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+                  "nodeIdentifier" : "ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Actual App Group Share ingress reader",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        },
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertEqual failed: (\"Optional(\"AIRED_CANCEL_F51EA657-B7EF-402B-8AF4-B107B7585459P\")\") is not equal to (\"Optional(\"PAIRED_CANCEL_F51EA657-B7EF-402B-8AF4-B107B7585459\")\") - Native typing must preserve the original request before Send",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinPairedProductUITests.swift",
+                        "lineNumber" : 168
+                      }
+                    }
+                  ],
+                  "duration" : "1m 36s",
+                  "durationInSeconds" : 96.78388798236847,
+                  "name" : "testCompanionCancellationReturnsWithoutChangingPrivateState()",
+                  "nodeIdentifier" : "HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertEqual failed: (\"Optional(\"AIRED_OPEN_5EA3A293-PDCF\")\") is not equal to (\"Optional(\"PAIRED_OPEN_5EA3A293-5716-41D2-8387-736A20EDCF37\")\") - Native typing must preserve the original request before Send",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinPairedProductUITests.swift",
+                        "lineNumber" : 168
+                      }
+                    }
+                  ],
+                  "duration" : "1m",
+                  "durationInSeconds" : 60.49259305000305,
+                  "name" : "testCompanionReturnsActualPrivateValueToOriginalChat()",
+                  "nodeIdentifier" : "HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "duration" : "4m 57s",
+                  "durationInSeconds" : 297.43316102027893,
+                  "name" : "testOriginalPackageAndSavedStateTransferThenRollback()",
+                  "nodeIdentifier" : "HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinPairedProductUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertEqual failed: (\"Optional(\"NSENT_PREEXISTING_D8BA137F-FF97-49BA-A1FD-03A9857B2CC6U\")\") is not equal to (\"Optional(\"UNSENT_PREEXISTING_D8BA137F-FF97-49BA-A1FD-03A9857B2CC6\")\") - Native typing must preserve the draft before opening the inbox",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinShareInboxUITests.swift",
+                        "lineNumber" : 41
+                      }
+                    }
+                  ],
+                  "duration" : "31s",
+                  "durationInSeconds" : 31.186328053474426,
+                  "name" : "testSharedTextURLAndFileReachTheOriginalChatOnlyAfterSend()",
+                  "nodeIdentifier" : "HanlinShareInboxUITests/testSharedTextURLAndFileReachTheOriginalChatOnlyAfterSend()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinShareInboxUITests/testSharedTextURLAndFileReachTheOriginalChatOnlyAfterSend",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "HanlinShareInboxUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinShareInboxUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "AI_HLYUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "observedAt": "2026-11-19T04:18:50.790732+00:00",
+  "runID": 44452948469,
+  "headSHA": "eefc3dbfd573800fa8383273f5f414e2667a8ff9",
+  "conclusion": "failure",
+  "artifactID": 14497274363,
+  "fullZIP_SHA256": "e17378390ade4d8c13468621295a62be47fb338fb747757eb5b7d3b64dc3ce7a",
+  "originalArchive": {
+    "operation": "profile-discovery-miniapps-archive",
+    "exit": 65,
+    "seconds": 7.783973500000002,
+    "log_sha256": "ca76bc168d03256200b11b6b1684614a419ed1531fb48e51bd2973c45fa4bede",
+    "distribution_logs": [],
+    "owned_pid": 15532,
+    "native_signing_logs": {
+      "status": "CAPTURED",
+      "pid": 15532,
+      "start": "2026-11-19 04:05:16",
+      "end": "2026-11-19 04:05:21",
+      "events": 12,
+      "sanitized_sha256": "5f0d67105d57388259891e388a2374212b76a82dd087e3c00b032ae74c16ef6c"
+    }
+  },
+  "exactNativeError": "No profile for team [REDACTED] matching 340E5061-5117-4840-B518-677D08CE5FCF found; Xcode could not find any provisioning profiles matching the selected team/UUID.",
+  "diagnostic": {
+    "status": "OBSERVED_SETTINGS",
+    "scope": "SIGNING_SETTINGS_ONLY_NOT_PROFILE_ACCEPTANCE",
+    "nonce": "22bda84fa1c246acac2a9f612389be2d",
+    "project_path_sha256": "46f20d98fcb6ba9a83238d135a6fe5d9acfb01cf16fc5f70f675b31566cc6639",
+    "archive_arguments_sha256": "1c76446bed21d20b1fef680539f817b1db91f69df17ddf42eb1a7dd9c7004b2a",
+    "query_mode": "showBuildSettings",
+    "selected_scheme_action": "archive",
+    "settings_arguments_sha256": "8c61ad58e81197413a317b468fa996708beabc40288cb77abe283e1a8f4c521a",
+    "inherited_environment": {
+      "HOME": {
+        "present": true,
+        "value_sha256": "9a09ac3910170055d9de7a25ac97f23402295686d31cd3e6f70765fe40872b4d",
+        "matches_python_home": true
+      },
+      "CFFIXED_USER_HOME": {
+        "present": false,
+        "value_sha256": null
+      },
+      "DEVELOPER_DIR": {
+        "present": true,
+        "value_sha256": "242d789333a5d449c0d71e21057c88c11db828690b8318f2d1d7a79d1a6840da"
+      },
+      "XCODE_XCCONFIG_FILE": {
+        "present": false,
+        "value_sha256": null
+      },
+      "SDKROOT": {
+        "present": false,
+        "value_sha256": null
+      }
+    },
+    "exit": 0,
+    "stdout_sha256": "a0c1709ba948d20eb445b64d2fa5db1ae5c1f71da73d047cc0696313c1f32277",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_errors": {
+      "text": "",
+      "source_bytes": 0,
+      "matching_lines": 0,
+      "truncated": false,
+      "redaction": "owned identities, nonce, environment paths and other absolute paths"
+    },
+    "project_and_nonce_match": true,
+    "target": "ProfileDiscovery",
+    "settings": {
+      "ACTION": {
+        "observed": true,
+        "value_sha256": "0eb3e36bfb24dcd9bb1d1bece1531216b59539a8fde17ee80224af0653c92aa3",
+        "value": "archive"
+      },
+      "CODE_SIGN_STYLE": {
+        "observed": true,
+        "value_sha256": "b0b9fe24ffa9629125bdc59b122f80d605ab604eb1b74485c2f2ecfde26576ae",
+        "matches_selected_argument": true,
+        "value": "Manual"
+      },
+      "CODE_SIGN_IDENTITY": {
+        "observed": true,
+        "value_sha256": "edc493d09f725ba85ffaa1aa031c16aa61eb03dc2ba880c676a8b70f1d21847e",
+        "matches_selected_argument": true,
+        "value": "644940FCF25D1730DBD1BF7596AEBA7229E2B8FD"
+      },
+      "EXPANDED_CODE_SIGN_IDENTITY": {
+        "observed": false
+      },
+      "DEVELOPMENT_TEAM": {
+        "observed": true,
+        "value_sha256": "5953512e788eeb9a570953b91bd0fea2c5449f9b82442c728a4d13e2f2607597",
+        "matches_selected_argument": true,
+        "value": "[SELECTED_TEAM]"
+      },
+      "PROVISIONING_PROFILE_SPECIFIER": {
+        "observed": true,
+        "value_sha256": "a5be14e2a4af221f7cd5cd78d617b1c51b0bb28fc308731a4ce7840a9f8a9aa0",
+        "matches_selected_argument": true,
+        "value": "340E5061-5117-4840-B518-677D08CE5FCF"
+      },
+      "PROVISIONING_PROFILE": {
+        "observed": false
+      },
+      "EXPANDED_PROVISIONING_PROFILE": {
+        "observed": false
+      },
+      "CONFIGURATION": {
+        "observed": true,
+        "value_sha256": "e020e3c67bd0c31227720bd8eb2c3a777d162e0987e8fd8438b007c170266476",
+        "value": "Release"
+      },
+      "SDKROOT": {
+        "observed": true,
+        "value_sha256": "47aebe872407cae1af7273036539390959f80b144d9aa895c9c4a14c2a4e0db6",
+        "value": "iPhoneOS27.2.sdk"
+      },
+      "PLATFORM_NAME": {
+        "observed": true,
+        "value_sha256": "427b6264fb8858c52b31a8b89df4f024d5559920f8bcaa0d2f4950667cb0fd1b",
+        "value": "iphoneos"
+      },
+      "SUPPORTED_PLATFORMS": {
+        "observed": true,
+        "value_sha256": "427b6264fb8858c52b31a8b89df4f024d5559920f8bcaa0d2f4950667cb0fd1b",
+        "value": "iphoneos"
+      },
+      "PRODUCT_BUNDLE_IDENTIFIER": {
+        "observed": true,
+        "value_sha256": "44a596596f1e05c5396a96200671bacb9b1c7340bb9c97632bc0cdb96f04926d",
+        "matches_selected_argument": true,
+        "value": "com.itorah.hanlinminiapps"
+      },
+      "CODE_SIGNING_ALLOWED": {
+        "observed": true,
+        "value_sha256": "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297",
+        "value": "YES"
+      },
+      "CODE_SIGNING_REQUIRED": {
+        "observed": true,
+        "value_sha256": "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297",
+        "value": "YES"
+      },
+      "PROVISIONING_PROFILE_REQUIRED": {
+        "observed": true,
+        "value_sha256": "f9171164593756e56fb197327b529a4955590566560dbe62d586bff41be9d297",
+        "value": "YES"
+      }
+    }
+  },
+  "priorDiagnosticGap": "Previous same-target query omitted archive and exited64. This run retains archive and returned actual same-project/same-nonce settings with exit0.",
+  "verifiedResourceFacts": {
+    "originalDistributionCertificateTrusted": "VERIFIED",
+    "installedFilesystemAndCMS": "VERIFIED_FILESYSTEM_AND_CMS_ONLY",
+    "allSixCMS": "CMS_SIGNATURES_VALID",
+    "sameSelectedProfileUUID": "340E5061-5117-4840-B518-677D08CE5FCF",
+    "profileNameOrUUIDSupportedByAppleBuildSettings": "https://developer.apple.com/documentation/xcode/build-settings-reference",
+    "currentAndLegacyProfilePathsDocumented": "https://developer.apple.com/documentation/xcode-release-notes/xcode-16-release-notes"
+  },
+  "remainingGap": "Actual Xcode profile admission. Correct selected build settings, filesystem bytes, and CMS trust do not prove eligibility; native error does not identify development-versus-distribution mismatch.",
+  "products": [],
+  "physicalDevice": "NOT_RUN",
+  "publication": "NOT_REQUESTED",
+  "releaseDecision": "NO_GO",
+  "cleanup": "PASS",
+  "actions": "No profile mutation, no cancellation, no export dispatch; original native failure retained."
+}

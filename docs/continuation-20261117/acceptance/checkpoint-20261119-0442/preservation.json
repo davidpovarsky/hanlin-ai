@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-11-19T04:46:25.568677+00:00",
+  "source": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "records": [
+    {
+      "file": "acceptance/ACCEPTANCE_REGISTER.json",
+      "source_tasks_sha256": "f6e64d3acc4b9df5162ca4e5e4ffcbfa7cfc892d6c414421a74981c644f6306b",
+      "source_tasks_count": 30,
+      "original87evidence_preserved": true,
+      "new_evidence": 19,
+      "total_evidence": 106
+    },
+    {
+      "file": "PHASE_2_INTEGRATION_LEDGER.json",
+      "source_tasks_sha256": "f6e64d3acc4b9df5162ca4e5e4ffcbfa7cfc892d6c414421a74981c644f6306b",
+      "source_tasks_count": 30,
+      "original87evidence_preserved": true,
+      "new_evidence": 19,
+      "total_evidence": 106
+    },
+    {
+      "file": "PHASE_3_INTEGRATION_LEDGER.json",
+      "source_tasks_sha256": "f6e64d3acc4b9df5162ca4e5e4ffcbfa7cfc892d6c414421a74981c644f6306b",
+      "source_tasks_count": 30,
+      "original87evidence_preserved": true,
+      "new_evidence": 19,
+      "total_evidence": 106
+    }
+  ],
+  "original_untracked_preserved": [
+    "docs/product-split/evidence/durability-fix/63fdfe48-6e55-420d-a599-93b61b8ef856/",
+    "docs/product-split/evidence/durability-fix/896f2f4e-8187-4f31-8a79-b2b8e91e42c6/",
+    "docs/product-split/foreground-results.json"
+  ]
+}

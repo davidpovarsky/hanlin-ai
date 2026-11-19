@@ -1,0 +1,102 @@
+{
+  "observed_at": "2026-11-19T04:49:20.578277+00:00",
+  "run": 44449673030,
+  "source_sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+  "url": "https://github.com/davidpovarsky/anytype-swift/actions/runs/44449673030",
+  "artifact": 14499420016,
+  "zip_bytes": 2934478,
+  "full_zip_sha256": "c9bb2e0203098f8a681efcf3238e3ece8dd1d283152de8b73061478fc01721d1",
+  "zip_crc_verified": true,
+  "nested_zip_crc_verified": true,
+  "preparation": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0
+  },
+  "ui": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "method": "HanlinSelectionAcceptanceUITests/testRealSelectedBlockReadAndReturn()",
+    "seconds": 35.641
+  },
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "163CF619-D36F-41AD-B8E9-89D70FD427A7",
+    "deviceName": "Pinkha-UI27-44449673030-iphone",
+    "modelName": "iPhone 18 Pro",
+    "osBuildNumber": "24A434",
+    "osVersion": "27.0",
+    "platform": "iOS Simulator"
+  },
+  "receipt_phase": "HANLIN_SELECTION_ACCEPTANCE_PASS",
+  "checks": {
+    "native_selected_text_read": true,
+    "middleware_logging_disabled": true,
+    "native_selected_block_mounted_on_return": true,
+    "unselected_text_excluded": true,
+    "no_provider_configuration": true,
+    "read_denied_before_native_consent": true,
+    "closed_selection_host_denies_read": true,
+    "read_receipt_contains_metadata_only": true,
+    "native_single_block_selection_context": true
+  },
+  "denied_read_attempts": 3,
+  "coverage": "selectedTextBlocksOnly",
+  "native_return_acknowledged": true,
+  "source_revision_matches_return": true,
+  "selected_block_matches_return": true,
+  "screenshots_reviewed": [
+    "native selected block only",
+    "native explicit read consent",
+    "same selected block mounted after original return with closed read authority"
+  ],
+  "visible_space_icon_error_in_reviewed_screenshots": false,
+  "provenance_limit": {
+    "runtime_probe_pid": 17713,
+    "ui_receipt_pid": 18645,
+    "same_pid": false,
+    "every_launch_verified": false,
+    "note": "Installed bytes and source inputs match; earlier mapped-runtime observation is not same-PID evidence for later UI receipt."
+  },
+  "not_claimed": [
+    "provider/model turn",
+    "signed physical device",
+    "full language/device matrix",
+    "complete SDK06 acceptance"
+  ],
+  "raw_files": {
+    "hanlin-selection-result.json": {
+      "bytes": 2946,
+      "sha256": "dd401ba5f27e86a19fb2f425c3ce891be515e05c9b44051a0ee43db6ed7e2f77"
+    },
+    "ui/wave15-hanlin-selection-summary.json": {
+      "bytes": 1032,
+      "sha256": "871edbf09a1e1ed95f74ada31a901488fcf9a6f51e53079510218f5ae4543da1"
+    },
+    "ui/wave15-hanlin-selection-tests.json": {
+      "bytes": 1810,
+      "sha256": "1d29a19f35f5962277c15d1ca68e5fa13263c9fceecb18d10b3cdd9888e6c2b8"
+    },
+    "preparation/prepare-summary.json": {
+      "bytes": 1016,
+      "sha256": "acee58eae6889b5774e888d8b86db24df657bb1706236c4ec477cdb0b3424bbf"
+    },
+    "preparation/prepare-tests.json": {
+      "bytes": 1776,
+      "sha256": "1fcfcc9ca9f726858525b18cab8ae05528c05c8b4d55747654c3c7cc69a63a65"
+    },
+    "installed-app-source.json": {
+      "bytes": 61273,
+      "sha256": "5eeace67fb63f2b1e69d232bf3b784892e33a31eec349de47b1d118985402a05"
+    },
+    "live-runtime.json": {
+      "bytes": 68956,
+      "sha256": "ca3da4978c221cb7ea6ca8d7030b7bfaf1464ff330af3447be3e670292284276"
+    },
+    "simulator-shared-group-identities.json": {
+      "bytes": 1595,
+      "sha256": "6a0a30261a367f0f7b313f0628e1cda74773650a8d905cbb1f48de8c757872b8"
+    }
+  }
+}

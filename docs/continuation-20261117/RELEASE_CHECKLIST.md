@@ -1,3 +1,5 @@
+> Current checkpoint (2026-11-19T04:46:25.568677+00:00): [verified continuation](CONTINUATION_STATUS_20261119.md), published source 25c28ae8. Paired five/eight and chat five unit plus six/eight UI are scoped verified results. Current provider, scroll, composer, Motion, A2UI and consumer gates remain open. All 30 original tasks and 87 prior evidence records are preserved; 106 records total. SDK01 alone is complete; 29 are open. Earlier snapshots below are historical; no phase completion or release acceptance is claimed.
+
 ## Current verified continuation — 19 November 2026
 
 Published source is `90314963`; Phase 2 and Phase 3 remain in progress. Exact results: paired 4/8 pass; compact 0/2 pass; Host/editor units 34 invocation leaves pass and UI 3/11 pass; wide UI 11/26 pass; both device archives pass and both exports fail profile discovery; Motion D is diagnostic only; live product NOT_RUN because simulator discovery failed before any credential was staged. Five newly dispatched native runs are pending, recorded at their actual 3de8cf6 or 90314963 sources.

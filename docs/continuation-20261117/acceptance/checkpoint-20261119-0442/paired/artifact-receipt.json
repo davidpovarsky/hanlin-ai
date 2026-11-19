@@ -1,0 +1,260 @@
+{
+  "verified_at": "2026-11-19T04:38:10.699841+00:00",
+  "run": 44447129341,
+  "head": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "artifact": {
+    "id": 14497644667,
+    "node_id": "MDg6QXJ0aWZhY3QxNDQ5NzY0NDY2Nw==",
+    "name": "app-split-44447129341",
+    "size_in_bytes": 94662172,
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14497644667",
+    "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14497644667/zip",
+    "expired": false,
+    "digest": "sha256:314a5644940230bf2422ff4c2bb788e8a267aa37cf6de1da0fa393969b6e301a",
+    "created_at": "2026-11-19T04:18:19Z",
+    "updated_at": "2026-11-19T04:18:19Z",
+    "expires_at": "2026-12-03T04:18:14Z",
+    "workflow_run": {
+      "id": 44447129341,
+      "repository_id": 1295277723,
+      "head_repository_id": 1295277723,
+      "head_branch": "codex/hanlin-product-completion-20261117",
+      "head_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc"
+    }
+  },
+  "full_size": 94662172,
+  "full_sha256": "314a5644940230bf2422ff4c2bb788e8a267aa37cf6de1da0fa393969b6e301a",
+  "all_crc_pass": true,
+  "safe_extraction": true,
+  "members": 1546,
+  "files": [
+    {
+      "path": "app-split-evidence\\acceptance.json",
+      "bytes": 5709
+    },
+    {
+      "path": "app-split-evidence\\ci-performance-report.json",
+      "bytes": 2133
+    },
+    {
+      "path": "app-split-evidence\\foreground.log",
+      "bytes": 200
+    },
+    {
+      "path": "app-split-evidence\\host-reuse.json",
+      "bytes": 903
+    },
+    {
+      "path": "app-split-evidence\\native-dependencies.log",
+      "bytes": 164503
+    },
+    {
+      "path": "app-split-evidence\\preflight.log",
+      "bytes": 128111
+    },
+    {
+      "path": "runtime-host\\host-metadata.json",
+      "bytes": 358
+    },
+    {
+      "path": "app-split-evidence\\foreground\\foreground-results.json",
+      "bytes": 21372
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\acceptance.json",
+      "bytes": 5709
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\ai-build.log",
+      "bytes": 1874156
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\boot.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\bootstatus.log",
+      "bytes": 131
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.chavrusachat-embedded-entitlements.json",
+      "bytes": 1237
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.chavrusachat-first-launch-terminate.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.chavrusachat-first-launch.log",
+      "bytes": 31
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.chavrusachat-install.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.chavrusachat-signature.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.hanlinminiapps-embedded-entitlements.json",
+      "bytes": 828
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.hanlinminiapps-first-launch-terminate.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.hanlinminiapps-first-launch.log",
+      "bytes": 33
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.hanlinminiapps-install.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\com.itorah.hanlinminiapps-signature.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\device-types.json",
+      "bytes": 66366
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\failure-device-state.json",
+      "bytes": 22746
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\fixture-provenance.json",
+      "bytes": 543
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\mini-build.log",
+      "bytes": 718589
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\original-a2ui-generator.log",
+      "bytes": 2633
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\paired-tests.log",
+      "bytes": 63185
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\requested-tests.log",
+      "bytes": 57
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\runtimes.json",
+      "bytes": 60640
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\screenshot.log",
+      "bytes": 264
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\test-nodes.json",
+      "bytes": 8920
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\test-summary.json",
+      "bytes": 3104
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\contracts-provenance.json",
+      "bytes": 14580
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\core-provenance.json",
+      "bytes": 6349
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\foreground-binary-provenance.json",
+      "bytes": 8216
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\manifest.json",
+      "bytes": 5116
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-001-toolchain.stderr.log",
+      "bytes": 30
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-001-toolchain.stdout.log",
+      "bytes": 98
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-002-compile-contracts.stderr.log",
+      "bytes": 98
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-002-compile-contracts.stdout.log",
+      "bytes": 91971
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-003-compile-core.stderr.log",
+      "bytes": 98
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-003-compile-core.stdout.log",
+      "bytes": 7585
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-004-link-foreground.stderr.log",
+      "bytes": 98
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-004-link-foreground.stdout.log",
+      "bytes": 41317
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-005-tests-foreground.stderr.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-005-tests-foreground.stdout.log",
+      "bytes": 2090
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-006-commit-base.stderr.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-006-commit-base.stdout.log",
+      "bytes": 41
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-007-working-tree.stderr.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\foreground\\raw-origin\\raw-007-working-tree.stdout.log",
+      "bytes": 130
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\original-a2ui-schemas\\compiler.log",
+      "bytes": 0
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\original-a2ui-schemas\\result.json",
+      "bytes": 2632
+    },
+    {
+      "path": "app-split-evidence\\paired-product\\Paired.xcresult\\database.sqlite3",
+      "bytes": 376832
+    },
+    {
+      "path": "app-split-evidence\\reused-host-origin\\44351078724\\native-dependencies.log",
+      "bytes": 180867
+    },
+    {
+      "path": "app-split-evidence\\reused-host-origin\\44351078724\\package-lifecycle.log",
+      "bytes": 1412
+    },
+    {
+      "path": "app-split-evidence\\reused-host-origin\\44351078724\\preflight.log",
+      "bytes": 128111
+    }
+  ]
+}

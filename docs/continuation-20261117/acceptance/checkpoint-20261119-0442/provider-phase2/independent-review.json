@@ -1,0 +1,38 @@
+{
+  "reviewedAt": "2026-11-19T04:45:12.128823+00:00",
+  "reviewer": "upstream_v2_finish",
+  "patchSHA256": "85e1adb2d9c2c5c543dfef1d1f46167979c97cc1adab377e3d3435f1d7d15458",
+  "canonicalHead": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "files": [
+    {
+      "path": "AI_HLY/Services/DataServices/HanlinAppProviderCredentials.swift",
+      "sha256": "0c4a7b8438810f97219caa4b376fed567bccd8cdafcdd6232d2bede32a5e8af7"
+    },
+    {
+      "path": "AI_HLY/Views/Components/APISettingView.swift",
+      "sha256": "995ff2d880d61374236baece5c948d24f199684627d59be636ed83a58d3ef5a6"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "937d1bbf390512c1332e775b5b0e5ea153240bd42af839f5dede84fd89fe991b"
+    }
+  ],
+  "blockingFindings": [],
+  "observedBehaviors": [
+    "Metadata saves retain original exact stored credential including nil/empty and do not create a Keychain generation.",
+    "Actual edited bytes, including canonical-Unicode-equivalent but byte-different strings, use original protected save.",
+    "Explicit migration uses only selected original record and rejects protected handles, built-in markers, empty keys or unstaged/changed drafts.",
+    "Stale durable row guards precede checkpointing; original save/verify/rollback behavior and retained generation recovery remain intact.",
+    "New custom provider uses original staged insert rather than compatibility plaintext insert.",
+    "Missing reference requires explicit user replacement; normal no-edit save remains blocked after load failure.",
+    "Compact publication retry remains separate from credential save; current canonical additionally guards retry with !migrate."
+  ],
+  "limitations": [
+    "Source review only, no new native SwiftData/Keychain test execution.",
+    "Existing guards are not claimed to provide an atomic cross-process/CloudKit compare-and-swap.",
+    "Original provider request await/rotation window is a separate follow-on owned by runtime_cache_finish.",
+    "Historical SQLite/CloudKit plaintext erasure and cross-device synchronization latency are not claimed."
+  ],
+  "liveCredentialsRead": false,
+  "canonicalMutationsByReviewer": false
+}

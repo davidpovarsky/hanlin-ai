@@ -1,0 +1,13 @@
+{
+  "command": [
+    "xcrun",
+    "simctl",
+    "install"
+  ],
+  "exit_code": 204,
+  "timeout_seconds": 300,
+  "elapsed_seconds": 58.949,
+  "stdout_tail": "",
+  "stderr_tail": "An error was encountered processing the command (domain=NSMachErrorDomain, code=-308):\nThe operation couldn\u2019t be completed. (Mach error -308 - (ipc/mig) server died)\n",
+  "credential_exported": false
+}

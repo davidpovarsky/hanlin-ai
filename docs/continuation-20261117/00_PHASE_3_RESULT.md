@@ -1,3 +1,5 @@
+> Current checkpoint (2026-11-19T04:46:25.568677+00:00): [verified continuation](CONTINUATION_STATUS_20261119.md), published source 25c28ae8. Paired five/eight and chat five unit plus six/eight UI are scoped verified results. Current provider, scroll, composer, Motion, A2UI and consumer gates remain open. All 30 original tasks and 87 prior evidence records are preserved; 106 records total. SDK01 alone is complete; 29 are open. Earlier snapshots below are historical; no phase completion or release acceptance is claimed.
+
 ## Current verified continuation — 19 November 2026
 
 > Current continuation (19 November,03:12 UTC): [source-bound checkpoint](CONTINUATION_STATUS_20261119.md). Native Skills25, d6 UI4/6 and Anytype77/UI22 results are qualified there; current SDK05/UI/signing/upstream replacements are pending. All30 original task criteria remain preserved; only SDK01 is complete. The detailed prior snapshot below is historical.

@@ -1,0 +1,18 @@
+{
+  "head": "031a331ad8c9819abe477f3c91517533d07234d4",
+  "dispatch_at": "2026-11-19T03:49:04.049212+00:00",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "scope": "Original D input diagnostic with bounded reset precondition; A/B/C acceptance unchanged and not included",
+  "inputs_sha256": "f84dae2706de9413fe30f447dccbcacda398a0292dd91e7933497a0368719ca3",
+  "matching_runs": [
+    {
+      "conclusion": "",
+      "createdAt": "2026-11-19T03:49:05Z",
+      "databaseId": 44454057890,
+      "event": "workflow_dispatch",
+      "headSha": "031a331ad8c9819abe477f3c91517533d07234d4",
+      "status": "queued",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44454057890"
+    }
+  ]
+}

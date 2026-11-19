@@ -1,0 +1,32 @@
+{
+  "verified_at": "2026-11-19T04:36:02.742237+00:00",
+  "comments": [
+    {
+      "task_id": "1220539644804804",
+      "name": "[HANLIN][UI APPROVED] מימוש בועת ההודעה והכלים החדשה — התאמה 1:1 ל-MorphView Swift Playground",
+      "completed": false,
+      "story": "1220693388341891",
+      "exact_text_match": true,
+      "created_at": "2026-11-19T04:34:35.503Z",
+      "text": "[ChatGPT | DEV/QA] תוקנה קריסת הגובה ב־Composer בגודל טקסט נגישות — 19.11.2026\n\nריצת iPhone המקורית44447123515 על7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc הסתיימה בכשל: testCompactNavigationKeepsDraft עבר; testCompactLargeTextWithAttachment נכשל בגלילת hanlin-composer-page-scroll. ה־ZIP המלא14497283435 אומת מול SHA256 a78d7b0fc7404df07d48f27386806fee7c15a33208127346ba3c68c5a654796d. ב־AX המקורי של שלוש הלחיצות נמצא אזור גלילה322×0, בעוד הכותרת הקבועה צורכת535.7 נקודות. זהו כשל פריסה שנמדד במוצר.\n\nפורסם ffc876fd04fbac61abfb4d4538e75ccb39055c48: רק בגדלי נגישות, הכותרת וכותרת המשנה המלאות נכללות באזור הגלילה המקורי. Back ו־Close נשארים קבועים; בגודל טקסט רגיל נשמרת הכותרת המקורית. אין הקטנת טקסט, השמטת תוכן או שינוי דרישות המבחנים. בדיקת מקור ו־Swift syntax ב־Windows עברו; זו אינה קבלה Native.\n\nשני התרחישים המקוריים נשלחו ללא שינוי על המקור שפורסם:\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44458939610\nראיות: docs/continuation-20261117/acceptance/compact-accessibility-heading-20261119. קבלת Morph המלאה נשארת פתוחה עד תוצאות Native ויתר דרישות המשימה."
+    },
+    {
+      "task_id": "1220542174541940",
+      "name": "[HANLIN-SDK-04][P0][UI] אותו ChatView/Composer/Thinking/A2UI בכל האפליקציות — SwiftUI",
+      "completed": false,
+      "story": "1220693350684731",
+      "exact_text_match": true,
+      "created_at": "2026-11-19T04:34:37.335Z",
+      "text": "[ChatGPT | DEV/QA] תוקנה גלילה אוטומטית של תמליל קצר ונשלחה קבלה ממוקדת — 19.11.2026\n\nב־xcresult והסרטונים המקוריים של44431811538 נמצאה תזוזה של כ־108 נקודות סביב לחיצת הקישור ולחיצת Allow once: המגע נשלח למיקום הישן בעוד התמליל זז. הקשר בין האירועים מתועד; עדיין אין הוכחה שתיקון יחיד פותר את כל התנהגות הממשק.\n\nפורסם7d5f0a47d7cfb98b28fd9f16d83a2b917618da95: AutoFollow דורש גלילה אפשרית לפי גובה התוכן, חלון הגלילה וה־insets שנמדדו בפועל. התנאי נבדק גם לפני התזמון וגם אחרי ההשהיה המקורית. שיחה קצרה לא נגללת בכוח; שיחה ארוכה שומרת על מסלול הגלילה המקורי וכללי השהיה בזמן בחירה. לא שונו מנגנון האישור, דדליין האישור, callback של Markdown או ארבע בדיקות הממשק המקוריות.\n\nריצה44457921366 כוללת את כל8 מקרי AutoFollow ועוד Safari, embedded result/Skills consent, partial selection ו־UI03 המקוריים. תוכנית CI אומתה מתוך artifact14498731890, SHA256 2d38dab1bfa9ece87d3839d49d62548bbca1da9e1e677ba9a26bc0fb5395e3b6: אותוSHA, אותם5selectors, Debug, unit+UI. Native עדיין ממתין.\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44457921366\n\nבנפרד פורסם תיקון גובה הכותרת הנגישה ב־Composer ffc876fd ונשלחו שני תרחישי האייפון המקוריים ב־44458939610. תוצאות קודמות נשארות משויכות למקור שעליו נבדקו; SDK04 עדיין פתוח."
+    },
+    {
+      "task_id": "1220542199999956",
+      "name": "[HANLIN-SDK-05][P0][DATA/SEC] ConversationStore, Keychain, App Group, CloudKit, בידוד והרשאות",
+      "completed": false,
+      "story": "1220693311897832",
+      "exact_text_match": true,
+      "created_at": "2026-11-19T04:34:39.375Z",
+      "text": "[ChatGPT | DEV/QA] הופעלה שמירת מפתחות מוגנת במסכי ההגדרות המקוריים — 19.11.2026\n\nפורסם25c28ae8981eceba18a2beb648da5d1a7660ac63 על גבי קוראי המפתחות37a246f4. שינוי אמיתי בבתי UTF-8 של מפתח או יצירת ספק מותאם אישית שומר תחילה דור Keychain בלתי משתנה ומאומת, ואז את ההפניה בשורת SwiftData המקורית. שמירת מטא־דאטה בלבד משמרת בדיוק את הערך הקיים, לרבות nil/ריק/הפניה, בלי ליצור דור חדש. נוספה העברה מפורשת של המפתח הנבחר בלבד, עם דור קודם לשחזור; סמני LOCAL/APPLE/APPLEMAP ו־keyless אינם מועברים.\n\nנשמרו בדיקות הרשומה הנוכחית והעמידה, חסימת כותב מיושן, טיפול בכשל שמירה ופרסום ל־Translation, וכללי הסמכות הקיימים. פתיחת מסך או שמירה ללא שינוי אינן מעבירות מפתח. תיקון סקירה נוסף מוודא שפעולת העברה מפורשת אינה מתחלפת בטעות ב־Retry לפרסום קובץ בלבד אחרי כשל פרסום קודם.\n\nאומת מול המקור הישן ce2fb04e: לקוח שקדם לשלב הקוראים אינו יודע לפתור הפניה חדשה. ההגדרות מסבירות שנדרשים Hanlin מעודכן ו־iCloud Keychain במכשירים האחרים. הצלחת Keychain מקומית לא מוכיחה סנכרון בין מכשירים; הרשומות הישנות שלא נערכו נשארות בייצוג הקודם. לא שונו schema, זהות ספקים, entitlements או CloudKit container, ולא הועברו מפתחות משתמש אמיתיים במהלך העבודה.\n\nשלושת קובצי Swift עברו בדיקת תחביר מקומית. נשלחה הרצת Apple מלאה של19selectors/28מקרים מתוכננים: כל בקרות שלב1 והסמכות המקורית, ועוד13מקרי metadata/migration/reopen/readonly/stale/recovery.\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44459110497\nראיות: docs/continuation-20261117/acceptance/provider-credential-activation-20261119. תוצאות Native, חתימת ההרחבה, סנכרון ממשי ו־account/store lifecycle עדיין פתוחים; המשימה אינה מסומנת הושלמה."
+    }
+  ]
+}

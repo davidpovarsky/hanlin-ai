@@ -1,0 +1,809 @@
+{
+  "recorded_at": "2026-11-19T04:46:25.568677+00:00",
+  "published_source": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "original_task_count": 30,
+  "current_asana_completed": [
+    "1220542174541844"
+  ],
+  "phase_2": "IN_PROGRESS",
+  "phase_3": "IN_PROGRESS",
+  "release": "NO_GO",
+  "native_runs": [
+    {
+      "run": 44448313143,
+      "source_sha": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44448313143",
+      "scope": "Prior DATA lane superseded before native start",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44447388017,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447388017",
+      "scope": "Original live Gemini, consent, Python and cold reopen",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "BUILD_PASS_PREPARATION_FAILED_BEFORE_CREDENTIAL_NO_UI",
+      "counts": {
+        "observed_ui_cases": 0
+      }
+    },
+    {
+      "run": 44447129341,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447129341",
+      "scope": "Original paired product_and_share eight cases",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "VERIFIED_TRANSFER_ROLLBACK_AND_HOST_INGRESS; TYPING_FAILURES_BEFORE_SEND",
+      "counts": {
+        "total": 8,
+        "passed": 5,
+        "failed": 3,
+        "skipped": 0
+      }
+    },
+    {
+      "run": 44447126258,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258",
+      "scope": "Affected original iPad editor, Canvas, reasoning and A2UI",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44447123515,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447123515",
+      "scope": "Original compact iPhone two cases at 7e",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "VERIFIED_COMPACT_GEOMETRY_FAILURE",
+      "counts": {
+        "total": 2,
+        "passed": 1,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "run": 44446182012,
+      "source_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44446182012",
+      "scope": "Prior tiny signing CMS/profile admission",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44440354095,
+      "source_sha": "589420f3da0db240df8aa5a466bba9303a6bf4c5",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44440354095",
+      "scope": "Prior maintained thirty cases; canceled before test start",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "CANCELLED_BEFORE_TESTS; ZERO_NATIVE_CASES",
+      "counts": {}
+    },
+    {
+      "run": 44437763739,
+      "source_sha": "ca49d1381d186dcc481eeb7c7eb753dd19bd0085",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44437763739",
+      "scope": "Motion D reset diagnostic; one case failed",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44431811538,
+      "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538",
+      "scope": "CodeFence five unit and original eight UI cases",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "VERIFIED_SCOPED_EXECUTION_WITH_FAILURES",
+      "counts": {
+        "unit": {
+          "total": 5,
+          "passed": 5,
+          "failed": 0
+        },
+        "ui": {
+          "total": 8,
+          "passed": 6,
+          "failed": 2,
+          "failed_assertions": 3
+        }
+      }
+    },
+    {
+      "run": 44429703865,
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865",
+      "scope": "Prior compact iPhone two cases at 3a",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44451321578,
+      "source_sha": "048e431cc55b10290c03ec4b2c0162e5f9dfcf9c",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44451321578",
+      "scope": "Original DATA owner, ports, clear history, runtime and split",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "BUILD_PASS_CANCELLED_AT_PACKAGE_GRAPH_NO_OBSERVED_CASES",
+      "counts": {
+        "observed_native_cases": 0
+      }
+    },
+    {
+      "run": 44452948469,
+      "source_sha": "eefc3dbfd573800fa8383273f5f414e2667a8ff9",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44452948469",
+      "scope": "Corrected settings query; tiny profile admission",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "NATIVE_SETTINGS_QUERY_PASS; PROFILE_ADMISSION_FAILED; NO_EXPORT",
+      "counts": {}
+    },
+    {
+      "run": 44453570922,
+      "source_sha": "873607e45e021b40fe5b940c836d398c329f95c8",
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44453570922",
+      "scope": "Maintained 23 packages, two Cairo, four Yams, Python wheel",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44454057890,
+      "source_sha": "031a331ad8c9819abe477f3c91517533d07234d4",
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44454057890",
+      "scope": "Original Motion D coherent reset baseline",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44454776034,
+      "source_sha": "ce2fb04e8a266759f6c9eed70fd2dda02029720d",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44454776034",
+      "scope": "A2UI six methods across 36 matrix configurations",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44456578432,
+      "source_sha": "37a246f404cc2ed253200ddf6fd647f999637f68",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44456578432",
+      "scope": "Provider compatibility: 12 selectors, 15 planned cases",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44457921366,
+      "source_sha": "7d5f0a47d7cfb98b28fd9f16d83a2b917618da95",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44457921366",
+      "scope": "Eight AutoFollow and four original UI cases",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44458939610,
+      "source_sha": "ffc876fd04fbac61abfb4d4538e75ccb39055c48",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44458939610",
+      "scope": "Accessible heading; original two iPhone cases",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44459110497,
+      "source_sha": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44459110497",
+      "scope": "Provider activation: 19 selectors, 28 planned cases",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44455722821,
+      "source_sha": "c80f620ba8ed28243922728e00acffcdd439cc12",
+      "workflow_status": "completed",
+      "workflow_conclusion": "success",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44455722821",
+      "scope": "Actual PR15 c80 native/schema2 candidate",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "VERIFIED_CANDIDATE; DIRECT_HOST_STAGE_REUSED; CREDENTIAL_FREE_TESTS_NOT_RUN",
+      "counts": {
+        "tests": 153,
+        "passed": 152,
+        "failed": 0,
+        "skipped": 1
+      }
+    },
+    {
+      "run": 44458610092,
+      "source_sha": "cbfae6eeeaa53969fa95fed18a5ba0a5548fd2ad",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44458610092",
+      "scope": "Original trusted consumer; primary protection REST403",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false,
+      "status": "TRUSTED_PROOF_REJECTED; PRIMARY_REST403; NO_MERGE",
+      "counts": {}
+    }
+  ],
+  "external_repository_runs": [
+    {
+      "repository": "davidpovarsky/anytype-swift",
+      "run": 44449673030,
+      "sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+      "state": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/davidpovarsky/anytype-swift/actions/runs/44449673030",
+      "scope": "Original selected-block iPhone journey with actual Debug groups",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "repository": "davidpovarsky/anytype-swift",
+      "run": 44450816123,
+      "sha": "6a478f0a8eba0687406d0690cbb86eb84cd90f79",
+      "state": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/davidpovarsky/anytype-swift/actions/runs/44450816123",
+      "scope": "Original 22 iPad UI checks with logout restoration",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "repository": "davidpovarsky/Maktabah",
+      "run": 44455016248,
+      "sha": "469d2f65e58d4ef0e74fe4466b5cc91ece8ac1c4",
+      "state": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44455016248",
+      "scope": "Original dispatcher/reader UI with Actor capture fix",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "repository": "davidpovarsky/Maktabah",
+      "run": 44459534291,
+      "sha": "f423a0d51c5a2d9bd87a533c48b57f9e395ac168",
+      "state": "queued",
+      "conclusion": null,
+      "url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44459534291",
+      "scope": "Original iOS app with actual Hanlin composition",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "repository": "davidpovarsky/Maktabah",
+      "run": 44459541882,
+      "sha": "f423a0d51c5a2d9bd87a533c48b57f9e395ac168",
+      "state": "queued",
+      "conclusion": null,
+      "url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44459541882",
+      "scope": "Original SDK/store/UI compiler acceptance",
+      "observed_at": "2026-11-19T04:46:25.568677+00:00",
+      "acceptance_claim": false
+    }
+  ],
+  "added_evidence": [
+    {
+      "id": "DATA_CLEAR_HISTORY_048_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "048e431cc55b10290c03ec4b2c0162e5f9dfcf9c",
+      "run": 44451321578,
+      "scope": "Original owner revocation and one synchronous original-row CAS clear; canonical empty revision barrier; disk, read-only, stale, temporary and overflow controls.",
+      "report": "acceptance/sdk05-clear-history-20261119"
+    },
+    {
+      "id": "BASELINE_278_REANCHOR_386_20261119",
+      "status": "SOURCE_VALIDATED_NOT_FEATURE_ACCEPTANCE",
+      "sha": "3869a174",
+      "run": null,
+      "scope": "All 278 feature IDs and 26 UX decisions preserved. 623 source anchors repaired using the original generator; 12 adversarial and 63 source-graph controls pass. 9 BLOCKED and 269 NOT_RUN remain; semantic mapping is incomplete.",
+      "report": "../product-split/evidence/inventory-048e431c"
+    },
+    {
+      "id": "SDK_ZIP_COMPAT_873_20261119",
+      "status": "SOURCE_VALIDATED_NATIVE_CONSUMER_PENDING",
+      "sha": "873607e45e021b40fe5b940c836d398c329f95c8",
+      "run": null,
+      "scope": "Original ZIPFoundation compatible 0.9 range restored; 13 consumer locks unchanged, including Maktabah 0.9.20.",
+      "report": "acceptance/sdk-zipfoundation-compatibility-20261119"
+    },
+    {
+      "id": "SIGNING_EEF_QUERY_NATIVE_20261119",
+      "status": "QUERY_PASS_ADMISSION_FAIL",
+      "sha": "eefc3dbf",
+      "run": 44452948469,
+      "scope": "Actual archive, Release, manual, team and profile UUID fields verified. Tiny archive still fails NoProfile; all six CMS and cache inputs are valid. Neither full export is accepted.",
+      "report": "acceptance/checkpoint-20261119-0442/signing-native-triage.json"
+    },
+    {
+      "id": "MAINTAINED_873_REPLACEMENT_20261119",
+      "status": "NATIVE_PENDING",
+      "sha": "873607e45e021b40fe5b940c836d398c329f95c8",
+      "run": 44453570922,
+      "scope": "Exact maintained 30-case lane replaces the canceled 589 attempt which executed zero cases; generated fixtures are separate evidence.",
+      "report": "acceptance/checkpoint-20261119-0442/maintained"
+    },
+    {
+      "id": "MOTION_D_031_RESET_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "031a331ad8c9819abe477f3c91517533d07234d4",
+      "run": 44454057890,
+      "scope": "Wait for a coherent reset baseline; keep immediate three commands and original native-default count assertion. Export original D diagnostic attachments.",
+      "report": "acceptance/checkpoint-20261119-0442/motion"
+    },
+    {
+      "id": "A2UI_MATRIX_CE2_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "ce2fb04e8a266759f6c9eed70fd2dda02029720d",
+      "run": 44454776034,
+      "scope": "Six original-product methods across 36 configurations: actual owner/canonical and Responses paths; 10k/50k characters, 1/10/100 nodes, 5/20/60 events per second. Admission/layout/CPU/sampled memory, not pixel TTFR, FPS or physical acceptance.",
+      "report": "acceptance/a2ui-performance-matrix-20261119"
+    },
+    {
+      "id": "PROVIDER_COMPAT_37_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "37a246f404cc2ed253200ddf6fd647f999637f68",
+      "run": 44456578432,
+      "scope": "Original readers resolve typed references and retain request authority; verified immutable writer and transient draft/discovery/compact-publication controls. Apple execution remains pending.",
+      "report": "acceptance/provider-credential-compatibility-20261119"
+    },
+    {
+      "id": "CHAT_UI_E564_NATIVE_20261119",
+      "status": "VERIFIED_SCOPED_PASS_WITH_FAILURES",
+      "sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+      "run": 44431811538,
+      "scope": "Five CodeFence unit cases pass; six of eight original UI cases pass. Safari and consent fail three assertions in two cases. Full official artifact digest and 1572 CRCs verified.",
+      "report": "acceptance/checkpoint-20261119-0442/chat-ui"
+    },
+    {
+      "id": "CHAT_SHORT_SCROLL_7D_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "7d5f0a47d7cfb98b28fd9f16d83a2b917618da95",
+      "run": 44457921366,
+      "scope": "Measured finite overflow is required before and after the coalescing scroll task. Eight AutoFollow and four unchanged UI cases retained. Raw videos show 108-point motion across taps; no consent or callback bypass.",
+      "report": "acceptance/chat-short-transcript-scroll-20261119"
+    },
+    {
+      "id": "COMPACT_ACCESSIBLE_HEADER_FFC_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "ffc876fd04fbac61abfb4d4538e75ccb39055c48",
+      "run": 44458939610,
+      "scope": "Original 7e iPhone result: one pass, one failure. The 535.7-point heading exhausted the page viewport. Complete accessibility heading now scrolls with the original page; Back/Close and ordinary layout remain. Original two UI cases unchanged.",
+      "report": "acceptance/compact-accessibility-heading-20261119"
+    },
+    {
+      "id": "PROVIDER_ACTIVATION_25_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+      "run": 44459110497,
+      "scope": "Actual changes/new keys use verified immutable Keychain; metadata preserves nil/empty/reference; explicit selected-row migration retains recovery. Nineteen selectors/28 planned cases. Pre-phase1 readers cannot consume new references; cross-device/account/erasure acceptance remains open.",
+      "report": "acceptance/provider-credential-activation-20261119"
+    },
+    {
+      "id": "PAIRED_7E_TRANSFER_PASS_20261119",
+      "status": "VERIFIED_5_PASS_3_TYPING_FAIL",
+      "sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "run": 44447129341,
+      "scope": "Both shipping builds and actual common App Group pass; full package import/state/transfer/relaunch/rollback plus four Host ingress cases pass. Three UI failures occur during exact typing before Send/inbox. HTTP fixture is not live inference; OS share sheet/distribution/physical NOT_RUN.",
+      "report": "acceptance/checkpoint-20261119-0442/paired"
+    },
+    {
+      "id": "UPSTREAM_C80_NATIVE_CONSUMER_403_20261119",
+      "status": "NATIVE_CANDIDATE_PASS_TRUSTED_CONSUMER_REJECTED",
+      "sha": "c80f620ba8ed28243922728e00acffcdd439cc12",
+      "run": 44455722821,
+      "scope": "Original PR15 c80 candidate on frozen d6 v3: 153/152/0/1 and packed JITless pass. Original consumer 44458610092 rejects primary REST403; missing proof JSON is secondary. App15368 failed check blocks merge. Native origin has repository credentials; direct stage reuses it. Deliberate negative, recovery, merge and rollback remain.",
+      "report": "acceptance/checkpoint-20261119-0442/upstream/candidate-and-consumer.json"
+    },
+    {
+      "id": "OTZARIA_ACTUAL_COMPOSITION_F423_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "f423a0d51c5a2d9bd87a533c48b57f9e395ac168",
+      "run": null,
+      "scope": "Original native Maktabah scene/reader uses original Hanlin SDK/Core catalog, deferred native handoff after dismissal, and separate host/SDK disk persistence. Eleven real filesystem tests and eleven Swift parses pass; original nine pins preserved among seventeen. Native UI/model acceptance pending.",
+      "report": "acceptance/checkpoint-20261119-0442/otzaria/asana-readback.json"
+    },
+    {
+      "id": "ANYTYPE_LOGOUT_6A_SOURCE_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "6a478f0a8eba0687406d0690cbb86eb84cd90f79",
+      "run": 44450816123,
+      "scope": "Original Settings logout restores ApplicationState.initial. Original 22 UI checks retained, with both auth controls and absence of the old workspace. Original SDK/Heart source preserved.",
+      "report": "acceptance/checkpoint-20261119-0442/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "id": "ANYTYPE_SELECTED_BLOCK_8B_NATIVE_20261119",
+      "status": "SCOPED_NATIVE_PASS",
+      "sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+      "run": 44449673030,
+      "scope": "One preparation and one actual selected-block UI case pass with all nine original consent/read/return/closed-authority checks. Screenshot source reviewed. Earlier runtime probe and UI have different PIDs; no provider/model or full consumer claim.",
+      "report": "acceptance/checkpoint-20261119-0442/anytype/verified-selection.json"
+    },
+    {
+      "id": "OTZARIA_469_NATIVE_COMPILER_NAVIGATION_20261119",
+      "status": "SCOPED_NATIVE_COMPILER_AND_DISPATCH_PASS",
+      "sha": "469d2f65e58d4ef0e74fe4466b5cc91ece8ac1c4",
+      "run": 44455016248,
+      "scope": "Original Apple toolbar and all nine UI source files compile; eight navigation effect-double tests pass. Zero UI cases executed, 2306 warnings retained. New f423 composition still pending.",
+      "report": "acceptance/checkpoint-20261119-0442/otzaria/verified-navigation.json"
+    },
+    {
+      "id": "LIVE_7E_INSTALL_IPC_FAILURE_20261119",
+      "status": "BUILD_PASS_PREPARATION_FAILURE_ZERO_UI",
+      "sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "run": 44447388017,
+      "scope": "Original build and owned simulator boot pass. Install fails204 with NSMachErrorDomain -308 server died after58.949seconds, before credential staging. No UI case ran; owned simulator removal verified. Run cancellation actor/cause is not established; not a provider authentication failure.",
+      "report": "acceptance/checkpoint-20261119-0442/live"
+    }
+  ],
+  "copy_provenance": [
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\asana-verified-20261119-0341.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\asana-0341.json",
+      "original_sha256": "340a291c406c16fcd37f2a074840096c68545dada0d908497191c0523a02963e",
+      "repository_sha256": "340a291c406c16fcd37f2a074840096c68545dada0d908497191c0523a02963e",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\asana-verified-20261119-0414.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\asana-0414.json",
+      "original_sha256": "d9327a07d37d64592d6f268456c231b7597842c9258852fb3c1596bca863b790",
+      "repository_sha256": "d9327a07d37d64592d6f268456c231b7597842c9258852fb3c1596bca863b790",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\asana-verified-20261119-0435.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\asana-0435.json",
+      "original_sha256": "2fae45cae6b43fc2463e9d81503e81b53962abb773810c46c9de28601813cba3",
+      "repository_sha256": "2fae45cae6b43fc2463e9d81503e81b53962abb773810c46c9de28601813cba3",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\asana-verified-paired-20261119-0441.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\asana-paired-0441.json",
+      "original_sha256": "7999f941bb57e2ddc6b7aeb06d02a902521b75db51ebb9f72d1ca2e5c8f40545",
+      "repository_sha256": "7999f941bb57e2ddc6b7aeb06d02a902521b75db51ebb9f72d1ca2e5c8f40545",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\artifact-verification.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\chat-ui\\artifact-verification.json",
+      "original_sha256": "24830e55972a0d974f47d25c233d0c706ad1088fefa2110442f61b2fa40a75af",
+      "repository_sha256": "24830e55972a0d974f47d25c233d0c706ad1088fefa2110442f61b2fa40a75af",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\extracted\\simulator-logs\\08-downstream-unit-test-results.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\chat-ui\\unit-results.json",
+      "original_sha256": "b503adbf02824e54e2cd9b6fe3e73b0dbd0e7c10e266573d7b3e89675baa037a",
+      "repository_sha256": "b503adbf02824e54e2cd9b6fe3e73b0dbd0e7c10e266573d7b3e89675baa037a",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44431811538\\extracted\\simulator-logs\\08-nativescript-production-ui-test-results.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\chat-ui\\ui-results.json",
+      "original_sha256": "67fa429e97387218bb5c14fad11aae2f63ed3ddb095c9b766d3f65b47f8e2d97",
+      "repository_sha256": "67fa429e97387218bb5c14fad11aae2f63ed3ddb095c9b766d3f65b47f8e2d97",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447129341\\artifact-receipt.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\paired\\artifact-receipt.json",
+      "original_sha256": "55b3d81d9c4a2a56eac6957de2afd8f9960e7d1b10f83dc83445d67c34094d1c",
+      "repository_sha256": "8e54a411972edd59ce6cc01b0a33b07e0fc0bd88e3bf0f8c39e3e255642fb1e7",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447129341\\extracted\\app-split-evidence\\paired-product\\acceptance.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\paired\\acceptance.json",
+      "original_sha256": "4e789e56d2d00a7d6279cf0d5f8118385b390cd651ea7afac752183085b86d61",
+      "repository_sha256": "4e789e56d2d00a7d6279cf0d5f8118385b390cd651ea7afac752183085b86d61",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447129341\\extracted\\app-split-evidence\\paired-product\\test-summary.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\paired\\test-summary.json",
+      "original_sha256": "69e4d8c6f064c5d80781acf3442e9d63af81351b3118b2a84c34333ad45d9a44",
+      "repository_sha256": "69e4d8c6f064c5d80781acf3442e9d63af81351b3118b2a84c34333ad45d9a44",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447129341\\extracted\\app-split-evidence\\paired-product\\test-nodes.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\paired\\test-nodes.json",
+      "original_sha256": "c5620b9a99a5551e374499f7e361c22d51dddd8f2320eb3043ad9f284e4a37ae",
+      "repository_sha256": "c5620b9a99a5551e374499f7e361c22d51dddd8f2320eb3043ad9f284e4a37ae",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing-profile-admission-diagnostics\\SIGNING_NATIVE_TRIAGE_44452948469.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\signing-native-triage.json",
+      "original_sha256": "b42dc52eee9afda610fd9cdd738879c2fef7631072aba329780463bd3c47af43",
+      "repository_sha256": "b42dc52eee9afda610fd9cdd738879c2fef7631072aba329780463bd3c47af43",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-maintained-corpus-20261119-0346\\prior-cancellation-verification.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\maintained\\prior-cancellation.json",
+      "original_sha256": "81a4d512dee2dfc3fc4446a5b6373d450249dc10120391dc8dd58c0f9f206e80",
+      "repository_sha256": "81a4d512dee2dfc3fc4446a5b6373d450249dc10120391dc8dd58c0f9f206e80",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-maintained-corpus-20261119-0346\\dispatch.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\maintained\\dispatch.json",
+      "original_sha256": "19d04f0b1aafdf0d70e416b089a520bd66fc162be8a5024f3c0227fdd51ff357",
+      "repository_sha256": "19d04f0b1aafdf0d70e416b089a520bd66fc162be8a5024f3c0227fdd51ff357",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-maintained-corpus-20261119-0346\\ci-plan-verification.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\maintained\\ci-plan.json",
+      "original_sha256": "e49f396a51ea70de2e8fc3bd3f3f399ae528ebcdfdd66506db4b57dc6f10d298",
+      "repository_sha256": "e49f396a51ea70de2e8fc3bd3f3f399ae528ebcdfdd66506db4b57dc6f10d298",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion-reset-baseline-20261119\\native-failure-verification.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\motion\\prior-native-failure.json",
+      "original_sha256": "01e1ac2ea9ea2ea8002aca68fe63038e44eaa8841bbc8bfc33e38548c84c915b",
+      "repository_sha256": "01e1ac2ea9ea2ea8002aca68fe63038e44eaa8841bbc8bfc33e38548c84c915b",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion-reset-baseline-20261119\\root-publication.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\motion\\publication.json",
+      "original_sha256": "8d7e5823904bd47c346b25c9e20773f09d5cf7f3494155e57558a19c0194ea05",
+      "repository_sha256": "8d7e5823904bd47c346b25c9e20773f09d5cf7f3494155e57558a19c0194ea05",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\motion-reset-baseline-20261119\\dispatch.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\motion\\dispatch.json",
+      "original_sha256": "4c5ad48cdfd780ab1ae8ca2d2eeadae21434085a02450bbee7839494c6c2493c",
+      "repository_sha256": "4c5ad48cdfd780ab1ae8ca2d2eeadae21434085a02450bbee7839494c6c2493c",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\a2ui-05-performance-proposal\\root-publication.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\a2ui\\publication.json",
+      "original_sha256": "2d82d5daeed64b86e95fd5387920909e74f0df2711c921091b0ec40c64775fa9",
+      "repository_sha256": "2d82d5daeed64b86e95fd5387920909e74f0df2711c921091b0ec40c64775fa9",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\a2ui-05-performance-proposal\\native-dispatch.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\a2ui\\dispatch.json",
+      "original_sha256": "a75fbc80ac6980bbc19c8916b44d586ce43fd5f3cdcc151d8b6ee6652706f15f",
+      "repository_sha256": "a75fbc80ac6980bbc19c8916b44d586ce43fd5f3cdcc151d8b6ee6652706f15f",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\a2ui-05-performance-proposal\\ci-plan-verification.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\a2ui\\ci-plan.json",
+      "original_sha256": "55ea8433431d4f5d48092c35c044a7b59a760651f2e107dc71dd08b8c40f4e75",
+      "repository_sha256": "55ea8433431d4f5d48092c35c044a7b59a760651f2e107dc71dd08b8c40f4e75",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-provider-credentials\\publication.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\provider-phase1\\publication.json",
+      "original_sha256": "13846d7cffe67ed794be51619352682f74cea07a4f353aae6f85b2201f9b1f86",
+      "repository_sha256": "13846d7cffe67ed794be51619352682f74cea07a4f353aae6f85b2201f9b1f86",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-provider-credentials\\native-dispatch.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\provider-phase1\\dispatch.json",
+      "original_sha256": "c76e2a2dcfcefc0e4775226d6cae1899ee0a1ca674a3de40a72e86c704539ff1",
+      "repository_sha256": "c76e2a2dcfcefc0e4775226d6cae1899ee0a1ca674a3de40a72e86c704539ff1",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-provider-credentials\\activation-root\\publication.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\provider-phase2\\publication.json",
+      "original_sha256": "70fc0c206875f61e175434e528db17231837604c7347dde711988b63f2290c75",
+      "repository_sha256": "70fc0c206875f61e175434e528db17231837604c7347dde711988b63f2290c75",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-provider-credentials\\activation-root\\native-dispatch.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\provider-phase2\\dispatch.json",
+      "original_sha256": "aa4a0f9c73151c11a492a872ef3c30e45914172a2339aba20ddff5aae1df49c4",
+      "repository_sha256": "c5f1751797ea5f239c51d7fffa06c67b3bd5fbec872a95e6dc5acc5451483ba1",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-provider-credentials\\activation-root\\native-ci-plan-receipt.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\provider-phase2\\ci-plan.json",
+      "original_sha256": "57de0136fc5a3cc3d37184c5c6859b1f95e2c1c8ce6e3b010f932f62497c10bc",
+      "repository_sha256": "57de0136fc5a3cc3d37184c5c6859b1f95e2c1c8ce6e3b010f932f62497c10bc",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\chat-short-transcript-scroll-20261119\\publication.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\chat-scroll\\publication.json",
+      "original_sha256": "46bd37720e55d2d348310bb7c17d52f169ff8670c3da3ba1399b2aabf0e9e6af",
+      "repository_sha256": "46bd37720e55d2d348310bb7c17d52f169ff8670c3da3ba1399b2aabf0e9e6af",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\chat-short-transcript-scroll-20261119\\native-dispatch.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\chat-scroll\\dispatch.json",
+      "original_sha256": "697eb4b5778be949fb3a72fbc08516759c47a0e1e87d1753713de7d721390eb1",
+      "repository_sha256": "697eb4b5778be949fb3a72fbc08516759c47a0e1e87d1753713de7d721390eb1",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\chat-short-transcript-scroll-20261119\\native-ci-plan-receipt.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\chat-scroll\\ci-plan.json",
+      "original_sha256": "c4480ad77dd1d146f08223d4f66708de54a0b0cc355a16c8c93538f8d9aa52af",
+      "repository_sha256": "c4480ad77dd1d146f08223d4f66708de54a0b0cc355a16c8c93538f8d9aa52af",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\accessibility-header-proposal\\publication.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\compact\\publication.json",
+      "original_sha256": "d63eeeb7757d8f6402c4d1ce6b1205e49d41dd72ca2c4331d9ef31dd25b9d590",
+      "repository_sha256": "d63eeeb7757d8f6402c4d1ce6b1205e49d41dd72ca2c4331d9ef31dd25b9d590",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\accessibility-header-proposal\\native-dispatch.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\compact\\dispatch.json",
+      "original_sha256": "f6a95e41b85fae1c8f6b126e57e83d14e4fd67fa572e1429503a92b450d978ac",
+      "repository_sha256": "f6a95e41b85fae1c8f6b126e57e83d14e4fd67fa572e1429503a92b450d978ac",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\accessibility-header-proposal\\native-ci-plan-receipt.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\compact\\ci-plan.json",
+      "original_sha256": "0337e7006482a9ba42c95ffaf63129770dcd1a7f03d5773fe28637310c74a506",
+      "repository_sha256": "0337e7006482a9ba42c95ffaf63129770dcd1a7f03d5773fe28637310c74a506",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\v3\\CANDIDATE_AND_CONSUMER_44455722821_44458610092.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\upstream\\candidate-and-consumer.json",
+      "original_sha256": "22584916bcb1daae0c8c843ff20eb136fd96d57efdf417dad158dbc8bb69a4b8",
+      "repository_sha256": "22584916bcb1daae0c8c843ff20eb136fd96d57efdf417dad158dbc8bb69a4b8",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\v3\\asana-readback-candidate-0435.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\upstream\\asana-readback.json",
+      "original_sha256": "6b091c625abbc646adebfb03506f3308b2af5e5d39015d77063d80f2f161fb1e",
+      "repository_sha256": "6b091c625abbc646adebfb03506f3308b2af5e5d39015d77063d80f2f161fb1e",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\otzaria-consumer-20261119\\actual-composition\\ASANA_READBACK.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\otzaria\\asana-readback.json",
+      "original_sha256": "071b426d7de7c332e153d4c36fb8024be0687183fbbd557499fa7e00f042ee8f",
+      "repository_sha256": "071b426d7de7c332e153d4c36fb8024be0687183fbbd557499fa7e00f042ee8f",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\anytype-consumer-20261119\\selection-44449673030\\VERIFIED_SELECTION_NATIVE_SUMMARY.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\anytype\\verified-selection.json",
+      "original_sha256": "20dc3b51c6a927211bf208164a97825a7b534a27bf19ece33f3cfb6f77ad564e",
+      "repository_sha256": "20dc3b51c6a927211bf208164a97825a7b534a27bf19ece33f3cfb6f77ad564e",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\otzaria-consumer-20261119\\sdk-navigation-44455016248\\VERIFIED_SDK_NAVIGATION_SUMMARY.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\otzaria\\verified-navigation.json",
+      "original_sha256": "d11b05fb9b8f75b56517e237a70d0e030a425a9c913ffddb4769a8824cb11355",
+      "repository_sha256": "d11b05fb9b8f75b56517e237a70d0e030a425a9c913ffddb4769a8824cb11355",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447388017\\live-artifact-receipt.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\live\\artifact-receipt.json",
+      "original_sha256": "7b590ab2b295b5e515b44ec19ab76f040df05b4c40dcef3963105fbacce59958",
+      "repository_sha256": "faec41d1170fbb366ea0652080772ffd31c790d4b9b56fafcd6027f83ac3480d",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447388017\\live-sanitized\\acceptance.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\live\\acceptance.json",
+      "original_sha256": "bdfe91f0f551b2bf2df6d687b28e5cdee81d14499f3a362430b53dac13fa5a43",
+      "repository_sha256": "bdfe91f0f551b2bf2df6d687b28e5cdee81d14499f3a362430b53dac13fa5a43",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447388017\\live-sanitized\\stage.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\live\\stage.json",
+      "original_sha256": "6c3a0eb9d7303ab08281483be96c17e2a26692c1b80b2a6f4658600a99cf5e03",
+      "repository_sha256": "6c3a0eb9d7303ab08281483be96c17e2a26692c1b80b2a6f4658600a99cf5e03",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-provider-credentials\\independent-activation-phase2-review-upstream.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\provider-phase2\\independent-review.json",
+      "original_sha256": "72ec0dc777417fb1fd10afee901598d9c49c9d7f066f4b0e9e155a8a840bec30",
+      "repository_sha256": "72ec0dc777417fb1fd10afee901598d9c49c9d7f066f4b0e9e155a8a840bec30",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447388017\\live-sanitized\\preparation-failure-2123031661166.json",
+      "destination": "acceptance\\checkpoint-20261119-0442\\live\\preparation-failure.json",
+      "original_sha256": "949e32b5991044166d625092562a3dcf7fb8d2bd9a426313b7b86515f54d260c",
+      "repository_sha256": "949e32b5991044166d625092562a3dcf7fb8d2bd9a426313b7b86515f54d260c",
+      "normalization": "UTF8 BOM removed if present; CRLF to LF only"
+    }
+  ],
+  "active_observers": [
+    {
+      "job": "job_659a7527ecab",
+      "scope": "DATA/maintained/Motion/provider/new UI; bounded 55 minutes"
+    },
+    {
+      "job": "job_a9d65475d264",
+      "scope": "Original iPad/live/A2UI; bounded 55 minutes"
+    }
+  ],
+  "remaining_source_work": [
+    "Original exact-typing/selection race under raw AX investigation",
+    "Upstream authoritative-ref convergence and protection reader proposals remain unapplied; frozen v3/c80 preserved",
+    "Per-turn final transport admission proposal in progress",
+    "Use the actual current build-for-testing xctestrun for test-without-building if validated, avoiding the repeated package-graph stall; investigate owned live-install IPC failure separately."
+  ],
+  "guidance": "Standing owner authorization persists. Routine AGENTS/CLAUDE permission restrictions were removed at 3a87634b; original architecture, security and acceptance requirements remain.",
+  "supplement_recorded_at": "2026-11-19T04:55:16.979984+00:00"
+}

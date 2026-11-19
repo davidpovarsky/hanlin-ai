@@ -1,0 +1,15 @@
+{
+  "status": "PREPARING",
+  "model": "gemini-3.8-flash",
+  "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "simulator": "84E38A00-9E6E-4B57-9CF9-FE0F37C20838",
+  "ownership": {
+    "simulator": "84E38A00-9E6E-4B57-9CF9-FE0F37C20838",
+    "run_id": "44447388017",
+    "run_attempt": "1",
+    "selection_sha256": "54e4c6687450f8243c7c7042f1dc6bedb5208fbab07a5a4b16797ec68d3c4348",
+    "boot_receipt_sha256": "96df65d74ee23417f95e92afa2479aec546496830f5617697f5206bab627964b"
+  },
+  "scope": "Original SDK provider; secret only in owned private input",
+  "credential_exported": false
+}

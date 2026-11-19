@@ -1,0 +1,18 @@
+{
+  "publication": {
+    "published_at": "2026-11-19T04:22:52.301060+00:00",
+    "head": "7d5f0a47d7cfb98b28fd9f16d83a2b917618da95",
+    "remote_match": true,
+    "source_plan": "Debug; complete8-case AutoFollow suite +4unchangedUI cases",
+    "inputs_sha256": "059827b50bd35db4a1450fd6e3f922bb4cd7b4c48048a14c4da1e2dcf46ca29f"
+  },
+  "run": {
+    "conclusion": "",
+    "createdAt": "2026-11-19T04:22:54Z",
+    "databaseId": 44457921366,
+    "event": "workflow_dispatch",
+    "headSha": "7d5f0a47d7cfb98b28fd9f16d83a2b917618da95",
+    "status": "queued",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44457921366"
+  }
+}

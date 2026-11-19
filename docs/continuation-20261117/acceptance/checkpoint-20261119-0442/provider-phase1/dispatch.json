@@ -1,0 +1,19 @@
+{
+  "publication": {
+    "published_at": "2026-11-19T04:11:21.693341+00:00",
+    "head": "37a246f404cc2ed253200ddf6fd647f999637f68",
+    "remote_match": true,
+    "source_plan": "Debug; exact12selectors;14newexpandedcases plus1originalcontrol",
+    "inputs_sha256": "e889655d6833f1fcad03b948d8cc32e84ca9e86e7d3523b8550190a5baa04bd7"
+  },
+  "run": {
+    "conclusion": "",
+    "createdAt": "2026-11-19T04:11:23Z",
+    "databaseId": 44456578432,
+    "event": "workflow_dispatch",
+    "headSha": "37a246f404cc2ed253200ddf6fd647f999637f68",
+    "status": "in_progress",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44456578432"
+  },
+  "selector_count": 12
+}

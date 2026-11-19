@@ -1,0 +1,15 @@
+{
+  "run": 44440354095,
+  "head": "589420f3da0db240df8aa5a466bba9303a6bf4c5",
+  "official_conclusion": "cancelled",
+  "actual_app_build": "PASS",
+  "native_testcase_starts": 0,
+  "test_result_bundle_present": false,
+  "last_test_log_line": "Resolve Package Graph",
+  "cancellation_message": "The operation was canceled.",
+  "cause": "NOT_ESTABLISHED",
+  "artifact": 14496476260,
+  "artifact_sha256": "82b9329d89f5ded010499a990671c5da18ddb65d1a146080af40755a1c3ff99b",
+  "verified_all_crc": true,
+  "prior_cases": "No testcase PASS or FAIL can be attributed"
+}
