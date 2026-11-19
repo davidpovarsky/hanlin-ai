@@ -1569,7 +1569,7 @@
       "consumers": []
     },
     "canonical_product_split": {
-      "description": "Canonical two-app leaves, production shell and standalone workflow; origin consumer tests here, standalone UI/storage via validate-app-split.yml",
+      "description": "Canonical two-app leaves, production shell and standalone workflow; origin consumer units here; paired UI and standalone UI/storage require validate-app-split.yml with both original products",
       "patterns": [
         "Packages/HanlinProductSplit/**",
         "AI_HLY/Downstream/ProductSplit/**",
@@ -1579,7 +1579,8 @@
         "HanlinMiniAppsTests/**",
         "HanlinMiniAppsUITests/**",
         "Tests/ProductSplit/**",
-        "AI_HLYTests/HanlinAppSplitOriginTests.swift"
+        "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+        "AI_HLYUITests/HanlinPairedProductUITests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
