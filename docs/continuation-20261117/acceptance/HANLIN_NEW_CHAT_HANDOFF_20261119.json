@@ -1,0 +1,248 @@
+{
+  "schema": "hanlin-handoff-v1",
+  "created_utc": "2026-11-19T11:29:38.720887+00:00",
+  "product_source_sha": "ab581ece28f7ec8120019e4c926d67cd99dfcff6",
+  "main_sha": "f7082624e2d1c81ba58f2ebdac76224e008c7292",
+  "phase2": "IN_PROGRESS",
+  "phase3": "IN_PROGRESS",
+  "release": "NO_GO",
+  "asana": {
+    "total": 30,
+    "completed": 1,
+    "open": 29,
+    "live_checked": true
+  },
+  "feature_snapshot": {
+    "all": 278,
+    "partial": 20,
+    "fully_accepted": 0,
+    "as_of": "2026-11-19T04:46:25Z"
+  },
+  "original_tasks": [
+    {
+      "gid": "1220542174541844",
+      "code": "SDK-01",
+      "completed": true
+    },
+    {
+      "gid": "1220546710401425",
+      "code": "SKILL-YAMS-02",
+      "completed": false
+    },
+    {
+      "gid": "1219605220234118",
+      "code": "WAVE-A",
+      "completed": false
+    },
+    {
+      "gid": "1220546608370437",
+      "code": "SKILL-UPSTREAM-01",
+      "completed": false
+    },
+    {
+      "gid": "1220373608755846",
+      "code": "SDK-03",
+      "completed": false
+    },
+    {
+      "gid": "1220373832827086",
+      "code": "SDK-04",
+      "completed": false
+    },
+    {
+      "gid": "1220374076374903",
+      "code": "INT-03",
+      "completed": false
+    },
+    {
+      "gid": "1220546710400478",
+      "code": "SKILL-RUNTIME-05",
+      "completed": false
+    },
+    {
+      "gid": "1220489383643571",
+      "code": "A2UI-02",
+      "completed": false
+    },
+    {
+      "gid": "1220489258419968",
+      "code": "A2UI-03",
+      "completed": false
+    },
+    {
+      "gid": "1220489257946325",
+      "code": "A2UI-04",
+      "completed": false
+    },
+    {
+      "gid": "1220489600044406",
+      "code": "A2UI-05",
+      "completed": false
+    },
+    {
+      "gid": "1220491240486416",
+      "code": "A2UI-09",
+      "completed": false
+    },
+    {
+      "gid": "1220546608350406",
+      "code": "SKILL-AST-04",
+      "completed": false
+    },
+    {
+      "gid": "1220546846740594",
+      "code": "CHATUX-MOTION",
+      "completed": false
+    },
+    {
+      "gid": "1220539644804804",
+      "code": "COMPOSER",
+      "completed": false
+    },
+    {
+      "gid": "1220541898122292",
+      "code": "ACTIVE-CHIPS",
+      "completed": false
+    },
+    {
+      "gid": "1220546710417618",
+      "code": "SKILL-UX-QA-06",
+      "completed": false
+    },
+    {
+      "gid": "1219613181643838",
+      "code": "SDK-PARENT",
+      "completed": false
+    },
+    {
+      "gid": "1220542419128390",
+      "code": "SDK-02",
+      "completed": false
+    },
+    {
+      "gid": "1220542199992529",
+      "code": "SDK-03-HOST",
+      "completed": false
+    },
+    {
+      "gid": "1220542199999956",
+      "code": "SDK-05-DATA",
+      "completed": false
+    },
+    {
+      "gid": "1220542174541940",
+      "code": "SDK-04-UI",
+      "completed": false
+    },
+    {
+      "gid": "1220546571007976",
+      "code": "SKILL-OPENCLAW-03",
+      "completed": false
+    },
+    {
+      "gid": "1219605220179926",
+      "code": "SPLIT-PARENT",
+      "completed": false
+    },
+    {
+      "gid": "1219656771637321",
+      "code": "WAVE-K",
+      "completed": false
+    },
+    {
+      "gid": "1219656771149125",
+      "code": "WAVE-J",
+      "completed": false
+    },
+    {
+      "gid": "1219656771460030",
+      "code": "WAVE-L",
+      "completed": false
+    },
+    {
+      "gid": "1219605235147314",
+      "code": "WAVE-H",
+      "completed": false
+    },
+    {
+      "gid": "1219605282038820",
+      "code": "WAVE-I",
+      "completed": false
+    }
+  ],
+  "runs": [
+    {
+      "id": 44453570922,
+      "state": "SUCCESS",
+      "topic": "Skills / Yams / Python",
+      "note": "Workflow הצליח; עדיין חסרות בדיקות נפרדות של שאר הצרכנים"
+    },
+    {
+      "id": 44466305765,
+      "state": "FAIL",
+      "topic": "DATA / Composer unit",
+      "note": "Prepare embedded RuntimeCore נכשל לפני בדיקות היחידה"
+    },
+    {
+      "id": 44466308930,
+      "state": "FAIL",
+      "topic": "Hanlin ↔ MiniApps",
+      "note": "מסלול ההעברה והחזרה נכשל"
+    },
+    {
+      "id": 44466312634,
+      "state": "FAIL",
+      "topic": "A2UI / Performance",
+      "note": "ריצת Native עברה לבדיקות אך 65 מבחני יחידה נכשלו"
+    },
+    {
+      "id": 44465711797,
+      "state": "FAIL",
+      "topic": "Motion D",
+      "note": "בדיקת Native כשלה; נדרש לחקור xcresult"
+    },
+    {
+      "id": 44458939610,
+      "state": "FAIL",
+      "topic": "iPhone compact",
+      "note": "TEST BUILD FAILED; לא הופקו בדיקות UI"
+    },
+    {
+      "id": 44459110497,
+      "state": "FAIL",
+      "topic": "Provider credentials",
+      "note": "הריצה לא התקבלה, נדרש לברר מקור מדויק"
+    },
+    {
+      "id": 44467193357,
+      "state": "SUCCESS",
+      "topic": "Main workflow",
+      "note": "לא מהווה אישור מוצר או IPA חתום"
+    },
+    {
+      "id": 44447126258,
+      "state": "FAIL",
+      "topic": "iPad UI היסטורי",
+      "note": "14/14 unit PASS; 4/17 UI PASS, 13 FAIL"
+    },
+    {
+      "id": 44447129341,
+      "state": "FAIL",
+      "topic": "Paired היסטורי",
+      "note": "5/8 PASS, שלוש בדיקות UI נכשלו לפני Send"
+    },
+    {
+      "id": 44476680808,
+      "state": "SUCCESS",
+      "topic": "Anytype Wave15",
+      "note": "הצלחת ריצת Anytype נפרדת, לא קבלה מלאה"
+    },
+    {
+      "id": 44480833870,
+      "state": "FAIL",
+      "topic": "Maktabah / Otzaria",
+      "note": "מבחן צרכן מאוחר נכשל"
+    }
+  ],
+  "report_sha256": "aa73f934542e819162bc089f3234a17cec674436617fd5f6bfe5e19ac5cb66db"
+}
