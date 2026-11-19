@@ -1,0 +1,147 @@
+{
+  "task": "1220489600044406",
+  "sourceHead": "873607e45e021b40fe5b940c836d398c329f95c8",
+  "observedAt": "2026-11-19T03:48:57.800623+00:00",
+  "status": "OPEN_PERFORMANCE_AND_FULL_PRODUCT_ACCEPTANCE",
+  "required": {
+    "nodes": [
+      1,
+      10,
+      100
+    ],
+    "modelTokensPerSecond": [
+      5,
+      20,
+      60
+    ],
+    "characters": [
+      10000,
+      50000
+    ],
+    "simultaneousSurfaces": 5,
+    "metrics": [
+      "CPU peak",
+      "memory",
+      "TTFR",
+      "FPS",
+      "scroll request/actual scrollTo",
+      "before/after traces",
+      "signed physical device results"
+    ]
+  },
+  "implementedNativeUISelectors": [
+    "testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+    "testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+    "testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+    "testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+    "testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow",
+    "testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+    "testNewConversationWorksWithoutOptimizationModel"
+  ],
+  "implementedCoalescingSelectors": [
+    "sustainedRequestsKeepOneTimerAndMergeAnimationWithoutStarvation",
+    "interactionCancelsScheduledScrollAndStaleTimerCannotClearNewOne",
+    "selectionPauseRejectsLayoutWorkUntilAnExplicitResume",
+    "aNewRunRejectsThePreviousPendingScroll"
+  ],
+  "genericBenchmarkSelectors": {
+    "AI_HLYUITests/HanlinUIPerformanceUITests.swift": [
+      "testFlow1_ApplicationColdLaunchPerformance",
+      "testFlow2_TimeToUsableFirstScreenPerformance",
+      "testFlow3_OpenScriptingAppsScreenPerformance",
+      "testFlow9_ScriptUIPackageImportAndInstallationPerformance",
+      "testFlow10_ScriptUIFirstRenderPerformance",
+      "testFlow15_ScriptUIInteractionAndReactiveUpdatePerformance",
+      "testFlow16_ScriptUIPersistenceAcrossAppRestartPerformance",
+      "testFlow11_12_13_NativeScriptFirstInitializationAndRenders",
+      "testFlow14_NativeScriptSwiftUIWarmRenderAndInteractionPerformance"
+    ],
+    "AI_HLYTests/HanlinRuntimePerformanceTests.swift": [
+      "testFlow4_JavaScriptCoreInitializationPerformance",
+      "testFlow5_JavaScriptCoreDeterministicExecutionPerformance",
+      "testFlow6_QuickJSInitializationPerformance",
+      "testFlow7_QuickJSDeterministicExecutionPerformance",
+      "testFlow8_MultiEngineRuntimeSwitchPerformance",
+      "testFlow9_DeterministicPackageStoreImportPerformance",
+      "testFlow10_InstalledPackageProviderExecutionPerformance",
+      "testRuntimeMemoryStabilityUnderRepeatedExecutionCycles"
+    ]
+  },
+  "findings": [
+    "Native HTTP fixture currently delivers a joined SSE payload containing only two text-delta events after one delay; no measured pacing or native A2UI performance matrix.",
+    "Original native structured-response engine buffers text deltas and calls decodeComplete/official batch validator only at finish; canonical parts are emitted afterwards.",
+    "Explicit advertised canonical custom-content channel is a distinct supported route and can deliver paced canonical parts through the original Session.",
+    "Existing ChatAutoFollowController coalesces requests over80ms and has behavioral tests. Its performed counter increments before a ChatView selection guard inside the callback, so that counter is not a guaranteed actual scrollTo count.",
+    "Current native UI tests cover original form action/draft, expanded dismissal, same-process replay, gallery/source, surface-only, mixed OpenUI, and new conversation. They do not supply the required matrix metrics.",
+    "Generic16flows exercise Runtime/ScriptUI/NativeScript and must not be relabeled native A2UI acceptance.",
+    "Five simultaneous original part owners with one surface each stay inside existing four-surfaces-per-session and128-parts bounds."
+  ],
+  "unmeasured": [
+    "actual model tokenizer throughput",
+    "full ChatView scrolling",
+    "pixel TTFR",
+    "display FPS",
+    "instrumented CPU peak",
+    "before/after performance baseline",
+    "signed physical-device acceptance",
+    "process restart of real persistent original chat store"
+  ],
+  "inputs": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift",
+      "sha256": "31ece3b1f5c1f60f3a076d2096072f4c554ac421262a7bd37c79ffcac7e67589"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "sha256": "0fadca052c3d9f131b72f31892940e734aefd28898be2d169e6affe177284fd9"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNativeStructuredResponse.swift",
+      "sha256": "aa102dfa161fdc72b939bbf103fad18d8c5e20ac307ab4c0ae92425cd2987eb6"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAppPresentation.swift",
+      "sha256": "fa5e1a258a2ff0c708b6d54acb981803ccedfaa424316ba3b950938bba9feff1"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift",
+      "sha256": "ec75c0ae676b6535c44d3ffb73e38bbf57cd916b8481f87d7f32618cb206f501"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+      "sha256": "60b64b4f2720df1d4e99e5222a1e606e425e2e71d4dfe1fd21da24fdcf40e5b3"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+      "sha256": "afb27c3c95235bfac4d6ff6f0ea0c22ed47f89b03e501d4f4c0de198d0628df1"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinChatContentView.swift",
+      "sha256": "6685c0c31eb166f9770e609da382d04fa4518eb0b3b57b001079a316b616e441"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+      "sha256": "585e4cd8d17b0bda7064cfa12957938877a3e17dbb95bc440bd9c047013f23d4"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "sha256": "c042da669f660e20be9757da40a517b954bcb3c67b145238dee08dfba2636424"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "sha256": "bd7753aaecf63456a38601678dd81430f92b8794112d8f784e82de2f89a74b69"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinUIPerformanceUITests.swift",
+      "sha256": "5a45d7679dc37f85b5941a8570b0f6d6ef22112cafc8034527d357d2a779b63f"
+    },
+    {
+      "path": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "sha256": "e4a309d6f83d8741355537143aba9359e5d77f0d22f6fb29519ff07927d45e41"
+    },
+    {
+      "path": "AI_HLYTests/HanlinRuntimePerformanceTests.swift",
+      "sha256": "9d468eac221e77a177874ef36d20a420786d01c6e5603302497d89eb69d24dcc"
+    }
+  ]
+}

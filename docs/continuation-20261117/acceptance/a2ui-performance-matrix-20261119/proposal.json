@@ -1,0 +1,43 @@
+{
+  "status": "UNAPPLIED_NATIVE_COMPILE_AND_EXECUTION_REQUIRED",
+  "canonicalSourceHead": "873607e45e021b40fe5b940c836d398c329f95c8",
+  "patchSha256": "01149c6fc2f2d1acee190441f5b5c54c2dd9fa9bd3e76876c9bb72f265b1a26a",
+  "files": [
+    {
+      "path": "AI_HLYTests/HanlinA2UIProductPerformanceTests.swift",
+      "before": "ABSENT",
+      "proposedLFsha256": "37f383733bd5ca77541af8cab969327c39fe40d33153b05034781c21df795b63"
+    },
+    {
+      "path": "Scripts/CI/affected-validation-map.json",
+      "beforeSha256": "2ea6f00a2d4de3c947972ed1406e5dd1aff0cd8d991b19f862b7cf2bbcf42760",
+      "proposedLFsha256": "566fbe3826698f67ce0fa0bc45a5caa99417c3cd23dc286b548c8890370159c2"
+    }
+  ],
+  "gitApplyCheckExit": 0,
+  "swiftParseExit": 0,
+  "exactRoutingExit": 0,
+  "selectors": [
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedCanonicalPartsUseOriginalSessionRendererAndReplayMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedResponsesBufferingUsesOriginalProviderSessionRendererAndReplayMatrix"
+  ],
+  "nativeTestsExecuted": false,
+  "productionRendererChanges": false,
+  "productionValidationChanges": false,
+  "proposalCoverage": {
+    "routes": 2,
+    "casesPerRoute": 18,
+    "canonicalPartsPerCase": 85,
+    "nativeOwners": 5,
+    "nativeSurfacesPerOwner": 1,
+    "dataModelUpdatesPerCase": 50,
+    "dataPayloadBytesPerUpdate": 1024,
+    "wireBytesRange": [
+      76490,
+      153505
+    ]
+  },
+  "portableVerification": "Compiled and executed extracted actual fixture generator with unmodified production HanlinChatStructuredPart/Sequence on Windows Swift6.3.3;18cases valid. Does not compile or execute app/presentation/renderer.",
+  "metricScope": "Actual monotonic offers/receipts, native admitted-model time, UIWindow layout callback, process CPU time, sampled physical footprint, replay duration. No token/FPS/pixelTTFR/CPUpeak/regression claims.",
+  "nextGate": "Review patch; native iOS compilation and exact2selectors; require36 raw measurement attachments, actual XCTest results, and fixture hashes. Original A2UI05 remains open for fullChatView/physical traces/baseline."
+}

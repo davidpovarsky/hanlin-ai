@@ -1506,6 +1506,19 @@
       ],
       "consumers": []
     },
+    "original_a2ui_product_benchmarks": {
+      "description": "Native original Session/presentation/renderer matrix observations and original-store lifecycle; separate from the 16 ScriptUI/Runtime performance flows",
+      "patterns": [
+        "AI_HLYTests/HanlinA2UIProductPerformanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinA2UIProductPerformanceTests"
+      ],
+      "consumers": []
+    },
     "skill_product_execution_tests": {
       "description": "Original app product integration and execution acceptance",
       "patterns": [
