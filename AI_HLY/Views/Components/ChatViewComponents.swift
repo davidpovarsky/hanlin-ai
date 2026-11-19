@@ -4761,6 +4761,7 @@ struct CanvasTextView: UIViewRepresentable {
     class Coordinator: NSObject, UITextViewDelegate {
         var parent: CanvasTextView
         var lastCode: String = ""
+        var lastLanguage: String = ""
         /// 记录上次高亮的选区，用来清除它的颜色
         var previousSelection: NSRange?
 
@@ -4840,6 +4841,7 @@ struct CanvasTextView: UIViewRepresentable {
 
     func updateUIView(_ uiView: UITextView, context: Context) {
         let coord = context.coordinator
+        coord.parent = self
         uiView.isEditable = isEditable
         
         // **拼音候选阶段，不要重置 text / 光标**
@@ -4851,50 +4853,64 @@ struct CanvasTextView: UIViewRepresentable {
         let originalRange = uiView.selectedRange
 
         // 用一个 helper，每次要恢复选区时再做 bounds‐check
-        func restoreCursor() {
+        func restoreCursor(_ selection: NSRange) {
             let total = uiView.text.utf16.count
             // location 最多只能到 total
-            let loc = min(originalRange.location, total)
+            let loc = min(selection.location, total)
             // length 最多只能到剩下的最大长度
             let maxLen = total - loc
-            let len = max(0, min(originalRange.length, maxLen))
+            let len = max(0, min(selection.length, maxLen))
             uiView.selectedRange = NSRange(location: loc, length: len)
         }
 
+        // Read SwiftUI bindings on the main actor before dispatching highlight work.
+        let sourceText = text
+        let sourceLanguage = language
+
         // 2) 根据模式分两路
-        if language != "text" {
+        if sourceLanguage != "text" {
             // 2a) 代码/HTML 高亮走异步
-            if coord.lastCode != text {
-                coord.lastCode = text
+            if coord.lastCode != sourceText || coord.lastLanguage != sourceLanguage {
+                coord.lastCode = sourceText
+                coord.lastLanguage = sourceLanguage
                 DispatchQueue.global(qos: .userInitiated).async {
                     let highlighted: NSAttributedString
-                    switch language {
+                    switch sourceLanguage {
                     case "python":
-                        highlighted = highlightPythonCode(text)
+                        highlighted = highlightPythonCode(sourceText)
                     case "html":
-                        highlighted = makeHighlighted(text)
+                        highlighted = makeHighlighted(sourceText)
                     default:
-                        highlighted = NSAttributedString(string: text)
+                        highlighted = NSAttributedString(string: sourceText)
                     }
                     DispatchQueue.main.async {
-                        // 如果 mid‐flight 又被新文本打断，就不再应用
-                        guard coord.lastCode == text else { return }
+                        // Reject results superseded by an edit, mode change or composition.
+                        guard coord.lastCode == sourceText,
+                              coord.lastLanguage == sourceLanguage,
+                              coord.parent.text == sourceText,
+                              coord.parent.language == sourceLanguage,
+                              uiView.markedTextRange == nil else { return }
+                        // Selection may have moved while highlighting was in flight.
+                        let currentSelection = uiView.selectedRange
                         uiView.attributedText = highlighted
                         // 保持 monospaced
                         let size = UIFont.preferredFont(forTextStyle: .footnote).pointSize
                         uiView.font = .monospacedSystemFont(ofSize: size, weight: .regular)
                         // **异步完成时再“安全恢复”**
-                        restoreCursor()
+                        restoreCursor(currentSelection)
                     }
                 }
             }
             // 别在这里 restore，让异步高亮那一端去做
         } else {
+            // Invalidate pending code highlighting when switching to plain text.
+            coord.lastCode = sourceText
+            coord.lastLanguage = sourceLanguage
             // 2b) 纯文本：立刻同步更新并恢复
-            if uiView.text != text {
-                uiView.text = text
+            if uiView.text != sourceText {
+                uiView.text = sourceText
             }
-            restoreCursor()
+            restoreCursor(originalRange)
         }
 
         // 3) 插入高亮动画时也不要 touch 选区
