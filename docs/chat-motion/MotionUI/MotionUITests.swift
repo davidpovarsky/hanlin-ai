@@ -142,8 +142,18 @@ final class MotionUITests: XCTestCase {
         let naturalHeight: Double?
     }
 
+    private struct ScrollTouchConfiguration: Codable, Equatable {
+        let phase: String
+        let originalDelaysContentTouches: Bool
+        let delaysContentTouches: Bool
+        let canCancelContentTouches: Bool
+        let isScrollEnabled: Bool
+    }
+
     private struct RapidInputReport: Encodable {
         let diagnosticOnly: Bool
+        let phase: String
+        let scrollConfiguration: ScrollTouchConfiguration
         let control: String
         let delivery: String
         let expectedActions: Int
@@ -175,42 +185,102 @@ final class MotionUITests: XCTestCase {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         var reports: [RapidInputReport] = []
-        for (identifier, delivery) in cases {
-            app.buttons["rapid-input-reset"].tap()
-            let collapsed = XCTNSPredicateExpectation(
-                predicate: NSPredicate(format: "label == %@", "static=collapsed;animated=collapsed"),
-                object: app.staticTexts["rapid-input-geometry"])
-            XCTAssertEqual(XCTWaiter.wait(for: [collapsed], timeout: 5), .completed)
-            let button = app.buttons[identifier]
-            XCTAssertTrue(button.waitForExistence(timeout: 5))
-            XCTAssertTrue(button.isHittable)
-            if delivery == "multi-tap" {
-                button.tap(withNumberOfTaps: 3, numberOfTouches: 1)
-            } else {
-                let coordinate = button.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-                for _ in 0..<3 { coordinate.tap() }
+        let configurationElement = app.staticTexts["rapid-scroll-configuration"]
+        let configurationToggle = app.buttons["rapid-scroll-delay-toggle"]
+        var baselineConfiguration: ScrollTouchConfiguration?
+        var changedTouchDelay = false
+        defer {
+            if changedTouchDelay && configurationToggle.exists {
+                configurationToggle.tap()
             }
-            let reachedThree = XCTNSPredicateExpectation(
-                predicate: NSPredicate(format: "label == %@", "3"), object: receipt)
-            let receiptReachedThree = XCTWaiter.wait(for: [reachedThree], timeout: 5) == .completed
-            let raw = try XCTUnwrap(receipt.value as? String)
-            let samples = try JSONDecoder().decode([RapidInputSample].self, from: Data(raw.utf8))
-            XCTAssertTrue(samples.allSatisfy { $0.control == identifier })
-            let gaps = zip(samples.dropFirst(), samples).map { $0.0.uptime - $0.1.uptime }
-            let intermediate = samples.dropFirst().map { sample in
-                guard let visible = sample.visibleHeight, let natural = sample.naturalHeight,
-                      natural > 0 else { return false }
-                return visible > 0.5 && visible < natural + 6 - 0.5
-            }
-            let report = RapidInputReport(diagnosticOnly: true, control: identifier, delivery: delivery,
-                expectedActions: 3, observedActions: samples.count, receiptReachedThree: receiptReachedThree,
-                actionTimeGaps: gaps, laterActionsAtIntermediateGeometry: intermediate, samples: samples)
-            reports.append(report)
-            let attachment = XCTAttachment(string: String(decoding: try encoder.encode(report), as: UTF8.self))
-            attachment.name = "\(identifier)-\(delivery)-input-observations"
-            attachment.lifetime = .keepAlways
-            add(attachment)
         }
+
+        for phase in ["native-default", "immediate-touch-down"] {
+            if phase == "immediate-touch-down" {
+                configurationToggle.tap()
+                changedTouchDelay = true
+            }
+            let configurationReady = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "label == %@", phase), object: configurationElement)
+            XCTAssertEqual(XCTWaiter.wait(for: [configurationReady], timeout: 5), .completed,
+                           "The actual containing UIScrollView must report the requested diagnostic phase")
+            let configurationRaw = try XCTUnwrap(configurationElement.value as? String)
+            let configuration = try JSONDecoder().decode(ScrollTouchConfiguration.self,
+                                                          from: Data(configurationRaw.utf8))
+            let configurationAttachment = XCTAttachment(string: configurationRaw)
+            configurationAttachment.name = "rapid-scroll-configuration-\(phase)"
+            configurationAttachment.lifetime = .keepAlways
+            add(configurationAttachment)
+            XCTAssertTrue(configuration.canCancelContentTouches,
+                          "Scroll cancellation must remain enabled during this experiment")
+            XCTAssertTrue(configuration.isScrollEnabled)
+            if let baselineConfiguration {
+                XCTAssertEqual(configuration.originalDelaysContentTouches,
+                               baselineConfiguration.originalDelaysContentTouches)
+                XCTAssertEqual(configuration.canCancelContentTouches,
+                               baselineConfiguration.canCancelContentTouches)
+                XCTAssertFalse(configuration.delaysContentTouches)
+            } else {
+                baselineConfiguration = configuration
+                XCTAssertEqual(configuration.delaysContentTouches,
+                               configuration.originalDelaysContentTouches)
+            }
+
+            for (identifier, delivery) in cases {
+                app.buttons["rapid-input-reset"].tap()
+                let collapsed = XCTNSPredicateExpectation(
+                    predicate: NSPredicate(format: "label == %@", "static=collapsed;animated=collapsed"),
+                    object: app.staticTexts["rapid-input-geometry"])
+                XCTAssertEqual(XCTWaiter.wait(for: [collapsed], timeout: 5), .completed)
+                let button = app.buttons[identifier]
+                XCTAssertTrue(button.waitForExistence(timeout: 5))
+                XCTAssertTrue(button.isHittable)
+                if delivery == "multi-tap" {
+                    button.tap(withNumberOfTaps: 3, numberOfTouches: 1)
+                } else {
+                    let coordinate = button.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+                    for _ in 0..<3 { coordinate.tap() }
+                }
+                let reachedThree = XCTNSPredicateExpectation(
+                    predicate: NSPredicate(format: "label == %@", "3"), object: receipt)
+                let receiptReachedThree = XCTWaiter.wait(for: [reachedThree], timeout: 5) == .completed
+                let raw = try XCTUnwrap(receipt.value as? String)
+                let samples = try JSONDecoder().decode([RapidInputSample].self, from: Data(raw.utf8))
+                XCTAssertTrue(samples.allSatisfy { $0.control == identifier })
+                let gaps = zip(samples.dropFirst(), samples).map { $0.0.uptime - $0.1.uptime }
+                let intermediate = samples.dropFirst().map { sample in
+                    guard let visible = sample.visibleHeight, let natural = sample.naturalHeight,
+                          natural > 0 else { return false }
+                    return visible > 0.5 && visible < natural + 6 - 0.5
+                }
+                let report = RapidInputReport(diagnosticOnly: true, phase: phase,
+                    scrollConfiguration: configuration, control: identifier, delivery: delivery,
+                    expectedActions: 3, observedActions: samples.count, receiptReachedThree: receiptReachedThree,
+                    actionTimeGaps: gaps, laterActionsAtIntermediateGeometry: intermediate, samples: samples)
+                reports.append(report)
+                let attachment = XCTAttachment(string: String(decoding: try encoder.encode(report), as: UTF8.self))
+                attachment.name = "\(phase)-\(identifier)-\(delivery)-input-observations"
+                attachment.lifetime = .keepAlways
+                add(attachment)
+            }
+            attach("rapid-input-\(phase)")
+        }
+
+        configurationToggle.tap()
+        changedTouchDelay = false
+        let restored = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label == %@", "native-default"), object: configurationElement)
+        XCTAssertEqual(XCTWaiter.wait(for: [restored], timeout: 5), .completed)
+        let restoredRaw = try XCTUnwrap(configurationElement.value as? String)
+        let restoredConfiguration = try JSONDecoder().decode(ScrollTouchConfiguration.self,
+                                                              from: Data(restoredRaw.utf8))
+        XCTAssertEqual(restoredConfiguration, try XCTUnwrap(baselineConfiguration),
+                       "The probe must restore the original scroll-view configuration")
+        let restoredAttachment = XCTAttachment(string: restoredRaw)
+        restoredAttachment.name = "rapid-scroll-configuration-restored"
+        restoredAttachment.lifetime = .keepAlways
+        add(restoredAttachment)
+
         let attachment = XCTAttachment(string: String(decoding: try encoder.encode(reports), as: UTF8.self))
         attachment.name = "rapid-input-diagnostic-only"
         attachment.lifetime = .keepAlways

@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 @main
 struct MotionProofApp: App {
@@ -139,6 +140,14 @@ private struct MotionRapidInputDiagnostic: View {
     }
     @State private var probes = ["static": ProbeState(), "animated": ProbeState()]
     @State private var samples: [Sample] = []
+    @State private var disablesScrollTouchDelay = false
+    @State private var scrollConfiguration: MotionScrollTouchConfiguration?
+
+    private var scrollConfigurationJSON: String {
+        guard let scrollConfiguration,
+              let data = try? JSONEncoder().encode(scrollConfiguration) else { return "{}" }
+        return String(decoding: data, as: UTF8.self)
+    }
 
     private var receiptJSON: String {
         guard let data = try? JSONEncoder().encode(samples) else { return "[]" }
@@ -201,6 +210,10 @@ private struct MotionRapidInputDiagnostic: View {
                 for key in ["static", "animated"] { probes[key]!.expanded = false }
             }
             .accessibilityIdentifier("rapid-input-reset")
+            Button(disablesScrollTouchDelay ? "Restore original scroll touches" : "Use immediate scroll touches") {
+                disablesScrollTouchDelay.toggle()
+            }
+            .accessibilityIdentifier("rapid-scroll-delay-toggle")
             nativeButton("Native button outside ScrollView", id: "rapid-native-outside")
                 .padding(.horizontal)
             ScrollView {
@@ -210,7 +223,18 @@ private struct MotionRapidInputDiagnostic: View {
                     productionProbe("static", preset: .none)
                     productionProbe("animated", preset: .relaxed)
                 }.padding()
+                .background {
+                    MotionScrollTouchProbe(disableDelay: disablesScrollTouchDelay) {
+                        scrollConfiguration = $0
+                    }
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+                }
             }
+            Text("Scroll input configuration").lineLimit(1).frame(height: 24)
+                .accessibilityIdentifier("rapid-scroll-configuration")
+                .accessibilityLabel(scrollConfiguration?.phase ?? "unresolved")
+                .accessibilityValue(scrollConfigurationJSON)
             Text("Input diagnostic samples").lineLimit(1).frame(height: 24)
                 .accessibilityIdentifier("rapid-input-receipt")
                 .accessibilityLabel(String(samples.count))
@@ -218,6 +242,113 @@ private struct MotionRapidInputDiagnostic: View {
             Text("static=\(geometry("static"));animated=\(geometry("animated"))")
                 .lineLimit(1).frame(height: 24)
                 .accessibilityIdentifier("rapid-input-geometry")
+        }
+    }
+}
+
+
+// This opt-in diagnostic changes only the public touch-delay property on the
+// actual containing scroll view. Production screens and acceptance B are unchanged.
+private struct MotionScrollTouchConfiguration: Codable, Equatable {
+    let phase: String
+    let originalDelaysContentTouches: Bool
+    let delaysContentTouches: Bool
+    let canCancelContentTouches: Bool
+    let isScrollEnabled: Bool
+}
+
+@MainActor
+private struct MotionScrollTouchProbe: UIViewRepresentable {
+    var disableDelay: Bool
+    var onConfiguration: (MotionScrollTouchConfiguration) -> Void
+
+    func makeUIView(context: Context) -> ProbeView {
+        let view = ProbeView()
+        view.isUserInteractionEnabled = false
+        view.isAccessibilityElement = false
+        view.disableDelay = disableDelay
+        view.onConfiguration = onConfiguration
+        return view
+    }
+
+    func updateUIView(_ uiView: ProbeView, context: Context) {
+        uiView.disableDelay = disableDelay
+        uiView.onConfiguration = onConfiguration
+        uiView.applyConfiguration()
+    }
+
+    static func dismantleUIView(_ uiView: ProbeView, coordinator: ()) {
+        uiView.restoreOriginalSettings()
+    }
+
+    final class ProbeView: UIView {
+        var disableDelay = false
+        var onConfiguration: ((MotionScrollTouchConfiguration) -> Void)?
+        private weak var observedScrollView: UIScrollView?
+        private var originalDelay: Bool?
+        private var lastConfiguration: MotionScrollTouchConfiguration?
+
+        override func didMoveToWindow() {
+            super.didMoveToWindow()
+            if window == nil { restoreOriginalSettings() }
+            else { applyConfiguration() }
+        }
+
+        override func didMoveToSuperview() {
+            super.didMoveToSuperview()
+            applyConfiguration()
+        }
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            applyConfiguration()
+        }
+
+        func restoreOriginalSettings() {
+            if let scrollView = observedScrollView, let originalDelay {
+                scrollView.delaysContentTouches = originalDelay
+            }
+            observedScrollView = nil
+            originalDelay = nil
+            lastConfiguration = nil
+        }
+
+        func applyConfiguration() {
+            guard window != nil else { return }
+            var ancestor = superview
+            var containingScrollView: UIScrollView?
+            while let view = ancestor {
+                if let scrollView = view as? UIScrollView {
+                    containingScrollView = scrollView
+                    break
+                }
+                ancestor = view.superview
+            }
+            guard let scrollView = containingScrollView else { return }
+            if observedScrollView !== scrollView {
+                restoreOriginalSettings()
+                observedScrollView = scrollView
+                originalDelay = scrollView.delaysContentTouches
+            }
+            guard let originalDelay else { return }
+            let requestedDelay = disableDelay ? false : originalDelay
+            if scrollView.delaysContentTouches != requestedDelay {
+                scrollView.delaysContentTouches = requestedDelay
+            }
+            // Do not alter cancellation, pan recognition, scroll enablement or
+            // control actions. The test records and checks these native flags.
+            let configuration = MotionScrollTouchConfiguration(
+                phase: disableDelay ? "immediate-touch-down" : "native-default",
+                originalDelaysContentTouches: originalDelay,
+                delaysContentTouches: scrollView.delaysContentTouches,
+                canCancelContentTouches: scrollView.canCancelContentTouches,
+                isScrollEnabled: scrollView.isScrollEnabled)
+            guard configuration != lastConfiguration else { return }
+            lastConfiguration = configuration
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.window != nil, let latest = self.lastConfiguration else { return }
+                self.onConfiguration?(latest)
+            }
         }
     }
 }
