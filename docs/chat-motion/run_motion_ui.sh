@@ -452,7 +452,7 @@ else
 fi
 set -e
 finish_phase results
-python3 "$root/docs/chat-motion/collect_motion_result.py" "$scratch/Motion.xcresult" "$device" "$evidence" "$test_code"
+python3 "$support_root/docs/chat-motion/collect_motion_result.py" "$scratch/Motion.xcresult" "$device" "$evidence" "$test_code"
 if [[ "$device_strategy" == xcodebuild-owned ]]; then
   python3 - "$support_dir" "$evidence" "$test_code" <<'PY'
 import datetime, json, sys
