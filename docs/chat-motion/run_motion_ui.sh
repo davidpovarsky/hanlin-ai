@@ -27,6 +27,7 @@ PY
 }
 trap retain EXIT
 git rev-parse HEAD > "$evidence/source-sha.txt"
+printf '%s\n' "${HANLIN_MOTION_SCOPE:-affected}" > "$evidence/requested-scope.txt"
 selected_xcode="$(python3 Scripts/CI/select_stable_xcode.py)"
 export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 if ! command -v xcodegen >/dev/null; then brew install xcodegen > "$evidence/xcodegen-install.log" 2>&1; fi
@@ -48,25 +49,8 @@ else
   device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json" "${selected_device_args[@]+"${selected_device_args[@]}"}")"
 fi
 printf '%s\n' "$device_strategy" > "$evidence/device-strategy.txt"
-python3 - "$device" "$evidence/verified-environment.json" "$device_strategy" <<'PY'
-import json,subprocess,sys
-selected=json.load(open(sys.argv[2]))
-if sys.argv[3]=='ready' and selected['device']['state']!='Booted':
-    raise SystemExit('BLOCKED_ENVIRONMENT: no already-booted SDK-matching iPad; no cold-boot retry was performed')
-if selected['device']['state']!='Booted':subprocess.run(['xcrun','simctl','boot',sys.argv[1]],check=True,timeout=15)
-from pathlib import Path
-out=Path(sys.argv[2]).parent
-try:
-    with (out/'bootstatus.log').open('w') as log:
-        subprocess.run(['xcrun','simctl','bootstatus',sys.argv[1],'-b'],stdout=log,stderr=subprocess.STDOUT,check=True,timeout=180)
-except (subprocess.TimeoutExpired,subprocess.CalledProcessError):
-    for name,command in [('devices-after',['xcrun','simctl','list','devices','-j']),('core-simulator-log',['log','show','--last','3m','--style','compact','--predicate','process == "CoreSimulatorService"'])]:
-        try:
-            result=subprocess.run(command,capture_output=True,timeout=15)
-            (out/(name+'.stdout')).write_bytes(result.stdout);(out/(name+'.stderr')).write_bytes(result.stderr)
-        except subprocess.TimeoutExpired:(out/(name+'.timeout')).write_text('15s observation deadline')
-    raise
-PY
+python3 "$root/Scripts/CI/boot_motion_simulator.py" \
+  --device "$device" --selection "$evidence/verified-environment.json" --strategy "$device_strategy"
 echo "$device" > "$evidence/selected-device.txt"
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-motion-ui.XXXXXXXX")"
 python3 docs/chat-motion/prepare_motion_ui.py --output "$scratch/proof" > "$evidence/preparation.json"

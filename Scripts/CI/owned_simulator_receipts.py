@@ -58,9 +58,8 @@ def created_selection(selected, before, observed, requested_name, created_udid,
             }}
 
 
-def _selection(log, simulator, run_id, run_attempt):
-    expected_name = _job(run_id, run_attempt)
-    raw = (Path(log) / SELECTION_FILE).read_bytes()
+def _created_selection(path, simulator, run_id, run_attempt, expected_name):
+    raw = Path(path).read_bytes()
     selected = json.loads(raw)
     device, runtime, owner = selected["device"], selected["runtime"], selected["ownership"]
     if (owner.get("schema_version") != 1 or owner.get("operation") != "simctl_create"
@@ -77,6 +76,21 @@ def _selection(log, simulator, run_id, run_attempt):
             or device.get("isAvailable") is not True):
         raise RuntimeError("Live credentials require this run's freshly created simulator")
     return selected, hashlib.sha256(raw).hexdigest()
+
+
+def _selection(log, simulator, run_id, run_attempt):
+    return _created_selection(Path(log) / SELECTION_FILE, simulator, run_id, run_attempt,
+                              _job(run_id, run_attempt))
+
+
+def verify_owned_motion_creation(path, simulator, run_id, run_attempt):
+    """Validate the original Motion create receipt before touching its UUID."""
+    _job(run_id, run_attempt)  # Require this GitHub run and attempt, as for live staging.
+    simulator = _uuid(simulator)
+    name = "Hanlin-Phase2-Motion-" + run_id
+    _, digest = _created_selection(path, simulator, run_id, run_attempt, name)
+    return {"simulator": simulator, "run_id": run_id, "run_attempt": run_attempt,
+            "name": name, "selection_sha256": digest}
 
 
 def record_owned_boot(log, simulator, result, run_id=None, run_attempt=None):

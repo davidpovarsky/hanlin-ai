@@ -1,0 +1,59 @@
+{
+  "appliedAt": "2026-11-19T05:28:53.508917+00:00",
+  "base": "6d62957852ffcb428810b065b4252e5384f1374b",
+  "patchSHA256": "0b54e4eb7885f68ef2ce3405045bff8f919d5123d6e8c0ada61dd66bda2a47dd",
+  "baseAndProposedAllHashesVerified": true,
+  "portableTestCount": 29,
+  "portableTests": "PASS",
+  "native": "NOT_RUN_FOR_CHANGED_SOURCE",
+  "retainedFailure": "44454057890 bootstatus timeout before build; zero product tests",
+  "copied": [
+    {
+      "path": "motion-owned-boot-recovery.diff",
+      "sha256": "0b54e4eb7885f68ef2ce3405045bff8f919d5123d6e8c0ada61dd66bda2a47dd"
+    },
+    {
+      "path": "REVIEW.md",
+      "sha256": "570458474309d01b1da938d9c7a4eb26cef0ca4d6b28f74c43849945c2f2ce09"
+    },
+    {
+      "path": "packet-receipt.json",
+      "sha256": "42eaf940693032bb752790efb8d575c3e0b8a9f340793990b9b129bad07df5c1"
+    },
+    {
+      "path": "validation.json",
+      "sha256": "cccdb96ff95e872b36d37abb501fa459f2b698e0fbd044d8a4ed24313c7f6bf2"
+    },
+    {
+      "path": "base-manifest.json",
+      "sha256": "e919befc35befc5b8b3a64638d701668837a4e3d1b938f7fb6b532241e8e2982"
+    },
+    {
+      "path": "changed-source-manifest.json",
+      "sha256": "b1c4d87f2eba0ae42fa74f18e8dd4978374fe23dd9d6664a8debd5ac057d904f"
+    },
+    {
+      "path": "native-failure-receipt.json",
+      "sha256": "4d6b36de12a9f690571352e2dd37eaa79b1dd936cda6098623b0f851ea50bb95"
+    },
+    {
+      "path": "independent-review-upstream.json",
+      "sha256": "f71dc03781acf4c2ba5c8d101da94fbd96c4cd37b8edead8780be87ed4bcb575"
+    },
+    {
+      "path": "native-job-135324691208.txt",
+      "sha256": "b967061573d191b0a91919e7a87647a8b83fb468f1ea41c1398bd4fdf94c9fd1"
+    },
+    {
+      "path": "focused-tests.txt",
+      "sha256": "9868cc05c57c96d24c803786dd2fd3427aa5884a3dead4d5db7767257544a905"
+    }
+  ],
+  "rawEvidenceArchive": {
+    "file": "reviewed-evidence.zip",
+    "sha256": "e56fb609d32e08f605c3c3dfc5a6feefa62b2ade5f777d89e0e2aae8247772ce",
+    "bytes": 25562,
+    "CRC": "PASS",
+    "qualification": "Original exact bytes retained, including original CRLF and patch context; portable execution is not native product acceptance"
+  }
+}
