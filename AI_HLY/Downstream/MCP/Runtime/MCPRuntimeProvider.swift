@@ -428,8 +428,25 @@ final class MCPRuntimeProvider {
 
     func updateEnvironment(_ drafts: [MCPEnvironmentDraft], for server: MCPServerDescriptor) async {
         guard persistentLoadState == .loaded else { return }
-        var updated = server
+        do {
+            servers = try await Self.persistEnvironment(
+                drafts, for: server, registryStore: registryStore, secretStore: secretStore
+            )
+        } catch {
+            lastError = error.localizedDescription
+        }
+    }
+
+    /// The original provider stages new Keychain items, commits their references,
+    /// and only then removes values no longer used by any saved server.
+    static func persistEnvironment(
+        _ drafts: [MCPEnvironmentDraft],
+        for server: MCPServerDescriptor,
+        registryStore: MCPServerRegistryStore,
+        secretStore: MCPSecretStore
+    ) async throws -> [MCPServerDescriptor] {
         var values: [MCPEnvironmentVariable] = []
+        var stagedReferences: Set<String> = []
         do {
             for draft in drafts {
                 let name = draft.name.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -440,20 +457,33 @@ final class MCPRuntimeProvider {
                     if draft.value.isEmpty, let saved = existing?.secretReference {
                         reference = saved
                     } else {
-                        if let old = existing?.secretReference { await secretStore.remove(reference: old) }
                         reference = try await secretStore.set(draft.value)
+                        stagedReferences.insert(reference)
                     }
                     values.append(.init(name: name, value: nil, secretReference: reference))
                 } else {
-                    if let old = existing?.secretReference { await secretStore.remove(reference: old) }
                     values.append(.init(name: name, value: draft.value, secretReference: nil))
                 }
             }
-            updated.environment = values
-            updated.updatedAt = .now
-            servers = try await registryStore.upsert(updated)
+            let committed = try await registryStore.replaceEnvironment(
+                for: server.id, matching: server.environment, with: values
+            )
+            let retained = Set(committed.flatMap(\.environment).compactMap(\.secretReference))
+            let previous = Set(server.environment.compactMap(\.secretReference))
+            for reference in previous.subtracting(retained) {
+                await secretStore.remove(reference: reference)
+            }
+            return committed
         } catch {
-            lastError = error.localizedDescription
+            // save() writes its verified backup first. An error can therefore
+            // mean that a new generation is durable in just one copy. Unknown
+            // reachability also retains the value instead of losing credentials.
+            if let retained = try? await registryStore.retainedSecretReferences() {
+                for reference in stagedReferences.subtracting(retained) {
+                    await secretStore.remove(reference: reference)
+                }
+            }
+            throw error
         }
     }
 

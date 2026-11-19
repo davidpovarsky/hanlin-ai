@@ -149,7 +149,7 @@ class APIManager {
                 return value
             }
         } catch {
-            print("JSON解析失败：\(error)")
+            print("JSON解析失败")
         }
         return nil
     }
@@ -162,7 +162,7 @@ class APIManager {
                 return value
             }
         } catch {
-            print("JSON解析失败：\(error)")
+            print("JSON解析失败")
         }
         return []
     }
@@ -173,10 +173,10 @@ class APIManager {
             let newMemory = MemoryArchive(content: content, timestamp: Date())
             context.insert(newMemory)
             try context.save()
-            print("成功保存记忆：\(content)")
+            print("成功保存记忆")
             return true
         } catch {
-            print("保存记忆失败：\(error)")
+            print("保存记忆失败")
             return false
         }
     }
@@ -184,7 +184,7 @@ class APIManager {
     // 回忆函数
     func retrieveMemory(keyword: String) -> String {
         
-        print("召回记忆关键词：", keyword)
+        print("召回记忆关键词已接收")
         
         // 1. 加载 JSON 配置（仅加载一次）
         let config: (stopWords: Set<String>, stopChars: Set<Character>, synonymMap: [String: [String]]) = {
@@ -324,7 +324,7 @@ class APIManager {
                 $0.0.content!.trimmingCharacters(in: .whitespacesAndNewlines)
             }
             
-            print("召回记忆结果：", results.joined(separator: "\n\n"))
+            print("召回记忆完成，记录数：", results.count)
             return results.joined(separator: "\n\n")
             
         } catch {
@@ -990,7 +990,7 @@ class APIManager {
                 return (activeMap.company, activeMap.key)
             }
         } catch {
-            print("获取地图服务失败: \(error.localizedDescription)")
+            print("获取地图服务失败")
         }
         return nil
     }
@@ -1006,7 +1006,7 @@ class APIManager {
                 return (activeMap.company, activeMap.key, activeMap.requestURL)
             }
         } catch {
-            print("获取天气服务失败: \(error.localizedDescription)")
+            print("获取天气服务失败")
         }
         return nil
     }
@@ -1052,7 +1052,7 @@ class APIManager {
                 return (engine, activeKey.key, activeKey.requestURL) as? (engine: SearchEngine, apiKey: String?, requestURL: String)
             }
         } catch {
-            print("获取搜索引擎失败: \(error.localizedDescription)")
+            print("获取搜索引擎失败")
         }
         return nil
     }
@@ -2046,7 +2046,7 @@ class APIManager {
             }
             self.searchEngine = searchEngine
         } catch {
-            print("搜索过程中发生错误: \(error.localizedDescription)")
+            print("搜索过程中发生错误")
         }
     }
     
@@ -2283,7 +2283,7 @@ class APIManager {
             
             return markdown
         } catch {
-            print("计算向量失败: \(error.localizedDescription)")
+            print("计算向量失败")
             return error.localizedDescription
         }
     }
@@ -2301,13 +2301,13 @@ class APIManager {
                 .map { "- " + $0.text + ($0.imageText ?? "") + ($0.documentText ?? "") }
                 .joined(separator: "\n")
             
-            print("优化的原问题：", query)
+            print("正在优化问题")
             let currentMessage = updatedMessages.last
             let images = currentMessage?.images
             let optimizer = SystemOptimizer(context: self.context)
             let optimizedQuery = try await optimizer.optimizeKnowledgeQuestion(inputPrompt: query, recentMessages: recentMessages, inputImages: images)
             captureSearchQuery(optimizedQuery)
-            print("优化后的问题：", optimizedQuery)
+            print("问题优化完成")
             
             if let knowledgeMarkdown = await self.performKnowledgeSearch(query: optimizedQuery) {
                 // 将搜索结果追加到 searchText 中
@@ -2327,7 +2327,7 @@ class APIManager {
                 ))
             }
         } catch {
-            print("知识背包搜索过程中发生错误: \(error.localizedDescription)")
+            print("知识背包搜索过程中发生错误")
         }
     }
     
@@ -2944,7 +2944,7 @@ class APIManager {
                                                     let tmpPlayer = try AVAudioPlayer(data: wavFile)
                                                     duration = tmpPlayer.duration
                                                 } catch {
-                                                    print("无法读取 WAV 时长：\(error)")
+                                                    print("无法读取 WAV 时长")
                                                 }
                                                 let asset = AudioAsset(
                                                     data: wavFile,
@@ -3082,7 +3082,7 @@ class APIManager {
             
             return optimizedQuery
         } catch {
-            print("发生错误: \(error.localizedDescription)")
+            print("发生错误")
             return nil
         }
     }
@@ -3126,7 +3126,7 @@ class APIManager {
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "自动优化提示" : "Automatic optimization prompt"))
                     var updatedMessages = messages
                     let optimizedPrompt = await ImagePromptTask(updatedMessages: &updatedMessages) ?? updatedMessages.last?.text ?? updatedMessages.last?.imageText ?? ""
-                    print("生成提示词：", optimizedPrompt)
+                    print("生成提示词已准备")
                     
                     var url: URL
                     var request: URLRequest

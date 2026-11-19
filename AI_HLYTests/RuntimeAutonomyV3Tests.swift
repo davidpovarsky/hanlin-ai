@@ -679,6 +679,339 @@ struct RuntimeAutonomyV3Tests {
         #expect(result.stderr.isEmpty && !result.didTimeOut && !result.wasCancelled)
     }
 
+    @Test func nativeKeychainReplacementPreservesOriginalServiceIsolation() async throws {
+        let runtime = RuntimeSecretStore()
+        let mcp = MCPSecretStore()
+        let reference = "sdk05-replacement-\(UUID().uuidString)"
+        do {
+            #expect(try await runtime.set("runtime-before", reference: reference) == reference)
+            #expect(try await mcp.set("mcp-before", reference: reference) == reference)
+            #expect(try await runtime.set("runtime-after", reference: reference) == reference)
+            #expect(try await runtime.value(reference: reference) == "runtime-after")
+            #expect(try await mcp.value(reference: reference) == "mcp-before")
+            #expect(try await mcp.set("mcp-after", reference: reference) == reference)
+            #expect(try await runtime.value(reference: reference) == "runtime-after")
+            #expect(try await mcp.value(reference: reference) == "mcp-after")
+        } catch {
+            await runtime.remove(reference: reference)
+            await mcp.remove(reference: reference)
+            throw error
+        }
+        await runtime.remove(reference: reference)
+        await mcp.remove(reference: reference)
+    }
+
+    @Test(arguments: ["replacement", "plaintext", "deletion"])
+    func runtimeEnvironmentCommitFailurePreservesTheOriginalSecret(operation: String) async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "secret-commit-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = RuntimeFileLayout(root: root)
+        let secrets = RuntimeSecretStore()
+        let environment = RuntimeEnvironmentStore(fileLayout: layout, secrets: secrets)
+        var references: Set<String> = []
+        do {
+            let saved = try await environment.save(
+                name: "SDK05_ROLLBACK", value: "original-fixture-value", scope: .python,
+                isEnabled: true, isSecret: true
+            )
+            let originalReference = try #require(saved.secretReference)
+            references.insert(originalReference)
+            let originalRegistry = try Data(contentsOf: layout.environmentRegistry)
+            // Force a real atomic-file-write failure, after the store has loaded
+            // the original descriptor and the real Keychain item has been saved.
+            try FileManager.default.removeItem(at: layout.environmentRegistry)
+            try FileManager.default.createDirectory(at: layout.environmentRegistry, withIntermediateDirectories: false)
+            var failed = false
+            do {
+                switch operation {
+                case "replacement":
+                    _ = try await environment.save(name: saved.name, value: "replacement-fixture-value",
+                        scope: .python, isEnabled: true, isSecret: true, replacing: saved.id)
+                case "plaintext":
+                    _ = try await environment.save(name: saved.name, value: "public-fixture-value",
+                        scope: .python, isEnabled: true, isSecret: false, replacing: saved.id)
+                default:
+                    try await environment.delete(id: saved.id)
+                }
+            } catch {
+                failed = true
+            }
+            #expect(failed)
+            #expect(try await secrets.value(reference: originalReference) == "original-fixture-value")
+            #expect(try await environment.items() == [saved])
+            try FileManager.default.removeItem(at: layout.environmentRegistry)
+            try originalRegistry.write(to: layout.environmentRegistry, options: .atomic)
+
+            let reopened = RuntimeEnvironmentStore(fileLayout: layout, secrets: secrets)
+            #expect(try await reopened.items() == [saved])
+            #expect(try await reopened.resolved(scopes: [.python])[saved.name] == "original-fixture-value")
+            switch operation {
+            case "replacement":
+                let replacement = try await reopened.save(name: saved.name, value: "replacement-fixture-value",
+                    scope: .python, isEnabled: true, isSecret: true, replacing: saved.id)
+                let newReference = try #require(replacement.secretReference)
+                references.insert(newReference)
+                #expect(newReference != originalReference)
+                #expect(try await secrets.value(reference: newReference) == "replacement-fixture-value")
+            case "plaintext":
+                let replacement = try await reopened.save(name: saved.name, value: "public-fixture-value",
+                    scope: .python, isEnabled: true, isSecret: false, replacing: saved.id)
+                #expect(replacement.secretReference == nil && replacement.value == "public-fixture-value")
+            default:
+                try await reopened.delete(id: saved.id)
+                #expect(try await reopened.items().isEmpty)
+            }
+            let retired = try? await secrets.value(reference: originalReference)
+            #expect(retired == nil)
+        } catch {
+            for reference in references { await secrets.remove(reference: reference) }
+            throw error
+        }
+        for reference in references { await secrets.remove(reference: reference) }
+    }
+
+    @Test func mcpEnvironmentPrimaryWriteFailureRetainsBothDurableGenerations() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "mcp-primary-secret-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
+        let secrets = MCPSecretStore()
+        var references: Set<String> = []
+        do {
+            let oldReference = try await secrets.set("original-mcp-fixture-value")
+            references.insert(oldReference)
+            let server = secretRollbackServer(reference: oldReference)
+            try await MCPServerRegistryStore(fileLayout: layout).save([server])
+            let failingRegistry = MCPServerRegistryStore(fileLayout: layout, writeAtomically: { data, url in
+                if url == layout.serverRegistry { throw CocoaError(.fileWriteNoPermission) }
+                try data.write(to: url, options: .atomic)
+            })
+            var failed = false
+            do {
+                _ = try await MCPRuntimeProvider.persistEnvironment(
+                    [.init(name: "SDK05_TOKEN", value: "new-mcp-fixture-value", isSecret: true)],
+                    for: server, registryStore: failingRegistry, secretStore: secrets
+                )
+            } catch {
+                failed = true
+            }
+            #expect(failed)
+            // The original writer persisted and verified the new backup before
+            // the injected primary replacement error. Both documents are real.
+            let primary = try JSONDecoder.mcp.decode(MCPServerRegistryDocument.self,
+                from: Data(contentsOf: layout.serverRegistry))
+            let backup = try JSONDecoder.mcp.decode(MCPServerRegistryDocument.self,
+                from: Data(contentsOf: layout.serverRegistryBackup))
+            #expect(backup.generation > primary.generation)
+            #expect(primary.servers.first?.environment.first?.secretReference == oldReference)
+            let newReference = try #require(backup.servers.first?.environment.first?.secretReference)
+            references.insert(newReference)
+            #expect(newReference != oldReference)
+            #expect(try await failingRegistry.retainedSecretReferences() == Set([oldReference, newReference]))
+            #expect(try await secrets.value(reference: oldReference) == "original-mcp-fixture-value")
+            #expect(try await secrets.value(reference: newReference) == "new-mcp-fixture-value")
+
+            let recovered = try await MCPServerRegistryStore(fileLayout: layout).load()
+            #expect(recovered.first?.environment.first?.secretReference == newReference)
+            #expect(try Data(contentsOf: layout.serverRegistry) == Data(contentsOf: layout.serverRegistryBackup))
+            #expect(try await secrets.value(reference: newReference) == "new-mcp-fixture-value")
+        } catch {
+            await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
+            throw error
+        }
+        await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
+    }
+
+    @Test func mcpEnvironmentUnknownReadAfterBackupCommitPreservesTheStagedCredential() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "mcp-unreadable-secret-proof-\(UUID().uuidString)")
+        let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
+        defer {
+            try? FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: layout.registry.path)
+            try? FileManager.default.removeItem(at: root)
+        }
+        let secrets = MCPSecretStore()
+        var references: Set<String> = []
+        do {
+            let oldReference = try await secrets.set("original-mcp-fixture-value")
+            references.insert(oldReference)
+            let server = secretRollbackServer(reference: oldReference)
+            try await MCPServerRegistryStore(fileLayout: layout).save([server])
+            let failingRegistry = MCPServerRegistryStore(fileLayout: layout, writeAtomically: { data, url in
+                if url == layout.serverRegistry {
+                    // The new backup is already durable. Make both copies genuinely
+                    // unreadable before throwing from the primary replacement.
+                    try FileManager.default.setAttributes([.posixPermissions: 0], ofItemAtPath: layout.registry.path)
+                    throw CocoaError(.fileWriteNoPermission)
+                }
+                try data.write(to: url, options: .atomic)
+            })
+            var failed = false
+            do {
+                _ = try await MCPRuntimeProvider.persistEnvironment(
+                    [.init(name: "SDK05_TOKEN", value: "new-mcp-fixture-value", isSecret: true)],
+                    for: server, registryStore: failingRegistry, secretStore: secrets
+                )
+            } catch {
+                failed = true
+            }
+            #expect(failed)
+            // This must really exercise inaccessible != absent, not just throw
+            // an injected error while the persisted references remain readable.
+            #expect(!FileManager.default.fileExists(atPath: layout.serverRegistryBackup.path))
+            #expect((try? Data(contentsOf: layout.serverRegistryBackup)) == nil)
+            try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: layout.registry.path)
+            let primary = try JSONDecoder.mcp.decode(MCPServerRegistryDocument.self,
+                from: Data(contentsOf: layout.serverRegistry))
+            let backup = try JSONDecoder.mcp.decode(MCPServerRegistryDocument.self,
+                from: Data(contentsOf: layout.serverRegistryBackup))
+            #expect(backup.generation > primary.generation)
+            let newReference = try #require(backup.servers.first?.environment.first?.secretReference)
+            references.insert(newReference)
+            #expect(newReference != oldReference)
+            #expect(try await secrets.value(reference: oldReference) == "original-mcp-fixture-value")
+            #expect(try await secrets.value(reference: newReference) == "new-mcp-fixture-value")
+            let recovered = try await MCPServerRegistryStore(fileLayout: layout).load()
+            #expect(recovered.first?.environment.first?.secretReference == newReference)
+        } catch {
+            try? FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: layout.registry.path)
+            await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
+            throw error
+        }
+        await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
+    }
+
+    @Test func mcpEnvironmentPrecommitFailureKeepsOriginalSecretAndRemovesOnlyStagedValue() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "mcp-backup-secret-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
+        let attempted = layout.registry.appending(path: "attempted-generation.json")
+        let secrets = MCPSecretStore()
+        var references: Set<String> = []
+        do {
+            let oldReference = try await secrets.set("original-mcp-fixture-value")
+            references.insert(oldReference)
+            let server = secretRollbackServer(reference: oldReference)
+            try await MCPServerRegistryStore(fileLayout: layout).save([server])
+            let originalPrimary = try Data(contentsOf: layout.serverRegistry)
+            let originalBackup = try Data(contentsOf: layout.serverRegistryBackup)
+            let failingRegistry = MCPServerRegistryStore(fileLayout: layout, writeAtomically: { data, url in
+                if url == layout.serverRegistryBackup {
+                    // Record only the attempted descriptor (opaque references),
+                    // then fail before either persisted generation changes.
+                    try data.write(to: attempted, options: .atomic)
+                    throw CocoaError(.fileWriteNoPermission)
+                }
+                try data.write(to: url, options: .atomic)
+            })
+            var failed = false
+            do {
+                _ = try await MCPRuntimeProvider.persistEnvironment(
+                    [.init(name: "SDK05_TOKEN", value: "new-mcp-fixture-value", isSecret: true)],
+                    for: server, registryStore: failingRegistry, secretStore: secrets
+                )
+            } catch {
+                failed = true
+            }
+            #expect(failed)
+            #expect(try Data(contentsOf: layout.serverRegistry) == originalPrimary)
+            #expect(try Data(contentsOf: layout.serverRegistryBackup) == originalBackup)
+            let attemptedDocument = try JSONDecoder.mcp.decode(MCPServerRegistryDocument.self,
+                from: Data(contentsOf: attempted))
+            let stagedReference = try #require(attemptedDocument.servers.first?.environment.first?.secretReference)
+            references.insert(stagedReference)
+            #expect(stagedReference != oldReference)
+            #expect(try await secrets.value(reference: oldReference) == "original-mcp-fixture-value")
+            let discarded = try? await secrets.value(reference: stagedReference)
+            #expect(discarded == nil)
+            #expect(try await MCPServerRegistryStore(fileLayout: layout).load() == [server])
+        } catch {
+            await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
+            throw error
+        }
+        await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
+    }
+
+    @Test func mcpEnvironmentEditPreservesOtherFieldsSharedReferencesAndRejectsStaleDraft() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "mcp-secret-edit-proof-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
+        let registry = MCPServerRegistryStore(fileLayout: layout)
+        let secrets = MCPSecretStore()
+        var references: Set<String> = []
+        do {
+            let oldReference = try await secrets.set("shared-mcp-fixture-value")
+            references.insert(oldReference)
+            let server = secretRollbackServer(reference: oldReference)
+            var other = secretRollbackServer(reference: oldReference)
+            other.displayName = "Other original server"
+            try await registry.save([server, other])
+            var renamed = server
+            renamed.displayName = "Updated original server"
+            renamed.arguments = ["--updated-metadata"]
+            _ = try await registry.upsert(renamed)
+            let committed = try await MCPRuntimeProvider.persistEnvironment(
+                [.init(name: "SDK05_TOKEN", value: "new-mcp-fixture-value", isSecret: true)],
+                for: server, registryStore: registry, secretStore: secrets
+            )
+            let updated = try #require(committed.first { $0.id == server.id })
+            let newReference = try #require(updated.environment.first?.secretReference)
+            references.insert(newReference)
+            #expect(updated.displayName == renamed.displayName && updated.arguments == renamed.arguments)
+            #expect(committed.first { $0.id == other.id }?.environment == other.environment)
+            #expect(try await secrets.value(reference: oldReference) == "shared-mcp-fixture-value")
+            #expect(try await secrets.value(reference: newReference) == "new-mcp-fixture-value")
+            let beforeStaleEdit = try Data(contentsOf: layout.serverRegistry)
+            var rejectedStaleEdit = false
+            do {
+                _ = try await MCPRuntimeProvider.persistEnvironment(
+                    [.init(name: "SDK05_TOKEN", value: "stale-mcp-fixture-value", isSecret: true)],
+                    for: server, registryStore: registry, secretStore: secrets
+                )
+            } catch MCPServerRegistryError.environmentChanged {
+                rejectedStaleEdit = true
+            }
+            #expect(rejectedStaleEdit)
+            #expect(try Data(contentsOf: layout.serverRegistry) == beforeStaleEdit)
+            _ = try await MCPRuntimeProvider.persistEnvironment(
+                [.init(name: "SDK05_TOKEN", value: "public-fixture-value", isSecret: false)],
+                for: other, registryStore: registry, secretStore: secrets
+            )
+            let retired = try? await secrets.value(reference: oldReference)
+            #expect(retired == nil)
+            #expect(try await secrets.value(reference: newReference) == "new-mcp-fixture-value")
+        } catch {
+            await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
+            throw error
+        }
+        await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
+    }
+
+    private func secretRollbackServer(reference: String) -> MCPServerDescriptor {
+        MCPServerDescriptor(
+            slug: "sdk05-secret-fixture", displayName: "Original secret fixture",
+            packageName: "sdk05-secret-fixture", resolvedVersion: "1.0.0", entryPoint: "index.js",
+            environment: [.init(name: "SDK05_TOKEN", value: nil, secretReference: reference)],
+            packageRoot: "sdk05-secret-fixture",
+            installedAt: Date(timeIntervalSince1970: 1_700_000_000),
+            updatedAt: Date(timeIntervalSince1970: 1_700_000_000),
+            compatibility: .init(verdict: .compatible, findings: [], runtimeProbePassed: true)
+        )
+    }
+
+    private func removeMCPSecretFixtureReferences(
+        layout: MCPFileLayout, secrets: MCPSecretStore, known: Set<String>
+    ) async {
+        var references = known
+        // These files belong exclusively to this temporary test fixture.
+        for url in [layout.serverRegistry, layout.serverRegistryBackup,
+                    layout.registry.appending(path: "attempted-generation.json")] {
+            if let data = try? Data(contentsOf: url),
+               let document = try? JSONDecoder.mcp.decode(MCPServerRegistryDocument.self, from: data) {
+                references.formUnion(document.servers.flatMap(\.environment).compactMap(\.secretReference))
+            }
+        }
+        for reference in references { await secrets.remove(reference: reference) }
+    }
+
     @Test func savedEnvironmentPrecedenceFollowsScopesAndPreservesUserPaths() async throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "environment-proof-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: root) }

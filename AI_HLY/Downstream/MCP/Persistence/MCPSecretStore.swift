@@ -11,11 +11,20 @@ actor MCPSecretStore {
             kSecAttrService as String: service,
             kSecAttrAccount as String: reference
         ]
-        SecItemDelete(base as CFDictionary)
         var query = base
         query[kSecValueData as String] = data
         query[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-        guard SecItemAdd(query as CFDictionary, nil) == errSecSuccess else {
+        var status = SecItemAdd(query as CFDictionary, nil)
+        if status == errSecDuplicateItem {
+            // Replacing an existing item must not delete its value before the
+            // replacement has succeeded.
+            let replacement: [String: Any] = [
+                kSecValueData as String: data,
+                kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+            ]
+            status = SecItemUpdate(base as CFDictionary, replacement as CFDictionary)
+        }
+        guard status == errSecSuccess else {
             throw MCPError.secretUnavailable
         }
         return reference

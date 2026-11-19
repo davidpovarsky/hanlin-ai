@@ -12,6 +12,7 @@ enum MCPServerRegistryError: LocalizedError, Sendable {
     case bothCopiesCorrupt(primary: String, backup: String)
     case unsupportedSchema(Int)
     case writeVerificationFailed(String)
+    case environmentChanged
 
     var errorDescription: String? {
         switch self {
@@ -21,6 +22,8 @@ enum MCPServerRegistryError: LocalizedError, Sendable {
             "The MCP server registry uses unsupported schema version \(version)."
         case .writeVerificationFailed(let reason):
             "The MCP server registry could not be verified before saving: \(reason)."
+        case .environmentChanged:
+            "The saved MCP environment changed. Reload it before saving again."
         }
     }
 }
@@ -33,9 +36,16 @@ actor MCPServerRegistryStore {
     }
 
     private let fileLayout: MCPFileLayout
+    private let writeAtomically: @Sendable (Data, URL) throws -> Void
 
-    init(fileLayout: MCPFileLayout = .default) {
+    init(
+        fileLayout: MCPFileLayout = .default,
+        writeAtomically: @escaping @Sendable (Data, URL) throws -> Void = { data, url in
+            try data.write(to: url, options: .atomic)
+        }
+    ) {
         self.fileLayout = fileLayout
+        self.writeAtomically = writeAtomically
     }
 
     func load() throws -> [MCPServerDescriptor] {
@@ -61,9 +71,9 @@ actor MCPServerRegistryStore {
 
         // The primary remains valid while the backup is replaced. Once the
         // backup is verified on disk, it protects the primary replacement.
-        try data.write(to: fileLayout.serverRegistryBackup, options: .atomic)
+        try writeAtomically(data, fileLayout.serverRegistryBackup)
         _ = try verifyCopy(at: fileLayout.serverRegistryBackup)
-        try data.write(to: fileLayout.serverRegistry, options: .atomic)
+        try writeAtomically(data, fileLayout.serverRegistry)
         _ = try verifyCopy(at: fileLayout.serverRegistry)
     }
 
@@ -76,6 +86,44 @@ actor MCPServerRegistryStore {
         }
         try save(servers)
         return servers.sorted { $0.id.uuidString < $1.id.uuidString }
+    }
+
+    /// Commit only the edited environment, preserving newer descriptor metadata.
+    /// The expected environment is checked without suspending this actor.
+    func replaceEnvironment(
+        for id: UUID,
+        matching expected: [MCPEnvironmentVariable],
+        with environment: [MCPEnvironmentVariable]
+    ) throws -> [MCPServerDescriptor] {
+        var servers = try load()
+        guard let index = servers.firstIndex(where: { $0.id == id }),
+              servers[index].environment == expected else {
+            throw MCPServerRegistryError.environmentChanged
+        }
+        servers[index].environment = environment
+        servers[index].updatedAt = .now
+        try save(servers)
+        return servers.sorted { $0.id.uuidString < $1.id.uuidString }
+    }
+
+    /// Read both persisted generations without repair. A backup can already
+    /// contain the new references when replacement of the primary fails.
+    func retainedSecretReferences() throws -> Set<String> {
+        var references: Set<String> = []
+        for candidate in [
+            readCandidate(at: fileLayout.serverRegistry),
+            readCandidate(at: fileLayout.serverRegistryBackup)
+        ] {
+            switch candidate {
+            case .valid(let document, _):
+                references.formUnion(document.servers.flatMap(\.environment).compactMap(\.secretReference))
+            case .missing:
+                break
+            case .corrupt:
+                throw MCPServerRegistryError.writeVerificationFailed("persisted secret references are unreadable")
+            }
+        }
+        return references
     }
 
     func remove(id: UUID) throws -> [MCPServerDescriptor] {
@@ -136,11 +184,17 @@ actor MCPServerRegistryStore {
     }
 
     private func readCandidate(at url: URL) -> Candidate {
-        guard FileManager.default.fileExists(atPath: url.path) else { return .missing }
         do {
             let data = try Data(contentsOf: url)
             return .valid(document: try decodeDocument(data), data: data)
         } catch {
+            // fileExists can return false when directory traversal is denied.
+            // Only a proved missing file is empty; every other failure is unknown.
+            let failure = error as NSError
+            if failure.domain == NSCocoaErrorDomain,
+               failure.code == NSFileReadNoSuchFileError || failure.code == NSFileNoSuchFileError {
+                return .missing
+            }
             return .corrupt(sanitizedDiagnostic(error))
         }
     }

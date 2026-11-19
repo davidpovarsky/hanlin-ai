@@ -1,0 +1,88 @@
+--- v1/AI_HLY/Downstream/MCP/Persistence/MCPServerRegistryStore.swift
++++ v2/AI_HLY/Downstream/MCP/Persistence/MCPServerRegistryStore.swift
+@@ -184,11 +184,17 @@
+     }
+ 
+     private func readCandidate(at url: URL) -> Candidate {
+-        guard FileManager.default.fileExists(atPath: url.path) else { return .missing }
+         do {
+             let data = try Data(contentsOf: url)
+             return .valid(document: try decodeDocument(data), data: data)
+         } catch {
++            // fileExists can return false when directory traversal is denied.
++            // Only a proved missing file is empty; every other failure is unknown.
++            let failure = error as NSError
++            if failure.domain == NSCocoaErrorDomain,
++               failure.code == NSFileReadNoSuchFileError || failure.code == NSFileNoSuchFileError {
++                return .missing
++            }
+             return .corrupt(sanitizedDiagnostic(error))
+         }
+     }
+--- v1/AI_HLYTests/RuntimeAutonomyV3Tests.swift
++++ v2/AI_HLYTests/RuntimeAutonomyV3Tests.swift
+@@ -821,6 +821,64 @@
+         await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
+     }
+ 
++    @Test func mcpEnvironmentUnknownReadAfterBackupCommitPreservesTheStagedCredential() async throws {
++        let root = FileManager.default.temporaryDirectory.appending(path: "mcp-unreadable-secret-proof-\(UUID().uuidString)")
++        let layout = MCPFileLayout(root: root, legacyMigrationSource: nil)
++        defer {
++            try? FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: layout.registry.path)
++            try? FileManager.default.removeItem(at: root)
++        }
++        let secrets = MCPSecretStore()
++        var references: Set<String> = []
++        do {
++            let oldReference = try await secrets.set("original-mcp-fixture-value")
++            references.insert(oldReference)
++            let server = secretRollbackServer(reference: oldReference)
++            try await MCPServerRegistryStore(fileLayout: layout).save([server])
++            let failingRegistry = MCPServerRegistryStore(fileLayout: layout, writeAtomically: { data, url in
++                if url == layout.serverRegistry {
++                    // The new backup is already durable. Make both copies genuinely
++                    // unreadable before throwing from the primary replacement.
++                    try FileManager.default.setAttributes([.posixPermissions: 0], ofItemAtPath: layout.registry.path)
++                    throw CocoaError(.fileWriteNoPermission)
++                }
++                try data.write(to: url, options: .atomic)
++            })
++            var failed = false
++            do {
++                _ = try await MCPRuntimeProvider.persistEnvironment(
++                    [.init(name: "SDK05_TOKEN", value: "new-mcp-fixture-value", isSecret: true)],
++                    for: server, registryStore: failingRegistry, secretStore: secrets
++                )
++            } catch {
++                failed = true
++            }
++            #expect(failed)
++            // This must really exercise inaccessible != absent, not just throw
++            // an injected error while the persisted references remain readable.
++            #expect(!FileManager.default.fileExists(atPath: layout.serverRegistryBackup.path))
++            #expect((try? Data(contentsOf: layout.serverRegistryBackup)) == nil)
++            try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: layout.registry.path)
++            let primary = try JSONDecoder.mcp.decode(MCPServerRegistryDocument.self,
++                from: Data(contentsOf: layout.serverRegistry))
++            let backup = try JSONDecoder.mcp.decode(MCPServerRegistryDocument.self,
++                from: Data(contentsOf: layout.serverRegistryBackup))
++            #expect(backup.generation > primary.generation)
++            let newReference = try #require(backup.servers.first?.environment.first?.secretReference)
++            references.insert(newReference)
++            #expect(newReference != oldReference)
++            #expect(try await secrets.value(reference: oldReference) == "original-mcp-fixture-value")
++            #expect(try await secrets.value(reference: newReference) == "new-mcp-fixture-value")
++            let recovered = try await MCPServerRegistryStore(fileLayout: layout).load()
++            #expect(recovered.first?.environment.first?.secretReference == newReference)
++        } catch {
++            try? FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: layout.registry.path)
++            await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
++            throw error
++        }
++        await removeMCPSecretFixtureReferences(layout: layout, secrets: secrets, known: references)
++    }
++
+     @Test func mcpEnvironmentPrecommitFailureKeepsOriginalSecretAndRemovesOnlyStagedValue() async throws {
+         let root = FileManager.default.temporaryDirectory.appending(path: "mcp-backup-secret-proof-\(UUID().uuidString)")
+         defer { try? FileManager.default.removeItem(at: root) }

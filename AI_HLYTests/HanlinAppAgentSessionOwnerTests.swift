@@ -139,6 +139,83 @@ private struct AppPartModel: LanguageModelV3 {
         #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
     }
 
+    @Test func diskBackedOriginalConversationReopensWithoutLosingLegacyOrCanonicalHistory() async throws {
+        let root = FileManager.default.temporaryDirectory
+            .appending(path: "hanlin-sdk05-durable-" + UUID().uuidString, directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let url = root.appending(path: "OriginalChat.store")
+        let id = UUID()
+        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: "swiftdata", space: id.uuidString)
+        let runID = UUID(), timestamp = Date(timeIntervalSince1970: 1_000)
+        let original = HanlinConversationRecord(namespace: namespace, conversationID: id, revision: 0,
+            model: .init(provider: "original-provider", modelID: "original-model"),
+            draft: "Canonical draft שלום",
+            entries: [
+                .init(runID: runID, step: 0, sequence: 0, timestamp: timestamp,
+                      payload: .text("Canonical history שלום e\u{301}")),
+                .init(runID: runID, step: 0, sequence: 1, timestamp: timestamp, payload: .cancelled)
+            ])
+        let legacyCanvas = CanvasData(title: "Original canvas", content: "Current canvas",
+            type: "text", history: ["Earlier canvas", "Current canvas"], index: 1)
+        let presentationBytes = Data("original-presentation-assignment".utf8)
+
+        @MainActor func openDatabase() throws -> ModelContainer {
+            try ModelContainer(for: ChatRecords.self,
+                configurations: ModelConfiguration(url: url, cloudKitDatabase: .none))
+        }
+        @MainActor func seedOriginalStore() async throws -> Data {
+            let container = try openDatabase(), context = container.mainContext
+            let row = ChatRecords(id: id, name: "Original persistent title", type: "chat",
+                lastEdited: timestamp, input: "Original unsent draft שלום", canvas: legacyCanvas)
+            row.presentationAssignmentData = presentationBytes
+            context.insert(row)
+            try context.save()
+            let store = HanlinAppConversationStore(context: context, conversation: row,
+                namespace: namespace, conversationID: id, temporary: false)
+            try await store.save(original, replacing: nil)
+            return try #require(row.agentSDKRecordData)
+        }
+        let originalBytes = try await seedOriginalStore()
+        #expect(FileManager.default.fileExists(atPath: url.path))
+        #expect((try FileManager.default.attributesOfItem(atPath: url.path)[.size] as? NSNumber)?.intValue ?? 0 > 0)
+
+        @MainActor func reopenAndRejectFutureFormat() async throws {
+            let container = try openDatabase(), context = container.mainContext
+            let rows = try context.fetch(FetchDescriptor<ChatRecords>())
+            #expect(rows.count == 1)
+            let row = try #require(rows.first)
+            #expect(row.id == id && row.name == "Original persistent title")
+            #expect(row.input == "Original unsent draft שלום" && row.lastEdited == timestamp)
+            #expect(row.canvas == legacyCanvas && row.presentationAssignmentData == presentationBytes)
+            #expect(row.agentSDKRecordData == originalBytes)
+            let store = HanlinAppConversationStore(context: context, conversation: row,
+                namespace: namespace, conversationID: id, temporary: false)
+            #expect(try await store.load(id, namespace: namespace) == original)
+            let future = HanlinConversationRecord(formatVersion: HanlinConversationRecord.currentFormat + 1,
+                namespace: namespace, conversationID: id, revision: 1, draft: "Must not replace",
+                entries: original.entries)
+            do {
+                try await store.save(future, replacing: 0)
+                Issue.record("Unknown future SDK format changed the original disk-backed conversation")
+            } catch { #expect(error as? HanlinHostError == .unsupportedVersion) }
+            #expect(row.agentSDKRecordData == originalBytes)
+            try context.save()
+        }
+        try await reopenAndRejectFutureFormat()
+        let finalContainer = try openDatabase(), finalContext = finalContainer.mainContext
+        let finalRows = try finalContext.fetch(FetchDescriptor<ChatRecords>())
+        #expect(finalRows.count == 1)
+        let finalRow = try #require(finalRows.first)
+        #expect(finalRow.agentSDKRecordData == originalBytes)
+        #expect(finalRow.name == "Original persistent title" && finalRow.input == "Original unsent draft שלום")
+        #expect(finalRow.canvas == legacyCanvas && finalRow.presentationAssignmentData == presentationBytes)
+        let finalStore = HanlinAppConversationStore(context: finalContext, conversation: finalRow,
+            namespace: namespace, conversationID: id, temporary: false)
+        #expect(try await finalStore.load(id, namespace: namespace) == original)
+    }
+
     @Test func originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns() async throws {
         weak var originalStorage: ModelContainer?
         func makeStore() throws -> (HanlinAppConversationStore, ChatRecords, HanlinConversationRecord) {

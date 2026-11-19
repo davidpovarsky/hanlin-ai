@@ -57,12 +57,12 @@ class SystemOptimizer {
 
         guard let requestURLString = apiKeyObj.requestURL,
               let url = URL(string: requestURLString) else {
-            print("[SystemOptimizer] 错误：厂商 \(modelCompany) 的请求URL无效: \(apiKeyObj.requestURL ?? "nil")")
+            print("[SystemOptimizer] Provider request URL is invalid")
             throw NSError(domain: "APIConfigError", code: -1,
                           userInfo: [NSLocalizedDescriptionKey: "厂商 \(modelCompany) 的请求URL无效"])
         }
 
-        print("[SystemOptimizer] API配置获取成功 - URL: \(requestURLString)")
+        print("[SystemOptimizer] API configuration loaded")
         return (optimizationModelName, modelCompany, apiKey, url, modelEntry.supportReasoningChange)
     }
 

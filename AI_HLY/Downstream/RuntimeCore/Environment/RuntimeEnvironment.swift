@@ -53,11 +53,20 @@ actor RuntimeSecretStore {
             kSecAttrService as String: service,
             kSecAttrAccount as String: reference
         ]
-        SecItemDelete(base as CFDictionary)
         var query = base
         query[kSecValueData as String] = data
         query[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-        guard SecItemAdd(query as CFDictionary, nil) == errSecSuccess else {
+        var status = SecItemAdd(query as CFDictionary, nil)
+        if status == errSecDuplicateItem {
+            // Replacing an existing item must not delete its value before the
+            // replacement has succeeded.
+            let replacement: [String: Any] = [
+                kSecValueData as String: data,
+                kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+            ]
+            status = SecItemUpdate(base as CFDictionary, replacement as CFDictionary)
+        }
+        guard status == errSecSuccess else {
             throw RuntimeCoreError.runtimeFailure("The secret could not be saved in Keychain.")
         }
         return reference
@@ -115,36 +124,89 @@ actor RuntimeEnvironmentStore {
     func save(name: String, value: String, scope: RuntimeEnvironmentScope, isEnabled: Bool, isSecret: Bool, replacing id: UUID? = nil) async throws -> RuntimeEnvironmentItem {
         let validName = try RuntimePolicy.validateEnvironmentName(name.trimmingCharacters(in: .whitespacesAndNewlines))
         _ = try RuntimePolicy.validatedEnvironment([validName: value])
-        var all = try items()
-        let existingIndex = id.flatMap { requested in all.firstIndex { $0.id == requested } }
-        if let existingIndex, let reference = all[existingIndex].secretReference, !isSecret { await secrets.remove(reference: reference) }
+        let itemID = id ?? UUID()
+        let original = try items().first { $0.id == itemID }
+        var stagedReference: String?
         let reference: String?
         if isSecret {
-            if value.isEmpty, let existingIndex, let saved = all[existingIndex].secretReference { reference = saved }
-            else {
-                if let existingIndex, let saved = all[existingIndex].secretReference { await secrets.remove(reference: saved) }
-                reference = try await secrets.set(value)
+            if value.isEmpty, let saved = original?.secretReference {
+                reference = saved
+            } else {
+                let staged = try await secrets.set(value)
+                stagedReference = staged
+                reference = staged
             }
-        } else { reference = nil }
+        } else {
+            reference = nil
+        }
         let item = RuntimeEnvironmentItem(
-            id: id ?? UUID(),
+            id: itemID,
             name: validName,
             isEnabled: isEnabled,
             scope: scope,
             value: isSecret ? nil : value,
             secretReference: reference
         )
-        if let existingIndex { all[existingIndex] = item } else { all.append(item) }
-        try persist(all)
+        do {
+            // Secret staging suspends this actor. Merge into the latest collection,
+            // and refuse a stale edit of this same item instead of losing an edit.
+            var all = try items()
+            guard all.first(where: { $0.id == itemID }) == original else {
+                throw RuntimeCoreError.runtimeFailure("The saved environment changed. Reload it before saving again.")
+            }
+            if let index = all.firstIndex(where: { $0.id == itemID }) {
+                all[index] = item
+            } else {
+                all.append(item)
+            }
+            try persist(all)
+        } catch {
+            // A failed write can leave its completion uncertain. Only remove a
+            // staged value when the persisted registry proves it is unreferenced.
+            if let stagedReference,
+               let retained = try? persistedSecretReferences(),
+               !retained.contains(stagedReference) {
+                await secrets.remove(reference: stagedReference)
+            }
+            throw error
+        }
+        if let previous = original?.secretReference, previous != reference,
+           !(try items()).contains(where: { $0.secretReference == previous }) {
+            await secrets.remove(reference: previous)
+        }
         return item
     }
 
     func delete(id: UUID) async throws {
         var all = try items()
         guard let index = all.firstIndex(where: { $0.id == id }) else { return }
-        if let reference = all[index].secretReference { await secrets.remove(reference: reference) }
-        all.remove(at: index)
+        let reference = all.remove(at: index).secretReference
         try persist(all)
+        if let reference, !all.contains(where: { $0.secretReference == reference }) {
+            await secrets.remove(reference: reference)
+        }
+    }
+
+    private func persistedSecretReferences() throws -> Set<String> {
+        let url = fileLayout.environmentRegistry
+        // A directory cannot contain an environment document. Other read or
+        // decode failures remain uncertain and must retain staged Keychain data.
+        if (try? url.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
+            return []
+        }
+        let data: Data
+        do {
+            data = try Data(contentsOf: url)
+        } catch {
+            let failure = error as NSError
+            if failure.domain == NSCocoaErrorDomain,
+               failure.code == NSFileReadNoSuchFileError || failure.code == NSFileNoSuchFileError {
+                return []
+            }
+            throw error
+        }
+        return Set(try JSONDecoder().decode([RuntimeEnvironmentItem].self, from: data)
+            .compactMap(\.secretReference))
     }
 
     /// Requested scope order is precedence, independent of saved-item ordering.
