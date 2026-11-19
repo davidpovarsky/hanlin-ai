@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import MarkdownUI
 import PhotosUI
 import Combine
@@ -45,6 +46,93 @@ struct LoadingGradientText: View {
     var body: some View {
         Text(text).font(font).foregroundStyle(textColor)
             .chatShimmer(isActive: isActive, colors: gradientColors)
+    }
+}
+
+/// Deliver touch-down immediately to controls inside a single containing
+/// transcript `UIScrollView` without changing `canCancelContentTouches`,
+/// scroll enablement, pan recognition, or global `UIAppearance`.
+@MainActor
+struct ChatScrollImmediateContentTouches: UIViewRepresentable {
+    func makeUIView(context: Context) -> ConfigurationView {
+        let view = ConfigurationView()
+        view.isUserInteractionEnabled = false
+        view.isAccessibilityElement = false
+        view.backgroundColor = .clear
+        return view
+    }
+
+    func updateUIView(_ uiView: ConfigurationView, context: Context) {
+        uiView.applyIfNeeded()
+    }
+
+    static func dismantleUIView(_ uiView: ConfigurationView, coordinator: ()) {
+        uiView.restoreOriginalValue()
+    }
+
+    final class ConfigurationView: UIView {
+        private weak var observedScrollView: UIScrollView?
+        private var originalDelaysContentTouches: Bool?
+
+        override func didMoveToWindow() {
+            super.didMoveToWindow()
+            if window == nil {
+                restoreOriginalValue()
+            } else {
+                applyIfNeeded()
+            }
+        }
+
+        override func didMoveToSuperview() {
+            super.didMoveToSuperview()
+            applyIfNeeded()
+        }
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            applyIfNeeded()
+        }
+
+        func restoreOriginalValue() {
+            if let scrollView = observedScrollView, let original = originalDelaysContentTouches {
+                scrollView.delaysContentTouches = original
+            }
+            observedScrollView = nil
+            originalDelaysContentTouches = nil
+        }
+
+        func applyIfNeeded() {
+            guard window != nil else { return }
+            var ancestor = superview
+            var containingScrollView: UIScrollView?
+            while let view = ancestor {
+                if let scrollView = view as? UIScrollView, !(scrollView is UITextView) {
+                    containingScrollView = scrollView
+                    break
+                }
+                ancestor = view.superview
+            }
+            guard let scrollView = containingScrollView else { return }
+            if observedScrollView !== scrollView {
+                restoreOriginalValue()
+                observedScrollView = scrollView
+                originalDelaysContentTouches = scrollView.delaysContentTouches
+            }
+            if scrollView.delaysContentTouches {
+                scrollView.delaysContentTouches = false
+            }
+        }
+    }
+}
+
+extension View {
+    @MainActor
+    func chatScrollImmediateContentTouches() -> some View {
+        background {
+            ChatScrollImmediateContentTouches()
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+        }
     }
 }
 

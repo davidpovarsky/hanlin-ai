@@ -39,14 +39,28 @@ private struct MotionProofContent: View {
     @State private var visibleHeight: CGFloat = 0
     @State private var samples: [[String: String]] = []
     @State private var transitionStarted = ProcessInfo.processInfo.systemUptime
+    @State private var actionUptimes: [TimeInterval] = []
+    @State private var actionAtIntermediate: [Bool] = []
+    @State private var scrollOffsetY: CGFloat = 0
 
     // Observe only writes made by the unchanged production ToggleButton. This
     // distinguishes an undelivered rapid tap from a completed layout reversal.
     private var observedExpansion: Binding<Bool> {
         Binding(get: { expanded }, set: { value in
+            let isIntermediate = naturalHeight > 0 && visibleHeight > 0.25 && visibleHeight < naturalHeight + 6 - 0.5
+            actionUptimes.append(ProcessInfo.processInfo.systemUptime)
+            actionAtIntermediate.append(isIntermediate)
             expandedActionCount += 1
             expanded = value
         })
+    }
+
+    private var actionReceiptValue: String {
+        let gaps = zip(actionUptimes.dropFirst(), actionUptimes)
+            .map { String(format: "%.4f", $0.0 - $0.1) }
+            .joined(separator: ",")
+        let intermediate = actionAtIntermediate.dropFirst().map(String.init).joined(separator: ",")
+        return "actions=\(expandedActionCount);expanded=\(expanded);natural=\(naturalHeight);visible=\(visibleHeight);gaps=\(gaps);intermediate=\(intermediate);scrollY=\(String(format: "%.1f", scrollOffsetY))"
     }
 
     private var geometryState: String {
@@ -68,7 +82,7 @@ private struct MotionProofContent: View {
                 Button("Large type") { largeType.toggle() }.accessibilityIdentifier("proof-type")
             }.buttonStyle(.bordered)
             Text(geometryState).accessibilityIdentifier("proof-geometry-state")
-                .accessibilityValue("actions=\(expandedActionCount);expanded=\(expanded);natural=\(naturalHeight);visible=\(visibleHeight)")
+                .accessibilityValue(actionReceiptValue)
             Text("shimmer=\(running && motion.showsShimmer);numeric=\(motion.numericCounts)")
                 .accessibilityIdentifier("proof-effective-motion")
             ScrollView {
@@ -107,6 +121,10 @@ private struct MotionProofContent: View {
                     Text("Original content after details").padding(.top, 6)
                         .accessibilityIdentifier("proof-footer")
                 }.padding()
+                .chatScrollImmediateContentTouches()
+            }
+            .onScrollGeometryChange(for: CGFloat.self) { $0.contentOffset.y } action: { _, newY in
+                scrollOffsetY = newY
             }
             .environment(\.layoutDirection, rtl ? .rightToLeft : .leftToRight)
             .dynamicTypeSize(largeType ? .accessibility2 : .large)

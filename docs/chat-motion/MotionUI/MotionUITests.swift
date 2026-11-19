@@ -67,6 +67,15 @@ final class MotionUITests: XCTestCase {
         attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
     }
 
+    private func receiptField(_ key: String, in raw: String?) -> String? {
+        guard let raw else { return nil }
+        for part in raw.split(separator: ";") {
+            let pair = part.split(separator: "=", maxSplits: 1)
+            if pair.count == 2, pair[0] == key { return String(pair[1]) }
+        }
+        return nil
+    }
+
     func testAAllFivePresetsTwentyCompleteCyclesEach() {
         let presets = [("Smooth and relaxed", "v1.relaxed"), ("Height reveal", "v1.height-reveal"),
             ("Gentle squeeze", "v1.gentle-squeeze"), ("Quiet fade", "v1.quiet-fade"), ("No animations", "v1.none")]
@@ -89,12 +98,21 @@ final class MotionUITests: XCTestCase {
         XCTAssertTrue(toggle.isHittable)
         toggle.tap(withNumberOfTaps: 3, numberOfTouches: 1)
         let state = app.staticTexts["proof-geometry-state"]
-        let receipt = XCTAttachment(string: "Triple tap delivered: \(String(describing: state.value)); geometry: \(state.label)")
+        let rapidValue = state.value as? String
+        let receipt = XCTAttachment(string: "Triple tap delivered: \(String(describing: rapidValue)); geometry: \(state.label)")
         receipt.name = "original-toggle-rapid-action-receipt"
         receipt.lifetime = .keepAlways
         add(receipt)
-        XCTAssertTrue((state.value as? String)?.hasPrefix("actions=3;expanded=true;") == true,
+        XCTAssertTrue(rapidValue?.hasPrefix("actions=3;expanded=true;") == true,
                       "The original production button must receive all three rapid actions")
+        let rapidGaps = (receiptField("gaps", in: rapidValue) ?? "")
+            .split(separator: ",").compactMap { Double($0) }
+        XCTAssertEqual(rapidGaps.count, 2, "Three rapid actions must report two inter-action gaps: \(String(describing: rapidValue))")
+        XCTAssertTrue(rapidGaps.allSatisfy { $0 < 0.5 },
+                      "Rapid multi-tap gaps must remain sub-second rather than idle sequential taps: \(String(describing: rapidValue))")
+        let rapidIntermediate = (receiptField("intermediate", in: rapidValue) ?? "").split(separator: ",")
+        XCTAssertTrue(rapidIntermediate.contains("true"),
+                      "Rapid reversal must observe at least one later action at intermediate geometry: \(String(describing: rapidValue))")
         waitForGeometry("expanded")
         selectPreset("Height reveal", id: "v1.height-reveal")
         waitForGeometry("expanded")
@@ -106,6 +124,26 @@ final class MotionUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["proof-tool-output"].exists)
         app.buttons["proof-count"].tap(); app.buttons["proof-count"].tap(); app.buttons["proof-count"].tap()
         waitForGeometry("expanded")
+        // Negative scroll/drag check: immediate touch-down must still cancel the
+        // button tap and scroll the transcript when a vertical drag starts on it.
+        app.buttons["proof-long"].tap()
+        app.buttons["proof-type"].tap()
+        waitForGeometry("expanded")
+        XCTAssertTrue(toggle.isHittable)
+        let beforeDragValue = state.value as? String
+        let beforeScrollY = Double(receiptField("scrollY", in: beforeDragValue) ?? "") ?? 0
+        let dragStart = toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        dragStart.press(forDuration: 0.05, thenDragTo: dragStart.withOffset(CGVector(dx: 0, dy: -120)))
+        let afterDragValue = state.value as? String
+        let afterScrollY = Double(receiptField("scrollY", in: afterDragValue) ?? "") ?? 0
+        let dragReceipt = XCTAttachment(string: "before=\(String(describing: beforeDragValue)); after=\(String(describing: afterDragValue))")
+        dragReceipt.name = "scroll-drag-from-toggle-receipt"
+        dragReceipt.lifetime = .keepAlways
+        add(dragReceipt)
+        XCTAssertTrue(afterDragValue?.hasPrefix("actions=5;expanded=true;") == true,
+                      "Dragging from ToggleButton must cancel the button touch without toggling: \(String(describing: afterDragValue))")
+        XCTAssertGreaterThan(afterScrollY, beforeScrollY + 20,
+                             "Containing ScrollView must still scroll when a vertical drag starts on ToggleButton: before=\(beforeScrollY) after=\(afterScrollY)")
         app.terminate()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()

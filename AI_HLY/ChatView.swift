@@ -1077,6 +1077,7 @@ struct ChatView: View {
                 }
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity)
+                .chatScrollImmediateContentTouches()
             }
             .defaultScrollAnchor(ifScroll ? .top : .bottom)
             .scrollIndicators(.hidden)

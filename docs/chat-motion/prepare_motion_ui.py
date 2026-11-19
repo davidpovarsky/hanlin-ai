@@ -13,11 +13,11 @@ sha=lambda data:hashlib.sha256(data).hexdigest()
 
 def snippets():
     source=(ROOT/SOURCE).read_text(encoding='utf-8')
-    loading=source[source.index('struct LoadingGradientText:'):source.index('struct ChatBubbleView:')].strip()
+    loading=source[source.index('struct LoadingGradientText:'):source.index('// MARK: - 组件化对话气泡')].strip()
     start=source.index('    private struct ToggleButton:')
     end=source.index('    @ViewBuilder\n    private func chatBubbleImage()',start)
     toggle=textwrap.dedent(source[start:end]).strip().replace('private struct ToggleButton:', 'struct ToggleButton:',1)
-    return 'import SwiftUI\n\n'+loading+'\n\n'+toggle+'\n'
+    return 'import SwiftUI\nimport UIKit\n\n'+loading+'\n\n'+toggle+'\n'
 
 def spec():
     common={'GENERATE_INFOPLIST_FILE':'YES','SWIFT_VERSION':'6.0','CODE_SIGNING_ALLOWED':'NO',
@@ -41,7 +41,7 @@ def main():
     receipt={'scope':'Motion components; original app/renderer/engine/scroll regression NOT_RUN',
         'files':[{'path':path,'sha256':sha((ROOT/path).read_bytes())} for path in files],
         'extracted_snippets_sha256':sha(snippets().encode()),
-        'extraction':'Exact LoadingGradientText and original nested ToggleButton; imports narrowed to SwiftUI, outer ToggleButton access changed private to internal only; no body edits',
+        'extraction':'Exact LoadingGradientText, ChatScrollImmediateContentTouches, and original nested ToggleButton; imports narrowed to SwiftUI/UIKit, outer ToggleButton access changed private to internal only; no body edits',
         'project_spec_sha256':sha(json.dumps(spec(),indent=2).encode())}
     if a.output:
         dest=a.output.resolve()
