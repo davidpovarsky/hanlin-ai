@@ -1,0 +1,532 @@
+TAP version 13
+# Subtest: real updater selects supported Host version without upgrading the embedded ABI
+ok 1 - real updater selects supported Host version without upgrading the embedded ABI
+  ---
+  duration_ms: 5.4155
+  type: 'test'
+  ...
+# Subtest: explicit incompatible target cannot bypass the original engine constraint
+ok 2 - explicit incompatible target cannot bypass the original engine constraint
+  ---
+  duration_ms: 0.6119
+  type: 'test'
+  ...
+# Subtest: unknown package and missing upstream provenance fail before changing a manifest
+ok 3 - unknown package and missing upstream provenance fail before changing a manifest
+  ---
+  duration_ms: 0.58
+  type: 'test'
+  ...
+# Subtest: major changes are proposals requiring review rather than a safe patch
+ok 4 - major changes are proposals requiring review rather than a safe patch
+  ---
+  duration_ms: 0.3389
+  type: 'test'
+  ...
+# Subtest: canonical dependency hash preserves its existing output/provenance boundary
+ok 5 - canonical dependency hash preserves its existing output/provenance boundary
+  ---
+  duration_ms: 8.8512
+  type: 'test'
+  ...
+# Subtest: only complete, current, protected and explicitly enabled evidence can qualify
+ok 6 - only complete, current, protected and explicitly enabled evidence can qualify
+  ---
+  duration_ms: 0.8405
+  type: 'test'
+  ...
+# Subtest: merge refuses missing checks
+ok 7 - merge refuses missing checks
+  ---
+  duration_ms: 0.2864
+  type: 'test'
+  ...
+# Subtest: merge refuses failed CI
+ok 8 - merge refuses failed CI
+  ---
+  duration_ms: 0.1565
+  type: 'test'
+  ...
+# Subtest: merge refuses skipped CI
+ok 9 - merge refuses skipped CI
+  ---
+  duration_ms: 0.4143
+  type: 'test'
+  ...
+# Subtest: merge refuses pending CI
+ok 10 - merge refuses pending CI
+  ---
+  duration_ms: 0.487
+  type: 'test'
+  ...
+# Subtest: merge refuses wrong check source
+ok 11 - merge refuses wrong check source
+  ---
+  duration_ms: 0.2959
+  type: 'test'
+  ...
+# Subtest: merge refuses stale check head
+ok 12 - merge refuses stale check head
+  ---
+  duration_ms: 0.2136
+  type: 'test'
+  ...
+# Subtest: merge refuses stale receipt
+ok 13 - merge refuses stale receipt
+  ---
+  duration_ms: 0.1436
+  type: 'test'
+  ...
+# Subtest: merge refuses unknown impact
+ok 14 - merge refuses unknown impact
+  ---
+  duration_ms: 0.1316
+  type: 'test'
+  ...
+# Subtest: merge refuses native ABI
+ok 15 - merge refuses native ABI
+  ---
+  duration_ms: 0.2277
+  type: 'test'
+  ...
+# Subtest: merge refuses major
+ok 16 - merge refuses major
+  ---
+  duration_ms: 0.1068
+  type: 'test'
+  ...
+# Subtest: merge refuses missing license
+ok 17 - merge refuses missing license
+  ---
+  duration_ms: 0.1102
+  type: 'test'
+  ...
+# Subtest: merge refuses missing checksum
+ok 18 - merge refuses missing checksum
+  ---
+  duration_ms: 0.0877
+  type: 'test'
+  ...
+# Subtest: merge refuses no gates
+ok 19 - merge refuses no gates
+  ---
+  duration_ms: 0.096
+  type: 'test'
+  ...
+# Subtest: merge refuses no rollback
+ok 20 - merge refuses no rollback
+  ---
+  duration_ms: 0.0927
+  type: 'test'
+  ...
+# Subtest: merge refuses unprotected branch
+ok 21 - merge refuses unprotected branch
+  ---
+  duration_ms: 0.0963
+  type: 'test'
+  ...
+# Subtest: merge refuses merge not enabled
+ok 22 - merge refuses merge not enabled
+  ---
+  duration_ms: 0.1162
+  type: 'test'
+  ...
+# Subtest: a familiar lock filename cannot hide unknown source/native changes
+ok 23 - a familiar lock filename cannot hide unknown source/native changes
+  ---
+  duration_ms: 0.2399
+  type: 'test'
+  ...
+# Subtest: merge correct protected set requires every exact server context on the same head
+ok 24 - merge correct protected set requires every exact server context on the same head
+  ---
+  duration_ms: 0.2265
+  type: 'test'
+  ...
+# Subtest: merge protected-but-wrong-gate cannot substitute lint for the upstream gate
+ok 25 - merge protected-but-wrong-gate cannot substitute lint for the upstream gate
+  ---
+  duration_ms: 0.1445
+  type: 'test'
+  ...
+# Subtest: merge extra-required-failed blocks even after upstream validation passes
+ok 26 - merge extra-required-failed blocks even after upstream validation passes
+  ---
+  duration_ms: 0.1408
+  type: 'test'
+  ...
+# Subtest: merge extra-required-pending blocks even after upstream validation passes
+ok 27 - merge extra-required-pending blocks even after upstream validation passes
+  ---
+  duration_ms: 0.0827
+  type: 'test'
+  ...
+# Subtest: merge extra-required-skipped blocks even after upstream validation passes
+ok 28 - merge extra-required-skipped blocks even after upstream validation passes
+  ---
+  duration_ms: 0.135
+  type: 'test'
+  ...
+# Subtest: merge server context preserves the original raw prefixed check name
+ok 29 - merge server context preserves the original raw prefixed check name
+  ---
+  duration_ms: 0.2095
+  type: 'test'
+  ...
+# Subtest: merge missing or ambiguous server configuration stays blocked
+ok 30 - merge missing or ambiguous server configuration stays blocked
+  ---
+  duration_ms: 0.2547
+  type: 'test'
+  ...
+# Subtest: merge app binding is enforced for additional required gates
+ok 31 - merge app binding is enforced for additional required gates
+  ---
+  duration_ms: 0.1364
+  type: 'test'
+  ...
+# Subtest: merge checks-only server configuration is supported without losing app bindings
+ok 32 - merge checks-only server configuration is supported without losing app bindings
+  ---
+  duration_ms: 0.1152
+  type: 'test'
+  ...
+# Subtest: merge legacy any-app context requires an unambiguous authenticated check run
+ok 33 - merge legacy any-app context requires an unambiguous authenticated check run
+  ---
+  duration_ms: 0.1449
+  type: 'test'
+  ...
+# Subtest: merge required status-only or missing gate is unknown rather than silently omitted
+ok 34 - merge required status-only or missing gate is unknown rather than silently omitted
+  ---
+  duration_ms: 0.1187
+  type: 'test'
+  ...
+# Subtest: merge extra required check cannot borrow another head result
+ok 35 - merge extra required check cannot borrow another head result
+  ---
+  duration_ms: 0.118
+  type: 'test'
+  ...
+# Subtest: merge unrelated failed checks do not replace the configured required set
+ok 36 - merge unrelated failed checks do not replace the configured required set
+  ---
+  duration_ms: 0.1073
+  type: 'test'
+  ...
+# Subtest: merge unknown or additional effective branch rules require explicit review
+ok 37 - merge unknown or additional effective branch rules require explicit review
+  ---
+  duration_ms: 0.158
+  type: 'test'
+  ...
+# Subtest: merge caller protectedBranch boolean cannot bypass absent server configuration
+ok 38 - merge caller protectedBranch boolean cannot bypass absent server configuration
+  ---
+  duration_ms: 0.1181
+  type: 'test'
+  ...
+# Subtest: merge missing execution accounting cannot qualify despite a passed CI boolean
+ok 39 - merge missing execution accounting cannot qualify despite a passed CI boolean
+  ---
+  duration_ms: 0.1154
+  type: 'test'
+  ...
+# Subtest: actual policy bootstraps an in-progress independent proof without claiming merge eligibility
+ok 40 - actual policy bootstraps an in-progress independent proof without claiming merge eligibility
+  ---
+  duration_ms: 4.5084
+  type: 'test'
+  ...
+# Subtest: authentic later producer attempt replaces older failure; raw history remains attributed
+ok 41 - authentic later producer attempt replaces older failure; raw history remains attributed
+  ---
+  duration_ms: 0.6153
+  type: 'test'
+  ...
+# Subtest: newest current-head failure is retained, never replaced by older green
+ok 42 - newest current-head failure is retained, never replaced by older green
+  ---
+  duration_ms: 0.5667
+  type: 'test'
+  ...
+# Subtest: out-of-order old completion is superseded before proof publication
+ok 43 - out-of-order old completion is superseded before proof publication
+  ---
+  duration_ms: 0.4543
+  type: 'test'
+  ...
+# Subtest: same workflow rerun uses exact current run_attempt and original job identity
+ok 44 - same workflow rerun uses exact current run_attempt and original job identity
+  ---
+  duration_ms: 0.5311
+  type: 'test'
+  ...
+# Subtest: later consumer on the same producer can replace its previous failed proof
+ok 45 - later consumer on the same producer can replace its previous failed proof
+  ---
+  duration_ms: 0.5448
+  type: 'test'
+  ...
+# Subtest: current producer excludes separately authenticated prior-producer proof history
+ok 46 - current producer excludes separately authenticated prior-producer proof history
+  ---
+  duration_ms: 0.3018
+  type: 'test'
+  ...
+# Subtest: unknown extra required failures remain unchanged and blocking
+ok 47 - unknown extra required failures remain unchanged and blocking
+  ---
+  duration_ms: 1.3542
+  type: 'test'
+  ...
+# Subtest: duplicates within one authentic attempt remain ambiguous
+ok 48 - duplicates within one authentic attempt remain ambiguous
+  ---
+  duration_ms: 1.092
+  type: 'test'
+  ...
+# Subtest: unknown job binding and ambiguous run chronology fail closed
+ok 49 - unknown job binding and ambiguous run chronology fail closed
+  ---
+  duration_ms: 1.0078
+  type: 'test'
+  ...
+# Subtest: a foreign workflow cannot self-claim the independent proof name
+ok 50 - a foreign workflow cannot self-claim the independent proof name
+  ---
+  duration_ms: 0.4739
+  type: 'test'
+  ...
+# Subtest: proof without source/consumer/run-attempt identity cannot shadow a valid proof
+ok 51 - proof without source/consumer/run-attempt identity cannot shadow a valid proof
+  ---
+  duration_ms: 0.2632
+  type: 'test'
+  ...
+# Subtest: different-app source checks are not silently filtered out
+ok 52 - different-app source checks are not silently filtered out
+  ---
+  duration_ms: 0.3165
+  type: 'test'
+  ...
+# Subtest: actual direct execution is attributed to the Host stage and current run
+ok 53 - actual direct execution is attributed to the Host stage and current run
+  ---
+  duration_ms: 5.9798
+  type: 'test'
+  ...
+# Subtest: verified same-run reuse identifies the native-origin execution separately
+ok 54 - verified same-run reuse identifies the native-origin execution separately
+  ---
+  duration_ms: 0.8708
+  type: 'test'
+  ...
+# Subtest: reuse and passed metadata booleans without a verified execution origin remain UNKNOWN
+ok 55 - reuse and passed metadata booleans without a verified execution origin remain UNKNOWN
+  ---
+  duration_ms: 0.3791
+  type: 'test'
+  ...
+# Subtest: origin missing capture cannot authorize consumer acceptance
+ok 56 - origin missing capture cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.5669
+  type: 'test'
+  ...
+# Subtest: origin other run cannot authorize consumer acceptance
+ok 57 - origin other run cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.4395
+  type: 'test'
+  ...
+# Subtest: origin other attempt cannot authorize consumer acceptance
+ok 58 - origin other attempt cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.735
+  type: 'test'
+  ...
+# Subtest: origin other source head cannot authorize consumer acceptance
+ok 59 - origin other source head cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.671
+  type: 'test'
+  ...
+# Subtest: origin changed source inputs cannot authorize consumer acceptance
+ok 60 - origin changed source inputs cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.5723
+  type: 'test'
+  ...
+# Subtest: origin changed Node fingerprint cannot authorize consumer acceptance
+ok 61 - origin changed Node fingerprint cannot authorize consumer acceptance
+  ---
+  duration_ms: 1.0516
+  type: 'test'
+  ...
+# Subtest: origin wrong archive cannot authorize consumer acceptance
+ok 62 - origin wrong archive cannot authorize consumer acceptance
+  ---
+  duration_ms: 1.1561
+  type: 'test'
+  ...
+# Subtest: origin missing environment cannot authorize consumer acceptance
+ok 63 - origin missing environment cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.7482
+  type: 'test'
+  ...
+# Subtest: origin missing source hash cannot authorize consumer acceptance
+ok 64 - origin missing source hash cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.5466
+  type: 'test'
+  ...
+# Subtest: origin missing direct capture cannot authorize consumer acceptance
+ok 65 - origin missing direct capture cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.6628
+  type: 'test'
+  ...
+# Subtest: origin wrong counts cannot authorize consumer acceptance
+ok 66 - origin wrong counts cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.6741
+  type: 'test'
+  ...
+# Subtest: origin missing packed probe cannot authorize consumer acceptance
+ok 67 - origin missing packed probe cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.54
+  type: 'test'
+  ...
+# Subtest: ambiguous duplicate fresh origins cannot authorize the archive
+ok 68 - ambiguous duplicate fresh origins cannot authorize the archive
+  ---
+  duration_ms: 0.8173
+  type: 'test'
+  ...
+# Subtest: receipt consumer recomputes accounting from raw proof rather than trusting its accepted boolean
+ok 69 - receipt consumer recomputes accounting from raw proof rather than trusting its accepted boolean
+  ---
+  duration_ms: 1.9595
+  type: 'test'
+  ...
+# Subtest: original authenticated green log really executed150/149/0/1 in native-origin
+ok 70 - original authenticated green log really executed150/149/0/1 in native-origin
+  ---
+  duration_ms: 19.6621
+  type: 'test'
+  ...
+# Subtest: one exact protected-base current-head candidate is selected
+ok 71 - one exact protected-base current-head candidate is selected
+  ---
+  duration_ms: 1.8694
+  type: 'test'
+  ...
+# Subtest: generic base-branch audit cannot select a candidate
+ok 72 - generic base-branch audit cannot select a candidate
+  ---
+  duration_ms: 0.2523
+  type: 'test'
+  ...
+# Subtest: a moved candidate does not inherit the old run
+ok 73 - a moved candidate does not inherit the old run
+  ---
+  duration_ms: 0.2849
+  type: 'test'
+  ...
+# Subtest: foreign repository run is rejected
+ok 74 - foreign repository run is rejected
+  ---
+  duration_ms: 0.3888
+  type: 'test'
+  ...
+# Subtest: non-dispatch and noncanonical run paths are rejected
+ok 75 - non-dispatch and noncanonical run paths are rejected
+  ---
+  duration_ms: 0.3625
+  type: 'test'
+  ...
+# Subtest: ambiguous and incomplete pull inventories are rejected
+ok 76 - ambiguous and incomplete pull inventories are rejected
+  ---
+  duration_ms: 0.2503
+  type: 'test'
+  ...
+# Subtest: draft and unowned candidate branches cannot become eligible
+ok 77 - draft and unowned candidate branches cannot become eligible
+  ---
+  duration_ms: 0.3723
+  type: 'test'
+  ...
+# Subtest: failed or skipped source run cannot use an otherwise positive receipt
+ok 78 - failed or skipped source run cannot use an otherwise positive receipt
+  ---
+  duration_ms: 0.2208
+  type: 'test'
+  ...
+# Subtest: green audit without schema2 native-origin accounting is rejected
+ok 79 - green audit without schema2 native-origin accounting is rejected
+  ---
+  duration_ms: 0.6589
+  type: 'test'
+  ...
+# Subtest: legacy schema1 proof is never upgraded
+ok 80 - legacy schema1 proof is never upgraded
+  ---
+  duration_ms: 0.7185
+  type: 'test'
+  ...
+# Subtest: base and source receipt drift are rejected
+ok 81 - base and source receipt drift are rejected
+  ---
+  duration_ms: 0.3812
+  type: 'test'
+  ...
+# Subtest: unknown or failed source validation cannot qualify
+ok 82 - unknown or failed source validation cannot qualify
+  ---
+  duration_ms: 0.2852
+  type: 'test'
+  ...
+# Subtest: strict source and proof app bindings are both required
+ok 83 - strict source and proof app bindings are both required
+  ---
+  duration_ms: 0.5915
+  type: 'test'
+  ...
+# Subtest: an additional required failed gate prevents automatic merge
+ok 84 - an additional required failed gate prevents automatic merge
+  ---
+  duration_ms: 0.1683
+  type: 'test'
+  ...
+# Subtest: pending, stale, skipped and ambiguous server gates prevent automatic merge
+ok 85 - pending, stale, skipped and ambiguous server gates prevent automatic merge
+  ---
+  duration_ms: 0.1968
+  type: 'test'
+  ...
+# Subtest: only activation-disabled can remain after all gates pass
+ok 86 - only activation-disabled can remain after all gates pass
+  ---
+  duration_ms: 0.264
+  type: 'test'
+  ...
+# Subtest: closed or draft proposals cannot activate automatic merge
+ok 87 - closed or draft proposals cannot activate automatic merge
+  ---
+  duration_ms: 0.1168
+  type: 'test'
+  ...
+1..87
+# tests 87
+# suites 0
+# pass 87
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 233.1293

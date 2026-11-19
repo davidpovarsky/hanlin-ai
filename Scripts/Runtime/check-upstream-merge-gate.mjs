@@ -2,6 +2,7 @@
 import { execFileSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
 import { verifiedReceiptAccounting } from './upstream-host-accounting.mjs';
+import { selectUpstreamCheckLineage } from './upstream-check-lineage.mjs';
 import { evaluateUpdate, dependencyImpact } from './dependency-update-policy.mjs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -23,8 +24,10 @@ const settings = api('');
 let effectiveRules;
 try { effectiveRules = api(`rules/branches/${encodeURIComponent(pr.base.ref)}`); }
 catch { /* Inaccessible/unsupported effective rules stay unknown, never eligible. */ }
-const checks = runs.map(check => ({ name:check.name, head:check.head_sha, app:check.app?.slug, appId:check.app?.id, checkId:check.id,
+const toCheckRows = items => items.map(check => ({ name:check.name, head:check.head_sha, app:check.app?.slug, appId:check.app?.id, checkId:check.id,
   status:check.status, conclusion:check.conclusion }));
+let checks=toCheckRows(runs);
+let checkLineage=null;
 let receipt;
 let consumerEvidenceVerified=false;
 if (proofRun) {
@@ -33,6 +36,11 @@ if (proofRun) {
   if (run.head_sha !== head || run.conclusion !== 'success' || !['.github/workflows/check-runtime-dependency-updates.yml','.github/workflows/validate-app-split.yml'].includes(run.path)) {
     throw new Error('Proof is not a successful current-head run of the canonical updater workflow.');
   }
+  const selection=selectUpstreamCheckLineage({rawChecks:runs,repository,head,proofRun:run,prNumber:Number(number),api});
+  const {selectedChecks,...lineageSummary}=selection;
+  checkLineage=lineageSummary;
+  if(!selection.producerMatchesProof)throw Error('Proof run is superseded by a newer authenticated current-head producer');
+  checks=toCheckRows(selectedChecks);
   const artifacts = api(`actions/runs/${proofRun}/artifacts`).artifacts
     .filter(item => item.name === `upstream-proof-${proofRun}` && !item.expired);
   if (artifacts.length !== 1 || artifacts[0].size_in_bytes > 16_777_216) throw new Error('Missing/ambiguous/oversized proof artifact');
@@ -55,7 +63,7 @@ const decision = evaluateUpdate({ head, evidenceHead:receipt?.head, updateType:r
   licensesReviewed:receipt?.licensesReviewed === true, rollback:!!receipt?.rollback,
   protection, effectiveRules, consumerEvidenceVerified, autoMergeEnabled:settings.allow_auto_merge === true && pr.auto_merge != null });
 const report = { ...decision, repository, pullRequest:Number(number), head, baseSHA:pr.base.sha,
-  requiredChecks:protection?.required_status_checks ?? null, effectiveBranchRules:effectiveRules ?? null, actualChecks:checks,
+  requiredChecks:protection?.required_status_checks ?? null, effectiveBranchRules:effectiveRules ?? null, actualChecks:checks, rawCheckInventory:toCheckRows(runs), checkLineage,
   consumerAccounting:{status:consumerEvidenceVerified?receipt.hostAccounting.status:'UNKNOWN',
     receiptSchemaVersion:receipt?.schemaVersion??null,origin:consumerEvidenceVerified?receipt.hostAccounting.origin:null,
     legacyNote:receipt?.schemaVersion===1?'Immutable historical receipt needs separate source/log audit; not automatically upgraded to schema2':null},
