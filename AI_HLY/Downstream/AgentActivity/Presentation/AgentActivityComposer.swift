@@ -28,6 +28,17 @@ enum AgentActivityComposer {
     )
   }
 
+  /// Expanded reasoning uses the same approved-summary boundary as its header.
+  /// Raw provider transcript storage is never a separate display permission.
+  static func reasoningDisplayText(for activity: AgentDisplayActivity, in run: AgentRun) -> String {
+    let stepIDs = Set(activity.sourceStepIDs)
+    let reasoning = run.transcriptItems.filter {
+      $0.kind == .reasoning && $0.activityStepID.map(stepIDs.contains) == true
+    }.compactMap(\.text).joined(separator: "\n")
+    let candidate = reasoning.isEmpty ? activity.outputPreview : reasoning
+    return ProgressSummarySanitizer.sanitizeProviderReasoningSummary(candidate) ?? activity.title
+  }
+
   private static func matchingGroupIndex(
     for step: AgentActivityStep, in groups: [[AgentActivityStep]]
   ) -> Int? {

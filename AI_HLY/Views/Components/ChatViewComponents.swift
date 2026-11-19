@@ -1978,6 +1978,9 @@ struct ChatBubbleView: View {
     }
     
     private var sanitizedReasoningDisplay: String {
+        // Reject a private reasoning segment as a whole before splitting it;
+        // otherwise innocuous-looking lines inside a <think> block can escape.
+        guard !ProgressSummarySanitizer.looksLikeRawChainOfThought(reasoning) else { return "" }
         let lines = reasoning
             .components(separatedBy: .newlines)
             .compactMap { line -> String? in
@@ -2114,7 +2117,7 @@ struct ChatBubbleView: View {
                 .accessibilityIdentifier("hanlin-reasoning-toggle")
 
                 // The original header presents one concise activity summary.
-                // Full reasoning, tool output and failures remain in the user's disclosure.
+                // Approved summaries, tool output and failures remain in the user's disclosure.
 
                 // Failures remain discoverable when the details are collapsed.
                 if timeline?.status == .failed || timeline?.activities.contains(where: { $0.status == .failed }) == true {
@@ -2133,11 +2136,7 @@ struct ChatBubbleView: View {
                             VStack(alignment: .leading, spacing: 6) {
                                 ForEach(round.activities) { activity in
                                     if activity.kind == .reasoning {
-                                        let stepIDs = Set(activity.sourceStepIDs)
-                                        let reasoning = agentRun.transcriptItems.filter {
-                                            $0.kind == .reasoning && $0.activityStepID.map(stepIDs.contains) == true
-                                        }.compactMap(\.text).joined(separator: "\n")
-                                        Text(AgentDiagnosticsRedactor.sanitize(reasoning.isEmpty ? activity.outputPreview ?? "" : reasoning))
+                                        Text(AgentActivityComposer.reasoningDisplayText(for: activity, in: agentRun))
                                             .font(.footnote).foregroundStyle(.secondary)
                                             .textSelection(.enabled).padding(.horizontal, 8)
                                             .accessibilityIdentifier("hanlin-reasoning-expanded-text")

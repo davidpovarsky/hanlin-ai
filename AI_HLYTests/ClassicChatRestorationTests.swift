@@ -769,6 +769,54 @@ struct ClassicChatRestorationTests {
         #expect(ProgressSummarySanitizer.sanitize(safeSummary) == safeSummary)
     }
 
+    @Test("Expanded activity rejects private transcript text and keeps approved operational summaries")
+    func expandedReasoningUsesApprovedSummaryProjection() throws {
+        let raw = "<think>Step 1: Let me think privately about internal CoT\n"
+            + "An apparently ordinary sentence inside the private block.\n</think>\n"
+            + "Verifying arithmetic expression 6 * 7"
+        let safeSummary = "Verifying arithmetic expression 6 * 7"
+        let step = AgentActivityStep(
+            externalID: "ui04-reasoning",
+            sequence: 0,
+            kind: .reasoning,
+            title: safeSummary,
+            status: .completed,
+            output: raw
+        )
+        var run = AgentRun(
+            groupID: UUID(),
+            status: .completed,
+            steps: [step],
+            transcriptItems: [
+                AgentTranscriptItem(sequence: 0, kind: .reasoning,
+                    activityStepID: step.id, status: .completed, text: raw,
+                    visibilityAfterCompletion: .collapseIntoThinking)
+            ]
+        )
+        let activity = try #require(AgentActivityComposer.compose(run).activities.first { $0.kind == .reasoning })
+        let expanded = AgentActivityComposer.reasoningDisplayText(for: activity, in: run)
+        #expect(expanded == safeSummary)
+        #expect(!expanded.contains("<think>"))
+        #expect(!expanded.contains("Let me think privately"))
+        #expect(!expanded.contains("apparently ordinary"))
+
+        let publicSummary = "Checking the arithmetic result with local Python"
+        run.transcriptItems = [
+            AgentTranscriptItem(sequence: 0, kind: .reasoning,
+                activityStepID: step.id, status: .completed, text: publicSummary,
+                visibilityAfterCompletion: .collapseIntoThinking),
+            AgentTranscriptItem(sequence: 1, kind: .reasoning,
+                activityStepID: UUID(), status: .completed, text: raw,
+                visibilityAfterCompletion: .collapseIntoThinking)
+        ]
+        #expect(AgentActivityComposer.reasoningDisplayText(for: activity, in: run) == publicSummary,
+                "Only this activity's approved summary may be shown")
+
+        run.transcriptItems = []
+        #expect(AgentActivityComposer.reasoningDisplayText(for: activity, in: run) == safeSummary,
+                "A rejected output preview must fall back to the safe activity title")
+    }
+
     // MARK: - 12. toolResultVisibilityAndHistory
 
     @Test("12. Tool results and final answer persist in ChatMessages.agentRunJSON and reload across reopen without duplication")
