@@ -1,0 +1,64 @@
+{
+  "schema": "hanlin.verified.handoff.v2",
+  "audit_utc": "2026-11-19 14:15 UTC",
+  "source_branch": "codex/hanlin-product-completion-20261117",
+  "source_head_at_audit_start": "114c98d4fc9228882f89efd74bfa011f3a4830e0",
+  "product_source_sha": "ab581ece28f7ec8120019e4c926d67cd99dfcff6",
+  "main_sha": "f7082624e2d1c81ba58f2ebdac76224e008c7292",
+  "release": "NO_GO",
+  "phase2": "IN_PROGRESS",
+  "phase3": "IN_PROGRESS",
+  "original_tasks": {
+    "checked": 30,
+    "completed": 1,
+    "open": 29
+  },
+  "extra_scope_excluded_from_30": [
+    "HANLIN-OPENUI-01",
+    "HANLIN-PRESENTATION-SDK-01",
+    "CHATUX-LIVE-V17",
+    "iSH ARM64 POC",
+    "Hanlin HQ manager tasks"
+  ],
+  "feature_snapshot": {
+    "timestamp_utc": "2026-11-19T04:46",
+    "total": 278,
+    "partially_evidenced": 20,
+    "fully_accepted": 0,
+    "is_current_to_all_runs": false
+  },
+  "corrections": [
+    {
+      "run": 44466312634,
+      "exits_with": 65,
+      "tests_executed": 6,
+      "test_failures": 5,
+      "unexpected_failures": 3
+    },
+    {
+      "run": 44465711797,
+      "ui_tests_executed": 1,
+      "ui_tests_failed": 0,
+      "workflow_result": "failure",
+      "cause": "post-test Python AssertionError"
+    },
+    {
+      "run": 44458939610,
+      "target_ui_cases_executed": 0,
+      "cause": "test target compile failures on old SHA"
+    },
+    {
+      "run": 44466305765,
+      "target_tests_executed": 0,
+      "cause": "runtime release not found during prepare-runtime-core"
+    }
+  ],
+  "files": [
+    "docs/continuation-20261117/acceptance/HANLIN_REMAINING_WORK_HANDOFF_20261119.md",
+    "docs/continuation-20261117/acceptance/HANLIN_NATIVE_CI_TRIAGE_20261119.md"
+  ],
+  "sha256": {
+    "HANLIN_REMAINING_WORK_HANDOFF_20261119.md": "bf4f77dc5eccfe22cfc919af822a1bbd1712f593e79f5eab166b3ad4abb18c5f",
+    "HANLIN_NATIVE_CI_TRIAGE_20261119.md": "4f0b2a1199a5af62acb261c572a89db6952c87cb5934f50e7bb4d1bebb4ae97e"
+  }
+}
