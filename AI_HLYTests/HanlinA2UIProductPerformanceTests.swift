@@ -461,7 +461,7 @@ private struct A2UIBenchmarkFixture: Sendable {
             for half in 0..<2 {
                 let chunk = update * 2 + half
                 let lower = characters.count * chunk / 20, upper = characters.count * (chunk + 1) / 20
-                add("markdown", text: String(characters[lower..<upper]))
+                add("markdown_\(chunk)", text: String(characters[lower..<upper]))
                 if half == 0 {
                     for owner in 0..<5 {
                         try frame("owner\(owner)", body: ["version": "1.0", "updateDataModel": [
