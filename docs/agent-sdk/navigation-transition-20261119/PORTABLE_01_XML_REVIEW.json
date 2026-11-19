@@ -1,0 +1,11 @@
+{
+  "status": "EXECUTED_PASS_PORTABLE_CONTRACT",
+  "count": 27,
+  "source": "portable-01 original input hashes, prior to undelivered-successor retirement correction",
+  "original_report": "FAIL because parser expected tests.xml; original report and raw XML preserved unchanged",
+  "raw_xml": "build\\navigation-transition-20261119\\portable-01\\tests-swift-testing.xml",
+  "sha256": "2e15393c18c4938f198702b3b597c7f6f6490e8399572637eef07470000d56ea",
+  "process_exit": 0,
+  "reexecuted": false,
+  "not_current_source_acceptance": true
+}

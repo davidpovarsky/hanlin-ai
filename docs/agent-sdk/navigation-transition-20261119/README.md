@@ -1,0 +1,39 @@
+# Acknowledged navigation context transitions
+
+## Scope and source
+
+This is an additive change to the original Hanlin SDK for Otzaria UI06 / Hanlin SDK03. It starts from the exact consumed SDK commit `080d1a2b264ead9e3f9df690f2dd0d3e81ebd07e`. The original dispatcher, context and integration source at that pin were independently compared with Hanlin continuation `f3bcb19d068473a8bdc6297f16b149e9cf7b8483`; those files were unchanged. Work is isolated on `codex/hanlin-otzaria-navigation-20261119`.
+
+Otzaria's actual Reader navigation changes the native workspace mapping epoch. The original `open` correctly rejects the old context after this effect, and correctly rejects a reply that merely substitutes a new context. Its post-await checks must remain.
+
+## Additive Host API 1.2
+
+A host explicitly implements `HanlinHostNavigationTransitionSource` and advertises API 1.2 before the dispatcher accepts `openWithContextTransition`. Existing `HanlinHostIntegration.open` keeps its unchanged-context semantics.
+
+The host returns `HanlinHostNavigationReceipt`: the complete original session, the original exact-target navigation acknowledgement, and an optional host-issued successor session. A successor requires an acknowledged presentation, a fresh session UUID and context generation, the same conversation, exact namespace and native scene. Queued requests cannot issue a successor.
+
+The dispatcher validates the original request UUID, full origin identity, object and block bytes. It asks the original host for the resulting session's live context and checks cancellation and revocation after that await. Origin revocation is checked independently of successor revocation. A correctly correlated effect receipt is retained before delivery can be suppressed.
+
+The original session cannot start another dispatcher action while its transition is in flight. A completed context transition retires that identity. A failed or cancelled call after host entry also retires it and any undelivered successor because the SDK cannot infer rollback. A historical receipt therefore cannot restart that successor through this dispatcher. The reservation remains and is never automatically reentered, including after a queued response. The host reconciles the original request; an uncertain operation is not repeated with a newly invented request ID.
+
+## Host responsibilities and remaining integration
+
+Only the actual native authority can correlate the request with an exact visible destination and its resulting context. A DTO, fixture host or SDK pass cannot prove a native screen appeared. The host must fence the original session at its last mutation boundary and distinguish the requested navigation from an unrelated account, workspace, scene or selection change.
+
+The host must stop the old original `HanlinAgentSession` and compose any continuation with a fresh host-issued identity using the original engine, store, UI and provider path. Old tool catalogs, permissions and in-flight engine runs do not migrate. The SDK adds no permission store, host registry, replacement engine or automatic session mutation.
+
+Otzaria production composition, real model-to-Core-to-UI journeys, provider/Keychain configuration, native cancellation and physical-device acceptance remain separate obligations. This source does not claim that those obligations passed.
+
+## Validation
+
+`VALIDATION_PLAN.json` records impact before execution. The changed admission helper affects original dispatcher callbacks, tool reservations, progress and old navigation, so both existing dispatcher regressions and the new transition cases require execution.
+
+The portable proof compiles the complete original Platform and Host contract modules and whole original dispatcher, with explicit host doubles. It excludes the engine, AgentSession, model provider and native UI. The original repository Apple workflow compiles the real complete SDK graph, runs the affected HostAssociation/AgentSession/Context/Callback suites and the new navigation suite, and builds the iOS Simulator SDK product.
+
+Results and exact source manifests will be recorded after execution. Build or portable proof alone does not close SDK03 or UI06.
+
+### Portable execution result
+
+The corrected source passed all **28** named Swift Testing cases on Windows Swift 6.3.3 with strict concurrency and zero compiler warnings. The complete raw XML, log, toolchain and 30 compiled original input hashes are retained under `portable/`. This is not an Apple graph or native UI pass. The earlier 27-case result is separately preserved as a historical source checkpoint; its initial report failed only because the wrapper looked for the XCTest XML filename instead of SwiftPM's `tests-swift-testing.xml`.
+
+The actual Apple plan selects 58 cases: one HostSchema original-byte correlation case, 22 AgentSession cases, six Context cases, one callback convention case and these 28 navigation cases, followed by the original iOS Simulator SDK build.

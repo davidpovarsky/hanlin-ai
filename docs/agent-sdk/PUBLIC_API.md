@@ -135,3 +135,11 @@ accepted/repaired input, but are **NOT_RUN / not typechecked** under the resourc
 gate. Prior 45-producer/39-portable results remain historical old-closure evidence.
 No consumer source or shipping dependency pin/lock changed for this correction;
 Roni review and Tomer's real Mac proof/final dependency window remain required.
+
+### Explicit context transition (Host API 1.2)
+
+`HanlinHostNavigationTransitionSource` refines the original host port with `openWithContextTransition(_:session:)`. Its `HanlinHostNavigationReceipt` retains the complete origin session and exact original navigation result, plus an optional host-issued successor. A successor requires a presented acknowledgement, fresh session ID and generation, and unchanged conversation/namespace/scene. Queued requests have no successor.
+
+Call through `HanlinHostDispatcher.openWithContextTransition`: it verifies the original context before entry, reserves the request, validates exact target bytes and correlation, then checks the resulting context with the live host. Cancellation and revocation of both identities are checked after suspension. Correctly correlated effect receipts survive suppressed delivery and can be read as historical evidence through `navigationReceipts(for:)`; they are not a current authority grant.
+
+An in-flight transition blocks other operations on its origin. A transitioned origin, or an origin whose call failed after host entry, is retired. An undelivered successor is also retired on failure/cancellation; retained historical receipts cannot reactivate it. Do not retry the request automatically or mutate an existing AgentSession identity. The host must reconcile uncertain outcomes, stop the old session and construct any continuation using its fresh identity and the original engine/store. Existing `open` remains strict about an unchanged context. See [the implementation and validation boundaries](navigation-transition-20261119/README.md).
