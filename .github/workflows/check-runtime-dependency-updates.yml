@@ -369,6 +369,7 @@ jobs:
       - name: Run the single configured Renovate bot
         if: env.UPDATE_OPERATION == 'renovate'
         env:
+          GH_TOKEN: ${{ github.token }}
           RENOVATE_TOKEN: ${{ github.token }}
           RENOVATE_BASE_BRANCH_PATTERNS: ${{ github.ref_name }}
           RENOVATE_ONBOARDING: 'false'

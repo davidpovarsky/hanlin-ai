@@ -99,13 +99,15 @@ test('closed or draft proposals cannot activate automatic merge',()=>{
 });
 
 
-test('only the two explicitly protected acceptance bases are recognized',()=>{
+test('only the three explicitly protected acceptance bases are recognized',()=>{
   for(const base of ['codex/upstream-acceptance-base-20261119',
-    'codex/upstream-acceptance-base-20261119-v2'])
+    'codex/upstream-acceptance-base-20261119-v2','codex/upstream-acceptance-base-20261119-v3'])
     assert.equal(isProtectedAcceptanceBase(base),true);
   for(const base of [undefined,null,'','main','codex/hanlin-product-completion-20261117',
-    'codex/upstream-acceptance-base-20261119-v3','codex/upstream-acceptance-base-20261119-v2/extra',
-    'codex/upstream-acceptance-base-20261119-v2 ','refs/heads/codex/upstream-acceptance-base-20261119-v2'])
+    'codex/upstream-acceptance-base-20261119-v4','codex/upstream-acceptance-base-20261119-v2/extra',
+    'codex/upstream-acceptance-base-20261119-v2 ','refs/heads/codex/upstream-acceptance-base-20261119-v2',
+    'codex/upstream-acceptance-base-20261119-v3/extra','codex/upstream-acceptance-base-20261119-v3 ',
+    'refs/heads/codex/upstream-acceptance-base-20261119-v3'])
     assert.equal(isProtectedAcceptanceBase(base),false);
 });
 
@@ -120,9 +122,21 @@ test('v2 selects only its own exact candidate and never inherits the original ba
 
 test('a matching PR cannot authorize a main or unlisted target',()=>{
   for(const target of ['main','codex/hanlin-product-completion-20261117',
-    'codex/upstream-acceptance-base-20261119-v3']) {
+    'codex/upstream-acceptance-base-20261119-v4']) {
     const candidate=structuredClone(pr);candidate.base.ref=target;
     assert.throws(()=>candidateForRun(run,[candidate],repository,target),
       /Unrecognized protected acceptance base/);
+  }
+});
+
+test('v3 selects only its own exact candidate and cannot inherit either older base',()=>{
+  const v3='codex/upstream-acceptance-base-20261119-v3';
+  const candidate=structuredClone(pr);candidate.base.ref=v3;
+  assert.equal(candidateForRun(run,[candidate],repository,v3),candidate);
+  for(const older of [allowedBase,'codex/upstream-acceptance-base-20261119-v2']) {
+    const previous=structuredClone(pr);previous.base.ref=older;
+    assert.equal(candidateForRun(run,[candidate],repository,older),null);
+    assert.equal(candidateForRun(run,[previous],repository,v3),null);
+    assert.equal(candidateForRun(run,[previous],repository,older),previous);
   }
 });

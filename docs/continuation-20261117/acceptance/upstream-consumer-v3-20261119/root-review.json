@@ -1,0 +1,31 @@
+{
+  "reviewed_at": "2026-11-19T02:53:57.716576+00:00",
+  "base": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "patch_sha256": "66b49601cc7a63ce57ee1948d7c664119bcda8578f9de8f89bd41d60250a59fa",
+  "files": [
+    {
+      "path": ".github/workflows/check-runtime-dependency-updates.yml",
+      "beforeSHA256": "241fdacb86e405cf09e2b5483219977f360c7d6788799ee36585a589ac7d8c78",
+      "afterSHA256": "097263ef454ad5efd362c53a13b1799b8b183ffe553a983321bccf4015faedb5"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-run-consumer-policy.mjs",
+      "beforeSHA256": "907398f17d0d9f06f97700d2a43026f547cd8196d8d37d29c5fc8c30f1ba5eb8",
+      "afterSHA256": "1d84550caf803b7891ea722172a72f4b73d7eee24e621856958624fc2a6e6684"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+      "beforeSHA256": "c844caa577ffda86f8baa7386de0106542a2e1a0e4577957b5b8c228e3da3ea6",
+      "afterSHA256": "54e213a9ead273f355238ea3b76f916e1eb27f3bac2e4587a261fe71ea9a441a"
+    }
+  ],
+  "root_checks": {
+    "yaml_exact_bot_token_only": "PASS",
+    "consumer_tests": "21/21 PASS",
+    "cli_syntax": "PASS",
+    "diff_check": "PASS"
+  },
+  "behavior": "Original Renovate step shares its existing Actions token explicitly with its gh child commands; exact v3 protected-base literal added while older bases remain exact. No permission or proof guard change.",
+  "native_or_renovate_execution": "NOT_RUN on corrected source; immutable original v2 result is retained separately",
+  "required_acceptance": "Real candidate PR, original Host/JITless/schema2 proof, actual server failure rejection, same-head later green, protected merge and rollback remain required."
+}

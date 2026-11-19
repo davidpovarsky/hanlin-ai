@@ -4,7 +4,8 @@ export const PROOF_CHECK = 'Hanlin upstream schema2 proof';
 export const ACTIONS_APP_ID = 15368;
 const protectedAcceptanceBases = new Set([
   'codex/upstream-acceptance-base-20261119',
-  'codex/upstream-acceptance-base-20261119-v2'
+  'codex/upstream-acceptance-base-20261119-v2',
+  'codex/upstream-acceptance-base-20261119-v3'
 ]);
 export const isProtectedAcceptanceBase = value => protectedAcceptanceBases.has(value);
 const sourceChecks = new Set(['Hanlin upstream acceptance', 'upstream-validation / Hanlin upstream acceptance']);
