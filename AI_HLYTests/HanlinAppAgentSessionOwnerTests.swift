@@ -82,10 +82,12 @@ private struct AppPartModel: LanguageModelV3 {
 private final class ProviderCredentialURLProtocol: URLProtocol, @unchecked Sendable {
     private static let lock = NSLock()
     nonisolated(unsafe) private static var requests: [String: [URLRequest]] = [:]
+    nonisolated(unsafe) private static var streamingHosts = Set<String>()
 
-    static func register(host: String) {
+    static func register(host: String, streaming: Bool = false) {
         lock.lock(); defer { lock.unlock() }
         requests[host] = []
+        if streaming { streamingHosts.insert(host) } else { streamingHosts.remove(host) }
     }
     static func snapshot(host: String) -> [URLRequest] {
         lock.lock(); defer { lock.unlock() }
@@ -94,6 +96,7 @@ private final class ProviderCredentialURLProtocol: URLProtocol, @unchecked Senda
     static func remove(host: String) {
         lock.lock(); defer { lock.unlock() }
         requests.removeValue(forKey: host)
+        streamingHosts.remove(host)
     }
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
@@ -103,20 +106,35 @@ private final class ProviderCredentialURLProtocol: URLProtocol, @unchecked Senda
         }
         Self.lock.lock()
         let registered = Self.requests[host] != nil
+        let streaming = Self.streamingHosts.contains(host)
         if registered { Self.requests[host, default: []].append(request) }
         Self.lock.unlock()
         guard registered else {
             client?.urlProtocol(self, didFailWithError: URLError(.unsupportedURL)); return
         }
         let discovery = url.path.hasSuffix("/models")
-        let body = discovery ? #"{"data":[{"id":"fixture-model","object":"model"}]}"# : #"{"error":{"message":"synthetic probe control"}}"#
-        let response = HTTPURLResponse(url: url, statusCode: discovery ? 200 : 400,
-            httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "application/json"])!
+        let body: String
+        if streaming {
+            body = "data: {\"id\":\"t1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Current transport response\"}}]}\n\n"
+                + "data: {\"id\":\"t2\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}]}\n\n"
+                + "data: [DONE]\n\n"
+        } else {
+            body = discovery ? #"{"data":[{"id":"fixture-model","object":"model"}]}"# : #"{"error":{"message":"synthetic probe control"}}"#
+        }
+        let response = HTTPURLResponse(url: url, statusCode: streaming || discovery ? 200 : 400,
+            httpVersion: "HTTP/1.1", headerFields: ["Content-Type": streaming ? "text/event-stream" : "application/json"])!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         client?.urlProtocol(self, didLoad: Data(body.utf8))
         client?.urlProtocolDidFinishLoading(self)
     }
     override func stopLoading() {}
+}
+
+@MainActor private final class ProviderTransportDiagnostics {
+    var requests: [Int] = []
+    var responses: [Int] = []
+    func requested(_ turn: Int) { requests.append(turn) }
+    func responded(_ turn: Int) { responses.append(turn) }
 }
 
 @MainActor
@@ -930,6 +948,222 @@ private final class ProviderCredentialTestFixture {
         #expect(try store.load() == nil)
         #expect(try keychain.resolve(provider.key, kind: .model) == "synthetic-secured-compact",
             "Removing configuration is not permission to delete a shared credential")
+    }
+
+    @Test(arguments: ["revoke", "rotate", "rotateSameValue", "endpoint", "deleteOrigin", "rebind", "cancel"])
+    func originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change: String) async throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        context.autosaveEnabled = false
+        let host = "provider-admission-\(UUID().uuidString.lowercased()).invalid"
+        ProviderCredentialURLProtocol.register(host: host, streaming: true)
+        defer { ProviderCredentialURLProtocol.remove(host: host) }
+        let endpoint = "https://\(host)/v1/chat/completions"
+        let row = ChatRecords(name: "Original transport origin", type: "chat")
+        let provider = APIKeys(name: "Original transport provider", company: "TRANSPORT_FIXTURE",
+            key: "synthetic-legacy", requestURL: endpoint)
+        context.insert(row); context.insert(provider); try context.save()
+        try fixture.credentials.save("synthetic-current", for: provider,
+            expectedStoredValue: "synthetic-legacy", in: context)
+        let originalReference = try #require(provider.key)
+        let owner = HanlinAppAgentSessionOwner()
+        defer { owner.cancel() }
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row,
+            conversationID: try #require(row.id), sceneID: UUID(), rowID: UUID(),
+            uiRunID: UUID(), temporary: false, interaction: nil)
+        let model = HanlinModelReference(provider: "TRANSPORT_FIXTURE", modelID: "fixture-model")
+        let api = APIManager(context: context, agentSessionOwner: owner, providerCredentials: fixture.credentials)
+        try api.bindDataAccess(request: request, model: model)
+        let admission = try api.makeProviderRequestAdmission(model: model, configuration: provider, credential: "synthetic-current")
+        let gate = AppHistoryWriteGate()
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [ProviderCredentialURLProtocol.self]
+        let fetch = HanlinAISDKProviderFactory.makeFetch(sessionConfiguration: configuration,
+            onRequest: { _ in await gate.pause() }, requestAdmission: admission)
+        let config = HanlinChatModelConfiguration(modelID: model.modelID, company: model.provider,
+            apiType: "OpenAI", endpoint: try #require(URL(string: endpoint)), apiKey: "synthetic-current")
+        let transportRequest = try HanlinChatRequestBuilder.buildRequest(
+            formattedMessages: [["role": "user", "content": "Synthetic private prompt waiting at admission"]],
+            configuration: config)
+        #expect(transportRequest.value(forHTTPHeaderField: "Authorization") == "Bearer synthetic-current")
+        #expect(transportRequest.httpBody?.isEmpty == false)
+        let work = Task { try await fetch(transportRequest) }
+        defer { work.cancel(); gate.release() }
+        await gate.waitUntilPaused()
+        #expect(ProviderCredentialURLProtocol.snapshot(host: host).isEmpty)
+        switch change {
+        case "revoke": owner.revoke()
+        case "rotate", "rotateSameValue", "endpoint":
+            let writer = ModelContext(container)
+            writer.autosaveEnabled = false
+            let original = try #require(writer.fetch(FetchDescriptor<APIKeys>())
+                .first(where: { $0.persistentModelID == provider.persistentModelID }))
+            if change == "endpoint" {
+                original.requestURL = endpoint + "?changed=1"
+                try writer.save()
+            } else {
+                try fixture.credentials.save(change == "rotate" ? "synthetic-rotated" : "synthetic-current",
+                    for: original, expectedStoredValue: originalReference, in: writer)
+            }
+        case "deleteOrigin": context.delete(row); try context.save()
+        case "rebind": _ = try owner.prepareDataAccess(request: request, modelContext: context)
+        case "cancel": work.cancel()
+        default: Issue.record("Unrecognized transport adversary")
+        }
+        gate.release()
+        do {
+            _ = try await work.value
+            Issue.record("An obsolete request reached the production fetch transport")
+        } catch {
+            if change == "cancel" { #expect(error is CancellationError) }
+            else { #expect(error as? HanlinHostError == .staleContext) }
+        }
+        #expect(ProviderCredentialURLProtocol.snapshot(host: host).isEmpty,
+            "The original URLSession must not begin a request after revocation during diagnostics")
+    }
+
+    @Test func originalDirectTransportRechecksOwnerInsideItsProducer() async throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        let host = "direct-admission-\(UUID().uuidString.lowercased()).invalid"
+        ProviderCredentialURLProtocol.register(host: host, streaming: true)
+        defer { ProviderCredentialURLProtocol.remove(host: host) }
+        let endpoint = try #require(URL(string: "https://\(host)/v1/chat/completions"))
+        let row = ChatRecords(name: "Original direct origin", type: "chat")
+        let provider = APIKeys(name: "Original direct provider", company: "TRANSPORT_FIXTURE",
+            key: "synthetic-direct", requestURL: endpoint.absoluteString)
+        context.insert(row); context.insert(provider); try context.save()
+        let owner = HanlinAppAgentSessionOwner()
+        defer { owner.cancel() }
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row,
+            conversationID: try #require(row.id), sceneID: UUID(), rowID: UUID(),
+            uiRunID: UUID(), temporary: false, interaction: nil)
+        let model = HanlinModelReference(provider: "TRANSPORT_FIXTURE", modelID: "fixture-model")
+        let api = APIManager(context: context, agentSessionOwner: owner, providerCredentials: fixture.credentials)
+        try api.bindDataAccess(request: request, model: model)
+        let admission = try api.makeProviderRequestAdmission(model: model, configuration: provider, credential: "synthetic-direct")
+        let gate = AppHistoryWriteGate()
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.protocolClasses = [ProviderCredentialURLProtocol.self]
+        let engine = HanlinChatEngine(sessionConfiguration: configuration)
+        let config = HanlinChatModelConfiguration(modelID: model.modelID, company: model.provider,
+            apiType: "OpenAI", endpoint: endpoint, apiKey: "synthetic-direct")
+        let transportRequest = try HanlinChatRequestBuilder.buildRequest(
+            formattedMessages: [["role": "user", "content": "Synthetic direct private prompt"]], configuration: config)
+        #expect(transportRequest.value(forHTTPHeaderField: "Authorization") == "Bearer synthetic-direct")
+        let stream = await engine.stream(request: transportRequest, configuration: config,
+            requestAdmission: { request in await gate.pause(); try await admission(request) })
+        let work = Task { for try await _ in stream {} }
+        defer { work.cancel(); gate.release() }
+        await gate.waitUntilPaused()
+        owner.revoke()
+        gate.release()
+        do { try await work.value; Issue.record("The detached direct producer bypassed owner revocation") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(ProviderCredentialURLProtocol.snapshot(host: host).isEmpty)
+    }
+
+    @Test func originalReusedSDKEngineUsesEachTurnsManagerAndTransport() async throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        let host = "reused-admission-\(UUID().uuidString.lowercased()).invalid"
+        ProviderCredentialURLProtocol.register(host: host, streaming: true)
+        defer { ProviderCredentialURLProtocol.remove(host: host) }
+        let endpoint = try #require(URL(string: "https://\(host)/v1/chat/completions"))
+        let row = ChatRecords(name: "Original reused conversation", type: "chat")
+        let provider = APIKeys(name: "Original reused provider", company: "TRANSPORT_FIXTURE",
+            key: "synthetic-reused", requestURL: endpoint.absoluteString)
+        context.insert(row); context.insert(provider); try context.save()
+        let owner = HanlinAppAgentSessionOwner()
+        defer { owner.cancel() }
+        let conversationID = try #require(row.id), sceneID = UUID()
+        let model = HanlinModelReference(provider: "TRANSPORT_FIXTURE", modelID: "fixture-model")
+        let config = HanlinChatModelConfiguration(modelID: model.modelID, company: model.provider,
+            apiType: "OpenAI", endpoint: endpoint, apiKey: "synthetic-reused")
+        let network = URLSessionConfiguration.ephemeral
+        network.protocolClasses = [ProviderCredentialURLProtocol.self]
+        let engine = HanlinChatEngine(sessionConfiguration: network)
+        let diagnostics = ProviderTransportDiagnostics()
+        var engineCreations = 0
+        var priorAdmission: HanlinChatRequestAdmission?
+        var priorManager: APIManager?
+        var firstIdentity: HanlinHostSession?
+
+        for turn in 1...2 {
+            let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: conversationID,
+                sceneID: sceneID, rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+            let api = APIManager(context: context, agentSessionOwner: owner, providerCredentials: fixture.credentials)
+            let access = try api.bindDataAccess(request: request, model: model)
+            if let priorAdmission {
+                let previousManager = try #require(priorManager)
+                do {
+                    try await priorAdmission(URLRequest(url: endpoint))
+                    Issue.record("A previous APIManager borrowed the new turn's lease")
+                } catch { #expect(error as? HanlinHostError == .staleContext) }
+                #expect(previousManager.agentSessionOwner === owner,
+                    "The old manager is still alive; its obsolete epoch, not deallocation, denies this request")
+                #expect(ProviderCredentialURLProtocol.snapshot(host: host).count == 1)
+            }
+            let admission = try api.makeProviderRequestAdmission(model: model, configuration: provider, credential: "synthetic-reused")
+            let fetch = await engine.makeAISDKFetch(
+                onRequest: { _ in await diagnostics.requested(turn) },
+                onResponse: { _, _ in await diagnostics.responded(turn) },
+                requestAdmission: admission)
+            let stream = try await owner.stream(request: request, modelContext: context, configuration: config,
+                engineFactory: {
+                    engineCreations += 1
+                    return try HanlinAISDKAgentEngine(configuration: config)
+                }, toolAdapter: nil, messages: [.init(role: .user, text: "Original turn \(turn)")],
+                systemPrompt: nil, dataAccess: access, transport: .init(fetch: fetch))
+            var visible = ""
+            for try await event in stream {
+                try owner.receive(event, uiRunID: request.uiRunID)
+                if case .textDelta(let text) = event.event { visible += text }
+            }
+            try owner.producerStreamDrained(uiRunID: request.uiRunID)
+            #expect(visible == "Current transport response")
+            if let firstIdentity { #expect(owner.session?.identity == firstIdentity) }
+            else { firstIdentity = owner.session?.identity }
+            priorManager = api
+            priorAdmission = admission
+        }
+        #expect(engineCreations == 1)
+        #expect(diagnostics.requests == [1, 2] && diagnostics.responses == [1, 2])
+        let requests = ProviderCredentialURLProtocol.snapshot(host: host)
+        #expect(requests.count == 2)
+        #expect(requests.allSatisfy { $0.value(forHTTPHeaderField: "Authorization") == "Bearer synthetic-reused" })
+        weak var releasedManager = priorManager
+        priorManager = nil
+        #expect(releasedManager == nil, "The retained engine does not own a completed turn's APIManager")
+        #expect(row.agentSDKRecordData != nil)
+    }
+
+    @Test func originalInjectedProviderCannotBeReplacedByTurnTransport() async throws {
+        let host = "injected-admission-\(UUID().uuidString.lowercased()).invalid"
+        ProviderCredentialURLProtocol.register(host: host, streaming: true)
+        defer { ProviderCredentialURLProtocol.remove(host: host) }
+        let endpoint = try #require(URL(string: "https://\(host)/v1/chat/completions"))
+        let config = HanlinChatModelConfiguration(modelID: "fixture-model", company: "TRANSPORT_FIXTURE",
+            apiType: "OpenAI", endpoint: endpoint, apiKey: "synthetic-injected")
+        let network = URLSessionConfiguration.ephemeral
+        network.protocolClasses = [ProviderCredentialURLProtocol.self]
+        let fetch = HanlinAISDKProviderFactory.makeFetch(sessionConfiguration: network)
+        let engine = HanlinAISDKAgentEngine(configuration: config,
+            model: .v3(AppPartModel(queue: AppPartQueue([]))))
+        do {
+            _ = try await engine.stream(messages: [.init(role: .user, text: "Original injected model")],
+                baseSystemPrompt: nil, tools: [], transport: .init(fetch: fetch),
+                prepareStep: { .init(activeToolAliases: []) })
+            Issue.record("Per-turn options replaced the original injected provider")
+        } catch {
+            guard let sdkError = error as? HanlinAISDKError, case .invalidConversation = sdkError else {
+                Issue.record("Unexpected rejection type for an injected transport override"); return
+            }
+        }
+        #expect(ProviderCredentialURLProtocol.snapshot(host: host).isEmpty)
     }
 
     @Test func originalCredentialPortRejectsForeignModelNamespaceRequestAndDeletedOrigin() async throws {

@@ -10,6 +10,7 @@ public actor HanlinAISDKAgentEngine {
 
     private let configuration: HanlinChatModelConfiguration
     private let resolvedProvider: HanlinAISDKResolvedProvider
+    private let resolvesProviderFromConfiguration: Bool
 
     private final class StreamStopper: @unchecked Sendable {
         private let lock = NSLock()
@@ -41,6 +42,7 @@ public actor HanlinAISDKAgentEngine {
         fetch: FetchFunction? = nil
     ) throws {
         self.configuration = configuration
+        self.resolvesProviderFromConfiguration = true
         self.resolvedProvider = try HanlinAISDKProviderFactory.resolve(
             configuration: configuration,
             fetch: fetch
@@ -55,6 +57,7 @@ public actor HanlinAISDKAgentEngine {
         providerOptions: ProviderOptions? = nil
     ) {
         self.configuration = configuration
+        self.resolvesProviderFromConfiguration = false
         self.resolvedProvider = HanlinAISDKResolvedProvider(
             model: model,
             descriptor: descriptor ?? HanlinAISDKProviderFactory.descriptor(for: configuration),
@@ -74,6 +77,7 @@ public actor HanlinAISDKAgentEngine {
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         structuredResponse: HanlinNativeStructuredResponse? = nil,
         requestApproval: ApprovalHandler? = nil,
+        transport: HanlinAISDKTurnTransport? = nil,
         prepareStep: @escaping @MainActor @Sendable () -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
@@ -84,6 +88,7 @@ public actor HanlinAISDKAgentEngine {
             dynamicTools: dynamicTools,
             structuredResponse: structuredResponse,
             requestApproval: requestApproval,
+            transport: transport,
             prepareStep: { (_: Int) in prepareStep() }
         )
     }
@@ -96,6 +101,7 @@ public actor HanlinAISDKAgentEngine {
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         structuredResponse: HanlinNativeStructuredResponse? = nil,
         requestApproval: ApprovalHandler? = nil,
+        transport: HanlinAISDKTurnTransport? = nil,
         prepareStep: @escaping @MainActor @Sendable () async -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         try stream(
@@ -106,6 +112,7 @@ public actor HanlinAISDKAgentEngine {
             dynamicTools: dynamicTools,
             structuredResponse: structuredResponse,
             requestApproval: requestApproval,
+            transport: transport,
             prepareStep: { (_: Int) async in await prepareStep() }
         )
     }
@@ -118,8 +125,19 @@ public actor HanlinAISDKAgentEngine {
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         structuredResponse: HanlinNativeStructuredResponse? = nil,
         requestApproval: ApprovalHandler? = nil,
+        transport: HanlinAISDKTurnTransport? = nil,
         prepareStep: @escaping StepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
+        // The engine/agent loop remains shared. A host-supplied transport belongs
+        // only to this turn; old streams keep their original immutable callbacks.
+        // An injected model owns its transport and must never be replaced by a
+        // network provider because a caller supplied per-turn transport options.
+        guard transport == nil || resolvesProviderFromConfiguration else {
+            throw HanlinAISDKError.invalidConversation("An injected provider owns its transport.")
+        }
+        let resolvedProvider = try transport.map {
+            try HanlinAISDKProviderFactory.resolve(configuration: configuration, fetch: $0.fetch)
+        } ?? self.resolvedProvider
         if structuredResponse != nil, !HanlinNativeStructuredResponse.supports(resolvedProvider.descriptor) {
             throw HanlinNativeStructuredResponseError.unsupportedProviderOrModel
         }

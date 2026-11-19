@@ -21,13 +21,15 @@ public actor HanlinChatEngine {
     public func makeAISDKFetch(
         onRequest: (@Sendable (URLRequest) async -> Void)? = nil,
         onResponse: (@Sendable (URLRequest, HTTPURLResponse) async -> Void)? = nil,
-        transportObserver: HanlinChatTransportObserver? = nil
+        transportObserver: HanlinChatTransportObserver? = nil,
+        requestAdmission: HanlinChatRequestAdmission? = nil
     ) -> FetchFunction {
         HanlinAISDKProviderFactory.makeFetch(
             sessionConfiguration: sessionConfiguration,
             onRequest: onRequest,
             onResponse: onResponse,
-            transportObserver: transportObserver
+            transportObserver: transportObserver,
+            requestAdmission: requestAdmission
         )
     }
 
@@ -53,7 +55,8 @@ public actor HanlinChatEngine {
     public func stream(
         request: URLRequest,
         configuration: HanlinChatModelConfiguration,
-        transportObserver: HanlinChatTransportObserver? = nil
+        transportObserver: HanlinChatTransportObserver? = nil,
+        requestAdmission: HanlinChatRequestAdmission? = nil
     ) -> AsyncThrowingStream<HanlinChatStreamEvent, Error> {
         let (stream, continuation) = AsyncThrowingStream<HanlinChatStreamEvent, Error>.makeStream()
 
@@ -62,10 +65,15 @@ public actor HanlinChatEngine {
         let traceID = UUID()
         let task = Task.detached(priority: .userInitiated) {
             defer { session.finishTasksAndInvalidate() }
-            transportObserver?(.request(id: traceID, request: request))
+            var transportStarted = false
             var tracePending = Data()
 
             do {
+                try Task.checkCancellation()
+                try await requestAdmission?(request)
+                try Task.checkCancellation()
+                transportObserver?(.request(id: traceID, request: request))
+                transportStarted = true
                 let (bytes, response) = try await session.bytes(for: request)
                 guard let httpResponse = response as? HTTPURLResponse else {
                     transportObserver?(.end(id: traceID, error: "invalid_response"))
@@ -130,11 +138,11 @@ public actor HanlinChatEngine {
                 continuation.finish()
             } catch is CancellationError {
                 if !tracePending.isEmpty { transportObserver?(.bytes(id: traceID, data: tracePending)) }
-                transportObserver?(.end(id: traceID, error: "cancelled"))
+                if transportStarted { transportObserver?(.end(id: traceID, error: "cancelled")) }
                 continuation.finish(throwing: HanlinChatError.cancelled)
             } catch {
                 if !tracePending.isEmpty { transportObserver?(.bytes(id: traceID, data: tracePending)) }
-                transportObserver?(.end(id: traceID, error: String(describing: error)))
+                if transportStarted { transportObserver?(.end(id: traceID, error: String(describing: error))) }
                 continuation.finish(throwing: error)
             }
         }

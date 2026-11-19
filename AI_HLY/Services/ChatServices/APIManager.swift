@@ -178,11 +178,13 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
 
     /// Uses the already selected model and original request. No account/Space provenance is
     /// inferred for the legacy global APIKeys or MemoryArchive tables.
-    func bindDataAccess(request: HanlinAppAgentSessionOwner.Request, model: HanlinModelReference) throws {
+    @discardableResult
+    func bindDataAccess(request: HanlinAppAgentSessionOwner.Request, model: HanlinModelReference) throws -> HanlinAppAgentSessionOwner.DataAccess {
         let access = try agentSessionOwner.prepareDataAccess(request: request, modelContext: context)
         agentSDKRequest = request
         dataAccess = access
         dataModel = model
+        return access
     }
 
     private func requireDataAccess(namespace: HanlinConversationNamespace? = nil,
@@ -204,6 +206,49 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             throw HanlinHostError.denied
         }
         return key
+    }
+
+    /// Capture only this request's existing lease and original provider identity.
+    /// The final check runs after transport diagnostics, never against a later turn.
+    func makeProviderRequestAdmission(
+        model: HanlinModelReference, configuration: APIKeys, credential: String
+    ) throws -> HanlinChatRequestAdmission {
+        let access = try requireDataAccess()
+        guard dataModel == model, configuration.modelContext === context, !configuration.isDeleted,
+              getAPIConfiguration(for: model.provider)?.persistentModelID == configuration.persistentModelID,
+              try providerCredentials.matches(credential, for: configuration) else {
+            throw HanlinHostError.staleContext
+        }
+        let providerID = configuration.persistentModelID
+        let storedValue = configuration.key.map { Data($0.utf8) }
+        let endpoint = configuration.requestURL.map { Data($0.utf8) }
+        let apiType = configuration.apiType.rawValue
+        return { [weak self] _ in
+            try await MainActor.run {
+                try Task.checkCancellation()
+                guard let self else { throw HanlinHostError.staleContext }
+                _ = try self.requireDataAccess(expected: access)
+                guard self.dataModel == model,
+                      let current = self.getAPIConfiguration(for: model.provider),
+                      current.modelContext === self.context, !current.isDeleted,
+                      current.persistentModelID == providerID, current.company == model.provider,
+                      current.key.map({ Data($0.utf8) }) == storedValue,
+                      current.requestURL.map({ Data($0.utf8) }) == endpoint, current.apiType.rawValue == apiType else {
+                    throw HanlinHostError.staleContext
+                }
+                // A different context or CloudKit import must not leave a cached
+                // managed object authorizing an obsolete durable credential.
+                let reader = ModelContext(self.context.container)
+                reader.autosaveEnabled = false
+                guard let durable = try reader.fetch(FetchDescriptor<APIKeys>())
+                    .first(where: { $0.persistentModelID == providerID }),
+                      durable.company == model.provider, durable.key.map({ Data($0.utf8) }) == storedValue,
+                      durable.requestURL.map({ Data($0.utf8) }) == endpoint, durable.apiType.rawValue == apiType,
+                      try self.providerCredentials.matches(credential, for: current) else {
+                    throw HanlinHostError.staleContext
+                }
+            }
+        }
     }
 
     func requireMemoryAccess(crossSession: Bool,
@@ -2628,6 +2673,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                         modelID: modelInfo.name ?? "Unknown") else { throw HanlinHostError.staleContext }
                     guard let providerConfiguration = self.getAPIConfiguration(for: selectedModel.provider),
                           try self.providerCredentials.matches(apiKey, for: providerConfiguration) else { throw HanlinHostError.staleContext }
+                    let requestAdmission = try self.makeProviderRequestAdmission(
+                        model: selectedModel, configuration: providerConfiguration, credential: apiKey)
                     guard let requestURLString = providerConfiguration.requestURL,
                           let requestURL = URL(string: requestURLString),
                           !requestURLString.isEmpty else {
@@ -2758,7 +2805,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                             session: session,
                             currentLanguage: currentLanguage,
                             currentLanguagePrefix: currentLanguagePrefix,
-                            continuation: continuation
+                            continuation: continuation,
+                            requestAdmission: requestAdmission
                         )
                         return
                     }
@@ -2798,7 +2846,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     
                     let chatEngine = self.chatEngineFactory()
                     let result = await chatEngine.stream(request: request, configuration: chatConfig,
-                        transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver)
+                        transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver,
+                        requestAdmission: requestAdmission)
                     
                     // 定义变量保存所有分片累计的 tool_calls
                     var accumulatedToolCalls: [[String: Any]] = []
@@ -3815,7 +3864,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         session: AssistantCapabilitySession,
         currentLanguage: String,
         currentLanguagePrefix: Bool,
-        continuation: AsyncThrowingStream<StreamData, Error>.Continuation
+        continuation: AsyncThrowingStream<StreamData, Error>.Continuation,
+        requestAdmission: HanlinChatRequestAdmission? = nil
     ) async throws {
         let converted = Self.convertFormattedMessagesToSDKMessages(formattedMessages)
         let baseSystemPrompt = converted.baseSystemPrompt
@@ -3842,40 +3892,46 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             throw HanlinAISDKError.invalidConversation("The original response row and conversation must be bound before starting the SDK session.")
         }
         let sessionConfiguration = agentSessionOwner.configurationForPresentation(chatConfig)
+        let turnTransport: HanlinAISDKTurnTransport?
+        if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
+            turnTransport = nil
+        } else {
+            guard let requestAdmission else { throw HanlinHostError.staleContext }
+            let chatEngine = self.chatEngineFactory()
+            let fetch = await chatEngine.makeAISDKFetch(
+                onRequest: { [weak self] request in
+                    let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
+                        (self?.agentDiagnosticsRecorder, toolAdapter?.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
+                    }
+                    if isActive, let recorder, let roundID {
+                        let body = request.httpBody ?? Data()
+                        let headers = request.allHTTPHeaderFields ?? [:]
+                        await recorder.recordModelRequest(roundID: roundID, requestData: body, httpHeaders: headers)
+                    }
+                },
+                onResponse: { [weak self] request, response in
+                    let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
+                        (self?.agentDiagnosticsRecorder, toolAdapter?.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
+                    }
+                    if isActive, let recorder, let roundID {
+                        let reqID = response.allHeaderFields["x-request-id"] as? String
+                        await recorder.responseStarted(roundID: roundID, httpStatus: response.statusCode, providerRequestID: reqID)
+                    }
+                },
+                transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver,
+                requestAdmission: requestAdmission
+            )
+            turnTransport = .init(fetch: fetch)
+        }
         let sdkStream = try await agentSessionOwner.stream(request: originalRequest, modelContext: context,
             configuration: sessionConfiguration, engineFactory: {
-        let agentEngine: HanlinAISDKAgentEngine
-        if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
-            guard toolAdapter == nil else { throw HanlinAppleProviderError.unsupportedTools }
-            agentEngine = try HanlinAppleOnDeviceProvider.makeEngine(configuration: sessionConfiguration)
-        } else {
-        let chatEngine = self.chatEngineFactory()
-        let fetch = await chatEngine.makeAISDKFetch(
-            onRequest: { [weak self] request in
-                let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
-                    (self?.agentDiagnosticsRecorder, toolAdapter?.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
+                if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
+                    guard toolAdapter == nil else { throw HanlinAppleProviderError.unsupportedTools }
+                    return try HanlinAppleOnDeviceProvider.makeEngine(configuration: sessionConfiguration)
                 }
-                if isActive, let recorder, let roundID {
-                    let body = request.httpBody ?? Data()
-                    let headers = request.allHTTPHeaderFields ?? [:]
-                    await recorder.recordModelRequest(roundID: roundID, requestData: body, httpHeaders: headers)
-                }
-            },
-            onResponse: { [weak self] request, response in
-                let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
-                    (self?.agentDiagnosticsRecorder, toolAdapter?.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
-                }
-                if isActive, let recorder, let roundID {
-                    let reqID = response.allHeaderFields["x-request-id"] as? String
-                    await recorder.responseStarted(roundID: roundID, httpStatus: response.statusCode, providerRequestID: reqID)
-                }
-            },
-            transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver
-        )
-        agentEngine = try HanlinAISDKAgentEngine(configuration: sessionConfiguration, fetch: fetch)
-        }
-        return agentEngine
-        }, toolAdapter: toolAdapter, messages: sdkMessages, systemPrompt: baseSystemPrompt, dataAccess: try requireDataAccess())
+                return try HanlinAISDKAgentEngine(configuration: sessionConfiguration)
+            }, toolAdapter: toolAdapter, messages: sdkMessages, systemPrompt: baseSystemPrompt,
+            dataAccess: try requireDataAccess(), transport: turnTransport)
 
         var currentStepID: UUID?
         var visibleFinalCharacters = 0

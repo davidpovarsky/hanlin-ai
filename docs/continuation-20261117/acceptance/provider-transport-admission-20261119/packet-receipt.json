@@ -1,0 +1,92 @@
+{
+  "created_utc": "2026-11-19T04:48:37.698122+00:00",
+  "base_commit": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "status": "UNAPPLIED; native NOT_RUN",
+  "files": [
+    {
+      "path": "original-provider-transport-admission.diff",
+      "bytes": 45183,
+      "sha256": "c03136b216e123b665ba3eb04dabdf4bbca05847286757b99716858da47cd2f1"
+    },
+    {
+      "path": "base-manifest.json",
+      "bytes": 1839,
+      "sha256": "36991dcef9ce34685e289789fafcfcda5284696c708af573eae2d36cb1e4a468"
+    },
+    {
+      "path": "changed-source-manifest.json",
+      "bytes": 2502,
+      "sha256": "6bdcaee3aadb983db09617e74097be8c14c4bba5745fd2c55237cd13d6974684"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 3270,
+      "sha256": "cab5c1017a381e1ad157fafa514f2b7e050cb39ec82d84b9a7eca7526f8c99ff"
+    },
+    {
+      "path": "swift-parse.json",
+      "bytes": 887,
+      "sha256": "57948472e5cf0b73785f8166246693b19c4da17077afbbf009a0ca00a6cffde2"
+    },
+    {
+      "path": "native-new-selectors.txt",
+      "bytes": 422,
+      "sha256": "57596459dc3dd20a682b2884cfdb487b2d5727aba40b315bf6f161f2c1be9d12"
+    },
+    {
+      "path": "native-retained-provider-selectors.txt",
+      "bytes": 2680,
+      "sha256": "dc6ff89c61833a58419fb7d2eb4c9549b95fd951b8b47246bb3a781a65c9531e"
+    },
+    {
+      "path": "pinned-fetch-api-proof.json",
+      "bytes": 553,
+      "sha256": "8a73dbffd8e3c056a057b8cb309e80459d7c4fd187a5aeb4e20d5757e569e6ee"
+    },
+    {
+      "path": "phase1-native-status-first.json",
+      "bytes": 13068,
+      "sha256": "7e7ad4ee50610582ae363d62f0e91226874a1c5cd657d85698c8e521b0b85070"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 8839,
+      "sha256": "d96d61306d78417051287521c7eca802f8a373ee5815ea92eeb15da125811365"
+    },
+    {
+      "path": "proposed/AI_HLY/Services/ChatServices/APIManager.swift",
+      "bytes": 215840,
+      "sha256": "2cb0e1f3ea242dc7c2bbcb5cfec5f7e83c6ec79f3bad06110e2601329c56ce2e"
+    },
+    {
+      "path": "proposed/AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "bytes": 32402,
+      "sha256": "45bb5b8041c2cccfd973f58aa26a6aeaf342bff2145af19e561f7c1137263340"
+    },
+    {
+      "path": "proposed/Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "bytes": 35047,
+      "sha256": "179e222f04e185d941c0f42416f6df6d391cf308bd79b63af341093c460d1e1b"
+    },
+    {
+      "path": "proposed/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift",
+      "bytes": 7284,
+      "sha256": "f5c8d5b3c406da5ed3b0d6ef2681ca8195fe066401888538981eb8e784ca343a"
+    },
+    {
+      "path": "proposed/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "bytes": 35975,
+      "sha256": "aaf8ae687d478710c2b4388f19350164a606facd02b70375743c808629cbe524"
+    },
+    {
+      "path": "proposed/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "bytes": 12237,
+      "sha256": "37040bbbf933960cb47046fbedaeaad953b59371607b0ec3062cbbefb1ee1c1a"
+    },
+    {
+      "path": "proposed/AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "bytes": 144044,
+      "sha256": "566f659f3bc906355e74cd2adf17025311c7066a87c6923b76aa13f38e6bb2d1"
+    }
+  ]
+}

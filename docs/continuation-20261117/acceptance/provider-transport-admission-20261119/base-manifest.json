@@ -1,0 +1,45 @@
+{
+  "base_commit": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "files": [
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "sha256": "86c5c6d55d3a355609e5440baecc6b77a9ea0d31f668fd4d018eadbf3fa8dffb",
+      "working_copy_equal": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "sha256": "4f57a668dca2d6a06047498e9986751d31383e2f8e14f873052626bb9f31a2dd",
+      "working_copy_equal": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "sha256": "36695f408a3bc147bd3394c6f445846e17e38146478a345745c1e28d7917f2d7",
+      "working_copy_equal": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift",
+      "sha256": "2bccec0d98941fb9ad89b8b8ca2325e773f853908d379e15617ca877af4700ca",
+      "working_copy_equal": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "sha256": "0fadca052c3d9f131b72f31892940e734aefd28898be2d169e6affe177284fd9",
+      "working_copy_equal": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "sha256": "a1b62896cb60494872843c2bf23a62cb635b8a107c806ed37f5b78fb5ceeb67f",
+      "working_copy_equal": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "937d1bbf390512c1332e775b5b0e5ea153240bd42af839f5dede84fd89fe991b",
+      "working_copy_equal": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinTransportTraceTests.swift",
+      "sha256": "7ef3785c16aad89b922d9207e53b5ab1c8fa765f1b1b3b4dea5194bd923583c0",
+      "working_copy_equal": true
+    }
+  ]
+}

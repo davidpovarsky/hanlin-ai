@@ -267,7 +267,8 @@ final class HanlinAppAgentSessionOwner {
 
     func stream(request: Request, modelContext: ModelContext, configuration: HanlinChatModelConfiguration,
                 engineFactory: @MainActor () async throws -> HanlinAISDKAgentEngine, toolAdapter: HanlinAISDKToolAdapter?,
-                messages: [HanlinAISDKMessage], systemPrompt: String?, dataAccess: DataAccess? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+                messages: [HanlinAISDKMessage], systemPrompt: String?, dataAccess: DataAccess? = nil,
+                transport: HanlinAISDKTurnTransport? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
         guard request.conversation.id == request.conversationID else { throw HanlinHostError.staleContext }
         if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
@@ -388,11 +389,11 @@ final class HanlinAppAgentSessionOwner {
                     && $0.reference.messageID == interaction.origin.messageID }) else { throw HanlinHostError.staleContext }
                 return try await session.continueInteraction(interaction, messages: messages,
                     modelReference: .init(provider: descriptor.kind.rawValue, modelID: descriptor.modelID),
-                    systemPrompt: effectiveSystemPrompt, structuredResponse: native, presentationReference: referenceData)
+                    systemPrompt: effectiveSystemPrompt, structuredResponse: native, presentationReference: referenceData, transport: transport)
             }
             return try await session.stream(messages: messages, systemPrompt: effectiveSystemPrompt,
                 modelReference: .init(provider: descriptor.kind.rawValue, modelID: descriptor.modelID),
-                structuredResponse: native, presentationReference: referenceData)
+                structuredResponse: native, presentationReference: referenceData, transport: transport)
         } catch { activeUIRunID = nil; activeReference = nil; throw error }
     }
 
@@ -515,7 +516,7 @@ final class HanlinAppAgentSessionOwner {
         guard let one else { return false }
         // updatedAt is bookkeeping, not an engine input. Compare the complete real input closure.
         return one.modelID == two.modelID && one.baseModelID == two.baseModelID && one.company == two.company
-            && one.apiType == two.apiType && one.endpoint == two.endpoint && one.apiKey == two.apiKey
+            && one.apiType == two.apiType && one.endpoint == two.endpoint && one.apiKey.utf8.elementsEqual(two.apiKey.utf8)
             && one.temperature == two.temperature && one.topP == two.topP && one.maxTokens == two.maxTokens
             && one.supportsReasoning == two.supportsReasoning && one.supportReasoningChange == two.supportReasoningChange
             && one.thinkingLength == two.thinkingLength && one.reasoningEffort == two.reasoningEffort

@@ -10,6 +10,20 @@ import OpenAICompatibleProvider
 import OpenAIProvider
 import SwiftAISDK
 
+/// The host validates its original request lease after diagnostic suspension
+/// and immediately before the production transport starts.
+public typealias HanlinChatRequestAdmission = @Sendable (URLRequest) async throws -> Void
+
+/// One stream's transport and callbacks. Reused engines do not retain a
+/// previous turn's host or authority closure through their provider instance.
+public struct HanlinAISDKTurnTransport: Sendable {
+    let fetch: FetchFunction
+
+    public init(fetch: @escaping FetchFunction) {
+        self.fetch = fetch
+    }
+}
+
 public enum HanlinAISDKProviderFactory {
     public static func descriptor(
         for configuration: HanlinChatModelConfiguration
@@ -198,11 +212,15 @@ extension HanlinAISDKProviderFactory {
         sessionConfiguration: URLSessionConfiguration,
         onRequest: (@Sendable (URLRequest) async -> Void)? = nil,
         onResponse: (@Sendable (URLRequest, HTTPURLResponse) async -> Void)? = nil,
-        transportObserver: HanlinChatTransportObserver? = nil
+        transportObserver: HanlinChatTransportObserver? = nil,
+        requestAdmission: HanlinChatRequestAdmission? = nil
     ) -> FetchFunction {
         let session = URLSession(configuration: sessionConfiguration)
         return { request in
             await onRequest?(request)
+            try Task.checkCancellation()
+            try await requestAdmission?(request)
+            try Task.checkCancellation()
             let traceID = UUID()
             transportObserver?(.request(id: traceID, request: request))
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
