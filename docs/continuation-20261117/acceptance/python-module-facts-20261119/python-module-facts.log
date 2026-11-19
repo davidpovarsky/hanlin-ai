@@ -1,0 +1,22 @@
+PYTHON_MODULE_FACTS_ISOLATED
+test_budgets_and_invalid_names_remain_unknown_and_restore_cache (__main__.PythonSkillModuleFactsTests.test_budgets_and_invalid_names_remain_unknown_and_restore_cache) ... ok
+test_custom_meta_path_path_hook_and_cached_finder_are_not_called (__main__.PythonSkillModuleFactsTests.test_custom_meta_path_path_hook_and_cached_finder_are_not_called) ... ok
+test_equality_traps_and_missing_bootstrap_dependencies_execute_no_custom_code (__main__.PythonSkillModuleFactsTests.test_equality_traps_and_missing_bootstrap_dependencies_execute_no_custom_code) ... ok
+test_native_extension_and_namespace_do_not_become_false_ready (__main__.PythonSkillModuleFactsTests.test_native_extension_and_namespace_do_not_become_false_ready) ... ok
+test_original_job_runner_uses_identical_paths_for_inspection_and_actual_skill_id (__main__.PythonSkillModuleFactsTests.test_original_job_runner_uses_identical_paths_for_inspection_and_actual_skill_id) ... ok
+test_original_zip_finder_binds_to_the_actual_archive_without_import (__main__.PythonSkillModuleFactsTests.test_original_zip_finder_binds_to_the_actual_archive_without_import) ... ok
+test_real_package_and_parent_code_are_never_executed (__main__.PythonSkillModuleFactsTests.test_real_package_and_parent_code_are_never_executed) ... ok
+test_source_change_and_deletion_cannot_keep_the_old_identity (__main__.PythonSkillModuleFactsTests.test_source_change_and_deletion_cannot_keep_the_old_identity) ... ok
+test_stdlib_submodules_resolve_without_importing_their_parent (__main__.PythonSkillModuleFactsTests.test_stdlib_submodules_resolve_without_importing_their_parent) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.208s
+
+OK
+
+test_original_interpreter_resolution_contract (test_python_skill_module_facts.IsolatedPythonSkillModuleFactsTests.test_original_interpreter_resolution_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.415s
+
+OK
