@@ -1,0 +1,1271 @@
+{
+  "verifiedAt": "2026-11-19T05:05:38.914679+00:00",
+  "sourceSHA": "36faa1904e819c92db193d65cafbec0b8bd62ab1",
+  "originalManifest": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\count-contract-proposal\\source-closure-d6e2e3f0.json",
+  "originalManifestSHA256": "f103cca9e4b45fc32969b55f76c132def6c0dcb1817b42ba6146d2869a0025b6",
+  "originalFrozenBaseSHA": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+  "closureDefinition": "All tracked Host source/test/fixture files plus six canonical recipe/tool files and RuntimeNetworkFixtures bundle; conservative superset of original input_hash paths",
+  "canonicalFingerprintFileCount": 134,
+  "additionalTrackedFixtureFiles": [
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/index.js",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/package.json",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/client/stdio.js",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/package.json",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/server/stdio.js"
+  ],
+  "inputCount": 139,
+  "allExactInputBlobsAndSHA256Unchanged": true,
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/PEGJS-LICENSE.txt",
+      "originalGitBlob": "a3706aab593dce9b0c237e79cb6eb72f97df1c06",
+      "gitBlob": "a3706aab593dce9b0c237e79cb6eb72f97df1c06",
+      "originalSHA256": "e56890ff38a31e1adc0617f57c23056289dd27a9ff6263eaf6137dacd1253d9d",
+      "sha256": "e56890ff38a31e1adc0617f57c23056289dd27a9ff6263eaf6137dacd1253d9d",
+      "bytes": 1060,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/package.json",
+      "originalGitBlob": "fe729fdb0ad42d29d60a9b783d9214c58092be99",
+      "gitBlob": "fe729fdb0ad42d29d60a9b783d9214c58092be99",
+      "originalSHA256": "00e01b16d1e612ae0dd4a4d92a2fafc1f7e52cfc952cb2b5f7e7d30356c12803",
+      "sha256": "00e01b16d1e612ae0dd4a4d92a2fafc1f7e52cfc952cb2b5f7e7d30356c12803",
+      "bytes": 101,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/server.mjs",
+      "originalGitBlob": "24dfdb7b0798c211685c2b64be9a293197d87080",
+      "gitBlob": "24dfdb7b0798c211685c2b64be9a293197d87080",
+      "originalSHA256": "7e1521b53b692c7d8a98b58b993c839b4ad4d0ff88671833d85bb4e2111c6d26",
+      "sha256": "7e1521b53b692c7d8a98b58b993c839b4ad4d0ff88671833d85bb4e2111c6d26",
+      "bytes": 125,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/package.json",
+      "originalGitBlob": "1142e16d3088348a6a5bae77e4205646697e5a69",
+      "gitBlob": "1142e16d3088348a6a5bae77e4205646697e5a69",
+      "originalSHA256": "8622d224936d7b9f0cd9e0ca3871f274ee47d196e3f3322968800195ebbac52a",
+      "sha256": "8622d224936d7b9f0cd9e0ca3871f274ee47d196e3f3322968800195ebbac52a",
+      "bytes": 84,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/server.cjs",
+      "originalGitBlob": "e187728f48afc137acca63bbf931bf04304c029c",
+      "gitBlob": "e187728f48afc137acca63bbf931bf04304c029c",
+      "originalSHA256": "f1c60042da7ad7b09e38656e645554a683ee4ada24758f4460678c1e7d79dd44",
+      "sha256": "f1c60042da7ad7b09e38656e645554a683ee4ada24758f4460678c1e7d79dd44",
+      "bytes": 89,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/package.json",
+      "originalGitBlob": "dc0ad40f6f857c4a1873e1067bba04f776b04aca",
+      "gitBlob": "dc0ad40f6f857c4a1873e1067bba04f776b04aca",
+      "originalSHA256": "38acff3bdeae5c7501d06d7a4689e4b375df1f1db014e3c6d6aa8e9ecc2fe6ab",
+      "sha256": "38acff3bdeae5c7501d06d7a4689e4b375df1f1db014e3c6d6aa8e9ecc2fe6ab",
+      "bytes": 96,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/server.mjs",
+      "originalGitBlob": "6eb7a3941dafa478257c96df3173632d8d0ad97c",
+      "gitBlob": "6eb7a3941dafa478257c96df3173632d8d0ad97c",
+      "originalSHA256": "af757b65e58926dae8f3589bb7dc0c59b02830f745ea6731676aa6ef8db42cd8",
+      "sha256": "af757b65e58926dae8f3589bb7dc0c59b02830f745ea6731676aa6ef8db42cd8",
+      "bytes": 590,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/package.json",
+      "originalGitBlob": "22bf7b45cefb49d78b813c3c553b1c560b4f6b02",
+      "gitBlob": "22bf7b45cefb49d78b813c3c553b1c560b4f6b02",
+      "originalSHA256": "a80e372624f66eb2b4bd96b0fdc369dc77d582c303db8d7b9e0e5b1364b97b97",
+      "sha256": "a80e372624f66eb2b4bd96b0fdc369dc77d582c303db8d7b9e0e5b1364b97b97",
+      "bytes": 90,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/server.mjs",
+      "originalGitBlob": "941a31abd8f5be3446c36ba951d5510d8c74ffa8",
+      "gitBlob": "941a31abd8f5be3446c36ba951d5510d8c74ffa8",
+      "originalSHA256": "bf25ec65bbcc4ad87197761ef3480767a83db0e8acc4f833c7ccca4fa59b1aaf",
+      "sha256": "bf25ec65bbcc4ad87197761ef3480767a83db0e8acc4f833c7ccca4fa59b1aaf",
+      "bytes": 87,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/package.json",
+      "originalGitBlob": "306ba09d938370f1f5a3ce888443a5fcc3d2f4bf",
+      "gitBlob": "306ba09d938370f1f5a3ce888443a5fcc3d2f4bf",
+      "originalSHA256": "4d962a17360a513f662edb370115bee50c6aa0e67df4b66493b2ee0f4ecb0c44",
+      "sha256": "4d962a17360a513f662edb370115bee50c6aa0e67df4b66493b2ee0f4ecb0c44",
+      "bytes": 95,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/server.mjs",
+      "originalGitBlob": "c9c889e2e41f7ea751b7bc66021d8b16e4be7599",
+      "gitBlob": "c9c889e2e41f7ea751b7bc66021d8b16e4be7599",
+      "originalSHA256": "1666731ee4e9de5e6dc5fb001b0a70e74e72b023f03fb4295daf0a7651806932",
+      "sha256": "1666731ee4e9de5e6dc5fb001b0a70e74e72b023f03fb4295daf0a7651806932",
+      "bytes": 95,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/package.json",
+      "originalGitBlob": "93d0561f309f4debd0467923679edc7ea05d219b",
+      "gitBlob": "93d0561f309f4debd0467923679edc7ea05d219b",
+      "originalSHA256": "d781369bc650080b31ac795cd65b0c1d3ccc4ef372fe0e2ed9f1f0ba64b904a5",
+      "sha256": "d781369bc650080b31ac795cd65b0c1d3ccc4ef372fe0e2ed9f1f0ba64b904a5",
+      "bytes": 100,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/server.mjs",
+      "originalGitBlob": "3e4e39660d7a413b39fa2f52cdc891187079463d",
+      "gitBlob": "3e4e39660d7a413b39fa2f52cdc891187079463d",
+      "originalSHA256": "be8004c181241556663195ccb4ec16be1945e92cadb321e7bad1e710a1fd628c",
+      "sha256": "be8004c181241556663195ccb4ec16be1945e92cadb321e7bad1e710a1fd628c",
+      "bytes": 103,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/package.json",
+      "originalGitBlob": "8165321332a05a22d511ec06ddd73393dfca022d",
+      "gitBlob": "8165321332a05a22d511ec06ddd73393dfca022d",
+      "originalSHA256": "74df0885beac53df29c26fa8a82b2dd405a68b721425be1588e6b78d7afb6ea3",
+      "sha256": "74df0885beac53df29c26fa8a82b2dd405a68b721425be1588e6b78d7afb6ea3",
+      "bytes": 95,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/server.mjs",
+      "originalGitBlob": "f26ac33c0a2a4e9e3961f5a897377bf578980072",
+      "gitBlob": "f26ac33c0a2a4e9e3961f5a897377bf578980072",
+      "originalSHA256": "d60241ae2bf053b0def9fb275a50df155e24e3018f4914fdb7c3ade25fe8f6d4",
+      "sha256": "d60241ae2bf053b0def9fb275a50df155e24e3018f4914fdb7c3ade25fe8f6d4",
+      "bytes": 95,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/package.json",
+      "originalGitBlob": "0de2e744762f205f9a6e05bb172cdf64ad76389e",
+      "gitBlob": "0de2e744762f205f9a6e05bb172cdf64ad76389e",
+      "originalSHA256": "1b3e7faeb79ae38dc7331ce3f4ca8986e192d1007b1fa0cf4b569dabde29b19c",
+      "sha256": "1b3e7faeb79ae38dc7331ce3f4ca8986e192d1007b1fa0cf4b569dabde29b19c",
+      "bytes": 90,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/server.mjs",
+      "originalGitBlob": "42355b818f9474fa09ea75a51d781d9f8341552a",
+      "gitBlob": "42355b818f9474fa09ea75a51d781d9f8341552a",
+      "originalSHA256": "f48c749f711648c7a2e66a13f9b57ddf02bdf27c79c86bbe010bedaa14469786",
+      "sha256": "f48c749f711648c7a2e66a13f9b57ddf02bdf27c79c86bbe010bedaa14469786",
+      "bytes": 87,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/package.json",
+      "originalGitBlob": "5b8071da79271040935eaab2279cd1fdaa0b328b",
+      "gitBlob": "5b8071da79271040935eaab2279cd1fdaa0b328b",
+      "originalSHA256": "6899eb61afe0b952925b0d6ffad7cea93b833901650ba3236c221f01bc3eb972",
+      "sha256": "6899eb61afe0b952925b0d6ffad7cea93b833901650ba3236c221f01bc3eb972",
+      "bytes": 96,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/server.mjs",
+      "originalGitBlob": "12be5cac70c11dc9062b2f1cce559daed0098a4b",
+      "gitBlob": "12be5cac70c11dc9062b2f1cce559daed0098a4b",
+      "originalSHA256": "469e6811ee4107c85e9c677ce9671cb97e27d0a09e75cde21b80c2c37cac0e2b",
+      "sha256": "469e6811ee4107c85e9c677ce9671cb97e27d0a09e75cde21b80c2c37cac0e2b",
+      "bytes": 99,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/package.json",
+      "originalGitBlob": "1385e6cdd237a7e57f3e321a51a025caf1e280a6",
+      "gitBlob": "1385e6cdd237a7e57f3e321a51a025caf1e280a6",
+      "originalSHA256": "b27d0c617678bcefe25116729f5d0159165ce46ff7d05033e77f4ca8cd76a5fe",
+      "sha256": "b27d0c617678bcefe25116729f5d0159165ce46ff7d05033e77f4ca8cd76a5fe",
+      "bytes": 97,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/server.mjs",
+      "originalGitBlob": "6f751360cad4301e86d15aeae97cab011e912d46",
+      "gitBlob": "6f751360cad4301e86d15aeae97cab011e912d46",
+      "originalSHA256": "97d410354e56192ad76696be8fc87a2667f31e94427b79ea69ee85e625c735ec",
+      "sha256": "97d410354e56192ad76696be8fc87a2667f31e94427b79ea69ee85e625c735ec",
+      "bytes": 92,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/package.json",
+      "originalGitBlob": "460faafbf688bb72ece01f6ced9417e6c9ccd3a8",
+      "gitBlob": "460faafbf688bb72ece01f6ced9417e6c9ccd3a8",
+      "originalSHA256": "288bd243a5bf5ccb282441295f9b2d969185dd3196699860d90fd73147b7be29",
+      "sha256": "288bd243a5bf5ccb282441295f9b2d969185dd3196699860d90fd73147b7be29",
+      "bytes": 122,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/server.mjs",
+      "originalGitBlob": "c1ed13ebef5708b4fadddcbf4228c05f7a30b9d9",
+      "gitBlob": "c1ed13ebef5708b4fadddcbf4228c05f7a30b9d9",
+      "originalSHA256": "f8fa6c96fde4f2ecbf2dde0501c302fe92d126cd7e932244e9d2886e53ba658f",
+      "sha256": "f8fa6c96fde4f2ecbf2dde0501c302fe92d126cd7e932244e9d2886e53ba658f",
+      "bytes": 60,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/package.json",
+      "originalGitBlob": "ca434551124ecd98d9659359c80df5126f0663f7",
+      "gitBlob": "ca434551124ecd98d9659359c80df5126f0663f7",
+      "originalSHA256": "6b721ece791b04f850a6e41bf441ea9829b27c1c9a81b551bef4d9adf8f87b2e",
+      "sha256": "6b721ece791b04f850a6e41bf441ea9829b27c1c9a81b551bef4d9adf8f87b2e",
+      "bytes": 91,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/server.mjs",
+      "originalGitBlob": "2a0547c5caf5aaece606615bf83d20c53556853e",
+      "gitBlob": "2a0547c5caf5aaece606615bf83d20c53556853e",
+      "originalSHA256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "sha256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "bytes": 89,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/package.json",
+      "originalGitBlob": "3ec84bdebbbead646c41067973e09cb17322f399",
+      "gitBlob": "3ec84bdebbbead646c41067973e09cb17322f399",
+      "originalSHA256": "3ed20ec5e1ba9bbe45afcc79dd3637cd105e0bd50265443921ff611782410e9c",
+      "sha256": "3ed20ec5e1ba9bbe45afcc79dd3637cd105e0bd50265443921ff611782410e9c",
+      "bytes": 96,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/server.mjs",
+      "originalGitBlob": "3a195277c807ef35cb5af26d6937cd26009d370e",
+      "gitBlob": "3a195277c807ef35cb5af26d6937cd26009d370e",
+      "originalSHA256": "77e660683b86d631a4ec91a19933d87e88ab23a1b1af33677c95ffa0d350ac67",
+      "sha256": "77e660683b86d631a4ec91a19933d87e88ab23a1b1af33677c95ffa0d350ac67",
+      "bytes": 97,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/module-a.mjs",
+      "originalGitBlob": "2a0547c5caf5aaece606615bf83d20c53556853e",
+      "gitBlob": "2a0547c5caf5aaece606615bf83d20c53556853e",
+      "originalSHA256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "sha256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "bytes": 89,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/package.json",
+      "originalGitBlob": "5f94e9a67815c9985d787a39211853572884c7c8",
+      "gitBlob": "5f94e9a67815c9985d787a39211853572884c7c8",
+      "originalSHA256": "073e7cfb564a0dffc4e971f41d1fa5a6c4d4dd4c2bbb4270d9d576f792df530d",
+      "sha256": "073e7cfb564a0dffc4e971f41d1fa5a6c4d4dd4c2bbb4270d9d576f792df530d",
+      "bytes": 96,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/server.mjs",
+      "originalGitBlob": "bfa525f6098cf05b629474594fa727fd2ba3d708",
+      "gitBlob": "bfa525f6098cf05b629474594fa727fd2ba3d708",
+      "originalSHA256": "b475e1821d9ffa16c29e7ee7f84b42c43b97071a013c36450f32274af8ed72f1",
+      "sha256": "b475e1821d9ffa16c29e7ee7f84b42c43b97071a013c36450f32274af8ed72f1",
+      "bytes": 52,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/package.json",
+      "originalGitBlob": "815d8c6243467108292684c5d89ea94bd6305be7",
+      "gitBlob": "815d8c6243467108292684c5d89ea94bd6305be7",
+      "originalSHA256": "d9558e8ef6ca0b8cf830e098e56036de5588e892031d9b82880bba8a5fee39d0",
+      "sha256": "d9558e8ef6ca0b8cf830e098e56036de5588e892031d9b82880bba8a5fee39d0",
+      "bytes": 81,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/server.mjs",
+      "originalGitBlob": "222c73d8e69bee3e23fe596b79dd45c0956f5e73",
+      "gitBlob": "222c73d8e69bee3e23fe596b79dd45c0956f5e73",
+      "originalSHA256": "107ad2aec7efd4e2cda5882c8d885fe5fa47e872279b79a1f868c5e7478330fa",
+      "sha256": "107ad2aec7efd4e2cda5882c8d885fe5fa47e872279b79a1f868c5e7478330fa",
+      "bytes": 31,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/package.json",
+      "originalGitBlob": "5b8fc7383bfcff7de96d9f6111f08492ffd89243",
+      "gitBlob": "5b8fc7383bfcff7de96d9f6111f08492ffd89243",
+      "originalSHA256": "520f86a8f824a1a36db10e16751e33e78873e47b71f14569ccc80f17aa9a23df",
+      "sha256": "520f86a8f824a1a36db10e16751e33e78873e47b71f14569ccc80f17aa9a23df",
+      "bytes": 81,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/server.mjs",
+      "originalGitBlob": "87fbda20f8f61b60b62192cebb8c281460c9c560",
+      "gitBlob": "87fbda20f8f61b60b62192cebb8c281460c9c560",
+      "originalSHA256": "734230e94ef0bdf1ea36dd6fb2cf747ee6793da6253c54156819fd4d070fd50d",
+      "sha256": "734230e94ef0bdf1ea36dd6fb2cf747ee6793da6253c54156819fd4d070fd50d",
+      "bytes": 18,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/package.json",
+      "originalGitBlob": "b5b62abb88e73678ed99acb30313ff4438315bd8",
+      "gitBlob": "b5b62abb88e73678ed99acb30313ff4438315bd8",
+      "originalSHA256": "5ee27b2f7a1afca8eabba3bc5ff0c2bc06e184e6b84c0fd48492fd9b26b36bd1",
+      "sha256": "5ee27b2f7a1afca8eabba3bc5ff0c2bc06e184e6b84c0fd48492fd9b26b36bd1",
+      "bytes": 84,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/server.cjs",
+      "originalGitBlob": "bd55be319cd55c6d09cac4a61bcde18b5bc0d01d",
+      "gitBlob": "bd55be319cd55c6d09cac4a61bcde18b5bc0d01d",
+      "originalSHA256": "1c58d346a4326d5167252008021aaddc2f262d313cc8efda04e3d5f1b1f1a94f",
+      "sha256": "1c58d346a4326d5167252008021aaddc2f262d313cc8efda04e3d5f1b1f1a94f",
+      "bytes": 602,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/package.json",
+      "originalGitBlob": "cde88b6a5ed39b4a57bee08ff9fb0ca5361bde2e",
+      "gitBlob": "cde88b6a5ed39b4a57bee08ff9fb0ca5361bde2e",
+      "originalSHA256": "ddd0b4c123f16ab60eb0f5baf91b2abed3b2acf12e22718fdc6a3621e4396f90",
+      "sha256": "ddd0b4c123f16ab60eb0f5baf91b2abed3b2acf12e22718fdc6a3621e4396f90",
+      "bytes": 80,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/server.mjs",
+      "originalGitBlob": "e985b195b492a23f8e6a1582e7a4c1c31c91a1fb",
+      "gitBlob": "e985b195b492a23f8e6a1582e7a4c1c31c91a1fb",
+      "originalSHA256": "35ef18067a5ebf605ecce7716a83867e86af0d3e4e962c4e4b6140f9c82e1573",
+      "sha256": "35ef18067a5ebf605ecce7716a83867e86af0d3e4e962c4e4b6140f9c82e1573",
+      "bytes": 586,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/package.json",
+      "originalGitBlob": "89a76116d0c5b8d1519ed5e762ccc54f7440f534",
+      "gitBlob": "89a76116d0c5b8d1519ed5e762ccc54f7440f534",
+      "originalSHA256": "06ac762d77ae6b9d7b193d86101b83654f5c8e00d30b0af96050d48e0b52238c",
+      "sha256": "06ac762d77ae6b9d7b193d86101b83654f5c8e00d30b0af96050d48e0b52238c",
+      "bytes": 81,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/server.mjs",
+      "originalGitBlob": "ea1f03bf720fc743f2db24ecf79ddfa9f3f64c45",
+      "gitBlob": "ea1f03bf720fc743f2db24ecf79ddfa9f3f64c45",
+      "originalSHA256": "89f6cf99c2588c96b646a27509251e65d3dbcc83162b0f0d16b5d12ef05f9002",
+      "sha256": "89f6cf99c2588c96b646a27509251e65d3dbcc83162b0f0d16b5d12ef05f9002",
+      "bytes": 574,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/index.js",
+      "originalGitBlob": "b0a78594f30519e30f97e432478821a68a42ddc4",
+      "gitBlob": "b0a78594f30519e30f97e432478821a68a42ddc4",
+      "originalSHA256": "19a9007ac313dbe6f7dd8aee89b30f278716000e812acdd8f7b29ae5b320d089",
+      "sha256": "19a9007ac313dbe6f7dd8aee89b30f278716000e812acdd8f7b29ae5b320d089",
+      "bytes": 66,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/package.json",
+      "originalGitBlob": "4a659ff89d6e2f530237389547e38db191ac727e",
+      "gitBlob": "4a659ff89d6e2f530237389547e38db191ac727e",
+      "originalSHA256": "649338383b3b9be7aee4058f9a5b4aa71253ab2fbed6ceb73bd695f620f4ef7c",
+      "sha256": "649338383b3b9be7aee4058f9a5b4aa71253ab2fbed6ceb73bd695f620f4ef7c",
+      "bytes": 75,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/client/stdio.js",
+      "originalGitBlob": "8e1244bd344baadf986f5ee87b8bdae77ab2910a",
+      "gitBlob": "8e1244bd344baadf986f5ee87b8bdae77ab2910a",
+      "originalSHA256": "3e106c01408b46e7e73871171446e6c08520cb913c0308c408d08518becb9c63",
+      "sha256": "3e106c01408b46e7e73871171446e6c08520cb913c0308c408d08518becb9c63",
+      "bytes": 112,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/package.json",
+      "originalGitBlob": "406a5830acb77ec1d63d9f6bc149f029c715b00f",
+      "gitBlob": "406a5830acb77ec1d63d9f6bc149f029c715b00f",
+      "originalSHA256": "8eb3dc9742270c91937517cecc77d55873130733c0bea30ddb89f5ef5ca27e0c",
+      "sha256": "8eb3dc9742270c91937517cecc77d55873130733c0bea30ddb89f5ef5ca27e0c",
+      "bytes": 146,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/server/stdio.js",
+      "originalGitBlob": "c4d18db1f2eb975b3176674868b0c54b05e19e43",
+      "gitBlob": "c4d18db1f2eb975b3176674868b0c54b05e19e43",
+      "originalSHA256": "0084cf7753dd64d55db54fa6f6fae0d9315e06e9dd2f3e2ab3b2085c3418140d",
+      "sha256": "0084cf7753dd64d55db54fa6f6fae0d9315e06e9dd2f3e2ab3b2085c3418140d",
+      "bytes": 614,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/package.json",
+      "originalGitBlob": "f4120578e1e224ef619f5fda87434680bf7b2bbc",
+      "gitBlob": "f4120578e1e224ef619f5fda87434680bf7b2bbc",
+      "originalSHA256": "cfc386f20c8abf2edb64079f87d35c65b03e8b8227103a9e842904d97944763a",
+      "sha256": "cfc386f20c8abf2edb64079f87d35c65b03e8b8227103a9e842904d97944763a",
+      "bytes": 84,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/server.mjs",
+      "originalGitBlob": "7d13135dbe578a77ee2a98bdfd18f57349680b52",
+      "gitBlob": "7d13135dbe578a77ee2a98bdfd18f57349680b52",
+      "originalSHA256": "e32b05eac2c5aff8741a3789ea663508ba158e32daa351edfc646792095d3ddf",
+      "sha256": "e32b05eac2c5aff8741a3789ea663508ba158e32daa351edfc646792095d3ddf",
+      "bytes": 35,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/fetch-compatibility-probe.mjs",
+      "originalGitBlob": "0bf084f5572e0f6791c8262d403f7b69c2222a93",
+      "gitBlob": "0bf084f5572e0f6791c8262d403f7b69c2222a93",
+      "originalSHA256": "35074bed12cc9b999a442d2df93b52823d2b367e2ce71fad029ae16be2c108c3",
+      "sha256": "35074bed12cc9b999a442d2df93b52823d2b367e2ce71fad029ae16be2c108c3",
+      "bytes": 4278,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/package.json",
+      "originalGitBlob": "5ea9687d1fa456327ea96823b223e38b91c64ab7",
+      "gitBlob": "5ea9687d1fa456327ea96823b223e38b91c64ab7",
+      "originalSHA256": "5b865d55da12ec8172084346336a14a7c78c9b149c03ca844c0b32b281de1cfa",
+      "sha256": "5b865d55da12ec8172084346336a14a7c78c9b149c03ca844c0b32b281de1cfa",
+      "bytes": 85,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/server.mjs",
+      "originalGitBlob": "4cbe0c4f7882991c7f349b98285531d41ad8464b",
+      "gitBlob": "4cbe0c4f7882991c7f349b98285531d41ad8464b",
+      "originalSHA256": "f4aaafa9ee2a7d17a9be772e7248445e0bda288ce76f66859f23f2a89444fde0",
+      "sha256": "f4aaafa9ee2a7d17a9be772e7248445e0bda288ce76f66859f23f2a89444fde0",
+      "bytes": 583,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/mcp-reference-lifecycle.mjs",
+      "originalGitBlob": "cbb47c3ddc89b20074373056a4d202f3a8f28eba",
+      "gitBlob": "cbb47c3ddc89b20074373056a4d202f3a8f28eba",
+      "originalSHA256": "b9731a89cf08147c9ab88b25e517e0935b757ff970f7c808085baf8dfe9fc2f6",
+      "sha256": "b9731a89cf08147c9ab88b25e517e0935b757ff970f7c808085baf8dfe9fc2f6",
+      "bytes": 2463,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/addon.node",
+      "originalGitBlob": "b6ae1afc7bb7dd799b7a479d53dab7d2783b08e0",
+      "gitBlob": "b6ae1afc7bb7dd799b7a479d53dab7d2783b08e0",
+      "originalSHA256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "sha256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "bytes": 24,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/package.json",
+      "originalGitBlob": "4db3c37ca4a63d011e17d34368960c51a66784f1",
+      "gitBlob": "4db3c37ca4a63d011e17d34368960c51a66784f1",
+      "originalSHA256": "4bfd432e8f8aa167c2e4847c7841eb7ea70f0aea2940221abbc28b01d7b9c778",
+      "sha256": "4bfd432e8f8aa167c2e4847c7841eb7ea70f0aea2940221abbc28b01d7b9c778",
+      "bytes": 84,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/server.cjs",
+      "originalGitBlob": "c05735ddc6f4fa8d32a3c24729c6e55d71843993",
+      "gitBlob": "c05735ddc6f4fa8d32a3c24729c6e55d71843993",
+      "originalSHA256": "c9f5901a33f9455a608a8cef81378caf5d4fdd155f63d9cd7e6c2ea2349f76c1",
+      "sha256": "c9f5901a33f9455a608a8cef81378caf5d4fdd155f63d9cd7e6c2ea2349f76c1",
+      "bytes": 25,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/module-a.mjs",
+      "originalGitBlob": "9f10477f0cf3f8d66ec818b62b69f94e1ba1eba3",
+      "gitBlob": "9f10477f0cf3f8d66ec818b62b69f94e1ba1eba3",
+      "originalSHA256": "518dbab9b57fdde73a9d8d7a450ec07dee293c0b2293026ff901a0974cbf0cec",
+      "sha256": "518dbab9b57fdde73a9d8d7a450ec07dee293c0b2293026ff901a0974cbf0cec",
+      "bytes": 29,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/package.json",
+      "originalGitBlob": "faa0e8e430eb4c54f735730a54d0f704c9b3fd2e",
+      "gitBlob": "faa0e8e430eb4c54f735730a54d0f704c9b3fd2e",
+      "originalSHA256": "97d7d397153d509c7ddb7e48b000add70b0fecf7d3f62838b6656487b76dc924",
+      "sha256": "97d7d397153d509c7ddb7e48b000add70b0fecf7d3f62838b6656487b76dc924",
+      "bytes": 84,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/server.mjs",
+      "originalGitBlob": "a183aa6cac80c8b87c1abf7cf5b1e7955ba43f47",
+      "gitBlob": "a183aa6cac80c8b87c1abf7cf5b1e7955ba43f47",
+      "originalSHA256": "777da3779c5b19b5f52aa0d3e0377350771f11d034b0b2ee9b93da71edc88a1d",
+      "sha256": "777da3779c5b19b5f52aa0d3e0377350771f11d034b0b2ee9b93da71edc88a1d",
+      "bytes": 566,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/package.json",
+      "originalGitBlob": "caf9c5bb386b6d7763c96388d2004d253d585c38",
+      "gitBlob": "caf9c5bb386b6d7763c96388d2004d253d585c38",
+      "originalSHA256": "165f5204a88ecf18e31ac4531e57b18d49187f7b83c0d06310070a330ffc1c84",
+      "sha256": "165f5204a88ecf18e31ac4531e57b18d49187f7b83c0d06310070a330ffc1c84",
+      "bytes": 84,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/server.ts",
+      "originalGitBlob": "fc336348e7dde9902d3bb86dbfbda9ad1b52cbcf",
+      "gitBlob": "fc336348e7dde9902d3bb86dbfbda9ad1b52cbcf",
+      "originalSHA256": "6d6a7e2810b2448e84187b0937e7b5090c497255405811598dace1911a97d4f0",
+      "sha256": "6d6a7e2810b2448e84187b0937e7b5090c497255405811598dace1911a97d4f0",
+      "bytes": 685,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/package.json",
+      "originalGitBlob": "cf235e3e26b1f015b437a9a2bc68eed69fc6c85d",
+      "gitBlob": "cf235e3e26b1f015b437a9a2bc68eed69fc6c85d",
+      "originalSHA256": "056a752de536a4149bcc9f13f83c3e44452a2e7ddc5ccd8d397fbf3b46234f92",
+      "sha256": "056a752de536a4149bcc9f13f83c3e44452a2e7ddc5ccd8d397fbf3b46234f92",
+      "bytes": 84,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/server.mjs",
+      "originalGitBlob": "60b21b97d958a4c17f5b8d5ba2caa9a6459109c6",
+      "gitBlob": "60b21b97d958a4c17f5b8d5ba2caa9a6459109c6",
+      "originalSHA256": "7e655246f02417a2d116db324363e9aee036ebf7de04d829a2e68bcb8a0670f8",
+      "sha256": "7e655246f02417a2d116db324363e9aee036ebf7de04d829a2e68bcb8a0670f8",
+      "bytes": 537,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/addon.node",
+      "originalGitBlob": "b6ae1afc7bb7dd799b7a479d53dab7d2783b08e0",
+      "gitBlob": "b6ae1afc7bb7dd799b7a479d53dab7d2783b08e0",
+      "originalSHA256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "sha256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "bytes": 24,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/binding.gyp",
+      "originalGitBlob": "822c1cd04a06b1aa7c9e3443ef09fb7ea660acdd",
+      "gitBlob": "822c1cd04a06b1aa7c9e3443ef09fb7ea660acdd",
+      "originalSHA256": "a758f0791313b284d4e230a4d5f162fb002bbb9c0e814277ddc24b07ace36cb2",
+      "sha256": "a758f0791313b284d4e230a4d5f162fb002bbb9c0e814277ddc24b07ace36cb2",
+      "bytes": 15,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/archive-resources.test.mjs",
+      "originalGitBlob": "4e82dff44027038a0c3672bd58acc48cbbc6c961",
+      "gitBlob": "4e82dff44027038a0c3672bd58acc48cbbc6c961",
+      "originalSHA256": "ef0caf9c8e714e3d943f0f14845c731f3a183c782bae055d9886a2b2a62b8712",
+      "sha256": "ef0caf9c8e714e3d943f0f14845c731f3a183c782bae055d9886a2b2a62b8712",
+      "bytes": 1757,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/cablate-google-map.integration.mjs",
+      "originalGitBlob": "88677f23533cf44ace69fae4f98a5548bd79359c",
+      "gitBlob": "88677f23533cf44ace69fae4f98a5548bd79359c",
+      "originalSHA256": "d9adab3a75c797ba3225b1c35f95b9bbc0f21da242f0db37fba94e16afa5bdc9",
+      "sha256": "d9adab3a75c797ba3225b1c35f95b9bbc0f21da242f0db37fba94e16afa5bdc9",
+      "bytes": 2328,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/cli-entry-resolution.test.mjs",
+      "originalGitBlob": "6f2b2dad8f39416b8666280264aab8a202f008ef",
+      "gitBlob": "6f2b2dad8f39416b8666280264aab8a202f008ef",
+      "originalSHA256": "c425716dad74710ae6d914ac54f2269ed8df11229beaf30272fc5a9088cc2ebc",
+      "sha256": "c425716dad74710ae6d914ac54f2269ed8df11229beaf30272fc5a9088cc2ebc",
+      "bytes": 1726,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/compatibility.test.mjs",
+      "originalGitBlob": "f56c606244632a79670126519b59f5d42013f6ee",
+      "gitBlob": "f56c606244632a79670126519b59f5d42013f6ee",
+      "originalSHA256": "f2abaa0927107ca4ed1761637077381967127c48ca4ae4613b83d21ab91e6cce",
+      "sha256": "f2abaa0927107ca4ed1761637077381967127c48ca4ae4613b83d21ab91e6cce",
+      "bytes": 16080,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-input.test.mjs",
+      "originalGitBlob": "cd8ae33f66b8f0b0c4aa4ebe04dc8149617a310c",
+      "gitBlob": "cd8ae33f66b8f0b0c4aa4ebe04dc8149617a310c",
+      "originalSHA256": "36da4dac42aefe9c0d08e46d8146e848ed642c12618c0fb9aad4ebad4054affb",
+      "sha256": "36da4dac42aefe9c0d08e46d8146e848ed642c12618c0fb9aad4ebad4054affb",
+      "bytes": 14443,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs",
+      "originalGitBlob": "81cc8b3bfc98c4df177dfabc23cf469f732bad67",
+      "gitBlob": "81cc8b3bfc98c4df177dfabc23cf469f732bad67",
+      "originalSHA256": "6278094d448ab43c5f8bfdbd80dcc8f98ebd7d803892778878b54ae227bcc9fa",
+      "sha256": "6278094d448ab43c5f8bfdbd80dcc8f98ebd7d803892778878b54ae227bcc9fa",
+      "bytes": 23830,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/fetch-compatibility.test.mjs",
+      "originalGitBlob": "5adfd51a628f6e29f876ef64fc527fde9babb73a",
+      "gitBlob": "5adfd51a628f6e29f876ef64fc527fde9babb73a",
+      "originalSHA256": "72b68cd74580c9bac8f48f01eb38dec4c8e1ca1541f57191dad29eae9041b7f5",
+      "sha256": "72b68cd74580c9bac8f48f01eb38dec4c8e1ca1541f57191dad29eae9041b7f5",
+      "bytes": 1048,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/fetch-conformance.test.mjs",
+      "originalGitBlob": "6135391c96f4de97ae79f8b12c3d037aca1a930d",
+      "gitBlob": "6135391c96f4de97ae79f8b12c3d037aca1a930d",
+      "originalSHA256": "4057560be54e16a5c1a3193852ff15534c352bdf02ba80ad1258a3c0a5ff8dfe",
+      "sha256": "4057560be54e16a5c1a3193852ff15534c352bdf02ba80ad1258a3c0a5ff8dfe",
+      "bytes": 1549,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/host-dependency-patches.test.mjs",
+      "originalGitBlob": "02f91f0c4cf6b8c6795c289b538cf00983818459",
+      "gitBlob": "02f91f0c4cf6b8c6795c289b538cf00983818459",
+      "originalSHA256": "404fb0ad2f3fca8597e03aaa48b6d4ffc98938ec71774806baaf2bbe3118718a",
+      "sha256": "404fb0ad2f3fca8597e03aaa48b6d4ffc98938ec71774806baaf2bbe3118718a",
+      "bytes": 4424,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/host-operations.test.mjs",
+      "originalGitBlob": "e77d42927ad7d07cc21e550873b1314c164b1e89",
+      "gitBlob": "e77d42927ad7d07cc21e550873b1314c164b1e89",
+      "originalSHA256": "8340059bf2c5d2c3e92a99e4e625787ac6119aa1d44d8dde144fb23a1fa9142b",
+      "sha256": "8340059bf2c5d2c3e92a99e4e625787ac6119aa1d44d8dde144fb23a1fa9142b",
+      "bytes": 5921,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/host.test.mjs",
+      "originalGitBlob": "37e4a5bba9fd57d86621bfaae331187e45ab3393",
+      "gitBlob": "37e4a5bba9fd57d86621bfaae331187e45ab3393",
+      "originalSHA256": "9a235851048a63be088a5835251072d36a6d73b5f1fb0d54c2bfeadaff5a1df5",
+      "sha256": "9a235851048a63be088a5835251072d36a6d73b5f1fb0d54c2bfeadaff5a1df5",
+      "bytes": 23559,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/job-terminal-publication.test.mjs",
+      "originalGitBlob": "706dd58c3923e59b8e69ce3df9e1dc16d8f56d5d",
+      "gitBlob": "706dd58c3923e59b8e69ce3df9e1dc16d8f56d5d",
+      "originalSHA256": "0b01e02fa3c3792e78ed0c8e79817176c62256e732c925438ec2340ffaa25acf",
+      "sha256": "0b01e02fa3c3792e78ed0c8e79817176c62256e732c925438ec2340ffaa25acf",
+      "bytes": 2407,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/lifecycle.integration.mjs",
+      "originalGitBlob": "880e4548885465c20934e1e5e83b4e8d2eb8c0cd",
+      "gitBlob": "880e4548885465c20934e1e5e83b4e8d2eb8c0cd",
+      "originalSHA256": "250459bbe1026aaea1ff91610c409a783525072ff8ef5c56afb67ee8fd184e77",
+      "sha256": "250459bbe1026aaea1ff91610c409a783525072ff8ef5c56afb67ee8fd184e77",
+      "bytes": 15541,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-install-lifecycle.test.mjs",
+      "originalGitBlob": "8dd6c99c919df9e6fc67d260aaf1e400d1415c23",
+      "gitBlob": "8dd6c99c919df9e6fc67d260aaf1e400d1415c23",
+      "originalSHA256": "2b9b60e58bb374daaa4650c9e3907545f13dea699139b0ec0fb117200cffe2e8",
+      "sha256": "2b9b60e58bb374daaa4650c9e3907545f13dea699139b0ec0fb117200cffe2e8",
+      "bytes": 4248,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-large-probe.test.mjs",
+      "originalGitBlob": "cfb9691bc9a0485b4162dc4832beef12f695776c",
+      "gitBlob": "cfb9691bc9a0485b4162dc4832beef12f695776c",
+      "originalSHA256": "a3ebc3f8f39167dc48825a6c6c41bf41dcea071ffbe788d3c775828c90f50df2",
+      "sha256": "a3ebc3f8f39167dc48825a6c6c41bf41dcea071ffbe788d3c775828c90f50df2",
+      "bytes": 4881,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-large-transport.test.mjs",
+      "originalGitBlob": "3d6efbcb2bc35cc11f799ff712f0e45b6fdf03f7",
+      "gitBlob": "3d6efbcb2bc35cc11f799ff712f0e45b6fdf03f7",
+      "originalSHA256": "f3ea855dabb03883ae87db7a06acae4936a6be01a13e344bd1f974e762cf5b7b",
+      "sha256": "f3ea855dabb03883ae87db7a06acae4936a6be01a13e344bd1f974e762cf5b7b",
+      "bytes": 7580,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-package-generations.test.mjs",
+      "originalGitBlob": "edd9daef6870c54337e70cf99e426ae3cd93852b",
+      "gitBlob": "edd9daef6870c54337e70cf99e426ae3cd93852b",
+      "originalSHA256": "96ea36d1338f056e0bff77adef5c0bbd60cca586af5d37c3c87436eecdc341dc",
+      "sha256": "96ea36d1338f056e0bff77adef5c0bbd60cca586af5d37c3c87436eecdc341dc",
+      "bytes": 3499,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-server-regression.integration.mjs",
+      "originalGitBlob": "aca7c5537298ad249425d511112651acb2e62b72",
+      "gitBlob": "aca7c5537298ad249425d511112651acb2e62b72",
+      "originalSHA256": "9d206b38579703a08800ecdb62b42a4f53666224ccd5611716ab7917ffcadf0b",
+      "sha256": "9d206b38579703a08800ecdb62b42a4f53666224ccd5611716ab7917ffcadf0b",
+      "bytes": 2354,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/native-commands.test.mjs",
+      "originalGitBlob": "1919eef6990afefda8333be61bdf18ae922dca05",
+      "gitBlob": "1919eef6990afefda8333be61bdf18ae922dca05",
+      "originalSHA256": "add7f47c2b9de3881646a7ef1e7890e920fa39653f7a71ba10d4c1ea70864e0d",
+      "sha256": "add7f47c2b9de3881646a7ef1e7890e920fa39653f7a71ba10d4c1ea70864e0d",
+      "bytes": 7271,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/network-diagnostics.test.mjs",
+      "originalGitBlob": "4bc9b53ec5983aa60235c4cd8e734d47dd01b009",
+      "gitBlob": "4bc9b53ec5983aa60235c4cd8e734d47dd01b009",
+      "originalSHA256": "8d0c8edfc99e5ca37f75b7bcceb68f04fb0b637c2be7f1d4749ad48a3f5faba5",
+      "sha256": "8d0c8edfc99e5ca37f75b7bcceb68f04fb0b637c2be7f1d4749ad48a3f5faba5",
+      "bytes": 2160,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/optional-lifecycle.test.mjs",
+      "originalGitBlob": "a67a14b6940e8335e6106415fbd3ae876908802a",
+      "gitBlob": "a67a14b6940e8335e6106415fbd3ae876908802a",
+      "originalSHA256": "54d1ed12d8f044fda90e1ab5a81af5f7b33d306aa6c97a29479835912353f0b7",
+      "sha256": "54d1ed12d8f044fda90e1ab5a81af5f7b33d306aa6c97a29479835912353f0b7",
+      "bytes": 11245,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/package-lifecycle.test.mjs",
+      "originalGitBlob": "4a8d94fafd3425a969c29b570edb7edd9d44c326",
+      "gitBlob": "4a8d94fafd3425a969c29b570edb7edd9d44c326",
+      "originalSHA256": "c7d0fb58af6b07e61bfd235e01bdb9d11483254ed0601d4f9363b375c2e0f2f9",
+      "sha256": "c7d0fb58af6b07e61bfd235e01bdb9d11483254ed0601d4f9363b375c2e0f2f9",
+      "bytes": 16334,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/package-validation.test.mjs",
+      "originalGitBlob": "4ae2d3c5e195cc11372081f082f3618e962ae470",
+      "gitBlob": "4ae2d3c5e195cc11372081f082f3618e962ae470",
+      "originalSHA256": "6cfec074c956d98500c6c840f83970d2ec6ee076e1abb9024701af2dc34dc2df",
+      "sha256": "6cfec074c956d98500c6c840f83970d2ec6ee076e1abb9024701af2dc34dc2df",
+      "bytes": 5143,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/portable-shell.test.mjs",
+      "originalGitBlob": "b57202e7151606582f917cbfc3ae64fe0cbd2cdc",
+      "gitBlob": "b57202e7151606582f917cbfc3ae64fe0cbd2cdc",
+      "originalSHA256": "709ad1b564b1f7a0daa87a35059d25dd8f4bd89db28bdcf4f4436a0706801b8a",
+      "sha256": "709ad1b564b1f7a0daa87a35059d25dd8f4bd89db28bdcf4f4436a0706801b8a",
+      "bytes": 6081,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime-capabilities.test.mjs",
+      "originalGitBlob": "4c9b462446b60a02a4f322447212e27ae9aaff40",
+      "gitBlob": "4c9b462446b60a02a4f322447212e27ae9aaff40",
+      "originalSHA256": "2c8fd6849c15517c1af5eb347533a174ab76f4c2d7cd50bc6881f7a7aa51d0ae",
+      "sha256": "2c8fd6849c15517c1af5eb347533a174ab76f4c2d7cd50bc6881f7a7aa51d0ae",
+      "bytes": 750,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime-command-broker.test.mjs",
+      "originalGitBlob": "aed9b023af051eb9404841e3bfbc7efaaf3b1589",
+      "gitBlob": "aed9b023af051eb9404841e3bfbc7efaaf3b1589",
+      "originalSHA256": "31d9ba300648b0c13c558d49e99956aa6f6dbde8b833327cad7501ef5778b383",
+      "sha256": "31d9ba300648b0c13c558d49e99956aa6f6dbde8b833327cad7501ef5778b383",
+      "bytes": 9794,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime-package-target.test.mjs",
+      "originalGitBlob": "c28d6b7ef174684e23a9b9d230d31725832b972c",
+      "gitBlob": "c28d6b7ef174684e23a9b9d230d31725832b972c",
+      "originalSHA256": "318c7c035661d3ee4461a42931c97416c0eb92d6e6b51891f77dc6425a8ea7fa",
+      "sha256": "318c7c035661d3ee4461a42931c97416c0eb92d6e6b51891f77dc6425a8ea7fa",
+      "bytes": 6577,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime.test.mjs",
+      "originalGitBlob": "8e742f0b2a81c9bb1c5704511c59988600a2ab9d",
+      "gitBlob": "8e742f0b2a81c9bb1c5704511c59988600a2ab9d",
+      "originalSHA256": "cbd84f7ef1d192ec3ba171982f6597aafea72e7efa4be14f69e207b9dbfee320",
+      "sha256": "cbd84f7ef1d192ec3ba171982f6597aafea72e7efa4be14f69e207b9dbfee320",
+      "bytes": 9258,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/server-everything.integration.mjs",
+      "originalGitBlob": "9b8098f6d5fd46dd43669df0942005579930e818",
+      "gitBlob": "9b8098f6d5fd46dd43669df0942005579930e818",
+      "originalSHA256": "9789308a914581e96608eb80b192cfc39d4af945aac8b7939dcea79d307bc022",
+      "sha256": "9789308a914581e96608eb80b192cfc39d4af945aac8b7939dcea79d307bc022",
+      "bytes": 3172,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/typescript-jobs.test.mjs",
+      "originalGitBlob": "0858df1e4af693f0801dbc53cae8c146aec20f30",
+      "gitBlob": "0858df1e4af693f0801dbc53cae8c146aec20f30",
+      "originalSHA256": "a96406171b1ec35e06be5abe6b9772b5eb9501b883b9295d48d068686228203c",
+      "sha256": "a96406171b1ec35e06be5abe6b9772b5eb9501b883b9295d48d068686228203c",
+      "bytes": 7594,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/warning-diagnostics.test.mjs",
+      "originalGitBlob": "92fe0e801683011b50c2970fcd7424d01a5811c4",
+      "gitBlob": "92fe0e801683011b50c2970fcd7424d01a5811c4",
+      "originalSHA256": "40a6a53c243c06a01bf64b341ac535c6131b143c76fb1d598030fd0708ef28c1",
+      "sha256": "40a6a53c243c06a01bf64b341ac535c6131b143c76fb1d598030fd0708ef28c1",
+      "bytes": 2148,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/workspace-io.test.mjs",
+      "originalGitBlob": "b28144c0217caca21d66bd3bf0862a037c233fc4",
+      "gitBlob": "b28144c0217caca21d66bd3bf0862a037c233fc4",
+      "originalSHA256": "d817d3b2d244013c900dfa2b72287bee4d577a07b4a1cb3aaddd4b681ab9f2a2",
+      "sha256": "d817d3b2d244013c900dfa2b72287bee4d577a07b4a1cb3aaddd4b681ab9f2a2",
+      "bytes": 3020,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/UNICODE-LICENSE.txt",
+      "originalGitBlob": "56da58912807030b451a4700687d5bd02c72d6ed",
+      "gitBlob": "56da58912807030b451a4700687d5bd02c72d6ed",
+      "originalSHA256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+      "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+      "bytes": 1995,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/apply-host-dependency-patches.mjs",
+      "originalGitBlob": "b546b90c1c8eceb8a3cc65588632ac794c8e192d",
+      "gitBlob": "b546b90c1c8eceb8a3cc65588632ac794c8e192d",
+      "originalSHA256": "ad74dbf9ffdf23d8fe0a75905f11cf52760a0d815e601813fea9bab1aa2d5d96",
+      "sha256": "ad74dbf9ffdf23d8fe0a75905f11cf52760a0d815e601813fea9bab1aa2d5d96",
+      "bytes": 3793,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/cli-preload.mjs",
+      "originalGitBlob": "c73d0dfce3b4ab48c697e4b73104a66cb268fcad",
+      "gitBlob": "c73d0dfce3b4ab48c697e4b73104a66cb268fcad",
+      "originalSHA256": "f1443f786a3fe2e80c735c819242c311399f666cbaf80c6d89813e2903e5a833",
+      "sha256": "f1443f786a3fe2e80c735c819242c311399f666cbaf80c6d89813e2903e5a833",
+      "bytes": 772,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/diagnostic-worker.mjs",
+      "originalGitBlob": "d558d30cb3b7964984df3710839d93e254bb5e8b",
+      "gitBlob": "d558d30cb3b7964984df3710839d93e254bb5e8b",
+      "originalSHA256": "2b7d4ecd3651521ccef6b3860ca13ba530e03b040e627c96f1e6ec87ffb95ddc",
+      "sha256": "2b7d4ecd3651521ccef6b3860ca13ba530e03b040e627c96f1e6ec87ffb95ddc",
+      "bytes": 288,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-context.mjs",
+      "originalGitBlob": "711d6c642f3711cba9dda78b1b2b85b270bd639e",
+      "gitBlob": "711d6c642f3711cba9dda78b1b2b85b270bd639e",
+      "originalSHA256": "ab9d145b80ffcae8f4e8fccd02e4c8f5db67f15dae57f5cacea49ed84424e4c7",
+      "sha256": "ab9d145b80ffcae8f4e8fccd02e4c8f5db67f15dae57f5cacea49ed84424e4c7",
+      "bytes": 2959,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-input.mjs",
+      "originalGitBlob": "d98f3a80b64696802aeaf8cdccc213ac1748b8e5",
+      "gitBlob": "d98f3a80b64696802aeaf8cdccc213ac1748b8e5",
+      "originalSHA256": "127a06f12bb687736c0e28a7fd0a8f6e060325d4b518e487ed37c0bef8b5c3b0",
+      "sha256": "127a06f12bb687736c0e28a7fd0a8f6e060325d4b518e487ed37c0bef8b5c3b0",
+      "bytes": 3986,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-jobs.mjs",
+      "originalGitBlob": "627e0cd0fbdcb69c13433f1a39fed0cf9780283a",
+      "gitBlob": "627e0cd0fbdcb69c13433f1a39fed0cf9780283a",
+      "originalSHA256": "84ace56b53c85047b2105ce8b5b790afb6fc2b055e59d7c7b2ae4047eee2980f",
+      "sha256": "84ace56b53c85047b2105ce8b5b790afb6fc2b055e59d7c7b2ae4047eee2980f",
+      "bytes": 27172,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-modules.mjs",
+      "originalGitBlob": "98b3e5fb752aaa6c5598ed766cc50a5b551f17c7",
+      "gitBlob": "98b3e5fb752aaa6c5598ed766cc50a5b551f17c7",
+      "originalSHA256": "3a581b4f68a80b39ae013a0e345d973146533551eb1d6166e09cf970357e0252",
+      "sha256": "3a581b4f68a80b39ae013a0e345d973146533551eb1d6166e09cf970357e0252",
+      "bytes": 3438,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-worker.mjs",
+      "originalGitBlob": "abfc752bdaa1c7576dc98a4a5953ef6006b9df6d",
+      "gitBlob": "abfc752bdaa1c7576dc98a4a5953ef6006b9df6d",
+      "originalSHA256": "92e0368e0ab09270c8ab3f0a4c989b570c0f7bebb0d2a41fda35b7efb9e993f1",
+      "sha256": "92e0368e0ab09270c8ab3f0a4c989b570c0f7bebb0d2a41fda35b7efb9e993f1",
+      "bytes": 1284,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/fetch-compatibility.mjs",
+      "originalGitBlob": "287c3105e93e7fbf05f3d7a1c3d1967340a0ebbc",
+      "gitBlob": "287c3105e93e7fbf05f3d7a1c3d1967340a0ebbc",
+      "originalSHA256": "e1c2bdbe192a2d9b3f0e0aed7141796d91a730d76ce8746015eef1e4a5fff483",
+      "sha256": "e1c2bdbe192a2d9b3f0e0aed7141796d91a730d76ce8746015eef1e4a5fff483",
+      "bytes": 2341,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-manager.mjs",
+      "originalGitBlob": "7a4da569ff95f1d0d0e66243d32bc1f8f8619aaa",
+      "gitBlob": "7a4da569ff95f1d0d0e66243d32bc1f8f8619aaa",
+      "originalSHA256": "de4a56d9936dcb9cf7270e469ed54fc14ed646bbfb9447840910d418b256920d",
+      "sha256": "de4a56d9936dcb9cf7270e469ed54fc14ed646bbfb9447840910d418b256920d",
+      "bytes": 8853,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-state.mjs",
+      "originalGitBlob": "f385ef9068a2483e0ce69861f1f9602d1b7d5c4c",
+      "gitBlob": "f385ef9068a2483e0ce69861f1f9602d1b7d5c4c",
+      "originalSHA256": "1ec7ffe20def4025cec4d228b8432c9d9950d01ccdf5b076a3c4b92dd3a16a5c",
+      "sha256": "1ec7ffe20def4025cec4d228b8432c9d9950d01ccdf5b076a3c4b92dd3a16a5c",
+      "bytes": 4994,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host-dependency-patches.json",
+      "originalGitBlob": "980f895de5dc13d60f01b564458f89261c2efb0c",
+      "gitBlob": "980f895de5dc13d60f01b564458f89261c2efb0c",
+      "originalSHA256": "adff17c32c653f0e3b99db277f42718218fb1a19c03a0c158079fceee873fba8",
+      "sha256": "adff17c32c653f0e3b99db277f42718218fb1a19c03a0c158079fceee873fba8",
+      "bytes": 43725,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs",
+      "originalGitBlob": "fdc98e9c638b0d01548d891c7df9ec5249077e9b",
+      "gitBlob": "fdc98e9c638b0d01548d891c7df9ec5249077e9b",
+      "originalSHA256": "808c80eaef48bdf5772871b8065ef24b00d4f01b2663b87366986ff538bd8147",
+      "sha256": "808c80eaef48bdf5772871b8065ef24b00d4f01b2663b87366986ff538bd8147",
+      "bytes": 42493,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-executor.mjs",
+      "originalGitBlob": "ad7900a298c02fb681c16d5e17b7ed7833678214",
+      "gitBlob": "ad7900a298c02fb681c16d5e17b7ed7833678214",
+      "originalSHA256": "f989f12f516ab4e9ef4bc2471ba0603cc566716d746444ab5364c1f415653c92",
+      "sha256": "f989f12f516ab4e9ef4bc2471ba0603cc566716d746444ab5364c1f415653c92",
+      "bytes": 3041,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-planner.mjs",
+      "originalGitBlob": "4dcc0056c5f56ce8e7dad1ba9154117b5443052e",
+      "gitBlob": "4dcc0056c5f56ce8e7dad1ba9154117b5443052e",
+      "originalSHA256": "7e8937094fed66ae25fbdac8bfc3fd5a91779855a51bbe2f97517d313e137b58",
+      "sha256": "7e8937094fed66ae25fbdac8bfc3fd5a91779855a51bbe2f97517d313e137b58",
+      "bytes": 8117,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-framing.mjs",
+      "originalGitBlob": "2847ee2bf2baaa008085358505565e816c6619e4",
+      "gitBlob": "2847ee2bf2baaa008085358505565e816c6619e4",
+      "originalSHA256": "6c558bb28dae24ea4582450a0af7067bbbb7cee9d675e6ccb047ce3140eebffb",
+      "sha256": "6c558bb28dae24ea4582450a0af7067bbbb7cee9d675e6ccb047ce3140eebffb",
+      "bytes": 823,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-package-generations.mjs",
+      "originalGitBlob": "481f7a9e90a9d82a1fc480642a65cde1b24967eb",
+      "gitBlob": "481f7a9e90a9d82a1fc480642a65cde1b24967eb",
+      "originalSHA256": "67b608d52a7bdc7dea854c50e777ab4d466517958903bcc746a13e98a132d96c",
+      "sha256": "67b608d52a7bdc7dea854c50e777ab4d466517958903bcc746a13e98a132d96c",
+      "bytes": 4714,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/native-commands.mjs",
+      "originalGitBlob": "1f19a053c69ecf4520cf8685a329529dfe119620",
+      "gitBlob": "1f19a053c69ecf4520cf8685a329529dfe119620",
+      "originalSHA256": "c4ab93a40ef6ae316ccfe0fa870f18b5ec8a1a40484c3e27ebdc40c469e5f3b2",
+      "sha256": "c4ab93a40ef6ae316ccfe0fa870f18b5ec8a1a40484c3e27ebdc40c469e5f3b2",
+      "bytes": 3493,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/network-diagnostics.mjs",
+      "originalGitBlob": "7e5814d86dc3503a7fea82122031a423cb604914",
+      "gitBlob": "7e5814d86dc3503a7fea82122031a423cb604914",
+      "originalSHA256": "e8cda97ae01cae485138c1f9d01f246935ece9c26da3cfd5f94e09bd08c6bc26",
+      "sha256": "e8cda97ae01cae485138c1f9d01f246935ece9c26da3cfd5f94e09bd08c6bc26",
+      "bytes": 5777,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/optional-lifecycle.mjs",
+      "originalGitBlob": "1d462b042b4240a3bb297b1d7da28bd34df606a9",
+      "gitBlob": "1d462b042b4240a3bb297b1d7da28bd34df606a9",
+      "originalSHA256": "1f668656e67d4be59536fd606f7ab92ef2587d45d3f9fc1fb509eedd3a8134ba",
+      "sha256": "1f668656e67d4be59536fd606f7ab92ef2587d45d3f9fc1fb509eedd3a8134ba",
+      "bytes": 6601,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-compatibility.mjs",
+      "originalGitBlob": "b4082bc171960648ffae412894b25def19a66e21",
+      "gitBlob": "b4082bc171960648ffae412894b25def19a66e21",
+      "originalSHA256": "32424b3a6e153d655677c524e85ab6b96a1085941d7d356906cfe3dfd609cd45",
+      "sha256": "32424b3a6e153d655677c524e85ab6b96a1085941d7d356906cfe3dfd609cd45",
+      "bytes": 19815,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs",
+      "originalGitBlob": "ea7bba8522a0ca0f560fb784a837f61802725638",
+      "gitBlob": "ea7bba8522a0ca0f560fb784a837f61802725638",
+      "originalSHA256": "fbc7c68aafafdbc8b80a8ff70466ab0d2b780a733975d4442a887cb7a884ee05",
+      "sha256": "fbc7c68aafafdbc8b80a8ff70466ab0d2b780a733975d4442a887cb7a884ee05",
+      "bytes": 16910,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json",
+      "originalGitBlob": "ccea3044b5412094f6305cd1cb93e18116cc3224",
+      "gitBlob": "ccea3044b5412094f6305cd1cb93e18116cc3224",
+      "originalSHA256": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+      "sha256": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+      "bytes": 74848,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-validation.mjs",
+      "originalGitBlob": "ae22f7957df90c5ad45564ee6d8777f4320414ed",
+      "gitBlob": "ae22f7957df90c5ad45564ee6d8777f4320414ed",
+      "originalSHA256": "b95da83e38ee55603712c17fed092232c8f23a13ce7c86d3bba1c450d185560c",
+      "sha256": "b95da83e38ee55603712c17fed092232c8f23a13ce7c86d3bba1c450d185560c",
+      "bytes": 3515,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json",
+      "originalGitBlob": "37a539d83cc91716ea585fd1eb443a987c2b92b4",
+      "gitBlob": "37a539d83cc91716ea585fd1eb443a987c2b92b4",
+      "originalSHA256": "1794af1338974e7f024e67daceb586fb0b7d897a702ce26ab66b690d41e20968",
+      "sha256": "1794af1338974e7f024e67daceb586fb0b7d897a702ce26ab66b690d41e20968",
+      "bytes": 816,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/portable-shell.mjs",
+      "originalGitBlob": "6e0c5d1594f37685f939202d825e2bb41d6e7323",
+      "gitBlob": "6e0c5d1594f37685f939202d825e2bb41d6e7323",
+      "originalSHA256": "2059b49ae6e86d45d8533e2a2bd66e2f9604307c73b3784f04c370f8c87b91f3",
+      "sha256": "2059b49ae6e86d45d8533e2a2bd66e2f9604307c73b3784f04c370f8c87b91f3",
+      "bytes": 5259,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-capabilities.mjs",
+      "originalGitBlob": "85b052685a09778fc789fb5bcc8fd9734202b40c",
+      "gitBlob": "85b052685a09778fc789fb5bcc8fd9734202b40c",
+      "originalSHA256": "43bd9d0fe8696a9578ec6df30b5c7e86b7f265c77013ee11f1bd28234180b2fa",
+      "sha256": "43bd9d0fe8696a9578ec6df30b5c7e86b7f265c77013ee11f1bd28234180b2fa",
+      "bytes": 2133,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-broker.mjs",
+      "originalGitBlob": "ea0e69da17f357f010af331d08c15060b563d47b",
+      "gitBlob": "ea0e69da17f357f010af331d08c15060b563d47b",
+      "originalSHA256": "7e7d289ecee36a20041e5237a834d6fd7435e49b33922f0541ac4582a93efae7",
+      "sha256": "7e7d289ecee36a20041e5237a834d6fd7435e49b33922f0541ac4582a93efae7",
+      "bytes": 5849,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-client.mjs",
+      "originalGitBlob": "3b9a31348d315ce8aaa7c540240275458ae33249",
+      "gitBlob": "3b9a31348d315ce8aaa7c540240275458ae33249",
+      "originalSHA256": "621af880e349fd99b6ec888e0d8cefa0fa4b447c64d96a7216c4d8d2803d1bc7",
+      "sha256": "621af880e349fd99b6ec888e0d8cefa0fa4b447c64d96a7216c4d8d2803d1bc7",
+      "bytes": 3434,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-resolution.mjs",
+      "originalGitBlob": "ef8d6bf31808b844b85339fdb26cc1fe25967ae8",
+      "gitBlob": "ef8d6bf31808b844b85339fdb26cc1fe25967ae8",
+      "originalSHA256": "88e0308f25b4d489098cff0973d6d742553e53bc1ee346a7ee3df3de17385211",
+      "sha256": "88e0308f25b4d489098cff0973d6d742553e53bc1ee346a7ee3df3de17385211",
+      "bytes": 2192,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-dependency-overrides.json",
+      "originalGitBlob": "97c17033df09117077461449634aa70a3e17ac30",
+      "gitBlob": "97c17033df09117077461449634aa70a3e17ac30",
+      "originalSHA256": "20f62dcb9696e3c85825bf4297bff5af7527b87dd19bc290daabeea78077dea8",
+      "sha256": "20f62dcb9696e3c85825bf4297bff5af7527b87dd19bc290daabeea78077dea8",
+      "bytes": 362,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-probe.mjs",
+      "originalGitBlob": "d1cb19d030253fd834d3c71663d56241588c4449",
+      "gitBlob": "d1cb19d030253fd834d3c71663d56241588c4449",
+      "originalSHA256": "8f6c140c337ea0524747450162ce8a712bc9c0142e305ad6fc3c24de2ba442b7",
+      "sha256": "8f6c140c337ea0524747450162ce8a712bc9c0142e305ad6fc3c24de2ba442b7",
+      "bytes": 14737,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/server-worker.mjs",
+      "originalGitBlob": "e4409eb574caf16275cf646383790a8787201a72",
+      "gitBlob": "e4409eb574caf16275cf646383790a8787201a72",
+      "originalSHA256": "53255b3b3d1cd77671219afa2dde6440636250804b3719e32b2d50e2add8a2d1",
+      "sha256": "53255b3b3d1cd77671219afa2dde6440636250804b3719e32b2d50e2add8a2d1",
+      "bytes": 13404,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/typescript-compiler.mjs",
+      "originalGitBlob": "4e4a6b2c53e186555f63accdf4f6c3b6ab03185d",
+      "gitBlob": "4e4a6b2c53e186555f63accdf4f6c3b6ab03185d",
+      "originalSHA256": "c21a05fdc704305815e130ad913a2c63b4e705bf06b68bacf0a855e0aab2631e",
+      "sha256": "c21a05fdc704305815e130ad913a2c63b4e705bf06b68bacf0a855e0aab2631e",
+      "bytes": 8341,
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/warning-diagnostics.mjs",
+      "originalGitBlob": "40c4718d82174c2a5f3c3b9cf76bbb60dedc38da",
+      "gitBlob": "40c4718d82174c2a5f3c3b9cf76bbb60dedc38da",
+      "originalSHA256": "b2d4111e9f22f2ae9c1ef61716040646b9e1e5aa7f93d4b7fc2a16ae3fe73d08",
+      "sha256": "b2d4111e9f22f2ae9c1ef61716040646b9e1e5aa7f93d4b7fc2a16ae3fe73d08",
+      "bytes": 585,
+      "identical": true
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle/probe.mjs",
+      "originalGitBlob": "bc6f8a1d5beca904d619f37920f62e5f51f288f2",
+      "gitBlob": "bc6f8a1d5beca904d619f37920f62e5f51f288f2",
+      "originalSHA256": "8ae9d02c1296b8f3a55c248d03b4a4bb2cf5e7538e36dc1327cbf55e0490143d",
+      "sha256": "8ae9d02c1296b8f3a55c248d03b4a4bb2cf5e7538e36dc1327cbf55e0490143d",
+      "bytes": 6680,
+      "identical": true
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle/tls-fixture.json",
+      "originalGitBlob": "db75578850559f95ab833bbd97b4ee232c2683bd",
+      "gitBlob": "db75578850559f95ab833bbd97b4ee232c2683bd",
+      "originalSHA256": "2dd234ef6f9429ab93c2a78c082fb0297e3949877508876f5c49b19d71ea9464",
+      "sha256": "2dd234ef6f9429ab93c2a78c082fb0297e3949877508876f5c49b19d71ea9464",
+      "bytes": 4332,
+      "identical": true
+    },
+    {
+      "path": "Scripts/Runtime/HostGrammarTools/package-lock.json",
+      "originalGitBlob": "8d76cdc62afc1051792e76403c7586f92b520e98",
+      "gitBlob": "8d76cdc62afc1051792e76403c7586f92b520e98",
+      "originalSHA256": "8a76d3aba3058502335f8b3c529ed84d9417c6c3ca5c77890a49256c2a79a564",
+      "sha256": "8a76d3aba3058502335f8b3c529ed84d9417c6c3ca5c77890a49256c2a79a564",
+      "bytes": 606,
+      "identical": true
+    },
+    {
+      "path": "Scripts/Runtime/HostGrammarTools/package.json",
+      "originalGitBlob": "4942860e407cf0dc17b378b8805f72259c4d79fa",
+      "gitBlob": "4942860e407cf0dc17b378b8805f72259c4d79fa",
+      "originalSHA256": "1a43e3f26c6ca992c43cff593ee0b5391dd6a30833d20e6303e53beeb9d1ad0a",
+      "sha256": "1a43e3f26c6ca992c43cff593ee0b5391dd6a30833d20e6303e53beeb9d1ad0a",
+      "bytes": 108,
+      "identical": true
+    },
+    {
+      "path": "Scripts/Runtime/generate-yarn-multiline-patch.mjs",
+      "originalGitBlob": "4e2f5c25bc49966b4acf2deee3ce0d6f30ea059c",
+      "gitBlob": "4e2f5c25bc49966b4acf2deee3ce0d6f30ea059c",
+      "originalSHA256": "d3d53dcd1ce75536057ee03669e61f581ef6194dec0f0258fd44a442d0444997",
+      "sha256": "d3d53dcd1ce75536057ee03669e61f581ef6194dec0f0258fd44a442d0444997",
+      "bytes": 4787,
+      "identical": true
+    },
+    {
+      "path": "Scripts/Runtime/generate-yarn-unicode-patch.mjs",
+      "originalGitBlob": "a4f1ee9d17668094979b7c92cd1c6e23a7f76c40",
+      "gitBlob": "a4f1ee9d17668094979b7c92cd1c6e23a7f76c40",
+      "originalSHA256": "fb738ab65d09f2a90ad0561994b7e7802653140f8adc38c486af2dab3a9335b7",
+      "sha256": "fb738ab65d09f2a90ad0561994b7e7802653140f8adc38c486af2dab3a9335b7",
+      "bytes": 4266,
+      "identical": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-host.sh",
+      "originalGitBlob": "720ee8a08cb2df9955ddb2d8c200b4303cb139bd",
+      "gitBlob": "720ee8a08cb2df9955ddb2d8c200b4303cb139bd",
+      "originalSHA256": "249c5136e886887800ff88e9fb3c3c32aa6749b6c5694dee8dbe980c4c108523",
+      "sha256": "249c5136e886887800ff88e9fb3c3c32aa6749b6c5694dee8dbe980c4c108523",
+      "bytes": 3735,
+      "identical": true
+    },
+    {
+      "path": "Scripts/Runtime/runtime_host_archive.py",
+      "originalGitBlob": "a879362b8b3dd4ee647f23b8ee3eceb70fe90865",
+      "gitBlob": "a879362b8b3dd4ee647f23b8ee3eceb70fe90865",
+      "originalSHA256": "55b31a02dbded24ba1b9a4c1036715a89755be2548dea36a948f57df6d42f334",
+      "sha256": "55b31a02dbded24ba1b9a4c1036715a89755be2548dea36a948f57df6d42f334",
+      "bytes": 9657,
+      "identical": true
+    }
+  ]
+}

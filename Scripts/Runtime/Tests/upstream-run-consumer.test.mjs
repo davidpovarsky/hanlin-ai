@@ -11,7 +11,7 @@ const run={repository:{full_name:repository},head_repository:{full_name:reposito
 const pr={number:1,state:'open',draft:false,
   base:{ref:allowedBase,sha:base,repo:{full_name:repository}},
   head:{ref:run.head_branch,sha:head,repo:{full_name:repository}}};
-const report={pullRequest:1,repository,head,baseSHA:base,validationPassed:true,
+const report={pullRequest:1,repository,head,baseSHA:base,validationPassed:true,adminEnforced:true,
   consumerAccounting:{receiptSchemaVersion:2,status:'EXECUTED_PASS'},
   requiredChecks:{strict:true,checks:[
     {context:'Hanlin upstream acceptance',app_id:ACTIONS_APP_ID},
@@ -139,4 +139,10 @@ test('v3 selects only its own exact candidate and cannot inherit either older ba
     assert.equal(candidateForRun(run,[previous],repository,v3),null);
     assert.equal(candidateForRun(run,[previous],repository,older),previous);
   }
+});
+
+
+test('missing or disabled administrator enforcement cannot publish proof',()=>{
+  for(const value of [false,undefined,null,'true'])
+    assert.throws(()=>requireCandidateProof({...report,adminEnforced:value},pr,run),/admin-enforced/);
 });

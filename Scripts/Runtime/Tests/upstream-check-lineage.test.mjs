@@ -123,3 +123,58 @@ test('different-app source checks are not silently filtered out',()=>{
   f.checks.push(foreign);const selected=f.select(r);
   assert.ok(selected.selectedChecks.includes(foreign));assert.equal(policy(selected.selectedChecks).validationPassed,false);
 });
+
+
+function useCanonicalCheckURL(check) {
+  check.details_url=check.html_url='https://github.com/'+repository+'/runs/'+check.id;
+  check.url='https://api.github.com/repos/'+repository+'/check-runs/'+check.id;
+}
+test('actual server canonical check URL retains exact producer and consumer lineage',()=>{
+  const f=fixture(),r=f.run(10),c=f.run(20,1,true,'2026-11-19T01:01:00Z');
+  f.source(r,100);const check=f.proof(r,c,200,'failure');useCanonicalCheckURL(check);
+  const selected=f.select(r);
+  assert.equal(selected.proof.consumerRunID,20);assert.equal(selected.proof.consumerAttempt,1);
+  assert.equal(selected.proof.checkID,200);assert.equal(selected.proof.urlForm,'GITHUB_CHECK_RUN_URL');
+  assert.equal(selected.proof.conclusion,'failure');assert.equal(policy(selected.selectedChecks).branchPolicy.eligible,false);
+});
+test('old failed canonical URL remains preserved when a later same-producer proof passes',()=>{
+  const f=fixture(),r=f.run(10),old=f.run(20,1,true,'2026-11-19T01:01:00Z'),now=f.run(21,1,true,'2026-11-19T01:02:00Z');
+  f.source(r,100);const failure=f.proof(r,old,200,'failure');useCanonicalCheckURL(failure);
+  const success=f.proof(r,now,210);useCanonicalCheckURL(success);
+  const selected=f.select(r);
+  assert.equal(selected.proof.checkID,210);assert.deepEqual(selected.supersededCheckIDs,[200]);
+  assert.equal(failure.conclusion,'failure');assert.equal(policy(selected.selectedChecks).branchPolicy.eligible,true);
+});
+test('canonical URL must match exact repository, check ID, HTML URL and API URL',()=>{
+  for(const mutate of [
+    x=>x.details_url='https://github.com/'+repository+'/runs/201',
+    x=>x.details_url='https://github.com/other/repo/runs/200',
+    x=>x.details_url+='?check_suite_focus=true',
+    x=>x.details_url='https://evil.invalid/runs/200',
+    x=>x.html_url='https://github.com/'+repository+'/runs/201',
+    x=>delete x.html_url,
+    x=>x.url='https://api.github.com/repos/other/repo/check-runs/200',
+    x=>delete x.url,
+    x=>x.id='200']) {
+    const f=fixture(),r=f.run(10),c=f.run(20,1,true);f.source(r,100);
+    const check=f.proof(r,c,200);useCanonicalCheckURL(check);mutate(check);
+    assert.throws(()=>f.select(r),/candidate\/consumer mismatch/);
+  }
+});
+test('canonical check URL cannot replace a valid external producer/PR/consumer tuple',()=>{
+  for(const identity of ['unknown','upstream:10:1:8:20:1','upstream:11:1:7:20:1','upstream:10:1:7:21:1','upstream:10:1:7:20:2']) {
+    const f=fixture(),r=f.run(10),c=f.run(20,1,true);f.source(r,100);
+    const check=f.proof(r,c,200);useCanonicalCheckURL(check);check.external_id=identity;
+    assert.throws(()=>f.select(r));
+  }
+});
+test('canonical URL still rejects foreign workflow, branch and repository run attempts',()=>{
+  for(const mutate of [
+    c=>c.path='.github/workflows/other.yml',c=>c.head_branch='feature/untrusted',
+    c=>c.repository={full_name:'other/repo'},c=>c.head_repository={full_name:'other/repo'},
+    c=>c.event='pull_request',c=>c.run_attempt=2]) {
+    const f=fixture(),r=f.run(10),c=f.run(20,1,true);f.source(r,100);
+    const check=f.proof(r,c,200);useCanonicalCheckURL(check);mutate(c);
+    assert.throws(()=>f.select(r));
+  }
+});

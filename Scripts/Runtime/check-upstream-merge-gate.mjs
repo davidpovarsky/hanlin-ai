@@ -6,6 +6,7 @@ import { selectUpstreamCheckLineage } from './upstream-check-lineage.mjs';
 import { evaluateUpdate, dependencyImpact } from './dependency-update-policy.mjs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { readUpstreamProtection } from './upstream-protection-reader.mjs';
 
 const [repository, number, output = 'build/upstream-updates/merge-gate.json', proofRun] = process.argv.slice(2);
 if (!/^[\w.-]+\/[\w.-]+$/.test(repository ?? '') || !/^\d+$/.test(number ?? '')) throw new Error('Expected repository PR-number [output].');
@@ -17,9 +18,11 @@ if (paths.length === 100 || pr.changed_files !== paths.length) throw new Error('
 const head = pr.head.sha;
 const runs = api(`commits/${head}/check-runs?filter=latest&per_page=100`).check_runs;
 if (runs.length === 100) throw new Error('Incomplete check inventory.');
-let protection;
-try { protection = api(`branches/${encodeURIComponent(pr.base.ref)}/protection`); }
-catch (error) { if (!String(error.stderr).includes('404')) throw error; }
+const {protection,observation:branchProtectionObservation} = readUpstreamProtection({
+  repository,base:pr.base.ref,baseSHA:pr.base.sha,rest:api,
+  graphql:body=>JSON.parse(execFileSync('gh',['api','graphql','--input','-'],{
+    input:JSON.stringify(body),encoding:'utf8',stdio:['pipe','pipe','pipe'],timeout:60_000,maxBuffer:2_097_152}))
+});
 const settings = api('');
 let effectiveRules;
 try { effectiveRules = api(`rules/branches/${encodeURIComponent(pr.base.ref)}`); }
@@ -63,6 +66,7 @@ const decision = evaluateUpdate({ head, evidenceHead:receipt?.head, updateType:r
   licensesReviewed:receipt?.licensesReviewed === true, rollback:!!receipt?.rollback,
   protection, effectiveRules, consumerEvidenceVerified, autoMergeEnabled:settings.allow_auto_merge === true && pr.auto_merge != null });
 const report = { ...decision, repository, pullRequest:Number(number), head, baseSHA:pr.base.sha,
+  adminEnforced:protection?.enforce_admins?.enabled === true, branchProtectionObservation,
   requiredChecks:protection?.required_status_checks ?? null, effectiveBranchRules:effectiveRules ?? null, actualChecks:checks, rawCheckInventory:toCheckRows(runs), checkLineage,
   consumerAccounting:{status:consumerEvidenceVerified?receipt.hostAccounting.status:'UNKNOWN',
     receiptSchemaVersion:receipt?.schemaVersion??null,origin:consumerEvidenceVerified?receipt.hostAccounting.origin:null,

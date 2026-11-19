@@ -30,7 +30,8 @@ try {
   const blob=api('git/blobs',{content:bytes.toString('base64'),encoding:'base64'});
   tree.push({path:paths[i],mode:'100644',type:'blob',sha:blob.sha});
  }
- if(!tree.length){console.log(JSON.stringify({number,head:pr.head.sha,changed:false}));process.exitCode=0;}
+ const synchronized = { schema: 1, repository, number, base: pr.base.sha, baseRef: pr.base.ref, headRef: pr.head.ref, previous: pr.head.sha };
+ if(!tree.length){console.log(JSON.stringify({...synchronized,head:pr.head.sha,changed:false}));process.exitCode=0;}
  else {
   const parent=api(`git/commits/${pr.head.sha}`);
   const nextTree=api('git/trees',{base_tree:parent.tree.sha,tree});
@@ -39,7 +40,7 @@ try {
   if(latest.head.sha!==pr.head.sha)throw new Error('Candidate moved; retry against current head');
   const result=JSON.parse(execFileSync('gh',['api','--method','PATCH',`repos/${repository}/git/refs/heads/${pr.head.ref}`,'--input','-'],
    {input:JSON.stringify({sha:commit.sha,force:false}),encoding:'utf8',stdio:['pipe','pipe','pipe']}));
-  console.log(JSON.stringify({number,previous:pr.head.sha,head:result.object.sha,changed:true,paths:tree.map(x=>x.path)}));
+  console.log(JSON.stringify({...synchronized,head:result.object.sha,changed:true,paths:tree.map(x=>x.path)}));
  }
 } finally {
  if(dirname(scratch)!==resolve(tmpdir())||!basename(scratch).startsWith('hanlin-upstream-sync-'))throw new Error('Unexpected cleanup target');

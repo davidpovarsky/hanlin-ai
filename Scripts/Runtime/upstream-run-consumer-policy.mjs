@@ -40,11 +40,11 @@ export function requireCandidateProof(report, pr, run) {
     throw Error('No authenticated schema2 execution proof');
   const config = report.requiredChecks;
   const bindings = config?.checks;
-  if (config?.strict !== true || !Array.isArray(bindings)
+  if (report.adminEnforced !== true || config?.strict !== true || !Array.isArray(bindings)
       || bindings.filter(row => row.context === PROOF_CHECK && row.app_id === ACTIONS_APP_ID).length !== 1
       || bindings.filter(row => sourceChecks.has(row.context) && row.app_id === ACTIONS_APP_ID).length !== 1
       || report.branchPolicy?.configurationKnown !== true)
-    throw Error('Missing strict app-bound source/proof protection');
+    throw Error('Missing admin-enforced strict app-bound source/proof protection');
   return true;
 }
 

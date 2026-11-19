@@ -1,0 +1,67 @@
+{
+  "testDependency": {
+    "path": "C:\\Users\\DAVID\\.local\\tools\\node-v24.22.1-win-x64\\node_modules\\npm\\node_modules\\semver\\package.json",
+    "version": "7.8.5",
+    "packageSHA256": "84c9df3ebd1153d5177e92d7079118c0a5890c25008e31cb43d1426835d0c24c",
+    "qualification": "Existing npm-bundled portable test dependency; not the candidate-native package execution"
+  },
+  "node": {
+    "command": [
+      "C:\\Users\\DAVID\\.local\\tools\\node-v24.22.1-win-x64\\node.exe",
+      "--test",
+      "Scripts/Runtime/Tests/dependency-updates.test.mjs",
+      "Scripts/Runtime/Tests/upstream-host-accounting.test.mjs",
+      "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+      "Scripts/Runtime/Tests/upstream-check-lineage.test.mjs",
+      "Scripts/Runtime/Tests/upstream-dispatch-synchronization.test.mjs",
+      "Scripts/Runtime/Tests/upstream-protection-reader.test.mjs"
+    ],
+    "exit": 0,
+    "tail": "ped source run cannot use an otherwise positive receipt (0.3139ms)\n\u2714 green audit without schema2 native-origin accounting is rejected (0.3705ms)\n\u2714 legacy schema1 proof is never upgraded (0.3335ms)\n\u2714 base and source receipt drift are rejected (0.4406ms)\n\u2714 unknown or failed source validation cannot qualify (0.2422ms)\n\u2714 strict source and proof app bindings are both required (2.5736ms)\n\u2714 an additional required failed gate prevents automatic merge (0.3197ms)\n\u2714 pending, stale, skipped and ambiguous server gates prevent automatic merge (0.3597ms)\n\u2714 only activation-disabled can remain after all gates pass (0.3123ms)\n\u2714 closed or draft proposals cannot activate automatic merge (0.2146ms)\n\u2714 only the three explicitly protected acceptance bases are recognized (0.2461ms)\n\u2714 v2 selects only its own exact candidate and never inherits the original base (0.4247ms)\n\u2714 a matching PR cannot authorize a main or unlisted target (0.9949ms)\n\u2714 v3 selects only its own exact candidate and cannot inherit either older base (0.4761ms)\n\u2714 missing or disabled administrator enforcement cannot publish proof (0.4023ms)\n\u2139 tests 129\n\u2139 suites 0\n\u2139 pass 129\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 1090.4943\n"
+  },
+  "python": {
+    "command": [
+      "C:\\ProgramData\\SentinelX\\.venv\\Scripts\\python.exe",
+      "Scripts/Runtime/Tests/test_upstream_proof_reader.py"
+    ],
+    "exit": 0,
+    "output": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.914s\n\nOK\n"
+  },
+  "parse": [
+    {
+      "path": "check-upstream-merge-gate.mjs",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "consume-upstream-run.mjs",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "run-upstream-bot.mjs",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "sync-upstream-host-pr.mjs",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "upstream-protection-reader.mjs",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "upstream-check-lineage.mjs",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "upstream-dispatch-synchronization.mjs",
+      "exit": 0,
+      "stderr": ""
+    }
+  ]
+}

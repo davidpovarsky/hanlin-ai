@@ -46,8 +46,16 @@ const checker = async (label, run) => {
   const result = spawnSync(process.execPath,[fileURLToPath(new URL('./check-upstream-merge-gate.mjs',import.meta.url)),
     repository,String(pr.number),file,runID],{encoding:'utf8',timeout:240_000,maxBuffer:4_194_304});
   await writeFile(resolve(directory,label+'.log'),redact((result.stdout??'')+'\n'+(result.stderr??'')));
-  if (result.error || ![0,1].includes(result.status)) throw Error('Canonical evidence checker did not complete');
-  const report = JSON.parse(await readFile(file,'utf8'));
+  const diagnostic = redact((result.stderr || result.stdout || result.error?.message || 'No subprocess diagnostic').trim()).slice(0,2000);
+  if (result.error || ![0,1].includes(result.status))
+    throw Error('Canonical evidence checker did not complete (exit '+result.status+'): '+diagnostic);
+  let report;
+  try { report = JSON.parse(await readFile(file,'utf8')); }
+  catch (error) {
+    if (error.code === 'ENOENT')
+      throw Error('Canonical evidence checker produced no report (exit '+result.status+'): '+diagnostic);
+    throw error;
+  }
   requireCandidateProof(report,pr,run);
   return report;
 };

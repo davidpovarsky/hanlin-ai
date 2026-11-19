@@ -41,14 +41,23 @@ export function selectUpstreamCheckLineage({rawChecks,repository,head,proofRun,p
       const identity=check.external_id?.match(/^upstream:(\d+):(\d+):(\d+):(\d+):(\d+)$/);
       if(!identity)throw Error('Unbound independent proof identity');
       const [producerID,producerAttempt,number,consumerID,consumerAttempt]=identity.slice(1).map(Number);
-      if(number!==prNumber||check.details_url!=='https://github.com/'+repository+'/actions/runs/'+consumerID)
+      const consumerURL='https://github.com/'+repository+'/actions/runs/'+consumerID;
+      const checkURL='https://github.com/'+repository+'/runs/'+check.id;
+      // The authenticated Checks API may return its own canonical check page
+      // after publication. That URL identifies the check, not the consumer run.
+      // Keep the exact external-id tuple and authenticated run-attempt checks below.
+      const canonicalCheckURL=integer(check.id)&&check.details_url===checkURL
+        &&check.html_url===checkURL
+        &&check.url==='https://api.github.com/repos/'+repository+'/check-runs/'+check.id;
+      if(number!==prNumber||(check.details_url!==consumerURL&&!canonicalCheckURL))
         throw Error('Independent proof candidate/consumer mismatch');
       const producer=attempt(producerID,producerAttempt),consumer=attempt(consumerID,consumerAttempt);
       if(producer.head_sha!==head||!SOURCE_PATHS.has(producer.path)||producer.event!=='workflow_dispatch'
         ||consumer.path!=='.github/workflows/upstream-candidate-proof.yml'||consumer.head_branch!=='main'
         ||!['workflow_run','workflow_dispatch'].includes(consumer.event))
         throw Error('Independent proof source/consumer workflow mismatch');
-      proofs.push({check,run:consumer,attempt:consumerAttempt,producerID,producerAttempt});
+      proofs.push({check,run:consumer,attempt:consumerAttempt,producerID,producerAttempt,
+        urlForm:canonicalCheckURL?'GITHUB_CHECK_RUN_URL':'CONSUMER_RUN_URL'});
     }
   }
   const latest=(entries,label)=>{
@@ -77,7 +86,7 @@ export function selectUpstreamCheckLineage({rawChecks,repository,head,proofRun,p
     producer:{runID:source.run.id,attempt:source.attempt,checkID:source.check.id,
       status:source.check.status,conclusion:source.check.conclusion},
     proof:proof?{consumerRunID:proof.run.id,consumerAttempt:proof.attempt,checkID:proof.check.id,
-      status:proof.check.status,conclusion:proof.check.conclusion}:null,
+      status:proof.check.status,conclusion:proof.check.conclusion,urlForm:proof.urlForm}:null,
     supersededCheckIDs:[...removedIDs].filter(id=>id!==source.check.id&&id!==proof?.check.id),
     authenticatedAttempts:[...cache.values()].map(run=>({id:run.id,attempt:run.run_attempt,path:run.path,
       head:run.head_sha,createdAt:run.created_at,status:run.status,conclusion:run.conclusion})),

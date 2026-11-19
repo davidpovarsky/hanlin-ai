@@ -355,7 +355,7 @@ jobs:
         run: |
           node --test Scripts/Runtime/Tests/dependency-updates.test.mjs
           node --test Scripts/Runtime/Tests/upstream-host-accounting.test.mjs
-          node --test Scripts/Runtime/Tests/upstream-run-consumer.test.mjs Scripts/Runtime/Tests/upstream-check-lineage.test.mjs
+          node --test Scripts/Runtime/Tests/upstream-run-consumer.test.mjs Scripts/Runtime/Tests/upstream-check-lineage.test.mjs Scripts/Runtime/Tests/upstream-dispatch-synchronization.test.mjs Scripts/Runtime/Tests/upstream-protection-reader.test.mjs
           python3 Scripts/Runtime/Tests/test_upstream_proof_reader.py
       - name: Inventory actual tracked graphs
         run: node Scripts/Runtime/inventory-upstream-dependencies.mjs

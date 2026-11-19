@@ -1,0 +1,114 @@
+{
+  "sourceHead": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "patch": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-protection-reader-proposal\\v2-complete-declarations\\exact-ref-protection-reader-v2.UNAPPLIED.patch",
+  "patchSHA256": "621baeb772177dfd9812fd1a9e478f075503df557969a1a74b2f076a89c6e00f",
+  "files": [
+    {
+      "path": "Scripts/Runtime/check-upstream-merge-gate.mjs",
+      "beforeSHA256": "038785ffce3289dfae75812571c220b4b54d45ff86f2ef09335a768b05d31d60",
+      "afterSHA256": "3c9a3f8a2554c05a8795259ac0cfd17cced5b3f0541ec5ba545e8ea6dfb6985d"
+    },
+    {
+      "path": "Scripts/Runtime/consume-upstream-run.mjs",
+      "beforeSHA256": "5e64e19e124fd949dfdd80d01d9ac70891c831dfc0f690054d60323b10405f2e",
+      "afterSHA256": "c7733ec0a207ad3a0edb56a3d391a1cfbee45dcb68e39800e22abc5d83b9c6cd"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-run-consumer-policy.mjs",
+      "beforeSHA256": "1d84550caf803b7891ea722172a72f4b73d7eee24e621856958624fc2a6e6684",
+      "afterSHA256": "484bc9d4bc758798c539dc651b7b92833af897af0ff5dcdd634daf5f5c12351e"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+      "beforeSHA256": "54e213a9ead273f355238ea3b76f916e1eb27f3bac2e4587a261fe71ea9a441a",
+      "afterSHA256": "afba342bae73bb9c86f001267892d5a8b74357e9682a7c7308a8894433fcab1c"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-protection-reader.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "bbdab0e8418ad77847e947ee3f3f732eb605b4bd99d84bcd1be345f9ea6b5c56"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-protection-reader.test.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "8c3fa9389035d8aa7982ce6fd4ba693fc644b346cc979062e855c3a5bfbf5c5c"
+    }
+  ],
+  "applied": false,
+  "ciTokenGraphQLAccess": "NOT_YET_PROVEN",
+  "effectiveRules": "ORIGINAL_REST_READ_UNCHANGED_UNKNOWN_STAYS_BLOCKED",
+  "frozenBase": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+  "candidate": "c80f620ba8ed28243922728e00acffcdd439cc12",
+  "testExit": 0,
+  "testCommand": [
+    "C:\\Users\\DAVID\\.local\\tools\\node-v24.22.1-win-x64\\node.exe",
+    "--test",
+    "Scripts/Runtime/Tests/upstream-protection-reader.test.mjs",
+    "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+    "Scripts/Runtime/Tests/dependency-updates.test.mjs",
+    "Scripts/Runtime/Tests/upstream-check-lineage.test.mjs"
+  ],
+  "testLogSHA256": "a9774d4f4964c2237023ef5c4d65558a7d26a1c6437c53a477c5455d231006d2",
+  "parseChecks": [
+    {
+      "file": "check-upstream-merge-gate.mjs",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "file": "consume-upstream-run.mjs",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "file": "upstream-protection-reader.mjs",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "file": "upstream-run-consumer-policy.mjs",
+      "exit": 0,
+      "stderr": ""
+    }
+  ],
+  "gitApplyCheck": {
+    "exit": 0,
+    "stderr": ""
+  },
+  "testSemver": "7.8.5",
+  "activationPlan": {
+    "consumerWorkflowMainSHA": "cbfae6eeeaa53969fa95fed18a5ba0a5548fd2ad",
+    "consumerWorkflowPath": ".github/workflows/upstream-candidate-proof.yml",
+    "existingImmutableCheckoutVariable": "HANLIN_UPSTREAM_TRUSTED_SHA",
+    "variableNameNeedsLiveReadback": false,
+    "step1": "Root reviews and publishes only these6 source/test files. No candidate, frozen base, required check, permission or credential is changed.",
+    "step2": "Verify remote full published SHA,6file posthashes and original139 Host source closure versus immutable d6. Verify workflow actual trusted-source variable name and update its value to the reviewed full SHA, then read back.",
+    "step3": "Use existing explicit proof_run dispatch once for44455722821. Actual job must verify checkout HEAD equals trusted source SHA. Authentic current PR15/headc80/base d6 and original artifact digests stay mandatory.",
+    "step4": "Only actual successful GraphQL+effective REST rules+schema2 verification can publish green app15368 proof. If token cannot read either API, preserve rejection and logs; no synthesized protection or new token.",
+    "step5": "Continue original same-head deliberate failure-demo/server merge rejection/later fullcandidate green/protected automerge/reverse-apply experiment. Original failed consumer44458610092 is retained.",
+    "automaticWorkflowRunTrigger": "No claim that automatic trigger was repaired by this source change; original manual proof entrypoint is being used and observed.",
+    "existingCheckoutEqualityStep": "test \"$(git rev-parse HEAD)\" = \"$TRUSTED_SOURCE_SHA\"",
+    "workflowModificationRequired": false,
+    "prePublicationHostClosure": "host-closure-before-publication.json"
+  },
+  "securityNotes": [
+    "GraphQL exact-ref projection only after structured authenticated REST403, never after network error or404.",
+    "GraphQL requires exact repository/ref/resolved base SHA and exact rule pattern; unknown booleans/partial errors/duplicate or malformed context/app declarations fail.",
+    "GraphQL cannot prove effective rulesets; original separate REST rules read is unchanged and unknown/additional rules keep configurationKnown=false.",
+    "Original check provenance,app15368 identity,artifact/source binding and every server required gate unchanged.",
+    "Proof publication now explicitly also requires adminEnforced=true, matching the original installed server protection.",
+    "Subprocess failure records the redacted primary API diagnostic when no JSON report was written, instead of masking it as ENOENT."
+  ],
+  "supersedesButPreservesPacketSHA256": "096cd7bc91a5b026c54c0307cf398a62ce8694f3b0115eda22287609cebcc949",
+  "supplementSHA256": "4b70b88ed0d6e12c3f94089a5ba56624688a9c14679fcba53d820cab1f9829dc",
+  "newFocusedTestsExit": 0,
+  "newFocusedTestCount": 4,
+  "graphqlDeclarationEvidence": {
+    "primaryReference": "https://docs.github.com/en/graphql/reference/branches#branchprotectionrule",
+    "fields": "Both unpaginated fields describe the required checks for the same classic rule; RequiredStatusCheckDescription.context is the status name, app is expected supplier.",
+    "actualExactV3SetsMatch": true,
+    "actualResponse": "actual-owner-authenticated-graphql-v3.json",
+    "ciTokenAccess": "STILL_NOT_YET_PROVEN",
+    "newRule": "Reject any missing/orphan declaration, equal-count unequal-membership, or prior ambiguity; matching order-independent sets preserved."
+  }
+}
