@@ -1,0 +1,82 @@
+{
+  "reviewed_at": "2026-11-19T03:40:16.128516+00:00",
+  "base": "eefc3dbfd573800fa8383273f5f414e2667a8ff9",
+  "manifest_before_sha256": "6fa5cc06b7beb940f4e745ce186bb27b296ccf4583119ab06663da620b51460d",
+  "manifest_after_sha256": "e9ea19d4bc3fe3873137e0c2e32cda50892ecd39103f3a63250acaa8f373e458",
+  "patch_sha256": "bb746b8efeb3a8bf7f7f406cab4455c4ac8f7d283c36b406fc9ad829e4f4d166",
+  "swift_manifest_evaluation": "PASS before and after; all other semantic fields unchanged",
+  "dependency_change": [
+    {
+      "before": {
+        "sourceControl": [
+          {
+            "identity": "zipfoundation",
+            "location": {
+              "remote": [
+                {
+                  "urlString": "https://github.com/weichsel/ZIPFoundation.git"
+                }
+              ]
+            },
+            "productFilter": null,
+            "requirement": {
+              "exact": [
+                "0.9.19"
+              ]
+            },
+            "traits": [
+              {
+                "name": "default"
+              }
+            ]
+          }
+        ]
+      },
+      "after": {
+        "sourceControl": [
+          {
+            "identity": "zipfoundation",
+            "location": {
+              "remote": [
+                {
+                  "urlString": "https://github.com/weichsel/ZIPFoundation.git"
+                }
+              ]
+            },
+            "productFilter": null,
+            "requirement": {
+              "range": [
+                {
+                  "lowerBound": "0.9.19",
+                  "upperBound": "0.10.0"
+                }
+              ]
+            },
+            "traits": [
+              {
+                "name": "default"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "all_tracked_resolution_locks_byte_unchanged": {
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+    "Packages/HanlinAgentSDK/Package.resolved": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+    "Packages/HanlinParityMiniApp/Package.resolved": "64abcc6af574107b111a5facbc00f70259aa0a809ab2fc6a5c0a571b5b10ea04",
+    "Packages/HanlinPlatform/Package.resolved": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+    "Packages/HanlinSefariaMiniApp/Package.resolved": "6c7a3f29ad73f35a20ed25f838c673cf2970398c18c4b0429f55b56a98a9f3ac",
+    "Packages/HanlinSkillFormat/Package.resolved": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+    "Packages/HanlinSwiftUIBridgeGenerator/Package.resolved": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+    "Packages/HanlinTextStudioMiniApp/Package.resolved": "402e58427b5cffccf4e2ca1cfc82785266433a62b8fbb96ba6711cff75dc2a28",
+    "Packages/HanlinWikipediaMiniApp/Package.resolved": "3591fbb4df85047710671391b83116e4725b44cceebb315aadd6d08dc48c555c",
+    "docs/a2ui/evidence/native-run-43668852483/raw-locks/00-Package.resolved": "af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae",
+    "docs/continuation-20261117/acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/Resolved-Package.resolved": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+    "docs/continuation-20261117/acceptance/run-44380551059/raw/Resolved-Package.resolved": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+    "docs/continuation-20261117/acceptance/run-44389672441/raw/Resolved-Package.resolved": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a"
+  },
+  "native_consumer_build": "NOT_RUN; isolated Otzaria consumer to use this published original SDK revision",
+  "scope": "Restore original SDK080d ZIPFoundation compatibility range allowing locked 0.9.19 and consumer-locked 0.9.20 without changing either lock"
+}
