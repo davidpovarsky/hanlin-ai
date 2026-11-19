@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "observed_head": "884c41d039dfbf276af4c12299d84ac4c981e082",
+  "current_project_sha256": "54e670643fdd31a35276fcaa06bb9ded51dd5ddd506cc655319dd123b28ce35b",
+  "historical_source_sha": "048e431cc55b10290c03ec4b2c0162e5f9dfcf9c",
+  "original_identity_settings_unchanged": true,
+  "settings": [
+    "PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.tests;",
+    "TEST_HOST = \"$(BUILT_PRODUCTS_DIR)/AI_Hanlin.app/AI_Hanlin\";",
+    "PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.tests;",
+    "TEST_HOST = \"$(BUILT_PRODUCTS_DIR)/AI_Hanlin.app/AI_Hanlin\";",
+    "PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat;",
+    "PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat;"
+  ],
+  "native_artifact": {
+    "id": 14499647092,
+    "sha256": "3210940e9e60808c2113317f2b916512c959146b3e3210e1a2b594d2308070f7",
+    "build_log_sha256": "5f7001a86c6876f735df6c093155002e5ee507b2857f6d7b1631214bd3e38e0c",
+    "observed_original_product_paths": [
+      "ProcessInfoPlistFile /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Info.plist /Users/runner/work/hanlin-ai/hanlin-ai/AI-HLY-Info.plist (in target 'AI_Hanlin' from project 'AI_HLY')",
+      "ProcessInfoPlistFile /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Info.plist /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_HLYTests.build/empty-AI_HLYTests.plist (in target 'AI_HLYTests' from project 'AI_HLY')",
+      "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests normal (in target 'AI_HLYTests' from project 'AI_HLY')",
+      "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib normal (in target 'AI_Hanlin' from project 'AI_HLY')",
+      "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin normal (in target 'AI_Hanlin' from project 'AI_HLY')"
+    ]
+  },
+  "workflow_step_order": {
+    "Record resolved diagnostics build provenance": 16,
+    "Stage modular headers into simulator Swift Package checkouts": 21,
+    "Stage exact original A2UI plugin schemas for the combined app graph": 22,
+    "Retain prior unit manifests before the current test build": 23,
+    "Build full arm64 simulator app": 24,
+    "Measure same-run simulator no-op rebuild": 25,
+    "Validate the current build-for-testing unit products": 26,
+    "Run simulator test suite": 34
+  },
+  "provenance_resource_tracked": true,
+  "provenance_writers_in_simulator_job": [
+    "Record resolved diagnostics build provenance"
+  ],
+  "qualification": "Actual xctestrun bytes were not present in the canceled archive. Identity/path expectations are authenticated source+native-build facts; exact manifest schema/native admission remains unverified. Any later tracked input/provenance change is rejected rather than assumed stable."
+}

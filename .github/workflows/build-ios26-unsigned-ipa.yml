@@ -2255,6 +2255,18 @@ jobs:
             --derived-data-path "$DERIVED_DATA_PATH" \
             --evidence "$LOG_DIR/a2ui-generation"
 
+      - name: Retain prior unit manifests before the current test build
+        if: ${{ env.NATIVESCRIPT_POC_ONLY != 'true' && env.SIMULATOR_E2E_ONLY != 'true' && (env.RUN_SIMULATOR_UNIT == 'true' || env.RUN_FULL_VALIDATION == 'true') && (env.SIMULATOR_UNIT_FILTER != '' || env.RUN_FULL_VALIDATION == 'true') }}
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/current_unit_xctestrun.py prepare \
+            --repository "$GITHUB_WORKSPACE" \
+            --derived-data "$DERIVED_DATA_PATH" \
+            --log-dir "$LOG_DIR" \
+            --configuration "$CONFIGURATION" \
+            --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
+            2>&1 | tee "$LOG_DIR/06-unit-xctestrun-prepare.log"
+
       - name: Build full arm64 simulator app
         run: |
           set -euxo pipefail
@@ -2431,6 +2443,18 @@ jobs:
           duration_seconds="$(( $(date +%s) - started_at ))"
           echo "$duration_seconds" > "$LOG_DIR/06-warm-rebuild-duration-seconds.txt"
           echo "Same-run simulator no-op rebuild duration: ${duration_seconds}s"
+
+      - name: Validate the current build-for-testing unit products
+        if: ${{ env.NATIVESCRIPT_POC_ONLY != 'true' && env.SIMULATOR_E2E_ONLY != 'true' && (env.RUN_SIMULATOR_UNIT == 'true' || env.RUN_FULL_VALIDATION == 'true') && (env.SIMULATOR_UNIT_FILTER != '' || env.RUN_FULL_VALIDATION == 'true') }}
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/current_unit_xctestrun.py seal \
+            --repository "$GITHUB_WORKSPACE" \
+            --derived-data "$DERIVED_DATA_PATH" \
+            --log-dir "$LOG_DIR" \
+            --configuration "$CONFIGURATION" \
+            --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
+            2>&1 | tee "$LOG_DIR/06-unit-xctestrun-seal.log"
 
       - name: Save successful simulator compiler state
         if: ${{ success() && !inputs.force_clean_build && steps.simulator-deriveddata-cache.outputs.cache-hit != 'true' }}
@@ -2616,7 +2640,6 @@ jobs:
             if [ "$SIMULATOR_E2E_ONLY" != "true" ] && { [ "$RUN_SIMULATOR_UNIT" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && { [ -n "${SIMULATOR_UNIT_FILTER:-}" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; }; then
               rm -rf "$LOG_DIR/DownstreamTestsResult.xcresult"
               started_at="$(date +%s)"
-              set +e
               unit_test_args=()
               IFS=',' read -ra UNIT_SUITES <<< "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}"
               for suite in "${UNIT_SUITES[@]}"; do
@@ -2628,16 +2651,18 @@ jobs:
               # Runtime V3 explicitly proves real jobs outlive 300 seconds.
               # Keep the ordinary suite limit unchanged; scope the larger allowance.
               unit_time_allowance="$(python3 Scripts/CI/simulator_test_allowance.py --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}")"
+              unit_xctestrun="$(python3 Scripts/CI/current_unit_xctestrun.py admit \
+                --repository "$GITHUB_WORKSPACE" \
+                --derived-data "$DERIVED_DATA_PATH" \
+                --log-dir "$LOG_DIR" \
+                --configuration "$CONFIGURATION" \
+                --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
+                --simulator-udid "$SIMULATOR_UDID")"
+              set +e
               xcodebuild test-without-building \
-              -project "$PROJECT_PATH" \
-              -scheme "$SCHEME_NAME" \
-              -configuration "$CONFIGURATION" \
+              -xctestrun "$unit_xctestrun" \
               -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
-              -derivedDataPath "$DERIVED_DATA_PATH" \
-              -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
               -resultBundlePath "$LOG_DIR/DownstreamTestsResult.xcresult" \
-              -skipPackagePluginValidation \
-              -skipMacroValidation \
               -parallel-testing-enabled NO \
               -test-timeouts-enabled YES \
               -maximum-test-execution-time-allowance "$unit_time_allowance" \

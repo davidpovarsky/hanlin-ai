@@ -1,0 +1,32 @@
+[
+  {
+    "source": "Apple Technical Note TN2339",
+    "url": "https://developer.apple.com/library/archive/technotes/tn2339/_index.html",
+    "retrieved": "2026-11-19",
+    "supports": "build-for-testing emits the test-run manifest; test-without-building accepts that manifest with the destination and only-testing selectors; referenced bundle paths must exist."
+  },
+  {
+    "source": "Apple WWDC19 session413, Testing in Xcode",
+    "url": "https://developer.apple.com/videos/play/wwdc2019/413/",
+    "retrieved": "2026-11-19",
+    "supports": "Separate build and execution use the generated products/manifest; manifest format can change, so use the same Xcode version for both stages."
+  },
+  {
+    "source": "Apple Xcode26 release notes",
+    "url": "https://developer.apple.com/documentation/Xcode-Release-Notes/xcode-26-release-notes",
+    "retrieved": "2026-11-19",
+    "supports": "Generated manifests include disabled test-plan configurations; those are not run by default."
+  },
+  {
+    "source": "Apple Xcode11.4 release notes",
+    "url": "https://developer.apple.com/documentation/Xcode-Release-Notes/xcode-11_4-release-notes",
+    "retrieved": "2026-11-19",
+    "supports": "Manifest execution validates target architecture/deployment compatibility and may skip incompatible targets; keep the independent selected-result completeness gate."
+  },
+  {
+    "source": "Apple QA1937",
+    "url": "https://developer.apple.com/library/archive/qa/qa1937/_index.html",
+    "retrieved": "2026-11-19",
+    "qualification": "This QA concerns missing privacy-purpose descriptions, not command-line test execution; it is not a basis for this patch."
+  }
+]

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "status": "UNAPPLIED_NATIVE_NOT_RUN",
+  "patch_sha256": "60e63a5b2dee5c7329fb0ee92adfe95e851f16bcffef9dd678bd83f75c87efa2",
+  "files": [
+    {
+      "path": "base-manifest.json",
+      "bytes": 626,
+      "sha256": "e54bd9dfe48ff1f407e34d0e9e9b909174b0f23235282edabc8225c50cecde59"
+    },
+    {
+      "path": "changed-source-manifest-v2.json",
+      "bytes": 722,
+      "sha256": "6d5f7cc30c50f7016364b2810b11434251b16e40b8c0dfdfad00de4c623629bd"
+    },
+    {
+      "path": "validation-v2.json",
+      "bytes": 1548,
+      "sha256": "76324fb4c3f4bd73a04633a25a98a93125a66f1aa6e108ae8674b9a701cd606b"
+    },
+    {
+      "path": "focused-tests-v2.log",
+      "bytes": 3604,
+      "sha256": "51a09c3b1916fbd08f5027abe6dd47cbc3b3e82da95296417676225044f3b75e"
+    },
+    {
+      "path": "native-original-selectors.txt",
+      "bytes": 1053,
+      "sha256": "85bbb7128a756b6cb03c814673a9ddc94e1270b443afc641e9e9e2ac0725c862"
+    },
+    {
+      "path": "primary-apple-sources.json",
+      "bytes": 1688,
+      "sha256": "5e7ffbba300d0c0dcdc67e7854637a041d78e3c57c2fcf29edbac9a8b5c71598"
+    },
+    {
+      "path": "source-and-native-path-proof.json",
+      "bytes": 3252,
+      "sha256": "8d667e22877abc1823f11020cebc33ce13609b3f568f98afe75a8578eb8482a3"
+    },
+    {
+      "path": "REVIEW-v2.md",
+      "bytes": 8202,
+      "sha256": "6faedea5e9ad8b42ca23a91d9ea946530e46b641779a8d101e71c1d99e9fe3fa"
+    },
+    {
+      "path": "current-unit-xctestrun-v2.diff",
+      "bytes": 41952,
+      "sha256": "60e63a5b2dee5c7329fb0ee92adfe95e851f16bcffef9dd678bd83f75c87efa2"
+    },
+    {
+      "path": "base/.github/workflows/build-ios26-unsigned-ipa.yml",
+      "bytes": 200473,
+      "sha256": "faa6a40f72b333299ffd817ece80647ac840286d7b9284ec8e42c59f809fb467"
+    },
+    {
+      "path": "proposed-v2/.github/workflows/build-ios26-unsigned-ipa.yml",
+      "bytes": 202037,
+      "sha256": "9211672a94444de2abc86699a285784c8d6c71bf91e3082a44d4a33cb6c94dd0"
+    },
+    {
+      "path": "proposed-v2/Scripts/CI/current_unit_xctestrun.py",
+      "bytes": 16251,
+      "sha256": "157e6e474d8a9fe84b534fcee0d482233034dd8fa79f8abcfb5389c23b5e0375"
+    },
+    {
+      "path": "proposed-v2/Scripts/CI/owned_simulator_receipts.py",
+      "bytes": 6731,
+      "sha256": "bb02edac757d563d0e92ccb8e1978b79d80c0e509ea4921bc6d807a1a1360686"
+    },
+    {
+      "path": "proposed-v2/Scripts/CI/Tests/test_current_unit_xctestrun.py",
+      "bytes": 20560,
+      "sha256": "1a7b0cb63612dd03960fa176d16dcba9ba5bf8e8279294470a93cd8883d0c8d1"
+    }
+  ]
+}
