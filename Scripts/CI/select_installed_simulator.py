@@ -22,9 +22,18 @@ def family_for_selectors(selectors: str) -> str:
     return "iPad"
 
 
-def select(devices: dict, runtimes: dict, sdk: str, family: str = "iPad", udid: str | None = None) -> dict:
+def select(
+    devices: dict,
+    runtimes: dict,
+    sdk: str,
+    family: str = "iPad",
+    udid: str | None = None,
+    device_type: str | None = None,
+) -> dict:
     if family not in {"iPad", "iPhone"}:
         raise ValueError("Unsupported simulator device family")
+    if device_type is not None and not device_type.strip():
+        raise ValueError("Exact simulator device type must be non-empty")
     canonical = "com.apple.CoreSimulator.SimRuntime.iOS-" + sdk.replace(".", "-")
     candidates = []
     for runtime in runtimes["runtimes"]:
@@ -36,7 +45,12 @@ def select(devices: dict, runtimes: dict, sdk: str, family: str = "iPad", udid: 
             # Owned simulators have task names, not marketing device names.
             # Verify the OS-provided hardware identity before reusing one.
             identity = device.get("deviceTypeIdentifier") or device.get("name", "")
-            if device.get("isAvailable") and family in identity and (udid is None or device.get("udid") == udid):
+            if (
+                device.get("isAvailable")
+                and family in identity
+                and (udid is None or device.get("udid") == udid)
+                and (device_type is None or device.get("deviceTypeIdentifier") == device_type)
+            ):
                 priority = (runtime["identifier"] == canonical, "iPad Pro 13" in device["name"], device["name"], device["udid"])
                 candidates.append((priority, {"sdk": sdk, "runtime": runtime, "device": device}))
     if not candidates:
@@ -52,6 +66,7 @@ if __name__ == "__main__":
     parser.add_argument("--selectors", default="")
     parser.add_argument("--family", choices=["iPad", "iPhone"])
     parser.add_argument("--udid", help="Use only this OS-observed matching device; never fall back to another simulator")
+    parser.add_argument("--device-type", help="Use only this exact CoreSimulator deviceTypeIdentifier; never fall back")
     args = parser.parse_args()
     def read(command):
         return subprocess.check_output(command, text=True, timeout=20)
@@ -60,7 +75,7 @@ if __name__ == "__main__":
     runtimes = json.loads(read(["xcrun", "simctl", "list", "runtimes", "-j"]))
     if args.udid and args.create_owned:
         raise ValueError("Existing device reuse and owned device creation are distinct operations")
-    selected = select(devices, runtimes, sdk, args.family or family_for_selectors(args.selectors), args.udid)
+    selected = select(devices, runtimes, sdk, args.family or family_for_selectors(args.selectors), args.udid, args.device_type)
     if args.create_owned:
         if not args.create_owned.startswith("Hanlin-Phase2-") or len(args.create_owned) > 120:
             raise ValueError("A bounded Phase2-owned simulator name is required")

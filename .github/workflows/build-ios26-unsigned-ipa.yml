@@ -399,17 +399,132 @@ jobs:
     runs-on: xcode-27
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v7.0.1
+      - name: Checkout support runner workflow
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Checkout pinned product source
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: 9d6c8ab8a644edacb25aee1bcb1411623c7a0fac
+          path: product
+          persist-credentials: false
+      - name: Verify pinned product SHA and prepare owned iPad (A16) simulator
+        env:
+          EXPECTED_PRODUCT_SHA: 9d6c8ab8a644edacb25aee1bcb1411623c7a0fac
+          MOTION_DEVICE_TYPE: com.apple.CoreSimulator.SimDeviceType.iPad-A16
+        run: |
+          set -euo pipefail
+          workflow_sha="$(git rev-parse HEAD)"
+          product_sha="$(git -C product rev-parse HEAD)"
+          if [[ "$product_sha" != "$EXPECTED_PRODUCT_SHA" ]]; then
+            echo "Product SHA mismatch: got $product_sha, expected $EXPECTED_PRODUCT_SHA" >&2
+            exit 1
+          fi
+          support_dir="$GITHUB_WORKSPACE/product/build/chat-motion-ui-evidence/support-readiness"
+          mkdir -p "$support_dir"
+          printf '%s\n' "$product_sha" > "$GITHUB_WORKSPACE/product/build/chat-motion-ui-evidence/source-sha.txt"
+          printf '%s\n' "$workflow_sha" > "$support_dir/workflow-sha.txt"
+          python3 - "$workflow_sha" "$product_sha" "$EXPECTED_PRODUCT_SHA" "$MOTION_DEVICE_TYPE" "$support_dir/support-source-receipt.json" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          Path(sys.argv[5]).write_text(json.dumps({
+              "schema_version": 1,
+              "workflow_sha": sys.argv[1],
+              "tested_product_sha": sys.argv[2],
+              "expected_product_sha": sys.argv[3],
+              "sha_verified": sys.argv[2] == sys.argv[3],
+              "device_type": sys.argv[4],
+          }, indent=2) + "\n", encoding="utf-8")
+          PY
+          export DEVELOPER_DIR="$(python3 product/Scripts/CI/select_stable_xcode.py)/Contents/Developer"
+          owned_name="Hanlin-Phase2-Motion-${GITHUB_RUN_ID}"
+          device="$(python3 Scripts/CI/select_installed_simulator.py \
+            --output "$support_dir/owned-simulator-selection.json" \
+            --device-type "$MOTION_DEVICE_TYPE" \
+            --create-owned "$owned_name")"
+          printf '%s\n' "$device" > "$support_dir/prepared-device-udid.txt"
+          python3 product/Scripts/CI/boot_motion_simulator.py \
+            --device "$device" \
+            --selection "$support_dir/owned-simulator-selection.json" \
+            --strategy fresh
       - name: Exercise the selected original Motion UI scope
         env:
           HANLIN_MOTION_SCOPE: ${{ inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'cycles' || inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'input-diagnostic' || 'affected' }}
-          HANLIN_MOTION_DEVICE_STRATEGY: fresh
-        run: bash docs/chat-motion/run_motion_ui.sh
+          HANLIN_MOTION_DEVICE_STRATEGY: ready
+          HANLIN_MOTION_PREPARED_DEVICE_FILE: ${{ github.workspace }}/product/build/chat-motion-ui-evidence/support-readiness/prepared-device-udid.txt
+        run: |
+          set -euo pipefail
+          cd product
+          bash docs/chat-motion/run_motion_ui.sh
+      - name: Clean up verified run-owned simulator
+        if: always()
+        run: |
+          set -euo pipefail
+          if [[ -f product/Scripts/CI/select_stable_xcode.py ]]; then
+            export DEVELOPER_DIR="$(python3 product/Scripts/CI/select_stable_xcode.py)/Contents/Developer"
+          elif [[ -f Scripts/CI/select_stable_xcode.py ]]; then
+            export DEVELOPER_DIR="$(python3 Scripts/CI/select_stable_xcode.py)/Contents/Developer"
+          fi
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          import sys
+
+          support_dir = Path(os.environ["GITHUB_WORKSPACE"]) / "product/build/chat-motion-ui-evidence/support-readiness"
+          support_dir.mkdir(parents=True, exist_ok=True)
+          selection_path = support_dir / "owned-simulator-selection.json"
+          udid_path = support_dir / "prepared-device-udid.txt"
+          receipt_path = support_dir / "owned-simulator-cleanup.json"
+
+          if not selection_path.is_file() and not udid_path.is_file():
+              receipt_path.write_text(json.dumps({"schema_version": 1, "status": "NOT_CREATED"}, indent=2) + "\n", encoding="utf-8")
+              raise SystemExit(0)
+
+          sys.path.insert(0, str((Path(os.environ["GITHUB_WORKSPACE"]) / "product/Scripts/CI").resolve()))
+          from owned_simulator_receipts import verify_owned_motion_creation
+
+          def run_bounded(cmd, timeout_s):
+              try:
+                  res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_s, check=False)
+                  return {"command": cmd, "return_code": res.returncode, "timed_out": False, "stdout": res.stdout, "stderr": res.stderr}
+              except subprocess.TimeoutExpired:
+                  return {"command": cmd, "return_code": 124, "timed_out": True, "stdout": "", "stderr": "timeout"}
+
+          receipt = {"schema_version": 1, "status": "CLEANUP_FAILED"}
+          try:
+              if not selection_path.is_file() or not udid_path.is_file():
+                  raise RuntimeError("Incomplete owned simulator receipt; refusing unverified cleanup")
+              device_uuid = udid_path.read_text(encoding="utf-8").strip()
+              owner = verify_owned_motion_creation(
+                  selection_path, device_uuid, os.environ.get("GITHUB_RUN_ID"), os.environ.get("GITHUB_RUN_ATTEMPT")
+              )
+              receipt["verified_uuid"] = owner["simulator"]
+              receipt["owned_name"] = owner["name"]
+              sd = run_bounded(["xcrun", "simctl", "shutdown", owner["simulator"]], 20.0)
+              receipt["shutdown"] = sd
+              verify_owned_motion_creation(
+                  selection_path, device_uuid, os.environ.get("GITHUB_RUN_ID"), os.environ.get("GITHUB_RUN_ATTEMPT")
+              )
+              dl = run_bounded(["xcrun", "simctl", "delete", owner["simulator"]], 20.0)
+              receipt["delete"] = dl
+              if dl["return_code"] == 0 and dl["timed_out"] is False:
+                  receipt["status"] = "OWNED_SIMULATOR_REMOVED"
+          except Exception as exc:
+              receipt["error"] = str(exc)
+          receipt_path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+          if receipt["status"] != "OWNED_SIMULATOR_REMOVED":
+              raise SystemExit(1)
+          PY
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: chat-motion-ui-${{ github.run_id }}
-          path: build/chat-motion-ui-evidence
+          path: product/build/chat-motion-ui-evidence
           if-no-files-found: error
           retention-days: 30
   a2ui-media-replay-ui:
