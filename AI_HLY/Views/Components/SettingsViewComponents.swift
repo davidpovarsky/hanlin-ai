@@ -343,7 +343,7 @@ struct SelectEmbeddingModelView: View {
             if newValue {
                 // 检查对应厂商的 APIKeys 配置
                 if let keyRecord = apiKeys.first(where: { $0.company == model.company }) {
-                    if keyRecord.key?.isEmpty ?? true {
+                    if keyRecord.resolvedKey?.isEmpty ?? true {
                         errorMessage = "\(model.displayName) 需要配置 API Key 才能启用。"
                         showError = true
                         loadingModel = nil
@@ -481,7 +481,7 @@ struct SelectTTSModelView: View {
                 // 如果选择的是非 Siri 模型，则检查对应厂商 APIKeys 的配置
                 if model.name.lowercased() != "siri" {
                     if let keyRecord = apiKeys.first(where: { $0.company == model.company }) {
-                        if keyRecord.key?.isEmpty ?? true {
+                        if keyRecord.resolvedKey?.isEmpty ?? true {
                             errorMessage = "\(model.displayName) 需要配置 API Key 才能启用。"
                             showError = true
                             loadingModel = nil
@@ -692,7 +692,7 @@ struct SelectOptimizationModelView: View {
     // 判断某个模型对应的公司是否存在有效的 APIKey
     private func hasValidAPIKey(for model: AllModels) -> Bool {
         guard let company = model.company, !company.isEmpty else { return false }
-        return allAPIKeys.first(where: { ($0.company ?? "") == company && !($0.key?.isEmpty ?? true) }) != nil
+        return allAPIKeys.first(where: { ($0.company ?? "") == company && !($0.resolvedKey?.isEmpty ?? true) }) != nil
     }
     
     // 过滤出符合文本优化要求的模型

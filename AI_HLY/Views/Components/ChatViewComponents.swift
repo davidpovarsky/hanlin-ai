@@ -4526,7 +4526,7 @@ struct AICanvasView: View {
                     selectedText: selectedText,
                     suggestion: selectedTextRevision,
                     modelInfo: model,
-                    apiKey: apiInfo.key ?? "",
+                    apiKey: try HanlinAppProviderCredentials.shared.resolve(apiInfo) ?? "",
                     requestURL: apiInfo.requestURL ?? ""
                 )
 
@@ -4590,7 +4590,7 @@ struct AICanvasView: View {
                     modelInfo: model,
                     readingLevel: selectedReadingLevelLabel,
                     lengthOption: selectedLengthOptionLabel,
-                    apiKey: apiInfo.key ?? "",
+                    apiKey: try HanlinAppProviderCredentials.shared.resolve(apiInfo) ?? "",
                     requestURL: apiInfo.requestURL ?? ""
                 )
                 for try await token in stream {

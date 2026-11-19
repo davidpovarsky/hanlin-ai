@@ -49,7 +49,7 @@ class SystemOptimizer {
                           userInfo: [NSLocalizedDescriptionKey: "未能从数据库中获取厂商 \(modelCompany) 的API配置"])
         }
 
-        guard let apiKey = apiKeyObj.key, !apiKey.isEmpty else {
+        guard let apiKey = apiKeyObj.resolvedKey, !apiKey.isEmpty else {
             print("[SystemOptimizer] 错误：厂商 \(modelCompany) 的API密钥为空")
             throw NSError(domain: "APIConfigError", code: -1,
                           userInfo: [NSLocalizedDescriptionKey: "厂商 \(modelCompany) 的API密钥未配置或为空"])

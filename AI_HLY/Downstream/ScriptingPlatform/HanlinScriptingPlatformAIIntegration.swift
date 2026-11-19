@@ -8,9 +8,11 @@ import SwiftData
 @MainActor
 final class HanlinScriptingPlatformAIIntegration: HanlinScriptingApplicationServices {
     private let modelContext: ModelContext
+    private let compactConfigStore: HanlinCompactAgentConfigStore?
 
-    init(modelContext: ModelContext) {
+    init(modelContext: ModelContext, compactConfigStore: HanlinCompactAgentConfigStore? = nil) {
         self.modelContext = modelContext
+        self.compactConfigStore = compactConfigStore
     }
 
     func loadAssistant(
@@ -24,7 +26,7 @@ final class HanlinScriptingPlatformAIIntegration: HanlinScriptingApplicationServ
         let models = try modelContext.fetch(FetchDescriptor<AllModels>())
 
         let validKeys = keys.filter { key in
-            guard let k = key.key, !k.isEmpty, k.uppercased() != "LOCAL",
+            guard let k = key.storedCredential, key.preservesCredentialSelection, k.uppercased() != "LOCAL",
                   let company = key.company, !company.isEmpty, company.uppercased() != "LOCAL",
                   let urlStr = key.requestURL, !urlStr.isEmpty, URL(string: urlStr) != nil else {
                 return false
@@ -61,14 +63,17 @@ final class HanlinScriptingPlatformAIIntegration: HanlinScriptingApplicationServ
               let apiKey = selectedKey.key,
               let endpointStr = selectedKey.requestURL,
               let endpoint = URL(string: endpointStr) else {
-            let store = try HanlinCompactAgentConfigStore()
+            let store = try compactConfigStore ?? HanlinCompactAgentConfigStore()
             try store.clear()
             return
         }
 
         let config = HanlinCompactAgentConfiguration(
             endpoint: endpoint,
-            apiKey: apiKey,
+            // Legacy records retain compatibility until explicitly saved.
+            // A secured record exports only its handle, never the resolved secret.
+            apiKey: HanlinKeychainCredentialStore.isReference(apiKey) ? "" : apiKey,
+            credentialReference: HanlinKeychainCredentialStore.isReference(apiKey) ? apiKey : nil,
             modelID: selectedModel.name ?? "gpt-4o-mini",
             company: selectedKey.company,
             displayName: selectedModel.displayName ?? selectedModel.name,
@@ -83,7 +88,7 @@ final class HanlinScriptingPlatformAIIntegration: HanlinScriptingApplicationServ
             supportsToolUse: false,
             updatedAt: .now
         )
-        let store = try HanlinCompactAgentConfigStore()
+        let store = try compactConfigStore ?? HanlinCompactAgentConfigStore()
         try store.save(config)
     }
 }

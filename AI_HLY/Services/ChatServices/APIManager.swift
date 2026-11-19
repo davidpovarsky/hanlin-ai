@@ -114,6 +114,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
     }
     
     private var context: ModelContext
+    private let providerCredentials: HanlinAppProviderCredentials
     private let chatEngineFactory: () -> HanlinChatEngine
     private var currentTask: URLSessionDataTask? // 当前流式请求任务
     private var isCancelled = false              // 请求取消标记
@@ -124,9 +125,11 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
     init(
         context: ModelContext,
         chatEngineFactory: (() -> HanlinChatEngine)? = nil,
-        agentSessionOwner: HanlinAppAgentSessionOwner? = nil
+        agentSessionOwner: HanlinAppAgentSessionOwner? = nil,
+        providerCredentials: HanlinAppProviderCredentials = .shared
     ) {
         self.context = context
+        self.providerCredentials = providerCredentials
         self.agentSessionOwner = agentSessionOwner ?? HanlinAppAgentSessionOwner()
         self.chatEngineFactory = chatEngineFactory ?? {
             if HanlinNativeA2UIAcceptanceProvider.isEnabled { return HanlinNativeA2UIAcceptanceProvider.makeChatEngine() }
@@ -194,9 +197,10 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
     func credential(for model: HanlinModelReference, namespace: HanlinConversationNamespace) throws -> String {
         _ = try requireDataAccess(namespace: namespace)
         guard model == dataModel else { throw HanlinHostError.staleContext }
-        // This is the original provider configuration owner. Keychain migration and CloudKit
-        // account fencing remain separate work; this port does not claim either has happened.
-        guard let key = getAPIConfiguration(for: model.provider)?.key, !key.isEmpty else {
+        // Resolve from the original current record after the owner/request checks.
+        // Legacy values remain readable; unavailable references fail closed.
+        guard let record = getAPIConfiguration(for: model.provider),
+              let key = try providerCredentials.resolve(record), !key.isEmpty else {
             throw HanlinHostError.denied
         }
         return key
@@ -926,7 +930,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
     private func getAPIKey(for company: String) -> String? {
         let predicate = #Predicate<APIKeys> { $0.company == company }
         let fetchDescriptor = FetchDescriptor<APIKeys>(predicate: predicate)
-        return (try? context.fetch(fetchDescriptor).first)?.key
+        guard let record = try? context.fetch(fetchDescriptor).first else { return nil }
+        return try? providerCredentials.resolve(record)
     }
     
     // 查询模型请求地址
@@ -1048,8 +1053,9 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         })
         do {
             let mapKeys = try context.fetch(fetchRequest)
-            if let activeMap = mapKeys.first {
-                return (activeMap.company, activeMap.key)
+            if let activeMap = mapKeys.first,
+               let secret = try providerCredentials.resolve(activeMap) {
+                return (activeMap.company, secret)
             }
         } catch {
             print("获取地图服务失败")
@@ -1064,8 +1070,9 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         })
         do {
             let mapKeys = try context.fetch(fetchRequest)
-            if let activeMap = mapKeys.first {
-                return (activeMap.company, activeMap.key, activeMap.requestURL)
+            if let activeMap = mapKeys.first,
+               let secret = try providerCredentials.resolve(activeMap) {
+                return (activeMap.company, secret, activeMap.requestURL)
             }
         } catch {
             print("获取天气服务失败")
@@ -1106,12 +1113,12 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         let fetchRequest = FetchDescriptor<SearchKeys>(predicate: #Predicate { $0.isUsing == true })
         do {
             let searchKeys = try context.fetch(fetchRequest)
-            let chosenKey = searchKeys.first(where: { $0.company != "AUTOMATIC_KEYLESS" && !($0.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) })
+            let chosenKey = searchKeys.first(where: { $0.company != "AUTOMATIC_KEYLESS" && $0.preservesCredentialSelection })
                 ?? searchKeys.first(where: { $0.company == "AUTOMATIC_KEYLESS" })
                 ?? searchKeys.first
             if let activeKey = chosenKey,
                let engine = SearchEngine(rawValue: activeKey.company?.uppercased() ?? "Unknown") {
-                return (engine, activeKey.key, activeKey.requestURL) as? (engine: SearchEngine, apiKey: String?, requestURL: String)
+                return (engine, try providerCredentials.resolve(activeKey), activeKey.requestURL) as? (engine: SearchEngine, apiKey: String?, requestURL: String)
             }
         } catch {
             print("获取搜索引擎失败")
@@ -2620,7 +2627,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     guard selectedModel == HanlinModelReference(provider: modelInfo.company ?? "Unknown",
                         modelID: modelInfo.name ?? "Unknown") else { throw HanlinHostError.staleContext }
                     guard let providerConfiguration = self.getAPIConfiguration(for: selectedModel.provider),
-                          providerConfiguration.key == apiKey else { throw HanlinHostError.staleContext }
+                          try self.providerCredentials.matches(apiKey, for: providerConfiguration) else { throw HanlinHostError.staleContext }
                     guard let requestURLString = providerConfiguration.requestURL,
                           let requestURL = URL(string: requestURLString),
                           !requestURLString.isEmpty else {

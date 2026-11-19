@@ -23,7 +23,19 @@ final class TranslationProviderSession {
     var isChatStreaming: Bool = false
     var chatError: String? = nil
 
-    private let agentClient = HanlinCompactAgentClient()
+    // Existing host identity and App Group. Policy stays in the app/extension hosts.
+    nonisolated private static let providerKeychain = HanlinKeychainCredentialStore(
+        service: "com.itorah.chavrusachat.provider-credentials",
+        accessGroup: "group.com.itorah.chavrusachat",
+        synchronizable: true,
+        accessibility: .afterFirstUnlock
+    )
+    private let agentClient = HanlinCompactAgentClient(credentialResolver: { reference in
+        guard let secret = try TranslationProviderSession.providerKeychain.resolve(reference, kind: .model) else {
+            throw HanlinCompactAgentError.notConfigured
+        }
+        return secret
+    })
 
     var sourceText: String {
         get {

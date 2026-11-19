@@ -5,6 +5,8 @@ import HanlinChatCore
 import HanlinHostContracts
 import HanlinPlatformContracts
 import HanlinProductSplit
+import HanlinScriptExtensions
+import Security
 import SwiftData
 import Testing
 @testable import AI_Hanlin
@@ -74,6 +76,101 @@ private struct AppPartModel: LanguageModelV3 {
     func release() { blocked?.resume(); blocked = nil }
 }
 
+
+/// Used only by an explicitly injected ephemeral URLSession. Every URL is
+/// intercepted so a regression cannot send a synthetic credential to the network.
+private final class ProviderCredentialURLProtocol: URLProtocol, @unchecked Sendable {
+    private static let lock = NSLock()
+    nonisolated(unsafe) private static var requests: [String: [URLRequest]] = [:]
+
+    static func register(host: String) {
+        lock.lock(); defer { lock.unlock() }
+        requests[host] = []
+    }
+    static func snapshot(host: String) -> [URLRequest] {
+        lock.lock(); defer { lock.unlock() }
+        return requests[host] ?? []
+    }
+    static func remove(host: String) {
+        lock.lock(); defer { lock.unlock() }
+        requests.removeValue(forKey: host)
+    }
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        guard let url = request.url, let host = url.host else {
+            client?.urlProtocol(self, didFailWithError: URLError(.badURL)); return
+        }
+        Self.lock.lock()
+        let registered = Self.requests[host] != nil
+        if registered { Self.requests[host, default: []].append(request) }
+        Self.lock.unlock()
+        guard registered else {
+            client?.urlProtocol(self, didFailWithError: URLError(.unsupportedURL)); return
+        }
+        let discovery = url.path.hasSuffix("/models")
+        let body = discovery ? #"{"data":[{"id":"fixture-model","object":"model"}]}"# : #"{"error":{"message":"synthetic probe control"}}"#
+        let response = HTTPURLResponse(url: url, statusCode: discovery ? 200 : 400,
+            httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "application/json"])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        client?.urlProtocol(self, didLoad: Data(body.utf8))
+        client?.urlProtocolDidFinishLoading(self)
+    }
+    override func stopLoading() {}
+}
+
+@MainActor
+private final class ProviderCredentialTestFixture {
+    let directory: URL
+    let databaseURL: URL
+    let service: String
+    let credentials: HanlinAppProviderCredentials
+
+    init() throws {
+        directory = FileManager.default.temporaryDirectory.appendingPathComponent("provider-credentials-\(UUID().uuidString)", isDirectory: true)
+        databaseURL = directory.appendingPathComponent("original.store")
+        service = "com.itorah.chavrusachat.tests.provider-credentials.\(UUID().uuidString)"
+        credentials = HanlinAppProviderCredentials(keychain: .init(service: service,
+            accessGroup: nil, synchronizable: false, accessibility: .afterFirstUnlock))
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+    }
+
+    func open(allowsSave: Bool = true) throws -> ModelContainer {
+        try ModelContainer(for: APIKeys.self, SearchKeys.self, ToolKeys.self, AllModels.self, ChatRecords.self,
+            configurations: ModelConfiguration(url: databaseURL, allowsSave: allowsSave, cloudKitDatabase: .none))
+    }
+
+    func references() throws -> [String] {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrSynchronizable as String: false,
+            kSecUseDataProtectionKeychain as String: true,
+            kSecReturnAttributes as String: true,
+            kSecMatchLimit as String: kSecMatchLimitAll
+        ]
+        var result: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        if status == errSecItemNotFound { return [] }
+        guard status == errSecSuccess, let entries = result as? [[String: Any]] else {
+            throw HanlinKeychainCredentialStore.Failure.unavailable(status)
+        }
+        return entries.compactMap { $0[kSecAttrAccount as String] as? String }
+    }
+
+    func removeOwnedFixture() {
+        // Unique non-synchronizable synthetic fixture service only.
+        let status = SecItemDelete([
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrSynchronizable as String: false,
+            kSecUseDataProtectionKeychain as String: true
+        ] as CFDictionary)
+        #expect(status == errSecSuccess || status == errSecItemNotFound)
+        try? FileManager.default.removeItem(at: directory)
+    }
+}
+
 @Suite @MainActor struct HanlinAppAgentSessionOwnerTests {
     @Test func originalConsentExpiresRevokesAndRejectsStaleSheetAnswers() async throws {
         let ns = try HanlinConversationNamespace(app: "hanlin", account: "consent", workspace: "test", space: UUID().uuidString)
@@ -133,6 +230,412 @@ private struct AppPartModel: LanguageModelV3 {
     private func dataDatabase() throws -> ModelContainer {
         try ModelContainer(for: ChatRecords.self, APIKeys.self, MemoryArchive.self, UserInfo.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+    }
+
+
+    @Test(arguments: [HanlinKeychainCredentialStore.Kind.model, .search, .tool])
+    func originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind: HanlinKeychainCredentialStore.Kind) throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        switch kind {
+        case .model:
+            try exerciseCredentialRoundTrip(fixture) { APIKeys(name: "Original", company: "KEYCHAIN_FIXTURE", key: "synthetic-legacy") }
+        case .search:
+            try exerciseCredentialRoundTrip(fixture) { SearchKeys(name: "Original", company: "KEYCHAIN_FIXTURE", key: "synthetic-legacy") }
+        case .tool:
+            try exerciseCredentialRoundTrip(fixture) { ToolKeys(name: "Original", company: "KEYCHAIN_FIXTURE", key: "synthetic-legacy") }
+        }
+    }
+
+    private func exerciseCredentialRoundTrip<Record: HanlinProviderCredentialRecord>(
+        _ fixture: ProviderCredentialTestFixture, makeRecord: () -> Record
+    ) throws {
+        var originalID: PersistentIdentifier?
+        var reference = ""
+        do {
+            let container = try fixture.open(), context = container.mainContext
+            context.autosaveEnabled = false
+            let record = makeRecord()
+            context.insert(record); try context.save()
+            originalID = record.persistentModelID
+            #expect(try fixture.credentials.resolve(record) == "synthetic-legacy")
+            try fixture.credentials.save("synthetic-secured", for: record,
+                expectedStoredValue: "synthetic-legacy", in: context)
+            reference = try #require(record.storedCredential)
+            #expect(HanlinKeychainCredentialStore.isReference(reference))
+            #expect(!reference.contains("synthetic"))
+            #expect(record.persistentModelID == originalID)
+            #expect(try context.fetch(FetchDescriptor<Record>()).count == 1)
+        }
+        // Reopen the real on-disk original model, not a copied/encoded replacement.
+        do {
+            let container = try fixture.open(), context = container.mainContext
+            context.autosaveEnabled = false
+            let record = try #require(context.fetch(FetchDescriptor<Record>()).first)
+            #expect(record.persistentModelID == originalID)
+            #expect(record.storedCredential == reference)
+            #expect(try fixture.credentials.resolve(record) == "synthetic-secured")
+            #expect(try fixture.credentials.keychain.previousStoredValue(for: reference, kind: Record.credentialKind) == "synthetic-legacy")
+            try fixture.credentials.restorePrevious(for: record, expectedReference: reference, in: context)
+        }
+        do {
+            let container = try fixture.open()
+            let restored = try #require(container.mainContext.fetch(FetchDescriptor<Record>()).first)
+            #expect(restored.persistentModelID == originalID)
+            #expect(restored.storedCredential == "synthetic-legacy")
+            #expect(try fixture.credentials.resolve(restored) == "synthetic-legacy")
+            #expect(try fixture.credentials.keychain.resolve(reference, kind: Record.credentialKind) == "synthetic-secured")
+        }
+    }
+
+    @Test func originalCredentialEditorRemainsTransientAndLegacyCompatible() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        context.autosaveEnabled = false
+        let record = APIKeys(name: "Original editor", company: "KEYCHAIN_FIXTURE", key: "synthetic-original")
+        context.insert(record); try context.save()
+        var first = HanlinCredentialEditDraft(), stale = HanlinCredentialEditDraft()
+        try first.load(record, credentials: fixture.credentials)
+        try stale.load(record, credentials: fixture.credentials)
+        first.replaceText("synthetic-unsaved")
+        #expect(record.key == "synthetic-original")
+        #expect(context.hasChanges == false)
+        #expect(try ModelContext(container).fetch(FetchDescriptor<APIKeys>()).first?.key == "synthetic-original")
+        #expect(try fixture.references().isEmpty)
+        // Discarding the transient draft cannot persist it.
+        first = HanlinCredentialEditDraft()
+        try first.load(record, credentials: fixture.credentials)
+        #expect(first.text == "synthetic-original")
+        first.replaceText("synthetic-explicit-save")
+        try first.save(to: record, in: context, credentials: fixture.credentials)
+        #expect(record.key == "synthetic-explicit-save")
+        #expect(try fixture.references().isEmpty, "The compatibility phase does not activate reference writes")
+        stale.replaceText("synthetic-stale-editor")
+        #expect(throws: Error.self) { try stale.save(to: record, in: context, credentials: fixture.credentials) }
+        #expect(record.key == "synthetic-explicit-save")
+        let reopened = try fixture.open()
+        #expect(try reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first?.key == "synthetic-explicit-save")
+    }
+
+    @Test func originalCredentialStaleContextCannotCheckpointOverNewerSavedValue() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), editorContext = container.mainContext
+        editorContext.autosaveEnabled = false
+        let record = APIKeys(name: "Original stale context", company: "KEYCHAIN_FIXTURE",
+            key: "synthetic-original", requestURL: "https://example.invalid/original")
+        editorContext.insert(record); try editorContext.save()
+        var draft = HanlinCredentialEditDraft()
+        try draft.load(record, credentials: fixture.credentials)
+        draft.replaceText("synthetic-stale")
+        record.requestURL = "https://example.invalid/unsaved-editor"
+        let otherContext = ModelContext(container)
+        otherContext.autosaveEnabled = false
+        let newer = try #require(otherContext.fetch(FetchDescriptor<APIKeys>()).first)
+        newer.key = "synthetic-newer-context"
+        try otherContext.save()
+        #expect(throws: Error.self) { try draft.save(to: record, in: editorContext, credentials: fixture.credentials) }
+        let diskReader = ModelContext(container)
+        let saved = try #require(diskReader.fetch(FetchDescriptor<APIKeys>()).first)
+        #expect(saved.key == "synthetic-newer-context")
+        #expect(saved.requestURL == "https://example.invalid/original")
+        #expect(try fixture.references().isEmpty)
+        editorContext.rollback()
+    }
+
+    @Test func originalSecuredCredentialRotationRetainsPredecessorAndRejectsStaleDraft() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        let record = APIKeys(name: "Original rotated credential", company: "KEYCHAIN_FIXTURE", key: "synthetic-original")
+        context.insert(record); try context.save()
+        try fixture.credentials.save("synthetic-first", for: record,
+            expectedStoredValue: "synthetic-original", in: context)
+        let firstReference = try #require(record.key)
+        var current = HanlinCredentialEditDraft(), stale = HanlinCredentialEditDraft()
+        try current.load(record, credentials: fixture.credentials)
+        try stale.load(record, credentials: fixture.credentials)
+        current.replaceText("synthetic-second")
+        try current.save(to: record, in: context, credentials: fixture.credentials)
+        let secondReference = try #require(record.key)
+        #expect(secondReference != firstReference)
+        #expect(try fixture.credentials.resolve(record) == "synthetic-second")
+        #expect(try fixture.credentials.keychain.resolve(firstReference, kind: .model) == "synthetic-first")
+        #expect(try fixture.credentials.keychain.previousStoredValue(for: secondReference, kind: .model) == firstReference)
+        stale.replaceText("synthetic-stale")
+        #expect(throws: Error.self) { try stale.save(to: record, in: context, credentials: fixture.credentials) }
+        #expect(try fixture.references().count == 2)
+        #expect(record.key == secondReference)
+        try fixture.credentials.restorePrevious(for: record, expectedReference: secondReference, in: context)
+        #expect(record.key == firstReference)
+        #expect(try fixture.credentials.resolve(record) == "synthetic-first")
+        #expect(try fixture.credentials.keychain.resolve(secondReference, kind: .model) == "synthetic-second")
+
+        record.key = "hanlin-keychain:v1:model:\(UUID().uuidString.lowercased())"
+        try context.save()
+        var unavailable = HanlinCredentialEditDraft()
+        #expect(throws: Error.self) { try unavailable.load(record, credentials: fixture.credentials) }
+        #expect(unavailable.isReadyToSave == false)
+        #expect(throws: Error.self) { try unavailable.save(to: record, in: context, credentials: fixture.credentials) }
+        #expect(record.key?.hasPrefix("hanlin-keychain:v1:model:") == true)
+        #expect(try fixture.references().count == 2)
+    }
+
+    @Test(arguments: ["", "synthetic-persisted"])
+    func originalDiscoveryAndProbesUseUnsavedCredentialWithoutImplicitFallback(storedKey: String) async throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        context.autosaveEnabled = false
+        let host = UUID().uuidString.lowercased() + ".provider-credential-test.invalid"
+        let endpoint = "https://\(host)/v1/chat/completions"
+        ProviderCredentialURLProtocol.register(host: host)
+        defer { ProviderCredentialURLProtocol.remove(host: host) }
+        let transport = URLSessionConfiguration.ephemeral
+        transport.protocolClasses = [ProviderCredentialURLProtocol.self]
+        let session = URLSession(configuration: transport)
+        defer { session.invalidateAndCancel() }
+        let provider = APIKeys(name: "Original discovery editor", company: "TEST_DRAFT",
+            key: storedKey, requestURL: endpoint, isHidden: false)
+        context.insert(provider); try context.save()
+        var draft = HanlinCredentialEditDraft()
+        try draft.load(provider, credentials: fixture.credentials)
+        draft.replaceText("synthetic-entered")
+        let override = ModelRefreshProviderConfiguration(provider: provider, credential: draft.text)
+        let models = try await ModelRefreshService.fetchModelsFromAPI(apiKey: provider,
+            configurationOverride: override, session: session)
+        #expect(models.map(\.id) == ["fixture-model"])
+        _ = try await ModelRefreshService.probeModelCapabilities(modelId: "fixture-model",
+            company: "TEST_DRAFT", context: context, configurationOverride: override, session: session,
+            update: { _, _, _ in })
+        let requests = ProviderCredentialURLProtocol.snapshot(host: host)
+        #expect(requests.count >= 2, "Both the actual discovery and actual capability pipeline reached the transport")
+        #expect(requests.allSatisfy { $0.value(forHTTPHeaderField: "Authorization") == "Bearer synthetic-entered" })
+        #expect(provider.key == storedKey)
+        #expect(context.hasChanges == false)
+        #expect(try ModelContext(container).fetch(FetchDescriptor<APIKeys>()).first?.key == storedKey)
+        #expect(try fixture.references().isEmpty)
+
+        let empty = ModelRefreshProviderConfiguration(provider: provider, credential: "")
+        do {
+            _ = try await ModelRefreshService.fetchModelsFromAPI(apiKey: provider,
+                configurationOverride: empty, session: session)
+            Issue.record("An explicitly empty discovery draft fell back to its saved credential")
+        } catch { #expect(error is ModelFetchError) }
+        do {
+            _ = try await ModelRefreshService.probeModelCapabilities(modelId: "fixture-model",
+                company: "TEST_DRAFT", context: context, configurationOverride: empty, session: session,
+                update: { _, _, _ in })
+            Issue.record("An explicitly empty probe draft fell back to its saved credential")
+        } catch { #expect(error is ModelCapabilityProbeError) }
+        #expect(ProviderCredentialURLProtocol.snapshot(host: host).count == requests.count)
+
+        if storedKey.isEmpty {
+            do {
+                _ = try await ModelRefreshService.fetchModelsFromAPI(apiKey: provider, session: session)
+                Issue.record("Absent override invented a saved key")
+            } catch { #expect(error is ModelFetchError) }
+        } else {
+            _ = try await ModelRefreshService.fetchModelsFromAPI(apiKey: provider, session: session)
+            #expect(ProviderCredentialURLProtocol.snapshot(host: host).last?.value(forHTTPHeaderField: "Authorization") == "Bearer \(storedKey)")
+        }
+        let other = APIKeys(name: "Other original provider", company: "OTHER", key: "", requestURL: endpoint)
+        let foreign = ModelRefreshProviderConfiguration(provider: other, credential: "synthetic-foreign")
+        let countBeforeForeign = ProviderCredentialURLProtocol.snapshot(host: host).count
+        do {
+            _ = try await ModelRefreshService.fetchModelsFromAPI(apiKey: provider,
+                configurationOverride: foreign, session: session)
+            Issue.record("A transient key crossed provider ownership")
+        } catch { #expect(error is ModelFetchError) }
+        #expect(ProviderCredentialURLProtocol.snapshot(host: host).count == countBeforeForeign)
+        #expect(provider.key == storedKey)
+    }
+
+    @Test func originalCredentialCommitSurvivesPublicationFailureAndRetryDoesNotResave() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        context.autosaveEnabled = false
+        let provider = APIKeys(name: "Original publication failure", company: "KEYCHAIN_FIXTURE",
+            key: "synthetic-original", requestURL: "https://example.invalid/v1/chat/completions", isHidden: false)
+        context.insert(provider)
+        context.insert(AllModels(name: "fixture-model", displayName: "Fixture", position: 0, company: "KEYCHAIN_FIXTURE"))
+        try context.save()
+        try fixture.credentials.save("synthetic-before-edit", for: provider,
+            expectedStoredValue: "synthetic-original", in: context)
+        var draft = HanlinCredentialEditDraft()
+        try draft.load(provider, credentials: fixture.credentials)
+        draft.replaceText("synthetic-committed")
+        let blocker = fixture.directory.appendingPathComponent("not-a-directory")
+        try Data("owned synthetic blocker".utf8).write(to: blocker)
+        let brokenStore = HanlinCompactAgentConfigStore(customURL: blocker.appendingPathComponent("config.json"))
+        let brokenPublisher = HanlinScriptingPlatformAIIntegration(modelContext: context, compactConfigStore: brokenStore)
+        let timestamp = Date(timeIntervalSince1970: 12345)
+        let result = try draft.saveAndPublish(to: provider, in: context, credentials: fixture.credentials,
+            update: { $0.timestamp = timestamp },
+            publishCompactConfiguration: { try brokenPublisher.publishCompactAgentConfig() })
+        #expect(result == .needsRetry)
+        let committedReference = try #require(provider.key)
+        #expect(draft.expectedStoredValue == committedReference)
+        #expect(draft.text == "synthetic-committed")
+        #expect(draft.edited == false)
+        #expect(try fixture.credentials.resolve(provider) == "synthetic-committed")
+        #expect(try ModelContext(container).fetch(FetchDescriptor<APIKeys>()).first?.key == committedReference)
+        #expect(try fixture.references().count == 2)
+        let fixedStore = HanlinCompactAgentConfigStore(customURL: fixture.directory.appendingPathComponent("published.json"))
+        let publisher = HanlinScriptingPlatformAIIntegration(modelContext: context, compactConfigStore: fixedStore)
+        #expect(HanlinCredentialEditDraft.retryPublication { try publisher.publishCompactAgentConfig() } == .updated)
+        #expect(provider.key == committedReference)
+        #expect(provider.timestamp == timestamp)
+        #expect(try fixture.references().count == 2, "Retry only publishes the compact file")
+        #expect(try fixedStore.load()?.credentialReference == committedReference)
+        #expect(try fixedStore.load()?.apiKey.isEmpty == true)
+    }
+
+    @Test func originalCredentialStageFailureLeavesOriginalDiskRowUnchanged() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        context.autosaveEnabled = false
+        let record = APIKeys(name: "Original denied staging", company: "KEYCHAIN_FIXTURE", key: "synthetic-original")
+        context.insert(record); try context.save()
+        // Apple documents an empty explicit access group as invalid. This is an
+        // actual SecItemAdd failure, not an injected successful/failed storage mock.
+        let denied = HanlinAppProviderCredentials(keychain: .init(service: fixture.service,
+            accessGroup: "", synchronizable: false, accessibility: .afterFirstUnlock))
+        #expect(throws: Error.self) {
+            try denied.save("synthetic-replacement", for: record,
+                expectedStoredValue: "synthetic-original", in: context)
+        }
+        #expect(record.key == "synthetic-original")
+        #expect(context.hasChanges == false)
+        #expect(try fixture.references().isEmpty)
+        let reopened = try fixture.open()
+        #expect(try reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first?.key == "synthetic-original")
+    }
+
+    @Test func originalCredentialReadOnlySaveRetainsStagedRecoveryWithoutReplacingLegacyRow() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        do {
+            let container = try fixture.open(), context = container.mainContext
+            context.insert(APIKeys(name: "Original read-only", company: "KEYCHAIN_FIXTURE", key: "synthetic-original"))
+            try context.save()
+        }
+        do {
+            let readOnly = try fixture.open(allowsSave: false), context = readOnly.mainContext
+            context.autosaveEnabled = false
+            let record = try #require(context.fetch(FetchDescriptor<APIKeys>()).first)
+            #expect(throws: Error.self) {
+                try fixture.credentials.save("synthetic-staged", for: record,
+                    expectedStoredValue: "synthetic-original", in: context)
+            }
+            #expect(record.key == "synthetic-original")
+            #expect(context.hasChanges == false)
+        }
+        let references = try fixture.references()
+        #expect(references.count == 1, "The real Keychain write succeeded before the original disk commit failed")
+        let staged = try #require(references.first)
+        #expect(try fixture.credentials.keychain.resolve(staged, kind: .model) == "synthetic-staged")
+        #expect(try fixture.credentials.keychain.previousStoredValue(for: staged, kind: .model) == "synthetic-original")
+        let reopened = try fixture.open()
+        #expect(try reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first?.key == "synthetic-original")
+    }
+
+    @Test func originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority() async throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        let row = ChatRecords(name: "Original secured request", type: "chat")
+        let provider = APIKeys(name: "Original secured provider", company: "KEYCHAIN_FIXTURE", key: "synthetic-original")
+        context.insert(row); context.insert(provider); try context.save()
+        try fixture.credentials.save("synthetic-secured", for: provider,
+            expectedStoredValue: "synthetic-original", in: context)
+        let reference = try #require(provider.key)
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id,
+            sceneID: UUID(), rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let model = HanlinModelReference(provider: "KEYCHAIN_FIXTURE", modelID: "selected-original")
+        let api = APIManager(context: context, agentSessionOwner: owner, providerCredentials: fixture.credentials)
+        try api.bindDataAccess(request: request, model: model)
+        let port: any HanlinCredentialResolver = api
+        let namespace = try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
+            workspace: "swiftdata", space: id.uuidString)
+        #expect(try await port.credential(for: model, namespace: namespace) == "synthetic-secured")
+        let composed = "synthetic-\u{00e9}", decomposed = "synthetic-e\u{0301}"
+        #expect(composed == decomposed, "Control: Swift String equality folds canonical Unicode equivalents")
+        let unicodeHandle = try fixture.credentials.keychain.stage(composed, kind: .model, previousStoredValue: reference)
+        provider.key = unicodeHandle; try context.save()
+        #expect(try fixture.credentials.matches(composed, for: provider))
+        #expect(try fixture.credentials.matches(decomposed, for: provider) == false)
+        #expect(Data(try await port.credential(for: model, namespace: namespace).utf8) == Data(composed.utf8))
+        let wrongKind = try fixture.credentials.keychain.stage("synthetic-search", kind: .search, previousStoredValue: nil)
+        for invalid in [wrongKind, "hanlin-keychain:v99:model:future",
+                        "hanlin-keychain:v1:model:\(UUID().uuidString.lowercased())"] {
+            provider.key = invalid; try context.save()
+            do {
+                _ = try await port.credential(for: model, namespace: namespace)
+                Issue.record("An unresolved or foreign-kind handle escaped as a provider credential")
+            } catch { #expect(error is HanlinKeychainCredentialStore.Failure) }
+        }
+        provider.key = reference; try context.save()
+        #expect(try await port.credential(for: model, namespace: namespace) == "synthetic-secured")
+        owner.revoke()
+        do {
+            _ = try await port.credential(for: model, namespace: namespace)
+            Issue.record("The secured credential survived original owner revocation")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+    }
+
+    @Test func originalSecuredSearchSelectionSurvivesUnavailableKeychain() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        let reference = "hanlin-keychain:v1:search:\(UUID().uuidString.lowercased())"
+        let manual = SearchKeys(name: "Original selected search", company: "TAVILY", key: reference, isUsing: true)
+        let automatic = AutomaticSearchMigration.makeAutomaticSearchKey(isUsing: true)
+        context.insert(manual); context.insert(automatic); try context.save()
+        #expect(throws: Error.self) { _ = try fixture.credentials.resolve(manual) }
+        AutomaticSearchMigration.reconcileDefaultProvider(in: context)
+        #expect(manual.isUsing)
+        #expect(automatic.isUsing == false)
+        #expect(manual.key == reference)
+    }
+
+    @Test func originalCompactPublisherExportsOnlySecuredReferenceAndRetainsLegacyCompatibility() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        let provider = APIKeys(name: "Original compact", company: "KEYCHAIN_FIXTURE", key: "synthetic-legacy-compact",
+            requestURL: "https://example.invalid/v1/chat/completions", isHidden: false)
+        let model = AllModels(name: "fixture-model", displayName: "Fixture model", position: 0, company: "KEYCHAIN_FIXTURE")
+        context.insert(provider); context.insert(model); try context.save()
+        let url = fixture.directory.appendingPathComponent("original-compact-config.json")
+        let store = HanlinCompactAgentConfigStore(customURL: url)
+        let publisher = HanlinScriptingPlatformAIIntegration(modelContext: context, compactConfigStore: store)
+        try publisher.publishCompactAgentConfig()
+        #expect(try store.load()?.apiKey == "synthetic-legacy-compact")
+        try fixture.credentials.save("synthetic-secured-compact", for: provider,
+            expectedStoredValue: "synthetic-legacy-compact", in: context)
+        try publisher.publishCompactAgentConfig()
+        let raw = try Data(contentsOf: url)
+        #expect(raw.range(of: Data("synthetic-secured-compact".utf8)) == nil)
+        #expect(raw.range(of: Data("synthetic-legacy-compact".utf8)) == nil)
+        let config = try #require(store.load())
+        #expect(config.apiKey.isEmpty)
+        #expect(config.credentialReference == provider.key)
+        #expect(config.chatModelConfiguration.apiKey.isEmpty)
+        #expect(throws: Error.self) { _ = try config.resolvedChatModelConfiguration(using: nil) }
+        let keychain = fixture.credentials.keychain
+        let resolved = try config.resolvedChatModelConfiguration(using: { handle in
+            try #require(keychain.resolve(handle, kind: .model))
+        })
+        #expect(resolved.apiKey == "synthetic-secured-compact")
+        try store.clear()
+        #expect(try store.load() == nil)
+        #expect(try keychain.resolve(provider.key, kind: .model) == "synthetic-secured-compact",
+            "Removing configuration is not permission to delete a shared credential")
     }
 
     @Test func originalCredentialPortRejectsForeignModelNamespaceRequestAndDeletedOrigin() async throws {

@@ -358,7 +358,7 @@ struct TranslationView: View {
                     modelInfo: selectedModel,
                     targetLanguage: targetLanguage,
                     translationMatters: translationMatters,
-                    apiKey: apiInfo.key ?? "Unknown",
+                    apiKey: try HanlinAppProviderCredentials.shared.resolve(apiInfo) ?? "Unknown",
                     requestURL: apiInfo.requestURL ?? "Unknown"
                 )
                 
@@ -760,7 +760,7 @@ struct PolishView: View {
                     input: inputText,
                     modelInfo: selectedModel,
                     prompts: selectedPrompts,
-                    apiKey: apiInfo.key ?? "",
+                    apiKey: try HanlinAppProviderCredentials.shared.resolve(apiInfo) ?? "",
                     requestURL: apiInfo.requestURL ?? "Unknown"
                 )
                 
@@ -1174,7 +1174,7 @@ struct SummaryView: View {
                 let stream = try await generateSummaryAPI(
                     input: combinedInput,
                     modelInfo: selectedModel,
-                    apiKey: apiInfo.key ?? "",
+                    apiKey: try HanlinAppProviderCredentials.shared.resolve(apiInfo) ?? "",
                     requestURL: apiInfo.requestURL ?? "Unknown"
                 )
                 

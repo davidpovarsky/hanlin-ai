@@ -134,7 +134,22 @@ struct AnthropicModelsResponse: Codable {
 }
 
 // MARK: - 模型刷新服务
+/// An explicit in-memory settings snapshot. An empty credential is an override,
+/// not permission to fall back to a previously saved key.
+struct ModelRefreshProviderConfiguration: Sendable {
+    let company: String
+    let apiKey: String
+    let requestURL: String?
+
+    init(provider: APIKeys, credential: String) {
+        company = provider.company ?? ""
+        apiKey = credential
+        requestURL = provider.requestURL
+    }
+}
+
 class ModelRefreshService {
+    @TaskLocal private static var requestSession: URLSession = .shared
     @MainActor private static var lastCatalogAttempt: Date?
 
     @MainActor static func refreshOpenRouterMetadata(in context: ModelContext) async {
@@ -168,31 +183,42 @@ class ModelRefreshService {
     }
 
     // MARK: 获取模型列表
-    static func fetchModelsFromAPI(apiKey: APIKeys) async throws -> [APIModelResponse] {
-        guard let key = apiKey.key, !key.isEmpty else {
-            throw ModelFetchError.invalidAPIKey
+    static func fetchModelsFromAPI(
+        apiKey: APIKeys,
+        configurationOverride: ModelRefreshProviderConfiguration? = nil,
+        session: URLSession = .shared
+    ) async throws -> [APIModelResponse] {
+        let configuration: ModelRefreshProviderConfiguration
+        if let configurationOverride {
+            guard configurationOverride.company == apiKey.company else { throw ModelFetchError.invalidCompany }
+            configuration = configurationOverride
+        } else {
+            guard let key = try HanlinAppProviderCredentials.shared.resolve(apiKey) else {
+                throw ModelFetchError.invalidAPIKey
+            }
+            configuration = .init(provider: apiKey, credential: key)
         }
-
-        guard let company = apiKey.company?.uppercased() else {
-            throw ModelFetchError.invalidCompany
-        }
-
-        // 根据不同的 API 类型调用不同的方法
-        switch apiKey.apiType {
-        case .openAI, .openAIResponse:
-            return try await fetchOpenAIModels(apiKey: apiKey, company: company)
-        case .anthropic:
-            return try await fetchAnthropicModels(apiKey: apiKey, company: company)
-        case .gemini:
-            return try await fetchGeminiModels(apiKey: apiKey, company: company)
+        guard !configuration.apiKey.isEmpty else { throw ModelFetchError.invalidAPIKey }
+        guard !configuration.company.isEmpty else { throw ModelFetchError.invalidCompany }
+        let company = configuration.company.uppercased()
+        let apiType = apiKey.apiType
+        return try await $requestSession.withValue(session) {
+            switch apiType {
+            case .openAI, .openAIResponse:
+                return try await fetchOpenAIModels(configuration: configuration, company: company)
+            case .anthropic:
+                return try await fetchAnthropicModels(configuration: configuration, company: company)
+            case .gemini:
+                return try await fetchGeminiModels(configuration: configuration, company: company)
+            }
         }
     }
 
     // MARK: OpenAI 兼容接口
-    private static func fetchOpenAIModels(apiKey: APIKeys, company: String) async throws -> [APIModelResponse] {
+    private static func fetchOpenAIModels(configuration: ModelRefreshProviderConfiguration, company: String) async throws -> [APIModelResponse] {
         // 构建请求 URL
         let baseURL: String
-        if let customURL = apiKey.requestURL, !customURL.isEmpty {
+        if let customURL = configuration.requestURL, !customURL.isEmpty {
             // 移除末尾的 /chat/completions 如果存在
             let url = customURL.replacingOccurrences(of: "/chat/completions", with: "")
                               .replacingOccurrences(of: "/v1", with: "")
@@ -213,11 +239,11 @@ class ModelRefreshService {
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("Bearer \(apiKey.key ?? "")", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(configuration.apiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 30
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await requestSession.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ModelFetchError.invalidResponse
@@ -237,8 +263,8 @@ class ModelRefreshService {
     }
 
     // MARK: Anthropic 接口
-    private static func fetchAnthropicModels(apiKey: APIKeys, company: String) async throws -> [APIModelResponse] {
-        let baseURL = apiKey.requestURL ?? "https://api.anthropic.com"
+    private static func fetchAnthropicModels(configuration: ModelRefreshProviderConfiguration, company: String) async throws -> [APIModelResponse] {
+        let baseURL = configuration.requestURL ?? "https://api.anthropic.com"
         let modelsURL = "\(baseURL)/v1/models"
 
         guard let url = URL(string: modelsURL) else {
@@ -247,12 +273,12 @@ class ModelRefreshService {
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue(apiKey.key ?? "", forHTTPHeaderField: "x-api-key")
+        request.setValue(configuration.apiKey, forHTTPHeaderField: "x-api-key")
         request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 30
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await requestSession.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ModelFetchError.invalidResponse
@@ -268,9 +294,9 @@ class ModelRefreshService {
     }
 
     // MARK: Gemini 接口
-    private static func fetchGeminiModels(apiKey: APIKeys, company: String) async throws -> [APIModelResponse] {
+    private static func fetchGeminiModels(configuration: ModelRefreshProviderConfiguration, company: String) async throws -> [APIModelResponse] {
         let baseURL = "https://generativelanguage.googleapis.com"
-        let modelsURL = "\(baseURL)/v1beta/models?key=\(apiKey.key ?? "")"
+        let modelsURL = "\(baseURL)/v1beta/models?key=\(configuration.apiKey)"
 
         guard let url = URL(string: modelsURL) else {
             throw ModelFetchError.invalidURL
@@ -281,7 +307,7 @@ class ModelRefreshService {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 30
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await requestSession.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ModelFetchError.invalidResponse
@@ -333,12 +359,27 @@ class ModelRefreshService {
         modelId: String,
         company: String,
         context: ModelContext,
+        configurationOverride: ModelRefreshProviderConfiguration? = nil,
+        session: URLSession = .shared,
+        update: @escaping (ModelCapabilityProbeStep, ModelCapabilityProbeStatus, String?) -> Void
+    ) async throws -> ModelCapabilityProbeSummary {
+        try await $requestSession.withValue(session) {
+            try await probeModelCapabilitiesUsingSession(modelId: modelId, company: company,
+                context: context, configurationOverride: configurationOverride, update: update)
+        }
+    }
+
+    private static func probeModelCapabilitiesUsingSession(
+        modelId: String,
+        company: String,
+        context: ModelContext,
+        configurationOverride: ModelRefreshProviderConfiguration?,
         update: @escaping (ModelCapabilityProbeStep, ModelCapabilityProbeStatus, String?) -> Void
     ) async throws -> ModelCapabilityProbeSummary {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let isZh = currentLanguage.hasPrefix("zh")
         
-        let config = try fetchAPIConfig(company: company, context: context)
+        let config = try fetchAPIConfig(company: company, context: context, configurationOverride: configurationOverride)
         let baseName = restoreBaseModelName(from: modelId)
         let existingModel = fetchExistingModel(modelId: modelId, baseName: baseName, company: company, context: context)
         let existingCapabilities = existingModel.map {
@@ -529,13 +570,23 @@ class ModelRefreshService {
         return imageOnlyPrefixesOrTokens.contains { lower.contains($0) }
     }
 
-    private static func fetchAPIConfig(company: String, context: ModelContext) throws -> (apiKey: String, requestURL: String) {
+    private static func fetchAPIConfig(
+        company: String, context: ModelContext, configurationOverride: ModelRefreshProviderConfiguration?
+    ) throws -> (apiKey: String, requestURL: String) {
+        if let configurationOverride {
+            guard configurationOverride.company == company else { throw ModelFetchError.invalidCompany }
+            guard !configurationOverride.apiKey.isEmpty else { throw ModelCapabilityProbeError.invalidAPIKey }
+            guard let requestURL = configurationOverride.requestURL, !requestURL.isEmpty else {
+                throw ModelCapabilityProbeError.invalidURL
+            }
+            return (configurationOverride.apiKey, requestURL)
+        }
         let predicate = #Predicate<APIKeys> { $0.company == company }
         let fetchDescriptor = FetchDescriptor<APIKeys>(predicate: predicate)
         guard let key = try? context.fetch(fetchDescriptor).first else {
             throw ModelCapabilityProbeError.invalidAPIKey
         }
-        guard let apiKey = key.key, !apiKey.isEmpty else {
+        guard let apiKey = key.resolvedKey, !apiKey.isEmpty else {
             throw ModelCapabilityProbeError.invalidAPIKey
         }
         guard let requestURL = key.requestURL, !requestURL.isEmpty else {
@@ -662,7 +713,7 @@ class ModelRefreshService {
         request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
         
         do {
-            let (bytes, response) = try await URLSession.shared.bytes(for: request)
+            let (bytes, response) = try await requestSession.bytes(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 return .failure(isZh ? "响应格式错误" : "Invalid response format")
@@ -795,7 +846,7 @@ class ModelRefreshService {
         request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
         
         do {
-            let (bytes, response) = try await URLSession.shared.bytes(for: request)
+            let (bytes, response) = try await requestSession.bytes(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 return .failure(isZh ? "响应格式错误" : "Invalid response format")
@@ -1076,7 +1127,7 @@ class ModelRefreshService {
         request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
         
         do {
-            let (bytes, response) = try await URLSession.shared.bytes(for: request)
+            let (bytes, response) = try await requestSession.bytes(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 return .failure(isZh ? "响应格式错误" : "Invalid response format")
@@ -1191,7 +1242,7 @@ class ModelRefreshService {
 
     private static func performRequest(request: URLRequest) async -> ModelCapabilityProbeResult {
         do {
-            let (_, response) = try await URLSession.shared.data(for: request)
+            let (_, response) = try await requestSession.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
                 return .failure(isZhLanguage ? "响应格式错误" : "Invalid response format")
             }
@@ -1207,7 +1258,7 @@ class ModelRefreshService {
     /// 执行请求并返回原始数据
     private static func performRequestWithData(request: URLRequest) async -> ModelCapabilityProbeResultWithData {
         do {
-            let (data, response) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await requestSession.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse else {
                 return .failure(isZhLanguage ? "响应格式错误" : "Invalid response format")
             }

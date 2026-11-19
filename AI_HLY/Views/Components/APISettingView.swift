@@ -175,6 +175,9 @@ private struct EditKeyContent: View {
     let modelContext: ModelContext
     let allModels: [AllModels]
     @Binding var selectedKey: APIKeys?
+    @State private var credentialDraft = HanlinCredentialEditDraft()
+    @State private var credentialError: String?
+    @State private var compactPublicationNeedsRetry = false
 
     @State private var testResult: Bool? = nil
     @State private var isTesting = false
@@ -279,8 +282,8 @@ private struct EditKeyContent: View {
                 }
                 Section(header: Text("API Key")) {
                     SecureField(String(localized: "请输入密钥"), text: Binding(
-                        get: { key.key ?? "" },
-                        set: { key.key = $0 }
+                        get: { credentialDraft.text },
+                        set: { credentialDraft.replaceText($0); compactPublicationNeedsRetry = false }
                     ))
                 }
                 // 自定义供应商或LAN供应商显示请求地址设置
@@ -290,7 +293,7 @@ private struct EditKeyContent: View {
                             .font(.caption)
                         TextField(String(localized: "请输入请求地址"), text: Binding(
                             get: { key.requestURL ?? "" },
-                            set: { key.requestURL = $0 }
+                            set: { key.requestURL = $0; compactPublicationNeedsRetry = false }
                         ))
                         .keyboardType(.URL)
                         .autocapitalization(.none)
@@ -381,17 +384,22 @@ private struct EditKeyContent: View {
             .navigationTitle(String(localized: "编辑密钥"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(String(localized: "取消")) {
+                    Button(compactPublicationNeedsRetry ? String(localized: "Close") : String(localized: "取消")) {
                         selectedKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "保存")) {
-                        key.timestamp = Date()
-                        key.isHidden = false
-                        try? modelContext.save()
-                        selectedKey = nil
+                    Button(compactPublicationNeedsRetry ? String(localized: "Retry extension update") : String(localized: "保存")) {
+                        saveOrRetryCompactPublication()
                     }
+                    .disabled(!credentialDraft.isReadyToSave)
+                }
+            }
+            .credentialSaveAlert($credentialError)
+            .onAppear {
+                if credentialDraft.recordID != key.persistentModelID {
+                    do { try credentialDraft.load(key) }
+                    catch { credentialError = HanlinAppProviderCredentials.userMessage(for: error) }
                 }
             }
             .onAppear {
@@ -403,10 +411,37 @@ private struct EditKeyContent: View {
                 }
             }
             .sheet(isPresented: $showModelManagement) {
-                ModelManagementView(apiKey: key)
+                ModelManagementView(apiKey: key, configurationOverride: .init(provider: key, credential: credentialDraft.text))
             }
     }
     
+    private func saveOrRetryCompactPublication() {
+        let publish = {
+            try HanlinScriptingPlatformAIIntegration(modelContext: modelContext).publishCompactAgentConfig()
+        }
+        let publication: HanlinCredentialEditDraft.Publication
+        if compactPublicationNeedsRetry {
+            publication = HanlinCredentialEditDraft.retryPublication(publish)
+        } else {
+            do {
+                publication = try credentialDraft.saveAndPublish(to: key, in: modelContext,
+                    update: { $0.timestamp = Date(); $0.isHidden = false },
+                    publishCompactConfiguration: publish)
+            } catch {
+                credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                return
+            }
+        }
+        switch publication {
+        case .updated:
+            compactPublicationNeedsRetry = false
+            selectedKey = nil
+        case .needsRetry:
+            compactPublicationNeedsRetry = true
+            credentialError = String(localized: "The key was saved, but the translation extension could not be updated. Retry the extension update or close these settings.")
+        }
+    }
+
     /// 判断是否应该显示模型刷新按钮
     private func shouldShowModelRefresh(for key: APIKeys) -> Bool {
         // 自定义供应商和 LAN 不显示
@@ -436,7 +471,7 @@ private struct EditKeyContent: View {
         
         Task {
             let result = await testAIAPIWithModel(
-                apiKey: key.key ?? "",
+                apiKey: credentialDraft.text,
                 requestURL: key.requestURL ?? "",
                 company: key.company ?? "",
                 modelName: modelToTest
@@ -453,8 +488,8 @@ private struct EditKeyContent: View {
         inquiryResult = nil
         Task {
             defer { isInquiring = false }
-            guard let company = key.company?.uppercased(),
-                  let token = key.key, !token.isEmpty else { return }
+            let token = credentialDraft.text
+            guard let company = key.company?.uppercased(), !token.isEmpty else { return }
             do {
                 switch company {
                 case "DEEPSEEK":
@@ -496,7 +531,7 @@ extension APIKeysView {
     
     /// 检查 APIKey 是否有效（非空即可）
     private func hasValidAPIKey(for key: APIKeys) -> Bool {
-        return !(key.key?.isEmpty ?? true)
+        return !(key.resolvedKey?.isEmpty ?? true)
     }
     
     /// 保存数据
@@ -696,7 +731,7 @@ struct AddCustomProviderForm: View {
         let customProvider = APIKeys(
             name: trimmedName,
             company: "CUSTOM_\(UUID().uuidString.prefix(8).uppercased())", // 使用唯一标识避免冲突
-            key: trimmedKey,
+            key: "",
             requestURL: trimmedURL,
             isHidden: false, // 默认启用
             help: "自定义 API 供应商",
@@ -705,13 +740,12 @@ struct AddCustomProviderForm: View {
             timestamp: Date()
         )
 
-        modelContext.insert(customProvider)
-
         do {
-            try modelContext.save()
+            try HanlinAppProviderCredentials.shared.insertCompatible(customProvider, value: trimmedKey, in: modelContext)
+            // The next host activation republishes the selected compact configuration.
             isPresented = false
         } catch {
-            validationMessage = String(format: String(localized: "保存失败：%@"), error.localizedDescription)
+            validationMessage = HanlinAppProviderCredentials.userMessage(for: error)
             showValidationError = true
         }
     }
@@ -728,6 +762,8 @@ struct SearchSettingView: View {
     // SearchKeysView 部分状态
     // 用于编辑 API 配置状态
     @State private var selectedKey: SearchKeys?
+    @State private var credentialDraft = HanlinCredentialEditDraft()
+    @State private var credentialError: String?
     // API 测试相关状态
     @State private var testResult: Bool? = nil
     @State private var isTesting = false
@@ -870,7 +906,10 @@ struct SearchSettingView: View {
         }
         .navigationTitle(String(localized: "联网搜索"))
         // 编辑 API 配置界面（SearchKeysView 部分）的弹出 sheet
-        .sheet(item: $selectedKey) { key in
+        .sheet(item: $selectedKey, onDismiss: {
+            credentialDraft = HanlinCredentialEditDraft()
+            credentialError = nil
+        }) { key in
             editKeyView(for: key)
         }
         // 出现错误时弹出警告
@@ -1031,8 +1070,8 @@ struct SearchSettingView: View {
                 } else {
                     Section(header: Text(String(localized: "密钥"))) {
                         SecureField(String(localized: "请输入密钥"), text: Binding(
-                            get: { key.key ?? "" },
-                            set: { key.key = $0 }
+                            get: { credentialDraft.text },
+                            set: { credentialDraft.replaceText($0) }
                         ))
                     }
                     // 测试 API 部分
@@ -1068,10 +1107,21 @@ struct SearchSettingView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(String(localized: "保存")) {
-                        key.timestamp = Date()
-                        try? modelContext.save()
-                        selectedKey = nil
+                        do {
+                            try credentialDraft.save(to: key, in: modelContext) { $0.timestamp = Date() }
+                            selectedKey = nil
+                        } catch {
+                            credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                        }
                     }
+                    .disabled(!credentialDraft.isReadyToSave)
+                }
+            }
+            .credentialSaveAlert($credentialError)
+            .onAppear {
+                if credentialDraft.recordID != key.persistentModelID {
+                    do { try credentialDraft.load(key) }
+                    catch { credentialError = HanlinAppProviderCredentials.userMessage(for: error) }
                 }
             }
             .onAppear {
@@ -1098,7 +1148,7 @@ struct SearchSettingView: View {
             // 根据 key.company 获取对应的搜索引擎，默认使用 .LANGSEARCH
             let engine = SearchEngine(rawValue: key.company?.uppercased() ?? "") ?? .LANGSEARCH
             let result = await testSearchAPI(
-                apiKey: key.key ?? "",
+                apiKey: credentialDraft.text,
                 requestURL: key.requestURL ?? "",
                 engine: engine
             )
@@ -1115,7 +1165,7 @@ struct SearchSettingView: View {
         DispatchQueue.main.async {
             if newValue {
                 // 开启前检查是否已配置 API Key（AUTOMATIC_KEYLESS 无需配置 API Key）
-                if key.company != "AUTOMATIC_KEYLESS" && (key.key?.isEmpty ?? true) {
+                if key.company != "AUTOMATIC_KEYLESS" && (key.resolvedKey?.isEmpty ?? true) {
             errorMessage = String(format: String(localized: "%@ 需要配置 API Key 才能启用。"), getCompanyName(for: key.company ?? "Unknown"))
                     showError = true
                     loadingCompany = nil
@@ -1257,6 +1307,8 @@ struct MapSettingView: View {
     
     // 用于地图引擎配置相关状态
     @State private var selectedMapKey: ToolKeys?
+    @State private var credentialDraft = HanlinCredentialEditDraft()
+    @State private var credentialError: String?
     @State private var loadingMapCompany: String? = nil
     @State private var errorMessage: String = ""
     @State private var showError: Bool = false
@@ -1355,7 +1407,10 @@ struct MapSettingView: View {
             saveUserInfo()
         }
         // 弹出编辑 API 配置界面
-        .sheet(item: $selectedMapKey) { key in
+        .sheet(item: $selectedMapKey, onDismiss: {
+            credentialDraft = HanlinCredentialEditDraft()
+            credentialError = nil
+        }) { key in
             editMapKeyView(for: key)
         }
         .alert(errorMessage, isPresented: $showError) {
@@ -1396,7 +1451,7 @@ struct MapSettingView: View {
         DispatchQueue.main.async {
             if newValue {
                 // 对于非 AppleMap 必须配置 API Key 才能启用
-                if key.company.uppercased() != "APPLEMAP" && key.key.isEmpty {
+                if key.company.uppercased() != "APPLEMAP" && (key.resolvedKey?.isEmpty ?? true) {
             errorMessage = String(format: String(localized: "%@ 需要配置 API Key 才能启用。"), getCompanyName(for: key.company))
                     showError = true
                     loadingMapCompany = nil
@@ -1481,8 +1536,8 @@ struct MapSettingView: View {
                     
                     Section(header: Text(String(localized: "密钥"))) {
                         SecureField(String(localized: "请输入 API Key"), text: Binding(
-                            get: { key.key },
-                            set: { key.key = $0 }
+                            get: { credentialDraft.text },
+                            set: { credentialDraft.replaceText($0) }
                         ))
                     }
                 }
@@ -1496,10 +1551,21 @@ struct MapSettingView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(String(localized: "保存")) {
-                        key.timestamp = Date()
-                        try? modelContext.save()
-                        selectedMapKey = nil
+                        do {
+                            try credentialDraft.save(to: key, in: modelContext) { $0.timestamp = Date() }
+                            selectedMapKey = nil
+                        } catch {
+                            credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                        }
                     }
+                    .disabled(!credentialDraft.isReadyToSave)
+                }
+            }
+            .credentialSaveAlert($credentialError)
+            .onAppear {
+                if credentialDraft.recordID != key.persistentModelID {
+                    do { try credentialDraft.load(key) }
+                    catch { credentialError = HanlinAppProviderCredentials.userMessage(for: error) }
                 }
             }
         }
@@ -1823,6 +1889,8 @@ struct WeatherSettingView: View {
     
     // 用于天气服务商配置相关状态
     @State private var selectedWeatherKey: ToolKeys?
+    @State private var credentialDraft = HanlinCredentialEditDraft()
+    @State private var credentialError: String?
     @State private var loadingWeatherCompany: String? = nil
     @State private var errorMessage: String = ""
     @State private var showError: Bool = false
@@ -1909,7 +1977,10 @@ struct WeatherSettingView: View {
             saveUserInfo()
         }
         // 弹出编辑 API 配置界面
-        .sheet(item: $selectedWeatherKey) { key in
+        .sheet(item: $selectedWeatherKey, onDismiss: {
+            credentialDraft = HanlinCredentialEditDraft()
+            credentialError = nil
+        }) { key in
             editWeatherKeyView(for: key)
         }
         .alert(errorMessage, isPresented: $showError) {
@@ -1945,7 +2016,7 @@ struct WeatherSettingView: View {
         loadingWeatherCompany = key.company
         DispatchQueue.main.async {
             if newValue {
-                if key.key.isEmpty {
+                if (key.resolvedKey?.isEmpty ?? true) {
                     errorMessage = "\(getCompanyName(for: key.company)) 需要配置 API Key 才能启用。"
                     showError = true
                     loadingWeatherCompany = nil
@@ -2008,8 +2079,8 @@ struct WeatherSettingView: View {
                 
                 Section(header: Text(String(localized: "密钥"))) {
                     SecureField(String(localized: "请输入 API Key"), text: Binding(
-                        get: { key.key },
-                        set: { key.key = $0 }
+                        get: { credentialDraft.text },
+                        set: { credentialDraft.replaceText($0) }
                     ))
                 }
                 
@@ -2029,12 +2100,37 @@ struct WeatherSettingView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(String(localized: "保存")) {
-                        key.timestamp = Date()
-                        try? modelContext.save()
-                        selectedWeatherKey = nil
+                        do {
+                            try credentialDraft.save(to: key, in: modelContext) { $0.timestamp = Date() }
+                            selectedWeatherKey = nil
+                        } catch {
+                            credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                        }
                     }
+                    .disabled(!credentialDraft.isReadyToSave)
                 }
             }
+            .credentialSaveAlert($credentialError)
+            .onAppear {
+                if credentialDraft.recordID != key.persistentModelID {
+                    do { try credentialDraft.load(key) }
+                    catch { credentialError = HanlinAppProviderCredentials.userMessage(for: error) }
+                }
+            }
+        }
+    }
+}
+
+
+private extension View {
+    func credentialSaveAlert(_ message: Binding<String?>) -> some View {
+        alert(String(localized: "Key settings"), isPresented: Binding(
+            get: { message.wrappedValue != nil },
+            set: { if !$0 { message.wrappedValue = nil } }
+        )) {
+            Button(String(localized: "OK"), role: .cancel) { message.wrappedValue = nil }
+        } message: {
+            Text(message.wrappedValue ?? "")
         }
     }
 }

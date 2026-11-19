@@ -11,6 +11,7 @@ import SwiftData
 // MARK: - 模型管理视图
 struct ModelManagementView: View {
     let apiKey: APIKeys
+    var configurationOverride: ModelRefreshProviderConfiguration? = nil
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
@@ -345,10 +346,11 @@ struct ModelManagementView: View {
         if model.company?.uppercased() == "LOCAL" {
             return true
         }
-        guard let company = model.company, let key = apiKey.key else {
+        guard let company = model.company,
+              let key = configurationOverride?.apiKey ?? apiKey.resolvedKey else {
             return false
         }
-        return !company.isEmpty && !key.isEmpty
+        return company == apiKey.company && !company.isEmpty && !key.isEmpty
     }
 
     private func priceText(for price: Int16) -> String {
@@ -396,7 +398,7 @@ struct ModelManagementView: View {
         errorMessage = nil
 
         do {
-            apiModels = try await ModelRefreshService.fetchModelsFromAPI(apiKey: apiKey)
+            apiModels = try await ModelRefreshService.fetchModelsFromAPI(apiKey: apiKey, configurationOverride: configurationOverride)
             let existing = (try? modelContext.fetch(FetchDescriptor<AllModels>())) ?? []
             for entry in apiModels {
                 if let metadata = entry.catalogMetadata {
@@ -432,6 +434,7 @@ struct ModelManagementView: View {
                     modelId: model.id,
                     company: company,
                     context: modelContext,
+                    configurationOverride: configurationOverride,
                     update: { step, status, message in
                         updateProbeItem(step: step, status: status, message: message)
                     }

@@ -27,10 +27,10 @@ struct SettingsView: View {
         
         let noAPIKeys = apiKeys
             .filter { $0.company != "LOCAL" }
-            .allSatisfy { $0.isHidden || ($0.key?.isEmpty ?? true) }
+            .allSatisfy { $0.isHidden || ($0.resolvedKey?.isEmpty ?? true) }
         
         let noSearchKeys = !searchKeys.contains {
-            $0.isUsing && ($0.company == "AUTOMATIC_KEYLESS" || !($0.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true))
+            $0.isUsing && ($0.company == "AUTOMATIC_KEYLESS" || !($0.resolvedKey?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true))
         }
 
         // 检测是否缺少优化模型

@@ -54,11 +54,11 @@ enum AutomaticSearchMigration {
             
             // Check manual providers
             let activeManual = manualKeys.first { key in
-                key.isUsing && !(key.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+                key.isUsing && key.preservesCredentialSelection
             }
             
             let hasConfiguredManualKeys = manualKeys.contains { key in
-                !(key.key?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+                key.preservesCredentialSelection
             }
             
             if let activeManual = activeManual {

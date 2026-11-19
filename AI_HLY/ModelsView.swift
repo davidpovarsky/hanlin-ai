@@ -313,7 +313,7 @@ struct ModelsView: View {
         if model.company?.uppercased() == "LOCAL" {
             return true // 本地模型无需 API Key
         }
-        return apiKeys.contains { $0.company == model.company && !($0.key?.isEmpty ?? true) }
+        return apiKeys.contains { $0.company == model.company && !($0.resolvedKey?.isEmpty ?? true) }
     }
     
     private func priceText(for price: Int16) -> String {

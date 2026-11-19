@@ -172,7 +172,7 @@ struct KnowledgeWritingView: View {
             embeddingCompleted = knowledgeRecord.isEmbedding
             
             visibleEmbeddingModels = embeddingModels.filter { model in
-                if let key = allApiKeys.first(where: { $0.company == model.company })?.key,
+                if let key = allApiKeys.first(where: { $0.company == model.company })?.resolvedKey,
                    !key.isEmpty {
                     return true
                 }
@@ -1055,7 +1055,7 @@ struct KnowledgeWritingView: View {
                     let batchEmbeddings = try await generateEmbeddings(
                         for: batch,
                         modelName: model.name,
-                        apiKey: apiInfo.key ?? "",
+                        apiKey: try HanlinAppProviderCredentials.shared.resolve(apiInfo) ?? "",
                         apiURL: model.requestURL
                     )
                     embeddings.append(contentsOf: batchEmbeddings)

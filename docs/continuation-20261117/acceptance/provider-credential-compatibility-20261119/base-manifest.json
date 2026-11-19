@@ -1,0 +1,97 @@
+{
+  "base": "048e431cc55b10290c03ec4b2c0162e5f9dfcf9c",
+  "files": {
+    "AI_HLY/Services/ChatServices/APIManager.swift": {
+      "sha256": "792823155e9ee5964bdc286ff09672a209dbad405c4e4d07159e8332ad0a0aeb",
+      "bytes": 211855
+    },
+    "AI_HLY/Services/VisionServices/VisionAPI.swift": {
+      "sha256": "9d9f897c4228e54f570ba0b7e974605a0f18a8ff0ae49d844022e049fe24f0ea",
+      "bytes": 25169
+    },
+    "AI_HLY/Services/ChatServices/TextToSpeech.swift": {
+      "sha256": "f53503774959fc82f4614f1ffcd6ace020c166081b798ba8b75ecbf335a1d1bc",
+      "bytes": 17381
+    },
+    "AI_HLY/Services/ChatServices/SystemOptimizer.swift": {
+      "sha256": "d88ebc215c3e74d3c839cc124753b1cbea3f8925676b1435744ae08832b8f8ae",
+      "bytes": 66088
+    },
+    "AI_HLY/Services/APIServices/ModelRefreshService.swift": {
+      "sha256": "1ca261befaf2ae14d8872fe5389a08b9f0fae2a2778c048ed0f1a52cb742f3af",
+      "bytes": 59363
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift": {
+      "sha256": "7a367b9a8c5b469521dcc313b0fff67830b30780c53fee4f58c8795155f61e71",
+      "bytes": 3935
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingAssistantProviderAdapter.swift": {
+      "sha256": "99d2af81b51cf51d6634febe7560bf750bea7106f8f7ee2cac65bea82380e736",
+      "bytes": 19560
+    },
+    "AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift": {
+      "sha256": "d00c79860e63f50872c4793b70c755b400d9668186c44592e2f097202d964aa2",
+      "bytes": 3507
+    },
+    "AI_HLY/SettingsView.swift": {
+      "sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+      "bytes": 16082
+    },
+    "AI_HLY/ModelsView.swift": {
+      "sha256": "6f2e4cde2824d0ab588e638257117c23fb28471d432b40c3ea0b69b6a78fb3f5",
+      "bytes": 19875
+    },
+    "AI_HLY/Views/Components/SettingsViewComponents.swift": {
+      "sha256": "ec516643013ea3ae9dff2f355f523c77d2e2080ffccd8e5e28f6f2b961be9839",
+      "bytes": 33419
+    },
+    "AI_HLY/Views/Components/QuickToolsView.swift": {
+      "sha256": "799136132ff64fa4bb012c5fd5704e5ce8b225e3491bdf0fd0de32a04417fafd",
+      "bytes": 60724
+    },
+    "AI_HLY/Views/Components/KnowledgeWritingView.swift": {
+      "sha256": "0b9368248f03d6cee6cebe7929f8d2283bff4c9d99c91aea915568c1578bead9",
+      "bytes": 46378
+    },
+    "AI_HLY/Views/Components/ChatViewComponents.swift": {
+      "sha256": "132e8a34f732f3182fef9e6ba44db3ce386490474ef4eef8fd33904c5a17e9f2",
+      "bytes": 254849
+    },
+    "AI_HLY/Views/Components/ModelManagementView.swift": {
+      "sha256": "93c38b6457ea7044d82c52e69e144beb841dcb0560d0407915aedb770a49a62c",
+      "bytes": 23903
+    },
+    "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticSearchMigration.swift": {
+      "sha256": "27746f847881408336abb773099eb55195be1d760cc9b297a9f6ee93009f41a6",
+      "bytes": 4439
+    },
+    "AI_HLY/Views/Components/APISettingView.swift": {
+      "sha256": "62654f964efe6b0990f1cfa0cbb588a34b0953d02223dc4f10b0f3998c08df92",
+      "bytes": 84401
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinCompactAgentContracts.swift": {
+      "sha256": "6b017f405864a7086f33df0f5a248df59dfcf4e647d423847adb518972a8f70f",
+      "bytes": 10640
+    },
+    "ChavrusaChatTranslationProvider/TranslationProviderSession.swift": {
+      "sha256": "132cf187e25abb0fd794947210aba5604f3ed7778687bfc828ab73addc15eab6",
+      "bytes": 3254
+    },
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift": {
+      "sha256": "bd3c545b0605488adc795583b07dc0fc7ce2dcac89eca976befd6b1e70600764",
+      "bytes": 81227
+    },
+    "AI_HLY/Model/APIKeys.swift": {
+      "sha256": "9a43d1c5e4d9f4fb60d8badc3f151a3c68c7ef82cde4a9891e4906b458e5003d",
+      "bytes": 1859
+    },
+    "AI_HLY/Model/SearchKeys.swift": {
+      "sha256": "a02f691b1a4c23f482cdee0ce9dcb4d088e7a1f19528b272d7c118ef9cab22ae",
+      "bytes": 974
+    },
+    "AI_HLY/Model/ToolKeys.swift": {
+      "sha256": "f0066b37abc65019832f3a52bb2a25e479fccdb04be094c1995e49d317fda221",
+      "bytes": 1083
+    }
+  }
+}

@@ -35,7 +35,7 @@ enum HanlinDefaultChatPolicy {
                                    nativeAvailable: Bool, downloadedLocalModels: Set<String>) -> Int? {
         let remoteConfigured = providers.contains {
             $0.company?.uppercased() != "LOCAL" && $0.company?.uppercased() != "APPLE"
-                && !$0.isHidden && !($0.key ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                && !$0.isHidden && !($0.resolvedKey ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         }
         if remoteConfigured { return defaultModelIndex(in: models) }
         let localEnabled = providers.contains { $0.company?.uppercased() == "LOCAL" && !$0.isHidden }

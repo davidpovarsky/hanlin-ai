@@ -17,6 +17,7 @@ public typealias HanlinCompactChatMessage = HanlinChatMessage
 public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
     public let endpoint: URL
     public let apiKey: String
+    public let credentialReference: String?
     public let modelID: String
     public let company: String?
     public let displayName: String?
@@ -34,6 +35,7 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
     public init(
         endpoint: URL,
         apiKey: String,
+        credentialReference: String? = nil,
         modelID: String,
         company: String? = nil,
         displayName: String? = nil,
@@ -49,7 +51,8 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
         updatedAt: Date = .now
     ) {
         self.endpoint = endpoint
-        self.apiKey = apiKey
+        self.apiKey = credentialReference == nil ? apiKey : ""
+        self.credentialReference = credentialReference
         self.modelID = modelID
         self.company = company
         self.displayName = displayName
@@ -66,13 +69,28 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
     }
 
     public var chatModelConfiguration: HanlinChatModelConfiguration {
+        // The legacy API never emits an opaque handle as a provider secret.
+        configuration(resolvedAPIKey: credentialReference == nil ? apiKey : "")
+    }
+
+    public func resolvedChatModelConfiguration(
+        using resolver: (@Sendable (String) throws -> String)?
+    ) throws -> HanlinChatModelConfiguration {
+        guard let credentialReference else { return chatModelConfiguration }
+        guard let resolver else { throw HanlinCompactAgentError.notConfigured }
+        let secret = try resolver(credentialReference)
+        guard !secret.isEmpty else { throw HanlinCompactAgentError.notConfigured }
+        return configuration(resolvedAPIKey: secret)
+    }
+
+    private func configuration(resolvedAPIKey: String) -> HanlinChatModelConfiguration {
         HanlinChatModelConfiguration(
             modelID: modelID,
             displayName: displayName,
             company: company,
             apiType: apiType,
             endpoint: endpoint,
-            apiKey: apiKey,
+            apiKey: resolvedAPIKey,
             temperature: temperature,
             topP: topP,
             maxTokens: maxTokens,
@@ -86,7 +104,7 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case endpoint, apiKey, modelID, company, displayName, systemPrompt, apiType
+        case endpoint, apiKey, credentialReference, modelID, company, displayName, systemPrompt, apiType
         case temperature, topP, maxTokens, supportsReasoning, supportReasoningChange
         case thinkingLength, supportsToolUse, updatedAt
     }
@@ -94,7 +112,9 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         endpoint = try container.decode(URL.self, forKey: .endpoint)
-        apiKey = try container.decode(String.self, forKey: .apiKey)
+        credentialReference = try container.decodeIfPresent(String.self, forKey: .credentialReference)
+        let legacyAPIKey = try container.decode(String.self, forKey: .apiKey)
+        apiKey = credentialReference == nil ? legacyAPIKey : ""
         modelID = try container.decode(String.self, forKey: .modelID)
         company = try container.decodeIfPresent(String.self, forKey: .company)
         displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
@@ -157,7 +177,7 @@ public struct HanlinCompactAgentConfigStore: Sendable {
         guard !data.isEmpty else { return nil }
         let decoder = JSONDecoder()
         let config = try decoder.decode(HanlinCompactAgentConfiguration.self, from: data)
-        guard !config.apiKey.isEmpty, !config.modelID.isEmpty else {
+        guard (!config.apiKey.isEmpty || !(config.credentialReference?.isEmpty ?? true)), !config.modelID.isEmpty else {
             return nil
         }
         return config
@@ -197,11 +217,14 @@ public enum HanlinCompactAgentError: LocalizedError, Sendable {
 // MARK: - Compact Streaming Agent Client (Facade over HanlinChatEngine)
 
 public actor HanlinCompactAgentClient {
-    private var config: HanlinCompactAgentConfiguration?
+    private let suppliedConfiguration: HanlinCompactAgentConfiguration?
+    private let credentialResolver: (@Sendable (String) throws -> String)?
     private let engine = HanlinChatEngine()
 
-    public init(configuration: HanlinCompactAgentConfiguration? = nil) {
-        self.config = configuration
+    public init(configuration: HanlinCompactAgentConfiguration? = nil,
+                credentialResolver: (@Sendable (String) throws -> String)? = nil) {
+        self.suppliedConfiguration = configuration
+        self.credentialResolver = credentialResolver
     }
 
     public func stream(
@@ -209,16 +232,17 @@ public actor HanlinCompactAgentClient {
         systemContext: String? = nil
     ) throws -> AsyncThrowingStream<String, Error> {
         let activeConfig: HanlinCompactAgentConfiguration
-        if let config = self.config {
+        if let config = suppliedConfiguration {
             activeConfig = config
         } else if let loaded = try HanlinCompactAgentConfigStore().load() {
             activeConfig = loaded
-            self.config = loaded
         } else {
             throw HanlinCompactAgentError.notConfigured
         }
 
-        let chatConfig = activeConfig.chatModelConfiguration
+        // Re-read the shared configuration and resolve at each request. Do not
+        // retain a plaintext Keychain result across replacement or removal.
+        let chatConfig = try activeConfig.resolvedChatModelConfiguration(using: credentialResolver)
         let (textStream, continuation) = AsyncThrowingStream<String, Error>.makeStream()
 
         let task = Task.detached(priority: .userInitiated) { [engine] in

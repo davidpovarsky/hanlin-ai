@@ -53,13 +53,13 @@ final class HanlinScriptingAssistantProviderAdapter {
                 key = keys.first { $0.company?.caseInsensitiveCompare(company) == .orderedSame }
             } else {
                 key = keys
-                    .filter { !($0.key?.isEmpty ?? true) && $0.requestURL != nil }
+                    .filter { !($0.resolvedKey?.isEmpty ?? true) && $0.requestURL != nil }
                     .sorted { ($0.isHidden ? 1 : 0, $0.company ?? "") < ($1.isHidden ? 1 : 0, $1.company ?? "") }
                     .first
             }
         }
 
-        guard let key, let secret = key.key, !secret.isEmpty, secret.uppercased() != "LOCAL" else {
+        guard let key, let secret = key.resolvedKey, !secret.isEmpty, secret.uppercased() != "LOCAL" else {
             throw Self.failure(
                 code: "assistant_credentials_unavailable",
                 message: "No configured credentials are available for the requested Assistant provider."
