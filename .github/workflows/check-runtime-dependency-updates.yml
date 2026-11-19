@@ -355,7 +355,7 @@ jobs:
         run: |
           node --test Scripts/Runtime/Tests/dependency-updates.test.mjs
           node --test Scripts/Runtime/Tests/upstream-host-accounting.test.mjs
-          node --test Scripts/Runtime/Tests/upstream-run-consumer.test.mjs Scripts/Runtime/Tests/upstream-check-lineage.test.mjs Scripts/Runtime/Tests/upstream-dispatch-synchronization.test.mjs Scripts/Runtime/Tests/upstream-protection-reader.test.mjs
+          node --test Scripts/Runtime/Tests/upstream-run-consumer.test.mjs Scripts/Runtime/Tests/upstream-check-lineage.test.mjs Scripts/Runtime/Tests/upstream-dispatch-synchronization.test.mjs Scripts/Runtime/Tests/upstream-protection-reader.test.mjs Scripts/Runtime/Tests/upstream-protection-access.test.mjs Scripts/Runtime/Tests/upstream-proof-handoff.test.mjs
           python3 Scripts/Runtime/Tests/test_upstream_proof_reader.py
       - name: Inventory actual tracked graphs
         run: node Scripts/Runtime/inventory-upstream-dependencies.mjs
@@ -428,6 +428,11 @@ jobs:
           path: build/runtime-host
           if-no-files-found: error
           retention-days: 14
+      - name: Hand off bot-generated candidate proof through the original consumer
+        if: always() && (env.UPDATE_OPERATION == 'candidate' || env.UPDATE_OPERATION == 'failure-demo')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node Scripts/Runtime/dispatch-upstream-proof.mjs "${{ github.repository }}" "$CANDIDATE_PR"
       - name: Retain original evidence even on failed/blocked verification
         if: always()
         uses: actions/upload-artifact@v7.0.2

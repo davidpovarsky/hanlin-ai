@@ -7,10 +7,12 @@ import { evaluateUpdate, dependencyImpact } from './dependency-update-policy.mjs
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { readUpstreamProtection } from './upstream-protection-reader.mjs';
+import {createUpstreamProtectionAccess, ordinaryUpstreamEnvironment} from './upstream-protection-access.mjs';
 
 const [repository, number, output = 'build/upstream-updates/merge-gate.json', proofRun] = process.argv.slice(2);
 if (!/^[\w.-]+\/[\w.-]+$/.test(repository ?? '') || !/^\d+$/.test(number ?? '')) throw new Error('Expected repository PR-number [output].');
-const api = path => JSON.parse(execFileSync('gh', ['api', `repos/${repository}${path ? '/' + path : ''}`], {encoding:'utf8', stdio:['ignore','pipe','pipe']}));
+const ordinaryEnvironment=ordinaryUpstreamEnvironment();
+const api = path => JSON.parse(execFileSync('gh', ['api', `repos/${repository}${path ? '/' + path : ''}`], {env:ordinaryEnvironment,encoding:'utf8', stdio:['ignore','pipe','pipe']}));
 const pr = api(`pulls/${number}`);
 if (pr.head.repo.full_name !== repository) throw new Error('Fork candidates require manual review; never use this trusted maintenance lane.');
 const paths = api(`pulls/${number}/files?per_page=100`);
@@ -18,14 +20,14 @@ if (paths.length === 100 || pr.changed_files !== paths.length) throw new Error('
 const head = pr.head.sha;
 const runs = api(`commits/${head}/check-runs?filter=latest&per_page=100`).check_runs;
 if (runs.length === 100) throw new Error('Incomplete check inventory.');
-const {protection,observation:branchProtectionObservation} = readUpstreamProtection({
-  repository,base:pr.base.ref,baseSHA:pr.base.sha,rest:api,
-  graphql:body=>JSON.parse(execFileSync('gh',['api','graphql','--input','-'],{
-    input:JSON.stringify(body),encoding:'utf8',stdio:['pipe','pipe','pipe'],timeout:60_000,maxBuffer:2_097_152}))
+const protectionAccess=createUpstreamProtectionAccess({repository,base:pr.base.ref,baseSHA:pr.base.sha});
+const {protection,observation} = readUpstreamProtection({
+  repository,base:pr.base.ref,baseSHA:pr.base.sha,rest:protectionAccess.rest,graphql:protectionAccess.graphql
 });
+const branchProtectionObservation={...observation,credentialMode:protectionAccess.credentialMode};
 const settings = api('');
 let effectiveRules;
-try { effectiveRules = api(`rules/branches/${encodeURIComponent(pr.base.ref)}`); }
+try { effectiveRules = protectionAccess.rest(`rules/branches/${encodeURIComponent(pr.base.ref)}`); }
 catch { /* Inaccessible/unsupported effective rules stay unknown, never eligible. */ }
 const toCheckRows = items => items.map(check => ({ name:check.name, head:check.head_sha, app:check.app?.slug, appId:check.app?.id, checkId:check.id,
   status:check.status, conclusion:check.conclusion }));
@@ -47,11 +49,11 @@ if (proofRun) {
   const artifacts = api(`actions/runs/${proofRun}/artifacts`).artifacts
     .filter(item => item.name === `upstream-proof-${proofRun}` && !item.expired);
   if (artifacts.length !== 1 || artifacts[0].size_in_bytes > 16_777_216) throw new Error('Missing/ambiguous/oversized proof artifact');
-  const bytes = execFileSync('gh', ['api', `repos/${repository}/actions/artifacts/${artifacts[0].id}/zip`], {maxBuffer:16_777_216});
+  const bytes = execFileSync('gh', ['api', `repos/${repository}/actions/artifacts/${artifacts[0].id}/zip`], {env:ordinaryEnvironment,maxBuffer:16_777_216});
   if ('sha256:'+createHash('sha256').update(bytes).digest('hex') !== artifacts[0].digest) throw new Error('Proof artifact digest mismatch');
   const python = process.platform === 'win32' ? 'py' : 'python3';
   const args = [...(process.platform === 'win32' ? ['-3'] : []), fileURLToPath(new URL('./verify-upstream-proof.py', import.meta.url))];
-  const proof = JSON.parse(execFileSync(python,args,{input:bytes,encoding:'utf8',maxBuffer:2_097_152}));
+  const proof = JSON.parse(execFileSync(python,args,{env:ordinaryEnvironment,input:bytes,encoding:'utf8',maxBuffer:2_097_152}));
   receipt=proof.receipt;
   consumerEvidenceVerified=verifiedReceiptAccounting(receipt,proof.hostEntries)
     && receipt.hostAccounting.origin.run.runId===proofRun

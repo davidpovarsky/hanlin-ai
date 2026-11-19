@@ -7,6 +7,8 @@ import {fileURLToPath} from 'node:url';
 import {ACTIONS_APP_ID, PROOF_CHECK, isProtectedAcceptanceBase, candidateForRun, requireCandidateProof, mayEnableAutoMerge}
   from './upstream-run-consumer-policy.mjs';
 import {selectUpstreamCheckLineage} from './upstream-check-lineage.mjs';
+import {ordinaryUpstreamEnvironment, PROTECTION_TOKEN_KEY} from './upstream-protection-access.mjs';
+import {awaitUpstreamProducer} from './upstream-proof-handoff.mjs';
 
 const [repository, runID, allowedBase, mode = 'inspect', allowAutoMerge = 'false',
   output = 'build/upstream-proof-consumer'] = process.argv.slice(2);
@@ -22,14 +24,15 @@ const directory = resolve(output);
 await mkdir(directory, {recursive:true});
 const journal = {schemaVersion:1, repository, runID, allowedBase, mode,
   evaluatedAt:new Date().toISOString(), status:'NOT_ACCEPTED', actions:[], mergePerformed:false, proofVerified:false};
-const tokens = ['GH_TOKEN','GITHUB_TOKEN','RENOVATE_TOKEN'].map(key=>process.env[key]).filter(Boolean);
+const ordinaryEnvironment=ordinaryUpstreamEnvironment();
+const tokens = ['GH_TOKEN','GITHUB_TOKEN','RENOVATE_TOKEN',PROTECTION_TOKEN_KEY].map(key=>process.env[key]).filter(Boolean);
 const redact = value => tokens.reduce((text,token)=>text.replaceAll(token,'[REDACTED]'),String(value));
 const save = async () => writeFile(resolve(directory,'consumer-receipt.json'),JSON.stringify(journal,null,2)+'\n');
-const api = (suffix, method = 'GET', body) => {
+const api = (suffix, method = 'GET', body, timeout = 60_000) => {
   const args = ['api', 'repos/'+repository+(suffix?'/'+suffix:''), '--method', method];
   if (body !== undefined) args.push('--input','-');
   return JSON.parse(execFileSync('gh',args,{input:body===undefined?undefined:JSON.stringify(body),
-    encoding:'utf8',stdio:['pipe','pipe','pipe'],timeout:60_000,maxBuffer:4_194_304}));
+    env:ordinaryEnvironment,encoding:'utf8',stdio:['pipe','pipe','pipe'],timeout,maxBuffer:4_194_304}));
 };
 let proofCheck;
 let pr;
@@ -60,11 +63,15 @@ const checker = async (label, run) => {
   return report;
 };
 try {
-  const run = api('actions/runs/'+runID);
+  const delivery=await awaitUpstreamProducer({repository,runID,
+    eventName:mode==='inspect'&&process.env.GITHUB_ACTIONS!=='true'?'local-inspect':process.env.GITHUB_EVENT_NAME,
+    expectedAttempt:process.env.EXPECTED_PRODUCER_ATTEMPT,
+    readRun:({timeoutMs})=>api('actions/runs/'+runID,'GET',undefined,timeoutMs)});
+  const run=delivery.run;
+  journal.delivery=delivery.observation;
   await writeFile(resolve(directory,'original-run.json'),JSON.stringify(run,null,2)+'\n');
-  if (run.path !== '.github/workflows/check-runtime-dependency-updates.yml'
-      || run.event !== 'workflow_dispatch') {
-    journal.status='NOT_APPLICABLE'; journal.reason='Not the canonical candidate dispatch path';
+  if (!delivery.consume) {
+    journal.status='NOT_APPLICABLE'; journal.reason=delivery.reason;
   } else {
     const head = encodeURIComponent(repository.split('/')[0]+':'+run.head_branch);
     const pulls = api('pulls?state=open&head='+head+'&base='+encodeURIComponent(allowedBase)+'&per_page=100');
@@ -116,7 +123,7 @@ try {
         // No administrator bypass or branch deletion flag is supplied.
         const args=['pr','merge',String(pr.number),'--repo',repository,'--auto','--squash',
           '--match-head-commit',pr.head.sha];
-        const result=spawnSync('gh',args,{encoding:'utf8',timeout:60_000,maxBuffer:1_048_576});
+        const result=spawnSync('gh',args,{env:ordinaryEnvironment,encoding:'utf8',timeout:60_000,maxBuffer:1_048_576});
         await writeFile(resolve(directory,'protected-auto-merge.log'),redact((result.stdout??'')+'\n'+(result.stderr??'')));
         if(result.error||result.status!==0)throw Error('GitHub rejected protected automatic merge');
         journal.actions.push({kind:'request-protected-auto-merge',head:pr.head.sha,baseSHA:pr.base.sha,
@@ -130,6 +137,7 @@ try {
     }
   }
 } catch (error) {
+  if(error.deliveryObservation)journal.delivery=error.deliveryObservation;
   if(error.code==='SUPERSEDED_PRODUCER') {
     journal.status='SUPERSEDED_PRODUCER'; journal.reason=redact(error.message);
   } else {
