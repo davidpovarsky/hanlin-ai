@@ -200,6 +200,8 @@ struct MaintainedSkillCorpusTests {
         let plan = try await service.plan(skillID: record.id, path: path, engine: .python,
             arguments: [], catalog: catalog, store: store)
         #expect(plan.lastTest == nil && plan.readiness != .verified)
+        try #require(plan.readiness == .likely && plan.isExecutable,
+            "Original CPython resolution must establish the actual standard-library requirements before this failure test")
         let arguments = try json(["skill_id": record.id.rawValue, "relative_path": path,
             "engine": RuntimeKind.localPython.rawValue, "arguments": [String]()])
         let result = await SkillRuntimeAuthorization.$approved.withValue(true) {
@@ -233,6 +235,166 @@ struct MaintainedSkillCorpusTests {
             "plan_readiness": plan.readiness.rawValue, "plan_issues": plan.issues.map { $0.code.rawValue },
             "resource_execution_attempted": receipt != nil, "external_business_workflow": "NOT_RUN"
         ])))
+    }
+
+
+    @Test func originalPythonPackageFactsUseRealInstallAndInvalidateChangedSource() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "python-module-facts-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let suffix = UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
+        let distribution = "hanlin-module-fact-" + suffix
+        let module = distribution.replacingOccurrences(of: "-", with: "_")
+        let parentMarker = root.appending(path: "parent-imports.txt")
+        let childMarker = root.appending(path: "child-imports.txt")
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.withoutEscapingSlashes]
+        func literal(_ text: String) throws -> String { String(decoding: try encoder.encode(text), as: UTF8.self) }
+        func archive(_ files: [String: Data], to url: URL) throws {
+            let archive = try Archive(url: url, accessMode: .create)
+            for name in files.keys.sorted() {
+                let bytes = try #require(files[name])
+                try archive.addEntry(with: name, type: .file, uncompressedSize: Int64(bytes.count)) { offset, length in
+                    bytes.subdata(in: Int(offset)..<(Int(offset) + length))
+                }
+            }
+        }
+        let parent = """
+        from pathlib import Path
+        marker = Path(\(try literal(parentMarker.path)))
+        marker.write_text((marker.read_text() if marker.exists() else '') + 'parent\\n')
+        __version__ = '1.0.0'
+        """
+        let child = """
+        from pathlib import Path
+        Path(\(try literal(childMarker.path))).write_text('actual-child-import')
+        VALUE = 7
+        """
+        let metadata = module + "-1.0.0.dist-info/"
+        var files: [String: Data] = [
+            module + "/__init__.py": Data((parent + "\n").utf8),
+            module + "/child.py": Data((child + "\n").utf8),
+            metadata + "METADATA": Data("Metadata-Version: 2.3\nName: \(distribution)\nVersion: 1.0.0\n\n".utf8),
+            metadata + "WHEEL": Data("Wheel-Version: 1.0\nRoot-Is-Purelib: true\nTag: py3-none-any\n".utf8)
+        ]
+        let records = files.keys.sorted().map { name -> String in
+            let bytes = files[name]!
+            let digest = Data(SHA256.hash(data: bytes)).base64EncodedString()
+                .replacingOccurrences(of: "+", with: "-").replacingOccurrences(of: "/", with: "_")
+                .replacingOccurrences(of: "=", with: "")
+            return "\(name),sha256=\(digest),\(bytes.count)\n"
+        }.joined() + metadata + "RECORD,,\n"
+        files[metadata + "RECORD"] = Data(records.utf8)
+        let wheel = root.appending(path: module + "-1.0.0-py3-none-any.whl")
+        try archive(files, to: wheel)
+
+        let manager = AppRuntimeCore.shared.pythonPackages
+        var installed: PythonPackageRecord?
+        func cleanOwnImportCache() async throws {
+            let source = """
+            import sys
+            for name in tuple(sys.modules):
+                if name == '\(module)' or name.startswith('\(module).'):
+                    sys.modules.pop(name, None)
+            """
+            let result = try await AppRuntimeCore.shared.python.execute(.init(source: source, workspace: root))
+            try #require(result.exitCode == 0 && !result.didTimeOut && !result.wasCancelled)
+        }
+        do {
+            let package = try await manager.install(name: wheel.path, importName: module)
+            installed = package
+            try #require(package.normalizedName == distribution && package.version == "1.0.0")
+            let importProbeMarker = try Data(contentsOf: parentMarker)
+            #expect(String(decoding: importProbeMarker, as: UTF8.self) == "parent\n")
+            #expect(!FileManager.default.fileExists(atPath: childMarker.path))
+
+            let skillName = "python-facts-" + suffix
+            let markdown = "---\nname: \(skillName)\ndescription: Actual local package fact inspection and cache invalidation\n---\nRun the owned local package check.\n"
+            let script = "import \(module).child\nprint(\(module).child.VALUE)\n"
+            let skillZip = root.appending(path: "skill.zip")
+            try archive(["SKILL.md": Data(markdown.utf8), "scripts/check.py": Data(script.utf8)], to: skillZip)
+            let staged = try SkillImporter().stageAndInspect(fileURL: skillZip)
+            defer { staged.cleanup() }
+            let store = SkillStore(rootDirectoryURL: root.appending(path: "store"), onCatalogChange: {})
+            let record = try store.install(stagedPackage: staged)
+            let catalog = catalogFor(record, store: store)
+            let session = AssistantCapabilitySession(isTemporaryChat: true)
+            let loaded = await LoadSkillTool.execute(argumentsJSON: try json(["skill_id": record.id.rawValue]),
+                session: session, catalog: catalog, store: store)
+            try #require(!loaded.hasPrefix("Error:") && session.isSkillLoaded(record.id))
+            let service = SkillRuntimeService()
+            try await service.analyze(skillID: record.id, path: "scripts/check.py", catalog: catalog, store: store)
+            let initial = try await service.plan(skillID: record.id, path: "scripts/check.py",
+                engine: .python, arguments: [], catalog: catalog, store: store)
+            try #require(initial.isExecutable && initial.readiness == .likely && initial.lastTest == nil)
+            #expect(try Data(contentsOf: parentMarker) == importProbeMarker,
+                "Module inspection must not repeat the package manager's actual import side effect")
+            #expect(!FileManager.default.fileExists(atPath: childMarker.path),
+                "Dotted module resolution must not execute the child")
+
+            let arguments = try json(["skill_id": record.id.rawValue, "relative_path": "scripts/check.py",
+                "engine": RuntimeKind.localPython.rawValue, "arguments": [String]()])
+            let result = await SkillRuntimeAuthorization.$approved.withValue(true) {
+                await ExecuteSkillResourceTool(catalog: catalog, store: store).execute(argumentsJSON: arguments,
+                    context: .init(localeIdentifier: "en", capabilitySession: session))
+            }
+            try #require(result.outcome.isSuccess, "\(result.modelText)")
+            let receipt = try #require(try service.receipt(skillID: record.id, path: "scripts/check.py", store: store))
+            try #require(receipt.status == .executionPass && receipt.result.stdout.trimmingCharacters(in: .whitespacesAndNewlines) == "7")
+            #expect(try String(contentsOf: childMarker, encoding: .utf8) == "actual-child-import")
+            #expect(try String(contentsOf: parentMarker, encoding: .utf8) == "parent\nparent\n")
+
+            // Establish a genuinely matching VERIFIED plan before mutation.
+            // New argv, absent analysis, or simply deleting a receipt is not proof.
+            try await service.analyze(skillID: record.id, path: "scripts/check.py", catalog: catalog, store: store)
+            let unchanged = try await service.plan(skillID: record.id, path: "scripts/check.py",
+                engine: .python, arguments: [], catalog: catalog, store: store)
+            try #require(unchanged.readiness == .verified && unchanged.lastTest == receipt.test)
+            let installedChild = RuntimeFileLayout.default.pythonPackages
+                .appending(path: package.normalizedName + "-" + package.version)
+                .appending(path: module + "/child.py")
+            try Data((child.replacingOccurrences(of: "VALUE = 7", with: "VALUE = 8") + "\n").utf8)
+                .write(to: installedChild, options: .atomic)
+            let passiveWork = MaintainedSkillWorkWitness()
+            let invalidated = try await RuntimeJobProgress.$reporter.withValue({ job in
+                passiveWork.executionIDs.insert(job.executionID)
+            }) {
+                try await service.plan(skillID: record.id, path: "scripts/check.py",
+                    engine: .python, arguments: [], catalog: catalog, store: store)
+            }
+            #expect(passiveWork.executionIDs.isEmpty)
+            #expect(invalidated.readiness != .verified && invalidated.lastTest == nil)
+            #expect(invalidated.binding?.environmentFingerprint != unchanged.binding?.environmentFingerprint)
+            let historical = try service.receipt(skillID: record.id, path: "scripts/check.py", store: store)
+            #expect(historical?.result.executionID == receipt.result.executionID && historical?.status == .executionPass)
+
+            try await service.analyze(skillID: record.id, path: "scripts/check.py", catalog: catalog, store: store)
+            let reanalyzed = try await service.plan(skillID: record.id, path: "scripts/check.py",
+                engine: .python, arguments: [], catalog: catalog, store: store)
+            #expect(reanalyzed.readiness == .likely && reanalyzed.lastTest == nil)
+            #expect(reanalyzed.binding?.environmentFingerprint != unchanged.binding?.environmentFingerprint)
+            #expect(try String(contentsOf: parentMarker, encoding: .utf8) == "parent\nparent\n",
+                "Reanalysis must not replay successful package code")
+
+            try await manager.uninstall(package)
+            installed = nil
+            try #require(try await manager.installed().allSatisfy { $0.normalizedName != distribution })
+            try await cleanOwnImportCache()
+            print("PYTHON_ORIGINAL_MODULE_FACTS " + (try json([
+                "schema": 1, "fixture_kind": "generated local wheel; excluded from the maintained corpus count",
+                "route": "PythonPackageManager local wheel / original CPython resolution / Skill ZIP / real execution / source mutation / uninstall",
+                "wheel_sha256": package.sha256, "execution_id": receipt.result.executionID.uuidString,
+                "unchanged_readiness": unchanged.readiness.rawValue,
+                "changed_source_readiness": invalidated.readiness.rawValue,
+                "reanalyzed_readiness": reanalyzed.readiness.rawValue,
+                "passive_jobs": passiveWork.executionIDs.count, "historical_receipt_retained": historical?.result.executionID == receipt.result.executionID,
+                "inspection_replayed_package": try String(contentsOf: parentMarker, encoding: .utf8) != "parent\nparent\n", "package_cleanup": "PASS", "external_requests": "NOT_RUN"
+            ])))
+        } catch {
+            if let installed { try? await manager.uninstall(installed) }
+            try? await cleanOwnImportCache()
+            throw error
+        }
     }
 
     private struct Manifest: Decodable { let schema: Int; let skills: [Entry]; let licenses: [File] }

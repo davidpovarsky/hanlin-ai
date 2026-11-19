@@ -1,6 +1,19 @@
 import Foundation
 import CryptoKit
 
+
+/// An observed original-CPython resolution is a module-availability fact, not an
+/// import test or a successful Skill execution.
+struct PythonSkillModuleFact: Sendable {
+    let name: String
+    let status: String
+    let resolvedPath: String?
+    let identity: String
+    let observedAt: Date
+    let executionID: UUID
+    let engineVersion: String
+}
+
 actor PythonRuntimeService {
     /// Original requirements/TOML helper and pinned packaging parser only. No Skill
     /// path is added to sys.path and no declaration is installed or imported.
@@ -39,7 +52,8 @@ actor PythonRuntimeService {
         _report = analyze_python_manifest(_input['file'], base64.b64decode(_input['base64']), requirement_parser=Requirement, packaging_version=packaging.__version__)
         print(json.dumps(_report))
         """
-        return try await execute(.init(source: source, workspace: workspace))
+        return try await executePythonJob(.init(source: source, workspace: workspace,
+            environment: ["SKILL_ID": "hanlin-skill-analysis"]), trustedInspection: true)
     }
 
     private struct BridgeResponse: Decodable {
@@ -68,28 +82,136 @@ actor PythonRuntimeService {
     }
     func snapshot() -> RuntimeSnapshot { snapshotValue }
 
-    private(set) var observedSkillAnalysisModules: [String] = []
+    private struct ModuleResolution: Decodable, Sendable {
+        struct Module: Codable, Sendable {
+            struct SourceFile: Codable, Sendable {
+                let path: String
+                let sha256: String
+                let bytes: Int
+            }
+            let name: String
+            let status: String
+            let reason: String
+            let resolvedPath: String?
+            let sourceFiles: [SourceFile]
+        }
+        let scope: String
+        let producer: String
+        let engineVersion: String
+        let resolutionOnly: Bool
+        let modules: [Module]
+    }
+    private struct CachedModuleResolution: Sendable {
+        let report: ModuleResolution
+        let environment: String
+        let generation: UInt64
+        let helperSHA256: String
+        let observedAt: Date
+        let executionID: UUID
+    }
+    private var moduleFactGeneration: UInt64 = 0
+    private var moduleResolution: CachedModuleResolution?
 
-    /// Trusted parser imports occur before inspecting user bytes and outside Skill paths.
+    private func moduleEnvironmentIdentity() throws -> String {
+        var bytes = Data("native-skill-isolated/v1".utf8)
+        for url in [fileLayout.environmentRegistry, fileLayout.registry.appending(path: "PythonPackages.json")] {
+            bytes.append(0)
+            bytes.append(contentsOf: url.lastPathComponent.utf8)
+            if FileManager.default.fileExists(atPath: url.path) {
+                bytes.append(1)
+                bytes.append(try Data(contentsOf: url))
+            } else { bytes.append(0) }
+        }
+        return SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined()
+    }
+
+    /// Passive: read cached native observations and recheck their exact source
+    /// hashes. This method never starts Python, imports a module, or submits a job.
+    func observedSkillModuleFacts() async -> [PythonSkillModuleFact] {
+        guard [.ready, .executing].contains(snapshotValue.state),
+              let cached = moduleResolution, cached.generation == moduleFactGeneration,
+              cached.report.engineVersion == snapshotValue.version,
+              let environment = try? moduleEnvironmentIdentity(), environment == cached.environment else { return [] }
+        let facts = await Task.detached {
+            var verifiedFiles: [String: Bool] = [:]
+            var totalBytes = 0
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.sortedKeys]
+            return cached.report.modules.compactMap { module -> PythonSkillModuleFact? in
+                for source in module.sourceFiles {
+                    let key = source.path + "\0" + source.sha256
+                    if verifiedFiles[key] == false { return nil }
+                    if verifiedFiles[key] == true { continue }
+                    guard source.bytes >= 0, source.bytes <= 64 * 1_048_576,
+                          totalBytes <= 64 * 1_048_576 - source.bytes,
+                          source.sha256.count == 64,
+                          let file = FileHandle(forReadingAtPath: source.path) else { return nil }
+                    defer { try? file.close() }
+                    var hash = SHA256()
+                    var count = 0
+                    do {
+                        while let bytes = try file.read(upToCount: min(65_536, source.bytes - count + 1)), !bytes.isEmpty {
+                            count += bytes.count
+                            guard count <= source.bytes else { verifiedFiles[key] = false; return nil }
+                            hash.update(data: bytes)
+                        }
+                    } catch { verifiedFiles[key] = false; return nil }
+                    totalBytes += count
+                    let matches = count == source.bytes
+                        && hash.finalize().map { String(format: "%02x", $0) }.joined() == source.sha256
+                    verifiedFiles[key] = matches
+                    guard matches else { return nil }
+                }
+                guard let encoded = try? encoder.encode(module) else { return nil }
+                var identity = Data(cached.helperSHA256.utf8)
+                identity.append(encoded)
+                return .init(name: module.name, status: module.status, resolvedPath: module.resolvedPath,
+                    identity: SHA256.hash(data: identity).map { String(format: "%02x", $0) }.joined(),
+                    observedAt: cached.observedAt, executionID: cached.executionID,
+                    engineVersion: cached.report.engineVersion)
+            }
+        }.value
+        guard cached.generation == moduleFactGeneration,
+              (try? moduleEnvironmentIdentity()) == cached.environment else { return [] }
+        return facts
+    }
+
+    /// Original AST and original import finders run only on this explicit action.
+    /// The analyzed source remains data. Module resolution requires loaded
+    /// original dependencies; this is not an arbitrary-interpreter security boundary.
     func analyzeSkillSyntax(payload: Data, workspace: URL) async throws -> RuntimeExecutionResult {
         guard let url = Bundle.main.url(forResource: "hanlin_python_ast", withExtension: "py") else {
             throw RuntimeCoreError.invalidRequest("Bundled Python syntax helper unavailable")
         }
         let helper = try String(contentsOf: url, encoding: .utf8)
+        let helperHash = SHA256.hash(data: Data(helper.utf8)).map { String(format: "%02x", $0) }.joined()
+        let generation = moduleFactGeneration
+        let environment = try moduleEnvironmentIdentity()
         let literal = String(decoding: try JSONEncoder().encode(payload.base64EncodedString()), as: UTF8.self)
         let source = helper + """
 
         import json, base64, os
         _hanlin = json.loads(base64.b64decode(\(literal)))
         _report = analyze_python_source(_hanlin['file'], base64.b64decode(_hanlin['base64']))
-        _report['observedTrustedModules'] = ['sys', 'ast', 'hashlib', 'time', 'json', 'base64', 'os']
+        _report['moduleResolution'] = inspect_python_module_requirements(_report['findings'])
         print(json.dumps(_report))
         """
-        let result = try await execute(.init(source: source, workspace: workspace))
-        if result.exitCode == 0,
-           let value = try? JSONSerialization.jsonObject(with: Data(result.stdout.utf8)) as? [String: Any],
-           let names = value["observedTrustedModules"] as? [String] {
-            observedSkillAnalysisModules = names
+        moduleResolution = nil
+        let result = try await executePythonJob(.init(source: source, workspace: workspace,
+            environment: ["SKILL_ID": "hanlin-skill-analysis"]), trustedInspection: true)
+        struct Envelope: Decodable { let moduleResolution: ModuleResolution }
+        if result.exitCode == 0, !result.wasCancelled, !result.didTimeOut,
+           generation == moduleFactGeneration, environment == (try moduleEnvironmentIdentity()),
+           let value = try? JSONDecoder().decode(Envelope.self, from: Data(result.stdout.utf8)) {
+            let report = value.moduleResolution
+            if report.scope == "native-skill-isolated", report.producer == "CPython.importlib.machinery",
+               report.resolutionOnly, report.engineVersion == snapshotValue.version,
+               report.modules.count <= 64, Set(report.modules.map(\.name)).count == report.modules.count,
+               report.modules.allSatisfy({ !$0.name.isEmpty && $0.name.utf8.count <= 256
+                   && ["available", "unknown"].contains($0.status) }) {
+                moduleResolution = .init(report: report, environment: environment, generation: generation,
+                    helperSHA256: helperHash, observedAt: .now, executionID: result.executionID)
+            }
         }
         return result
     }
@@ -106,6 +228,8 @@ actor PythonRuntimeService {
         return snapshotValue
     }
     func stop() async -> RuntimeSnapshot {
+        moduleFactGeneration &+= 1
+        moduleResolution = nil
         stopGeneration &+= 1
         stopRequested = true
         for id in activeIDs {
@@ -129,7 +253,13 @@ actor PythonRuntimeService {
     }
 
     private func executePythonJob(_ request: RuntimeExecutionRequest, entryPoint: URL? = nil,
-                                  standardInput: URL? = nil) async throws -> RuntimeExecutionResult {
+                                  standardInput: URL? = nil, trustedInspection: Bool = false) async throws -> RuntimeExecutionResult {
+        // A user job may change Python import state. Only these private, trusted
+        // inspection calls may retain observations; an environment flag cannot.
+        if !trustedInspection {
+            moduleFactGeneration &+= 1
+            moduleResolution = nil
+        }
         let operation = RuntimeUserOperation.current
         try operation?.checkInterruption()
         let interruption = operation?.registerInterruption { reason in

@@ -31,6 +31,16 @@ struct SkillRuntimeFactsProvider: SkillRuntimeCapabilityProvider {
                     layout.registry.appending(path: "PythonPackages.json")] {
             if let bytes = try? Data(contentsOf: url) { environment.append(bytes) }
         }
+        var pythonModuleFacts: [PythonSkillModuleFact] = []
+        if engineID == .python {
+            pythonModuleFacts = await AppRuntimeCore.shared.python.observedSkillModuleFacts()
+            environment.append(0)
+            environment.append(contentsOf: "python-module-resolution/v1".utf8)
+            for fact in pythonModuleFacts.sorted(by: { $0.name < $1.name }) {
+                environment.append(0)
+                environment.append(contentsOf: fact.identity.utf8)
+            }
+        }
         let binding = C.EngineBinding(engineID: engineID, engineVersion: version,
             engineFingerprint: SkillRuntimeRequirements.digest(identity), environmentID: environmentID,
             environmentFingerprint: SkillRuntimeRequirements.digest(environment))
@@ -46,12 +56,14 @@ struct SkillRuntimeFactsProvider: SkillRuntimeCapabilityProvider {
             facts = observed.facts
         }
         if engineID == .python {
-            for name in await AppRuntimeCore.shared.python.observedSkillAnalysisModules {
-                facts.append(.init(requirement: .init(kind: .module, name: name, versionConstraint: nil),
-                    binding: binding, status: .available, resolvedVersion: version, resolvedPath: nil,
-                    evidence: .init(kind: .observed, producer: "PythonRuntimeService.trustedAnalysisImports",
-                        producerVersion: "1", sourceID: engineID.rawValue, sourceVersion: version,
-                        sourceFingerprint: binding.engineFingerprint, observedAt: .now, artifactReference: nil)))
+            for fact in pythonModuleFacts {
+                facts.append(.init(requirement: .init(kind: .module, name: fact.name, versionConstraint: nil),
+                    binding: binding, status: C.FactStatus(rawValue: fact.status) ?? .unknown,
+                    resolvedVersion: nil, resolvedPath: fact.resolvedPath,
+                    evidence: .init(kind: .observed, producer: "CPython.importlib.machinery.resolveWithoutImport",
+                        producerVersion: "1", sourceID: engineID.rawValue,
+                        sourceVersion: fact.engineVersion, sourceFingerprint: binding.engineFingerprint,
+                        observedAt: fact.observedAt, artifactReference: fact.executionID.uuidString)))
             }
         }
         if engineID == .typeScript,

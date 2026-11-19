@@ -1,0 +1,20 @@
+[
+  {
+    "file": "portable-original-wheel-proof.json",
+    "original_sha256": "1c45335866bfb296caf467c4be1ecbef6bcc89a0a03ebbb092471096de31f07c",
+    "repository_sha256": "44a0c7c529803e999f1453bc9e00870a319b7602ab4c51d78c142f11d8f2ee99",
+    "change": "CRLF to LF only; JSON value identical"
+  },
+  {
+    "file": "proposal-validation-v2.json",
+    "original_sha256": "9ce981a26ae495991b6a4b4402fb339932e9c4826c401eefbfb0d2fb846421a6",
+    "repository_sha256": "af038949b158e80ddc51509dcbad0ea6d82a9a05f4374262e368feebbb51799f",
+    "change": "CRLF to LF only; JSON value identical"
+  },
+  {
+    "file": "root-verification.json",
+    "original_sha256": "8a00a267fc4795324eadf15ada3476ef744e819e392e3a50a87835906649ed86",
+    "repository_sha256": "0a80a13b788067538de40c49a0fd65638aebd9600256350cc9808963bd741c9d",
+    "change": "CRLF to LF only; JSON value identical"
+  }
+]
