@@ -13,7 +13,7 @@ struct HanlinAppProviderCredentials: Sendable {
     ))
 
     enum Failure: LocalizedError {
-        case staleRecord, commitVerificationFailed
+        case staleRecord, commitVerificationFailed, migrationUnavailable
 
         var errorDescription: String? {
             switch self {
@@ -21,6 +21,8 @@ struct HanlinAppProviderCredentials: Sendable {
                 "The credential record changed. Reopen its settings before saving."
             case .commitVerificationFailed:
                 "The saved key could not be verified. Reopen these settings before trying again."
+            case .migrationUnavailable:
+                "This key is not eligible for migration. Reopen its settings before trying again."
             }
         }
     }
@@ -47,8 +49,30 @@ struct HanlinAppProviderCredentials: Sendable {
         lhs.map { Data($0.utf8) } == rhs.map { Data($0.utf8) }
     }
 
-    /// Compatibility phase: existing legacy rows keep their current persisted
-    /// representation. Reference-write activation is a separate rollout change.
+    /// A settings-only save must not rewrite an unchanged credential or create a
+    /// Keychain generation. The original representation, including nil, is preserved.
+    @MainActor
+    func saveMetadata<Record: HanlinProviderCredentialRecord>(
+        for record: Record, expectedStoredValue: String?, in context: ModelContext,
+        update: (Record) -> Void = { _ in }
+    ) throws {
+        try requireCurrent(record, expectedStoredValue: expectedStoredValue, in: context)
+        try requireDurableValue(record, expectedStoredValue: expectedStoredValue, in: context)
+        if context.hasChanges { try context.save() }
+        try requireCurrent(record, expectedStoredValue: expectedStoredValue, in: context)
+        try requireDurableValue(record, expectedStoredValue: expectedStoredValue, in: context)
+        update(record)
+        guard Self.sameStoredValue(record.storedCredential, expectedStoredValue) else {
+            context.rollback()
+            throw Failure.staleRecord
+        }
+        do { try context.save() }
+        catch { context.rollback(); throw error }
+        try verifyCommit(record, expectedStoredValue: expectedStoredValue, in: context)
+    }
+
+    /// Retained for explicit legacy-compatibility callers. Settings use protected
+    /// writes for replacements and saveMetadata for unchanged credentials.
     /// A row already using a supported handle must never be downgraded to plaintext.
     @MainActor
     func saveCompatible<Record: HanlinProviderCredentialRecord>(
@@ -199,6 +223,7 @@ struct HanlinAppProviderCredentials: Sendable {
 protocol HanlinProviderCredentialRecord: PersistentModel {
     static var credentialKind: HanlinKeychainCredentialStore.Kind { get }
     var storedCredential: String? { get set }
+    var isBuiltInCredentialMarker: Bool { get }
 }
 
 extension HanlinProviderCredentialRecord {
@@ -219,6 +244,7 @@ extension HanlinProviderCredentialRecord {
 
 extension APIKeys: HanlinProviderCredentialRecord {
     static var credentialKind: HanlinKeychainCredentialStore.Kind { .model }
+    var isBuiltInCredentialMarker: Bool { ["LOCAL", "APPLE"].contains(company?.uppercased() ?? "") }
     var storedCredential: String? {
         get { key }
         set { key = newValue }
@@ -228,6 +254,7 @@ extension APIKeys: HanlinProviderCredentialRecord {
 
 extension SearchKeys: HanlinProviderCredentialRecord {
     static var credentialKind: HanlinKeychainCredentialStore.Kind { .search }
+    var isBuiltInCredentialMarker: Bool { company == "AUTOMATIC_KEYLESS" }
     var storedCredential: String? {
         get { key }
         set { key = newValue }
@@ -237,6 +264,7 @@ extension SearchKeys: HanlinProviderCredentialRecord {
 
 extension ToolKeys: HanlinProviderCredentialRecord {
     static var credentialKind: HanlinKeychainCredentialStore.Kind { .tool }
+    var isBuiltInCredentialMarker: Bool { company.uppercased() == "APPLEMAP" }
     var storedCredential: String? {
         get { key }
         set { key = newValue ?? "" }
@@ -252,8 +280,21 @@ struct HanlinCredentialEditDraft {
     private(set) var text = ""
     private(set) var loaded = false
     private(set) var edited = false
+    private var loadedText: String?
 
     var isReadyToSave: Bool { recordID != nil && (loaded || edited) }
+
+    var hasCredentialReplacement: Bool {
+        guard edited else { return false }
+        guard let loadedText else { return true }
+        return !text.utf8.elementsEqual(loadedText.utf8)
+    }
+
+    func canMigrate<Record: HanlinProviderCredentialRecord>(_ record: Record) -> Bool {
+        loaded && !hasCredentialReplacement && !text.isEmpty &&
+            recordID == record.persistentModelID && !record.isBuiltInCredentialMarker &&
+            !(expectedStoredValue.map(HanlinKeychainCredentialStore.isReference) ?? false)
+    }
 
     mutating func load<Record: HanlinProviderCredentialRecord>(
         _ record: Record, credentials: HanlinAppProviderCredentials = .shared
@@ -263,7 +304,9 @@ struct HanlinCredentialEditDraft {
         text = ""
         loaded = false
         edited = false
+        loadedText = nil
         text = try credentials.resolve(record) ?? ""
+        loadedText = text
         loaded = true
     }
 
@@ -281,11 +324,32 @@ struct HanlinCredentialEditDraft {
         guard isReadyToSave, recordID == record.persistentModelID else {
             throw HanlinAppProviderCredentials.Failure.staleRecord
         }
-        try credentials.saveCompatible(text, for: record, expectedStoredValue: expectedStoredValue,
+        if hasCredentialReplacement {
+            try credentials.save(text, for: record, expectedStoredValue: expectedStoredValue,
+                                 in: context, update: update)
+        } else {
+            try credentials.saveMetadata(for: record, expectedStoredValue: expectedStoredValue,
+                                         in: context, update: update)
+        }
+        recordVerifiedCommit(record)
+    }
+
+    @MainActor
+    mutating func migrate<Record: HanlinProviderCredentialRecord>(
+        _ record: Record, in context: ModelContext,
+        credentials: HanlinAppProviderCredentials = .shared,
+        update: (Record) -> Void = { _ in }
+    ) throws {
+        guard canMigrate(record) else { throw HanlinAppProviderCredentials.Failure.migrationUnavailable }
+        try credentials.save(text, for: record, expectedStoredValue: expectedStoredValue,
                              in: context, update: update)
-        // This commit was verified. Refresh the draft's expected representation
-        // without performing a second fallible Keychain read after the save.
+        recordVerifiedCommit(record)
+    }
+
+    private mutating func recordVerifiedCommit<Record: HanlinProviderCredentialRecord>(_ record: Record) {
+        // No second fallible Keychain read after the verified original-row commit.
         expectedStoredValue = record.storedCredential
+        loadedText = text
         loaded = true
         edited = false
     }
@@ -302,6 +366,17 @@ struct HanlinCredentialEditDraft {
         publishCompactConfiguration: () throws -> Void
     ) throws -> Publication {
         try save(to: record, in: context, credentials: credentials, update: update)
+        return Self.retryPublication(publishCompactConfiguration)
+    }
+
+    @MainActor
+    mutating func migrateAndPublish(
+        _ record: APIKeys, in context: ModelContext,
+        credentials: HanlinAppProviderCredentials = .shared,
+        update: (APIKeys) -> Void = { _ in },
+        publishCompactConfiguration: () throws -> Void
+    ) throws -> Publication {
+        try migrate(record, in: context, credentials: credentials, update: update)
         return Self.retryPublication(publishCompactConfiguration)
     }
 

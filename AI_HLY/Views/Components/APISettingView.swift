@@ -285,6 +285,9 @@ private struct EditKeyContent: View {
                         get: { credentialDraft.text },
                         set: { credentialDraft.replaceText($0); compactPublicationNeedsRetry = false }
                     ))
+                    ProviderCredentialStorageNotice(canMigrate: credentialDraft.canMigrate(key)) {
+                        saveOrRetryCompactPublication(migrate: true)
+                    }
                 }
                 // 自定义供应商或LAN供应商显示请求地址设置
                 if key.company == "LAN" || key.from == .custom {
@@ -415,18 +418,24 @@ private struct EditKeyContent: View {
             }
     }
     
-    private func saveOrRetryCompactPublication() {
+    private func saveOrRetryCompactPublication(migrate: Bool = false) {
         let publish = {
             try HanlinScriptingPlatformAIIntegration(modelContext: modelContext).publishCompactAgentConfig()
         }
         let publication: HanlinCredentialEditDraft.Publication
-        if compactPublicationNeedsRetry {
+        // An explicit migration must not be mistaken for a publication-only retry.
+        if compactPublicationNeedsRetry && !migrate {
             publication = HanlinCredentialEditDraft.retryPublication(publish)
         } else {
             do {
-                publication = try credentialDraft.saveAndPublish(to: key, in: modelContext,
-                    update: { $0.timestamp = Date(); $0.isHidden = false },
-                    publishCompactConfiguration: publish)
+                if migrate {
+                    publication = try credentialDraft.migrateAndPublish(key, in: modelContext,
+                        update: { $0.timestamp = Date() }, publishCompactConfiguration: publish)
+                } else {
+                    publication = try credentialDraft.saveAndPublish(to: key, in: modelContext,
+                        update: { $0.timestamp = Date(); $0.isHidden = false },
+                        publishCompactConfiguration: publish)
+                }
             } catch {
                 credentialError = HanlinAppProviderCredentials.userMessage(for: error)
                 return
@@ -625,6 +634,7 @@ struct AddCustomProviderForm: View {
 
             Section(header: Text("API Key")) {
                 SecureField(String(localized: "请输入 API 密钥"), text: $apiKey)
+                ProviderCredentialStorageNotice(canMigrate: false, performMigration: {})
             }
 
             Section(header: Text(String(localized: "请求地址（URL）"))) {
@@ -741,7 +751,7 @@ struct AddCustomProviderForm: View {
         )
 
         do {
-            try HanlinAppProviderCredentials.shared.insertCompatible(customProvider, value: trimmedKey, in: modelContext)
+            try HanlinAppProviderCredentials.shared.insert(customProvider, value: trimmedKey, in: modelContext)
             // The next host activation republishes the selected compact configuration.
             isPresented = false
         } catch {
@@ -1073,6 +1083,14 @@ struct SearchSettingView: View {
                             get: { credentialDraft.text },
                             set: { credentialDraft.replaceText($0) }
                         ))
+                        ProviderCredentialStorageNotice(canMigrate: credentialDraft.canMigrate(key)) {
+                            do {
+                                try credentialDraft.migrate(key, in: modelContext) { $0.timestamp = Date() }
+                                selectedKey = nil
+                            } catch {
+                                credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                            }
+                        }
                     }
                     // 测试 API 部分
                     Section {
@@ -1539,6 +1557,14 @@ struct MapSettingView: View {
                             get: { credentialDraft.text },
                             set: { credentialDraft.replaceText($0) }
                         ))
+                        ProviderCredentialStorageNotice(canMigrate: credentialDraft.canMigrate(key)) {
+                            do {
+                                try credentialDraft.migrate(key, in: modelContext) { $0.timestamp = Date() }
+                                selectedMapKey = nil
+                            } catch {
+                                credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                            }
+                        }
                     }
                 }
             }
@@ -2082,6 +2108,14 @@ struct WeatherSettingView: View {
                         get: { credentialDraft.text },
                         set: { credentialDraft.replaceText($0) }
                     ))
+                    ProviderCredentialStorageNotice(canMigrate: credentialDraft.canMigrate(key)) {
+                        do {
+                            try credentialDraft.migrate(key, in: modelContext) { $0.timestamp = Date() }
+                            selectedWeatherKey = nil
+                        } catch {
+                            credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                        }
+                    }
                 }
                 
                 Section(header: Text(String(localized: "请求地址"))) {
@@ -2131,6 +2165,23 @@ private extension View {
             Button(String(localized: "OK"), role: .cancel) { message.wrappedValue = nil }
         } message: {
             Text(message.wrappedValue ?? "")
+        }
+    }
+}
+
+
+private struct ProviderCredentialStorageNotice: View {
+    let canMigrate: Bool
+    let performMigration: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(String(localized: "New and changed keys are saved in Keychain. Update Hanlin and enable iCloud Keychain on your other devices to use them there. Synchronization can take time."))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            if canMigrate {
+                Button(String(localized: "Move this key to Keychain"), action: performMigration)
+            }
         }
     }
 }

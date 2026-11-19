@@ -1,0 +1,42 @@
+{
+  "reviewed_at": "2026-11-19T04:32:53.065896+00:00",
+  "base": "ffc876fd04fbac61abfb4d4538e75ccb39055c48",
+  "proposal_base": "37a246f404cc2ed253200ddf6fd647f999637f68",
+  "proposal_patch_sha256": "85e1adb2d9c2c5c543dfef1d1f46167979c97cc1adab377e3d3435f1d7d15458",
+  "source_files": [
+    {
+      "path": "AI_HLY/Services/DataServices/HanlinAppProviderCredentials.swift",
+      "base_sha256": "0144d2e941ed4882661afd43b3c74faba869fb6a50dc3087d5e0964f37d5e9a1",
+      "proposal_sha256": "0c4a7b8438810f97219caa4b376fed567bccd8cdafcdd6232d2bede32a5e8af7",
+      "applied_sha256": "0c4a7b8438810f97219caa4b376fed567bccd8cdafcdd6232d2bede32a5e8af7",
+      "windows_syntax_parse": "PASS"
+    },
+    {
+      "path": "AI_HLY/Views/Components/APISettingView.swift",
+      "base_sha256": "9564ed5bc0b9efde1743c58ba00487f66da061106121854ac82614b4847a888b",
+      "proposal_sha256": "24c9ad61dc0d22e4ca75df6f51411254d7d238c686a54d4af2015a1ba2a2d3e8",
+      "applied_sha256": "995ff2d880d61374236baece5c948d24f199684627d59be636ed83a58d3ef5a6",
+      "windows_syntax_parse": "PASS"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "base_sha256": "bbb954b00d1e6ed28d91225f808f94487227923fd7ae2b5be4fe355f24603877",
+      "proposal_sha256": "937d1bbf390512c1332e775b5b0e5ea153240bd42af839f5dede84fd89fe991b",
+      "applied_sha256": "937d1bbf390512c1332e775b5b0e5ea153240bd42af839f5dede84fd89fe991b",
+      "windows_syntax_parse": "PASS"
+    }
+  ],
+  "native_status": "NOT_RUN",
+  "retained_selectors": 19,
+  "planned_expanded_cases": 28,
+  "root_adjustment": "After a legacy metadata-only save succeeds but compact publication fails, an explicit migration still executes migrateAndPublish. Only the toolbar retry takes publication-only path. This prevents a misleading successful migration action with no migration. Original frozen proposal retained unchanged.",
+  "design_findings": [
+    "Exact UTF8 replacement detection; unchanged nil/empty/reference representation preserved",
+    "Keychain stage and readback precede original durable row publication; no predecessor deletion",
+    "Actual current/durable row checks precede dirty UI checkpoint; stale writer fails",
+    "Built-in markers excluded from explicit targeted migration",
+    "Supported reader boundary phase1 or later; no old-binary or multi-device proof",
+    "No schema, account registry, entitlements, provider row identity or CloudKit container changes"
+  ],
+  "remaining": "Original Apple Security/SwiftData/extension signing and multi-device/account lifecycle acceptance; source syntax is not execution"
+}

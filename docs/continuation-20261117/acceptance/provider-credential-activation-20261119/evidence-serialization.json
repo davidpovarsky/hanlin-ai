@@ -1,0 +1,44 @@
+[
+  {
+    "file": "ACTIVATION_REVIEW.md",
+    "original_sha256": "f8ed30c2302b40b8925c32bdc851320bfdba2b7e9cc473f0638fc409950d2d52",
+    "repository_sha256": "f8ed30c2302b40b8925c32bdc851320bfdba2b7e9cc473f0638fc409950d2d52",
+    "normalization": "CRLF to LF only"
+  },
+  {
+    "file": "ACTIVATION_DESIGN.md",
+    "original_sha256": "bcb878709789d5e50aa9250c0494444fff59a0d4b45645a1537b46e35200be72",
+    "repository_sha256": "bcb878709789d5e50aa9250c0494444fff59a0d4b45645a1537b46e35200be72",
+    "normalization": "CRLF to LF only"
+  },
+  {
+    "file": "activation-validation.json",
+    "original_sha256": "b58f55d11569505521e6b98a63fdb440621f03cc186b9620c8ed78ca98b919f9",
+    "repository_sha256": "1cd7163fa91e97de9e1cb12ad8cecddf8637afa0d8f6dbf429dc1d4a45922b86",
+    "normalization": "CRLF to LF only"
+  },
+  {
+    "file": "activation-changed-source-manifest.json",
+    "original_sha256": "7cad0611276429ee696f6f47955f63d1e1d810db6ea6a3aa0d1e901fb081060f",
+    "repository_sha256": "1516867983ccd6c3ec798f9c5ddc90f446aa13678311a2a2de663d9074d7a159",
+    "normalization": "CRLF to LF only"
+  },
+  {
+    "file": "activation-old-client-source-audit.json",
+    "original_sha256": "fa580c2fbac3da631682cbd79645385de4cfcf660c48cc0beb2e43f268faf595",
+    "repository_sha256": "e1e5189253558c75188ddf0da943ca85ab5ca911a2deaa57ca2c7e422e56a993",
+    "normalization": "CRLF to LF only"
+  },
+  {
+    "file": "activation-native-selectors.txt",
+    "original_sha256": "7e1eccebb5a1f67c01f112f69e181f04eb1d0039ed6096cde211fbbd43c9c875",
+    "repository_sha256": "7e1eccebb5a1f67c01f112f69e181f04eb1d0039ed6096cde211fbbd43c9c875",
+    "normalization": "CRLF to LF only"
+  },
+  {
+    "file": "activation-packet-receipt.json",
+    "original_sha256": "9bb50737f424b71493c0da0f7db2c75d9c11cab054bd371dbd689c7eaf09db24",
+    "repository_sha256": "b6cdc4bbfe501bff82ce6ef4d2f9589aa6af86d36249e76777bd79afeb1c9938",
+    "normalization": "CRLF to LF only"
+  }
+]

@@ -309,13 +309,17 @@ private final class ProviderCredentialTestFixture {
         #expect(first.text == "synthetic-original")
         first.replaceText("synthetic-explicit-save")
         try first.save(to: record, in: context, credentials: fixture.credentials)
-        #expect(record.key == "synthetic-explicit-save")
-        #expect(try fixture.references().isEmpty, "The compatibility phase does not activate reference writes")
+        // Activation secures actual secret edits while the earlier untouched row
+        // remains readable in its original legacy representation.
+        let committedReference = try #require(record.key)
+        #expect(HanlinKeychainCredentialStore.isReference(committedReference))
+        #expect(try fixture.credentials.resolve(record) == "synthetic-explicit-save")
+        #expect(try fixture.references().count == 1)
         stale.replaceText("synthetic-stale-editor")
         #expect(throws: Error.self) { try stale.save(to: record, in: context, credentials: fixture.credentials) }
-        #expect(record.key == "synthetic-explicit-save")
+        #expect(record.key == committedReference)
         let reopened = try fixture.open()
-        #expect(try reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first?.key == "synthetic-explicit-save")
+        #expect(try reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first?.key == committedReference)
     }
 
     @Test func originalCredentialStaleContextCannotCheckpointOverNewerSavedValue() throws {
@@ -491,6 +495,296 @@ private final class ProviderCredentialTestFixture {
         #expect(try fixture.references().count == 2, "Retry only publishes the compact file")
         #expect(try fixedStore.load()?.credentialReference == committedReference)
         #expect(try fixedStore.load()?.apiKey.isEmpty == true)
+    }
+
+    @Test(arguments: [HanlinKeychainCredentialStore.Kind.model, .search, .tool])
+    func protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations(kind: HanlinKeychainCredentialStore.Kind) throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        switch kind {
+        case .model:
+            try exerciseProtectedMetadata(fixture,
+                make: { APIKeys(name: "Original", company: "FIXTURE", key: "synthetic-legacy") },
+                update: { $0.timestamp = $1 }, timestamp: { $0.timestamp })
+        case .search:
+            try exerciseProtectedMetadata(fixture,
+                make: { SearchKeys(name: "Original", company: "FIXTURE", key: "synthetic-legacy") },
+                update: { $0.timestamp = $1 }, timestamp: { $0.timestamp })
+        case .tool:
+            try exerciseProtectedMetadata(fixture,
+                make: { ToolKeys(name: "Original", company: "FIXTURE", key: "synthetic-legacy") },
+                update: { $0.timestamp = $1 }, timestamp: { $0.timestamp })
+        }
+    }
+
+    private func exerciseProtectedMetadata<Record: HanlinProviderCredentialRecord>(
+        _ fixture: ProviderCredentialTestFixture, make: () -> Record,
+        update: (Record, Date) -> Void, timestamp: (Record) -> Date
+    ) throws {
+        let container = try fixture.open(), context = container.mainContext
+        context.autosaveEnabled = false
+        let record = make()
+        context.insert(record); try context.save()
+        let originalID = record.persistentModelID
+        var draft = HanlinCredentialEditDraft()
+        try draft.load(record, credentials: fixture.credentials)
+        let changedDate = Date(timeIntervalSince1970: 12345)
+        try draft.save(to: record, in: context, credentials: fixture.credentials) { update($0, changedDate) }
+        #expect(record.storedCredential == "synthetic-legacy")
+        #expect(timestamp(record) == changedDate)
+        #expect(try fixture.references().isEmpty)
+        // Typing and undoing back to the exact original bytes is not a migration.
+        draft.replaceText("synthetic-legacy-changed")
+        draft.replaceText("synthetic-legacy")
+        #expect(draft.hasCredentialReplacement == false)
+        try draft.save(to: record, in: context, credentials: fixture.credentials)
+        #expect(record.storedCredential == "synthetic-legacy")
+        #expect(try fixture.references().isEmpty)
+
+        draft.replaceText("synthetic-\u{00e9}")
+        #expect(draft.hasCredentialReplacement)
+        try draft.save(to: record, in: context, credentials: fixture.credentials)
+        let first = try #require(record.storedCredential)
+        #expect(HanlinKeychainCredentialStore.isReference(first))
+        #expect(try fixture.references().count == 1)
+        try draft.save(to: record, in: context, credentials: fixture.credentials) { update($0, changedDate.addingTimeInterval(1)) }
+        #expect(record.storedCredential == first)
+        #expect(try fixture.references().count == 1)
+        // Canonical Unicode equality must not discard a real opaque-byte change.
+        draft.replaceText("synthetic-e\u{0301}")
+        #expect(draft.hasCredentialReplacement)
+        try draft.save(to: record, in: context, credentials: fixture.credentials)
+        #expect(record.storedCredential != first)
+        #expect(try fixture.references().count == 2)
+        #expect(Data(try #require(fixture.credentials.resolve(record)).utf8) == Data("synthetic-e\u{0301}".utf8))
+        let reopened = try fixture.open()
+        let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<Record>()).first)
+        #expect(saved.persistentModelID == originalID)
+        #expect(saved.storedCredential == record.storedCredential)
+        #expect(timestamp(saved) == changedDate.addingTimeInterval(1))
+        #expect(Data(try #require(fixture.credentials.resolve(saved)).utf8) == Data("synthetic-e\u{0301}".utf8))
+    }
+
+    @Test(arguments: [Optional<String>.none, Optional<String>.some("")])
+    func protectedCredentialMetadataSaveRetainsNilAndEmptyRepresentations(initial: String?) throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        let record = APIKeys(name: "Original optional key", company: "FIXTURE", key: initial)
+        context.insert(record); try context.save()
+        var draft = HanlinCredentialEditDraft()
+        try draft.load(record, credentials: fixture.credentials)
+        draft.replaceText("")
+        #expect(draft.hasCredentialReplacement == false)
+        let timestamp = Date(timeIntervalSince1970: 54321)
+        try draft.save(to: record, in: context, credentials: fixture.credentials) { $0.timestamp = timestamp }
+        #expect(record.key == initial)
+        #expect(record.timestamp == timestamp)
+        #expect(try fixture.references().isEmpty)
+        let reopened = try fixture.open()
+        let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first)
+        #expect(saved.persistentModelID == record.persistentModelID)
+        #expect(saved.key == initial)
+        #expect(throws: Error.self) {
+            try fixture.credentials.saveMetadata(for: record, expectedStoredValue: initial, in: context) {
+                $0.key = "must-not-bypass-secured-write"
+            }
+        }
+        #expect(record.key == initial)
+        #expect(try fixture.references().isEmpty)
+    }
+
+    @Test(arguments: [HanlinKeychainCredentialStore.Kind.model, .search, .tool])
+    func protectedCredentialExplicitMigrationIsTargetedAndRecoverable(kind: HanlinKeychainCredentialStore.Kind) throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        switch kind {
+        case .model:
+            try exerciseExplicitCredentialMigration(fixture) { value in
+                APIKeys(name: value, company: value, key: value)
+            }
+        case .search:
+            try exerciseExplicitCredentialMigration(fixture) { value in
+                SearchKeys(name: value, company: value, key: value)
+            }
+        case .tool:
+            try exerciseExplicitCredentialMigration(fixture) { value in
+                ToolKeys(name: value, company: value, key: value)
+            }
+        }
+    }
+
+    private func exerciseExplicitCredentialMigration<Record: HanlinProviderCredentialRecord>(
+        _ fixture: ProviderCredentialTestFixture, make: (String) -> Record
+    ) throws {
+        let container = try fixture.open(), context = container.mainContext
+        let record = make("synthetic-selected"), unrelated = make("synthetic-unrelated")
+        context.insert(record); context.insert(unrelated); try context.save()
+        let originalID = record.persistentModelID
+        var draft = HanlinCredentialEditDraft()
+        try draft.load(record, credentials: fixture.credentials)
+        #expect(draft.hasCredentialReplacement == false)
+        #expect(draft.canMigrate(record))
+        try draft.migrate(record, in: context, credentials: fixture.credentials)
+        let reference = try #require(record.storedCredential)
+        #expect(HanlinKeychainCredentialStore.isReference(reference))
+        #expect(try fixture.credentials.resolve(record) == "synthetic-selected")
+        #expect(try fixture.credentials.keychain.previousStoredValue(for: reference, kind: Record.credentialKind) == "synthetic-selected")
+        #expect(unrelated.storedCredential == "synthetic-unrelated")
+        #expect(record.persistentModelID == originalID)
+        #expect(draft.canMigrate(record) == false)
+        #expect(throws: Error.self) { try draft.migrate(record, in: context, credentials: fixture.credentials) }
+        #expect(try fixture.references().count == 1)
+        do {
+            let reopened = try fixture.open()
+            let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<Record>())
+                .first(where: { $0.persistentModelID == originalID }))
+            #expect(saved.storedCredential == reference)
+            #expect(try fixture.credentials.resolve(saved) == "synthetic-selected")
+        }
+        try fixture.credentials.restorePrevious(for: record, expectedReference: reference, in: context)
+        #expect(record.storedCredential == "synthetic-selected")
+        #expect(unrelated.storedCredential == "synthetic-unrelated")
+        #expect(try fixture.credentials.keychain.resolve(reference, kind: Record.credentialKind) == "synthetic-selected")
+        do {
+            let readOnly = try fixture.open(allowsSave: false), reader = readOnly.mainContext
+            reader.autosaveEnabled = false
+            let saved = try #require(reader.fetch(FetchDescriptor<Record>())
+                .first(where: { $0.persistentModelID == originalID }))
+            var migration = HanlinCredentialEditDraft()
+            try migration.load(saved, credentials: fixture.credentials)
+            #expect(migration.canMigrate(saved))
+            #expect(throws: Error.self) {
+                try migration.migrate(saved, in: reader, credentials: fixture.credentials)
+            }
+        }
+        let reopened = try fixture.open()
+        let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<Record>())
+            .first(where: { $0.persistentModelID == originalID }))
+        #expect(saved.storedCredential == "synthetic-selected")
+        #expect(try fixture.references().count == 2, "A failed migration retains its staged checkpoint without replacing the original durable row")
+    }
+
+    @Test func protectedCredentialMigrationRejectsBuiltInMarkersAndEmptyKeys() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        func check<Record: HanlinProviderCredentialRecord>(_ record: Record) throws {
+            context.insert(record); try context.save()
+            let stored = record.storedCredential
+            var draft = HanlinCredentialEditDraft()
+            try draft.load(record, credentials: fixture.credentials)
+            #expect(draft.canMigrate(record) == false)
+            #expect(throws: Error.self) { try draft.migrate(record, in: context, credentials: fixture.credentials) }
+            #expect(record.storedCredential == stored)
+        }
+        try check(APIKeys(name: "Local", company: "LOCAL", key: "LOCAL"))
+        try check(ToolKeys(name: "Apple Maps", company: "APPLEMAP", key: "APPLEMAP"))
+        try check(AutomaticSearchMigration.makeAutomaticSearchKey())
+        #expect(try fixture.references().isEmpty)
+    }
+
+    @Test func protectedCredentialNewProviderCommitsOnlyReferenceAndFailedInsertRetainsExistingRows() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        var committedReference = ""
+        do {
+            let container = try fixture.open(), context = container.mainContext
+            let record = APIKeys(name: "New original provider", company: "NEW_FIXTURE", key: nil,
+                requestURL: "https://example.invalid", isHidden: false)
+            try fixture.credentials.insert(record, value: "synthetic-new-provider", in: context)
+            committedReference = try #require(record.key)
+            #expect(HanlinKeychainCredentialStore.isReference(committedReference))
+            #expect(try fixture.credentials.resolve(record) == "synthetic-new-provider")
+        }
+        do {
+            let readOnly = try fixture.open(allowsSave: false), context = readOnly.mainContext
+            context.autosaveEnabled = false
+            let failed = APIKeys(name: "Failed original provider", company: "FAILED_FIXTURE", key: nil)
+            #expect(throws: Error.self) {
+                try fixture.credentials.insert(failed, value: "synthetic-failed-provider", in: context)
+            }
+        }
+        let reopened = try fixture.open()
+        let rows = try reopened.mainContext.fetch(FetchDescriptor<APIKeys>())
+        #expect(rows.count == 1)
+        #expect(rows.first?.company == "NEW_FIXTURE")
+        #expect(rows.first?.key == committedReference)
+        #expect(try fixture.references().count == 2, "Failed insertion retains its staged generation without creating a canonical row")
+    }
+
+    @Test(arguments: ["synthetic-reentered", ""])
+    func protectedCredentialExplicitReplacementRecoversMissingReferenceWithoutPlaintextFallback(value: String) throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        let missing = "hanlin-keychain:v1:model:\(UUID().uuidString.lowercased())"
+        let record = APIKeys(name: "Original unavailable", company: "FIXTURE", key: missing)
+        context.insert(record); try context.save()
+        var draft = HanlinCredentialEditDraft()
+        #expect(throws: Error.self) { try draft.load(record, credentials: fixture.credentials) }
+        #expect(draft.isReadyToSave == false)
+        #expect(throws: Error.self) { try draft.save(to: record, in: context, credentials: fixture.credentials) }
+        #expect(record.key == missing)
+        draft.replaceText(value)
+        #expect(draft.hasCredentialReplacement)
+        try draft.save(to: record, in: context, credentials: fixture.credentials)
+        let replacement = try #require(record.key)
+        #expect(replacement != missing)
+        #expect(HanlinKeychainCredentialStore.isReference(replacement))
+        #expect(try fixture.credentials.resolve(record) == value)
+        #expect(try fixture.credentials.keychain.previousStoredValue(for: replacement, kind: .model) == missing)
+        #expect(try fixture.references().count == 1)
+        let reopened = try fixture.open()
+        let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first)
+        #expect(saved.persistentModelID == record.persistentModelID)
+        #expect(saved.key == replacement)
+        #expect(try fixture.credentials.resolve(saved) == value)
+    }
+
+    @Test func protectedCredentialMetadataFailureAndStaleDraftPreserveOriginalDiskRow() throws {
+        let fixture = try ProviderCredentialTestFixture()
+        defer { fixture.removeOwnedFixture() }
+        let container = try fixture.open(), context = container.mainContext
+        context.autosaveEnabled = false
+        let timestamp = Date(timeIntervalSince1970: 11223)
+        let record = APIKeys(name: "Original metadata failure", company: "FIXTURE", key: "synthetic-original",
+            requestURL: "https://example.invalid/original", timestamp: timestamp)
+        context.insert(record); try context.save()
+        var stale = HanlinCredentialEditDraft()
+        try stale.load(record, credentials: fixture.credentials)
+        record.requestURL = "https://example.invalid/unsaved"
+        let otherContext = ModelContext(container)
+        otherContext.autosaveEnabled = false
+        let newer = try #require(otherContext.fetch(FetchDescriptor<APIKeys>()).first)
+        try fixture.credentials.save("synthetic-newer", for: newer,
+            expectedStoredValue: "synthetic-original", in: otherContext)
+        let reference = try #require(newer.key)
+        #expect(stale.hasCredentialReplacement == false)
+        #expect(throws: Error.self) {
+            try stale.save(to: record, in: context, credentials: fixture.credentials) { $0.timestamp = Date() }
+        }
+        context.rollback()
+        do {
+            let readOnly = try fixture.open(allowsSave: false), reader = readOnly.mainContext
+            reader.autosaveEnabled = false
+            let saved = try #require(reader.fetch(FetchDescriptor<APIKeys>()).first)
+            var draft = HanlinCredentialEditDraft()
+            try draft.load(saved, credentials: fixture.credentials)
+            #expect(throws: Error.self) {
+                try draft.save(to: saved, in: reader, credentials: fixture.credentials) {
+                    $0.timestamp = timestamp.addingTimeInterval(1)
+                }
+            }
+            #expect(saved.key == reference)
+        }
+        let reopened = try fixture.open()
+        let saved = try #require(reopened.mainContext.fetch(FetchDescriptor<APIKeys>()).first)
+        #expect(saved.key == reference)
+        #expect(saved.timestamp == timestamp)
+        #expect(saved.requestURL == "https://example.invalid/original")
+        #expect(try fixture.credentials.resolve(saved) == "synthetic-newer")
+        #expect(try fixture.references().count == 1, "Metadata-only failure and stale save create no Keychain generations")
     }
 
     @Test func originalCredentialStageFailureLeavesOriginalDiskRowUnchanged() throws {

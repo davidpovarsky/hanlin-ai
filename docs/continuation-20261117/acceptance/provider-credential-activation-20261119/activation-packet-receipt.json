@@ -1,0 +1,67 @@
+{
+  "created_utc": "2026-11-19T04:23:43.271426+00:00",
+  "base_commit": "37a246f404cc2ed253200ddf6fd647f999637f68",
+  "status": "UNAPPLIED; native NOT_RUN",
+  "files": [
+    {
+      "path": "protected-provider-activation-phase2.diff",
+      "bytes": 32328,
+      "sha256": "85e1adb2d9c2c5c543dfef1d1f46167979c97cc1adab377e3d3435f1d7d15458"
+    },
+    {
+      "path": "activation-base-manifest.json",
+      "bytes": 499,
+      "sha256": "470c098206363b6e5fc313c80de7e6156ba13c9d281614a2d8d16cb3e4ba0ea9"
+    },
+    {
+      "path": "activation-changed-source-manifest.json",
+      "bytes": 1219,
+      "sha256": "7cad0611276429ee696f6f47955f63d1e1d810db6ea6a3aa0d1e901fb081060f"
+    },
+    {
+      "path": "activation-validation.json",
+      "bytes": 4993,
+      "sha256": "b58f55d11569505521e6b98a63fdb440621f03cc186b9620c8ed78ca98b919f9"
+    },
+    {
+      "path": "activation-swift-parse.json",
+      "bytes": 347,
+      "sha256": "1b28f978c1e662107afdee4005fcc6e49f55534db8c6be35bf0d507c8c9e0065"
+    },
+    {
+      "path": "activation-native-selectors.txt",
+      "bytes": 2239,
+      "sha256": "7e1eccebb5a1f67c01f112f69e181f04eb1d0039ed6096cde211fbbd43c9c875"
+    },
+    {
+      "path": "activation-old-client-source-audit.json",
+      "bytes": 7248,
+      "sha256": "fa580c2fbac3da631682cbd79645385de4cfcf660c48cc0beb2e43f268faf595"
+    },
+    {
+      "path": "ACTIVATION_DESIGN.md",
+      "bytes": 15150,
+      "sha256": "bcb878709789d5e50aa9250c0494444fff59a0d4b45645a1537b46e35200be72"
+    },
+    {
+      "path": "ACTIVATION_REVIEW.md",
+      "bytes": 11112,
+      "sha256": "f8ed30c2302b40b8925c32bdc851320bfdba2b7e9cc473f0638fc409950d2d52"
+    },
+    {
+      "path": "activation-proposed/AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "bytes": 129029,
+      "sha256": "937d1bbf390512c1332e775b5b0e5ea153240bd42af839f5dede84fd89fe991b"
+    },
+    {
+      "path": "activation-proposed/AI_HLY/Services/DataServices/HanlinAppProviderCredentials.swift",
+      "bytes": 17638,
+      "sha256": "0c4a7b8438810f97219caa4b376fed567bccd8cdafcdd6232d2bede32a5e8af7"
+    },
+    {
+      "path": "activation-proposed/AI_HLY/Views/Components/APISettingView.swift",
+      "bytes": 92224,
+      "sha256": "24c9ad61dc0d22e4ca75df6f51411254d7d238c686a54d4af2015a1ba2a2d3e8"
+    }
+  ]
+}
