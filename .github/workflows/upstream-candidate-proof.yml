@@ -53,7 +53,7 @@ jobs:
         run: >-
           node Scripts/Runtime/consume-upstream-run.mjs
           davidpovarsky/hanlin-ai "$PROOF_RUN"
-          codex/upstream-acceptance-base-20261119
+          codex/upstream-acceptance-base-20261119-v2
           publish "$ALLOW_AUTO_MERGE"
       - name: Preserve the independent consumer and mutation journal
         if: always()
