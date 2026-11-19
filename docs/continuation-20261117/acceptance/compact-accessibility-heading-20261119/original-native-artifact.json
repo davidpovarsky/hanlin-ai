@@ -1,0 +1,91 @@
+{
+  "repo": "davidpovarsky/hanlin-ai",
+  "run": 44447123515,
+  "head_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "status": "completed",
+  "conclusion": "failure",
+  "artifact_id": 14497283435,
+  "official_zip_digest": "sha256:a78d7b0fc7404df07d48f27386806fee7c15a33208127346ba3c68c5a654796d",
+  "full_zip_digest_verification": "verified",
+  "ranges": [
+    [
+      50118486,
+      50118507
+    ],
+    [
+      50118466,
+      50118485
+    ],
+    [
+      49872163,
+      50118485
+    ],
+    [
+      267468,
+      267497
+    ],
+    [
+      267498,
+      267559
+    ],
+    [
+      267560,
+      268331
+    ],
+    [
+      1706927,
+      1706956
+    ],
+    [
+      1706957,
+      1707010
+    ],
+    [
+      1707011,
+      1713897
+    ],
+    [
+      47887006,
+      47887035
+    ],
+    [
+      47887036,
+      47887107
+    ],
+    [
+      47887108,
+      47921897
+    ]
+  ],
+  "members": [
+    {
+      "name": "simulator-logs/08-nativescript-production-ui-test-results.json",
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\08-nativescript-production-ui-test-results.json",
+      "bytes": 2787,
+      "sha256": "8d8ab02a899c8dffaa60e6cbb8ce4e30e07add9b97046d92a82c174a07b96d81",
+      "zip_crc32": "85f582a0",
+      "crc_verified_by_zipfile": true,
+      "compressed_bytes": 772
+    },
+    {
+      "name": "simulator-logs/08-nativescript-production-ui-tests.log",
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\08-nativescript-production-ui-tests.log",
+      "bytes": 62804,
+      "sha256": "567b47ef1ca206a76b52433646e74ec8a3a0e1d9cefcfc91b86ad4fad92d97ec",
+      "zip_crc32": "ca473bf6",
+      "crc_verified_by_zipfile": true,
+      "compressed_bytes": 6887
+    },
+    {
+      "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/database.sqlite3",
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\database.sqlite3",
+      "bytes": 348160,
+      "sha256": "0f5c993becb24e642430073db117ec719ca5d08f7304f19b6102bb260c2db99a",
+      "zip_crc32": "e14d9c2a",
+      "crc_verified_by_zipfile": true,
+      "compressed_bytes": 34790
+    }
+  ],
+  "full_zip_sha256": "a78d7b0fc7404df07d48f27386806fee7c15a33208127346ba3c68c5a654796d",
+  "full_zip_file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\artifact-14497283435.zip"
+}

@@ -71,6 +71,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
     @State private var swipeOffset: CGFloat = 0
     @State private var measuredInputHeight: CGFloat = 52
     @State private var measuredToolbarHeight: CGFloat = 44
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(
@@ -186,11 +187,18 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
                 inputHeight: measuredInputHeight,
                 toolbarHeight: measuredToolbarHeight
             )) {
-                home().tag(HanlinMorphPageID<Page>.home)
+                VStack(alignment: .leading, spacing: 14) {
+                    if dynamicTypeSize.isAccessibilitySize { toolbarText }
+                    home()
+                }
+                .tag(HanlinMorphPageID<Page>.home)
                 if let page = activePage {
-                    detail(page)
-                        .offset(x: swipeOffset)
-                        .tag(HanlinMorphPageID<Page>.detail(page))
+                    VStack(alignment: .leading, spacing: 14) {
+                        if dynamicTypeSize.isAccessibilitySize { toolbarText }
+                        detail(page)
+                    }
+                    .offset(x: swipeOffset)
+                    .tag(HanlinMorphPageID<Page>.detail(page))
                 }
             }
             .overlay(alignment: .leading) {
@@ -233,12 +241,9 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
             } else {
                 Image(systemName: "square.grid.3x2.fill").foregroundStyle(azure)
             }
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title(activePage)).font(.headline.weight(.semibold))
-                Text(subtitle(activePage)).font(.caption).foregroundStyle(.secondary)
-            }
-            .contentTransition(.identity)
-            .transaction { $0.animation = nil }
+            // Accessibility text participates in the page's native scrolling.
+            // A fixed multi-line heading must not consume its entire viewport.
+            if !dynamicTypeSize.isAccessibilitySize { toolbarText }
             Spacer(minLength: 0)
             Button {
                 withAnimation(reduceMotion ? nil : .spring(response: 0.42, dampingFraction: 0.86)) {
@@ -256,6 +261,15 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
             .accessibilityIdentifier("composer-toolbar-close")
         }
         .padding(.horizontal, 3)
+    }
+
+    private var toolbarText: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title(activePage)).font(.headline.weight(.semibold))
+            Text(subtitle(activePage)).font(.caption).foregroundStyle(.secondary)
+        }
+        .contentTransition(.identity)
+        .transaction { $0.animation = nil }
     }
 
     private func goBack() {
