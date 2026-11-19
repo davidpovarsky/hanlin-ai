@@ -20,14 +20,8 @@ def main():
             parsed = json.loads(data)
             print(json.dumps(parsed, indent=2, ensure_ascii=False))
     except Exception as e:
-        simulated = {
-            "sys_id": sys_id,
-            "shelfmark": sys_id,
-            "library": "Cambridge University Library",
-            "transcription": "תמלול קטע גניזה מלא מתוך אוסף קיימברידג'",
-            "license": "CC BY-NC-SA 4.0"
-        }
-        print(json.dumps(simulated, indent=2, ensure_ascii=False))
+        print(f"Error querying Cairo Genizah API: {e}", file=sys.stderr)
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
