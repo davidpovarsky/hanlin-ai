@@ -144,9 +144,9 @@ concurrency:
 jobs:
   simulator-environment-probe:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'simulator_environment_probe' && !inputs.testflight_upload }}
-    name: Read installed stable simulator environment only
+    name: Probe runner git and fresh owned simulator readiness
     runs-on: xcode-27
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Inspect original runtime registrations and on-disk image state
@@ -154,6 +154,238 @@ jobs:
           set -euo pipefail
           export DEVELOPER_DIR="$(python3 Scripts/CI/select_stable_xcode.py)/Contents/Developer"
           python3 Scripts/CI/probe_simulator_environment.py
+      - name: Reproduce blocked git probes and verify fresh owned simulator readiness
+        run: |
+          set -euo pipefail
+          export DEVELOPER_DIR="$(python3 Scripts/CI/select_stable_xcode.py)/Contents/Developer"
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+          import sys
+          import time
+
+          sys.path.insert(0, str(Path("Scripts/CI").resolve()))
+          from boot_motion_simulator import (
+              BOOT_SECONDS,
+              BOOTSTATUS_SECONDS,
+              SHUTDOWN_SECONDS,
+              native_command,
+              retain_failure_observations,
+          )
+          from owned_simulator_receipts import _created_selection, _uuid
+
+          out = Path("build/phase2-simulator-environment")
+          out.mkdir(parents=True, exist_ok=True)
+          repo_root = Path(".").resolve()
+          run_id = os.environ.get("GITHUB_RUN_ID", "")
+          run_attempt = os.environ.get("GITHUB_RUN_ATTEMPT", "")
+          github_sha = os.environ.get("GITHUB_SHA", "")
+          if not all(re.fullmatch(r"[1-9][0-9]*", v) for v in (run_id, run_attempt)):
+              raise RuntimeError("GITHUB_RUN_ID and GITHUB_RUN_ATTEMPT are required")
+
+          owned_name = f"Hanlin-Phase2-Probe-{run_id}-{run_attempt}"
+          selection_path = out / "owned-simulator-selection.json"
+
+          def run_git_probe(name, args, capture_head=False):
+              started = time.monotonic()
+              timed_out = False
+              code = None
+              stdout = b""
+              try:
+                  res = subprocess.run(args, cwd=repo_root, capture_output=True, timeout=30, check=False)
+                  code = res.returncode
+                  stdout = res.stdout
+              except subprocess.TimeoutExpired:
+                  timed_out = True
+                  code = 124
+              elapsed = round(time.monotonic() - started, 3)
+              record = {
+                  "name": name,
+                  "command": args,
+                  "timeout_seconds": 30,
+                  "return_code": code,
+                  "timed_out": timed_out,
+                  "elapsed_seconds": elapsed,
+                  "stdout_bytes": len(stdout),
+              }
+              if capture_head:
+                  head_sha = stdout.decode("utf-8", errors="replace").strip() if code == 0 and not timed_out else None
+                  record["head_sha"] = head_sha
+                  record["head_matches_github_sha"] = (head_sha == github_sha) if head_sha else False
+              else:
+                  record["clean_working_tree"] = (code == 0 and not timed_out and len(stdout) == 0)
+              return record
+
+          git_probes = [
+              run_git_probe("git-rev-parse-head", ["git", "rev-parse", "HEAD"], capture_head=True),
+              run_git_probe(
+                  "git-diff-head",
+                  ["git", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
+              ),
+          ]
+
+          sim_probe = {
+              "owned_name": owned_name,
+              "device_udid": None,
+              "runtime": None,
+              "device_type": None,
+              "status": "NOT_READY",
+              "recovery_count": 0,
+              "attempts": [],
+              "cleanup": {"status": "NOT_CREATED"},
+              "error": None,
+          }
+
+          device_uuid = None
+          initial_hash = None
+
+          def verify_owner():
+              if initial_hash is None or not selection_path.is_file():
+                  raise RuntimeError("Owned simulator selection receipt is missing")
+              if hashlib.sha256(selection_path.read_bytes()).hexdigest() != initial_hash:
+                  raise RuntimeError("Owned simulator selection receipt changed during probe")
+              selected, _ = _created_selection(selection_path, device_uuid, run_id, run_attempt, owned_name)
+              return selected
+
+          def bounded_simctl(name, operation, timeout_s):
+              verify_owner()
+              cmd = ["xcrun", "simctl", operation, device_uuid] + (["-b"] if operation == "bootstatus" else [])
+              res = native_command(cmd, timeout_s, out / f"{name}.log")
+              sim_probe["attempts"].append({"name": name, **res})
+              return res
+
+          def succeeded(res):
+              return res["return_code"] == 0 and res["timed_out"] is False
+
+          try:
+              create_cmd = [
+                  "python3",
+                  "Scripts/CI/select_installed_simulator.py",
+                  "--output",
+                  str(selection_path),
+                  "--create-owned",
+                  owned_name,
+              ]
+              create_res = native_command(create_cmd, 70.0, out / "select-owned-simulator.log")
+              sim_probe["attempts"].append({"name": "create-owned-simulator", **create_res})
+              if not succeeded(create_res):
+                  raise RuntimeError("select_installed_simulator.py --create-owned failed")
+              raw_udid = (out / "select-owned-simulator.log").read_text(encoding="utf-8", errors="replace").strip().splitlines()[-1]
+              device_uuid = _uuid(raw_udid)
+              initial_hash = hashlib.sha256(selection_path.read_bytes()).hexdigest()
+              selected = verify_owner()
+              sim_probe["device_udid"] = device_uuid
+              sim_probe["runtime"] = selected["runtime"]["identifier"]
+              sim_probe["device_type"] = selected["device"]["deviceTypeIdentifier"]
+
+              if not succeeded(bounded_simctl("boot-initial", "boot", BOOT_SECONDS)):
+                  raise RuntimeError("Initial simctl boot failed")
+              first = bounded_simctl("bootstatus-attempt-1", "bootstatus", BOOTSTATUS_SECONDS)
+              if not succeeded(first):
+                  if first["timed_out"] is not True:
+                      raise RuntimeError("Native bootstatus failed without timeout; recovery not eligible")
+                  verify_owner()
+                  sim_probe["recovery_count"] = 1
+                  sim_probe["recovery_reason"] = "FIRST_NATIVE_BOOTSTATUS_TIMEOUT"
+                  if not succeeded(bounded_simctl("shutdown-recovery", "shutdown", SHUTDOWN_SECONDS)):
+                      raise RuntimeError("Owned recovery shutdown failed")
+                  if not succeeded(bounded_simctl("boot-recovery", "boot", BOOT_SECONDS)):
+                      raise RuntimeError("Owned recovery boot failed")
+                  second = bounded_simctl("bootstatus-attempt-2", "bootstatus", BOOTSTATUS_SECONDS)
+                  if not succeeded(second):
+                      raise RuntimeError("Owned recovery bootstatus failed; no further retry")
+              verify_owner()
+              sim_probe["status"] = "READY_FROM_NATIVE_BOOTSTATUS"
+          except (OSError, ValueError, TypeError, AttributeError, KeyError, RuntimeError, IndexError) as exc:
+              sim_probe["error"] = str(exc)
+              retain_failure_observations(out)
+          finally:
+              logs = []
+              for attempt in sim_probe["attempts"]:
+                  if attempt["name"].startswith("bootstatus-attempt"):
+                      p = out / attempt["output_file"]
+                      meta = json.dumps({k: v for k, v in attempt.items() if k != "output_sha256"})
+                      logs.append((meta + "\n").encode() + (p.read_bytes() if p.is_file() else b""))
+              if logs:
+                  (out / "bootstatus.log").write_bytes(b"\n".join(logs))
+
+              if device_uuid is not None and selection_path.is_file() and initial_hash is not None:
+                  try:
+                      verify_owner()
+                      sd = native_command(["xcrun", "simctl", "shutdown", device_uuid], SHUTDOWN_SECONDS, out / "cleanup-shutdown.log")
+                      verify_owner()
+                      dl = native_command(["xcrun", "simctl", "delete", device_uuid], 20.0, out / "cleanup-delete.log")
+                      sim_probe["cleanup"] = {
+                          "verified_uuid": device_uuid,
+                          "owned_name": owned_name,
+                          "shutdown": sd,
+                          "delete": dl,
+                          "status": "OWNED_SIMULATOR_REMOVED" if succeeded(dl) else "CLEANUP_FAILED",
+                      }
+                  except Exception as cleanup_exc:
+                      sim_probe["cleanup"] = {
+                          "verified_uuid": device_uuid,
+                          "owned_name": owned_name,
+                          "status": "CLEANUP_FAILED",
+                          "error": str(cleanup_exc),
+                      }
+
+          git_ok = (
+              git_probes[0]["return_code"] == 0
+              and not git_probes[0]["timed_out"]
+              and git_probes[0].get("head_matches_github_sha") is True
+              and git_probes[1]["return_code"] == 0
+              and not git_probes[1]["timed_out"]
+          )
+          sim_ok = sim_probe["status"] == "READY_FROM_NATIVE_BOOTSTATUS"
+          cleanup_ok = sim_probe["cleanup"]["status"] in ("OWNED_SIMULATOR_REMOVED", "NOT_CREATED")
+          overall_ready = git_ok and sim_ok and (sim_probe["cleanup"]["status"] == "OWNED_SIMULATOR_REMOVED")
+
+          receipt = {
+              "schema_version": 1,
+              "probe_status": "READY" if overall_ready else "FAILED",
+              "run_id": run_id,
+              "run_attempt": run_attempt,
+              "github_sha": github_sha,
+              "developer_dir": os.environ.get("DEVELOPER_DIR"),
+              "git_probes": git_probes,
+              "simulator_probe": sim_probe,
+          }
+          (out / "readiness-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+
+          md_lines = [
+              "### Simulator & Runner Readiness Probe",
+              f"- **Overall:** `{receipt['probe_status']}`",
+              f"- **Run:** `{run_id}` (attempt `{run_attempt}`), **SHA:** `{github_sha}`",
+              "",
+              "#### Git Probes (30s timeout, no file content logged)",
+              "| Probe | Exit | Timed Out | Elapsed (s) | Details |",
+              "|---|---:|---:|---:|---|",
+              f"| `git rev-parse HEAD` | {git_probes[0]['return_code']} | {git_probes[0]['timed_out']} | {git_probes[0]['elapsed_seconds']} | `head_matches_github_sha={git_probes[0].get('head_matches_github_sha')}` |",
+              f"| `git diff ... HEAD -- .` | {git_probes[1]['return_code']} | {git_probes[1]['timed_out']} | {git_probes[1]['elapsed_seconds']} | `stdout_bytes={git_probes[1]['stdout_bytes']}`, `clean={git_probes[1].get('clean_working_tree')}` |",
+              "",
+              "#### Fresh Owned Simulator Probe",
+              f"- **Owned Name:** `{owned_name}`",
+              f"- **Device UUID:** `{sim_probe['device_udid']}`",
+              f"- **Status:** `{sim_probe['status']}` (recoveries: `{sim_probe['recovery_count']}`)",
+              f"- **Cleanup:** `{sim_probe['cleanup']['status']}`",
+          ]
+          if sim_probe["error"]:
+              md_lines.append(f"- **Error:** `{sim_probe['error']}`")
+          md_text = "\n".join(md_lines) + "\n"
+          (out / "readiness-receipt.md").write_text(md_text, encoding="utf-8")
+          summary_env = os.environ.get("GITHUB_STEP_SUMMARY")
+          if summary_env:
+              with Path(summary_env).open("a", encoding="utf-8") as fh:
+                  fh.write(md_text)
+
+          if not (overall_ready and cleanup_ok):
+              raise SystemExit(1)
+          PY
       - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
