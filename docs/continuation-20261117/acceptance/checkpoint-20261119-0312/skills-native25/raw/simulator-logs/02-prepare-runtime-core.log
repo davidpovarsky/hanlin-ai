@@ -1,0 +1,10 @@
+Validated /Users/runner/work/hanlin-ai/hanlin-ai/RuntimeDependencies.lock.json.
+d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5
+/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/tmp.W5iJXkkVJT/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip
+/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/tmp.W5iJXkkVJT/payload/NodeMobile.xcframework/Info.plist: OK
+/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/tmp.W5iJXkkVJT/payload/Python.xcframework/Info.plist: OK
+Runtime Host: updated source modules with unchanged locked dependencies
+Generated /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json.
+/Users/runner/work/hanlin-ai/hanlin-ai/Vendor/Python/Python.xcframework/build/iOS-dylib-Info-template.plist: OK
+Verified native artifact 2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194; current Host dependency closure 2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.
+Prepared verified RuntimeCore 2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194: Node 24.5.0, Python 3.14.6.

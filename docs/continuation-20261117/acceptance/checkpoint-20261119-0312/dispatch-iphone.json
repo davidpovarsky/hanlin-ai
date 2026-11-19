@@ -1,0 +1,28 @@
+{
+  "head": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "branch": "codex/hanlin-product-completion-20261117",
+  "workflow": "310046367",
+  "label": "iphone",
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft,AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "dispatch_at": "2026-11-19T02:49:48.147674+00:00",
+  "status": "queued",
+  "run_id": 44447123515,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447123515",
+  "verified_at": "2026-11-19T02:51:22.326739+00:00",
+  "authenticated_plan": {
+    "artifact_id": 14492544945,
+    "sha256": "62f335a2c6cbcfd19396cd4e70553694253a0323318823e09bae2ef5692f09e8",
+    "exact_selector_matches": true,
+    "simulator_configuration": "Debug"
+  }
+}

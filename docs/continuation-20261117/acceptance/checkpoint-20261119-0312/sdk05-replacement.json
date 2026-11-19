@@ -1,0 +1,16 @@
+{
+  "old_run": 44443891179,
+  "replacement_run": 44448313143,
+  "replacement_head": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+  "all_original_selectors_preserved": true,
+  "plan_sha256": "7adad2708e2b66113f26814a1ceec4b89fffbbe9b0b77d2b87e63d390d55f74e",
+  "original_status": "queued",
+  "active_jobs": [
+    {
+      "id": 135291316411,
+      "status": "queued",
+      "runner_id": 0
+    }
+  ],
+  "action": "CANCEL_REQUESTED_AFTER_AUTHENTICATED_FULL_REPLACEMENT"
+}

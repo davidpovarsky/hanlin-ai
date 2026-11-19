@@ -1,0 +1,58 @@
+{
+  "verified_at": "2026-11-19T03:10:37.334625+00:00",
+  "base_sha": "833dddee4d5c4e6cd0f89354e5a73096750d8e77",
+  "upstream_sha": "d857b23ea540be33d6faab4f7a7a1a260ab578c1",
+  "portable_exit_code": 0,
+  "portable_log_sha256": "bc29bd25fdcfa38a809a43a6c7af9507f41b42bd2bb1c743887db40619b84cca",
+  "swift_parse_exit_code": 0,
+  "diff_check_exit_code": 0,
+  "exact_three_pbx_changes_only": true,
+  "configuration_matrix": [
+    {
+      "configuration": "7458588C2DD73A4F00895687",
+      "entitlement_file": "Anytype/AnytypeDebug.entitlements",
+      "expected_group": "group.io.anytype.app.dev",
+      "other_entitlements_unchanged": true,
+      "bundle_id": "io.anytype.app"
+    },
+    {
+      "configuration": "7458588F2DD73A4F00895687",
+      "entitlement_file": "AnytypeShareExtension/AnytypeShareExtensionDebug.entitlements",
+      "expected_group": "group.io.anytype.app.dev",
+      "other_entitlements_unchanged": true,
+      "bundle_id": "io.anytype.app.AnytypeShareExtension"
+    },
+    {
+      "configuration": "745858902DD73A4F00895687",
+      "entitlement_file": "AnytypeNotificationServiceExtension/AnytypeNotificationServiceExtensionDebug.entitlements",
+      "expected_group": "group.io.anytype.app.dev",
+      "other_entitlements_unchanged": true,
+      "bundle_id": "io.anytype.app.AnytypeNotificationExtension"
+    }
+  ],
+  "unchanged_inputs": [
+    {
+      "path": "PinkhaStage1Acceptance/Tests/HanlinSelectionAcceptanceUITests.swift",
+      "sha256": "3c0baaeb34cffd1d44068dfcfa05b7a2be3e67250501162df67068ce71270c33"
+    },
+    {
+      "path": "PinkhaStage1Acceptance/Tests/HanlinNativeAcceptanceUITests.swift",
+      "sha256": "69dcd5203dd40ec1533bc2adb3de89853d43e6cd7a05789ed88706e7dfa008c8"
+    },
+    {
+      "path": "Modules/AnytypeCore/AnytypeCore/Utils/TargetsConstants.swift",
+      "sha256": "2baf17f01e7f3167efb7a0212fdd95a83d6e5d3c83e13c898721f4ba144104e0"
+    },
+    {
+      "path": "Modules/AnytypeCore/AnytypeCore/Utils/CoreEnvironment.swift",
+      "sha256": "8772a9a23bebbab18e76eea3f2ecc35cbca25f3b3d2695bb578598acaceab5bb"
+    },
+    {
+      "path": "Tools/Hanlin/source.json",
+      "sha256": "d9f9803bb39b0aa6ca2dbc9999e522c209b7b46a99ff769919ba8a70f686ef48"
+    }
+  ],
+  "native_after_fix": "NOT_RUN",
+  "physical_device": "NOT_RUN",
+  "selection_failure_causality": "UNPROVEN"
+}

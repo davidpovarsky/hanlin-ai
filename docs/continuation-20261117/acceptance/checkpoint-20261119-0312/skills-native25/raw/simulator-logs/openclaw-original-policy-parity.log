@@ -1,0 +1,73 @@
+
+added 30 packages in 1s
+
+> @hanlin/openclaw-skill-probe@0.0.0 fetch:policy
+> node fetch-upstream.mjs --policy
+
+{"status":"SOURCE_VERIFIED","tag":"v2026.11.3","revision":"847611dcaa3bf0e2783335f961dd1fd0580e4d9f","sources":89}
+
+> @hanlin/openclaw-skill-probe@0.0.0 build:policy
+> node extract-policy.cjs && node build-policy.mjs && node build-policy-tests.mjs && node stage-policy-resources.mjs
+
+{
+  "status": "ORIGINAL_DECLARATIONS_EXTRACTED_NOT_PRODUCT_ACCEPTANCE",
+  "declarations": 90,
+  "modules": 21,
+  "externalImports": [
+    {
+      "name": "json5",
+      "symbols": [
+        "JSON5"
+      ]
+    },
+    {
+      "name": "node:fs",
+      "symbols": [
+        "fs"
+      ]
+    },
+    {
+      "name": "node:path",
+      "symbols": [
+        "path"
+      ]
+    },
+    {
+      "name": "node:module",
+      "symbols": [
+        "createRequire"
+      ]
+    },
+    {
+      "name": "semver",
+      "symbols": [
+        "parseSemver",
+        "parseSemverPrerelease",
+        "validSemver"
+      ]
+    }
+  ],
+  "unresolvedCount": 10
+}
+{"status":"BUILT_ORIGINAL_POLICY","artifactBytes":136257,"sha256":"d6cc833943108245a2a68fc85ff4d67bf50719ade36e52fc63c784afedf9d565","runtimeImports":["node:fs","node:module","node:path"],"exports":17}
+{"status":"ORIGINAL_POLICY_TESTS_SELECTED","statements":27,"expectedInvocations":28}
+{"status":"ORIGINAL_POLICY_RESOURCES_STAGED","resources":10}
+✔ missing observations remain unknown but original any-bin and always short circuits stay decisive (2.456708ms)
+✔ unknown OpenClaw config cannot inherit a browser default as a verified Hanlin capability (0.293084ms)
+✔ original disabled and degraded owner controls are isolated between inspections (0.243083ms)
+✔ native snapshots cannot borrow iSH platform or observations (0.301208ms)
+✔ absent, invalid and future requirement shapes never become execution proof (0.409583ms)
+✔ original JSON5, CSV normalization and install-hint rejection survive the typed boundary (1.5095ms)
+✔ rechecking actual snapshots observes both installation and removal without a stale eligibility cache (0.174084ms)
+✔ exact original policy artifact and dependency closure are pinned (4.940583ms)
+✔ 28 unchanged upstream policy tests run against the production artifact (4.327166ms)
+✔ original selection, source allowlist and disabled policy retain separate authority (0.226542ms)
+✔ original invocation policy and install preferences are data, not installation (0.1305ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 91.872166

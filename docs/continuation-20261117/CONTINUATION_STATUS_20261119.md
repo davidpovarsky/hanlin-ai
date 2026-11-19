@@ -1,5 +1,59 @@
 # Continuation status — 2026-11-19
 
+## Current checkpoint — 2026-11-19T03:11:56.834148+00:00
+
+Published product source: `1480b347f519073b384cd86f7efc506e9c2d1aab` on `codex/hanlin-product-completion-20261117`. Owner authorization covers the required original repository actions; guidance approval/STOP gates were already removed. Phase2 and Phase3 remain **IN_PROGRESS**; release acceptance remains **NO_GO**.
+
+All30 original Asana tasks were read again: SDK01 alone is complete. The other29 retain their actual open status. The original task snapshots,75 earlier evidence records,278 feature rows and26 UX decisions are preserved;12 evidence records are added.
+
+### New authenticated outcomes
+
+- Original Skills/policy/cache:25 native invocation leaves passed on iPad Pro13(M5)/iOS27.2. Node24.5.0 ios/arm64 ran JITless,28 original policy cases/64 assertions and11 contracts; six offline controls and both cache invalidation witnesses passed.22 generated fixtures are not the separate23 maintained packages. This run records trackedWorkspaceModified=true during preparation; exhaustive tracked diff was not retained, so no clean-tree binary claim is made.
+- Original d6 native UI scope: reasoning2, UI04 Inspector and partial selection/save/preview passed. UI01 typed text and Canvas's expected Cancel failed. Actual Canvas local Python result42 and disclosure were reached; cold reopen was not reached.7e27ded6 preserves original assertions while using native regular-width popover dismissal and exact-editor keyboard ownership. Text corruption remains under metadata-only observation.
+- Anytype source833dddee:76 component methods/77 expanded invocations passed, and the original whole-document UI passed22 named checks. The iPhone selection journey failed before long press; Debug group identity and logout/banner work remain open. These are component/UI subsets, not full consumer acceptance.
+- Real upstream CI Renovate created PR13 on frozen v2 and then failed its gh child because GH_TOKEN was absent. Corrected frozen v3 source d6e2e3f0 and its exact protected-base activation are published. Candidate/native proof, real rejection and same-head recovery/merge/rollback are still required.
+
+- Original npm lifecycle:1 native case passed on iPad Pro13(M5)/iOS27.2. Actual install/import, update with previous-generation retention, rejected invalid version and removal/import denial were verified against the raw native witness. All39 resolved pins match. The same trackedWorkspaceModified preparation qualification applies; this is not offline or complete Runtime05 acceptance.
+- Anytype Debug group repair is published separately at8b79d35c. The original main/Share/Notification Debug configurations now use their existing .dev entitlements, matching the existing Swift constant.91portable controls passed; original iPhone selected-block journey44449673030 is pending. This corrects an observed configuration mismatch without claiming it caused the earlier hit-testing failure.
+
+### Published repairs awaiting original native acceptance
+
+SDK05 source1480b347 includes original secret commit ordering, protected old-secret retention on failures, disk SwiftData reopening and actual credential/memory/attachment ports tied to the original request/Session. Both memory opt-outs are live checks; images use the original UI turn instead of diagnostics round ID. APIKeys legacy persistence, account/CloudKit boundaries and erase are not falsely claimed complete.
+
+Signing source8a505675 corrects actual CMS NSNumber1 handling and records bounded settings from only the failed owned tiny project. This diagnostic does not waive the real profile-admission failure or replace the two original signed exports.
+
+### Current original run observations
+
+| Run | Source | Observed result | Scope |
+| --- | --- | --- | --- |
+| [44448313143](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44448313143) | 1480b347 | queued/pending | Full original SDK05 scope plus5 typed ports, registry/SDK/MCP and split origin |
+| [44447388017](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447388017) | 7e27ded6 | queued/pending | Original live Gemini/Python/consent/cold-reopen with owned cleanup |
+| [44447129341](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447129341) | 7e27ded6 | queued/pending | Original paired product/share8 with Storage fixture and keyboard fixes |
+| [44447126258](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258) | 7e27ded6 | queued/pending | Complete original iPad scope plus geometry, Canvas, reasoning and selection |
+| [44447123515](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447123515) | 7e27ded6 | queued/pending | Original iPhone2 with actual-editor keyboard ownership |
+| [44446182012](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44446182012) | 8a505675 | queued/pending | Corrected CMS wire flags and bounded owned signing settings |
+| [44443891179](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44443891179) | a7d6762c | completed/cancelled | Old23 SDK05 cases replaced before native by complete expanded44448313143 |
+| [44440354095](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44440354095) | 589420f3 | queued/pending | 23 maintained original packages +2Cairo +4Yams +local Python wheel (30) |
+| [44437763739](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44437763739) | ca49d138 | in_progress/pending | Original Motion D coherent accessibility diagnostic |
+| [44434893361](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361) | c91732b2 | completed/cancelled | Old maintained29 scope replaced before native by30-case44440354095 |
+| [44431826560](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560) | e564dc29 | completed/failure | CMS/signing tiny admission diagnostic; native profile discovery failed |
+| [44431811538](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538) | e564dc29 | in_progress/pending | CodeFence plus8 original UI/Skills/consent/Safari routes |
+| [44429728630](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630) | 3a87634b | completed/cancelled | Old queued iPad scope replaced by full superset44447126258 |
+| [44429703865](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865) | 3a87634b | in_progress/pending | Original two compact iPhone cases on prior source (already running; retained) |
+| [44429680236](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236) | 3a87634b | completed/success | Original isolated npm install/update/failure/uninstall lifecycle |
+| [44429654565](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565) | 3a87634b | completed/success | 4 methods/25 generated-fixture and policy/cache cases |
+| [44428114202](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428114202) | d6cb7d0b | completed/failure | Live case not run: owned simulator app installation timed out before credentials |
+| [44428104345](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345) | d6cb7d0b | completed/failure | 6 exact native cases:4pass,2fail; Canvas local result/disclosure reached |
+| [44426526923](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426526923) | 90314963 | completed/failure | Original paired8:4Hostpass,4UIfail |
+
+The prior iPad and SDK05 queues were replaced only after the corrected exact-source CI plans proved their complete original scopes, while old native jobs were still unallocated. The already-running original iPhone and upstream v2 were preserved. Live credentials were transferred privately for the original scenario and the owned temporary secret was deleted/read back.
+
+The [current checkpoint](acceptance/checkpoint-20261119-0312/CONTINUATION_CHECKPOINT.json) retains source-bound proofs, exact dispatch plans and Asana readbacks. The acceptance register preserves all prior results. Remaining original obligations include full UI/engine and presentation performance, paired/OS extension flows, scoped data/account erasure, signed exports, physical-device comparison, and the current feature/UX matrices.
+
+## Historical checkpoint retained below
+
+# Continuation status — 2026-11-19
+
 ## Current checkpoint
 
 Published source: c91732b21456f964c8e1cf612b06497277ae9fdf. The owner has authorized the required actions across the original repositories. Guidance-file approval/STOP restrictions have been removed and published. Actual source, authority and evidence remain traceable.

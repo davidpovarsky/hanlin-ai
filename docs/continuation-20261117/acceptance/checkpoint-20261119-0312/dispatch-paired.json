@@ -1,0 +1,21 @@
+{
+  "head": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "branch": "codex/hanlin-product-completion-20261117",
+  "workflow": "validate-app-split.yml",
+  "label": "paired",
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "product_and_share",
+    "native_test_scope": "baseline",
+    "host_proof_run_id": "44351078724",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "signed_release_archives": "false",
+    "audit_release_resources": "false",
+    "prepare_miniapps_registration": "false"
+  },
+  "dispatch_at": "2026-11-19T02:49:51.193669+00:00",
+  "status": "queued",
+  "run_id": 44447129341,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447129341",
+  "verified_at": "2026-11-19T02:51:26.349274+00:00"
+}

@@ -1,0 +1,181 @@
+{
+  "verifiedAt": "2026-11-19T03:04:36.425394+00:00",
+  "state": "V3_ACTIVATION_VERIFIED_ACCEPTANCE_OPEN",
+  "repository": "davidpovarsky/hanlin-ai",
+  "immutableV3Source": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+  "sourceCorrection": {
+    "canonicalPatchSHA256": "66b49601cc7a63ce57ee1948d7c664119bcda8578f9de8f89bd41d60250a59fa",
+    "validation": "21/21 original consumer controls on Node24.22.1; original bot YAML object delta exactly GH_TOKEN mapping; root independent verification passed",
+    "actualChangedRelevantTreePathScope": [
+      ".github/workflows/check-runtime-dependency-updates.yml",
+      "Scripts/Runtime",
+      "RuntimeDependencies.lock.json",
+      "AI_HLY/Downstream/RuntimeCore"
+    ],
+    "actualChangedRelevantTreePaths": [
+      ".github/workflows/check-runtime-dependency-updates.yml",
+      "AI_HLY/Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift",
+      "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+      "Scripts/Runtime/consume-upstream-run.mjs",
+      "Scripts/Runtime/upstream-run-consumer-policy.mjs"
+    ],
+    "scopeNote": "Workflow GH_TOKEN mapping is included explicitly. RuntimeEnvironment.swift app persistence is a separate source change and outside Host pipeline execution; original native binary and139 tracked Host closure identities are verified unchanged."
+  },
+  "protectedBase": {
+    "verifiedAt": "2026-11-19T02:56:12.909687+00:00",
+    "base": "codex/upstream-acceptance-base-20261119-v3",
+    "frozenSHA": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+    "trustedSourceSHA": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+    "strict": true,
+    "enforceAdmins": true,
+    "requiredChecks": [
+      {
+        "context": "Hanlin upstream acceptance",
+        "app_id": 15368
+      },
+      {
+        "context": "Hanlin upstream schema2 proof",
+        "app_id": 15368
+      }
+    ],
+    "allowForcePushes": false,
+    "allowDeletions": false,
+    "oldV2BaseSHA": "7436f7dd5da56dc649421017e4fc186d53ba0cd0",
+    "oldV2ProtectionUnchanged": true,
+    "repositoryAutoMerge": false,
+    "acceptanceAutoMerge": "false",
+    "mainBefore": "4c47176f51e3102f94464583d35d00231ce457bf",
+    "mainActivation": "PENDING",
+    "nativeAcceptance": "NOT_RUN"
+  },
+  "mainActivation": {
+    "createdAt": "2026-11-19T02:56:53.392878+00:00",
+    "branch": "codex/upstream-activation-v3-20261119",
+    "mainBefore": "4c47176f51e3102f94464583d35d00231ce457bf",
+    "head": "343f6a210036b2b93e8844d778e889e35202da70",
+    "pr": 12,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/pull/12",
+    "sourceSHA": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+    "files": [
+      {
+        "path": ".github/workflows/check-runtime-dependency-updates.yml",
+        "beforeSHA256": "47751768ca6affd20cd59b6b6756201a376bec898d48a62ed5965c746ee4412e",
+        "afterSHA256": "7b66b84912f1db19527ce5d657d5c07299e89afea2078cb2b11b23d3f7df249d",
+        "literalReplacements": 2
+      },
+      {
+        "path": ".github/workflows/upstream-candidate-proof.yml",
+        "beforeSHA256": "edc21ab66dfbf3e2989c5360242704be33b961197d653782ac2b32a4f0f560c3",
+        "afterSHA256": "b225322e42c8fb134c9ee79e677adf0622cd6164b419e9388566eeb79bcbe134",
+        "literalReplacements": 1
+      }
+    ],
+    "patchSHA256": "3421b3526bfa31be7198ef2f69db8adadad4ad55432033f4cdabca03f4e571fd",
+    "state": "MERGED_ACTIVATION_NOT_PRODUCT_ACCEPTANCE",
+    "verifiedAt": "2026-11-19T02:57:26.884724+00:00",
+    "mainAfter": "cbfae6eeeaa53969fa95fed18a5ba0a5548fd2ad",
+    "mergeMethod": "squash with expected head; no administrator bypass",
+    "serverMainProtection": {
+      "classic": "404 not protected",
+      "effectiveRules": []
+    },
+    "actualHeadChecks": 0,
+    "actualHeadStatuses": 0,
+    "actualMainDiff": {
+      "files": 2,
+      "additions": 3,
+      "deletions": 3
+    }
+  },
+  "originalDispatch": {
+    "dispatchAcceptedAt": "2026-11-19T02:57:55.938680+00:00",
+    "mainSHA": "cbfae6eeeaa53969fa95fed18a5ba0a5548fd2ad",
+    "frozenSourceSHA": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+    "base": "codex/upstream-acceptance-base-20261119-v3",
+    "payload": {
+      "ref": "main",
+      "inputs": {
+        "operation": "renovate",
+        "base_branch": "codex/upstream-acceptance-base-20261119-v3",
+        "package_name": "semver",
+        "runtime_baseline_run_id": "42926628418"
+      }
+    },
+    "status": "DISPATCHER_EXECUTED_PASS_ORIGINAL_PRODUCER_IDENTIFIED",
+    "cancellation": "NONE",
+    "dispatcherRunID": 44448056014,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44448056014",
+    "conclusion": "success",
+    "identifiedAt": "2026-11-19T02:58:24.064557+00:00",
+    "producerRunID": 44448070120,
+    "producerURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44448070120",
+    "producerStatus": "queued",
+    "producerConclusion": null,
+    "correlation": "dispatch-44448056014-5925a83ec947",
+    "originalWorkflowSHA256": "097263ef454ad5efd362c53a13b1799b8b183ffe553a983321bccf4015faedb5",
+    "dispatcherArtifactID": 14493877161,
+    "dispatcherArtifactSHA256": "6fdf9944c1d96d0e3dd1b5697df19ab95b50e3cb10d8c7856df7df6e66226ee2",
+    "verifiedAt": "2026-11-19T02:59:47.242341+00:00"
+  },
+  "harmlessConsumer": {
+    "consumerRunID": 44448090039,
+    "head": "cbfae6eeeaa53969fa95fed18a5ba0a5548fd2ad",
+    "trustedSourceSHA": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+    "status": "PASS_NOT_APPLICABLE",
+    "artifactID": 14494530888,
+    "artifactSHA256": "bb03ceaeba0a0d3cc4655e31d87a630e36ca97c698f37041de75a9ab5fcdc95c",
+    "jobLogSHA256": "0868eea2770d6c2ae64fb7da3c53d4409e6cfe6afe3bb56ab90e792614db6392",
+    "receipt": {
+      "schemaVersion": 1,
+      "repository": "davidpovarsky/hanlin-ai",
+      "runID": "44448056014",
+      "allowedBase": "codex/upstream-acceptance-base-20261119-v3",
+      "mode": "publish",
+      "evaluatedAt": "2026-11-19T02:58:26.950Z",
+      "status": "NOT_APPLICABLE",
+      "actions": [],
+      "mergePerformed": false,
+      "proofVerified": false,
+      "reason": "No open current-head PR on the explicitly protected acceptance base"
+    }
+  },
+  "hostClosure": {
+    "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\count-contract-proposal\\source-closure-d6e2e3f0.json",
+    "sha256": "f103cca9e4b45fc32969b55f76c132def6c0dcb1817b42ba6146d2869a0025b6",
+    "sourceSHA": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a"
+  },
+  "nativeBinaryInputIdentity": {
+    "old": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+    "new": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+    "matchesBothOriginalLockPins": true,
+    "definition": "Unchanged original runtime_native_identity.py reading both immutable Git revisions; Node/Python source/patch/adapter/build inputs"
+  },
+  "asana": {
+    "task": "1220546608370437",
+    "comment": "1220692294082828",
+    "completed": false,
+    "readbackSHA256": "6f2782ea559667709c4dc4e9a70970f790e1eaad52835b9003f3a8aab6db7a12"
+  },
+  "preservation": {
+    "oldV2Ref": "7436f7dd5da56dc649421017e4fc186d53ba0cd0",
+    "oldV2Run": 44443862765,
+    "rootCurrentObservation": "IN_PROGRESS on runner1000021726 at03:02:59; preserved; root-v2-replacement.json records decision",
+    "cancellation": "NONE",
+    "originalBasesAndHistoricalPRs": "Preserved"
+  },
+  "observers": {
+    "v3": "job_d9a33358f300",
+    "v2Resumed": "job_b12773d6ce33",
+    "signing44446182012": "job_6492587240c3"
+  },
+  "acceptanceStillRequired": [
+    "Actual CI-created v3 Renovate PR",
+    "Full digest-authenticated schema2 Host153/JITless execution",
+    "Same-head failed producer and proof checks",
+    "Actual expected-head merge rejected by protected server",
+    "Later successful candidate at unchanged head",
+    "Trusted consumer protected automatic merge",
+    "Actual isolated reverse-apply byte equality"
+  ],
+  "IPA": "No distribution in this upstream task"
+}

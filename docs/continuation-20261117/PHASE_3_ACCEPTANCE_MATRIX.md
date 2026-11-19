@@ -1,5 +1,7 @@
 # Hanlin — Phase 3 acceptance matrix
 
+> Current continuation (19 November,03:12 UTC): [source-bound checkpoint](CONTINUATION_STATUS_20261119.md). Native Skills25, d6 UI4/6 and Anytype77/UI22 results are qualified there; current SDK05/UI/signing/upstream replacements are pending. All30 original task criteria remain preserved; only SDK01 is complete. The detailed prior snapshot below is historical.
+
 > Current continuation: [2026-11-19 checkpoint](CONTINUATION_STATUS_20261119.md). SDK01 audit is complete; current UI/Skills/signing/native and source-bound replacement runs are recorded there. The earlier detailed phase snapshot below remains historical; no phase completion is claimed.
 
 ## Current continuation — 19 November 2026

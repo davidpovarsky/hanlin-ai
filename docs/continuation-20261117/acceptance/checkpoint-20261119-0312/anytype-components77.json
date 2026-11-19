@@ -1,0 +1,59 @@
+{
+  "verified_at": "2026-11-19T03:06:38.932310+00:00",
+  "source_sha": "833dddee4d5c4e6cd0f89354e5a73096750d8e77",
+  "run_id": 44437298303,
+  "run_url": "https://github.com/davidpovarsky/anytype-swift/actions/runs/44437298303",
+  "official_conclusion": "success",
+  "artifact_id": 14493888367,
+  "artifact_bytes": 786298,
+  "full_zip_sha256_verified": "3a7e8f6003e1beefe8b76987227093f6f96ec3a8a75a1e1d3adec4b5ee529636",
+  "nested_zip_sha256": "e908513a7650ebca0d3697138e05f389471b346a8707cebba9f54757ac3fe78d",
+  "all_outer_and_nested_crc_verified": true,
+  "build": "PASS",
+  "declared_methods": 76,
+  "expanded_invocations": 77,
+  "failed": 0,
+  "skipped": 0,
+  "suite_methods": {
+    "HanlinHostAdapterTests": 35,
+    "HanlinHostReadWriteTests": 20,
+    "HanlinHostWriteTests": 15,
+    "HanlinSDKConsumerTests": 6
+  },
+  "new_preflight_cases": [
+    "HanlinHostReadWriteTests/writePreflightDenialPreventsRunnerAndRetainsOriginalMetadata()",
+    "HanlinHostReadWriteTests/writePreflightErrorsPreserveSafeCodesWithoutRunnerEntry()",
+    "HanlinHostReadWriteTests/writeRunnerResultsAndErrorsKeepTheirOriginalDisposition()"
+  ],
+  "parameterized_invocations": [
+    {
+      "name": "1048576",
+      "result": "Passed"
+    },
+    {
+      "name": "8388608",
+      "result": "Passed"
+    }
+  ],
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "AB70F117-3B4C-4A52-AB9A-ED457F9ACE7F",
+    "deviceName": "Pinkha-UI27-44437298303-ipad",
+    "modelName": "iPad Pro 13-inch (M5)",
+    "osBuildNumber": "24A434",
+    "osVersion": "27.0",
+    "platform": "iOS Simulator"
+  },
+  "canonical_hanlin_revision": "116cc6be0654a5d11bc56ba00e0310031107ee36",
+  "post_execution_source_verified": true,
+  "raw_sha256": {
+    "execution.json": "f4b4aa1283be507267abbad3bc98e2634fb1d6fae282b22d26a2458ebad94d1d",
+    "sdk06-summary.json": "b561e50993fea26c69362cd3e0da404274cb07d99f64707ece16749ecc7c3eed",
+    "sdk06-tests.json": "7db765c3a385536cc6f5dc21c2b19de25dffac800a14b9587beea9db5ddcf220"
+  },
+  "limitations": [
+    "Original four-suite component acceptance only; no new real navigation/selection/provider/logout or release proof.",
+    "iPhone selected-block UI run44435210654 failed before actual native selection; its Debug app-group mismatch is being fixed separately.",
+    "Other source epochs require explicit relevant-input comparison before reusing this result."
+  ]
+}

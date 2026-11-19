@@ -1,0 +1,28 @@
+{
+  "head": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "branch": "codex/hanlin-product-completion-20261117",
+  "workflow": "310046367",
+  "label": "ipad",
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYTests/NativeComposerLineSizingTests,AI_HLYUITests/AgentRuntimeConversationUITests/testRealChatUISendsPromptShowsToolActivityAndFinalAnswer,AI_HLYUITests/AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation,AI_HLYUITests/HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette,AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel,AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft,AI_HLYUITests/HanlinNativeA2UIChatUITests,AI_HLYUITests/AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft,AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomWithKeyboardAndDraft,AI_HLYTests/ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews(),AI_HLYTests/ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection(),AI_HLYUITests/AgentRuntimeConversationUITests/testUI04CollapsedProgressAndInspectorWithoutRawCoT,AI_HLYUITests/HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch,AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview,AI_HLYTests/HanlinCompactKeyboardGeometryTests/dockedKeyboardUsesWorkspaceIntersection(),AI_HLYTests/HanlinCompactKeyboardGeometryTests/translatedWindowUsesLocalIntersection(),AI_HLYTests/HanlinCompactKeyboardGeometryTests/floatingDismissedAndInvalidFramesDoNotResize(),AI_HLYTests/HanlinCompactKeyboardGeometryTests/lateEditorDetachPreservesCurrentOwner()",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "dispatch_at": "2026-11-19T02:49:49.636380+00:00",
+  "status": "queued",
+  "run_id": 44447126258,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258",
+  "verified_at": "2026-11-19T02:51:24.320630+00:00",
+  "authenticated_plan": {
+    "artifact_id": 14493527235,
+    "sha256": "f0e271e6335a27d9646ce96bc474b6fee67e2fc7ffc7de05170c1d4b3b5242f9",
+    "exact_selector_matches": true,
+    "simulator_configuration": "Debug"
+  }
+}

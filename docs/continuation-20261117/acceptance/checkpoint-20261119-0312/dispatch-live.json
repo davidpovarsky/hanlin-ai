@@ -1,0 +1,28 @@
+{
+  "head": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "branch": "codex/hanlin-product-completion-20261117",
+  "label": "live",
+  "workflow": "310046367",
+  "original_secret_absent": true,
+  "credential_source": "Existing host GEMINI_API_KEY; stdin only; never logged",
+  "status": "queued",
+  "started_at": "2026-11-19T02:52:01.417706+00:00",
+  "owned_secret_created": true,
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testLiveGeminiPythonConsentAndColdReopen",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "runtime_publish_release": "false",
+    "testflight_upload": "false",
+    "full_validation": "false"
+  },
+  "dispatch_at": "2026-11-19T02:52:02.904422+00:00",
+  "run_id": 44447388017,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447388017",
+  "exact_queued_source_verified": true,
+  "owned_secret_deleted_and_absence_verified": true,
+  "finished_at": "2026-11-19T02:52:09.508697+00:00"
+}

@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-11-19 03:19:31 UTC",
+  "tasks": [
+    {
+      "task_id": "1220546710400478",
+      "name": "[P0][SKILL-RUNTIME-05] Skill Compatibility/Readiness + Execution Planner — engine selection Native/iSH",
+      "completed": false,
+      "comment": {
+        "gid": "1220692531393667",
+        "created_at": "2026-11-19T03:19:01.197Z",
+        "created_by": {
+          "gid": "1219597879016933",
+          "name": "דוד פוברסקי",
+          "resource_type": "user"
+        },
+        "resource_type": "story",
+        "text": "עדכון קבלה מאומת — npm lifecycle — 19.11.2026\n\nהריצה המקורית https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236 הסתיימה בהצלחה על3a87634b8b478833ddd90c896fe494bd4becda82. אומת קובץ התוצאות הגולמי: מקרה Native אחד עבר, ללא כישלון או דילוג, עלiPad Pro13(M5), iOS27.2 Simulator, arm64; משך המקרה35.145s.\n\nהמבחן המקורי actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations משתמש ב-AppRuntimeCore/NodePackageManager הקיימים: התקנתis-number7.0.0 וייבוא ESM עם בדיקת התנהגות ומסלול; עדכון6.0.0 לדור אחר תוך שמירת הדור הקודם; דחיית9999.0.0 בלי שינוי הדור הפעיל; הסרה שלאחריה הייבוא נכשל. ראיית הריצה מראה שינוי pointer/policy/environment בכל פרסום, שמירת engine/version וכל שלושת קובצי הרישום הישנים נעדרים ללא שינוי. העדכון שנדחה שמר את כל החתימות בדיוק.\n\nארכיון14495131117 אומת מול GitHub:2,549,153bytes,93members/CRC תקין,SHA256582658030d0d84bb65b8e5a2bd3e2513df8c0c8d622dc09cda365ad0401a169e. כל39 package pins תואמים לקוד המבוקש.\n\nסייג המקור נשמר: build provenance מדווח trackedWorkspaceModified=true; שלב ההכנה עדכן Host modules ו-RuntimeManifest ולא נשמר diff מלא של כל הקבצים. לכן זו תוצאה של הריצה המתועדת, ולא טענה לבינארי clean-tree או להצלחת HEAD הנוכחי. זו אינה קבלה מלאה שלRuntime05, של כל המנועים או של מכשיר פיזי; ההתקנה אינה בדיקת offline.\n\nהראיות נשמרו ב-Hanlin-Continuation-Evidence-20261119/run-44429680236/verification.json, SHA256e3180ec0d3d59cc460ab1c2b13719f31e929804e6a26a68ac226a9a30193666b; ייכללו במחסום הקבלה הבא במאגר. המשימה נשארת פתוחה עד להשלמת מלוא תנאיה.",
+        "type": "comment",
+        "resource_subtype": "comment_added"
+      },
+      "exact_text_match": true
+    },
+    {
+      "task_id": "1220369388989551",
+      "name": "[P0][RUNTIME-AUTONOMY-V3] סביבת סוכן פתוחה — Python/npm/WASM/Shell; לביצוע לאחר העבודה הנוכחית",
+      "completed": false,
+      "comment": {
+        "gid": "1220692639150450",
+        "created_at": "2026-11-19T03:19:02.852Z",
+        "created_by": {
+          "gid": "1219597879016933",
+          "name": "דוד פוברסקי",
+          "resource_type": "user"
+        },
+        "resource_type": "story",
+        "text": "עדכון קבלה מאומת — npm lifecycle — 19.11.2026\n\nהריצה המקורית https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236 הסתיימה בהצלחה על3a87634b8b478833ddd90c896fe494bd4becda82. אומת קובץ התוצאות הגולמי: מקרה Native אחד עבר, ללא כישלון או דילוג, עלiPad Pro13(M5), iOS27.2 Simulator, arm64; משך המקרה35.145s.\n\nהמבחן המקורי actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations משתמש ב-AppRuntimeCore/NodePackageManager הקיימים: התקנתis-number7.0.0 וייבוא ESM עם בדיקת התנהגות ומסלול; עדכון6.0.0 לדור אחר תוך שמירת הדור הקודם; דחיית9999.0.0 בלי שינוי הדור הפעיל; הסרה שלאחריה הייבוא נכשל. ראיית הריצה מראה שינוי pointer/policy/environment בכל פרסום, שמירת engine/version וכל שלושת קובצי הרישום הישנים נעדרים ללא שינוי. העדכון שנדחה שמר את כל החתימות בדיוק.\n\nארכיון14495131117 אומת מול GitHub:2,549,153bytes,93members/CRC תקין,SHA256582658030d0d84bb65b8e5a2bd3e2513df8c0c8d622dc09cda365ad0401a169e. כל39 package pins תואמים לקוד המבוקש.\n\nסייג המקור נשמר: build provenance מדווח trackedWorkspaceModified=true; שלב ההכנה עדכן Host modules ו-RuntimeManifest ולא נשמר diff מלא של כל הקבצים. לכן זו תוצאה של הריצה המתועדת, ולא טענה לבינארי clean-tree או להצלחת HEAD הנוכחי. זו אינה קבלה מלאה שלRuntime05, של כל המנועים או של מכשיר פיזי; ההתקנה אינה בדיקת offline.\n\nהראיות נשמרו ב-Hanlin-Continuation-Evidence-20261119/run-44429680236/verification.json, SHA256e3180ec0d3d59cc460ab1c2b13719f31e929804e6a26a68ac226a9a30193666b; ייכללו במחסום הקבלה הבא במאגר. המשימה נשארת פתוחה עד להשלמת מלוא תנאיה.",
+        "type": "comment",
+        "resource_subtype": "comment_added"
+      },
+      "exact_text_match": true
+    }
+  ]
+}

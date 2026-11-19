@@ -1,0 +1,365 @@
+{
+  "observed_at": "2026-11-19T03:10:46.000302+00:00",
+  "tasks": [
+    {
+      "gid": "1220542174541844",
+      "code": "SDK-01",
+      "objective": "Audit package/source/host/platform",
+      "current": {
+        "gid": "1220542174541844",
+        "completed": true,
+        "modified_at": "2026-11-19T01:07:12.401Z",
+        "name": "[HANLIN-SDK-01][P0][AUDIT] מיפוי קוד, תלות ו־iOS 26/27; חוזי Swift Package ללא שכפול",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542174541844"
+      }
+    },
+    {
+      "gid": "1220546710401425",
+      "code": "SKILL-YAMS-02",
+      "objective": "Yams source package and app adoption",
+      "current": {
+        "gid": "1220546710401425",
+        "completed": false,
+        "modified_at": "2026-11-19T01:12:52.149Z",
+        "name": "[P0][SKILL-YAMS-02] Yams מקורית ב-SwiftPM — פענוח SKILL.md/Agent Skills frontmatter מלא ללא שכפול",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546710401425"
+      }
+    },
+    {
+      "gid": "1219605220234118",
+      "code": "WAVE-A",
+      "objective": "Canonical legacy baseline and product parity",
+      "current": {
+        "gid": "1219605220234118",
+        "completed": false,
+        "modified_at": "2026-11-16T05:55:12.447Z",
+        "name": "[CURRENT WAVE A] Baseline + parity audit — מפת רכיבי Hanlin ומקור SwiftChat",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219605220234118"
+      }
+    },
+    {
+      "gid": "1220546608370437",
+      "code": "SKILL-UPSTREAM-01",
+      "objective": "Pinned upstream PR9/maintenance and accepted safe pipeline",
+      "current": {
+        "gid": "1220546608370437",
+        "completed": false,
+        "modified_at": "2026-11-19T03:07:40.194Z",
+        "name": "[P0][SKILL-UPSTREAM-01] תשתית קליטת upstream חיה — SwiftPM, OpenClaw/Tree-sitter, Renovate/CI ומיזוג בטוח",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546608370437"
+      }
+    },
+    {
+      "gid": "1220373608755846",
+      "code": "SDK-03",
+      "objective": "NativeScript targeted TS SDK/Host capabilities (not Full-SDK metadata)",
+      "current": {
+        "gid": "1220373608755846",
+        "completed": false,
+        "modified_at": "2026-11-16T16:05:18.855Z",
+        "name": "[SDK-03][NATIVESCRIPT] TypeScript SDK מלא ומדויק ל-Core ו-Direct Native iOS APIs",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220373608755846"
+      }
+    },
+    {
+      "gid": "1220373832827086",
+      "code": "SDK-04",
+      "objective": "Expo SDK generated bridge and native-api",
+      "current": {
+        "gid": "1220373832827086",
+        "completed": false,
+        "modified_at": "2026-11-16T16:05:18.792Z",
+        "name": "[SDK-04][EXPO] TypeScript SDK מלא, Expo SwiftUI, Generated Bridge ו-native-api",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220373832827086"
+      }
+    },
+    {
+      "gid": "1220374076374903",
+      "code": "INT-03",
+      "objective": "NativeScript runtime.execute/TS/Shell and scheduler",
+      "current": {
+        "gid": "1220374076374903",
+        "completed": false,
+        "modified_at": "2026-11-16T16:05:18.838Z",
+        "name": "[INT-03][NATIVESCRIPT] Generic runtime.execute + TypeScript/Shell, robust session scheduler and actions",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220374076374903"
+      }
+    },
+    {
+      "gid": "1220546710400478",
+      "code": "SKILL-RUNTIME-05",
+      "objective": "Passive engine facts/readiness planner and real skill execution",
+      "current": {
+        "gid": "1220546710400478",
+        "completed": false,
+        "modified_at": "2026-11-19T03:01:46.154Z",
+        "name": "[P0][SKILL-RUNTIME-05] Skill Compatibility/Readiness + Execution Planner — engine selection Native/iSH",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546710400478"
+      }
+    },
+    {
+      "gid": "1220489383643571",
+      "code": "A2UI-02",
+      "objective": "Rich-content envelope for agent output and tool result",
+      "current": {
+        "gid": "1220489383643571",
+        "completed": false,
+        "modified_at": "2026-11-18T09:51:43.100Z",
+        "name": "[A2UI-02][P0] Unified Rich-Content envelope: A2UI מתוך תשובת Agent, לא רק ToolResult",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220489383643571"
+      }
+    },
+    {
+      "gid": "1220489258419968",
+      "code": "A2UI-03",
+      "objective": "Original SwiftUI A2UI surfaces and bindings",
+      "current": {
+        "gid": "1220489258419968",
+        "completed": false,
+        "modified_at": "2026-11-18T09:51:45.353Z",
+        "name": "[A2UI-03][P0] Native SwiftUI Surface והקטלוג הרשמי: רכיבים, Binding, RTL, נגישות ומצבי תצוגה",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220489258419968"
+      }
+    },
+    {
+      "gid": "1220489257946325",
+      "code": "A2UI-04",
+      "objective": "Events, RPC, action broker, permissions",
+      "current": {
+        "gid": "1220489257946325",
+        "completed": false,
+        "modified_at": "2026-11-18T09:51:47.711Z",
+        "name": "[A2UI-04][P0] דו־כיווניות: Events, RPC, action broker והרשאות מפעולות הממשק לסוכן",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220489257946325"
+      }
+    },
+    {
+      "gid": "1220489600044406",
+      "code": "A2UI-05",
+      "objective": "Streaming, lifecycle, replay",
+      "current": {
+        "gid": "1220489600044406",
+        "completed": false,
+        "modified_at": "2026-11-18T09:51:50.076Z",
+        "name": "[A2UI-05][P1] Streaming A2UI סדור, מחזור חיים, ביצועים ו־Transcript replay",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220489600044406"
+      }
+    },
+    {
+      "gid": "1220491240486416",
+      "code": "A2UI-09",
+      "objective": "Native images, links, MP4/HLS, YouTube and galleries",
+      "current": {
+        "gid": "1220491240486416",
+        "completed": false,
+        "modified_at": "2026-11-18T05:55:21.322Z",
+        "name": "[A2UI-09][P0][TOP PRIORITY][MEDIA] תמונות אינטרנט, גלריות, MP4/HLS, YouTube וכרטיסי קישור בתוך Hanlin Chat",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220491240486416"
+      }
+    },
+    {
+      "gid": "1220546608350406",
+      "code": "SKILL-AST-04",
+      "objective": "Original Tree-sitter/AST passive skill dependencies",
+      "current": {
+        "gid": "1220546608350406",
+        "completed": false,
+        "modified_at": "2026-11-16T16:05:18.799Z",
+        "name": "[P1][SKILL-AST-04] זיהוי תלויות לא מוצהרות מ-Skills — Tree-sitter Bash upstream + Python/TS AST קיימים",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546608350406"
+      }
+    },
+    {
+      "gid": "1220546846740594",
+      "code": "CHATUX-MOTION",
+      "objective": "Native animated disclosure, transitions and shimmer",
+      "current": {
+        "gid": "1220546846740594",
+        "completed": false,
+        "modified_at": "2026-11-19T01:34:10.756Z",
+        "name": "[P1][CHATUX-MOTION] Hanlin AI — ערכות אנימציה מוכנות לצ׳אט + בורר יחיד בהגדרות",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546846740594"
+      }
+    },
+    {
+      "gid": "1220539644804804",
+      "code": "COMPOSER",
+      "objective": "Approved native chat bubble and MorphView parity",
+      "current": {
+        "gid": "1220539644804804",
+        "completed": false,
+        "modified_at": "2026-11-19T02:52:59.718Z",
+        "name": "[HANLIN][UI APPROVED] מימוש בועת ההודעה והכלים החדשה — התאמה 1:1 ל-MorphView Swift Playground",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220539644804804"
+      }
+    },
+    {
+      "gid": "1220541898122292",
+      "code": "ACTIVE-CHIPS",
+      "objective": "Active tool chips above bubble / expanded state",
+      "current": {
+        "gid": "1220541898122292",
+        "completed": false,
+        "modified_at": "2026-11-16T16:05:18.934Z",
+        "name": "[HANLIN][Composer][Active Chips] להטמיע chips של הכלים המופעלים מעל בועת ההודעה — לפי קובץ Swift המאושר במחשב",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220541898122292"
+      }
+    },
+    {
+      "gid": "1220546710417618",
+      "code": "SKILL-UX-QA-06",
+      "objective": "Skill Center real state/remediation and UX",
+      "current": {
+        "gid": "1220546710417618",
+        "completed": false,
+        "modified_at": "2026-11-19T01:02:13.511Z",
+        "name": "[P1][SKILL-UX-QA-06] Skill Center — סטטוס תאימות אמיתי, remediation, בדיקות iPad ודו״ח קבלה",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546710417618"
+      }
+    },
+    {
+      "gid": "1219613181643838",
+      "code": "SDK-PARENT",
+      "objective": "Shared Hanlin Agent/Chat SDK and Host integration",
+      "current": {
+        "gid": "1219613181643838",
+        "completed": false,
+        "modified_at": "2026-11-19T02:08:40.159Z",
+        "name": "[P0][CURRENT WAVE][IN PROGRESS] Hanlin Chat & Agent SDK — SwiftUI משותף + Host API לאוצריא ול־Anytype",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1219613181643838"
+      }
+    },
+    {
+      "gid": "1220542419128390",
+      "code": "SDK-02",
+      "objective": "Importable Swift Agent/Chat/Streaming/Skills/MCP package",
+      "current": {
+        "gid": "1220542419128390",
+        "completed": false,
+        "modified_at": "2026-11-16T16:05:18.896Z",
+        "name": "[HANLIN-SDK-02][P0][CORE] חבילת Swift ניתנת לייבוא — Agent/Chat/Streaming/Skills/MCP",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542419128390"
+      }
+    },
+    {
+      "gid": "1220542199992529",
+      "code": "SDK-03-HOST",
+      "objective": "HostIntegration actions/policy/results/navigation",
+      "current": {
+        "gid": "1220542199992529",
+        "completed": false,
+        "modified_at": "2026-11-19T01:46:23.818Z",
+        "name": "[HANLIN-SDK-03][P0][HOST] HostIntegration API — הקשר, פעולות, הרשאות, תוצאות וניווט",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542199992529"
+      }
+    },
+    {
+      "gid": "1220542199999956",
+      "code": "SDK-05-DATA",
+      "objective": "ConversationStore, Keychain, App Group, persistence",
+      "current": {
+        "gid": "1220542199999956",
+        "completed": false,
+        "modified_at": "2026-11-19T03:04:17.303Z",
+        "name": "[HANLIN-SDK-05][P0][DATA/SEC] ConversationStore, Keychain, App Group, CloudKit, בידוד והרשאות",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542199999956"
+      }
+    },
+    {
+      "gid": "1220542174541940",
+      "code": "SDK-04-UI",
+      "objective": "Shared SwiftUI ChatView/Composer/Thinking/A2UI",
+      "current": {
+        "gid": "1220542174541940",
+        "completed": false,
+        "modified_at": "2026-11-19T02:53:01.151Z",
+        "name": "[HANLIN-SDK-04][P0][UI] אותו ChatView/Composer/Thinking/A2UI בכל האפליקציות — SwiftUI",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542174541940"
+      }
+    },
+    {
+      "gid": "1220546571007976",
+      "code": "SKILL-OPENCLAW-03",
+      "objective": "Original OpenClaw eligibility/gating subset and embedded node",
+      "current": {
+        "gid": "1220546571007976",
+        "completed": false,
+        "modified_at": "2026-11-19T03:02:02.344Z",
+        "name": "[P0][SKILL-OPENCLAW-03] קליטת מנגנון Eligibility/Gating המקורי של OpenClaw ב-Hanlin — מקור מתעדכן ומתאם דק",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546571007976"
+      }
+    },
+    {
+      "gid": "1219605220179926",
+      "code": "SPLIT-PARENT",
+      "objective": "Two independent apps with product acceptance",
+      "current": {
+        "gid": "1219605220179926",
+        "completed": false,
+        "modified_at": "2026-11-19T00:11:47.764Z",
+        "name": "[CURRENT WAVE][SPLIT] Hanlin AI + Hanlin MiniApps — שתי אפליקציות עצמאיות ושימור יכולות",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1219605220179926"
+      }
+    },
+    {
+      "gid": "1219656771637321",
+      "code": "WAVE-K",
+      "objective": "Two targets, security and shared data migration",
+      "current": {
+        "gid": "1219656771637321",
+        "completed": false,
+        "modified_at": "2026-11-19T02:57:15.526Z",
+        "name": "[CURRENT WAVE K][ARCH][SEC] שני Targets, Shared Contracts ומיגרציה בטוחה",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219656771637321"
+      }
+    },
+    {
+      "gid": "1219656771149125",
+      "code": "WAVE-J",
+      "objective": "Approved Hanlin AI shell IA/UX",
+      "current": {
+        "gid": "1219656771149125",
+        "completed": false,
+        "modified_at": "2026-11-18T05:21:26.223Z",
+        "name": "[CURRENT WAVE J][UX] אישור IA ומסכי Hanlin AI הנקיים — Chat / Library / History / Advanced",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219656771149125"
+      }
+    },
+    {
+      "gid": "1219656771460030",
+      "code": "WAVE-L",
+      "objective": "Hanlin MiniApps independent, return to agent",
+      "current": {
+        "gid": "1219656771460030",
+        "completed": false,
+        "modified_at": "2026-11-18T19:36:53.521Z",
+        "name": "[CURRENT WAVE L][DEV] Hanlin MiniApps עצמאית + גשר חזרה לסוכן",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219656771460030"
+      }
+    },
+    {
+      "gid": "1219605235147314",
+      "code": "WAVE-H",
+      "objective": "Final original source parity/non-regression matrix",
+      "current": {
+        "gid": "1219605235147314",
+        "completed": false,
+        "modified_at": "2026-11-18T08:08:58.393Z",
+        "name": "[CURRENT WAVE H] תרחישי קבלה, בדיקות סטטיות, non-regression ודוח קוד",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219605235147314"
+      }
+    },
+    {
+      "gid": "1219605282038820",
+      "code": "WAVE-I",
+      "objective": "iOS 26/27, real iPad and release candidate",
+      "current": {
+        "gid": "1219605282038820",
+        "completed": false,
+        "modified_at": "2026-11-19T02:53:02.825Z",
+        "name": "[CURRENT WAVE I] אישור נפרד: Xcode 27 / iOS 27 / IPA / השוואה חזותית במכשיר",
+        "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219605282038820"
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "published_at": "2026-11-19T03:11:10.189540+00:00",
+  "repository": "https://github.com/davidpovarsky/anytype-swift.git",
+  "branch": "codex/chatgpt-wave15-hanlin-consumer-20261119",
+  "parent_sha": "833dddee4d5c4e6cd0f89354e5a73096750d8e77",
+  "source_sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+  "verified_remote_sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+  "patch_sha256": "95932b769dac3d2fa6b3f977b42a75bc72c972a583f52ad35116ec814fee643c",
+  "changed_paths": [
+    "Anytype.xcodeproj/project.pbxproj",
+    "AnyTypeTests/Pinkha/HanlinNativeAcceptancePreparationTests.swift",
+    "Tools/PinkhaSimulatorGate/run_ui27.py",
+    "Tools/PinkhaSimulatorGate/simulator_identity.py",
+    "Tools/PinkhaSimulatorGate/test_simulator_identity.py",
+    "docs/architecture/UPSTREAM_EXCEPTION_REGISTER.md"
+  ],
+  "other_integration_ref_before": [
+    "833dddee4d5c4e6cd0f89354e5a73096750d8e77\trefs/heads/codex/chatgpt-wave15-hanlin-consumer-20261119",
+    "90fcb6033ca4f8aecf8e04d4959cf06fb104adf9\trefs/heads/codex/chatgpt-wave15-integration-20261118"
+  ],
+  "portable_tests": 91,
+  "native_after_fix": "NOT_RUN",
+  "physical_device": "NOT_RUN"
+}

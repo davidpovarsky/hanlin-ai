@@ -1,5 +1,7 @@
 ## Current verified continuation — 19 November 2026
 
+> Current continuation (19 November,03:12 UTC): [source-bound checkpoint](CONTINUATION_STATUS_20261119.md). Native Skills25, d6 UI4/6 and Anytype77/UI22 results are qualified there; current SDK05/UI/signing/upstream replacements are pending. All30 original task criteria remain preserved; only SDK01 is complete. The detailed prior snapshot below is historical.
+
 > Current continuation: [2026-11-19 checkpoint](CONTINUATION_STATUS_20261119.md). SDK01 audit is complete; current UI/Skills/signing/native and source-bound replacement runs are recorded there. The earlier detailed phase snapshot below remains historical; no phase completion is claimed.
 
 Published source is `90314963`; Phase 2 and Phase 3 remain in progress. Exact results: paired 4/8 pass; compact 0/2 pass; Host/editor units 34 invocation leaves pass and UI 3/11 pass; wide UI 11/26 pass; both device archives pass and both exports fail profile discovery; Motion D is diagnostic only; live product NOT_RUN because simulator discovery failed before any credential was staged. Five newly dispatched native runs are pending, recorded at their actual 3de8cf6 or 90314963 sources.

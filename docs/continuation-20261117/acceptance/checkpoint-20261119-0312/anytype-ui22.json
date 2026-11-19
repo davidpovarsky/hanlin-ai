@@ -1,0 +1,154 @@
+{
+  "observed_at": "2026-11-19T02:34:05.191320+00:00",
+  "repository": "https://github.com/davidpovarsky/anytype-swift.git",
+  "run_id": 44437308455,
+  "run_url": "https://github.com/davidpovarsky/anytype-swift/actions/runs/44437308455",
+  "source_sha": "833dddee4d5c4e6cd0f89354e5a73096750d8e77",
+  "source_branch": "codex/chatgpt-wave15-hanlin-consumer-20261119",
+  "canonical_hanlin_pin": "116cc6be0654a5d11bc56ba00e0310031107ee36",
+  "swift_ai_sdk_pin": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "artifact_id": 14492647037,
+  "outer_bytes": 5162062,
+  "outer_sha256": "2d71a211a454ba8c48da54399e2126a5ba0cd5c3ad34e496a6b3f881d8db2da7",
+  "full_outer_digest_verified": true,
+  "nested_sha256": "635db7f9cefe352e197948853bf9527251d04ee04c8e1516d7c922c4d36e977e",
+  "all_nested_members_crc_verified": true,
+  "native_build": "PASS",
+  "preparation": {
+    "methods": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0
+  },
+  "native_ui": {
+    "methods": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "selector": "HanlinNativeAcceptanceUITests/testRealNativeConsentCreatePageAndAuthorityRevocation()",
+    "duration_seconds": 85.53802192211151
+  },
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "4794A074-5BD3-4704-A0C0-475089D513B5",
+    "deviceName": "Pinkha-UI27-44437308455-ipad",
+    "modelName": "iPad Pro 13-inch (M5)",
+    "osBuildNumber": "24A434",
+    "osVersion": "27.0",
+    "platform": "iOS Simulator"
+  },
+  "checks_true": 22,
+  "checks": {
+    "fresh_presentation_reads_original_document_only": true,
+    "native_active_space_change_denied": true,
+    "background_presentation_had_live_read_access": true,
+    "cancelled_title_absent_from_native_index": true,
+    "native_confirm_creates_exact_page": true,
+    "native_source_permission_change_denied": true,
+    "native_return_mounted_original_document": true,
+    "pending_read_consent_dismissed_on_document_exit": true,
+    "closed_presentation_denies_read_and_create": true,
+    "fresh_presentation_requires_new_native_consent": true,
+    "native_cancel_prevents_write": true,
+    "read_denied_before_native_consent": true,
+    "departed_document_presentation_denies_read_and_create": true,
+    "native_account_logout_denied": true,
+    "created_page_read_back_by_journal_id": true,
+    "native_background_foreground_observed": true,
+    "backgrounded_presentation_denies_read_and_create": true,
+    "no_provider_configuration": true,
+    "original_commit_metadata_survives_logout": true,
+    "replay_does_not_create_duplicate": true,
+    "middleware_logging_disabled": true,
+    "real_native_context_text_read": true
+  },
+  "provider_configured": false,
+  "execution_status": "LANE_PASS_ACCEPTANCE_REVIEW_PENDING",
+  "visual_review": {
+    "reviewed_by": "/root/motion_ui_results",
+    "images": [
+      {
+        "file": "raw/ui/wave15-hanlin-native-attachments/E06F404A-EAD5-4B83-9A50-EE3391266274.png",
+        "sha256": "d2c6e2986bee28a03f6624559f7406e8316ec5f192b5558d1ca0060022665b38",
+        "observation": "Real native page-creation Cancel prompt with Create page and Cancel controls; provider/model/key unconfigured."
+      },
+      {
+        "file": "raw/ui/wave15-hanlin-native-attachments/58317F40-7B88-4212-AA9D-642A05BBB05F.png",
+        "sha256": "8b6ad019222f6d1b1be95ea8502847ec7f4d2964904188a4416fe36bc3ffbbc6",
+        "observation": "Real native page-creation Confirm prompt for a distinct created title and the same disposable Space."
+      },
+      {
+        "file": "raw/ui/wave15-hanlin-native-attachments/E8A6BE98-A0B2-490D-8D08-F6B96A92587D.png",
+        "sha256": "a66aeb66937a8225f6e4881f808d93df8c8e21820a437f41a07b5230489bca7c",
+        "observation": "Original Anytype document mounted after return, preserving its fixture body."
+      },
+      {
+        "file": "raw/ui/wave15-hanlin-native-attachments/CE6421E5-D6AC-45EA-94B8-8F705E4A9054.png",
+        "sha256": "3ba45879b73eda848e72719ecb210009e9235ab5e1f1be3457e5bdde8ca21fbd",
+        "observation": "Fresh original-document Hanlin presentation; access allowed; model and API key fields still empty."
+      },
+      {
+        "file": "raw/ui/wave15-hanlin-native-attachments/6E059FFD-6AE5-4D42-9D0C-307A07AD33E4.png",
+        "sha256": "098011ebd7b56e2e52965cd1853410e39b0126b79e733dc61e94f7ba6d428970",
+        "observation": "Final acceptance marker behind a red native WorkspaceService.workspaceOpen panic-recovered error banner; original Space list remains mounted."
+      }
+    ]
+  },
+  "important_open_issue": {
+    "kind": "visible_native_lifecycle_error_after_logout",
+    "screenshot": "raw/ui/wave15-hanlin-native-attachments/6E059FFD-6AE5-4D42-9D0C-307A07AD33E4.png",
+    "text": "WorkspaceService.workspaceOpen: panic recovered (unknownError)",
+    "console": "raw/pinkha-ui-console.log",
+    "console_fact": "Bootstrap and Torah catalog work continued after logout, reporting not logged in / account must be started.",
+    "source_boundary": "PinkhaHanlinNativeAcceptanceDriver.swift530-565 performs source lock/unlock, actual Space switch/back, then original authService.logout(false). It awaits routeOwner.currentSpaceId but does not establish all native bootstrap work has quiesced. Cause/product-vs-driver ownership not yet resolved."
+  },
+  "proof_limits": [
+    "Named consumer native contracts passed; a clean whole-app lifecycle is not established because final screenshot contains a real error banner.",
+    "No configured AI provider or provider network request; this is actual native host integration proof.",
+    "Pre-UI live runtime PID differs from final UI receipt PID; every relaunch's live mapping is explicitly unverified. Built/installed executable bytes and source-bound native receipt agree, but full bundle equivalence is false.",
+    "No signed-device/release/full-platform-matrix acceptance.",
+    "Original iPhone selection and new component suites were still running at this verification."
+  ],
+  "raw_evidence": [
+    {
+      "file": "raw/hanlin-native-result.json",
+      "sha256": "705e08d1fcedeb3c748668dc51389adedaa38f330a17955b416f6baed90b3649"
+    },
+    {
+      "file": "raw/execution.json",
+      "sha256": "d2055edf8a9498c61a4ea725b938a60c86e22e435b5ac3f2e4c21e7ce61bb41b"
+    },
+    {
+      "file": "raw/ui/wave15-hanlin-native-summary.json",
+      "sha256": "d3aceb3f2c6cfff3ca68d4f43657829b3533d2cc0bda291165bed3fcb8ab4820"
+    },
+    {
+      "file": "raw/ui/wave15-hanlin-native-tests.json",
+      "sha256": "f294ba342f17f6b31606818a1f4a6e20bc7ed6e47a54ae7e47697fb21cb31cc8"
+    },
+    {
+      "file": "raw/preparation/prepare-summary.json",
+      "sha256": "847a1059eabb6dcdb08b93744809973271b719e01b8033d1f006eade51a5f5f4"
+    },
+    {
+      "file": "raw/preparation/prepare-tests.json",
+      "sha256": "698c71741359a0f297a724775103b729b0226f22f124fe617a5f69f1d4e8dba0"
+    },
+    {
+      "file": "raw/installed-app-source.json",
+      "sha256": "9f5359ceccb1206a83e983d1052ae3584ea2f3937053f753b019355cbd8df619"
+    },
+    {
+      "file": "raw/hanlin-snapshot.json",
+      "sha256": "87b87db6bff6e577acbcfc7b76490e31a588b387f390291146f79d01f5f2e51c"
+    },
+    {
+      "file": "raw/actual-package-pins.json",
+      "sha256": "0c3777efc6702bcb37469d9ed57149a273402a67cd4afa67cb9246eb612173b6"
+    },
+    {
+      "file": "raw/pinkha-ui-console.log",
+      "sha256": "9589d80037fc7765fa165b00f9eec532a8ecf7776b1e0120a84220b827ef30da"
+    }
+  ]
+}

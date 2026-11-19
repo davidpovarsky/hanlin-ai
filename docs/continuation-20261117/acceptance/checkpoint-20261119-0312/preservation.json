@@ -1,0 +1,33 @@
+{
+  "verified_at": "2026-11-19T03:11:56.834148+00:00",
+  "ledgers": [
+    {
+      "file": "acceptance/ACCEPTANCE_REGISTER.json",
+      "source_tasks_preserved": 30,
+      "prior_evidence_preserved": 75,
+      "new_evidence_total": 87
+    },
+    {
+      "file": "PHASE_2_INTEGRATION_LEDGER.json",
+      "source_tasks_preserved": 30,
+      "prior_evidence_preserved": 75,
+      "new_evidence_total": 87
+    },
+    {
+      "file": "PHASE_3_INTEGRATION_LEDGER.json",
+      "source_tasks_preserved": 30,
+      "prior_evidence_preserved": 75,
+      "new_evidence_total": 87
+    }
+  ],
+  "feature_matrix_sha256": "cd655dd9a5492d53335a88762bd13decad68c40aa35339099d8f2f5fdd39b311",
+  "ux_matrix_sha256": "ef748ff2d9bace0a3c3d260d15b6b64512a690ff34dc46f2e8356475ebdb350d",
+  "supplement_verified_at": "2026-11-19T03:20:09.979869+00:00",
+  "raw_evidence_whitespace": {
+    "findings": [
+      "docs/continuation-20261117/acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/01-environment.log:41: new blank line at EOF.",
+      "docs/continuation-20261117/acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/08-downstream-unit-tests.log:325: trailing whitespace."
+    ],
+    "disposition": "Two whitespace-only lines are original authenticated diagnostic content. Retained with source/repository digests; no source code or authored-document whitespace findings."
+  }
+}

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-19T01:19:55.276264+00:00",
+  "generated_at": "2026-11-19T03:11:56.834148+00:00",
   "status": "IN_PROGRESS_NOT_A_PHASE_COMPLETION",
   "baseline_sha": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
-  "source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+  "source_sha": "1480b347f519073b384cd86f7efc506e9c2d1aab",
   "branch": "codex/hanlin-product-completion-20261117",
   "phase_2": "IN_PROGRESS",
   "phase_3": "IN_PROGRESS",
@@ -741,6 +741,122 @@
       "sha": "e564dc29d24239309b113244bec4556c211c5b2d",
       "scope": "Canvas/MainActor, reasoning, links, WebKit startup, native approval/Skills navigation and CMS diagnostics; actual source-linked runs retain original checks",
       "report": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "id": "SKILLS25_NATIVE_20261119_3A",
+      "status": "VERIFIED_NATIVE_SUBSET_PASS",
+      "run": 44429654565,
+      "sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "scope": "25 native cases, Node24.5.0 ios/arm64 JITless; original28/64 and11 adapter contracts; six offline observer controls; cache invalidation witnesses.22 generated fixtures, not maintained corpus; dirty preparation qualification retained.",
+      "report": "acceptance/checkpoint-20261119-0312/skills-native25/verification.json"
+    },
+    {
+      "id": "UI6_D6_AUTHENTICATED_20261119",
+      "status": "FOUR_PASS_TWO_FAIL",
+      "run": 44428104345,
+      "sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+      "scope": "Reasoning2, UI04 and original selection/save/preview pass; UI01 corruption and missing regular-width Canvas Cancel fail; cold Canvas reopen not reached.",
+      "report": "acceptance/compact-keyboard-canvas-20261119/native-d6-results.json"
+    },
+    {
+      "id": "COMPACT_KEYBOARD_CANVAS_7E_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "runs": [
+        44447123515,
+        44447126258,
+        44447129341,
+        44447388017
+      ],
+      "scope": "Exact existing editor/window keyboard ownership, original native popover dismissal, metadata-only editor diagnostics and unchanged typed expectations.",
+      "report": "acceptance/compact-keyboard-canvas-20261119/root-review.json"
+    },
+    {
+      "id": "SDK05_SECRET_AND_TYPED_DATA_1480_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+      "run": 44448313143,
+      "scope": "Original Keychain commit ordering/read-error retention, disk SwiftData reopen, actual credential/memory/attachment ports and request revocation. Account/CloudKit/full erase and APIKeys migration remain open.",
+      "report": "acceptance/sdk05-typed-data-ports-20261119/root-review.json"
+    },
+    {
+      "id": "PYTHON_FACTS_MAINTAINED30_589_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "589420f3da0db240df8aa5a466bba9303a6bf4c5",
+      "run": 44440354095,
+      "scope": "Import-free original Python facts and genuine local wheel/cache acceptance plus maintained23/Cairo2/Yams4.",
+      "report": "acceptance/checkpoint-20261119-0312/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "id": "SIGNING_CMS_WIRE_8A_20261119",
+      "status": "NATIVE_ADMISSION_FAILURE_CORRECTION_PENDING",
+      "sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+      "runs": [
+        44431826560,
+        44446182012
+      ],
+      "scope": "Actual CMS flags were integer1 and valid; tiny Xcode archive still rejected original profile. Correct native wire type and bounded exact-project diagnostic,28portable passes, no product export yet.",
+      "report": "acceptance/signing-native-wire-and-owned-settings-20261119/root-verification.json"
+    },
+    {
+      "id": "LIVE_PREPARATION_F780_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "f780cc12800b1f3c27295e9456d93b3947c43a7d",
+      "runs": [
+        44428114202,
+        44447388017
+      ],
+      "scope": "Preserve atomic simulator ownership before install, sanitized install-failure evidence and cleanup. Prior live case never ran; original temporary credential route used and cleaned for new run.",
+      "report": "acceptance/checkpoint-20261119-0312/dispatch-live.json"
+    },
+    {
+      "id": "UPSTREAM_V3_REAL_CI_PR_20261119",
+      "status": "REAL_RENOVATE_PR_SOURCE_FIX_PUBLISHED_NATIVE_PENDING",
+      "sha": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+      "runs": [
+        44443862765,
+        44448070120
+      ],
+      "scope": "Actual original bot created PR13 then gh child failed missing GH_TOKEN. v3 supplies same existing token, preserves exact strict/app-bound checks. Native candidate/negative/same-head green/merge/rollback remain.",
+      "report": "acceptance/checkpoint-20261119-0312/upstream-v3-activation.json"
+    },
+    {
+      "id": "ANYTYPE_COMPONENT77_UI22_20261119",
+      "status": "VERIFIED_RECORDED_NATIVE_SUBSETS",
+      "sha": "833dddee4d5c4e6cd0f89354e5a73096750d8e77",
+      "runs": [
+        44437298303,
+        44437308455
+      ],
+      "scope": "76methods/77 expanded component passes and1whole-document UI with22 named checks. iPhone selection, Debug app-group mismatch and logout lifecycle/banner remain open; no whole consumer acceptance.",
+      "report": "acceptance/checkpoint-20261119-0312/anytype-components77.json"
+    },
+    {
+      "id": "ORIGINAL_PAIRED_STORAGE_FIX_20261119",
+      "status": "FOUR_HOST_PASS_FOUR_UI_FAIL_REPAIR_PUBLISHED",
+      "sha": "b32e50846551d8e870dd5b58230ae01f13487c87",
+      "runs": [
+        44426526923,
+        44447129341
+      ],
+      "scope": "Original compiler reproduced invalid Storage named import and accepts corrected global API fixture; all8 original native selectors retained, typing and keyboard evidence separate.",
+      "report": "acceptance/paired-transfer-storage-20261119"
+    },
+    {
+      "id": "NPM_GENERATIONS_NATIVE_20261119_3A",
+      "status": "VERIFIED_NATIVE_SUBSET_PASS",
+      "run": 44429680236,
+      "sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "scope": "One original real embedded npm lifecycle passed: install7/import, update6/preserved old generation, rejected9999 without active publication, uninstall/import failure; generation policy/environment identities verified.39pins match; trackedWorkspaceModified qualification retained.",
+      "report": "acceptance/checkpoint-20261119-0312/npm-native1/verification.json"
+    },
+    {
+      "id": "ANYTYPE_DEBUG_GROUPS_8B_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "run": 44449673030,
+      "sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+      "scope": "Original Debug main/Share/Notification configs select existing .dev entitlement files; original Swift constants and selected-block UI assertions unchanged.91portable controls pass; original iPhone selection dispatched. Hittability causality and logout UI acceptance remain unproven.",
+      "report": "acceptance/checkpoint-20261119-0312/anytype-debug-groups-publication.json"
     }
   ],
   "source_tasks": [
@@ -1524,17 +1640,17 @@
     },
     {
       "id": "LIVE_MODEL_PROVIDER",
-      "status": "SIMULATOR_PREPARATION_FAILED_NOT_AUTH_FAILURE",
-      "need": "Authorized original route remains available. The native run stopped on simctl list devices -j before staging any credential; witness NO_CREDENTIAL_STAGED. Repair simulator discovery and rerun the original product case.",
-      "run": 44385752088,
-      "evidence": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\live\\members\\acceptance.json"
+      "status": "ORIGINAL_AUTHORIZED_CASE_QUEUED",
+      "need": "Original provider credential transferred via stdin for the queued source, owned temporary secret deleted and absence verified. Prior live install failed before credential staging; actual provider/cold-reopen acceptance remains pending.",
+      "run": 44447388017,
+      "evidence": "acceptance/checkpoint-20261119-0312/CONTINUATION_CHECKPOINT.json"
     },
     {
       "id": "SIGNED_PROVISIONING",
-      "status": "PROFILES_READY_ARCHIVES_PASS_EXPORTS_FAIL",
-      "need": "Existing identity and six original profiles validated; both device archives passed. Xcode could not find the matching installed App Store profiles during export. Repair profile discovery, then verify exports and exported entitlements.",
-      "run": 44383723446,
-      "evidence": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing\\members\\app-split-evidence\\signed-products\\acceptance.json"
+      "status": "ORIGINAL_PROFILE_ADMISSION_STILL_UNRESOLVED",
+      "need": "Apple records/identity/profiles exist; actual tiny Xcode admission failed despite valid CMS. Corrected native flag parsing and exact owned build-settings diagnostic are queued. Both signed exports and signed entitlement use remain open.",
+      "run": 44446182012,
+      "evidence": "acceptance/checkpoint-20261119-0312/CONTINUATION_CHECKPOINT.json"
     },
     {
       "id": "APPROVED_FULL_VISUAL_REFERENCE",
@@ -1548,18 +1664,18 @@
     }
   ],
   "remaining_internal_gates": [
-    "Read all seven pending native runs and original raw cases at their recorded SHAs. Source fixes and queued jobs are not acceptance results.",
-    "Verify compact keyboard, native editor and paired search corrections through the three 90314963 native runs, preserving all original assertions.",
-    "Diagnose Canvas AX connection loss and the distinct failures in the wide 26-case suite; preserve its 11 genuine passes.",
-    "Complete original-policy offline and Runtime05 global-generation/cache native validation through the two 3de8cf6 runs.",
-    "Use Motion D to distinguish native input delivery from animation behavior; original B remains an unmet acceptance case.",
-    "Fix Xcode profile discovery for both original App Store exports. Identity/profile resources and archives passed; signed exports and exported entitlements remain unverified.",
-    "Repair live owned-simulator discovery before account staging, then execute the original live Gemini/Host/Python/cold-reopen route. NO_CREDENTIAL_STAGED is not an authentication failure.",
-    "Map actual assertions to all 278 preserved feature rows and 26 UX decisions; retain every original Definition of Done and all 30 source tasks.",
-    "Complete physical-device and OS entry-point obligations where required; the observed Windows host has no Apple USB developer transport.",
-    "Update original Asana tasks after verified milestones. Phase 2 and Phase 3 remain in progress because acceptance is incomplete."
+    "Finish all pending original native scopes at their recorded sources; do not promote queue/source checks to native acceptance.",
+    "Resolve native editor corruption with exact edit ordering evidence; verify keyboard/Canvas/paired/Share flows on corrected source.",
+    "Complete maintained23+Yams4+Cairo2+wheel; original25 fixture/policy cases and original npm lifecycle now have qualified native proof.",
+    "Complete original Motion presets/rapid toggle and native performance obligations; diagnosticD alone is not acceptance.",
+    "Complete actual typed DATA Apple cases, original clear-history/reopen/stale writer repair, account/CloudKit/logout/full erase and host-owned credentials.",
+    "Complete actual A2UI presentation/event/stream/media and required performance/surface matrix; preserve original contracts.",
+    "Complete real upstream candidate proof, server negative rejection, later same-head green, protected merge and rollback.",
+    "Finish Anytype original selection, Debug app-group and logout lifecycle; retain actual77 component/UI22 subset proof and original Otzaria host obligations.",
+    "Verify tiny profile admission, both signed product exports/entitlements and physical iOS/iPad acceptance where required.",
+    "Reconcile original278 features/26UX decisions with actual current evidence and close only fulfilled original tasks."
   ],
-  "native_status_observed_at": "2026-11-19T01:19:55.276264+00:00",
+  "native_status_observed_at": "2026-11-19T03:11:56.834148+00:00",
   "feature_coverage_snapshot": {
     "path": "docs/continuation-20261117/acceptance/FEATURE_ACCEPTANCE_278.json",
     "source_anchor_sha": "4f4f927db97aefc7ca3df558993a2fa769f8eea1",
@@ -1569,15 +1685,15 @@
     "scope": "20 model/history native,6 editor native,8 selected SDK native and6 original MiniApps UI unique cases within their recorded runs; no new executions or full-product claim."
   },
   "publication": {
-    "published_source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
-    "local_review_source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+    "published_source_sha": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+    "local_review_source_sha": "1480b347f519073b384cd86f7efc506e9c2d1aab",
     "unpublished_commits": [],
     "status": "PUBLISHED_VERIFIED",
     "destination": "https://github.com/davidpovarsky/hanlin-ai.git",
     "branch": "codex/hanlin-product-completion-20261117",
     "reason": "On 19 November 2026, the owner explicitly authorized required actions, reads, runs, transfers and uploads across projects and repositories, and requested removal of obsolete local agent/claude permission and stop gates. Continue authorized completion without repeated approval. Actual access and truthful acceptance evidence remain factual requirements.",
     "scope": "Owner-authorized continuation across the original repositories. Publication, local checks and native acceptance are recorded separately.",
-    "published_sha_verified_at": "2026-11-19T01:19:55.276264+00:00",
+    "published_sha_verified_at": "2026-11-19T03:11:56.834148+00:00",
     "upstream_dependency": {
       "repo": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
       "branch": "codex/hanlin-markdown-link-continuation-20261118",
@@ -1596,124 +1712,114 @@
   },
   "pending_native_runs": [
     {
-      "run": "44434893361",
-      "source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
-      "scope": "23 maintained original Skill packages +2 Cairo invalid-argv/plan cases +4 existing Yams app adoption controls",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "run": 44448313143,
+      "source_sha": "1480b347f519073b384cd86f7efc506e9c2d1aab",
       "workflow_status": "queued",
       "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44448313143",
+      "scope": "Full original SDK05 scope plus5 typed ports, registry/SDK/MCP and split origin",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
       "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
     },
     {
-      "run": "44431826560",
-      "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
-      "scope": "Original identity CMS and Xcode admission diagnostic only",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+      "run": 44447388017,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
       "workflow_status": "queued",
       "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447388017",
+      "scope": "Original live Gemini/Python/consent/cold-reopen with owned cleanup",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
       "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
     },
     {
-      "run": "44431811538",
+      "run": 44447129341,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447129341",
+      "scope": "Original paired product/share8 with Storage fixture and keyboard fixes",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44447126258,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258",
+      "scope": "Complete original iPad scope plus geometry, Canvas, reasoning and selection",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44447123515,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447123515",
+      "scope": "Original iPhone2 with actual-editor keyboard ownership",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44446182012,
+      "source_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44446182012",
+      "scope": "Corrected CMS wire flags and bounded owned signing settings",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44440354095,
+      "source_sha": "589420f3da0db240df8aa5a466bba9303a6bf4c5",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44440354095",
+      "scope": "23 maintained original packages +2Cairo +4Yams +local Python wheel (30)",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44437763739,
+      "source_sha": "ca49d1381d186dcc481eeb7c7eb753dd19bd0085",
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44437763739",
+      "scope": "Original Motion D coherent accessibility diagnostic",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44431811538,
       "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
-      "scope": "Code fence tests plus original eight affected UI/Skills/consent routes",
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
       "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
-      "workflow_status": "queued",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "scope": "CodeFence plus8 original UI/Skills/consent/Safari routes",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
       "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
     },
     {
-      "run": "44429728630",
+      "run": 44429703865,
       "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
-      "scope": "Corrected native editor/A2UI and two actual compact iPad keyboard routes",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
-      "workflow_status": "queued",
+      "workflow_status": "in_progress",
       "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
-    },
-    {
-      "run": "44429703865",
-      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
-      "scope": "Corrected original two compact iPhone controls",
       "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
-      "workflow_status": "queued",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "scope": "Original two compact iPhone cases on prior source (already running; retained)",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
       "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
-    },
-    {
-      "run": "44429680236",
-      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
-      "scope": "Corrected original isolated npm lifecycle",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
-      "workflow_status": "queued",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
-    },
-    {
-      "run": "44429654565",
-      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
-      "scope": "Corrected original native Skills/offline policy and cache: four methods/25 invocations",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
-      "workflow_status": "queued",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
-    },
-    {
-      "run": "44428114202",
-      "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
-      "scope": "Actual live Gemini/Host consent/Python/cold reopen",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428114202",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
-      "workflow_status": "in_progress",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
-    },
-    {
-      "run": "44428104345",
-      "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
-      "scope": "Reasoning/Canvas/UI01/Saved messages original native selectors",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
-      "workflow_status": "queued",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
-    },
-    {
-      "run": "44426526923",
-      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
-      "scope": "Original eight paired product/shared-ingress controls",
-      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426526923",
-      "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
-      "workflow_status": "in_progress",
-      "workflow_conclusion": null,
-      "observed_at": "2026-11-19T01:19:55.276264+00:00",
-      "acceptance_claim": false,
-      "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
     }
   ],
   "terminal_native_continuation_runs": [
@@ -3132,6 +3238,140 @@
       "observed_at": "2026-11-19T01:19:55.276264+00:00",
       "acceptance_claim": false,
       "observation_source": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "run": 44443891179,
+      "source_sha": "a7d6762c4d2d9c18ca987dfe6ce3f077d4c4e164",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44443891179",
+      "scope": "Old23 SDK05 cases replaced before native by complete expanded44448313143",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44434893361,
+      "source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361",
+      "scope": "Old maintained29 scope replaced before native by30-case44440354095",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44431826560,
+      "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560",
+      "scope": "CMS/signing tiny admission diagnostic; native profile discovery failed",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44429728630,
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630",
+      "scope": "Old queued iPad scope replaced by full superset44447126258",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44429680236,
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "workflow_status": "completed",
+      "workflow_conclusion": "success",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236",
+      "scope": "Original isolated npm install/update/failure/uninstall lifecycle",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44429654565,
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "workflow_status": "completed",
+      "workflow_conclusion": "success",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565",
+      "scope": "4 methods/25 generated-fixture and policy/cache cases",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "counts": {
+        "total": 25,
+        "passed": 25,
+        "failed": 0,
+        "skipped": 0
+      },
+      "status": "VERIFIED_NATIVE_SUBSET_PASS",
+      "source_qualification": {
+        "note": "The authenticated build records trackedWorkspaceModified=true. Runtime preparation logs record a generated RuntimeManifest and updated Host source modules with unchanged locked dependencies. An exhaustive tracked diff is not retained, so this is not described as a clean-tree binary. The exact original policy artifact/declaration closure is independently authenticated by the native witness. Evidence applies to this recorded run, not newer source commits.",
+        "packageResolvedSHA256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+        "resolved_pin_states_match_committed_lock": true,
+        "sourceCommit": "3a87634b8b478833ddd90c896fe494bd4becda82",
+        "trackedWorkspaceModified": true
+      },
+      "artifact": {
+        "all_zip_crcs_verified": true,
+        "bytes": 2592144,
+        "id": 14494480413,
+        "members": 144,
+        "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+        "official_digest_matches": true,
+        "sha256": "a1a893e852f679288f523de367bd2ae1b33b664656ca7847e71b0748d9a653e1",
+        "uncompressed_bytes": 17191368
+      }
+    },
+    {
+      "run": 44428114202,
+      "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428114202",
+      "scope": "Live case not run: owned simulator app installation timed out before credentials",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44428104345,
+      "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345",
+      "scope": "6 exact native cases:4pass,2fail; Canvas local result/disclosure reached",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "counts": {
+        "total": 6,
+        "passed": 4,
+        "failed": 2,
+        "skipped": 0
+      },
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44426526923,
+      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426526923",
+      "scope": "Original paired8:4Hostpass,4UIfail",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "counts": {
+        "total": 8,
+        "passed": 4,
+        "failed": 4,
+        "skipped": 0
+      },
+      "status": "TERMINAL_RECORDED_SCOPE"
     }
   ],
   "historical_snapshots": [
@@ -3398,6 +3638,177 @@
         },
         "receipt": "docs/continuation-20261117/acceptance/PUBLICATION_AND_NATIVE_CONTINUATION_20261118.json"
       }
+    },
+    {
+      "observed_at": "2026-11-19T01:19:55.276264+00:00",
+      "source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+      "pending_native_runs": [
+        {
+          "run": "44434893361",
+          "source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+          "scope": "23 maintained original Skill packages +2 Cairo invalid-argv/plan cases +4 existing Yams app adoption controls",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        },
+        {
+          "run": "44431826560",
+          "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+          "scope": "Original identity CMS and Xcode admission diagnostic only",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        },
+        {
+          "run": "44431811538",
+          "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+          "scope": "Code fence tests plus original eight affected UI/Skills/consent routes",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        },
+        {
+          "run": "44429728630",
+          "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+          "scope": "Corrected native editor/A2UI and two actual compact iPad keyboard routes",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        },
+        {
+          "run": "44429703865",
+          "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+          "scope": "Corrected original two compact iPhone controls",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        },
+        {
+          "run": "44429680236",
+          "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+          "scope": "Corrected original isolated npm lifecycle",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        },
+        {
+          "run": "44429654565",
+          "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+          "scope": "Corrected original native Skills/offline policy and cache: four methods/25 invocations",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        },
+        {
+          "run": "44428114202",
+          "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+          "scope": "Actual live Gemini/Host consent/Python/cold reopen",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428114202",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "in_progress",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        },
+        {
+          "run": "44428104345",
+          "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+          "scope": "Reasoning/Canvas/UI01/Saved messages original native selectors",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "queued",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        },
+        {
+          "run": "44426526923",
+          "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+          "scope": "Original eight paired product/shared-ingress controls",
+          "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426526923",
+          "status": "PENDING_RAW_NATIVE_ACCEPTANCE",
+          "workflow_status": "in_progress",
+          "workflow_conclusion": null,
+          "observed_at": "2026-11-19T01:19:55.276264+00:00",
+          "acceptance_claim": false,
+          "dispatch_receipt": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
+        }
+      ],
+      "remaining_internal_gates": [
+        "Read all seven pending native runs and original raw cases at their recorded SHAs. Source fixes and queued jobs are not acceptance results.",
+        "Verify compact keyboard, native editor and paired search corrections through the three 90314963 native runs, preserving all original assertions.",
+        "Diagnose Canvas AX connection loss and the distinct failures in the wide 26-case suite; preserve its 11 genuine passes.",
+        "Complete original-policy offline and Runtime05 global-generation/cache native validation through the two 3de8cf6 runs.",
+        "Use Motion D to distinguish native input delivery from animation behavior; original B remains an unmet acceptance case.",
+        "Fix Xcode profile discovery for both original App Store exports. Identity/profile resources and archives passed; signed exports and exported entitlements remain unverified.",
+        "Repair live owned-simulator discovery before account staging, then execute the original live Gemini/Host/Python/cold-reopen route. NO_CREDENTIAL_STAGED is not an authentication failure.",
+        "Map actual assertions to all 278 preserved feature rows and 26 UX decisions; retain every original Definition of Done and all 30 source tasks.",
+        "Complete physical-device and OS entry-point obligations where required; the observed Windows host has no Apple USB developer transport.",
+        "Update original Asana tasks after verified milestones. Phase 2 and Phase 3 remain in progress because acceptance is incomplete."
+      ],
+      "external_gates": [
+        {
+          "id": "PHYSICAL_DEVICE",
+          "status": "NO_DEVELOPER_USB_TRANSPORT_OBSERVED",
+          "need": "The connected Windows host shows only iPad Bluetooth/audio profiles and no Apple USB developer transport. Physical acceptance remains unverified where specifically required.",
+          "evidence": "acceptance/PHYSICAL_DEVICE_AVAILABILITY_20261118.json"
+        },
+        {
+          "id": "LIVE_MODEL_PROVIDER",
+          "status": "SIMULATOR_PREPARATION_FAILED_NOT_AUTH_FAILURE",
+          "need": "Authorized original route remains available. The native run stopped on simctl list devices -j before staging any credential; witness NO_CREDENTIAL_STAGED. Repair simulator discovery and rerun the original product case.",
+          "run": 44385752088,
+          "evidence": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\live\\members\\acceptance.json"
+        },
+        {
+          "id": "SIGNED_PROVISIONING",
+          "status": "PROFILES_READY_ARCHIVES_PASS_EXPORTS_FAIL",
+          "need": "Existing identity and six original profiles validated; both device archives passed. Xcode could not find the matching installed App Store profiles during export. Repair profile discovery, then verify exports and exported entitlements.",
+          "run": 44383723446,
+          "evidence": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing\\members\\app-split-evidence\\signed-products\\acceptance.json"
+        },
+        {
+          "id": "APPROVED_FULL_VISUAL_REFERENCE",
+          "status": "PARTIAL_REFERENCE",
+          "need": "Original 26-decision summary and authenticated Composer reference exist; full October master prompt was not found. Source/visual conclusions must state their actual references."
+        },
+        {
+          "id": "PUBLIC_SOURCE_PUBLICATION",
+          "status": "AUTHORIZED_PUBLISHED_BRANCH",
+          "need": "The current owner authorized required reads, actions, runs, transfers and uploads, and requested removal of local repeat-approval gates. The published branch SHA is recorded below; product acceptance is separate."
+        }
+      ],
+      "checkpoint": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json"
     }
   ],
   "continuation_20261119": {
@@ -3533,7 +3944,7 @@
     }
   },
   "source_task_observation_policy": "source_tasks preserves the original 30 source snapshots verbatim. current_task_observations records later scoped completion; it does not close parent/phase/product acceptance.",
-  "latest_checkpoint": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json",
+  "latest_checkpoint": "acceptance/checkpoint-20261119-0312/CONTINUATION_CHECKPOINT.json",
   "continuation_20261119_later": {
     "checkpoint": "acceptance/checkpoint-20261119-0119/CONTINUATION_CHECKPOINT.json",
     "new_evidence_ids": [
@@ -3724,5 +4135,399 @@
     ],
     "original_task_objects_preserved": true,
     "prior_evidence_records_preserved": 67
-  }
+  },
+  "current_asana_task_status": {
+    "observed_at": "2026-11-19T03:10:46.000302+00:00",
+    "tasks": [
+      {
+        "gid": "1220542174541844",
+        "code": "SDK-01",
+        "objective": "Audit package/source/host/platform",
+        "current": {
+          "gid": "1220542174541844",
+          "completed": true,
+          "modified_at": "2026-11-19T01:07:12.401Z",
+          "name": "[HANLIN-SDK-01][P0][AUDIT] מיפוי קוד, תלות ו־iOS 26/27; חוזי Swift Package ללא שכפול",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542174541844"
+        }
+      },
+      {
+        "gid": "1220546710401425",
+        "code": "SKILL-YAMS-02",
+        "objective": "Yams source package and app adoption",
+        "current": {
+          "gid": "1220546710401425",
+          "completed": false,
+          "modified_at": "2026-11-19T01:12:52.149Z",
+          "name": "[P0][SKILL-YAMS-02] Yams מקורית ב-SwiftPM — פענוח SKILL.md/Agent Skills frontmatter מלא ללא שכפול",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546710401425"
+        }
+      },
+      {
+        "gid": "1219605220234118",
+        "code": "WAVE-A",
+        "objective": "Canonical legacy baseline and product parity",
+        "current": {
+          "gid": "1219605220234118",
+          "completed": false,
+          "modified_at": "2026-11-16T05:55:12.447Z",
+          "name": "[CURRENT WAVE A] Baseline + parity audit — מפת רכיבי Hanlin ומקור SwiftChat",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219605220234118"
+        }
+      },
+      {
+        "gid": "1220546608370437",
+        "code": "SKILL-UPSTREAM-01",
+        "objective": "Pinned upstream PR9/maintenance and accepted safe pipeline",
+        "current": {
+          "gid": "1220546608370437",
+          "completed": false,
+          "modified_at": "2026-11-19T03:07:40.194Z",
+          "name": "[P0][SKILL-UPSTREAM-01] תשתית קליטת upstream חיה — SwiftPM, OpenClaw/Tree-sitter, Renovate/CI ומיזוג בטוח",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546608370437"
+        }
+      },
+      {
+        "gid": "1220373608755846",
+        "code": "SDK-03",
+        "objective": "NativeScript targeted TS SDK/Host capabilities (not Full-SDK metadata)",
+        "current": {
+          "gid": "1220373608755846",
+          "completed": false,
+          "modified_at": "2026-11-16T16:05:18.855Z",
+          "name": "[SDK-03][NATIVESCRIPT] TypeScript SDK מלא ומדויק ל-Core ו-Direct Native iOS APIs",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220373608755846"
+        }
+      },
+      {
+        "gid": "1220373832827086",
+        "code": "SDK-04",
+        "objective": "Expo SDK generated bridge and native-api",
+        "current": {
+          "gid": "1220373832827086",
+          "completed": false,
+          "modified_at": "2026-11-16T16:05:18.792Z",
+          "name": "[SDK-04][EXPO] TypeScript SDK מלא, Expo SwiftUI, Generated Bridge ו-native-api",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220373832827086"
+        }
+      },
+      {
+        "gid": "1220374076374903",
+        "code": "INT-03",
+        "objective": "NativeScript runtime.execute/TS/Shell and scheduler",
+        "current": {
+          "gid": "1220374076374903",
+          "completed": false,
+          "modified_at": "2026-11-16T16:05:18.838Z",
+          "name": "[INT-03][NATIVESCRIPT] Generic runtime.execute + TypeScript/Shell, robust session scheduler and actions",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220374076374903"
+        }
+      },
+      {
+        "gid": "1220546710400478",
+        "code": "SKILL-RUNTIME-05",
+        "objective": "Passive engine facts/readiness planner and real skill execution",
+        "current": {
+          "gid": "1220546710400478",
+          "completed": false,
+          "modified_at": "2026-11-19T03:01:46.154Z",
+          "name": "[P0][SKILL-RUNTIME-05] Skill Compatibility/Readiness + Execution Planner — engine selection Native/iSH",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546710400478"
+        }
+      },
+      {
+        "gid": "1220489383643571",
+        "code": "A2UI-02",
+        "objective": "Rich-content envelope for agent output and tool result",
+        "current": {
+          "gid": "1220489383643571",
+          "completed": false,
+          "modified_at": "2026-11-18T09:51:43.100Z",
+          "name": "[A2UI-02][P0] Unified Rich-Content envelope: A2UI מתוך תשובת Agent, לא רק ToolResult",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220489383643571"
+        }
+      },
+      {
+        "gid": "1220489258419968",
+        "code": "A2UI-03",
+        "objective": "Original SwiftUI A2UI surfaces and bindings",
+        "current": {
+          "gid": "1220489258419968",
+          "completed": false,
+          "modified_at": "2026-11-18T09:51:45.353Z",
+          "name": "[A2UI-03][P0] Native SwiftUI Surface והקטלוג הרשמי: רכיבים, Binding, RTL, נגישות ומצבי תצוגה",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220489258419968"
+        }
+      },
+      {
+        "gid": "1220489257946325",
+        "code": "A2UI-04",
+        "objective": "Events, RPC, action broker, permissions",
+        "current": {
+          "gid": "1220489257946325",
+          "completed": false,
+          "modified_at": "2026-11-18T09:51:47.711Z",
+          "name": "[A2UI-04][P0] דו־כיווניות: Events, RPC, action broker והרשאות מפעולות הממשק לסוכן",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220489257946325"
+        }
+      },
+      {
+        "gid": "1220489600044406",
+        "code": "A2UI-05",
+        "objective": "Streaming, lifecycle, replay",
+        "current": {
+          "gid": "1220489600044406",
+          "completed": false,
+          "modified_at": "2026-11-18T09:51:50.076Z",
+          "name": "[A2UI-05][P1] Streaming A2UI סדור, מחזור חיים, ביצועים ו־Transcript replay",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220489600044406"
+        }
+      },
+      {
+        "gid": "1220491240486416",
+        "code": "A2UI-09",
+        "objective": "Native images, links, MP4/HLS, YouTube and galleries",
+        "current": {
+          "gid": "1220491240486416",
+          "completed": false,
+          "modified_at": "2026-11-18T05:55:21.322Z",
+          "name": "[A2UI-09][P0][TOP PRIORITY][MEDIA] תמונות אינטרנט, גלריות, MP4/HLS, YouTube וכרטיסי קישור בתוך Hanlin Chat",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220491240486416"
+        }
+      },
+      {
+        "gid": "1220546608350406",
+        "code": "SKILL-AST-04",
+        "objective": "Original Tree-sitter/AST passive skill dependencies",
+        "current": {
+          "gid": "1220546608350406",
+          "completed": false,
+          "modified_at": "2026-11-16T16:05:18.799Z",
+          "name": "[P1][SKILL-AST-04] זיהוי תלויות לא מוצהרות מ-Skills — Tree-sitter Bash upstream + Python/TS AST קיימים",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546608350406"
+        }
+      },
+      {
+        "gid": "1220546846740594",
+        "code": "CHATUX-MOTION",
+        "objective": "Native animated disclosure, transitions and shimmer",
+        "current": {
+          "gid": "1220546846740594",
+          "completed": false,
+          "modified_at": "2026-11-19T01:34:10.756Z",
+          "name": "[P1][CHATUX-MOTION] Hanlin AI — ערכות אנימציה מוכנות לצ׳אט + בורר יחיד בהגדרות",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546846740594"
+        }
+      },
+      {
+        "gid": "1220539644804804",
+        "code": "COMPOSER",
+        "objective": "Approved native chat bubble and MorphView parity",
+        "current": {
+          "gid": "1220539644804804",
+          "completed": false,
+          "modified_at": "2026-11-19T02:52:59.718Z",
+          "name": "[HANLIN][UI APPROVED] מימוש בועת ההודעה והכלים החדשה — התאמה 1:1 ל-MorphView Swift Playground",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220539644804804"
+        }
+      },
+      {
+        "gid": "1220541898122292",
+        "code": "ACTIVE-CHIPS",
+        "objective": "Active tool chips above bubble / expanded state",
+        "current": {
+          "gid": "1220541898122292",
+          "completed": false,
+          "modified_at": "2026-11-16T16:05:18.934Z",
+          "name": "[HANLIN][Composer][Active Chips] להטמיע chips של הכלים המופעלים מעל בועת ההודעה — לפי קובץ Swift המאושר במחשב",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220541898122292"
+        }
+      },
+      {
+        "gid": "1220546710417618",
+        "code": "SKILL-UX-QA-06",
+        "objective": "Skill Center real state/remediation and UX",
+        "current": {
+          "gid": "1220546710417618",
+          "completed": false,
+          "modified_at": "2026-11-19T01:02:13.511Z",
+          "name": "[P1][SKILL-UX-QA-06] Skill Center — סטטוס תאימות אמיתי, remediation, בדיקות iPad ודו״ח קבלה",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546710417618"
+        }
+      },
+      {
+        "gid": "1219613181643838",
+        "code": "SDK-PARENT",
+        "objective": "Shared Hanlin Agent/Chat SDK and Host integration",
+        "current": {
+          "gid": "1219613181643838",
+          "completed": false,
+          "modified_at": "2026-11-19T02:08:40.159Z",
+          "name": "[P0][CURRENT WAVE][IN PROGRESS] Hanlin Chat & Agent SDK — SwiftUI משותף + Host API לאוצריא ול־Anytype",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1219613181643838"
+        }
+      },
+      {
+        "gid": "1220542419128390",
+        "code": "SDK-02",
+        "objective": "Importable Swift Agent/Chat/Streaming/Skills/MCP package",
+        "current": {
+          "gid": "1220542419128390",
+          "completed": false,
+          "modified_at": "2026-11-16T16:05:18.896Z",
+          "name": "[HANLIN-SDK-02][P0][CORE] חבילת Swift ניתנת לייבוא — Agent/Chat/Streaming/Skills/MCP",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542419128390"
+        }
+      },
+      {
+        "gid": "1220542199992529",
+        "code": "SDK-03-HOST",
+        "objective": "HostIntegration actions/policy/results/navigation",
+        "current": {
+          "gid": "1220542199992529",
+          "completed": false,
+          "modified_at": "2026-11-19T01:46:23.818Z",
+          "name": "[HANLIN-SDK-03][P0][HOST] HostIntegration API — הקשר, פעולות, הרשאות, תוצאות וניווט",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542199992529"
+        }
+      },
+      {
+        "gid": "1220542199999956",
+        "code": "SDK-05-DATA",
+        "objective": "ConversationStore, Keychain, App Group, persistence",
+        "current": {
+          "gid": "1220542199999956",
+          "completed": false,
+          "modified_at": "2026-11-19T03:04:17.303Z",
+          "name": "[HANLIN-SDK-05][P0][DATA/SEC] ConversationStore, Keychain, App Group, CloudKit, בידוד והרשאות",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542199999956"
+        }
+      },
+      {
+        "gid": "1220542174541940",
+        "code": "SDK-04-UI",
+        "objective": "Shared SwiftUI ChatView/Composer/Thinking/A2UI",
+        "current": {
+          "gid": "1220542174541940",
+          "completed": false,
+          "modified_at": "2026-11-19T02:53:01.151Z",
+          "name": "[HANLIN-SDK-04][P0][UI] אותו ChatView/Composer/Thinking/A2UI בכל האפליקציות — SwiftUI",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1220542174541940"
+        }
+      },
+      {
+        "gid": "1220546571007976",
+        "code": "SKILL-OPENCLAW-03",
+        "objective": "Original OpenClaw eligibility/gating subset and embedded node",
+        "current": {
+          "gid": "1220546571007976",
+          "completed": false,
+          "modified_at": "2026-11-19T03:02:02.344Z",
+          "name": "[P0][SKILL-OPENCLAW-03] קליטת מנגנון Eligibility/Gating המקורי של OpenClaw ב-Hanlin — מקור מתעדכן ומתאם דק",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546571007976"
+        }
+      },
+      {
+        "gid": "1219605220179926",
+        "code": "SPLIT-PARENT",
+        "objective": "Two independent apps with product acceptance",
+        "current": {
+          "gid": "1219605220179926",
+          "completed": false,
+          "modified_at": "2026-11-19T00:11:47.764Z",
+          "name": "[CURRENT WAVE][SPLIT] Hanlin AI + Hanlin MiniApps — שתי אפליקציות עצמאיות ושימור יכולות",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1219605220179926"
+        }
+      },
+      {
+        "gid": "1219656771637321",
+        "code": "WAVE-K",
+        "objective": "Two targets, security and shared data migration",
+        "current": {
+          "gid": "1219656771637321",
+          "completed": false,
+          "modified_at": "2026-11-19T02:57:15.526Z",
+          "name": "[CURRENT WAVE K][ARCH][SEC] שני Targets, Shared Contracts ומיגרציה בטוחה",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219656771637321"
+        }
+      },
+      {
+        "gid": "1219656771149125",
+        "code": "WAVE-J",
+        "objective": "Approved Hanlin AI shell IA/UX",
+        "current": {
+          "gid": "1219656771149125",
+          "completed": false,
+          "modified_at": "2026-11-18T05:21:26.223Z",
+          "name": "[CURRENT WAVE J][UX] אישור IA ומסכי Hanlin AI הנקיים — Chat / Library / History / Advanced",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219656771149125"
+        }
+      },
+      {
+        "gid": "1219656771460030",
+        "code": "WAVE-L",
+        "objective": "Hanlin MiniApps independent, return to agent",
+        "current": {
+          "gid": "1219656771460030",
+          "completed": false,
+          "modified_at": "2026-11-18T19:36:53.521Z",
+          "name": "[CURRENT WAVE L][DEV] Hanlin MiniApps עצמאית + גשר חזרה לסוכן",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219656771460030"
+        }
+      },
+      {
+        "gid": "1219605235147314",
+        "code": "WAVE-H",
+        "objective": "Final original source parity/non-regression matrix",
+        "current": {
+          "gid": "1219605235147314",
+          "completed": false,
+          "modified_at": "2026-11-18T08:08:58.393Z",
+          "name": "[CURRENT WAVE H] תרחישי קבלה, בדיקות סטטיות, non-regression ודוח קוד",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219605235147314"
+        }
+      },
+      {
+        "gid": "1219605282038820",
+        "code": "WAVE-I",
+        "objective": "iOS 26/27, real iPad and release candidate",
+        "current": {
+          "gid": "1219605282038820",
+          "completed": false,
+          "modified_at": "2026-11-19T02:53:02.825Z",
+          "name": "[CURRENT WAVE I] אישור נפרד: Xcode 27 / iOS 27 / IPA / השוואה חזותית במכשיר",
+          "permalink_url": "https://app.asana.com/1/1219597879016953/task/1219605282038820"
+        }
+      }
+    ]
+  },
+  "continuation_20261119_0312": {
+    "checkpoint": "acceptance/checkpoint-20261119-0312/CONTINUATION_CHECKPOINT.json",
+    "added_evidence_ids": [
+      "SKILLS25_NATIVE_20261119_3A",
+      "UI6_D6_AUTHENTICATED_20261119",
+      "COMPACT_KEYBOARD_CANVAS_7E_20261119",
+      "SDK05_SECRET_AND_TYPED_DATA_1480_20261119",
+      "PYTHON_FACTS_MAINTAINED30_589_20261119",
+      "SIGNING_CMS_WIRE_8A_20261119",
+      "LIVE_PREPARATION_F780_20261119",
+      "UPSTREAM_V3_REAL_CI_PR_20261119",
+      "ANYTYPE_COMPONENT77_UI22_20261119",
+      "ORIGINAL_PAIRED_STORAGE_FIX_20261119"
+    ],
+    "supplement_recorded_at": "2026-11-19T03:20:09.979869+00:00",
+    "additional_evidence_ids": [
+      "NPM_GENERATIONS_NATIVE_20261119_3A",
+      "ANYTYPE_DEBUG_GROUPS_8B_20261119"
+    ]
+  },
+  "external_repository_runs": [
+    {
+      "repository": "davidpovarsky/anytype-swift",
+      "run": 44449673030,
+      "sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+      "state": "dispatched; native result not yet verified",
+      "url": "https://github.com/davidpovarsky/anytype-swift/actions/runs/44449673030"
+    }
+  ]
 }

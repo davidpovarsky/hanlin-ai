@@ -1,0 +1,50 @@
+{
+  "verifiedAt": "2026-11-19T03:07:09.601783+00:00",
+  "runID": 44443862765,
+  "sourceSHA": "7436f7dd5da56dc649421017e4fc186d53ba0cd0",
+  "workflowConclusion": "failure",
+  "cancelled": false,
+  "originalRenovate": {
+    "repository": "davidpovarsky/hanlin-ai",
+    "branch": "codex/upstream-acceptance-base-20261119-v2",
+    "mode": "apply",
+    "onlyPackage": "semver",
+    "exitCode": 0,
+    "tool": "44.239.1",
+    "node": "v24.22.1",
+    "mergeEnabled": false,
+    "log": "build/upstream-updates/renovate.log"
+  },
+  "realCIProven": {
+    "number": 13,
+    "creator": "github-actions[bot]",
+    "head": "00d5ff9f68a335ab20628fad1016c9b7863d2070",
+    "base": "7436f7dd5da56dc649421017e4fc186d53ba0cd0",
+    "baseRef": "codex/upstream-acceptance-base-20261119-v2",
+    "headRef": "codex/renovate/6b30fb8505bc/semver-7.x",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/pull/13",
+    "changedFiles": [
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json",
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json"
+    ],
+    "autoMerge": null
+  },
+  "exactFailureEvidence": [
+    "Hanlin upstream acceptance\tRun the single configured Renovate bot\t2026-11-19T03:03:09.4364530Z Error: Command failed: gh pr list --repo davidpovarsky/hanlin-ai --base codex/upstream-acceptance-base-20261119-v2 --limit 100 --json number,headRefName",
+    "Hanlin upstream acceptance\tRun the single configured Renovate bot\t2026-11-19T03:03:09.4371520Z gh: To use GitHub CLI in a GitHub Actions workflow, set the GH_TOKEN environment variable. Example:",
+    "Hanlin upstream acceptance\tRun the single configured Renovate bot\t2026-11-19T03:03:09.4386620Z   status: 4,",
+    "Hanlin upstream acceptance\tRun the single configured Renovate bot\t2026-11-19T03:03:09.4391040Z     'gh: To use GitHub CLI in a GitHub Actions workflow, set the GH_TOKEN environment variable. Example:\\n' +",
+    "Hanlin upstream acceptance\tRun the single configured Renovate bot\t2026-11-19T03:03:09.4410300Z   stderr: 'gh: To use GitHub CLI in a GitHub Actions workflow, set the GH_TOKEN environment variable. Example:\\n' +"
+  ],
+  "failureClassification": "Original Renovate CLI exited0 and CI token createdPR13; subsequent gh pr list exited4 because the bot step did not provide GH_TOKEN. Post-sync and candidate dispatch were not completed.",
+  "artifactID": 14493464820,
+  "artifactSHA256": "2fa12b719f70454a2b87d0a7fb80d3e3f81d8969dcdf90d7d0d8a5d20c13575c",
+  "artifactCRC": "PASS",
+  "failedJobLogSHA256": "72ee0f38a0525c61450f93660217ab9faa402423362684d8e92dadf69b003485",
+  "successorV3": {
+    "sourceSHA": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+    "producerRunID": 44448070120,
+    "status": "queued at latest observation"
+  },
+  "acceptance": "CI original bot credential creation demonstrated in old v2 only; schema2/native candidate and protected lifecycle remain open on v3"
+}

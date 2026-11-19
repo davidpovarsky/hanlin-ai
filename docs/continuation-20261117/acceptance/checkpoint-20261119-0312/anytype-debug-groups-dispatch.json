@@ -1,0 +1,17 @@
+{
+  "accepted_at": "2026-11-19T03:11:26.221441+00:00",
+  "source_sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+  "branch": "codex/chatgpt-wave15-hanlin-consumer-20261119",
+  "workflow": "torah-inspector-ipados27.yml",
+  "inputs": {
+    "route": "wave15-acceptance",
+    "acceptance_lane": "hanlin-selection",
+    "acceptance_device": "iphone",
+    "acceptance_language": "en",
+    "source_run_id": "44203168617"
+  },
+  "exit_code": 0,
+  "stdout": "https://github.com/davidpovarsky/anytype-swift/actions/runs/44449673030\n",
+  "stderr": "",
+  "runs": []
+}
