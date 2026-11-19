@@ -1,5 +1,7 @@
 # SDK-01 source audit — 2026-11-15
 
+> Historical 2026-11-15 source record. For current pins, implemented products, Host API 1.1, conversation format 2 and actual consumer/platform status, read [SDK-01 current audit (2026-11-19)](SDK_01_CURRENT_AUDIT_20261119.md). Historical pause/lease wording does not override the owner's current standing continuation authorization.
+
 Status: SOURCE_AUDIT / implementation contracts proposed. No native acceptance claimed.
 
 This document preserves the initial pinned audit. The later implementation lease and current preview delivery are recorded in `PUBLIC_API.md` and `IMPLEMENTATION_HANDOFF.md`; the historical docs-only lease below is not the later source grant.

@@ -1,5 +1,7 @@
 # HanlinAgentSDK 0.1.0-preview.1 — first source contract
 
+> Historical 2026-11-15 source record. For current pins, implemented products, Host API 1.1, conversation format 2 and actual consumer/platform status, read [SDK-01 current audit (2026-11-19)](SDK_01_CURRENT_AUDIT_20261119.md). Historical pause/lease wording does not override the owner's current standing continuation authorization.
+
 This preview is source delivery, not app/UI/device acceptance or a stable release. Consume the exact handoff Git SHA, never a moving branch. The package manifest is `Packages/HanlinAgentSDK/Package.swift`; platforms are iOS **27.0**, macOS **26**, Swift tools **6.2**, Swift language mode **6**. The local `../HanlinPlatform` dependency retains its real manifest and original public products. SwiftAISDK is pinned to `43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6` in both graphs. See `IMPLEMENTATION_HANDOFF.md` for the frozen source/evidence and remaining gates.
 
 ## Public products and direction

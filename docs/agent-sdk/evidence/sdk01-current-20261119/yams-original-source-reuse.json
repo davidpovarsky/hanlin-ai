@@ -1,0 +1,63 @@
+{
+  "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+  "historical_run": 43757913093,
+  "historical_source": "e44c57cf348b1037baa8416277a3414d7e93b805",
+  "records": [
+    {
+      "path": "Packages/HanlinSkillFormat/Package.resolved",
+      "expected": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "actual": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "matches": true
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Package.swift",
+      "expected": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+      "actual": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+      "matches": true
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/README.md",
+      "expected": "6fec57ec750366ed1d56a96a569ba7d235471971c4e4f3253933015d5b4d4f8e",
+      "actual": "6fec57ec750366ed1d56a96a569ba7d235471971c4e4f3253933015d5b4d4f8e",
+      "matches": true
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillDocumentEditing.swift",
+      "expected": "49ee1cadfc7a5b0931abdad0b86ee79a5c0ab7f905c0c049215e609bd38843b1",
+      "actual": "49ee1cadfc7a5b0931abdad0b86ee79a5c0ab7f905c0c049215e609bd38843b1",
+      "matches": true
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillDocumentParser.swift",
+      "expected": "516af3113b808985210e5d53802a74c904f9ea5d6d5b1e6f35cbd3b46661e043",
+      "actual": "516af3113b808985210e5d53802a74c904f9ea5d6d5b1e6f35cbd3b46661e043",
+      "matches": true
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/SkillMarkdownDocument.swift",
+      "expected": "44af023aa465984253e184e11a1c09b94e39073cfeae87a1810557e4d80e0f03",
+      "actual": "44af023aa465984253e184e11a1c09b94e39073cfeae87a1810557e4d80e0f03",
+      "matches": true
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat/YAMLSourceInspector.swift",
+      "expected": "8b4ae12a1108b804c7641c290c06f614b8ef75785b20c57a7d0a1f6da7fe21f6",
+      "actual": "8b4ae12a1108b804c7641c290c06f614b8ef75785b20c57a7d0a1f6da7fe21f6",
+      "matches": true
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests/Fixtures/openclaw.md",
+      "expected": "01887afef5beb260a45e4002ce4f39aee5acea2429a8acce229ca40cdd3227af",
+      "actual": "01887afef5beb260a45e4002ce4f39aee5acea2429a8acce229ca40cdd3227af",
+      "matches": true
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests/SkillDocumentTests.swift",
+      "expected": "5e648e5feabd7faca7dda4bd4bff767f32a04184de62bf37322c85f8650476f0",
+      "actual": "5e648e5feabd7faca7dda4bd4bff767f32a04184de62bf37322c85f8650476f0",
+      "matches": true
+    }
+  ],
+  "all_match": true,
+  "scope": "Original package input identity only; current app consumers require their own closure."
+}
