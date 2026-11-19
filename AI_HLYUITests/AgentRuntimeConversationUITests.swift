@@ -1547,17 +1547,46 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     /// This is not another chat turn, an injected grant, or a tool-result stub.
     private func approveOriginalToolRequest(_ expected: [String: String], in app: XCUIApplication,
                                             file: StaticString = #filePath, line: UInt = #line) {
-        let toggle = app.descendants(matching: .any)["hanlin-tool-consent-review-toggle"].firstMatch
-        XCTAssertTrue(toggle.waitForExistence(timeout: 45), "The original Host must request consent", file: file, line: line)
-        guard toggle.exists else { return }
-        let scroll = app.scrollViews.containing(.any, identifier: "hanlin-tool-consent-review-toggle").firstMatch
-        for _ in 0..<3 where !toggle.isHittable && scroll.exists { scroll.swipeUp() }
-        XCTAssertTrue(toggle.isHittable, "The original approval must be reachable", file: file, line: line)
-        guard toggle.isHittable else { return }
-        toggle.tap()
-        let review = app.staticTexts["hanlin-tool-consent-original-request"].firstMatch
-        XCTAssertTrue(review.waitForExistence(timeout: 10), file: file, line: line)
-        guard review.exists,
+        let owner = app.descendants(matching: .any).matching(
+            NSPredicate(format: "identifier BEGINSWITH 'hanlin-tool-approval-'")).firstMatch
+        let ownerExists = owner.waitForExistence(timeout: 45)
+        XCTAssertTrue(ownerExists, "The original Host must request consent", file: file, line: line)
+        guard ownerExists else { return }
+        let ownerID = owner.identifier
+        guard ownerID.hasPrefix("hanlin-tool-approval-") else {
+            XCTFail("The original immutable approval owner must exist", file: file, line: line)
+            return
+        }
+
+        func currentOwner() -> XCUIElement {
+            app.descendants(matching: .any)[ownerID].firstMatch
+        }
+
+        func tapOwnedButton(_ identifier: String) -> Bool {
+            // Each reveal resolves the original request again. Once reachable,
+            // tap immediately: repeated AX probes can outlive its one-use deadline.
+            for reveal in 0...3 {
+                let button = currentOwner().buttons[identifier].firstMatch
+                guard button.exists else { return false }
+                if button.isHittable {
+                    button.tap()
+                    return true
+                }
+                guard reveal < 3 else { return false }
+                let scroll = app.scrollViews.containing(.any, identifier: ownerID).firstMatch
+                guard scroll.exists else { return false }
+                scroll.swipeUp()
+            }
+            return false
+        }
+
+        let reviewed = tapOwnedButton("hanlin-tool-consent-review-toggle")
+        XCTAssertTrue(reviewed, "The original approval must be reachable", file: file, line: line)
+        guard reviewed else { return }
+        let review = currentOwner().staticTexts["hanlin-tool-consent-original-request"].firstMatch
+        let reviewExists = review.waitForExistence(timeout: 10)
+        XCTAssertTrue(reviewExists, file: file, line: line)
+        guard reviewExists,
               let actual = (try? JSONSerialization.jsonObject(with: Data(review.label.utf8))) as? [String: Any] else {
             XCTFail("The original request must contain reviewable JSON", file: file, line: line); return
         }
@@ -1566,17 +1595,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         for (key, value) in expected { XCTAssertEqual(actual[key] as? String, value, file: file, line: line) }
         guard Set(actual.keys).isSubset(of: allowed),
               expected.allSatisfy({ actual[$0.key] as? String == $0.value }) else { return }
-        let owner = app.descendants(matching: .any).matching(
-            NSPredicate(format: "identifier BEGINSWITH 'hanlin-tool-approval-'")).firstMatch
-        XCTAssertTrue(owner.exists, "The original immutable approval owner must exist", file: file, line: line)
-        guard owner.exists else { return }
-        let ownerID = owner.identifier
-        let allow = app.buttons["hanlin-tool-consent-allow-once"].firstMatch
-        for _ in 0..<3 where !allow.isHittable && scroll.exists { scroll.swipeUp() }
-        XCTAssertTrue(allow.exists && allow.isHittable, file: file, line: line)
-        guard allow.exists && allow.isHittable else { return }
-        allow.tap()
-        XCTAssertTrue(app.descendants(matching: .any)[ownerID].firstMatch.waitForNonExistence(timeout: 10),
+        let approved = tapOwnedButton("hanlin-tool-consent-allow-once")
+        XCTAssertTrue(approved, "The reviewed one-use approval must remain reachable", file: file, line: line)
+        guard approved else { return }
+        XCTAssertTrue(currentOwner().waitForNonExistence(timeout: 10),
                       "The one-use request must disappear after approval", file: file, line: line)
     }
 
