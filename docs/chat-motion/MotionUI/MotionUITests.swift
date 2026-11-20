@@ -50,16 +50,22 @@ final class MotionUITests: XCTestCase {
     private func waitForGeometry(_ value: String, timeout: TimeInterval = 5) {
         let state = app.staticTexts["proof-geometry-state"]
         let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", value), object: state)
-        XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: timeout), .completed,
-                       "Expected geometry: \(value); actual geometry: \(state.label); native action receipt: \(String(describing: state.value))")
+        let result = XCTWaiter.wait(for: [expectation], timeout: timeout)
+        if result != .completed {
+            let receipt = app.staticTexts["proof-action-receipt"]
+            XCTFail("Expected geometry: \(value); actual geometry: \(state.label); status: \(String(describing: state.value)); native action receipt: \(String(describing: receipt.value))")
+        }
     }
 
     private func waitForOrientation(landscape: Bool, timeout: TimeInterval = 5) {
         let state = app.staticTexts["proof-geometry-state"]
         let expected = landscape ? "orientation=landscape" : "orientation=portrait"
         let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", expected), object: state)
-        XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: timeout), .completed,
-                       "Expected \(expected); actual geometry: \(state.label); native action receipt: \(String(describing: state.value))")
+        let result = XCTWaiter.wait(for: [expectation], timeout: timeout)
+        if result != .completed {
+            let receipt = app.staticTexts["proof-action-receipt"]
+            XCTFail("Expected \(expected); actual geometry: \(state.label); status: \(String(describing: state.value)); native action receipt: \(String(describing: receipt.value))")
+        }
     }
 
     private func selectPreset(_ title: String, id: String) {
@@ -105,23 +111,67 @@ final class MotionUITests: XCTestCase {
         waitForGeometry("collapsed")
         let toggle = app.buttons["proof-thinking"]
         XCTAssertTrue(toggle.isHittable)
-        toggle.tap(withNumberOfTaps: 3, numberOfTouches: 1)
+        // One authentic native expand/collapse prewarm so SwiftUI disclosure
+        // layout caches are warm before the rapid 3-burst gesture.
+        toggle.tap()
+        waitForGeometry("expanded")
+        XCTAssertTrue(app.staticTexts["proof-summary"].exists)
+        toggle.tap()
+        waitForGeometry("collapsed")
+        XCTAssertFalse(app.staticTexts["proof-summary"].exists)
+
         let state = app.staticTexts["proof-geometry-state"]
-        let rapidValue = state.value as? String
+        let receiptElement = app.staticTexts["proof-action-receipt"]
+        let baselineValue = receiptElement.value as? String
+        let baselineAttachment = XCTAttachment(string: "Pre-burst baseline: \(String(describing: baselineValue)); geometry: \(state.label)")
+        baselineAttachment.name = "original-toggle-prewarm-baseline-receipt"
+        baselineAttachment.lifetime = .keepAlways
+        add(baselineAttachment)
+        let baselineActions = Int(receiptField("actions", in: baselineValue) ?? "") ?? -1
+        XCTAssertEqual(baselineActions, 2,
+                       "Prewarm expand/collapse must record exactly two actions: \(String(describing: baselineValue))")
+        XCTAssertEqual(receiptField("expanded", in: baselineValue), "false",
+                       "Prewarm must finish collapsed before rapid 3-burst: \(String(describing: baselineValue))")
+        XCTAssertEqual(state.label, "collapsed")
+
+        toggle.tap(withNumberOfTaps: 3, numberOfTouches: 1)
+        let rapidValue = receiptElement.value as? String
         let receipt = XCTAttachment(string: "Triple tap delivered: \(String(describing: rapidValue)); geometry: \(state.label)")
         receipt.name = "original-toggle-rapid-action-receipt"
         receipt.lifetime = .keepAlways
         add(receipt)
-        XCTAssertTrue(rapidValue?.hasPrefix("actions=3;expanded=true;") == true,
-                      "The original production button must receive all three rapid actions")
-        let rapidGaps = (receiptField("gaps", in: rapidValue) ?? "")
+        let afterActions = Int(receiptField("actions", in: rapidValue) ?? "") ?? -1
+        XCTAssertEqual(afterActions - baselineActions, 3,
+                       "The original production button must receive an exact 3-action delta: \(String(describing: rapidValue))")
+        XCTAssertEqual(receiptField("expanded", in: rapidValue), "true",
+                       "Three rapid actions from collapsed must end expanded: \(String(describing: rapidValue))")
+        let allGaps = (receiptField("gaps", in: rapidValue) ?? "")
             .split(separator: ",").compactMap { Double($0) }
-        XCTAssertEqual(rapidGaps.count, 2, "Three rapid actions must report two inter-action gaps: \(String(describing: rapidValue))")
-        XCTAssertTrue(rapidGaps.allSatisfy { $0 < 0.5 },
-                      "Rapid multi-tap gaps must remain sub-second rather than idle sequential taps: \(String(describing: rapidValue))")
-        let rapidIntermediate = (receiptField("intermediate", in: rapidValue) ?? "").split(separator: ",")
-        XCTAssertTrue(rapidIntermediate.contains("true"),
-                      "Rapid reversal must observe at least one later action at intermediate geometry: \(String(describing: rapidValue))")
+        XCTAssertEqual(allGaps.count, max(0, afterActions - 1))
+        let burstGaps = Array(allGaps.dropFirst(baselineActions))
+        XCTAssertEqual(burstGaps.count, 2,
+                       "Three rapid actions must report two inter-action gaps: \(String(describing: rapidValue))")
+        XCTAssertTrue(burstGaps.allSatisfy { $0 < 0.5 },
+                      "Warm rapid multi-tap gaps must remain sub-second (<0.5s): \(String(describing: rapidValue))")
+        let allIntermediate = (receiptField("intermediate", in: rapidValue) ?? "").split(separator: ",")
+        let burstIntermediate = Array(allIntermediate.dropFirst(baselineActions))
+        XCTAssertEqual(burstIntermediate.count, 2,
+                       "Three rapid actions must report two post-first-tap intermediate checks: \(String(describing: rapidValue))")
+        XCTAssertTrue(burstIntermediate.contains("true"),
+                      "Rapid reversal must observe at least one later burst action at intermediate geometry: \(String(describing: rapidValue))")
+        let naturalHeight = Double(receiptField("natural", in: rapidValue) ?? "") ?? 0
+        XCTAssertGreaterThan(naturalHeight, 0,
+                             "Prewarmed disclosure must report positive natural height: \(String(describing: rapidValue))")
+        let allVisible = (receiptField("actionVisible", in: rapidValue) ?? "")
+            .split(separator: ",").compactMap { Double($0) }
+        let burstVisible = Array(allVisible.dropFirst(baselineActions))
+        XCTAssertEqual(burstVisible.count, 3,
+                       "Three rapid actions must capture visible height at each action: \(String(describing: rapidValue))")
+        XCTAssertLessThan(burstVisible.first ?? 999, 0.25,
+                          "First burst action must begin from collapsed geometry: \(String(describing: rapidValue))")
+        XCTAssertTrue(burstVisible.dropFirst().contains(where: { $0 > 0.25 && $0 < naturalHeight + 6 - 0.5 }),
+                      "At least one later burst action must overlap intermediate rendered height: \(String(describing: rapidValue))")
+
         waitForGeometry("expanded")
         selectPreset("Height reveal", id: "v1.height-reveal")
         waitForGeometry("expanded")
@@ -139,18 +189,24 @@ final class MotionUITests: XCTestCase {
         app.buttons["proof-type"].tap()
         waitForGeometry("expanded")
         XCTAssertTrue(toggle.isHittable)
-        let beforeDragValue = state.value as? String
+        let beforeDragValue = receiptElement.value as? String
+        let beforeDragActions = Int(receiptField("actions", in: beforeDragValue) ?? "") ?? -1
         let beforeScrollY = Double(receiptField("scrollY", in: beforeDragValue) ?? "") ?? 0
         let dragStart = toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
         dragStart.press(forDuration: 0.05, thenDragTo: dragStart.withOffset(CGVector(dx: 0, dy: -120)))
-        let afterDragValue = state.value as? String
+        let afterDragValue = receiptElement.value as? String
+        let afterDragActions = Int(receiptField("actions", in: afterDragValue) ?? "") ?? -1
         let afterScrollY = Double(receiptField("scrollY", in: afterDragValue) ?? "") ?? 0
         let dragReceipt = XCTAttachment(string: "before=\(String(describing: beforeDragValue)); after=\(String(describing: afterDragValue))")
         dragReceipt.name = "scroll-drag-from-toggle-receipt"
         dragReceipt.lifetime = .keepAlways
         add(dragReceipt)
-        XCTAssertTrue(afterDragValue?.hasPrefix("actions=5;expanded=true;") == true,
-                      "Dragging from ToggleButton must cancel the button touch without toggling: \(String(describing: afterDragValue))")
+        XCTAssertEqual(beforeDragActions, afterActions + 2,
+                       "Pre-drag actions must match prewarm + 3-burst + single cycle: \(String(describing: beforeDragValue))")
+        XCTAssertEqual(afterDragActions, beforeDragActions,
+                       "Dragging from ToggleButton must cancel the button touch without toggling: \(String(describing: afterDragValue))")
+        XCTAssertEqual(receiptField("expanded", in: afterDragValue), "true",
+                       "Dragging from ToggleButton must preserve expanded state: \(String(describing: afterDragValue))")
         XCTAssertGreaterThan(afterScrollY, beforeScrollY + 20,
                              "Containing ScrollView must still scroll when a vertical drag starts on ToggleButton: before=\(beforeScrollY) after=\(afterScrollY)")
         app.terminate()
@@ -283,6 +339,7 @@ final class MotionUITests: XCTestCase {
             for (identifier, delivery) in cases {
                 app.buttons["rapid-input-reset"].tap()
                 let geometryElement = app.staticTexts["rapid-input-geometry"]
+                let geometryReceiptElement = app.staticTexts["rapid-input-geometry-receipt"]
                 // Reset is a setup transition, not an input-delivery deadline.
                 // Allow the original disclosure to close before the next gesture;
                 // keep the post-gesture action receipt a single native snapshot.
@@ -291,8 +348,9 @@ final class MotionUITests: XCTestCase {
                     object: geometryElement)
                 let resetResult = XCTWaiter.wait(for: [resetExpectation], timeout: 5)
                 let geometrySnapshot = try geometryElement.snapshot()
+                let geometryReceiptSnapshot = try geometryReceiptElement.snapshot()
                 let baseline = XCTAttachment(string:
-                    "\(geometrySnapshot.label); geometry=\(String(describing: geometrySnapshot.value))")
+                    "\(geometrySnapshot.label); geometry=\(String(describing: geometryReceiptSnapshot.value))")
                 baseline.name = "\(phase)-\(identifier)-\(delivery)-reset-baseline"
                 baseline.lifetime = .keepAlways
                 add(baseline)
