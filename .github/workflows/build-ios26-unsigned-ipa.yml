@@ -8,11 +8,6 @@ on:
         required: false
         default: false
         type: boolean
-      composer_expected_sha:
-        description: Exact commit SHA expected by isolated Composer validation
-        required: false
-        default: ''
-        type: string
       nativescript_metadata_validation_only:
         description: Compare pinned NativeScript metadata parser modes against the selected SDK without app or engine builds
         required: false
