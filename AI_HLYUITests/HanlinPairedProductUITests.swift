@@ -113,8 +113,13 @@ final class HanlinPairedProductUITests: XCTestCase {
         tap(ai, "hanlin-transfer-link")
         tap(ai, "hanlin-transfer-prepare")
         assertText(ai, "Copy ready. Open Hanlin MiniApps and choose Transfer from Hanlin.")
+        if mini.state != .notRunning {
+            mini.terminate()
+        }
         tap(ai, "hanlin-transfer-open-companion")
         XCTAssertTrue(mini.wait(for: .runningForeground, timeout: 30))
+        // Fresh process guarantees no prior compiled-storage/runtime use and applies test launch args.
+        mini.terminate(); mini.launch()
         tap(mini, "hanlin-miniapps-transfer")
         tap(mini, "hanlin-transfer-import")
         assertText(mini, "Transfer complete. Your mini apps are ready.")
