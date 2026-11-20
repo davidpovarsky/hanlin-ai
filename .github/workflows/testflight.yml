@@ -554,7 +554,7 @@ jobs:
           app=$(find "$verify_dir/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)
           test -d "$app"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")" = "$APP_BUNDLE_ID"
-          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")" = ChavrusaChat
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")" = "Hanlin AI"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Info.plist")" = "$BUILD_NUMBER"
 
           privacy_log="$BUILD_DIR/logs/main-privacy-purpose-strings.txt"
