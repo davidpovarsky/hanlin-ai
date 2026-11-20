@@ -406,12 +406,12 @@ jobs:
       - name: Checkout pinned product source
         uses: actions/checkout@v7.0.1
         with:
-          ref: c456b7240d7b43f52de6b1090bfd82d41ec27eb7
+          ref: 836a8a4a6ce41995945a4250e9e6a0db410d8cc1
           path: product
           persist-credentials: false
       - name: Verify pinned product SHA and select stable Xcode 27 / iPadOS 27.2
         env:
-          EXPECTED_PRODUCT_SHA: c456b7240d7b43f52de6b1090bfd82d41ec27eb7
+          EXPECTED_PRODUCT_SHA: 836a8a4a6ce41995945a4250e9e6a0db410d8cc1
           MOTION_DEVICE_TYPE: com.apple.CoreSimulator.SimDeviceType.iPad-A16
           MOTION_REQUIRED_SDK: '27.2'
         run: |
