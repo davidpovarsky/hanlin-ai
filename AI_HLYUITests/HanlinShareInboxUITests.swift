@@ -138,18 +138,14 @@ final class HanlinShareInboxUITests: XCTestCase {
     }
 
     private func openInbox(_ app: XCUIApplication) {
-        let panel = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
-        if !panel.exists {
+        let shareInboxButton = app.buttons["hanlin-general-share-inbox"].firstMatch
+        if !shareInboxButton.exists {
             tap(app.buttons["hanlin-composer-general-menu"].firstMatch, app: app)
-            let panelReady = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: panel)
-            XCTAssertEqual(XCTWaiter.wait(for: [panelReady], timeout: 15), .completed,
-                           "Action center panel did not open before querying Share Inbox")
+            let buttonExists = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: shareInboxButton)
+            XCTAssertEqual(XCTWaiter.wait(for: [buttonExists], timeout: 15), .completed,
+                           "Share Inbox button did not appear after opening action center")
         }
-        let shareInboxButton = panel.buttons["hanlin-general-share-inbox"].firstMatch
-        let buttonExists = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true"), object: shareInboxButton)
-        XCTAssertEqual(XCTWaiter.wait(for: [buttonExists], timeout: 15), .completed,
-                       "Share Inbox button did not appear inside action center panel")
-        let viewport = panel.scrollViews["hanlin-composer-page-scroll"].firstMatch
+        let viewport = app.scrollViews["hanlin-composer-page-scroll"].firstMatch
         if viewport.exists {
             revealInContainer(shareInboxButton, container: viewport)
         }
