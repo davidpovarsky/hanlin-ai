@@ -139,7 +139,7 @@ def main():
         raise RuntimeError("Expected exactly one registered Apple bundle identifier for main app")
     bundle_id = matches[0]["id"]
     capabilities = page_all(
-        token, "/v1/bundleIds/" + bundle_id + "/bundleIdCapabilities?limit=200",
+        token, "/v1/bundleIds/" + bundle_id + "/bundleIdCapabilities",
     )
     print("Apple Developer bundle ID available; provisioned capabilities: "
           + str(len(capabilities)), flush=True)
