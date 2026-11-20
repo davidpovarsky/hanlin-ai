@@ -37,6 +37,7 @@ public struct OpenUIBlock: View {
                     Text(error).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
                 }
             }
+            .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-openui-\(target.rawValue)-\(part.streamOrder)")
         }
     }

@@ -25,11 +25,16 @@ struct NativeOpenUINode: View {
                 custom
             } else {
             switch type {
-            case "Stack", "Card", "Form", "FormControl", "Buttons", "FollowUps", "Tabs", "Accordion", "Carousel": layout
-            case "Input", "TextArea", "Select", "DatePicker", "Slider", "CheckBoxGroup", "RadioGroup", "SwitchGroup", "Button": control
-            case "BarChart", "LineChart", "AreaChart", "HorizontalBarChart", "PieChart", "ScatterChart": chart
-            case "Table", "EntityList", "ListBlock", "Steps", "ImageGallery", "Comparison", "Sources": collection
-            default: textOrMedia
+            case "Stack", "Card", "Form", "FormControl", "Buttons", "FollowUps", "Tabs", "Accordion", "Carousel":
+                layout.accessibilityElement(children: .contain)
+            case "Input", "TextArea", "Select", "DatePicker", "Slider", "CheckBoxGroup", "RadioGroup", "SwitchGroup", "Button":
+                control
+            case "BarChart", "LineChart", "AreaChart", "HorizontalBarChart", "PieChart", "ScatterChart":
+                chart
+            case "Table", "EntityList", "ListBlock", "Steps", "ImageGallery", "Comparison", "Sources":
+                collection.accessibilityElement(children: .contain)
+            default:
+                textOrMedia
             }
             }
         }

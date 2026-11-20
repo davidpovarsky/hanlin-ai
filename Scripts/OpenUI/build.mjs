@@ -8,6 +8,7 @@ const out = resolve(dir, '../../Packages/HanlinPresentationSDK/Sources/HanlinRic
 await mkdir(out, { recursive: true });
 await build({ entryPoints: [resolve(dir, 'bridge.jsx')], bundle: true, minify: true,
   outfile: resolve(out, 'bridge.js'), format: 'iife', platform: 'browser', target: 'safari17',
+  jsx: 'automatic', tsconfigRaw: '{}',
   define: { 'process.env.NODE_ENV': '"production"' }, legalComments: 'linked',
   loader: { '.woff2': 'file', '.woff': 'file', '.ttf': 'file', '.svg': 'dataurl' } });
 await writeFile(resolve(out, 'index.html'), `<!doctype html><html dir="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src https: data: blob:; media-src https: blob:; connect-src 'none'"><link rel="stylesheet" href="bridge.css"></head><body><div id="root"></div><script src="bridge.js"></script></body></html>`);

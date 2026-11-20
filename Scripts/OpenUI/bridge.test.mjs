@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { openuiLibrary } from '@openuidev/react-ui';
 import { NativeRuntime } from './native-runtime.mjs';
 import { encodeState, decodeState } from './state-wire.mjs';
@@ -125,4 +128,15 @@ test('original DatePicker range values survive native edits, JSON persistence an
     assert.equal(reopened.$dates.to.toISOString(), '2026-11-22T00:00:00.000Z');
     assert.deepEqual(decodeState({ __hanlinOpenUIDate: 'not-a-date' }), { __hanlinOpenUIDate: 'not-a-date' });
   } finally { runtime.dispose(); }
+});
+
+test('bundled bridge.js uses automatic JSX runtime without unbound createElement in render', async () => {
+  const dir = dirname(fileURLToPath(import.meta.url));
+  const [buildSource, bridgeSource] = await Promise.all([
+    readFile(resolve(dir, 'build.mjs'), 'utf8'),
+    readFile(resolve(dir, '../../Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.js'), 'utf8'),
+  ]);
+  const bridgeBuild = buildSource.slice(buildSource.indexOf('bridge.jsx'), buildSource.indexOf('index.html'));
+  assert.match(bridgeBuild, /jsx:\s*['"]automatic['"]/);
+  assert.doesNotMatch(bridgeSource, /\.render\(createElement\(/);
 });
