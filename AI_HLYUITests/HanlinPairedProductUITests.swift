@@ -7,9 +7,11 @@ final class HanlinPairedProductUITests: XCTestCase {
     private let ai = XCUIApplication(bundleIdentifier: "com.itorah.chavrusachat")
     private let mini = XCUIApplication(bundleIdentifier: "com.itorah.hanlinminiapps")
     private var pairedRequestStartedAt: Date?
+    private var capturedFailureSnapshot = false
 
     override func setUpWithError() throws {
         pairedRequestStartedAt = nil
+        capturedFailureSnapshot = false
         continueAfterFailure = false
         executionTimeAllowance = 600
         for app in [ai, mini] {
@@ -21,15 +23,18 @@ final class HanlinPairedProductUITests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        let failed = (testRun?.totalFailureCount ?? 0) > 0
         for (name, app) in [("AI", ai), ("MiniApps", mini)] {
-            if app.state != .notRunning {
+            if app.state == .runningForeground {
                 let picture = XCTAttachment(screenshot: app.screenshot())
                 picture.name = name + "-paired-product"; picture.lifetime = .keepAlways; add(picture)
-                if testRun?.hasSucceeded == false {
+                if failed && !capturedFailureSnapshot {
                     let tree = XCTAttachment(string: app.debugDescription)
                     tree.name = name + "-paired-accessibility"; tree.lifetime = .keepAlways; add(tree)
                 }
             }
+        }
+        for app in [ai, mini] where app.state != .notRunning {
             app.terminate()
         }
     }
@@ -66,6 +71,8 @@ final class HanlinPairedProductUITests: XCTestCase {
         }
         assertPairedResult("PAIRED_CANCEL_RETURN_" + nonce, caseKind: "cancel_return")
         XCTAssertEqual(ai.staticTexts["hanlin-phase2-chat-id"].label, originalChat)
+        XCTAssertFalse(ai.alerts["Mini App result unavailable"].exists)
+        XCTAssertFalse(ai.buttons["hanlin-tool-consent-allow-once"].exists)
         mini.terminate(); mini.launch()
         tap(mini, "hanlin-miniapp-hanlin.demo.swift-parity")
         tap(mini, "hanlin-miniapps-open")
@@ -290,8 +297,10 @@ final class HanlinPairedProductUITests: XCTestCase {
             format: "label CONTAINS %@ OR value CONTAINS %@", "PAIRED_RESULT_NOT_VERIFIED", "PAIRED_RESULT_NOT_VERIFIED")).firstMatch
         let deadline = Date().addingTimeInterval(60)
         while Date() < deadline {
-            if expectedElement.exists { return }
-            if failedMarker.exists { break }
+            if ai.state == .runningForeground {
+                if expectedElement.exists { return }
+                if failedMarker.exists { break }
+            }
             RunLoop.current.run(until: Date().addingTimeInterval(0.25))
         }
         let summary = recordPairedFailureDiagnostics(caseKind: caseKind, stage: "result_verification")
@@ -301,18 +310,41 @@ final class HanlinPairedProductUITests: XCTestCase {
     @discardableResult
     private func recordPairedFailureDiagnostics(caseKind: String, stage: String) -> String {
         let elapsed = pairedRequestStartedAt.map { String(format: "%.2fs", Date().timeIntervalSince($0)) } ?? "unknown"
-        let aiOutcome = classifyAIOutcomeCategory()
-        let miniBanner = classifyMiniAppsBannerCategory()
-        let miniFailure = classifyMiniAppsFailureCode()
-        let summary = "case=\(caseKind) stage=\(stage) elapsed=\(elapsed) ai_state=\(describeState(ai.state)) mini_state=\(describeState(mini.state)) ai_outcome=\(aiOutcome) mini_banner=\(miniBanner) mini_failure=\(miniFailure)"
+        let aiState = ai.state
+        let miniState = mini.state
+        let aiOutcome = classifyAIOutcomeCategory(state: aiState)
+        let miniBanner = classifyMiniAppsBannerCategory(state: miniState)
+        let miniFailure = classifyMiniAppsFailureCode(state: miniState)
+        let summary = "case=\(caseKind) stage=\(stage) elapsed=\(elapsed) ai_state=\(describeState(aiState)) mini_state=\(describeState(miniState)) ai_outcome=\(aiOutcome) mini_banner=\(miniBanner) mini_failure=\(miniFailure)"
         let attachment = XCTAttachment(string: summary)
         attachment.name = "paired-return-diagnostics"
         attachment.lifetime = .keepAlways
         add(attachment)
+        captureForegroundFailureSnapshot(caseKind: caseKind, stage: stage, aiState: aiState, miniState: miniState)
         return summary
     }
 
-    private func classifyAIOutcomeCategory() -> String {
+    private func captureForegroundFailureSnapshot(
+        caseKind: String,
+        stage: String,
+        aiState: XCUIApplication.State,
+        miniState: XCUIApplication.State
+    ) {
+        for (name, app, state) in [("AI", ai, aiState), ("MiniApps", mini, miniState)] where state == .runningForeground {
+            let picture = XCTAttachment(screenshot: app.screenshot())
+            picture.name = "\(name)-\(caseKind)-\(stage)"
+            picture.lifetime = .keepAlways
+            add(picture)
+            let tree = XCTAttachment(string: app.debugDescription)
+            tree.name = "\(name)-\(caseKind)-\(stage)-accessibility"
+            tree.lifetime = .keepAlways
+            add(tree)
+            capturedFailureSnapshot = true
+        }
+    }
+
+    private func classifyAIOutcomeCategory(state: XCUIApplication.State) -> String {
+        guard state == .runningForeground else { return "not_foreground_\(describeState(state))" }
         let failedElement = ai.descendants(matching: .any).matching(NSPredicate(
             format: "label CONTAINS %@ OR value CONTAINS %@", "PAIRED_RESULT_NOT_VERIFIED", "PAIRED_RESULT_NOT_VERIFIED")).firstMatch
         if failedElement.exists { return "paired_result_not_verified" }
@@ -321,7 +353,8 @@ final class HanlinPairedProductUITests: XCTestCase {
         return "pending_or_missing"
     }
 
-    private func classifyMiniAppsBannerCategory() -> String {
+    private func classifyMiniAppsBannerCategory(state: XCUIApplication.State) -> String {
+        guard state == .runningForeground else { return "not_foreground_\(describeState(state))" }
         let interrupted = "This action was interrupted. Its outcome must be checked before it can run again."
         let returnFailed = "The request could not be opened or returned to Hanlin. Open Hanlin and try again."
         if mini.alerts["Hanlin request unavailable"].firstMatch.exists { return "alert_request_unavailable" }
@@ -337,7 +370,8 @@ final class HanlinPairedProductUITests: XCTestCase {
         return "none"
     }
 
-    private func classifyMiniAppsFailureCode() -> String {
+    private func classifyMiniAppsFailureCode(state: XCUIApplication.State) -> String {
+        guard state == .runningForeground else { return "not_foreground_\(describeState(state))" }
         let alert = mini.alerts["Hanlin request unavailable"].firstMatch
         if alert.exists {
             for element in alert.staticTexts.allElementsBoundByIndex {

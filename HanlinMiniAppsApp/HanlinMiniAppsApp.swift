@@ -105,9 +105,15 @@ private struct HanlinMiniAppsWindow: View {
                     #endif
                 }
                 .interactiveDismissDisabled()
+                .alert("Hanlin request unavailable", isPresented: Binding(
+                    get: { foreground.presentation != nil && foreground.error != nil },
+                    set: { if !$0 { foreground.error = nil } }
+                )) { Button("OK") { foreground.error = nil } }
+                message: { Text(alertMessage) }
             }
             .alert("Hanlin request unavailable", isPresented: Binding(
-                get: { foreground.error != nil }, set: { if !$0 { foreground.error = nil } }
+                get: { foreground.presentation == nil && foreground.error != nil },
+                set: { if !$0 { foreground.error = nil } }
             )) { Button("OK") { foreground.error = nil } }
             message: { Text(alertMessage) }
         }

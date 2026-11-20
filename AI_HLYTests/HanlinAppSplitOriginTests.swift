@@ -157,6 +157,37 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         // This is the actual durable receiver with a fixture operation result, NOT a live broker effect.
         _ = try await receiver.complete(reference: request.id, attempt: attempt, outcome: .result(.integer(9_007_199_254_740_993)), context: context)
     }
+    func cancelBeforeExecution(_ request: SplitBridgeRequest) async throws {
+        let receiver = SplitDurableReceiver(persistence: mailbox, source: mailbox), context = Self.context(request)
+        _ = try await receiver.receive(reference: request.id, context: context, now: .now)
+        let cancelled = try await receiver.interrupt(reference: request.id, reason: .cancelled, context: context)
+        #expect(cancelled.phase == .completed && cancelled.attempt == nil && cancelled.outcome == .failure(.cancelled))
+    }
+    func completeWithPostStartFailure(_ request: SplitBridgeRequest, reason: SplitBridgeFailure = .cancelled) async throws {
+        let receiver = SplitDurableReceiver(persistence: mailbox, source: mailbox), context = Self.context(request)
+        _ = try await receiver.receive(reference: request.id, context: context, now: .now)
+        let started = try await receiver.start(reference: request.id, context: context, now: .now)
+        let attempt = try #require(started.attempt)
+        _ = try await receiver.complete(reference: request.id, attempt: attempt, outcome: .failure(reason), context: context)
+    }
+    func startFollowUpTurn() async throws -> Bool {
+        let id = try #require(row.id), context = container.mainContext
+        let followUpRow = ChatMessages(role: "assistant", text: "", record: row)
+        context.insert(followUpRow); try context.save()
+        let followUpUIRun = UUID()
+        let adapter = HanlinAISDKToolAdapter(session: .init(chatID: id.uuidString, isTemporaryChat: false),
+            preparedTools: .init(authority: try HanlinCanonicalToolAuthority.build(nativeSources: [], mcpTools: []),
+                executors: .init(executeNative: { _, _, _, _ in Issue.record("Unexpected general native executor"); return .init(modelText: "Unexpected", outcome: .failed) },
+                    executeScripting: { _, _ in Issue.record("Unexpected script executor"); return .init(modelText: "Unexpected", outcome: .failed) })))
+        let config = HanlinChatModelConfiguration(modelID: model.modelId, endpoint: URL(filePath: "/fixture"), apiKey: "", supportsToolUse: true)
+        let stream = try await owner.stream(request: .init(conversation: row, conversationID: id, sceneID: scene,
+            rowID: followUpRow.id, uiRunID: followUpUIRun, temporary: false, interaction: nil), modelContext: context,
+            configuration: config, engineFactory: { self.engineConstructions += 1; return HanlinAISDKAgentEngine(configuration: config, model: .v3(self.model)) },
+            toolAdapter: adapter, messages: [.init(role: .user, text: "Follow up after split return")], systemPrompt: nil)
+        for try await event in stream { try owner.receive(event, uiRunID: followUpUIRun) }
+        try owner.producerStreamDrained(uiRunID: followUpUIRun)
+        return true
+    }
     func returnToAI(_ request: SplitBridgeRequest) async {
         let url = SplitForegroundRoute.returnToAI.url(reference: request.id)
         guard let claim = coordinator.claimReturn(url, receivingWindowID: receivingWindowID) else { return }
@@ -467,5 +498,60 @@ private enum SplitComponentError: Error { case timeout, cancelled, missing }
         #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == nil)
         do { _ = try harness.mailbox.original(requestID); Issue.record("Cancelled pre-dispatch request entered mailbox") }
         catch { #expect(error as? SplitBridgeFailure == .correlationMismatch) }
+    }
+
+    @Test func companionPreExecutionCancellationReturnsConfirmedNoEffectAndAllowsContinuation() async throws {
+        let harness = try SplitAppHarness(); defer { harness.stop() }
+        try harness.start()
+        let original = try await harness.opened()
+        try await harness.cancelBeforeExecution(original)
+        await harness.returnToAI(original)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == original && harness.coordinator.lastFailure == nil)
+        let data = try #require(harness.row.agentSDKRecordData), record = try JSONDecoder().decode(HanlinConversationRecord.self, from: data)
+        #expect(record.entries.contains {
+            if case .toolResult(_, let receipt) = $0.payload,
+               case .failed(let error) = receipt.result.outcome {
+                return receipt.effectState == .confirmedNoEffect
+                    && error.code == .cancelled
+                    && receipt.reconciliationReference?.hasPrefix("hanlin.split.return.v1:" + original.id.uuidString.lowercased() + ":") == true
+            }
+            return false
+        })
+        let task = try #require(harness.streamTask)
+        let completed = try await splitBounded { await task.value }
+        let modelCalls = await harness.model.counter.value
+        #expect(completed && harness.failure == nil)
+        #expect(harness.probe.count == 1 && modelCalls == 2 && harness.engineConstructions == 1)
+        harness.coordinator.acknowledgeAcceptedOrigin(requestID: original.id, receivingWindowID: harness.receivingWindowID)
+        await harness.returnToAI(original)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == nil && harness.coordinator.lastFailure != nil)
+        let followUpCompleted = try await splitBounded { try await harness.startFollowUpTurn() }
+        #expect(followUpCompleted)
+        #expect(try harness.container.mainContext.fetch(FetchDescriptor<ChatRecords>()).count == 1)
+    }
+
+    @Test func postStartCancelledOutcomeRemainsUncertainAndBlocksSubsequentTurn() async throws {
+        let harness = try SplitAppHarness(); defer { harness.stop() }
+        try harness.start()
+        let original = try await harness.opened()
+        try await harness.completeWithPostStartFailure(original, reason: .cancelled)
+        await harness.returnToAI(original)
+        #expect(harness.coordinator.acceptedOrigin(forReceivingWindowID: harness.receivingWindowID) == original && harness.coordinator.lastFailure == nil)
+        let data = try #require(harness.row.agentSDKRecordData), record = try JSONDecoder().decode(HanlinConversationRecord.self, from: data)
+        #expect(record.entries.contains {
+            if case .toolResult(_, let receipt) = $0.payload,
+               case .failed(let error) = receipt.result.outcome {
+                return receipt.effectState == .uncertain && error.code == .nativeFailure
+            }
+            return false
+        })
+        let task = try #require(harness.streamTask)
+        _ = try await splitBounded { await task.value }
+        do {
+            _ = try await splitBounded { try await harness.startFollowUpTurn() }
+            Issue.record("Post-start uncertain outcome allowed a subsequent turn without reconciliation")
+        } catch {
+            #expect(error as? HanlinHostError == .unresolvedWrite)
+        }
     }
 }

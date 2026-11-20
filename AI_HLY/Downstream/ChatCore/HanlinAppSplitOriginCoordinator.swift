@@ -63,6 +63,7 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         weak var host: HanlinAppHostIntegration?
         weak var session: HanlinAgentSession?
         var response: SplitBridgeReturn?
+        var confirmedPreExecutionCancellation = false
         var receipt: HanlinHostResultEvent?
         var waiter: CheckedContinuation<SplitBridgeReturn, Error>?
         var receiptWaiters: [CheckedContinuation<Void, Error>] = []
@@ -155,7 +156,8 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
                 }
                 return try await withCheckedThrowingContinuation { item.waiter = $0 }
             }, onCancel: { Task { @MainActor in self.invalidate(reference: request.id, reason: .cancelled) } })
-            return try Self.result(response, origin: origin)
+            return try Self.result(response, origin: origin,
+                confirmedPreExecutionCancellation: item.confirmedPreExecutionCancellation)
         } catch {
             // These failures are issued by original transport admission/OS-open rejection before
             // any receiver attempt. Cancellation/IO after possible dispatch remains uncertain.
@@ -221,8 +223,14 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
         if let item = pending[response.request.id] {
             guard !item.invalidated, item.request == response.request,
                   item.origin.requestDigest == (try Self.digest(response.request)) else { throw SplitBridgeFailure.cancelled }
-            if let old = item.response { guard try Self.digest(old) == Self.digest(response) else { throw SplitBridgeFailure.correlationMismatch } }
-            else {
+            let cancelledBeforeExecution = try confirmedPreExecutionCancellation(for: response)
+            if let old = item.response {
+                guard try Self.digest(old) == Self.digest(response),
+                      item.confirmedPreExecutionCancellation == cancelledBeforeExecution else {
+                    throw SplitBridgeFailure.correlationMismatch
+                }
+            } else {
+                item.confirmedPreExecutionCancellation = cancelledBeforeExecution
                 item.response = response
                 item.waiter?.resume(returning: response); item.waiter = nil
             }
@@ -236,8 +244,9 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
             // Cold receipt only: no Session/engine/Host/grants are manufactured from stored metadata.
             let (origin, reference, store) = try await coldOrigin(response.request)
             guard !hasRunningSession(for: response.request.chat) else { throw SplitBridgeFailure.transportUnavailable }
+            let cancelledBeforeExecution = try confirmedPreExecutionCancellation(for: response)
             let event = try HanlinHostResultEvent(resultID: origin.resultID, call: origin.call,
-                result: Self.result(response, origin: origin))
+                result: Self.result(response, origin: origin, confirmedPreExecutionCancellation: cancelledBeforeExecution))
             let receiptKey = try Self.historicalReceiptReference(response, resultID: origin.resultID)
             try await store.persistHistoricalReceipt(event, originReference: reference, receiptReference: receiptKey,
                 replacingUncertainReference: Self.receiptReference(response.request.id))
@@ -253,7 +262,8 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     func receiptCommitted(_ event: HanlinHostResultEvent) {
         for item in pending.values where item.origin.call == event.call && item.origin.resultID == event.resultID {
             guard !item.invalidated, let response = item.response,
-                  let expected = try? Self.result(response, origin: item.origin),
+                  let expected = try? Self.result(response, origin: item.origin,
+                      confirmedPreExecutionCancellation: item.confirmedPreExecutionCancellation),
                   event.result.reconciliationReference == expected.reconciliationReference,
                   event.result.effectState == expected.effectState,
                   event.result.metadataReceipt().result.outcome == expected.metadataReceipt().result.outcome else { continue }
@@ -437,12 +447,40 @@ final class HanlinAppSplitOriginCoordinator: HanlinSplitOriginalOrigin {
     static func historicalReceiptReference(_ response: SplitBridgeReturn, resultID: UUID) throws -> String {
         "hanlin.split.receipt.v1:" + resultID.uuidString.lowercased() + ":" + (try digest(response))
     }
-    private static func result(_ response: SplitBridgeReturn, origin: StoredOrigin) throws -> HanlinHostExecutionResult {
+    /// Only a durable App Group receiver record that completed with `attempt == nil`
+    /// and `interruption == .cancelled` proves the request was cancelled before any
+    /// execution attempt started. Any post-start failure remains `.uncertain`.
+    private func confirmedPreExecutionCancellation(for response: SplitBridgeReturn) throws -> Bool {
+        guard case .failure(.cancelled) = response.outcome else { return false }
+        let request = response.request
+        let record = try makeMailbox().transaction { database in
+            guard let existing = database.records[request.id], existing.request == request else {
+                throw SplitBridgeFailure.correlationMismatch
+            }
+            return existing
+        }
+        return record.phase == .completed
+            && record.attempt == nil
+            && record.interruption == .cancelled
+            && record.outcome == .failure(.cancelled)
+    }
+
+    private static func result(_ response: SplitBridgeReturn, origin: StoredOrigin,
+                               confirmedPreExecutionCancellation: Bool) throws -> HanlinHostExecutionResult {
         let outcome: HanlinToolOutcome
         let effect: HanlinHostEffectState
         switch response.outcome {
-        case .result(let value): outcome = .completed([.structured(value)]); effect = .confirmedCommitted
-        case .failure: outcome = .failed(.init(code: .nativeFailure, userMessage: "The Mini App did not provide a successful operation receipt. Do not retry automatically.")); effect = .uncertain
+        case .result(let value):
+            outcome = .completed([.structured(value)])
+            effect = .confirmedCommitted
+        case .failure(.cancelled) where confirmedPreExecutionCancellation:
+            outcome = .failed(.init(code: .cancelled,
+                userMessage: "The Mini App request was cancelled before execution and did not provide a successful operation receipt."))
+            effect = .confirmedNoEffect
+        case .failure:
+            outcome = .failed(.init(code: .nativeFailure,
+                userMessage: "The Mini App did not provide a successful operation receipt. Do not retry automatically."))
+            effect = .uncertain
         }
         return .init(result: .init(invocationID: origin.call.invocationID, logicalToolID: origin.call.logicalToolID,
             outcome: outcome, completedAt: .now), effectState: effect, context: origin.call.session.context,
