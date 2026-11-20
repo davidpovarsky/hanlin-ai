@@ -48,6 +48,11 @@ on:
         required: true
         default: false
         type: boolean
+      testflight_skip_simulator_tests:
+        description: Explicit direct TestFlight device testing without simulator acceptance
+        required: false
+        default: false
+        type: boolean
       testflight_existing_build_number:
         description: Existing uploaded build to distribute without rebuilding (requires testflight_upload)
         required: false
@@ -3468,6 +3473,7 @@ jobs:
     uses: ./.github/workflows/testflight.yml
     with:
       upload_to_testflight: true
+      skip_simulator_tests: ${{ inputs.testflight_skip_simulator_tests }}
       existing_build_number: ${{ inputs.testflight_existing_build_number }}
       audience_source_build: ${{ inputs.testflight_audience_source_build }}
       runtime_bundle_artifact_run_id: ${{ inputs.runtime_bundle_artifact_run_id }}
