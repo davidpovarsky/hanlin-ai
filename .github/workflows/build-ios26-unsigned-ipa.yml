@@ -142,6 +142,82 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  reuse-original-signed-testflight-ipa:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'signed_ipa_reuse' && !inputs.testflight_upload }}
+    name: Validate and upload already-signed Hanlin build 143801 without a rebuild
+    runs-on: xcode-27
+    timeout-minutes: 60
+    env:
+      APP_BUNDLE_ID: com.itorah.chavrusachat
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      BUILD_DIR: ${{ github.workspace }}/build/signed-ipa-reuse
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Retrieve the exact original signed IPA from build 143801
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$BUILD_DIR/original" "$BUILD_DIR/logs"
+          gh run download 44663389672 --repo davidpovarsky/hanlin-ai \
+            --name ChavrusaChat-signed-ipa-143801 --dir "$BUILD_DIR/original"
+      - name: Verify exact provenance, SHA-256, app identity, signatures, extensions, and entitlements
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/AppleSigning/verify_saved_testflight_ipa.py \
+            --artifact-dir "$BUILD_DIR/original" --evidence-dir "$BUILD_DIR/logs"
+      - name: Restore App Store Connect upload key
+        env:
+          KEY_P8_B64: ${{ secrets.ASC_KEY_P8 }}
+          KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          set -euo pipefail
+          test -n "$KEY_P8_B64" && test -n "$KEY_ID" && test -n "$ISSUER_ID"
+          mkdir -p "$HOME/.appstoreconnect/private_keys" "$HOME/.private_keys"
+          keyfile="$HOME/.appstoreconnect/private_keys/AuthKey_${KEY_ID}.p8"
+          umask 077
+          printf '%s' "$KEY_P8_B64" | base64 --decode > "$keyfile"
+          cp "$keyfile" "$HOME/.private_keys/AuthKey_${KEY_ID}.p8"
+          echo "ASC_KEY_ID=$KEY_ID" >> "$GITHUB_ENV"
+          echo "ASC_ISSUER_ID=$ISSUER_ID" >> "$GITHUB_ENV"
+          echo "ASC_KEY_PATH=$keyfile" >> "$GITHUB_ENV"
+      - name: Validate original signed IPA with Apple
+        run: |
+          set -o pipefail
+          xcrun altool --validate-app -f "$IPA_PATH" -t ios \
+            --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID" \
+            2>&1 | tee "$BUILD_DIR/logs/apple-validation.log"
+      - name: Upload original signed IPA 143801 to App Store Connect
+        run: |
+          set -o pipefail
+          xcrun altool --upload-app -f "$IPA_PATH" -t ios \
+            --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID" \
+            2>&1 | tee "$BUILD_DIR/logs/apple-upload.log"
+      - name: Verify Apple accepted build for internal TestFlight testing
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/verify-testflight-venv"
+          "$RUNNER_TEMP/verify-testflight-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+          "$RUNNER_TEMP/verify-testflight-venv/bin/python" \
+            Scripts/CI/verify_testflight_build.py 143801 \
+            2>&1 | tee "$BUILD_DIR/logs/testflight-verification.log"
+      - name: Retain signed IPA provenance and App Store Connect results
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: Hanlin-TestFlight-original-signed-143801-receipt
+          path: ${{ env.BUILD_DIR }}/logs
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Remove temporary App Store Connect signing key
+        if: always()
+        run: |
+          rm -f "${ASC_KEY_PATH:-$RUNNER_TEMP/nonexistent}" 
+          rm -f "$HOME/.private_keys/AuthKey_${ASC_KEY_ID:-missing}.p8"
+
   apple-main-profile-capability-probe:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'apple_profile_probe' && !inputs.testflight_upload }}
     name: Verify Apple App ID can issue Extended Virtual Addressing profile
@@ -548,7 +624,7 @@ jobs:
           retention-days: 14
 
   plan-affected-validation:
-    if: ${{ inputs.target_validation_group != 'apple_profile_probe' && inputs.target_validation_group != 'simulator_environment_probe' && inputs.target_validation_group != 'chat_motion_product' && inputs.target_validation_group != 'a2ui_media_replay_ui' && inputs.target_validation_group != 'native_result_inspection' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '')))) ) }}
+    if: ${{ inputs.target_validation_group != 'signed_ipa_reuse' && inputs.target_validation_group != 'apple_profile_probe' && inputs.target_validation_group != 'simulator_environment_probe' && inputs.target_validation_group != 'chat_motion_product' && inputs.target_validation_group != 'a2ui_media_replay_ui' && inputs.target_validation_group != 'native_result_inspection' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (!(inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he') && !inputs.composer_validation_only && !inputs.nativescript_metadata_validation_only && !inputs.diagnostics_capture_validation_only && !inputs.code_fence_webkit_validation_only && !inputs.markdown_renderer_validation_only && !inputs.runtime_job_foundation_only && !inputs.testflight_upload && (inputs.scripting_package_test_filter == '' || inputs.exact_test_selector != '')))) ) }}
     name: Plan affected validation and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
