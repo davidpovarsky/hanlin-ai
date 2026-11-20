@@ -1,3 +1,4 @@
+import Observation
 import SwiftUI
 import UIKit
 
@@ -24,49 +25,111 @@ struct MotionProofApp: App {
     }
 }
 
+@MainActor
+@Observable
+private final class MotionProofTelemetry {
+    private(set) var expandedActionCount = 0
+    private(set) var naturalHeight: CGFloat = 0
+    private(set) var visibleHeight: CGFloat = 0
+    private(set) var actionUptimes: [TimeInterval] = []
+    private(set) var actionAtIntermediate: [Bool] = []
+    private(set) var actionVisibleHeights: [CGFloat] = []
+    private(set) var scrollOffsetY: CGFloat = 0
+    private(set) var isLandscape: Bool?
+
+    @ObservationIgnored private var samples: [[String: String]] = []
+    @ObservationIgnored private var transitionStarted = ProcessInfo.processInfo.systemUptime
+
+    func recordAction() {
+        let isIntermediate = naturalHeight > 0 && visibleHeight > 0.25 && visibleHeight < naturalHeight + 6 - 0.5
+        actionUptimes.append(ProcessInfo.processInfo.systemUptime)
+        actionAtIntermediate.append(isIntermediate)
+        actionVisibleHeights.append(visibleHeight)
+        expandedActionCount += 1
+    }
+
+    func noteTransitionStarted() {
+        transitionStarted = ProcessInfo.processInfo.systemUptime
+    }
+
+    func recordNaturalHeight(_ height: CGFloat) {
+        guard height == 0 ? naturalHeight != 0 : abs(naturalHeight - height) >= 0.01 else { return }
+        naturalHeight = height
+    }
+
+    func recordVisibleHeight(_ height: CGFloat, preset: String, expanded: Bool) {
+        if samples.count < 16000 {
+            samples.append(["preset": preset, "expanded": String(expanded),
+                "seconds": String(ProcessInfo.processInfo.systemUptime - transitionStarted),
+                "height": String(Double(height)), "natural": String(Double(naturalHeight))])
+        }
+        guard height == 0 ? visibleHeight != 0 : abs(visibleHeight - height) >= 0.01 else { return }
+        visibleHeight = height
+    }
+
+    func recordScrollOffset(_ newY: CGFloat) {
+        guard newY == 0 ? scrollOffsetY != 0 : abs(scrollOffsetY - newY) >= 0.1 else { return }
+        scrollOffsetY = newY
+    }
+
+    func recordOrientation(isLandscape: Bool) {
+        guard self.isLandscape != isLandscape else { return }
+        self.isLandscape = isLandscape
+    }
+
+    func geometryState(expanded: Bool) -> String {
+        if !expanded && visibleHeight < 0.25 { return "collapsed" }
+        if expanded && naturalHeight > 0 && abs(visibleHeight - naturalHeight - 6) < 0.5 { return "expanded" }
+        return "transitioning"
+    }
+
+    func actionReceiptValue(expanded: Bool) -> String {
+        let gaps = zip(actionUptimes.dropFirst(), actionUptimes)
+            .map { String(format: "%.4f", $0.0 - $0.1) }
+            .joined(separator: ",")
+        let intermediate = actionAtIntermediate.dropFirst().map(String.init).joined(separator: ",")
+        let actionVisible = actionVisibleHeights.map { String(format: "%.1f", $0) }.joined(separator: ",")
+        let orientation = isLandscape.map { $0 ? "landscape" : "portrait" } ?? "unknown"
+        return "actions=\(expandedActionCount);expanded=\(expanded);natural=\(naturalHeight);visible=\(visibleHeight);gaps=\(gaps);intermediate=\(intermediate);scrollY=\(String(format: "%.1f", scrollOffsetY));orientation=\(orientation);actionVisible=\(actionVisible)"
+    }
+
+    func saveTimeline() {
+        guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+              let data = try? JSONSerialization.data(withJSONObject: samples, options: [.sortedKeys]) else { return }
+        try? data.write(to: directory.appendingPathComponent("motion-geometry-timeline.json"), options: .atomic)
+    }
+}
+
+private struct MotionProofGeometryReadout: View {
+    let telemetry: MotionProofTelemetry
+    let expanded: Bool
+
+    var body: some View {
+        Text(telemetry.geometryState(expanded: expanded))
+            .accessibilityIdentifier("proof-geometry-state")
+            .accessibilityValue(telemetry.actionReceiptValue(expanded: expanded))
+    }
+}
+
 private struct MotionProofContent: View {
     @AppStorage(ChatMotionPreset.storageKey) private var storedID = ChatMotionPreset.relaxed.rawValue
     @Environment(\.chatMotion) private var motion
     @State private var expanded = false
-    @State private var expandedActionCount = 0
     @State private var toolExpanded = false
     @State private var count = 0
     @State private var running = true
     @State private var longText = false
     @State private var rtl = false
     @State private var largeType = false
-    @State private var naturalHeight: CGFloat = 0
-    @State private var visibleHeight: CGFloat = 0
-    @State private var samples: [[String: String]] = []
-    @State private var transitionStarted = ProcessInfo.processInfo.systemUptime
-    @State private var actionUptimes: [TimeInterval] = []
-    @State private var actionAtIntermediate: [Bool] = []
-    @State private var scrollOffsetY: CGFloat = 0
+    @State private var telemetry = MotionProofTelemetry()
 
     // Observe only writes made by the unchanged production ToggleButton. This
     // distinguishes an undelivered rapid tap from a completed layout reversal.
     private var observedExpansion: Binding<Bool> {
         Binding(get: { expanded }, set: { value in
-            let isIntermediate = naturalHeight > 0 && visibleHeight > 0.25 && visibleHeight < naturalHeight + 6 - 0.5
-            actionUptimes.append(ProcessInfo.processInfo.systemUptime)
-            actionAtIntermediate.append(isIntermediate)
-            expandedActionCount += 1
+            telemetry.recordAction()
             expanded = value
         })
-    }
-
-    private var actionReceiptValue: String {
-        let gaps = zip(actionUptimes.dropFirst(), actionUptimes)
-            .map { String(format: "%.4f", $0.0 - $0.1) }
-            .joined(separator: ",")
-        let intermediate = actionAtIntermediate.dropFirst().map(String.init).joined(separator: ",")
-        return "actions=\(expandedActionCount);expanded=\(expanded);natural=\(naturalHeight);visible=\(visibleHeight);gaps=\(gaps);intermediate=\(intermediate);scrollY=\(String(format: "%.1f", scrollOffsetY))"
-    }
-
-    private var geometryState: String {
-        if !expanded && visibleHeight < 0.25 { return "collapsed" }
-        if expanded && naturalHeight > 0 && abs(visibleHeight - naturalHeight - 6) < 0.5 { return "expanded" }
-        return "transitioning"
     }
 
     var body: some View {
@@ -81,8 +144,7 @@ private struct MotionProofContent: View {
                 Button("RTL") { rtl.toggle() }.accessibilityIdentifier("proof-rtl")
                 Button("Large type") { largeType.toggle() }.accessibilityIdentifier("proof-type")
             }.buttonStyle(.bordered)
-            Text(geometryState).accessibilityIdentifier("proof-geometry-state")
-                .accessibilityValue(actionReceiptValue)
+            MotionProofGeometryReadout(telemetry: telemetry, expanded: expanded)
             Text("shimmer=\(running && motion.showsShimmer);numeric=\(motion.numericCounts)")
                 .accessibilityIdentifier("proof-effective-motion")
             ScrollView {
@@ -108,15 +170,12 @@ private struct MotionProofContent: View {
                             Text("source call-2: Repeated tool name — cancelled")
                             Text("source call-3: Repeated tool name — failed; no output")
                         }
-                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { naturalHeight = $0 }
+                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {
+                            telemetry.recordNaturalHeight($0)
+                        }
                     }
                     .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
-                        visibleHeight = height
-                        if samples.count < 16000 {
-                            samples.append(["preset": storedID, "expanded": String(expanded),
-                                "seconds": String(ProcessInfo.processInfo.systemUptime - transitionStarted),
-                                "height": String(Double(height)), "natural": String(Double(naturalHeight))])
-                        }
+                        telemetry.recordVisibleHeight(height, preset: storedID, expanded: expanded)
                     }
                     Text("Original content after details").padding(.top, 6)
                         .accessibilityIdentifier("proof-footer")
@@ -124,19 +183,16 @@ private struct MotionProofContent: View {
                 .chatScrollImmediateContentTouches()
             }
             .onScrollGeometryChange(for: CGFloat.self) { $0.contentOffset.y } action: { _, newY in
-                scrollOffsetY = newY
+                telemetry.recordScrollOffset(newY)
             }
             .environment(\.layoutDirection, rtl ? .rightToLeft : .leftToRight)
             .dynamicTypeSize(largeType ? .accessibility2 : .large)
-            Button("Save geometry timeline") { saveTimeline() }.accessibilityIdentifier("proof-save-timeline")
+            Button("Save geometry timeline") { telemetry.saveTimeline() }.accessibilityIdentifier("proof-save-timeline")
         }
-        .onChange(of: expanded) { _, _ in transitionStarted = ProcessInfo.processInfo.systemUptime }
-    }
-
-    private func saveTimeline() {
-        guard let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
-              let data = try? JSONSerialization.data(withJSONObject: samples, options: [.sortedKeys]) else { return }
-        try? data.write(to: directory.appendingPathComponent("motion-geometry-timeline.json"), options: .atomic)
+        .onGeometryChange(for: Bool.self) { $0.size.width > $0.size.height } action: { isLandscape in
+            telemetry.recordOrientation(isLandscape: isLandscape)
+        }
+        .onChange(of: expanded) { _, _ in telemetry.noteTransitionStarted() }
     }
 }
 

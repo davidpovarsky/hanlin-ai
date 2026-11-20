@@ -20,21 +20,17 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     @State private var revision = 0
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
-                ChatDisclosureLayout(progress: progress, spacing: spacing) {
-                    VStack(alignment: .leading, spacing: 6, content: content)
-                        .opacity(motion.collapsedOpacity + (1 - motion.collapsedOpacity) * Double(progress))
-                }
-                .clipped()
-                .contentShape(Rectangle())
-                .allowsHitTesting(isExpanded)
-                .accessibilityHidden(!isExpanded)
-                .onAppear {
-                    if isExpanded && progress == 0 { animateToTarget() }
-                }
+                VStack(alignment: .leading, spacing: 6, content: content)
+                    .transition(.identity)
             }
         }
+        .opacity(motion.collapsedOpacity + (1 - motion.collapsedOpacity) * Double(progress))
+        .clipped()
+        .contentShape(Rectangle())
+        .allowsHitTesting(isExpanded)
+        .accessibilityHidden(!isExpanded)
         .onAppear { settle() }
         .onChange(of: isExpanded) { _, _ in transition() }
         .onChange(of: motion.isAnimated) { _, animated in
@@ -54,15 +50,8 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
 
     private func transition() {
         guard motion.isAnimated else { settle(); return }
-        // Mount at zero without inheriting a caller's animation. No timers or
-        // measured-height state; natural size is read during each layout pass.
-        if isExpanded && !mounted {
-            revision += 1
-            var transaction = Transaction(animation: nil)
-            transaction.disablesAnimations = true
-            withTransaction(transaction) { mounted = true; progress = 0 }
-            return // The mounted child's onAppear starts from its rendered zero height.
-        }
+        // Keep the animatable ChatDisclosureLayout mounted at progress == 0 so
+        // first expand starts immediately without an extra child onAppear turn.
         animateToTarget()
     }
 
@@ -72,10 +61,13 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         let currentRevision = revision
         let expanding = isExpanded
         withAnimation(motion.disclosureAnimation(expanding: expanding), completionCriteria: .removed) {
+            if expanding { mounted = true }
             progress = expanding ? 1 : 0
         } completion: {
             guard revision == currentRevision, !isExpanded, !expanding else { return }
-            mounted = false
+            var transaction = Transaction(animation: nil)
+            transaction.disablesAnimations = true
+            withTransaction(transaction) { mounted = false }
         }
     }
 }
@@ -120,7 +112,8 @@ private struct ChatDisclosureLayout: Layout {
     }
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let natural = subviews.first?.sizeThatFits(ProposedViewSize(width: proposal.width, height: nil)) ?? .zero
+        guard let subview = subviews.first else { return .zero }
+        let natural = subview.sizeThatFits(ProposedViewSize(width: proposal.width, height: nil))
         // Use the same width for measurement and placement. A narrower reported
         // text width can otherwise rewrap during placement and change its height.
         let width = proposal.width.flatMap { $0.isFinite ? $0 : nil } ?? natural.width
@@ -128,8 +121,9 @@ private struct ChatDisclosureLayout: Layout {
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        guard let subview = subviews.first else { return }
         let naturalProposal = ProposedViewSize(width: bounds.width, height: nil)
-        subviews.first?.place(at: CGPoint(x: bounds.minX, y: bounds.minY + spacing * min(1, max(0, progress))),
+        subview.place(at: CGPoint(x: bounds.minX, y: bounds.minY + spacing * min(1, max(0, progress))),
             anchor: .topLeading, proposal: naturalProposal)
     }
 }

@@ -66,6 +66,10 @@ struct ChatScrollImmediateContentTouches: UIViewRepresentable {
         uiView.applyIfNeeded()
     }
 
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: ConfigurationView, context: Context) -> CGSize? {
+        .zero
+    }
+
     static func dismantleUIView(_ uiView: ConfigurationView, coordinator: ()) {
         uiView.restoreOriginalValue()
     }
@@ -102,7 +106,15 @@ struct ChatScrollImmediateContentTouches: UIViewRepresentable {
         }
 
         func applyIfNeeded() {
-            guard window != nil else { return }
+            guard let window else { return }
+            if let scrollView = observedScrollView,
+               scrollView.window === window,
+               isDescendant(of: scrollView) {
+                if scrollView.delaysContentTouches {
+                    scrollView.delaysContentTouches = false
+                }
+                return
+            }
             var ancestor = superview
             var containingScrollView: UIScrollView?
             while let view = ancestor {
@@ -128,8 +140,9 @@ struct ChatScrollImmediateContentTouches: UIViewRepresentable {
 extension View {
     @MainActor
     func chatScrollImmediateContentTouches() -> some View {
-        background {
+        background(alignment: .topLeading) {
             ChatScrollImmediateContentTouches()
+                .frame(width: 0, height: 0)
                 .accessibilityHidden(true)
                 .allowsHitTesting(false)
         }

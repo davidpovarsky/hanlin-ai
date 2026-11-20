@@ -51,7 +51,15 @@ final class MotionUITests: XCTestCase {
         let state = app.staticTexts["proof-geometry-state"]
         let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", value), object: state)
         XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: timeout), .completed,
-                       "Actual geometry: \(state.label); native action receipt: \(String(describing: state.value))")
+                       "Expected geometry: \(value); actual geometry: \(state.label); native action receipt: \(String(describing: state.value))")
+    }
+
+    private func waitForOrientation(landscape: Bool, timeout: TimeInterval = 5) {
+        let state = app.staticTexts["proof-geometry-state"]
+        let expected = landscape ? "orientation=landscape" : "orientation=portrait"
+        let expectation = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value CONTAINS %@", expected), object: state)
+        XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: timeout), .completed,
+                       "Expected \(expected); actual geometry: \(state.label); native action receipt: \(String(describing: state.value))")
     }
 
     private func selectPreset(_ title: String, id: String) {
@@ -94,6 +102,7 @@ final class MotionUITests: XCTestCase {
     }
 
     func testBRapidReversalPresetSwitchAndPersistence() {
+        waitForGeometry("collapsed")
         let toggle = app.buttons["proof-thinking"]
         XCTAssertTrue(toggle.isHittable)
         toggle.tap(withNumberOfTaps: 3, numberOfTouches: 1)
@@ -163,11 +172,16 @@ final class MotionUITests: XCTestCase {
         app.buttons["proof-thinking"].tap(); waitForGeometry("expanded")
         attach("long-rtl-accessibility-type-portrait")
         XCUIDevice.shared.orientation = .landscapeLeft
+        waitForOrientation(landscape: true)
         waitForGeometry("expanded"); attach("long-rtl-accessibility-type-landscape")
         app.buttons["proof-finish"].tap()
         XCTAssertEqual(app.staticTexts["proof-effective-motion"].label, "shimmer=false;numeric=true")
         XCUIDevice.shared.orientation = .portrait
-        app.buttons["proof-thinking"].tap(); waitForGeometry("collapsed")
+        waitForOrientation(landscape: false)
+        waitForGeometry("expanded")
+        let toggle = app.buttons["proof-thinking"]
+        XCTAssertTrue(toggle.isHittable)
+        toggle.tap(); waitForGeometry("collapsed")
         attach("completed-closed-portrait")
     }
 
