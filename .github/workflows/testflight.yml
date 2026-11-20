@@ -239,6 +239,20 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Obtain a main distribution profile with Extended Virtual Addressing
+        if: ${{ inputs.upload_to_testflight && inputs.skip_simulator_tests }}
+        shell: bash
+        env:
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8 }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/apple-signing-venv"
+          "$RUNNER_TEMP/apple-signing-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+          "$RUNNER_TEMP/apple-signing-venv/bin/python" Scripts/CI/AppleSigning/reconcile_main_profile.py --output "$RUNNER_TEMP/hanlin-main-extended-va.mobileprovision"
+
       - name: Import distribution certificate and provisioning profiles
         shell: bash
         env:
@@ -273,7 +287,11 @@ jobs:
             local role="$1" bundle_id="$2" encoded="$3" env_prefix="$4"
             local profile="$RUNNER_TEMP/${role}.mobileprovision"
             local plist="$BUILD_DIR/logs/${role}-profile.plist"
-            printf '%s' "$encoded" | base64 --decode > "$profile"
+            if [[ "$role" == main && -n "${HANLIN_GENERATED_MAIN_PROFILE_PATH:-}" ]]; then
+              cp "$HANLIN_GENERATED_MAIN_PROFILE_PATH" "$profile"
+            else
+              printf '%s' "$encoded" | base64 --decode > "$profile"
+            fi
             security cms -D -i "$profile" > "$plist"
             local uuid name team app_identifier get_task_allow groups
             uuid=$(/usr/libexec/PlistBuddy -c 'Print :UUID' "$plist")
