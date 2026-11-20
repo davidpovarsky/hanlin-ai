@@ -8,11 +8,6 @@ on:
         required: false
         default: false
         type: boolean
-      composer_expected_sha:
-        description: Exact commit SHA expected by isolated Composer validation
-        required: false
-        default: ''
-        type: string
       nativescript_metadata_validation_only:
         description: Compare pinned NativeScript metadata parser modes against the selected SDK without app or engine builds
         required: false
@@ -46,6 +41,11 @@ on:
       testflight_upload:
         description: Build, sign, validate, and upload ChavrusaChat to TestFlight
         required: true
+        default: false
+        type: boolean
+      testflight_skip_simulator_tests:
+        description: Explicit direct TestFlight device testing without simulator acceptance
+        required: false
         default: false
         type: boolean
       testflight_existing_build_number:
@@ -3468,6 +3468,7 @@ jobs:
     uses: ./.github/workflows/testflight.yml
     with:
       upload_to_testflight: true
+      skip_simulator_tests: ${{ inputs.testflight_skip_simulator_tests }}
       existing_build_number: ${{ inputs.testflight_existing_build_number }}
       audience_source_build: ${{ inputs.testflight_audience_source_build }}
       runtime_bundle_artifact_run_id: ${{ inputs.runtime_bundle_artifact_run_id }}
