@@ -173,12 +173,35 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         assertTransport(count: 1)
         let react = app.webViews.textFields["React nights"].firstMatch
         XCTAssertTrue(react.waitForExistence(timeout: 15), "The original React library must render inside the same assistant message")
+        let initialNative = native.value as? String ?? "<nil>"
+        let initialReact = react.value as? String ?? "<nil>"
+        func openUIDiag(_ phase: String) -> String {
+            let budgets = app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Budget:"))
+                .allElementsBoundByIndex.map(\.label)
+            return [
+                "phase=\(phase)",
+                "initial=(native:\(initialNative),react:\(initialReact))",
+                "native=(exists:\(native.exists),enabled:\(native.isEnabled),hittable:\(native.isHittable),val:\(native.value as? String ?? "<nil>"))",
+                "react=(exists:\(react.exists),enabled:\(react.isEnabled),hittable:\(react.isHittable),val:\(react.value as? String ?? "<nil>"))",
+                "webViews=\(app.webViews.count)",
+                "webTextFields=\(app.webViews.textFields.count)",
+                "budgets=\(budgets)",
+                "requests=\(element("hanlin-native-a2ui-request-count").label)"
+            ].joined(separator: " ")
+        }
         native.tap()
         native.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: (native.value as? String ?? "").count) + "7")
-        XCTAssertTrue(wait(NSPredicate(format: "value == '7'"), on: react))
+        let reactSynced7 = wait(NSPredicate(format: "value == '7'"), on: react)
+        if !reactSynced7 { record("openui-mixed-react-7-failure") }
+        XCTAssertTrue(reactSynced7, openUIDiag("native-to-react-7"))
         react.tap()
         react.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: (react.value as? String ?? "").count) + "9")
-        XCTAssertTrue(wait(NSPredicate(format: "value == '9'"), on: native))
+        let reactTyped9 = wait(NSPredicate(format: "value == '9'"), on: react)
+        if !reactTyped9 { record("openui-mixed-react-type-9-failure") }
+        XCTAssertTrue(reactTyped9, openUIDiag("react-typed-9"))
+        let nativeSynced9 = wait(NSPredicate(format: "value == '9'"), on: native)
+        if !nativeSynced9 { record("openui-mixed-native-9-failure") }
+        XCTAssertTrue(nativeSynced9, openUIDiag("react-to-native-9"))
         assertText("Budget: 1200, nights: 9")
         assertTransport(count: 1) // Cross-renderer state updates must remain local.
         input().tap(); input().typeText("UNSENT_DRAFT_MUST_STAY_LOCAL")
