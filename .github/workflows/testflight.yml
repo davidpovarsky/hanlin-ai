@@ -6,6 +6,10 @@ on:
       upload_to_testflight:
         required: true
         type: boolean
+      skip_simulator_tests:
+        required: false
+        default: false
+        type: boolean
       existing_build_number:
         required: false
         default: ''
@@ -25,6 +29,11 @@ on:
         required: true
         type: boolean
         default: true
+      skip_simulator_tests:
+        description: Direct TestFlight device preview without simulator UI tests (explicit opt-in)
+        required: false
+        type: boolean
+        default: false
       existing_build_number:
         description: Distribute an existing uploaded build without rebuilding
         required: false
@@ -150,12 +159,17 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Freeze required actual app UI contract before release work
-        if: ${{ inputs.upload_to_testflight }}
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         env:
           UI_ACCEPTANCE_EVIDENCE: ${{ env.BUILD_DIR }}/ui-acceptance
         run: |
           python3 Scripts/CI/SimulatorAcceptance/gate.py plan \
             --evidence "$UI_ACCEPTANCE_EVIDENCE" --build-number "$BUILD_NUMBER"
+
+      - name: Record explicit fast TestFlight device preview
+        if: ${{ inputs.skip_simulator_tests }}
+        run: |
+          echo 'Simulator UI tests and dependent UI proof gates skipped by operator request; not a validated full release.' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Prepare application build inputs
         shell: bash
@@ -372,13 +386,13 @@ jobs:
 
       - name: Execute mandatory actual iPhone and iPad 27 Release UI acceptance
         timeout-minutes: 75
-        if: ${{ inputs.upload_to_testflight }}
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         env:
           UI_ACCEPTANCE_EVIDENCE: ${{ env.BUILD_DIR }}/ui-acceptance
         run: python3 Scripts/CI/SimulatorAcceptance/run_app.py
 
       - name: Retain UI execution immediately before archive or upload work
-        if: ${{ always() && inputs.upload_to_testflight }}
+        if: ${{ always() && inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         uses: actions/upload-artifact@v7.0.2
         with:
           name: Hanlin-App-UI-execution-${{ env.BUILD_NUMBER }}
@@ -647,7 +661,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Enforce UI proof bound to the exact signed candidate before upload
-        if: ${{ inputs.upload_to_testflight }}
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         run: |
           python3 Scripts/CI/SimulatorAcceptance/release_gate.py seal \
             --evidence "$BUILD_DIR/ui-acceptance" --build-number "$BUILD_NUMBER" \
@@ -707,14 +721,14 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Bind the uploaded App Store build identity to its UI proof
-        if: ${{ inputs.upload_to_testflight }}
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         run: |
           python3 Scripts/CI/SimulatorAcceptance/release_gate.py uploaded \
             --evidence "$BUILD_DIR/ui-acceptance" --build-number "$BUILD_NUMBER" \
             --readiness "$BUILD_DIR/logs/testflight-readiness.json"
 
       - name: Retain mandatory app UI proof including blocked or failed execution
-        if: ${{ always() && inputs.upload_to_testflight }}
+        if: ${{ always() && inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         uses: actions/upload-artifact@v7.0.2
         with:
           name: Hanlin-App-UI-${{ env.BUILD_NUMBER }}
