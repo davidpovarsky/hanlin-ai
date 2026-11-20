@@ -131,7 +131,7 @@ if not (1 <= dest <= 300):
     raise SystemExit(f"Invalid bounded destination timeout: {dest}")
 if not (1 <= bld <= 600):
     raise SystemExit(f"Invalid bounded build timeout: {bld}")
-if not (1 <= tst <= 1200):
+if not (1 <= tst <= 1600):
     raise SystemExit(f"Invalid bounded test timeout: {tst}")
 PY
 fi
@@ -216,7 +216,7 @@ if destination_timeout < 1 or destination_timeout > 300:
     raise SystemExit(f"Invalid bounded destination timeout: {destination_timeout}")
 if build_timeout < 1 or build_timeout > 600:
     raise SystemExit(f"Invalid bounded build timeout: {build_timeout}")
-if test_outer_timeout < 1 or test_outer_timeout > 1200:
+if test_outer_timeout < 1 or test_outer_timeout > 1600:
     raise SystemExit(f"Invalid bounded test timeout: {test_outer_timeout}")
 
 sys.path.insert(0, str(support_root))
