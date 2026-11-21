@@ -1,6 +1,29 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Run normal Python source with embedded CPython 3.14.6 on this device. It works offline and does not use the remote Piston service. Script arguments become sys.argv entries. Packages installed by Hanlin's local package manager are available, including compatible wheels and source builds. Third-party packages such as requests are not preinstalled: inspect/install/probe them with manage_runtime_packages before importing, or use standard-library urllib.request for HTTP. After a missing import, review any earlier side effects before rerunning the script. Native imports require a registered extension linked and signed with the app; arbitrary desktop binaries cannot become iOS extensions.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Run normal Python source with embedded CPython 3.14.6 on this device. It works offline and does not use the remote Piston service. Script arguments become sys.argv entries. Packages installed by Hanlin's local package manager are available, including compatible wheels and source builds. Third-party packages such as requests are not preinstalled: inspect/install/probe them with manage_runtime_packages before importing, or use standard-library urllib.request for HTTP. After a missing import, review any earlier side effects before rerunning the script. Native imports require a registered extension linked and signed with the app; arbitrary desktop binaries cannot become iOS extensions."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הרצת קוד Python רגיל במכשיר באמצעות CPython 3.14.6 המוטמע. ההרצה פועלת גם ללא חיבור לרשת ואינה משתמשת בשירות Piston המרוחק. ארגומנטים של הסקריפט זמינים כערכים ב־sys.argv. חבילות שהותקנו באמצעות מנהל החבילות המקומי של Hanlin זמינות להרצה, כולל חבילות wheel תואמות וחבילות שנבנו מקוד מקור. חבילות צד שלישי כגון requests אינן מותקנות מראש: לפני הייבוא יש לבדוק את מצב החבילה, להתקין אותה לפי הצורך ולבדוק את טעינתה באמצעות manage_runtime_packages, או להשתמש ב־urllib.request מהספרייה הסטנדרטית לבקשות HTTP. לאחר שגיאת ייבוא עקב חבילה חסרה, יש לבדוק את השפעות הקוד שכבר בוצע לפני הרצת הסקריפט מחדש. ייבוא הרחבות נייטיב דורש הרחבה רשומה המקושרת והחתומה עם האפליקציה; לא ניתן להפוך קבצים בינאריים שרירותיים למחשבים להרחבות iOS."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用设备内嵌的 CPython 3.14.6 运行普通 Python 源码，可离线运行，不使用远程 Piston 服务。脚本参数写入 sys.argv。Hanlin 本地包管理器安装的兼容 wheel 和源码构建包均可使用。requests 等第三方包并未预装：导入前请使用 manage_runtime_packages 检查包状态、按需安装并探测其可用性，或使用标准库 urllib.request 发起 HTTP 请求。如果导入因缺少包而失败，重新运行脚本前请检查此前代码可能已产生的副作用。原生导入需要已注册且随应用链接、签名的扩展；桌面二进制文件不能直接作为 iOS 扩展。"
+          }
+        }
+      }
+    },
       "Run Python on the remote service?": {
         "extractionState": "manual",
         "localizations": {
