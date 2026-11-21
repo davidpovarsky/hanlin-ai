@@ -179,3 +179,24 @@ These acceptance tasks remain open. The release receipt and any subsequent physi
 The first repair attempt, [run 44952550947](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44952550947), used source `72bf6f2b29e64585fc1ec85762dbe0f120f772a1` and failed before upload in Xcode's GenerateStringSymbols phase. Three newly added keys produced the same generated Swift symbols as existing keys: `Agent Capabilities` / `Agent capabilities`, `Local runtimes` / `Local Runtimes`, and `Mini Apps` / `MiniApps`.
 
 The follow-up changes only the three new lookup identifiers to `hanlin.morph.agentCapabilitiesTitle`, `hanlin.morph.localRuntimesDescription`, and `hanlin.morph.miniAppsTitle`. Their English, Hebrew and Simplified Chinese values are unchanged, and all 1,049 pre-existing catalogue entries remain identical. A focused normalized-key collision check passes for all 21 additions. This check does not substitute for Xcode's actual string symbol generation; a fresh signed archive is required. This failed attempt did not produce an available TestFlight build.
+
+## Verified TestFlight distribution (22 November 2026)
+
+The retry [run 44955994342](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44955994342) completed successfully. Apple confirmed readiness at 01:19 on 22 November 2026 (Asia/Hebron; receipt timestamp `2026-11-21T23:19:10Z`).
+
+| Receipt field | Verified value |
+| --- | --- |
+| Version / build | `0.7.3 (145201)` |
+| Shipped implementation source | `927001ac4ac2f3f3cf837df50ec3bb20a0648b48` |
+| App ID | `6811910017` |
+| Apple build ID | `1e3cd763-54a8-447a-b6e1-2795c1c8f59f` |
+| Processing state | `VALID` |
+| Internal testing state | `IN_BETA_TESTING` |
+| Existing audience source | Build `143801` |
+| Verified internal group | `14fdc6a7-062e-40f6-8f11-45cbd30c6ddb` |
+| Native Runtime producer | `42926628418` |
+| Simulator-test input | `skip_simulator_tests: true` |
+
+The signed Apple archive, export, App Store Connect validation, upload and readiness verification all passed. The exact source SHA in the readiness receipt matches the successful workflow's head SHA. One existing internal group was reused and its assignment verified. External beta state is `READY_FOR_BETA_SUBMISSION`; this receipt proves availability to the existing internal audience.
+
+The 39 executed production-logic checks remain the validation described above. No simulator or physical-iPad UI run was added. Physical parity, keyboard/streaming performance measurements and crash recurrence acceptance remain open in Asana. This receipt section was added after distribution; the shipped implementation source is the SHA in the table, and this documentation update does not change app code.
