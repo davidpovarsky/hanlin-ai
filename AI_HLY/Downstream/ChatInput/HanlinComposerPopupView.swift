@@ -212,7 +212,7 @@ struct HanlinComposerGeneralActionsView: View {
             #if targetEnvironment(simulator)
             attachmentAcceptanceFixtures
             #endif
-            Text(String(localized: "Agent Capabilities"))
+            Text(String(localized: "hanlin.morph.agentCapabilitiesTitle"))
                 .font(HanlinTypography.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
             capabilityTiles
@@ -598,7 +598,7 @@ struct HanlinComposerGeneralActionsView: View {
                 }
             }
             if let onOpenMiniApps {
-                morphCapabilityTile(title: String(localized: "Mini Apps"), subtitle: String(localized: "Interfaces in chat"),
+                morphCapabilityTile(title: String(localized: "hanlin.morph.miniAppsTitle"), subtitle: String(localized: "Interfaces in chat"),
                                     symbol: "square.grid.2x2", identifier: "tool-miniApps") {
                     coordinator.closeAll()
                     onOpenMiniApps()

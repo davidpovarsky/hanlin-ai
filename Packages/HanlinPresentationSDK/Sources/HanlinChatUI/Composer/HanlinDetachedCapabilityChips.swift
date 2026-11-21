@@ -40,7 +40,7 @@ public enum HanlinDetachedCapability: String, CaseIterable, Identifiable, Sendab
         case .tools: return String(localized: "Tools and actions")
         case .skills: return String(localized: "Agent capabilities")
         case .mcp: return String(localized: "Servers and connections")
-        case .runtimes: return String(localized: "Local runtimes")
+        case .runtimes: return String(localized: "hanlin.morph.localRuntimesDescription")
         case .creative: return String(localized: "Image and audio")
         }
     }

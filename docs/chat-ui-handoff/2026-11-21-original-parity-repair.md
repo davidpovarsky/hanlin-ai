@@ -173,3 +173,9 @@ Tracking:
 - Physical/UI acceptance: https://app.asana.com/0/1219603102275846/1220083352349478
 
 These acceptance tasks remain open. The release receipt and any subsequent physical findings belong in their activity records.
+
+## First Apple archive and localization correction
+
+The first repair attempt, [run 44952550947](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44952550947), used source `72bf6f2b29e64585fc1ec85762dbe0f120f772a1` and failed before upload in Xcode's GenerateStringSymbols phase. Three newly added keys produced the same generated Swift symbols as existing keys: `Agent Capabilities` / `Agent capabilities`, `Local runtimes` / `Local Runtimes`, and `Mini Apps` / `MiniApps`.
+
+The follow-up changes only the three new lookup identifiers to `hanlin.morph.agentCapabilitiesTitle`, `hanlin.morph.localRuntimesDescription`, and `hanlin.morph.miniAppsTitle`. Their English, Hebrew and Simplified Chinese values are unchanged, and all 1,049 pre-existing catalogue entries remain identical. A focused normalized-key collision check passes for all 21 additions. This check does not substitute for Xcode's actual string symbol generation; a fresh signed archive is required. This failed attempt did not produce an available TestFlight build.
