@@ -147,6 +147,10 @@ struct ChatView: View {
     @Environment(\.chatSourceDestination) private var sourceDestination
     @State private var nativeSelectionIDs: Set<UUID> = []
     @State private var pendingSourceScroll: UUID?
+    @State private var sourceScrollTask: Task<Void, Never>?
+    @State private var sourceScrollGeneration = UUID()
+    @State private var sourceScrollHasRevealed = false
+    @State private var sourceScrollNeedsCorrection = false
     @State private var revealedSourceRequest: UUID?
     private var effectiveMatchedMessageID: UUID? {
         if let sourceDestination, sourceDestination.chatRecordID == chatRecord.id { return sourceDestination.messageID }
@@ -155,8 +159,8 @@ struct ChatView: View {
     var matchedMessageID: UUID?                             // 匹配的消息 ID
     @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
-    @State private var ifScroll = false                     // 控制滚动相关状态
     @State private var autoFollowController = ChatAutoFollowController()
+    @State private var transcriptScrollView = ChatScrollViewHandle()
     @State private var measuredComposerHeight: CGFloat = 0
     @State private var chatContainerWidth: CGFloat = 0
 
@@ -240,11 +244,8 @@ struct ChatView: View {
             targetCount = 20
         }
         
-        // 根据设备类型动态调整 ifScroll 阈值
-        let threshold = UIDevice.current.userInterfaceIdiom == .phone ? 6 : 12
         allMessages = sortedMessages
         loadedMessageCount = min(targetCount, sortedMessages.count)
-        ifScroll = (loadedMessageCount < threshold)
         chatTemps = Array(sortedMessages.suffix(loadedMessageCount))
         topVisibleMessageID = chatTemps.first?.id
         
@@ -285,7 +286,7 @@ struct ChatView: View {
         showPhotoSourceOptions: Bool,
         hasPrompts: Bool
     ) -> CGFloat {
-        if measuredComposerHeight > 40 {
+        if measuredComposerHeight.isFinite, measuredComposerHeight > 40 {
             return max(96, min(measuredComposerHeight + 20, 680))
         }
         var baseHeight: CGFloat = 116
@@ -299,7 +300,8 @@ struct ChatView: View {
 
     private func dynamicBottomPadding() -> CGFloat {
         if isExternalCompactComposerHost {
-            return max(225, externalDockHeight + 24)
+            let height = externalDockHeight + 24
+            return height.isFinite ? max(225, height) : 225
         }
         return Self.calculateDynamicBottomPadding(
             measuredComposerHeight: measuredComposerHeight,
@@ -503,12 +505,15 @@ struct ChatView: View {
             .onGeometryChange(for: CGSize.self) { proxy in
                 proxy.size
             } action: { newSize in
+                guard newSize.width.isFinite, newSize.height.isFinite,
+                      newSize.width > 0, newSize.height > 0 else { return }
                 if abs(measuredWorkspaceSize.width - newSize.width) > 1 || abs(measuredWorkspaceSize.height - newSize.height) > 1 {
                     measuredWorkspaceSize = newSize
                 }
             }
             .onPreferenceChange(ComposerHeightPreferenceKey.self) { newHeight in
-                guard newHeight > 0, abs(measuredComposerHeight - newHeight) > 1 else { return }
+                guard newHeight.isFinite, newHeight > 0,
+                      abs(measuredComposerHeight - newHeight) > 1 else { return }
                 measuredComposerHeight = newHeight
             }
     }
@@ -631,7 +636,13 @@ struct ChatView: View {
             agentSessionOwner.cancel()
             sessionBridge?.setTemporaryChat(newValue, for: effectiveChatSessionID)
         }
-        .onChange(of: chatRecord.id) { _, _ in agentSessionOwner.cancel() }
+        .onChange(of: chatRecord.id) { _, _ in
+            agentSessionOwner.cancel()
+            cancelSourceScroll()
+            autoFollowController.invalidateLayout()
+            autoFollowController.resumeFollowing(reason: "conversationChanged")
+            transcriptScrollView.activate(conversationID: effectiveChatSessionID)
+        }
         .onChange(of: sessionBridge?.expectedActiveSessionID) { _, current in
             if sessionBridge != nil, current != effectiveChatSessionID { agentSessionOwner.cancel() }
         }
@@ -995,7 +1006,11 @@ struct ChatView: View {
     @MainActor
     private func revealMatchedSource(using proxy: ScrollViewProxy) {
         guard let id = effectiveMatchedMessageID,
-              let index = allMessages.firstIndex(where: { $0.id == id }) else { return }
+              let index = allMessages.firstIndex(where: { $0.id == id }) else {
+            cancelSourceScroll()
+            return
+        }
+        cancelSourceScroll()
         revealedSourceRequest = sourceDestination?.id
         autoFollowController.cancelPendingScroll()
         autoFollowController.pauseFollowing(reason: "savedSource")
@@ -1005,10 +1020,57 @@ struct ChatView: View {
             chatTemps = Array(allMessages.suffix(loadedMessageCount))
         }
         pendingSourceScroll = id
-        Task { @MainActor in
-            await Task.yield()
-            proxy.scrollTo(id, anchor: .center)
+        scheduleSourceScroll(using: proxy)
+    }
+
+    /// The initial reveal and Markdown correction share a cancellable request.
+    /// A retained proxy must never position a detached or replaced transcript.
+    private func scheduleSourceScroll(using proxy: ScrollViewProxy) {
+        guard let id = pendingSourceScroll else { return }
+        guard effectiveMatchedMessageID == id, chatTemps.contains(where: { $0.id == id }) else {
+            cancelSourceScroll()
+            return
         }
+        guard !sourceScrollHasRevealed || sourceScrollNeedsCorrection,
+              sourceScrollTask == nil, nativeSelectionIDs.isEmpty,
+              !autoFollowController.state.isUserInteracting else { return }
+        let conversationID = effectiveChatSessionID
+        guard transcriptScrollView.layout(conversationID: conversationID) != nil else { return }
+        let viewportGeneration = transcriptScrollView.generation
+        let requestGeneration = sourceScrollGeneration
+        sourceScrollTask = Task { @MainActor in
+            await Task.yield()
+            guard !Task.isCancelled, sourceScrollGeneration == requestGeneration else { return }
+            sourceScrollTask = nil
+            guard pendingSourceScroll == id else { return }
+            guard effectiveMatchedMessageID == id, effectiveChatSessionID == conversationID,
+                  chatTemps.contains(where: { $0.id == id }) else {
+                cancelSourceScroll()
+                return
+            }
+            guard transcriptScrollView.generation == viewportGeneration,
+                  nativeSelectionIDs.isEmpty, !autoFollowController.state.isUserInteracting,
+                  let layout = transcriptScrollView.layout(conversationID: conversationID) else { return }
+            if layout.hasScrollableContent {
+                var transaction = Transaction(animation: nil)
+                transaction.disablesAnimations = true
+                withTransaction(transaction) { proxy.scrollTo(id, anchor: .center) }
+            }
+            sourceScrollHasRevealed = true
+            if sourceScrollNeedsCorrection {
+                pendingSourceScroll = nil
+                sourceScrollNeedsCorrection = false
+            }
+        }
+    }
+
+    private func cancelSourceScroll() {
+        sourceScrollTask?.cancel()
+        sourceScrollTask = nil
+        sourceScrollGeneration = UUID()
+        pendingSourceScroll = nil
+        sourceScrollHasRevealed = false
+        sourceScrollNeedsCorrection = false
     }
 
     private var scrollTriggerState: ScrollTriggerState {
@@ -1063,15 +1125,21 @@ struct ChatView: View {
                 }
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity)
-                .chatScrollImmediateContentTouches()
+                .chatScrollImmediateContentTouches { [transcriptScrollView, conversationID = effectiveChatSessionID] scrollView in
+                    transcriptScrollView.bind(scrollView, conversationID: conversationID)
+                    scheduleScrollWhenViewportReady(using: scrollViewProxy)
+                }
             }
             .hanlinFeedback(.success, trigger: isOutPut)
-            .defaultScrollAnchor(ifScroll ? .top : .bottom)
+            // One measured policy owns positioning. A mutable default bottom
+            // anchor also restores offsets during HostingScrollView attachment,
+            // bypassing the finite-viewport and current-request checks below.
             .scrollIndicators(.hidden)
             .refreshable {
                 loadMoreMessages()
             }
             .onChange(of: needScrollToBottomButton) {
+                cancelSourceScroll()
                 autoFollowController.resumeFollowing()
                 scheduleAutoFollow(using: scrollViewProxy, animated: true, force: true)
             }
@@ -1089,16 +1157,14 @@ struct ChatView: View {
             .environment(\.chatMarkdownSelectionActivity, { id, active in
                 if active, !nativeSelectionIDs.contains(id) {
                     nativeSelectionIDs.insert(id)
+                    cancelSourceScroll()
                     autoFollowController.pauseFollowing(reason: "textSelection")
                 } else if !active, nativeSelectionIDs.contains(id) { nativeSelectionIDs.remove(id) }
             })
             .environment(\.chatMarkdownDidRender, { messageID in
                 guard pendingSourceScroll == messageID else { return }
-                pendingSourceScroll = nil
-                Task { @MainActor in
-                    await Task.yield()
-                    scrollViewProxy.scrollTo(messageID, anchor: .center)
-                }
+                sourceScrollNeedsCorrection = true
+                scheduleSourceScroll(using: scrollViewProxy)
             })
             // The original text views own link and selection interactions.
             // Dismiss composer controls alongside their tap recognizers instead
@@ -1130,16 +1196,18 @@ struct ChatView: View {
             .onScrollGeometryChange(for: CGFloat.self) { geometry in
                 geometry.containerSize.width
             } action: { _, newWidth in
-                if newWidth > 0, abs(chatContainerWidth - newWidth) > 1 {
+                if newWidth.isFinite, newWidth > 0, abs(chatContainerWidth - newWidth) > 1 {
                     chatContainerWidth = newWidth
                 }
             }
-            .onScrollGeometryChange(for: Bool.self) { geometry in
-                let visibleBottom = geometry.contentOffset.y
-                    + geometry.containerSize.height
-                    - geometry.contentInsets.bottom
-                return geometry.contentSize.height - visibleBottom <= 96
-            } action: { wasScrolledToBottom, isScrolledToBottom in
+            .onScrollGeometryChange(for: Bool?.self) { geometry in
+                ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height),
+                    viewportHeight: Double(geometry.containerSize.height),
+                    topInset: Double(geometry.contentInsets.top),
+                    bottomInset: Double(geometry.contentInsets.bottom))
+                    .isNearBottom(contentOffsetY: Double(geometry.contentOffset.y))
+            } action: { _, measuredNearBottom in
+                guard let isScrolledToBottom = measuredNearBottom else { return }
                 autoFollowController.updateNearBottom(isScrolledToBottom)
                 withAnimation(.easeOut(duration: 0.16)) {
                     showScrollToBottomButton = !isScrolledToBottom
@@ -1152,11 +1220,13 @@ struct ChatView: View {
                     bottomInset: Double(geometry.contentInsets.bottom).rounded())
             } action: { _, layout in
                 autoFollowController.updateLayout(layout)
+                scheduleSourceScroll(using: scrollViewProxy)
                 scheduleAutoFollow(using: scrollViewProxy, animated: false)
             }
             .onScrollPhaseChange { _, newPhase in
                 switch newPhase {
                 case .tracking, .interacting, .decelerating:
+                    cancelSourceScroll()
                     autoFollowController.userInteractionBegan()
                 case .idle:
                     autoFollowController.userInteractionEnded()
@@ -1166,9 +1236,30 @@ struct ChatView: View {
                     break
                 }
             }
-            .onDisappear {
-                autoFollowController.cancelPendingScroll()
+            .onAppear {
+                transcriptScrollView.activate(conversationID: effectiveChatSessionID)
+                autoFollowController.invalidateLayout()
+                scheduleScrollWhenViewportReady(using: scrollViewProxy)
             }
+            .task(id: effectiveChatSessionID) {
+                guard !Task.isCancelled else { return }
+                transcriptScrollView.activate(conversationID: effectiveChatSessionID)
+                scheduleScrollWhenViewportReady(using: scrollViewProxy)
+            }
+            .onDisappear {
+                cancelSourceScroll()
+                transcriptScrollView.deactivate()
+                autoFollowController.invalidateLayout()
+            }
+    }
+
+    private func scheduleScrollWhenViewportReady(using proxy: ScrollViewProxy) {
+        let conversationID = effectiveChatSessionID
+        transcriptScrollView.whenReady(conversationID: conversationID) {
+            guard effectiveChatSessionID == conversationID else { return }
+            scheduleSourceScroll(using: proxy)
+            scheduleAutoFollow(using: proxy, animated: false)
+        }
     }
     
     // 聊天时滚动到最底层
@@ -1187,9 +1278,19 @@ struct ChatView: View {
         animated: Bool,
         force: Bool = false
     ) {
-        guard force || nativeSelectionIDs.isEmpty else { return }
+        guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty else { return }
+        let conversationID = effectiveChatSessionID
+        guard let layout = transcriptScrollView.layout(conversationID: conversationID) else {
+            autoFollowController.invalidateLayout()
+            return
+        }
+        autoFollowController.updateLayout(layout)
+        let viewportGeneration = transcriptScrollView.generation
         autoFollowController.scheduleScroll(animated: animated, force: force) { animate in
-            guard force || nativeSelectionIDs.isEmpty else { return }
+            guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty,
+                  effectiveChatSessionID == conversationID,
+                  transcriptScrollView.generation == viewportGeneration,
+                  transcriptScrollView.layout(conversationID: conversationID)?.hasScrollableContent == true else { return }
             scrollToLastMessage(using: scrollViewProxy, animated: animate)
         }
     }
@@ -1575,7 +1676,9 @@ struct ChatView: View {
             chatTemps = [replacement]
             selectedMessageIDs.removeAll()
             isMultiSelectMode = false
-            ifScroll = true
+            cancelSourceScroll()
+            autoFollowController.invalidateLayout()
+            autoFollowController.resumeFollowing(reason: "conversationCleared")
         } catch {
             showClearChatError = true
         }

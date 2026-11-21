@@ -26,26 +26,13 @@ import HanlinPresentationKit
 
 
 struct LoadingGradientText: View {
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.scenePhase) private var scenePhase
-    @Environment(\.chatMotion) private var motion
     let text: String
     var textColor: Color = .gray
-    var gradientColors: [Color] = [
-        .hlBluefont.opacity(0.0),
-        .hlBluefont.opacity(0.2),
-        .hlBluefont.opacity(0.6),
-        .hlBluefont.opacity(1.0),
-        .hlBluefont.opacity(0.6),
-        .hlBluefont.opacity(0.2),
-        .hlBluefont.opacity(0.0)
-    ]
-    var font: Font = HanlinTypography.body.bold()
+    var font: Font = HanlinTypography.body.weight(.medium)
     var isActive: Bool = true
 
     var body: some View {
-        Text(text).font(font).foregroundStyle(textColor)
-            .chatShimmer(isActive: isActive, colors: gradientColors)
+        HanlinActivityTitle(text, font: font, baseColor: textColor, isActive: isActive)
     }
 }
 
@@ -54,8 +41,11 @@ struct LoadingGradientText: View {
 /// scroll enablement, pan recognition, or global `UIAppearance`.
 @MainActor
 struct ChatScrollImmediateContentTouches: UIViewRepresentable {
+    var onScrollViewChanged: @MainActor (UIScrollView?) -> Void = { _ in }
+
     func makeUIView(context: Context) -> ConfigurationView {
         let view = ConfigurationView()
+        view.onScrollViewChanged = onScrollViewChanged
         view.isUserInteractionEnabled = false
         view.isAccessibilityElement = false
         view.backgroundColor = .clear
@@ -63,6 +53,7 @@ struct ChatScrollImmediateContentTouches: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: ConfigurationView, context: Context) {
+        uiView.onScrollViewChanged = onScrollViewChanged
         uiView.applyIfNeeded()
     }
 
@@ -72,9 +63,11 @@ struct ChatScrollImmediateContentTouches: UIViewRepresentable {
 
     static func dismantleUIView(_ uiView: ConfigurationView, coordinator: ()) {
         uiView.restoreOriginalValue()
+        uiView.onScrollViewChanged = { _ in }
     }
 
     final class ConfigurationView: UIView {
+        var onScrollViewChanged: @MainActor (UIScrollView?) -> Void = { _ in }
         private weak var observedScrollView: UIScrollView?
         private var originalDelaysContentTouches: Bool?
 
@@ -103,16 +96,21 @@ struct ChatScrollImmediateContentTouches: UIViewRepresentable {
             }
             observedScrollView = nil
             originalDelaysContentTouches = nil
+            onScrollViewChanged(nil)
         }
 
         func applyIfNeeded() {
-            guard let window else { return }
+            guard let window else {
+                restoreOriginalValue()
+                return
+            }
             if let scrollView = observedScrollView,
                scrollView.window === window,
                isDescendant(of: scrollView) {
                 if scrollView.delaysContentTouches {
                     scrollView.delaysContentTouches = false
                 }
+                onScrollViewChanged(scrollView)
                 return
             }
             var ancestor = superview
@@ -124,7 +122,10 @@ struct ChatScrollImmediateContentTouches: UIViewRepresentable {
                 }
                 ancestor = view.superview
             }
-            guard let scrollView = containingScrollView else { return }
+            guard let scrollView = containingScrollView else {
+                restoreOriginalValue()
+                return
+            }
             if observedScrollView !== scrollView {
                 restoreOriginalValue()
                 observedScrollView = scrollView
@@ -133,15 +134,18 @@ struct ChatScrollImmediateContentTouches: UIViewRepresentable {
             if scrollView.delaysContentTouches {
                 scrollView.delaysContentTouches = false
             }
+            onScrollViewChanged(scrollView)
         }
     }
 }
 
 extension View {
     @MainActor
-    func chatScrollImmediateContentTouches() -> some View {
+    func chatScrollImmediateContentTouches(
+        onScrollViewChanged: @escaping @MainActor (UIScrollView?) -> Void = { _ in }
+    ) -> some View {
         background(alignment: .topLeading) {
-            ChatScrollImmediateContentTouches()
+            ChatScrollImmediateContentTouches(onScrollViewChanged: onScrollViewChanged)
                 .frame(width: 0, height: 0)
                 .accessibilityHidden(true)
                 .allowsHitTesting(false)
@@ -805,48 +809,22 @@ struct ChatBubbleView: View {
         }
     }
 
-    // MARK: 底部 Loading / 结束状态
+    // MARK: Live status belongs only to the current, active response.
     @ViewBuilder
     private func assistantFooter() -> some View {
-        if (!operationalState.isEmpty && isLastAssistant)
-            || (text.isEmpty && sanitizedReasoningDisplay.isEmpty && !hasToolContentForDisplay && images == nil && !hasAssistantRichCards && !hasAgentActivity) {
-            loadingSection()
-        }
-        else if isResponding && isLastAssistant {
-            Image(systemName: "sparkle")
-                .bold()
-                .foregroundColor(.hlBluefont)
-                .symbolEffect(.breathe.pulse.byLayer,
-                              options: .repeat(.continuous), isActive: isMotionRunActive && chatMotion.isAnimated)
+        if AgentActivityHeaderPhase.showsStandaloneStatus(
+            isRunActive: isMotionRunActive, isCurrentMessage: isLastAssistant,
+            hasActivityHeader: hasAgentActivity
+        ) {
+            LoadingGradientText(text: operationalState.isEmpty
+                ? String(localized: "Working through your request") : operationalState,
+                isActive: true)
                 .padding(5)
+                .contentTransition(.opacity)
+                .animation(chatMotion.updateAnimation, value: operationalState)
         }
     }
 
-    // MARK: 真正的 Loading / Operational 状态块
-    @ViewBuilder
-    private func loadingSection() -> some View {
-        HStack(alignment: .top) {
-            if !operationalState.isEmpty {
-                VStack(alignment: .leading) {
-                    LoadingGradientText(text: operationalState, isActive: isMotionRunActive && isLastAssistant)
-                        .foregroundColor(.gray)
-                        .padding(5)
-                        .contentTransition(.opacity)
-                        .animation(chatMotion.updateAnimation, value: operationalState)
-                    
-                }
-            } else {
-                Image(systemName: "sparkle")
-                    .bold()
-                    .foregroundColor(.hlBluefont)
-                    .symbolEffect(.breathe.pulse.byLayer,
-                                  options: .repeat(.continuous), isActive: isMotionRunActive && isLastAssistant && chatMotion.isAnimated)
-            }
-        }
-        .padding(10)
-        .cornerRadius(20)
-    }
-    
     @State private var selectedCodeBlock: CodeBlock? = nil
     @State private var codeIsCopied = false
     @State private var triggerPythonCopyFeedback = false
@@ -2187,8 +2165,8 @@ struct ChatBubbleView: View {
         let isActive: Bool
         let toolApproval: ChatToolApprovalPresentation?
         @Environment(\.hanlinRichMessageContext) private var richMessageContext
-        @Environment(\.chatMotion) private var motion
         @State private var expandedActivityIDs: Set<String> = []
+        @State private var collapsedRoundIDs: Set<String> = []
         @State private var legacyDetailsExpanded = false
 
         static func == (lhs: Self, rhs: Self) -> Bool {
@@ -2206,95 +2184,160 @@ struct ChatBubbleView: View {
             ProgressSummarySanitizer.sanitizeProviderReasoningSummary(reasoning) ?? ""
         }
 
+        private var headerPhase: AgentActivityHeaderPhase {
+            AgentActivityHeaderPhase.resolve(isRunActive: isActive,
+                hasPendingApproval: toolApproval != nil || run?.approvals.contains {
+                    $0.disposition == .awaiting || $0.disposition == .providerRequired
+                } == true)
+        }
+
+        private var headerTitle: String {
+            switch headerPhase {
+            case .working: String(localized: "Working through your request")
+            case .awaitingApproval: String(localized: "Waiting for your confirmation")
+            case .history: String(localized: "Activity history")
+            }
+        }
+
+        private var hierarchyIsExpanded: Bool { isExpanded || toolApproval != nil }
+
         var body: some View {
             let timeline = run.map(AgentActivityComposer.compose)
             let expandedIDs = richMessageContext?.state.expandedActivityIDs ?? expandedActivityIDs
-            // Technical payload projection is lazy: a collapsed activity does
-            // not format any raw output, even when the parent answer changes.
-            let entries = (isExpanded || toolApproval != nil) && !expandedIDs.isEmpty
+            // Raw payload projection stays lazy and independent of answer deltas.
+            let entries = hierarchyIsExpanded && !expandedIDs.isEmpty
                 ? ClassicChatAgentProjection.projectToolEntries(from: run) : []
             let entriesByCallID = Dictionary(grouping: entries, by: \.callID)
             let approvals = Dictionary((run?.approvals ?? []).map { ($0.callID, $0) },
                 uniquingKeysWith: { _, latest in latest })
             if timeline?.activities.isEmpty == false || !safeReasoning.isEmpty
                 || !legacyToolContent.isEmpty || toolApproval != nil {
-                VStack(alignment: .leading, spacing: 0) {
-                    ToggleButton(title: String(localized: "Thinking"),
-                        timeText: reasoningTime ?? timeline?.summaryTitle ?? "",
-                        isExpanded: $isExpanded, isActive: isActive, usesAnimatedDisclosure: true)
+                DisclosureGroup(isExpanded: Binding(
+                    get: { hierarchyIsExpanded }, set: { isExpanded = $0 }
+                )) {
+                    if let reasoningTime, !reasoningTime.isEmpty {
+                        Text(reasoningTime).font(HanlinTypography.caption).foregroundStyle(.secondary)
+                    }
+                    if let timeline, let run, !timeline.activities.isEmpty {
+                        ForEach(AgentActivityComposer.rounds(for: run, timeline: timeline)) { round in
+                            roundView(round, run: run, entriesByCallID: entriesByCallID, approvals: approvals)
+                        }
+                    } else {
+                        if !safeReasoning.isEmpty {
+                            Text(safeReasoning).font(HanlinTypography.footnote).textSelection(.enabled)
+                                .accessibilityIdentifier("hanlin-reasoning-expanded-text")
+                        }
+                        if !legacyToolContent.isEmpty {
+                            DisclosureGroup(isExpanded: $legacyDetailsExpanded) {
+                                technicalText(ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(legacyToolContent))
+                            } label: {
+                                HanlinActivityHierarchyHeader(title: String(localized: "Tool details"),
+                                    symbol: "wrench.and.screwdriver", depth: 1,
+                                    isExpanded: legacyDetailsExpanded, isActive: false)
+                            }
+                            .disclosureGroupStyle(HanlinActivityDisclosureStyle())
+                        }
+                    }
+                    if let pending = toolApproval,
+                       timeline?.activities.contains(where: { $0.id == pending.callID }) != true {
+                        // Early delivery keeps the request attached to its real
+                        // call, without guessing ownership or granting consent.
+                        approvalView(pending)
+                    }
+                } label: {
+                    HanlinActivityHierarchyHeader(title: headerTitle, symbol: "sparkles",
+                        isExpanded: hierarchyIsExpanded, isActive: headerPhase.showsShimmer)
                         .accessibilityIdentifier("hanlin-reasoning-toggle")
-                    if timeline?.status == .failed || timeline?.activities.contains(where: { $0.status == .failed }) == true {
-                        Label("Some activity failed", systemImage: "exclamationmark.circle")
-                            .font(HanlinTypography.caption).foregroundStyle(.red).padding(.top, 6)
-                    } else if timeline?.status == .cancelled {
-                        Label("Cancelled", systemImage: "stop.circle")
-                            .font(HanlinTypography.caption).foregroundStyle(.secondary).padding(.top, 6)
-                    }
-                    // A pending request is always reachable, without changing
-                    // the user's saved disclosure preference or granting consent.
-                    HanlinAnimatedDisclosure(isExpanded: isExpanded || toolApproval != nil) {
-                        if let timeline, let run, !timeline.activities.isEmpty {
-                            ForEach(AgentActivityComposer.rounds(for: run, timeline: timeline)) { round in
-                                VStack(alignment: .leading, spacing: 4) {
-                                    ForEach(round.activities) { activity in
-                                        if activity.kind == .reasoning {
-                                            Text(AgentActivityComposer.reasoningDisplayText(for: activity, in: run))
-                                                .font(HanlinTypography.footnote).foregroundStyle(.secondary)
-                                                .textSelection(.enabled).padding(.vertical, 4)
-                                                .accessibilityIdentifier("hanlin-reasoning-expanded-text")
-                                        } else if activity.kind == .narrative {
-                                            Text(activity.title).font(HanlinTypography.footnote)
-                                                .foregroundStyle(.secondary).textSelection(.enabled)
-                                        } else {
-                                            activityRow(activity, entries: entriesByCallID[activity.id] ?? [],
-                                                approval: approvals[activity.id])
-                                        }
-                                    }
-                                }
-                                .padding(.leading, 12)
-                                .padding(.vertical, 4)
-                                .overlay(alignment: .leading) {
-                                    Rectangle().fill(Color.secondary.opacity(0.16)).frame(width: 1)
-                                        .padding(.vertical, 6).accessibilityHidden(true)
-                                }
-                            }
-                        } else {
-                            if !safeReasoning.isEmpty {
-                                Text(safeReasoning).font(HanlinTypography.footnote).textSelection(.enabled)
-                                    .accessibilityIdentifier("hanlin-reasoning-expanded-text")
-                            }
-                            if !legacyToolContent.isEmpty {
-                                DisclosureGroup("Tool details", isExpanded: $legacyDetailsExpanded) {
-                                    technicalText(ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(legacyToolContent))
-                                }
-                                .disclosureGroupStyle(HanlinMotionDisclosureStyle())
-                            }
-                        }
-                        if let pending = toolApproval,
-                           timeline?.activities.contains(where: { $0.id == pending.callID }) != true {
-                            // Early request delivery can precede the canonical
-                            // activity event. Keep the original request attached
-                            // to this run; never guess another call's ownership.
-                            approvalView(pending)
-                        }
-                    }
                 }
+                .disclosureGroupStyle(HanlinActivityDisclosureStyle(depth: 0))
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("hanlin-agent-activity-toggle")
             }
         }
 
         @ViewBuilder
+        private func roundView(_ round: AgentDisplayRound, run: AgentRun,
+                               entriesByCallID: [String: [ClassicProjectedToolCallEntry]],
+                               approvals: [String: AgentToolApproval]) -> some View {
+            // Nest only genuinely attributed rounds. Legacy siblings are never
+            // assigned a parent because their rows happen to be adjacent.
+            if round.roundID != nil,
+               round.activities.contains(where: { $0.kind != .reasoning && $0.kind != .narrative }) {
+                let waiting = round.activities.contains { activity in
+                    toolApproval?.callID == activity.id
+                        || approvals[activity.id]?.disposition == .awaiting
+                        || approvals[activity.id]?.disposition == .providerRequired
+                }
+                let expanded = !collapsedRoundIDs.contains(round.id) || waiting
+                DisclosureGroup(isExpanded: Binding(
+                    get: { !collapsedRoundIDs.contains(round.id) || waiting },
+                    set: { if $0 { collapsedRoundIDs.remove(round.id) }
+                        else { collapsedRoundIDs.insert(round.id) } }
+                )) {
+                    roundRows(round, run: run, entriesByCallID: entriesByCallID, approvals: approvals)
+                } label: {
+                    HanlinActivityHierarchyHeader(title: String(localized: "Tools"),
+                        symbol: "gearshape.2", depth: 1, isExpanded: expanded,
+                        isActive: isActive && !waiting && round.activities.contains { $0.status == .running })
+                }
+                .disclosureGroupStyle(HanlinActivityDisclosureStyle())
+            } else {
+                roundRows(round, run: run, entriesByCallID: entriesByCallID, approvals: approvals)
+            }
+        }
+
+        private func roundRows(_ round: AgentDisplayRound, run: AgentRun,
+                               entriesByCallID: [String: [ClassicProjectedToolCallEntry]],
+                               approvals: [String: AgentToolApproval]) -> some View {
+            VStack(alignment: .leading, spacing: 3) {
+                ForEach(round.activities) { activity in
+                    if activity.kind == .reasoning {
+                        let summary = AgentActivityComposer.reasoningDisplayText(for: activity, in: run)
+                        // A stored placeholder is not historical reasoning text.
+                        if !summary.isEmpty && summary != String(localized: "Thinking") {
+                            Text(summary).font(HanlinTypography.footnote).foregroundStyle(.secondary)
+                                .textSelection(.enabled).padding(.vertical, 4)
+                                .accessibilityIdentifier("hanlin-reasoning-expanded-text")
+                        }
+                    } else if activity.kind == .narrative {
+                        Text(activity.title).font(HanlinTypography.footnote)
+                            .foregroundStyle(.secondary).textSelection(.enabled)
+                    } else {
+                        activityRow(activity, entries: entriesByCallID[activity.id] ?? [],
+                            approval: approvals[activity.id])
+                    }
+                }
+            }
+        }
+
+        private func activityIsExpanded(_ id: String) -> Bool {
+            richMessageContext?.state.expandedActivityIDs.contains(id) ?? expandedActivityIDs.contains(id)
+        }
+
+        private func activityDisplayTitle(_ activity: AgentDisplayActivity) -> String {
+            guard !isActive, activity.status == .running || activity.status == .pending else {
+                return activity.title
+            }
+            // An interrupted historical step may never receive a terminal
+            // event. Keep its actual outcome; do not advertise live work or
+            // fabricate success from the parent run's completion.
+            let sourceIDs = Set(activity.sourceStepIDs)
+            let steps = (run?.steps ?? []).filter { sourceIDs.contains($0.id) }
+            let profile = steps.compactMap(\.presentationProfile).first
+            let name = steps.compactMap(\.subtitle).first ?? ""
+            return ToolPresentationRegistry.presentation(for: name, profile: profile).title
+        }
+
+        @ViewBuilder
         private func activityRow(_ activity: AgentDisplayActivity,
                                  entries: [ClassicProjectedToolCallEntry],
                                  approval: AgentToolApproval?) -> some View {
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 0) {
                 if let pending = toolApproval, pending.callID == activity.id {
                     approvalView(pending)
                 } else {
                     DisclosureGroup(isExpanded: Binding(
-                        get: { richMessageContext?.state.expandedActivityIDs.contains(activity.id)
-                            ?? expandedActivityIDs.contains(activity.id) },
+                        get: { activityIsExpanded(activity.id) },
                         set: { expanded in
                             if let state = richMessageContext?.state { state.setExpanded(expanded, activityID: activity.id) }
                             else if expanded { expandedActivityIDs.insert(activity.id) }
@@ -2322,18 +2365,20 @@ struct ChatBubbleView: View {
                             }
                             ForEach(entries) { toolCallDetails($0) }
                         }
-                        .padding(.vertical, 4)
                     } label: {
-                        HanlinToolActivityHeader(title: activity.title,
+                        HanlinToolActivityHeader(title: activityDisplayTitle(activity),
                             status: statusText(activity, approval: approval),
                             symbol: activity.systemImage ?? (activity.status == .failed
                                 ? "exclamationmark.circle" : "wrench.and.screwdriver"),
                             family: trustedActivityFamily(activity),
                             isActive: isActive && activity.status == .running
                                 && approval?.disposition != .awaiting && approval?.disposition != .providerRequired,
+                            isExpanded: activityIsExpanded(activity.id),
+                            isFailure: activity.status == .failed,
+                            startedAt: activity.startedAt, completedAt: activity.completedAt,
                             sources: sourceReferences(for: activity))
                     }
-                    .disclosureGroupStyle(HanlinMotionDisclosureStyle())
+                    .disclosureGroupStyle(HanlinActivityDisclosureStyle(isTool: true))
                 }
             }
             .accessibilityElement(children: .contain)
@@ -2352,7 +2397,7 @@ struct ChatBubbleView: View {
                 return String(localized: "Awaiting approval")
             }
             switch activity.status {
-            case .pending: return String(localized: "Pending")
+            case .pending: return isActive ? String(localized: "Pending") : ""
             case .running: return ""
             case .completed: return ""
             case .failed: return String(localized: "Failed")
@@ -5295,6 +5340,7 @@ struct BottomSheetView: View {
                 .frame(width: size_30, height: size_30)
                 .foregroundColor(Color(.systemGray))
         }
+        .accessibilityIdentifier("hanlin-expanded-editor-close")
     }
 
     // MARK: - 计算 Token 数量

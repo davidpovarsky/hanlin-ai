@@ -12,35 +12,61 @@ public enum HanlinMorphPageID<Page: Hashable>: Hashable {
 }
 
 public enum HanlinMorphGeometry {
+    private static func finiteHeight(_ value: CGFloat) -> CGFloat {
+        value.isFinite ? max(0, value) : 0
+    }
+
     public static func viewportLimit(availableHeight: CGFloat) -> CGFloat {
-        max(80, availableHeight * 0.72)
+        max(HanlinMorphStyle.minimumPageHeight, finiteHeight(availableHeight) * 0.72)
     }
 
     public static func selectedHeight(naturalHeight: CGFloat?, maxHeight: CGFloat) -> CGFloat? {
-        naturalHeight.map { min($0, maxHeight) }
+        guard let naturalHeight, naturalHeight.isFinite, naturalHeight > 1,
+              maxHeight.isFinite, maxHeight > 1 else { return nil }
+        return min(naturalHeight, maxHeight)
+    }
+
+    /// With the source's bottom alignment, a one-line 52pt input places the
+    /// panel 13pt from the launcher. Extra toolbars inside the input enlarge
+    /// this gap and break the original three-surface glass connection.
+    public static func launcherPanelGap(inputHeight: CGFloat) -> CGFloat {
+        HanlinMorphStyle.panelInputSpacing
+            + max(0, finiteHeight(inputHeight) - HanlinMorphStyle.launcherSize)
     }
 
     public static func pageBudget(availableHeight: CGFloat, accessoryHeight: CGFloat, inputHeight: CGFloat, toolbarHeight: CGFloat) -> CGFloat {
-        let available = max(0, availableHeight)
-        // Panel padding and toolbar gap, launcher gap, shell padding and host spacing.
-        let chrome: CGFloat = 32 + 14 + 13 + 26 + 6
-        let remaining = available - max(0, accessoryHeight) - max(52, inputHeight) - max(0, toolbarHeight) - chrome
+        let available = finiteHeight(availableHeight)
+        // The caller accounts for the quick bar and visible accessory gaps
+        // once. This component owns only its original shell/panel geometry.
+        let chrome = HanlinMorphStyle.panelInset * 2 + HanlinMorphStyle.panelContentSpacing
+            + HanlinMorphStyle.panelInputSpacing + HanlinMorphStyle.topInset + HanlinMorphStyle.bottomInset
+        let remaining = available - finiteHeight(accessoryHeight)
+            - max(HanlinMorphStyle.launcherSize, finiteHeight(inputHeight))
+            - finiteHeight(toolbarHeight) - chrome
         return max(0, min(viewportLimit(availableHeight: available), remaining))
     }
 
     public static func accessoryBudget(availableHeight: CGFloat, inputHeight: CGFloat, toolbarHeight: CGFloat, isExpanded: Bool) -> CGFloat {
-        let panelChrome: CGFloat = isExpanded ? 32 + 14 + 13 + max(0, toolbarHeight) : 0
-        return max(0, availableHeight - max(52, inputHeight) - panelChrome - 32)
+        let panelChrome: CGFloat = isExpanded
+            ? HanlinMorphStyle.panelInset * 2 + HanlinMorphStyle.panelContentSpacing
+                + HanlinMorphStyle.panelInputSpacing + finiteHeight(toolbarHeight) + HanlinMorphStyle.minimumPageHeight
+            : 0
+        let shellAndAccessoryGap = HanlinMorphStyle.topInset + HanlinMorphStyle.bottomInset + HanlinMorphStyle.hostSpacing
+        return max(0, finiteHeight(availableHeight) - max(HanlinMorphStyle.launcherSize, finiteHeight(inputHeight))
+                   - panelChrome - shellAndAccessoryGap)
     }
 
     /// The editor and its enclosing bubble share the same remaining viewport.
     /// The input's other controls are measured, so Dynamic Type and chrome changes
     /// do not rely on a guessed fixed editor-to-bubble offset.
     public static func editorBudget(availableHeight: CGFloat, accessoryHeight: CGFloat, inputHeight: CGFloat, editorHeight: CGFloat, toolbarHeight: CGFloat, isExpanded: Bool) -> CGFloat {
-        let inputChrome = max(0, inputHeight - editorHeight)
-        let panelChrome: CGFloat = isExpanded ? 32 + 14 + 13 + max(0, toolbarHeight) : 0
-        let shellAndHostSpacing: CGFloat = 32
-        return max(0, availableHeight - max(0, accessoryHeight) - inputChrome - panelChrome - shellAndHostSpacing)
+        let inputChrome = max(0, finiteHeight(inputHeight) - finiteHeight(editorHeight))
+        let panelChrome: CGFloat = isExpanded
+            ? HanlinMorphStyle.panelInset * 2 + HanlinMorphStyle.panelContentSpacing
+                + HanlinMorphStyle.panelInputSpacing + finiteHeight(toolbarHeight) + HanlinMorphStyle.minimumPageHeight
+            : 0
+        let shellInsets = HanlinMorphStyle.topInset + HanlinMorphStyle.bottomInset
+        return max(0, finiteHeight(availableHeight) - finiteHeight(accessoryHeight) - inputChrome - panelChrome - shellInsets)
     }
 
     public static func isBackSwipe(horizontal: CGFloat, vertical: CGFloat) -> Bool {
@@ -109,16 +135,16 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
         self.input = input
     }
 
-    private let blue = Color.accentColor
-    private let azure = Color.accentColor
+    private let blue = HanlinMorphStyle.blue
+    private let azure = HanlinMorphStyle.azure
 
     private var pageID: HanlinMorphPageID<Page> {
         activePage.map(HanlinMorphPageID.detail) ?? .home
     }
 
     public var body: some View {
-        GlassEffectContainer(spacing: 32) {
-            VStack(spacing: 13) {
+        GlassEffectContainer(spacing: HanlinMorphStyle.glassMergeDistance) {
+            VStack(spacing: HanlinMorphStyle.panelInputSpacing) {
                 if isExpanded {
                     panel
                         .transition(.asymmetric(
@@ -126,7 +152,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
                             removal: .opacity.combined(with: .scale(scale: 0.94, anchor: .bottom))
                         ))
                 }
-                HStack(alignment: .bottom, spacing: 10) {
+                HStack(alignment: .bottom, spacing: HanlinMorphStyle.launcherInputSpacing) {
                     Button {
                         let opening = !isExpanded
                         withAnimation(reduceMotion ? nil : .spring(response: 0.48, dampingFraction: 0.79)) {
@@ -138,7 +164,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
                         Image(systemName: "plus")
                             .font(HanlinTypography.fixed(size: 21, weight: .semibold))
                             .rotationEffect(.degrees(isExpanded ? 45 : 0))
-                            .frame(width: 52, height: 52)
+                            .frame(width: HanlinMorphStyle.launcherSize, height: HanlinMorphStyle.launcherSize)
                             .contentShape(Circle())
                             .accessibilityIdentifier("composer-plus")
                     }
@@ -153,38 +179,38 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
                     // The host supplies the actual editor and send/stop controls.
                     input()
                         .fixedSize(horizontal: false, vertical: true)
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 52)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: HanlinMorphStyle.launcherSize)
                         .layoutPriority(1)
                         .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
-                            guard height.isFinite, abs(height - measuredInputHeight) > 1 else { return }
+                            guard height.isFinite, height > 1, abs(height - measuredInputHeight) > 1 else { return }
                             measuredInputHeight = height
                             onInputHeightChange(height)
                         }
                         .background {
                             Color.clear.contentShape(Rectangle()).onTapGesture(perform: onBackgroundTap)
                         }
-                        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 27, style: .continuous))
+                        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: HanlinMorphStyle.inputCornerRadius, style: .continuous))
                         .glassEffectID("composer-input", in: glassNamespace)
                         .overlay {
-                            RoundedRectangle(cornerRadius: 27, style: .continuous)
+                            RoundedRectangle(cornerRadius: HanlinMorphStyle.inputCornerRadius, style: .continuous)
                                 .strokeBorder(blue.opacity(0.30), lineWidth: 0.8)
                                 .allowsHitTesting(false)
                         }
                 }
             }
         }
-        .padding(.horizontal, 18)
-        .padding(.top, 12)
-        .padding(.bottom, 14)
+        .padding(.horizontal, HanlinMorphStyle.horizontalInset)
+        .padding(.top, HanlinMorphStyle.topInset)
+        .padding(.bottom, HanlinMorphStyle.bottomInset)
     }
 
     private var panel: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: HanlinMorphStyle.panelContentSpacing) {
             toolbar
                 .fixedSize(horizontal: false, vertical: true)
                 .layoutPriority(1)
                 .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
-                    guard height.isFinite, abs(height - measuredToolbarHeight) > 1 else { return }
+                    guard height.isFinite, height > 1, abs(height - measuredToolbarHeight) > 1 else { return }
                     measuredToolbarHeight = height
                     onToolbarHeightChange(height)
                 }
@@ -217,12 +243,12 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 29, style: .continuous))
+        .padding(HanlinMorphStyle.panelInset)
+        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: HanlinMorphStyle.panelCornerRadius, style: .continuous))
         .glassEffectID("composer-panel", in: glassNamespace)
         .glassEffectTransition(.matchedGeometry)
         .overlay {
-            RoundedRectangle(cornerRadius: 29, style: .continuous)
+            RoundedRectangle(cornerRadius: HanlinMorphStyle.panelCornerRadius, style: .continuous)
                 .strokeBorder(blue.opacity(0.26), lineWidth: 0.7)
                 .allowsHitTesting(false)
         }
@@ -325,7 +351,16 @@ private struct HanlinMorphMeasuredPages<ID: Hashable, Content: View>: View {
         HanlinMorphGeometry.selectedHeight(naturalHeight: naturalHeight, maxHeight: maxHeight)
     }
 
+    @ViewBuilder
     var body: some View {
+        // Window/keyboard changes can briefly leave no space for a page.
+        // Do not attach a HostingScrollView with zero or non-finite bounds.
+        if maxHeight.isFinite, maxHeight > 1 {
+            measuredScrollView
+        }
+    }
+
+    private var measuredScrollView: some View {
         ScrollView(.vertical, showsIndicators: (naturalHeight ?? 0) > maxHeight) {
             ZStack(alignment: .topLeading) {
                 ForEach(subviews: content) { child in
@@ -349,8 +384,8 @@ private struct HanlinMorphMeasuredPages<ID: Hashable, Content: View>: View {
             .frame(height: naturalHeight, alignment: .top)
         }
         .accessibilityIdentifier("hanlin-composer-page-scroll")
-        .frame(height: animatedHeight, alignment: .top)
-        .frame(maxHeight: maxHeight, alignment: .top)
+        .frame(height: HanlinMorphGeometry.selectedHeight(naturalHeight: animatedHeight, maxHeight: maxHeight) ?? maxHeight,
+               alignment: .top)
         .clipped()
         .onChange(of: selectedHeight) { _, target in adoptHeight(target) }
         .onChange(of: id) { _, _ in adoptHeight(selectedHeight) }
@@ -359,7 +394,7 @@ private struct HanlinMorphMeasuredPages<ID: Hashable, Content: View>: View {
     }
 
     private func adoptHeight(_ target: CGFloat?) {
-        guard let target, target.isFinite, target >= 0 else { return }
+        guard let target, target.isFinite, target > 1 else { return }
         if let previous = animatedHeight {
             guard abs(target - previous) > 0.5 else { return }
             withAnimation(reduceMotion ? nil : .spring(response: 0.54, dampingFraction: 0.84)) {

@@ -1031,8 +1031,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertLessThan(abs(composer.frame.maxY - collapsedFrame.maxY), 16,
                           "Opening the palette must preserve the input's bottom anchor")
         XCTAssertEqual(app.popovers.count, 0, "The action panel must remain in the original composer")
-        let saved = app.descendants(matching: .any)["hanlin-drawer-saved-prompts-slot"].firstMatch
-        XCTAssertTrue(saved.waitForExistence(timeout: 5), "The original saved-prompt gallery must remain available")
+        let saved = app.buttons["hanlin-general-prompts-button"].firstMatch
+        let pageScroll = app.scrollViews["hanlin-composer-page-scroll"].firstMatch
+        XCTAssertTrue(pageScroll.waitForExistence(timeout: 5))
+        for _ in 0..<5 {
+            if saved.isHittable { break }
+            pageScroll.swipeUp()
+        }
+        XCTAssertTrue(saved.isHittable, "The original saved-prompts action must remain reachable below the capability grid")
         attachScreenshot("7B-04b_MorphExpanded", in: app)
 
         let close = app.buttons["composer-toolbar-close"].firstMatch
@@ -1042,20 +1048,20 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(composer.exists, "Closing the palette must preserve the same input")
     }
 
+    // Keep the existing test selector used by acceptance scripts. The approved
+    // Morph uses automatic native line growth and a sheet, not an input handle.
     func testDrawerHandleDragCloseOpenAndComposerResize() throws {
         let app = launchDockAcceptanceApp()
         openChat(in: app)
 
-        let resizeHandle = app.descendants(matching: .any)["hanlin-composer-resize-handle"].firstMatch
+        let expand = app.buttons["hanlin-composer-expand-editor"].firstMatch
         let composerShell = app.descendants(matching: .any)["hanlin-composer-surface"].firstMatch
         let generalBtn = app.buttons["hanlin-composer-general-menu"].firstMatch
         let panel = app.descendants(matching: .any)["morphing-action-panel"].firstMatch
-        XCTAssertTrue(resizeHandle.waitForExistence(timeout: 10), "The original input resize handle must exist")
+        XCTAssertTrue(expand.waitForExistence(timeout: 10), "The native expanded editor action must remain reachable")
         XCTAssertTrue(composerShell.waitForExistence(timeout: 10))
         XCTAssertTrue(generalBtn.exists && generalBtn.isHittable)
 
-        // Use the approved Morph launcher/close controls. The former drawer
-        // handle is absent from this design; input drag-resizing remains real.
         generalBtn.tap()
         XCTAssertTrue(panel.waitForExistence(timeout: 5))
         let close = app.buttons["composer-toolbar-close"].firstMatch
@@ -1068,46 +1074,39 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(panel.waitForNonExistence(timeout: 5))
         attachScreenshot("7B-05a_AfterMorphCloseReopen", in: app)
 
-        // 4. Drag composer resize handle upward to increase both composer shell and inner text editor height
         let input = chatInputElement(in: app)
         XCTAssertTrue(input.waitForExistence(timeout: 5))
-        let heightBefore = composerShell.frame.height
-        let inputHeightBefore = input.frame.height
-        let resizeStart = resizeHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        let resizeDragUp = resizeStart.withOffset(CGVector(dx: 0, dy: -90))
-        resizeStart.press(forDuration: 0.05, thenDragTo: resizeDragUp)
+        input.tap()
+        let old = (input.value as? String) ?? ""
+        input.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count))
+        let emptyHeight = input.frame.height
+        let draft = "Native automatic composer draft"
+        input.typeText(draft)
+        let grown = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            input.frame.height > emptyHeight + 5
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [grown], timeout: 5), .completed,
+                       "The first draft text must grow the native editor to its two-line minimum")
+        XCTAssertEqual(input.value as? String, draft)
+        attachScreenshot("7B-05b_AutomaticComposerGrowth", in: app)
 
-        let heightAfter = composerShell.frame.height
-        let inputHeightAfter = input.frame.height
-        XCTAssertGreaterThan(
-            heightAfter,
-            heightBefore + 20,
-            "Dragging composer resize handle upward must increase composer height (before: \(heightBefore), after: \(heightAfter))"
-        )
-        XCTAssertGreaterThan(
-            inputHeightAfter,
-            inputHeightBefore + 15,
-            "Dragging composer resize handle upward must increase inner text editor height (before: \(inputHeightBefore), after: \(inputHeightAfter))"
-        )
-        attachScreenshot("7B-05b_AfterComposerResizeUp", in: app)
-
-        // 5. Drag composer resize handle downward to shrink both composer shell and inner text editor height
-        let resizeShrinkStart = resizeHandle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        let resizeDragDown = resizeShrinkStart.withOffset(CGVector(dx: 0, dy: 70))
-        resizeShrinkStart.press(forDuration: 0.05, thenDragTo: resizeDragDown)
-
-        let heightAfterShrink = composerShell.frame.height
-        let inputHeightAfterShrink = input.frame.height
-        XCTAssertLessThan(
-            heightAfterShrink,
-            heightAfter - 15,
-            "Dragging composer resize handle downward must shrink composer height (expanded: \(heightAfter), shrunk: \(heightAfterShrink))"
-        )
-        XCTAssertLessThan(
-            inputHeightAfterShrink,
-            inputHeightAfter - 10,
-            "Dragging composer resize handle downward must shrink inner text editor height (expanded: \(inputHeightAfter), shrunk: \(inputHeightAfterShrink))"
-        )
+        expand.tap()
+        let expandedSheet = app.descendants(matching: .any)["hanlin-expanded-editor-sheet"].firstMatch
+        XCTAssertTrue(expandedSheet.waitForExistence(timeout: 5))
+        let expandedText = expandedSheet.textViews.firstMatch
+        XCTAssertTrue(expandedText.waitForExistence(timeout: 5))
+        XCTAssertEqual(expandedText.value as? String, draft)
+        expandedText.tap()
+        let suffix = " — edited in the native sheet"
+        expandedText.typeText(suffix)
+        let editedDraft = (expandedText.value as? String) ?? ""
+        XCTAssertTrue(editedDraft.contains(suffix), "The expanded native editor must accept typing")
+        let sheetClose = app.buttons["hanlin-expanded-editor-close"].firstMatch
+        XCTAssertTrue(sheetClose.waitForExistence(timeout: 5))
+        sheetClose.tap()
+        XCTAssertTrue(expandedSheet.waitForNonExistence(timeout: 5))
+        XCTAssertEqual(input.value as? String, editedDraft,
+                       "Closing the expanded editor must preserve the same draft owner")
     }
 
     func testDirectToolsOneTapAndRealState() throws {
@@ -1476,9 +1475,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         openChat(in: app)
 
         let generalBtn = app.descendants(matching: .any)["hanlin-composer-general-menu"].firstMatch
-        let resizeHandle = app.descendants(matching: .any)["hanlin-composer-resize-handle"].firstMatch
+        let expand = app.buttons["hanlin-composer-expand-editor"].firstMatch
         XCTAssertTrue(generalBtn.waitForExistence(timeout: 10))
-        XCTAssertTrue(resizeHandle.waitForExistence(timeout: 10))
+        XCTAssertTrue(expand.waitForExistence(timeout: 10))
 
         // The approved Morph palette replaces the former organizer drawer.
         tapElement(generalBtn)

@@ -7,16 +7,17 @@ enum AgentActivityTitleBuilder {
         queries: [String],
         status: AgentActivityStatus
     ) -> String {
-        if status == .failed || status == .cancelled,
-           let terminalTitle = steps.reversed()
-            .first(where: { $0.status == status })?
-            .title,
-           let sanitizedTitle = ProgressSummarySanitizer.sanitize(terminalTitle),
-           !isGeneric(sanitizedTitle) {
-            return sanitizedTitle
+        if status == .failed || status == .cancelled {
+            // A terminal update may retain its earlier running title. Name the
+            // actual operation; the row separately presents the real outcome.
+            let name = steps.compactMap(\.subtitle).first ?? ""
+            let profile = steps.compactMap(\.presentationProfile).first
+            return ToolPresentationRegistry.presentation(for: name, profile: profile).title
         }
 
-        if let summary = steps.compactMap(\.userFacingSummary)
+        // Historical completion uses the completed presentation below, never
+        // a retained in-progress summary from an earlier lifecycle event.
+        if status == .running, let summary = steps.compactMap(\.userFacingSummary)
             .compactMap({ ProgressSummarySanitizer.sanitize($0) })
             .first(where: { !isGeneric($0) }) {
             return summary

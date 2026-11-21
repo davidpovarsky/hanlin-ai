@@ -60,4 +60,35 @@ public enum HanlinControlMetrics {
     public static let badgeHorizontalInset: CGFloat = 5
     public static let badgeVerticalInset: CGFloat = 1.5
 }
+
+/// The approved Morph experiment's material and geometry, shared by the
+/// production shell and its live capability cards. Native search, menus and
+/// forms keep system styling; these values preserve the original glass design.
+public enum HanlinMorphStyle {
+    public static let blue = Color(red: 58.0 / 255, green: 124.0 / 255, blue: 180.0 / 255)
+    public static let azure = Color(red: 2.0 / 255, green: 136.0 / 255, blue: 209.0 / 255)
+    public static let glassMergeDistance: CGFloat = 32
+    public static let panelInputSpacing: CGFloat = 13
+    public static let launcherInputSpacing: CGFloat = 10
+    public static let launcherSize: CGFloat = 52
+    public static let inputCornerRadius: CGFloat = 27
+    public static let panelCornerRadius: CGFloat = 29
+    public static let panelInset: CGFloat = 16
+    public static let panelContentSpacing: CGFloat = 14
+    public static let minimumPageHeight: CGFloat = 80
+    public static let horizontalInset: CGFloat = 18
+    public static let topInset: CGFloat = 12
+    public static let bottomInset: CGFloat = 14
+    public static let hostSpacing: CGFloat = 6
+    public static let sendButtonSize: CGFloat = 34
+    public static let sendButtonInset: CGFloat = 9
+    public static let cardCornerRadius: CGFloat = 17
+    public static let cardMinimumHeight: CGFloat = 94
+    public static let cardHorizontalInset: CGFloat = 13
+    public static let cardVerticalInset: CGFloat = 7
+    public static let cardSpacing: CGFloat = 10
+    public static let cardMinimumWidth: CGFloat = 128
+    public static let cardMaximumWidth: CGFloat = 230
+    public static let attachmentMinimumHeight: CGFloat = 62
+}
 #endif

@@ -13,6 +13,7 @@ import SwiftUI
 import SwiftData
 import Observation
 import HanlinPlatformContracts
+import HanlinPresentationKit
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -52,6 +53,7 @@ struct HanlinComposerGeneralActionsView: View {
     let onOpenPhotoLibrary: () -> Void
     let onOpenDocumentPicker: () -> Void
     let onOpenShareInbox: () -> Void
+    var onOpenMiniApps: (() -> Void)? = nil
 
     // Mode toggles
     @Binding var ifSearch: Bool
@@ -123,7 +125,11 @@ struct HanlinComposerGeneralActionsView: View {
                         coordinator.markGeneralDestinationDisappeared(reduceMotion: reduceMotion)
                     }
                 } else {
-                    generalRootPage
+                    if embeddedInMorph {
+                        morphHomePage
+                    } else {
+                        generalRootPage
+                    }
                 }
             }
             .onChange(of: coordinator.generalNavigationPath) { _, _ in
@@ -175,6 +181,118 @@ struct HanlinComposerGeneralActionsView: View {
     }
 
     // MARK: - Root Page
+
+    /// The approved Morph home's hierarchy, backed by production actions.
+    /// The older Organizer page below remains available to its own host; its
+    /// prompt gallery, duplicated toggles and inner padding are not this page.
+    private var morphHomePage: some View {
+        VStack(alignment: .leading, spacing: HanlinMorphStyle.panelContentSpacing) {
+            Text(String(localized: "Add Content"))
+                .font(HanlinTypography.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            HStack(spacing: 9) {
+                if !capability.isLocal {
+                    attachmentTile(title: String(localized: "Camera"), systemImage: "camera.fill",
+                                   identifier: "hanlin-general-camera", disabled: isResponding || selectedImages.count >= 5) {
+                        coordinator.closeAll()
+                        onOpenCamera()
+                    }
+                    attachmentTile(title: String(localized: "Photos"), systemImage: "photo.on.rectangle",
+                                   identifier: "hanlin-general-photos", disabled: isResponding || selectedImages.count >= 5) {
+                        coordinator.closeAll()
+                        onOpenPhotoLibrary()
+                    }
+                }
+                attachmentTile(title: String(localized: "Files"), systemImage: "doc.fill",
+                               identifier: "hanlin-general-files", disabled: isResponding || selectedDocumentURLs.count >= 5) {
+                    coordinator.closeAll()
+                    onOpenDocumentPicker()
+                }
+            }
+            #if targetEnvironment(simulator)
+            attachmentAcceptanceFixtures
+            #endif
+            Text(String(localized: "Agent Capabilities"))
+                .font(HanlinTypography.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+            capabilityTiles
+            Button {
+                coordinator.pushGeneralSubroute(.prompts, reduceMotion: true)
+            } label: {
+                Label(String(localized: "Saved Prompts"), systemImage: "text.book.closed.fill")
+                    .font(HanlinTypography.subheadline.weight(.medium))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(11)
+            }
+            .buttonStyle(.plain)
+            .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: HanlinMorphStyle.cardCornerRadius, style: .continuous))
+            .accessibilityIdentifier("hanlin-general-prompts-button")
+
+            // The production share inbox is the only additional home action.
+            // It uses the existing import flow and never substitutes demo data.
+            Button {
+                coordinator.closeAll()
+                onOpenShareInbox()
+            } label: {
+                Label("Shared Items", systemImage: "tray.and.arrow.down")
+                    .frame(maxWidth: .infinity, minHeight: HanlinControlMetrics.minimumHitTarget, alignment: .leading)
+            }
+            .font(HanlinTypography.caption)
+            .buttonStyle(.plain)
+            .foregroundStyle(HanlinMorphStyle.azure)
+            .disabled(isResponding)
+            .accessibilityIdentifier("hanlin-general-share-inbox")
+        }
+    }
+
+    #if targetEnvironment(simulator)
+    @ViewBuilder
+    private var attachmentAcceptanceFixtures: some View {
+        if AgentRuntimeUIAcceptanceProvider.isEnabled {
+            HStack(spacing: HanlinControlMetrics.rowSpacing) {
+                Button {
+                    let renderer = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 64))
+                    let sampleImage = renderer.image { ctx in
+                        UIColor.systemBlue.setFill()
+                        ctx.fill(CGRect(x: 0, y: 0, width: 64, height: 64))
+                    }
+                    selectedImages.append(sampleImage)
+                    coordinator.closeAll()
+                } label: {
+                    Label("Sample Image", systemImage: "photo.badge.plus")
+                        .font(HanlinTypography.caption.weight(.semibold))
+                        .foregroundStyle(accentColor)
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity)
+                        .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("hanlin-attach-sample-image")
+
+                Button {
+                    let tmpURL = FileManager.default.temporaryDirectory
+                        .appendingPathComponent("sample-attachment.txt")
+                    try? "Sample attachment document content for UI acceptance.".write(
+                        to: tmpURL,
+                        atomically: true,
+                        encoding: .utf8
+                    )
+                    selectedDocumentURLs.append(tmpURL)
+                    coordinator.closeAll()
+                } label: {
+                    Label("Sample Document", systemImage: "doc.badge.plus")
+                        .font(HanlinTypography.caption.weight(.semibold))
+                        .foregroundStyle(accentColor)
+                        .padding(.vertical, 8)
+                        .frame(maxWidth: .infinity)
+                        .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("hanlin-attach-sample-document")
+            }
+        }
+    }
+    #endif
 
     private var generalRootPage: some View {
         HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: false) {
@@ -252,49 +370,7 @@ struct HanlinComposerGeneralActionsView: View {
                 }
 
                 #if targetEnvironment(simulator)
-                if AgentRuntimeUIAcceptanceProvider.isEnabled {
-                    HStack(spacing: HanlinControlMetrics.rowSpacing) {
-                        Button {
-                            let renderer = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 64))
-                            let sampleImage = renderer.image { ctx in
-                                UIColor.systemBlue.setFill()
-                                ctx.fill(CGRect(x: 0, y: 0, width: 64, height: 64))
-                            }
-                            selectedImages.append(sampleImage)
-                            coordinator.closeAll()
-                        } label: {
-                            Label("Sample Image", systemImage: "photo.badge.plus")
-                                .font(HanlinTypography.caption.weight(.semibold))
-                                .foregroundStyle(accentColor)
-                                .padding(.vertical, 8)
-                                .frame(maxWidth: .infinity)
-                                .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("hanlin-attach-sample-image")
-
-                        Button {
-                            let tmpURL = FileManager.default.temporaryDirectory
-                                .appendingPathComponent("sample-attachment.txt")
-                            try? "Sample attachment document content for UI acceptance.".write(
-                                to: tmpURL,
-                                atomically: true,
-                                encoding: .utf8
-                            )
-                            selectedDocumentURLs.append(tmpURL)
-                            coordinator.closeAll()
-                        } label: {
-                            Label("Sample Document", systemImage: "doc.badge.plus")
-                                .font(HanlinTypography.caption.weight(.semibold))
-                                .foregroundStyle(accentColor)
-                                .padding(.vertical, 8)
-                                .frame(maxWidth: .infinity)
-                                .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("hanlin-attach-sample-document")
-                    }
-                }
+                attachmentAcceptanceFixtures
                 #endif
 
                 Rectangle()
@@ -497,10 +573,13 @@ struct HanlinComposerGeneralActionsView: View {
     }
 
     private var capabilityTiles: some View {
-        return LazyVGrid(columns: [GridItem(.adaptive(minimum: 128, maximum: 230), spacing: 10)], spacing: 10) {
-            ForEach(HanlinDetachedCapability.allCases) { item in
-                let enabled = enabledCapabilities.contains(item)
-                Button {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: HanlinMorphStyle.cardMinimumWidth, maximum: HanlinMorphStyle.cardMaximumWidth),
+                                    spacing: HanlinMorphStyle.cardSpacing)], spacing: HanlinMorphStyle.cardSpacing) {
+            // Preserve the original PanelPage order; detached active chips
+            // have a separate order and do not define this nine-card catalogue.
+            ForEach([HanlinDetachedCapability.search, .thinking, .creative, .tools, .skills, .mcp, .runtimes]) { item in
+                morphCapabilityTile(title: item.title, subtitle: item.subtitle, symbol: item.symbol,
+                                    identifier: "tool-\(item.id)", enabled: enabledCapabilities.contains(item)) {
                     switch item {
                     case .search: coordinator.pushGeneralSubroute(.search, reduceMotion: true)
                     case .thinking: coordinator.pushGeneralSubroute(.thinking, reduceMotion: true)
@@ -516,29 +595,62 @@ struct HanlinComposerGeneralActionsView: View {
                         coordinator.switchFromGeneralToTools()
                         coordinator.pushToolsSubroute(.runtimeCenter, reduceMotion: true)
                     }
-                } label: {
-                    VStack(alignment: .leading, spacing: 7) {
-                        HStack(spacing: 4) {
-                            Image(systemName: item.symbol).font(HanlinTypography.title3)
-                            Spacer(minLength: 0)
-                            if enabled {
-                                Image(systemName: "checkmark.circle.fill").font(HanlinTypography.caption).accessibilityHidden(true)
-                            }
-                        }
-                        Text(item.title).font(HanlinTypography.subheadline.weight(.semibold)).lineLimit(2)
-                        Text(item.subtitle).font(HanlinTypography.caption).foregroundStyle(.secondary).lineLimit(2)
-                    }
-                    .frame(maxWidth: .infinity, minHeight: HanlinControlMetrics.minimumHitTarget, alignment: .leading)
-                    .padding(.vertical, 6)
                 }
-                .buttonStyle(.bordered)
-                .controlSize(.large)
-                .tint(accentColor)
-                .disabled(isResponding)
-                .accessibilityIdentifier("tool-\(item.id)")
-                .accessibilityValue(enabled ? String(localized: "Enabled") : String(localized: "Open settings"))
+            }
+            if let onOpenMiniApps {
+                morphCapabilityTile(title: String(localized: "Mini Apps"), subtitle: String(localized: "Interfaces in chat"),
+                                    symbol: "square.grid.2x2", identifier: "tool-miniApps") {
+                    coordinator.closeAll()
+                    onOpenMiniApps()
+                }
+            }
+            morphCapabilityTile(title: String(localized: "Model Parameters"), subtitle: String(localized: "Model controls"),
+                                symbol: "slider.horizontal.3", identifier: "tool-parameters") {
+                coordinator.pushGeneralSubroute(.parameters, reduceMotion: true)
             }
         }
+    }
+
+    private func morphCapabilityTile(title: String, subtitle: String, symbol: String,
+                                     identifier: String, enabled: Bool = false,
+                                     action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(alignment: .leading, spacing: 7) {
+                HStack(spacing: 4) {
+                    Image(systemName: symbol).font(HanlinTypography.title3)
+                    Spacer(minLength: 0)
+                    if enabled {
+                        Image(systemName: "checkmark.circle.fill").font(HanlinTypography.caption).accessibilityHidden(true)
+                    }
+                }
+                Text(title)
+                    .font(HanlinTypography.subheadline.weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                Text(subtitle)
+                    .font(HanlinTypography.caption2)
+                    .foregroundStyle(.white.opacity(0.88))
+                    .lineLimit(1)
+            }
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity, minHeight: HanlinMorphStyle.cardMinimumHeight, alignment: .leading)
+            .padding(.horizontal, HanlinMorphStyle.cardHorizontalInset)
+            .padding(.vertical, HanlinMorphStyle.cardVerticalInset)
+        }
+        .buttonStyle(.plain)
+        .background(HanlinMorphStyle.blue, in: RoundedRectangle(cornerRadius: HanlinMorphStyle.cardCornerRadius, style: .continuous))
+        .glassEffect(.regular.tint(HanlinMorphStyle.blue.opacity(0.55)).interactive(),
+                     in: RoundedRectangle(cornerRadius: HanlinMorphStyle.cardCornerRadius, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: HanlinMorphStyle.cardCornerRadius, style: .continuous)
+                .strokeBorder(HanlinMorphStyle.azure.opacity(0.58), lineWidth: 1)
+                .allowsHitTesting(false)
+        }
+        // The shell's three IDs alone own opening/closing. Tile IDs must not
+        // take over that morph as a detail page replaces them.
+        .disabled(isResponding)
+        .accessibilityIdentifier(identifier)
+        .accessibilityValue(enabled ? String(localized: "Enabled") : String(localized: "Open settings"))
     }
 
     @ViewBuilder
@@ -918,20 +1030,18 @@ struct HanlinComposerGeneralActionsView: View {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            VStack(spacing: 6) {
+            VStack(spacing: 7) {
                 Image(systemName: systemImage)
-                    .font(HanlinTypography.fixed(size: 18, weight: .semibold))
-                    .foregroundStyle(disabled ? .secondary : accentColor)
+                    .font(HanlinTypography.title3)
+                    .foregroundStyle(disabled ? Color.secondary : HanlinMorphStyle.azure)
                 Text(title)
-                    .font(HanlinTypography.caption.weight(.medium))
+                    .font(HanlinTypography.subheadline.weight(.medium))
                     .foregroundStyle(disabled ? .secondary : .primary)
+                    .lineLimit(1)
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(
-                (disabled ? Color.secondary.opacity(0.08) : accentColor.opacity(0.1)),
-                in: RoundedRectangle(cornerRadius: 14, style: .continuous)
-            )
+            .frame(maxWidth: .infinity, minHeight: HanlinMorphStyle.attachmentMinimumHeight)
+            .padding(.horizontal, 3)
+            .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: HanlinMorphStyle.cardCornerRadius, style: .continuous))
         }
         .buttonStyle(.plain)
         .disabled(disabled)

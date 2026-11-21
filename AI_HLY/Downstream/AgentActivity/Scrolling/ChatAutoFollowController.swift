@@ -18,14 +18,34 @@ struct ChatAutoFollowLayout: Equatable {
     let topInset: Double
     let bottomInset: Double
 
-    /// The valid offset range runs from -topInset to
-    /// contentHeight - viewportHeight + bottomInset. Composer clearance is
-    /// already part of contentHeight; it must not be added a second time.
-    var hasScrollableContent: Bool {
+    /// Insets are already measured by the scroll view. Composer clearance is
+    /// part of contentHeight and must not be added a second time. Validate the
+    /// arithmetic as well as its inputs: finite components can still overflow.
+    var validOffsetRange: ClosedRange<Double>? {
         guard contentHeight.isFinite, viewportHeight.isFinite,
               topInset.isFinite, bottomInset.isFinite,
-              contentHeight >= 0, viewportHeight > 0 else { return false }
-        return contentHeight + topInset + bottomInset > viewportHeight + 1
+              contentHeight >= 0, viewportHeight > 0 else { return nil }
+        let minimum = -topInset
+        let measuredMaximum = contentHeight - viewportHeight + bottomInset
+        let maximum = max(minimum, measuredMaximum)
+        let extent = contentHeight + topInset + bottomInset
+        guard measuredMaximum.isFinite, maximum.isFinite, extent.isFinite,
+              (maximum - minimum).isFinite else { return nil }
+        return minimum...maximum
+    }
+
+    var hasScrollableContent: Bool {
+        guard let range = validOffsetRange else { return false }
+        return range.upperBound - range.lowerBound > 1
+    }
+
+    func isNearBottom(contentOffsetY: Double, tolerance: Double = 96) -> Bool? {
+        guard let range = validOffsetRange, contentOffsetY.isFinite,
+              tolerance.isFinite, tolerance >= 0 else { return nil }
+        // Clamp elastic overscroll before subtracting to avoid overflow and to
+        // keep pull-to-refresh/bottom bounce from producing a false position.
+        let offset = min(range.upperBound, max(range.lowerBound, contentOffsetY))
+        return range.upperBound - offset <= tolerance
     }
 }
 
@@ -62,6 +82,10 @@ final class ChatAutoFollowController {
     }
 
     func updateLayout(_ layout: ChatAutoFollowLayout) {
+        guard layout.validOffsetRange != nil else {
+            invalidateLayout()
+            return
+        }
         guard latestLayout != layout else { return }
         latestLayout = layout
         if layoutTraceCount < 64 {
@@ -72,6 +96,13 @@ final class ChatAutoFollowController {
                 "hasScrollableContent": layout.hasScrollableContent
             ])
         }
+    }
+
+    /// A previous window or conversation's viewport is not evidence that a
+    /// newly attached transcript can be repositioned. Wait for a fresh measure.
+    func invalidateLayout() {
+        cancelPendingScroll()
+        latestLayout = nil
     }
 
     func updateNearBottom(_ isNearBottom: Bool) {

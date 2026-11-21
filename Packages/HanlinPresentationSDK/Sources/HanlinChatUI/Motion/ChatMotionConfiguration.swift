@@ -50,7 +50,7 @@ public struct ChatMotionConfiguration: Equatable, Sendable {
         switch preset {
         case .relaxed:
             return Self(openingDuration: 0.410, closingDuration: 0.300, updateDuration: 0.160,
-                resultDuration: 0.280, shimmerDuration: 2, collapsedOpacity: 0.25,
+                resultDuration: 0.280, shimmerDuration: 1.95, collapsedOpacity: 0.25,
                 collapsedScale: 1, resultScale: 0.96, numericCounts: true, curve: .easeInOut)
         case .heightReveal:
             return Self(openingDuration: 0.450, closingDuration: 0.330, updateDuration: 0.160,

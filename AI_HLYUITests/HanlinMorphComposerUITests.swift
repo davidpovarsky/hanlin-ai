@@ -306,10 +306,16 @@ final class HanlinMorphComposerUITests: XCTestCase {
         sampleImage.tap()
         let attachment = app.descendants(matching: .any)["hanlin-composer-image-attachment"].firstMatch
         XCTAssertTrue(attachment.waitForExistence(timeout: 5))
-        let resize = app.descendants(matching: .any)["hanlin-composer-resize-handle"].firstMatch
-        XCTAssertTrue(resize.waitForExistence(timeout: 5))
-        let start = resize.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-        start.press(forDuration: 0.2, thenDragTo: start.withOffset(CGVector(dx: 0, dy: -70)))
+        let expand = app.buttons["hanlin-composer-expand-editor"].firstMatch
+        XCTAssertTrue(expand.waitForExistence(timeout: 5))
+        expand.tap()
+        let expandedSheet = app.descendants(matching: .any)["hanlin-expanded-editor-sheet"].firstMatch
+        XCTAssertTrue(expandedSheet.waitForExistence(timeout: 5))
+        XCTAssertEqual(expandedSheet.textViews.firstMatch.value as? String, draft)
+        let sheetClose = app.buttons["hanlin-expanded-editor-close"].firstMatch
+        XCTAssertTrue(sheetClose.waitForExistence(timeout: 5))
+        sheetClose.tap()
+        XCTAssertTrue(expandedSheet.waitForNonExistence(timeout: 5))
         plus.tap()
         XCTAssertTrue(panel.waitForExistence(timeout: 5))
         XCTAssertGreaterThanOrEqual(panel.frame.minY, window.frame.minY - 1)
