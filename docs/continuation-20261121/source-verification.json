@@ -11,5 +11,7 @@
   "runtimeArtifactRun": "42926628418",
   "runtimeInnerSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
   "nativeInputIdentity": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
-  "bufferSourceSHA256": "6c49e0a006b64a47edd31a6a3085a8af43a10e0ddd7d77a419b31cba5ce91dfe"
+  "bufferSourceSHA256": "6c49e0a006b64a47edd31a6a3085a8af43a10e0ddd7d77a419b31cba5ce91dfe",
+  "agentRunReadCacheChecks": 17,
+  "agentRunReadCache": "PASS; production cache Swift6 compile/link/run with minimal original-getter fixture"
 }

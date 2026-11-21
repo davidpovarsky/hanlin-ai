@@ -1,4 +1,4 @@
-# iPad stability and TestFlight handoff — 2026-11-21
+# iPad stability and TestFlight handoff â€” 2026-11-21
 
 Baseline: `5534d6b249518d29efda6c2a43f4eacbfbc2b973`.
 Branch: `codex/hanlin-ipad-stability-20261121`.
@@ -16,6 +16,8 @@ Owner request: fix typing, streaming, Morph layout, tool activity and design con
 - Pending approval belongs to its actual call row; completion reflects execution, not permission or completion of provider arguments.
 - The message context-menu preview receives a bounded explicit width.
 - 101 sensory feedback call sites now use the central synchronous UIKit bridge, and response completion has one observer instead of one per visible message. This removes the LocationBasedFeedbackAdaptor route seen in the supplied crash. It does not establish the exact upstream crash cause or prove device crash freedom.
+
+Historical activity reads now use a per-view non-observable cache (64 entries /16 MiB source JSON) and a lazy first-run lookup. Exact UTF-8 changes invalidate the value; malformed results are negatively cached; nil rows do not evict useful entries. Actual production cache compile/link/run passed17 focused portable checks, including no retained model objects.
 
 ## Design catalogue
 

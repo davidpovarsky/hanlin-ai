@@ -19,7 +19,7 @@ The source catalogue is consumed by the app, HanlinChatUI and HanlinRichUI. It i
 | Native control behavior | SwiftUI/UIKit system components | Lists, forms, search, menus, toggles, pickers, buttons, text input and navigation |
 | Approved Morph geometry | `HanlinMorphComposer.swift` | The composer owner; not duplicated into a global generic card style |
 | App-to-package names | `AI_HLY/Downstream/ChatPresentation/HanlinDesignCatalogBridge.swift` | Module-level aliases for typography, metrics, search and catalogue |
-| Reviewable examples | `HanlinComponentCatalogView.swift` | Settings → Developer/Diagnostics → Interface catalogue |
+| Reviewable examples | `HanlinComponentCatalogView.swift` | Settings â†’ Developer/Diagnostics â†’ Interface catalogue |
 
 HanlinPresentationKit is already a dependency of both UI package targets. The app already links it and HanlinChatUI. The app's filesystem-synchronized Xcode source group includes the bridge without a second project-file source list.
 
@@ -102,7 +102,7 @@ The separate HanlinMiniAppsApp product, vendored runtimes, generated bridges and
 
 The catalogue work changed 75 existing Swift files, routing 580 semantic font sites, 49 fixed-size factory sites and 24 monospaced semantic sites. Four Swift sources implement the catalogue, UIKit search, app aliases and the linked live example screen. This count excludes parallel chat/composer/streaming work.
 
-The refreshed inventory covers 511 Swift files, 171 UI-related files, and 252 View declarations. After integration of the parallel chat changes it contains 845 shared typography references and 53 metric references. No direct semantic/system/custom .font call sites remain in the main app and Presentation SDK outside the central factory implementation. Four extension font sites intentionally retain the system defaults. Remaining candidates are reported rather than hidden. The one search-field candidate is the catalogue's non-UIKit fallback.
+The refreshed inventory covers 512 Swift files, 171 UI-related files, and 252 View declarations. After integration of the parallel chat changes it contains 845 shared typography references and 53 metric references. No direct semantic/system/custom .font call sites remain in the main app and Presentation SDK outside the central factory implementation. Four extension font sites intentionally retain the system defaults. Remaining candidates are reported rather than hidden. The one search-field candidate is the catalogue's non-UIKit fallback.
 
 Source validation:
 

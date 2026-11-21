@@ -136,6 +136,7 @@ struct ChatView: View {
     }
     #endif
     @State private var activeAgentCoordinator: AgentRunCoordinator?
+    @State private var agentRunReadCache = HanlinAgentRunReadCache()
     @State private var activeAgentRun: AgentRun?
     @State private var activeAgentMessage: ChatMessages?
 
@@ -1350,7 +1351,7 @@ struct ChatView: View {
             return messages
         }()
         let storedActivityRun = (activeAgentRun?.groupID == msg.groupID ? activeAgentRun : nil)
-            ?? groupMessages.compactMap(\.agentRun).first
+            ?? groupMessages.lazy.compactMap { agentRunReadCache.run(for: $0) }.first
         let activityRun = storedActivityRun
             ?? LegacyAgentActivityAdapter.run(for: precedingSearchMessages + groupMessages)
         let rawMsgText = (msg.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)

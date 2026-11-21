@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-21T17:59:32+00:00",
-  "gitHead": "5534d6b249518d29efda6c2a43f4eacbfbc2b973",
+  "generatedAt": "2026-11-21T18:17:39+00:00",
+  "gitHead": "8e8ca56f845fb0c80990ed30c3471c0903ed9150",
   "workingTree": true,
   "scope": "Native Hanlin AI app, Presentation SDK, and app extensions; source inventory only.",
   "method": "Lexical scan; constructor counts and candidates require source interpretation. No simulator, device, visual or performance validation.",
@@ -46,7 +46,7 @@
     "customSearchCandidates": 1,
     "declaredViews": 252,
     "directFontSites": 4,
-    "swiftFiles": 511,
+    "swiftFiles": 512,
     "uiFiles": 171
   },
   "areas": {
@@ -197,7 +197,7 @@
       "customSearchCandidates": 0,
       "declaredViews": 24,
       "directFontSites": 0,
-      "swiftFiles": 44,
+      "swiftFiles": 45,
       "uiFiles": 24
     },
     "AI_HLY/Downstream/Compatibility": {
@@ -475,7 +475,7 @@
     },
     {
       "path": "AI_HLY/ChatView.swift",
-      "sha256": "bef9f68b9e5863f38f98baf7c19ee6fa242e630f3e624bfdbccce1fb4c615106",
+      "sha256": "43956be8567770e2f93678b216a69375a0d8586e61bdb40c7e725eff3e5b4708",
       "isUI": true,
       "declaredViews": [
         "ChatView"
@@ -2385,6 +2385,18 @@
       "declaredViews": [
         "ChatCodeFenceWebView"
       ],
+      "nativeComponents": {},
+      "catalogueFontUses": 0,
+      "catalogueMetricUses": 0,
+      "directFontSites": [],
+      "customSearchCandidates": [],
+      "originalPaletteTokens": []
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinAgentRunReadCache.swift",
+      "sha256": "6ca6c5e2c9b129e6163e0a806850e4c5f163a2655830d14b8731e018a2447c25",
+      "isUI": false,
+      "declaredViews": [],
       "nativeComponents": {},
       "catalogueFontUses": 0,
       "catalogueMetricUses": 0,
