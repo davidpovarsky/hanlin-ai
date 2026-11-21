@@ -19,14 +19,14 @@ struct NativeAppDetailView: View {
                                 endPoint: .bottomTrailing
                             )
                             Image(systemName: module.manifest.systemImage)
-                                .font(.title)
+                                .font(HanlinTypography.title)
                                 .foregroundStyle(Color(nativeAppHex: module.manifest.appearance.foregroundHex))
                         }
                         .frame(width: 68, height: 68)
                         .clipShape(RoundedRectangle(cornerRadius: 19, style: .continuous))
 
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(module.manifest.title).font(.title3.weight(.semibold))
+                            Text(module.manifest.title).font(HanlinTypography.title3.weight(.semibold))
                             Text(module.manifest.subtitle).foregroundStyle(.secondary)
                         }
                     }
@@ -52,9 +52,9 @@ struct NativeAppDetailView: View {
                                         .foregroundStyle(.secondary)
                                 }
                                 if let domain = request.domain {
-                                    Text(domain).font(.caption).foregroundStyle(.secondary)
+                                    Text(domain).font(HanlinTypography.caption).foregroundStyle(.secondary)
                                 }
-                                Text(request.reason).font(.caption).foregroundStyle(.tertiary)
+                                Text(request.reason).font(HanlinTypography.caption).foregroundStyle(.tertiary)
                             }
                         }
                     }
@@ -70,7 +70,7 @@ struct NativeAppDetailView: View {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(tool.catalogEntry.title)
                                 Text(tool.name)
-                                    .font(.caption.monospaced())
+                                    .font(HanlinTypography.caption.monospaced())
                                     .foregroundStyle(.secondary)
                             }
                         }

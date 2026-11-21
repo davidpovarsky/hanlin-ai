@@ -106,7 +106,7 @@ struct PythonPackagesView: View {
                 }
                 if let message = model.message {
                     Text(message)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .textSelection(.enabled)
                         .accessibilityIdentifier("hanlin-python-message")
                 }
@@ -118,7 +118,7 @@ struct PythonPackagesView: View {
                     LabeledContent(RuntimeL10n.string("Version"), value: preview.version)
                     if let summary = preview.summary { Text(summary) }
                     LabeledContent(RuntimeL10n.string("Classification"), value: preview.isPurePython ? RuntimeL10n.string("Universal pure-Python wheel") : RuntimeL10n.string("Native or source distribution"))
-                    Text(preview.compatibilityExplanation).font(.caption)
+                    Text(preview.compatibilityExplanation).font(HanlinTypography.caption)
                 }
                 .accessibilityIdentifier("hanlin-python-preview-section")
             }
@@ -131,11 +131,11 @@ struct PythonPackagesView: View {
                 ForEach(model.installed) { item in
                     VStack(alignment: .leading, spacing: 6) {
                         HStack { Text(item.name); Spacer(); Text(item.version).foregroundStyle(.secondary) }
-                        Text(ByteCountFormatter.string(fromByteCount: item.storageBytes, countStyle: .file)).font(.caption)
-                        if !item.dependencyRequirements.isEmpty { Text(item.dependencyRequirements.joined(separator: ", ")).font(.caption2).foregroundStyle(.secondary) }
+                        Text(ByteCountFormatter.string(fromByteCount: item.storageBytes, countStyle: .file)).font(HanlinTypography.caption)
+                        if !item.dependencyRequirements.isEmpty { Text(item.dependencyRequirements.joined(separator: ", ")).font(HanlinTypography.caption2).foregroundStyle(.secondary) }
                         if let dependencies = item.resolvedDependencies, !dependencies.isEmpty {
                             Text(dependencies.map { "\($0.name) \($0.version)" }.joined(separator: ", "))
-                                .font(.caption2)
+                                .font(HanlinTypography.caption2)
                                 .foregroundStyle(.secondary)
                         }
                         Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }
@@ -148,10 +148,10 @@ struct PythonPackagesView: View {
                         Button(RuntimeL10n.string("Update")) { model.update(item) }.tint(.blue)
                     }
                 }
-                if let probeOutput = model.probeOutput { Text(probeOutput).font(.system(.caption, design: .monospaced)).textSelection(.enabled) }
+                if let probeOutput = model.probeOutput { Text(probeOutput).font(HanlinTypography.caption.monospaced()).textSelection(.enabled) }
             }
 
-            Section { Text(RuntimeL10n.string("Install compatible wheels, local packages and source distributions. Source builds use compatible Python backends. Native extensions must be packaged and signed with this app.")) .font(.caption).foregroundStyle(.secondary) }
+            Section { Text(RuntimeL10n.string("Install compatible wheels, local packages and source distributions. Source builds use compatible Python backends. Native extensions must be packaged and signed with this app.")) .font(HanlinTypography.caption).foregroundStyle(.secondary) }
         }
         .navigationTitle(RuntimeL10n.string("Python Packages"))
         .fileImporter(isPresented: $importsPackage, allowedContentTypes: [.folder, .data]) { result in

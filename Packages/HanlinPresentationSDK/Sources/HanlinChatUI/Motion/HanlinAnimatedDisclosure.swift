@@ -1,5 +1,6 @@
 #if canImport(SwiftUI)
 import SwiftUI
+import HanlinPresentationKit
 
 /// Original implementation informed by Fatbobman's height/spacing discussion:
 /// https://fatbobman.com/en/posts/taming-row-height-and-spacing-jumps/
@@ -85,7 +86,7 @@ public struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
                 HStack(spacing: 8) {
                     configuration.label
                     Image(systemName: "chevron.down")
-                        .font(.caption.weight(.semibold))
+                        .font(HanlinTypography.caption.weight(.semibold))
                         .foregroundStyle(.secondary)
                         .rotationEffect(.degrees(configuration.isExpanded ? 180 : 0))
                         .animation(motion.disclosureAnimation(expanding: configuration.isExpanded), value: configuration.isExpanded)

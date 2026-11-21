@@ -61,7 +61,7 @@ struct NativeUIToolResultContainer: View {
                         openExpandedPresentation()
                     } label: {
                         Image(systemName: "arrow.down.backward.and.arrow.up.forward")
-                            .font(.system(size: 16, weight: .medium))
+                            .font(HanlinTypography.fixed(size: 16, weight: .medium))
                             .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
                             .padding(8)
                             .background(BlurView(style: .systemUltraThinMaterial))
@@ -249,7 +249,7 @@ private struct NativeCardView: View {
             VStack(alignment: .leading, spacing: 10) {
                 if let subtitle = block.subtitle, !subtitle.isEmpty {
                     Text(subtitle)
-                        .font(.subheadline)
+                        .font(HanlinTypography.subheadline)
                         .foregroundStyle(.secondary)
                         .lineLimit(presentationMode == .compact ? 2 : nil)
                         .nativeTextSelection(presentationMode == .expanded)
@@ -284,7 +284,7 @@ private struct NativeCardView: View {
                 }
                 if let footnote = block.footnote, !footnote.isEmpty {
                     Text(footnote)
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .foregroundStyle(.secondary)
                         .lineLimit(presentationMode == .compact ? 2 : nil)
                         .nativeTextSelection(presentationMode == .expanded)
@@ -335,7 +335,7 @@ private struct NativeSearchResultsView: View {
             VStack(alignment: .leading, spacing: 10) {
                 if let subtitle = block.subtitle, !subtitle.isEmpty {
                     Text(subtitle)
-                        .font(.subheadline)
+                        .font(HanlinTypography.subheadline)
                         .foregroundStyle(.secondary)
                         .lineLimit(presentationMode == .compact ? 1 : nil)
                 }
@@ -355,7 +355,7 @@ private struct NativeSearchResultsView: View {
                             Int64(block.items.count - visibleItems.count)
                         )
                     )
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundStyle(.secondary)
                 }
 
@@ -378,13 +378,13 @@ private struct NativeSearchResultsView: View {
             }
             if let subtitle = item.subtitle, !subtitle.isEmpty {
                 Text(subtitle)
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
             }
             if let body = item.body, !body.isEmpty {
                 NativeMarkdownText(body, lineLimit: 3, isSelectable: false)
-                    .font(.subheadline)
+                    .font(HanlinTypography.subheadline)
             }
             NativeActionControlGroup(
                 actions: item.actions + defaultActions(for: item),
@@ -399,7 +399,7 @@ private struct NativeSearchResultsView: View {
             VStack(alignment: .leading, spacing: 8) {
                 if let subtitle = item.subtitle, !subtitle.isEmpty {
                     Text(subtitle)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundStyle(.secondary)
                         .textSelection(.enabled)
                 }

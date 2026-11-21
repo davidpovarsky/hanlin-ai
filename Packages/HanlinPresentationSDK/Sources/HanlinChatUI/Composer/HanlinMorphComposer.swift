@@ -4,6 +4,7 @@
 // and session state; this component does not own those values.
 
 import SwiftUI
+import HanlinPresentationKit
 
 public enum HanlinMorphPageID<Page: Hashable>: Hashable {
     case home
@@ -108,8 +109,8 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
         self.input = input
     }
 
-    private let blue = Color(red: 58 / 255, green: 124 / 255, blue: 180 / 255)
-    private let azure = Color(red: 2 / 255, green: 136 / 255, blue: 209 / 255)
+    private let blue = Color.accentColor
+    private let azure = Color.accentColor
 
     private var pageID: HanlinMorphPageID<Page> {
         activePage.map(HanlinMorphPageID.detail) ?? .home
@@ -135,7 +136,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
                         if opening { onOpen() }
                     } label: {
                         Image(systemName: "plus")
-                            .font(.system(size: 21, weight: .semibold))
+                            .font(HanlinTypography.fixed(size: 21, weight: .semibold))
                             .rotationEffect(.degrees(isExpanded ? 45 : 0))
                             .frame(width: 52, height: 52)
                             .contentShape(Circle())
@@ -151,8 +152,11 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
 
                     // The host supplies the actual editor and send/stop controls.
                     input()
-                        .frame(minHeight: 52)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 52)
+                        .layoutPriority(1)
                         .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
+                            guard height.isFinite, abs(height - measuredInputHeight) > 1 else { return }
                             measuredInputHeight = height
                             onInputHeightChange(height)
                         }
@@ -177,7 +181,10 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
     private var panel: some View {
         VStack(alignment: .leading, spacing: 14) {
             toolbar
+                .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
                 .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
+                    guard height.isFinite, abs(height - measuredToolbarHeight) > 1 else { return }
                     measuredToolbarHeight = height
                     onToolbarHeightChange(height)
                 }
@@ -230,7 +237,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
             if activePage != nil {
                 Button(action: goBack) {
                     Image(systemName: "chevron.right")
-                        .font(.subheadline.weight(.semibold))
+                        .font(HanlinTypography.subheadline.weight(.semibold))
                         .frame(width: 30, height: 30).contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
@@ -252,7 +259,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
                     swipeOffset = 0
                 }
             } label: {
-                Image(systemName: "chevron.down").font(.subheadline.weight(.medium))
+                Image(systemName: "chevron.down").font(HanlinTypography.subheadline.weight(.medium))
                     .frame(width: 30, height: 30).contentShape(Rectangle())
             }
             .buttonStyle(.plain)
@@ -265,8 +272,8 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
 
     private var toolbarText: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(title(activePage)).font(.headline.weight(.semibold))
-            Text(subtitle(activePage)).font(.caption).foregroundStyle(.secondary)
+            Text(title(activePage)).font(HanlinTypography.headline.weight(.semibold))
+            Text(subtitle(activePage)).font(HanlinTypography.caption).foregroundStyle(.secondary)
         }
         .contentTransition(.identity)
         .transaction { $0.animation = nil }

@@ -1,6 +1,7 @@
 // Visual reference: Hanlin_Detached_Active_Chips_Original_Composer.swift
 // SHA-256 e3cf93feac90ff1ead2e6bd2acbb3cace1a2b89e07dd97d242e4b89751bbb5c7.
 import SwiftUI
+import HanlinPresentationKit
 
 public enum HanlinCapabilityContextAction: Equatable, Sendable {
     case disableModes, disableChatToolUse, clearChatMCPSelection, chooseModel
@@ -84,9 +85,9 @@ public struct HanlinDetachedCapabilityChips: View {
                     Button { open(capability) } label: {
                         HStack(spacing: 4) {
                             Image(systemName: capability.symbol)
-                                .font(.system(size: 13, weight: .medium))
+                                .font(HanlinTypography.fixed(size: 13, weight: .medium))
                             if !compact {
-                                Text(capability.title).font(.caption2.weight(.medium)).lineLimit(1)
+                                Text(capability.title).font(HanlinTypography.caption2.weight(.medium)).lineLimit(1)
                             }
                         }
                         .foregroundStyle(blue)

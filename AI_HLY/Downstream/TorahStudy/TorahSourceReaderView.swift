@@ -35,19 +35,19 @@ public struct TorahSourceReaderView: View {
 
                             if let before = studySource.contextBefore, !before.isEmpty {
                                 Text(before)
-                                    .font(.body)
+                                    .font(HanlinTypography.body)
                                     .foregroundColor(.secondary)
                                     .environment(\.layoutDirection, .rightToLeft)
                             }
 
                             highlightedText(primary: studySource.primaryText, highlight: deepLink.highlightText)
-                                .font(.title3)
+                                .font(HanlinTypography.title3)
                                 .lineSpacing(6)
                                 .environment(\.layoutDirection, .rightToLeft)
 
                             if let after = studySource.contextAfter, !after.isEmpty {
                                 Text(after)
-                                    .font(.body)
+                                    .font(HanlinTypography.body)
                                     .foregroundColor(.secondary)
                                     .environment(\.layoutDirection, .rightToLeft)
                             }
@@ -85,15 +85,15 @@ public struct TorahSourceReaderView: View {
     private func headerSection(studySource: StudySource) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(deepLink.workTitle ?? studySource.locator.workKey)
-                .font(.headline)
+                .font(HanlinTypography.headline)
             Text(studySource.locator.positionValue)
-                .font(.subheadline)
+                .font(HanlinTypography.subheadline)
                 .foregroundColor(.secondary)
 
             let version = studySource.versionMetadata.versionTitle
             if !version.isEmpty {
                 Text(version)
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundColor(.secondary)
             }
         }
@@ -128,27 +128,27 @@ public struct TorahSourceReaderView: View {
     private func linksSection(links: [TorahLinkedSource]) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(String(localized: "פירושים וקישורים"))
-                .font(.headline)
+                .font(HanlinTypography.headline)
             ForEach(links) { link in
                 VStack(alignment: .leading, spacing: 2) {
                     HStack {
                         Text(link.type)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(Color.secondary.opacity(0.1))
                             .cornerRadius(4)
                         Text(link.sourceTitle)
-                            .font(.subheadline)
+                            .font(HanlinTypography.subheadline)
                             .bold()
                         Spacer()
                         Text(link.category)
-                            .font(.caption2)
+                            .font(HanlinTypography.caption2)
                             .foregroundColor(.secondary)
                     }
                     if !link.primaryText.isEmpty {
                         Text(link.primaryText)
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                             .foregroundColor(.secondary)
                             .lineLimit(2)
                             .environment(\.layoutDirection, .rightToLeft)

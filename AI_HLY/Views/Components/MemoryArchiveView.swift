@@ -103,14 +103,14 @@ struct MemoryArchiveView: View {
                                 Image(systemName: "xmark")
                                 Text(String(localized: "取消"))
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlBluefont)
                             .padding(6)
                             .background(BlurView(style: .systemUltraThinMaterial))
                             .clipShape(Capsule())
                             .shadow(color: .hlBlue, radius: 1)
                         }
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                     }
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Button {
@@ -130,7 +130,7 @@ struct MemoryArchiveView: View {
                                 Image(systemName: "checkmark")
                                 Text(String(localized: "保存"))
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.white)
                             .padding(6)
                             .background(.hlBlue)
@@ -138,7 +138,7 @@ struct MemoryArchiveView: View {
                             .clipShape(Capsule())
                             .shadow(color: .hlBlue, radius: 1)
                         }
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                     }
                 }
             }
@@ -172,13 +172,13 @@ struct MemoryArchiveView: View {
                 // MARK: 信息提示区
                 VStack(alignment: .center) {
                     Image(systemName: "archivebox")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "记忆档案功能用于聊天，受支持的模型会自动在聊天时记住你的喜好并在需要的时候主动回忆这些喜好。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                     
@@ -281,12 +281,12 @@ struct MemoryArchiveView: View {
                     .foregroundColor(.primary)
                     .truncationMode(.tail)
             }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
             
             HStack {
                 Spacer()
                 Text(formattedDate(memory.timestamp))
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
             }
         }

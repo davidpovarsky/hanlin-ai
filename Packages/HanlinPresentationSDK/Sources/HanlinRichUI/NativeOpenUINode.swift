@@ -40,7 +40,7 @@ struct NativeOpenUINode: View {
         }
         .accessibilityIdentifier("openui-native-\(type)-\(text("name", fallback: id))")
         if !text("validationError").isEmpty {
-            Text(text("validationError")).font(.caption).foregroundStyle(.red)
+            Text(text("validationError")).font(HanlinTypography.caption).foregroundStyle(.red)
                 .accessibilityLabel(text("validationError"))
         }
         }
@@ -64,9 +64,9 @@ struct NativeOpenUINode: View {
             VStack(alignment: .leading, spacing: 14) { children(props["fields"]); children(props["buttons"]) }
         case "FormControl":
             VStack(alignment: .leading, spacing: 6) {
-                Text(text("label")).font(.subheadline.weight(.medium))
+                Text(text("label")).font(HanlinTypography.subheadline.weight(.medium))
                 children(props["input"])
-                if !text("hint").isEmpty { Text(text("hint")).font(.caption).foregroundStyle(.secondary) }
+                if !text("hint").isEmpty { Text(text("hint")).font(HanlinTypography.caption).foregroundStyle(.secondary) }
             }
         case "Buttons":
             if text("direction") == "column" { VStack(alignment: .leading) { children(props["buttons"]) } }
@@ -165,36 +165,36 @@ struct NativeOpenUINode: View {
         switch type {
         case "CardHeader", "InlineHeader":
             VStack(alignment: .leading, spacing: 4) {
-                Text(text("title", fallback: text("heading"))).font(.headline)
+                Text(text("title", fallback: text("heading"))).font(HanlinTypography.headline)
                 let detail = text("subtitle", fallback: text("description"))
-                if !detail.isEmpty { Text(detail).font(.subheadline).foregroundStyle(.secondary) }
+                if !detail.isEmpty { Text(detail).font(HanlinTypography.subheadline).foregroundStyle(.secondary) }
             }
-        case "Title": Text(text("text")).font(.title2.weight(.semibold)).textSelection(.enabled)
-        case "Conclusion": Text(.init(text("text"))).font(.body.weight(.medium)).textSelection(.enabled)
+        case "Title": Text(text("text")).font(HanlinTypography.title2.weight(.semibold)).textSelection(.enabled)
+        case "Conclusion": Text(.init(text("text"))).font(HanlinTypography.body.weight(.medium)).textSelection(.enabled)
         case "TextContent", "MarkDownRenderer", "Paragraph": Text(.init(text("text", fallback: text("textMarkdown")))).textSelection(.enabled)
         case "Text", "BoldText":
             VStack(alignment: .leading) {
                 Text(text("value")).fontWeight(type == "BoldText" ? .semibold : .regular)
-                if !text("subtext").isEmpty { Text(text("subtext")).font(.caption).foregroundStyle(.secondary) }
+                if !text("subtext").isEmpty { Text(text("subtext")).font(HanlinTypography.caption).foregroundStyle(.secondary) }
             }.textSelection(.enabled)
-        case "Label": Text(text("text")).font(.subheadline)
-        case "CodeBlock": ScrollView(.horizontal) { Text(text("codeString")).font(.system(.callout, design: .monospaced)).textSelection(.enabled) }
+        case "Label": Text(text("text")).font(HanlinTypography.subheadline)
+        case "CodeBlock": ScrollView(.horizontal) { Text(text("codeString")).font(HanlinTypography.callout.monospaced()).textSelection(.enabled) }
         case "Separator": Divider()
         case "Image", "ImageBlock": image(url: text("src"), alt: text("alt"))
-        case "Tag": Text(text("text")).font(.caption).padding(.horizontal, 8).padding(.vertical, 4).background(.quaternary, in: Capsule())
+        case "Tag": Text(text("text")).font(HanlinTypography.caption).padding(.horizontal, 8).padding(.vertical, 4).background(.quaternary, in: Capsule())
         case "TagBlock":
             ScrollView(.horizontal) { HStack { ForEach(Array(array("tags").enumerated()), id: \.offset) { _, tag in
-                Text(tag.string ?? "").font(.caption).padding(6).background(.quaternary, in: Capsule())
+                Text(tag.string ?? "").font(HanlinTypography.caption).padding(6).background(.quaternary, in: Capsule())
             } } }
         case "TextCallout", "Callout":
-            VStack(alignment: .leading) { Text(text("title")).font(.headline); Text(text("description")) }
+            VStack(alignment: .leading) { Text(text("title")).font(HanlinTypography.headline); Text(text("description")) }
                 .padding(12).background(.quaternary, in: RoundedRectangle(cornerRadius: 12))
         case "SourceQuote":
             VStack(alignment: .leading, spacing: 6) {
                 Text(.init(text("text"))).textSelection(.enabled)
                 if props["hasAction"] == .bool(true) {
-                    Button(text("reference")) { runtime.action(id) }.font(.caption).disabled(!enabled)
-                } else { Text(text("reference")).font(.caption) }
+                    Button(text("reference")) { runtime.action(id) }.font(HanlinTypography.caption).disabled(!enabled)
+                } else { Text(text("reference")).font(HanlinTypography.caption) }
             }.padding(.leading, 10).overlay(alignment: .leading) { Rectangle().fill(.secondary.opacity(0.4)).frame(width: 2) }
         default: EmptyView()
         }
@@ -245,14 +245,14 @@ struct NativeOpenUINode: View {
                 VStack(alignment: .leading) { comparisonPositions }
             }
         case "Sources":
-            VStack(alignment: .leading) { ForEach(Array(array("references").enumerated()), id: \.offset) { _, ref in Text(ref.displayText).font(.caption) } }
+            VStack(alignment: .leading) { ForEach(Array(array("references").enumerated()), id: \.offset) { _, ref in Text(ref.displayText).font(HanlinTypography.caption) } }
         default: EmptyView()
         }
     }
 
     @ViewBuilder private var comparisonPositions: some View {
         ForEach(Array(array("positions").enumerated()), id: \.offset) { _, position in
-            VStack(alignment: .leading) { Text(position.object?["title"]?.string ?? "").font(.headline); Text(position.object?["text"]?.string ?? "") }.padding(8)
+            VStack(alignment: .leading) { Text(position.object?["title"]?.string ?? "").font(HanlinTypography.headline); Text(position.object?["text"]?.string ?? "") }.padding(8)
         }
     }
 
@@ -358,7 +358,7 @@ struct NativeOpenUINode: View {
             VStack(alignment: .leading) {
                 Text(props["title"]?.string ?? "").fontWeight(.medium)
                 children(props["subtitle"] ?? props["details"])
-                if let label = props["actionLabel"]?.string { Text(label).font(.caption).foregroundStyle(.tint) }
+                if let label = props["actionLabel"]?.string { Text(label).font(HanlinTypography.caption).foregroundStyle(.tint) }
             }
         }
     }

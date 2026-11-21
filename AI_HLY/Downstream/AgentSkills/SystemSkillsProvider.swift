@@ -163,6 +163,7 @@ public enum SystemSkillsProvider {
                    - Call `execute_javascript_code` or `execute_typescript_code` for JS/TS scripts.
                    - Call `execute_shell_command` for terminal commands when permitted.
                    - Call `manage_runtime_packages` to list, preview, install, probe, or uninstall Python and Node packages. Python supports standard requirements with extras/markers, compatible source backends and local sources.
+                   - Third-party Python packages, including `requests`, are not preinstalled. Check installed packages before importing; use Python's standard-library `urllib.request` for HTTP when sufficient. On ModuleNotFoundError, verify the distribution name and use the package manager's preview/install/probe workflow. Do not repeat the same failing import or rerun earlier side effects blindly.
                    - Long Node/Python/TypeScript executions have durable job IDs and full output files. Call `get_runtime_job` to read status/output or explicitly cancel; never replay side effects merely because a client disconnected.
                    - Call `execute_skill_resource` to run bundled skill scripts.
                    - Call `create_web_view` to render HTML/JavaScript previews.

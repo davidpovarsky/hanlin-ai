@@ -60,21 +60,21 @@ struct SettingsView: View {
                 if noAPIKeys {
                     Section {
                         Text(String(localized: "指引：暂无开启的大模型厂商，点击下方“模型”中的“模型密钥”设置大模型密钥和厂商的启用状态"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlRed)
                     }
                 }
                 if noOptimizationModel {
                     Section {
                         Text(String(localized: "指引：点击下方“优化模型”设置文本优化模型和视觉优化模型，以启用提示词优化、系统消息优化、图片内容识别等功能"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlRed)
                     }
                 }
                 if noEmbeddingModel {
                     Section {
                         Text(String(localized: "指引：点击下方“向量模型“设置向量嵌入模型，以启用知识背包检索功能"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlRed)
                     }
                 }
@@ -99,7 +99,7 @@ struct SettingsView: View {
                 if noSearchKeys {
                     Section {
                         Text(String(localized: "指引：点击下方“工具”中的“联网搜索”设置搜索引擎密钥和需要使用的搜索引擎"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlRed)
                     }
                 }
@@ -164,6 +164,15 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text(String(localized: "Developer / Diagnostics"))) {
+                    NavigationLink {
+                        HanlinComponentCatalogView()
+                            .onAppear { isPushed = true }
+                            .onDisappear { isPushed = false }
+                            .toolbar(.hidden, for: .tabBar)
+                    } label: {
+                        Label(String(localized: "Interface catalogue"), systemImage: "square.grid.2x2")
+                    }
+                    .accessibilityIdentifier("hanlin-interface-catalogue-link")
                     NavigationLink {
                         RuntimeCenterView()
                             .onAppear { isPushed = true }

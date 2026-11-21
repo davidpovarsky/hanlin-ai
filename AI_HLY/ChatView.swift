@@ -20,7 +20,6 @@ import HanlinPlatformContracts
 struct ChatView: View {
     var chatRecord: ChatRecords
     @Environment(\.scenePhase) private var chatScenePhase
-    @State private var draftSaveTask: Task<Void, Never>?
     // 输入与会话状态相关
     @State private var composerDraft = HanlinComposerDraft()
 
@@ -93,7 +92,6 @@ struct ChatView: View {
     // 反馈与动画相关
     @State private var isFeedBack = false                   // 是否需要震动反馈
     @State private var isOutPut = false                     // 输出反馈状态（用于触发动画）
-    @State private var lastUpdateTime = Date()              // 最近更新时间，用于刷新控制
     @State private var outPutFeedBackEnabled: Bool = true   // 是否启用输出反馈震动
 
     // 聊天数据管理相关
@@ -104,7 +102,6 @@ struct ChatView: View {
     @State private var useSystemMessage: Bool = true        // 是否自定义系统消息
     @State private var systemMessage: String = ""           // 是否系统消息内容
     @State private var showSystemMessageSheet = false       // 打开系统消息设置
-    let refreshInterval: TimeInterval = 0.3                 // 刷新间隔时间
     @State private var operationalState: String = ""        // 操作状态文本
     @State private var operationalDescription: String = ""  // 操作描述文本
     @State private var apiManager: APIManager?
@@ -373,7 +370,6 @@ struct ChatView: View {
         var temporaryRecord: Bool
         var respondIndex: Int
         var isResponding: Bool
-        var message: String
         var selectedImagesCount: Int
         var selectedDocumentURLs: [URL]
         var selectedURLs: [String]
@@ -396,7 +392,6 @@ struct ChatView: View {
             temporaryRecord: TemporaryRecord,
             respondIndex: respondIndex,
             isResponding: isResponding || agentSessionOwner.inlineToolIsRunning,
-            message: message,
             selectedImagesCount: selectedImages.count,
             selectedDocumentURLs: selectedDocumentURLs,
             selectedURLs: selectedURLs,
@@ -574,7 +569,7 @@ struct ChatView: View {
         .safeAreaInset(edge: .top) {
             if a2uiHistoryUnavailable {
                 Label("Some rich content could not be restored.", systemImage: "exclamationmark.bubble")
-                    .font(.footnote).foregroundStyle(.secondary)
+                    .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading).padding(8)
                     .accessibilityIdentifier("hanlin-a2ui-history-unavailable")
             }
@@ -599,6 +594,11 @@ struct ChatView: View {
         agentConnectedWorkspace
         .toolbar((horizontalSizeClass == .compact || isExternalCompactComposerHost) ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
+        .background {
+            // Observe typing below the transcript. Neither the workspace nor
+            // its SwiftData conversation changes for every native keystroke.
+            HanlinDraftPersistence(draft: composerDraft, record: chatRecord, temporary: TemporaryRecord)
+        }
         .onAppear {
             #if HANLIN_A2UI_POC
             if a2uiPresentation == nil { a2uiPresentation = HanlinA2UIAppPresentation() }
@@ -620,25 +620,12 @@ struct ChatView: View {
                 NotificationCenter.default.post(name: .hideTabBar, object: true) // 仅在紧凑模式下隐藏 TabBar
             }
         }
-        .onChange(of: message) { _, draft in
-            draftSaveTask?.cancel()
-            guard !TemporaryRecord else { return }
-            let original = chatRecord, originalID = chatRecord.id
-            original.input = draft
-            draftSaveTask = Task { @MainActor in
-                do { try await Task.sleep(for: .milliseconds(500)) } catch { return }
-                guard !Task.isCancelled, original.modelContext === context, original.id == originalID else { return }
-                try? context.save()
-            }
-        }
         .onChange(of: chatScenePhase) { _, phase in
             if phase != .active, !TemporaryRecord {
-                draftSaveTask?.cancel()
                 openHistory()
             }
         }
         .onChange(of: TemporaryRecord) { _, newValue in
-            draftSaveTask?.cancel()
             if isResponding { handleCancellation() }
             agentSessionOwner.cancel()
             sessionBridge?.setTemporaryChat(newValue, for: effectiveChatSessionID)
@@ -651,7 +638,6 @@ struct ChatView: View {
             syncComposerEndpointWithBridge()
         }
         .onDisappear {
-            draftSaveTask?.cancel()
             // The workspace router supplies actual selection ownership. A sheet/full-screen
             // result that leaves that original selection mounted does not revoke its Session.
             if let sessionBridge, sessionBridge.expectedActiveSessionID != effectiveChatSessionID {
@@ -688,7 +674,7 @@ struct ChatView: View {
                 if TemporaryRecord {
                     HStack {
                         Text(" 临 时 对 话 模 式 ")
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .padding(6)
                     }
                     .background(
@@ -702,7 +688,7 @@ struct ChatView: View {
                     ZStack {
                         // 普通显示模式
                         Text(chatTitle)
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                             .foregroundColor(.primary)
                             .lineLimit(1)
                             .truncationMode(.tail)
@@ -760,13 +746,13 @@ struct ChatView: View {
                 }) {
                     if TemporaryRecord {
                         Image(systemName: "exclamationmark.bubble.fill")
-                            .font(.body)
+                            .font(HanlinTypography.body)
                             .foregroundColor(.primary)
                             .transition(.opacity.combined(with: .move(edge: .trailing)))
                             .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: TemporaryRecord)
                     } else {
                         Image(systemName: "checkmark.bubble")
-                            .font(.body)
+                            .font(HanlinTypography.body)
                             .foregroundColor(.primary)
                             .transition(.opacity.combined(with: .move(edge: .leading)))
                             .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: TemporaryRecord)
@@ -850,7 +836,7 @@ struct ChatView: View {
                     }
                 } label: {
                     Image(systemName: "slider.horizontal.3")
-                        .font(.body)
+                        .font(HanlinTypography.body)
                         .foregroundColor(.primary)
                         .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: TemporaryRecord)
                 }
@@ -1051,7 +1037,7 @@ struct ChatView: View {
                         Spacer()
                         if loadHistoryMessages {
                             ProgressView()
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .padding()
                         }
                         Spacer()
@@ -1060,7 +1046,6 @@ struct ChatView: View {
                     // 聊天记录
                     ForEach(chatTemps) { msg in
                         createChatBubble(for: msg)
-                            .sensoryFeedback(.success, trigger: isOutPut)
                             .id(msg.id)
                     }
 
@@ -1079,6 +1064,7 @@ struct ChatView: View {
                 .frame(maxWidth: .infinity)
                 .chatScrollImmediateContentTouches()
             }
+            .hanlinFeedback(.success, trigger: isOutPut)
             .defaultScrollAnchor(ifScroll ? .top : .bottom)
             .scrollIndicators(.hidden)
             .refreshable {
@@ -1381,6 +1367,22 @@ struct ChatView: View {
         let bubbleText = legacyBubbleText
         #endif
         
+        let toolApproval: ChatToolApprovalPresentation? = {
+            guard groupIDs.first == msg.id,
+                  let pendingRowID = agentSessionOwner.pendingApprovalRowID,
+                  groupIDs.contains(pendingRowID),
+                  let request = agentSessionOwner.consent.pending else { return nil }
+            return ChatToolApprovalPresentation(
+                requestID: request.id.uuidString,
+                callID: request.providerCallID,
+                toolName: request.tool,
+                reviewText: AgentDiagnosticsRedactor.sanitize(request.originalArgumentsJSON.map {
+                    String(decoding: $0, as: UTF8.self)
+                } ?? "{}"),
+                answer: { allowed in agentSessionOwner.consent.answer(id: request.id, allowed: allowed) }
+            )
+        }()
+
         // 1. 构造基础气泡
         let bubble = VStack(alignment: .leading, spacing: 8) {
         ChatBubbleView(
@@ -1410,6 +1412,7 @@ struct ChatView: View {
             knowledgeCard: msg.knowledgeCard,
             nativeUIBlocks: msg.nativeUIBlocks,
             agentRun: activityRun,
+            toolApproval: toolApproval,
             showsAgentActivitySummary: groupIDs.first == msg.id,
             showsAllSources: groupIDs.last == msg.id,
             isAgentTranscriptOwner: false,
@@ -1454,13 +1457,6 @@ struct ChatView: View {
                 }
             }
         )
-        if agentSessionOwner.pendingApprovalRowID == msg.id, let request = agentSessionOwner.consent.pending {
-            HanlinInlineToolApproval(requestID: request.id.uuidString, toolName: request.tool,
-                reviewText: AgentDiagnosticsRedactor.sanitize(request.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}")) { allowed in
-                agentSessionOwner.consent.answer(id: request.id, allowed: allowed)
-            }
-            .id("tool-consent-" + request.providerCallID)
-        }
         }
         .environment(\.hanlinRichMessageContext, richMessageContext(for: msg))
         .environment(\.chatExcerptSource, ChatExcerptSource(
@@ -1527,7 +1523,7 @@ struct ChatView: View {
     
     private func openHistory() {
         // 如果输入框有草稿内容，则优先保存草稿
-        if !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+        if !message.isEmpty {
             chatRecord.infoDescription = "[草稿] \(message)"
             chatRecord.input = message
         } else {
@@ -1565,7 +1561,6 @@ struct ChatView: View {
     }
     
     private func newConversation() {
-        draftSaveTask?.cancel()
         if isResponding { handleCancellation() }
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let clearedText = currentLanguage.hasPrefix("zh")
@@ -1822,9 +1817,8 @@ struct ChatView: View {
                 
                 // 接受流式数据
                 var warningKinds = Set<String>()
-                for try await data in stream {
+                let presentationBuffer = HanlinChatStreamBuffer { data in
                     let rawAgentEvents = eventAdapter.events(from: data)
-                    await MainActor.run {
                         guard !isCancelled, activeAgentCoordinator === agentCoordinator else { return }
 
                         let agentEvents = agentProjection.deduplicateEvents(rawAgentEvents)
@@ -2007,11 +2001,6 @@ struct ChatView: View {
                         
                         // 更新信息
                         if updated {
-                            let currentTime = Date()
-                            if currentTime.timeIntervalSince(lastUpdateTime) > refreshInterval {
-                                lastUpdateTime = currentTime
-                            }
-                            
                             if let start = reasoningStart, let end = reasoningEnd {
                                 let closed = reasoningTotal ?? 0
                                 let openSeg = end.timeIntervalSince(start)
@@ -2102,9 +2091,16 @@ struct ChatView: View {
                                 chatTemps.append(infoMessage)
                             }
                         }
-                    }
                 }
-                
+                // Deliver pending text before finalization or an error. A cancelled
+                // or replaced run is rejected by the callback's ownership guard.
+                defer { presentationBuffer.flush(); presentationBuffer.cancel() }
+                for try await data in stream {
+                    try Task.checkCancellation()
+                    presentationBuffer.append(data)
+                }
+                presentationBuffer.flush()
+
                 let completionEvents = eventAdapter.completionEvents()
                 // 流结束后的处理必须在主线程执行
                 await MainActor.run {

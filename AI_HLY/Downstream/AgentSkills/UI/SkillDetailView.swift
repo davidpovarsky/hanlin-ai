@@ -108,14 +108,14 @@ struct SkillDetailView: View {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(alignment: .center, spacing: 12) {
                     Image(systemName: iconName)
-                        .font(.system(size: 32))
+                        .font(HanlinTypography.fixed(size: 32))
                         .foregroundColor(.accentColor)
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text(descriptor?.title.preferredValue() ?? skillID.rawValue)
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                         Text(skillID.rawValue)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.secondary)
                     }
 
@@ -151,7 +151,7 @@ struct SkillDetailView: View {
     private var summarySection: some View {
         Section(header: Text(SkillL10n.string("Description"))) {
             Text(descriptor?.summary.preferredValue() ?? "")
-                .font(.subheadline)
+                .font(HanlinTypography.subheadline)
         }
     }
 
@@ -159,11 +159,11 @@ struct SkillDetailView: View {
         Section(header: Text(SkillL10n.string("Instructions"))) {
             if instructionsText.isEmpty {
                 Text("No instructions provided.")
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
             } else {
                 Text(instructionsText)
-                    .font(.system(.footnote, design: .monospaced))
+                    .font(HanlinTypography.footnote.monospaced())
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
@@ -174,16 +174,16 @@ struct SkillDetailView: View {
             let tools = descriptor?.preferredToolIDs ?? []
             if tools.isEmpty {
                 Text("None specified.")
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
             } else {
                 ForEach(tools, id: \.self) { tool in
                     HStack {
                         Image(systemName: "wrench.and.screwdriver")
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.secondary)
                         Text(tool)
-                            .font(.system(.subheadline, design: .monospaced))
+                            .font(HanlinTypography.subheadline.monospaced())
                     }
                 }
             }
@@ -200,7 +200,7 @@ struct SkillDetailView: View {
                         showFileImporter = true
                     } label: {
                         Image(systemName: "square.and.arrow.down")
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                     }
                     .accessibilityIdentifier("hanlin-skill-detail-import-resource-button")
 
@@ -209,7 +209,7 @@ struct SkillDetailView: View {
                         importFixtureResource()
                     } label: {
                         Image(systemName: "doc.badge.plus")
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                     }
                     .accessibilityIdentifier("hanlin-skill-detail-import-fixture-resource-button")
                     #endif
@@ -221,7 +221,7 @@ struct SkillDetailView: View {
                         showAddResource = true
                     } label: {
                         Image(systemName: "plus")
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                     }
                     .accessibilityIdentifier("hanlin-skill-detail-add-resource-button")
                 }
@@ -229,16 +229,16 @@ struct SkillDetailView: View {
         }) {
             if resources.isEmpty {
                 Text(SkillL10n.string("No resources"))
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
             } else {
                 ForEach(resources) { res in
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
                             Text(res.relativePath)
-                                .font(.system(.subheadline, design: .monospaced))
+                                .font(HanlinTypography.subheadline.monospaced())
                             Text(ByteCountFormatter.string(fromByteCount: res.byteCount, countStyle: .file))
-                                .font(.caption2)
+                                .font(HanlinTypography.caption2)
                                 .foregroundColor(.secondary)
                         }
 
@@ -249,7 +249,7 @@ struct SkillDetailView: View {
                                 previewResource = res
                             }
                             .buttonStyle(.bordered)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .accessibilityIdentifier("hanlin-skill-detail-view-resource-\(res.relativePath)")
 
                             if isCustomOrImported {
@@ -257,7 +257,7 @@ struct SkillDetailView: View {
                                     startEditingResource(res)
                                 }
                                 .buttonStyle(.bordered)
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .accessibilityIdentifier("hanlin-skill-detail-edit-resource-\(res.relativePath)")
                             }
                         } else {
@@ -265,7 +265,7 @@ struct SkillDetailView: View {
                                 binaryMetadataResource = res
                             } label: {
                                 Text("Binary")
-                                    .font(.caption2)
+                                    .font(HanlinTypography.caption2)
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 2)
                                     .background(Color.secondary.opacity(0.1))
@@ -280,7 +280,7 @@ struct SkillDetailView: View {
                                 resourceToDelete = res.relativePath
                             } label: {
                                 Image(systemName: "trash")
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.red)
                             }
                             .buttonStyle(.borderless)
@@ -303,10 +303,10 @@ struct SkillDetailView: View {
                 if let sha = rec.sha256 {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("SHA-256")
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.secondary)
                         Text(sha)
-                            .font(.system(.caption2, design: .monospaced))
+                            .font(HanlinTypography.caption2.monospaced())
                             .foregroundColor(.primary)
                     }
                     .accessibilityIdentifier("hanlin-skill-detail-sha256")
@@ -387,7 +387,7 @@ struct SkillDetailView: View {
         }
 
         return Text(text)
-            .font(.caption2)
+            .font(HanlinTypography.caption2)
             .bold()
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
@@ -430,7 +430,7 @@ struct SkillDetailView: View {
                 if let url = SkillStore.shared.safeResourceURL(for: skillID, relativePath: res.relativePath),
                    let text = try? String(contentsOf: url, encoding: .utf8) {
                     Text(text)
-                        .font(.system(.caption, design: .monospaced))
+                        .font(HanlinTypography.caption.monospaced())
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
@@ -458,7 +458,7 @@ struct SkillDetailView: View {
                     Section {
                         Text(err)
                             .foregroundColor(.red)
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                     }
                 }
 
@@ -472,7 +472,7 @@ struct SkillDetailView: View {
                 Section(header: Text("Content")) {
                     TextEditor(text: $newResourceContent)
                         .frame(minHeight: 180)
-                        .font(.system(.body, design: .monospaced))
+                        .font(HanlinTypography.body.monospaced())
                         .accessibilityIdentifier("hanlin-skill-resource-content-input")
                 }
             }
@@ -525,14 +525,14 @@ struct SkillDetailView: View {
                     Section {
                         Text(err)
                             .foregroundColor(.red)
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                     }
                 }
 
                 Section(header: Text(res.relativePath)) {
                     TextEditor(text: $editingResourceContent)
                         .frame(minHeight: 220)
-                        .font(.system(.body, design: .monospaced))
+                        .font(HanlinTypography.body.monospaced())
                         .accessibilityIdentifier("hanlin-skill-resource-edit-content-input")
                 }
             }

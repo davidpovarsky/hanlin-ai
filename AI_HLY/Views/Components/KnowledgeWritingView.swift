@@ -138,7 +138,7 @@ struct KnowledgeWritingView: View {
                                             embeddingModelButton(for: model,
                                                                  isSelected: selectedEmbeddingModel?.id == model.id)
                                         }
-                                        .sensoryFeedback(.selection, trigger: isSelect)
+                                        .hanlinFeedback(.selection, trigger: isSelect)
                                     }
                                 }
                             }
@@ -196,7 +196,7 @@ struct KnowledgeWritingView: View {
                 ZStack {
                     // 普通模式标题
                     Text(knowledgeRecord.name)
-                        .font(.headline)
+                        .font(HanlinTypography.headline)
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .opacity(isEditingTitle ? 0 : 1)
@@ -291,18 +291,18 @@ struct KnowledgeWritingView: View {
 
             if isSelected {
                 Text(model.displayName)
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundColor(.hlBluefont)
                     .transition(.opacity.combined(with: .move(edge: .leading)))
                 
                 if model.price > 0 {
                     Text(String(format: "¥%.4f/Ktokens", model.price))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.orange)
                         .transition(.opacity)
                 } else {
                     Text(String(localized: "免费"))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.green)
                         .transition(.opacity)
                 }
@@ -345,7 +345,7 @@ struct KnowledgeWritingView: View {
             if showWebInput {
                 VStack {
                     Text(String(localized: "请输入网页 URL"))
-                        .font(.caption.bold())
+                        .font(HanlinTypography.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -381,7 +381,7 @@ struct KnowledgeWritingView: View {
                                 .foregroundColor(isWeb ? .gray : .hlBluefont)
                         }
                         .padding(.bottom, 6)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                     }
                 }
                 .transition(.opacity.combined(with: .move(edge: .bottom)))
@@ -398,7 +398,7 @@ struct KnowledgeWritingView: View {
             }
             if showPhotoSourceOptions {
                 Text(String(localized: "选择OCR的图片来源"))
-                    .font(.caption.bold())
+                    .font(HanlinTypography.caption.bold())
                     .foregroundColor(.hlBluefont)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 12)
@@ -415,7 +415,7 @@ struct KnowledgeWritingView: View {
                 isWebInputVisible = showWebInput
             }
         }
-        .sensoryFeedback(.impact, trigger: isFeedBack)
+        .hanlinFeedback(.impact, trigger: isFeedBack)
     }
 
     // MARK: - 优化按钮
@@ -617,8 +617,8 @@ struct KnowledgeWritingView: View {
     // MARK: - 计算 Token 数量
     private func tokenCounter() -> some View {
         VStack(alignment: .trailing) {
-            Text("\(message.count) 字").font(.caption).foregroundColor(.gray)
-            Text("约 \(estimatedTokens) tokens").font(.caption).foregroundColor(.gray)
+            Text("\(message.count) 字").font(HanlinTypography.caption).foregroundColor(.gray)
+            Text("约 \(estimatedTokens) tokens").font(HanlinTypography.caption).foregroundColor(.gray)
         }
     }
     
@@ -816,7 +816,7 @@ struct KnowledgeWritingView: View {
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showCameraPicker)
                     Text(String(localized: "拍摄照片"))
-                        .font(.caption.bold())
+                        .font(HanlinTypography.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)
                 }
@@ -825,7 +825,7 @@ struct KnowledgeWritingView: View {
                 .background(Color.hlBlue.opacity(0.1))
                 .cornerRadius(size_20)
             }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
             // 打开相机
@@ -846,7 +846,7 @@ struct KnowledgeWritingView: View {
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showImagePicker)
                     Text(String(localized: "相册选择"))
-                        .font(.caption.bold())
+                        .font(HanlinTypography.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)
                 }
@@ -855,7 +855,7 @@ struct KnowledgeWritingView: View {
                 .background(Color.hlBlue.opacity(0.1))
                 .cornerRadius(size_20)
             }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
             // 打开相册

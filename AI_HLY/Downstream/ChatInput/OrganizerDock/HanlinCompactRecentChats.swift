@@ -62,7 +62,7 @@ struct HanlinCompactRecentChats: View {
     private var recentHeader: some View {
         HStack(alignment: .firstTextBaseline) {
             Text(String(localized: "Recent Conversations"))
-                .font(.system(size: 16, weight: .regular))
+                .font(HanlinTypography.fixed(size: 16, weight: .regular))
                 .foregroundStyle(.secondary)
                 .accessibilityIdentifier("hanlin-compact-recent-header")
 
@@ -72,9 +72,9 @@ struct HanlinCompactRecentChats: View {
                 HStack(spacing: 4) {
                     Text(String(localized: "View All"))
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(HanlinTypography.fixed(size: 11, weight: .semibold))
                 }
-                .font(.system(size: 14, weight: .medium))
+                .font(HanlinTypography.fixed(size: 14, weight: .medium))
                 .foregroundStyle(Color.hlBluefont)
                 .padding(.vertical, 4)
                 .contentShape(Rectangle())
@@ -92,10 +92,10 @@ struct HanlinCompactRecentChats: View {
         if recentItems.isEmpty {
             HStack(spacing: 10) {
                 Image(systemName: "bubble.left.and.bubble.right")
-                    .font(.subheadline)
+                    .font(HanlinTypography.subheadline)
                     .foregroundStyle(Color.hlBluefont)
                 Text(String(localized: "No recent conversations yet. Type a message below to start."))
-                    .font(.subheadline)
+                    .font(HanlinTypography.subheadline)
                     .foregroundStyle(.secondary)
             }
             .padding(.vertical, 14)
@@ -158,12 +158,12 @@ struct HanlinRecentConversationRow: View {
     var body: some View {
         HStack(spacing: 10) {
             Image(systemName: record.icon ?? "bubble.left.circle.fill")
-                .font(.system(size: 17, weight: .medium))
+                .font(HanlinTypography.fixed(size: 17, weight: .medium))
                 .foregroundStyle(Color.from(name: record.color ?? ".hlBlue"))
                 .frame(width: 24, height: 24)
 
             Text(titleText)
-                .font(.system(size: 17, weight: .regular))
+                .font(HanlinTypography.fixed(size: 17, weight: .regular))
                 .foregroundStyle(.primary)
                 .lineLimit(1)
                 .truncationMode(.tail)
@@ -182,7 +182,7 @@ struct HanlinRecentConversationRow: View {
 
             if record.isPinned {
                 Image(systemName: "pin.fill")
-                    .font(.system(size: 11, weight: .semibold))
+                    .font(HanlinTypography.fixed(size: 11, weight: .semibold))
                     .foregroundStyle(Color.hlBluefont.opacity(0.75))
             }
         }

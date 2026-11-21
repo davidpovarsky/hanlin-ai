@@ -12,6 +12,8 @@ import HanlinHostContracts
 final class HanlinAppRichPresentation {
     @ObservationIgnored private var stores: [PresentationMessageIdentity: MessageOpenUIStateStore] = [:]
     @ObservationIgnored private var descriptor: HostPresentationDescriptor?
+    @ObservationIgnored private var pendingSnapshotSaves: [PresentationMessageIdentity: Bool] = [:]
+    @ObservationIgnored private var pendingError: String?
     private(set) var error: String?
 
     func profile(for conversation: ChatRecords, conversationID: UUID) throws -> ResolvedPresentationProfile {
@@ -28,8 +30,9 @@ final class HanlinAppRichPresentation {
             if let descriptor { _ = try ProfileResolver.resolve(host: descriptor, conversationID: conversationID, assignment: assignment) }
             conversation.presentationAssignmentData = try JSONEncoder().encode(assignment)
             if !temporary { try context.save() }
-            error = nil
-        } catch { self.error = error.localizedDescription }
+            pendingError = nil
+            if error != nil { error = nil }
+        } catch { reportError(error.localizedDescription) }
     }
 
     func state(for message: ChatMessages, conversation: ChatRecords, conversationID: UUID,
@@ -44,24 +47,70 @@ final class HanlinAppRichPresentation {
                 snapshot = saved
             } else {
                 snapshot = .init(identity: identity, profile: try profile(for: conversation, conversationID: conversationID))
-                message.presentationSnapshotData = try JSONEncoder().encode(snapshot)
             }
             let store = MessageOpenUIStateStore(snapshot: snapshot)
-            store.onChange = { [weak self, weak message] snapshot in
-                guard let message, message.id == snapshot.identity.messageID else { return }
-                do {
-                    message.presentationSnapshotData = try JSONEncoder().encode(snapshot)
-                    if !temporary { try context.save() }
-                } catch { self?.error = error.localizedDescription }
+            store.onChange = { [weak self, weak message, weak conversation, weak store, weak context] snapshot in
+                guard let self, let message, let conversation, let store, let context,
+                      message.id == snapshot.identity.messageID else { return }
+                self.scheduleSnapshot(store, message: message, conversation: conversation,
+                    context: context, temporary: temporary, save: !temporary)
             }
             stores[identity] = store
+            if message.presentationSnapshotData == nil {
+                scheduleSnapshot(store, message: message, conversation: conversation,
+                    context: context, temporary: temporary, save: false)
+            }
             return store
-        } catch { self.error = error.localizedDescription; return nil }
+        } catch { reportError(error.localizedDescription); return nil }
+    }
+
+    /// `state(for:)` is also used by the original bubble's body. Cache creation
+    /// is unobserved; SwiftData writes and error publication wait for the next
+    /// main-queue turn so they cannot mutate an in-progress SwiftUI update.
+    private func scheduleSnapshot(_ store: MessageOpenUIStateStore, message: ChatMessages,
+                                  conversation: ChatRecords, context: ModelContext,
+                                  temporary: Bool, save: Bool) {
+        let identity = store.identity
+        let recordID = conversation.id
+        if let queued = pendingSnapshotSaves[identity] {
+            pendingSnapshotSaves[identity] = queued || save
+            return
+        }
+        pendingSnapshotSaves[identity] = save
+        DispatchQueue.main.async { [weak self, weak message, weak conversation, weak store, weak context] in
+            guard let self else { return }
+            let shouldSave = self.pendingSnapshotSaves.removeValue(forKey: identity) == true
+            guard let message, let conversation, let store, let context,
+                  self.stores[identity] === store, store.identity == identity,
+                  message.id == identity.messageID, !message.isDeleted, !conversation.isDeleted,
+                  conversation.id == recordID,
+                  recordID == nil || recordID == identity.conversationID,
+                  message.modelContext === context || (temporary && message.modelContext == nil),
+                  conversation.modelContext === context || (temporary && conversation.modelContext == nil) else { return }
+            do {
+                // Read the current store here. A newer edit must never be
+                // overwritten by the initialization snapshot queued earlier.
+                let bytes = try JSONEncoder().encode(store.snapshot)
+                guard message.presentationSnapshotData != bytes else { return }
+                message.presentationSnapshotData = bytes
+                if shouldSave && !temporary { try context.save() }
+            } catch { self.reportError(error.localizedDescription) }
+        }
+    }
+
+    private func reportError(_ message: String) {
+        guard error != message, pendingError != message else { return }
+        pendingError = message
+        DispatchQueue.main.async { [weak self] in
+            guard let self, self.pendingError == message else { return }
+            self.pendingError = nil
+            if self.error != message { self.error = message }
+        }
     }
 
     func instructions(conversation: ChatRecords, conversationID: UUID) -> String {
         do { return OpenUICatalogs.instructions(for: try profile(for: conversation, conversationID: conversationID)) }
-        catch { self.error = error.localizedDescription; return "" }
+        catch { reportError(error.localizedDescription); return "" }
     }
 }
 

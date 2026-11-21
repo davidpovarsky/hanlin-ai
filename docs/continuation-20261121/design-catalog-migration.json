@@ -1,0 +1,246 @@
+{
+  "baseline": "5534d6b249518d29efda6c2a43f4eacbfbc2b973",
+  "semanticReplacementCount": 580,
+  "changedFiles": {
+    "AI_HLY/KnowledgeListView.swift": 5,
+    "AI_HLY/ListView.swift": 3,
+    "AI_HLY/ModelsView.swift": 11,
+    "AI_HLY/SettingsView.swift": 4,
+    "AI_HLY/VisionView.swift": 14,
+    "AI_HLY/Downstream/AgentActivity/AgentActivityStepView.swift": 3,
+    "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsView.swift": 15,
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": 2,
+    "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift": 82,
+    "AI_HLY/Downstream/ChatInput/HanlinModelPickerPopover.swift": 13,
+    "AI_HLY/Downstream/ChatPresentation/ChatEmbeddedResultHost.swift": 1,
+    "AI_HLY/Downstream/ChatPresentation/ChatSavedExcerptsView.swift": 3,
+    "AI_HLY/Downstream/ChatPresentation/HanlinPersonalLibraryView.swift": 2,
+    "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCardView.swift": 4,
+    "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift": 10,
+    "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift": 4,
+    "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift": 6,
+    "AI_HLY/Downstream/TorahStudy/TorahSourceReaderView.swift": 11,
+    "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceRow.swift": 4,
+    "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceSheet.swift": 1,
+    "AI_HLY/Downstream/AgentSkills/UI/SkillCenterView.swift": 5,
+    "AI_HLY/Downstream/AgentSkills/UI/SkillCompatibilityUnknownSection.swift": 1,
+    "AI_HLY/Downstream/AgentSkills/UI/SkillDetailView.swift": 19,
+    "AI_HLY/Downstream/AgentSkills/UI/SkillEditorView.swift": 8,
+    "AI_HLY/Downstream/AgentSkills/UI/SkillExecutionPlanSection.swift": 9,
+    "AI_HLY/Downstream/AgentSkills/UI/SkillImportView.swift": 15,
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift": 4,
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactRecentChats.swift": 2,
+    "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAcceptanceStatusView.swift": 1,
+    "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolConsentSheet.swift": 2,
+    "AI_HLY/Downstream/ChatPresentation/CodeFences/ChatCodeFenceView.swift": 4,
+    "AI_HLY/Downstream/ChatPresentation/Media/HanlinRichMediaViews.swift": 7,
+    "AI_HLY/Downstream/MCP/UI/Chat/MCPChatServerButton.swift": 1,
+    "AI_HLY/Downstream/MCP/UI/Chat/MCPChatServerSheet.swift": 2,
+    "AI_HLY/Downstream/MCP/UI/Settings/MCPInstallProgressView.swift": 2,
+    "AI_HLY/Downstream/MCP/UI/Settings/MCPRuntimeStatusView.swift": 1,
+    "AI_HLY/Downstream/MCP/UI/Settings/MCPServerDiagnosticsView.swift": 4,
+    "AI_HLY/Downstream/MCP/UI/Settings/MCPServerInstallView.swift": 1,
+    "AI_HLY/Downstream/MCP/UI/Settings/MCPServersSettingsView.swift": 5,
+    "AI_HLY/Downstream/MCP/UI/Settings/MCPServerToolsView.swift": 3,
+    "AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift": 5,
+    "AI_HLY/Downstream/RuntimeCore/UI/PythonPackagesView.swift": 6,
+    "AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift": 10,
+    "AI_HLY/Downstream/RuntimeCore/UI/RuntimeEnvironmentView.swift": 4,
+    "AI_HLY/Downstream/RuntimeCore/UI/ShellCapabilitiesView.swift": 5,
+    "AI_HLY/NativeAgentExtensions/UI/NativeAssistantToolGroupSettingsView.swift": 5,
+    "AI_HLY/NativeAgentExtensions/UI/NativeUIRenderer.swift": 7,
+    "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolEntityCard.swift": 3,
+    "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolErrorCard.swift": 1,
+    "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolResultCardContainer.swift": 2,
+    "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolSearchResultCard.swift": 3,
+    "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift": 3,
+    "AI_HLY/NativeAppPlatform/AppsHub/NativeAppCardView.swift": 3,
+    "AI_HLY/NativeAppPlatform/AppsHub/NativeAppDetailView.swift": 5,
+    "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift": 5,
+    "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift": 3,
+    "AI_HLY/Views/Components/APISettingView.swift": 58,
+    "AI_HLY/Views/Components/KnowledgeWritingView.swift": 10,
+    "AI_HLY/Views/Components/ListViewComponents.swift": 9,
+    "AI_HLY/Views/Components/MemoryArchiveView.swift": 5,
+    "AI_HLY/Views/Components/ModelManagementView.swift": 11,
+    "AI_HLY/Views/Components/ModelsViewComponents.swift": 27,
+    "AI_HLY/Views/Components/PromptRepoView.swift": 11,
+    "AI_HLY/Views/Components/QuickToolsView.swift": 20,
+    "AI_HLY/Views/Components/SettingsViewComponents.swift": 32,
+    "AI_HLY/Views/Components/TranslationDicView.swift": 4,
+    "AI_HLY/Views/Components/VoiceInputView.swift": 7,
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/NativeOpenUINode.swift": 17,
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/OpenUIBlock.swift": 1,
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinDetachedCapabilityChips.swift": 1,
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift": 1,
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinSources.swift": 2
+  },
+  "collaboratorOwnedFilesExcluded": [
+    "AI_HLY/ChatView.swift",
+    "AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift",
+    "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
+    "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+    "AI_HLY/Views/Components/ChatViewBottom.swift",
+    "AI_HLY/Views/Components/ChatViewComponents.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolActivityHeader.swift"
+  ],
+  "validation": "SOURCE_ONLY; native build delegated to integrated device archive; no simulator run",
+  "fixedAndMonospacedMigration": {
+    "AI_HLY/VisionView.swift": {
+      "fixedGlyphOrScaledSize": 2,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift": {
+      "fixedGlyphOrScaledSize": 4,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Downstream/ChatPresentation/ChatEmbeddedResultHost.swift": {
+      "fixedGlyphOrScaledSize": 2,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 2
+    },
+    "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceRow.swift": {
+      "fixedGlyphOrScaledSize": 1,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Downstream/AgentSkills/UI/SkillDetailView.swift": {
+      "fixedGlyphOrScaledSize": 1,
+      "monospacedSemantic": 7
+    },
+    "AI_HLY/Downstream/AgentSkills/UI/SkillEditorView.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "AI_HLY/Downstream/AgentSkills/UI/SkillExecutionPlanSection.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "AI_HLY/Downstream/AgentSkills/UI/SkillImportView.swift": {
+      "fixedGlyphOrScaledSize": 2,
+      "monospacedSemantic": 3
+    },
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift": {
+      "fixedGlyphOrScaledSize": 1,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactRecentChats.swift": {
+      "fixedGlyphOrScaledSize": 6,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolConsentSheet.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "AI_HLY/Downstream/ChatPresentation/CodeFences/ChatCodeFenceView.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 2
+    },
+    "AI_HLY/Downstream/MCP/UI/Settings/MCPServerLogsView.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "AI_HLY/Downstream/RuntimeCore/UI/PythonPackagesView.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "AI_HLY/Downstream/RuntimeCore/UI/RuntimeEnvironmentView.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "AI_HLY/Downstream/RuntimeCore/UI/RuntimeLogsView.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "AI_HLY/Downstream/RuntimeCore/UI/ShellCapabilitiesView.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "AI_HLY/NativeAgentExtensions/UI/NativeUIRenderer.swift": {
+      "fixedGlyphOrScaledSize": 1,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolResultCardContainer.swift": {
+      "fixedGlyphOrScaledSize": 1,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift": {
+      "fixedGlyphOrScaledSize": 3,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/NativeAppPlatform/AppsHub/NativeAppCardView.swift": {
+      "fixedGlyphOrScaledSize": 1,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Views/Components/ListViewComponents.swift": {
+      "fixedGlyphOrScaledSize": 1,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Views/Components/ModelManagementView.swift": {
+      "fixedGlyphOrScaledSize": 4,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Views/Components/ModelsViewComponents.swift": {
+      "fixedGlyphOrScaledSize": 1,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Views/Components/QuickToolsView.swift": {
+      "fixedGlyphOrScaledSize": 12,
+      "monospacedSemantic": 0
+    },
+    "AI_HLY/Views/Components/VoiceInputView.swift": {
+      "fixedGlyphOrScaledSize": 5,
+      "monospacedSemantic": 0
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/NativeOpenUINode.swift": {
+      "fixedGlyphOrScaledSize": 0,
+      "monospacedSemantic": 1
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinDetachedCapabilityChips.swift": {
+      "fixedGlyphOrScaledSize": 1,
+      "monospacedSemantic": 0
+    }
+  },
+  "fixedGlyphOrScaledCount": 49,
+  "monospacedSemanticCount": 24,
+  "localizationKeysAdded": [
+    "Interface catalogue",
+    "Typography",
+    "Large title",
+    "Title",
+    "Section heading",
+    "Subsection heading",
+    "Headline",
+    "Secondary text",
+    "Callout",
+    "Supporting text",
+    "Caption",
+    "Metadata",
+    "System controls",
+    "Selection",
+    "First",
+    "Second",
+    "Value",
+    "Action",
+    "Menu",
+    "First action",
+    "Second action",
+    "Inline search",
+    "Appearance",
+    "Accent",
+    "Primary text",
+    "Minimum touch target",
+    "Page inset"
+  ],
+  "changedSwiftFileCount": 75
+}

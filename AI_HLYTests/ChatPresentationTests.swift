@@ -9,6 +9,57 @@ import SwiftStreamingMarkdown
 @MainActor
 @Suite("Original chat presentation", .serialized)
 struct ChatPresentationTests {
+    @Test func permissionReceiptDoesNotClaimExecutionOrBecomeItsTitle() throws {
+        let call = AgentToolCall.parse(id: "consented-call", name: "execute_local_python_code",
+            argumentsJSON: #"{"source":"print(42)"}"#,
+            presentationProfile: ExecuteLocalPythonTool().catalogEntry.presentationProfile)
+        var accumulator = AgentEventAccumulator(run: AgentRun(groupID: UUID()))
+        accumulator.apply(.toolCallStarted(call))
+        accumulator.apply(.toolCallCompleted(call))
+        accumulator.apply(.toolApprovalChanged(AgentToolApproval(id: "request", canonicalRunID: nil,
+            callID: call.id, toolName: call.name, reviewText: call.sanitizedArgumentsJSON, disposition: .allowedOnce)))
+        let waiting = try #require(AgentActivityComposer.compose(accumulator.run).activities.first { $0.id == call.id })
+        #expect(waiting.status == .pending)
+        #expect(waiting.title != String(localized: "Allowed once"))
+        accumulator.apply(.toolExecutionStarted(AgentToolExecution(id: call.id + ":execution", callID: call.id,
+            name: call.name, startedAt: .now)))
+        accumulator.apply(.toolExecutionFailed(id: call.id + ":execution", error: AgentSafeError(message: "runtime failure")))
+        let failed = try #require(AgentActivityComposer.compose(accumulator.run).activities.first { $0.id == call.id })
+        #expect(failed.status == .failed)
+        #expect(failed.errorDescription == "runtime failure")
+    }
+
+    @Test func answerDeltasDoNotDuplicateReasoningOrEncodeEveryRunSnapshot() throws {
+        let message = ChatMessages(id: UUID(), role: "assistant", text: "", reasoning: "Approved summary")
+        let time = Date(timeIntervalSinceReferenceDate: 100)
+        var run = AgentRun(groupID: UUID(), startedAt: time, transcriptItems: [
+            AgentTranscriptItem(sequence: 0, kind: .assistantText, text: "First",
+                visibilityAfterCompletion: .remainInChat)
+        ])
+        var projection = ClassicChatAgentProjection(runID: run.id)
+        var state = "", description = ""
+        _ = projection.applyStreamChunk(StreamData(), agentRun: run, to: message,
+            operationalState: &state, operationalDescription: &description, checkpointDate: time)
+        let checkpoint = message.agentRunJSON
+        run.transcriptItems[0].text = "First שלום 👋🏽"
+        _ = projection.applyStreamChunk(StreamData(content: " שלום 👋🏽", reasoning: "Approved summary"),
+            agentRun: run, to: message, operationalState: &state, operationalDescription: &description,
+            checkpointDate: time.addingTimeInterval(0.1))
+        #expect(message.reasoning == "Approved summary")
+        #expect(message.agentRunJSON == checkpoint)
+        _ = projection.applyStreamChunk(StreamData(), agentRun: run, to: message,
+            operationalState: &state, operationalDescription: &description,
+            checkpointDate: time.addingTimeInterval(0.5))
+        #expect(message.agentRun?.transcriptItems.first?.text == "First שלום 👋🏽")
+        run.transcriptItems[0].text = "First שלום 👋🏽 final tail"
+        run.status = .completed
+        run.completedAt = time.addingTimeInterval(0.6)
+        var seen = Set<String>()
+        ClassicChatAgentProjection.syncAgentRunProjection(run, into: message, seenToolCallKeys: &seen)
+        #expect(message.agentRun?.transcriptItems.first?.text == "First שלום 👋🏽 final tail")
+        #expect(message.agentRun?.status == .completed)
+    }
+
     @Test func parallelCallsWithSameToolAndArgumentsKeepTheirOwnIdentity() {
         let time = Date()
         let steps = [

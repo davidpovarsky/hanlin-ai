@@ -108,6 +108,13 @@ struct ClassicChatAgentProjection {
     private var seenToolContentBlocks: Set<String> = []
     private(set) var orderedToolEntries: [ClassicProjectedToolCallEntry] = []
     private var streamChunkSequence: Int = 0
+    private var projectedMessageID: UUID?
+    private var projectedToolSteps: [AgentActivityStep] = []
+    private var projectedToolTranscript: [AgentTranscriptItem] = []
+    private var projectedEvidence: [AgentEvidenceItem] = []
+    private var projectedApprovals: [AgentToolApproval] = []
+    private var checkpointStatus: AgentActivityStatus?
+    private var lastCheckpointAt: Date?
 
     init(runID: UUID) {
         self.runID = runID
@@ -147,7 +154,8 @@ struct ClassicChatAgentProjection {
         agentRun: AgentRun,
         to assistantMessage: ChatMessages,
         operationalState: inout String,
-        operationalDescription: inout String
+        operationalDescription: inout String,
+        checkpointDate: Date = .now
     ) -> Bool {
         var updated = false
 
@@ -164,20 +172,15 @@ struct ClassicChatAgentProjection {
             }
         }
 
-        // 2. Reasoning summary / delta (filter raw <think> tags)
-        if let reasoningDelta = data.reasoning, !reasoningDelta.isEmpty {
-            let cleanedDelta = Self.stripRawThinkTags(reasoningDelta)
-            if !cleanedDelta.isEmpty, !ProgressSummarySanitizer.looksLikeRawChainOfThought(cleanedDelta) {
-                assistantMessage.reasoning = (assistantMessage.reasoning ?? "") + cleanedDelta
-                updated = true
-            }
-        }
+        // 2. The original ChatView stream owner appends the reasoning delta to
+        // its group message. Appending here as well duplicates the same chunk.
 
         // 3. Per-call Tool output -> tracked deterministically by (runID, callID, toolName)
         let incomingToolName = (data.toolName ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         let alreadyAttributed = !incomingToolName.isEmpty && agentRun.transcriptItems.contains {
             $0.kind == .toolActivity && $0.toolName == incomingToolName
         }
+        var legacyToolOutputChanged = false
         if let toolInfo = data.toolContent, !toolInfo.isEmpty, !alreadyAttributed {
             let isMeta = ClassicProjectedToolCallEntry.isMetaTool(incomingToolName)
             let sanitizedInfo = ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(toolInfo, isMetaSkillOrDiscoveryTool: isMeta)
@@ -204,10 +207,11 @@ struct ClassicChatAgentProjection {
                         isMetaSkillOrDiscoveryTool: isMeta
                     )
                     orderedToolEntries.append(entry)
+                    legacyToolOutputChanged = true
                     updated = true
                 }
             }
-        } else if !incomingToolName.isEmpty, orderedToolEntries.isEmpty {
+        } else if !incomingToolName.isEmpty, orderedToolEntries.isEmpty, assistantMessage.toolName != incomingToolName {
             assistantMessage.toolName = incomingToolName
             updated = true
         }
@@ -217,25 +221,53 @@ struct ClassicChatAgentProjection {
             let validIncoming = Self.filterValidResources(incomingResources)
             if !validIncoming.isEmpty {
                 let combined = (assistantMessage.resources ?? []) + validIncoming
-                assistantMessage.resources = LegacyResourcesEvidenceAdapter.deduplicatedResources(combined)
-                updated = true
+                updated = Self.assignResourcesIfChanged(
+                    LegacyResourcesEvidenceAdapter.deduplicatedResources(combined), to: assistantMessage) || updated
             }
         }
 
-        // 5. Synchronize AgentRun snapshot onto assistantMessage using per-call attribution
-        assistantMessage.agentRun = agentRun
-        Self.syncStructuredToolEntries(
-            from: agentRun,
-            runID: runID,
-            orderedToolEntries: &orderedToolEntries,
-            seenToolCallKeys: &seenToolCallKeys
-        )
-        Self.applyFormattedToolProjection(
-            entries: orderedToolEntries,
-            fallbackToolName: incomingToolName,
-            to: assistantMessage
-        )
-        Self.syncEvidenceResources(from: agentRun, into: assistantMessage)
+        // 5. Text-only deltas do not change tool output or evidence. Keep these
+        // projections separate from the live transcript so an answer token never
+        // reformats every previous tool result or serializes the whole run.
+        let messageChanged = projectedMessageID != assistantMessage.id
+        let toolSteps = agentRun.steps.filter(Self.isToolProjectionStep)
+        let toolTranscript = agentRun.transcriptItems.filter { $0.callID != nil }
+        let toolsChanged = messageChanged || projectedToolSteps != toolSteps
+            || projectedToolTranscript != toolTranscript
+        let evidenceChanged = messageChanged || projectedEvidence != agentRun.evidenceItems
+        let approvalsChanged = messageChanged || projectedApprovals != agentRun.approvals
+        if toolsChanged {
+            Self.syncStructuredToolEntries(from: agentRun, runID: runID,
+                orderedToolEntries: &orderedToolEntries, seenToolCallKeys: &seenToolCallKeys)
+            projectedToolSteps = toolSteps
+            projectedToolTranscript = toolTranscript
+        }
+        if toolsChanged || legacyToolOutputChanged {
+            Self.applyFormattedToolProjection(entries: orderedToolEntries,
+                fallbackToolName: incomingToolName, to: assistantMessage)
+            updated = true
+        }
+        if evidenceChanged {
+            Self.syncEvidenceResources(from: agentRun, into: assistantMessage)
+            projectedEvidence = agentRun.evidenceItems
+        }
+        let controlEvent = data.agentEvents.contains { event in
+            switch event {
+            case .reasoningDelta, .answerSegmentDelta, .toolCallArgumentsDelta: false
+            default: true
+            }
+        }
+        if messageChanged || toolsChanged || evidenceChanged || approvalsChanged || controlEvent
+            || checkpointStatus != agentRun.status
+            || lastCheckpointAt.map({ checkpointDate.timeIntervalSince($0) >= 0.5 }) != false {
+            // The live UI uses the in-memory run. This bounded checkpoint is
+            // persistence only; every control/final event is stored immediately.
+            assistantMessage.agentRun = agentRun
+            lastCheckpointAt = checkpointDate
+            checkpointStatus = agentRun.status
+        }
+        projectedMessageID = assistantMessage.id
+        projectedApprovals = agentRun.approvals
 
         return updated
     }
@@ -314,6 +346,9 @@ struct ClassicChatAgentProjection {
         seenToolCallKeys: inout Set<String>
     ) {
         var entries: [ClassicProjectedToolCallEntry] = []
+        // End-of-stream/restore always persists the exact canonical snapshot,
+        // including the tail since the last periodic streaming checkpoint.
+        assistantMessage.agentRun = agentRun
         AgentDiagnosticsRecorder.trace(runID: agentRun.id, stage: "ClassicChatAgentProjection.snapshot",
             text: agentRun.transcriptItems.compactMap(\.text).joined(separator: "\n"),
             fields: ["messageID": String(describing: assistantMessage.id)])
@@ -364,13 +399,10 @@ struct ClassicChatAgentProjection {
         orderedToolEntries: inout [ClassicProjectedToolCallEntry],
         seenToolCallKeys: inout Set<String>
     ) {
-        let toolSteps = agentRun.steps.filter { step in
-            switch step.kind {
-            case .toolCall, .toolExecution, .codeExecution, .documentRead, .sourceRead, .map, .calendar, .health, .nativeApp:
-                return true
-            case .reasoning, .progress, .planning, .webSearch, .result, .error, .cancellation:
-                return false
-            }
+        let toolSteps = agentRun.steps.filter(isToolProjectionStep)
+        var entryIndexByCallID: [String: Int] = [:]
+        for index in orderedToolEntries.indices {
+            entryIndexByCallID[orderedToolEntries[index].callID] = index
         }
 
         // Map callID -> canonical toolName and status from transcriptItems when available
@@ -416,8 +448,8 @@ struct ClassicChatAgentProjection {
             let callKey = "\(runID.uuidString):call:\(rawCallID)"
 
             // Identity and deduplication is strictly by callID, NEVER by toolName::output
-            if let existingIdx = orderedToolEntries.firstIndex(where: { $0.callID == rawCallID }) {
-                if orderedToolEntries[existingIdx].summary == nil, let summary, !summary.isEmpty {
+            if let existingIdx = entryIndexByCallID[rawCallID] {
+                if let summary, !summary.isEmpty {
                     orderedToolEntries[existingIdx].summary = summary
                 }
                 if !effectiveOutput.isEmpty {
@@ -436,6 +468,7 @@ struct ClassicChatAgentProjection {
 
             guard seenToolCallKeys.insert(callKey).inserted else { continue }
 
+            entryIndexByCallID[rawCallID] = orderedToolEntries.count
             orderedToolEntries.append(
                 ClassicProjectedToolCallEntry(
                     id: callKey,
@@ -480,17 +513,20 @@ struct ClassicChatAgentProjection {
             let text = entry.formattedBlock(includeHeader: includePerCallHeaders)
             return text.isEmpty ? nil : text
         }
-        assistantMessage.toolContent = blocks.joined(separator: "\n\n")
+        let formattedContent = blocks.joined(separator: "\n\n")
+        if assistantMessage.toolContent != formattedContent { assistantMessage.toolContent = formattedContent }
 
         // Compute truthful header badge for `ToggleButton(title: "tooluse_content", timeText: toolName)`
+        let name: String
         if entries.count == 1, let onlyTool = distinctToolNames.first {
-            assistantMessage.toolName = onlyTool
+            name = onlyTool
         } else if entries.count > 1 {
             let format = String(localized: "Tool activity (%lld)")
-            assistantMessage.toolName = String(format: format, entries.count)
-        } else if !fallbackToolName.isEmpty {
-            assistantMessage.toolName = fallbackToolName
+            name = String(format: format, entries.count)
+        } else {
+            name = fallbackToolName
         }
+        if !name.isEmpty, assistantMessage.toolName != name { assistantMessage.toolName = name }
     }
 
     private static func orderedDistinctToolNames(in entries: [ClassicProjectedToolCallEntry]) -> [String] {
@@ -521,8 +557,24 @@ struct ClassicChatAgentProjection {
         }
         if !evidenceResources.isEmpty {
             let combined = (assistantMessage.resources ?? []) + evidenceResources
-            assistantMessage.resources = LegacyResourcesEvidenceAdapter.deduplicatedResources(combined)
+            _ = assignResourcesIfChanged(LegacyResourcesEvidenceAdapter.deduplicatedResources(combined), to: assistantMessage)
         }
+    }
+
+    private static func isToolProjectionStep(_ step: AgentActivityStep) -> Bool {
+        switch step.kind {
+        case .toolCall, .toolExecution, .codeExecution, .documentRead, .sourceRead, .map, .calendar, .health, .nativeApp: true
+        case .reasoning, .progress, .planning, .webSearch, .result, .error, .cancellation: false
+        }
+    }
+
+    private static func assignResourcesIfChanged(_ resources: [Resource], to message: ChatMessages) -> Bool {
+        let existing = message.resources ?? []
+        guard !existing.elementsEqual(resources, by: {
+            $0.icon == $1.icon && $0.title == $1.title && $0.link == $1.link
+        }) else { return false }
+        message.resources = resources
+        return true
     }
 
     static func filterValidResources(_ resources: [Resource]) -> [Resource] {

@@ -25,10 +25,10 @@ struct ChavrusaShareInboxView: View {
             Section {
                 if useInChat != nil {
                     Text("Choose a batch to add its text, links and files to your current draft. Nothing is sent until you tap Send.")
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                 } else {
                     Text("These items are saved on this device. Choose a MiniApp action to send a batch. Its actual status and result appear below.")
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                 }
                 if batches.isEmpty && legacyItems.isEmpty && !loadFailed {
                     Text("No shared items yet").foregroundStyle(.secondary)
@@ -139,7 +139,7 @@ struct ChavrusaShareInboxView: View {
                 .accessibilityIdentifier("hanlin-share-status-\(batch.id.uuidString.lowercased())")
             if let command = commands[batch.id] {
                 Text("\(command.invocation.delivery?.appID.rawValue ?? command.invocation.identity.packageID.rawValue) · \(command.invocation.entityID ?? "")")
-                    .font(.caption).textSelection(.enabled)
+                    .font(HanlinTypography.caption).textSelection(.enabled)
             }
             if let value = receipt.value,
                let data = try? JSONEncoder().encode(value), let text = String(data: data, encoding: .utf8) {
@@ -153,7 +153,7 @@ struct ChavrusaShareInboxView: View {
             }
         } else if platform.shareActionTargets.isEmpty {
             Text("No installed MiniApp currently declares a supported share action.")
-                .font(.footnote).foregroundStyle(.secondary)
+                .font(HanlinTypography.footnote).foregroundStyle(.secondary)
         } else {
             Menu("Choose MiniApp action") {
                 ForEach(platform.shareActionTargets) { target in

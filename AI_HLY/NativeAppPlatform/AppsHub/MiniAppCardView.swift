@@ -25,7 +25,7 @@ struct MiniAppCardView: View {
         switch descriptor.icon {
         case let .systemSymbol(name):
             Image(systemName: name)
-                .font(.system(size: 27, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 27, weight: .semibold))
         case let .asset(name):
             Image(name)
                 .resizable()
@@ -50,11 +50,11 @@ struct MiniAppCardView: View {
                     .frame(width: 27, height: 27)
             } else {
                 Image(systemName: "app.dashed")
-                    .font(.system(size: 27, weight: .semibold))
+                    .font(HanlinTypography.fixed(size: 27, weight: .semibold))
             }
             #else
             Image(systemName: "app.dashed")
-                .font(.system(size: 27, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 27, weight: .semibold))
             #endif
         }
     }
@@ -79,7 +79,7 @@ struct MiniAppCardView: View {
                 HStack(alignment: .top) {
                     if isBeta {
                         Text("BETA")
-                            .font(.caption2.weight(.bold))
+                            .font(HanlinTypography.caption2.weight(.bold))
                             .padding(.horizontal, 7)
                             .padding(.vertical, 4)
                             .background(.white.opacity(0.2), in: Capsule())
@@ -92,11 +92,11 @@ struct MiniAppCardView: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(title)
-                        .font(.title3.weight(.semibold))
+                        .font(HanlinTypography.title3.weight(.semibold))
                         .lineLimit(2)
                         .truncationMode(.tail)
                     Text(subtitle)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .lineLimit(2)
                         .truncationMode(.tail)
                         .opacity(0.82)

@@ -196,14 +196,14 @@ struct HanlinCompactChatWorkspace: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         if loadHistoryMessages {
                             HStack(spacing: 4) {
-                                ProgressView().font(.caption)
-                                Text("正在加载...").font(.caption)
+                                ProgressView().font(HanlinTypography.caption)
+                                Text("正在加载...").font(HanlinTypography.caption)
                             }
                         } else {
                             Button(action: onOpenSafariGuide) {
                                 Label {
                                     Text("软件指南")
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                 } icon: {
                                     Image(systemName: "text.rectangle.page")
                                 }
@@ -333,12 +333,12 @@ struct HanlinCompactChatWorkspace: View {
     private var welcomeHeroSection: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(String(localized: "Start a conversation or continue recent work"))
-                .font(.system(size: 24, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 24, weight: .semibold))
                 .foregroundStyle(.primary)
                 .fixedSize(horizontal: false, vertical: true)
 
             Text(String(localized: "Type below to start a new chat immediately, or open the organizer dock for attachments, modes, tools, skills, and MCP."))
-                .font(.subheadline)
+                .font(HanlinTypography.subheadline)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }

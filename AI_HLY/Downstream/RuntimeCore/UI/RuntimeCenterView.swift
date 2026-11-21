@@ -89,7 +89,7 @@ struct RuntimeCenterView: View {
             if let message = model.lastMessage {
                 Section {
                     Text(message)
-                        .font(.callout)
+                        .font(HanlinTypography.callout)
                         .textSelection(.enabled)
                         .accessibilityIdentifier("hanlin-runtime-last-message")
                 }
@@ -182,26 +182,26 @@ private struct RuntimeCard<Destination: View>: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Label(title, systemImage: image)
-                    .font(.headline)
+                    .font(HanlinTypography.headline)
                     .accessibilityIdentifier("hanlin-runtime-card-\(kind.rawValue)")
                 Spacer()
                 Text(RuntimeL10n.string(snapshot.state.localizationKey))
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundStyle(snapshot.state.tint)
                     .accessibilityIdentifier("hanlin-runtime-state-\(kind.rawValue)")
             }
             if snapshot.state == .stopped {
-                Text(RuntimeL10n.string("Starts on demand")).font(.caption).foregroundStyle(.secondary)
+                Text(RuntimeL10n.string("Starts on demand")).font(HanlinTypography.caption).foregroundStyle(.secondary)
             }
             if let version = snapshot.version { LabeledContent(RuntimeL10n.string("Version"), value: version) }
             if let source = snapshot.source { LabeledContent(RuntimeL10n.string("Source"), value: source) }
             if let date = snapshot.lastHealthCheck { LabeledContent(RuntimeL10n.string("Last health check"), value: date.formatted(date: .abbreviated, time: .standard)) }
-            if let error = snapshot.lastErrorCode { Text(error).font(.caption).foregroundStyle(.red).textSelection(.enabled) }
+            if let error = snapshot.lastErrorCode { Text(error).font(HanlinTypography.caption).foregroundStyle(.red).textSelection(.enabled) }
             if let diagnostic = snapshot.lastDiagnostic {
-                Text(diagnostic).font(.caption).foregroundStyle(snapshot.state == .failed || snapshot.state == .appRestartRequired ? .red : .secondary).textSelection(.enabled)
+                Text(diagnostic).font(HanlinTypography.caption).foregroundStyle(snapshot.state == .failed || snapshot.state == .appRestartRequired ? .red : .secondary).textSelection(.enabled)
             }
             if let missingCommands = snapshot.missingCommands, !missingCommands.isEmpty {
-                Text(missingCommands.joined(separator: ", ")).font(.caption2.monospaced()).foregroundStyle(.red).textSelection(.enabled)
+                Text(missingCommands.joined(separator: ", ")).font(HanlinTypography.caption2.monospaced()).foregroundStyle(.red).textSelection(.enabled)
             }
             HStack {
                 Button(RuntimeL10n.string("Smoke Test"), action: smoke)
@@ -225,7 +225,7 @@ private struct ExternalRuntimeRow: View {
         Label {
             VStack(alignment: .leading) {
                 Text(title)
-                Text(detail).font(.caption).foregroundStyle(.secondary)
+                Text(detail).font(HanlinTypography.caption).foregroundStyle(.secondary)
             }
         } icon: { Image(systemName: image) }
     }
@@ -245,8 +245,8 @@ private struct RuntimeToolsSettingsView: View {
                 Label {
                     VStack(alignment: .leading) {
                         Text(entry.title)
-                        Text(entry.summary).font(.caption).foregroundStyle(.secondary)
-                        if entry.isSensitive { Text(RuntimeL10n.string("Sensitive capability — review every command")) .font(.caption2).foregroundStyle(.orange) }
+                        Text(entry.summary).font(HanlinTypography.caption).foregroundStyle(.secondary)
+                        if entry.isSensitive { Text(RuntimeL10n.string("Sensitive capability — review every command")) .font(HanlinTypography.caption2).foregroundStyle(.orange) }
                     }
                 } icon: { Image(systemName: entry.systemImage) }
             }

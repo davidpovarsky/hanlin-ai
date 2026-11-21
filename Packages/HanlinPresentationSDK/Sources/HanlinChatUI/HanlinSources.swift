@@ -14,8 +14,8 @@ public struct HanlinSourcesButton: View {
             Button(action: action) {
                 HStack(spacing: 6) {
                     ForEach(Array(sources.prefix(3))) { source in HanlinSourceIcon(url: source.iconURL) }
-                    Text(title).font(.caption.weight(.medium))
-                    Text("\(sources.count)").font(.caption.monospacedDigit()).foregroundStyle(.secondary)
+                    Text(title).font(HanlinTypography.caption.weight(.medium))
+                    Text("\(sources.count)").font(HanlinTypography.caption.monospacedDigit()).foregroundStyle(.secondary)
                 }.padding(.horizontal, 10).padding(.vertical, 7)
                     .background(.quaternary, in: Capsule())
             }.buttonStyle(.plain).accessibilityIdentifier("hanlin-all-sources")

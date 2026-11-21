@@ -6,6 +6,10 @@ on:
       upload_to_testflight:
         required: true
         type: boolean
+      skip_simulator_tests:
+        required: false
+        default: false
+        type: boolean
       existing_build_number:
         required: false
         default: ''
@@ -25,6 +29,11 @@ on:
         required: true
         type: boolean
         default: true
+      skip_simulator_tests:
+        description: Direct TestFlight device preview without simulator UI tests (explicit opt-in)
+        required: false
+        type: boolean
+        default: false
       existing_build_number:
         description: Distribute an existing uploaded build without rebuilding
         required: false
@@ -150,12 +159,17 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Freeze required actual app UI contract before release work
-        if: ${{ inputs.upload_to_testflight }}
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         env:
           UI_ACCEPTANCE_EVIDENCE: ${{ env.BUILD_DIR }}/ui-acceptance
         run: |
           python3 Scripts/CI/SimulatorAcceptance/gate.py plan \
             --evidence "$UI_ACCEPTANCE_EVIDENCE" --build-number "$BUILD_NUMBER"
+
+      - name: Record explicit fast TestFlight device preview
+        if: ${{ inputs.skip_simulator_tests }}
+        run: |
+          echo 'Simulator UI tests and dependent UI proof gates skipped by operator request; not a validated full release.' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Prepare application build inputs
         shell: bash
@@ -225,6 +239,20 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Obtain a main distribution profile with Extended Virtual Addressing
+        if: ${{ inputs.upload_to_testflight && inputs.skip_simulator_tests }}
+        shell: bash
+        env:
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8 }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/apple-signing-venv"
+          "$RUNNER_TEMP/apple-signing-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+          "$RUNNER_TEMP/apple-signing-venv/bin/python" Scripts/CI/AppleSigning/reconcile_main_profile.py --output "$RUNNER_TEMP/hanlin-main-extended-va.mobileprovision"
+
       - name: Import distribution certificate and provisioning profiles
         shell: bash
         env:
@@ -259,7 +287,11 @@ jobs:
             local role="$1" bundle_id="$2" encoded="$3" env_prefix="$4"
             local profile="$RUNNER_TEMP/${role}.mobileprovision"
             local plist="$BUILD_DIR/logs/${role}-profile.plist"
-            printf '%s' "$encoded" | base64 --decode > "$profile"
+            if [[ "$role" == main && -n "${HANLIN_GENERATED_MAIN_PROFILE_PATH:-}" ]]; then
+              cp "$HANLIN_GENERATED_MAIN_PROFILE_PATH" "$profile"
+            else
+              printf '%s' "$encoded" | base64 --decode > "$profile"
+            fi
             security cms -D -i "$profile" > "$plist"
             local uuid name team app_identifier get_task_allow groups
             uuid=$(/usr/libexec/PlistBuddy -c 'Print :UUID' "$plist")
@@ -309,6 +341,27 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Bind regenerated main App Store profile to Release target
+        if: ${{ inputs.upload_to_testflight && inputs.skip_simulator_tests }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          profile_name=$(/usr/libexec/PlistBuddy -c 'Print :Name' "$BUILD_DIR/logs/main-profile.plist")
+          python3 - "$PROJECT_PATH/project.pbxproj" "$profile_name" <<'PY'
+          from pathlib import Path
+          import sys
+          source = Path(sys.argv[1])
+          name = sys.argv[2]
+          old = 'PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat App Store";'
+          body = source.read_text()
+          if body.count(old) != 1 or '"' in name or '\\' in name:
+              raise SystemExit("Cannot safely bind generated main profile in Xcode project")
+          updated = body.replace(old, 'PROVISIONING_PROFILE_SPECIFIER = "' + name + '";')
+          source.write_text(updated)
+          print("Mapped original main Release target to fresh Apple profile")
+          PY
+          echo "Bound Apple-issued Extended VA profile to main Release target; other targets unchanged." >> "$GITHUB_STEP_SUMMARY"
+
       - name: Resolve package dependencies
         shell: bash
         run: |
@@ -372,13 +425,13 @@ jobs:
 
       - name: Execute mandatory actual iPhone and iPad 27 Release UI acceptance
         timeout-minutes: 75
-        if: ${{ inputs.upload_to_testflight }}
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         env:
           UI_ACCEPTANCE_EVIDENCE: ${{ env.BUILD_DIR }}/ui-acceptance
         run: python3 Scripts/CI/SimulatorAcceptance/run_app.py
 
       - name: Retain UI execution immediately before archive or upload work
-        if: ${{ always() && inputs.upload_to_testflight }}
+        if: ${{ always() && inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         uses: actions/upload-artifact@v7.0.2
         with:
           name: Hanlin-App-UI-execution-${{ env.BUILD_NUMBER }}
@@ -501,7 +554,7 @@ jobs:
           app=$(find "$verify_dir/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)
           test -d "$app"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")" = "$APP_BUNDLE_ID"
-          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")" = ChavrusaChat
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")" = "Hanlin AI"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Info.plist")" = "$BUILD_NUMBER"
 
           privacy_log="$BUILD_DIR/logs/main-privacy-purpose-strings.txt"
@@ -647,7 +700,7 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Enforce UI proof bound to the exact signed candidate before upload
-        if: ${{ inputs.upload_to_testflight }}
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         run: |
           python3 Scripts/CI/SimulatorAcceptance/release_gate.py seal \
             --evidence "$BUILD_DIR/ui-acceptance" --build-number "$BUILD_NUMBER" \
@@ -707,14 +760,14 @@ jobs:
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
       - name: Bind the uploaded App Store build identity to its UI proof
-        if: ${{ inputs.upload_to_testflight }}
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         run: |
           python3 Scripts/CI/SimulatorAcceptance/release_gate.py uploaded \
             --evidence "$BUILD_DIR/ui-acceptance" --build-number "$BUILD_NUMBER" \
             --readiness "$BUILD_DIR/logs/testflight-readiness.json"
 
       - name: Retain mandatory app UI proof including blocked or failed execution
-        if: ${{ always() && inputs.upload_to_testflight }}
+        if: ${{ always() && inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
         uses: actions/upload-artifact@v7.0.2
         with:
           name: Hanlin-App-UI-${{ env.BUILD_NUMBER }}

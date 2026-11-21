@@ -39,7 +39,7 @@ struct ScriptingPackageImportView: View {
                         .foregroundStyle(.orange)
                         .accessibilityIdentifier("hanlin-pending-action-warning")
                     Text("Other actions can still run. The unreadable items were kept for recovery.")
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                 }
             }
             if case let .failed(message) = platform.activity {
@@ -73,7 +73,7 @@ struct ScriptingPackageImportView: View {
                     }
                     .accessibilityIdentifier("hanlin-file-importer")
                     Text("Choose a .scripting, .hanlinNativeScript, .hanlinExpo, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .foregroundStyle(.secondary)
                 }
                 let stagedFiles = stagedDocumentPackages
@@ -149,10 +149,10 @@ private struct ScriptingImportPreviewSections: View {
                 VStack(alignment: .leading, spacing: 4) {
                     LabeledContent(entrypoint.kind.rawValue, value: entrypoint.sourcePath)
                     LabeledContent("Runtime", value: entrypoint.runtimeProfile.rawValue)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundStyle(.secondary)
                     Text(runtimeReason(entrypoint.runtimeProfile))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundStyle(.secondary)
                 }
             }
@@ -268,7 +268,7 @@ struct ScriptingInstalledPackageDetailView: View {
                     VStack(alignment: .leading) {
                         LabeledContent(entrypoint.kind.rawValue, value: entrypoint.sourcePath)
                         LabeledContent("Runtime", value: entrypoint.runtimeProfile.rawValue)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -302,20 +302,20 @@ struct ScriptingInstalledPackageDetailView: View {
                     .disabled(sourceInstanceID.isEmpty || newInstanceName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     .accessibilityIdentifier("hanlin-widget-create-instance")
                     Text("Choose these names in the Home Screen widget configuration. Two placements selecting the same instance share state; separate instances keep independent state.")
-                        .font(.caption).foregroundStyle(.secondary)
+                        .font(HanlinTypography.caption).foregroundStyle(.secondary)
 
                     if let diag = storageDiagnostic ?? platform.widgetPublicationDiagnostic(for: packageID) {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(diag.userFacingHeadline)
-                                .font(.subheadline.weight(.semibold))
+                                .font(HanlinTypography.subheadline.weight(.semibold))
                                 .foregroundStyle(.red)
                                 .accessibilityIdentifier("hanlin-widget-storage-error-headline")
                             Text("Diagnostic ID: \(diag.correlationID) • \(diag.phase.rawValue) (\(diag.decisionPoint.rawValue))")
-                                .font(.caption.monospaced())
+                                .font(HanlinTypography.caption.monospaced())
                                 .foregroundStyle(.secondary)
                                 .accessibilityIdentifier("hanlin-widget-storage-diagnostic-id")
                             Text(diag.summary)
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundStyle(.secondary)
                             HStack(spacing: 12) {
                                 Button {
@@ -348,7 +348,7 @@ struct ScriptingInstalledPackageDetailView: View {
                     }
                     if let widgetInstanceError {
                         Text(widgetInstanceError)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundStyle(.red)
                     }
                 }

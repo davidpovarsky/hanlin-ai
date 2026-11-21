@@ -10,17 +10,24 @@ struct AgentDisplayRound: Identifiable {
 
 extension AgentActivityComposer {
     static func rounds(for run: AgentRun, timeline: AgentDisplayTimeline) -> [AgentDisplayRound] {
+        var roundsByStep: [UUID: Set<String>] = [:]
+        for item in run.transcriptItems {
+            if let stepID = item.activityStepID, let roundID = item.roundID {
+                roundsByStep[stepID, default: []].insert(roundID)
+            }
+        }
         var result: [AgentDisplayRound] = []
+        var indexByRound: [String: Int] = [:]
         for activity in timeline.activities {
-            let steps = Set(activity.sourceStepIDs)
-            let roundIDs = Set(run.transcriptItems.filter {
-                $0.activityStepID.map(steps.contains) == true
-            }.compactMap(\.roundID))
+            let roundIDs = activity.sourceStepIDs.reduce(into: Set<String>()) { result, stepID in
+                result.formUnion(roundsByStep[stepID] ?? [])
+            }
             let roundID = roundIDs.count == 1 ? roundIDs.first : nil
             let key = roundID ?? "unattributed"
-            if let index = result.firstIndex(where: { $0.id == key }) {
+            if let index = indexByRound[key] {
                 result[index].activities.append(activity)
             } else {
+                indexByRound[key] = result.count
                 result.append(AgentDisplayRound(id: key, roundID: roundID, activities: [activity]))
             }
         }

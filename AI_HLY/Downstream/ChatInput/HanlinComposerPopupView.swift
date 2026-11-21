@@ -165,7 +165,7 @@ struct HanlinComposerGeneralActionsView: View {
             .background(GlassView(style: .systemUltraThinMaterial))
             .clipShape(.rect(cornerRadius: 22, style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                RoundedRectangle(cornerRadius: HanlinControlMetrics.popoverCornerRadius, style: .continuous)
                     .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
                     .allowsHitTesting(false)
             )
@@ -178,16 +178,16 @@ struct HanlinComposerGeneralActionsView: View {
 
     private var generalRootPage: some View {
         HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: HanlinControlMetrics.sectionSpacing) {
                 // Header
                 HStack {
                     Label(String(localized: "Add & Modes"), systemImage: "plus.circle")
-                        .font(.subheadline.weight(.semibold))
+                        .font(HanlinTypography.subheadline.weight(.semibold))
                         .foregroundStyle(accentColor)
                     Spacer()
                     if capability.isLocal {
                         Label(String(localized: "Local Model"), systemImage: "bolt.horizontal.icloud.fill")
-                            .font(.caption2.weight(.medium))
+                            .font(HanlinTypography.caption2.weight(.medium))
                             .foregroundStyle(.hlOrange)
                             .padding(.horizontal, 7)
                             .padding(.vertical, 3)
@@ -198,7 +198,7 @@ struct HanlinComposerGeneralActionsView: View {
                 .padding(.horizontal, 4)
 
                 // 1. Attachments Grid (Camera, Photos, Files)
-                HStack(spacing: 8) {
+                HStack(spacing: HanlinControlMetrics.rowSpacing) {
                     if !capability.isLocal {
                         attachmentTile(
                             title: String(localized: "Camera"),
@@ -237,7 +237,7 @@ struct HanlinComposerGeneralActionsView: View {
                     onOpenShareInbox()
                 } label: {
                     Label("Shared Items", systemImage: "tray.and.arrow.down")
-                        .font(.subheadline)
+                        .font(HanlinTypography.subheadline)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 6)
                 }
@@ -246,14 +246,14 @@ struct HanlinComposerGeneralActionsView: View {
 
                 if !capability.supportsMultimodal && !capability.isLocal {
                     Text(String(localized: "Tip: The current model is not a native vision model; attached images will use visual assistance descriptions."))
-                        .font(.caption2)
+                        .font(HanlinTypography.caption2)
                         .foregroundStyle(.secondary)
                         .padding(.horizontal, 4)
                 }
 
                 #if targetEnvironment(simulator)
                 if AgentRuntimeUIAcceptanceProvider.isEnabled {
-                    HStack(spacing: 8) {
+                    HStack(spacing: HanlinControlMetrics.rowSpacing) {
                         Button {
                             let renderer = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 64))
                             let sampleImage = renderer.image { ctx in
@@ -264,11 +264,11 @@ struct HanlinComposerGeneralActionsView: View {
                             coordinator.closeAll()
                         } label: {
                             Label("Sample Image", systemImage: "photo.badge.plus")
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                                 .foregroundStyle(accentColor)
                                 .padding(.vertical, 8)
                                 .frame(maxWidth: .infinity)
-                                .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                         }
                         .buttonStyle(.plain)
                         .accessibilityIdentifier("hanlin-attach-sample-image")
@@ -285,11 +285,11 @@ struct HanlinComposerGeneralActionsView: View {
                             coordinator.closeAll()
                         } label: {
                             Label("Sample Document", systemImage: "doc.badge.plus")
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                                 .foregroundStyle(accentColor)
                                 .padding(.vertical, 8)
                                 .frame(maxWidth: .infinity)
-                                .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                .background(accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                         }
                         .buttonStyle(.plain)
                         .accessibilityIdentifier("hanlin-attach-sample-document")
@@ -393,7 +393,7 @@ struct HanlinComposerGeneralActionsView: View {
                     }
                 }
             }
-            .padding(12)
+            .padding(HanlinControlMetrics.pageInset)
         }
         .toolbar(.hidden, for: .navigationBar)
     }
@@ -403,7 +403,7 @@ struct HanlinComposerGeneralActionsView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(String(localized: "Saved Prompts"))
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(HanlinTypography.footnote.weight(.semibold))
                     .foregroundStyle(.secondary)
                 Spacer()
                 Button {
@@ -412,9 +412,9 @@ struct HanlinComposerGeneralActionsView: View {
                     HStack(spacing: 3) {
                         Text(String(localized: "Browse"))
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 10, weight: .semibold))
+                            .font(HanlinTypography.fixed(size: 10, weight: .semibold))
                     }
-                    .font(.system(size: 12, weight: .medium))
+                    .font(HanlinTypography.caption.weight(.medium))
                     .foregroundStyle(accentColor)
                 }
                 .buttonStyle(.plain)
@@ -427,16 +427,16 @@ struct HanlinComposerGeneralActionsView: View {
                 } label: {
                     HStack(spacing: 10) {
                         Image(systemName: "text.book.closed")
-                            .font(.subheadline)
+                            .font(HanlinTypography.subheadline)
                             .foregroundStyle(accentColor)
                             .frame(width: 28, height: 28)
                             .background(accentColor.opacity(0.12), in: Circle())
                         VStack(alignment: .leading, spacing: 2) {
                             Text(String(localized: "No unselected saved prompts"))
-                                .font(.caption.weight(.medium))
+                                .font(HanlinTypography.caption.weight(.medium))
                                 .foregroundStyle(.primary)
                             Text(String(localized: "Create or manage templates in Prompt Library"))
-                                .font(.caption2)
+                                .font(HanlinTypography.caption2)
                                 .foregroundStyle(.secondary)
                         }
                         Spacer()
@@ -459,15 +459,15 @@ struct HanlinComposerGeneralActionsView: View {
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack(spacing: 6) {
                                         Image(systemName: "text.quote")
-                                            .font(.caption.weight(.semibold))
+                                            .font(HanlinTypography.caption.weight(.semibold))
                                             .foregroundStyle(accentColor)
                                         Text(item.name ?? String(localized: "Untitled Prompt"))
-                                            .font(.caption.weight(.semibold))
+                                            .font(HanlinTypography.caption.weight(.semibold))
                                             .foregroundStyle(.primary)
                                             .lineLimit(1)
                                     }
                                     Text(item.content ?? "")
-                                        .font(.caption2)
+                                        .font(HanlinTypography.caption2)
                                         .foregroundStyle(.secondary)
                                         .lineLimit(2)
                                         .multilineTextAlignment(.leading)
@@ -497,8 +497,6 @@ struct HanlinComposerGeneralActionsView: View {
     }
 
     private var capabilityTiles: some View {
-        let blue = Color(red: 58 / 255, green: 124 / 255, blue: 180 / 255)
-        let azure = Color(red: 2 / 255, green: 136 / 255, blue: 209 / 255)
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 128, maximum: 230), spacing: 10)], spacing: 10) {
             ForEach(HanlinDetachedCapability.allCases) { item in
                 let enabled = enabledCapabilities.contains(item)
@@ -521,28 +519,22 @@ struct HanlinComposerGeneralActionsView: View {
                 } label: {
                     VStack(alignment: .leading, spacing: 7) {
                         HStack(spacing: 4) {
-                            Image(systemName: item.symbol).font(.title3)
+                            Image(systemName: item.symbol).font(HanlinTypography.title3)
                             Spacer(minLength: 0)
                             if enabled {
-                                Image(systemName: "checkmark.circle.fill").font(.caption).accessibilityHidden(true)
+                                Image(systemName: "checkmark.circle.fill").font(HanlinTypography.caption).accessibilityHidden(true)
                             }
                         }
-                        Text(item.title).font(.subheadline.weight(.semibold)).lineLimit(1).minimumScaleFactor(0.8)
-                        Text(item.subtitle).font(.caption2).foregroundStyle(.white.opacity(0.88)).lineLimit(1)
+                        Text(item.title).font(HanlinTypography.subheadline.weight(.semibold)).lineLimit(2)
+                        Text(item.subtitle).font(HanlinTypography.caption).foregroundStyle(.secondary).lineLimit(2)
                     }
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity, minHeight: 94, alignment: .leading)
-                    .padding(.horizontal, 13).padding(.vertical, 7)
+                    .frame(maxWidth: .infinity, minHeight: HanlinControlMetrics.minimumHitTarget, alignment: .leading)
+                    .padding(.vertical, 6)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .tint(accentColor)
                 .disabled(isResponding)
-                .background(blue, in: RoundedRectangle(cornerRadius: 17, style: .continuous))
-                .glassEffect(.regular.tint(blue.opacity(0.55)).interactive(), in: RoundedRectangle(cornerRadius: 17, style: .continuous))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 17, style: .continuous)
-                        .strokeBorder(azure.opacity(enabled ? 0.90 : 0.58), lineWidth: enabled ? 1.15 : 1)
-                        .allowsHitTesting(false)
-                }
                 .accessibilityIdentifier("tool-\(item.id)")
                 .accessibilityValue(enabled ? String(localized: "Enabled") : String(localized: "Open settings"))
             }
@@ -602,7 +594,7 @@ struct HanlinComposerGeneralActionsView: View {
                                 onOpenEmbeddingSettings()
                             } label: {
                                 Image(systemName: "slider.horizontal.2.square")
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                     .foregroundStyle(accentColor)
                                     .padding(7)
                                     .background(accentColor.opacity(0.1), in: Circle())
@@ -722,12 +714,12 @@ struct HanlinComposerGeneralActionsView: View {
                                         .frame(width: 24, height: 24)
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(item.name ?? String(localized: "Untitled Prompt"))
-                                            .font(.subheadline.weight(.medium))
+                                            .font(HanlinTypography.subheadline.weight(.medium))
                                             .foregroundStyle(.primary)
                                             .lineLimit(1)
                                         if let content = item.content, !content.isEmpty {
                                             Text(content)
-                                                .font(.caption)
+                                                .font(HanlinTypography.caption)
                                                 .foregroundStyle(.secondary)
                                                 .lineLimit(2)
                                         }
@@ -737,12 +729,12 @@ struct HanlinComposerGeneralActionsView: View {
                                         .foregroundStyle(accentColor)
                                 }
                                 .padding(10)
-                                .background(accentColor.opacity(0.08), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                                .background(accentColor.opacity(0.08), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                             }
                             .buttonStyle(.plain)
                         }
                     }
-                    .padding(12)
+                    .padding(HanlinControlMetrics.pageInset)
                 }
             }
         }
@@ -764,10 +756,10 @@ struct HanlinComposerGeneralActionsView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Text(String(localized: "Creativity (Temperature)"))
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                             Spacer()
                             Text(String(format: "%.2f", temperature))
-                                .font(.caption.monospacedDigit())
+                                .font(HanlinTypography.caption.monospacedDigit())
                                 .foregroundStyle(accentColor)
                         }
                         Slider(value: $temperature, in: 0.0...2.0, step: 0.1)
@@ -779,10 +771,10 @@ struct HanlinComposerGeneralActionsView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Text(String(localized: "Sampling Range (Top-P)"))
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                             Spacer()
                             Text(String(format: "%.2f", topP))
-                                .font(.caption.monospacedDigit())
+                                .font(HanlinTypography.caption.monospacedDigit())
                                 .foregroundStyle(accentColor)
                         }
                         Slider(value: $topP, in: 0.1...1.0, step: 0.05)
@@ -794,10 +786,10 @@ struct HanlinComposerGeneralActionsView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Text(String(localized: "Max Output Length (Max Tokens)"))
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                             Spacer()
                             Text("\(maxTokens)")
-                                .font(.caption.monospacedDigit())
+                                .font(HanlinTypography.caption.monospacedDigit())
                                 .foregroundStyle(accentColor)
                         }
                         Slider(
@@ -816,10 +808,10 @@ struct HanlinComposerGeneralActionsView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack {
                             Text(String(localized: "Context Memory Turns (Max History)"))
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                             Spacer()
                             Text("\(maxMessagesNum)")
-                                .font(.caption.monospacedDigit())
+                                .font(HanlinTypography.caption.monospacedDigit())
                                 .foregroundStyle(accentColor)
                         }
                         Slider(
@@ -861,9 +853,9 @@ struct HanlinComposerGeneralActionsView: View {
                 }
             }
 
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: HanlinControlMetrics.sectionSpacing) {
                 Text(String(localized: "Select Aspect Ratio"))
-                    .font(.caption.weight(.semibold))
+                    .font(HanlinTypography.caption.weight(.semibold))
                     .foregroundStyle(.secondary)
 
                 ForEach([
@@ -878,7 +870,7 @@ struct HanlinComposerGeneralActionsView: View {
                             Image(systemName: icon)
                                 .foregroundStyle(selectedImageSize == value ? accentColor : .secondary)
                             Text(label)
-                                .font(.subheadline)
+                                .font(HanlinTypography.subheadline)
                                 .foregroundStyle(.primary)
                             Spacer()
                             if selectedImageSize == value {
@@ -896,7 +888,7 @@ struct HanlinComposerGeneralActionsView: View {
                 }
 
                 TextField(String(localized: "Negative Prompt (Optional)"), text: $imageReversePrompt)
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .padding(10)
                     .background(Color(.secondarySystemFill), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
             }
@@ -928,10 +920,10 @@ struct HanlinComposerGeneralActionsView: View {
         Button(action: action) {
             VStack(spacing: 6) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(HanlinTypography.fixed(size: 18, weight: .semibold))
                     .foregroundStyle(disabled ? .secondary : accentColor)
                 Text(title)
-                    .font(.caption.weight(.medium))
+                    .font(HanlinTypography.caption.weight(.medium))
                     .foregroundStyle(disabled ? .secondary : .primary)
             }
             .frame(maxWidth: .infinity)
@@ -958,16 +950,16 @@ struct HanlinComposerGeneralActionsView: View {
         Toggle(isOn: isOn) {
             HStack(spacing: 10) {
                 Image(systemName: systemImage)
-                    .font(.subheadline.weight(.medium))
+                    .font(HanlinTypography.subheadline.weight(.medium))
                     .foregroundStyle(isOn.wrappedValue ? tint : .secondary)
                     .frame(width: 26, height: 26)
                     .background((isOn.wrappedValue ? tint : Color.secondary).opacity(0.12), in: Circle())
                 VStack(alignment: .leading, spacing: 1) {
                     Text(title)
-                        .font(.subheadline.weight(.medium))
+                        .font(HanlinTypography.subheadline.weight(.medium))
                         .foregroundStyle(.primary)
                     Text(subtitle)
-                        .font(.caption2)
+                        .font(HanlinTypography.caption2)
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                 }
@@ -989,17 +981,17 @@ struct HanlinComposerGeneralActionsView: View {
     ) -> some View {
         HStack(spacing: 10) {
             Image(systemName: systemImage)
-                .font(.subheadline.weight(.medium))
+                .font(HanlinTypography.subheadline.weight(.medium))
                 .foregroundStyle(tint)
                 .frame(width: 26, height: 26)
                 .background(tint.opacity(0.12), in: Circle())
 
             VStack(alignment: .leading, spacing: 1) {
                 Text(title)
-                    .font(.subheadline.weight(.medium))
+                    .font(HanlinTypography.subheadline.weight(.medium))
                     .foregroundStyle(.primary)
                 Text(subtitle)
-                    .font(.caption2)
+                    .font(HanlinTypography.caption2)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
             }
@@ -1008,7 +1000,7 @@ struct HanlinComposerGeneralActionsView: View {
 
             if showsChevron {
                 Image(systemName: "chevron.forward")
-                    .font(.caption.weight(.semibold))
+                    .font(HanlinTypography.caption.weight(.semibold))
                     .foregroundStyle(.secondary)
             }
         }
@@ -1018,13 +1010,13 @@ struct HanlinComposerGeneralActionsView: View {
     }
 
     private func subpageHeader(title: String, onBack: @escaping () -> Void) -> some View {
-        HStack(spacing: 8) {
+        HStack(spacing: HanlinControlMetrics.rowSpacing) {
             Button(action: onBack) {
                 HStack(spacing: 4) {
                     Image(systemName: "chevron.backward")
-                        .font(.subheadline.weight(.semibold))
+                        .font(HanlinTypography.subheadline.weight(.semibold))
                     Text(String(localized: "Back"))
-                        .font(.subheadline.weight(.medium))
+                        .font(HanlinTypography.subheadline.weight(.medium))
                 }
                 .foregroundStyle(accentColor)
                 .padding(.horizontal, 8)
@@ -1037,12 +1029,12 @@ struct HanlinComposerGeneralActionsView: View {
             Spacer()
 
             Text(title)
-                .font(.subheadline.weight(.semibold))
+                .font(HanlinTypography.subheadline.weight(.semibold))
 
             Spacer()
             Color.clear.frame(width: 48, height: 24)
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, HanlinControlMetrics.pageInset)
         .padding(.top, 10)
         .padding(.bottom, 6)
     }
@@ -1272,7 +1264,7 @@ struct HanlinComposerToolsRootView: View {
             .background(GlassView(style: .systemUltraThinMaterial))
             .clipShape(.rect(cornerRadius: 22, style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                RoundedRectangle(cornerRadius: HanlinControlMetrics.popoverCornerRadius, style: .continuous)
                     .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
                     .allowsHitTesting(false)
             )
@@ -1309,12 +1301,12 @@ struct HanlinComposerToolsRootView: View {
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
                     Label(String(localized: "Tools, Skills & MCP"), systemImage: "hammer.circle.fill")
-                        .font(.subheadline.weight(.semibold))
+                        .font(HanlinTypography.subheadline.weight(.semibold))
                         .foregroundStyle(accentColor)
                     Spacer()
                     if capability.supportsToolUse {
                         Text(ifToolUse ? String(localized: "Enabled") : String(localized: "Paused"))
-                            .font(.caption2.weight(.semibold))
+                            .font(HanlinTypography.caption2.weight(.semibold))
                             .foregroundStyle(ifToolUse ? .hlBrown : .secondary)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 2)
@@ -1326,17 +1318,17 @@ struct HanlinComposerToolsRootView: View {
                 // Master Tool Calling Toggle or Informative Unsupported Banner
                 if capability.supportsToolUse {
                     Toggle(isOn: $ifToolUse) {
-                        HStack(spacing: 8) {
+                        HStack(spacing: HanlinControlMetrics.rowSpacing) {
                             Image(systemName: "hammer.fill")
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                                 .foregroundStyle(ifToolUse ? .hlBrown : .secondary)
                                 .frame(width: 24, height: 24)
                                 .background((ifToolUse ? Color.hlBrown : Color.secondary).opacity(0.14), in: Circle())
                             VStack(alignment: .leading, spacing: 1) {
                                 Text(String(localized: "Allow tool usage in this chat"))
-                                    .font(.footnote.weight(.medium))
+                                    .font(HanlinTypography.footnote.weight(.medium))
                                 Text(String(localized: "When enabled, the model can call built-in tools, skills, and MCP servers as needed"))
-                                    .font(.caption2)
+                                    .font(HanlinTypography.caption2)
                                     .foregroundStyle(.secondary)
                                     .lineLimit(1)
                             }
@@ -1348,11 +1340,11 @@ struct HanlinComposerToolsRootView: View {
                     .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                     .accessibilityIdentifier("hanlin-tool-use-toggle")
                 } else {
-                    HStack(spacing: 8) {
+                    HStack(spacing: HanlinControlMetrics.rowSpacing) {
                         Image(systemName: "info.circle.fill")
                             .foregroundStyle(.orange)
                         Text(String(format: String(localized: "The current model \"%@\" does not support tool calling. You can still browse and manage skills, MCP, and runtimes."), capability.displayName))
-                            .font(.caption2)
+                            .font(HanlinTypography.caption2)
                             .foregroundStyle(.secondary)
                             .lineLimit(2)
                     }
@@ -1434,7 +1426,7 @@ struct HanlinComposerToolsRootView: View {
                     .accessibilityValue(enabledCapabilities.contains(.runtimes) ? String(localized: "Enabled") : String(localized: "Open settings"))
                 }
             }
-            .padding(.horizontal, 12)
+            .padding(.horizontal, HanlinControlMetrics.pageInset)
             .padding(.vertical, 6)
         }
         .toolbar(.hidden, for: .navigationBar)
@@ -1457,15 +1449,15 @@ struct HanlinComposerToolsRootView: View {
                                     NativeToolCatalog.shared.setGroupEnabled(enabled, for: group)
                                 }
                             )) {
-                                HStack(spacing: 8) {
+                                HStack(spacing: HanlinControlMetrics.rowSpacing) {
                                     Image(systemName: group.systemImage)
                                         .foregroundStyle(accentColor)
                                         .frame(width: 22)
                                     VStack(alignment: .leading, spacing: 1) {
                                         Text(group.title)
-                                            .font(.subheadline.weight(.semibold))
+                                            .font(HanlinTypography.subheadline.weight(.semibold))
                                         Text(String(format: String(localized: "%lld capabilities"), group.toolEntries.count))
-                                            .font(.caption2)
+                                            .font(HanlinTypography.caption2)
                                             .foregroundStyle(.secondary)
                                     }
                                 }
@@ -1482,9 +1474,9 @@ struct HanlinComposerToolsRootView: View {
                                     )) {
                                         VStack(alignment: .leading, spacing: 1) {
                                             Text(entry.title)
-                                                .font(.caption.weight(.medium))
+                                                .font(HanlinTypography.caption.weight(.medium))
                                             Text(entry.name)
-                                                .font(.caption2.monospaced())
+                                                .font(HanlinTypography.caption2.monospaced())
                                                 .foregroundStyle(.secondary)
                                         }
                                     }
@@ -1494,10 +1486,10 @@ struct HanlinComposerToolsRootView: View {
                             }
                         }
                         .padding(10)
-                        .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                     }
                 }
-                .padding(12)
+                .padding(HanlinControlMetrics.pageInset)
             }
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-tools-catalog-page")
@@ -1522,19 +1514,13 @@ struct HanlinComposerToolsRootView: View {
                 subpageHeader(title: String(format: String(localized: "Agent Skills (%lld/%lld)"), enabledSkillsCount, allSkills.count))
             }
 
-            HStack(spacing: 6) {
-                Image(systemName: "magnifyingglass")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                TextField(String(localized: "Search skill name or ID..."), text: $skillSearchText)
-                    .font(.footnote)
-                    .textFieldStyle(.plain)
-                    .accessibilityIdentifier("hanlin-tools-skills-search")
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 7)
-            .background(Color(.secondarySystemFill), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
-            .padding(.horizontal, 12)
+            HanlinSearchField(
+                text: $skillSearchText,
+                prompt: String(localized: "Search skill name or ID..."),
+                accessibilityIdentifier: "hanlin-tools-skills-search",
+                tint: accentColor
+            )
+            .padding(.horizontal, HanlinControlMetrics.pageInset)
             .padding(.bottom, 6)
 
             HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
@@ -1550,40 +1536,40 @@ struct HanlinComposerToolsRootView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 HStack(spacing: 6) {
                                     Text(skill.title.preferredValue())
-                                        .font(.subheadline.weight(.medium))
+                                        .font(HanlinTypography.subheadline.weight(.medium))
                                     Text(skill.id.rawValue)
-                                        .font(.caption2.monospaced())
+                                        .font(HanlinTypography.caption2.monospaced())
                                         .foregroundStyle(.secondary)
                                 }
                                 Text(skill.summary.preferredValue())
-                                    .font(.caption2)
+                                    .font(HanlinTypography.caption2)
                                     .foregroundStyle(.secondary)
                                     .lineLimit(2)
                             }
                         }
                         .tint(accentColor)
                         .padding(9)
-                        .background(Color(.secondarySystemFill).opacity(0.55), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .background(Color(.secondarySystemFill).opacity(0.55), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                         .accessibilityIdentifier("hanlin-skill-toggle-\(skill.id.rawValue)")
                     }
 
                     managementLink(.skills) {
                         HStack {
                             Label(String(localized: "Open Skills Center (Import / New / Edit)"), systemImage: "arrow.up.forward.app")
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                                 .foregroundStyle(accentColor)
                             Spacer()
                             Image(systemName: "chevron.forward")
-                                .font(.caption2)
+                                .font(HanlinTypography.caption2)
                                 .foregroundStyle(.secondary)
                         }
                         .padding(10)
-                        .background(accentColor.opacity(0.1), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .background(accentColor.opacity(0.1), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                     }
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("hanlin-tools-open-full-skill-center")
                 }
-                .padding(.horizontal, 12)
+                .padding(.horizontal, HanlinControlMetrics.pageInset)
                 .padding(.bottom, 10)
             }
             .accessibilityElement(children: .contain)
@@ -1620,20 +1606,20 @@ struct HanlinComposerToolsRootView: View {
                     )) {
                         VStack(alignment: .leading, spacing: 1) {
                             Text(String(localized: "Enable MCP Globally (global_mcp_enabled)"))
-                                .font(.subheadline.weight(.medium))
+                                .font(HanlinTypography.subheadline.weight(.medium))
                             Text(mcpProvider.configuration.isEnabled ? String(localized: "Enabled") : String(localized: "Disabled"))
-                                .font(.caption2)
+                                .font(HanlinTypography.caption2)
                                 .foregroundStyle(.secondary)
                         }
                     }
                     .tint(.hlTeal)
                     .padding(10)
-                    .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                     .accessibilityIdentifier("hanlin-mcp-global-toggle")
 
                     if let selectionError {
                         Text(selectionError)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundStyle(.red)
                             .accessibilityIdentifier("hanlin-mcp-selection-error")
                     }
@@ -1641,19 +1627,19 @@ struct HanlinComposerToolsRootView: View {
                     if mcpProvider.servers.isEmpty {
                         VStack(spacing: 6) {
                             Image(systemName: "server.rack")
-                                .font(.title3)
+                                .font(HanlinTypography.title3)
                                 .foregroundStyle(.secondary)
                             Text(String(localized: "No MCP servers installed (server_installed: false)"))
-                                .font(.caption.weight(.medium))
+                                .font(HanlinTypography.caption.weight(.medium))
                                 .foregroundStyle(.secondary)
                             Text(String(localized: "You can ask the assistant to install servers via chat, or configure them in Settings below."))
-                                .font(.caption2)
+                                .font(HanlinTypography.caption2)
                                 .foregroundStyle(.secondary)
                                 .multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(14)
-                        .background(Color(.secondarySystemFill).opacity(0.4), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .background(Color(.secondarySystemFill).opacity(0.4), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                         .accessibilityIdentifier("hanlin-tools-mcp-empty")
                     } else {
                         ForEach(mcpProvider.servers) { server in
@@ -1683,9 +1669,9 @@ struct HanlinComposerToolsRootView: View {
                                 )) {
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(server.displayName)
-                                            .font(.subheadline.weight(.semibold))
+                                            .font(HanlinTypography.subheadline.weight(.semibold))
                                         Text("\(server.packageName) @ \(server.resolvedVersion)")
-                                            .font(.caption2.monospaced())
+                                            .font(HanlinTypography.caption2.monospaced())
                                             .foregroundStyle(.secondary)
                                     }
                                 }
@@ -1693,10 +1679,10 @@ struct HanlinComposerToolsRootView: View {
 
                                 if let error = intentFeedback.message(for: server.id) {
                                     HStack {
-                                        Text(error).font(.caption).foregroundStyle(.red)
+                                        Text(error).font(HanlinTypography.caption).foregroundStyle(.red)
                                         Spacer()
                                         Button(String(localized: "Dismiss")) { intentFeedback.dismiss(serverID: server.id) }
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                     }
                                     .accessibilityIdentifier("hanlin-mcp-intent-error-\(server.id.uuidString)")
                                 }
@@ -1718,12 +1704,12 @@ struct HanlinComposerToolsRootView: View {
                                             await refreshRuntimeSnapshots(for: request)
                                         }
                                     }
-                                    .font(.caption2.weight(.semibold))
+                                    .font(HanlinTypography.caption2.weight(.semibold))
                                     .foregroundStyle(accentColor)
                                 }
                             }
                             .padding(10)
-                            .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                            .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                             .accessibilityIdentifier("hanlin-mcp-server-row-\(server.slug)")
                         }
                     }
@@ -1731,20 +1717,20 @@ struct HanlinComposerToolsRootView: View {
                     managementLink(.mcp) {
                         HStack {
                             Label(String(localized: "Open MCP Server Settings & Installation"), systemImage: "plus.circle.fill")
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                                 .foregroundStyle(accentColor)
                             Spacer()
                             Image(systemName: "chevron.forward")
-                                .font(.caption2)
+                                .font(HanlinTypography.caption2)
                                 .foregroundStyle(.secondary)
                         }
                         .padding(10)
-                        .background(accentColor.opacity(0.1), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .background(accentColor.opacity(0.1), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                     }
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("hanlin-tools-open-full-mcp-settings")
                 }
-                .padding(12)
+                .padding(HanlinControlMetrics.pageInset)
             }
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-tools-mcp-page")
@@ -1777,9 +1763,9 @@ struct HanlinComposerToolsRootView: View {
                                 .frame(width: 8, height: 8)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(snap.kind.rawValue)
-                                    .font(.subheadline.weight(.medium))
+                                    .font(HanlinTypography.subheadline.weight(.medium))
                                 Text(snap.version ?? "On-demand")
-                                    .font(.caption2)
+                                    .font(HanlinTypography.caption2)
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
@@ -1794,32 +1780,32 @@ struct HanlinComposerToolsRootView: View {
                                     await refreshRuntimeSnapshots(for: request)
                                 }
                             }
-                            .font(.caption.weight(.semibold))
+                            .font(HanlinTypography.caption.weight(.semibold))
                             .padding(.horizontal, 10)
                             .padding(.vertical, 4)
                             .background(accentColor.opacity(0.12), in: Capsule())
                         }
                         .padding(10)
-                        .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                     }
 
                     managementLink(.runtime) {
                         HStack {
                             Label(String(localized: "Open Runtime & Package Manager"), systemImage: "terminal")
-                                .font(.caption.weight(.semibold))
+                                .font(HanlinTypography.caption.weight(.semibold))
                                 .foregroundStyle(accentColor)
                             Spacer()
                             Image(systemName: "chevron.forward")
-                                .font(.caption2)
+                                .font(HanlinTypography.caption2)
                                 .foregroundStyle(.secondary)
                         }
                         .padding(10)
-                        .background(accentColor.opacity(0.1), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                        .background(accentColor.opacity(0.1), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
                     }
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("hanlin-tools-open-full-runtime-center")
                 }
-                .padding(12)
+                .padding(HanlinControlMetrics.pageInset)
             }
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-tools-runtime-page")
@@ -1911,18 +1897,18 @@ struct HanlinComposerToolsRootView: View {
     ) -> some View {
         HStack(spacing: 10) {
             Image(systemName: systemImage)
-                .font(.system(size: 15, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 15, weight: .semibold))
                 .foregroundStyle(tint)
                 .frame(width: 28, height: 28)
                 .background(tint.opacity(0.14), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
 
             VStack(alignment: .leading, spacing: 1) {
                 Text(title)
-                    .font(.footnote.weight(.semibold))
+                    .font(HanlinTypography.footnote.weight(.semibold))
                     .foregroundStyle(.primary)
                     .lineLimit(1)
                 Text(subtitle)
-                    .font(.caption2)
+                    .font(HanlinTypography.caption2)
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
             }
@@ -1930,14 +1916,14 @@ struct HanlinComposerToolsRootView: View {
             Spacer(minLength: 4)
 
             Image(systemName: enabled ? "checkmark.circle.fill" : "chevron.forward")
-                .font(.caption.weight(.semibold))
+                .font(HanlinTypography.caption.weight(.semibold))
                 .foregroundStyle(enabled ? accentColor : .secondary)
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
-        .background(enabled ? accentColor.opacity(0.13) : Color(.secondarySystemFill).opacity(0.55), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .background(enabled ? accentColor.opacity(0.13) : Color(.secondarySystemFill).opacity(0.55), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
         .overlay {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
+            RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous)
                 .strokeBorder(enabled ? accentColor.opacity(0.6) : Color.clear, lineWidth: 1)
                 .allowsHitTesting(false)
         }
@@ -1946,7 +1932,7 @@ struct HanlinComposerToolsRootView: View {
 
     private func statusPill(_ label: String, active: Bool) -> some View {
         Text("\(label): \(active ? "✓" : "–")")
-            .font(.system(size: 9, weight: .medium, design: .monospaced))
+            .font(HanlinTypography.fixed(size: 9, weight: .medium, design: .monospaced))
             .foregroundStyle(active ? Color.hlTeal : .secondary)
             .padding(.horizontal, 5)
             .padding(.vertical, 2)
@@ -1954,7 +1940,7 @@ struct HanlinComposerToolsRootView: View {
     }
 
     private func subpageHeader(title: String) -> some View {
-        HStack(spacing: 8) {
+        HStack(spacing: HanlinControlMetrics.rowSpacing) {
             Button {
                 if !coordinator.toolsNavigationPath.isEmpty {
                     coordinator.toolsNavigationPath.removeLast()
@@ -1962,9 +1948,9 @@ struct HanlinComposerToolsRootView: View {
             } label: {
                 HStack(spacing: 4) {
                     Image(systemName: "chevron.backward")
-                        .font(.subheadline.weight(.semibold))
+                        .font(HanlinTypography.subheadline.weight(.semibold))
                     Text(String(localized: "Back"))
-                        .font(.subheadline.weight(.medium))
+                        .font(HanlinTypography.subheadline.weight(.medium))
                 }
                 .foregroundStyle(accentColor)
                 .padding(.horizontal, 8)
@@ -1977,13 +1963,13 @@ struct HanlinComposerToolsRootView: View {
             Spacer()
 
             Text(title)
-                .font(.subheadline.weight(.semibold))
+                .font(HanlinTypography.subheadline.weight(.semibold))
                 .lineLimit(1)
 
             Spacer()
             Color.clear.frame(width: 48, height: 24)
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, HanlinControlMetrics.pageInset)
         .padding(.top, 10)
         .padding(.bottom, 6)
     }

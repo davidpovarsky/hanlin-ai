@@ -282,6 +282,7 @@ struct ChatViewBottom: View {
 
     @Environment(\.modelContext) private var context
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
@@ -372,9 +373,9 @@ struct ChatViewBottom: View {
                         }) {
                             HStack(spacing: 6) {
                                 Image(systemName: "pencil.and.outline")
-                                    .font(.system(size: size_16, weight: .medium))
+                                    .font(HanlinTypography.fixed(size: size_16, weight: .medium))
                                 Text("画布 \(chatRecord.canvas?.title ?? "")")
-                                    .font(.system(size: size_16, weight: .medium))
+                                    .font(HanlinTypography.fixed(size: size_16, weight: .medium))
                                     .lineLimit(1)
                                     .truncationMode(.tail)
                             }
@@ -400,7 +401,7 @@ struct ChatViewBottom: View {
                     if showScrollToBottomButton {
                         Button(action: { needScrollToBottomButton.toggle() }) {
                             Image(systemName: "arrow.down")
-                                .font(.system(size: size_16, weight: .medium))
+                                .font(HanlinTypography.fixed(size: size_16, weight: .medium))
                                 .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                 .frame(width: buttonHeight, height: buttonHeight)
                                 .clipShape(Circle())
@@ -480,13 +481,7 @@ struct ChatViewBottom: View {
         .onChange(of: attachmentOverheadHeightEstimate) { _, newOverhead in
             popupCoordinator.dockState.attachmentOverheadHeight = max(measuredAttachmentPreviewHeight, newOverhead)
         }
-        .onDisappear {
-            debounceWorkItem?.cancel()
-            if chatRecord.modelContext != nil {
-                chatRecord.input = message
-                try? context.save()
-            }
-        }
+        .onDisappear { debounceWorkItem?.cancel() }
         .onChange(of: isInputActive.wrappedValue) { _, focused in
             popupCoordinator.dockState.handleInputFocusChange(focused)
             if focused && (popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools) {
@@ -681,7 +676,6 @@ struct ChatViewBottom: View {
                 .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
                 .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
                 .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isViewLoaded)
-                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: bottomAnimationState)
             }
             .padding(.vertical, 6)
             .padding(.horizontal, 15)
@@ -813,8 +807,12 @@ struct ChatViewBottom: View {
                     showMaxTokensSlider = false
                     showMaxMessagesNumSlider = false
                 },
-                onInputHeightChange: { measuredMorphInputHeight = $0 },
-                onToolbarHeightChange: { measuredMorphToolbarHeight = $0 },
+                onInputHeightChange: { height in
+                    if height.isFinite, abs(measuredMorphInputHeight - height) > 1 { measuredMorphInputHeight = height }
+                },
+                onToolbarHeightChange: { height in
+                    if height.isFinite, abs(measuredMorphToolbarHeight - height) > 1 { measuredMorphToolbarHeight = height }
+                },
                 isEnabled: !isResponding,
                 home: { generalDrawerView(morphHomeOnly: true) },
                 detail: { route in
@@ -1101,7 +1099,7 @@ struct ChatViewBottom: View {
                                         .clipShape(Circle())
                                 }
                                 .accessibilityIdentifier("hanlin-remove-image-attachment")
-                                .sensoryFeedback(.impact, trigger: isFeedBack)
+                                .hanlinFeedback(.impact, trigger: isFeedBack)
                             }
                             .accessibilityElement(children: .contain)
                             .accessibilityIdentifier("hanlin-composer-image-attachment")
@@ -1137,7 +1135,7 @@ struct ChatViewBottom: View {
                                 .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
                                 .cornerRadius(size_20)
                             }
-                            .sensoryFeedback(.impact, trigger: isFeedBack)
+                            .hanlinFeedback(.impact, trigger: isFeedBack)
                         }
                     }
                     .padding(6)
@@ -1166,9 +1164,9 @@ struct ChatViewBottom: View {
                             HStack {
                                 Image(systemName: "doc.text")
                                     .foregroundColor(TemporaryRecord ? .primary : Color(.hlBluefont))
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                 Text(document.lastPathComponent)
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                     .foregroundColor(.secondary)
                                     .lineLimit(1)
                                     .truncationMode(.middle)
@@ -1182,7 +1180,7 @@ struct ChatViewBottom: View {
                                         .foregroundColor(Color(.hlRed))
                                 }
                                 .accessibilityIdentifier("hanlin-remove-document-attachment")
-                                .sensoryFeedback(.impact, trigger: isFeedBack)
+                                .hanlinFeedback(.impact, trigger: isFeedBack)
                             }
                             .padding(6)
                             .background(.background.opacity(0.6))
@@ -1211,9 +1209,9 @@ struct ChatViewBottom: View {
                                 HStack {
                                     Image(systemName: "link")
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                        .font(.footnote)
+                                        .font(HanlinTypography.footnote)
                                     Text(url)
-                                        .font(.footnote)
+                                        .font(HanlinTypography.footnote)
                                         .foregroundColor(.primary)
                                         .lineLimit(1)
                                         .truncationMode(.middle)
@@ -1227,7 +1225,7 @@ struct ChatViewBottom: View {
                                         Image(systemName: "xmark.circle.fill")
                                             .foregroundColor(Color(.hlRed))
                                     }
-                                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                                    .hanlinFeedback(.impact, trigger: isFeedBack)
                                 }
                                 .padding(6)
                                 .background(.background.opacity(0.6))
@@ -1262,7 +1260,7 @@ struct ChatViewBottom: View {
                                         .frame(width: 20, height: 20)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                     Text(item.name ?? "未命名提示词")
-                                        .font(.body)
+                                        .font(HanlinTypography.body)
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                         .lineLimit(1)
                                         .truncationMode(.tail)
@@ -1274,7 +1272,7 @@ struct ChatViewBottom: View {
                                         Image(systemName: "pencil.circle.fill")
                                             .foregroundColor(Color(.hlGreen))
                                     }
-                                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                                    .hanlinFeedback(.impact, trigger: isFeedBack)
                                     Button(action: {
                                         isFeedBack.toggle()
                                         removePrompt(item)
@@ -1282,7 +1280,7 @@ struct ChatViewBottom: View {
                                         Image(systemName: "xmark.circle.fill")
                                             .foregroundColor(Color(.hlRed))
                                     }
-                                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                                    .hanlinFeedback(.impact, trigger: isFeedBack)
                                 }
                                 .padding(12)
                                 .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
@@ -1317,14 +1315,14 @@ struct ChatViewBottom: View {
                                 }) {
                                     Image(systemName: "at")
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                        .font(.footnote)
+                                        .font(HanlinTypography.footnote)
                                     highlightedModelText(for: model.displayName ?? model.name ?? "未知")
-                                        .font(.footnote)
+                                        .font(HanlinTypography.footnote)
                                         .foregroundColor(.primary)
                                         .lineLimit(1)
                                         .truncationMode(.middle)
                                 }
-                                .sensoryFeedback(.impact, trigger: isFeedBack)
+                                .hanlinFeedback(.impact, trigger: isFeedBack)
                                 .padding(6)
                                 .background(.background.opacity(0.6))
                                 .cornerRadius(20)
@@ -1393,32 +1391,25 @@ struct ChatViewBottom: View {
                             minimumInteractiveHeight: interactiveMinimum
                         ))
                     )
-                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { measuredEditorFrameHeight = $0 }
+                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
+                        if height.isFinite, abs(measuredEditorFrameHeight - height) > 1 { measuredEditorFrameHeight = height }
+                    }
                     .focused(isInputActive)
                     .accessibilityIdentifier("hanlin-chat-input")
                     .onChange(of: message) {
                         popupCoordinator.dockState.handleDraftTextChange(message)
-                        if chatRecord.modelContext != nil, chatRecord.input != message {
-                            chatRecord.input = message
-                        }
                         debounceWorkItem?.cancel()
-                        debounceWorkItem = DispatchWorkItem {
+                        // Persistence has one owner in the original ChatView.
+                        // This debounce only updates composer-local suggestions.
+                        let draft = message
+                        let work = DispatchWorkItem {
+                            guard message == draft else { return }
                             updateModelSuggestions()
-                            extractURLs(from: message)
-                            if chatRecord.modelContext != nil {
-                                if chatRecord.input != message {
-                                    chatRecord.input = message
-                                }
-                                do {
-                                    try context.save()
-                                } catch {
-                                    print("Failed to save chat record updates: \(error)")
-                                }
-                            }
+                            extractURLs(from: draft)
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: debounceWorkItem!)
+                        debounceWorkItem = work
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: work)
                     }
-                    .disabled(isResponding)
 
                     // 多行输入展开抽屉
                     Button(action: {
@@ -1432,13 +1423,12 @@ struct ChatViewBottom: View {
                             .symbolEffect(.bounce, value: inputExpanded)
                     }
                     .accessibilityIdentifier("hanlin-composer-expand-editor")
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                     .disabled(isResponding)
                 }
 
                 composerBottomToolbar
             }
-            .animation(.spring(response: 0.45, dampingFraction: 0.78), value: popupCoordinator.activePopup)
         }
         .sheet(isPresented: $inputExpanded) {
             BottomSheetView(message: $message, isExpanded: $inputExpanded)
@@ -1567,25 +1557,25 @@ struct ChatViewBottom: View {
     private var composerActionSize: CGFloat { min(size_32, 44) }
 
     private var composerBottomToolbar: some View {
-        return ViewThatFits(in: .horizontal) {
+        let width = availableWorkspaceSize.width > 0
+            ? availableWorkspaceSize.width : popupCoordinator.measuredContainerSize.width
+        let stacksControls = width < 560 || dynamicTypeSize.isAccessibilitySize
+        let layout = stacksControls
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
+            : AnyLayout(HStackLayout(alignment: .center, spacing: 8))
+        return layout {
+            // A single instance retains the native popover/focus across resizing.
+            // ViewThatFits used to construct two independent model controls.
+            composerModelControl
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .layoutPriority(1)
             HStack(spacing: 8) {
                 composerToolsControl
-                composerModelControl
-                Spacer(minLength: 4)
+                if stacksControls { Spacer(minLength: 4) }
                 composerMicrophoneControl
                 composerPrimaryControl
             }
             .frame(height: composerActionSize)
-            VStack(spacing: 8) {
-                composerModelControl.frame(maxWidth: .infinity, alignment: .leading)
-                HStack(spacing: 8) {
-                    composerToolsControl
-                    Spacer(minLength: 4)
-                    composerMicrophoneControl
-                    composerPrimaryControl
-                }
-                .frame(height: composerActionSize)
-            }
         }
         .frame(minWidth: 0, maxWidth: .infinity)
         .padding(.horizontal, 10)
@@ -1607,7 +1597,7 @@ struct ChatViewBottom: View {
         } label: {
             ZStack(alignment: .topTrailing) {
                 Image(systemName: (isToolsOpen || isToolsActive) ? "hammer.circle.fill" : "hammer.circle")
-                    .font(.system(size: min(size_20 + 5, 36), weight: .regular))
+                    .font(HanlinTypography.fixed(size: min(size_20 + 5, 36), weight: .regular))
                     .foregroundStyle(
                         isResponding
                         ? Color.gray
@@ -1641,7 +1631,7 @@ struct ChatViewBottom: View {
         .buttonStyle(.plain)
         .accessibilityIdentifier("hanlin-composer-tools-direct")
         .disabled(isResponding)
-        .sensoryFeedback(.impact, trigger: isFeedBack)
+        .hanlinFeedback(.impact, trigger: isFeedBack)
     }
 
     private var composerModelControl: some View {
@@ -1663,7 +1653,7 @@ struct ChatViewBottom: View {
             }
             .buttonStyle(.plain)
             .accessibilityIdentifier("hanlin-composer-model-picker")
-            .sensoryFeedback(.selection, trigger: isSelect)
+            .hanlinFeedback(.selection, trigger: isSelect)
         } content: {
             HanlinModelPickerPopover(
                 coordinator: popupCoordinator,
@@ -1687,13 +1677,13 @@ struct ChatViewBottom: View {
             voiceExpanded.toggle()
         }) {
             Image(systemName: "microphone")
-                .font(.system(size: 16, weight: .medium))
+                .font(HanlinTypography.fixed(size: 16, weight: .medium))
                 .foregroundColor(isResponding ? Color.gray : Color(.systemGray))
                 .frame(width: min(size_30, 44), height: min(size_30, 44))
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("hanlin-chat-mic")
-        .sensoryFeedback(.impact, trigger: isFeedBack)
+        .hanlinFeedback(.impact, trigger: isFeedBack)
         .disabled(isResponding)
     }
 
@@ -1741,7 +1731,7 @@ struct ChatViewBottom: View {
                 .disabled(!canObserveCurrentChat)
             }
         }
-        .sensoryFeedback(.impact, trigger: isFeedBack)
+        .hanlinFeedback(.impact, trigger: isFeedBack)
     }
 
     @ViewBuilder
@@ -1757,27 +1747,27 @@ struct ChatViewBottom: View {
                         .frame(width: 16, height: 16)
                 } else {
                     Image(systemName: model.icon ?? "circle.dotted.circle")
-                        .font(.system(size: 13, weight: .semibold))
+                        .font(HanlinTypography.fixed(size: 13, weight: .semibold))
                         .foregroundStyle(accent)
                         .frame(width: 16, height: 16)
                 }
                 Text(model.displayName ?? model.name ?? "Model")
-                    .font(.caption.weight(.medium))
+                    .font(HanlinTypography.caption.weight(.medium))
                     .foregroundStyle(accent)
                     .lineLimit(1)
                     .truncationMode(.tail)
                     .frame(maxWidth: 132, alignment: .leading)
             } else {
                 Image(systemName: "cpu")
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(HanlinTypography.fixed(size: 12, weight: .semibold))
                     .foregroundStyle(.secondary)
                 Text(modelTemp.isEmpty ? "加载模型..." : "选择模型")
-                    .font(.caption.weight(.medium))
+                    .font(HanlinTypography.caption.weight(.medium))
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
             }
             Image(systemName: "chevron.up.chevron.down")
-                .font(.system(size: 9, weight: .bold))
+                .font(HanlinTypography.fixed(size: 9, weight: .bold))
                 .foregroundStyle(accent.opacity(0.75))
         }
         .padding(.horizontal, 9)

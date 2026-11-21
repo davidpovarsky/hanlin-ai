@@ -116,6 +116,20 @@ def _run(request, cancelled, owned_thread_count):
                     print(status, file=stderr)
             else:
                 traceback.print_exc(file=stderr)
+                if isinstance(error, ModuleNotFoundError):
+                    # Report the actual missing import without guessing that an import name
+                    # is a PyPI distribution, installing packages, or replaying partial work.
+                    print("\nA required Python module is unavailable in this job. "
+                          "Use manage_runtime_packages with runtime='python' and action='list' "
+                          "to inspect installed packages. If a third-party dependency is needed, "
+                          "verify its distribution name, then preview/install/probe it with that tool. "
+                          "The script may have performed work before this import failed; "
+                          "review that work before running it again.", file=stderr)
+                    if error.name == "requests":
+                        print("For HTTP access, urllib.request is available in Python's standard library. "
+                              "If requests is required, use manage_runtime_packages with "
+                              "runtime='python', action='preview', package='requests', then install "
+                              "and probe it before importing it.", file=stderr)
         finally:
             threading.settrace(old_thread_trace)
             sys.stdin = old_stdin

@@ -12,7 +12,7 @@ struct MCPInstallProgressView: View {
         case .installing(_, let phase, let fraction):
             VStack(alignment: .leading, spacing: 8) {
                 if let fraction { ProgressView(value: fraction) } else { ProgressView() }
-                Text(title(for: phase)).font(.caption)
+                Text(title(for: phase)).font(HanlinTypography.caption)
             }
             .accessibilityElement(children: .combine)
         case .completed:
@@ -22,7 +22,7 @@ struct MCPInstallProgressView: View {
             VStack(alignment: .leading, spacing: 6) {
                 Label(message, systemImage: "exclamationmark.triangle.fill")
                 if let rollbackMessage {
-                    Text(rollbackMessage).font(.caption).textSelection(.enabled)
+                    Text(rollbackMessage).font(HanlinTypography.caption).textSelection(.enabled)
                 }
             }
             .foregroundStyle(.red)

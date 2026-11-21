@@ -54,8 +54,8 @@ struct KnowledgeListView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         if loadHistoryMessages {
                             HStack {
-                                ProgressView().font(.caption)
-                                Text(String(localized: "正在加载...")).font(.caption)
+                                ProgressView().font(HanlinTypography.caption)
+                                Text(String(localized: "正在加载...")).font(HanlinTypography.caption)
                             }
                         }
                     }
@@ -166,14 +166,14 @@ struct KnowledgeListView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Text(highlightedName(for: record))
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                             .lineLimit(1)
                             .truncationMode(.tail)
                         
                         Spacer()
                         
                         Text(formattedDate(record.lastEdited))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                     }
                     
@@ -187,7 +187,7 @@ struct KnowledgeListView: View {
                         let limitedContent = String(processedContent.prefix(100))
                         
                         Text(limitedContent)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .lineLimit(2)
                             .truncationMode(.tail)
                             .foregroundColor(.gray)

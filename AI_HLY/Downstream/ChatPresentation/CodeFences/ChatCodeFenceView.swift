@@ -34,9 +34,9 @@ struct ChatCodeFenceView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(kind == "mermaid" ? String(localized: "Diagram") : String(localized: "Code comparison"))
-                    .font(.caption.weight(.semibold))
+                    .font(HanlinTypography.caption.weight(.semibold))
                 Spacer()
-                Toggle(String(localized: "Show code"), isOn: $showsSource).toggleStyle(.button).font(.caption)
+                Toggle(String(localized: "Show code"), isOn: $showsSource).toggleStyle(.button).font(HanlinTypography.caption)
                     .accessibilityIdentifier("hanlin-code-fence-source-toggle-\(blockID)")
                 Menu {
                     Button(String(localized: "Copy source"), systemImage: "doc.on.doc") { UIPasteboard.general.string = source }
@@ -64,10 +64,10 @@ struct ChatCodeFenceView: View {
                 Text(requiresRestart
                      ? String(localized: "The preview stopped responding. Reopen the app to try again. You can still read or share the source.")
                      : String(localized: "Preview is unavailable. The complete source remains available to copy, share or expand."))
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(HanlinTypography.caption).foregroundStyle(.secondary)
                 if !requiresRestart {
                     Button(String(localized: "Retry preview")) { failed = false; retry += 1 }
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                 }
             }
         }
@@ -116,7 +116,7 @@ struct ChatCodeFenceView: View {
                 Group {
                     if showsSource || failed || payload == nil {
                         ScrollView([.horizontal, .vertical]) {
-                            Text(source).font(.system(.callout, design: .monospaced)).textSelection(.enabled)
+                            Text(source).font(HanlinTypography.callout.monospaced()).textSelection(.enabled)
                                 .fixedSize(horizontal: true, vertical: true).padding()
                         }
                     } else if let payload {
@@ -137,7 +137,7 @@ struct ChatCodeFenceView: View {
 
     private var sourcePreview: some View {
         ScrollView([.horizontal, .vertical]) {
-            Text(source).font(.system(.callout, design: .monospaced)).textSelection(.enabled)
+            Text(source).font(HanlinTypography.callout.monospaced()).textSelection(.enabled)
                 .accessibilityIdentifier("hanlin-code-fence-source-text-\(blockID)")
                 .fixedSize(horizontal: true, vertical: true).padding(8)
         }

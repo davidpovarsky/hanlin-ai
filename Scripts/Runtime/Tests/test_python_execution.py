@@ -89,6 +89,30 @@ class PythonExecutionTests(unittest.TestCase):
         self.assertNotIn("error", result, result)
         return result
 
+    def test_missing_dependency_preserves_original_error_and_suggests_package_recovery(self):
+        result = self.execute("print('before missing import')\nimport hanlin_dependency_missing_fixture_20261121\n", preview=8192)
+        self.assertEqual(result["exitCode"], 1)
+        self.assertEqual(result["stdout"].strip(), "before missing import")
+        self.assertIn("ModuleNotFoundError: No module named 'hanlin_dependency_missing_fixture_20261121'", result["stderr"])
+        self.assertIn("manage_runtime_packages", result["stderr"])
+        self.assertIn("verify its distribution name", result["stderr"])
+        self.assertIn("review that work before running it again", result["stderr"])
+        self.assertNotIn("package='requests'", result["stderr"])
+
+    def test_missing_requests_has_standard_library_and_managed_install_options(self):
+        result = self.execute("raise ModuleNotFoundError(\"No module named 'requests'\", name='requests')", preview=8192)
+        self.assertEqual(result["exitCode"], 1)
+        self.assertIn("ModuleNotFoundError: No module named 'requests'", result["stderr"])
+        self.assertIn("urllib.request", result["stderr"])
+        self.assertIn("package='requests'", result["stderr"])
+        self.assertEqual(result["stdout"], "")
+
+    def test_unrelated_python_failure_does_not_suggest_installing_dependencies(self):
+        result = self.execute("raise ValueError('broken value')", preview=8192)
+        self.assertEqual(result["exitCode"], 1)
+        self.assertIn("ValueError: broken value", result["stderr"])
+        self.assertNotIn("manage_runtime_packages", result["stderr"])
+
     def test_daemon_and_raw_threads_drain_before_output_and_process_state_close(self):
         # The raw start alias is captured before the runner imports/thread hooks.
         import _thread

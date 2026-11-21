@@ -171,7 +171,7 @@ struct SkillEditorView: View {
                     Section {
                         Text(error)
                             .foregroundColor(.red)
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                     }
                 }
 
@@ -184,7 +184,7 @@ struct SkillEditorView: View {
                         if let err = idValidationError {
                             Text(err)
                                 .foregroundColor(.red)
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                         }
                     } else {
                         Text(rawID)
@@ -198,7 +198,7 @@ struct SkillEditorView: View {
                     if let err = titleValidationError {
                         Text(err)
                             .foregroundColor(.red)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                     }
                 }
 
@@ -211,7 +211,7 @@ struct SkillEditorView: View {
                 Section(header: Text(SkillL10n.string("Instructions"))) {
                     TextEditor(text: $instructions)
                         .frame(minHeight: 180)
-                        .font(.body)
+                        .font(HanlinTypography.body)
                         .accessibilityIdentifier("hanlin-skill-editor-instructions-input")
                 }
 
@@ -219,7 +219,7 @@ struct SkillEditorView: View {
                     let entries = availableCanonicalTools
                     if entries.isEmpty {
                         Text("No canonical tools registered.")
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                             .foregroundColor(.secondary)
                     } else {
                         ForEach(entries) { entry in
@@ -229,10 +229,10 @@ struct SkillEditorView: View {
                                 HStack {
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text(entry.name)
-                                            .font(.system(.subheadline, design: .monospaced))
+                                            .font(HanlinTypography.subheadline.monospaced())
                                             .foregroundColor(.primary)
                                         Text(entry.title)
-                                            .font(.caption2)
+                                            .font(HanlinTypography.caption2)
                                             .foregroundColor(.secondary)
                                     }
                                     Spacer()
@@ -249,7 +249,7 @@ struct SkillEditorView: View {
 
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Tool Aliases (comma-separated)")
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.secondary)
                         TextField("tool_a, tool_b", text: $preferredToolsText)
                             .autocorrectionDisabled()
@@ -261,7 +261,7 @@ struct SkillEditorView: View {
                         if let err = toolValidationError {
                             Text(err)
                                 .foregroundColor(.red)
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .accessibilityIdentifier("hanlin-skill-editor-tools-error")
                         }
                     }

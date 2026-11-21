@@ -59,7 +59,7 @@ struct RuntimeEnvironmentView: View {
 
     var body: some View {
         List {
-            if let message = model.message { Section { Text(message).font(.caption).foregroundStyle(.red) } }
+            if let message = model.message { Section { Text(message).font(HanlinTypography.caption).foregroundStyle(.red) } }
             ForEach(RuntimeEditableScope.allCases) { scope in
                 let entries = model.items.filter { $0.scope == scope.value }
                 Section(RuntimeL10n.string(scope.title)) {
@@ -68,11 +68,11 @@ struct RuntimeEnvironmentView: View {
                         Toggle(isOn: Binding(get: { item.isEnabled }, set: { model.setEnabled($0, item: item) })) {
                             VStack(alignment: .leading) {
                                 HStack {
-                                    Text(item.name).font(.system(.body, design: .monospaced))
+                                    Text(item.name).font(HanlinTypography.body.monospaced())
                                     if item.isSecret { Image(systemName: "lock.fill").foregroundStyle(.secondary) }
                                 }
                                 Text(item.isSecret ? RuntimeL10n.string("Saved in Keychain · value hidden") : (item.value ?? ""))
-                                    .font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                                    .font(HanlinTypography.caption).foregroundStyle(.secondary).lineLimit(1)
                             }
                         }
                         .contentShape(Rectangle())
@@ -81,7 +81,7 @@ struct RuntimeEnvironmentView: View {
                     }
                 }
             }
-            Section { Text(RuntimeL10n.string("Runtime-managed names such as HOME, PATH, TMPDIR, NODE_PATH, npm cache paths, PYTHONHOME and PYTHONPATH cannot be overridden.")) .font(.caption).foregroundStyle(.secondary) }
+            Section { Text(RuntimeL10n.string("Runtime-managed names such as HOME, PATH, TMPDIR, NODE_PATH, npm cache paths, PYTHONHOME and PYTHONPATH cannot be overridden.")) .font(HanlinTypography.caption).foregroundStyle(.secondary) }
         }
         .navigationTitle(RuntimeL10n.string("Environment"))
         .toolbar { Button(RuntimeL10n.string("Add"), systemImage: "plus") { draft = RuntimeEnvironmentDraft() } }
@@ -106,7 +106,7 @@ private struct RuntimeEnvironmentEditor: View {
                 }
                 Toggle(RuntimeL10n.string("Enabled"), isOn: $draft.isEnabled)
                 Toggle(RuntimeL10n.string("Treat as secret"), isOn: $draft.isSecret)
-                if draft.isSecret { Text(RuntimeL10n.string("Secrets are saved in Keychain and are never displayed again, logged, or included in diagnostics.")) .font(.caption).foregroundStyle(.secondary) }
+                if draft.isSecret { Text(RuntimeL10n.string("Secrets are saved in Keychain and are never displayed again, logged, or included in diagnostics.")) .font(HanlinTypography.caption).foregroundStyle(.secondary) }
             }
             .navigationTitle(draft.id == nil ? RuntimeL10n.string("Add Variable") : RuntimeL10n.string("Edit Variable"))
             .toolbar {

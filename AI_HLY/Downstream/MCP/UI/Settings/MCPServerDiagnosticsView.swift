@@ -58,7 +58,7 @@ struct MCPServerDiagnosticsView: View {
                 LabeledContent(MCPL10n.string("Runtime phase"), value: phaseTitle)
                 LabeledContent(MCPL10n.string("Generation"), value: "\(status.generation)")
                 if let message = status.message {
-                    Text(message).font(.caption).foregroundStyle(.red)
+                    Text(message).font(HanlinTypography.caption).foregroundStyle(.red)
                 }
                 if let failure = status.failure {
                     LabeledContent(
@@ -131,7 +131,7 @@ struct MCPServerDiagnosticsView: View {
                         Task { await provider.update(updated) }
                     }
                 Text(MCPL10n.string("Preloading shortens the first-use wait. It is not required to use the server in a chat."))
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundStyle(.secondary)
             }
         }
@@ -153,8 +153,8 @@ struct MCPServerDiagnosticsView: View {
     @ViewBuilder
     private func diagnosticPath(_ title: String, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title).font(.caption).foregroundStyle(.secondary)
-            Text(value).font(.caption.monospaced()).textSelection(.enabled)
+            Text(title).font(HanlinTypography.caption).foregroundStyle(.secondary)
+            Text(value).font(HanlinTypography.caption.monospaced()).textSelection(.enabled)
         }
     }
 

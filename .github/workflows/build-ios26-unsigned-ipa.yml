@@ -119,7 +119,7 @@ on:
         default: ''
         type: string
       target_validation_group:
-        description: Explicitly run a targeted validation group (e.g. product_split_integration, a2ui_exact_pin_proof, ci_router, nativescript_runtime, simulator_targeted_ui, app_unit_tests)
+        description: Targeted group; testflight_device_upload with testflight_upload=true archives and uploads without simulator tests
         required: false
         default: ''
         type: string
@@ -3468,6 +3468,7 @@ jobs:
     uses: ./.github/workflows/testflight.yml
     with:
       upload_to_testflight: true
+      skip_simulator_tests: ${{ inputs.target_validation_group == 'testflight_device_upload' }}
       existing_build_number: ${{ inputs.testflight_existing_build_number }}
       audience_source_build: ${{ inputs.testflight_audience_source_build }}
       runtime_bundle_artifact_run_id: ${{ inputs.runtime_bundle_artifact_run_id }}

@@ -21,7 +21,7 @@ struct AgentDiagnosticsView: View {
                     Text(String(localized: "Full detailed logs")).tag(AgentDiagnosticsLevel.fullLocalDebug.rawValue)
                 }
                 Text(String(localized: "Complete chat diagnostics are saved automatically on this device, including after upgrading. Readable logs include conversation text, prompts and tool content with credentials redacted. Exact source bytes are encrypted with a device-only key. Nothing is uploaded automatically. You can reduce or turn off recording here."))
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundStyle(.secondary)
 
                 Picker(String(localized: "Keep sessions"), selection: Binding(get: { retention }, set: { value in
@@ -34,7 +34,7 @@ struct AgentDiagnosticsView: View {
                     Text(String(localized: "No automatic deletion")).tag(0)
                 }
                 Text(String(localized: "Sessions are kept until you delete them. Choosing a session limit automatically deletes older sessions and all their companion files when a new session starts."))
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(HanlinTypography.caption).foregroundStyle(.secondary)
             }
 
             Section(String(localized: "Log folder")) {
@@ -45,7 +45,7 @@ struct AgentDiagnosticsView: View {
                 }
                 if let directoryURL {
                     Text(directoryURL.path)
-                        .font(.caption.monospaced())
+                        .font(HanlinTypography.caption.monospaced())
                         .textSelection(.enabled)
                     Button(String(localized: "Open in Files")) {
                         UIApplication.shared.open(directoryURL)
@@ -68,7 +68,7 @@ struct AgentDiagnosticsView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Text(file.session.modelID)
                             Text("\(file.session.startedAt.formatted()) · \(file.session.rounds.count) rounds · \(file.session.status)")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundStyle(.secondary)
                         }
                     }
@@ -169,7 +169,7 @@ private struct AgentDiagnosticsSessionView: View {
                 ForEach(file.session.rounds.sorted(by: { $0.index < $1.index })) { round in
                     DisclosureGroup("Round \(round.index) — \(round.trigger)") {
                         Text("Input: \(round.usage.inputTokens.map(String.init) ?? "—") · Output: \(round.usage.outputTokens.map(String.init) ?? "—") · \(round.usage.source.rawValue)")
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                         if let request = round.request.sanitizedJSON {
                             diagnosticsBlock(String(localized: "Request"), request)
                         }
@@ -187,7 +187,7 @@ private struct AgentDiagnosticsSessionView: View {
                     ForEach(["OpenAI", "Anthropic", "Gemini"], id: \.self) { Text($0).tag($0) }
                 }
                 Text(String(localized: "Choose the format actually used by the recorded provider. This response-only replay does not recreate the original request or timing."))
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(HanlinTypography.caption).foregroundStyle(.secondary)
                 Button { showsRawConfirmation = true } label: {
                     Label(String(localized: "Review encrypted capture"), systemImage: "lock.doc")
                 }
@@ -257,16 +257,16 @@ private struct AgentDiagnosticsSessionView: View {
             NavigationStack {
                 List {
                     Section(String(localized: "Review before sharing")) {
-                        Text(export.preview).font(.caption).textSelection(.enabled)
+                        Text(export.preview).font(HanlinTypography.caption).textSelection(.enabled)
                     }
                     Section(String(localized: "Conversation preview")) {
                         Text(String(localized: "Preview shows up to 65,536 characters from the readable log. The archive may contain additional conversation content."))
-                            .font(.caption).foregroundStyle(.secondary)
-                        Text(export.conversationPreview).font(.caption.monospaced()).textSelection(.enabled)
+                            .font(HanlinTypography.caption).foregroundStyle(.secondary)
+                        Text(export.conversationPreview).font(HanlinTypography.caption.monospaced()).textSelection(.enabled)
                     }
                     Section(String(localized: "Files")) {
-                        ForEach(export.includedFiles, id: \.self) { Text($0).font(.caption) }
-                        ForEach(export.missingFiles, id: \.self) { Text($0).font(.caption).foregroundStyle(.orange) }
+                        ForEach(export.includedFiles, id: \.self) { Text($0).font(HanlinTypography.caption) }
+                        ForEach(export.missingFiles, id: \.self) { Text($0).font(HanlinTypography.caption).foregroundStyle(.orange) }
                     }
                     ShareLink(item: export.archive) {
                         Label(String(localized: "Share reviewed archive"), systemImage: "square.and.arrow.up")
@@ -283,8 +283,8 @@ private struct AgentDiagnosticsSessionView: View {
                 List {
                     Section(String(localized: "Review before sharing")) {
                         Text(String(localized: "Preview shows up to 65,536 characters. Sharing includes the full redacted report, not the encrypted source or device key."))
-                            .font(.caption).foregroundStyle(.secondary)
-                        Text(String(review.text.prefix(65_536))).font(.caption.monospaced()).textSelection(.enabled)
+                            .font(HanlinTypography.caption).foregroundStyle(.secondary)
+                        Text(String(review.text.prefix(65_536))).font(HanlinTypography.caption.monospaced()).textSelection(.enabled)
                             .accessibilityIdentifier("hanlin-diagnostics-local-review-text")
                     }
                 }
@@ -306,8 +306,8 @@ private struct AgentDiagnosticsSessionView: View {
 
     private func diagnosticsBlock(_ title: String, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(title).font(.caption.weight(.semibold)).foregroundStyle(.secondary)
-            Text(value).font(.caption.monospaced()).textSelection(.enabled)
+            Text(title).font(HanlinTypography.caption.weight(.semibold)).foregroundStyle(.secondary)
+            Text(value).font(HanlinTypography.caption.monospaced()).textSelection(.enabled)
         }
     }
 }

@@ -115,14 +115,14 @@ private struct HanlinEditorView: View {
                 if request.readOnly {
                     ScrollView {
                         Text(content)
-                            .font(.system(.body, design: .monospaced))
+                            .font(HanlinTypography.body.monospaced())
                             .textSelection(.enabled)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding()
                     }
                 } else {
                     TextEditor(text: $content)
-                        .font(.system(.body, design: .monospaced))
+                        .font(HanlinTypography.body.monospaced())
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                         .padding(.horizontal, 8)

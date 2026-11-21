@@ -315,10 +315,10 @@ enum AgentRuntimeUIAcceptanceProvider {
                         rootView: AnyView(
                             VStack(spacing: 8) {
                                 Text("Acceptance Embedded Card Surface")
-                                    .font(.headline)
+                                    .font(HanlinTypography.headline)
                                     .accessibilityIdentifier("acceptance_embedded_surface")
                                 Text("Arbitrary Mini App Result: \(handler)")
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .accessibilityIdentifier("acceptance_embedded_detail")
                             }
                             .padding()

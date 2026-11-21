@@ -138,7 +138,7 @@ struct SkillCenterView: View {
 
         return HStack(spacing: 12) {
             Image(systemName: iconName(for: skillID.rawValue))
-                .font(.title2)
+                .font(HanlinTypography.title2)
                 .foregroundColor(.accentColor)
                 .frame(width: 32)
 
@@ -146,10 +146,10 @@ struct SkillCenterView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     HStack(spacing: 6) {
                         Text(descriptor.title.preferredValue())
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                         if isOverride {
                             Text(SkillL10n.string("Overrides"))
-                                .font(.caption2)
+                                .font(HanlinTypography.caption2)
                                 .bold()
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
@@ -160,11 +160,11 @@ struct SkillCenterView: View {
                     }
 
                     Text(descriptor.summary.preferredValue())
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.secondary)
                         .lineLimit(2)
                     Label(SkillL10n.string("Compatibility unknown"), systemImage: "questionmark.circle")
-                        .font(.caption2)
+                        .font(HanlinTypography.caption2)
                         .foregroundStyle(.secondary)
                         .accessibilityIdentifier("hanlin-skill-center-compatibility-\(skillID.rawValue)")
                 }

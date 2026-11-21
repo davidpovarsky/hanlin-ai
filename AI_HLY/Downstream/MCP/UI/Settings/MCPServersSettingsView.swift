@@ -36,18 +36,18 @@ struct MCPServersSettingsView: View {
                             Image(systemName: "server.rack")
                             VStack(alignment: .leading) {
                                 Text(server.displayName)
-                                Text("\(server.packageName) @ \(server.resolvedVersion)").font(.caption).foregroundStyle(.secondary)
+                                Text("\(server.packageName) @ \(server.resolvedVersion)").font(HanlinTypography.caption).foregroundStyle(.secondary)
                                 Text(statusText(for: server))
-                                    .font(.caption2)
+                                    .font(HanlinTypography.caption2)
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
                             VStack(alignment: .trailing) {
-                                Text(MCPL10n.string("Installed")).font(.caption)
+                                Text(MCPL10n.string("Installed")).font(HanlinTypography.caption)
                                 Text(server.isGloballyEnabled ? MCPL10n.string("Enabled in app") : MCPL10n.string("Disabled"))
-                                    .font(.caption2)
+                                    .font(HanlinTypography.caption2)
                                 Text(server.isEnabledForNewChats ? MCPL10n.string("Included by default in new chats") : MCPL10n.string("Not included by default"))
-                                    .font(.caption2)
+                                    .font(HanlinTypography.caption2)
                             }
                         }
                         .accessibilityElement(children: .combine)

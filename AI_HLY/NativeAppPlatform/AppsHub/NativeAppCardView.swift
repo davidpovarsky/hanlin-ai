@@ -19,24 +19,24 @@ struct NativeAppCardView: View {
                 HStack(alignment: .top) {
                     if manifest.isExperimental {
                         Text("BETA")
-                            .font(.caption2.weight(.bold))
+                            .font(HanlinTypography.caption2.weight(.bold))
                             .padding(.horizontal, 7)
                             .padding(.vertical, 4)
                             .background(.white.opacity(0.2), in: Capsule())
                     }
                     Spacer()
                     Image(systemName: manifest.systemImage)
-                        .font(.system(size: 27, weight: .semibold))
+                        .font(HanlinTypography.fixed(size: 27, weight: .semibold))
                 }
 
                 Spacer(minLength: 8)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(manifest.title)
-                        .font(.title3.weight(.semibold))
+                        .font(HanlinTypography.title3.weight(.semibold))
                         .lineLimit(2)
                     Text(manifest.subtitle)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .lineLimit(2)
                         .opacity(0.82)
                 }

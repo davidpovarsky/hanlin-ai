@@ -30,7 +30,7 @@ struct ChatRowView: View {
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: selectedIcon)
-                .font(.system(size: 18))
+                .font(HanlinTypography.fixed(size: 18))
                 .foregroundColor(selectedColor)
                 .frame(width: 36, height: 36)
                 .background(selectedColor.opacity(0.12))
@@ -45,27 +45,27 @@ struct ChatRowView: View {
                     Spacer()
                     
                     Text(formattedDate(record.lastEdited))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.gray)
                 }
                 
                 // 如果存在匹配片段，则显示出来
                 if let snippet = matchedSnippet {
                     Text(snippet)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .lineLimit(2)
                         .truncationMode(.tail)
                 } else {
                     if let highlightedDescription = highlightedText(record.infoDescription ?? "", searchText: searchText) {
                         Text(highlightedDescription)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .lineLimit(2)
                             .truncationMode(.tail)
                             .multilineTextAlignment(.leading)
                     } else {
                         Text(String(localized: "暂无消息"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .lineLimit(2)
                             .truncationMode(.tail)
@@ -126,14 +126,14 @@ struct ChatRowView: View {
         // 如果名称为空，则返回默认“Unknown”
         guard let name = record.name, !name.isEmpty else {
             return Text("Unknown")
-                .font(.headline)
+                .font(HanlinTypography.headline)
                 .foregroundColor(.primary)
         }
         
         // 去除搜索词前后空格，并提前处理空搜索
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmedSearch.isEmpty {
-            return Text(name).font(.headline)
+            return Text(name).font(HanlinTypography.headline)
         }
         
         // 构建富文本对象
@@ -153,7 +153,7 @@ struct ChatRowView: View {
         }
         
         return Text(attributedName)
-            .font(.headline)
+            .font(HanlinTypography.headline)
     }
 }
 
@@ -206,12 +206,12 @@ struct IconAndColorPicker: View {
                     
                     VStack(alignment: .leading) {
                         TextField(String(localized: "请输入标题"), text: $title)
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                             .foregroundColor(.primary)
                             .textFieldStyle(PlainTextFieldStyle())
                         
                         Text(String(localized: "这是一段示例消息内容..."))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.secondary)
                             .lineLimit(1)
                     }

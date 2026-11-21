@@ -28,7 +28,7 @@ struct ChatShimmerModifier: ViewModifier {
             content
                 .overlay {
                     GeometryReader { geo in
-                        TimelineView(.animation) { timeline in
+                        TimelineView(.animation(minimumInterval: 1.0 / 24)) { timeline in
                         let width = geo.size.width
                         let shimmerColor = Color.blue
                         let time = timeline.date.timeIntervalSinceReferenceDate

@@ -77,7 +77,7 @@ struct VisionView: View {
             
             if showSaveToast {
                 Text(String(localized: "✅ 图片已保存"))
-                    .font(.body)
+                    .font(HanlinTypography.body)
                     .padding()
                     .background(Color.black.opacity(0.6))
                     .foregroundColor(.white)
@@ -222,7 +222,7 @@ extension VisionView {
                                     .shadow(color: showSaveToast ? .hlGreen : Color(.systemBackground), radius: 1)
                             )
                     }
-                    .sensoryFeedback(.success, trigger: isFeedBack) // 振动反馈
+                    .hanlinFeedback(.success, trigger: isFeedBack) // 振动反馈
                     
                     Button(action: {
                         isFeedBack.toggle()
@@ -242,7 +242,7 @@ extension VisionView {
                                     .shadow(color: .hlRed, radius: 1)
                             )
                     }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                 }
             } else {
                 HStack (spacing: 10) {
@@ -263,7 +263,7 @@ extension VisionView {
                                     .shadow(color: isFlashOn ? .hlOrange : Color(.systemBackground), radius: 1)
                             )
                     }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                     
                     // 显示焦距按钮
                     Button(action: {
@@ -272,10 +272,10 @@ extension VisionView {
                     }) {
                         HStack {
                             Text(String(format: "%.1fx", cameraManager.zoomFactor))
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                         }
                         .frame(width: 40, height: 30)
-                        .font(.system(size: 30))
+                        .font(HanlinTypography.fixed(size: 30))
                         .padding(3)
                         .foregroundColor(.primary)
                         .opacity(0.6)
@@ -285,7 +285,7 @@ extension VisionView {
                                 .shadow(color: Color(.systemBackground), radius: 1)
                         )
                     }
-                    .sensoryFeedback(.selection, trigger: isSelect)
+                    .hanlinFeedback(.selection, trigger: isSelect)
                 }
             }
         }
@@ -374,7 +374,7 @@ extension VisionView {
                 }) {
                     HStack {
                         Text(String(localized: "reasoning_chain"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                         Spacer()
                         Image(systemName: "chevron.down")
@@ -388,7 +388,7 @@ extension VisionView {
                 if isReasoningExpanded {
                     // 展开：显示完整推理内容
                     Text(reasoning)
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 8)
                         .transition(.opacity.combined(with: .scale))
@@ -401,7 +401,7 @@ extension VisionView {
                             ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { idx, line in
                                 Text(line)
                                     .id(String(line.prefix(1)))
-                                    .font(.system(size: idx == 2 ? 10 : (idx == 1 ? 9 : 8)))
+                                    .font(HanlinTypography.fixed(size: idx == 2 ? 10 : (idx == 1 ? 9 : 8)))
                                     .lineLimit(1)
                                     .truncationMode(.head)
                                     .foregroundColor(idx == 2 ? .hlBluefont : .gray)
@@ -432,7 +432,7 @@ extension VisionView {
     private var visionErrorView: some View {
         return VStack(alignment: .leading) {
             Text(visionErrorMessage ?? "")
-                .font(.caption)
+                .font(HanlinTypography.caption)
                 .foregroundColor(.hlOrange)
                 .multilineTextAlignment(.leading)
 
@@ -441,14 +441,14 @@ extension VisionView {
                 retryLastRequest()
             }) {
                 Text(String(localized: "重新请求"))
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .frame(maxWidth: .infinity)
                     .padding(6)
                     .background(.hlOrange)
                     .foregroundColor(.white)
                     .cornerRadius(20)
             }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
         }
         .frame(maxWidth: .infinity)
         .padding()
@@ -475,7 +475,7 @@ extension VisionView {
                                 Text(currentAsk)
                                 Spacer()
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .multilineTextAlignment(.leading)
                             .padding(.bottom, 5)
@@ -492,7 +492,7 @@ extension VisionView {
                                 Text(currentAsk)
                                 Spacer()
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .multilineTextAlignment(.leading)
                         }
@@ -522,7 +522,7 @@ extension VisionView {
                             }
                             
                             Text("\(currentModelName)")
-                                .font(.body)
+                                .font(HanlinTypography.body)
                             ProgressView()
                                 .frame(width: 20, height: 20)
                         }
@@ -540,7 +540,7 @@ extension VisionView {
                                 Text(currentAsk)
                                 Spacer()
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .multilineTextAlignment(.leading)
                             .padding(.bottom, 5)
@@ -552,10 +552,10 @@ extension VisionView {
                         // 正文内容区域
                         if let analysis = photoAnalysis, !analysis.isEmpty {
                             Markdown(analysis)
-                                .font(.body)
+                                .font(HanlinTypography.body)
                                 .multilineTextAlignment(.leading) // 文本左对齐
                                 .fixedSize(horizontal: false, vertical: true) // 允许文本高度自适应
-                                .sensoryFeedback(.increase, trigger: isOutPut)
+                                .hanlinFeedback(.increase, trigger: isOutPut)
                         } else if isProcessing && !reasoning.isEmpty {
                             // 正在思考中，还没有正文内容
                             HStack {
@@ -563,7 +563,7 @@ extension VisionView {
                                     .foregroundColor(.hlBluefont)
                                     .symbolEffect(.breathe.pulse.byLayer, options: .repeat(.continuous))
                                 Text(String(localized: "thinking"))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.secondary)
                             }
                             .padding(.top, 5)
@@ -635,7 +635,7 @@ extension VisionView {
                                         .clipShape(Circle())
                                         .foregroundColor(isCopied ? .green : .primary)
                                 }
-                                .sensoryFeedback(.success, trigger: isSuccess)
+                                .hanlinFeedback(.success, trigger: isSuccess)
                                 
                                 // 继续对话按钮
                                 Button(action: {
@@ -652,9 +652,9 @@ extension VisionView {
                                         .clipShape(Circle())
                                         .foregroundColor(isInputActive ? .green : .hlBluefont)
                                 }
-                                .sensoryFeedback(.selection, trigger: isSelect)
+                                .hanlinFeedback(.selection, trigger: isSelect)
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .multilineTextAlignment(.leading)
                         }
@@ -765,7 +765,7 @@ extension VisionView {
                     .padding(.vertical, 6)
                     .padding(.trailing, 6)
                     .opacity(0.7)
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                 }
                 .background(
                     GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
@@ -807,7 +807,7 @@ extension VisionView {
                         VisionImagePicker(selectedImage: $capturedImage, showModelSelection: $showModelSelection)
                             .ignoresSafeArea()
                     }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                     Spacer()
                 }
                 
@@ -865,7 +865,7 @@ extension VisionView {
                         }
                 }
                 .animation(.spring(response: 0.5, dampingFraction: 0.7), value: capturedImage)
-                .sensoryFeedback(.impact, trigger: isFeedBack)
+                .hanlinFeedback(.impact, trigger: isFeedBack)
                 
                 Spacer()
                 
@@ -891,7 +891,7 @@ extension VisionView {
                             )
                     }
                     .animation(.easeInOut(duration: 0.3), value: capturedImage)
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                     
                     Spacer()
                 }
@@ -1022,7 +1022,7 @@ extension VisionView {
                     modelItem(for: index)
                         .tag(index)
                         .padding(6)
-                        .sensoryFeedback(.selection, trigger: isSelect) // 触发轻微振动
+                        .hanlinFeedback(.selection, trigger: isSelect) // 触发轻微振动
                 }
             }
             .frame(width: 180, height: 80)
@@ -1080,7 +1080,7 @@ extension VisionView {
                         .animation(.easeInOut(duration: 0.3), value: selectedModelIndex)
                 }
                 Text(model.name)
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundColor(index == selectedModelIndex ? .hlBluefont : Color(.systemGray))
                     .opacity(opacityFactor)
                     .animation(.easeInOut(duration: 0.3), value: selectedModelIndex)

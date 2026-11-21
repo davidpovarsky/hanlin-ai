@@ -63,13 +63,13 @@ struct APIKeysView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "key.2.on.ring")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "点击名称或钥匙设置厂商密钥，并打开厂商开关以使用该厂商的模型"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -259,20 +259,20 @@ private struct EditKeyContent: View {
                         }
 
                         Text("设置 \(getCompanyName(for: key)) API密钥，以启用该厂商的模型")
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                             .multilineTextAlignment(.center)
 
                         // 自定义供应商不显示获取API密钥的链接
                         if key.from != .custom {
                             if let url = URL(string: key.help) {
                             Link(String(format: String(localized: "🔗 点此获取 %@ API密钥"), getCompanyName(for: key)), destination: url)
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             } else {
                                 // 当 URL 无效时可以提供一个备用视图
                                 Text(String(localized: "建议进入其开放平台获取API密钥"))
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             }
@@ -293,7 +293,7 @@ private struct EditKeyContent: View {
                 if key.company == "LAN" || key.from == .custom {
                     Section(header: Text(String(localized: "请求地址（URL）"))) {
                         Text(verbatim: String(localized: "例如：http://127.0.0.1:1234/v1/chat/completions"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                         TextField(String(localized: "请输入请求地址"), text: Binding(
                             get: { key.requestURL ?? "" },
                             set: { key.requestURL = $0; compactPublicationNeedsRetry = false }
@@ -330,13 +330,13 @@ private struct EditKeyContent: View {
                                     .foregroundColor(result ? .green : .red)
                             } else if testableModels.isEmpty {
                                 Text(String(localized: "无可用模型"))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.secondary)
                             }
                         }
                         if let errorMessage = testErrorMessage, !errorMessage.isEmpty {
                             Text(errorMessage)
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.hlOrange)
                         }
                     }
@@ -381,7 +381,7 @@ private struct EditKeyContent: View {
 
                 Section {
                     Text(String(localized: "⚠️ 注意：配置API后，厂商将自动开启，如需修改，可以在菜单中关闭厂商"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                 }
             }
             .navigationTitle(String(localized: "编辑密钥"))
@@ -621,7 +621,7 @@ struct AddCustomProviderForm: View {
                         .padding()
 
                     Text(String(localized: "添加自定义 API 供应商，使用兼容 OpenAI 格式的 API 服务"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -639,7 +639,7 @@ struct AddCustomProviderForm: View {
 
             Section(header: Text(String(localized: "请求地址（URL）"))) {
                 Text(String(localized: "例如：https://api.example.com/v1/chat/completions"))
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundColor(.secondary)
 
                 TextField(String(localized: "请输入请求地址"), text: $requestURL)
@@ -651,14 +651,14 @@ struct AddCustomProviderForm: View {
                     Button(String(localized: "补全 /v1/chat/completions")) {
                         completeURL()
                     }
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundColor(.hlBluefont)
                 }
             }
 
             Section {
                 Text(String(localized: "💡 提示：此功能适用于兼容 OpenAI API 格式的服务，如 LocalAI、Ollama 等本地部署服务，或其他第三方 API 服务"))
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
             }
         }
@@ -805,13 +805,13 @@ struct SearchSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "magnifyingglass")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "设置搜索功能，以便在聊天对话时获取互联网内容，提升回答效果。个性化的设置能最大程度的平衡你的需求与检索带来的成本消耗"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -856,28 +856,28 @@ struct SearchSettingView: View {
                                 switch key.company?.uppercased() {
                                 case "AUTOMATIC_KEYLESS":
                                     Text(String(localized: "免费 (自动切换)"))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.green)
                                 case "GOOGLE_SEARCH":
                                     Text(String(localized: "100次免费/日"))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.green)
                                 case "TAVILY":
                                     Text(String(localized: "1000免费积分/月"))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.green)
                                 case "LANGSEARCH":
                                     Text(String(localized: "免费"))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.green)
                                 case "BRAVE":
                                     Text(String(localized: "2000次免费/月"))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.green)
                                 default:
                                     if let price = key.price {
                                         Text(String(format: String(localized: "¥%.4f/次"), price))
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                             .foregroundColor(.orange)
                                     }
                                 }
@@ -983,29 +983,29 @@ struct SearchSettingView: View {
 
                         if key.company == "AUTOMATIC_KEYLESS" {
                             Text(getCompanyName(for: key.company ?? "Unknown"))
-                                .font(.headline)
+                                .font(HanlinTypography.headline)
                                 .fontWeight(.bold)
                                 .multilineTextAlignment(.center)
 
                             Text(String(localized: "内置免密钥自动搜索服务，根据网络状况与速率限制自动在 You.com、Tavily 和 Keenable 之间平滑回退，即开即用。"))
-                                .font(.footnote)
+                                .font(HanlinTypography.footnote)
                                 .foregroundColor(.secondary)
                                 .multilineTextAlignment(.center)
                                 .padding(.top, 2)
                                 .padding(.bottom, 6)
                         } else {
                             Text(String(format: String(localized: "设置 %@ API密钥，以开启该搜索引擎"), getCompanyName(for: key.company ?? "Unknown")))
-                                .font(.footnote)
+                                .font(HanlinTypography.footnote)
                                 .multilineTextAlignment(.center)
 
                             if let url = URL(string: key.help) {
                                 Link(String(format: String(localized: "🔗 点此获取 %@ API密钥"), getCompanyName(for: key.company ?? "Unknown")), destination: url)
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             } else {
                                 Text(String(localized: "建议进入其开放平台获取API密钥"))
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             }
@@ -1017,16 +1017,16 @@ struct SearchSettingView: View {
                     Section(header: Text(String(localized: "运行模式"))) {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(String(localized: "内置三级自动回退策略："))
-                                .font(.subheadline)
+                                .font(HanlinTypography.subheadline)
                                 .fontWeight(.semibold)
                             Text("1. You.com Keyless (~100/day/IP)")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.secondary)
                             Text("2. Tavily Keyless (Keyless Fallback)")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.secondary)
                             Text("3. Keenable Public (Public Search)")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.secondary)
                         }
                         .padding(.vertical, 4)
@@ -1034,7 +1034,7 @@ struct SearchSettingView: View {
                     
                     Section(header: Text(String(localized: "服务说明与限制"))) {
                         Text(String(localized: "无需 API Key。公共端点受网络连通性、服务商速率及配额限制，不承诺无限制可用。"))
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                             .foregroundColor(.secondary)
                     }
                     
@@ -1061,17 +1061,17 @@ struct SearchSettingView: View {
                                 Divider()
                                 if diag.success {
                                     Text(String(format: String(localized: "响应服务商: %@"), diag.providerUsed))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                     Text(String(format: String(localized: "耗时: %.2fs"), diag.duration))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                     if !diag.topSourceTitle.isEmpty {
                                         Text(String(format: String(localized: "首选结果: %@"), diag.topSourceTitle))
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                             .foregroundColor(.hlBluefont)
                                     }
                                 } else if let err = diag.errorMessage {
                                     Text(String(format: String(localized: "失败原因: %@"), err))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.red)
                                 }
                             }
@@ -1112,7 +1112,7 @@ struct SearchSettingView: View {
                     }
                     Section {
                         Text(String(localized: "⚠️ 注意：配置 API 后，请在菜单中打开您要使用的搜索引擎"))
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                     }
                 }
             }
@@ -1231,13 +1231,13 @@ struct KnowledgeSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "backpack")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "设置知识功能，以便在聊天对话时翻找知识背包，获取私有知识库内容，提升回答效果。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1342,13 +1342,13 @@ struct MapSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "map")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "设置地图功能，以便在与支持工具的模型对话时，更好的获取位置相关的信息并让模型向你展示地图"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1383,7 +1383,7 @@ struct MapSettingView: View {
                                 // 对于默认的 APPLEMAP，显示"默认"标识
                                 if key.company.uppercased() == "APPLEMAP" {
                                     Text(String(localized: "默认"))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.gray)
                                 } else {
                                     Image(systemName: "key")
@@ -1533,18 +1533,18 @@ struct MapSettingView: View {
                                 .padding()
 
                             Text("设置 \(getCompanyName(for: key.company)) API密钥，以开启该地图引擎")
-                                .font(.footnote)
+                                .font(HanlinTypography.footnote)
                                 .multilineTextAlignment(.center)
 
                             if let url = URL(string: key.help) {
                             Link(String(format: String(localized: "🔗 点此获取 %@ API密钥"), getCompanyName(for: key.company)), destination: url)
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             } else {
                                 // 当 URL 无效时可以提供一个备用视图
                                 Text(String(localized: "建议进入其开放平台获取API密钥"))
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             }
@@ -1611,13 +1611,13 @@ struct CalendarSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "calendar")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "设置日历功能，以便在与支持工具的模型对话时，获取日历日程、提醒事项信息或者让模型写入日历日程、提醒事项"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1687,13 +1687,13 @@ struct CodeSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "apple.terminal")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "设置代码功能，以便在与支持工具的模型对话时，模型为你运行Python代码，或查看模型为你制作网页内容，并与其交互。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1761,13 +1761,13 @@ struct HealthSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "heart")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "设置健康功能，以便在与支持工具的模型对话时，模型能够获取你的健康信息或帮你记录健康、饮食等信息。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1837,13 +1837,13 @@ struct CanvasSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "pencil.and.outline")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "设置画布功能，以便在与支持工具的模型对话时，模型能够使用画布工具，带来更好的长文本、大段落或结构化内容的输出编辑体验。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1931,13 +1931,13 @@ struct WeatherSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "cloud.sun")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "设置天气功能，以便在与支持工具的模型对话时，获取实时天气信息和未来天气预报"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -2085,17 +2085,17 @@ struct WeatherSettingView: View {
                             .padding()
 
                         Text("设置 \(getCompanyName(for: key.company)) API 密钥，以开启该天气服务")
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                             .multilineTextAlignment(.center)
 
                         if let url = URL(string: key.help) {
                             Link("🔗 点此获取 \(getCompanyName(for: key.company)) API 密钥", destination: url)
-                                .font(.footnote)
+                                .font(HanlinTypography.footnote)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                         } else {
                             Text(String(localized: "建议进入其开放平台获取 API 密钥"))
-                                .font(.footnote)
+                                .font(HanlinTypography.footnote)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                         }
@@ -2177,7 +2177,7 @@ private struct ProviderCredentialStorageNotice: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(String(localized: "New and changed keys are saved in Keychain. Update Hanlin and enable iCloud Keychain on your other devices to use them there. Synchronization can take time."))
-                .font(.footnote)
+                .font(HanlinTypography.footnote)
                 .foregroundStyle(.secondary)
             if canMigrate {
                 Button(String(localized: "Move this key to Keychain"), action: performMigration)

@@ -22,7 +22,7 @@ enum AgentActivityTitleBuilder {
             return summary
         }
 
-        if kind == .search, let query = queries.first {
+        if kind == .search, status != .pending, let query = queries.first {
             if let profile = steps.compactMap(\.presentationProfile).first,
                profile.activity.kind == .search {
                 let title = status == .running
@@ -39,12 +39,19 @@ enum AgentActivityTitleBuilder {
         let toolName = steps.compactMap(\.subtitle).first ?? ""
         let profile = steps.compactMap(\.presentationProfile).first
         let presentation = ToolPresentationRegistry.presentation(for: toolName, profile: profile)
+        if status == .pending { return presentation.title }
         return status == .running ? presentation.runningDescription : presentation.completedDescriptionForTimeline
     }
 
     private static func isGeneric(_ value: String) -> Bool {
         let normalized = AgentActivityDeduplicator.normalized(value) ?? ""
+        // A permission receipt describes consent, never the result or the name
+        // of the subsequent operation. Keep it in the approval state only.
+        let permissionLabels = ["Allowed once", "Awaiting approval", "Not approved",
+            String(localized: "Allowed once"), String(localized: "Awaiting approval"),
+            String(localized: "Not approved")]
         return ["done", "using a tool", "progress update", "עדכון התקדמות"].contains(normalized)
+            || permissionLabels.contains { AgentActivityDeduplicator.normalized($0) == normalized }
     }
 }
 

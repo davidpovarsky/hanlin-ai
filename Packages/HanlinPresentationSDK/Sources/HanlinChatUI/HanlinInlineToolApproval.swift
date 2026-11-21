@@ -1,5 +1,6 @@
 #if canImport(SwiftUI)
 import SwiftUI
+import HanlinPresentationKit
 
 /// Presentation of the original Host's pending one-use request. The host supplies
 /// safe review text and handles both buttons against the immutable request ID.
@@ -10,6 +11,7 @@ public struct HanlinInlineToolApproval: View {
     public let reviewText: String
     private let answer: (Bool) -> Void
     @State private var detailsExpanded = false
+    @State private var decisionSubmitted = false
 
     public init(requestID: String, toolName: String, reviewText: String,
                 answer: @escaping (Bool) -> Void) {
@@ -19,30 +21,43 @@ public struct HanlinInlineToolApproval: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Label("Allow \(toolName)?", systemImage: "hand.raised")
-                .font(.subheadline.weight(.semibold))
+                .font(HanlinTypography.subheadline.weight(.semibold))
             Text("Review this operation before allowing it once.")
-                .font(.footnote).foregroundStyle(.secondary)
+                .font(HanlinTypography.footnote).foregroundStyle(.secondary)
             DisclosureGroup("Request", isExpanded: $detailsExpanded) {
-                ScrollView(.horizontal) {
-                    Text(reviewText).font(.system(.footnote, design: .monospaced))
+                ScrollView([.horizontal, .vertical]) {
+                    Text(reviewText).font(HanlinTypography.footnote.monospaced())
                         .textSelection(.enabled)
                         .accessibilityIdentifier("hanlin-tool-consent-original-request")
                 }
+                .frame(maxHeight: 240)
             }
             .disclosureGroupStyle(HanlinMotionDisclosureStyle())
             .accessibilityIdentifier("hanlin-tool-consent-review-toggle")
             HStack(spacing: 16) {
-                Button("Deny", role: .cancel) { answer(false) }
+                Button("Deny", role: .cancel) { submit(false) }
+                    .buttonStyle(.bordered)
                     .accessibilityIdentifier("hanlin-tool-consent-deny")
-                Button("Allow once") { answer(true) }
+                Button("Allow once") { submit(true) }
                     .buttonStyle(.borderedProminent)
                     .accessibilityIdentifier("hanlin-tool-consent-allow-once")
             }
+            .disabled(decisionSubmitted)
         }
         .padding(12)
         .background(.quaternary.opacity(0.35), in: RoundedRectangle(cornerRadius: 12))
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-tool-approval-\(requestID)")
+        .onChange(of: requestID) { _, _ in
+            decisionSubmitted = false
+            detailsExpanded = false
+        }
+    }
+
+    private func submit(_ allowed: Bool) {
+        guard !decisionSubmitted else { return }
+        decisionSubmitted = true
+        answer(allowed)
     }
 }
 #endif

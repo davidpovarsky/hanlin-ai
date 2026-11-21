@@ -83,13 +83,13 @@ struct PromptRepoView: View {
             if searchText.isEmpty {
                 VStack(alignment: .center) {
                     Image(systemName: "tray.full")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "在提示词库中提前编辑好提示词，在群聊中快速应用，提升对话效率并保持聊天记录的简洁清晰。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -283,7 +283,7 @@ struct PromptRepoView: View {
                     .foregroundColor(.hlBluefont) // 颜色变为 .hlBlue
                 
                 Text(highlightedName(for: item))
-                    .font(.title2)
+                    .font(HanlinTypography.title2)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
                     .lineLimit(1) // 限制为 1 行
@@ -293,11 +293,11 @@ struct PromptRepoView: View {
                         startRenaming(item)
                     }
             }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
             
             // 内容简介
             Text(item.content ?? String(localized: "暂无内容"))
-                .font(.body)
+                .font(HanlinTypography.body)
                 .foregroundColor(.secondary)
                 .lineLimit(2) // 限制最多 2 行
                 .multilineTextAlignment(.leading)
@@ -306,7 +306,7 @@ struct PromptRepoView: View {
             // 底部：显示时间 + "编辑内容"按钮
             HStack {
                 Text(formattedDate(item.timestamp))
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
                 
                 Spacer()
@@ -319,7 +319,7 @@ struct PromptRepoView: View {
                     }
                 }) {
                     Text(String(localized: "编辑内容"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .fontWeight(.bold)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 8)
@@ -327,7 +327,7 @@ struct PromptRepoView: View {
                         .foregroundColor(.white)
                         .clipShape(Capsule())
                 }
-                .sensoryFeedback(.impact, trigger: isFeedBack)
+                .hanlinFeedback(.impact, trigger: isFeedBack)
             }
         }
         .padding()
@@ -466,7 +466,7 @@ struct PromptDetailView: View {
             }
             if showPhotoSourceOptions {
                 Text(String(localized: "选择OCR的图片来源"))
-                    .font(.caption.bold())
+                    .font(HanlinTypography.caption.bold())
                     .foregroundColor(.hlBluefont)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 12)
@@ -485,7 +485,7 @@ struct PromptDetailView: View {
                 .shadow(color: .hlBlue, radius: 1)
         )
         .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.4), value: showPhotoSourceOptions)
-        .sensoryFeedback(.impact, trigger: isFeedBack)
+        .hanlinFeedback(.impact, trigger: isFeedBack)
     }
 
     // MARK: - 优化按钮
@@ -619,8 +619,8 @@ struct PromptDetailView: View {
     // MARK: - 计算 Token 数量
     private func tokenCounter() -> some View {
         VStack(alignment: .trailing) {
-            Text("\(content.count) 字").font(.caption).foregroundColor(.gray)
-            Text("约 \(estimatedTokens) tokens").font(.caption).foregroundColor(.gray)
+            Text("\(content.count) 字").font(HanlinTypography.caption).foregroundColor(.gray)
+            Text("约 \(estimatedTokens) tokens").font(HanlinTypography.caption).foregroundColor(.gray)
         }
     }
 
@@ -731,7 +731,7 @@ struct PromptDetailView: View {
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showCameraPicker)
                     Text(String(localized: "拍摄照片"))
-                        .font(.caption.bold())
+                        .font(HanlinTypography.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)
                 }
@@ -740,7 +740,7 @@ struct PromptDetailView: View {
                 .background(Color.hlBlue.opacity(0.1))
                 .cornerRadius(size_20)
             }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.6), value: showPhotoSourceOptions)
             // 打开相机
@@ -761,7 +761,7 @@ struct PromptDetailView: View {
                         .foregroundColor(.hlBluefont)
                         .symbolEffect(.bounce, value: showImagePicker)
                     Text(String(localized: "相册选择"))
-                        .font(.caption.bold())
+                        .font(HanlinTypography.caption.bold())
                         .foregroundColor(.hlBluefont)
                         .padding(.top, 3)
                 }
@@ -770,7 +770,7 @@ struct PromptDetailView: View {
                 .background(Color.hlBlue.opacity(0.1))
                 .cornerRadius(size_20)
             }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
             .transition(.opacity.combined(with: .move(edge: .top)))
             .animation(.spring(response: 0.5, dampingFraction: 0.6), value: showPhotoSourceOptions)
             // 打开相册

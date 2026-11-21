@@ -31,16 +31,16 @@ struct NativeToolResultCardContainer<Content: View>: View {
         VStack(alignment: .leading, spacing: NativeToolResultCardStyle.sectionSpacing) {
             HStack(alignment: .firstTextBaseline, spacing: 9) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 20, weight: .medium))
+                    .font(HanlinTypography.fixed(size: 20, weight: .medium))
                     .foregroundStyle(.secondary)
                     .frame(width: 22)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
-                        .font(.headline)
+                        .font(HanlinTypography.headline)
                         .foregroundStyle(.primary)
                     if let subtitle, !subtitle.isEmpty {
                         Text(subtitle)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundStyle(.secondary)
                             .lineLimit(2)
                     }

@@ -214,7 +214,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
           }
         } label: {
           Image(systemName: action.systemImage ?? "arrow.up.right.square")
-            .font(.system(size: 16, weight: .medium))
+            .font(HanlinTypography.fixed(size: 16, weight: .medium))
             .foregroundColor(.hlBluefont)
             .padding(8)
             .background(BlurView(style: .systemUltraThinMaterial))
@@ -232,7 +232,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
           handleExpansion(expansion)
         } label: {
           Image(systemName: iconName(for: expansion.mode))
-            .font(.system(size: 16, weight: .medium))
+            .font(HanlinTypography.fixed(size: 16, weight: .medium))
             .foregroundColor(.hlBluefont)
             .padding(8)
             .background(BlurView(style: .systemUltraThinMaterial))
@@ -290,7 +290,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
       if let title, !title.isEmpty {
         HStack(alignment: .center) {
           Text(title)
-            .font(.caption.weight(.medium))
+            .font(HanlinTypography.caption.weight(.medium))
             .foregroundStyle(.secondary)
             .lineLimit(1)
           Spacer(minLength: 8)

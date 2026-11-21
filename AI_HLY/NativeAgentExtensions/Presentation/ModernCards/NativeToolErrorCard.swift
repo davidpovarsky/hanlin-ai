@@ -15,7 +15,7 @@ struct NativeToolErrorCard: View {
         ) {
             if let body = block.body, !body.isEmpty {
                 Text(body)
-                    .font(.subheadline)
+                    .font(HanlinTypography.subheadline)
                     .foregroundStyle(.secondary)
                     .lineLimit(3)
                     .textSelection(.enabled)

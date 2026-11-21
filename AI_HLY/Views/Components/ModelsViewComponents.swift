@@ -113,7 +113,7 @@ struct AddOnlineModelView: View {
                                     .scaleEffect(0.8)
                             } else {
                                 Image(systemName: "chevron.right")
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -121,7 +121,7 @@ struct AddOnlineModelView: View {
                     .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || selectedCompany.isEmpty || isProbing)
                     
                     Text(String(localized: "注意：自动模型能力探测中可能有一定的API费用消耗"))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.secondary)
                     
                     HStack(spacing: 10) {
@@ -412,13 +412,13 @@ struct LocalModelDownloadView: View {
                 Section {
                     VStack(alignment: .center) {
                         Image(systemName: "externaldrive")
-                            .font(.largeTitle)
+                            .font(HanlinTypography.largeTitle)
                             .fontWeight(.bold)
                             .foregroundColor(.hlBluefont)
                             .padding()
                         
                         Text(String(localized: "本地模型还属于测试阶段，暂不支持视觉功能等，输出也可能存在问题，将在后期修复优化。如果下载后需要删除，可以直接在模型列表进行删除，本地文件会随之一起删除。模型文件来自于魔塔社区或HuggingFace，本软件对模型输出结果不负有任何责任。请结合自己的设备性能合理下载，若超出设备承受能力，可能会出现闪退、卡死等现象。"))
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
                     }
@@ -440,10 +440,10 @@ struct LocalModelDownloadView: View {
                             VStack(alignment: .leading) {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     Text(model.displayName)
-                                        .font(.headline)
+                                        .font(HanlinTypography.headline)
                                 }
                                 Text(model.space)
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                             }
                             
                             Spacer()
@@ -607,7 +607,7 @@ struct RenameModelView: View {
             VStack(alignment: .leading, spacing: 20) {
                 
                 Text(String(localized: "请输入模型名称"))
-                    .font(.system(size: 20, weight: .semibold))
+                    .font(HanlinTypography.fixed(size: 20, weight: .semibold))
                     .foregroundColor(.primary)
                     .padding(.horizontal)
                 
@@ -663,14 +663,14 @@ struct DownloadButtonView: View {
             
             if let pro = progress {
                 Text("\(Int(pro))%")
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundColor(.hlBluefont)
             }
             
             if isDownloaded {
                 Text(String(localized: "已下载"))
                     .foregroundColor(.gray)
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
             } else {
                 Button(action: {
                     if progress == nil {
@@ -827,7 +827,7 @@ struct AddAgentView: View {
                                     .frame(width: 25, height: 25)
                                     .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
                                 Text(String(localized: "正在填写"))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.hlBluefont)
                                 
                             } else if autoFilled {
@@ -839,7 +839,7 @@ struct AddAgentView: View {
                                     .foregroundColor(.hlBluefont)
                                 
                                 Text(String(localized: "撤销填写"))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.hlBluefont)
                                 
                             } else {
@@ -851,19 +851,19 @@ struct AddAgentView: View {
                                     .foregroundColor(displayName.isEmpty ? .gray : .hlBluefont)
                                 
                                 Text(String(localized: "自动填写"))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(displayName.isEmpty ? .gray : .hlBluefont)
                                 
                             }
                         }
                         .disabled(autoFilling || displayName.isEmpty)
                         .buttonStyle(.plain)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                         
                         Spacer()
                         
                         Text(String(localized: "输入工具"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                         
                         Button(action: {
@@ -877,7 +877,7 @@ struct AddAgentView: View {
                                 .foregroundColor(.hlBluefont)
                         }
                         .buttonStyle(.plain)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                         
                         Button(action: {
                             isFeedBack.toggle()
@@ -891,7 +891,7 @@ struct AddAgentView: View {
                                 .symbolEffect(.bounce, value: inputExpanded)
                         }
                         .buttonStyle(.plain)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                     }
                 }
                 
@@ -1160,7 +1160,7 @@ struct EditModelSheetView: View {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(editedDisplayName)
                             Text(String(localized: "⚠️ 默认智能体不可重命名"))
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.hlBluefont)
                         }
                     } else {
@@ -1187,7 +1187,7 @@ struct EditModelSheetView: View {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(editedBriefDescription)
                             Text(String(localized: "⚠️ 默认智能体不可更改描述"))
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.hlBluefont)
                         }
                     }
@@ -1356,7 +1356,7 @@ struct EditModelSheetView: View {
                         .frame(width: 25, height: 25)
                         .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
                     Text(String(localized: "正在填写"))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.hlBluefont)
                     
                 } else if autoFilled {
@@ -1368,7 +1368,7 @@ struct EditModelSheetView: View {
                         .foregroundColor(.hlBluefont)
                     
                     Text(String(localized: "撤销填写"))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.hlBluefont)
                     
                 } else {
@@ -1380,19 +1380,19 @@ struct EditModelSheetView: View {
                         .foregroundColor(editedDisplayName.isEmpty ? .gray : .hlBluefont)
                     
                     Text(String(localized: "自动填写"))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(editedDisplayName.isEmpty ? .gray : .hlBluefont)
                     
                 }
             }
             .disabled(autoFilling || editedDisplayName.isEmpty)
             .buttonStyle(.plain)
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
 
             Spacer()
 
             Text(String(localized: "输入工具"))
-                .font(.caption)
+                .font(HanlinTypography.caption)
                 .foregroundColor(.gray)
 
             Button(action: {
@@ -1406,7 +1406,7 @@ struct EditModelSheetView: View {
                     .foregroundColor(.hlBluefont)
             }
             .buttonStyle(.plain)
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
             
             Button(action: {
                 isFeedBack.toggle()
@@ -1420,7 +1420,7 @@ struct EditModelSheetView: View {
                     .symbolEffect(.bounce, value: inputExpanded)
             }
             .buttonStyle(.plain)
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
         }
     }
 }
@@ -1451,46 +1451,46 @@ struct BaseModelCardView: View {
             VStack(alignment: .leading) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     Text(model.displayName ?? "Unknown")
-                        .font(.subheadline)
+                        .font(HanlinTypography.subheadline)
                 }
                 HStack(spacing: 6) {
                     if model.supportsToolUse {
                         Text(String(localized: "工具"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlBrown)
                     }
                     if model.supportsMultimodal {
                         Text(String(localized: "视觉"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlTeal)
                     } else if model.supportsTextGen {
                         Text(String(localized: "文本"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                     }
                     if model.hasVerifiedImageOutput {
                         Text(String(localized: "生图"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlGreen)
                     }
                     if model.supportsVoiceGen {
                         Text(String(localized: "语音"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlPink)
                     }
                     if model.supportsReasoning {
                         Text(String(localized: "思考"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlPurple)
                     }
                     if model.company?.uppercased() == "LOCAL" {
                         Text(String(localized: "本地"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlOrange)
                     }
 
                     Text(priceText(for: model.price))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(priceColor(for: model.price))
                 }
             }

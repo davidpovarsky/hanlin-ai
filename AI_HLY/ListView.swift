@@ -356,8 +356,8 @@ struct ListView: View {
         ToolbarItem(placement: .navigationBarLeading) {
             if loadHistoryMessages {
                 HStack {
-                    ProgressView().font(.caption)
-                    Text("正在加载...").font(.caption)
+                    ProgressView().font(HanlinTypography.caption)
+                    Text("正在加载...").font(HanlinTypography.caption)
                 }
             } else {
                 HStack {
@@ -366,7 +366,7 @@ struct ListView: View {
                     }) {
                         Label {
                             Text("软件指南")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                         } icon: {
                             Image(systemName: "text.rectangle.page")
                         }

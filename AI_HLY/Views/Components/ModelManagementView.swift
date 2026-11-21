@@ -111,7 +111,7 @@ struct ModelManagementView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 if isLoading {
                     // 加载状态
@@ -119,7 +119,7 @@ struct ModelManagementView: View {
                         ProgressView()
                             .scaleEffect(1.5)
                         Text(String(localized: "正在获取模型列表..."))
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                             .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -127,10 +127,10 @@ struct ModelManagementView: View {
                     // 空状态
                     VStack(spacing: 20) {
                         Image(systemName: "list.bullet.rectangle")
-                            .font(.system(size: 60))
+                            .font(HanlinTypography.fixed(size: 60))
                             .foregroundColor(.secondary)
                         Text(String(localized: "暂无可用模型"))
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                             .foregroundColor(.secondary)
                         Button(String(localized: "刷新模型列表")) {
                             Task {
@@ -144,28 +144,6 @@ struct ModelManagementView: View {
                 } else {
                     // 模型列表
                     List {
-                        // 搜索栏（已添加模型 + 可用模型总数 > 10 时显示）
-                        if totalModelCount > 10 {
-                            Section {
-                                HStack {
-                                    Image(systemName: "magnifyingglass")
-                                        .foregroundColor(.secondary)
-                                    TextField(String(localized: "搜索模型..."), text: $searchText)
-                                        .textFieldStyle(.plain)
-                                    if !searchText.isEmpty {
-                                        Button {
-                                            searchText = ""
-                                        } label: {
-                                            Image(systemName: "xmark.circle.fill")
-                                                .foregroundColor(.secondary)
-                                        }
-                                        .buttonStyle(.plain)
-                                    }
-                                }
-                                .padding(.vertical, 4)
-                            }
-                        }
-
                         Section(footer: Text(String(localized: "注意：自动模型能力探测中可能有一定的API费用消耗"))) {
                             Toggle(String(localized: "自动模型能力探测"), isOn: Binding(
                                 get: { apiKey.autoProbeCapabilities },
@@ -190,7 +168,7 @@ struct ModelManagementView: View {
                                     } label: {
                                         Image(systemName: isAddedModelsExpanded ? "chevron.up" : "chevron.down")
                                             .foregroundColor(.secondary)
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                     }
                                     .buttonStyle(.plain)
                                 }
@@ -235,10 +213,10 @@ struct ModelManagementView: View {
                                     VStack(alignment: .leading, spacing: 4) {
                                         ScrollView(.horizontal, showsIndicators: false) {
                                             Text(model.id)
-                                                .font(.subheadline)
+                                                .font(HanlinTypography.subheadline)
                                         }
                                         Text("提供者: \(providerName)")
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                             .foregroundColor(.secondary)
                                     }
                                     Spacer()
@@ -255,7 +233,7 @@ struct ModelManagementView: View {
                                             } label: {
                                                 Text(String(localized: "删除"))
                                                     .foregroundColor(.red)
-                                                    .font(.caption)
+                                                    .font(HanlinTypography.caption)
                                             }
                                             .buttonStyle(.bordered)
                                         }
@@ -270,7 +248,7 @@ struct ModelManagementView: View {
                                                 Image(systemName: "plus.circle")
                                                 Text(String(localized: "添加"))
                                             }
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                         }
                                         .buttonStyle(.borderedProminent)
                                         .tint(.hlBlue)
@@ -283,6 +261,7 @@ struct ModelManagementView: View {
                     .listStyle(.insetGrouped)
                 }
             }
+            .searchable(text: $searchText, prompt: String(localized: "搜索模型..."))
             .navigationTitle(String(localized: "模型管理"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -337,7 +316,7 @@ struct ModelManagementView: View {
         AnyView(
             ScrollView(.horizontal, showsIndicators: false) {
                 Text(displayNameForAddedModel(model))
-                    .font(.subheadline)
+                    .font(HanlinTypography.subheadline)
             }
         )
     }
@@ -532,7 +511,7 @@ struct CapabilityProbeSheet: View {
     var body: some View {
         VStack(spacing: 16) {
             Text(String(localized: "模型能力自动探测"))
-                .font(.headline)
+                .font(HanlinTypography.headline)
                 .padding(.top, 16)
 
             VStack(spacing: 12) {
@@ -542,10 +521,10 @@ struct CapabilityProbeSheet: View {
                             .frame(width: 20, height: 20)
                         VStack(alignment: .leading, spacing: 4) {
                             Text(item.step.title)
-                                .font(.subheadline)
+                                .font(HanlinTypography.subheadline)
                             if let message = item.message, !message.isEmpty {
                                 Text(message)
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -573,18 +552,18 @@ struct CapabilityProbeSheet: View {
         case .pending:
             Image(systemName: "circle")
                 .foregroundColor(.secondary)
-                .font(.system(size: 16, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 16, weight: .semibold))
         case .running:
             ProgressView()
                 .scaleEffect(0.8)
         case .success:
             Image(systemName: "checkmark.circle.fill")
                 .foregroundColor(.green)
-                .font(.system(size: 16, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 16, weight: .semibold))
         case .failure:
             Image(systemName: "xmark.circle.fill")
                 .foregroundColor(.red)
-                .font(.system(size: 16, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 16, weight: .semibold))
         }
     }
 }

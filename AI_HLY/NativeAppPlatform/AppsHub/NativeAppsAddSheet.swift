@@ -17,7 +17,7 @@ struct NativeAppsAddSheet: View {
             List {
                 Section {
                     Text("Swift apps are compiled into Hanlin. Dynamic packages (NativeScript, Expo) are importable.")
-                        .font(.subheadline)
+                        .font(HanlinTypography.subheadline)
                         .foregroundStyle(.secondary)
 
                     NavigationLink {
@@ -79,20 +79,20 @@ struct NativeAppsAddSheet: View {
                                 HStack {
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text(name)
-                                            .font(.headline)
+                                            .font(HanlinTypography.headline)
                                             .foregroundStyle(.primary)
                                         Text(livePackage.record.packageID.rawValue)
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                             .foregroundStyle(.secondary)
                                     }
                                     Spacer()
                                     if !livePackage.enabled {
                                         Text("Disabled")
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                             .foregroundStyle(.secondary)
                                     } else if !hasLaunchableApp && hasWidget {
                                         Text("Widget")
-                                            .font(.caption2.weight(.medium))
+                                            .font(HanlinTypography.caption2.weight(.medium))
                                             .foregroundStyle(.secondary)
                                     }
                                 }

@@ -42,7 +42,7 @@ public struct HanlinMarkdownView: View {
 
     private var config: MarkdownRenderConfig {
         func fonts(_ style: UIFont.TextStyle) -> TextFonts {
-            let normal = UIFont.preferredFont(forTextStyle: style)
+            let normal = HanlinTypography.uiFont(style)
             func variant(_ traits: UIFontDescriptor.SymbolicTraits) -> UIFont? {
                 normal.fontDescriptor.withSymbolicTraits(traits).map { UIFont(descriptor: $0, size: 0) }
             }
@@ -51,10 +51,10 @@ public struct HanlinMarkdownView: View {
         }
         let body = MarkdownRenderConfig.MarkdownTextStyle(textFonts: fonts(.body), textColor: .primary)
         let codeStyle = CodeBlockConfig.default
-        let codeFonts = TextFonts(normal: UIFont.monospacedSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .callout).pointSize, weight: .regular),
+        let codeFonts = TextFonts(normal: UIFont.monospacedSystemFont(ofSize: HanlinTypography.uiFont(.callout).pointSize, weight: .regular),
             italic: nil, bold: nil, boldItalic: nil, preferredLetterSpacing: nil, preferredLineHeight: nil)
         return MarkdownRenderConfig.default
-            .withCitationConfig(value: .init(font: UIFont.preferredFont(forTextStyle: .caption2),
+            .withCitationConfig(value: .init(font: HanlinTypography.uiFont(.caption2),
                 textColor: .secondary, backgroundColor: Color.secondary.opacity(0.10),
                 iconsByCitationURL: citationIcons, iconOnTrailingEdge: layoutDirection == .rightToLeft))
             .withImageConfig(imageConfig)
@@ -76,17 +76,21 @@ public struct HanlinMarkdownView: View {
     private func loadCitationIcons() async {
         let groups = Array(citationGroups.prefix(24))
         let visibleKeys = Set(groups.map { $0.url.absoluteString })
-        citationIcons = citationIcons.filter { visibleKeys.contains($0.key) }
+        var loaded = citationIcons.filter { visibleKeys.contains($0.key) }
         for group in groups {
-            guard citationIcons[group.url.absoluteString] == nil,
+            guard loaded[group.url.absoluteString] == nil,
                   let url = group.sources.first?.iconURL, url.scheme == "https" else { continue }
             do {
                 if let png = try await HanlinCitationIconLoader.png(from: url) {
                     try Task.checkCancellation()
-                    citationIcons[group.url.absoluteString] = png
+                    loaded[group.url.absoluteString] = png
                 }
             } catch { if Task.isCancelled { return } }
         }
+        // One publication per source batch. Each icon must not rebuild the full
+        // Markdown layout while the answer is being streamed.
+        guard !Task.isCancelled, loaded != citationIcons else { return }
+        citationIcons = loaded
     }
 }
 

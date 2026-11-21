@@ -54,7 +54,7 @@ struct SkillExecutionPlanSection: View {
                     Label(requirement.key.name, systemImage: "exclamationmark.circle")
                 }
                 ForEach(Array(plan.issues.enumerated()), id: \.offset) { _, issue in
-                    Text(issue.code.rawValue).font(.footnote).foregroundStyle(.secondary)
+                    Text(issue.code.rawValue).font(HanlinTypography.footnote).foregroundStyle(.secondary)
                 }
             }
             if let originalPolicy {
@@ -63,11 +63,11 @@ struct SkillExecutionPlanSection: View {
                 LabeledContent(SkillL10n.string("Skill requirements"), value: availability)
                     .accessibilityValue(availability)
                     .accessibilityIdentifier("hanlin-skill-openclaw-policy")
-                if !originalPolicy.invocation.userInvocable { Text(SkillL10n.string("This Skill does not allow manual invocation.")).font(.footnote) }
-                if originalPolicy.invocation.disableModelInvocation { Text(SkillL10n.string("This Skill is hidden from automatic model invocation.")).font(.footnote) }
-                ForEach(originalPolicy.unobserved, id: \.self) { Text($0).font(.caption).foregroundStyle(.secondary) }
+                if !originalPolicy.invocation.userInvocable { Text(SkillL10n.string("This Skill does not allow manual invocation.")).font(HanlinTypography.footnote) }
+                if originalPolicy.invocation.disableModelInvocation { Text(SkillL10n.string("This Skill is hidden from automatic model invocation.")).font(HanlinTypography.footnote) }
+                ForEach(originalPolicy.unobserved, id: \.self) { Text($0).font(HanlinTypography.caption).foregroundStyle(.secondary) }
                 if !originalPolicy.installHints.isEmpty {
-                    Text(SkillL10n.string("Suggested installation")).font(.headline)
+                    Text(SkillL10n.string("Suggested installation")).font(HanlinTypography.headline)
                     ForEach(Array(originalPolicy.installHints.enumerated()), id: \.offset) { _, hint in
                         LabeledContent(hint.label ?? hint.kind, value: hint.target)
                             .accessibilityValue(hint.target)
@@ -75,7 +75,7 @@ struct SkillExecutionPlanSection: View {
                             .accessibilityIdentifier("hanlin-skill-openclaw-install-hint")
                     }
                     Text(SkillL10n.string("Installer suggestions do not install anything automatically. Use a package manager available for the selected runtime."))
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                 }
             }
             ForEach(Array(findings.prefix(64).enumerated()), id: \.offset) { _, finding in
@@ -83,14 +83,14 @@ struct SkillExecutionPlanSection: View {
                     Text("\(finding.source.file):\(finding.source.line):\(finding.source.utf8Column)")
                     Text(finding.value ?? finding.reason).textSelection(.enabled)
                     Text("\(finding.confidence.rawValue) · \(finding.reason)").foregroundStyle(.secondary)
-                }.font(.caption)
+                }.font(HanlinTypography.caption)
             }
             LabeledContent(SkillL10n.string("Last tested"), value: lastTest)
                 .accessibilityValue(lastTest)
                 .accessibilityIdentifier("hanlin-skill-detail-compatibility-last-tested")
             if let receipt {
                 Text("\(receiptIsCurrent ? receipt.status.rawValue : "Historical \(receipt.status.rawValue) — source or engine changed") · \(receipt.result.executionID.uuidString.prefix(8))")
-                    .font(.caption).textSelection(.enabled)
+                    .font(HanlinTypography.caption).textSelection(.enabled)
                     .accessibilityIdentifier("hanlin-skill-execution-receipt")
             }
             if let error { Text(error).foregroundStyle(.red).textSelection(.enabled) }
@@ -111,11 +111,11 @@ struct SkillExecutionPlanSection: View {
                     .accessibilityIdentifier("hanlin-skill-cancel-execution")
             }
             if !output.isEmpty {
-                Text(output).font(.system(.body, design: .monospaced)).textSelection(.enabled)
+                Text(output).font(HanlinTypography.body.monospaced()).textSelection(.enabled)
                     .accessibilityIdentifier("hanlin-skill-execution-output")
             }
             Text("Compatibility is evaluated without running imported code. Run executes code with this app’s access after your approval.")
-                .font(.footnote).foregroundStyle(.secondary)
+                .font(HanlinTypography.footnote).foregroundStyle(.secondary)
         }
         .task(id: selectionID) {
             operation?.cancel(); revision = UUID(); working = false; plan = nil; receipt = nil; originalPolicy = nil; findings = []; output = ""; error = nil

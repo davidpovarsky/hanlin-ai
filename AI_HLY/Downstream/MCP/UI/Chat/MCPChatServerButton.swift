@@ -16,7 +16,7 @@ struct MCPChatServerButton: View {
                 .overlay(alignment: .topTrailing) {
                     if selectedCount > 0 {
                         Text("\(selectedCount)")
-                            .font(.caption2.bold())
+                            .font(HanlinTypography.caption2.bold())
                             .foregroundStyle(.white)
                             .padding(4)
                             .background(.red, in: Circle())

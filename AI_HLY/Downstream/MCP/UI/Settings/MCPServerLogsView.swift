@@ -7,7 +7,7 @@ struct MCPServerLogsView: View {
     var body: some View {
         ScrollView {
             Text(text.isEmpty ? MCPL10n.string("No logs") : text)
-                .font(.system(.caption, design: .monospaced))
+                .font(HanlinTypography.caption.monospaced())
                 .textSelection(.enabled)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()

@@ -30,7 +30,15 @@ final class HanlinAISDKToolAdapter {
     }
 
     let session: AssistantCapabilitySession
-    var preparedTools: AssistantToolBridge.PreparedTools
+    var preparedTools: AssistantToolBridge.PreparedTools {
+        didSet {
+            cachedToolDefinitions = nil
+            catalogGeneration = UUID()
+        }
+    }
+    /// PreparedTools owns an immutable authority. Only replacement can change its routes or schemas.
+    private(set) var catalogGeneration = UUID()
+    private var cachedToolDefinitions: [HanlinAISDKToolDefinition]?
     let catalog: HanlinSkillCatalog
     let skillStore: SkillStore
     let modelContext: ModelContext?
@@ -256,6 +264,7 @@ final class HanlinAISDKToolAdapter {
     /// Builds all available tool definitions for the SDK engine.
     /// Dynamic visibility is managed per step via `prepareStep()`.
     func allToolDefinitions() throws -> [HanlinAISDKToolDefinition] {
+        if let cachedToolDefinitions { return cachedToolDefinitions }
         var definitions: [HanlinAISDKToolDefinition] = []
 
         // 1. load_skill
@@ -291,6 +300,9 @@ final class HanlinAISDKToolAdapter {
             definitions.append(try makeCanonicalDefinition(alias: alias, schema: decoratedSchema, profile: profile))
         }
 
+        // Schema decoration and exact MCP projection are bounded but expensive. Keep the
+        // validated definitions until their immutable authority is replaced, never per token/call.
+        cachedToolDefinitions = definitions
         return definitions
     }
 

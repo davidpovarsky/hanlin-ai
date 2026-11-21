@@ -12,11 +12,11 @@ struct HanlinToolConsentSheet: View {
                 Section {
                     LabeledContent("Tool", value: request.tool)
                     Text("This operation uses Hanlin’s access. Review its request before allowing it once.")
-                        .font(.footnote).foregroundStyle(.secondary)
+                        .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                 }
                 Section("Request") {
                     Text(String(decoding: request.originalArgumentsJSON ?? Data(), as: UTF8.self))
-                        .font(.system(.footnote, design: .monospaced))
+                        .font(HanlinTypography.footnote.monospaced())
                         .textSelection(.enabled)
                         .accessibilityIdentifier("hanlin-tool-consent-original-request")
                 }
@@ -45,7 +45,7 @@ struct HanlinPhase2AcceptanceStatusView: View {
             Text("\(requests)").accessibilityIdentifier("hanlin-phase2-request-count")
             Text(conversationID?.uuidString ?? "unavailable").accessibilityIdentifier("hanlin-phase2-chat-id")
         }
-        .font(.caption2)
+        .font(HanlinTypography.caption2)
         .task {
             while !Task.isCancelled {
                 let observed = AgentRuntimeUIAcceptanceURLProtocol.observedPhase2Requests

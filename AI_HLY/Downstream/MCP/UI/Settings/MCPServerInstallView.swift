@@ -31,7 +31,7 @@ struct MCPServerInstallView: View {
                     MCPL10n.string("This package contains executable JavaScript and will run inside Hanlin's application sandbox. Install only packages you trust."),
                     systemImage: "exclamationmark.shield"
                 )
-                .font(.callout)
+                .font(HanlinTypography.callout)
             }
 
             if let preview {

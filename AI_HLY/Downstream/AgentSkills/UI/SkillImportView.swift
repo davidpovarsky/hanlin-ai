@@ -100,7 +100,7 @@ struct SkillImportView: View {
             if let err = errorMessage {
                 Text(err)
                     .foregroundColor(.red)
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .padding(.horizontal)
                     .multilineTextAlignment(.center)
             }
@@ -108,7 +108,7 @@ struct SkillImportView: View {
             if let succ = successMessage {
                 Text(succ)
                     .foregroundColor(.green)
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .padding(.horizontal)
                     .multilineTextAlignment(.center)
             }
@@ -129,11 +129,11 @@ struct SkillImportView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
                         Text(staged.parsedMarkdown.name)
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                             .accessibilityIdentifier("hanlin-skill-import-preview-title")
                         Spacer()
                         Text(staged.skillID.rawValue)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
                             .background(Color.secondary.opacity(0.15))
@@ -142,7 +142,7 @@ struct SkillImportView: View {
 
                     if !staged.parsedMarkdown.description.isEmpty {
                         Text(staged.parsedMarkdown.description)
-                            .font(.subheadline)
+                            .font(HanlinTypography.subheadline)
                             .foregroundColor(.secondary)
                     }
                 }
@@ -156,10 +156,10 @@ struct SkillImportView: View {
                     ForEach(staged.metadata.preferredToolIDs, id: \.self) { tool in
                         HStack {
                             Image(systemName: "wrench.and.screwdriver")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.secondary)
                             Text(tool)
-                                .font(.system(.subheadline, design: .monospaced))
+                                .font(HanlinTypography.subheadline.monospaced())
                         }
                     }
                 }
@@ -169,7 +169,7 @@ struct SkillImportView: View {
                 Section(header: Text("Trigger Hints")) {
                     ForEach(staged.metadata.triggerHints, id: \.self) { hint in
                         Text(hint)
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                     }
                 }
             }
@@ -177,7 +177,7 @@ struct SkillImportView: View {
             Section(header: Text("Included Resources (\(staged.resources.count))")) {
                 if staged.resources.isEmpty {
                     Text("No additional resources.")
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .foregroundColor(.secondary)
                         .accessibilityIdentifier("hanlin-skill-import-preview-resources-empty")
                 } else {
@@ -185,15 +185,15 @@ struct SkillImportView: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(res.relativePath)
-                                    .font(.system(.footnote, design: .monospaced))
+                                    .font(HanlinTypography.footnote.monospaced())
                                 Text(ByteCountFormatter.string(fromByteCount: res.byteCount, countStyle: .file))
-                                    .font(.caption2)
+                                    .font(HanlinTypography.caption2)
                                     .foregroundColor(.secondary)
                             }
                             Spacer()
                             if res.isBinary {
                                 Text("Binary")
-                                    .font(.caption2)
+                                    .font(HanlinTypography.caption2)
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -208,10 +208,10 @@ struct SkillImportView: View {
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     Text("SHA-256")
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.secondary)
                     Text(staged.sha256)
-                        .font(.system(.caption2, design: .monospaced))
+                        .font(HanlinTypography.caption2.monospaced())
                         .foregroundColor(.primary)
                 }
                 .accessibilityIdentifier("hanlin-skill-import-sha256")
@@ -222,7 +222,7 @@ struct SkillImportView: View {
                     if let err = errorMessage {
                         Text(err)
                             .foregroundColor(.red)
-                            .font(.footnote)
+                            .font(HanlinTypography.footnote)
                             .multilineTextAlignment(.center)
                     }
 
@@ -258,12 +258,12 @@ struct SkillImportView: View {
     private var zipImportSection: some View {
         VStack(spacing: 20) {
             Image(systemName: "doc.zipper")
-                .font(.system(size: 48))
+                .font(HanlinTypography.fixed(size: 48))
                 .foregroundColor(.accentColor)
                 .padding(.top, 30)
 
             Text(SkillL10n.string("Select a ZIP package or a SKILL.md file. Previewing does not run scripts."))
-                .font(.subheadline)
+                .font(HanlinTypography.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
@@ -312,13 +312,13 @@ struct SkillImportView: View {
     private var urlImportSection: some View {
         VStack(spacing: 20) {
             Image(systemName: "network")
-                .font(.system(size: 48))
+                .font(HanlinTypography.fixed(size: 48))
                 .foregroundColor(.accentColor)
                 .padding(.top, 30)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(SkillL10n.string("Skill Archive URL"))
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundColor(.secondary)
 
                 TextField("https://example.com/skill-bundle.zip", text: $urlString)
@@ -345,7 +345,7 @@ struct SkillImportView: View {
             if isProcessing {
                 ProgressView(SkillL10n.string("Downloading & Inspecting..."))
                 Text(downloadProgressDescription)
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .foregroundStyle(.secondary)
                     .accessibilityIdentifier("hanlin-skill-download-progress")
             }

@@ -39,7 +39,7 @@ struct AgentEvidenceSheet: View {
                                 }
                             } header: {
                                 Text(group.title)
-                                    .font(.headline)
+                                    .font(HanlinTypography.headline)
                             }
                         }
                     }

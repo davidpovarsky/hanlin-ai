@@ -7,18 +7,18 @@ struct ScriptingPackageCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             Image(systemName: package.manifest?.icon ?? "curlybraces.square")
-                .font(.largeTitle)
+                .font(HanlinTypography.largeTitle)
                 .frame(width: 56, height: 56)
                 .background(.tint.opacity(0.16), in: RoundedRectangle(cornerRadius: 14))
             Text(package.manifest?.name ?? package.record.packageID.rawValue)
-                .font(.headline)
+                .font(HanlinTypography.headline)
                 .lineLimit(2)
             Text(package.manifest?.description ?? "Scripting package")
-                .font(.subheadline)
+                .font(HanlinTypography.subheadline)
                 .foregroundStyle(.secondary)
                 .lineLimit(2)
             Label(package.enabled ? "Enabled" : "Disabled", systemImage: package.enabled ? "checkmark.circle" : "pause.circle")
-                .font(.caption)
+                .font(HanlinTypography.caption)
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, minHeight: 180, alignment: .topLeading)

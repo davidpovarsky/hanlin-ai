@@ -16,7 +16,7 @@ struct HanlinA2UIAcceptanceStatusView: View {
             Text(isResponding ? "running" : "idle").accessibilityIdentifier("hanlin-native-a2ui-state")
             Text(conversationID?.uuidString ?? "unavailable").accessibilityIdentifier("hanlin-native-a2ui-chat-id")
         }
-        .font(.caption2)
+        .font(HanlinTypography.caption2)
         .onChange(of: isResponding, initial: true) { _, _ in
             requestCount = HanlinNativeA2UIAcceptanceProvider.observedRequestCount
             failure = HanlinNativeA2UIAcceptanceProvider.lastRequestFailure ?? "none"

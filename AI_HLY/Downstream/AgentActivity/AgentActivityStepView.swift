@@ -12,7 +12,7 @@ struct AgentActivityStepView: View {
             HStack(alignment: .top, spacing: 10) {
                 VStack(spacing: 0) {
                     Image(systemName: iconName)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundStyle(iconColor)
                         .frame(width: 18, height: 18)
                     if !isLast {
@@ -25,12 +25,12 @@ struct AgentActivityStepView: View {
 
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
                     Text(activity.narrativeText ?? activity.title)
-                        .font(.subheadline.weight(activity.status == .running ? .medium : .regular))
+                        .font(HanlinTypography.subheadline.weight(activity.status == .running ? .medium : .regular))
                         .foregroundStyle(activity.status == .failed ? .red : .secondary)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Image(systemName: "chevron.right")
-                        .font(.caption2.weight(.semibold))
+                        .font(HanlinTypography.caption2.weight(.semibold))
                         .foregroundStyle(.tertiary)
                 }
                 .padding(.bottom, 12)

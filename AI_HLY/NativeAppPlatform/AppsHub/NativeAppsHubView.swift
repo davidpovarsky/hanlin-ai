@@ -174,7 +174,7 @@ struct NativeAppsHubView: View {
                 }
             } header: {
                 Text(title)
-                    .font(.title2.bold())
+                    .font(HanlinTypography.title2.bold())
                     .accessibilityIdentifier("hanlin-miniapps-section-\(engine.rawValue)")
             }
         }
@@ -195,7 +195,7 @@ struct NativeAppsHubView: View {
             if isEditingApps {
                 Button { miniAppHost.setHidden(true, appID: item.id) } label: {
                     Image(systemName: "minus.circle.fill")
-                        .font(.title2)
+                        .font(HanlinTypography.title2)
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(.white, .red)
                 }
@@ -204,7 +204,7 @@ struct NativeAppsHubView: View {
             } else {
                 Menu { commonActions(for: item) } label: {
                     Image(systemName: "ellipsis")
-                        .font(.headline)
+                        .font(HanlinTypography.headline)
                         .foregroundStyle(.white)
                         .frame(width: 38, height: 38)
                         .background(.white.opacity(0.18), in: Circle())

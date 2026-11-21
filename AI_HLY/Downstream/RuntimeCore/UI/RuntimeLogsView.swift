@@ -6,7 +6,7 @@ struct RuntimeLogsView: View {
     var body: some View {
         ScrollView {
             Text(text.isEmpty ? RuntimeL10n.string("No runtime logs") : text)
-                .font(.system(.caption, design: .monospaced))
+                .font(HanlinTypography.caption.monospaced())
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .textSelection(.enabled)
                 .padding()

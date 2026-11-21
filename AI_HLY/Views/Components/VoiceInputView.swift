@@ -67,9 +67,9 @@ struct VoiceInputView: View {
                         Image(systemName: "globe")
                         Text(speechRecognizer.selectedLocaleDisplayName)
                         Image(systemName: "chevron.up.chevron.down")
-                            .font(.caption2)
+                            .font(HanlinTypography.caption2)
                     }
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .background(Capsule().fill(Color(.systemGray5)))
@@ -81,7 +81,7 @@ struct VoiceInputView: View {
 
                 if let err = speechRecognizer.errorMessage {
                     Text(err)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.orange)
                         .lineLimit(1)
                 }
@@ -94,12 +94,12 @@ struct VoiceInputView: View {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.orange)
                     Text(reason)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.secondary)
                     Spacer()
                     Button(action: openSettings) {
                         Text(String(localized: "打开“设置”"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .fontWeight(.medium)
                             .foregroundColor(.hlBluefont)
                     }
@@ -110,12 +110,12 @@ struct VoiceInputView: View {
                     Image(systemName: "lock.shield.fill")
                         .foregroundColor(.secondary)
                     Text(String(localized: "语音识别已被系统限制使用"))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.secondary)
                     Spacer()
                     Button(action: openSettings) {
                         Text(String(localized: "打开“设置”"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .fontWeight(.medium)
                             .foregroundColor(.hlBluefont)
                     }
@@ -152,7 +152,7 @@ struct VoiceInputView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 40, height: 40)
-                    .font(.system(size: 40))
+                    .font(HanlinTypography.fixed(size: 40))
                     .foregroundColor(speechRecognizer.isRecording ? .hlRed : isOptimizing ? .gray : .hlBluefont)
                     .padding(12)
                 }
@@ -186,7 +186,7 @@ struct VoiceInputView: View {
                         if isOptimizing {
                             ProgressView()
                                 .frame(width: 40, height: 40)
-                                .font(.system(size: 40))
+                                .font(HanlinTypography.fixed(size: 40))
                                 .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
                                 .padding(.vertical, 12)
                         } else if optimized {
@@ -194,7 +194,7 @@ struct VoiceInputView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
-                                .font(.system(size: 40))
+                                .font(HanlinTypography.fixed(size: 40))
                                 .foregroundColor(.hlBluefont)
                                 .padding(.vertical, 12)
                         } else {
@@ -202,7 +202,7 @@ struct VoiceInputView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
-                                .font(.system(size: 40))
+                                .font(HanlinTypography.fixed(size: 40))
                                 .foregroundColor(speechRecognizer.isRecording ? .gray : .hlBluefont)
                                 .padding(.vertical, 12)
                         }
@@ -233,7 +233,7 @@ struct VoiceInputView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 40, height: 40)
-                        .font(.system(size: 40))
+                        .font(HanlinTypography.fixed(size: 40))
                         .foregroundColor(speechRecognizer.isRecording ? .gray : .hlBluefont)
                         .padding(12)
                 }
@@ -246,7 +246,7 @@ struct VoiceInputView: View {
                     .shadow(color: .hlBlue, radius: 1)
             )
             .padding(.horizontal)
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
 
             Spacer()
         }

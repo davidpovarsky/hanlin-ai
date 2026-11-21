@@ -20,12 +20,12 @@ struct MCPServerToolsView: View {
                 ForEach(tools) { tool in
                     VStack(alignment: .leading, spacing: 4) {
                         Text(tool.title ?? tool.originalName)
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                         Text(tool.exposedName)
-                            .font(.caption.monospaced())
+                            .font(HanlinTypography.caption.monospaced())
                             .foregroundStyle(.secondary)
                         if let summary = tool.summary, !summary.isEmpty {
-                            Text(summary).font(.callout)
+                            Text(summary).font(HanlinTypography.callout)
                         }
                     }
                     .accessibilityElement(children: .combine)

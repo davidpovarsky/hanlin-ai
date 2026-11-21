@@ -30,6 +30,7 @@ final class HanlinA2UIAppPresentation: HanlinAppAgentPresentationConsumer, Hanli
     private var toolRoutes: [HanlinA2UIResultKey: HanlinHostInteractionOrigin] = [:]
     private var toolReceipts: [String: HanlinHostResultEvent] = [:]
     private(set) var toolSource: HanlinA2UIResultProjectionSource?
+    @ObservationIgnored private var synchronizedToolStatus: [UUID: AgentActivityStatus] = [:]
 
     var modelInstructions: String? { HanlinMediaCatalog.modelGuidance }
 
@@ -41,6 +42,7 @@ final class HanlinA2UIAppPresentation: HanlinAppAgentPresentationConsumer, Hanli
     /// Original transcript payloads supply result/call identity. The Host receipt supplies live
     /// authority. Historical payloads are rendered read-only and never manufacture a receipt.
     func synchronizeTools(_ run: AgentRun, isLive: Bool) {
+        var registeredResult = false
         for item in run.transcriptItems where item.kind == .userVisibleToolResult {
             guard toolKeys[item.id] == nil, toolKeys.count < 128,
                   let callID = item.callID,
@@ -58,14 +60,23 @@ final class HanlinA2UIAppPresentation: HanlinAppAgentPresentationConsumer, Hanli
                 }
             }
             toolKeys[item.id] = key
+            registeredResult = true
             if admitted, isLive, let receipt, let binding, let session,
                let origin = try? session.admitHostResultInteraction(receipt, messageID: binding.reference.messageID) {
                 toolRoutes[key] = origin
             } else { toolStore.seal(key) }
         }
-        if run.status == .completed { toolStore.finishRun(run.id) }
-        if run.status == .cancelled || run.status == .failed { toolStore.sealRun(run.id) }
-        toolSource = HanlinA2UIResultProjectionSource(store: toolStore, keys: Array(toolKeys.values))
+        if synchronizedToolStatus[run.id] != run.status || registeredResult {
+            if run.status == .completed { toolStore.finishRun(run.id) }
+            if run.status == .cancelled || run.status == .failed { toolStore.sealRun(run.id) }
+            synchronizedToolStatus[run.id] = run.status
+        }
+        // This source is a stable lookup into the observable store. Its identity
+        // changes only when registrations change, never for an answer token.
+        // The admission loop still checks late real receipts on every event.
+        if registeredResult {
+            toolSource = HanlinA2UIResultProjectionSource(store: toolStore, keys: Array(toolKeys.values))
+        }
     }
 
     func receive(_ event: RendererToAgentMessage, for key: HanlinA2UIResultKey) {
@@ -89,6 +100,7 @@ final class HanlinA2UIAppPresentation: HanlinAppAgentPresentationConsumer, Hanli
             history = nil; rows = [:]; historicalRows = []
             toolStore.discardAll(); toolStore = HanlinA2UIResultStore()
             toolKeys = [:]; toolRoutes = [:]; toolReceipts = [:]; toolSource = nil
+            synchronizedToolStatus = [:]
         }
         if let live { live.invalidate(live.identity) }
         pendingAction = nil
@@ -115,7 +127,7 @@ final class HanlinA2UIAppPresentation: HanlinAppAgentPresentationConsumer, Hanli
             $0.canonicalRunID == binding.canonicalRunID && $0 != binding
         }) else { throw BindingError.ambiguous }
         guard rows[row] != nil || rows.count < 256 else { throw BindingError.resourceLimit }
-        rows[row] = binding
+        if rows[row] != binding { rows[row] = binding }
         _ = try live?.receive(event)
     }
 

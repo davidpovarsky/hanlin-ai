@@ -8,15 +8,21 @@ enum AgentActivityComposer {
       .filter { AgentActivityCompositionPolicy.displayKind(for: $0.kind) != nil }
 
     var groups: [[AgentActivityStep]] = []
+    var groupIndexByCallID: [String: Int] = [:]
     for step in meaningful {
-      if let index = matchingGroupIndex(for: step, in: groups) {
+      if let callID = step.toolCallID, let index = groupIndexByCallID[callID] {
         groups[index].append(step)
       } else {
+        if let callID = step.toolCallID { groupIndexByCallID[callID] = groups.count }
         groups.append([step])
       }
     }
 
-    var activities = groups.compactMap(makeActivity)
+    let approvals = Dictionary(run.approvals.map { ($0.callID, $0) },
+      uniquingKeysWith: { _, latest in latest })
+    var activities = groups.compactMap { steps in
+      makeActivity(steps, approval: steps.first?.toolCallID.flatMap { approvals[$0] })
+    }
     activities = removeNarrativeDuplicates(activities)
 
     let duration = run.completedAt.map { max(0, $0.timeIntervalSince(run.startedAt)) }
@@ -39,18 +45,6 @@ enum AgentActivityComposer {
     return ProgressSummarySanitizer.sanitizeProviderReasoningSummary(candidate) ?? activity.title
   }
 
-  private static func matchingGroupIndex(
-    for step: AgentActivityStep, in groups: [[AgentActivityStep]]
-  ) -> Int? {
-    if let callID = step.toolCallID,
-      let exact = groups.lastIndex(where: { group in group.contains { $0.toolCallID == callID } }) {
-      return exact
-    }
-    // Historical records without correlation remain separate. Equal names,
-    // arguments and nearby timestamps do not establish operation ownership.
-    return nil
-  }
-
   private static func lifecycleKey(_ step: AgentActivityStep) -> String {
     step.toolCallID ?? step.externalID ?? step.id.uuidString
   }
@@ -59,7 +53,7 @@ enum AgentActivityComposer {
     AgentActivityDeduplicator.normalized(step.input)
   }
 
-  private static func makeActivity(_ steps: [AgentActivityStep]) -> AgentDisplayActivity? {
+  private static func makeActivity(_ steps: [AgentActivityStep], approval: AgentToolApproval?) -> AgentDisplayActivity? {
     guard let first = steps.first else { return nil }
     let kind: AgentDisplayActivityKind
     if let presentationKind = first.presentationProfile?.activity.kind {
@@ -69,7 +63,15 @@ enum AgentActivityComposer {
     } else {
       return nil
     }
-    let status = combinedStatus(steps)
+    var status = combinedStatus(steps)
+    if !steps.contains(where: \.isExecutionLifecycleStep), let approval {
+      // A parsed call or an approval receipt is not a successful execution.
+      // Once execution exists, its real lifecycle determines the outcome.
+      switch approval.disposition {
+      case .awaiting, .providerRequired, .allowedOnce: status = .pending
+      case .notApproved: status = .cancelled
+      }
+    }
     let queries = AgentActivityDeduplicator.uniqueStrings(
       steps.flatMap(\.queryItems) + steps.compactMap { query(from: $0.input) }
     )
@@ -181,14 +183,22 @@ enum AgentActivityComposer {
   {
     var result: [AgentDisplayActivity] = []
     var seenNarratives = Set<String>()
+    // Find the next real activity once, rather than scanning the remaining
+    // transcript separately for every progress update.
+    var nextToolTitles = Array<String?>(repeating: nil, count: activities.count)
+    var nextToolTitle: String?
+    for index in activities.indices.reversed() {
+      nextToolTitles[index] = nextToolTitle
+      if activities[index].kind != .narrative {
+        nextToolTitle = AgentActivityDeduplicator.normalized(activities[index].title)
+      }
+    }
     for (index, activity) in activities.enumerated() {
       if activity.kind == .narrative {
         guard let key = AgentActivityDeduplicator.normalized(activity.narrativeText),
           !seenNarratives.contains(key)
         else { continue }
-        let nextToolTitle = activities.dropFirst(index + 1).first(where: { $0.kind != .narrative })?
-          .title
-        if key == AgentActivityDeduplicator.normalized(nextToolTitle) { continue }
+        if key == nextToolTitles[index] { continue }
         seenNarratives.insert(key)
       }
       result.append(activity)

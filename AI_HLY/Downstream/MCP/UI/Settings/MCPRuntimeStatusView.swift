@@ -19,7 +19,7 @@ struct MCPRuntimeStatusView: View {
         }
         LabeledContent(MCPL10n.string("Active workers"), value: "\(snapshot.activeWorkerCount)")
         if let message = snapshot.message {
-            Text(message).font(.caption).foregroundStyle(.red)
+            Text(message).font(HanlinTypography.caption).foregroundStyle(.red)
         }
     }
 

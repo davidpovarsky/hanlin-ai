@@ -2179,6 +2179,81 @@ private final class ProviderCredentialTestFixture {
     }
     #endif
 
+    @Test func cachedSearchCatalogKeepsOriginalRoutesAndInvalidatesChangedSchemasBeforeDispatch() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Search catalog", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id)
+        let ns = try HanlinConversationNamespace(app: "hanlin", account: "a", workspace: "w", space: id.uuidString)
+        let identity = HanlinHostSession(conversationID: id, context: .init(namespace: ns, sceneID: UUID(), generation: UUID()))
+        let store = HanlinAppConversationStore(context: context, conversation: row, namespace: ns, conversationID: id, temporary: false)
+        let search = try #require(LegacyToolCanonicalAdapter.sources(memoryEnabled: false, mapEnabled: false,
+            calendarEnabled: false, searchEnabled: true, knowledgeEnabled: false, codeEnabled: false,
+            healthEnabled: false, weatherEnabled: false, canvasEnabled: false).first { $0.toolName == "search_online" })
+        let authority = try HanlinCanonicalToolAuthority.build(nativeSources: [], mcpTools: [], legacySources: [search])
+        var calls: [String] = [], current = true
+        let executors = AssistantToolBridge.Executors(executeNative: { _, _, _, _ in
+            Issue.record("Search escaped its original legacy route")
+            return NativeToolResult(modelText: "Unexpected route", outcome: .failed)
+        }, executeScripting: { _, _ in
+            Issue.record("Search escaped its original legacy route")
+            return NativeToolResult(modelText: "Unexpected route", outcome: .failed)
+        }, executeLegacy: { alias, arguments, _ in
+            #expect(alias == "search_online")
+            calls.append(arguments)
+            return NativeToolResult(modelText: "Search receipt", outcome: .succeeded)
+        })
+        let adapter = HanlinAISDKToolAdapter(session: .init(chatID: id.uuidString, isTemporaryChat: true),
+            preparedTools: .init(authority: authority, executors: executors, legacySources: [search]))
+        let host = HanlinAppHostIntegration(identity: identity, store: store, isCurrent: { current })
+        host.toolAdapter = adapter
+        host.confirmInvocation = { _ in true }
+        let catalog = try await host.catalog(for: identity.context)
+        for _ in 0..<8 {
+            #expect(try await host.catalog(for: identity.context).revision == catalog.revision)
+        }
+        let dispatcher = HanlinHostDispatcher(host: host)
+        let input = #"{"query":"חדשות בישראל 🙂","progress_summary":"מחפש מקורות","result_presentation":"card"}"#
+        let result = try await dispatcher.dispatchEvent(alias: "search_online", argumentsJSON: input,
+            providerCallID: "search-original", runID: UUID(), step: 0, session: identity, catalog: catalog, limits: .init())
+        #expect(result.result.effectState == .confirmedCommitted && calls.count == 1)
+        try HanlinHostSchemaValidation.requireSameValue(originalJSON: Data(input.utf8),
+            projectedJSON: Data(try #require(calls.first).utf8),
+            removingMetadataKeys: [ToolSchemaDecorator.progressSummaryKey, ToolSchemaDecorator.resultPresentationKey])
+
+        var changedSchema = search.modelSchema
+        var function = try #require(changedSchema["function"] as? [String: Any])
+        function["parameters"] = ["type": "object", "properties": ["query": ["type": "integer"]], "required": ["query"]]
+        changedSchema["function"] = function
+        let changedSource = HanlinCanonicalToolAuthority.LegacySource(descriptor: search.descriptor,
+            preferredAlias: search.preferredAlias, modelSchema: changedSchema, toolName: search.toolName,
+            presentationProfile: search.presentationProfile, resultTitle: search.resultTitle)
+        let changedAuthority = try HanlinCanonicalToolAuthority.build(nativeSources: [], mcpTools: [], legacySources: [changedSource])
+        adapter.preparedTools = .init(authority: changedAuthority, executors: executors, legacySources: [changedSource])
+        let changedCatalog = try await host.catalog(for: identity.context)
+        #expect(changedCatalog.revision != catalog.revision)
+        let stale = try await dispatcher.dispatchEvent(alias: "search_online", argumentsJSON: input,
+            providerCallID: "stale-search", runID: UUID(), step: 0, session: identity, catalog: catalog, limits: .init())
+        #expect(stale.result.effectState == .notDispatched && calls.count == 1)
+
+        // A change while the user reviews the request must invalidate the cached route too.
+        adapter.preparedTools = .init(authority: authority, executors: executors, legacySources: [search])
+        let restored = try await host.catalog(for: identity.context)
+        #expect(restored.revision == catalog.revision)
+        host.confirmInvocation = { _ in
+            adapter.preparedTools = .init(authority: changedAuthority, executors: executors, legacySources: [changedSource])
+            return true
+        }
+        let changedDuringReview = try await dispatcher.dispatchEvent(alias: "search_online", argumentsJSON: input,
+            providerCallID: "changed-during-review", runID: UUID(), step: 0, session: identity, catalog: restored, limits: .init())
+        #expect(changedDuringReview.result.effectState == .notDispatched && calls.count == 1)
+        current = false
+        do {
+            _ = try await host.catalog(for: identity.context)
+            Issue.record("Cached catalog bypassed the original conversation check")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+    }
+
     @Test func appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome() async throws {
         for (nativeOutcome, approved, expires) in [(NativeToolExecutionOutcome.succeeded, true, false),
             (.rejectedByCapability, true, false), (.failed, true, false), (.succeeded, false, false), (.succeeded, true, true)] {

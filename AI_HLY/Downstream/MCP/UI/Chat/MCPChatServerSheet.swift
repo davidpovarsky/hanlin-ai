@@ -34,10 +34,10 @@ struct MCPChatServerSheet: View {
                                 Text(server.displayName)
                                 if selected.contains(server.id) {
                                     Text(MCPL10n.string("Selected for this chat"))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                 }
                                 Text(statusText(for: server))
-                                    .font(.caption).foregroundStyle(.secondary)
+                                    .font(HanlinTypography.caption).foregroundStyle(.secondary)
                             }
                         }
                     }

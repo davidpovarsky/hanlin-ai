@@ -8,6 +8,7 @@
 //
 
 import SwiftUI
+import HanlinPresentationKit
 import UniformTypeIdentifiers
 import UIKit
 
@@ -111,7 +112,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
     }
 
     public static func automaticHeightBounds(for textView: UITextView, isEmpty: Bool, availableHeight: CGFloat) -> (min: CGFloat, max: CGFloat) {
-        let font = textView.font ?? UIFont.preferredFont(forTextStyle: .body)
+        let font = textView.font ?? HanlinTypography.uiFont(.body)
         let insets = textView.textContainerInset.top + textView.textContainerInset.bottom
         // This is only the one/two-line minimum. The six-line maximum comes
         // from actual visual fragments in automaticLimit, not this estimate.
@@ -163,15 +164,18 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             var ranges: [Range<Int>] = []
             var validRanges = true
             var lastBottom: CGFloat = 0
+            var expectedStart = 0
+            var reachedVisibleLimit = false
             manager.enumerateTextLayoutFragments(from: nil, options: [.ensuresLayout, .ensuresExtraLineFragment]) { fragment in
                 let range = fragment.rangeInElement
                 let start = content.offset(from: document.location, to: range.location)
                 let end = content.offset(from: document.location, to: range.endLocation)
-                guard start >= 0, end >= start, end <= documentLength else {
+                guard start == expectedStart, end >= start, end <= documentLength else {
                     validRanges = false
                     return false
                 }
                 ranges.append(start..<end)
+                expectedStart = end
                 guard start == end || !fragment.textLineFragments.isEmpty else {
                     validRanges = false
                     return false
@@ -183,14 +187,19 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
                         return false
                     }
                     lastBottom = bottom
-                    if count < 7 { count += 1 }
-                    if count == 6 {
-                        sixthBottom = bottom
+                    count += 1
+                    if count == 6 { sixthBottom = bottom }
+                    if count == 7 {
+                        // A contiguous prefix with seven native visual lines is
+                        // sufficient to cap the editor at six. Do not lay out
+                        // and enumerate every following paragraph per keystroke.
+                        reachedVisibleLimit = true
+                        return false
                     }
                 }
                 return true
             }
-            guard validRanges, Self.hasContiguousCoverage(ranges, documentLength: documentLength) else {
+            guard validRanges, reachedVisibleLimit || Self.hasContiguousCoverage(ranges, documentLength: documentLength) else {
                 observeDiagnostic?("invalid/partial fragments valid=\(validRanges) ranges=\(ranges) documentLength=\(documentLength) counted=\(count)")
                 return (0, nil, false)
             }
@@ -311,7 +320,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
     public func makeUIView(context: Context) -> MultilineInnerTextView {
         let textView = MultilineInnerTextView()
         textView.delegate = context.coordinator
-        textView.font = UIFont.preferredFont(forTextStyle: .body)
+        textView.font = HanlinTypography.uiFont(.body)
         textView.adjustsFontForContentSizeCategory = true
         textView.backgroundColor = .clear
         textView.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
@@ -350,16 +359,11 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
         context.coordinator.synchronizeText(in: uiView)
 
-        let editorIsEmpty = uiView.textColor == .placeholderText || (uiView.text ?? "").isEmpty
-        let clampedHeight = measuredHeight(for: uiView, isEmpty: editorIsEmpty)
-        if abs(textHeight - clampedHeight) > 1 {
-            DispatchQueue.main.async {
-                self.textHeight = clampedHeight
-            }
-        }
+        context.coordinator.updateHeight(in: uiView, deferred: true)
     }
 
     public static func dismantleUIView(_ uiView: MultilineInnerTextView, coordinator: Coordinator) {
+        coordinator.detach()
         coordinator.parent.onLifecycleEvent?(uiView, .detached)
     }
 
@@ -380,6 +384,74 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         private var lastSynchronizedTextState: TextState?
         private var pendingVersionedEcho: PendingVersionedEcho?
         private var isRebindingOwner = false
+        private var isAttached = true
+        private var measurementGeneration: UInt64 = 0
+        private var heightUpdateTask: Task<Void, Never>?
+        private struct MeasurementKey: Equatable {
+            let generation: UInt64
+            let width: CGFloat
+            let minimum: CGFloat
+            let maximum: CGFloat
+            let automatic: Bool
+            let isEmpty: Bool
+            let font: UIFont?
+            let insets: UIEdgeInsets
+        }
+        private var cachedMeasurement: (key: MeasurementKey, height: CGFloat, scrolling: Bool)?
+
+        private func measurementKey(for textView: UITextView) -> MeasurementKey {
+            MeasurementKey(generation: measurementGeneration,
+                width: NativeMultilineTextEditor.effectiveMeasurementWidth(for: textView),
+                minimum: parent.minHeight, maximum: parent.maxHeight,
+                automatic: parent.usesAutomaticLineLimits,
+                isEmpty: textView.textColor == .placeholderText || (textView.text ?? "").isEmpty,
+                font: textView.font, insets: textView.textContainerInset)
+        }
+
+        private func invalidateMeasurement() {
+            measurementGeneration &+= 1
+            cachedMeasurement = nil
+            heightUpdateTask?.cancel()
+            heightUpdateTask = nil
+        }
+
+        fileprivate func detach() {
+            isAttached = false
+            invalidateMeasurement()
+        }
+
+        /// A native edit and its SwiftUI acknowledgement share one measurement.
+        /// Unrelated streaming/tool updates cannot force the same TextKit layout.
+        fileprivate func updateHeight(in textView: UITextView, deferred: Bool) {
+            let key = measurementKey(for: textView)
+            let height: CGFloat
+            if let cachedMeasurement, cachedMeasurement.key == key {
+                height = cachedMeasurement.height
+                if textView.isScrollEnabled != cachedMeasurement.scrolling {
+                    textView.isScrollEnabled = cachedMeasurement.scrolling
+                }
+            } else {
+                height = parent.measuredHeight(for: textView, isEmpty: key.isEmpty)
+                cachedMeasurement = (key, height, textView.isScrollEnabled)
+            }
+            heightUpdateTask?.cancel()
+            heightUpdateTask = nil
+            guard abs(parent.textHeight - height) > 1 else { return }
+            if !deferred {
+                parent.textHeight = height
+                return
+            }
+            // Never write SwiftUI state during updateUIView. Re-check the native
+            // owner/layout after yielding so an old measurement cannot resize a
+            // replacement conversation, or a view already removed from the tree.
+            heightUpdateTask = Task { @MainActor [weak self, weak textView] in
+                await Task.yield()
+                guard !Task.isCancelled, let self, let textView, self.isAttached,
+                      self.measurementKey(for: textView) == key else { return }
+                if abs(self.parent.textHeight - height) > 1 { self.parent.textHeight = height }
+                self.heightUpdateTask = nil
+            }
+        }
         #if DEBUG || HANLIN_TESTING
         private let editDiagnosticsEnabled = ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1"
         private var editDiagnosticSequence = 0
@@ -408,6 +480,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         /// A pending edit belongs to the old owner even when A and B contain
         /// identical strings. An intervening authoritative write wins over it.
         public func rebind(to newParent: NativeMultilineTextEditor, in textView: UITextView) {
+            isAttached = true
             let oldOwner = parent.currentTextState?.ownerID
             let newOwner = newParent.currentTextState?.ownerID
             guard oldOwner != newOwner else {
@@ -416,6 +489,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             }
 
             isRebindingOwner = true
+            invalidateMeasurement()
             defer { isRebindingOwner = false }
             // UIKit's unmarkText finishes the existing composition. Keep its
             // original owner installed until the native value is committed.
@@ -511,6 +585,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
                 #endif
                 let selection = textView.selectedRange
                 textView.text = desired
+                invalidateMeasurement()
                 if isEditing {
                     let count = (desired as NSString).length
                     let start = min(selection.location, count)
@@ -527,6 +602,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             if textView.textColor == .placeholderText {
                 textView.text = ""
                 textView.textColor = .label
+                invalidateMeasurement()
             }
             #if DEBUG || HANLIN_TESTING
             traceEdit("focus-begin", in: textView)
@@ -545,10 +621,12 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             if parent.currentText.isEmpty {
                 textView.text = parent.placeholderText
                 textView.textColor = .placeholderText
+                invalidateMeasurement()
             }
         }
 
         public func textViewDidChange(_ textView: UITextView) {
+            invalidateMeasurement()
             guard !isRebindingOwner, textView.markedTextRange == nil else { return }
             // An explicit clear/replacement can arrive before the delegate for
             // an older native mutation. Do not resurrect that older value.
@@ -568,10 +646,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
                 if changed && nativeText.hasSuffix("@") {
                     parent.onMentionTriggered?()
                 }
-                let clampedHeight = parent.measuredHeight(for: textView, isEmpty: textView.text.isEmpty)
-                if abs(parent.textHeight - clampedHeight) > 1 {
-                    parent.textHeight = clampedHeight
-                }
+                updateHeight(in: textView, deferred: false)
             }
         }
 
@@ -589,7 +664,8 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             let ns = raw as NSString
             if let match = Self.matchContaining(index: range.location, in: raw) {
                 textView.text = ns.replacingCharacters(in: match.range, with: "")
-                publishNativeTextIfChanged(textView.text ?? "")
+                textView.selectedRange = NSRange(location: match.range.location, length: 0)
+                textViewDidChange(textView)
                 return false
             }
             return true

@@ -29,13 +29,13 @@ struct UserInfoView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "person")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "设定个性化内容，使得模型在对话时了解你的需求与偏好，更好的进行回复。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -184,12 +184,12 @@ struct VersionInfoView: View {
                     .cornerRadius(20)
                     
                 Text(Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "Hanlin")
-                    .font(.largeTitle)
+                    .font(HanlinTypography.largeTitle)
                     .bold()
                     .foregroundColor(.primary)
                 
                 Text("版本：\(getAppVersion())")
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
@@ -199,17 +199,17 @@ struct VersionInfoView: View {
                     .background(Color.gray.opacity(0.5))
                 
                 Text(String(localized: "软件含有AI生成信息，请注意鉴别"))
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
                 Text(String(localized: "本软件对生成结果不负有任何责任"))
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
                 Text(String(localized: "Thank you for using Hanlin"))
-                    .font(.footnote)
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
@@ -217,11 +217,11 @@ struct VersionInfoView: View {
                 
                 VStack(spacing: 8) {
                     Text(String(localized: "项目创建于2025年2月·新加坡"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .foregroundColor(.secondary)
                     
                     Text(String(localized: "© 2026 Hylic.AI 保留所有权利"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .foregroundColor(.secondary)
                 }
             }
@@ -262,13 +262,13 @@ struct SelectEmbeddingModelView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "compass.drawing")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "向量模型将被用于知识背包文档索引的构建与知识背包查找功能，优秀的向量模型能带来精确、全面的查找效果，提高信息的召回率。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -284,7 +284,7 @@ struct SelectEmbeddingModelView: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             Text(model.displayName)
-                                .font(.body)
+                                .font(HanlinTypography.body)
                         }
                         
                         Spacer()
@@ -292,11 +292,11 @@ struct SelectEmbeddingModelView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             if model.price > 0 {
                                 Text("¥\(String(format: "%.4f", model.price))/Ktokens")
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.orange)
                             } else {
                                 Text(String(localized: "免费"))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.green)
                             }
                         }
@@ -397,13 +397,13 @@ struct SelectTTSModelView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "waveform")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "语音模型将用于合成语音。选择 Siri 模型可使用本地合成，而选择大模型合成将通过 API 请求生成语音，后者需要配置有效的 API Key。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -421,7 +421,7 @@ struct SelectTTSModelView: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             Text(model.displayName)
-                                .font(.body)
+                                .font(HanlinTypography.body)
                         }
                         
                         Spacer()
@@ -429,11 +429,11 @@ struct SelectTTSModelView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             if model.price > 0 {
                                 Text(String(format: String(localized: "¥%.4f/分钟"), model.price))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.orange)
                             } else {
                                 Text(String(localized: "免费"))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.green)
                             }
                         }
@@ -579,13 +579,13 @@ struct UpdateNoteCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) { // 确保 VStack 内部左对齐
             Text(note.version)
-                .font(.title3)
+                .font(HanlinTypography.title3)
                 .bold()
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity, alignment: .leading) // 强制左对齐
 
             Text(note.releaseDate)
-                .font(.subheadline)
+                .font(HanlinTypography.subheadline)
                 .foregroundColor(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading) // 强制左对齐
 
@@ -628,13 +628,13 @@ struct GeneralSettingsView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "gearshape")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
 
                     Text(String(localized: "通用设置包含语言和触感反馈等基础配置项。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -722,13 +722,13 @@ struct SelectOptimizationModelView: View {
                 
                 VStack(alignment: .center) {
                     Image(systemName: "paintbrush.pointed")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "文本优化模型将被广泛用于软件的提示词优化、文章内容优化、联网搜索提问优化、知识背包检索优化、图片生成提示词优化、自动生成群聊标题、自动生成智能体设定、翻译文本等功能上，优秀的文本优化模型能带来更好的产品体验。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -753,16 +753,16 @@ struct SelectOptimizationModelView: View {
                             HStack {
                                 if model.supportsMultimodal {
                                     Text(String(localized: "视觉"))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.teal)
                                 } else {
                                     Text(String(localized: "文本"))
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.gray)
                                 }
                                 
                                 Text(priceText(for: model.price))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(priceColor(for: model.price))
                             }
                         }
@@ -775,13 +775,13 @@ struct SelectOptimizationModelView: View {
             Section(header: Text(String(localized: "视觉优化模型"))) {
                 VStack(alignment: .center) {
                     Image(systemName: "paintbrush")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "视觉优化模型将被广泛用于软件的联网搜索提问优化、知识背包检索优化、图片生成提示词优化、OCR扫描文本、文本及推理模型分析图片等功能上，优秀的视觉优化模型能带来更好的产品体验。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -804,11 +804,11 @@ struct SelectOptimizationModelView: View {
                             }
                             HStack {
                                 Text(String(localized: "视觉"))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.teal)
                                 
                                 Text(priceText(for: model.price))
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(priceColor(for: model.price))
                             }
                         }

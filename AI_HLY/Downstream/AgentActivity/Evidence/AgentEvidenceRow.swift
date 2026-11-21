@@ -9,24 +9,24 @@ struct AgentEvidenceRow: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: iconName)
-                .font(.system(size: 17, weight: .medium))
+                .font(HanlinTypography.fixed(size: 17, weight: .medium))
                 .foregroundStyle(.secondary)
                 .frame(width: 28, height: 28)
 
             VStack(alignment: .leading, spacing: 5) {
                 Text(item.title)
-                    .font(.subheadline.weight(.semibold))
+                    .font(HanlinTypography.subheadline.weight(.semibold))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .textSelection(.enabled)
                 if let metadataText {
                     Text(metadataText)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundStyle(.secondary)
                         .textSelection(.enabled)
                 }
                 if let snippet = item.snippet, !snippet.isEmpty {
                     Text(snippet)
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .foregroundStyle(.secondary)
                         .lineLimit(3)
                         .textSelection(.enabled)
@@ -39,7 +39,7 @@ struct AgentEvidenceRow: View {
                         Button(copyTitle) { UIPasteboard.general.string = copyValue }
                     }
                 }
-                .font(.caption.weight(.medium))
+                .font(HanlinTypography.caption.weight(.medium))
                 .buttonStyle(.plain)
                 .frame(minHeight: 44)
             }

@@ -126,8 +126,8 @@ private struct HanlinCanvasLibraryView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text((record.canvas?.title.isEmpty == false ? record.canvas?.title : nil) ?? String(localized: "Canvas"))
                     Text(record.name ?? String(localized: "Chat"))
-                        .font(.caption).foregroundStyle(.secondary)
-                    Text("Open in conversation").font(.caption2).foregroundStyle(.secondary)
+                        .font(HanlinTypography.caption).foregroundStyle(.secondary)
+                    Text("Open in conversation").font(HanlinTypography.caption2).foregroundStyle(.secondary)
                 }
             }
             .accessibilityIdentifier("hanlin-library-canvas-\(record.id?.uuidString ?? "unavailable")")

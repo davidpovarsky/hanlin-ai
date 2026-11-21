@@ -210,7 +210,7 @@ struct ModelsView: View {
         guard let displayName = model.displayName, !displayName.isEmpty else {
             return AnyView(
                 Text("Unknown")
-                    .font(.headline)
+                    .font(HanlinTypography.headline)
                     .foregroundColor(.primary)
             )
         }
@@ -247,7 +247,7 @@ struct ModelsView: View {
         // 返回富文本视图
         return AnyView(
             Text(attributedName)
-                .font(.headline)
+                .font(HanlinTypography.headline)
         )
     }
     
@@ -406,7 +406,7 @@ struct ModelRowView: View {
                         if model.identity == "agent" {
                             let baseName = restoreBaseModelName(from: model.name ?? "Unknown")
                             Text("基于\(baseName)模型")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.gray)
                         }
                     }
@@ -415,46 +415,46 @@ struct ModelRowView: View {
                     
                     if model.supportsToolUse {
                         Text(String(localized: "工具"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlBrown)
                     }
                     
                     if model.supportsMultimodal {
                         Text(String(localized: "视觉"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlTeal)
                     } else if model.supportsTextGen {
                         Text(String(localized: "文本"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                     }
                     
                     if model.hasVerifiedImageOutput {
                         Text(String(localized: "生图"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlGreen)
                     }
                     
                     if model.supportsVoiceGen {
                         Text(String(localized: "语音"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlPink)
                     }
                     
                     if model.supportsReasoning {
                         Text(String(localized: "思考"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlPurple)
                     }
                     
                     if model.company?.uppercased() == "LOCAL" {
                         Text(String(localized: "本地"))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.hlOrange)
                     }
                     
                     Text(model.catalogPriceDescription ?? priceText(model.catalogPriceTier))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(priceColor(model.catalogPriceTier))
                 }
             }

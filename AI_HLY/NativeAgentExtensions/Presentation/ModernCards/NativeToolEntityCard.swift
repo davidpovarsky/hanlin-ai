@@ -17,7 +17,7 @@ struct NativeToolEntityCard: View {
             VStack(alignment: .leading, spacing: 10) {
                 if let body = block.body, !body.isEmpty {
                     Text(body)
-                        .font(.body)
+                        .font(HanlinTypography.body)
                         .lineLimit(block.compactLineLimit ?? 4)
                         .textSelection(.enabled)
                 }
@@ -28,11 +28,11 @@ struct NativeToolEntityCard: View {
                             .multilineTextAlignment(.leading)
                             .lineLimit(2)
                     }
-                    .font(.subheadline)
+                    .font(HanlinTypography.subheadline)
                 }
                 if let footnote = block.footnote, !footnote.isEmpty {
                     Text(footnote)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundStyle(.secondary)
                         .lineLimit(2)
                 }

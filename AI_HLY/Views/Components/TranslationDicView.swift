@@ -34,13 +34,13 @@ struct TranslationDicView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "character.book.closed")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.hlBluefont)
                         .padding()
                     
                     Text(String(localized: "自定义翻译词典将使得“即时翻译”的翻译结果变得更加个性化，特别是对于某些私有化的翻译知识而言，在翻译词典中添加搭配能最快速的优化你的翻译结果。"))
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -85,11 +85,11 @@ struct TranslationDicView: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(entry.contentOne ?? "")
                             Image(systemName: "arrow.up.arrow.down")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.secondary)
                             Text(entry.contentTwo ?? "")
                             Text("更新时间：\(entry.timestamp, formatter: dateFormatter)")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.secondary)
                         }
                         .padding(.vertical, 4)

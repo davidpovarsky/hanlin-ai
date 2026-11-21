@@ -34,7 +34,7 @@ public struct OpenUIBlock: View {
                     .accessibilityHidden(target == .swiftui)
                     .allowsHitTesting(target == .react)
                 if let error = runtime.error {
-                    Text(error).font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+                    Text(error).font(HanlinTypography.caption).foregroundStyle(.secondary).textSelection(.enabled)
                 }
             }
             .accessibilityElement(children: .contain)

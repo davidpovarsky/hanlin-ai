@@ -132,7 +132,7 @@ struct HanlinModelPickerPopover: View {
                 compactRootPage
                     .transition(rootPageTransition)
             } else {
-                morphSurface(cornerRadius: 22)
+                morphSurface(cornerRadius: HanlinControlMetrics.popoverCornerRadius)
                     .transition(.identity)
                 allModelsDestinationPage
                     .transition(allModelsPageTransition)
@@ -198,13 +198,13 @@ struct HanlinModelPickerPopover: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Label(String(localized: "Select Model"), systemImage: "cpu")
-                    .font(.subheadline.weight(.semibold))
+                    .font(HanlinTypography.subheadline.weight(.semibold))
                     .foregroundStyle(accentColor)
                 Spacer()
                 if models.indices.contains(selectedModelIndex),
                    let current = models[safe: selectedModelIndex] {
                     Text(current.company ?? "")
-                        .font(.caption2.weight(.medium))
+                        .font(HanlinTypography.caption2.weight(.medium))
                         .foregroundStyle(.secondary)
                         .padding(.horizontal, 7)
                         .padding(.vertical, 3)
@@ -236,7 +236,7 @@ struct HanlinModelPickerPopover: View {
                 }
 
                 Divider()
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, HanlinControlMetrics.pageInset)
                     .padding(.vertical, 4)
 
                 // Repaired single Button calling completion-ordered pushModelSubroute (§4.8)
@@ -246,27 +246,27 @@ struct HanlinModelPickerPopover: View {
                 } label: {
                     HStack(spacing: 10) {
                         Image(systemName: "square.grid.2x2")
-                            .font(.subheadline.weight(.medium))
+                            .font(HanlinTypography.subheadline.weight(.medium))
                             .foregroundStyle(accentColor)
-                            .frame(width: 24, height: 24)
+                            .frame(width: HanlinControlMetrics.iconSize, height: HanlinControlMetrics.iconSize)
                             .background(accentColor.opacity(0.12), in: Circle())
 
                         Text(String(format: String(localized: "All Models (%lld)"), visibleIndices.count))
-                            .font(.subheadline.weight(.medium))
+                            .font(HanlinTypography.subheadline.weight(.medium))
                             .foregroundStyle(.primary)
 
                         Spacer(minLength: 4)
 
                         Image(systemName: "chevron.forward")
-                            .font(.caption.weight(.semibold))
+                            .font(HanlinTypography.caption.weight(.semibold))
                             .foregroundStyle(.secondary)
                     }
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, HanlinControlMetrics.pageInset)
                     .padding(.vertical, 9)
-                    .contentShape(.rect(cornerRadius: 12))
+                    .contentShape(.rect(cornerRadius: HanlinControlMetrics.rowCornerRadius))
                 }
                 .buttonStyle(.plain)
-                .background { morphSurface(cornerRadius: 12) }
+                .background { morphSurface(cornerRadius: HanlinControlMetrics.rowCornerRadius) }
                 .disabled(coordinator.isModelAnimatingExpand)
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)
@@ -278,16 +278,18 @@ struct HanlinModelPickerPopover: View {
     // MARK: - Stage 2: Expanded All Models Page (Provider Sections)
 
     private var allModelsDestinationPage: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 8) {
+        let groups = providerGroups
+        let resultCount = groups.reduce(0) { $0 + $1.indices.count }
+        return VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: HanlinControlMetrics.rowSpacing) {
                 Button {
                     coordinator.popModelSubroute(reduceMotion: reduceMotion)
                 } label: {
                     HStack(spacing: 4) {
                         Image(systemName: "chevron.backward")
-                            .font(.subheadline.weight(.semibold))
+                            .font(HanlinTypography.subheadline.weight(.semibold))
                         Text(String(localized: "Back"))
-                            .font(.subheadline.weight(.medium))
+                            .font(HanlinTypography.subheadline.weight(.medium))
                     }
                     .foregroundStyle(accentColor)
                     .padding(.horizontal, 8)
@@ -299,49 +301,32 @@ struct HanlinModelPickerPopover: View {
 
                 Spacer()
 
-                Text(String(format: String(localized: "All Models (%lld)"), filteredAllIndices.count))
-                    .font(.subheadline.weight(.semibold))
+                Text(String(format: String(localized: "All Models (%lld)"), resultCount))
+                    .font(HanlinTypography.subheadline.weight(.semibold))
                     .foregroundStyle(.primary)
 
                 Spacer()
                 Color.clear.frame(width: 48, height: 24)
             }
-            .padding(.horizontal, 12)
+            .padding(.horizontal, HanlinControlMetrics.pageInset)
             .padding(.top, 10)
             .padding(.bottom, 6)
 
-            // Search bar
-            HStack(spacing: 6) {
-                Image(systemName: "magnifyingglass")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                TextField(String(localized: "Search models"), text: $searchText)
-                    .font(.footnote)
-                    .textFieldStyle(.plain)
-                    .accessibilityIdentifier("hanlin-model-picker-search")
-                if !searchText.isEmpty {
-                    Button {
-                        searchText = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 7)
-            .background(Color(.secondarySystemFill), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
-            .padding(.horizontal, 12)
+            HanlinSearchField(
+                text: $searchText,
+                prompt: String(localized: "Search models"),
+                accessibilityIdentifier: "hanlin-model-picker-search",
+                tint: accentColor
+            )
+            .padding(.horizontal, HanlinControlMetrics.pageInset)
             .padding(.bottom, 6)
 
             ScrollView(.vertical, showsIndicators: true) {
                 LazyVStack(alignment: .leading, spacing: 10) {
-                    ForEach(providerGroups) { group in
+                    ForEach(groups) { group in
                         VStack(alignment: .leading, spacing: 4) {
                             Text(group.provider)
-                                .font(.system(size: 11, weight: .semibold))
+                                .font(HanlinTypography.caption2.weight(.semibold))
                                 .foregroundStyle(.secondary)
                                 .padding(.horizontal, 10)
                                 .padding(.top, 2)
@@ -358,7 +343,6 @@ struct HanlinModelPickerPopover: View {
                 .padding(.bottom, 10)
             }
         }
-        .accessibilityElement(children: .contain)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-all-models-page")
     }
@@ -383,7 +367,7 @@ struct HanlinModelPickerPopover: View {
 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(model.displayName ?? model.name ?? "Unknown")
-                        .font(.subheadline.weight(isSelected ? .semibold : .regular))
+                        .font(HanlinTypography.subheadline.weight(isSelected ? .semibold : .regular))
                         .foregroundStyle(isSelected ? accentColor : .primary)
                         .lineLimit(1)
                         .truncationMode(.middle)
@@ -395,17 +379,17 @@ struct HanlinModelPickerPopover: View {
 
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.subheadline)
+                        .font(HanlinTypography.subheadline)
                         .foregroundStyle(accentColor)
                 }
             }
             .padding(.horizontal, 10)
             .padding(.vertical, compact ? 7 : 8)
             .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous)
                     .fill(isSelected ? accentColor.opacity(0.12) : Color.clear)
             )
-            .contentShape(.rect(cornerRadius: 12))
+            .contentShape(.rect(cornerRadius: HanlinControlMetrics.rowCornerRadius))
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("hanlin-model-picker-option-\(index)")
@@ -415,7 +399,7 @@ struct HanlinModelPickerPopover: View {
     private func modelIconView(for model: AllModels) -> some View {
         if model.id == Self.nativeCatalogID {
             Image(systemName: "apple.intelligence")
-                .font(.title3)
+                .font(HanlinTypography.title3)
                 .foregroundStyle(accentColor)
         } else if model.identity == "model" {
             Image(getCompanyIcon(for: model.company ?? "Unknown"))
@@ -462,10 +446,10 @@ struct HanlinModelPickerPopover: View {
 
     private func badgePill(_ text: String, color: Color) -> some View {
         Text(text)
-            .font(.system(size: 10, weight: .medium))
+            .font(HanlinTypography.caption2.weight(.medium))
             .foregroundStyle(color)
-            .padding(.horizontal, 5)
-            .padding(.vertical, 1.5)
+            .padding(.horizontal, HanlinControlMetrics.badgeHorizontalInset)
+            .padding(.vertical, HanlinControlMetrics.badgeVerticalInset)
             .background(color.opacity(0.12), in: Capsule())
     }
 }

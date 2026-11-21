@@ -79,7 +79,7 @@ public struct TorahPhotoStudyCaptureView: View {
                 .foregroundColor(.secondary)
 
             Text(String(localized: "צלם קטע מתוך ספר פיזי או בחר תמונה מגלריה"))
-                .font(.headline)
+                .font(HanlinTypography.headline)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.primary)
 
@@ -152,10 +152,10 @@ public struct TorahPhotoStudyCaptureView: View {
                 }
 
                 Text(title)
-                    .font(.headline)
+                    .font(HanlinTypography.headline)
                 Spacer()
                 Text(identificationStatus ?? (lastIdentificationStatus == .verified ? "מאומת" : "זוהה"))
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
                     .background(
@@ -167,7 +167,7 @@ public struct TorahPhotoStudyCaptureView: View {
 
             if !ocrText.isEmpty {
                 Text(ocrText)
-                    .font(.subheadline)
+                    .font(HanlinTypography.subheadline)
                     .foregroundColor(.secondary)
                     .lineLimit(3)
             }
@@ -177,12 +177,12 @@ public struct TorahPhotoStudyCaptureView: View {
             HStack(spacing: 12) {
                 Button(action: openHere) {
                     Label(String(localized: "פתח כאן"), systemImage: "book")
-                        .font(.subheadline)
+                        .font(HanlinTypography.subheadline)
                 }
 
                 Button(action: openInMaktabah) {
                     Label(String(localized: "פתח ב-Maktabah"), systemImage: "arrow.up.forward.app")
-                        .font(.subheadline)
+                        .font(HanlinTypography.subheadline)
                 }
 
                 Spacer()

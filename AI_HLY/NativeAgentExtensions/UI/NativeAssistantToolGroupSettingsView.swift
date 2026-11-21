@@ -18,16 +18,16 @@ struct NativeAssistantToolGroupSettingsView: View {
                     Section {
                         VStack(alignment: .center, spacing: 10) {
                             Image(systemName: group.systemImage)
-                                .font(.largeTitle)
+                                .font(HanlinTypography.largeTitle)
                                 .fontWeight(.bold)
                                 .foregroundColor(.hlBluefont)
                                 .padding(.top)
 
                             Text(group.title)
-                                .font(.title2.bold())
+                                .font(HanlinTypography.title2.bold())
 
                             Text(group.summary)
-                                .font(.footnote)
+                                .font(HanlinTypography.footnote)
                                 .foregroundStyle(.secondary)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
@@ -54,11 +54,11 @@ struct NativeAssistantToolGroupSettingsView: View {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(entry.title)
                                     Text(entry.summary)
-                                        .font(.caption)
+                                        .font(HanlinTypography.caption)
                                         .foregroundStyle(.secondary)
                                     if entry.isSensitive {
                                         Label(String(localized: "Sensitive"), systemImage: "hand.raised.fill")
-                                            .font(.caption2)
+                                            .font(HanlinTypography.caption2)
                                             .foregroundStyle(.orange)
                                     }
                                 }

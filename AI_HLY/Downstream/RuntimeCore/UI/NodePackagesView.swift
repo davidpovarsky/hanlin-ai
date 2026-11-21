@@ -78,7 +78,7 @@ struct NodePackagesView: View {
                 }
                 if let message = model.message {
                     Text(message)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .textSelection(.enabled)
                         .accessibilityIdentifier("hanlin-npm-message")
                 }
@@ -96,7 +96,7 @@ struct NodePackagesView: View {
                         NavigationLink { List { NodePackageDetailsView(item: item) }.navigationTitle(item.name) } label: {
                             VStack(alignment: .leading) {
                                 Text(item.name)
-                                Text(item.version).font(.caption).foregroundStyle(.secondary)
+                                Text(item.version).font(HanlinTypography.caption).foregroundStyle(.secondary)
                             }
                         }
                         Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }
@@ -108,10 +108,10 @@ struct NodePackagesView: View {
                         Button(RuntimeL10n.string("Update")) { model.update(item) }.tint(.blue)
                     }
                 }
-                if let probeOutput = model.probeOutput { Text(probeOutput).font(.system(.caption, design: .monospaced)).textSelection(.enabled) }
+                if let probeOutput = model.probeOutput { Text(probeOutput).font(HanlinTypography.caption.monospaced()).textSelection(.enabled) }
             }
 
-            Section { Text(RuntimeL10n.string("Packages are installed transactionally. Supported setup scripts run automatically.")) .font(.caption).foregroundStyle(.secondary) }
+            Section { Text(RuntimeL10n.string("Packages are installed transactionally. Supported setup scripts run automatically.")) .font(HanlinTypography.caption).foregroundStyle(.secondary) }
         }
         .navigationTitle(RuntimeL10n.string("Node Packages"))
         .task { await model.reload() }
@@ -134,11 +134,11 @@ private struct NodePackageDetailsView: View {
             if !item.dependencies.isEmpty { LabeledContent(RuntimeL10n.string("Dependencies"), value: item.dependencies.joined(separator: ", ")) }
             if let lifecycle = item.lifecycle {
                 LabeledContent(RuntimeL10n.string("Lifecycle scripts"), value: lifecycle.actions.isEmpty ? RuntimeL10n.string("None") : RuntimeL10n.format("%d planned actions", lifecycle.actions.count))
-                if !lifecycle.actions.isEmpty { Text(RuntimeL10n.string("Supported setup scripts run automatically.")) .font(.caption).foregroundStyle(.secondary) }
+                if !lifecycle.actions.isEmpty { Text(RuntimeL10n.string("Supported setup scripts run automatically.")) .font(HanlinTypography.caption).foregroundStyle(.secondary) }
             }
             ForEach(item.findings ?? []) { finding in
                 Label(finding.message, systemImage: finding.severity == "unsupported" ? "xmark.octagon" : "exclamationmark.triangle")
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
             }
         }
         .accessibilityIdentifier("hanlin-npm-preview-section")

@@ -20,6 +20,13 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
     private let isCurrent: @MainActor @Sendable () -> Bool
     private var validationPlans: [Data: HanlinHostSchemaValidation] = [:]
     private var definitions: [String: HanlinAISDKToolDefinition] = [:]
+    private struct CatalogCache {
+        let adapterID: ObjectIdentifier?
+        let generation: UUID?
+        let includesSplit: Bool
+        let catalog: HanlinHostCatalog
+    }
+    private var catalogCache: CatalogCache?
     private var executions: [HanlinToolInvocationID: Task<HanlinAISDKToolExecutionOutput, Error>] = [:]
 
     init(identity: HanlinHostSession, store: HanlinAppConversationStore,
@@ -36,6 +43,13 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
     func catalog(for context: HanlinHostContext) async throws -> HanlinHostCatalog {
         guard context == identity.context else { throw HanlinHostError.staleContext }
         _ = try await self.context(for: identity)
+        let adapterID = toolAdapter.map(ObjectIdentifier.init)
+        let generation = toolAdapter?.catalogGeneration
+        let includesSplit = supportsSplit
+        if let cached = catalogCache, cached.adapterID == adapterID,
+           cached.generation == generation, cached.includesSplit == includesSplit {
+            return cached.catalog
+        }
         let available = try toolAdapter?.allToolDefinitions().sorted { $0.name < $1.name } ?? []
         guard Set(available.map(\.name)).count == available.count else { throw HanlinHostError.duplicateAlias }
         var tools = try available.map { definition -> HanlinHostTool in
@@ -62,7 +76,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
                 originalInputSchemaJSON: definition.inputSchemaData)
         }
         guard !tools.contains(where: { $0.route.alias == Self.splitAlias }) else { throw HanlinHostError.duplicateAlias }
-        if supportsSplit { tools.append(try Self.splitTool()) }
+        if includesSplit { tools.append(try Self.splitTool()) }
         // JSON dictionaries must be canonical before hashing or unchanged schemas spuriously
         // change the catalog generation. No process-random Hasher is used for public revision.
         let canonicalTools = try tools.map { tool in HanlinJSONValue.object([
@@ -77,6 +91,8 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
         definitions = Dictionary(uniqueKeysWithValues: available.map { ($0.name, $0) })
         let catalog = HanlinHostCatalog(apiVersion: apiVersion, revision: .init(value), context: context, tools: tools)
         try catalog.validate()
+        catalogCache = .init(adapterID: adapterID, generation: generation,
+                             includesSplit: includesSplit, catalog: catalog)
         return catalog
     }
 
@@ -270,16 +286,34 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
     private static func preDispatchError(_ error: Error) -> HanlinPlatformError {
         if let error = error as? HanlinPlatformError { return error }
         let code: HanlinErrorCode
+        let message: String
         switch error {
-        case is CancellationError: code = .cancelled
-        case HanlinHostError.denied: code = .permissionDenied
-        case HanlinHostSchemaValidation.Failure.invalidArguments: code = .invalidArguments
-        case HanlinHostSchemaValidation.Failure.lossyProjection: code = .schemaProjectionWidensInput
-        case HanlinHostSchemaValidation.Failure.inputTooLarge: code = .sizeLimitExceeded
-        case HanlinHostSchemaValidation.Failure.unsupportedSchema: code = .unsupportedSchemaKeyword
-        default: code = .operationUnavailable
+        case is CancellationError:
+            code = .cancelled
+            message = "The operation was cancelled before dispatch."
+        case HanlinHostError.denied:
+            code = .permissionDenied
+            message = "The operation was not approved, or its approval expired. Do not retry it automatically."
+        case HanlinHostSchemaValidation.Failure.invalidArguments, HanlinHostError.invalidArguments:
+            code = .invalidArguments
+            message = "The arguments do not match the tool's input schema. Read the current tool schema and correct the arguments before retrying."
+        case HanlinHostSchemaValidation.Failure.lossyProjection:
+            code = .schemaProjectionWidensInput
+            message = "The tool input cannot be preserved exactly by the current adapter. Repeating the same call will not resolve this."
+        case HanlinHostSchemaValidation.Failure.inputTooLarge:
+            code = .sizeLimitExceeded
+            message = "The tool input exceeds the supported size. Use a smaller input or the tool's supported file reference."
+        case HanlinHostSchemaValidation.Failure.unsupportedSchema:
+            code = .unsupportedSchemaKeyword
+            message = "The original tool schema is unavailable or unsupported. Refresh the available tools before continuing."
+        case HanlinHostError.staleContext:
+            code = .operationUnavailable
+            message = "The conversation, tool catalog, or request deadline changed before dispatch. Continue only with a fresh request in the current conversation."
+        default:
+            code = .operationUnavailable
+            message = "The original operation input or context could not be verified."
         }
-        return .init(code: code, userMessage: "The original operation input or context could not be verified. No operation was dispatched.")
+        return .init(code: code, userMessage: message + " No operation was dispatched.")
     }
 
     private func noDispatch(_ invocation: HanlinHostInvocation, error: Error) -> HanlinHostExecutionResult {

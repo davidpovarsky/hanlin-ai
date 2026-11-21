@@ -13,7 +13,7 @@ struct SkillCompatibilityUnknownSection: View {
                 .accessibilityValue(SkillL10n.string("Not recorded"))
                 .accessibilityIdentifier("hanlin-skill-\(identifierScope)-compatibility-last-tested")
             Text(SkillL10n.string("Installing or enabling a skill does not verify that its actions can run."))
-                .font(.footnote)
+                .font(HanlinTypography.footnote)
                 .foregroundStyle(.secondary)
         }
     }

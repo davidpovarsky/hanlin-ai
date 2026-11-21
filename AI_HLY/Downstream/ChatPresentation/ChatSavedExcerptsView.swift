@@ -23,8 +23,8 @@ struct ChatSavedExcerptsView: View {
                     } label: {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(excerpt.quote).lineLimit(4).accessibilityIdentifier("hanlin-saved-excerpt-text")
-                            Text(excerpt.sourceTitle).font(.caption).foregroundStyle(.secondary)
-                            Text(excerpt.createdAt, style: .date).font(.caption2).foregroundStyle(.tertiary)
+                            Text(excerpt.sourceTitle).font(HanlinTypography.caption).foregroundStyle(.secondary)
+                            Text(excerpt.createdAt, style: .date).font(HanlinTypography.caption2).foregroundStyle(.tertiary)
                         }
                     }
                     .contextMenu {
@@ -69,7 +69,7 @@ struct ChatSavedExcerptsView: View {
                     if ChatSavedExcerpt.digest(message.text ?? "") != excerpt.sourceDigest,
                        ChatSavedExcerpt.digest(message.translatedText ?? "") != excerpt.sourceDigest {
                         Text("The source message has changed. Your saved text is kept.")
-                            .font(.caption).foregroundStyle(.secondary)
+                            .font(HanlinTypography.caption).foregroundStyle(.secondary)
                     }
                     Button {
                         openSource(chat, destination)

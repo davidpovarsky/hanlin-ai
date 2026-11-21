@@ -76,10 +76,10 @@ struct HanlinImageGallery: View {
                                 requested: requested && active,
                                 onLoaded: { files[item.id] = $0 },
                                 onOpen: { selected = $0 })
-                            Text(item.title).font(.subheadline).lineLimit(3)
+                            Text(item.title).font(HanlinTypography.subheadline).lineLimit(3)
                             Link(destination: item.source) {
                                 Label(item.source.host ?? String(localized: "Source"), systemImage: "link")
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                             }
                             .accessibilityLabel("Open source: \(item.title)")
                         }
@@ -125,11 +125,11 @@ struct HanlinSourceCard: View {
                     requested: attempt > 0 && active, onLoaded: { _ in }, onOpen: { preview = $0 })
                     .id(thumbnail)
             }
-            Text(title).font(.headline).textSelection(.enabled)
-            if !summary.isEmpty { Text(summary).font(.subheadline).lineLimit(4).textSelection(.enabled) }
+            Text(title).font(HanlinTypography.headline).textSelection(.enabled)
+            if !summary.isEmpty { Text(summary).font(HanlinTypography.subheadline).lineLimit(4).textSelection(.enabled) }
             Link(destination: descriptor.source) {
                 Label(descriptor.source.host ?? String(localized: "Open source"), systemImage: "link")
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
             }
             .accessibilityLabel("Open linked source")
             if attempt == 0 || failed {
@@ -142,7 +142,7 @@ struct HanlinSourceCard: View {
             } else if metadata == nil {
                 ProgressView("Loading link preview")
             }
-            if failed { Text("Preview unavailable. You can still open the source.").font(.caption).foregroundStyle(.secondary) }
+            if failed { Text("Preview unavailable. You can still open the source.").font(HanlinTypography.caption).foregroundStyle(.secondary) }
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -204,7 +204,7 @@ private struct HanlinRichMediaThumbnail: View {
                     .accessibilityLabel("Image unavailable")
                 } else { ProgressView("Loading image") }
             } else {
-                Image(systemName: "photo").font(.largeTitle).foregroundStyle(.secondary)
+                Image(systemName: "photo").font(HanlinTypography.largeTitle).foregroundStyle(.secondary)
                     .accessibilityLabel(description)
             }
         }

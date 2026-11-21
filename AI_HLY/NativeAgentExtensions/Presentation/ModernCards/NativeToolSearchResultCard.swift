@@ -22,17 +22,17 @@ struct NativeToolSearchResultCard: View {
                 ForEach(Array(visibleItems.enumerated()), id: \.element.id) { index, item in
                     VStack(alignment: .leading, spacing: 5) {
                         Text(item.title)
-                            .font(.subheadline.weight(.semibold))
+                            .font(HanlinTypography.subheadline.weight(.semibold))
                             .lineLimit(2)
                         if let subtitle = item.subtitle, !subtitle.isEmpty {
                             Text(subtitle)
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundStyle(.secondary)
                                 .lineLimit(1)
                         }
                         if let body = item.body, !body.isEmpty {
                             Text(body)
-                                .font(.subheadline)
+                                .font(HanlinTypography.subheadline)
                                 .foregroundStyle(.secondary)
                                 .lineLimit(3)
                                 .textSelection(.enabled)
