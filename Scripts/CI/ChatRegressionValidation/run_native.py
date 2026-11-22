@@ -20,6 +20,8 @@ HERE = Path(__file__).resolve().parent
 OUT = ROOT / "build/chat-regression-native-evidence"
 BASELINE_APP = "de9ccac5d38c44f597b2a057701de4757587d6a8"
 BASELINE_RENDERER = "ebbbf889276098f3642448e5439ad049c3cd2d6c"
+EQUATABLE_REVISION = "597c2bb34af0c51331eb3b5e705f942d8ee20daa"
+HEADLESS_PACKAGE_FLAGS = ["-skipPackagePluginValidation", "-skipMacroValidation"]
 PROVIDER_TEST = "ChatRegressionTests/RichBlockAttachmentRenderingTests/testProviderLookupUsesRichRenderer"
 RENDERER_PIN = re.compile(rb'(https://github\.com/davidpovarsky/hanlin-streaming-markdown"\s*,\s*revision:\s*")([0-9a-f]{40})(")')
 
@@ -194,6 +196,44 @@ def result_record(folder: Path, exit_code: int, expected_count: int, *, baseline
     return record
 
 
+def require_native_build_succeeded(folder: Path, exit_code: int) -> None:
+    """Keep an explicit build failure primary, even when xcresulttool stalls."""
+    if not exit_code:
+        return
+    output = (folder / "test.log").read_text(encoding="utf-8", errors="replace")
+    failed_commands = output.partition("The following build commands failed:")[2]
+    build_cancelled = "Testing cancelled because the build failed" in output
+    graph_failed = any(line.strip() == "ComputeTargetDependencyGraph" for line in failed_commands.splitlines())
+    if build_cancelled or graph_failed:
+        errors = [line.strip() for line in output.splitlines()
+                  if " error:" in line or "Testing cancelled because the build failed" in line][:20]
+        write_json(folder / "phase-result.json", {
+            "status": "BUILD_FAILED", "exit_code": exit_code, "tests": 0,
+            "native_verification": "NOT_RUN", "primary_errors": errors,
+            "raw_result_bundle": "Tests.xcresult" if (folder / "Tests.xcresult").is_dir() else None})
+        raise RuntimeError(f"{folder.name}: native build failed before XCTest; see test.log and phase-result.json")
+
+
+def record_macro_configuration(stage: Path, folder: Path) -> None:
+    checkout = stage / "SourcePackages/checkouts/equatable"
+    resolved = read(["git", "rev-parse", "HEAD"], cwd=checkout)
+    if resolved != EQUATABLE_REVISION:
+        raise RuntimeError("Equatable macro source differs from the reviewed exact app dependency")
+    precedents = []
+    for path in [".github/workflows/testflight.yml", "Scripts/CI/IntegrationValidation/run_presentation_sdk.sh"]:
+        source = (ROOT / path).read_bytes()
+        lines = source.decode("utf-8").splitlines()
+        matches = [{"line": number, "source": line.strip()} for number, line in enumerate(lines, 1)
+                   if all(flag in line for flag in HEADLESS_PACKAGE_FLAGS)]
+        if not matches:
+            raise RuntimeError(f"Established headless macro configuration is missing in {path}")
+        precedents.append({"path": path, "sha256": hashlib.sha256(source).hexdigest(), "matching_lines": matches})
+    write_json(folder / "macro-source.json", {
+        "package": "https://github.com/ordo-one/equatable", "version": "1.4.1",
+        "expected_revision": EQUATABLE_REVISION, "resolved_revision": resolved,
+        "headless_flags": HEADLESS_PACKAGE_FLAGS, "existing_routes": precedents})
+
+
 def phase(stage: Path, name: str, revision: str, selectors: list[str], device: str) -> dict:
     folder = OUT / name
     folder.mkdir()
@@ -201,7 +241,7 @@ def phase(stage: Path, name: str, revision: str, selectors: list[str], device: s
     common = ["-project", str(project), "-scheme", "HanlinChatRegression", "-configuration", "Debug",
               "-derivedDataPath", str(stage / "DerivedData"),
               "-clonedSourcePackagesDirPath", str(stage / "SourcePackages"),
-              "CODE_SIGNING_ALLOWED=NO", "ENABLE_TESTABILITY=YES"]
+              *HEADLESS_PACKAGE_FLAGS, "CODE_SIGNING_ALLOWED=NO", "ENABLE_TESTABILITY=YES"]
     # Package resolution needs no running simulator or concrete destination.
     # Resolve the baseline before booting, as the established release route does.
     run(["xcodebuild", "-resolvePackageDependencies", *common], folder / "resolve.log", 240)
@@ -210,6 +250,7 @@ def phase(stage: Path, name: str, revision: str, selectors: list[str], device: s
     if resolved != revision:
         raise RuntimeError(f"{name}: native renderer checkout does not equal its exact requested pin")
     write_json(folder / "renderer-source.json", {"requested": revision, "resolved": resolved})
+    record_macro_configuration(stage, folder)
     if name == "baseline":
         # Read disk-image state before any boot, using the existing environment
         # probe command. Observations never substitute for bootstatus success.
@@ -235,6 +276,7 @@ def phase(stage: Path, name: str, revision: str, selectors: list[str], device: s
                 "-parallel-testing-enabled", "NO", "-maximum-concurrent-test-simulator-destinations", "1",
                 "-resultBundlePath", str(folder / "Tests.xcresult"),
                 *["-only-testing:" + test for test in selectors]], folder / "test.log", 720, check=False)
+    require_native_build_succeeded(folder, code)
     result = result_record(folder, code, 1 if name == "baseline" else 4, baseline=name == "baseline")
     if name == "candidate":
         images = [p for p in (folder / "attachments").rglob("*") if p.suffix.lower() in {".png", ".jpg", ".jpeg"}]
