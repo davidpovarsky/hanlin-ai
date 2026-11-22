@@ -169,6 +169,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
         app.launch()
         openChat(in: app)
+        revokeRememberedToolPermissions(in: app)
 
         let transcript = app.descendants(matching: .any)["hanlin-chat-transcript"].firstMatch
         func checkViewport(_ stage: String) {
@@ -202,26 +203,17 @@ final class AgentRuntimeConversationUITests: XCTestCase {
                            "The actual application viewport must rotate")
         }
 
-        sendPrompt("PHASE2_REAL_PYTHON_" + nonce, in: app)
-        let reviewToggle = app.buttons["hanlin-tool-consent-review-toggle"].firstMatch
-        XCTAssertTrue(reviewToggle.waitForExistence(timeout: 45))
-        let request = app.staticTexts["hanlin-tool-consent-original-request"].firstMatch
         let identity = app.staticTexts["hanlin-phase2-chat-id"].firstMatch
         XCTAssertTrue(identity.waitForExistence(timeout: 10))
         let originalChat = identity.label
         XCTAssertNotNil(UUID(uuidString: originalChat))
         let source = "import sys; print('PHASE2_RESULT_\(nonce):' + sys.version.split()[0] + ':' + str(6*7))"
-        revealAndTap(reviewToggle)
-        XCTAssertTrue(request.waitForExistence(timeout: 10))
-        let arguments = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(request.label.utf8)) as? [String: Any])
-        XCTAssertEqual(arguments["source"] as? String, source)
-        revealAndTap(reviewToggle)
-        XCTAssertTrue(request.waitForNonExistence(timeout: 5))
 
-        // Approve through the unchanged original Host continuation, verifying
-        // the exact harmless request. Its existing 30-second deadline remains
-        // authoritative; exercise slower rotations after it has completed.
-        approveOriginalToolRequest(["source": source], in: app)
+        // Review the exact harmless request under the original Host's remembered
+        // permission scope. Its deadline remains authoritative; exercise slower
+        // rotations after it has completed.
+        sendPrompt("PHASE2_REAL_PYTHON_" + nonce, in: app)
+        approveOriginalToolRequest(["source": source], in: app, remembersDecision: true)
         let expected = "PHASE2_VERIFIED_" + nonce + ":3.14.6:42"
         let answer = app.descendants(matching: .any).matching(NSPredicate(
             format: "label CONTAINS %@", expected)).firstMatch
@@ -272,6 +264,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
         XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, requestCount,
                        "Reattaching the transcript cannot replay any provider or tool operation")
+        XCTAssertFalse(app.buttons["hanlin-tool-consent-allow-remember"].exists)
         XCTAssertFalse(app.buttons["hanlin-tool-consent-allow-once"].exists)
         if !activity.waitForExistence(timeout: 2) { revealAndTap(hierarchy) }
         XCTAssertTrue(activity.waitForExistence(timeout: 10))
@@ -636,24 +629,36 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let screenshotPrefix = hebrew ? "UI-03_HE_RTL" : "UI-03"
         let verificationSource = "print('UI03_LOCAL_RESULT_' + str(6 * 7))"
         openChat(in: app)
+        revokeRememberedToolPermissions(in: app)
 
         sendPrompt(hebrew ? "PROMPT_UI03_SEARCH_CITATIONS_HE" : "PROMPT_UI03_SEARCH_CITATIONS", in: app)
         let inspectHebrewApproval: ((XCUIElement) -> Void)? = hebrew ? { owner in
-            let review = owner.buttons["hanlin-tool-consent-review-toggle"].firstMatch
-            let allow = owner.buttons["hanlin-tool-consent-allow-once"].firstMatch
-            let deny = owner.buttons["hanlin-tool-consent-deny"].firstMatch
-            let scope = owner.descendants(matching: .any)["hanlin-tool-consent-visible-request"].firstMatch
-            XCTAssertTrue(review.isHittable && allow.isHittable,
-                          "The compact Hebrew approval and its original action must be visible together")
-            XCTAssertFalse(owner.staticTexts["hanlin-tool-consent-original-request"].exists,
+            // Read one coherent native snapshot. Re-querying each label can
+            // consume the unchanged Host deadline before the request is reviewed.
+            guard let snapshot = try? owner.snapshot() else {
+                XCTFail("The original Hebrew approval must have an accessible snapshot")
+                return
+            }
+            var elements = [snapshot]
+            var index = 0
+            while index < elements.count {
+                elements.append(contentsOf: elements[index].children)
+                index += 1
+            }
+            let review = elements.first { $0.identifier == "hanlin-tool-consent-review-toggle" }
+            let allow = elements.first { $0.identifier == "hanlin-tool-consent-allow-remember" }
+            let deny = elements.first { $0.identifier == "hanlin-tool-consent-deny" }
+            let scope = elements.first { $0.identifier == "hanlin-tool-consent-visible-request" }
+            XCTAssertFalse(elements.contains { $0.identifier == "hanlin-tool-consent-original-request" },
                            "The pending compact approval must keep raw request details closed")
-            XCTAssertEqual(allow.label, "לאשר פעם אחת")
-            XCTAssertEqual(deny.label, "לדחות")
-            XCTAssertTrue(review.label.contains("מריץ קוד"), "The actual Python approval action title must be Hebrew")
-            XCTAssertTrue(review.label.contains("ממתין לאישור"), "The actual pending status must be Hebrew")
-            XCTAssertTrue(scope.label.contains(verificationSource), "The compact scope must show the actual bounded Python operation")
-            let labels = owner.staticTexts.allElementsBoundByIndex.map(\.label)
-                + owner.buttons.allElementsBoundByIndex.map(\.label)
+            XCTAssertEqual(allow?.label, "לאשר ולזכור")
+            XCTAssertEqual(deny?.label, "לדחות")
+            XCTAssertTrue(review?.label.contains("מריץ קוד") == true, "The actual Python approval action title must be Hebrew")
+            XCTAssertTrue(review?.label.contains("ממתין לאישור") == true, "The actual pending status must be Hebrew")
+            XCTAssertTrue(scope?.label.contains(verificationSource) == true, "The compact scope must show the actual bounded Python operation")
+            let labels = elements.map(\.label)
+            XCTAssertTrue(labels.contains("ההרשאה הזאת תחול גם בשיחות האחרות שלך."),
+                          "The real remembered permission scope must be disclosed in Hebrew")
             XCTAssertFalse(labels.contains { $0.contains("??") || $0.contains("\u{FFFD}") },
                            "The actual Hebrew approval card must not contain corrupted labels")
             let pending = XCTAttachment(screenshot: owner.screenshot())
@@ -664,7 +669,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         } : nil
         // Public page reads deliberately do not require consent. Exercise the
         // original privileged Python approval before those unchanged read calls.
-        approveOriginalToolRequest(["source": verificationSource], in: app,
+        approveOriginalToolRequest(["source": verificationSource], in: app, remembersDecision: true,
                                    inspectPendingCard: inspectHebrewApproval)
 
         let finalAnswer = app.descendants(matching: .any).matching(
@@ -747,6 +752,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     func testNativePartialSelectionSaveAndOriginalLongPressPreview() throws {
+        continueAfterFailure = false
         let app = launchAcceptanceApp()
         openChat(in: app)
         sendPrompt("PROMPT_CHAT_PRESENTATION", in: app)
@@ -757,10 +763,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(save.waitForExistence(timeout: 10), "Native selected-text Save action is missing: \(app.debugDescription)")
         tapElement(save)
 
-        // The original whole-message context menu remains on the message's padding;
-        // a double tap inside its native paragraph selects text independently.
-        paragraph.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0))
-            .withOffset(CGVector(dx: 0, dy: -2)).press(forDuration: 1)
+        // The visible model header owns the original whole-message long hold.
+        // Keep this separate from the native paragraph's selected-text action;
+        // the outer gap above the paragraph is not a gesture target.
+        let assistant = app.otherElements["hanlin-assistant-bubble"].firstMatch
+        let modelHeader = assistant.staticTexts["Agent Acceptance"].firstMatch
+        XCTAssertTrue(modelHeader.waitForExistence(timeout: 10), "The original assistant model header must be visible")
+        XCTAssertTrue(modelHeader.isHittable, "The original message-actions gesture must be reachable")
+        modelHeader.press(forDuration: 1.2)
         let wholeCopy = app.descendants(matching: .any)["hanlin-message-menu-copy"].firstMatch
         XCTAssertTrue(wholeCopy.waitForExistence(timeout: 10), "Original whole-message preview/menu was lost: \(app.debugDescription)")
         attachScreenshot("Chat_OriginalOpaquePreview", in: app)
@@ -1779,8 +1789,11 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     /// Approve only the exact fixture business request through the original UI.
     /// This is not another chat turn, an injected grant, or a tool-result stub.
     private func approveOriginalToolRequest(_ expected: [String: String], in app: XCUIApplication,
+                                            remembersDecision: Bool = false,
                                             inspectPendingCard: ((XCUIElement) -> Void)? = nil,
                                             file: StaticString = #filePath, line: UInt = #line) {
+        let allowIdentifier = remembersDecision ? "hanlin-tool-consent-allow-remember" : "hanlin-tool-consent-allow-once"
+        let unexpectedIdentifier = remembersDecision ? "hanlin-tool-consent-allow-once" : "hanlin-tool-consent-allow-remember"
         let owner = app.descendants(matching: .any).matching(
             NSPredicate(format: "identifier BEGINSWITH 'hanlin-tool-approval-'")).firstMatch
         let ownerExists = owner.waitForExistence(timeout: 45)
@@ -1791,14 +1804,20 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             XCTFail("The original immutable approval owner must exist", file: file, line: line)
             return
         }
+        let requestID = String(ownerID.dropFirst("hanlin-tool-approval-".count))
+        XCTAssertNotNil(UUID(uuidString: requestID), "The owner must identify the actual immutable request", file: file, line: line)
+        guard UUID(uuidString: requestID) != nil else { return }
 
         func currentOwner() -> XCUIElement {
             app.descendants(matching: .any)[ownerID].firstMatch
         }
+        let unexpectedKind = currentOwner().buttons[unexpectedIdentifier].exists
+        XCTAssertFalse(unexpectedKind, "The request must expose exactly the expected consent scope", file: file, line: line)
+        guard !unexpectedKind else { return }
 
         func tapOwnedButton(_ identifier: String) -> Bool {
             // Each reveal resolves the original request again. Once reachable,
-            // tap immediately: repeated AX probes can outlive its one-use deadline.
+            // tap immediately: repeated AX probes can outlive its Host deadline.
             for reveal in 0...3 {
                 let button = currentOwner().buttons[identifier].firstMatch
                 guard button.exists else { return false }
@@ -1817,15 +1836,21 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         if let inspectPendingCard {
             // Reveal the real compact card before opening its original details.
             // This optional witness leaves the existing English journey unchanged.
+            var compactActionsVisible = false
             for reveal in 0...3 {
                 let pending = currentOwner()
                 if pending.buttons["hanlin-tool-consent-review-toggle"].firstMatch.isHittable,
-                   pending.buttons["hanlin-tool-consent-allow-once"].firstMatch.isHittable { break }
+                   pending.buttons[allowIdentifier].firstMatch.isHittable {
+                    compactActionsVisible = true
+                    break
+                }
                 guard reveal < 3 else { break }
                 let scroll = app.scrollViews.containing(.any, identifier: ownerID).firstMatch
                 guard scroll.exists else { break }
                 scroll.swipeUp()
             }
+            XCTAssertTrue(compactActionsVisible, "The compact approval and its original action must be visible together", file: file, line: line)
+            guard compactActionsVisible else { return }
             inspectPendingCard(currentOwner())
         }
         let reviewed = tapOwnedButton("hanlin-tool-consent-review-toggle")
@@ -1843,11 +1868,49 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         for (key, value) in expected { XCTAssertEqual(actual[key] as? String, value, file: file, line: line) }
         guard Set(actual.keys).isSubset(of: allowed),
               expected.allSatisfy({ actual[$0.key] as? String == $0.value }) else { return }
-        let approved = tapOwnedButton("hanlin-tool-consent-allow-once")
-        XCTAssertTrue(approved, "The reviewed one-use approval must remain reachable", file: file, line: line)
+        let approved = tapOwnedButton(allowIdentifier)
+        XCTAssertTrue(approved, "The reviewed approval must retain its expected scope and remain reachable", file: file, line: line)
         guard approved else { return }
         XCTAssertTrue(currentOwner().waitForNonExistence(timeout: 10),
-                      "The one-use request must disappear after approval", file: file, line: line)
+                      "The original request must disappear after approval", file: file, line: line)
+    }
+
+    /// Remembered Host grants intentionally span conversations. Clear the test
+    /// account through its original settings action so each consent journey
+    /// reviews a real new request, independent of which UI case ran first.
+    private func revokeRememberedToolPermissions(in app: XCUIApplication,
+                                                 file: StaticString = #filePath, line: UInt = #line) {
+        openSettings(in: app)
+        let link = app.descendants(matching: .any)["hanlin-tool-permissions-link"].firstMatch
+        for _ in 0..<6 where !link.isHittable { app.swipeUp() }
+        XCTAssertTrue(link.isHittable, "The original tool permissions settings must be reachable", file: file, line: line)
+        guard link.isHittable else { return }
+        link.tap()
+
+        let permissions = app.descendants(matching: .any)["hanlin-tool-permissions-list"].firstMatch
+        XCTAssertTrue(permissions.waitForExistence(timeout: 10), "The original tool permissions screen must open", file: file, line: line)
+        let revoke = app.buttons["hanlin-tool-permissions-revoke-all"].firstMatch
+        if revoke.exists {
+            for _ in 0..<6 where !revoke.isHittable { permissions.swipeUp() }
+            XCTAssertTrue(revoke.isHittable, "The original permission revocation must be reachable", file: file, line: line)
+            guard revoke.isHittable else { return }
+            revoke.tap()
+        }
+        let empty = app.descendants(matching: .any)["hanlin-tool-permissions-empty"].firstMatch
+        XCTAssertTrue(empty.waitForExistence(timeout: 10), "Each consent journey must begin without a remembered tool grant", file: file, line: line)
+        // Scope Back to this actual destination, not the first navigation item
+        // in the underlying iPad sidebar.
+        let permissionsNavigation = app.navigationBars.matching(NSPredicate(
+            format: "identifier == %@ OR identifier == %@", "Tool permissions", "הרשאות כלים")).firstMatch
+        let back = permissionsNavigation.buttons.element(boundBy: 0)
+        XCTAssertTrue(back.waitForExistence(timeout: 5) && back.isHittable,
+                      "The original permissions Back control must be reachable", file: file, line: line)
+        guard back.exists && back.isHittable else { return }
+        back.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["hanlin-settings-list"].firstMatch.waitForExistence(timeout: 5),
+                      "Permission review must return to the original Settings screen", file: file, line: line)
+        openChat(in: app)
+        XCTAssertTrue(chatInputElement(in: app).waitForExistence(timeout: 10), "The original chat must reopen before its request is sent", file: file, line: line)
     }
 
     private func ensureChatListVisible(in app: XCUIApplication,

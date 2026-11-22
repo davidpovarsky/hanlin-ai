@@ -2425,8 +2425,9 @@ struct ChatBubbleView: View {
         @ViewBuilder
         private func activityRow(_ activity: AgentDisplayActivity,
                                  approval: AgentToolApproval?, isCurrent: Bool) -> some View {
+            let pending = toolApproval.flatMap { $0.callID == activity.id ? $0 : nil }
             VStack(alignment: .leading, spacing: 0) {
-                if let pending = toolApproval, pending.callID == activity.id {
+                if let pending {
                     approvalView(pending)
                 } else {
                     DisclosureGroup(isExpanded: Binding(
@@ -2460,7 +2461,10 @@ struct ChatBubbleView: View {
                 }
             }
             .accessibilityElement(children: .contain)
-            .accessibilityIdentifier("hanlin-agent-activity-\(activity.id)")
+            // SwiftUI can expose this wrapper as the approval's sole AX
+            // container. Preserve its immutable request owner at that boundary.
+            .accessibilityIdentifier(pending.map { "hanlin-tool-approval-\($0.requestID)" }
+                ?? "hanlin-agent-activity-\(activity.id)")
         }
 
         /// A dedicated body keeps projection lazy even when DisclosureGroup

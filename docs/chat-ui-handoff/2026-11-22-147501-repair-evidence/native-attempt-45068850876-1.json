@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "run_id": "45068850876",
+  "run_attempt": 1,
+  "job_id": "137351106195",
+  "source_commit": "44037dd81ccbb09ba79d67009228dd1bf69621fd",
+  "job_conclusion": "cancelled",
+  "annotation": "GitHub Actions has encountered an internal error when running your job.",
+  "full_apple_compilation": "success",
+  "owned_simulator_boot": "success",
+  "test_execution_started_utc": "2026-11-22T21:12:15Z",
+  "job_cancelled_utc": "2026-11-22T21:16:11Z",
+  "native_results": "unknown; no retained native test artifact or job logs",
+  "test_counts": null,
+  "recovery": "rerun only interrupted native job at the same source; no source or test-policy change"
+}

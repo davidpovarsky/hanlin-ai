@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "run_id": "45068850876",
+  "run_attempt": 2,
+  "job_id": "137358936126",
+  "source_commit": "44037dd81ccbb09ba79d67009228dd1bf69621fd",
+  "job_conclusion": "cancelled",
+  "cancelled_by": "task owner agent after concrete same-helper failure evidence from completed45067928645",
+  "reason": "The unchanged approval test helper requires an inner AX owner hidden by the outer activity container and expects one-use consent while the actual verified Host request has a remembered scope. The new UI03 fixture uses that same known-invalid helper.",
+  "build_step": {
+    "name": "Build full arm64 simulator app",
+    "started_utc": "2026-11-22T21:28:12Z",
+    "completed_utc": "2026-11-22T21:30:56Z",
+    "conclusion": "cancelled"
+  },
+  "test_step": {
+    "name": "Run simulator test suite",
+    "conclusion": "skipped"
+  },
+  "executed_test_count": 0,
+  "previous_attempt_note": "Attempt1 remains UNKNOWN test count after GitHub internal service cancellation; this zero does not overwrite it."
+}

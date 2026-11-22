@@ -1,0 +1,250 @@
+{
+  "scope": "ACTUAL_NATIVE_EXECUTION_SUMMARY",
+  "workflowRunID": "45067928645",
+  "runAttempt": 1,
+  "sourceSHA": "139c6bf93f80ef7301182110dcaf086612d9bbbd",
+  "workflowConclusion": "failure",
+  "workflowConclusionEvidence": "Root final workflow observation; raw results independently confirm missing selected unit tests and three UI failures.",
+  "artifact": {
+    "id": "14773257813",
+    "sha256": "1248901f3fe2c0e6bb6008522a40b363f5321531a1e66aa82f3885dfd88c7768",
+    "identityAndArchiveHashEvidence": "Provided by root after artifact retrieval; this audit independently hashes the extracted result files below."
+  },
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "490B01F6-2B5F-4446-8C49-AC646CD5CB1E",
+    "deviceName": "Hanlin-Phase2-45067928645-1",
+    "modelName": "iPad Pro 13-inch (M5)",
+    "osBuildNumber": "24B8117",
+    "osVersion": "27.2",
+    "platform": "iOS Simulator"
+  },
+  "toolchain": "Xcode 27.2\nBuild version 27B52",
+  "unit": {
+    "executedFunctionCount": 55,
+    "passedFunctionCount": 55,
+    "failedFunctionCount": 0,
+    "parameterizedFunctionCount": 4,
+    "parameterArgumentInvocationCount": 8,
+    "nonParameterizedInvocationCount": 51,
+    "effectiveExecutedInvocationCount": 59,
+    "effectivePassedInvocationCount": 59,
+    "countsDefinition": "Each nonparameterized function contributes one invocation; each parameterized function contributes its actual Arguments child count. Do not add parent function nodes to argument invocations.",
+    "swiftTestingSummary": "55 tests in 6 suites passed after 3.641 seconds",
+    "nonEmptyExecutedSuiteCount": 5,
+    "suiteSummaries": [
+      {
+        "suite": "AgentActivityHeaderPhaseTests",
+        "displayName": "V17 activity presentation lifetime",
+        "functionsExecuted": 14,
+        "functionsPassed": 14,
+        "invocationsExecuted": 14,
+        "invocationsPassed": 14
+      },
+      {
+        "suite": "AgentRoundPresentationTests",
+        "displayName": "Source-correlated Thinking hierarchy",
+        "functionsExecuted": 21,
+        "functionsPassed": 21,
+        "invocationsExecuted": 21,
+        "invocationsPassed": 21
+      },
+      {
+        "suite": "ChatScrollViewHandleTests",
+        "displayName": "Transcript native viewport lifetime",
+        "functionsExecuted": 11,
+        "functionsPassed": 11,
+        "invocationsExecuted": 11,
+        "invocationsPassed": 11
+      },
+      {
+        "suite": "CurrentLocationToolTests",
+        "displayName": "Current location and weather tool results",
+        "functionsExecuted": 7,
+        "functionsPassed": 7,
+        "invocationsExecuted": 11,
+        "invocationsPassed": 11
+      },
+      {
+        "suite": "HanlinModelDisplayNameTests",
+        "displayName": "Human-readable model labels",
+        "functionsExecuted": 2,
+        "functionsPassed": 2,
+        "invocationsExecuted": 2,
+        "invocationsPassed": 2
+      }
+    ],
+    "emptyLoggedSuite": {
+      "suite": "ProductionSystemSkillsTests",
+      "displayName": "Production System Skills Verification",
+      "executedFunctionCount": 0,
+      "qualification": "Suite starts/passes in the console but has no Test Case result nodes and no weather test start/pass lines."
+    },
+    "parameterizedFunctions": [
+      {
+        "testIdentifier": "CurrentLocationToolTests/validCoordinatesSurviveUnavailableAddress(emptyAddress:)",
+        "arguments": [
+          {
+            "value": "false",
+            "result": "Passed"
+          },
+          {
+            "value": "true",
+            "result": "Passed"
+          }
+        ]
+      },
+      {
+        "testIdentifier": "CurrentLocationToolTests/currentLocationFailureAndCancellationAreTruthful(cancelled:)",
+        "arguments": [
+          {
+            "value": "false",
+            "result": "Passed"
+          },
+          {
+            "value": "true",
+            "result": "Passed"
+          }
+        ]
+      },
+      {
+        "testIdentifier": "CurrentLocationToolTests/weatherFailuresAreNotReportedAsSuccess(configuredService:)",
+        "arguments": [
+          {
+            "value": "false",
+            "result": "Passed"
+          },
+          {
+            "value": "true",
+            "result": "Passed"
+          }
+        ]
+      },
+      {
+        "testIdentifier": "CurrentLocationToolTests/alreadyCancelledRequestDoesNotReportSuccess(toolName:)",
+        "arguments": [
+          {
+            "value": "\"get_current_location\"",
+            "result": "Passed"
+          },
+          {
+            "value": "\"query_weather\"",
+            "result": "Passed"
+          }
+        ]
+      }
+    ],
+    "selectedCoverageComplete": false,
+    "selectedButNotExecuted": [
+      "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillResolvesCoordinatesBeforeQuerying",
+      "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillRespectsDisabledMaps"
+    ],
+    "existingCompletenessVerifier": {
+      "sourceSHA256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+      "missingSelectors": [
+        "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillResolvesCoordinatesBeforeQuerying",
+        "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillRespectsDisabledMaps"
+      ],
+      "expectedCLIOutcome": "NONZERO: Requested tests did not execute"
+    },
+    "xcodebuildExecuteResult": "SUCCEEDED; does not establish complete requested selection",
+    "xctestWrapperZeroCount": "The console XCTest wrapper reports zero before Swift Testing begins; this is not the actual unit execution count."
+  },
+  "ui": {
+    "executedCount": 3,
+    "passedCount": 0,
+    "failedCount": 3,
+    "failures": [
+      {
+        "testIdentifier": "AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview()",
+        "result": "Failed",
+        "durationSeconds": 193.43797206878662,
+        "assertion": "XCTAssertTrue failed - Original whole-message preview/menu was lost",
+        "sourceFile": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+        "sourceLine": 763,
+        "scope": "Native selected-text Save, the exact-alpha assertion and source return executed without a recorded failure within an overall failed test. The whole-message preview requirement failed, so the selector has no pass or reuse credit. No cold-restart persistence claim.",
+        "observedFollowThrough": {
+          "continuationAfterFailure": "This selection test does not set continueAfterFailure=false; exported activities continue after its failed preview assertion. Other test methods in the file do set that flag.",
+          "exactAlphaAssertionSourceLine": 771,
+          "savedExcerptReadsUTC": [
+            "2026-11-22T21:19:40.110000+00:00",
+            "2026-11-22T21:19:43.810000+00:00"
+          ],
+          "savedExcerptTapUTC": "2026-11-22T21:19:53.153000+00:00",
+          "openSourceTapUTC": "2026-11-22T21:20:07.676000+00:00",
+          "retainedSourceReturnScreenshotUTC": "2026-11-22T21:20:12.650000+00:00",
+          "retainedScreenshotUUID": "99E87090-DE09-47C8-AEE1-AA5C44F8898C",
+          "visualObservation": "The independently viewed retained frame shows the saved alpha excerpt in the sidebar and alpha highlighted in the original paragraph.",
+          "recordedFailuresInSelector": 1,
+          "passingSelectorCredit": false,
+          "coldRestartPersistenceVerified": false,
+          "activityExport": "/workspace/scratch/2453c7f51f3d/inspection-45067928645/case-1-activities.json",
+          "activityExportSHA256": "97260ee067e52d6e280c078c15bc4871c1c314ac102717d51c43b8d14f6f120f",
+          "sourceReturnScreenshot": "/workspace/scratch/2453c7f51f3d/inspection-45067928645/case-1/99E87090-DE09-47C8-AEE1-AA5C44F8898C.png",
+          "sourceReturnScreenshotSHA256": "1373c9f42f3d5174c34a58e32fbbb4aade69182aad18510ebb9c3ef01bc22131",
+          "testSourceSHA256": "79f8e5464f45617ac8436f5ca7e837a926707f9be6b56607a8f20c20bd2b29f7"
+        }
+      },
+      {
+        "testIdentifier": "AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment()",
+        "result": "Failed",
+        "durationSeconds": 167.19935703277588,
+        "assertion": "XCTAssertTrue failed - The original Host must request consent",
+        "sourceFile": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+        "sourceLine": 224,
+        "scope": "Failed at the original Host consent expectation; root is separately diagnosing the lifecycle scenario. No lifecycle pass is claimed."
+      },
+      {
+        "testIdentifier": "AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations()",
+        "result": "Failed",
+        "durationSeconds": 117.08873403072357,
+        "assertion": "XCTAssertTrue failed - The original Host must request consent",
+        "sourceFile": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+        "sourceLine": 664,
+        "scope": "Known obsolete public-read consent expectation at this source. Corrected EN/HE fixture is in 44037dd81ccbb09ba79d67009228dd1bf69621fd; this failure is not a result for that corrected fixture."
+      }
+    ],
+    "totalReportedDurationSeconds": 477.726,
+    "xcodebuildExecuteResult": "FAILED"
+  },
+  "relatedWorkReportedByRoot": {
+    "inspectionRun45072283334": "Original artifacts exported; root inspected actual pending approval and selected-excerpt source images.",
+    "signedTestFlightUpload": "NOT_DISPATCHED",
+    "correctedRun45068850876": {
+      "attempt1": {
+        "status": "CANCELLED_GITHUB_INTERNAL_ERROR",
+        "executedTestCount": null,
+        "executionOutcome": "UNKNOWN",
+        "qualification": "No count or test artifact available; never record as zero."
+      },
+      "attempt2": {
+        "status": "CANCELLED_BY_ROOT_BEFORE_TESTS",
+        "buildCancelledAtUTC": "2026-11-22T21:30:56Z",
+        "runSimulatorTestSuiteConclusion": "SKIPPED",
+        "executedTestCount": 0,
+        "evidence": "Root observed cancellation before tests because of the known same helper mismatch."
+      },
+      "nextRunPreparation": "Root preparing four UI cases and two exact weather selectors with () after actual accessibility ownership and test-scope corrections; no dispatch/result asserted here."
+    },
+    "correctedRun45068850876Attempt2": "CANCELLED before tests after concrete same-helper mismatch evidence; see separate attempt2 receipt."
+  },
+  "sourceEvidenceSHA256": {
+    "08-downstream-unit-test-results.json": "c76ce5764720c3a284ec469accebae185625dec8db499932c21fc296d93622ad",
+    "08-downstream-unit-tests.log": "db12c4c1df164e30e8e9b0679c65487ef19ea5216b6241629ce01a409e15e722",
+    "08-nativescript-production-ui-test-results.json": "26006347ca72195f941feb9066af3c11ca990ed1a3c745047df74ac60b4cb1b3",
+    "08-nativescript-production-ui-tests.log": "b88a3ab34319eafd5f081c99c83a33cc3ca82a6154db71ec1e5f711308e541bd",
+    "08-current-unit-xctestrun-admission.json": "1c62eb4c64e14b07c64529f04f774fdf9fdd8c80ec972ac22e532a83b7a3656b",
+    "06-current-unit-xctestrun.json": "9343a72b9fa6dbf7bb41b0d218b3f3796ffdf48361b77ca7229878d8e99ddd74"
+  },
+  "rawEvidenceDirectory": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs",
+  "physicalIPadAcceptance": "NOT_RUN",
+  "actionsByThisAudit": {
+    "dispatchedTests": false,
+    "polledCI": false,
+    "modifiedRepository": false
+  },
+  "correction": {
+    "supersedesReceiptSHA256": "e3cb4268ad04a77dc2f656f40152bfa10e736d2d9f82b0779941a88eb64a3010",
+    "reason": "Corrected the earlier inference that execution stopped at the first failed assertion. The exact source and exported activity timeline show continuation through the saved-alpha and source-return actions. The selector remains FAILED."
+  }
+}

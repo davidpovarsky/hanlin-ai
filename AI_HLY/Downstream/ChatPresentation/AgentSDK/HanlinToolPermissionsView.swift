@@ -14,6 +14,7 @@ struct HanlinToolPermissionsView: View {
                         systemImage: "hand.raised",
                         description: Text(String(localized: "Sensitive tools will ask before their first use."))
                     )
+                    .accessibilityIdentifier("hanlin-tool-permissions-empty")
                 } else {
                     ForEach(grants) { grant in
                         HStack {
@@ -44,6 +45,7 @@ struct HanlinToolPermissionsView: View {
                         saveFailed = !HanlinToolApprovalStore.shared.revokeAll()
                         reload()
                     }
+                    .accessibilityIdentifier("hanlin-tool-permissions-revoke-all")
                 }
             }
             if saveFailed {
@@ -53,6 +55,7 @@ struct HanlinToolPermissionsView: View {
                 }
             }
         }
+        .accessibilityIdentifier("hanlin-tool-permissions-list")
         .navigationTitle(String(localized: "Tool permissions"))
         .onAppear(perform: reload)
         .onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in reload() }
