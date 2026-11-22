@@ -5,7 +5,7 @@ import HanlinScriptStore
 import SwiftUI
 
 struct NativeAppsCatalogView<AdditionalToolbar: ToolbarContent>: View {
-    var prepareCatalog: () async -> Void = {}
+    var prepareCatalog: (() async -> Void)?
     let refreshCatalog: () async -> Void
     let onLaunch: (HanlinMiniAppCatalogItem) -> Void
     let onLaunchPackage: (HanlinInstalledPackageID) -> Void
@@ -108,10 +108,7 @@ struct NativeAppsCatalogView<AdditionalToolbar: ToolbarContent>: View {
                     }
                 }
             }
-            .task {
-                await prepareCatalog()
-                await refreshCatalog()
-            }
+            .task { await prepareCatalog?() }
             .onChange(of: scriptingPlatform.installedPackages) { _, _ in
                 Task { await refreshCatalog() }
             }

@@ -14,6 +14,7 @@ struct NativeAppsHubView: View {
             prepareCatalog: {
                 launchSession.platform.configure(modelContext: modelContext)
                 await launchSession.platform.restore()
+                await launchSession.refreshCatalog()
             },
             refreshCatalog: { await launchSession.refreshCatalog() },
             onLaunch: launchSession.launch,

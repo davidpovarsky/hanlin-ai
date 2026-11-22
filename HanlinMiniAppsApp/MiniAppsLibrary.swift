@@ -6,6 +6,7 @@ struct MiniAppsLibrary: View {
     @State private var presentation: PresentedApp?
     @State private var isLaunching = false
     @State private var showsTransfer = false
+    @State private var catalogReady = false
     @State private var catalogError: String?
     @State private var launchError: String?
 
@@ -15,6 +16,27 @@ struct MiniAppsLibrary: View {
     }
 
     var body: some View {
+        Group {
+            if catalogReady {
+                catalog
+            } else if let catalogError {
+                ContentUnavailableView {
+                    Label("MiniApps unavailable", systemImage: "exclamationmark.triangle")
+                } description: {
+                    Text(catalogError)
+                } actions: {
+                    Button("Retry") { Task { await refreshCatalog() } }
+                }
+            } else {
+                ProgressView("Loading apps…")
+            }
+        }
+        .task {
+            if !catalogReady { await refreshCatalog() }
+        }
+    }
+
+    private var catalog: some View {
         NativeAppsCatalogView(
             refreshCatalog: refreshCatalog,
             onLaunch: { item in open { try await provider.launch(item) } },
@@ -27,17 +49,6 @@ struct MiniAppsLibrary: View {
             }
         }
         .refreshable { await refreshCatalog() }
-        .overlay {
-            if let catalogError, HanlinMiniAppHost.shared.items.isEmpty {
-                ContentUnavailableView {
-                    Label("MiniApps unavailable", systemImage: "exclamationmark.triangle")
-                } description: {
-                    Text(catalogError)
-                } actions: {
-                    Button("Retry") { Task { await refreshCatalog() } }
-                }
-            }
-        }
         .sheet(isPresented: $showsTransfer, onDismiss: {
             Task { await refreshCatalog() }
         }) {
@@ -83,6 +94,8 @@ struct MiniAppsLibrary: View {
         do {
             try await provider.refreshCatalog()
             catalogError = nil
+            // Display the library after the canonical catalog is available to Hanlin AI.
+            catalogReady = true
         } catch {
             catalogError = error.localizedDescription
         }
