@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "scope": "NATIVE_FAILURE_BEFORE_TEST_INVOCATION",
+  "workflowRunID": "45073227781",
+  "runAttempt": 1,
+  "jobID": "137364720716",
+  "sourceSHA": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+  "artifact": {
+    "id": "14775381971",
+    "archiveSHA256": "66e7ef64a613a379a9bb866fd1c4be5d12086398ca066bbf0b5dc13e6c62ab73",
+    "fullLocalArchiveHashIndependentlyVerified": true
+  },
+  "buildForTesting": {
+    "status": "SUCCEEDED",
+    "logMarker": "TEST BUILD SUCCEEDED",
+    "sealedProductsStatus": "SEALED",
+    "toolchain": "Xcode 27.2\nBuild version 27B52",
+    "configuration": "Debug",
+    "qualification": "Current build-for-testing may reuse validated compiler products; no fresh-compilation claim."
+  },
+  "simulatorBoot": {
+    "status": "BOOTED",
+    "exitCode": 0,
+    "udid": "0DFD3833-2E38-44A0-98BB-406488F9091A",
+    "finishedAtUTC": "2026-11-22T22:01:42Z"
+  },
+  "failure": {
+    "stage": "Run simulator test suite / current_unit_xctestrun admission",
+    "command": [
+      "xcodebuild",
+      "-version"
+    ],
+    "configuredTimeoutSeconds": [
+      30,
+      60
+    ],
+    "admissionStartedAtUTC": "2026-11-22T22:03:07.8282060Z",
+    "firstTimeoutReportedAtUTC": "2026-11-22T22:05:46.3158530Z",
+    "retryTimeoutReportedAtUTC": "2026-11-22T22:07:56.4059280Z",
+    "emptyUnitXctestrunAtUTC": "2026-11-22T22:07:57.7717230Z",
+    "stepExitAtUTC": "2026-11-22T22:07:57.8730810Z",
+    "exitCode": 1,
+    "classification": "INFRASTRUCTURE_PRETEST_FAILURE",
+    "diagnosticQualification": "The retained failed-step file is filtered, rendered gh CLI output with original timestamps, not the complete raw job log. The timeout numbers are configured limits, not inferred wall-clock durations.",
+    "followOnDiagnostics": "Subsequent simctl log show and get_app_container calls also timed out; no new root-cause claim."
+  },
+  "execution": {
+    "unitFunctionsExecuted": 0,
+    "unitArgumentInvocationsExecuted": 0,
+    "uiTestsExecuted": 0,
+    "retainedUnitResults": false,
+    "retainedUIResults": false,
+    "nativePassClaim": false,
+    "zeroCountBasis": "The exact committed shell runs admission in an assignment under set -e before set +e and xcodebuild test-without-building. The failed-step output records failed admission, empty unit_xctestrun and immediate exit 1. No unit/UI invocation is reached. Missing result files alone are not used as proof of zero.",
+    "absentTestOutputFiles": [
+      "08-current-unit-xctestrun-admission.json",
+      "08-downstream-unit-tests.log",
+      "08-downstream-unit-test-results.json",
+      "08-nativescript-production-ui-tests.log",
+      "08-nativescript-production-ui-test-results.json"
+    ],
+    "expectedSelectors": [
+      "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillResolvesCoordinatesBeforeQuerying()",
+      "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillRespectsDisabledMaps()",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations"
+    ]
+  },
+  "stillUnverifiedWeatherSelectors": [
+    "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillResolvesCoordinatesBeforeQuerying()",
+    "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillRespectsDisabledMaps()"
+  ],
+  "sourceEvidenceSHA256": {
+    "archive": "66e7ef64a613a379a9bb866fd1c4be5d12086398ca066bbf0b5dc13e6c62ab73",
+    "06-current-unit-xctestrun.json": "df5741d1acd562b1c68757cd8284b7da11da2b8c101725f4e312b1674672611c",
+    "06-xcodebuild-simulator.log": "1a7c2ee24c987cbc3a539f36c0de6a5694ada80f996cd77c0d099617623918de",
+    "08-owned-simulator-boot.json": "c223e25d9d5b47b7298ceed9699f2e1f2ba2650d78f3d9e481928c272058efb7",
+    "08-bootstatus.log": "871c8c5d9ad9d9c0002dd9f4b93df149783991474317729381938e919d40f840",
+    "failed-step-diagnostics.txt": "5f5467bc30b81b70c8751e113ae4cde15ea2f9f68a71217dd423b537c236ecac",
+    "exactSourceWorkflow": "50bc4f9a8a0c12883d3796c7e80c1a23ede6d92221e085a9a475fb1fd4c461aa"
+  },
+  "ongoingRunReportedByRoot": {
+    "workflowRunID": "45076547453",
+    "sourceSHA": "78979c92971ef3c2e36d7847bdea1ec2f5a5742e",
+    "status": "ACTIVE; no outcome inferred"
+  },
+  "testFlightUpload": "NOT_DISPATCHED",
+  "physicalIPadAcceptance": "NOT_RUN",
+  "auditActions": {
+    "ciPolling": false,
+    "testDispatch": false,
+    "runCancellation": false,
+    "repositoryEdits": false
+  },
+  "retained_filtered_log": {
+    "path": "native-attempt-45073227781-diagnostics.json",
+    "format": "JSON content field retains exact original UTF-8 text including CRLF; original_sha256 applies to reconstructed content bytes.",
+    "wrapper_sha256": "8d50c91af9c98a2f37d562e520a99d32f8a4f63e5bb9887587aa112bdcc19f1f",
+    "original_sha256": "5f5467bc30b81b70c8751e113ae4cde15ea2f9f68a71217dd423b537c236ecac"
+  },
+  "independent_source_receipt_sha256": "9229b2bd9948d6c2b87f0bc261c59e2cd114223a680cbc5382943eb25e6684d5"
+}

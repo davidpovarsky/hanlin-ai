@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "verification_kind": "portable_python_unittest",
+  "recorded_from_existing_result": true,
+  "reexecuted_for_receipt": false,
+  "command": "python3 -m unittest Scripts/CI/Tests/test_current_unit_xctestrun.py -v",
+  "working_directory": "/workspace/scratch/2453c7f51f3d/hanlin-ai",
+  "original_tool_result": {
+    "tool": "exec_command",
+    "chunk_id": "48f89e",
+    "exit_code": 0,
+    "wall_time_seconds": 0.233863843,
+    "original_token_count": 1321
+  },
+  "result": {
+    "status": "EXECUTED_PASS",
+    "tests_executed": 24,
+    "unittest_reported_duration_seconds": 0.113,
+    "scope": "Scripts/CI/Tests/test_current_unit_xctestrun.py",
+    "qualification": "Portable admission-harness verification only. No Apple build, simulator test, application UI test, or TestFlight result is claimed by this receipt."
+  },
+  "source_files": [
+    {
+      "path": "Scripts/CI/current_unit_xctestrun.py",
+      "sha256": "2d7839768ed684daee282382ab846e118adab049e22a6a7252053062e7f08efa"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_current_unit_xctestrun.py",
+      "sha256": "1200e511ec31145e4968736cb16748471ec70e3440241f27a1e441de4e1f49d7"
+    }
+  ],
+  "source_hash_observation": {
+    "tool": "exec_command",
+    "chunk_id": "61e888",
+    "command": "sha256sum Scripts/CI/current_unit_xctestrun.py Scripts/CI/Tests/test_current_unit_xctestrun.py",
+    "unchanged_hashes_checked_when_retaining_receipt": true
+  },
+  "combined_output": "test_absent_wrong_disabled_or_ambiguous_original_target_rejected (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_absent_wrong_disabled_or_ambiguous_original_target_rejected) ... ok\ntest_build_context_reads_actual_git_revision_dirty_diff_and_provenance (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_build_context_reads_actual_git_revision_dirty_diff_and_provenance) ... ok\ntest_context_cannot_cross_run_attempt_source_toolchain_selector_or_dirty_inputs (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_context_cannot_cross_run_attempt_source_toolchain_selector_or_dirty_inputs) ... ok\ntest_current_v1_products_preserve_all_original_selectors_and_manifest_bytes (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_current_v1_products_preserve_all_original_selectors_and_manifest_bytes) ... ok\ntest_current_v2_preserves_environment_and_ignores_disabled_configuration (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_current_v2_preserves_environment_and_ignores_disabled_configuration) ... ok\ntest_developer_override_and_bundle_alias_use_the_actual_selected_installation (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_developer_override_and_bundle_alias_use_the_actual_selected_installation) ... ok\ntest_escaped_metadata_or_executable_and_unrelated_path_launcher_are_rejected (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_escaped_metadata_or_executable_and_unrelated_path_launcher_are_rejected) ... ok\ntest_failed_or_non_test_build_cannot_be_sealed (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_failed_or_non_test_build_cannot_be_sealed) ... ok\ntest_fresh_bundle_identity_does_not_start_xcode_or_simulator_services (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_fresh_bundle_identity_does_not_start_xcode_or_simulator_services) ... ok\ntest_manifest_test_binary_and_actual_debug_app_code_cannot_change_after_seal (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_manifest_test_binary_and_actual_debug_app_code_cannot_change_after_seal) ... ok\ntest_missing_malformed_or_inconsistent_identity_never_uses_sealed_metadata (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_missing_malformed_or_inconsistent_identity_never_uses_sealed_metadata) ... ok\ntest_missing_or_wrong_owned_boot_receipt_and_destination_rejected (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_missing_or_wrong_owned_boot_receipt_and_destination_rejected) ... ok\ntest_missing_original_test_binary_fails_before_execution (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_missing_original_test_binary_fails_before_execution) ... ok\ntest_prepared_receipt_does_not_admit_and_cannot_be_silently_overwritten (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_prepared_receipt_does_not_admit_and_cannot_be_silently_overwritten) ... ok\ntest_previous_cached_manifest_cannot_satisfy_current_build (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_previous_cached_manifest_cannot_satisfy_current_build) ... ok\ntest_rejected_native_manifest_format_retains_exact_current_bytes (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_rejected_native_manifest_format_retains_exact_current_bytes) ... ok\ntest_same_version_executable_or_metadata_replacement_cannot_admit_sealed_products (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_same_version_executable_or_metadata_replacement_cannot_admit_sealed_products) ... ok\ntest_selection_failure_remains_fail_closed_without_retry_or_cached_identity (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_selection_failure_remains_fail_closed_without_retry_or_cached_identity) ... ok\ntest_selector_validation_retains_parameterized_methods_and_rejects_other_target (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_selector_validation_retains_parameterized_methods_and_rejects_other_target) ... ok\ntest_symlinked_external_test_binary_is_rejected (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_symlinked_external_test_binary_is_rejected) ... ok\ntest_two_generated_manifests_are_ambiguous (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_two_generated_manifests_are_ambiguous) ... ok\ntest_unresolved_or_outside_product_path_rejected (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_unresolved_or_outside_product_path_rejected) ... ok\ntest_workflow_unit_route_preserves_destination_filters_limits_and_result_gate (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_workflow_unit_route_preserves_destination_filters_limits_and_result_gate) ... ok\ntest_wrong_host_identity_configuration_and_bundle_identity_rejected (Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_wrong_host_identity_configuration_and_bundle_identity_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 24 tests in 0.113s\n\nOK\n",
+  "combined_output_sha256": "fd42b4080ffa674e32de5df8ee0589f0ac3444a229e72070989a20d6905863fd"
+}

@@ -43,6 +43,7 @@ class CurrentUnitXctestrunTests(unittest.TestCase):
             "configuration": "Debug", "selectors": DATA_SELECTORS,
             "products_root": str(self.products), "developer_directory": "/Synthetic/Xcode/Developer",
             "xcode_version": "Synthetic Xcode fixture",
+            "xcode_identity": {"method": "synthetic fixture", "executable_sha256": "a" * 64},
             "tracked_diff_sha256": "1" * 64, "tracked_workspace_modified": True,
             "diagnostics_provenance_sha256": "2" * 64,
             "diagnostics_tracked_workspace_modified": True,
@@ -260,6 +261,7 @@ class CurrentUnitXctestrunTests(unittest.TestCase):
             "run_id": "2", "run_attempt": "2", "source_sha": "3" * 40,
             "configuration": "Release", "selectors": DATA_SELECTORS[:-1],
             "developer_directory": "/Other/Xcode", "xcode_version": "Other Xcode",
+            "xcode_identity": {"method": "synthetic fixture", "executable_sha256": "b" * 64},
             "tracked_diff_sha256": "4" * 64,
             "diagnostics_provenance_sha256": "5" * 64,
         }
@@ -309,54 +311,150 @@ class CurrentUnitXctestrunTests(unittest.TestCase):
             with self.subTest(selectors=selectors), self.assertRaises(RuntimeError):
                 admission.selected_identifiers(selectors)
 
-    def test_version_query_timeout_retries_only_a_fresh_bounded_query(self):
-        arguments = ["xcodebuild", "-version"]
-        failure = subprocess.TimeoutExpired(arguments, 30, output=b"incomplete stale output")
-        with mock.patch.object(admission.subprocess, "check_output",
-                               side_effect=[failure, b"Xcode 27.2\nBuild version 27B52\n"]) as command, \
-                mock.patch.object(admission.sys, "stderr"):
-            version = admission.current_xcode_version(self.root)
-        self.assertEqual(version, "Xcode 27.2\nBuild version 27B52")
-        self.assertEqual(command.call_args_list, [
-            mock.call(arguments, cwd=self.root, timeout=30),
-            mock.call(arguments, cwd=self.root, timeout=60),
-        ])
+    def installed_xcode(self, name="Xcode.app"):
+        contents = self.root / name / "Contents"
+        developer = contents / "Developer"
+        executable = developer / "usr/bin/xcodebuild"
+        executable.parent.mkdir(parents=True, exist_ok=True)
+        executable.write_bytes(b"synthetic executable fixture; never executed")
+        executable.chmod(0o755)
+        (contents / "Info.plist").write_bytes(plistlib.dumps({
+            "CFBundleIdentifier": "com.apple.dt.Xcode", "CFBundleShortVersionString": "27.2"}))
+        (contents / "version.plist").write_bytes(plistlib.dumps({
+            "CFBundleShortVersionString": "27.2", "ProductBuildVersion": "27B52"}))
+        return developer
 
-    def test_second_version_timeout_cannot_fall_back_to_a_sealed_version(self):
+    def read_xcode_identity(self, developer, *, override="", launcher=None):
+        with mock.patch.dict(os.environ, {"DEVELOPER_DIR": override, "TOOLCHAINS": ""}), \
+                mock.patch.object(admission.subprocess, "check_output",
+                                  return_value=(str(developer) + "\n").encode()), \
+                mock.patch.object(admission.shutil, "which", return_value=str(
+                    launcher or developer / "usr/bin/xcodebuild")):
+            return admission.current_xcode_identity(self.root)
+
+    def test_fresh_bundle_identity_does_not_start_xcode_or_simulator_services(self):
+        developer = self.installed_xcode()
+        with mock.patch.dict(os.environ, {"DEVELOPER_DIR": "", "TOOLCHAINS": ""}), \
+                mock.patch.object(admission.subprocess, "check_output",
+                                  return_value=(str(developer) + "\n").encode()) as command, \
+                mock.patch.object(admission.shutil, "which",
+                                  return_value=str(developer / "usr/bin/xcodebuild")):
+            identity = admission.current_xcode_identity(self.root)
+        command.assert_called_once_with(["/usr/bin/xcode-select", "-p"], cwd=self.root, timeout=30)
+        self.assertEqual(identity["developer_directory"], str(developer))
+        self.assertEqual(identity["xcode_version"], "Xcode 27.2\nBuild version 27B52")
+        self.assertEqual(identity["xcode_identity"]["executable_sha256"],
+                         admission.sha256(developer / "usr/bin/xcodebuild"))
+        self.assertEqual(identity["xcode_identity"]["version_plist_sha256"],
+                         admission.sha256(developer.parent / "version.plist"))
+
+    def test_developer_override_and_bundle_alias_use_the_actual_selected_installation(self):
+        developer = self.installed_xcode()
+        alias = self.root / "Xcode-alias.app"
+        alias.symlink_to(developer.parent.parent, target_is_directory=True)
+        for override in (str(alias), str(developer)):
+            with self.subTest(override=override), \
+                    mock.patch.dict(os.environ, {"DEVELOPER_DIR": override, "TOOLCHAINS": ""}), \
+                    mock.patch.object(admission.subprocess, "check_output",
+                                      side_effect=AssertionError("Override must avoid system selection")), \
+                    mock.patch.object(admission.shutil, "which",
+                                      return_value=str(developer / "usr/bin/xcodebuild")):
+                identity = admission.current_xcode_identity(self.root)
+            self.assertEqual(identity["developer_directory"], str(developer))
+            self.assertEqual(identity["xcode_identity"]["developer_dir_override"], override)
+
+    def test_same_version_executable_or_metadata_replacement_cannot_admit_sealed_products(self):
+        developer = self.installed_xcode()
+        self.context.update(self.read_xcode_identity(developer))
         self.prepare()
         self.generated()
         self.seal()
-        arguments = ["xcodebuild", "-version"]
-        with mock.patch.object(admission.subprocess, "check_output", side_effect=[
-                subprocess.TimeoutExpired(arguments, 30),
-                subprocess.TimeoutExpired(arguments, 60)]) as command, \
-                mock.patch.object(admission.sys, "stderr"), \
-                self.assertRaises(subprocess.TimeoutExpired):
-            admission.current_xcode_version(self.root)
-        self.assertEqual(command.call_count, 2)
-        self.assertEqual(json.loads((self.log / admission.RECEIPT).read_bytes())["status"], "SEALED")
-        self.assertFalse((self.log / admission.ADMISSION).exists())
-
-    def test_version_query_command_failure_is_not_retried(self):
-        failure = subprocess.CalledProcessError(1, ["xcodebuild", "-version"])
-        with mock.patch.object(admission.subprocess, "check_output", side_effect=failure) as command, \
-                self.assertRaises(subprocess.CalledProcessError):
-            admission.current_xcode_version(self.root)
-        self.assertEqual(command.call_count, 1)
-
-    def test_fresh_version_after_timeout_cannot_admit_a_different_toolchain(self):
-        self.prepare()
-        self.generated()
-        self.seal()
-        with mock.patch.object(admission.subprocess, "check_output", side_effect=[
-                subprocess.TimeoutExpired(["xcodebuild", "-version"], 30),
-                b"Xcode 27.3\nBuild version 27C10\n"]), \
-                mock.patch.object(admission.sys, "stderr"):
-            version = admission.current_xcode_version(self.root)
+        changes = {
+            developer / "usr/bin/xcodebuild": b"different executable, same claimed version",
+            developer.parent / "Info.plist": plistlib.dumps({
+                "CFBundleIdentifier": "com.apple.dt.Xcode", "CFBundleShortVersionString": "27.2",
+                "CFBundleVersion": "different internal build"}),
+            developer.parent / "version.plist": plistlib.dumps({
+                "CFBundleShortVersionString": "27.2", "ProductBuildVersion": "27B53"}),
+        }
+        for path, changed in changes.items():
+            original = path.read_bytes()
+            try:
+                path.write_bytes(changed)
+                context = {**self.context, **self.read_xcode_identity(developer)}
+                with self.subTest(path=path.name), self.assertRaisesRegex(RuntimeError, "changed"):
+                    admission.admit(self.products, self.log, context, DEVICE)
+                self.assertFalse((self.log / admission.ADMISSION).exists())
+            finally:
+                path.write_bytes(original)
+        other = self.installed_xcode("OtherXcode.app")
         with self.assertRaisesRegex(RuntimeError, "changed"):
             admission.admit(self.products, self.log,
-                            {**self.context, "xcode_version": version}, DEVICE)
-        self.assertFalse((self.log / admission.ADMISSION).exists())
+                            {**self.context, **self.read_xcode_identity(other)}, DEVICE)
+
+    def test_missing_malformed_or_inconsistent_identity_never_uses_sealed_metadata(self):
+        developer = self.installed_xcode()
+        self.context.update(self.read_xcode_identity(developer))
+        self.prepare()
+        self.generated()
+        self.seal()
+        version = developer.parent / "version.plist"
+        invalid = [None, b"not a property list", plistlib.dumps([]), plistlib.dumps({}),
+                   plistlib.dumps({"CFBundleShortVersionString": "27.3", "ProductBuildVersion": "27B52"}),
+                   plistlib.dumps({"CFBundleShortVersionString": "27.2", "ProductBuildVersion": ""})]
+        original = version.read_bytes()
+        for data in invalid:
+            try:
+                version.unlink(missing_ok=True)
+                if data is not None:
+                    version.write_bytes(data)
+                with self.subTest(data=data), self.assertRaises(
+                        (OSError, RuntimeError, plistlib.InvalidFileException)):
+                    self.read_xcode_identity(developer)
+                self.assertFalse((self.log / admission.ADMISSION).exists())
+                self.assertEqual(json.loads((self.log / admission.RECEIPT).read_bytes())["status"], "SEALED")
+            finally:
+                version.write_bytes(original)
+
+    def test_escaped_metadata_or_executable_and_unrelated_path_launcher_are_rejected(self):
+        developer = self.installed_xcode()
+        for relative in ("Info.plist", "Developer/usr/bin/xcodebuild"):
+            path = developer.parent / relative
+            original = path.read_bytes()
+            external = self.root / "outside-bundle"
+            external.write_bytes(original)
+            external.chmod(0o755)
+            try:
+                path.unlink()
+                path.symlink_to(external)
+                with self.subTest(relative=relative), self.assertRaisesRegex(RuntimeError, "escapes"):
+                    self.read_xcode_identity(developer)
+            finally:
+                path.unlink()
+                path.write_bytes(original)
+                path.chmod(0o755)
+        wrapper = self.root / "path-wrapper"
+        wrapper.write_bytes((developer / "usr/bin/xcodebuild").read_bytes())
+        wrapper.chmod(0o755)
+        with self.assertRaisesRegex(RuntimeError, "PATH xcodebuild"):
+            self.read_xcode_identity(developer, launcher=wrapper)
+        (developer / "usr/bin/xcodebuild").chmod(0o644)
+        with self.assertRaisesRegex(RuntimeError, "executable is unavailable"):
+            self.read_xcode_identity(developer)
+
+    def test_selection_failure_remains_fail_closed_without_retry_or_cached_identity(self):
+        self.prepare()
+        self.generated()
+        self.seal()
+        for failure in (subprocess.TimeoutExpired(["/usr/bin/xcode-select", "-p"], 30),
+                        subprocess.CalledProcessError(1, ["/usr/bin/xcode-select", "-p"])):
+            with self.subTest(failure=type(failure).__name__), \
+                    mock.patch.dict(os.environ, {"DEVELOPER_DIR": ""}), \
+                    mock.patch.object(admission.subprocess, "check_output", side_effect=failure) as command, \
+                    self.assertRaises(subprocess.SubprocessError):
+                admission.current_xcode_identity(self.root)
+            self.assertEqual(command.call_count, 1)
+            self.assertFalse((self.log / admission.ADMISSION).exists())
 
     def test_build_context_reads_actual_git_revision_dirty_diff_and_provenance(self):
         def git(*arguments):
@@ -371,19 +469,21 @@ class CurrentUnitXctestrunTests(unittest.TestCase):
         head = git("rev-parse", "HEAD").decode().strip()
         provenance = self.log / "06-diagnostics-build-provenance.json"
         provenance.write_text(json.dumps({"sourceCommit": head, "trackedWorkspaceModified": False}))
+        developer = self.installed_xcode()
         real_command = subprocess.check_output
         observed = []
 
         def command(arguments, **kwargs):
             observed.append(arguments)
-            if arguments == ["xcode-select", "-p"]:
-                return b"/Synthetic/Xcode/Developer\n"
-            if arguments == ["xcodebuild", "-version"]:
-                return b"Synthetic Xcode fixture\n"
+            if arguments == ["/usr/bin/xcode-select", "-p"]:
+                return (str(developer) + "\n").encode()
             return real_command(arguments, **kwargs)
 
         with mock.patch.dict(os.environ, {"GITHUB_RUN_ID": self.context["run_id"],
-                                         "GITHUB_RUN_ATTEMPT": "1", "GITHUB_SHA": head}), \
+                                         "GITHUB_RUN_ATTEMPT": "1", "GITHUB_SHA": head,
+                                         "DEVELOPER_DIR": "", "TOOLCHAINS": ""}), \
+                mock.patch.object(admission.shutil, "which",
+                                  return_value=str(developer / "usr/bin/xcodebuild")), \
                 mock.patch.object(admission.subprocess, "check_output", side_effect=command):
             before = admission.build_context(self.root, self.products, self.log, "Debug",
                                              ",".join(DATA_SELECTORS))
@@ -397,7 +497,7 @@ class CurrentUnitXctestrunTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "different source"):
                 admission.build_context(self.root, self.products, self.log, "Debug", "AI_HLYTests")
         self.assertTrue(all("-resolvePackageDependencies" not in args and "-project" not in args
-                            and "-scheme" not in args for args in observed))
+                            and "-scheme" not in args and "xcodebuild" not in args for args in observed))
 
     def test_workflow_unit_route_preserves_destination_filters_limits_and_result_gate(self):
         workflow = (SCRIPT_PATH.parents[2] / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(

@@ -90,19 +90,74 @@ def descriptors(products):
     return candidates
 
 
-def current_xcode_version(repository):
-    # The read-only version query can stall just after a fresh simulator boots.
-    # Retry only that timeout, once, with a bounded fresh query. Never substitute
-    # the prepared/sealed receipt's version: its equality check must still fail
-    # if the selected toolchain changed or cannot be observed now.
-    arguments = ["xcodebuild", "-version"]
-    try:
-        output = subprocess.check_output(arguments, cwd=repository, timeout=30)
-    except subprocess.TimeoutExpired:
-        print("Current Xcode version query timed out after 30 seconds; retrying once "
-              "with a 60-second limit. Product admission is still pending.", file=sys.stderr)
-        output = subprocess.check_output(arguments, cwd=repository, timeout=60)
-    return output.decode().strip()
+def current_xcode_identity(repository):
+    """Read the selected installation now, without starting Xcode or its services.
+
+    A version subprocess can stall under simulator memory pressure. Reading the
+    installed bundle and executable at every phase also detects replacement by
+    a different executable reporting the same version. Nothing is taken from a
+    previous receipt or environment log, and an unreadable identity fails closed.
+    """
+    override = os.environ.get("DEVELOPER_DIR", "")
+    selected = override or subprocess.check_output(
+        ["/usr/bin/xcode-select", "-p"], cwd=repository, timeout=30).decode().strip()
+    require(selected and Path(selected).is_absolute(), "Selected Xcode path must be absolute")
+    developer = Path(selected).resolve(strict=True)
+    if developer.suffix == ".app":
+        developer = (developer / "Contents" / "Developer").resolve(strict=True)
+    require(developer.is_dir() and developer.name == "Developer"
+            and developer.parent.name == "Contents" and developer.parent.parent.suffix == ".app",
+            "Selected developer directory is not an Xcode app bundle")
+    contents = developer.parent
+
+    def bundle_file(relative):
+        path = (contents / relative).resolve(strict=True)
+        require(path.is_relative_to(contents) and path.is_file(),
+                "Required Xcode identity file escapes or is absent from the selected bundle")
+        return path
+
+    def metadata(relative):
+        path = bundle_file(relative)
+        require(0 < path.stat().st_size <= 1024 * 1024, "Invalid Xcode metadata size")
+        data = path.read_bytes()
+        value = plistlib.loads(data)
+        require(isinstance(value, dict), "Malformed Xcode bundle metadata")
+        return value, hashlib.sha256(data).hexdigest()
+
+    info, info_digest = metadata("Info.plist")
+    version, version_digest = metadata("version.plist")
+    number, build = version.get("CFBundleShortVersionString"), version.get("ProductBuildVersion")
+    require(info.get("CFBundleIdentifier") == "com.apple.dt.Xcode",
+            "Selected bundle is not Xcode")
+    require(isinstance(number, str) and re.fullmatch(r"\d+(?:\.\d+)*", number)
+            and info.get("CFBundleShortVersionString") == number,
+            "Missing or inconsistent Xcode version metadata")
+    require(isinstance(build, str) and re.fullmatch(r"[0-9]+[A-Z][0-9A-Za-z]+", build),
+            "Missing or malformed Xcode build metadata")
+    executable = bundle_file("Developer/usr/bin/xcodebuild")
+    require(os.access(executable, os.X_OK) and executable.stat().st_size > 0,
+            "Selected Xcode executable is unavailable")
+    located = shutil.which("xcodebuild")
+    require(located is not None, "xcodebuild is unavailable on the current PATH")
+    launcher = Path(located).resolve(strict=True)
+    # The workflow invokes xcodebuild through PATH. Only the system selector shim
+    # or this exact selected executable can establish which bundle it will use.
+    require(launcher == Path("/usr/bin/xcodebuild").resolve() or launcher == executable,
+            "PATH xcodebuild does not resolve to the system shim or selected Xcode")
+    require(launcher.is_file() and os.access(launcher, os.X_OK),
+            "Current xcodebuild launcher is unavailable")
+    return {
+        "developer_directory": str(developer),
+        "xcode_version": f"Xcode {number}\nBuild version {build}",
+        "xcode_identity": {
+            "method": "selected_bundle_files_v1",
+            "info_plist_sha256": info_digest, "version_plist_sha256": version_digest,
+            "executable_path": str(executable), "executable_sha256": sha256(executable),
+            "launcher_path": str(launcher), "launcher_sha256": sha256(launcher),
+            "developer_dir_override": override,
+            "toolchains_override": os.environ.get("TOOLCHAINS", ""),
+        },
+    }
 
 
 def build_context(repository, products, log, configuration, selectors):
@@ -134,8 +189,7 @@ def build_context(repository, products, log, configuration, selectors):
         "run_id": run_id, "run_attempt": attempt, "source_sha": head,
         "configuration": configuration, "selectors": selected_identifiers(selectors),
         "products_root": str(products),
-        "developer_directory": command(["xcode-select", "-p"]).decode().strip(),
-        "xcode_version": current_xcode_version(repository),
+        **current_xcode_identity(repository),
         "tracked_diff_sha256": hashlib.sha256(diff).hexdigest(),
         "tracked_workspace_modified": bool(diff),
         "diagnostics_provenance_sha256": sha256(provenance_path),
