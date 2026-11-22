@@ -94,7 +94,7 @@
     "runtime_producer_changed": false
   },
   "retry": {
-    "status": "DISPATCHED_RESULT_PENDING",
+    "status": "COMPLETED_SUCCESS_VERIFIED",
     "app_source_sha": "c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2",
     "dispatch_job_id": "job_df8572e96187",
     "runtime_bundle_artifact_run_id": "42926628418",
@@ -107,12 +107,77 @@
     "attempt": 1,
     "expected_candidate_build_number": "145401",
     "started_at": "2026-11-22T01:43:54Z",
-    "watcher_job_id": "job_41d6b06d11ab"
+    "watcher_job_id": "job_c8b82d9e7339",
+    "build_number": "145401",
+    "workflow_evidence": "workflow-release-145401.json",
+    "workflow_conclusion": "success",
+    "scoped_outcomes": {
+      "signed_archive": "EXECUTED_PASS",
+      "ipa_export": "EXECUTED_PASS",
+      "signatures_profiles_runtime_verification": "EXECUTED_PASS",
+      "apple_validation": "EXECUTED_PASS",
+      "app_store_upload": "EXECUTED_PASS",
+      "testflight_readiness": "EXECUTED_PASS",
+      "independent_artifact_receipt_verification": "EXECUTED_PASS",
+      "simulator_and_native_ui_jobs": "SKIPPED_BY_OWNER_REQUEST",
+      "physical_ipad_acceptance": "NOT_RUN"
+    },
+    "archive_completed_at": "2026-11-22T02:24:53Z",
+    "readiness_completed_at": "2026-11-22T02:46:50Z",
+    "exported": true,
+    "uploaded_to_testflight": true,
+    "verified_release_receipt": {
+      "file": "testflight-release-145401.json",
+      "verified_at_utc": "2026-11-22T02:58:16.712591+00:00",
+      "verification_job_ids": [
+        "job_79bd7b8ff8e1",
+        "job_0c651ebb9f2b"
+      ],
+      "version": "0.7.3",
+      "app_id": "6811910017",
+      "build_id": "ea8b309c-a0a3-4afb-b8f8-3234c0a536c1",
+      "processing_state": "VALID",
+      "internal_build_state": "IN_BETA_TESTING",
+      "verification_sha": "c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2",
+      "audience_source_build": "143801",
+      "internal_beta_group_ids": [
+        "14fdc6a7-062e-40f6-8f11-45cbd30c6ddb"
+      ],
+      "ipa_sha256": "751cf593dca2905344186db778b04fa7ceddfd5e60ca7aba6343b5a7c91dcf55",
+      "runtime_bundle_artifact_run_id": "42926628418",
+      "packaged_manifest_matches": true,
+      "source_and_packaged_node_uuid_match": true,
+      "physical_ipad_acceptance": "NOT_RUN",
+      "independent_verification_scope": [
+        "Recomputed the complete downloaded IPA SHA-256.",
+        "Read the actual IPA Info.plist and RuntimeManifest.json.",
+        "Compared the retained source and packaged Node UUID receipt files.",
+        "Read Apple readiness, runtime-distribution and signed-memory-entitlement receipts; did not independently rehash the packaged Host ZIP or parse the downloaded Node Mach-O UUID."
+      ],
+      "ci_packaged_runtime_verification_scope": [
+        "Verified the selected native runtime bundle archive checksum and provenance.",
+        "Compared the actual packaged RuntimeHostResources.zip checksum against the verified build input.",
+        "Extracted and compared source and packaged Node Mach-O image UUIDs during archive verification."
+      ]
+    },
+    "watcher_history": [
+      {
+        "job_id": "job_41d6b06d11ab",
+        "status": "timed_out",
+        "scope": "Workflow status monitoring only; not a release failure."
+      },
+      {
+        "job_id": "job_c8b82d9e7339",
+        "status": "succeeded",
+        "observed_workflow_status": "completed",
+        "observed_workflow_conclusion": "success"
+      }
+    ]
   },
   "limitations": [
-    "The failed archive did not create a distributable TestFlight build 145301.",
-    "Source parsing and prior portable-domain checks do not establish Apple-framework compilation or physical-device correctness.",
-    "Existing implementation evidence and physical NOT_RUN obligations remain unchanged.",
-    "Retry identifiers and Apple readiness must be recorded from actual completed evidence; no success is inferred from dispatch."
+    "The first failed archive did not create a distributable TestFlight build 145301; its historical FAILED status remains unchanged.",
+    "The corrected source passed a later signed Apple archive. Source parsing and portable-domain checks retain their original limited scopes.",
+    "Physical iPad visual, gesture, recording, selection and crash acceptance remains NOT_RUN.",
+    "The corrected release is supported by successful CI package verification and independent IPA hash, plist, manifest and receipt readback. Independent verification did not repeat the packaged Host ZIP rehash or Mach-O UUID extraction; those exact checks passed in CI. Physical iPad acceptance remains NOT_RUN."
   ]
 }

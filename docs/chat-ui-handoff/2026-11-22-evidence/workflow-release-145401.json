@@ -1,0 +1,266 @@
+{
+  "workflowRunID": 44972815423,
+  "sourceSHA": "c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2",
+  "conclusion": "success",
+  "artifact": {
+    "id": 14735454350,
+    "name": "ChavrusaChat-signed-ipa-145401",
+    "sizeInBytes": 304675520,
+    "digest": "sha256:56eed61ade11c87e00bd378b13071786b6fb2d5be0ff64bdf6436c4a39a425c8"
+  },
+  "steps": [
+    {
+      "name": "Retain UI execution immediately before archive or upload work",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-11-22T01:52:12Z",
+      "completed_at": "2026-11-22T01:52:12Z"
+    },
+    {
+      "name": "Archive signed Release app",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-22T01:54:38Z",
+      "completed_at": "2026-11-22T02:24:53Z"
+    },
+    {
+      "name": "Export App Store Connect IPA",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-22T02:24:55Z",
+      "completed_at": "2026-11-22T02:25:47Z"
+    },
+    {
+      "name": "Verify archive, signatures, profiles, and entitlements",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-22T02:25:49Z",
+      "completed_at": "2026-11-22T02:25:58Z"
+    },
+    {
+      "name": "Enforce UI proof bound to the exact signed candidate before upload",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-11-22T02:25:59Z",
+      "completed_at": "2026-11-22T02:25:59Z"
+    },
+    {
+      "name": "Validate with App Store Connect",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-22T02:25:59Z",
+      "completed_at": "2026-11-22T02:28:40Z"
+    },
+    {
+      "name": "Upload to App Store Connect and TestFlight",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-22T02:28:41Z",
+      "completed_at": "2026-11-22T02:32:06Z"
+    },
+    {
+      "name": "Verify uploaded build appears in TestFlight",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-22T02:32:08Z",
+      "completed_at": "2026-11-22T02:46:50Z"
+    },
+    {
+      "name": "Bind the uploaded App Store build identity to its UI proof",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-11-22T02:46:52Z",
+      "completed_at": "2026-11-22T02:46:52Z"
+    },
+    {
+      "name": "Retain mandatory app UI proof including blocked or failed execution",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-11-22T02:46:52Z",
+      "completed_at": "2026-11-22T02:46:52Z"
+    },
+    {
+      "name": "Upload signed IPA and verification logs",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-22T02:46:52Z",
+      "completed_at": "2026-11-22T02:47:17Z"
+    }
+  ],
+  "status": "completed",
+  "jobID": 137056085991,
+  "runNumber": 1454,
+  "attempt": 1,
+  "workflowJobs": [
+    {
+      "id": 137056085991,
+      "name": "upload-chavrusachat-to-testflight / build-sign-and-upload",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 137056086718,
+      "name": "focused-markdown-renderer-tests",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056086895,
+      "name": "Run split RuntimeCore bundle pipeline",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056086913,
+      "name": "Compile reusable presentation on iOS 27 and test isolated state",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056086926,
+      "name": "Probe pinned NativeScript SDK metadata",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056086931,
+      "name": "Actual compiled Swift Mini App UI on iPhone and iPad 27",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056086987,
+      "name": "inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || 'Original Motion interaction acceptance (B and C)'",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056086999,
+      "name": "Resolve exact SDK producer in all six existing Apple package graphs",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056087038,
+      "name": "focused-scripting-package-tests",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056087060,
+      "name": "upload-chavrusachat-to-testflight / distribute-existing-build",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056087082,
+      "name": "Plan affected validation and tests",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056087116,
+      "name": "Inspect existing native failure evidence only",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056087155,
+      "name": "Verify provider conformance test summary",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056087219,
+      "name": "Launch full app on iPad Simulator",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056087223,
+      "name": "Validate baseline, contracts, tests, and iOS compilation",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056087261,
+      "name": "Build unsigned IPA with Xcode 26",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056106972,
+      "name": "Two frozen Composer metadata queries only",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056109203,
+      "name": "Verify original media lifecycle controls on current native sources",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056113057,
+      "name": "Verify whole Composer and UIKit components on iOS 27",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056113267,
+      "name": "One SDK-explicit eligibility-gated frozen Composer diagnostic",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056118755,
+      "name": "Resolve original Yams in the actual app graph only",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056121241,
+      "name": "focused-diagnostics-capture-tests",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056123256,
+      "name": "Exact-source Agent SDK Apple tests",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056123756,
+      "name": "focused-code-fence-webkit-tests",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056123759,
+      "name": "Read installed stable simulator environment only",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056125678,
+      "name": "inputs.target_validation_group != 'product_split_integration' && 'Verify exact-pin A2UI on macOS 27' || 'Verify MiniApps provider and focused tests on iOS 27'",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 137056126303,
+      "name": "One guarded native hosted Composer component diagnostic",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "releaseInputs": {
+    "testflight_upload": true,
+    "target_validation_group": "testflight_device_upload",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "runtime_bundle_only": false,
+    "runtime_publish_release": false,
+    "testflight_audience_source_build": "143801"
+  }
+}

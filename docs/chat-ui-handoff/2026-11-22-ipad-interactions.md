@@ -5,6 +5,7 @@ Date: 2026-11-22 (Asia/Hebron). Owner-authorized continuation.
 ## Source and acceptance context
 
 - Shipped baseline: 0.7.3 (145201), source `927001ac4ac2f3f3cf837df50ec3bb20a0648b48`.
+- Current verified internal TestFlight release: **0.7.3 (145401)**, uploaded source `c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2`; Apple reports VALID and IN_BETA_TESTING. Physical iPad acceptance remains open.
 - Branch: `codex/hanlin-ipad-interactions-20261122`, parent `5b0a369dd674a96a3f2583ad331c1ba83ec03501` (shipped source plus release documentation).
 - Renderer: [6e884c73352a272c4e7bf8a5917e8b2157bc952e](https://github.com/davidpovarsky/hanlin-streaming-markdown/commit/6e884c73352a272c4e7bf8a5917e8b2157bc952e), pinned consistently in the app project, Package.resolved and HanlinPresentationSDK.
 - The owner reports an improvement but supplied two new crashes and concrete interaction failures. Physical acceptance remains open.
@@ -51,13 +52,13 @@ Both record EXC_CRASH/SIGABRT through CALayer.setBounds, UIScrollView.setContent
 - [WWDC25, Build a UIKit app with the new design,13:55](https://developer.apple.com/videos/play/wwdc2025/284/?time=835): native popover morph.
 - [SwiftUI navigationTransition](https://developer.apple.com/documentation/swiftui/view/navigationtransition(_:)): stacks/sheets, distinct from popover morphing.
 
-The apple-devtools API probe44964672060 failed before creating jobs because of a workflow-file issue. It provides **no SDK validation evidence**. Apple-framework compilation is assigned to the project's signed device archive.
+The apple-devtools API probe44964672060 failed before creating jobs because of a workflow-file issue. It provides **no SDK validation evidence**. Apple-framework compilation is established separately by the corrected successful signed device archive, run 44972815423.
 
 ## Impact-aware validation plan and evidence
 
 Only changed disclosure, activity, selection, composer and popup dependency closures are in scope. Prior145201 UI acceptance and affected logic evidence are invalidated by changed source and the owner's actual failures. Cache hits do not constitute acceptance.
 
-| Obligation | Status after first signed archive attempt | Method / reason |
+| Obligation | Status after corrected release workflow | Method / reason |
 | --- | --- | --- |
 | Activity phase, visible motion ownership, finite disclosure geometry | EXECUTED_PASS:132 assertions | Actual portable production source; Swift6.3.3 Windows, job_ab2edef42a8f; fresh after concurrent-approval correction. [Exact evidence](2026-11-22-evidence/activity-domain-result.json). No UIKit emulation claim. |
 | Composer coordinator, dock, geometry, metrics | EXECUTED_PASS:148 assertions | Actual domain source on Windows, with explicit stand-ins for SwiftUI Binding/Transaction/animation plumbing. Source hashes in [composer-domain-result.json](2026-11-22-evidence/composer-domain-result.json). |
@@ -66,24 +67,26 @@ Only changed disclosure, activity, selection, composer and popup dependency clos
 | Native text incremental edits | EXECUTED_PASS:329 assertions | job_58de3b3ef235; actual Foundation helper, including stable attributed prefixes, RTL, combining marks, emoji, CRLF append/delete/style changes, and selection preservation. |
 | Preview viewport geometry | EXECUTED_PASS:49 assertions | Independent fixture in job_920bd3580317 passed. That overall job failed on the separately reported CRLF edit-plan defect; the corrected edit-plan result supersedes it. [Exact scope/evidence](2026-11-22-evidence/selection-domain-result.json). |
 | App-search localization | EXECUTED_PASS | Catalog JSON/duplicate-key check and normalized symbol collision check for hanlin.apps.search; en/he/zh-Hans. |
-| Apple package resolution | EXECUTED_PASS | Run 44969425818 checked out renderer 6e884c73352a272c4e7bf8a5917e8b2157bc952e. This does not imply successful app compilation. |
-| Apple application compilation / signed archive | EXECUTED_FAIL; RETRY_PENDING | Candidate 145301 stopped at ChatMarkdownView.swift:27:25 with one unique app compiler diagnostic. No signed archive or IPA was completed. [First-attempt evidence](2026-11-22-evidence/first-archive-failure-44969425818.json). |
-| Runtime reuse | BUILD_INPUTS_VERIFIED; PACKAGED_NOT_RUN | Producer 42926628418 supplied the verified native artifact. Archive failure prevented final packaged-runtime verification. No fresh engine build. |
-| TestFlight availability | NOT_RUN_FOR_145301; RETRY_PENDING | Export, upload and Apple readiness were not reached. Candidate 145301 was not uploaded; the retry must still reach VALID + IN_BETA_TESTING and confirm the internal audience. |
+| Apple package resolution | EXECUTED_PASS | Renderer 6e884c73352a272c4e7bf8a5917e8b2157bc952e is pinned consistently and included in the corrected source's successful signed archive, run 44972815423. |
+| Apple application compilation / signed archive | EXECUTED_PASS | Corrected source c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2 archived successfully in run 44972815423. The earlier failed 145301 attempt remains recorded in [first-attempt evidence](2026-11-22-evidence/first-archive-failure-44969425818.json). |
+| Runtime reuse | EXECUTED_PASS; RECEIPT_AND_IPA_READBACK_VERIFIED | CI verified producer 42926628418, the runtime bundle hash, packaged Host ZIP bytes and source/packaged Node Mach-O UUIDs. Independent readback recomputed the IPA hash, read its plist/manifest and compared the two Node UUID receipt files. No fresh engine build. [Release receipt](2026-11-22-evidence/testflight-release-145401.json). |
+| TestFlight availability | EXECUTED_PASS; INDEPENDENT_READBACK_VERIFIED | Actual receipt and IPA identify 0.7.3 (145401), Apple VALID + IN_BETA_TESTING, source c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2 and the confirmed internal audience from 143801. The failed candidate 145301 was not uploaded. |
 | Physical iPad visual/gesture/recording/crash acceptance | NOT_RUN | Remains open until actual device evidence. |
 
-The first upload attempt explicitly skipped simulator UI tests and dependent UI-proof gates. The retry retains target_validation_group=testflight_device_upload, which passes skip_simulator_tests=true to TestFlight.
+Both attempts used target_validation_group=testflight_device_upload, passing skip_simulator_tests=true to TestFlight. The completed retry's workflow metadata records the simulator, native UI and dependent UI-proof jobs/steps as skipped; no such execution is claimed.
 
-## Release plan
+## Release execution and evidence
 
 Workflow310046367, ref codex/hanlin-ipad-interactions-20261122:
 testflight_upload=true; target_validation_group=testflight_device_upload;
 runtime_bundle_artifact_run_id=42926628418; runtime_bundle_only=false;
 runtime_publish_release=false; testflight_audience_source_build=143801.
 
-The failed first attempt used app source `20e6bd518c15b8b9746f298506e4d5d13e96955a`. The app-only compiler fix is committed as `c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2`; retry dispatch was issued by job_df8572e96187 with the same renderer, native-runtime producer and no-simulator inputs. The confirmed retry is [run 44972815423](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44972815423), job 137056085991, run number 1454 / attempt 1 (expected candidate 145401), started at 2026-11-22T01:43:54Z. Its outcome remains pending in this checkpoint. No new available TestFlight build is claimed.
+The failed first attempt used app source `20e6bd518c15b8b9746f298506e4d5d13e96955a`. The app-only compiler fix is committed as `c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2`. [Run 44972815423](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44972815423), job 137056085991, run number 1454 / attempt 1, completed successfully for build **145401**. Archive, export, signature/runtime verification, Apple validation, upload and TestFlight readiness all passed; simulator/native UI validation jobs were skipped as requested. [Authentic workflow metadata](2026-11-22-evidence/workflow-release-145401.json) records these outcomes.
 
-## First signed archive attempt: failed; corrected retry dispatched
+The signed artifact is `ChavrusaChat-signed-ipa-145401` (ID 14735454350, 304,675,520 bytes), with GitHub artifact SHA-256 `56eed61ade11c87e00bd378b13071786b6fb2d5be0ff64bdf6436c4a39a425c8`. Independent download, receipt and IPA verification completed successfully in jobs job_79bd7b8ff8e1 and job_0c651ebb9f2b. Independent verification recomputed the full IPA checksum, read its application plist and RuntimeManifest, and compared the source/packaged Node UUID receipt files. CI's archive-verification step performed the packaged Host ZIP rehash and source/packaged Node Mach-O UUID comparison; their results are retained in runtime-distribution.json. The [verified release receipt](2026-11-22-evidence/testflight-release-145401.json) preserves the raw Apple/runtime fields and individual receipt hashes.
+
+## First signed archive attempt: failed; corrected archive succeeded
 
 [Run 44969425818](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44969425818) attempted candidate **145301** from source `20e6bd518c15b8b9746f298506e4d5d13e96955a` on Xcode 27.2. The retained log confirms renderer checkout and native-runtime preparation before the app compiler stopped:
 
@@ -91,11 +94,40 @@ The failed first attempt used app source `20e6bd518c15b8b9746f298506e4d5d13e9695
 
 This is the single unique app compiler diagnostic in the retained log. It points to the combined SwiftUI body expression; it does not establish a renderer-runtime defect or validate the original iPad crash repair. The diagnostic was emitted at 2026-11-22T01:33:07.267284Z; `ARCHIVE FAILED` followed at 01:34:28.449690Z. The existing watcher ended failed at 01:34:51 UTC. Export and upload were not reached: **145301 was not uploaded to TestFlight**, and this attempt has no Apple-readiness receipt.
 
-The remediation changes only `ChatMarkdownView.swift`: typed initializer, linked/highlighted/body composition boundaries and explicit callbacks. Its SHA-256 is `bca9926d0099a8c78c47fd01a4c37d2bb3e319fd3db4be7e529fd97d11b51744`. Frontend parse and whitespace checks passed in job_23de13982e0e (11.37 seconds). This is syntax evidence, not successful Apple-framework typechecking. Prior portable-domain evidence remains unchanged and was not rerun for this app-only composition change.
+The remediation changes only `ChatMarkdownView.swift`: typed initializer, linked/highlighted/body composition boundaries and explicit callbacks. Its SHA-256 is `bca9926d0099a8c78c47fd01a4c37d2bb3e319fd3db4be7e529fd97d11b51744`. Frontend parse and whitespace checks passed in job_23de13982e0e (11.37 seconds). That initial check established syntax only. The corrected source subsequently passed Apple-framework compilation in the successful signed archive. Prior portable-domain evidence remains unchanged and was not rerun for this app-only composition change.
 
-The corrected source is `c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2`. Its retry keeps renderer `6e884c73352a272c4e7bf8a5917e8b2157bc952e`, runtime producer `42926628418`, audience source `143801` and simulator skipping. Retry run 44972815423 is tracked by the existing root-owned watcher job_41d6b06d11ab. Its archive, export, upload and Apple-readiness results remain unverified until actual completion evidence is available.
+The corrected source is `c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2`. Its retry keeps renderer `6e884c73352a272c4e7bf8a5917e8b2157bc952e`, runtime producer `42926628418`, audience source `143801` and simulator skipping. Final watcher job_c8b82d9e7339 successfully confirmed run 44972815423 after the earlier watcher job_41d6b06d11ab timed out. The earlier timeout concerned monitoring only; the release workflow completed successfully. Its archive, export, upload and Apple-readiness steps subsequently completed successfully. The first failure remains part of the record. Independent raw receipt and IPA readback subsequently confirmed the successful 145401 publication and original runtime reuse.
 
 [First-attempt failure evidence](2026-11-22-evidence/first-archive-failure-44969425818.json) records the diagnostic, log hash, scoped outcomes and retry limits. Physical iPad acceptance remains **NOT_RUN**.
+
+## Verified TestFlight and packaged-runtime receipt
+
+Independent verification completed at **2026-11-22T02:58:16.712591+00:00**. This receipt comes from the downloaded signed artifact and actual IPA, in addition to the successful workflow metadata.
+
+| Field | Verified value |
+| --- | --- |
+| Version / build | `0.7.3 (145401)` |
+| App Store app ID | `6811910017` |
+| App Store build ID | `ea8b309c-a0a3-4afb-b8f8-3234c0a536c1` |
+| Apple processing state | `VALID` |
+| Internal testing state | `IN_BETA_TESTING` |
+| Internal audience source | `143801` |
+| Confirmed internal group | `14fdc6a7-062e-40f6-8f11-45cbd30c6ddb` |
+| Uploaded app source / verification SHA | `c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2` |
+| Renderer source | `6e884c73352a272c4e7bf8a5917e8b2157bc952e` |
+| Workflow / job | `44972815423 / 137056085991` |
+| Actual IPA SHA-256 | `751cf593dca2905344186db778b04fa7ceddfd5e60ca7aba6343b5a7c91dcf55` |
+| Packaged app identifier | `com.itorah.chavrusachat` |
+| Native runtime producer | `42926628418` |
+| Inner runtime ZIP SHA-256 (CI-verified; receipt/manifest value) | `196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f` |
+| Node XCFramework SHA-256 (manifest/receipt value) | `21c404e94c38e7d91ec446ce0ca07d7fed9120ec3e42b80cc8352052dd1db207` |
+| CI-verified Node image UUID (matching receipt files) | `DF9F9A4D-4842-31DE-A906-BA1B61891ED5 (arm64)` |
+| CI-verified packaged Runtime Host ZIP SHA-256 | `f6346b53c32bae70a040278b2290ce6b6a3526d699eea8530eb4ec95253bfa21` |
+| Packaged manifest match | `true` |
+
+The authenticated GitHub artifact digest above describes the artifact ZIP. Independent readback recomputed the IPA hash. CI verified the inner runtime ZIP and packaged Host ZIP hashes; independent readback retained those receipt/manifest values and compared the Node UUID receipt files. It did not independently rehash the packaged Host ZIP or extract a UUID from the downloaded Node Mach-O binary. Subsequent documentation commits do not change the uploaded app source.
+
+CI signing/provisioning checks confirmed that required Extended Virtual Addressing is authorized by the profile and present in the signed app. The receipt still records `physicalAllocationVerified=false`; this is not a device memory-allocation test. Simulator/native UI jobs were skipped, and physical iPad visual, gesture, recording, selection and crash acceptance remains **NOT_RUN**.
 
 ## Physical acceptance sequence
 
