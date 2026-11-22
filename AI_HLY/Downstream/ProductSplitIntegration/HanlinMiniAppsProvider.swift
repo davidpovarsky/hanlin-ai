@@ -77,44 +77,24 @@ final class HanlinMiniAppsProvider {
         }
     }
 
-    func packageManagement() throws -> AnyView {
+    func launch(packageID: HanlinInstalledPackageID) async throws -> AnyView {
+        guard !launching else { throw Failure.launchInProgress }
+        launching = true
+        defer { launching = false }
+
+        await platform.restore()
         try requirePackageServices()
-        return AnyView(HanlinMiniAppsPackageManagement(platform: platform))
+        await platform.launch(packageID)
+        if case .failed(let message) = platform.activity { throw Failure.unavailable(message) }
+        guard platform.activeApplicationID == packageID,
+              platform.activeApplicationModel != nil || platform.activeNativeScriptController != nil
+                || platform.activeExpoController != nil else {
+            throw Failure.launchDidNotProduceApplication
+        }
+        return AnyView(ScriptingApplicationContainerView(platform: platform))
     }
 
     private func requirePackageServices() throws {
         if let error = platform.bootstrapError { throw Failure.unavailable(error) }
-    }
-}
-
-@MainActor
-private struct HanlinMiniAppsPackageManagement: View {
-    let platform: HanlinScriptingPlatform
-    @State private var importing = false
-
-    var body: some View {
-        List {
-            ForEach(platform.installedPackages, id: \.record.installedPackageID) { package in
-                NavigationLink {
-                    ScriptingInstalledPackageDetailView(
-                        packageID: package.record.installedPackageID, platform: platform
-                    )
-                } label: {
-                    Text(package.manifest?.name ?? package.record.packageID.rawValue)
-                }
-            }
-        }
-        .navigationTitle("Packages")
-        .accessibilityIdentifier("hanlin-miniapps-package-management")
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button("Import package", systemImage: "square.and.arrow.down") { importing = true }
-                    .accessibilityIdentifier("hanlin-miniapps-package-import")
-            }
-        }
-        .sheet(isPresented: $importing) {
-            NavigationStack { ScriptingPackageImportView(platform: platform) }
-        }
-        .task { await platform.restore() }
     }
 }

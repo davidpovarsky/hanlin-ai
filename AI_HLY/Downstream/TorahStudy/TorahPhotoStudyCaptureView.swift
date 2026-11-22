@@ -1,3 +1,4 @@
+import HanlinPresentationKit
 import SwiftUI
 import PhotosUI
 import UniformTypeIdentifiers
@@ -21,7 +22,12 @@ public struct TorahPhotoStudyCaptureView: View {
     @State private var isEditingTranscription = false
     @State private var editedText: String = ""
 
-    public init() {}
+    let presentsSourceReader: Bool
+    @State private var localSource: TorahStudyDeepLink?
+
+    public init(presentsSourceReader: Bool = false) {
+        self.presentsSourceReader = presentsSourceReader
+    }
 
     public var body: some View {
         NavigationStack {
@@ -62,6 +68,20 @@ public struct TorahPhotoStudyCaptureView: View {
                 #if canImport(UIKit)
                 CameraPicker(selectedImage: $selectedImage)
                 #endif
+            }
+            .sheet(isPresented: Binding(
+                get: { localSource != nil },
+                set: { if !$0 { localSource = nil } }
+            )) {
+                if let localSource { TorahSourceReaderView(deepLink: localSource) }
+            }
+            .alert("Maktabah", isPresented: Binding(
+                get: { statusMessage != nil },
+                set: { if !$0 { statusMessage = nil } }
+            )) {
+                Button("OK") { statusMessage = nil }
+            } message: {
+                Text(statusMessage ?? "")
             }
             .sheet(isPresented: $isEditingTranscription) {
                 transcriptionEditorSheet
@@ -355,7 +375,11 @@ public struct TorahPhotoStudyCaptureView: View {
         guard let locStr = identifiedLocator,
               let locator = SourceLocator.parse(persistenceKey: locStr) else { return }
         let link = TorahStudyDeepLink(action: .open, locator: locator, workTitle: identifiedBookTitle, highlightText: ocrText)
-        TorahStudyNavigationRouter.shared.navigate(to: link)
+        if presentsSourceReader {
+            localSource = link
+        } else {
+            TorahStudyNavigationRouter.shared.navigate(to: link)
+        }
     }
 
     private func openInMaktabah() {

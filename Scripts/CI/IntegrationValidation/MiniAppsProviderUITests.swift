@@ -7,7 +7,7 @@ final class MiniAppsProviderUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launch()
-        let parity = app.descendants(matching: .any)["hanlin-miniapp-hanlin.demo.swift-parity"].firstMatch
+        let parity = app.descendants(matching: .any)["hanlin-package-card-Swift Parity"].firstMatch
         XCTAssertTrue(parity.waitForExistence(timeout: 45), "The real canonical library did not load")
         return app
     }
@@ -15,10 +15,7 @@ final class MiniAppsProviderUITests: XCTestCase {
     @MainActor
     func testCanonicalLibraryLaunchesRealCompiledSwiftApp() {
         let app = launchLibrary()
-        app.descendants(matching: .any)["hanlin-miniapp-hanlin.demo.swift-parity"].firstMatch.tap()
-        let open = app.buttons["hanlin-miniapps-open"]
-        XCTAssertTrue(open.waitForExistence(timeout: 10))
-        open.tap()
+        app.descendants(matching: .any)["hanlin-package-card-Swift Parity"].firstMatch.tap()
         XCTAssertTrue(app.steppers.firstMatch.waitForExistence(timeout: 20), "The actual Swift Parity view did not appear")
         XCTAssertTrue(app.buttons["Save"].exists)
         XCTAssertTrue(app.buttons["Reload"].exists)
@@ -29,14 +26,14 @@ final class MiniAppsProviderUITests: XCTestCase {
         let close = app.buttons["hanlin-miniapps-app-close"]
         XCTAssertTrue(close.exists)
         close.tap()
-        XCTAssertTrue(app.buttons["hanlin-miniapps-open"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["hanlin-package-card-Swift Parity"].waitForExistence(timeout: 10))
     }
 
     @MainActor
     func testManagementPresentsExistingPackageImportScreen() {
         let app = launchLibrary()
-        app.buttons["hanlin-miniapps-management"].tap()
-        let importing = app.buttons["hanlin-miniapps-package-import"]
+        app.buttons["hanlin-apps-add"].tap()
+        let importing = app.buttons["hanlin-import-script-package"]
         XCTAssertTrue(importing.waitForExistence(timeout: 10))
         importing.tap()
         XCTAssertTrue(app.buttons["hanlin-file-importer"].waitForExistence(timeout: 10), "Original package importer was not presented")
@@ -50,8 +47,8 @@ final class MiniAppsProviderUITests: XCTestCase {
     @MainActor
     func testOrdinaryInstalledScriptUICatalogAndStatefulLaunch() {
         let app = launchLibrary()
-        app.buttons["hanlin-miniapps-management"].tap()
-        app.buttons["hanlin-miniapps-package-import"].tap()
+        app.buttons["hanlin-apps-add"].tap()
+        app.buttons["hanlin-import-script-package"].tap()
         let package = app.buttons["MiniApps-Ordinary-ScriptUI"]
         let packages = app.collectionViews["hanlin-package-import-list"]
         XCTAssertTrue(packages.waitForExistence(timeout: 15))
@@ -68,12 +65,17 @@ final class MiniAppsProviderUITests: XCTestCase {
         install.tap()
         let installed = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: install)
         wait(for: [installed], timeout: 90)
-        app.buttons["Done"].firstMatch.tap() // Original import sheet.
-        app.buttons["Done"].firstMatch.tap() // Package management cover.
-        let row = app.staticTexts["Production ScriptUI TSX"].firstMatch
-        XCTAssertTrue(row.waitForExistence(timeout: 30), "An ordinary installed default-JSC app is absent from the canonical catalog")
-        row.tap()
-        app.buttons["hanlin-miniapps-open"].tap()
+        app.navigationBars["Script Package"].buttons["Done"].tap()
+        let addDone = app.buttons["hanlin-apps-add-done"].firstMatch
+        XCTAssertTrue(addDone.waitForExistence(timeout: 10))
+        addDone.tap()
+        let card = app.buttons["hanlin-package-card-Production ScriptUI TSX"].firstMatch
+        for _ in 0..<5 {
+            if card.exists && card.isHittable { break }
+            app.swipeUp()
+        }
+        XCTAssertTrue(card.waitForExistence(timeout: 30), "An ordinary installed default-JSC app is absent from the canonical catalog")
+        card.tap()
         XCTAssertTrue(app.staticTexts["Count 0"].waitForExistence(timeout: 30), "The actual ScriptUI runtime did not render the installed app")
         app.buttons["Increment"].tap()
         XCTAssertTrue(app.staticTexts["Count 1"].waitForExistence(timeout: 10), "Actual ScriptUI callback/state did not update")

@@ -19,6 +19,9 @@
     "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
     "AI_HLY/Downstream/NativeScript/HanlinNativeScriptProductionBootstrap.swift",
     "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
+    "AI_HLY/Downstream/ProductSplit/HanlinSplitForegroundTransport.swift",
+    "AI_HLY/Downstream/ProductSplit/HanlinSplitLiveTarget.swift",
+    "AI_HLY/Downstream/ProductSplit/HanlinSplitMailbox.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/AppRuntimeCore.swift",
@@ -56,11 +59,16 @@
     "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
     "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
     "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
+    "AI_HLY/Downstream/TorahStudy/TorahOCRService.swift",
+    "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+    "AI_HLY/Downstream/TorahStudy/TorahSourceReaderView.swift",
+    "AI_HLY/Downstream/TorahStudy/TorahStudyNavigationRouter.swift",
     "AI_HLY/NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift",
+    "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift",
+    "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
+    "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
     "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
-    "AI_HLY/Downstream/ProductSplit/HanlinSplitForegroundTransport.swift",
-    "AI_HLY/Downstream/ProductSplit/HanlinSplitLiveTarget.swift",
-    "AI_HLY/Downstream/ProductSplit/HanlinSplitMailbox.swift"
+    "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift"
   ],
   "native_sources": [
     "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRunner.mm",
@@ -108,6 +116,7 @@
     "HanlinWikipediaMiniApp",
     "IOSSystemLite",
     "SWCompression",
+    "TorahLibraryKit",
     "ZIPFoundation"
   ],
   "native_framework_refs": [

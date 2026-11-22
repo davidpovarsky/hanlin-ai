@@ -18,7 +18,7 @@ EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
 TEST_SCOPE = os.environ.get('SPLIT_NATIVE_TEST_SCOPE', 'baseline')
 UI_PLANS = {
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
-                  'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
+                  'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 9),
     'production_runtimes': ([
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 2),
@@ -48,7 +48,7 @@ def command(argv, name, timeout=60):
 def main():
     EVIDENCE.mkdir(parents=True, exist_ok=True)
     state = {'status': 'INFRA_ERROR', 'ui': 'NOT_RUN', 'storage_boundary': 'NOT_RUN', 'xcresult': 'NOT_CREATED',
-             'scope': 'production MiniApps target; actual private storage/mailbox/bootstrap and seven UI controls; two-process/signed/device acceptance separate',
+             'scope': 'production MiniApps target; actual private storage/mailbox/bootstrap and focused catalog and launch controls; two-process/signed/device acceptance separate',
              'reused_passes': [], 'started_at': time.time()}
     simulator = None
     try:

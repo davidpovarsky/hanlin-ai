@@ -1,3 +1,4 @@
+import HanlinPresentationKit
 import HanlinMiniAppCore
 import HanlinPlatformContracts
 import HanlinScriptStore
