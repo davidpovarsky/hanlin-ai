@@ -83,15 +83,21 @@ struct HanlinMorphComposerTests {
         #expect(HanlinMorphGeometry.editorBudget(availableHeight: 100, accessoryHeight: 100, inputHeight: 300, editorHeight: 200, toolbarHeight: 60, isExpanded: true) == 0)
     }
 
-    @Test("Bottom launcher remains adjacent to the editor as its internal controls grow")
+    @Test("Panel material stays directly adjacent to the bottom launcher at every input height")
     func originalLauncherConnection() {
-        #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 52) == 13)
-        #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 52) < 32)
-        #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 70) < 32)
-        // With the owner-requested controls inside the field, the input
-        // remains the glass bridge from the panel to the original bottom launcher.
-        #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 150) == 111)
-        #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 150) > 32)
+        // Test both real minimum chrome (102 points) and the grown editor;
+        // checking only adjacent stack spacing missed the shipping regression.
+        for inputHeight in [CGFloat(52), 70, 102, 150, 240, 500, 900] {
+            let extensionHeight = HanlinMorphGeometry.panelGlassExtension(inputHeight: inputHeight)
+            let panelContentBottom: CGFloat = 300
+            let launcherTop = panelContentBottom + 13 + max(0, inputHeight - 52)
+            let materialBottom = panelContentBottom + extensionHeight
+            #expect(launcherTop - materialBottom == 13)
+            #expect(launcherTop - materialBottom < HanlinMorphStyle.glassMergeDistance)
+            #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: inputHeight) == 13)
+        }
+        #expect(HanlinMorphGeometry.panelGlassExtension(inputHeight: 52) == 0)
+        #expect(HanlinMorphGeometry.panelGlassExtension(inputHeight: 102) == 50)
         #expect(HanlinMorphStyle.launcherInputSpacing < HanlinMorphStyle.glassMergeDistance)
         #expect(HanlinMorphStyle.panelInputSpacing < HanlinMorphStyle.glassMergeDistance)
     }

@@ -1,0 +1,18 @@
+{
+  "recorded_at_utc": "2026-11-22T12:41:50.686438+00:00",
+  "validation_scope": "Actual composer geometry and CGFloat metrics, compiled with Foundation; no SwiftUI/UIKit/native UI execution.",
+  "source_hashes": {
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift": "8c1e6c2f9db85c020a8730c620a0bb638a214714d3243d7ffc40efd319e077ea",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinDesignCatalog.swift": "58a33bd987cc324ba44fa9c64ce911772c2f88c16f4b78e9f1bf4122716741db",
+    "AI_HLY/Views/Components/ChatViewBottom.swift": "0a12b392bad4c9450ab8fade12d19d3b976208e2446b2c283f905c7cc1c2bbb7",
+    "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift": "57bf747fa6778f835620e5f5cdf46b24722c669fdccba501e987841c1ecda5b1",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift": "729ae08bec5d2280fcddf363b3f27f5181287fd8f3537c00c4b1b79c36549d95",
+    "AI_HLYTests/HanlinMorphComposerTests.swift": "df872008bd19d06f88664d7d7aa6e3671a1e2d779c58eb2d964962637ecac113",
+    "Scripts/CI/check_composer_layout.py": "e86c355a8c4a6ebdc7a8e76f7337cf3fd9d954e6e91f2fb39f55f07b841a2f4b"
+  },
+  "compiler": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions",
+  "compile_returncode": 0,
+  "compile_output": "   Creating library C:\\Users\\DAVID\\Code\\hanlin-testflight-followup-20261122\\composer-regression-checks\\ComposerLayoutChecks.lib and object C:\\Users\\DAVID\\Code\\hanlin-testflight-followup-20261122\\composer-regression-checks\\ComposerLayoutChecks.exp\n\n",
+  "run_returncode": 0,
+  "output": "COMPOSER_LAYOUT_PASS scenarios=384 assertions=2147\n"
+}
