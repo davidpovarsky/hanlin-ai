@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import platform
 import re
 import shutil
@@ -20,13 +20,40 @@ HERE = Path(__file__).resolve().parent
 OUT = ROOT / "build/chat-regression-native-evidence"
 BASELINE_APP = "de9ccac5d38c44f597b2a057701de4757587d6a8"
 BASELINE_RENDERER = "ebbbf889276098f3642448e5439ad049c3cd2d6c"
+EQUATABLE_REVISION = "597c2bb34af0c51331eb3b5e705f942d8ee20daa"
+HEADLESS_PACKAGE_FLAGS = ["-skipPackagePluginValidation", "-skipMacroValidation"]
 PROVIDER_TEST = "ChatRegressionTests/RichBlockAttachmentRenderingTests/testProviderLookupUsesRichRenderer"
+PROVIDER_FIXTURE_SHA256 = "9407c6d95b5e25c5bee3190a46bc67c97a25c9f5ae641832332f7a0357e614c4"
+PROVIDER_TEST_CASE = "RichBlockAttachmentRenderingTests.testProviderLookupUsesRichRenderer()"
+PROVIDER_OBJC_CASE = "-[ChatRegressionTests.RichBlockAttachmentRenderingTests testProviderLookupUsesRichRenderer]"
+PROVIDER_NIL_MESSAGE = 'XCTUnwrap failed: expected non-nil value of type "NSTextAttachmentViewProvider"'
 RENDERER_PIN = re.compile(rb'(https://github\.com/davidpovarsky/hanlin-streaming-markdown"\s*,\s*revision:\s*")([0-9a-f]{40})(")')
 
 
 def write_json(path: Path, value) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+
+
+def capture_timeout_diagnostics(pid: int, log: Path) -> None:
+    """Retain bounded process state without arguments or environment secrets."""
+    folder = log.parent / (log.stem + "-timeout")
+    folder.mkdir(parents=True, exist_ok=True)
+    commands = [
+        ("processes", ["ps", "-axo", "pid,ppid,pgid,state,pcpu,pmem,etime,comm"], 5),
+        ("sample", ["sample", str(pid), "1", "10", "-file", str(folder / "process.sample.txt")], 8)
+    ]
+    receipts = []
+    for label, arguments, limit in commands:
+        with (folder / (label + ".log")).open("w", encoding="utf-8") as output:
+            try:
+                result = subprocess.run(arguments, stdout=output, stderr=subprocess.STDOUT,
+                                        timeout=limit, check=False)
+                receipts.append({"diagnostic": label, "exit_code": result.returncode, "limit_seconds": limit})
+            except (subprocess.TimeoutExpired, OSError) as error:
+                output.write(f"Diagnostic unavailable: {type(error).__name__}\n")
+                receipts.append({"diagnostic": label, "error": type(error).__name__, "limit_seconds": limit})
+    write_json(folder / "diagnostics.json", {"timed_out_pid": pid, "diagnostics": receipts})
 
 
 def run(args: list[str], log: Path, timeout: int, *, cwd: Path = ROOT, check: bool = True,
@@ -41,11 +68,23 @@ def run(args: list[str], log: Path, timeout: int, *, cwd: Path = ROOT, check: bo
         try:
             code = process.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
-            os.killpg(process.pid, signal.SIGTERM)
+            # The deadline is still a failure even if the process exits while
+            # diagnostics run. Sample only our child, then terminate its group.
+            try:
+                capture_timeout_diagnostics(process.pid, log)
+            except OSError as error:
+                stream.write(f"Timeout diagnostic unavailable: {type(error).__name__}\n")
+            try:
+                os.killpg(process.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
             try:
                 process.wait(timeout=10)
             except subprocess.TimeoutExpired:
-                os.killpg(process.pid, signal.SIGKILL)
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
                 process.wait(timeout=10)
             stream.write("\nBounded command timeout; no execution success is inferred.\n")
             code = 124
@@ -58,6 +97,31 @@ def run(args: list[str], log: Path, timeout: int, *, cwd: Path = ROOT, check: bo
 
 def read(args: list[str], timeout: int = 20, *, cwd: Path = ROOT) -> str:
     return subprocess.check_output(args, cwd=cwd, text=True, timeout=timeout).strip()
+
+
+def capture_boot_failure() -> None:
+    """Retain a small, bounded log of the three simulator runtime services."""
+    log = OUT / "boot-failure-unified.log"
+    try:
+        run(["log", "show", "--last", "6m", "--style", "compact", "--predicate",
+             'process == "simdiskimaged" OR process == "cryptexd" OR process == "CoreSimulatorService"'],
+            log, 20, check=False)
+    except OSError as error:
+        write_json(OUT / "boot-failure-observation.json", {"error": type(error).__name__})
+    finally:
+        if log.is_file():
+            original_bytes = log.stat().st_size
+            with log.open("rb") as source:
+                source.seek(max(0, original_bytes - 256 * 1024))
+                lines = source.read().splitlines()
+            # Drop a possibly partial first line after seeking into the file.
+            if original_bytes > 256 * 1024:
+                lines = lines[1:]
+            retained = b"\n".join(lines[-1000:]) + b"\n"
+            log.write_bytes(retained)
+            write_json(OUT / "boot-failure-log-retention.json", {
+                "original_bytes": original_bytes, "retained_bytes": len(retained),
+                "maximum_lines": 1000, "maximum_tail_bytes": 256 * 1024})
 
 
 def ensure_xcodegen() -> dict:
@@ -104,14 +168,46 @@ def value(item):
     return item.get("_value") if isinstance(item, dict) else item
 
 
+def expected_provider_failure(folder: Path, exit_code: int, count: int, failed: int,
+                              skipped: int, diagnostics: list[dict]) -> bool:
+    if (exit_code, count, failed, skipped, len(diagnostics)) != (65, 1, 1, 0, 1):
+        return False
+    if not (folder / "Tests.xcresult/Info.plist").is_file():
+        return False
+    if diagnostics[0]["test"] not in {
+        PROVIDER_TEST_CASE, "ChatRegressionTests." + PROVIDER_TEST_CASE,
+        PROVIDER_TEST, PROVIDER_OBJC_CASE,
+    }:
+        return False
+    try:
+        receipt = json.loads((folder / "test.command.json").read_text())
+        command = receipt["command"]
+        project = PurePosixPath(command[command.index("-project") + 1])
+        selected = [arg for arg in command if arg.startswith("-only-testing:")]
+        if receipt["exit_code"] != 65 or selected != ["-only-testing:" + PROVIDER_TEST]:
+            return False
+        message = diagnostics[0]["message"] or ""
+        if "UIKit must resolve the rich-block provider, not its generic file-icon fallback" in message:
+            return True
+        # Bind only this observed nil-provider assertion, not arbitrary unwraps.
+        fixture = (folder / "provider-fixture.swift").read_bytes()
+        assertion = project.parent / "Tests/RichBlockAttachmentRenderingTests.swift"
+        expected_line = f"{assertion}:34: error: {PROVIDER_OBJC_CASE} : {PROVIDER_NIL_MESSAGE}"
+        return (message == PROVIDER_NIL_MESSAGE
+                and hashlib.sha256(fixture).hexdigest() == PROVIDER_FIXTURE_SHA256
+                and expected_line in (folder / "test.log").read_text().splitlines())
+    except (OSError, ValueError, KeyError, IndexError, TypeError):
+        return False
+
+
 def result_record(folder: Path, exit_code: int, expected_count: int, *, baseline: bool) -> dict:
     bundle = folder / "Tests.xcresult"
-    if not bundle.is_dir():
-        raise RuntimeError(f"{folder.name}: no native xcresult; this is not an expected assertion failure")
+    if not (bundle / "Info.plist").is_file():
+        raise RuntimeError(f"{folder.name}: no finalized native xcresult; this is not an expected assertion failure")
     run(["xcrun", "xcresulttool", "get", "object", "--legacy", "--path", str(bundle),
          "--format", "json"], folder / "result-object.json", 40)
-    run(["xcrun", "xcresulttool", "get", "test-results", "tests", "--path", str(bundle),
-         "--format", "json"], folder / "tests.json", 40)
+    run(["xcrun", "xcresulttool", "get", "test-results", "tests", "--path", str(bundle)],
+        folder / "tests.json", 40)
     run(["xcrun", "xcresulttool", "export", "attachments", "--path", str(bundle),
          "--output-path", str(folder / "attachments")], folder / "attachments-export.log", 60)
     raw = json.loads((folder / "result-object.json").read_text())
@@ -122,10 +218,7 @@ def result_record(folder: Path, exit_code: int, expected_count: int, *, baseline
     failures = raw.get("issues", {}).get("testFailureSummaries", {}).get("_values", [])
     diagnostics = [{"test": value(f.get("testCaseName")), "message": value(f.get("message"))}
                    for f in failures]
-    expected_failure = baseline and exit_code == 65 and failed == 1 and bool(diagnostics) and all(
-        "testProviderLookupUsesRichRenderer" in (f["test"] or "")
-        and "UIKit must resolve the rich-block provider, not its generic file-icon fallback" in (f["message"] or "")
-        for f in diagnostics)
+    expected_failure = baseline and expected_provider_failure(folder, exit_code, count, failed, skipped, diagnostics)
     passed = exit_code == 0 and failed == 0 and not diagnostics
     record = {"exit_code": exit_code, "tests": count, "failed": failed, "skipped": skipped,
               "failures": diagnostics, "status": "EXPECTED_PROVIDER_FAILURE" if expected_failure
@@ -136,25 +229,106 @@ def result_record(folder: Path, exit_code: int, expected_count: int, *, baseline
     return record
 
 
+def require_native_build_succeeded(folder: Path, exit_code: int) -> None:
+    """Keep the primary timeout/build failure ahead of xcresult extraction."""
+    if not exit_code:
+        return
+    output = (folder / "test.log").read_text(encoding="utf-8", errors="replace")
+    if exit_code == 124:
+        events = re.findall(r"^Test Case '([^']+)' (started|passed|failed|skipped)[ .]", output, re.MULTILINE)
+        started = {test for test, state in events if state == "started"}
+        finished = {test: state for test, state in events if state != "started"}
+        write_json(folder / "phase-result.json", {
+            "status": "TIMEOUT", "exit_code": exit_code, "native_verification": "INCOMPLETE",
+            "tests": len(started | finished.keys()) or None, "completed_tests": len(finished),
+            "failed": sum(state == "failed" for state in finished.values()) if finished else None,
+            "test_counts_source": "retained_test_log_observation_only",
+            "observed_started": sorted(started), "observed_finished": finished,
+            "raw_result_bundle": "Tests.xcresult" if (folder / "Tests.xcresult").is_dir() else None,
+            "primary_errors": ["The native test command exceeded its 720-second deadline; result verification is incomplete."]})
+        raise RuntimeError(f"{folder.name}: native test command timed out; see test.log and phase-result.json")
+    failed_commands = output.partition("The following build commands failed:")[2]
+    build_cancelled = "Testing cancelled because the build failed" in output
+    graph_failed = any(line.strip() == "ComputeTargetDependencyGraph" for line in failed_commands.splitlines())
+    if build_cancelled or graph_failed:
+        errors = [line.strip() for line in output.splitlines()
+                  if " error:" in line or "Testing cancelled because the build failed" in line][:20]
+        write_json(folder / "phase-result.json", {
+            "status": "BUILD_FAILED", "exit_code": exit_code, "tests": 0,
+            "native_verification": "NOT_RUN", "primary_errors": errors,
+            "raw_result_bundle": "Tests.xcresult" if (folder / "Tests.xcresult").is_dir() else None})
+        raise RuntimeError(f"{folder.name}: native build failed before XCTest; see test.log and phase-result.json")
+
+
+def record_macro_configuration(stage: Path, folder: Path) -> None:
+    checkout = stage / "SourcePackages/checkouts/equatable"
+    resolved = read(["git", "rev-parse", "HEAD"], cwd=checkout)
+    if resolved != EQUATABLE_REVISION:
+        raise RuntimeError("Equatable macro source differs from the reviewed exact app dependency")
+    precedents = []
+    for path in [".github/workflows/testflight.yml", "Scripts/CI/IntegrationValidation/run_presentation_sdk.sh"]:
+        source = (ROOT / path).read_bytes()
+        lines = source.decode("utf-8").splitlines()
+        matches = [{"line": number, "source": line.strip()} for number, line in enumerate(lines, 1)
+                   if all(flag in line for flag in HEADLESS_PACKAGE_FLAGS)]
+        if not matches:
+            raise RuntimeError(f"Established headless macro configuration is missing in {path}")
+        precedents.append({"path": path, "sha256": hashlib.sha256(source).hexdigest(), "matching_lines": matches})
+    write_json(folder / "macro-source.json", {
+        "package": "https://github.com/ordo-one/equatable", "version": "1.4.1",
+        "expected_revision": EQUATABLE_REVISION, "resolved_revision": resolved,
+        "headless_flags": HEADLESS_PACKAGE_FLAGS, "existing_routes": precedents})
+
+
 def phase(stage: Path, name: str, revision: str, selectors: list[str], device: str) -> dict:
     folder = OUT / name
     folder.mkdir()
+    shutil.copy2(stage / "Scripts/CI/ChatRegressionValidation/Tests/RichBlockAttachmentRenderingTests.swift",
+                 folder / "provider-fixture.swift")
     project = stage / "Scripts/CI/ChatRegressionValidation/HanlinChatRegression.xcodeproj"
     common = ["-project", str(project), "-scheme", "HanlinChatRegression", "-configuration", "Debug",
-              "-destination", f"platform=iOS Simulator,id={device}", "-destination-timeout", "30",
               "-derivedDataPath", str(stage / "DerivedData"),
               "-clonedSourcePackagesDirPath", str(stage / "SourcePackages"),
-              "CODE_SIGNING_ALLOWED=NO", "ENABLE_TESTABILITY=YES"]
+              *HEADLESS_PACKAGE_FLAGS, "CODE_SIGNING_ALLOWED=NO", "ENABLE_TESTABILITY=YES"]
+    # Package resolution needs no running simulator or concrete destination.
+    # Resolve the baseline before booting, as the established release route does.
     run(["xcodebuild", "-resolvePackageDependencies", *common], folder / "resolve.log", 240)
     checkout = stage / "SourcePackages/checkouts/hanlin-streaming-markdown"
     resolved = read(["git", "rev-parse", "HEAD"], cwd=checkout)
     if resolved != revision:
         raise RuntimeError(f"{name}: native renderer checkout does not equal its exact requested pin")
     write_json(folder / "renderer-source.json", {"requested": revision, "resolved": resolved})
-    code = run(["xcodebuild", "test", *common, "-disableAutomaticPackageResolution",
+    record_macro_configuration(stage, folder)
+    if name == "baseline":
+        # Read disk-image state before any boot, using the existing environment
+        # probe command. Observations never substitute for bootstatus success.
+        run(["xcrun", "simctl", "runtime", "list", "-j"],
+            OUT / "runtime-images-before-boot.json", 30, check=False)
+        memory_tool = shutil.which("vm_stat")
+        write_json(OUT / "memory-observation.json", {"tool": memory_tool})
+        if memory_tool:
+            run([memory_tool], OUT / "memory-before-boot.log", 10, check=False)
+        try:
+            run(["xcrun", "simctl", "boot", device], OUT / "boot.log", 30)
+            # Match the existing production cold-boot budget in
+            # Scripts/CI/stage_simulator_fixtures.py. Failure remains fatal.
+            run(["xcrun", "simctl", "bootstatus", device, "-b"], OUT / "bootstatus.log", 300)
+        except (RuntimeError, OSError):
+            try:
+                capture_boot_failure()
+            except OSError:
+                pass  # Preserve the original failed boot verdict.
+            raise
+    destination = ["-destination", f"platform=iOS Simulator,id={device}", "-destination-timeout", "30"]
+    # The intentionally failing baseline must not start a broad sysdiagnose.
+    # Preserve default diagnostics for every candidate failure.
+    diagnostics_flags = ["-collect-test-diagnostics", "never"] if name == "baseline" else []
+    code = run(["xcodebuild", "test", *common, *destination, "-disableAutomaticPackageResolution",
+                *diagnostics_flags,
                 "-parallel-testing-enabled", "NO", "-maximum-concurrent-test-simulator-destinations", "1",
                 "-resultBundlePath", str(folder / "Tests.xcresult"),
                 *["-only-testing:" + test for test in selectors]], folder / "test.log", 720, check=False)
+    require_native_build_succeeded(folder, code)
     result = result_record(folder, code, 1 if name == "baseline" else 4, baseline=name == "baseline")
     if name == "candidate":
         images = [p for p in (folder / "attachments").rglob("*") if p.suffix.lower() in {".png", ".jpg", ".jpeg"}]
@@ -177,7 +351,16 @@ def main() -> None:
     xcodegen = ensure_xcodegen()
     write_json(OUT / "toolchain.json", {"source_sha": source, "developer_dir": os.environ["DEVELOPER_DIR"],
         "xcode": read(["xcodebuild", "-version"]), "sdk": read(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"]),
-        "xcodegen": xcodegen})
+        "xcodegen": xcodegen, "runner": {
+            "image_os": os.environ.get("ImageOS"), "image_version": os.environ.get("ImageVersion"),
+            "runner_os": os.environ.get("RUNNER_OS"), "runner_arch": os.environ.get("RUNNER_ARCH"),
+            "platform": platform.platform(), "machine": platform.machine()}})
+    first_launch_status = run(["xcodebuild", "-checkFirstLaunchStatus"],
+                              OUT / "first-launch-status.log", 30, check=False)
+    if first_launch_status:
+        raise RuntimeError("Selected Xcode first-launch preflight failed; inspect its retained status before bootstrap")
+    run(["xcrun", "xcresulttool", "help", "get", "test-results", "tests"],
+        OUT / "xcresult-tests-help.log", 20)
     baseline_available = run(["git", "cat-file", "-e", BASELINE_APP + ":Packages/HanlinPresentationSDK/Package.swift"],
                              OUT / "baseline-availability.log", 20, check=False)
     if baseline_available:
@@ -212,8 +395,6 @@ def main() -> None:
                 or ownership.get("simulator") != observed_device):
             raise RuntimeError("Selected simulator has no matching native creation receipt")
         device = observed_device
-        run(["xcrun", "simctl", "boot", device], OUT / "boot.log", 30)
-        run(["xcrun", "simctl", "bootstatus", device, "-b"], OUT / "bootstatus.log", 150)
 
         with tempfile.TemporaryDirectory(prefix="hanlin-chat-regression-", dir=os.environ.get("RUNNER_TEMP")) as work:
             stage = Path(work)

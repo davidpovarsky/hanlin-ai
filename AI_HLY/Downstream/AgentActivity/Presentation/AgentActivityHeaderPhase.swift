@@ -1,19 +1,27 @@
-/// Run lifetime includes answer streaming. Activity lifetime ends as soon as an
-/// answer is visible unless a real operation is still executing concurrently.
-/// Persisted labels and stale reasoning state never revive completed activity.
+/// Real reasoning and tool lifetimes own activity motion. Answer streaming ends
+/// reasoning motion; independently running tools may still continue alongside it.
+/// A run alone, persisted labels or stale approval never revive completed activity.
 enum AgentActivityHeaderPhase: Equatable, Sendable {
     case working
     case awaitingApproval
     case history
 
     static func resolve(isRunActive: Bool, hasPendingApproval: Bool,
-                        hasAnswerText: Bool = false, hasActiveOperation: Bool = false) -> Self {
+                        hasAnswerText: Bool = false, hasActiveOperation: Bool = false,
+                        hasActiveReasoning: Bool = false, hasPendingModelRequest: Bool = false) -> Self {
         guard isRunActive else { return .history }
+        let hasLiveWork = hasActiveOperation
+            || ((hasActiveReasoning || hasPendingModelRequest) && !hasAnswerText && !hasPendingApproval)
         if hasPendingApproval && !hasActiveOperation { return .awaitingApproval }
-        return hasActiveOperation ? .working : .history
+        return hasLiveWork ? .working : .history
     }
 
     var showsShimmer: Bool { self == .working }
+
+    static func showsModelRequestStatus(isRunActive: Bool, requestID: String?,
+                                       hasAnswerText: Bool, hasPendingApproval: Bool) -> Bool {
+        isRunActive && requestID?.isEmpty == false && !hasAnswerText && !hasPendingApproval
+    }
 
     static func showsStandaloneStatus(
         isRunActive: Bool, isCurrentMessage: Bool, hasActivityHeader: Bool,

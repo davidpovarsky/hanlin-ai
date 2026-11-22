@@ -119,4 +119,131 @@ struct AgentActivityHeaderPhaseTests {
         #expect(run.steps.count == 2, "Lazy detail projection must not mutate the run")
     }
 
+    @Test func providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer() throws {
+        let run = AgentRun(groupID: UUID(), providerID: "fixture", modelID: "fixture")
+        var adapter = HanlinStreamEventAdapter(runID: run.id)
+        var accumulator = AgentEventAccumulator(run: run)
+        for event in adapter.events(from: .init(reasoning: "Checking the requested route.",
+                                               modelRoundID: UUID())) {
+            accumulator.apply(event)
+        }
+        let live = try #require(AgentActivityComposer.compose(accumulator.run).activities.first)
+        #expect(live.kind == .reasoning)
+        #expect(live.status == .running)
+        #expect(live.id.hasPrefix("reasoning:"))
+        #expect(AgentActivityVisibilityPolicy.animatesActivity(kind: live.kind.rawValue,
+            status: live.status.rawValue, isRunActive: true, hasAnswerText: false, isAwaitingApproval: false))
+        let liveRounds = AgentActivityComposer.rounds(for: accumulator.run,
+            timeline: AgentActivityComposer.compose(accumulator.run))
+        #expect(liveRounds.flatMap(\.activities).map(\.id) == [live.id])
+
+        for event in adapter.events(from: .init(content: "The route is ready.")) { accumulator.apply(event) }
+        let history = try #require(AgentActivityComposer.compose(accumulator.run).activities.first)
+        #expect(history.id == live.id, "Answer streaming must preserve the activity's disclosure identity")
+        #expect(history.status == .completed)
+        #expect(history.completedAt != nil)
+        #expect(!AgentActivityVisibilityPolicy.animatesActivity(kind: history.kind.rawValue,
+            status: history.status.rawValue, isRunActive: true, hasAnswerText: true, isAwaitingApproval: false))
+        #expect(accumulator.run.transcriptItems.contains { $0.kind == .assistantText && $0.text == "The route is ready." })
+    }
+
+    @Test func reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden() throws {
+        var accumulator = AgentEventAccumulator(run: .init(groupID: UUID()))
+        let startedAt = Date()
+        accumulator.apply(.reasoningStarted(.init(id: "reasoning-real", title: String(localized: "Thinking"),
+                                                startedAt: startedAt)))
+        accumulator.apply(.reasoningDelta(id: "reasoning-real", text: "Checking route options."))
+        accumulator.apply(.reasoningCompleted(id: "reasoning-real"))
+        accumulator.apply(.toolCallStarted(.parse(id: "load", name: "load_skill", argumentsJSON: "{}")))
+        accumulator.apply(.toolCallStarted(.parse(id: "route", name: "get_route", argumentsJSON: "{}")))
+        accumulator.apply(.toolExecutionStarted(.init(id: "route:execution", callID: "route",
+            name: "get_route", startedAt: startedAt)))
+
+        let active = AgentActivityComposer.compose(accumulator.run).activities
+        #expect(active.map(\.id) == ["reasoning-real", "route"])
+        #expect(active.first?.status == .completed)
+        let route = try #require(active.last)
+        #expect(route.status == .running)
+        #expect(AgentActivityVisibilityPolicy.animatesActivity(kind: route.kind.rawValue,
+            status: route.status.rawValue, isRunActive: true, hasAnswerText: false, isAwaitingApproval: false))
+        #expect(accumulator.run.steps.contains { $0.toolCallID == "load" },
+            "Hiding preparation must not delete the canonical audit")
+
+        accumulator.apply(.toolExecutionFailed(id: "route:execution", error: .init(message: "Route unavailable")))
+        let failed = try #require(AgentActivityComposer.compose(accumulator.run).activities.last)
+        #expect(failed.id == route.id && failed.status == .failed)
+        #expect(failed.errorDescription == "Route unavailable")
+        #expect(!AgentActivityVisibilityPolicy.animatesActivity(kind: failed.kind.rawValue,
+            status: failed.status.rawValue, isRunActive: true, hasAnswerText: false, isAwaitingApproval: false))
+    }
+
+    @Test func onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt() throws {
+        var accumulator = AgentEventAccumulator(run: .init(groupID: UUID()))
+        accumulator.apply(.modelRoundStarted(id: "inline-tool-round"))
+        #expect(accumulator.run.pendingModelRequestID == nil,
+            "A round may be an inline tool and is not evidence of a model request")
+        accumulator.apply(.modelRequestStarted(id: "provider-step-1"))
+        #expect(accumulator.run.pendingModelRequestID == "provider-step-1")
+        #expect(accumulator.run.steps.isEmpty, "Request latency must not become a fabricated tool stage")
+        let restored = try JSONDecoder().decode(AgentRun.self, from: JSONEncoder().encode(accumulator.run))
+        #expect(restored.pendingModelRequestID == "provider-step-1")
+
+        accumulator.apply(.modelRequestStarted(id: "provider-step-2"))
+        accumulator.apply(.modelRequestEnded(id: "provider-step-1"))
+        #expect(accumulator.run.pendingModelRequestID == "provider-step-2",
+            "A delayed older request end cannot stop the current indicator")
+        accumulator.apply(.reasoningStarted(.init(id: "reasoning", title: String(localized: "Thinking"), startedAt: .now)))
+        #expect(accumulator.run.pendingModelRequestID == nil)
+        #expect(AgentActivityComposer.compose(accumulator.run).activities.first?.kind == .reasoning)
+
+        accumulator.apply(.modelRequestStarted(id: "provider-step-3"))
+        accumulator.apply(.answerSegmentStarted(.init(id: "answer", title: "Answer", startedAt: .now)))
+        #expect(accumulator.run.pendingModelRequestID == nil,
+            "A provider without reasoning still removes waiting at its first answer")
+        accumulator.apply(.modelRequestStarted(id: "provider-step-4"))
+        accumulator.apply(.toolCallStarted(.parse(id: "search", name: "search_online", argumentsJSON: "{}")))
+        #expect(accumulator.run.pendingModelRequestID == nil)
+        accumulator.apply(.modelRequestStarted(id: "provider-step-5"))
+        accumulator.apply(.modelRequestEnded(id: "provider-step-5"))
+        #expect(accumulator.run.pendingModelRequestID == nil)
+        accumulator.apply(.modelRequestStarted(id: "provider-step-6"))
+        accumulator.apply(.runCancelled)
+        #expect(accumulator.run.pendingModelRequestID == nil)
+        accumulator.apply(.modelRequestStarted(id: "late-start"))
+        #expect(accumulator.run.pendingModelRequestID == nil, "A terminal run cannot be revived")
+    }
+
+    @Test func olderStoredRunsDoNotInventPendingRequestReceipt() throws {
+        let data = try JSONEncoder().encode(AgentRun(groupID: UUID(), status: .completed))
+        var object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        object.removeValue(forKey: "pendingModelRequestID")
+        let restored = try JSONDecoder().decode(AgentRun.self, from: JSONSerialization.data(withJSONObject: object))
+        #expect(restored.pendingModelRequestID == nil)
+        #expect(!AgentActivityHeaderPhase.showsModelRequestStatus(isRunActive: false,
+            requestID: restored.pendingModelRequestID, hasAnswerText: false, hasPendingApproval: false))
+    }
+
+    @Test func admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer() throws {
+        let run = AgentRun(groupID: UUID())
+        var adapter = HanlinStreamEventAdapter(runID: run.id)
+        var accumulator = AgentEventAccumulator(run: run)
+        let round = UUID()
+        for event in adapter.events(from: .init(reasoning: "Preparing the requested image.", modelRoundID: round)) {
+            accumulator.apply(event)
+        }
+        for event in adapter.events(from: .init(agentEvents: [.modelRequestEnded(id: "older-round")])) {
+            accumulator.apply(event)
+        }
+        #expect(AgentActivityComposer.compose(accumulator.run).activities.first?.status == .running)
+        // API emits this receipt only after an image is decoded/admitted or a
+        // real SDK step finishes. Metadata alone is not visible output.
+        for event in adapter.events(from: .init(agentEvents: [.modelRequestEnded(id: round.uuidString)])) {
+            accumulator.apply(event)
+        }
+        #expect(AgentActivityComposer.compose(accumulator.run).activities.first?.status == .completed)
+        for event in adapter.events(from: .init(content: "Here is the image.")) { accumulator.apply(event) }
+        for event in adapter.completionEvents() { accumulator.apply(event) }
+        #expect(AgentTranscriptValidation.finalAnswer(in: accumulator.run.transcriptItems) == "Here is the image.")
+    }
+
 }

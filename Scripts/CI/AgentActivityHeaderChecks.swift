@@ -1,7 +1,8 @@
 import Foundation
 
 // Compile with the production AgentActivityHeaderPhase.swift and
-// ChatMotionConfiguration.swift and HanlinAnimatedDisclosure.swift. This does not replace Apple UI acceptance.
+// AgentActivityVisibilityPolicy.swift, ChatMotionConfiguration.swift and
+// HanlinAnimatedDisclosure.swift. This does not replace Apple UI acceptance.
 @main
 struct AgentActivityHeaderChecks {
     static func main() {
@@ -83,6 +84,87 @@ struct AgentActivityHeaderChecks {
             check(!AgentActivityVisibilityPolicy.showsInvocation(kind: "toolExecution", toolName: name, hasIdentity: false),
                 "No fabricated call without lifecycle identity")
         }
+        // Regression from 145801: the tree, phase and owner must agree on a
+        // real reasoning event before any tool invocation exists.
+        let semanticReasoning = AgentActivityVisibilityPolicy.showsActivity(
+            kind: "reasoning", toolName: nil, hasIdentity: true)
+        check(semanticReasoning, "Provider reasoning must survive activity composition")
+        check(!AgentActivityVisibilityPolicy.showsActivity(
+            kind: "reasoning", toolName: nil, hasIdentity: false),
+            "A generic waiting label cannot invent provider reasoning")
+        let reasonPhase = AgentActivityHeaderPhase.resolve(isRunActive: true,
+            hasPendingApproval: false, hasActiveReasoning: semanticReasoning)
+        check(reasonPhase == .working && reasonPhase.showsShimmer,
+            "A reasoning-only response must have a live activity header")
+        let reasonMotion = AgentActivityVisibilityPolicy.animatesActivity(kind: "reasoning",
+            status: "running", isRunActive: true, hasAnswerText: false, isAwaitingApproval: false)
+        check(reasonMotion, "The active reasoning leaf keeps the canonical blue sweep")
+        let reasonPath = Owner.Path(activityID: "reasoning-1", roundID: "round-1", isRoundExpanded: true)
+        check(Owner.resolve(isWorking: reasonPhase.showsShimmer, isHierarchyExpanded: true,
+            activePaths: reasonMotion ? [reasonPath] : []) == [.activity("reasoning-1")],
+            "Reasoning-only expansion must not drop all animated owners")
+        check(Owner.resolve(isWorking: reasonPhase.showsShimmer, isHierarchyExpanded: false,
+            activePaths: reasonMotion ? [reasonPath] : []) == [.root],
+            "Collapsing real reasoning transfers its sweep to the visible root")
+        check(!AgentActivityVisibilityPolicy.animatesActivity(kind: "reasoning",
+            status: "running", isRunActive: true, hasAnswerText: true, isAwaitingApproval: false),
+            "First answer text suppresses a stale running reasoning row")
+        check(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false,
+            hasAnswerText: true, hasActiveReasoning: true) == .history,
+            "An answer must not keep a misleading Thinking header alive")
+        for status in ["pending", "completed", "failed", "cancelled"] {
+            check(!AgentActivityVisibilityPolicy.animatesActivity(kind: "reasoning",
+                status: status, isRunActive: true, hasAnswerText: false, isAwaitingApproval: false),
+                "Only the real running reasoning lifetime animates")
+        }
+        check(!AgentActivityVisibilityPolicy.animatesActivity(kind: "reasoning",
+            status: "running", isRunActive: false, hasAnswerText: false, isAwaitingApproval: false),
+            "Historical reasoning must remain static even with stale persisted status")
+        check(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: true,
+            hasActiveReasoning: true) == .awaitingApproval,
+            "A consent wait must not be described as ongoing model reasoning")
+        for kind in ["tool", "search", "source", "document", "code", "map", "calendar", "health"] {
+            check(AgentActivityVisibilityPolicy.animatesActivity(kind: kind, status: "running",
+                isRunActive: true, hasAnswerText: true, isAwaitingApproval: false),
+                "Actual parallel tool execution may continue while answer text exists")
+            check(!AgentActivityVisibilityPolicy.animatesActivity(kind: kind, status: "running",
+                isRunActive: true, hasAnswerText: false, isAwaitingApproval: true),
+                "Permission wait never masquerades as running execution")
+        }
+        check(!AgentActivityVisibilityPolicy.animatesActivity(kind: "narrative", status: "running",
+            isRunActive: true, hasAnswerText: false, isAwaitingApproval: false),
+            "Transport prose never owns the blue sweep")
+        // Real SDK request admission is distinct from reasoning. It must stay
+        // visible even when a provider sends no reasoning channel at all.
+        let admittedRequest = AgentActivityHeaderPhase.showsModelRequestStatus(
+            isRunActive: true, requestID: "provider-step-1", hasAnswerText: false, hasPendingApproval: false)
+        check(admittedRequest, "A real dispatched request must not leave an empty assistant")
+        check(!AgentActivityHeaderPhase.showsModelRequestStatus(
+            isRunActive: true, requestID: nil, hasAnswerText: false, hasPendingApproval: false),
+            "Creating a run without dispatch does not fabricate model activity")
+        check(!AgentActivityHeaderPhase.showsModelRequestStatus(
+            isRunActive: true, requestID: "", hasAnswerText: false, hasPendingApproval: false),
+            "Empty transport identity is not a dispatch receipt")
+        for (active, answer, approval) in [(false, false, false), (true, true, false), (true, false, true)] {
+            check(!AgentActivityHeaderPhase.showsModelRequestStatus(isRunActive: active,
+                requestID: "provider-step-1", hasAnswerText: answer, hasPendingApproval: approval),
+                "History, answer text and consent wait end the pre-output label")
+        }
+        let requestPhase = AgentActivityHeaderPhase.resolve(isRunActive: true,
+            hasPendingApproval: false, hasPendingModelRequest: admittedRequest)
+        let requestPath = Owner.Path(activityID: "model-request:provider-step-1",
+            roundID: nil, isRoundExpanded: true)
+        check(requestPhase == .working, "An admitted request owns live motion before output")
+        check(Owner.resolve(isWorking: requestPhase.showsShimmer, isHierarchyExpanded: false,
+            activePaths: [requestPath]) == [.root], "Collapsed pending request has one visible owner")
+        check(Owner.resolve(isWorking: requestPhase.showsShimmer, isHierarchyExpanded: true,
+            activePaths: [requestPath]) == [.activity("model-request:provider-step-1")],
+            "Expanded pending request animates its semantic leaf, not the parent")
+        check(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false,
+            hasAnswerText: true, hasPendingModelRequest: true) == .history,
+            "First answer suppresses even a delayed request receipt")
+        check(AgentActivityHeaderPhase.resolve(isRunActive: false, hasPendingApproval: false,
+            hasPendingModelRequest: true) == .history, "Reloaded request receipt cannot animate history")
         // UIKit's crash reports abort on a non-finite scroll/layer bound.
         // Check the production geometry including zero, invalid probes and reversal.
         for height in [0.0, 24, 280, 40_000, -.infinity, .infinity, .nan, -1] {

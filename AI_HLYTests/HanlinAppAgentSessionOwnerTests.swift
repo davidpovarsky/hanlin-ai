@@ -224,25 +224,27 @@ private final class ProviderCredentialTestFixture {
                 runID: UUID(), step: 0, providerCallID: UUID().uuidString, writeGuarantee: .hostManagedMutation,
                 originalArgumentsJSON: Data("{}".utf8))
         }
-        let approvalScope = HanlinToolApprovalScope(app: "hanlin", account: "consent", workspace: "test", providerID: "hanlin.host", toolID: "fixture", manifestFingerprint: String(repeating: "a", count: 64), permissionFingerprint: String(repeating: "b", count: 64))
         let consent = HanlinAppToolConsent(grants: HanlinToolApprovalStore(key: UUID().uuidString))
+        let scope = HanlinToolApprovalScope(app: ns.app, account: ns.account, workspace: ns.workspace,
+            providerID: logical.providerInstanceID.rawValue, toolID: logical.localToolID.rawValue,
+            manifestFingerprint: String(repeating: "a", count: 64), permissionFingerprint: String(repeating: "b", count: 64))
         var changes: [(UUID, String, Bool?)] = []
         consent.onChange = { request, choice in changes.append((request.id, request.providerCallID, choice)) }
-        #expect(await consent.request(try invocation(deadline: .now.addingTimeInterval(-1)), approvalScope: approvalScope) == false)
+        #expect(await consent.request(try invocation(deadline: .now.addingTimeInterval(-1)), approvalScope: scope) == false)
         #expect(consent.pending == nil)
         let expiring = try invocation(deadline: .now.addingTimeInterval(0.15))
-        let expiredTask = Task { @MainActor in await consent.request(expiring, approvalScope: approvalScope) }
+        let expiredTask = Task { @MainActor in await consent.request(expiring, approvalScope: scope) }
         #expect(await expiredTask.value == false)
         #expect(consent.pending == nil)
 
         let live = try invocation(deadline: .now.addingTimeInterval(30))
-        let cancelled = Task { @MainActor in await consent.request(live, approvalScope: approvalScope) }
+        let cancelled = Task { @MainActor in await consent.request(live, approvalScope: scope) }
         for _ in 0..<100 where consent.pending == nil { await Task.yield() }
         let oldID = try #require(consent.pending?.id)
         cancelled.cancel()
         #expect(await cancelled.value == false)
         #expect(consent.pending == nil)
-        let replacement = Task { @MainActor in await consent.request(live, approvalScope: approvalScope) }
+        let replacement = Task { @MainActor in await consent.request(live, approvalScope: scope) }
         for _ in 0..<100 where consent.pending == nil { await Task.yield() }
         let currentID = try #require(consent.pending?.id)
         consent.answer(id: oldID, allowed: true)
@@ -254,6 +256,75 @@ private final class ProviderCredentialTestFixture {
         #expect(changes.filter { $0.0 == currentID }.first?.2 == nil)
         #expect(changes.filter { $0.0 == currentID }.last?.2 == false)
         #expect(!changes.contains { $0.2 == true }, "A stale answer never creates an approval event")
+    }
+
+    @Test func nativeConsentUsesOriginalOperationAcrossForeignAnswerContextAndRevocation() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Consent operation owner", type: "chat")
+        context.insert(row); try context.save()
+        let conversationID = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        defer { owner.cancel() }
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: conversationID,
+            sceneID: UUID(), rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let original = RuntimeUserOperation(), foreign = RuntimeUserOperation(), config = configuration()
+        let queue = AppPartQueue([try .init(messageID: request.rowID, partID: UUID(), sequence: 0,
+                                           payload: .textDelta("Original conversation"))])
+        let stream = try await RuntimeUserOperation.$current.withValue(original) {
+            try await owner.stream(request: request, modelContext: context, configuration: config,
+                engineFactory: { factory(config, queue: queue) }, toolAdapter: nil,
+                messages: [.init(role: .user, text: "Original request")], systemPrompt: nil)
+        }
+        var iterator = stream.makeAsyncIterator()
+        let firstEvent = try #require(try await iterator.next())
+        try owner.receive(firstEvent, uiRunID: request.uiRunID)
+        let identity = try #require(owner.session?.identity)
+        let logical = try HanlinLogicalToolID(providerInstanceID: .init(validating: "hanlin.host"),
+                                              localToolID: .init(validating: "consent-fixture"))
+        let invocation = HanlinHostInvocation(request: .init(
+            id: try .init(validating: UUID().uuidString.lowercased()), logicalToolID: logical,
+            aliasUsed: "consent-fixture", descriptorRevision: try .init(1), routingTableRevision: .init(1),
+            arguments: .object([:]), origin: .assistantModel, deadline: .now.addingTimeInterval(30),
+            limits: try .init()), session: identity, runID: firstEvent.runID, step: 0,
+            providerCallID: "original-native-call", writeGuarantee: .hostManagedMutation,
+            originalArgumentsJSON: Data("{}".utf8))
+        let scope = HanlinToolApprovalScope(app: identity.context.namespace.app,
+            account: identity.context.namespace.account, workspace: UUID().uuidString,
+            providerID: logical.providerInstanceID.rawValue, toolID: logical.localToolID.rawValue,
+            manifestFingerprint: String(repeating: "a", count: 64), permissionFingerprint: String(repeating: "b", count: 64))
+        var phasesAtEvent: [RuntimeUserOperation.Presentation] = []
+        owner.onApprovalEvent = { _, _ in phasesAtEvent.append(original.snapshot.presentation) }
+        // The shared Host worker and the user's later answer can run in an
+        // unrelated TaskLocal context; the original admitted operation owns UI.
+        let pending = Task { @MainActor in
+            await RuntimeUserOperation.$current.withValue(foreign) {
+                await owner.consent.request(invocation, approvalScope: scope)
+            }
+        }
+        for _ in 0..<100 where owner.consent.pending == nil { await Task.yield() }
+        let oldID = try #require(owner.consent.pending?.id)
+        #expect(original.snapshot.presentation == .awaitingApproval)
+        #expect(foreign.snapshot.presentation == .waitingForResponse)
+        RuntimeUserOperation.$current.withValue(foreign) {
+            owner.consent.answer(id: oldID, allowed: false)
+        }
+        #expect(await pending.value == false)
+        #expect(original.snapshot.presentation == .waitingForResponse)
+        let replacement = Task { @MainActor in
+            await RuntimeUserOperation.$current.withValue(foreign) {
+                await owner.consent.request(invocation, approvalScope: scope)
+            }
+        }
+        for _ in 0..<100 where owner.consent.pending == nil { await Task.yield() }
+        let currentID = try #require(owner.consent.pending?.id)
+        owner.consent.answer(id: oldID, allowed: true)
+        #expect(owner.consent.pending?.id == currentID)
+        #expect(original.snapshot.presentation == .awaitingApproval)
+        // Revocation emits resolution before clearing the original owner.
+        owner.cancel()
+        #expect(await replacement.value == false)
+        #expect(original.snapshot.presentation == .waitingForResponse)
+        #expect(foreign.snapshot.presentation == .waitingForResponse)
+        #expect(phasesAtEvent == [.awaitingApproval, .waitingForResponse, .awaitingApproval, .waitingForResponse])
     }
 
     private func database() throws -> ModelContainer {
@@ -1440,6 +1511,15 @@ private final class ProviderCredentialTestFixture {
         #expect(secondRoundID != firstRoundID)
         #expect(secondRoundID != diagnosticRound)
         #expect(secondRoundID != request.uiRunID)
+        // The producer has already prepared step 1 while the consumer is still
+        // draining step 0. Resolve the original receipt, not the mutable current ID.
+        #expect(adapter.takePreparedRoundID(forStep: 0) == firstRoundID)
+        #expect(adapter.takePreparedRoundID(forStep: 0) == nil)
+        #expect(adapter.takePreparedRoundID(forStep: 1) == secondRoundID)
+        adapter.finishPreparedRound(forStep: 0, roundID: firstRoundID)
+        #expect(adapter.currentRoundID == secondRoundID)
+        adapter.finishPreparedRound(forStep: 1, roundID: firstRoundID)
+        #expect(adapter.currentRoundID == secondRoundID, "A mismatched completion has no authority")
         let secondRoundOutput = try await definition.execute(arguments, "second-round-attachment")
         #expect(!secondRoundOutput.isError && reads == [image, image])
         #expect(observedRequestIDs == [firstRoundID.uuidString, secondRoundID.uuidString])
@@ -1459,6 +1539,9 @@ private final class ProviderCredentialTestFixture {
             secondRoundID.uuidString,
             secondRoundID.uuidString
         ])
+        adapter.finishPreparedRound(forStep: 1, roundID: secondRoundID)
+        #expect(adapter.currentRoundID == nil)
+        #expect(adapter.takePreparedRoundID(forStep: 1) == nil)
         await AuthorizedAttachmentRegistry.shared.revoke(handle: otherTurnHandle)
         await AuthorizedAttachmentRegistry.shared.revoke(handle: handle)
     }
@@ -2128,6 +2211,7 @@ private final class ProviderCredentialTestFixture {
                 canonicalSchema: schema, modelSchema: schema, preferredAlias: alias)
             let authority = try HanlinCanonicalToolAuthority.build(nativeSources: [source], mcpTools: [])
             var calls = 0, current = true
+            var toolEvents: [AgentEvent] = []
             let executors = AssistantToolBridge.Executors(executeNative: { _, _, arguments, _ in
                 calls += 1
                 do { try HanlinHostSchemaValidation.requireSameValue(originalJSON: Data(item.input.utf8), projectedJSON: Data(arguments.utf8)) }
@@ -2136,6 +2220,7 @@ private final class ProviderCredentialTestFixture {
             }, executeScripting: { _, _ in NativeToolResult(modelText: "Unexpected", outcome: .failed) })
             let adapter = HanlinAISDKToolAdapter(session: .init(chatID: id.uuidString, isTemporaryChat: true),
                 preparedTools: .init(authority: authority, executors: executors), callbacks: .init(onAgentEvent: { event in
+                    toolEvents.append(event)
                     if case .toolExecutionStarted = event, item.invalidate { current = false }
                 }))
             let host = HanlinAppHostIntegration(identity: identity, store: store, isCurrent: { current })
@@ -2155,6 +2240,16 @@ private final class ProviderCredentialTestFixture {
             let receipts = await dispatcher.receipts(for: identity)
             let receipt = try #require(receipts.first)
             #expect(calls == item.calls && receipts.count == 1)
+            if item.invalidate {
+                let started = toolEvents.compactMap { event -> String? in
+                    if case .toolExecutionStarted(let execution) = event { return execution.id }; return nil
+                }
+                let failed = toolEvents.compactMap { event -> String? in
+                    if case .toolExecutionFailed(let id, _) = event { return id }; return nil
+                }
+                #expect(started == ["exact:execution"] && failed == started,
+                    "Pre-dispatch rejection must end the already-emitted execution without invoking the tool")
+            }
             #expect(receipt.effectState == (item.calls == 1 ? .confirmedCommitted : .notDispatched))
             if let code = item.code {
                 guard case .failed(let error) = receipt.result.outcome else { Issue.record("Missing typed pre-dispatch denial"); continue }

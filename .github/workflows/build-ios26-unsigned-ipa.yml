@@ -2020,6 +2020,8 @@ jobs:
           mkdir -p "$LOG_DIR" build
           selected_xcode="$(python3 Scripts/CI/select_stable_xcode.py)"
           sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
           {
             sw_vers
             xcode-select -p
@@ -2478,31 +2480,6 @@ jobs:
             --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
             2>&1 | tee "$LOG_DIR/06-unit-xctestrun-seal.log"
 
-      - name: Save successful simulator compiler state
-        if: ${{ success() && !inputs.force_clean_build && steps.simulator-deriveddata-cache.outputs.cache-hit != 'true' }}
-        uses: actions/cache/save@v6.1.0
-        with:
-          path: |
-            build/SimulatorDerivedData/Build
-            build/SimulatorDerivedData/ModuleCache.noindex
-            build/SimulatorDerivedData/SDKStatCaches.noindex
-            build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
-          key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
-
-      - name: Record simulator DerivedData save status
-        if: always()
-        run: |
-          set -euo pipefail
-          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
-            echo "DerivedData_save=skip_forced_clean" >> "$LOG_DIR/01-cache-mode.log"
-          elif [ "${{ steps.simulator-deriveddata-cache.outputs.cache-hit }}" = "true" ]; then
-            echo "DerivedData_save=skip_exact_hit" >> "$LOG_DIR/01-cache-mode.log"
-          elif [ "${{ job.status }}" = "success" ]; then
-            echo "DerivedData_save=saved" >> "$LOG_DIR/01-cache-mode.log"
-          else
-            echo "DerivedData_save=skip_failed_job" >> "$LOG_DIR/01-cache-mode.log"
-          fi
-
       - name: Locate and scan simulator app
         run: |
           set -euxo pipefail
@@ -2900,6 +2877,31 @@ jobs:
             --xcode-version "${{ steps.simulator-toolchain.outputs.xcode-version }}" \
             --runner-arch "${{ steps.simulator-toolchain.outputs.runner-arch }}" \
             "${perf_flags[@]+"${perf_flags[@]}"}"
+
+      - name: Save successful simulator compiler state
+        if: ${{ success() && !inputs.force_clean_build && steps.simulator-deriveddata-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: |
+            build/SimulatorDerivedData/Build
+            build/SimulatorDerivedData/ModuleCache.noindex
+            build/SimulatorDerivedData/SDKStatCaches.noindex
+            build/SimulatorDerivedData/CacheMetadata/xcode-build-inputs.json
+          key: ${{ steps.simulator-deriveddata-cache.outputs.cache-primary-key }}
+
+      - name: Record simulator DerivedData save status
+        if: always()
+        run: |
+          set -euo pipefail
+          if [ "${{ inputs.force_clean_build }}" = "true" ]; then
+            echo "DerivedData_save=skip_forced_clean" >> "$LOG_DIR/01-cache-mode.log"
+          elif [ "${{ steps.simulator-deriveddata-cache.outputs.cache-hit }}" = "true" ]; then
+            echo "DerivedData_save=skip_exact_hit" >> "$LOG_DIR/01-cache-mode.log"
+          elif [ "${{ job.status }}" = "success" ]; then
+            echo "DerivedData_save=saved" >> "$LOG_DIR/01-cache-mode.log"
+          else
+            echo "DerivedData_save=skip_failed_job" >> "$LOG_DIR/01-cache-mode.log"
+          fi
 
       - name: Run full Runtime Tooling acceptance and collect every group
         if: ${{ env.RUN_RUNTIME_TOOLING_FULL_ACCEPTANCE == 'true' }}

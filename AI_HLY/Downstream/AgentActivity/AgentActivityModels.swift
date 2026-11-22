@@ -239,6 +239,9 @@ struct AgentRun: Codable, Hashable, Identifiable {
   var evidenceItems: [AgentEvidenceItem]
   var finalAnswer: String?
   var approvals: [AgentToolApproval] = []
+  /// Receipt of a currently dispatched model request, cleared by its first semantic output.
+  /// Optional for older persisted runs; presentation also requires current live-run ownership.
+  var pendingModelRequestID: String? = nil
 
   init(
     schemaVersion: Int = currentSchemaVersion,
@@ -274,7 +277,7 @@ struct AgentRun: Codable, Hashable, Identifiable {
 
   private enum CodingKeys: String, CodingKey {
     case schemaVersion, id, groupID, providerID, modelID, startedAt, completedAt
-    case status, steps, transcriptItems, evidenceItems, finalAnswer, approvals
+    case status, steps, transcriptItems, evidenceItems, finalAnswer, approvals, pendingModelRequestID
   }
 
   init(from decoder: Decoder) throws {
@@ -300,6 +303,8 @@ struct AgentRun: Codable, Hashable, Identifiable {
     evidenceItems =
       try container.decodeIfPresent([AgentEvidenceItem].self, forKey: .evidenceItems) ?? []
     approvals = try container.decodeIfPresent([AgentToolApproval].self, forKey: .approvals) ?? []
+    pendingModelRequestID = try container.decodeIfPresent(String.self, forKey: .pendingModelRequestID)
+    if status != .running && status != .pending { pendingModelRequestID = nil }
     let transcriptFinalAnswer = AgentTranscriptValidation.finalAnswer(in: transcriptItems)
     let persistedFinalAnswer = try container.decodeIfPresent(String.self, forKey: .finalAnswer)
     finalAnswer =

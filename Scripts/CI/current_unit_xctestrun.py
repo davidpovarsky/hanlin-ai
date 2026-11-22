@@ -23,6 +23,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import uuid
 
 try:
@@ -90,6 +91,42 @@ def descriptors(products):
     return candidates
 
 
+GIT_RETRY_DELAYS_SECONDS = (2.0, 5.0)
+GIT_REV_PARSE_TIMEOUT_SECONDS = 60
+GIT_DIFF_TIMEOUT_SECONDS = 120
+GIT_TOTAL_BUDGET_SECONDS = 240.0
+
+
+def run_git_command(arguments, *, cwd, timeout_seconds, deadline=None,
+                    retry_delays=GIT_RETRY_DELAYS_SECONDS, sleeper=time.sleep,
+                    clock=time.monotonic):
+    """Run read-only Git check with bounded total time budget and TimeoutExpired retry/backoff."""
+    attempts = len(retry_delays) + 1
+    last_error = None
+    for index in range(attempts):
+        if deadline is not None:
+            remaining = deadline - clock()
+            require(remaining > 0, "Git admission verification exceeded its total run time budget")
+            effective_timeout = min(float(timeout_seconds), remaining)
+        else:
+            effective_timeout = float(timeout_seconds)
+        try:
+            return subprocess.check_output(arguments, cwd=cwd, timeout=effective_timeout)
+        except subprocess.TimeoutExpired as error:
+            last_error = error
+            if index + 1 >= attempts:
+                break
+            delay = float(retry_delays[index])
+            if deadline is not None:
+                remaining = deadline - clock()
+                if remaining <= 0:
+                    break
+                delay = min(delay, max(0.0, remaining))
+            if delay > 0:
+                sleeper(delay)
+    raise last_error
+
+
 def build_context(repository, products, log, configuration, selectors):
     repository = Path(repository).resolve(strict=True)
     products = Path(products).resolve()
@@ -102,27 +139,40 @@ def build_context(repository, products, log, configuration, selectors):
     run_id, attempt = os.environ.get("GITHUB_RUN_ID", ""), os.environ.get("GITHUB_RUN_ATTEMPT", "")
     require(all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run_id, attempt)),
             "Current GitHub run and attempt are required")
+    git_deadline = time.monotonic() + GIT_TOTAL_BUDGET_SECONDS
 
-    def command(arguments, *, timeout_seconds=30):
-        return subprocess.check_output(arguments, cwd=repository, timeout=timeout_seconds)
-
-    head = command(["git", "rev-parse", "HEAD"]).decode().strip()
+    head = run_git_command(["git", "--no-optional-locks", "rev-parse", "HEAD"],
+                           cwd=repository, timeout_seconds=GIT_REV_PARSE_TIMEOUT_SECONDS,
+                           deadline=git_deadline).decode().strip()
     require(head == os.environ.get("GITHUB_SHA"), "Checkout differs from this run's source SHA")
-    # Run 45019487094: full-checkout binary diff exceeded 30s at native admit after build IO.
-    diff = command(["git", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
-                   timeout_seconds=120)
+    diff = run_git_command(
+        ["git", "--no-optional-locks", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
+        cwd=repository, timeout_seconds=GIT_DIFF_TIMEOUT_SECONDS, deadline=git_deadline)
     provenance_path = log / "06-diagnostics-build-provenance.json"
     provenance = json.loads(provenance_path.read_bytes())
     require(provenance.get("sourceCommit") == head, "Build provenance belongs to a different source")
     require(type(provenance.get("trackedWorkspaceModified")) is bool,
             "Build provenance lacks its tracked-tree qualification")
     require(configuration in ("Debug", "Release"), "Unsupported original app configuration")
+    configured_developer = Path(os.environ.get("DEVELOPER_DIR", ""))
+    require(configured_developer.is_absolute(), "The selected Xcode Developer directory is required")
+    developer = configured_developer.resolve(strict=True)
+    require(developer.name == "Developer" and (developer / "usr/bin/xcodebuild").is_file(),
+            "Selected Developer directory does not contain xcodebuild")
+    # The Mac job selects this exact Xcode before building. Read its installed
+    # version at each phase without launching Xcode again during admission.
+    version_info = plistlib.loads((developer.parent / "version.plist").read_bytes())
+    version = version_info.get("CFBundleShortVersionString") or version_info.get("ProductVersion")
+    build = version_info.get("ProductBuildVersion")
+    require(isinstance(version, str) and bool(re.fullmatch(r"[0-9]+(?:\.[0-9]+)*", version))
+            and isinstance(build, str) and bool(re.fullmatch(r"[A-Za-z0-9]+", build)),
+            "Selected Xcode version plist lacks a valid release and build")
     return {
         "run_id": run_id, "run_attempt": attempt, "source_sha": head,
         "configuration": configuration, "selectors": selected_identifiers(selectors),
         "products_root": str(products),
-        "developer_directory": command(["xcode-select", "-p"]).decode().strip(),
-        "xcode_version": command(["xcodebuild", "-version"]).decode().strip(),
+        "developer_directory": str(developer),
+        "xcode_version": f"Xcode {version}\nBuild version {build}",
         "tracked_diff_sha256": hashlib.sha256(diff).hexdigest(),
         "tracked_workspace_modified": bool(diff),
         "diagnostics_provenance_sha256": sha256(provenance_path),

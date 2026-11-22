@@ -50,6 +50,20 @@ final class HanlinAISDKToolAdapter {
     var latestToolProgressSummary: String?
     var diagnosticsRecorder: AgentDiagnosticsRecorder?
     var currentRoundID: UUID?
+    /// Prepared producer receipts stay keyed to their immutable SDK step until
+    /// the consumer receives stepStarted. This is not a completed-round history.
+    private var preparedRoundIDs: [Int: UUID] = [:]
+
+    func takePreparedRoundID(forStep step: Int) -> UUID? {
+        preparedRoundIDs.removeValue(forKey: step)
+    }
+
+    func finishPreparedRound(forStep step: Int, roundID: UUID) {
+        if preparedRoundIDs[step] == roundID { preparedRoundIDs.removeValue(forKey: step) }
+        // A buffered step N completion must not clear producer step N+1.
+        guard currentStepIndex == step, currentRoundID == roundID else { return }
+        currentRoundID = nil
+    }
     /// Installed only by the original Session owner with its authentic HostSession.
     var sdkAttachmentResolver: (@MainActor @Sendable (String) async throws -> Data)?
     var currentStepIndex: Int = 0
@@ -231,7 +245,9 @@ final class HanlinAISDKToolAdapter {
             loadedSkillInstructions: session.loadedSkillInstructions,
             visibleSchemaBytes: visibleBytes
         )
-        if let recorder = diagnosticsRecorder {
+        if let existing = preparedRoundIDs[stepNumber] {
+            currentRoundID = existing
+        } else if let recorder = diagnosticsRecorder {
             let stepID = await recorder.beginRound(
                 index: stepNumber,
                 trigger: stepNumber == 0 ? "initialUserRequest" : "continueAfterToolResult",
@@ -245,6 +261,7 @@ final class HanlinAISDKToolAdapter {
         } else {
             currentRoundID = UUID()
         }
+        if let currentRoundID { preparedRoundIDs[stepNumber] = currentRoundID }
         return prep
     }
 
@@ -784,9 +801,14 @@ final class HanlinAISDKToolAdapter {
         // diagnostics/round awaits and immediately before the existing prepared executor.
         do { try sdkPreDispatchHandlers[callID]?(parsedCall.sanitizedArgumentsJSON) }
         catch {
+            let message = "Operation input or context could not be verified before dispatch."
             sdkOutcomeHandlers[callID]?(.invalidArguments)
+            callbacks.onAgentEvent?(.toolExecutionFailed(
+                id: executionID,
+                error: AgentSafeError(message: message)
+            ))
             completedCallIDs.insert(callID)
-            return HanlinAISDKToolExecutionOutput(modelText: "Operation input or context could not be verified before dispatch.", isError: true)
+            return HanlinAISDKToolExecutionOutput(modelText: message, isError: true)
         }
 
         let nativeResult = await RuntimeJobProgress.$reporter.withValue({ [weak self] job in

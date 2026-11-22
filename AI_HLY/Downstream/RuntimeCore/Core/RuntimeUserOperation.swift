@@ -13,12 +13,22 @@ struct RuntimeOperationInterruptionError: LocalizedError, Sendable {
 final class RuntimeUserOperation: @unchecked Sendable {
     @TaskLocal static var current: RuntimeUserOperation?
 
+    /// Semantic state for the system's continuation UI. Byte and work-unit
+    /// counters remain internal accounting, never user-facing descriptions.
+    enum ModelPhase: Sendable { case waitingForResponse, thinking, responding }
+    enum Presentation: Equatable, Sendable {
+        case waitingForResponse, thinking, responding, awaitingApproval
+        case tool(String)
+        case completed, stopped
+    }
+
     struct Snapshot: Sendable {
         let reason: String?
         let outputBytes: Int64
         let completedWorkUnits: Int64
         let finished: Bool
         let succeeded: Bool
+        let presentation: Presentation
 
         /// Progress covers work discovered so far, plus the real finalization
         /// step. The total grows as the provider discovers additional work;
@@ -40,6 +50,10 @@ final class RuntimeUserOperation: @unchecked Sendable {
     private var cancelProducer: (@Sendable () -> Void)?
     private var finished = false
     private var succeeded = false
+    private var modelPhase: ModelPhase = .waitingForResponse
+    private var activeToolTitles: [String: String] = [:]
+    private var activeToolOrder: [String] = []
+    private var pendingApprovals: Set<String> = []
 
     init(id: UUID = UUID()) { self.id = id }
 
@@ -52,7 +66,57 @@ final class RuntimeUserOperation: @unchecked Sendable {
 
     var snapshot: Snapshot {
         lock.withLock { Snapshot(reason: reason, outputBytes: outputBytes,
-            completedWorkUnits: completedWorkUnits, finished: finished, succeeded: succeeded) }
+            completedWorkUnits: completedWorkUnits, finished: finished, succeeded: succeeded,
+            presentation: presentationLocked) }
+    }
+
+    func updateModelPhase(_ phase: ModelPhase) {
+        lock.withLock {
+            guard !finished, reason == nil else { return }
+            modelPhase = phase
+        }
+    }
+
+    func beginTool(id: String, title: String) {
+        let title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !id.isEmpty, !title.isEmpty else { return }
+        lock.withLock {
+            guard !finished, reason == nil else { return }
+            if activeToolTitles[id] == nil { activeToolOrder.append(id) }
+            activeToolTitles[id] = title
+            modelPhase = .waitingForResponse
+        }
+    }
+
+    func endTool(id: String) {
+        lock.withLock {
+            guard !finished, reason == nil else { return }
+            guard activeToolTitles.removeValue(forKey: id) != nil else { return }
+            activeToolOrder.removeAll { $0 == id }
+        }
+    }
+
+    func updateApproval(id: String, isPending: Bool) {
+        guard !id.isEmpty else { return }
+        lock.withLock {
+            guard !finished, reason == nil else { return }
+            if isPending { pendingApprovals.insert(id) }
+            else { pendingApprovals.remove(id) }
+        }
+    }
+
+    /// Access only while holding lock. Concurrent tool completion must reveal
+    /// the remaining real tool, and late callbacks cannot revive terminal UI.
+    private var presentationLocked: Presentation {
+        if reason != nil { return .stopped }
+        if finished { return succeeded ? .completed : .stopped }
+        if !pendingApprovals.isEmpty { return .awaitingApproval }
+        if let id = activeToolOrder.last, let title = activeToolTitles[id] { return .tool(title) }
+        switch modelPhase {
+        case .waitingForResponse: return .waitingForResponse
+        case .thinking: return .thinking
+        case .responding: return .responding
+        }
     }
 
     func bindProducerCancellation(_ cancel: @escaping @Sendable () -> Void) {
@@ -156,6 +220,9 @@ final class RuntimeUserOperation: @unchecked Sendable {
             cancelProducer = nil // Break the producer Task/context ownership cycle.
             jobBytes.removeAll()
             recordedEvents.removeAll()
+            activeToolTitles.removeAll()
+            activeToolOrder.removeAll()
+            pendingApprovals.removeAll()
         }
     }
 

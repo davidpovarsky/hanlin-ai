@@ -4,7 +4,7 @@ enum AgentActivityComposer {
   static func compose(_ run: AgentRun) -> AgentDisplayTimeline {
     let meaningful = run.steps
       .sorted { $0.sequence < $1.sequence }
-      .filter(AgentActivityCompositionPolicy.isVisibleToolActivity)
+      .filter(AgentActivityCompositionPolicy.isVisibleActivity)
 
     var groups: [[AgentActivityStep]] = []
     var groupIndexByCallID: [String: Int] = [:]

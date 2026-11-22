@@ -322,37 +322,121 @@ class CurrentUnitXctestrunTests(unittest.TestCase):
         head = git("rev-parse", "HEAD").decode().strip()
         provenance = self.log / "06-diagnostics-build-provenance.json"
         provenance.write_text(json.dumps({"sourceCommit": head, "trackedWorkspaceModified": False}))
+        developer = self.root / "Test Xcode.app/Contents/Developer"
+        xcodebuild = developer / "usr/bin/xcodebuild"
+        xcodebuild.parent.mkdir(parents=True)
+        xcodebuild.touch()
+        version_plist = developer.parent / "version.plist"
+        version_plist.write_bytes(plistlib.dumps({
+            "CFBundleShortVersionString": "27.2", "ProductBuildVersion": "27B52",
+        }))
         real_command = subprocess.check_output
         observed = []
 
         def command(arguments, **kwargs):
             observed.append(arguments)
-            if arguments == ["xcode-select", "-p"]:
-                return b"/Synthetic/Xcode/Developer\n"
-            if arguments == ["xcodebuild", "-version"]:
-                return b"Synthetic Xcode fixture\n"
             return real_command(arguments, **kwargs)
 
         with mock.patch.dict(os.environ, {"GITHUB_RUN_ID": self.context["run_id"],
-                                         "GITHUB_RUN_ATTEMPT": "1", "GITHUB_SHA": head}), \
+                                         "GITHUB_RUN_ATTEMPT": "1", "GITHUB_SHA": head,
+                                         "DEVELOPER_DIR": str(developer)}), \
                 mock.patch.object(admission.subprocess, "check_output", side_effect=command):
             before = admission.build_context(self.root, self.products, self.log, "Debug",
                                              ",".join(DATA_SELECTORS))
             self.assertFalse(before["tracked_workspace_modified"])
+            self.assertEqual(before["developer_directory"], str(developer.resolve()))
+            self.assertEqual(before["xcode_version"], "Xcode 27.2\nBuild version 27B52")
+            version_plist.write_bytes(plistlib.dumps({
+                "CFBundleShortVersionString": "27.2", "ProductBuildVersion": "27B53",
+            }))
             source.write_text("let original = 2\n")
             after = admission.build_context(self.root, self.products, self.log, "Debug",
                                             ",".join(DATA_SELECTORS))
             self.assertTrue(after["tracked_workspace_modified"])
+            self.assertEqual(after["xcode_version"], "Xcode 27.2\nBuild version 27B53")
             self.assertNotEqual(before["tracked_diff_sha256"], after["tracked_diff_sha256"])
             provenance.write_text(json.dumps({"sourceCommit": "f" * 40, "trackedWorkspaceModified": True}))
             with self.assertRaisesRegex(RuntimeError, "different source"):
                 admission.build_context(self.root, self.products, self.log, "Debug", "AI_HLYTests")
-        self.assertTrue(all("-resolvePackageDependencies" not in args and "-project" not in args
-                            and "-scheme" not in args for args in observed))
+        self.assertTrue(all(args[0] == "git" for args in observed))
+        self.assertIn(
+            ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+            observed,
+        )
+        self.assertIn(
+            ["git", "--no-optional-locks", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
+            observed,
+        )
+
+    def test_git_command_retries_only_timeout_expired_with_backoff_and_enforces_total_budget(self):
+        calls = []
+        sleeps = []
+        now = [100.0]
+
+        def clock():
+            return now[0]
+
+        def sleeper(seconds):
+            sleeps.append(seconds)
+            now[0] += seconds
+
+        def transient_then_ok(arguments, *, cwd, timeout):
+            calls.append((arguments, timeout))
+            if len(calls) < 3:
+                now[0] += 10.0
+                raise subprocess.TimeoutExpired(arguments, timeout)
+            return b"deadbeef\n"
+
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=transient_then_ok):
+            result = admission.run_git_command(
+                ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+                cwd=self.root, timeout_seconds=30, deadline=160.0,
+                retry_delays=(2.0, 5.0), sleeper=sleeper, clock=clock)
+        self.assertEqual(result, b"deadbeef\n")
+        self.assertEqual(len(calls), 3)
+        self.assertEqual(sleeps, [2.0, 5.0])
+
+        error_calls = []
+
+        def fail_once(arguments, *, cwd, timeout):
+            error_calls.append(arguments)
+            raise subprocess.CalledProcessError(128, arguments)
+
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=fail_once):
+            with self.assertRaises(subprocess.CalledProcessError):
+                admission.run_git_command(
+                    ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+                    cwd=self.root, timeout_seconds=30, deadline=160.0,
+                    retry_delays=(2.0, 5.0), sleeper=sleeper, clock=clock)
+        self.assertEqual(len(error_calls), 1)
+
+        def always_timeout(arguments, *, cwd, timeout):
+            now[0] += timeout
+            raise subprocess.TimeoutExpired(arguments, timeout)
+
+        now[0] = 200.0
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=always_timeout):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                admission.run_git_command(
+                    ["git", "--no-optional-locks", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
+                    cwd=self.root, timeout_seconds=30, deadline=225.0,
+                    retry_delays=(2.0, 5.0), sleeper=sleeper, clock=clock)
+
+        now[0] = 300.0
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=always_timeout):
+            with self.assertRaisesRegex(RuntimeError, "total run time budget"):
+                admission.run_git_command(
+                    ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+                    cwd=self.root, timeout_seconds=30, deadline=299.0,
+                    retry_delays=(2.0, 5.0), sleeper=sleeper, clock=clock)
 
     def test_workflow_unit_route_preserves_destination_filters_limits_and_result_gate(self):
         workflow = (SCRIPT_PATH.parents[2] / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(
             encoding="utf-8")
+        self.assertGreater(
+            workflow.index("      - name: Save successful simulator compiler state\n"),
+            workflow.index("      - name: Run simulator test suite\n"),
+        )
         unit = workflow.split("      - name: Run simulator test suite\n", 1)[1].split(
             '            if [ "${STAGE_NATIVESCRIPT_AFTER_UNIT:-false}"', 1)[0]
         command = unit.split("              xcodebuild test-without-building \\\n", 1)[1].split(

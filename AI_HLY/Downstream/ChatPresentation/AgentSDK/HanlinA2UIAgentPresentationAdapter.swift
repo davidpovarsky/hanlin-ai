@@ -68,6 +68,20 @@ final class HanlinA2UIAgentPresentationAdapter: HanlinA2UIResultEventSink {
         return try consume(part, runID: event.runID, live: true)
     }
 
+    /// Accepted protocol metadata is not visible answer content. The official
+    /// incremental graph can own a surface before its root component arrives.
+    func hasRenderableModelPart(runID: UUID, part: HanlinChatStructuredPart) -> Bool {
+        guard !invalidated, session?.identity == identity,
+              !finishedRuns.contains(runID), modes[runID] == .live,
+              case .a2uiMessage = part.payload,
+              let content = messages[Address(runID: runID, messageID: part.messageID)]?.parts[part.partID],
+              case .surface(let key, _, let failed) = content,
+              !failed, let projection = store.projection(for: key), !projection.isClosed else { return false }
+        return projection.surfaceIDs.contains {
+            projection.surface($0)?.componentsModel.components["root"] != nil
+        }
+    }
+
     /// The SDK record remains the only persisted transcript. A replay is permanently read-only
     /// and cannot mix with live delivery or call admitInteraction for its historical identities.
     func replay(_ record: HanlinConversationRecord, runID: UUID, messageID: UUID) throws {

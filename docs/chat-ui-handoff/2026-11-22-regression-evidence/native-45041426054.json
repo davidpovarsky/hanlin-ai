@@ -1,0 +1,258 @@
+{
+  "run_id": 45041426054,
+  "artifact_id": 14762382429,
+  "status": "FAIL",
+  "artifact_zip_bytes": 277334667,
+  "artifact_zip_sha256": "219e5e8c4ed0ab898c6c5c9f77fe792157226218e556490b7eaaeef84168a9a1",
+  "sources": {
+    "app": "7af041d96d1c39f94fc526a0263e9255e16288ca",
+    "baseline_app": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+    "baseline_renderer": "ebbbf889276098f3642448e5439ad049c3cd2d6c",
+    "candidate_renderer": "d7abb9d27ee0ad5a2720cf81795b3db4c7ac5190",
+    "candidate_manifest_sha256": "9e1ec1a26cf3e57a2ce6164e4a678ba9ab1e035415f480253e636a228ac0129b"
+  },
+  "native_source_receipt": {
+    "baseline_app_commit": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+    "baseline_source": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+    "baseline_sha256": "45454e8c5080ff002999672abcbd9ba6b4ecc5cda9a59c8e7c7751aa8786e4fa",
+    "candidate_app_commit": "7af041d96d1c39f94fc526a0263e9255e16288ca",
+    "candidate_sha256": "8c1e6c2f9db85c020a8730c620a0bb638a214714d3243d7ffc40efd319e077ea",
+    "scope": "Two actual Composer implementations rendered by the same native UIKit host. No Runtime, accounts, live tools, or physical-device acceptance."
+  },
+  "baseline": {
+    "exit_code": 65,
+    "tests": 1,
+    "failed": 1,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "RichBlockAttachmentRenderingTests.testProviderLookupUsesRichRenderer()",
+        "message": "XCTUnwrap failed: expected non-nil value of type \"NSTextAttachmentViewProvider\""
+      }
+    ],
+    "status": "EXPECTED_PROVIDER_FAILURE"
+  },
+  "candidate": {
+    "exit_code": 65,
+    "tests": 4,
+    "failed": 1,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "RichBlockAttachmentRenderingTests.testProviderLookupUsesRichRenderer()",
+        "message": "XCTAssertEqual failed: (\"nil\") is not equal to (\"Optional(\"com.hanlin.markdown.rich-block\")\")"
+      }
+    ],
+    "status": "FAIL"
+  },
+  "attachments": [
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "activity-collapsed-parent_0_6050B28A-3640-492E-AE52-876642339A86.png",
+      "file": "42170245-E471-4832-AD5C-D1901FEFC502.png",
+      "bytes": 222257,
+      "sha256": "23266631579fd99102091c46c5f35bef3dc07598b48cc9c34e69ff6406e98e99"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "activity-expanded-leaf_0_41FF1A20-D258-481E-9C2D-89DFC4FCDCEF.png",
+      "file": "A5C76BA3-358B-4309-AA36-028F8356804E.png",
+      "bytes": 226876,
+      "sha256": "241748aca614c354a2a1cc6ec30cab8ca2e2e042180fbd20044080966079f8de"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "moved-origin-rtl-corrected-frames_0_FBE82BB6-6DB4-4EA3-BCB4-2711FBFEB0F9.json",
+      "file": "2097A92F-FBD0-4FDD-AC29-D4EC1889E1FC.json",
+      "bytes": 627,
+      "sha256": "58df5072984007f49f7f46119f852676768303c7ab44d50fb3b4e6199af96551"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "moved-origin-rtl-corrected_0_3BE11F0B-49C8-49A7-B6FF-DF9F48CDC6C6.png",
+      "file": "BF232824-48E2-4B93-B9A9-4FC4D807F397.png",
+      "bytes": 10807882,
+      "sha256": "46beac5a46becce878fa195f04135d8be85425154f698bed81dba6ed7458fb0c"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "moved-origin-rtl-145801-frames_0_8A97C9F5-38F4-4133-8DD7-C00D4B98278F.json",
+      "file": "DA2BC986-C6D9-487D-982D-AC5DAAA8BEC3.json",
+      "bytes": 627,
+      "sha256": "58df5072984007f49f7f46119f852676768303c7ab44d50fb3b4e6199af96551"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "moved-origin-rtl-145801_0_433A712B-30F2-4B49-B21B-F5FE46469C19.png",
+      "file": "A8D546CD-C839-423F-B7E5-E02C0F610282.png",
+      "bytes": 10818138,
+      "sha256": "cc868c2ccbb1df6a5a7eb2d6bcb264e7856e186012da83cb9192ee7bacad1329"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "expanded-rtl-corrected-frames_0_D43E30F9-BF10-431E-B083-EABFABE2778B.json",
+      "file": "C23D120F-2DDD-43F2-AD15-B3296B391CC5.json",
+      "bytes": 628,
+      "sha256": "d3dfac009b33ac56bab9b1aeb75e49b7bb0a26862f7380247bd01e023a9e8fdf"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "expanded-rtl-corrected_0_6BB2DE11-C7E1-4BA3-9AFA-7BDF80A4B017.png",
+      "file": "663B87A5-EF32-49B9-B4B0-6A8A26577FFC.png",
+      "bytes": 9521363,
+      "sha256": "ad50e5e129394a24fb8a4014ac6f04fb38996712d5ab8aa88717790a616c9f50"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "expanded-rtl-145801-frames_0_07F0AC24-C8F8-4C5C-AFDD-5633DFC4C869.json",
+      "file": "D3689E37-A6F7-4001-B24C-39F8D995E40E.json",
+      "bytes": 628,
+      "sha256": "d3dfac009b33ac56bab9b1aeb75e49b7bb0a26862f7380247bd01e023a9e8fdf"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "expanded-rtl-145801_0_ACA04FD4-6D52-422E-981A-0556D7EA3625.png",
+      "file": "BE0DDEA2-ADFC-479E-B1C5-F6366E782B25.png",
+      "bytes": 9531400,
+      "sha256": "ef41dbb6a59067a0ae4648681f9845afad7586cae75a1f44ebb463a24c685c66"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-long-rtl-corrected-frames_0_78919355-B2FA-4516-8469-0BE3C9BAAB3F.json",
+      "file": "B47AF6F8-D01A-49F8-B3A0-6BBE617665EB.json",
+      "bytes": 627,
+      "sha256": "8b835497c76998ef6c1eedbfbde964270297d9c5f5f5bb7e313e390b512baa05"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-long-rtl-corrected_0_EA994DA3-F2C7-4449-BC74-8E46D0E89C6D.png",
+      "file": "08B75464-02A4-4581-8EB8-1967050F666F.png",
+      "bytes": 11300422,
+      "sha256": "caddaa0cad60313ef21bff59db8de799e83b108ccdc49b0b2a33a1503a0224e1"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-long-rtl-145801-frames_0_4E163970-CF21-47E1-8F3A-503A476DCBF6.json",
+      "file": "13A73A86-9A91-4BFF-A7B8-D9BB9BD8CA1D.json",
+      "bytes": 627,
+      "sha256": "8b835497c76998ef6c1eedbfbde964270297d9c5f5f5bb7e313e390b512baa05"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-long-rtl-145801_0_9F9363B7-D4A0-4D7C-8476-EE542B3AC4AC.png",
+      "file": "95AAF440-70E1-424B-A3DD-4084ECDF9055.png",
+      "bytes": 11352719,
+      "sha256": "e72990690d3d0015d7d3731a5313ce7a90317bfe29b2e125da613456b6f09b4e"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-long-corrected-frames_0_7F6D75BF-1416-40D4-843A-E5082EEF6D72.json",
+      "file": "7479C18C-C47B-4F93-B679-97ED10C8C388.json",
+      "bytes": 628,
+      "sha256": "59f96d05c95ec0a7e312c88c3af97500d34a25292069faa2f1b3fb6ce8f2d4fc"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-long-corrected_0_8153B200-256A-4D19-8123-396BF03E6697.png",
+      "file": "1334FE3D-6DFF-4B02-94C3-D7D199FBA5F8.png",
+      "bytes": 10107611,
+      "sha256": "661ec181fa30baa8a305c7d259bab89bae244e56004b62311114757c386026d8"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-long-145801-frames_0_C4D020E7-7911-4BA8-AB8C-D58B37385A30.json",
+      "file": "41F1F6A3-99BE-4527-B184-9DA2C49286DE.json",
+      "bytes": 628,
+      "sha256": "59f96d05c95ec0a7e312c88c3af97500d34a25292069faa2f1b3fb6ce8f2d4fc"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-long-145801_0_991993D8-F1C0-456D-A397-15E3C3C28D1B.png",
+      "file": "CBEB38CA-D753-42D6-8E00-82FFD348C808.png",
+      "bytes": 10133538,
+      "sha256": "d6f00a53d84daa36071f84a89e522d25cf254bd9f75b70ba91d51083cf59b4d6"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-empty-rtl-corrected-frames_0_0DB279AB-AC9D-4F43-8EF8-C3D8F9D4C3A9.json",
+      "file": "B10E2937-4F88-476F-812F-D3A0C0C68DF7.json",
+      "bytes": 626,
+      "sha256": "dcdb22d7c94c2a3950e948df8715bffb2f0d9cae7947ba5d94392098200b1c71"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-empty-rtl-corrected_0_E1B22A76-4916-4DA9-A9E7-56ED829795A9.png",
+      "file": "F31FE86E-0D6E-4AC5-862D-55002A8285D8.png",
+      "bytes": 11406811,
+      "sha256": "950d87cdd24ef75da5cf3cfbc6f4cad8c8148989a915428e6b460315ebd91002"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-empty-rtl-145801-frames_0_3E03EC85-B356-4097-B851-A9108B744FB4.json",
+      "file": "20FFA778-CD6A-462A-80D8-18C50B14AB7E.json",
+      "bytes": 626,
+      "sha256": "dcdb22d7c94c2a3950e948df8715bffb2f0d9cae7947ba5d94392098200b1c71"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-empty-rtl-145801_0_205D8648-63E6-4A3F-820E-7153C7FDBF2A.png",
+      "file": "63FAA75B-0CCB-43A1-8069-A6CD3A323059.png",
+      "bytes": 11431197,
+      "sha256": "d5e80d20875f6dd0b277f61dd7e75436bbc6be229252e9d3669f900c69630785"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-empty-corrected-frames_0_75FA9116-0AF3-484A-8067-216DFF27F22C.json",
+      "file": "68EA9683-2274-4DBD-B56B-DC61363C0941.json",
+      "bytes": 627,
+      "sha256": "49788356d376ab00bf18dd99266021ce80114a0bfea2e931399682f3626e7dee"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-empty-corrected_0_7A7850B5-E607-4710-9CF1-6E69A40C2924.png",
+      "file": "BB60093B-711C-4924-AE42-D81204843FE7.png",
+      "bytes": 10492971,
+      "sha256": "eb436fae43ca3e9459b5479868db98f80e3000415ec7f8355a55282f044ef1fd"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-empty-145801-frames_0_EECB6FBC-9B3F-4F15-89C9-18C9EA84700B.json",
+      "file": "84BEA977-CFD5-450E-9FDA-710848B485AD.json",
+      "bytes": 627,
+      "sha256": "49788356d376ab00bf18dd99266021ce80114a0bfea2e931399682f3626e7dee"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-empty-145801_0_E3C77218-F018-452A-9B5A-FC0F8B023548.png",
+      "file": "6A15F5E2-1B26-41FF-B8F5-FC3067752BFE.png",
+      "bytes": 10491186,
+      "sha256": "32712bd8691e6d0fc1ceb1c8f8f016c9f8cd65565017a389eac59b2760828d18"
+    },
+    {
+      "test": "RichBlockAttachmentRenderingTests/testNativeDocumentDisplaysDividerAndTableAcrossWidths()",
+      "label": "rich-blocks-width-320_0_9BE1C3F1-F4F2-4F02-B87E-DE8274FB1303.png",
+      "file": "00D26557-E7D8-4D5C-B872-CFCDC6D08D05.png",
+      "bytes": 168647,
+      "sha256": "3c5a77283e61b4dc596150344ed450936052bf1a043f4aadc8e7a0d108d308ae"
+    },
+    {
+      "test": "RichBlockAttachmentRenderingTests/testNativeDocumentDisplaysDividerAndTableAcrossWidths()",
+      "label": "rich-blocks-width-640_0_9B41D321-28AA-46CF-A4C1-5453C9AC49F8.png",
+      "file": "147C6903-D462-4A79-B38E-85DA452A24A0.png",
+      "bytes": 174182,
+      "sha256": "17fed2675894478797abbfb5f381c311c2ea7bc7b5efb44c9ebf3ae02e0d1d64"
+    }
+  ],
+  "root_visual_review": {
+    "rich_blocks_640_320": "Both native captures displayed and inspected: real table and divider visible with surrounding text, no generic document icon. Rendering test passes.",
+    "composer_activity": "Same production source as native7. Native8 Composer tests passed and all expected images retained; root did not repeat full pair-by-pair visual acceptance on native8.",
+    "limits": "Actual production shell/activity components and TextKit renderer, with fixture controls/content. Not full application, keyboard, live network, temporal animation or physical iPad acceptance."
+  },
+  "contract_review": {
+    "observation": "Sole candidate failure is line38 fileType equality; native provider type, actual rendering/selection and ownership passed.",
+    "finding": "Optional backing-file metadata is not consumed by this direct in-memory provider override. Replace it with exact provider attachment and layout-manager association checks. Retain all substantive rendering/selection/ownership gates and the old baseline line34 missing-provider detector.",
+    "limitations": "Private UIKit cause of nil metadata was not established. No RTF/archive round-trip coverage claimed. Historical run remains FAIL."
+  },
+  "other_jobs_skipped": 26,
+  "testflight_dispatched": false
+}

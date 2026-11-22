@@ -99,7 +99,47 @@ struct RuntimeContinuationChecks {
             check(receipt.snapshot == [1, ownsRun ? 1 : 0],
                 "Actual cancellation stops its producer; only the root stream can cancel the shared run")
         }
-        print("PASS: \(checks) production continuation ownership/progress checks")
+        // The system UI must describe authentic activity, not internal byte
+        // accounting; approval/phase-only events must also become visible.
+        let semantic = RuntimeUserOperation()
+        check(semantic.snapshot.presentation == .waitingForResponse, "Admission does not invent reasoning")
+        semantic.recordStreamBytes(10_240)
+        check(semantic.snapshot.presentation == .waitingForResponse, "Byte count never becomes a user-facing title")
+        semantic.updateModelPhase(.thinking)
+        check(semantic.snapshot.presentation == .thinking, "Actual reasoning is described")
+        semantic.updateModelPhase(.responding)
+        check(semantic.snapshot.presentation == .responding, "Answer delta immediately ends the thinking label")
+        let unitsBeforePhaseChange = semantic.snapshot.completedWorkUnits
+        semantic.updateApproval(id: "one", isPending: true)
+        semantic.updateApproval(id: "two", isPending: true)
+        check(semantic.snapshot.presentation == .awaitingApproval, "Approval is shown even without new bytes")
+        check(semantic.snapshot.completedWorkUnits == unitsBeforePhaseChange, "Semantic changes do not fabricate progress")
+        semantic.updateApproval(id: "one", isPending: false)
+        check(semantic.snapshot.presentation == .awaitingApproval, "A second unresolved approval remains visible")
+        semantic.beginTool(id: "route", title: "Finding a route")
+        semantic.updateApproval(id: "two", isPending: false)
+        check(semantic.snapshot.presentation == .tool("Finding a route"), "Resolved approval exposes the actual tool")
+        semantic.beginTool(id: "search", title: "Searching the web")
+        semantic.beginTool(id: "search", title: "Searching the web")
+        semantic.endTool(id: "search")
+        check(semantic.snapshot.presentation == .tool("Finding a route"), "Concurrent completion preserves the remaining tool")
+        semantic.endTool(id: "route")
+        check(semantic.snapshot.presentation == .waitingForResponse, "Tool completion does not invent a response phase")
+        semantic.updateModelPhase(.responding)
+        try semantic.markSucceeded()
+        semantic.finish()
+        check(semantic.snapshot.presentation == .completed, "Completed Live Activity has a completion label")
+        semantic.updateModelPhase(.thinking)
+        semantic.beginTool(id: "late", title: "Stale tool")
+        semantic.updateApproval(id: "late", isPending: true)
+        check(semantic.snapshot.presentation == .completed, "Late callbacks cannot revive finished activity")
+        let interrupted = RuntimeUserOperation()
+        interrupted.beginTool(id: "real", title: "Reading a file")
+        interrupted.interrupt(reason: "Cancelled")
+        check(interrupted.snapshot.presentation == .stopped, "Cancellation takes precedence over an old tool title")
+        interrupted.finish()
+        check(interrupted.snapshot.presentation == .stopped, "Failure never claims completion")
+        print("PASS: \(checks) production continuation ownership/progress/semantic UI checks")
     }
 }
 
