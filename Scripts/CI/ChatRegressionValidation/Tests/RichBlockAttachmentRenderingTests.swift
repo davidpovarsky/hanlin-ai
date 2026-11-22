@@ -35,7 +35,12 @@ final class RichBlockAttachmentRenderingTests: XCTestCase {
                                                        textContainer: view.textContainer))
     XCTAssertTrue(provider is MarkdownRichBlockViewProvider,
                   "UIKit must resolve the rich-block provider, not its generic file-icon fallback; got \(type(of: provider))")
-    XCTAssertEqual(attachment.fileType, MarkdownRichBlockAttachment.contentType)
+    // File metadata is not the contract of this in-memory provider. Its
+    // attachment and layout manager must belong to this exact native document.
+    XCTAssertTrue(provider.textAttachment === attachment,
+                  "The rich provider must reference the exact owned attachment")
+    XCTAssertTrue(provider.textLayoutManager === layout,
+                  "The rich provider must reference the native document's layout manager")
     XCTAssertTrue(attachment.allowsTextAttachmentView)
     XCTAssertNotNil(view.textLayoutManager, "Provider lookup must not fall back to TextKit 1")
 
