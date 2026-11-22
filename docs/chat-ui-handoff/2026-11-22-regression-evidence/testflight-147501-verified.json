@@ -1,0 +1,359 @@
+{
+  "verifiedAtUTC": "2026-11-22T18:08:19.480890+00:00",
+  "workflowRunID": "45046861531",
+  "workflowRunURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45046861531",
+  "appSourceSHA": "45612d73532f1ad77c312353c66de81631cb67c3",
+  "rendererSourceSHA": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+  "appleReadiness": {
+    "appID": "6811910017",
+    "buildID": "d616a47f-e368-4f20-a0c9-9a9253d184c1",
+    "buildNumber": "147501",
+    "processingState": "VALID",
+    "internalBuildState": "IN_BETA_TESTING",
+    "externalBuildState": "READY_FOR_BETA_SUBMISSION",
+    "verificationSHA": "45612d73532f1ad77c312353c66de81631cb67c3",
+    "audienceSourceBuild": "143801",
+    "internalBetaGroupIDs": [
+      "14fdc6a7-062e-40f6-8f11-45cbd30c6ddb"
+    ]
+  },
+  "runtimeDistribution": {
+    "sourceSHA": "45612d73532f1ad77c312353c66de81631cb67c3",
+    "runtimeBundleArtifactRunID": "42926628418",
+    "runtimeBundleSha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "nodeXCFrameworkSha256": "21c404e94c38e7d91ec446ce0ca07d7fed9120ec3e42b80cc8352052dd1db207",
+    "nodeImageUUIDs": [
+      "DF9F9A4D-4842-31DE-A906-BA1B61891ED5 (arm64)"
+    ],
+    "runtimeHostArchiveSha256": "8f03aa2420103a30d0f3ed1f718faf4e341915905c5c4150ae26ea4fe2a9d2ab",
+    "packagedManifestMatches": true
+  },
+  "signedMemoryEntitlements": {
+    "extendedVirtualAddressingRequired": true,
+    "physicalAllocationVerified": false,
+    "pointerCompressionConfigured": true,
+    "profileAuthorizesExtendedVA": true,
+    "signedExtendedVA": true
+  },
+  "sourceReceiptSHA256": {
+    "testflight-readiness.json": "1329398e21d1b748e467cdf1e06512142c9ed2a04047612fdfefa49c81704fa2",
+    "runtime-distribution.json": "1ef5bd542901812a070f3837c7f4ab7c0340e0b3dbd2e007f184822345393a93",
+    "runtime-memory-entitlements.json": "21133f0f6fde2a47c2d67ce9c314e6cc57149ee9593d853e619fb41b978472d3"
+  },
+  "packagedApp": {
+    "CFBundleVersion": "147501",
+    "CFBundleShortVersionString": "0.7.3",
+    "CFBundleIdentifier": "com.itorah.chavrusachat",
+    "CFBundleDisplayName": "Hanlin AI"
+  },
+  "ipaSHA256": "18ff430dc7edf4e7f64c0b8514c1798d706ea22acdb49b17b4398e7371ce4238",
+  "packagedManifest": {
+    "schemaVersion": 1,
+    "runtimeBundle": {
+      "formatVersion": 1,
+      "releaseRepository": "davidpovarsky/hanlin-ai",
+      "releaseTagPrefix": "runtime-core-v1-",
+      "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+      "verificationStatus": "verified",
+      "artifactDependencyHash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+      "nativeInputSHA256": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+      "sourceCommit": "4784dd99c3e5892ef726e7a3cce6587eb7847997"
+    },
+    "runtimes": [
+      {
+        "id": "node",
+        "sourceProject": "https://github.com/heylogin/nodejs-mobile",
+        "version": "24.5.0",
+        "revision": "4768489cd0cfa3bb0c27786e958c6446c004f1bd",
+        "license": "MIT with bundled third-party notices",
+        "bundleHash": "21c404e94c38e7d91ec446ce0ca07d7fed9120ec3e42b80cc8352052dd1db207",
+        "verificationStatus": "verified"
+      },
+      {
+        "id": "python",
+        "sourceProject": "https://github.com/beeware/Python-Apple-support",
+        "version": "3.14.6",
+        "revision": "3.14-b10",
+        "license": "MIT; Python and bundled libraries retain their upstream licenses",
+        "bundleHash": "200ef60eb67be0483ceb638daa9048f84f41a9a952707a5ad4c3198037c7b583",
+        "verificationStatus": "archive-verified"
+      },
+      {
+        "id": "typescript",
+        "sourceProject": "https://github.com/microsoft/TypeScript",
+        "version": "6.0.3",
+        "revision": "6.0.3",
+        "license": "Apache-2.0",
+        "bundleHash": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+        "verificationStatus": "package-integrity-verified"
+      },
+      {
+        "id": "ios-system",
+        "sourceProject": "https://github.com/holzschu/ios_system",
+        "version": "v3.0.5",
+        "revision": "7658fcf551935b42d6bb5bedc9315d8f53f760c4",
+        "license": "BSD-3-Clause; included command components retain the licenses documented by ios_system",
+        "bundleHash": null,
+        "componentHashes": {
+          "ios_system": "d429e68102926f58bedd8e8b7105dcd169478cd6da1cef494a5f468482d1c8f5",
+          "files": "b0ee1f58c65ba306f178cd559fd6bce79ec8f275280526908c2a992bfcafedd5",
+          "text": "6fed763c6e941817b2a2af2051871bdfb8a1af4177fad1ab7837f72023dffb79",
+          "tar": "207ab260f8dfb3101938c9e2a949cfd7b76f0e90a000637bbfd6aff47b014a68",
+          "curl_ios": "d7e2f05c9f2689d103db32f83ab045bfb6ab28ce84e3017e0c23e4b4db7ab169",
+          "awk": "283f368df6c44ed9d49d15651ca4281706cdd86eb2b6ddb81808c8a3b18a4f7d"
+        },
+        "linkDependencyHashes": {
+          "libssh2": "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6",
+          "openssl": "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80"
+        },
+        "linkDependencies": [
+          {
+            "name": "libssh2",
+            "role": "application-link-dependency",
+            "sourceRepository": "https://github.com/holzschu/libssh2-apple",
+            "release": "v1.11.0",
+            "archiveHash": "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6",
+            "license": "BSD-3-Clause (libssh2 1.11.0 COPYING)",
+            "distribution": "resolved-and-embedded-during-application-build"
+          },
+          {
+            "name": "openssl",
+            "role": "application-link-dependency",
+            "sourceRepository": "https://github.com/holzschu/openssl-apple",
+            "release": "v1.1.1w",
+            "archiveHash": "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80",
+            "license": "OpenSSL License and original SSLeay License (OpenSSL 1.1.1w)",
+            "distribution": "resolved-and-embedded-during-application-build"
+          }
+        ],
+        "verificationStatus": "release-assets-verified"
+      }
+    ]
+  },
+  "sourceAndPackagedNodeUUIDMatch": true,
+  "physicalIPadAcceptance": "NOT_RUN",
+  "regressionVerification": {
+    "verifierSHA256": "3f3c2a96f62acc25d85083654b657a004320c0c38d2b1a7663f2a23276995f2e",
+    "artifactRetrieval": {
+      "receiptFile": "C:\\Users\\DAVID\\Code\\hanlin-selected-receipt-147501\\selected-artifact-retrieval.json",
+      "receiptSHA256": "66b6fa894c07972fdb46200c35f4b80d4ca3aa9c89896e4bb22bb21be91dcbb7",
+      "artifactID": "14765947134",
+      "repository": "davidpovarsky/hanlin-ai",
+      "workflowRunID": "45046861531",
+      "sourceSHA": "45612d73532f1ad77c312353c66de81631cb67c3",
+      "buildNumber": "147501",
+      "workflowRunNumber": 1475,
+      "workflowRunAttempt": 1,
+      "expectedOuterArtifactDigest": "sha256:71adc0634d03227ad37b3216b61a15129d9c3863979efa0ed3fe0e20753b4f91",
+      "fullOuterArtifactDigestVerified": false,
+      "selectedLocalFileSHA256AndSizesReverified": true,
+      "files": [
+        {
+          "file": "ChavrusaChat-147501.ipa",
+          "zipEntry": "export/ChavrusaChat-147501.ipa",
+          "bytes": 183586365,
+          "compressedBytes": 180478463,
+          "sha256": "18ff430dc7edf4e7f64c0b8514c1798d706ea22acdb49b17b4398e7371ce4238",
+          "crc32": "79abd7af"
+        },
+        {
+          "file": "ChavrusaChat-147501.ipa.sha256",
+          "zipEntry": "export/ChavrusaChat-147501.ipa.sha256",
+          "bytes": 153,
+          "compressedBytes": 125,
+          "sha256": "c65677da470fbc43ae2d9b0c28081db3b5d14f794a033fa25f12ea7929581315",
+          "crc32": "6e6cebae"
+        },
+        {
+          "file": "testflight-readiness.json",
+          "zipEntry": "logs/testflight-readiness.json",
+          "bytes": 410,
+          "compressedBytes": 275,
+          "sha256": "1329398e21d1b748e467cdf1e06512142c9ed2a04047612fdfefa49c81704fa2",
+          "crc32": "4866298a"
+        },
+        {
+          "file": "runtime-distribution.json",
+          "zipEntry": "logs/runtime-distribution.json",
+          "bytes": 508,
+          "compressedBytes": 346,
+          "sha256": "1ef5bd542901812a070f3837c7f4ab7c0340e0b3dbd2e007f184822345393a93",
+          "crc32": "d387ffaa"
+        },
+        {
+          "file": "runtime-memory-entitlements.json",
+          "zipEntry": "logs/runtime-memory-entitlements.json",
+          "bytes": 182,
+          "compressedBytes": 122,
+          "sha256": "21133f0f6fde2a47c2d67ce9c314e6cc57149ee9593d853e619fb41b978472d3",
+          "crc32": "9a64277e"
+        },
+        {
+          "file": "node-source-uuid.txt",
+          "zipEntry": "logs/node-source-uuid.txt",
+          "bytes": 45,
+          "compressedBytes": 47,
+          "sha256": "c8549740c76b4c488c702b8fb83402c3fb4740c5646d5efd93e9c4d94d30e431",
+          "crc32": "d51aa91b"
+        },
+        {
+          "file": "node-packaged-uuid.txt",
+          "zipEntry": "logs/node-packaged-uuid.txt",
+          "bytes": 45,
+          "compressedBytes": 47,
+          "sha256": "c8549740c76b4c488c702b8fb83402c3fb4740c5646d5efd93e9c4d94d30e431",
+          "crc32": "d51aa91b"
+        },
+        {
+          "file": "main-privacy-purpose-strings.txt",
+          "zipEntry": "logs/main-privacy-purpose-strings.txt",
+          "bytes": 1690,
+          "compressedBytes": 523,
+          "sha256": "28c02872180c66cc4640fe5994e2ede5e67e61867bd66ae3fc039b3bdfbeac5b",
+          "crc32": "c126791f"
+        },
+        {
+          "file": "chat-localization-packaged.json",
+          "zipEntry": "logs/chat-localization-packaged.json",
+          "bytes": 90,
+          "compressedBytes": 71,
+          "sha256": "23780c5b864ed561f08359aa61837d613fcb06728278184ac3dc490bf8bc850d",
+          "crc32": "4b5ba09b"
+        }
+      ]
+    },
+    "compiledLocalization": {
+      "receiptFile": "C:\\Users\\DAVID\\Code\\hanlin-selected-receipt-147501\\chat-localization-packaged.json",
+      "receiptSHA256": "23780c5b864ed561f08359aa61837d613fcb06728278184ac3dc490bf8bc850d",
+      "status": "PASS",
+      "catalogValues": 3556,
+      "expectedPackagedValues": 63,
+      "packagedValues": 63,
+      "errors": []
+    },
+    "baseVerifierSHA256": "34c62fcd39870809e5cbe283ecb08ab06e4bea94b647af7d2540191428f07a99",
+    "runtimeProducer": "42926628418",
+    "fullFrozenManifestMatches": true,
+    "canonicalPackagedManifestSHA256": "11252a6891e24f64d005f20c3f4e46be9ab1413a3837452252fa952160f1151f",
+    "packagedBackgroundModes": [
+      "remote-notification",
+      "processing"
+    ],
+    "packagedBGTaskSchedulerPermittedIdentifiers": [
+      "com.itorah.chavrusachat.runtime.*"
+    ],
+    "exactInternalBetaGroupIDs": [
+      "14fdc6a7-062e-40f6-8f11-45cbd30c6ddb"
+    ],
+    "audienceSourceBuild": "143801",
+    "packagedRuntimeHostEntry": "Payload/AI_Hanlin.app/RuntimeHostResources.zip",
+    "actualPackagedRuntimeHostSHA256": "8f03aa2420103a30d0f3ed1f718faf4e341915905c5c4150ae26ea4fe2a9d2ab",
+    "hostPayloadAndTimestampProof": {
+      "baselineIPASHA256": "751cf593dca2905344186db778b04fa7ceddfd5e60ca7aba6343b5a7c91dcf55",
+      "baselineHostZIPBytes": 13084832,
+      "currentHostZIPBytes": 13084832,
+      "baselineHostZIPSHA256": "f6346b53c32bae70a040278b2290ce6b6a3526d699eea8530eb4ec95253bfa21",
+      "currentHostZIPSHA256": "8f03aa2420103a30d0f3ed1f718faf4e341915905c5c4150ae26ea4fe2a9d2ab",
+      "entriesVerified": 3101,
+      "payloadBytesVerified": 57173137,
+      "addedEntries": 0,
+      "removedEntries": 0,
+      "changedPayloadEntries": 0,
+      "sameEntryOrder": true,
+      "canonicalPayloadSHA256": "d4b02c781c1a07e59f96363c15af1279a404cda103cdb8c05e08072634f7dd8f",
+      "canonicalPayloadEncoding": "SHA-256 of UTF-8 compact sorted-key JSON array in ZIP order: path, bytes, sha256, unixMode",
+      "metadataFieldsCompared": [
+        "orig_filename",
+        "compress_type",
+        "comment",
+        "extra",
+        "create_system",
+        "create_version",
+        "extract_version",
+        "reserved",
+        "flag_bits",
+        "volume",
+        "internal_attr",
+        "external_attr",
+        "CRC",
+        "compress_size",
+        "file_size",
+        "header_offset"
+      ],
+      "changedDateTimeEntries": 3101,
+      "changedLocalDOSTimestampFields": 3101,
+      "changedCentralDOSTimestampFields": 3101,
+      "permittedByteDifferences": "Only each local header[10:14] and central header[12:16]",
+      "normalizedCurrentZIPSHA256": "f6346b53c32bae70a040278b2290ce6b6a3526d699eea8530eb4ec95253bfa21",
+      "normalizedCurrentBytesExactlyMatchBaseline": true
+    },
+    "packagedNodeEntry": "Payload/AI_Hanlin.app/Frameworks/NodeMobile.framework/NodeMobile",
+    "actualPackagedNodeLCUUID": "DF9F9A4D-4842-31DE-A906-BA1B61891ED5",
+    "nodeArchitecture": "arm64",
+    "nodeImageFormat": "Mach-O 64-bit little-endian dylib",
+    "simulatorExecution": {
+      "simulatorJobID": 137283282553,
+      "simulatorJobName": "Launch full app on iPad Simulator",
+      "simulatorJobConclusion": "skipped",
+      "nativeRegressionJobKey": "chat-regression-native",
+      "nativeRegressionJobID": 137283282290,
+      "nativeRegressionJobName": "Native chat regression before and after sources",
+      "nativeRegressionJobConclusion": "skipped",
+      "releaseJobID": 137283281310,
+      "releaseJobName": "upload-chavrusachat-to-testflight / build-sign-and-upload",
+      "releaseJobConclusion": "success",
+      "fastPreviewStep": {
+        "name": "Record explicit fast TestFlight device preview",
+        "number": 13,
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-22T17:01:41Z",
+        "completed_at": "2026-11-22T17:01:41Z"
+      },
+      "packagedVerificationStep": {
+        "name": "Verify archive, signatures, profiles, and entitlements",
+        "number": 35,
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-22T17:43:55Z",
+        "completed_at": "2026-11-22T17:44:10Z"
+      },
+      "skippedUISteps": [
+        {
+          "name": "Freeze required actual app UI contract before release work",
+          "number": 12,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Execute mandatory actual iPhone and iPad 27 Release UI acceptance",
+          "number": 27,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Retain UI execution immediately before archive or upload work",
+          "number": 28,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Enforce UI proof bound to the exact signed candidate before upload",
+          "number": 37,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Bind the uploaded App Store build identity to its UI proof",
+          "number": 44,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Retain mandatory app UI proof including blocked or failed execution",
+          "number": 45,
+          "conclusion": "skipped"
+        }
+      ],
+      "workflowRunID": "45046861531",
+      "sourceSHA": "45612d73532f1ad77c312353c66de81631cb67c3",
+      "metadataFile": "C:\\Users\\DAVID\\Code\\hanlin-testflight-followup-20261122\\jobs-45046861531-final.json",
+      "metadataSHA256": "b98e6abda035885427f2634288b508bb31bfb2b9f42ba8922cdc2ad8ba376fb9"
+    }
+  }
+}
