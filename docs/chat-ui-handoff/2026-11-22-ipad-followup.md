@@ -2,7 +2,9 @@
 
 ## Delivery state
 
-Candidate implementation is integrated on `codex/hanlin-ipad-followup-20261122`, based on `f49b81fd7b1654b2b0486dddbd8972d400ba6c29`. Release archive, upload and physical acceptance are not yet complete. This document will record the actual release receipt after upload; the prior 145401 delivery is not evidence for this candidate.
+**Hanlin AI 0.7.3 (145801) is delivered to the existing internal TestFlight audience.** Apple reports `VALID` and `IN_BETA_TESTING`. The signed archive, export, upload and independent packaged-artifact verification passed. Physical iPad acceptance remains **OPEN / NOT_RUN**.
+
+The binary was built from app source `de9ccac5d38c44f597b2a057701de4757587d6a8` on `codex/hanlin-ipad-followup-20261122`, based on `f49b81fd7b1654b2b0486dddbd8972d400ba6c29`, with renderer `ebbbf889276098f3642448e5439ad049c3cd2d6c`. A later documentation commit records these receipts; it is not the binary source revision.
 
 User authorization covers the eleven reported regressions, Asana updates and TestFlight delivery. The release must reuse native Runtime producer `42926628418`, use `testflight_device_upload`, and skip simulator tests during upload. Preserve the original Morph plus geometry and Liquid Glass identity.
 
@@ -14,12 +16,12 @@ User authorization covers the eleven reported regressions, Asana updates and Tes
 | 2. Internal Using Tools / Loading skill stages | Visibility requires an actual tool invocation identity. Internal discovery, Skill loading, metadata and generic progress stages remain in canonical history but do not become user-facing tool rows. Legacy projection applies the same exclusion. | Production lifetime/visibility checks passed; real-provider visual acceptance remains open. |
 | 3. Preparing your answer persists | Removed the generic assistant operational footer and standalone status. Active shimmer is attributed only to real visible operation paths; a collapsed ancestor may represent its running descendants. Completed history has no active shimmer. | Production header/motion policy checks passed. |
 | 4. Expanded composer title / Done and always-visible expand | Removed the extra title/Done row. The inverse collapse icon occupies the upper corner; expand/collapse appears only for a nonempty draft. The native editor remains the same mounted instance. | Source and geometry verified; touch/focus acceptance remains open. |
-| 5. get_route rejects input | The Host compared exact decimal input against a lossy binary64 portable DTO; the metadata extractor also used Foundation number reserialization. Validate original bytes against the original schema, separately prove the DTO is its deterministic projection, remove only top-level metadata with the bounded exact JSON parser/writer, and compare original business input to actual executor input. Execution still consumes the original retained value, never the DTO. | Exact-input domain tests and archive must pass; no live route request is claimed by offline checks. |
+| 5. get_route rejects input | The Host compared exact decimal input against a lossy binary64 portable DTO; the metadata extractor also used Foundation number reserialization. Validate original bytes against the original schema, separately prove the DTO is its deterministic projection, remove only top-level metadata with the bounded exact JSON parser/writer, and compare original business input to actual executor input. Execution still consumes the original retained value, never the DTO. | Exact-input domain tests and the Apple archive passed; live MapKit route acceptance remains open. |
 | 6. Model moves above controls at narrow width | Removed the alternate vertical controls layout. One 44pt bottom row owns every control, and the model title compresses/truncates within its allocation. | 384 geometry scenarios / 1,955 assertions passed. |
 | 7. Blank / misplaced model popover | Explicit local bounds for the real toolbar source item; hosting safe area applies the container without subtracting the keyboard twice. A tokenized presentation lease preserves compact keyboard ownership when focus moves to model search; an old dismissal cannot clear a newer owner. | Apple native zoom/popover and real-device layout remain acceptance work. |
 | 8. Tool panel disconnects from plus | The panel and input consume one local geometry budget. Original 52pt launcher, bottom alignment, glass IDs/material, 10pt input-to-plus gap, 13pt panel-to-input gap and 32pt merge distance are preserved. | Geometry/source verified, not a physical visual-equivalence claim. |
 | 9. Selection stops at paragraph/rich-part boundaries | A single native text document spans original Markdown parts and rich blocks, with public TextKit 2 view attachments. Copy/save expands atomic rich positions to exact source payloads. Existing rich rendering/actions, stable IDs, streamed tail editing and a one-second stationary preview hold are retained. Nested URL/citation taps use public text geometry and accessibility actions. | 41 portable boundary checks and syntax passed. UIKit gesture, RTL, rich sizing and interaction acceptance remain open. |
-| 10. Repeated approvals and missing presentation metadata | Sensitive actions use manifest-derived consent policy. Explicit approval persists locally across conversations, scoped to app/account/workspace/provider/tool/manifest/permission identity. Current route and grants are checked again at dispatch. Settings can revoke one or all grants. Optional manifest `systemImage` and `search`/`execution`/`common` animation presets have a shared tools fallback. | Portable policy/store/schema tests and archive must pass. Original OS permissions and other capability authorities remain effective. |
+| 10. Repeated approvals and missing presentation metadata | Sensitive actions use manifest-derived consent policy. Explicit approval persists locally across conversations, scoped to app/account/workspace/provider/tool/manifest/permission identity. Current route and grants are checked again at dispatch. Settings can revoke one or all grants. Optional manifest `systemImage` and `search`/`execution`/`common` animation presets have a shared tools fallback. | Portable policy/store/schema tests and the Apple archive passed. Original OS permissions and other capability authorities remain effective. |
 | 11. Background conversation stalls | Admission now starts before attachment-preparation awaits. A bounded UIKit lease bridges asynchronous continued-processing admission; the scheduler attaches to the existing producer. MCP background cleanup no longer stops workers owned by an admitted operation. Real work receipts/output advance finite progress, and a completed nested stream no longer cancels the root conversation. | 118 production ownership/progress/real-stream termination checks passed. Apple OS admission, long background runtime and cancellation remain physical-device acceptance. |
 
 ## Approval and manifest contract
@@ -77,8 +79,9 @@ Primary references:
 | Swift syntax | Root 15 integration files; renderer18 and app5 surfaces; policy27 files; final scoped deltas passed | Parsing is not Apple-framework type checking. |
 | Root whitespace | Initial combined parse/check job found3 introduced whitespace errors, fixed; follow-up passed | No broad reformat of unrelated existing whitespace. |
 | Exact input / approval / metadata | PASS: 17 tests in3 suites, Swift subprocess exit0, `job_3c5caf9c7fd0` | First run passed16/17: the portable package had a different resource bundle name. Reused compiled cache and the existing DEBUG resource hook with unchanged production resources; all9 pinned resource hash checks and original test expectations retained. Wrapper later hit a Windows console Unicode-print error after saving the passing receipt; output escaping fixed without changing production or rerunning passed tests. |
-| Apple archive / signed export / upload | Pending | Actual release receipt must be recorded. |
-| Simulator execution in upload | Prohibited by user; must be skipped | Verify workflow job/step metadata. |
+| Apple archive / signed export / upload | PASS: run `44989992516`, build `145801` | Archive completed `2026-11-22T06:14:59Z`; signed export completed `06:16:01Z`; upload and Apple readiness succeeded. |
+| Independent IPA / native Runtime / Host payload verification | PASS: `job_cb031a896a5a` | IPA checksum, exact frozen manifest, actual packaged Node Mach-O UUID, background configuration, exact internal audience and 3,101 unchanged Host payload entries verified. See final receipt below. |
+| Simulator execution in upload | SKIPPED, verified from final authenticated job/step metadata | iPad Simulator job and all six simulator-dependent UI proof steps were skipped; explicit fast TestFlight preview step succeeded. |
 | Physical iPad acceptance | OPEN | User tests narrow/wide, keyboard, expansion, popup, selection, maps, background/return and tool collapse. |
 
 Detailed evidence is stored under `2026-11-22-followup-evidence/`, plus the selection follow-up receipt `2026-11-22-evidence/selection-cross-block-followup.json`. Source hashes identify consumed files; working-tree hashes can differ from Git blobs solely through configured line-ending normalization. A successful archive or portable test does not establish visual parity or absence of device crashes.
@@ -106,4 +109,39 @@ runtime_publish_release=false
 testflight_audience_source_build=143801
 ```
 
-Renderer revision `ebbbf889276098f3642448e5439ad049c3cd2d6c` was committed, pushed and independently read back from its remote branch; all3 app pins now reference that exact revision. Record app source SHA, renderer SHA, workflow ID/run/attempt, build number, IPA/runtime receipts, Apple's processing state and internal audience readiness. Do not reuse the prior145401 receipt as the result of this follow-up.
+Renderer revision `ebbbf889276098f3642448e5439ad049c3cd2d6c` was committed, pushed and independently read back from its remote branch; all3 app pins now reference that exact revision. The final receipt below records the exact source, workflow, build, IPA, native Runtime and new Apple build identity. The previous 145401 IPA is used only as a trusted Host-payload comparison baseline; its readiness is not reused for this delivery.
+
+## Verified release receipt
+
+Full evidence: [independent signed-IPA verification](2026-11-22-followup-evidence/testflight-145801-verified.json), [Host ZIP comparison and initial verifier result](2026-11-22-followup-evidence/testflight-145801-host-zip-comparison.json), and [release provenance](2026-11-22-followup-evidence/testflight-145801-release-provenance.json).
+
+| Identity | Verified value |
+|---|---|
+| App | Hanlin AI `0.7.3 (145801)` — `com.itorah.chavrusachat` |
+| Workflow | [44989992516](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44989992516), number `1458`, attempt `1`, conclusion `success` |
+| App source | `de9ccac5d38c44f597b2a057701de4757587d6a8` |
+| Renderer source | `ebbbf889276098f3642448e5439ad049c3cd2d6c` |
+| Apple build | `1e9aa944-86e5-4e03-9a02-989cc93585f8` — `VALID` / `IN_BETA_TESTING` |
+| Internal audience | Exact group `14fdc6a7-062e-40f6-8f11-45cbd30c6ddb`, retained from build `143801` |
+| Signed artifact | `14743740296` — `ChavrusaChat-signed-ipa-145801` |
+| IPA SHA-256 | `02858c65f0be03caa71c214a3f80c427ed4f1e464927f3b6e6526ebeea16badc` |
+| Frozen native Runtime producer | `42926628418` |
+| Native Runtime bundle SHA-256 | `196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f` |
+| Actual packaged Node image | `DF9F9A4D-4842-31DE-A906-BA1B61891ED5`, arm64 |
+| Independent verification time | `2026-11-22T06:47:56.323351+00:00` |
+
+The packaged app contains the `processing` background mode and `com.itorah.chavrusachat.runtime.*` permitted task identifier. The full Runtime manifest matches the frozen baseline. These packaging checks do not establish physical background duration or OS admission.
+
+### Host archive timestamp investigation
+
+The first independent verifier (`job_e70bb7b9f35a`) stopped because the Host ZIP container hash differed from the previous app build. The native Runtime producer, native bundle, Node XCFramework and full manifest still matched. The release script separately regenerates `RuntimeHostResources.zip` using `zip -X` without normalizing file modification times; the application Host payload and native Runtime have separate packaging identities.
+
+The current Host archive has SHA-256 `90eea3cceba98ebab415331b4d5a358d8e7fb5ae47b87823be516f1d5d375a6b`; the trusted previous Host archive is `f6346b53c32bae70a040278b2290ce6b6a3526d699eea8530eb4ec95253bfa21`. The separately reviewed v2 verifier first validates the previous IPA's pinned checksum, then compares every one of **3,101 entries**: paths/order, bytes, permissions, compression and all non-time metadata. No entry was added, removed or changed.
+
+It then replaces only the four DOS timestamp bytes in each current local and central ZIP header, in memory, with the corresponding baseline timestamp. The entire normalized ZIP must match the trusted baseline **byte for byte**. This passed. All other native Runtime, actual Node UUID, manifest, audience, background and simulator assertions remained intact. No distributed artifact was modified by this verification.
+
+Verifier v1 remains unchanged. The reviewed v2 SHA-256 is `c700ee34e32e2c3c6a344584575237a76e0399793dfddea8191dc882fea8011d`; its successful execution is `job_cb031a896a5a`. Retrieval selected the IPA and seven small receipts; the full outer artifact digest including dSYMs was not independently verified. The actual IPA checksum and packaged payloads were independently verified.
+
+### Remaining product acceptance
+
+Asana records implementation and delivery while keeping physical acceptance open. The owner should exercise narrow/wide iPad windows, keyboard and origin transitions, empty/nonempty expansion, model search and the all-models screen, panel-to-plus continuity, activity collapse during streaming, selection across paragraphs and rich blocks, a live map route, remembered consent/revocation, and background/return/cancellation. No new simulator run or physical-device execution is represented by this release receipt.
