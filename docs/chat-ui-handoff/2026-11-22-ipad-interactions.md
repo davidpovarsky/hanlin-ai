@@ -57,7 +57,7 @@ The apple-devtools API probe44964672060 failed before creating jobs because of a
 
 Only changed disclosure, activity, selection, composer and popup dependency closures are in scope. Prior145201 UI acceptance and affected logic evidence are invalidated by changed source and the owner's actual failures. Cache hits do not constitute acceptance.
 
-| Obligation | Status before signed archive | Method / reason |
+| Obligation | Status after first signed archive attempt | Method / reason |
 | --- | --- | --- |
 | Activity phase, visible motion ownership, finite disclosure geometry | EXECUTED_PASS:132 assertions | Actual portable production source; Swift6.3.3 Windows, job_ab2edef42a8f; fresh after concurrent-approval correction. [Exact evidence](2026-11-22-evidence/activity-domain-result.json). No UIKit emulation claim. |
 | Composer coordinator, dock, geometry, metrics | EXECUTED_PASS:148 assertions | Actual domain source on Windows, with explicit stand-ins for SwiftUI Binding/Transaction/animation plumbing. Source hashes in [composer-domain-result.json](2026-11-22-evidence/composer-domain-result.json). |
@@ -66,12 +66,13 @@ Only changed disclosure, activity, selection, composer and popup dependency clos
 | Native text incremental edits | EXECUTED_PASS:329 assertions | job_58de3b3ef235; actual Foundation helper, including stable attributed prefixes, RTL, combining marks, emoji, CRLF append/delete/style changes, and selection preservation. |
 | Preview viewport geometry | EXECUTED_PASS:49 assertions | Independent fixture in job_920bd3580317 passed. That overall job failed on the separately reported CRLF edit-plan defect; the corrected edit-plan result supersedes it. [Exact scope/evidence](2026-11-22-evidence/selection-domain-result.json). |
 | App-search localization | EXECUTED_PASS | Catalog JSON/duplicate-key check and normalized symbol collision check for hanlin.apps.search; en/he/zh-Hans. |
-| Apple compilation, package resolution, signed archive | NEEDS_TEST | Source-frozen signed device archive on Xcode27 runner. |
-| Runtime reuse | REUSE_REQUESTED | Producer42926628418; workflow must verify original manifest/identity/hashes. No fresh engine build. |
-| TestFlight availability | NEEDS_TEST | Require Apple VALID + IN_BETA_TESTING and verified internal audience. |
+| Apple package resolution | EXECUTED_PASS | Run 44969425818 checked out renderer 6e884c73352a272c4e7bf8a5917e8b2157bc952e. This does not imply successful app compilation. |
+| Apple application compilation / signed archive | EXECUTED_FAIL; RETRY_PENDING | Candidate 145301 stopped at ChatMarkdownView.swift:27:25 with one unique app compiler diagnostic. No signed archive or IPA was completed. [First-attempt evidence](2026-11-22-evidence/first-archive-failure-44969425818.json). |
+| Runtime reuse | BUILD_INPUTS_VERIFIED; PACKAGED_NOT_RUN | Producer 42926628418 supplied the verified native artifact. Archive failure prevented final packaged-runtime verification. No fresh engine build. |
+| TestFlight availability | NOT_RUN_FOR_145301; RETRY_PENDING | Export, upload and Apple readiness were not reached. Candidate 145301 was not uploaded; the retry must still reach VALID + IN_BETA_TESTING and confirm the internal audience. |
 | Physical iPad visual/gesture/recording/crash acceptance | NOT_RUN | Remains open until actual device evidence. |
 
-No simulator tests will run in the upload workflow. target_validation_group=testflight_device_upload passes skip_simulator_tests=true to TestFlight.
+The first upload attempt explicitly skipped simulator UI tests and dependent UI-proof gates. The retry retains target_validation_group=testflight_device_upload, which passes skip_simulator_tests=true to TestFlight.
 
 ## Release plan
 
@@ -80,7 +81,21 @@ testflight_upload=true; target_validation_group=testflight_device_upload;
 runtime_bundle_artifact_run_id=42926628418; runtime_bundle_only=false;
 runtime_publish_release=false; testflight_audience_source_build=143801.
 
-Renderer pin is recorded above. App source SHA, workflow receipt and Apple build IDs will be recorded after dispatch/upload. This checkpoint does not claim a new available build.
+The failed first attempt used app source `20e6bd518c15b8b9746f298506e4d5d13e96955a`. The app-only compiler fix is committed as `c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2`; retry dispatch was issued by job_df8572e96187 with the same renderer, native-runtime producer and no-simulator inputs. The confirmed retry is [run 44972815423](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44972815423), job 137056085991, run number 1454 / attempt 1 (expected candidate 145401), started at 2026-11-22T01:43:54Z. Its outcome remains pending in this checkpoint. No new available TestFlight build is claimed.
+
+## First signed archive attempt: failed; corrected retry dispatched
+
+[Run 44969425818](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44969425818) attempted candidate **145301** from source `20e6bd518c15b8b9746f298506e4d5d13e96955a` on Xcode 27.2. The retained log confirms renderer checkout and native-runtime preparation before the app compiler stopped:
+
+`AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift:27:25: error: failed to produce diagnostic for expression; please submit a bug report`
+
+This is the single unique app compiler diagnostic in the retained log. It points to the combined SwiftUI body expression; it does not establish a renderer-runtime defect or validate the original iPad crash repair. The diagnostic was emitted at 2026-11-22T01:33:07.267284Z; `ARCHIVE FAILED` followed at 01:34:28.449690Z. The existing watcher ended failed at 01:34:51 UTC. Export and upload were not reached: **145301 was not uploaded to TestFlight**, and this attempt has no Apple-readiness receipt.
+
+The remediation changes only `ChatMarkdownView.swift`: typed initializer, linked/highlighted/body composition boundaries and explicit callbacks. Its SHA-256 is `bca9926d0099a8c78c47fd01a4c37d2bb3e319fd3db4be7e529fd97d11b51744`. Frontend parse and whitespace checks passed in job_23de13982e0e (11.37 seconds). This is syntax evidence, not successful Apple-framework typechecking. Prior portable-domain evidence remains unchanged and was not rerun for this app-only composition change.
+
+The corrected source is `c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2`. Its retry keeps renderer `6e884c73352a272c4e7bf8a5917e8b2157bc952e`, runtime producer `42926628418`, audience source `143801` and simulator skipping. Retry run 44972815423 is tracked by the existing root-owned watcher job_41d6b06d11ab. Its archive, export, upload and Apple-readiness results remain unverified until actual completion evidence is available.
+
+[First-attempt failure evidence](2026-11-22-evidence/first-archive-failure-44969425818.json) records the diagnostic, log hash, scoped outcomes and retry limits. Physical iPad acceptance remains **NOT_RUN**.
 
 ## Physical acceptance sequence
 

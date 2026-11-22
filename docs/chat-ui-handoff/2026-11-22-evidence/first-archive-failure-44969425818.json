@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "status": "FAILED",
+  "scope": "first signed device archive attempt",
+  "repository": "davidpovarsky/hanlin-ai",
+  "workflow": {
+    "id": 310046367,
+    "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "run_id": 44969425818,
+    "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44969425818",
+    "attempt": 1,
+    "job_name": "upload-chavrusachat-to-testflight / build-sign-and-upload",
+    "failed_step": "Archive signed Release app",
+    "xcode": "27.2"
+  },
+  "candidate": {
+    "app_source_sha": "20e6bd518c15b8b9746f298506e4d5d13e96955a",
+    "renderer_revision": "6e884c73352a272c4e7bf8a5917e8b2157bc952e",
+    "build_number": "145301",
+    "exported": false,
+    "uploaded_to_testflight": false,
+    "apple_readiness": "NOT_RUN"
+  },
+  "inputs": {
+    "testflight_upload": true,
+    "target_validation_group": "testflight_device_upload",
+    "skip_simulator_tests": true,
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "runtime_bundle_only": false,
+    "runtime_publish_release": false,
+    "testflight_audience_source_build": "143801"
+  },
+  "diagnostic": {
+    "unique_app_compiler_diagnostic_count": 1,
+    "file": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+    "line": 27,
+    "column": 25,
+    "expression": "var body: some View",
+    "message": "failed to produce diagnostic for expression; please submit a bug report (https://swift.org/contributing/#reporting-bugs)",
+    "emitted_at": "2026-11-22T01:33:07.267284Z",
+    "archive_failed_at": "2026-11-22T01:34:28.449690Z"
+  },
+  "scoped_outcomes": {
+    "renderer_checkout": "EXECUTED_PASS",
+    "native_runtime_preparation": "EXECUTED_PASS",
+    "application_apple_compilation": "EXECUTED_FAIL",
+    "signed_archive": "FAILED",
+    "ipa_export": "NOT_RUN",
+    "packaged_runtime_verification": "NOT_RUN",
+    "app_store_upload": "NOT_RUN",
+    "testflight_readiness": "NOT_RUN",
+    "simulator_tests": "SKIPPED_BY_OWNER_REQUEST",
+    "physical_ipad_acceptance": "NOT_RUN"
+  },
+  "runtime_preparation": {
+    "producer_run_id": "42926628418",
+    "artifact_dependency_hash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "current_host_dependency_hash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "node_version": "24.5.0",
+    "python_version": "3.14.6",
+    "verified_at": "2026-11-22T01:06:22.208800Z",
+    "fresh_native_engine_build": false
+  },
+  "retained_log": {
+    "path": "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-44969425818-job.log",
+    "encoding": "utf-16",
+    "size_bytes": 60787606,
+    "sha256": "998db744fc23fc46503e146e4554efe46ad0b21dc6312b8f4fedfb70a96a6cc1",
+    "acquisition_job_id": "job_3506731c0227",
+    "compiler_diagnostic_line": 145488,
+    "archive_failed_line": 146433,
+    "export_command_observed": false,
+    "upload_command_observed": false,
+    "readiness_json_observed": false
+  },
+  "watcher": {
+    "job_id": "job_905c3ca45181",
+    "status": "failed",
+    "exit_code": 1,
+    "ended_at": "2026-11-22T01:34:51Z"
+  },
+  "remediation": {
+    "scope": "app-only typed Markdown composition",
+    "file": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+    "sha256": "bca9926d0099a8c78c47fd01a4c37d2bb3e319fd3db4be7e529fd97d11b51744",
+    "changes": "Typed initializer, linked/highlighted/body boundaries and explicit callbacks.",
+    "syntax_and_whitespace": {
+      "status": "EXECUTED_PASS",
+      "job_id": "job_23de13982e0e",
+      "duration_seconds": 11.37,
+      "scope": "Swift frontend parse and whitespace; not Apple-framework typechecking"
+    },
+    "renderer_changed": false,
+    "runtime_producer_changed": false
+  },
+  "retry": {
+    "status": "DISPATCHED_RESULT_PENDING",
+    "app_source_sha": "c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2",
+    "dispatch_job_id": "job_df8572e96187",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "skip_simulator_tests": true,
+    "audience_source_build": "143801",
+    "run_id": 44972815423,
+    "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44972815423",
+    "job_id": 137056085991,
+    "run_number": 1454,
+    "attempt": 1,
+    "expected_candidate_build_number": "145401",
+    "started_at": "2026-11-22T01:43:54Z",
+    "watcher_job_id": "job_41d6b06d11ab"
+  },
+  "limitations": [
+    "The failed archive did not create a distributable TestFlight build 145301.",
+    "Source parsing and prior portable-domain checks do not establish Apple-framework compilation or physical-device correctness.",
+    "Existing implementation evidence and physical NOT_RUN obligations remain unchanged.",
+    "Retry identifiers and Apple readiness must be recorded from actual completed evidence; no success is inferred from dispatch."
+  ]
+}
