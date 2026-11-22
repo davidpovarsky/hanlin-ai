@@ -224,24 +224,25 @@ private final class ProviderCredentialTestFixture {
                 runID: UUID(), step: 0, providerCallID: UUID().uuidString, writeGuarantee: .hostManagedMutation,
                 originalArgumentsJSON: Data("{}".utf8))
         }
-        let consent = HanlinAppToolConsent()
+        let approvalScope = HanlinToolApprovalScope(app: "hanlin", account: "consent", workspace: "test", providerID: "hanlin.host", toolID: "fixture", manifestFingerprint: String(repeating: "a", count: 64), permissionFingerprint: String(repeating: "b", count: 64))
+        let consent = HanlinAppToolConsent(grants: HanlinToolApprovalStore(key: UUID().uuidString))
         var changes: [(UUID, String, Bool?)] = []
         consent.onChange = { request, choice in changes.append((request.id, request.providerCallID, choice)) }
-        #expect(await consent.request(try invocation(deadline: .now.addingTimeInterval(-1))) == false)
+        #expect(await consent.request(try invocation(deadline: .now.addingTimeInterval(-1)), approvalScope: approvalScope) == false)
         #expect(consent.pending == nil)
         let expiring = try invocation(deadline: .now.addingTimeInterval(0.15))
-        let expiredTask = Task { @MainActor in await consent.request(expiring) }
+        let expiredTask = Task { @MainActor in await consent.request(expiring, approvalScope: approvalScope) }
         #expect(await expiredTask.value == false)
         #expect(consent.pending == nil)
 
         let live = try invocation(deadline: .now.addingTimeInterval(30))
-        let cancelled = Task { @MainActor in await consent.request(live) }
+        let cancelled = Task { @MainActor in await consent.request(live, approvalScope: approvalScope) }
         for _ in 0..<100 where consent.pending == nil { await Task.yield() }
         let oldID = try #require(consent.pending?.id)
         cancelled.cancel()
         #expect(await cancelled.value == false)
         #expect(consent.pending == nil)
-        let replacement = Task { @MainActor in await consent.request(live) }
+        let replacement = Task { @MainActor in await consent.request(live, approvalScope: approvalScope) }
         for _ in 0..<100 where consent.pending == nil { await Task.yield() }
         let currentID = try #require(consent.pending?.id)
         consent.answer(id: oldID, allowed: true)
