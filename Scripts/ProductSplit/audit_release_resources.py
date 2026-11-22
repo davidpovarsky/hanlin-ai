@@ -239,7 +239,19 @@ def miniapps_testflight_status(app_id, build_number):
             states[state] = states.get(state, 0) + 1
         internal_groups.append({"id": group_id, **attributes,
                                 "explicitly_linked": group_id in included, "tester_states": states})
-    return {"build_id": build["id"], **build["attributes"], **beta,
+    try:
+        availability = apple_get("/v1/apps/" + app_id + "/appAvailabilityV2", {})["data"]
+        availability_id = urllib.parse.quote(availability["id"], safe="")
+        territories = apple_get("/v2/appAvailabilities/" + availability_id + "/territoryAvailabilities", {
+            "fields[territoryAvailabilities]": "available,territory", "limit": 200,
+        })
+        france = [t["attributes"].get("available") for t in territories["data"]
+                  if t.get("relationships", {}).get("territory", {}).get("data", {}).get("id") == "FRA"]
+        french_store = {"configured_available": france[0]} if len(france) == 1 else {
+            "read_status": "FRANCE_TERRITORY_NOT_CONFIRMED"}
+    except AppleReadFailure as error:
+        french_store = {"read_status": str(error)}
+    return {"build_id": build["id"], **build["attributes"], **beta, "french_store": french_store,
             "encryption_declaration": encryption, "internal_groups": internal_groups}
 
 
