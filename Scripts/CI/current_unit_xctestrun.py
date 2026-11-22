@@ -103,12 +103,14 @@ def build_context(repository, products, log, configuration, selectors):
     require(all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run_id, attempt)),
             "Current GitHub run and attempt are required")
 
-    def command(arguments):
-        return subprocess.check_output(arguments, cwd=repository, timeout=30)
+    def command(arguments, *, timeout_seconds=30):
+        return subprocess.check_output(arguments, cwd=repository, timeout=timeout_seconds)
 
     head = command(["git", "rev-parse", "HEAD"]).decode().strip()
     require(head == os.environ.get("GITHUB_SHA"), "Checkout differs from this run's source SHA")
-    diff = command(["git", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."])
+    # Run 45019487094: full-checkout binary diff exceeded 30s at native admit after build IO.
+    diff = command(["git", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
+                   timeout_seconds=120)
     provenance_path = log / "06-diagnostics-build-provenance.json"
     provenance = json.loads(provenance_path.read_bytes())
     require(provenance.get("sourceCommit") == head, "Build provenance belongs to a different source")
