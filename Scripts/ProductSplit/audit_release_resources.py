@@ -204,6 +204,18 @@ def apple_resources(cert_sha=None):
                 builds = apple_get("/v1/builds", {"filter[app]": apps[0]["id"],
                     "fields[builds]": "version,processingState,expired", "sort": "-uploadedDate", "limit": 3})
                 item["recent_builds"] = [b.get("attributes", {}) for b in builds.get("data", [])]
+                if role == "miniapps":
+                    try:
+                        uploads = apple_get("/v1/apps/" + apps[0]["id"] + "/buildUploads", {
+                            "fields[buildUploads]": "cfBundleShortVersionString,cfBundleVersion,state,uploadedDate",
+                            "sort": "-uploadedDate", "limit": 10,
+                        })
+                        item["recent_uploads"] = [
+                            {"id": upload["id"], **upload.get("attributes", {})}
+                            for upload in uploads.get("data", [])
+                        ]
+                    except AppleReadFailure as error:
+                        item["build_upload_read_error"] = str(error)
         except Exception as error:
             item["app_store_read_error"] = str(error) if isinstance(error, AppleReadFailure) else type(error).__name__
         try:
