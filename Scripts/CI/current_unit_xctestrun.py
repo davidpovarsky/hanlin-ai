@@ -23,6 +23,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import uuid
 
 try:
@@ -90,6 +91,42 @@ def descriptors(products):
     return candidates
 
 
+GIT_RETRY_DELAYS_SECONDS = (2.0, 5.0)
+GIT_REV_PARSE_TIMEOUT_SECONDS = 60
+GIT_DIFF_TIMEOUT_SECONDS = 120
+GIT_TOTAL_BUDGET_SECONDS = 240.0
+
+
+def run_git_command(arguments, *, cwd, timeout_seconds, deadline=None,
+                    retry_delays=GIT_RETRY_DELAYS_SECONDS, sleeper=time.sleep,
+                    clock=time.monotonic):
+    """Run read-only Git check with bounded total time budget and TimeoutExpired retry/backoff."""
+    attempts = len(retry_delays) + 1
+    last_error = None
+    for index in range(attempts):
+        if deadline is not None:
+            remaining = deadline - clock()
+            require(remaining > 0, "Git admission verification exceeded its total run time budget")
+            effective_timeout = min(float(timeout_seconds), remaining)
+        else:
+            effective_timeout = float(timeout_seconds)
+        try:
+            return subprocess.check_output(arguments, cwd=cwd, timeout=effective_timeout)
+        except subprocess.TimeoutExpired as error:
+            last_error = error
+            if index + 1 >= attempts:
+                break
+            delay = float(retry_delays[index])
+            if deadline is not None:
+                remaining = deadline - clock()
+                if remaining <= 0:
+                    break
+                delay = min(delay, max(0.0, remaining))
+            if delay > 0:
+                sleeper(delay)
+    raise last_error
+
+
 def build_context(repository, products, log, configuration, selectors):
     repository = Path(repository).resolve(strict=True)
     products = Path(products).resolve()
@@ -102,15 +139,18 @@ def build_context(repository, products, log, configuration, selectors):
     run_id, attempt = os.environ.get("GITHUB_RUN_ID", ""), os.environ.get("GITHUB_RUN_ATTEMPT", "")
     require(all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run_id, attempt)),
             "Current GitHub run and attempt are required")
+    git_deadline = time.monotonic() + GIT_TOTAL_BUDGET_SECONDS
 
     def command(arguments, *, timeout_seconds=30):
         return subprocess.check_output(arguments, cwd=repository, timeout=timeout_seconds)
 
-    head = command(["git", "rev-parse", "HEAD"]).decode().strip()
+    head = run_git_command(["git", "--no-optional-locks", "rev-parse", "HEAD"],
+                           cwd=repository, timeout_seconds=GIT_REV_PARSE_TIMEOUT_SECONDS,
+                           deadline=git_deadline).decode().strip()
     require(head == os.environ.get("GITHUB_SHA"), "Checkout differs from this run's source SHA")
-    # Run 45019487094: full-checkout binary diff exceeded 30s at native admit after build IO.
-    diff = command(["git", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
-                   timeout_seconds=120)
+    diff = run_git_command(
+        ["git", "--no-optional-locks", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
+        cwd=repository, timeout_seconds=GIT_DIFF_TIMEOUT_SECONDS, deadline=git_deadline)
     provenance_path = log / "06-diagnostics-build-provenance.json"
     provenance = json.loads(provenance_path.read_bytes())
     require(provenance.get("sourceCommit") == head, "Build provenance belongs to a different source")

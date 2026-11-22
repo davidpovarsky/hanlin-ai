@@ -349,10 +349,84 @@ class CurrentUnitXctestrunTests(unittest.TestCase):
                 admission.build_context(self.root, self.products, self.log, "Debug", "AI_HLYTests")
         self.assertTrue(all("-resolvePackageDependencies" not in args and "-project" not in args
                             and "-scheme" not in args for args in observed))
+        self.assertIn(
+            ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+            observed,
+        )
+        self.assertIn(
+            ["git", "--no-optional-locks", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
+            observed,
+        )
+
+    def test_git_command_retries_only_timeout_expired_with_backoff_and_enforces_total_budget(self):
+        calls = []
+        sleeps = []
+        now = [100.0]
+
+        def clock():
+            return now[0]
+
+        def sleeper(seconds):
+            sleeps.append(seconds)
+            now[0] += seconds
+
+        def transient_then_ok(arguments, *, cwd, timeout):
+            calls.append((arguments, timeout))
+            if len(calls) < 3:
+                now[0] += 10.0
+                raise subprocess.TimeoutExpired(arguments, timeout)
+            return b"deadbeef\n"
+
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=transient_then_ok):
+            result = admission.run_git_command(
+                ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+                cwd=self.root, timeout_seconds=30, deadline=160.0,
+                retry_delays=(2.0, 5.0), sleeper=sleeper, clock=clock)
+        self.assertEqual(result, b"deadbeef\n")
+        self.assertEqual(len(calls), 3)
+        self.assertEqual(sleeps, [2.0, 5.0])
+
+        error_calls = []
+
+        def fail_once(arguments, *, cwd, timeout):
+            error_calls.append(arguments)
+            raise subprocess.CalledProcessError(128, arguments)
+
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=fail_once):
+            with self.assertRaises(subprocess.CalledProcessError):
+                admission.run_git_command(
+                    ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+                    cwd=self.root, timeout_seconds=30, deadline=160.0,
+                    retry_delays=(2.0, 5.0), sleeper=sleeper, clock=clock)
+        self.assertEqual(len(error_calls), 1)
+
+        def always_timeout(arguments, *, cwd, timeout):
+            now[0] += timeout
+            raise subprocess.TimeoutExpired(arguments, timeout)
+
+        now[0] = 200.0
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=always_timeout):
+            with self.assertRaises(subprocess.TimeoutExpired):
+                admission.run_git_command(
+                    ["git", "--no-optional-locks", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."],
+                    cwd=self.root, timeout_seconds=30, deadline=225.0,
+                    retry_delays=(2.0, 5.0), sleeper=sleeper, clock=clock)
+
+        now[0] = 300.0
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=always_timeout):
+            with self.assertRaisesRegex(RuntimeError, "total run time budget"):
+                admission.run_git_command(
+                    ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+                    cwd=self.root, timeout_seconds=30, deadline=299.0,
+                    retry_delays=(2.0, 5.0), sleeper=sleeper, clock=clock)
 
     def test_workflow_unit_route_preserves_destination_filters_limits_and_result_gate(self):
         workflow = (SCRIPT_PATH.parents[2] / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(
             encoding="utf-8")
+        self.assertGreater(
+            workflow.index("      - name: Save successful simulator compiler state\n"),
+            workflow.index("      - name: Run simulator test suite\n"),
+        )
         unit = workflow.split("      - name: Run simulator test suite\n", 1)[1].split(
             '            if [ "${STAGE_NATIVESCRIPT_AFTER_UNIT:-false}"', 1)[0]
         command = unit.split("              xcodebuild test-without-building \\\n", 1)[1].split(
