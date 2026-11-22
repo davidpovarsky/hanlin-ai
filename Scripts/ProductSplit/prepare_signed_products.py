@@ -144,8 +144,25 @@ def main():
             if not re.search(r'(?m)^\s*\d+\)\s+' + distribution_identity + r'\s+"', identities):
                 raise RuntimeError("The existing distribution identity is not trusted for local code signing")
             state["existing_distribution_identity"]["os_codesigning_trust"] = "VERIFIED"
+            preflight_only = os.environ.get("SPLIT_SIGNING_PREFLIGHT_ONLY", "false").lower() == "true"
+            upload_miniapps_testflight = os.environ.get("SPLIT_UPLOAD_MINIAPPS_TESTFLIGHT", "false").lower() == "true"
+            if upload_miniapps_testflight and preflight_only:
+                raise RuntimeError("MiniApps TestFlight upload cannot run with signing_preflight_only")
+            upload_build_number = None
+            if upload_miniapps_testflight:
+                run_number_raw = os.environ.get("GITHUB_RUN_NUMBER", "")
+                run_attempt_raw = os.environ.get("GITHUB_RUN_ATTEMPT", "1")
+                if not re.fullmatch(r"[1-9][0-9]*", run_number_raw) or not re.fullmatch(r"[1-9][0-9]*", run_attempt_raw):
+                    raise RuntimeError("Positive GITHUB_RUN_NUMBER and GITHUB_RUN_ATTEMPT are required for MiniApps TestFlight upload")
+                run_attempt = int(run_attempt_raw)
+                if run_attempt >= 100:
+                    raise RuntimeError("GITHUB_RUN_ATTEMPT must be < 100 to preserve unique build numbering")
+                upload_build_number = str(int(run_number_raw) * 100 + run_attempt)
+                state["requested_build_number"] = upload_build_number
+                state["publication"] = "PENDING_UPLOAD_STEP"
+            selected_roles = ("miniapps",) if upload_miniapps_testflight else None
             state["provisioning_profiles"] = []
-            profiles = resolve_original_profiles(cert_sha, folder, state["provisioning_profiles"])
+            profiles = resolve_original_profiles(cert_sha, folder, state["provisioning_profiles"], roles=selected_roles)
             # Xcode's current cache and the established legacy cache both receive
             # the same verified bytes. Cleanup removes only this job's own files.
             profile_directories = [
@@ -157,7 +174,6 @@ def main():
             profile_mapping = {profile["bundle"]: profile["uuid"] for profile in profiles}
             state["installed_profile_readback"] = {}
             installed_profile_receipt(profiles, profile_directories, state["installed_profile_readback"])
-            preflight_only = os.environ.get("SPLIT_SIGNING_PREFLIGHT_ONLY", "false").lower() == "true"
             _, sdk = run(["xcrun", "--sdk", "iphoneos", "--show-sdk-version"], "device-sdk")
             if int(sdk.strip().split(".")[0]) != 27:
                 raise RuntimeError("The current stable iOS 27 SDK is required")
@@ -184,9 +200,14 @@ def main():
                 "signingCertificate": distribution_identity, "uploadSymbols": False,
                 "manageAppVersionAndBuildNumber": False, "stripSwiftSymbols": True
             }
-            product_archives = [] if preflight_only else [
-                ("miniapps", "HanlinMiniApps", "com.itorah.hanlinminiapps"),
-                ("ai", "AI_HLY", "com.itorah.chavrusachat")]
+            if preflight_only:
+                product_archives = []
+            elif upload_miniapps_testflight:
+                product_archives = [("miniapps", "HanlinMiniApps", "com.itorah.hanlinminiapps")]
+            else:
+                product_archives = [
+                    ("miniapps", "HanlinMiniApps", "com.itorah.hanlinminiapps"),
+                    ("ai", "AI_HLY", "com.itorah.chavrusachat")]
             for role, scheme, bundle in product_archives:
                 product = {"role": role, "bundle_id": bundle, "archive": "NOT_RUN", "export": "NOT_RUN",
                            "entitlements": "NOT_RUN"}
@@ -199,13 +220,15 @@ def main():
                 archive = ROOT / "build/ReleaseArchives" / (scheme + ".xcarchive")
                 archive.parent.mkdir(exist_ok=True)
                 export = OUT / role
-                result, _ = run(common + ["-scheme", scheme, "-configuration", "Release",
+                archive_cmd = common + ["-scheme", scheme, "-configuration", "Release",
                     "-destination", "generic/platform=iOS", "-derivedDataPath", derived,
                     "-archivePath", archive, "archive",
                     "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
                     "CODE_SIGN_IDENTITY=", "PROVISIONING_PROFILE_SPECIFIER=",
-                    "PROVISIONING_PROFILE="],
-                    role + "-archive", 3300, required=False)
+                    "PROVISIONING_PROFILE="]
+                if upload_build_number is not None:
+                    archive_cmd.append("CURRENT_PROJECT_VERSION=" + upload_build_number)
+                result, _ = run(archive_cmd, role + "-archive", 3300, required=False)
                 product["archive"] = "EXECUTED_PASS" if result == 0 else "EXECUTED_FAIL"
                 if result:
                     continue
@@ -215,6 +238,8 @@ def main():
                     raise RuntimeError("Archive identity does not match the original product")
                 product["version"] = application.get("CFBundleShortVersionString")
                 product["build"] = application.get("CFBundleVersion")
+                if upload_build_number is not None and product["build"] != upload_build_number:
+                    raise RuntimeError("Archive build number does not match requested upload build number")
                 product["profile_cache_at_export"] = {}
                 installed_profile_receipt(
                     [profile for profile in profiles if profile["bundle"] in selected_bundles],
@@ -249,6 +274,11 @@ def main():
                     identity = bundle_info["CFBundleIdentifier"]
                     if identity not in expected:
                         raise RuntimeError("Unexpected signed extension or product")
+                    if target == apps[0]:
+                        product["ipa_version"] = bundle_info.get("CFBundleShortVersionString")
+                        product["ipa_build"] = bundle_info.get("CFBundleVersion")
+                        if upload_build_number is not None and product["ipa_build"] != upload_build_number:
+                            raise RuntimeError("Exported IPA build number does not match requested upload build number")
                     name, source = expected[identity]
                     decoded = subprocess.run(["security", "cms", "-D", "-i", str(target / "embedded.mobileprovision")],
                                              capture_output=True, timeout=20, check=True)
@@ -281,8 +311,11 @@ def main():
                 state["status"] = "PROVISIONING_PREFLIGHT_PASS"
                 state["scope"] = "Original identity and entitlement provisioning preflight only; original product archives were not run."
             else:
-                state["status"] = "EXECUTED_PASS" if len(state["products"]) == 2 and all(
+                expected_count = len(product_archives)
+                state["status"] = "EXECUTED_PASS" if expected_count > 0 and len(state["products"]) == expected_count and all(
                     p["entitlements"] == "EXECUTED_PASS" for p in state["products"]) else "SIGNING_OR_BUILD_FAILED"
+                if upload_miniapps_testflight:
+                    state["scope"] = "MiniApps-only iOS device archive and App Store export for TestFlight upload."
         except Exception as error:
             state["error"] = sanitize(str(error))
             if state["status"] == "NOT_RUN":

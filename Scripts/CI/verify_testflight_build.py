@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Wait until App Store Connect acknowledges the uploaded ChavrusaChat build."""
+"""Wait until App Store Connect acknowledges the uploaded build."""
 
 from __future__ import annotations
 
@@ -15,7 +15,13 @@ from pathlib import Path
 import jwt
 
 
-BUNDLE_ID = "com.itorah.chavrusachat"
+ALLOWED_BUNDLE_IDS = {
+    "com.itorah.chavrusachat",
+    "com.itorah.hanlinminiapps",
+}
+BUNDLE_ID = os.environ.get("HANLIN_TESTFLIGHT_BUNDLE_ID") or "com.itorah.chavrusachat"
+if BUNDLE_ID not in ALLOWED_BUNDLE_IDS:
+    raise SystemExit(f"Unsupported TestFlight bundle identifier: {BUNDLE_ID}")
 build_number = sys.argv[1]
 expected_build_id = os.environ.get("HANLIN_EXPECTED_ASC_BUILD_ID")
 expected_app_id = os.environ.get("HANLIN_EXPECTED_ASC_APP_ID")
@@ -117,6 +123,7 @@ for _ in range(40):
             ready = {"IN_BETA_TESTING"} if audience_source else {"READY_FOR_BETA_TESTING", "IN_BETA_TESTING"}
             if internal in ready:
                 evidence = {"appID": apps[0]["id"], "buildID": builds[0]["id"],
+                            "bundleID": BUNDLE_ID,
                             "buildNumber": build_number, "processingState": state,
                             "internalBuildState": internal,
                             "externalBuildState": detail.get("externalBuildState"),

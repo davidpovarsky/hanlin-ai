@@ -18,6 +18,11 @@ on:
         type: boolean
         required: false
         default: false
+      upload_miniapps_testflight:
+        description: With signed_release_archives (non-preflight), archive/export MiniApps only and upload to TestFlight
+        type: boolean
+        required: false
+        default: false
       audit_release_resources:
         description: Read existing Apple signing and registration metadata without signing or publishing
         type: boolean
@@ -61,6 +66,11 @@ on:
         type: boolean
         required: false
         default: false
+      upload_miniapps_testflight:
+        description: With signed_release_archives (non-preflight), archive/export MiniApps only and upload to TestFlight
+        type: boolean
+        required: false
+        default: false
       audit_release_resources:
         description: Read existing Apple signing and registration metadata without signing or publishing
         type: boolean
@@ -98,8 +108,8 @@ on:
 concurrency:
   # Separate acceptance scopes use distinct job checkouts and owned simulators.
   # A paired run must not cancel standalone storage/UI evidence still being collected.
-  group: standalone-miniapps-${{ github.ref }}-${{ inputs.prepare_miniapps_registration && 'registration' || inputs.audit_release_resources && 'release-audit' || inputs.signing_preflight_only && 'signing-preflight' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}
-  cancel-in-progress: ${{ !inputs.prepare_miniapps_registration }}
+  group: standalone-miniapps-${{ github.ref }}-${{ inputs.prepare_miniapps_registration && 'registration' || inputs.audit_release_resources && 'release-audit' || inputs.signing_preflight_only && 'signing-preflight' || inputs.upload_miniapps_testflight && 'miniapps-testflight' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}
+  cancel-in-progress: ${{ !inputs.prepare_miniapps_registration && !inputs.upload_miniapps_testflight }}
 
 permissions:
   actions: read
@@ -191,6 +201,15 @@ jobs:
         env:
           SIGNED_RELEASE_ARCHIVES: ${{ inputs.signed_release_archives }}
         run: test "$SIGNED_RELEASE_ARCHIVES" = 'true'
+      - name: Validate requested MiniApps TestFlight upload scope
+        if: ${{ inputs.upload_miniapps_testflight }}
+        shell: bash
+        env:
+          SIGNED_RELEASE_ARCHIVES: ${{ inputs.signed_release_archives }}
+          SIGNING_PREFLIGHT_ONLY: ${{ inputs.signing_preflight_only }}
+        run: |
+          test "$SIGNED_RELEASE_ARCHIVES" = 'true'
+          test "$SIGNING_PREFLIGHT_ONLY" != 'true'
       - name: Verify actual Mac toolchain, disk and installed simulator tooling
         id: split-platform
         shell: bash
@@ -366,6 +385,7 @@ jobs:
         if: ${{ inputs.signed_release_archives }}
         env:
           SPLIT_SIGNING_PREFLIGHT_ONLY: ${{ inputs.signing_preflight_only }}
+          SPLIT_UPLOAD_MINIAPPS_TESTFLIGHT: ${{ inputs.upload_miniapps_testflight }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
           APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
@@ -373,6 +393,120 @@ jobs:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         run: '"$RUNNER_TEMP/hanlin-signing-python/bin/python" Scripts/ProductSplit/prepare_signed_products.py'
+      - name: Upload MiniApps IPA to TestFlight and verify processing
+        if: ${{ inputs.signed_release_archives && !inputs.signing_preflight_only && inputs.upload_miniapps_testflight }}
+        shell: bash
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          HANLIN_TESTFLIGHT_BUNDLE_ID: com.itorah.hanlinminiapps
+          HANLIN_EXPECTED_ASC_APP_ID: "6836449016"
+          BUILD_DIR: ${{ github.workspace }}/build/app-split-evidence/miniapps-testflight
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/hanlin-signing-python/bin/python" - <<'PY'
+          import base64, hashlib, json, os, re, subprocess, sys, tempfile
+          from pathlib import Path
+
+          evidence_dir = Path(os.environ["SPLIT_EVIDENCE"])
+          signed_dir = evidence_dir / "signed-products"
+          acceptance = json.loads((signed_dir / "acceptance.json").read_text(encoding="utf-8"))
+          if (acceptance.get("status") != "EXECUTED_PASS"
+              or acceptance.get("sha") != os.environ["GITHUB_SHA"]
+              or acceptance.get("run_id") != os.environ["GITHUB_RUN_ID"]):
+              raise SystemExit("Signed MiniApps archive/export did not pass")
+          products = acceptance.get("products", [])
+          if len(products) != 1 or products[0].get("role") != "miniapps" or products[0].get("bundle_id") != "com.itorah.hanlinminiapps":
+              raise SystemExit("Expected MiniApps-only signed product")
+          product = products[0]
+          ipa_path = (signed_dir / product["ipa_file"]).resolve()
+          if ipa_path.parent != (signed_dir / "miniapps").resolve():
+              raise SystemExit("Unexpected MiniApps IPA path")
+          ipa_build = str(product.get("ipa_build", ""))
+          if not ipa_path.is_file() or not ipa_build.isdigit() or ipa_build != str(product.get("build", "")):
+              raise SystemExit("MiniApps IPA or matching build number is missing")
+
+          with ipa_path.open("rb") as stream:
+              ipa_sha256 = hashlib.file_digest(stream, "sha256").hexdigest()
+          if ipa_sha256 != product.get("ipa_sha256"):
+              raise SystemExit("IPA digest differs from the signed archive receipt")
+
+          out_dir = Path(os.environ["BUILD_DIR"])
+          logs_dir = out_dir / "logs"
+          logs_dir.mkdir(parents=True, exist_ok=True)
+          secrets = [os.environ.get(k, "") for k in ("ASC_KEY_P8", "ASC_KEY_ID", "ASC_ISSUER_ID")]
+
+          def sanitize(text: str) -> str:
+              for value in sorted((v for v in secrets if v), key=len, reverse=True):
+                  text = text.replace(value, "[REDACTED]")
+              text = re.sub(r"-----BEGIN [^-]*PRIVATE KEY-----.*?-----END [^-]*PRIVATE KEY-----",
+                            "[PRIVATE KEY REDACTED]", text, flags=re.S)
+              return re.sub(r"\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b",
+                            "[JWT REDACTED]", text)
+
+          receipt = {
+              "bundle_id": "com.itorah.hanlinminiapps",
+              "build_number": ipa_build,
+              "ipa_sha256": product.get("ipa_sha256"),
+              "sha": os.environ.get("GITHUB_SHA"),
+              "run_id": os.environ.get("GITHUB_RUN_ID"),
+              "validate_exit": None,
+              "upload_exit": None,
+              "verify_exit": None,
+              "status": "FAILED",
+          }
+
+          with tempfile.TemporaryDirectory(prefix="hanlin-miniapps-testflight-", dir=os.environ["RUNNER_TEMP"]) as tmp:
+              tmp_path = Path(tmp)
+              tmp_path.chmod(0o700)
+              keys_dir = tmp_path / "private_keys"
+              keys_dir.mkdir(mode=0o700)
+              key_path = keys_dir / f"AuthKey_{os.environ['ASC_KEY_ID']}.p8"
+              key_path.write_bytes(base64.b64decode("".join(os.environ["ASC_KEY_P8"].split()), validate=True))
+              key_path.chmod(0o600)
+
+              altool_env = os.environ.copy()
+              altool_env["API_PRIVATE_KEYS_DIR"] = str(keys_dir)
+              verify_env = os.environ.copy()
+              verify_env["ASC_KEY_PATH"] = str(key_path)
+
+              def run_step(cmd, env, log_name, timeout):
+                  proc = subprocess.run(cmd, env=env, capture_output=True, text=True, timeout=timeout)
+                  (logs_dir / log_name).write_text(sanitize((proc.stdout or "") + (proc.stderr or "")), encoding="utf-8")
+                  return proc.returncode
+
+              try:
+                  receipt["validate_exit"] = run_step([
+                      "xcrun", "altool", "--validate-app", "-f", str(ipa_path), "-t", "ios",
+                      "--apiKey", os.environ["ASC_KEY_ID"], "--apiIssuer", os.environ["ASC_ISSUER_ID"],
+                      "--output-format", "json",
+                  ], altool_env, "altool-validate.log", 600)
+                  if receipt["validate_exit"] != 0:
+                      raise SystemExit("altool --validate-app failed")
+
+                  receipt["upload_exit"] = run_step([
+                      "xcrun", "altool", "--upload-app", "-f", str(ipa_path), "-t", "ios",
+                      "--apiKey", os.environ["ASC_KEY_ID"], "--apiIssuer", os.environ["ASC_ISSUER_ID"],
+                      "--output-format", "json",
+                  ], altool_env, "altool-upload.log", 900)
+                  if receipt["upload_exit"] != 0:
+                      raise SystemExit("altool --upload-app failed")
+
+                  receipt["verify_exit"] = run_step([
+                      sys.executable, "Scripts/CI/verify_testflight_build.py", ipa_build,
+                  ], verify_env, "verify-testflight.log", 1500)
+                  if receipt["verify_exit"] != 0:
+                      raise SystemExit("verify_testflight_build.py failed")
+
+                  readiness_path = logs_dir / "testflight-readiness.json"
+                  if readiness_path.is_file():
+                      receipt["readiness"] = json.loads(readiness_path.read_text(encoding="utf-8"))
+                  receipt["status"] = "EXECUTED_PASS"
+              finally:
+                  (out_dir / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+          print(json.dumps(receipt))
+          PY
       - name: Keep original logs, status and xcresult even after early failure
         if: always()
         shell: bash

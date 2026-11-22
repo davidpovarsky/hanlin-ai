@@ -174,13 +174,20 @@ def resolve_profile(role, bundle, required, certificate_sha, certificate_id, tea
     return {"bundle": bundle, "uuid": profile_uuid, "content": raw}, facts
 
 
-def resolve_original_profiles(certificate_sha, private_directory, facts):
+def resolve_original_profiles(certificate_sha, private_directory, facts, roles=None):
+    selected_roles = None if roles is None else set(roles)
+    if selected_roles is not None:
+        known_roles = {role for role, _, _, _ in ROLES}
+        if not selected_roles or not selected_roles.issubset(known_roles):
+            raise ValueError("Unsupported original profile role selection")
     certificate_id = original_certificate_id(apple_get("/v1/certificates", {
         "filter[certificateType]": "DISTRIBUTION,IOS_DISTRIBUTION",
         "fields[certificates]": "certificateType,certificateContent", "limit": 200,
     }), certificate_sha)
     resolved = []
     for role, bundle, _, source in ROLES:
+        if selected_roles is not None and role not in selected_roles:
+            continue
         profile, result = resolve_profile(
             role, bundle, plistlib.loads((ROOT / source).read_bytes()),
             certificate_sha, certificate_id, os.environ["APPLE_TEAM_ID"], private_directory,
