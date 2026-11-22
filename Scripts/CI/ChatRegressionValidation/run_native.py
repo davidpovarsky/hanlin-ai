@@ -29,14 +29,15 @@ def write_json(path: Path, value) -> None:
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
 
 
-def run(args: list[str], log: Path, timeout: int, *, cwd: Path = ROOT, check: bool = True) -> int:
+def run(args: list[str], log: Path, timeout: int, *, cwd: Path = ROOT, check: bool = True,
+        env: dict[str, str] | None = None) -> int:
     """Bound the whole command process group, retaining diagnostics on failure."""
     log.parent.mkdir(parents=True, exist_ok=True)
     print(f"Native probe: {log.name}", flush=True)
     started = time.monotonic()
     with log.open("w", encoding="utf-8") as stream:
         process = subprocess.Popen(args, cwd=cwd, stdout=stream, stderr=subprocess.STDOUT,
-                                   start_new_session=True)
+                                   start_new_session=True, env=env)
         try:
             code = process.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
@@ -57,6 +58,46 @@ def run(args: list[str], log: Path, timeout: int, *, cwd: Path = ROOT, check: bo
 
 def read(args: list[str], timeout: int = 20, *, cwd: Path = ROOT) -> str:
     return subprocess.check_output(args, cwd=cwd, text=True, timeout=timeout).strip()
+
+
+def ensure_xcodegen() -> dict:
+    """Use the repository's Homebrew bootstrap, with observed tools and limits."""
+    executable = shutil.which("xcodegen")
+    brew = shutil.which("brew")
+    write_json(OUT / "tool-availability.json", {"xcodegen": executable, "homebrew": brew})
+    installed = executable is None
+    if installed:
+        if brew is None:
+            raise RuntimeError("Native runner has neither XcodeGen nor an installed Homebrew executable")
+        # Same installation route as docs/chat-motion/run_motion_ui.sh and
+        # docs/a2ui/run_media_replay_ui.sh. Do not update unrelated tooling.
+        brew_environment = {**os.environ,
+            "HOMEBREW_NO_AUTO_UPDATE": "1", "HOMEBREW_NO_INSTALL_CLEANUP": "1",
+            "HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK": "1", "HOMEBREW_NO_INSTALL_UPGRADE": "1",
+            "HOMEBREW_NO_ANALYTICS": "1", "HOMEBREW_CURL_RETRIES": "0"}
+        run([brew, "install", "--formula", "--force-bottle", "xcodegen"],
+            OUT / "xcodegen-install.log", 180, env=brew_environment)
+        # Use this actual formula's path even when the runner PATH has not been
+        # refreshed after installation. Never substitute a guessed executable.
+        prefix = read([brew, "--prefix", "xcodegen"], timeout=15)
+        executable = str(Path(prefix) / "bin/xcodegen")
+    tool = Path(executable).resolve(strict=True)
+    if not tool.is_file() or not os.access(tool, os.X_OK):
+        raise RuntimeError("XcodeGen bootstrap did not produce a runnable executable")
+    version = read([str(tool), "--version"], timeout=15)
+    if re.search(r"\b\d+\.\d+(?:\.\d+)?\b", version) is None:
+        raise RuntimeError("XcodeGen did not report a valid observed version")
+    receipt = {"path": str(tool), "version": version,
+               "sha256": hashlib.sha256(tool.read_bytes()).hexdigest(),
+               "installation": "homebrew-bottle" if installed else "preinstalled"}
+    if installed:
+        install_receipt = tool.parent.parent / "INSTALL_RECEIPT.json"
+        native_receipt = json.loads(install_receipt.read_text())
+        if native_receipt.get("poured_from_bottle") is not True:
+            raise RuntimeError("XcodeGen was not installed from a Homebrew-verified bottle")
+        shutil.copy2(install_receipt, OUT / "xcodegen-install-receipt.json")
+    write_json(OUT / "xcodegen-tool.json", receipt)
+    return receipt
 
 
 def value(item):
@@ -133,11 +174,10 @@ def main() -> None:
         raise RuntimeError("Candidate checkout differs from the explicitly requested source SHA")
     xcode = read([sys.executable, str(ROOT / "Scripts/CI/select_stable_xcode.py")], timeout=60)
     os.environ["DEVELOPER_DIR"] = xcode + "/Contents/Developer"
-    if not shutil.which("xcodegen"):
-        raise RuntimeError("The selected runner has no installed XcodeGen; no package/app build was attempted")
+    xcodegen = ensure_xcodegen()
     write_json(OUT / "toolchain.json", {"source_sha": source, "developer_dir": os.environ["DEVELOPER_DIR"],
         "xcode": read(["xcodebuild", "-version"]), "sdk": read(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"]),
-        "xcodegen": read(["xcodegen", "--version"])})
+        "xcodegen": xcodegen})
     baseline_available = run(["git", "cat-file", "-e", BASELINE_APP + ":Packages/HanlinPresentationSDK/Package.swift"],
                              OUT / "baseline-availability.log", 20, check=False)
     if baseline_available:
@@ -182,7 +222,7 @@ def main() -> None:
             shutil.copytree(ROOT / "Packages/HanlinPresentationSDK", stage / "Packages/HanlinPresentationSDK", ignore=ignore)
             shutil.copytree(HERE, harness, ignore=ignore)
             manifest = stage / "Packages/HanlinPresentationSDK/Package.swift"
-            run(["xcodegen", "generate", "--spec", "project.yml"], OUT / "xcodegen.log", 30, cwd=harness)
+            run([xcodegen["path"], "generate", "--spec", "project.yml"], OUT / "xcodegen.log", 30, cwd=harness)
             try:
                 manifest.write_bytes(RENDERER_PIN.sub(lambda m: m[1] + BASELINE_RENDERER.encode() + m[3], candidate_manifest, count=1))
                 results["baseline"] = phase(stage, "baseline", BASELINE_RENDERER, [PROVIDER_TEST], device)
