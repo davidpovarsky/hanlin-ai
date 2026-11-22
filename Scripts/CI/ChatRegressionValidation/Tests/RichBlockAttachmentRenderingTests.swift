@@ -35,9 +35,32 @@ final class RichBlockAttachmentRenderingTests: XCTestCase {
                                                        textContainer: view.textContainer))
     XCTAssertTrue(provider is MarkdownRichBlockViewProvider,
                   "UIKit must resolve the rich-block provider, not its generic file-icon fallback; got \(type(of: provider))")
-    XCTAssertEqual(attachment.fileType, MarkdownRichBlockAttachment.contentType)
+    // File metadata is not the contract of this in-memory provider. Its
+    // attachment and layout manager must belong to this exact native document.
+    XCTAssertTrue(provider.textAttachment === attachment,
+                  "The rich provider must reference the exact owned attachment")
+    XCTAssertTrue(provider.textLayoutManager === layout,
+                  "The rich provider must reference the native document's layout manager")
     XCTAssertTrue(attachment.allowsTextAttachmentView)
     XCTAssertNotNil(view.textLayoutManager, "Provider lookup must not fall back to TextKit 1")
+
+    // Exercise Foundation's attribute replacement/uniquing with the same
+    // canonical document mounted independently in two native text views.
+    let contents = NSMutableAttributedString(attachment: canonical)
+    view.setParagraphContents(contents, animatedByWord: false)
+    let sibling = ParagraphUIView(frame: view.frame, textContainer: nil)
+    sibling.setAttachmentEnvironment(EnvironmentValues())
+    sibling.setParagraphContents(contents, animatedByWord: false)
+    let first = try XCTUnwrap(view.textStorage.attribute(.attachment, at: 0,
+      effectiveRange: nil) as? MarkdownRichBlockAttachment)
+    let second = try XCTUnwrap(sibling.textStorage.attribute(.attachment, at: 0,
+      effectiveRange: nil) as? MarkdownRichBlockAttachment)
+    XCTAssertTrue(first.owner === view, "Stored attachment must retain its own text view's environment")
+    XCTAssertTrue(second.owner === sibling, "Equal document content must not reuse another text view's owner")
+    XCTAssertFalse(first === second, "Independent native documents need independent attachment ownership")
+    XCTAssertTrue(view.paragraphContents.attribute(.attachment, at: 0, effectiveRange: nil) as? MarkdownRichBlockAttachment === canonical,
+                  "Streaming tail planning must retain canonical attributes, not mounted copies")
+    XCTAssertNil(canonical.owner, "Mounting must not mutate the parser's canonical attachment")
   }
 
   func testNativeDocumentDisplaysDividerAndTableAcrossWidths() async throws {
@@ -47,6 +70,7 @@ final class RichBlockAttachmentRenderingTests: XCTestCase {
     }
     let window = try makeWindow(size: CGSize(width: 700, height: 900))
     let controller = UIViewController()
+    controller.view.backgroundColor = .systemBackground
     window.rootViewController = controller
     let view = ParagraphUIView(frame: CGRect(x: 20, y: 20, width: 640, height: 800), textContainer: nil)
     var environment = EnvironmentValues()
@@ -68,9 +92,10 @@ final class RichBlockAttachmentRenderingTests: XCTestCase {
       let hosts = richHosts(in: view)
       XCTAssertEqual(hosts.count, 2, "Both divider and table must mount their original rich renderer")
       XCTAssertNotNil(view.textLayoutManager)
+      let geometry = hosts.map { "bounds=\($0.bounds), children=\($0.subviews.count)" }.joined(separator: "; ")
       XCTAssertTrue(hosts.allSatisfy { !$0.subviews.isEmpty && $0.bounds.width > width * 0.8 },
-                    "Rich attachments must have their hosted content and fill the native line")
-      XCTAssertTrue(hosts.contains { $0.bounds.height > 30 }, "The table must occupy its real content height")
+                    "Rich attachments must have their hosted content and fill the native line; \(geometry)")
+      XCTAssertTrue(hosts.contains { $0.bounds.height > 30 }, "The table must occupy its real content height; \(geometry)")
       XCTAssertTrue(view.text.contains("Before the rich blocks.") && view.text.contains("After the rich blocks."))
       let image = UIGraphicsImageRenderer(bounds: controller.view.bounds).image { _ in
         controller.view.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
@@ -125,6 +150,7 @@ final class RichBlockAttachmentRenderingTests: XCTestCase {
       throw XCTSkip("Mounted rich-block rendering requires an app host with a foreground UIWindowScene; the focused native probe rejects skips.")
     }
     let window = UIWindow(windowScene: scene)
+    window.overrideUserInterfaceStyle = .light
     window.frame = CGRect(origin: .zero, size: size)
     return window
   }

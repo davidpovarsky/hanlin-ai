@@ -1,0 +1,226 @@
+{
+  "run_id": 45039451193,
+  "artifact_id": 14760947980,
+  "status": "FAIL",
+  "artifact_zip_bytes": 277266242,
+  "artifact_zip_sha256": "5d70073bfbbb1100939b4ea3092d58f806e9cf1504854ceec156e46f4cd532fa",
+  "sources": {
+    "app": "92fe9b5a8b683e317caf3aa9d6ff711222965211",
+    "baseline_app": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+    "baseline_renderer": "ebbbf889276098f3642448e5439ad049c3cd2d6c",
+    "candidate_renderer": "eebcae3b085d6ab65541794e2f055f528a071856",
+    "candidate_manifest_sha256": "cf642aa0c640064cce47d07a2e4a890c2837f0e859f6e0442e63c43b0a5f821f"
+  },
+  "native_source_receipt": {
+    "baseline_app_commit": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+    "baseline_source": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+    "baseline_sha256": "45454e8c5080ff002999672abcbd9ba6b4ecc5cda9a59c8e7c7751aa8786e4fa",
+    "candidate_app_commit": "92fe9b5a8b683e317caf3aa9d6ff711222965211",
+    "candidate_sha256": "8c1e6c2f9db85c020a8730c620a0bb638a214714d3243d7ffc40efd319e077ea",
+    "scope": "Two actual Composer implementations rendered by the same native UIKit host. No Runtime, accounts, live tools, or physical-device acceptance."
+  },
+  "baseline": {
+    "exit_code": 65,
+    "tests": 1,
+    "failed": 1,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "RichBlockAttachmentRenderingTests.testProviderLookupUsesRichRenderer()",
+        "message": "XCTUnwrap failed: expected non-nil value of type \"NSTextAttachmentViewProvider\""
+      }
+    ],
+    "status": "EXPECTED_PROVIDER_FAILURE"
+  },
+  "candidate": {
+    "exit_code": 65,
+    "tests": 4,
+    "failed": 1,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "RichBlockAttachmentRenderingTests.testProviderLookupUsesRichRenderer()",
+        "message": "XCTAssertEqual failed: (\"nil\") is not equal to (\"Optional(\"com.hanlin.markdown.rich-block\")\")"
+      }
+    ],
+    "status": "FAIL"
+  },
+  "attachments": [
+    {
+      "name": "activity-collapsed-parent_0_6F838D2C-5FAC-42F9-BC85-49937C1AF352.png",
+      "file": "41C2520F-74AB-4F74-8376-CA70924CE4AD.png",
+      "bytes": 222257,
+      "sha256": "23266631579fd99102091c46c5f35bef3dc07598b48cc9c34e69ff6406e98e99"
+    },
+    {
+      "name": "activity-expanded-leaf_0_E21614DA-61E6-48ED-BCC4-A9F7356616A1.png",
+      "file": "9A6CE42E-84AA-488D-B6A8-CDDB18F780F1.png",
+      "bytes": 226876,
+      "sha256": "241748aca614c354a2a1cc6ec30cab8ca2e2e042180fbd20044080966079f8de"
+    },
+    {
+      "name": "moved-origin-rtl-corrected-frames_0_ADD11BE9-C520-45D4-9432-CAAF94D21B19.json",
+      "file": "C7D0D77F-B397-42E3-8AA2-9F81EB296F63.json",
+      "bytes": 627,
+      "sha256": "58df5072984007f49f7f46119f852676768303c7ab44d50fb3b4e6199af96551"
+    },
+    {
+      "name": "moved-origin-rtl-corrected_0_9488383D-DD08-4193-B640-F36D447AC50E.png",
+      "file": "F89E927C-A6B3-4444-8EA3-77C12D725F02.png",
+      "bytes": 10807882,
+      "sha256": "46beac5a46becce878fa195f04135d8be85425154f698bed81dba6ed7458fb0c"
+    },
+    {
+      "name": "moved-origin-rtl-145801-frames_0_18A44412-C0F6-4D60-8DED-3FE0513F058F.json",
+      "file": "B3885800-AAD5-4F55-B2D9-B4BF177B3D2A.json",
+      "bytes": 627,
+      "sha256": "58df5072984007f49f7f46119f852676768303c7ab44d50fb3b4e6199af96551"
+    },
+    {
+      "name": "moved-origin-rtl-145801_0_3ACD7D00-37A5-4D71-960A-CD207D97CC49.png",
+      "file": "4D771D93-E712-45F5-B58A-D501919EE35F.png",
+      "bytes": 10818138,
+      "sha256": "cc868c2ccbb1df6a5a7eb2d6bcb264e7856e186012da83cb9192ee7bacad1329"
+    },
+    {
+      "name": "expanded-rtl-corrected-frames_0_05DC12F6-783C-4987-BE01-7B378B36BBF7.json",
+      "file": "5FF4CDB3-FA45-49B2-9FF4-BB6508840BA8.json",
+      "bytes": 628,
+      "sha256": "d3dfac009b33ac56bab9b1aeb75e49b7bb0a26862f7380247bd01e023a9e8fdf"
+    },
+    {
+      "name": "expanded-rtl-corrected_0_BC9EDE69-357A-4C87-8978-E3EBDF60B1E2.png",
+      "file": "488E5F64-36C3-4A54-AD7D-1C6DD6FCB0CE.png",
+      "bytes": 9521363,
+      "sha256": "ad50e5e129394a24fb8a4014ac6f04fb38996712d5ab8aa88717790a616c9f50"
+    },
+    {
+      "name": "expanded-rtl-145801-frames_0_5075C5B3-CF1B-4351-B1AF-73C43CEC5701.json",
+      "file": "F6C505B1-7837-4CBF-80BB-32FEE3848BED.json",
+      "bytes": 628,
+      "sha256": "d3dfac009b33ac56bab9b1aeb75e49b7bb0a26862f7380247bd01e023a9e8fdf"
+    },
+    {
+      "name": "expanded-rtl-145801_0_22137D68-A856-4F10-A1A3-1503433DB69C.png",
+      "file": "40147C2B-B915-4755-BB81-BC9BD3B7DEA2.png",
+      "bytes": 9531400,
+      "sha256": "ef41dbb6a59067a0ae4648681f9845afad7586cae75a1f44ebb463a24c685c66"
+    },
+    {
+      "name": "narrow-long-rtl-corrected-frames_0_6C27220D-B0E2-40BB-841C-BF80D746405D.json",
+      "file": "92F05AF7-57EB-4191-9C9B-1AA20176DAAA.json",
+      "bytes": 627,
+      "sha256": "8b835497c76998ef6c1eedbfbde964270297d9c5f5f5bb7e313e390b512baa05"
+    },
+    {
+      "name": "narrow-long-rtl-corrected_0_763149BA-1D74-494A-96A5-B239F45C1901.png",
+      "file": "FD3AA890-FBE5-46FA-BF8E-EDE44BE52B12.png",
+      "bytes": 11300315,
+      "sha256": "b6832fa572251ec9e7841a2bfc30f4c2f7395673bb0d4806518d5a5ef4c71a34"
+    },
+    {
+      "name": "narrow-long-rtl-145801-frames_0_F9C335DF-A6D7-46E6-9B09-6CFFC897AC73.json",
+      "file": "8C7D7FED-9003-4A32-B1A2-F22CFC16CFE0.json",
+      "bytes": 627,
+      "sha256": "8b835497c76998ef6c1eedbfbde964270297d9c5f5f5bb7e313e390b512baa05"
+    },
+    {
+      "name": "narrow-long-rtl-145801_0_0C73368A-C8A0-426C-B012-746B3708A82E.png",
+      "file": "7EC9AFE0-54FD-42EC-902C-76A4147E99CF.png",
+      "bytes": 11352665,
+      "sha256": "f1b3432d4093f2abd13d72ae0ed250f372d146e535fa35b6f96f9efcb6c6b85a"
+    },
+    {
+      "name": "wide-long-corrected-frames_0_364E96BA-08CE-4A95-B2A3-5E2A40D64824.json",
+      "file": "BA10EFA1-B8F1-4564-A2A5-BBAA23CD2426.json",
+      "bytes": 628,
+      "sha256": "59f96d05c95ec0a7e312c88c3af97500d34a25292069faa2f1b3fb6ce8f2d4fc"
+    },
+    {
+      "name": "wide-long-corrected_0_A7732CC4-A179-4A3D-9465-4979BB2E0E64.png",
+      "file": "EF2A4717-1E7A-4F7A-86C1-3F2D8E397D1A.png",
+      "bytes": 10107611,
+      "sha256": "661ec181fa30baa8a305c7d259bab89bae244e56004b62311114757c386026d8"
+    },
+    {
+      "name": "wide-long-145801-frames_0_54BE1C77-BDB7-47CE-95F6-92136518A7D7.json",
+      "file": "7B403A3D-298A-4070-BD7C-0FB70B2AD977.json",
+      "bytes": 628,
+      "sha256": "59f96d05c95ec0a7e312c88c3af97500d34a25292069faa2f1b3fb6ce8f2d4fc"
+    },
+    {
+      "name": "wide-long-145801_0_B4E11350-9BB4-42FD-8253-3D0D12EAFB41.png",
+      "file": "9C58469B-E132-48EE-B8D1-00DDD6DFD264.png",
+      "bytes": 10133538,
+      "sha256": "d6f00a53d84daa36071f84a89e522d25cf254bd9f75b70ba91d51083cf59b4d6"
+    },
+    {
+      "name": "narrow-empty-rtl-corrected-frames_0_4DDF87B5-85AC-4861-B725-58B1CBA7572B.json",
+      "file": "17D9A158-9EA3-4B0A-8AAF-2009FBD0C097.json",
+      "bytes": 626,
+      "sha256": "dcdb22d7c94c2a3950e948df8715bffb2f0d9cae7947ba5d94392098200b1c71"
+    },
+    {
+      "name": "narrow-empty-rtl-corrected_0_450FFF83-0423-47E1-A079-8AE617225ED6.png",
+      "file": "E9DC9348-366D-4900-B9DF-9F2A4D9EF667.png",
+      "bytes": 11406875,
+      "sha256": "566dfdf796c45d1d55780e55a8ef223ad2ba9971709404760339666619942313"
+    },
+    {
+      "name": "narrow-empty-rtl-145801-frames_0_A8CCFCA1-78AF-4526-B1AD-66E047E6280C.json",
+      "file": "A6FD18AF-4151-4F85-81D9-CD308F84FCA2.json",
+      "bytes": 626,
+      "sha256": "dcdb22d7c94c2a3950e948df8715bffb2f0d9cae7947ba5d94392098200b1c71"
+    },
+    {
+      "name": "narrow-empty-rtl-145801_0_CB5546A9-416F-499E-A5E3-81B74AB9DD93.png",
+      "file": "AFDD0FDD-F34A-4F95-B04B-840131EB10AF.png",
+      "bytes": 11431197,
+      "sha256": "d5e80d20875f6dd0b277f61dd7e75436bbc6be229252e9d3669f900c69630785"
+    },
+    {
+      "name": "wide-empty-corrected-frames_0_50494277-AA54-486B-AD31-72F4AA5F0DFA.json",
+      "file": "43FF44E7-19FD-4057-8981-018CB7A4C143.json",
+      "bytes": 627,
+      "sha256": "49788356d376ab00bf18dd99266021ce80114a0bfea2e931399682f3626e7dee"
+    },
+    {
+      "name": "wide-empty-corrected_0_1ED0EBC4-766B-424D-846B-04D025951D20.png",
+      "file": "AA8CCFE1-5ADA-423E-B7DF-420D20AD7DEE.png",
+      "bytes": 10492971,
+      "sha256": "eb436fae43ca3e9459b5479868db98f80e3000415ec7f8355a55282f044ef1fd"
+    },
+    {
+      "name": "wide-empty-145801-frames_0_A5F5F888-B218-4C26-B315-22387C9F0C4D.json",
+      "file": "D1552302-4340-4C98-AD2A-38BADE90196A.json",
+      "bytes": 627,
+      "sha256": "49788356d376ab00bf18dd99266021ce80114a0bfea2e931399682f3626e7dee"
+    },
+    {
+      "name": "wide-empty-145801_0_54D916F9-2627-44E4-8137-003B277122CA.png",
+      "file": "5B24D3AA-53AD-4D73-AB8D-B70BFEAA9995.png",
+      "bytes": 10491186,
+      "sha256": "32712bd8691e6d0fc1ceb1c8f8f016c9f8cd65565017a389eac59b2760828d18"
+    },
+    {
+      "name": "rich-blocks-width-320_0_1F98471F-B5EF-4CF2-8AB9-1ABB7BBED4A6.png",
+      "file": "C18F6943-A28A-497E-8DEB-60276E1F6605.png",
+      "bytes": 168647,
+      "sha256": "3c5a77283e61b4dc596150344ed450936052bf1a043f4aadc8e7a0d108d308ae"
+    },
+    {
+      "name": "rich-blocks-width-640_0_A5466E6C-36E3-46F6-97F5-9A6FFF56DC00.png",
+      "file": "046CB281-C9CD-45D6-96E3-940F11D0FC1C.png",
+      "bytes": 174182,
+      "sha256": "17fed2675894478797abbfb5f381c311c2ea7bc7b5efb44c9ebf3ae02e0d1d64"
+    }
+  ],
+  "root_visual_review": {
+    "rich_blocks_640_320": "Both native captures displayed and inspected: real table and divider visible with surrounding text, no generic document icon. Rendering test passes.",
+    "activity_expanded_collapsed": "Both displayed and inspected: expanded static parent and blue leaf; collapsed blue parent only. Static captures do not demonstrate temporal sweep.",
+    "composer_moved_origin_rtl": "Displayed and inspected: continuous outer glass contour reaches launcher, one bottom control row inside. Small enclosed native-glass aperture remains without detachment.",
+    "limits": "Native fixture uses actual production shell and activity components, with fixture controls and content. Not full application, keyboard, live network, temporal animation, or physical iPad acceptance."
+  },
+  "other_jobs_skipped": 26,
+  "testflight_dispatched": false
+}

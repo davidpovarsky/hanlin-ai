@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "status": "FAIL",
+  "workflow_run": 45034845488,
+  "workflow_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45034845488",
+  "artifact": {
+    "id": 14760530021,
+    "name": "chat-regression-native-45034845488",
+    "zip_bytes": 286097090,
+    "zip_sha256": "0536cdf857d3237689b47d22391f8dc9e4bc048c9bfdab984bdb7597f345bfaf",
+    "zip_download_digest_verified": true
+  },
+  "sources": {
+    "app": "ae453ef2b2e653ceef45b81c5c0cd5a69d6635e9",
+    "baseline_app": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+    "baseline_renderer": "ebbbf889276098f3642448e5439ad049c3cd2d6c",
+    "candidate_renderer": "b1de83c3ee465e6bd75967a8e9cd162e6f88d723",
+    "candidate_manifest_sha256": "d4680fa920a03cddaeefbfefd648d7d8c8faf0086683848bc09e6830632ae38e"
+  },
+  "baseline": {
+    "exit_code": 65,
+    "tests": 1,
+    "failed": 1,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "RichBlockAttachmentRenderingTests.testProviderLookupUsesRichRenderer()",
+        "message": "XCTUnwrap failed: expected non-nil value of type \"NSTextAttachmentViewProvider\""
+      }
+    ],
+    "status": "EXPECTED_PROVIDER_FAILURE"
+  },
+  "candidate": {
+    "exit_code": 65,
+    "tests": 4,
+    "failed": 2,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "RichBlockAttachmentRenderingTests.testNativeDocumentDisplaysDividerAndTableAcrossWidths()",
+        "message": "XCTAssertTrue failed - Rich attachments must have their hosted content and fill the native line"
+      },
+      {
+        "test": "RichBlockAttachmentRenderingTests.testNativeDocumentDisplaysDividerAndTableAcrossWidths()",
+        "message": "XCTAssertTrue failed - The table must occupy its real content height"
+      },
+      {
+        "test": "RichBlockAttachmentRenderingTests.testProviderLookupUsesRichRenderer()",
+        "message": "XCTAssertEqual failed: (\"nil\") is not equal to (\"Optional(\"com.hanlin.markdown.rich-block\")\")"
+      }
+    ],
+    "status": "FAIL"
+  },
+  "candidate_failure_assertion_occurrences": 5,
+  "images": 16,
+  "frame_receipts": 12,
+  "attachments": [
+    {
+      "name": "activity-collapsed-parent",
+      "file": "B5F6C134-FCF8-436B-A422-CB5B44348A55.png",
+      "bytes": 222257,
+      "sha256": "23266631579fd99102091c46c5f35bef3dc07598b48cc9c34e69ff6406e98e99",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "activity-expanded-leaf",
+      "file": "B2A7421B-0698-497F-8485-A2ADC065E9F2.png",
+      "bytes": 226876,
+      "sha256": "241748aca614c354a2a1cc6ec30cab8ca2e2e042180fbd20044080966079f8de",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "moved-origin-rtl-corrected-frames",
+      "file": "6ACEF9CC-0F21-4D0E-8EFD-55784A78C5DD.json",
+      "bytes": 627,
+      "sha256": "58df5072984007f49f7f46119f852676768303c7ab44d50fb3b4e6199af96551",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "moved-origin-rtl-corrected",
+      "file": "0983E1DD-8D54-4694-8295-0F86823173C6.png",
+      "bytes": 10807882,
+      "sha256": "46beac5a46becce878fa195f04135d8be85425154f698bed81dba6ed7458fb0c",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "moved-origin-rtl-145801-frames",
+      "file": "6DAD3140-474B-45F2-BB3B-A10CCBDB0578.json",
+      "bytes": 627,
+      "sha256": "58df5072984007f49f7f46119f852676768303c7ab44d50fb3b4e6199af96551",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "moved-origin-rtl-145801",
+      "file": "14B7F3C0-E3A7-4C90-B4BE-23AE9B980B55.png",
+      "bytes": 10818138,
+      "sha256": "cc868c2ccbb1df6a5a7eb2d6bcb264e7856e186012da83cb9192ee7bacad1329",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "expanded-rtl-corrected-frames",
+      "file": "F04A6989-FAEB-450C-8881-B18375EF961B.json",
+      "bytes": 628,
+      "sha256": "d3dfac009b33ac56bab9b1aeb75e49b7bb0a26862f7380247bd01e023a9e8fdf",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "expanded-rtl-corrected",
+      "file": "371BAA74-BC6C-401A-BBB0-7783AB8C99CD.png",
+      "bytes": 9521363,
+      "sha256": "ad50e5e129394a24fb8a4014ac6f04fb38996712d5ab8aa88717790a616c9f50",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "expanded-rtl-145801-frames",
+      "file": "2451CD2B-668D-4E0C-A3F1-E11FEA771E12.json",
+      "bytes": 628,
+      "sha256": "d3dfac009b33ac56bab9b1aeb75e49b7bb0a26862f7380247bd01e023a9e8fdf",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "expanded-rtl-145801",
+      "file": "DA2A9343-AAEA-4572-84C6-3891D8B7359A.png",
+      "bytes": 9531400,
+      "sha256": "ef41dbb6a59067a0ae4648681f9845afad7586cae75a1f44ebb463a24c685c66",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "narrow-long-rtl-corrected-frames",
+      "file": "69AA4CF0-A7EF-4439-8E7B-2D1A539786B3.json",
+      "bytes": 627,
+      "sha256": "8b835497c76998ef6c1eedbfbde964270297d9c5f5f5bb7e313e390b512baa05",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "narrow-long-rtl-corrected",
+      "file": "F509F3DB-BD64-4E3C-A07B-384EAC7E3A03.png",
+      "bytes": 11300315,
+      "sha256": "b6832fa572251ec9e7841a2bfc30f4c2f7395673bb0d4806518d5a5ef4c71a34",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "narrow-long-rtl-145801-frames",
+      "file": "3E3D4DBB-3A23-454D-A313-8968AD166E03.json",
+      "bytes": 627,
+      "sha256": "8b835497c76998ef6c1eedbfbde964270297d9c5f5f5bb7e313e390b512baa05",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "narrow-long-rtl-145801",
+      "file": "062C3E8B-2654-4B44-AA74-EA30F350DBDB.png",
+      "bytes": 11352719,
+      "sha256": "e72990690d3d0015d7d3731a5313ce7a90317bfe29b2e125da613456b6f09b4e",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "wide-long-corrected-frames",
+      "file": "7F6B797A-5344-4953-AA3E-C4A6DE53C4AA.json",
+      "bytes": 628,
+      "sha256": "59f96d05c95ec0a7e312c88c3af97500d34a25292069faa2f1b3fb6ce8f2d4fc",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "wide-long-corrected",
+      "file": "A468E532-2FBA-4D55-808A-84C140735433.png",
+      "bytes": 10107611,
+      "sha256": "661ec181fa30baa8a305c7d259bab89bae244e56004b62311114757c386026d8",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "wide-long-145801-frames",
+      "file": "FFD7B394-4A3E-4383-81E4-5E83ED843B01.json",
+      "bytes": 628,
+      "sha256": "59f96d05c95ec0a7e312c88c3af97500d34a25292069faa2f1b3fb6ce8f2d4fc",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "wide-long-145801",
+      "file": "FC586F0A-C7A3-4210-8D21-34ED79855D56.png",
+      "bytes": 10133538,
+      "sha256": "d6f00a53d84daa36071f84a89e522d25cf254bd9f75b70ba91d51083cf59b4d6",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "narrow-empty-rtl-corrected-frames",
+      "file": "461F3B36-53B6-4FF0-9C46-3E8B9C38F23A.json",
+      "bytes": 626,
+      "sha256": "dcdb22d7c94c2a3950e948df8715bffb2f0d9cae7947ba5d94392098200b1c71",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "narrow-empty-rtl-corrected",
+      "file": "2E4438BF-72A1-4F6F-B938-8C56D450E6C7.png",
+      "bytes": 11406811,
+      "sha256": "950d87cdd24ef75da5cf3cfbc6f4cad8c8148989a915428e6b460315ebd91002",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "narrow-empty-rtl-145801-frames",
+      "file": "84494C38-F9C8-4B96-9F41-7A39AD8402E2.json",
+      "bytes": 626,
+      "sha256": "dcdb22d7c94c2a3950e948df8715bffb2f0d9cae7947ba5d94392098200b1c71",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "narrow-empty-rtl-145801",
+      "file": "5B79EE56-F99C-4A09-85A6-20BF0B9F3E1B.png",
+      "bytes": 11431255,
+      "sha256": "54fa2c28bac75ddb31a59b2c98e25e0003030ad80a1ec23055fa7c9a271cc11b",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "wide-empty-corrected-frames",
+      "file": "D64CDFB1-9934-42AB-9B08-4821387B193A.json",
+      "bytes": 627,
+      "sha256": "49788356d376ab00bf18dd99266021ce80114a0bfea2e931399682f3626e7dee",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "wide-empty-corrected",
+      "file": "2049CAC3-53C1-4FB1-9B05-FE06A67BA425.png",
+      "bytes": 10492971,
+      "sha256": "eb436fae43ca3e9459b5479868db98f80e3000415ec7f8355a55282f044ef1fd",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "wide-empty-145801-frames",
+      "file": "6F309CB7-9034-42D8-B772-733D02A5980C.json",
+      "bytes": 627,
+      "sha256": "49788356d376ab00bf18dd99266021ce80114a0bfea2e931399682f3626e7dee",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "wide-empty-145801",
+      "file": "CEF00BCA-A8EE-44BC-9218-CCBECDBFFFCB.png",
+      "bytes": 10491186,
+      "sha256": "32712bd8691e6d0fc1ceb1c8f8f016c9f8cd65565017a389eac59b2760828d18",
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()"
+    },
+    {
+      "name": "rich-blocks-width-320",
+      "file": "F2D9E718-A9C9-4D94-8694-7E7F1881CE0E.png",
+      "bytes": 142746,
+      "sha256": "8045d8a0273b56f729905e16747cea5f598ebabf5be76a31a7fab04fa4cb107c",
+      "test": "RichBlockAttachmentRenderingTests/testNativeDocumentDisplaysDividerAndTableAcrossWidths()"
+    },
+    {
+      "name": "rich-blocks-width-640",
+      "file": "BA79DCB6-B5F4-4BCC-B88C-B41DBE675B50.png",
+      "bytes": 145752,
+      "sha256": "fcdb6e6ff026797d7b97af50ce4f62f05a2ae1acf6b823d268584bd950d0e672",
+      "test": "RichBlockAttachmentRenderingTests/testNativeDocumentDisplaysDividerAndTableAcrossWidths()"
+    }
+  ],
+  "root_visual_review": {
+    "composer_scenarios_inspected": [
+      "wide-empty",
+      "narrow-empty-rtl",
+      "wide-long",
+      "narrow-long-rtl",
+      "expanded-rtl",
+      "moved-origin-rtl"
+    ],
+    "composer_observation": "Candidate material visibly reaches the plus/close button in all six mounted scenarios; old material merges only with the upper input edge. Fixture controls keep the same positions. A small native glass aperture remains beside the button.",
+    "activity_observation": "Expanded capture shows static parent and blue active child. Collapsed capture shows blue visible parent. Static images cannot prove the complete sweep timing or live tool event propagation.",
+    "markdown_observation": "The table and divider are not correctly visible at either 640 or 320 points. Native geometry and provider content-type tests fail. This is not an accepted candidate.",
+    "limits": [
+      "Mounted package fixture, not the full app screen",
+      "No physical iPad acceptance",
+      "No real keyboard, provider request, microphone, live approval or background run acceptance",
+      "No TestFlight upload in this workflow",
+      "Frame sources use different coordinate spaces; before/after equality does not by itself assert control containment."
+    ]
+  }
+}
