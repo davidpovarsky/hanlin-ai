@@ -44,7 +44,23 @@ struct AgentEventAccumulator {
       assert(AgentTranscriptValidation.satisfiesCompletedRunInvariant(run))
     }
 
+    // A provider's real output takes over from request latency. Neither
+    // transport prose nor an unrelated late request-end can revive/erase it.
     switch event {
+    case .reasoningStarted, .reasoningDelta, .answerSegmentStarted, .answerSegmentDelta,
+         .toolCallStarted, .toolCallArgumentsDelta, .toolCallCompleted,
+         .toolExecutionStarted, .toolApprovalChanged, .searchStarted,
+         .runCompleted, .runFailed, .runCancelled:
+      run.pendingModelRequestID = nil
+    default: break
+    }
+
+    switch event {
+    case .modelRequestStarted(let id):
+      guard !id.isEmpty else { return }
+      run.pendingModelRequestID = id
+    case .modelRequestEnded(let id):
+      if run.pendingModelRequestID == id { run.pendingModelRequestID = nil }
     case .sourceObserved(let source):
       evidence.insert(contentsOf: [source])
     case .sourceCitations(let segmentID, let citations):
@@ -625,6 +641,7 @@ final class AgentRunCoordinator {
   init(continuingActivity original: AgentRun) {
     var run = original
     run.status = .running; run.completedAt = nil
+    run.pendingModelRequestID = nil
     runID = run.id
     accumulator = AgentEventAccumulator(run: run)
   }

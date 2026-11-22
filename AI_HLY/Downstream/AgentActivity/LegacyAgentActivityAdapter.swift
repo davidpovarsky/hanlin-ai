@@ -34,7 +34,7 @@ enum LegacyAgentActivityAdapter {
         }
 
         if let reasoning = assistantMessages.compactMap(\.reasoning).first(where: { !$0.isEmpty }) {
-            appendStep(AgentActivityStep(sequence: sequence, kind: .reasoning, title: String(localized: "Thinking"), status: .completed, startedAt: first.timestamp, completedAt: first.timestamp, output: reasoning))
+            appendStep(AgentActivityStep(externalID: "legacy-reasoning:\(first.id.uuidString)", sequence: sequence, kind: .reasoning, title: String(localized: "Thinking"), status: .completed, startedAt: first.timestamp, completedAt: first.timestamp, output: reasoning))
         }
 
         for searchMessage in sortedMessages where searchMessage.role == "search" {

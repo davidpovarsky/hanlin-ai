@@ -30,6 +30,8 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var contextGeneration: UUID?
     @ObservationIgnored private var activeUIRunID: UUID?
     @ObservationIgnored private var activeReference: HanlinAppAgentRowReference?
+    @ObservationIgnored private weak var activeUserOperation: RuntimeUserOperation?
+    @ObservationIgnored private var pendingConsentOperation: (requestID: UUID, operation: RuntimeUserOperation)?
     @ObservationIgnored private var completion: HanlinAgentRunCompletion?
     @ObservationIgnored private var starting = false
     @ObservationIgnored private var historyGeneration: UUID?
@@ -48,11 +50,23 @@ final class HanlinAppAgentSessionOwner {
         self.splitCoordinator = splitCoordinator
         consent.onChange = { [weak self] request, allowed in
             guard let self else { return }
+            // Native Host consent bypasses the adapter's event callback. Bind
+            // the original admitted operation, not the TaskLocal of a later
+            // user answer or shared Host worker. Retain it across the review.
+            if allowed == nil, let operation = activeUserOperation {
+                pendingConsentOperation = (request.id, operation)
+                operation.updateApproval(id: request.providerCallID, isPending: true)
+            } else if allowed != nil, let pending = pendingConsentOperation, pending.requestID == request.id {
+                pending.operation.updateApproval(id: request.providerCallID, isPending: false)
+            }
             let review = request.originalArgumentsJSON.map { String(decoding: $0, as: UTF8.self) } ?? "{}"
             onApprovalEvent?(pendingApprovalRowID, .init(id: request.activityID,
                 canonicalRunID: request.canonicalRunID, callID: request.providerCallID,
                 toolName: request.tool, reviewText: AgentDiagnosticsRedactor.sanitize(review),
                 disposition: allowed.map { $0 ? (request.remembersDecision ? .allowedAlways : .allowedOnce) : .notApproved } ?? .awaiting))
+            if allowed != nil, pendingConsentOperation?.requestID == request.id {
+                pendingConsentOperation = nil
+            }
         }
     }
 
@@ -75,6 +89,7 @@ final class HanlinAppAgentSessionOwner {
         // A program may declare several independent Query blocks. Serialize them
         // through the one existing Session; each obtains fresh Host admission.
         let previous = inlineToolTail
+        let userOperation = RuntimeUserOperation.current
         let id = UUID()
         let work = Task { @MainActor [weak self] in
             await previous?.value
@@ -86,6 +101,7 @@ final class HanlinAppAgentSessionOwner {
             inlineToolRowID = rowID
             inlineToolIsRunning = true
             activeUIRunID = binding.reference.uiRunID; activeReference = binding.reference; completion = nil
+            activeUserOperation = userOperation
             let previousCallbacks = adapter.callbacks
             let previousApproval = onApprovalEvent
             adapter.callbacks.onAgentEvent = onEvent
@@ -96,6 +112,7 @@ final class HanlinAppAgentSessionOwner {
                 adapter.callbacks = previousCallbacks; onApprovalEvent = previousApproval
                 inlineToolRowID = nil; inlineToolIsRunning = false
                 activeUIRunID = nil; activeReference = nil
+                activeUserOperation = nil
             }
             let reference = "hanlin.app.row.v1:" + (try JSONEncoder().encode(HanlinAppAgentStoredRowReference(reference: binding.reference, session: session.identity))).base64EncodedString()
             let output = try await session.executePresentationTool(request, alias: alias,
@@ -269,6 +286,7 @@ final class HanlinAppAgentSessionOwner {
                 engineFactory: @MainActor () async throws -> HanlinAISDKAgentEngine, toolAdapter: HanlinAISDKToolAdapter?,
                 messages: [HanlinAISDKMessage], systemPrompt: String?, dataAccess: DataAccess? = nil,
                 transport: HanlinAISDKTurnTransport? = nil) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
+        let userOperation = RuntimeUserOperation.current
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
         guard request.conversation.id == request.conversationID else { throw HanlinHostError.staleContext }
         if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
@@ -383,6 +401,7 @@ final class HanlinAppAgentSessionOwner {
         }
         if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
         activeUIRunID = request.uiRunID; activeReference = reference; completion = nil
+        activeUserOperation = userOperation
         do {
             if let interaction = request.interaction {
                 guard bindings.contains(where: { $0.session == interaction.origin.session && $0.canonicalRunID == interaction.origin.runID
@@ -394,7 +413,11 @@ final class HanlinAppAgentSessionOwner {
             return try await session.stream(messages: messages, systemPrompt: effectiveSystemPrompt,
                 modelReference: .init(provider: descriptor.kind.rawValue, modelID: descriptor.modelID),
                 structuredResponse: native, presentationReference: referenceData, transport: transport)
-        } catch { activeUIRunID = nil; activeReference = nil; throw error }
+        } catch {
+            activeUIRunID = nil; activeReference = nil
+            activeUserOperation = nil
+            throw error
+        }
     }
 
     func receive(_ event: HanlinAgentEvent, uiRunID: UUID) throws {
@@ -415,11 +438,25 @@ final class HanlinAppAgentSessionOwner {
         try presentation?.receive(event, binding: binding)
     }
 
+    /// This is a receipt query for the event just consumed, never a current-selection
+    /// lookup. Empty, rejected, repeated and historical structured parts cannot end
+    /// a different request's waiting/reasoning status.
+    func hasVisibleModelOutput(_ event: HanlinAgentEvent, uiRunID: UUID) -> Bool {
+        guard activeUIRunID == uiRunID, let reference = activeReference,
+              event.session == session?.identity,
+              contextGeneration == event.session.context.generation,
+              let binding = bindings.first(where: {
+                  $0.session == event.session && $0.canonicalRunID == event.runID
+              }), binding.reference == reference else { return false }
+        return presentation?.hasVisibleModelOutput(event) == true
+    }
+
     func producerStreamDrained(uiRunID: UUID) throws {
         guard activeUIRunID == uiRunID, let completion, completion.session == session?.identity else { throw HanlinHostError.staleContext }
         guard case .completed = completion.outcome else { throw HanlinHostError.cancelled }
         presentation?.producerStreamDrained(runID: completion.runID)
         activeUIRunID = nil; activeReference = nil
+        activeUserOperation = nil
     }
 
     /// User-requested clear history uses the same original store and revision chain.
@@ -461,6 +498,7 @@ final class HanlinAppAgentSessionOwner {
         if let session { splitCoordinator.invalidate(session: session.identity) }
         if let session { presentation?.invalidated(session.identity) }
         activeUIRunID = nil; activeReference = nil
+        activeUserOperation = nil
     }
 
     func invalidate() async { await invalidate(preservingDataAccess: nil) }

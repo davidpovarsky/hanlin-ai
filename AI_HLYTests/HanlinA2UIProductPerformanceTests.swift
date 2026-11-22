@@ -130,6 +130,7 @@ final class HanlinA2UIProductPerformanceTests: XCTestCase {
         var firstSurfaceAdmitted: Double?
         var originalModels = [String: ObjectIdentifier]()
         var lastEvent: HanlinAgentEvent?
+        var checkedDuplicateVisibleOutput = false
         let source = try await owner.stream(request: .init(conversation: conversation,
             conversationID: conversationID, sceneID: sceneID, rowID: messageID, uiRunID: uiRunID,
             temporary: false, interaction: nil), modelContext: context, configuration: configuration,
@@ -137,9 +138,33 @@ final class HanlinA2UIProductPerformanceTests: XCTestCase {
             messages: [.init(role: .user, text: "Show the original benchmark content")], systemPrompt: nil)
         do {
             for try await event in source {
+                XCTAssertFalse(owner.hasVisibleModelOutput(event, uiRunID: uiRunID),
+                    "An unconsumed part has no presentation receipt")
                 try owner.receive(event, uiRunID: uiRunID)
                 lastEvent = event
                 if case .structuredPart(let part) = event.event {
+                    let hasVisibleOutput = owner.hasVisibleModelOutput(event, uiRunID: uiRunID)
+                    XCTAssertFalse(owner.hasVisibleModelOutput(event, uiRunID: UUID()),
+                        "A presentation receipt belongs only to its original UI run")
+                    switch part.payload {
+                    case .textDelta:
+                        XCTAssertFalse(hasVisibleOutput, "Text uses the existing text-delta boundary")
+                    case .a2uiMessage:
+                        let projection = rendered.projection
+                        let acceptedPart = projection?.parts.first { $0.id == part.partID }
+                        let surface = acceptedPart.flatMap { projection?.surface(for: $0) }
+                        let hasRoot = surface?.surfaceIDs.contains {
+                            surface?.surface($0)?.componentsModel.components["root"] != nil
+                        } == true
+                        XCTAssertEqual(hasVisibleOutput, hasRoot,
+                            "A create/data frame without a real root is not visible model output")
+                        if hasVisibleOutput && !checkedDuplicateVisibleOutput {
+                            try owner.receive(event, uiRunID: uiRunID)
+                            XCTAssertFalse(owner.hasVisibleModelOutput(event, uiRunID: uiRunID),
+                                "An exact replay cannot end a later model request")
+                            checkedDuplicateVisibleOutput = true
+                        }
+                    }
                     if firstCanonical == nil { firstCanonical = ProcessInfo.processInfo.systemUptime }
                     delivered.append(part)
                     receivedAt.append(ProcessInfo.processInfo.systemUptime)
@@ -169,6 +194,11 @@ final class HanlinA2UIProductPerformanceTests: XCTestCase {
         } catch {
             await owner.invalidate()
             throw error
+        }
+        XCTAssertTrue(checkedDuplicateVisibleOutput)
+        if let lastEvent {
+            XCTAssertFalse(owner.hasVisibleModelOutput(lastEvent, uiRunID: uiRunID),
+                "Drained runs cannot emit a new live visibility receipt")
         }
         let completed = ProcessInfo.processInfo.systemUptime
         let cpuEnd = clock()

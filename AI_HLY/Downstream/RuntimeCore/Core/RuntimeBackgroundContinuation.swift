@@ -60,7 +60,7 @@ final class RuntimeBackgroundContinuation {
         entries[operation.id]?.handoffID = handoffID
         logger.info("Requested continuation for \(operation.id.uuidString, privacy: .public)")
         let title = "Hanlin"
-        let subtitle = String(localized: "Progress is saved as work continues", table: "RuntimeLocalizable")
+        let subtitle = subtitle(for: operation.snapshot.presentation)
         // iOS 27 submission is asynchronous and belongs off the main thread.
         Task.detached(priority: .userInitiated) { [weak self, weak operation] in
             guard let operation, !operation.snapshot.finished else { return }
@@ -147,36 +147,60 @@ final class RuntimeBackgroundContinuation {
                 self.end(operation)
             }
         }
-        publishProgress(operation.snapshot, to: task)
+        let initialSnapshot = operation.snapshot
+        publishProgress(initialSnapshot, to: task)
         if entry.handoffID != .invalid { UIApplication.shared.endBackgroundTask(entry.handoffID) }
         entry.handoffID = .invalid
         entry.task = task
         entry.progressObserver = Task { @MainActor [weak self, weak operation, weak task] in
-            var lastUnits = operation?.snapshot.completedWorkUnits
+            // Compare against the state actually published above. The producer
+            // can advance before this scheduled observer first starts running.
+            var lastUnits = initialSnapshot.completedWorkUnits
+            var lastPresentation = initialSnapshot.presentation
             while !Task.isCancelled {
                 do { try await Task.sleep(for: .milliseconds(500)) } catch { return }
                 guard let self, let operation, let task else { return }
                 let snapshot = operation.snapshot
                 guard !snapshot.finished else { return }
-                guard snapshot.completedWorkUnits != lastUnits else { continue }
+                let presentationChanged = snapshot.presentation != lastPresentation
+                guard snapshot.completedWorkUnits != lastUnits || presentationChanged else { continue }
                 lastUnits = snapshot.completedWorkUnits
-                self.publishProgress(snapshot, to: task)
+                lastPresentation = snapshot.presentation
+                self.publishProgress(snapshot, to: task, updatePresentation: presentationChanged)
             }
         }
         entries[operation.id] = entry
         logger.info("Continuation launched for \(operation.id.uuidString, privacy: .public)")
     }
 
-    private func publishProgress(_ snapshot: RuntimeUserOperation.Snapshot, to task: BGContinuedProcessingTask) {
+    private func publishProgress(_ snapshot: RuntimeUserOperation.Snapshot, to task: BGContinuedProcessingTask,
+                                 updatePresentation: Bool = true) {
         // A negative total fixes fractionCompleted at zero even while bytes
         // arrive. Track actual discovered/processed units and finalization;
         // reading this snapshot or passing time never advances progress.
         task.progress.totalUnitCount = snapshot.progressTotalUnits
         task.progress.completedUnitCount = snapshot.progressCompletedUnits
-        if snapshot.outputBytes > 0 {
-            let received = ByteCountFormatter.string(fromByteCount: snapshot.outputBytes, countStyle: .file)
-            task.updateTitle("Hanlin", subtitle: String(format:
-                String(localized: "Processed %@", table: "RuntimeLocalizable"), received))
+        if updatePresentation {
+            task.updateTitle("Hanlin", subtitle: subtitle(for: snapshot.presentation))
+        }
+    }
+
+    private func subtitle(for presentation: RuntimeUserOperation.Presentation) -> String {
+        switch presentation {
+        case .waitingForResponse:
+            String(localized: "Waiting for a response", table: "RuntimeLocalizable")
+        case .thinking:
+            String(localized: "Thinking", table: "RuntimeLocalizable")
+        case .responding:
+            String(localized: "Writing the response", table: "RuntimeLocalizable")
+        case .awaitingApproval:
+            String(localized: "Waiting for your approval", table: "RuntimeLocalizable")
+        case .tool(let title):
+            title
+        case .completed:
+            String(localized: "Response complete", table: "RuntimeLocalizable")
+        case .stopped:
+            String(localized: "Response stopped", table: "RuntimeLocalizable")
         }
     }
 

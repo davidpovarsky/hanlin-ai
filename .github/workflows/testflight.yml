@@ -94,6 +94,12 @@ jobs:
           clean: true
           fetch-depth: 1
 
+      - name: Validate chat status and permission translations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/validate_chat_localization.py
+
       - name: Live Activity · refresh
         timeout-minutes: 1
         uses: davidpovarsky/github-automation/live-refresh@main
@@ -553,6 +559,7 @@ jobs:
           ditto -x -k "$IPA_PATH" "$verify_dir"
           app=$(find "$verify_dir/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)
           test -d "$app"
+          python3 Scripts/CI/validate_chat_localization.py --app "$app" --output "$BUILD_DIR/logs/chat-localization-packaged.json"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")" = "$APP_BUNDLE_ID"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")" = "Hanlin AI"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Info.plist")" = "$BUILD_NUMBER"

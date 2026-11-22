@@ -1,6 +1,52 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Waiting for model response" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for model response"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ממתין לתגובת המודל"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "等待模型响应"
+          }
+        }
+      }
+    },
+    "Thought for %@" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thought for %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חשב במשך %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "思考了%@"
+          }
+        }
+      }
+    },
     "The permission change could not be saved. Please try again." : {
       "extractionState": "manual",
       "localizations": {
@@ -13,13 +59,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "?? ???? ????? ?? ????? ??????. ?? ????? ???."
+            "value": "לא ניתן לשמור את שינוי ההרשאה. נסה שוב."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "?????????????"
+            "value": "无法保存权限更改，请重试。"
           }
         }
       }
@@ -36,13 +82,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "??????? ??????? ???? ??? ?????? ??? ?????? ???. ?????? ?????? ????? ??????? ???????."
+            "value": "ההרשאות שנשמרו חלות על כל השיחות שלך במכשיר הזה. הרשאות המערכת מנוהלות בהגדרות."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "????????????????????????????????"
+            "value": "已保存的权限适用于此设备上的所有对话。系统权限仍在设置中管理。"
           }
         }
       }
@@ -59,13 +105,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "????? ?? ?????? ?????"
+            "value": "ביטול כל הרשאות הכלים"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "????????"
+            "value": "撤销所有工具权限"
           }
         }
       }
@@ -82,13 +128,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "????? ????? ???? %@"
+            "value": "ביטול ההרשאה עבור %@"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "?? %@ ???"
+            "value": "撤销 %@ 的权限"
           }
         }
       }
@@ -105,13 +151,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "????? ?????"
+            "value": "ביטול הרשאה"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "????"
+            "value": "撤销权限"
           }
         }
       }
@@ -128,13 +174,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "???? ?????? ????? ????? ???? ?????? ??????."
+            "value": "כלים רגישים יבקשו אישור לפני השימוש הראשון."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "????????????????"
+            "value": "敏感工具会在首次使用前请求许可。"
           }
         }
       }
@@ -151,13 +197,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "??? ?????? ???? ??????"
+            "value": "אין הרשאות כלים שמורות"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "??????????"
+            "value": "没有已保存的工具权限"
           }
         }
       }
@@ -174,13 +220,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "?????? ????"
+            "value": "הרשאות כלים"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "????"
+            "value": "工具权限"
           }
         }
       }
@@ -197,13 +243,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "?????"
+            "value": "צמצום"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "??"
+            "value": "收起"
           }
         }
       }
@@ -220,13 +266,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "?????? ???? ???? ?? ?????? ?????? ???."
+            "value": "ההרשאה הזאת תחול גם בשיחות האחרות שלך."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "???????????????"
+            "value": "此权限也适用于你的其他对话。"
           }
         }
       }
@@ -243,13 +289,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "????? ??????"
+            "value": "לאשר ולזכור"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "?????"
+            "value": "允许并记住"
           }
         }
       }
@@ -266,13 +312,13 @@
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "???? ?????"
+            "value": "אושר ונשמר"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "??????"
+            "value": "已允许并记住"
           }
         }
       }

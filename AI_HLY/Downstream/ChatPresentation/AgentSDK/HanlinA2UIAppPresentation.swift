@@ -31,6 +31,7 @@ final class HanlinA2UIAppPresentation: HanlinAppAgentPresentationConsumer, Hanli
     private var toolReceipts: [String: HanlinHostResultEvent] = [:]
     private(set) var toolSource: HanlinA2UIResultProjectionSource?
     @ObservationIgnored private var synchronizedToolStatus: [UUID: AgentActivityStatus] = [:]
+    @ObservationIgnored private var latestVisibleModelOutput: (runID: UUID, messageID: UUID, partID: UUID, sequence: UInt64)?
 
     var modelInstructions: String? { HanlinMediaCatalog.modelGuidance }
 
@@ -115,6 +116,7 @@ final class HanlinA2UIAppPresentation: HanlinAppAgentPresentationConsumer, Hanli
     }
 
     func receive(_ event: HanlinAgentEvent, binding: HanlinAppAgentRowBinding) throws {
+        latestVisibleModelOutput = nil
         guard binding.session == event.session, binding.canonicalRunID == event.runID,
               binding.reference.messageID == binding.reference.rowID,
               session?.identity == binding.session, live?.identity == binding.session else { throw BindingError.mismatch }
@@ -128,7 +130,19 @@ final class HanlinA2UIAppPresentation: HanlinAppAgentPresentationConsumer, Hanli
         }) else { throw BindingError.ambiguous }
         guard rows[row] != nil || rows.count < 256 else { throw BindingError.resourceLimit }
         if rows[row] != binding { rows[row] = binding }
-        _ = try live?.receive(event)
+        let admitted = try live?.receive(event) == true
+        if admitted, case .structuredPart(let part) = event.event,
+           live?.hasRenderableModelPart(runID: event.runID, part: part) == true {
+            latestVisibleModelOutput = (event.runID, part.messageID, part.partID, part.sequence)
+        }
+    }
+
+    func hasVisibleModelOutput(_ event: HanlinAgentEvent) -> Bool {
+        guard event.session == session?.identity, case .structuredPart(let part) = event.event,
+              let receipt = latestVisibleModelOutput,
+              receipt.runID == event.runID, receipt.messageID == part.messageID,
+              receipt.partID == part.partID, receipt.sequence == part.sequence else { return false }
+        return live?.hasRenderableModelPart(runID: event.runID, part: part) == true
     }
 
     func completed(_ completion: HanlinAgentRunCompletion) {

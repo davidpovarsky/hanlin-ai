@@ -125,6 +125,9 @@ struct AgentToolApproval: Codable, Hashable, Sendable, Identifiable {
 enum AgentEvent: @unchecked Sendable {
   case runStarted(AgentRunMetadata)
   case modelRoundStarted(id: String)
+  /// Emitted only by an actual provider request, never inferred from run/round creation.
+  case modelRequestStarted(id: String)
+  case modelRequestEnded(id: String)
   case reasoningStarted(AgentItemMetadata)
   case reasoningDelta(id: String, text: String)
   case reasoningCompleted(id: String)

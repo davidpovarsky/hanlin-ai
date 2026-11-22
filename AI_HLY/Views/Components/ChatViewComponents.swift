@@ -2120,9 +2120,18 @@ struct ChatBubbleView: View {
     }
 
     private var hasAgentActivity: Bool {
-        showsAgentActivitySummary && (toolApproval != nil || agentRun?.steps.contains {
-            AgentActivityCompositionPolicy.isVisibleToolActivity($0)
+        showsAgentActivitySummary && (toolApproval != nil || hasLiveModelRequest || agentRun?.steps.contains {
+            AgentActivityCompositionPolicy.isVisibleActivity($0)
         } == true || (agentRun == nil && hasToolContentForDisplay))
+    }
+
+    private var hasLiveModelRequest: Bool {
+        AgentActivityHeaderPhase.showsModelRequestStatus(
+            isRunActive: isMotionRunActive && isLastAssistantGroup,
+            requestID: agentRun?.pendingModelRequestID, hasAnswerText: hasStartedAssistantAnswer,
+            hasPendingApproval: toolApproval != nil || agentRun?.approvals.contains {
+                $0.disposition == .awaiting || $0.disposition == .providerRequired
+            } == true)
     }
 
     private var isMotionRunActive: Bool {
@@ -2200,20 +2209,32 @@ struct ChatBubbleView: View {
                         && toolApproval?.callID != $0.id
                         && approvals[$0.id]?.disposition != .awaiting
                         && approvals[$0.id]?.disposition != .providerRequired
-                })
+                },
+                hasActiveReasoning: activities.contains { $0.kind == .reasoning && $0.status == .running },
+                hasPendingModelRequest: hasLiveModelRequest)
         }
 
         private func headerTitle(for phase: AgentActivityHeaderPhase,
                                  activeActivities: [AgentDisplayActivity]) -> String {
             switch phase {
             case .working:
-                return hierarchyIsExpanded ? String(localized: "Tools")
-                    : activeActivities.map(\.title).joined(separator: " · ")
+                return hierarchyIsExpanded ? String(localized: "Thinking & tools")
+                    : (activeActivities.map(\.title) + (hasLiveModelRequest
+                        ? [String(localized: "Waiting for model response")] : [])).joined(separator: " · ")
             case .awaitingApproval: return String(localized: "Waiting for your confirmation")
             case .history: return String(localized: "Activity history")
             }
         }
 
+        private var hasLiveModelRequest: Bool {
+            AgentActivityHeaderPhase.showsModelRequestStatus(isRunActive: isActive,
+                requestID: run?.pendingModelRequestID, hasAnswerText: hasAnswerText,
+                hasPendingApproval: toolApproval != nil || run?.approvals.contains {
+                    $0.disposition == .awaiting || $0.disposition == .providerRequired
+                } == true)
+        }
+
+        private var modelRequestActivityID: String { "model-request:" + (run?.pendingModelRequestID ?? "") }
         private var hierarchyIsExpanded: Bool { isExpanded || toolApproval != nil }
 
         private func roundHasHeader(_ round: AgentDisplayRound) -> Bool {
@@ -2234,22 +2255,26 @@ struct ChatBubbleView: View {
                                       approvals: [String: AgentToolApproval]) -> [AgentDisplayActivity] {
             guard phase == .working else { return [] }
             return activities.filter { activity in
-                guard activity.status == .running, toolApproval?.callID != activity.id,
-                      approvals[activity.id]?.disposition != .awaiting,
-                      approvals[activity.id]?.disposition != .providerRequired else { return false }
-                return activity.kind != .reasoning && activity.kind != .narrative
+                AgentActivityVisibilityPolicy.animatesActivity(kind: activity.kind.rawValue,
+                    status: activity.status.rawValue, isRunActive: isActive, hasAnswerText: hasAnswerText,
+                    isAwaitingApproval: toolApproval?.callID == activity.id
+                        || approvals[activity.id]?.disposition == .awaiting
+                        || approvals[activity.id]?.disposition == .providerRequired)
             }
         }
 
         private func shimmerPaths(rounds: [AgentDisplayRound], activeIDs: Set<String>,
                                   approvals: [String: AgentToolApproval]) -> [AgentActivityShimmerOwner.Path] {
-            let paths = rounds.flatMap { round in
+            var paths = rounds.flatMap { round in
                 round.activities.filter { activeIDs.contains($0.id) }.map { activity in
                     AgentActivityShimmerOwner.Path(activityID: activity.id,
                         roundID: roundHasHeader(round) ? round.id : nil,
                         isRoundExpanded: !collapsedRoundIDs.contains(round.id)
                             || roundIsWaiting(round, approvals: approvals))
                 }
+            }
+            if hasLiveModelRequest {
+                paths.append(.init(activityID: modelRequestActivityID, roundID: nil, isRoundExpanded: true))
             }
             return paths
         }
@@ -2267,7 +2292,7 @@ struct ChatBubbleView: View {
             let shimmerOwners = AgentActivityShimmerOwner.resolve(isWorking: phase.showsShimmer,
                 isHierarchyExpanded: hierarchyIsExpanded, activePaths: paths)
             if timeline?.activities.isEmpty == false
-                || (run == nil && !legacyToolContent.isEmpty) || toolApproval != nil {
+                || (run == nil && !legacyToolContent.isEmpty) || toolApproval != nil || hasLiveModelRequest {
                 DisclosureGroup(isExpanded: Binding(
                     get: { hierarchyIsExpanded }, set: { isExpanded = $0 }
                 )) {
@@ -2287,6 +2312,13 @@ struct ChatBubbleView: View {
                             .disclosureGroupStyle(HanlinActivityDisclosureStyle())
                         }
                     }
+                    if hasLiveModelRequest {
+                        HanlinActivityTitle(String(localized: "Waiting for model response"),
+                            font: HanlinTypography.footnote, baseColor: .secondary,
+                            isActive: shimmerOwners.contains(.activity(modelRequestActivityID)))
+                            .padding(.vertical, 4)
+                            .accessibilityIdentifier("hanlin-model-request-status")
+                    }
                     if let pending = toolApproval,
                        timeline?.activities.contains(where: { $0.id == pending.callID }) != true {
                         // Early delivery keeps the request attached to its real
@@ -2295,7 +2327,7 @@ struct ChatBubbleView: View {
                     }
                 } label: {
                     HanlinActivityHierarchyHeader(title: headerTitle(for: phase, activeActivities: activeActivities),
-                        symbol: "wrench.and.screwdriver", isExpanded: hierarchyIsExpanded,
+                        symbol: "sparkles", isExpanded: hierarchyIsExpanded,
                         isActive: shimmerOwners.contains(.root))
                         .accessibilityIdentifier("hanlin-reasoning-toggle")
                 }
@@ -2314,7 +2346,13 @@ struct ChatBubbleView: View {
             if roundHasHeader(round) {
                 let waiting = roundIsWaiting(round, approvals: approvals)
                 let expanded = !collapsedRoundIDs.contains(round.id) || waiting
-                let activeTitles = round.activities.filter { $0.status == .running }.map(\.title)
+                let activeTitles = round.activities.filter {
+                    AgentActivityVisibilityPolicy.animatesActivity(kind: $0.kind.rawValue,
+                        status: $0.status.rawValue, isRunActive: isActive, hasAnswerText: hasAnswerText,
+                        isAwaitingApproval: toolApproval?.callID == $0.id
+                            || approvals[$0.id]?.disposition == .awaiting
+                            || approvals[$0.id]?.disposition == .providerRequired)
+                }.map(\.title)
                 DisclosureGroup(isExpanded: Binding(
                     get: { !collapsedRoundIDs.contains(round.id) || waiting },
                     set: { if $0 { collapsedRoundIDs.remove(round.id) }
@@ -2323,7 +2361,7 @@ struct ChatBubbleView: View {
                     roundRows(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
                 } label: {
                     HanlinActivityHierarchyHeader(title: !expanded && !activeTitles.isEmpty
-                        ? activeTitles.joined(separator: " · ") : String(localized: "Tools"),
+                        ? activeTitles.joined(separator: " · ") : String(localized: "Thinking & tools"),
                         symbol: "wrench.and.screwdriver", depth: 1, isExpanded: expanded,
                         isActive: shimmerOwners.contains(.round(round.id)))
                 }
@@ -2338,10 +2376,37 @@ struct ChatBubbleView: View {
                                shimmerOwners: Set<AgentActivityShimmerOwner>) -> some View {
             VStack(alignment: .leading, spacing: 3) {
                 ForEach(round.activities) { activity in
-                    activityRow(activity, approval: approvals[activity.id],
-                        isCurrent: shimmerOwners.contains(.activity(activity.id)))
+                    if activity.kind == .reasoning {
+                        reasoningRow(activity, run: run,
+                            isCurrent: shimmerOwners.contains(.activity(activity.id)))
+                    } else {
+                        activityRow(activity, approval: approvals[activity.id],
+                            isCurrent: shimmerOwners.contains(.activity(activity.id)))
+                    }
                 }
             }
+        }
+
+        private func reasoningRow(_ activity: AgentDisplayActivity, run: AgentRun,
+                                  isCurrent: Bool) -> some View {
+            let summary = AgentActivityComposer.reasoningDisplayText(for: activity, in: run)
+            let isPlaceholder = summary == String(localized: "Thinking")
+            let title: String = {
+                if isCurrent || !isPlaceholder { return summary }
+                if let startedAt = activity.startedAt, let completedAt = activity.completedAt {
+                    return String(format: String(localized: "Thought for %@"),
+                        AgentActivityDurationFormatter.string(max(0, completedAt.timeIntervalSince(startedAt))))
+                }
+                // Historical interrupted reasoning has no completion duration.
+                // A stopped run must never advertise present-tense Thinking.
+                return String(localized: "Activity history")
+            }()
+            return HanlinActivityTitle(title, font: HanlinTypography.footnote,
+                baseColor: .secondary, isActive: isCurrent,
+                startedAt: activity.startedAt, stoppedAt: isCurrent ? nil : activity.completedAt)
+                .textSelection(.enabled)
+                .padding(.vertical, 4)
+                .accessibilityIdentifier("hanlin-reasoning-expanded-text")
         }
 
         private func activityIsExpanded(_ id: String) -> Bool {

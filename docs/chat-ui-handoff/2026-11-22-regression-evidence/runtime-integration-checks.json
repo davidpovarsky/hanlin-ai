@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "scope": "Final provider/adapter syntax and unchanged previously executed runtime source; no Apple SDK type check or new runtime execution is claimed.",
+  "started_at": "2026-11-22T13:28:15.006807+00:00",
+  "finished_at": "2026-11-22T13:28:21.568114+00:00",
+  "source_sha256": {
+    "AI_HLY/Downstream/RuntimeCore/Core/RuntimeUserOperation.swift": "be826abc53bcec771236d731756ced6990fc80dd5a9d3ab04ffe85a2c7f5cb08",
+    "Scripts/CI/RuntimeContinuationChecks.swift": "cee2c69c1e587456a9874845a6afd5cbf706027ad6748370d3a82088e285a279",
+    "AI_HLY/Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift": "cd8f6436b9beee8a0dac4735c4e5f6bcf3099b2e5c7c21fc4c1d243d1d7f1132",
+    "AI_HLY/Services/ChatServices/APIManager.swift": "0c691ff011e4a7f804aa247ac2fae010c7e6a82cd4e6d4d02fd979efae221c55",
+    "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift": "ae9a0a2ffda2449f6cab6a697ad4a290b04aa448dd7f651afda532f250791c49",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift": "cc36da1ec9c3272713d416f532c889425561cab4f323715a6f57e12d95af3a6e"
+  },
+  "executed_runtime_check_count": 132,
+  "previous_runtime_receipt_sha256": "bf762d481d68a5e6315b9ceabd3deb40867bfd89de467795f0562cf137d6a51c",
+  "unchanged_runtime_inputs": [
+    "AI_HLY/Downstream/RuntimeCore/Core/RuntimeUserOperation.swift",
+    "Scripts/CI/RuntimeContinuationChecks.swift",
+    "AI_HLY/Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift"
+  ],
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "-D",
+    "HANLIN_A2UI_POC",
+    "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\\AI_HLY\\Services\\ChatServices\\APIManager.swift",
+    "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\\AI_HLY\\Downstream\\AgentSkills\\HanlinAISDKToolAdapter.swift",
+    "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\\AI_HLYTests\\HanlinAppAgentSessionOwnerTests.swift"
+  ],
+  "exit_code": 0,
+  "output": ""
+}
