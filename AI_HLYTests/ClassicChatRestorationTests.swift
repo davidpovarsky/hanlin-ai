@@ -1449,7 +1449,7 @@ struct ClassicChatRestorationTests {
     // MARK: - 23. hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom
 
     @MainActor
-    @Test("23. HanlinComposerPopupCoordinator enforces mutual exclusion across .general, .tools, and .model and V3.3 two-phase expand/shrink state machine")
+    @Test("23. HanlinComposerPopupCoordinator preserves drawer routes across independent model presentation")
     func hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom() throws {
         let coordinator = HanlinComposerPopupCoordinator()
         #expect(coordinator.activePopup == nil)
@@ -1490,9 +1490,11 @@ struct ClassicChatRestorationTests {
         coordinator.markToolsDestinationDisappeared()
         #expect(coordinator.isToolsExpanded == false)
 
-        // 3. Model picker switches atomically from .tools to .model and expands to All Models
+        // 3. Model picker opens independently without replacing the tools drawer.
         coordinator.open(.model, isInputCurrentlyFocused: false)
-        #expect(coordinator.activePopup == .model)
+        #expect(coordinator.isModelPresented)
+        #expect(coordinator.activePopup == .tools)
+        #expect(coordinator.dockState.mode == .tools)
         #expect(coordinator.isModelExpanded == false)
         coordinator.navigateToModelSubpage(.allModels)
         #expect(coordinator.isModelExpanded == true)

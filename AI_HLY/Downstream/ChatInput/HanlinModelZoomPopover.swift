@@ -2,9 +2,9 @@ import SwiftUI
 import SwiftData
 import UIKit
 
-/// UIKit owns the popover's source-item morph; SwiftUI owns its inner geometry morph.
-/// A navigationTransition on a SwiftUI popover's root competes with the inner
-/// destination transition (42539502009 rendered an invisible All Models page).
+/// UIKit owns the system popover morph and its single size transition.
+/// The source is a real bar item, as required by Apple's iOS 26 popover morph;
+/// an arbitrary hosting view only supplies an anchor, not that transition.
 @MainActor
 struct HanlinModelZoomPopover<Source: View, Content: View>: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
@@ -38,7 +38,9 @@ struct HanlinModelZoomPopover<Source: View, Content: View>: UIViewControllerRepr
             source: HanlinModelHostedView(content: source, environment: context.environment),
             content: HanlinModelHostedView(content: content, environment: context.environment),
             isPresented: $isPresented, presentationID: presentationID, contentSize: contentSize,
-            animatedResize: !context.environment.accessibilityReduceMotion && !context.transaction.disablesAnimations,
+            // Route replacement suppresses SwiftUI animations; UIKit still
+            // owns the one popover size animation (except under Reduce Motion).
+            animatedResize: !context.environment.accessibilityReduceMotion,
             onResizeCompleted: onResizeCompleted
         )
     }
@@ -124,19 +126,20 @@ final class HanlinModelSizingHost<Content: View>: UIHostingController<HanlinMode
 
     private func observeResize(_ coordinator: any UIViewControllerTransitionCoordinator, generation: Int) {
         observedNativeTransition = true
-        let registered = coordinator.animate(alongsideTransition: nil) { [weak self] context in
-            let completed = !context.isCancelled
-            Task { @MainActor in self?.finishResize(generation, completed: completed) }
+        let registered = coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+            // Cancellation also settles this resize. Leaving the coordinator
+            // waiting would disable All Models until another layout update.
+            Task { @MainActor in self?.finishResize(generation) }
         }
         if !registered { finishResize(generation) }
     }
 
-    private func finishResize(_ generation: Int, completed: Bool = true) {
+    private func finishResize(_ generation: Int) {
         guard generation == resizeGeneration else { return }
         isResizing = false
         let completion = resizeCompletion
         resizeCompletion = nil
-        if completed, let completion {
+        if let completion {
             // An unchanged/clamped size can finish inside updateUIViewController.
             // Deliver the model mutation after that SwiftUI update, and reject a
             // newer resize that supersedes this queued delivery.
@@ -152,6 +155,8 @@ final class HanlinModelSizingHost<Content: View>: UIHostingController<HanlinMode
 final class HanlinModelPopoverController<Source: View, Content: View>: UIViewController,
     UIPopoverPresentationControllerDelegate {
     private let sourceHost: UIHostingController<HanlinModelHostedView<Source>>
+    private let sourceToolbar = UIToolbar()
+    private lazy var sourceItem = UIBarButtonItem(customView: sourceHost.view)
     private var content: HanlinModelHostedView<Content>
     private var contentSize: CGSize
     private var popupHost: HanlinModelSizingHost<Content>?
@@ -181,15 +186,22 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
         view.backgroundColor = .clear
         addChild(sourceHost)
         sourceHost.view.backgroundColor = .clear
-        sourceHost.view.layer.cornerRadius = 14
-        sourceHost.view.clipsToBounds = true
-        sourceHost.view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(sourceHost.view)
+        sourceHost.view.setContentHuggingPriority(.required, for: .horizontal)
+        sourceHost.view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
+        // Keep the existing SwiftUI label/action, hosted in an actual system
+        // toolbar item. UIKit owns the glass and replaces this item during the
+        // popover morph; no proxy, snapshot or second zoom competes with it.
+        sourceItem.sharesBackground = false
+        sourceToolbar.items = [sourceItem]
+        sourceToolbar.directionalLayoutMargins = .zero
+        sourceToolbar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(sourceToolbar)
         NSLayoutConstraint.activate([
-            sourceHost.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            sourceHost.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            sourceHost.view.topAnchor.constraint(equalTo: view.topAnchor),
-            sourceHost.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            sourceToolbar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            sourceToolbar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            sourceToolbar.topAnchor.constraint(equalTo: view.topAnchor),
+            sourceToolbar.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         sourceHost.didMove(toParent: self)
     }
@@ -199,7 +211,21 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
         reconcilePresentation()
     }
 
-    func sourceSize(in proposal: CGSize) -> CGSize { sourceHost.sizeThatFits(in: proposal) }
+    func sourceSize(in proposal: CGSize) -> CGSize {
+        if proposal.width.isFinite && proposal.width <= 0 {
+            return CGSize(width: 44, height: 44)
+        }
+        let horizontalInset: CGFloat = 16
+        let width = proposal.width.isFinite && proposal.width > 0 ? proposal.width : 10_000
+        let label = sourceHost.sizeThatFits(in: CGSize(
+            width: max(1, width - horizontalInset), height: 10_000))
+        // Reserve the system bar's hit target inside the composer. Measuring
+        // just the 28pt label clips the native glass and its source geometry.
+        let labelWidth = label.width.isFinite ? max(0, label.width) : 0
+        let labelHeight = label.height.isFinite ? max(0, label.height) : 0
+        return CGSize(width: min(width, max(44, labelWidth + horizontalInset)),
+                      height: max(44, labelHeight))
+    }
 
     func update(source: HanlinModelHostedView<Source>, content: HanlinModelHostedView<Content>,
                 isPresented: Binding<Bool>, presentationID: Int, contentSize: CGSize,
@@ -235,16 +261,20 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
             }
             return
         }
-        guard requested, isViewLoaded, view.window != nil, presentedViewController == nil else { return }
+        guard requested, isViewLoaded, view.window != nil,
+              sourceHost.view.window != nil,
+              sourceToolbar.bounds.width.isFinite, sourceToolbar.bounds.height.isFinite,
+              sourceToolbar.bounds.width > 0, sourceToolbar.bounds.height > 0,
+              presentedViewController == nil else { return }
         let host = HanlinModelSizingHost(content: content)
         host.modalPresentationStyle = .popover
         host.view.backgroundColor = .clear
         host.view.clipsToBounds = true
         host.resize(to: contentSize, animated: false) {}
         guard let popover = host.popoverPresentationController else { return }
-        // Public iOS 26+ popover morph. The source contains the actual visible
-        // SwiftUI button, rather than a transparent geometry proxy behind it.
-        popover.sourceItem = sourceHost.view
+        // Apple's documented popover morph is sourceItem = barButtonItem.
+        // navigationTransition(.zoom) is for stacks/sheets, not this popover.
+        popover.sourceItem = sourceItem
         popover.permittedArrowDirections = .down
         popover.delegate = self
         presentedID = requestID

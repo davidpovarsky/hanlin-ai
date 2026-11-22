@@ -67,7 +67,7 @@ public struct HanlinMarkdownView: View {
             .withBlockQuoteStyle(value: body)
             .withHeadingStyle(value: .init(h1Font: fonts(.title1), h2Font: fonts(.title2), h3Font: fonts(.title3),
                 h4Font: fonts(.headline), h5Font: fonts(.subheadline), h6Font: fonts(.subheadline), textColor: .primary))
-            .withTextSelectionConfig(value: .init(isEnabled: false))
+            .withTextSelectionConfig(value: .init(isEnabled: false, continuousSelection: true))
             .withTextContextMenu(value: contextMenuItems.isEmpty ? nil : TextContextMenu(menuGroups: [
                 TextContextMenuGroup(title: nil, image: nil, displayInline: true, items: contextMenuItems)
             ]))

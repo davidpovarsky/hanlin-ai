@@ -13,6 +13,7 @@ public struct HanlinToolActivityHeader: View {
     private let symbol: String
     private let family: Family
     private let active: Bool
+    private let shimmerActive: Bool
     private let expanded: Bool
     private let isFailure: Bool
     private let sources: [HanlinSourceReference]
@@ -33,11 +34,12 @@ public struct HanlinToolActivityHeader: View {
     private let blue = Color(red: 0.28, green: 0.49, blue: 0.80)
 
     public init(title: String, status: String, symbol: String, family: Family = .generic,
-                isActive: Bool, isExpanded: Bool = false, isFailure: Bool = false,
+                isActive: Bool, showsShimmer: Bool? = nil, isExpanded: Bool = false, isFailure: Bool = false,
                 startedAt: Date? = nil, completedAt: Date? = nil,
                 sources: [HanlinSourceReference] = []) {
         self.title = title; self.status = status; self.symbol = symbol
         self.family = family; self.active = isActive; self.expanded = isExpanded
+        self.shimmerActive = showsShimmer ?? isActive
         self.isFailure = isFailure; self.sources = sources; self.completedAt = completedAt
         let hasSurface = isActive && Self.supportsLiveSurface(family)
         _liveSurfaceMounted = State(initialValue: hasSurface)
@@ -108,7 +110,7 @@ public struct HanlinToolActivityHeader: View {
                 .accessibilityHidden(true)
             HanlinActivityTitle(title, font: HanlinTypography.subheadline,
                 baseColor: Color.primary.opacity(0.71),
-                isActive: active && !Self.supportsLiveSurface(family))
+                isActive: active && shimmerActive && !Self.supportsLiveSurface(family))
                 .fixedSize(horizontal: false, vertical: true)
                 .layoutPriority(1)
             HanlinActivityDisclosureArrow(isExpanded: expanded)
@@ -143,7 +145,7 @@ public struct HanlinToolActivityHeader: View {
             HanlinActivityTitle(title,
                 font: HanlinTypography.fixed(size: liveFontSize, weight: .medium),
                 baseColor: Color(red: 0.25, green: 0.37, blue: 0.54),
-                isActive: true, startedAt: startedAt, stoppedAt: stoppedAt)
+                isActive: active && shimmerActive, startedAt: startedAt, stoppedAt: stoppedAt)
                 .fixedSize(horizontal: false, vertical: true)
                 .layoutPriority(1)
             HanlinActivityDisclosureArrow(isExpanded: expanded)

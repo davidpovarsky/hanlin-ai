@@ -378,8 +378,17 @@ struct ClassicChatAgentProjection {
     }
 
     /// Convenience projection to derive view-oriented structured tool items from an `AgentRun`.
-    static func projectToolEntries(from agentRun: AgentRun?) -> [ClassicProjectedToolCallEntry] {
-        guard let agentRun else { return [] }
+    static func projectToolEntries(from agentRun: AgentRun?, callID: String? = nil) -> [ClassicProjectedToolCallEntry] {
+        guard var agentRun else { return [] }
+        if let callID {
+            // A mounted disclosure projects only its own call. Its payload does
+            // not change when a parent begins collapsing, and collapsed calls
+            // never pay the sanitization cost for unrelated tool outputs.
+            agentRun.steps.removeAll {
+                ($0.toolCallID ?? $0.externalID ?? $0.id.uuidString) != callID
+            }
+            agentRun.transcriptItems.removeAll { $0.callID != callID }
+        }
         var entries: [ClassicProjectedToolCallEntry] = []
         var seenKeys: Set<String> = []
         syncStructuredToolEntries(

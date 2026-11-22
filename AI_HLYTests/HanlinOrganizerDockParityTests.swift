@@ -448,17 +448,26 @@ struct HanlinComposerDrawerRouteTests {
         #expect(coordinator.dockState.mode == .tools)
     }
 
-    @Test("2.3 Opening Model Picker collapses any open dock drawer so only one surface is active")
-    func modelPickerCollapsesDrawer() {
+    @Test("2.3 Model presentation and dismissal preserve the open tools page")
+    func modelPickerPreservesDrawer() {
         let coordinator = HanlinComposerPopupCoordinator()
         coordinator.presentDirectTools()
-        #expect(coordinator.dockState.mode == .tools)
+        coordinator.pushToolsSubroute(.skillsCenter, reduceMotion: true)
 
         coordinator.toggle(.model)
-        #expect(coordinator.activePopup == .model)
-        #expect(coordinator.dockState.mode == .collapsed)
-        #expect(!coordinator.dockState.isExpanded)
+        #expect(coordinator.isModelPresented)
+        #expect(coordinator.activePopup == .tools)
+        #expect(coordinator.dockState.mode == .tools)
+        #expect(coordinator.dockState.isExpanded)
+        #expect(coordinator.toolsNavigationPath == [.skillsCenter])
+
+        coordinator.binding(for: .model).wrappedValue = false
+        #expect(!coordinator.isModelPresented)
+        #expect(coordinator.activePopup == .tools)
+        #expect(coordinator.toolsNavigationPath == [.skillsCenter])
+        #expect(coordinator.dockState.isExpanded)
     }
+
 }
 
 // MARK: - 7A.3 CompactRecentConversationsTests
@@ -1105,7 +1114,7 @@ struct PendingFirstTurnTests {
 // MARK: - 7A.7 ModelPopoverZoomOrderTests
 
 @MainActor
-@Suite("7A.7 ModelPopoverZoomOrderTests — Expand First, Push All Models Only On Completion", .serialized)
+@Suite("7A.7 ModelPopoverZoomOrderTests — One Native Resize and Stable Independent Presentation", .serialized)
 struct ModelPopoverZoomOrderTests {
     @Test("The real native catalog registration feeds the existing picker without index drift")
     func nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift() throws {
@@ -1269,106 +1278,79 @@ struct ModelPopoverZoomOrderTests {
         #expect(currentCallbacks == 1)
     }
 
-    @Test("Normal navigation waits for the actual native size completion")
-    func nativeSizeCompletionOwnsForwardNavigation() {
+    @Test("All Models enters once together with the native target size")
+    func singleEntryUpdatesRouteAndSizeTogether() {
         let coordinator = HanlinComposerPopupCoordinator()
         coordinator.measuredContainerSize = CGSize(width: 500, height: 768)
         coordinator.open(.model)
         coordinator.pushModelSubroute()
-        #expect(coordinator.modelNavigationPath.isEmpty)
+        coordinator.pushModelSubroute()
+        #expect(coordinator.modelNavigationPath == [.allModels])
+        #expect(coordinator.modelFrameExpanded)
         #expect(coordinator.isModelAnimatingExpand)
-        coordinator.modelFrameResizeDidComplete(presentationID: coordinator.modelPresentationGeneration,
+        let generation = coordinator.modelPresentationGeneration
+        let expandedSize = coordinator.modelPopoverSize
+        coordinator.modelFrameResizeDidComplete(presentationID: generation,
                                                 size: CGSize(width: 286, height: 324))
-        #expect(coordinator.modelNavigationPath.isEmpty)
-        coordinator.modelFrameResizeDidComplete(presentationID: coordinator.modelPresentationGeneration,
-                                                size: coordinator.modelPopoverSize)
+        #expect(coordinator.isModelAnimatingExpand)
+        coordinator.modelFrameResizeDidComplete(presentationID: generation, size: expandedSize)
+        coordinator.modelFrameResizeDidComplete(presentationID: generation, size: expandedSize)
         #expect(coordinator.modelNavigationPath == [.allModels])
         #expect(!coordinator.isModelAnimatingExpand)
     }
 
-    @Test("A native callback from an old presentation cannot complete the reopened expansion")
+    @Test("An old presentation cannot finish the reopened picker's native resize")
     func staleNativeResizeCannotCompleteReopenedPresentation() {
         let coordinator = HanlinComposerPopupCoordinator()
         coordinator.open(.model)
         let previousGeneration = coordinator.modelPresentationGeneration
         coordinator.pushModelSubroute()
-        coordinator.closeAll()
+        coordinator.close(.model)
         coordinator.open(.model)
         coordinator.pushModelSubroute()
         coordinator.modelFrameResizeDidComplete(presentationID: previousGeneration, size: coordinator.modelPopoverSize)
-        #expect(coordinator.modelNavigationPath.isEmpty)
+        #expect(coordinator.modelNavigationPath == [.allModels])
         #expect(coordinator.isModelAnimatingExpand)
         coordinator.modelFrameResizeDidComplete(presentationID: coordinator.modelPresentationGeneration,
                                                 size: coordinator.modelPopoverSize)
-        #expect(coordinator.modelNavigationPath == [.allModels])
-    }
-
-    @Test("Reentering during the reverse morph uses the already-expanded native frame")
-    func reenterWhileExpandedDoesNotWaitForAnotherResize() {
-        let coordinator = HanlinComposerPopupCoordinator()
-        coordinator.deferAnimationCompletionsForTesting = true
-        coordinator.open(.model)
-        coordinator.pushModelSubroute()
-        coordinator.flushPendingAnimationCompletions()
-        coordinator.popModelSubroute()
-        coordinator.pushModelSubroute()
-        #expect(coordinator.modelNavigationPath == [.allModels])
-        coordinator.flushPendingAnimationCompletions()
-        #expect(coordinator.modelFrameExpanded)
-        #expect(coordinator.modelNavigationPath == [.allModels])
-    }
-
-    @Test("Reverse morph completes before shrinking the popover frame")
-    func reverseCompletesBeforeShrink() {
-        let coordinator = HanlinComposerPopupCoordinator()
-        coordinator.deferAnimationCompletionsForTesting = true
-        coordinator.toggle(.model)
-        coordinator.pushModelSubroute()
-        coordinator.flushPendingAnimationCompletions()
-        coordinator.popModelSubroute()
-        #expect(coordinator.modelNavigationPath.isEmpty)
-        #expect(coordinator.modelFrameExpanded)
-        #expect(!coordinator.modelDestinationDisappeared)
-        coordinator.flushPendingAnimationCompletions()
-        #expect(!coordinator.modelFrameExpanded)
-        #expect(coordinator.modelDestinationDisappeared)
-    }
-
-    @Test("A stale reverse completion cannot shrink a newly reopened picker")
-    func staleReverseCannotShrinkNewPresentation() {
-        let coordinator = HanlinComposerPopupCoordinator()
-        coordinator.deferAnimationCompletionsForTesting = true
-        coordinator.toggle(.model)
-        coordinator.pushModelSubroute()
-        coordinator.flushPendingAnimationCompletions()
-        coordinator.popModelSubroute()
-        coordinator.closeAll()
-        coordinator.toggle(.model)
-        coordinator.pushModelSubroute()
-        coordinator.flushPendingAnimationCompletions(firstOnly: true)
-        #expect(coordinator.modelFrameExpanded)
-        #expect(coordinator.isModelAnimatingExpand)
-        #expect(coordinator.modelNavigationPath.isEmpty)
-        coordinator.flushPendingAnimationCompletions()
-        #expect(coordinator.modelNavigationPath == [.allModels])
-    }
-
-    @Test("A dismissed presentation cannot alter a reopened popover's pending expansion")
-    func staleCompletionCannotEndNewExpansion() {
-        let coordinator = HanlinComposerPopupCoordinator()
-        coordinator.deferAnimationCompletionsForTesting = true
-        coordinator.toggle(.model)
-        coordinator.pushModelSubroute()
-        coordinator.closeAll()
-        coordinator.toggle(.model)
-        coordinator.pushModelSubroute()
-
-        coordinator.flushPendingAnimationCompletions(firstOnly: true)
-        #expect(coordinator.isModelAnimatingExpand)
-        #expect(coordinator.modelNavigationPath.isEmpty)
-        coordinator.flushPendingAnimationCompletions()
         #expect(!coordinator.isModelAnimatingExpand)
         #expect(coordinator.modelNavigationPath == [.allModels])
+    }
+
+    @Test("Back during native expansion immediately replaces route and target without a second entrance")
+    func backDuringExpansionRejectsObsoleteTarget() {
+        let coordinator = HanlinComposerPopupCoordinator()
+        coordinator.measuredContainerSize = CGSize(width: 500, height: 768)
+        coordinator.open(.model)
+        coordinator.pushModelSubroute()
+        let expandedSize = coordinator.modelPopoverSize
+        coordinator.popModelSubroute()
+        #expect(coordinator.modelNavigationPath.isEmpty)
+        #expect(!coordinator.modelFrameExpanded)
+        #expect(coordinator.modelDestinationDisappeared)
+        coordinator.modelFrameResizeDidComplete(presentationID: coordinator.modelPresentationGeneration,
+                                                size: expandedSize)
+        #expect(coordinator.isModelAnimatingExpand)
+        coordinator.modelFrameResizeDidComplete(presentationID: coordinator.modelPresentationGeneration,
+                                                size: coordinator.modelPopoverSize)
+        #expect(!coordinator.isModelAnimatingExpand)
+        #expect(coordinator.modelNavigationPath.isEmpty)
+    }
+
+    @Test("Reentering during native shrink keeps one destination and ignores the old compact target")
+    func reenterDuringShrinkKeepsOneDestination() {
+        let coordinator = HanlinComposerPopupCoordinator()
+        coordinator.measuredContainerSize = CGSize(width: 500, height: 768)
+        coordinator.open(.model)
+        let compactSize = coordinator.modelPopoverSize
+        coordinator.pushModelSubroute()
+        coordinator.popModelSubroute()
+        coordinator.pushModelSubroute()
+        coordinator.modelFrameResizeDidComplete(presentationID: coordinator.modelPresentationGeneration,
+                                                size: compactSize)
+        #expect(coordinator.modelFrameExpanded)
+        #expect(coordinator.modelNavigationPath == [.allModels])
+        #expect(coordinator.isModelAnimatingExpand)
     }
 
     @Test("Popover dimensions remain inside narrow and short measured containers")
@@ -1383,45 +1365,19 @@ struct ModelPopoverZoomOrderTests {
             availableContainerSize: CGSize(width: 1024, height: 768)) == target)
     }
 
-    @Test("7.1 pushModelSubroute(.allModels) expands popover FIRST and appends .allModels ONLY in completion handler")
-    func expandFirstThenPushAllModelsInCompletion() {
+    @Test("Dismissing during expansion leaves no pending route that can reopen the picker")
+    func dismissedResizeCannotReopenPicker() {
         let coordinator = HanlinComposerPopupCoordinator()
-        coordinator.deferAnimationCompletionsForTesting = true
-
-        coordinator.toggle(.model)
-        #expect(coordinator.activePopup == .model)
-        #expect(!coordinator.modelFrameExpanded)
-        #expect(coordinator.modelNavigationPath.isEmpty)
-
-        // Trigger All Models transition with reduceMotion = false
-        coordinator.pushModelSubroute(.allModels, reduceMotion: false)
-
-        // Immediately after call: popover MUST be expanded, but .allModels MUST NOT be in modelNavigationPath yet!
-        #expect(coordinator.modelFrameExpanded == true)
-        #expect(coordinator.modelNavigationPath.isEmpty)
-
-        // Once the expansion animation completion fires, .allModels is appended so matched zoom runs in expanded bounds
-        coordinator.flushPendingAnimationCompletions()
-        #expect(coordinator.modelNavigationPath == [.allModels])
-    }
-
-    @Test("7.2 Generation token cancels stale completion if popover is dismissed or popped mid-animation")
-    func generationTokenCancelsStaleCompletion() {
-        let coordinator = HanlinComposerPopupCoordinator()
-        coordinator.deferAnimationCompletionsForTesting = true
-
-        coordinator.toggle(.model)
-        coordinator.pushModelSubroute(.allModels, reduceMotion: false)
-        #expect(coordinator.modelFrameExpanded)
-        #expect(coordinator.modelNavigationPath.isEmpty)
-
-        // Dismiss before completion fires
-        coordinator.closeAll()
-        coordinator.flushPendingAnimationCompletions()
-
-        // Stale completion must NOT append .allModels
+        coordinator.open(.model)
+        coordinator.pushModelSubroute()
+        let oldGeneration = coordinator.modelPresentationGeneration
+        let expandedSize = coordinator.modelPopoverSize
+        coordinator.close(.model)
+        coordinator.modelFrameResizeDidComplete(presentationID: oldGeneration, size: expandedSize)
+        #expect(!coordinator.isModelPresented)
         #expect(coordinator.modelNavigationPath.isEmpty)
         #expect(!coordinator.modelFrameExpanded)
+        #expect(!coordinator.isModelAnimatingExpand)
     }
 
     @Test("7.3 With Reduce Motion enabled, expansion and .allModels navigation happen immediately")

@@ -261,9 +261,9 @@ final class HanlinOrganizerDockState {
         // Preserve the deliberate size until the user resets it or switches chats.
     }
 
-    func handleInputFocusChange(_ focused: Bool) {
+    func handleInputFocusChange(_ focused: Bool, preserveExpandedDrawer: Bool = false) {
         isInputFocused = focused
-        if focused && isExpanded {
+        if focused && isExpanded && !preserveExpandedDrawer {
             mode = .collapsed
         }
     }

@@ -1,4 +1,5 @@
 import CoreGraphics
+import HanlinPresentationKit
 import Testing
 @testable import AI_Hanlin
 
@@ -40,15 +41,17 @@ struct HanlinMorphComposerTests {
         #expect(HanlinMorphGeometry.editorBudget(availableHeight: 100, accessoryHeight: 100, inputHeight: 300, editorHeight: 200, toolbarHeight: 60, isExpanded: true) == 0)
     }
 
-    @Test("Original empty composer keeps launcher inside native glass merge distance")
+    @Test("Bottom launcher remains adjacent to the editor as its internal controls grow")
     func originalLauncherConnection() {
         #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 52) == 13)
         #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 52) < 32)
         #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 70) < 32)
-        // This is the rejected host layout: an extra toolbar inside an empty
-        // input puts its bottom-aligned launcher beyond the merge distance.
+        // With the owner-requested controls inside the field, the input
+        // remains the glass bridge from the panel to the original bottom launcher.
         #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 150) == 111)
         #expect(HanlinMorphGeometry.launcherPanelGap(inputHeight: 150) > 32)
+        #expect(HanlinMorphStyle.launcherInputSpacing < HanlinMorphStyle.glassMergeDistance)
+        #expect(HanlinMorphStyle.panelInputSpacing < HanlinMorphStyle.glassMergeDistance)
     }
 
     @Test("Native page viewport never adopts zero or non-finite geometry")
@@ -124,7 +127,7 @@ struct HanlinMorphComposerTests {
     func capabilityRoutesReturnToOpenHome() {
         let coordinator = HanlinComposerPopupCoordinator()
         coordinator.open(.general)
-        for route in [ComposerGeneralSubroute.search, .thinking, .creative] {
+        for route in [ComposerGeneralSubroute.search, .thinking, .creative, .miniApps] {
             coordinator.pushGeneralSubroute(route, reduceMotion: true)
             #expect(coordinator.morphRoute == .general(route))
             #expect(coordinator.activePopup == .general)
@@ -138,5 +141,40 @@ struct HanlinMorphComposerTests {
         coordinator.returnFromMorphPage()
         #expect(coordinator.morphRoute == .tools(nil))
         #expect(coordinator.activePopup == .tools)
+    }
+
+    @Test("Expanded editor stays within the keyboard-adjusted remaining budget")
+    func expandedEditorFitsRemainingViewport() {
+        #expect(HanlinMorphGeometry.expandedEditorHeight(availableHeight: 900, editorBudget: 650) == 630)
+        #expect(HanlinMorphGeometry.expandedEditorHeight(availableHeight: 400, editorBudget: 169) == 169)
+        #expect(HanlinMorphGeometry.expandedEditorHeight(availableHeight: 200, editorBudget: 50) == 50)
+        #expect(HanlinMorphGeometry.expandedEditorHeight(availableHeight: 0, editorBudget: 0) == 0)
+        #expect(HanlinMorphGeometry.expandedEditorHeight(availableHeight: .nan, editorBudget: .infinity) == 0)
+    }
+
+    @MainActor
+    @Test("Model presentation and editor focus preserve the exact open action page")
+    func modelAndFocusKeepDrawerOpen() {
+        let coordinator = HanlinComposerPopupCoordinator()
+        coordinator.open(.tools)
+        coordinator.pushToolsSubroute(.skillsCenter, reduceMotion: true)
+        coordinator.open(.model)
+        #expect(coordinator.isModelPresented)
+        #expect(coordinator.activePopup == .tools)
+        #expect(coordinator.morphRoute == .tools(.skillsCenter))
+        coordinator.dockState.handleInputFocusChange(true, preserveExpandedDrawer: true)
+        #expect(coordinator.dockState.mode == .tools)
+        coordinator.close(.model)
+        #expect(!coordinator.isModelPresented)
+        #expect(coordinator.morphRoute == .tools(.skillsCenter))
+        coordinator.open(.tools)
+        #expect(coordinator.morphRoute == .tools(.skillsCenter), "An already-open tools control must not close or reset its page")
+
+        coordinator.switchFromToolsToGeneral()
+        coordinator.pushGeneralSubroute(.miniApps, reduceMotion: true)
+        coordinator.binding(for: .model).wrappedValue = true
+        coordinator.binding(for: .model).wrappedValue = false
+        #expect(coordinator.morphRoute == .general(.miniApps))
+        #expect(coordinator.dockState.mode == .general)
     }
 }

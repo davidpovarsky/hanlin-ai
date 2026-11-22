@@ -4,8 +4,8 @@
 //
 //  Shared coordinator for the integrated HanlinOrganizerDock drawer (.general, .tools)
 //  and the anchored Model Picker popover (.model).
-//  Enforces mutual exclusion, synchronizes drawer mode with HanlinOrganizerDockState,
-//  and implements the completion-ordered two-phase expand-then-push zoom state machine (§4.8).
+//  Keeps the action drawer and model presentation independent. UIKit owns the
+//  model surface animation; one route update describes its final content.
 //
 
 import Foundation
@@ -27,6 +27,7 @@ enum ComposerGeneralSubroute: String, Hashable, Sendable {
     case prompts
     case parameters
     case imageSize
+    case miniApps
 }
 
 enum ComposerToolsSubroute: String, Hashable, Sendable {
@@ -51,10 +52,11 @@ final class HanlinComposerPopupCoordinator {
     /// Integrated OrganizerDock state for `.general` and `.tools` drawer modes.
     let dockState = HanlinOrganizerDockState()
 
-    /// Currently active surface (`nil` when collapsed and model popover closed).
-    /// Note: `.general` and `.tools` are rendered as modes of the integrated `HanlinOrganizerDock` drawer,
-    /// NEVER as floating `.popover` sheets. Only `.model` is presented as a native `.popover`.
+    /// The in-bubble action page. Model presentation never changes this route.
     var activePopup: ComposerPopup?
+
+    /// A model popover can be open over either action page without collapsing it.
+    var isModelPresented = false
 
     /// Projects the existing navigation state into the Morph shell without
     /// introducing a second source of truth for the current page.
@@ -104,12 +106,6 @@ final class HanlinComposerPopupCoordinator {
     /// Optional measured container size from the hosting workspace/detail column.
     var measuredContainerSize: CGSize = .zero
 
-    /// Deterministic testing hook: when `true`, Stage 1 sets `modelFrameExpanded = true` immediately
-    /// and Stage 2 (`modelNavigationPath.append`) waits until `flushPendingAnimationCompletions()` is called.
-    var deferAnimationCompletionsForTesting: Bool = false
-    private var pendingAnimationCompletions: [@MainActor () -> Void] = []
-    private var pendingNativeModelExpansion: (@MainActor () -> Void)?
-
     /// Tracks whether the text input was focused before opening so focus can be restored cleanly if desired.
     var wasInputFocusedBeforePopup: Bool = false
 
@@ -136,130 +132,108 @@ final class HanlinComposerPopupCoordinator {
 
     init() {}
 
-    // MARK: - Mutual Exclusion & Drawer Mode Synchronization
+    // MARK: - Independent model presentation and drawer navigation
 
     func toggle(_ popup: ComposerPopup, isInputCurrentlyFocused: Bool = false) {
-        open(popup, isInputCurrentlyFocused: isInputCurrentlyFocused)
+        if popup == .model {
+            if isModelPresented { close(.model) }
+            else { open(.model, isInputCurrentlyFocused: isInputCurrentlyFocused) }
+        } else if activePopup == popup {
+            close(popup)
+        } else {
+            open(popup, isInputCurrentlyFocused: isInputCurrentlyFocused)
+        }
     }
 
     func open(_ popup: ComposerPopup, isInputCurrentlyFocused: Bool = false) {
-        if activePopup == popup {
-            closeAll()
+        if popup == .model {
+            guard !isModelPresented else { return }
+            wasInputFocusedBeforePopup = isInputCurrentlyFocused
+            modelPresentationGeneration &+= 1
+            resetModelNavigation()
+            isModelPresented = true
             return
         }
-        if activePopup == nil {
-            wasInputFocusedBeforePopup = isInputCurrentlyFocused
-        }
-        modelPresentationGeneration &+= 1
-        resetSubroutesAndExpansion()
+        guard activePopup != popup else { return }
+        if activePopup == nil { wasInputFocusedBeforePopup = isInputCurrentlyFocused }
+        resetDrawerNavigation()
         activePopup = popup
-
-        switch popup {
-        case .general:
-            dockState.openMode(.general)
-        case .tools:
-            dockState.openMode(.tools)
-        case .model:
-            dockState.collapse()
-        }
+        dockState.openMode(popup == .tools ? .tools : .general)
     }
 
     func presentDirectTools(isInputCurrentlyFocused: Bool = false) {
-        if activePopup == .tools {
-            closeAll()
-            return
-        }
-        if activePopup == nil {
-            wasInputFocusedBeforePopup = isInputCurrentlyFocused
-        }
-        modelPresentationGeneration &+= 1
-        resetSubroutesAndExpansion()
-        activePopup = .tools
-        dockState.openMode(.tools)
+        open(.tools, isInputCurrentlyFocused: isInputCurrentlyFocused)
     }
 
-    /// Switches from General (`+`) to Tools inside the SAME expanded OrganizerDock drawer without dismissing or reopening.
+    /// Change the page within the mounted bubble. An open model popover is independent.
     func switchFromGeneralToTools() {
-        modelPresentationGeneration &+= 1
-        resetSubroutesAndExpansion()
-        activePopup = .tools
-        dockState.openMode(.tools)
+        open(.tools)
     }
 
-    /// Switches from Tools to General (`+`) inside the SAME expanded OrganizerDock drawer without dismissing or reopening.
     func switchFromToolsToGeneral() {
-        modelPresentationGeneration &+= 1
-        resetSubroutesAndExpansion()
-        activePopup = .general
-        dockState.openMode(.general)
+        open(.general)
     }
 
     func close(_ popup: ComposerPopup) {
-        guard activePopup == popup else { return }
-        closeAll()
+        if popup == .model {
+            guard isModelPresented else { return }
+            modelPresentationGeneration &+= 1
+            isModelPresented = false
+            resetModelNavigation()
+        } else if activePopup == popup {
+            activePopup = nil
+            dockState.collapse()
+            resetDrawerNavigation()
+        }
     }
 
+    /// Explicit session/context teardown; ordinary control actions close their own surface.
     func closeAll() {
         modelPresentationGeneration &+= 1
+        isModelPresented = false
         activePopup = nil
         dockState.collapse()
-        resetSubroutesAndExpansion()
+        resetDrawerNavigation()
+        resetModelNavigation()
     }
 
-    /// Synchronizes `activePopup` when `dockState.mode` is changed by a drawer handle tap, drag gesture, or editor resize.
     func syncFromDockModeChange(_ newMode: HanlinOrganizerDrawerMode) {
-        switch newMode {
-        case .collapsed:
-            if activePopup == .general || activePopup == .tools {
-                activePopup = nil
-                resetSubroutesAndExpansion()
-            }
-        case .general:
-            if activePopup != .general {
-                modelPresentationGeneration &+= 1
-                resetSubroutesAndExpansion()
-                activePopup = .general
-            }
-        case .tools:
-            if activePopup != .tools {
-                modelPresentationGeneration &+= 1
-                resetSubroutesAndExpansion()
-                activePopup = .tools
-            }
+        let next: ComposerPopup? = switch newMode {
+        case .collapsed: nil
+        case .general: .general
+        case .tools: .tools
         }
+        guard activePopup != next else { return }
+        activePopup = next
+        resetDrawerNavigation()
     }
 
     func binding(for popup: ComposerPopup) -> Binding<Bool> {
         Binding(
-            get: { self.activePopup == popup },
+            get: { popup == .model ? self.isModelPresented : self.activePopup == popup },
             set: { isPresented in
-                if isPresented {
-                    if self.activePopup != popup {
-                        self.open(popup)
-                    }
-                } else if self.activePopup == popup {
-                    self.closeAll()
-                }
+                if isPresented { self.open(popup) }
+                else { self.close(popup) }
             }
         )
     }
 
-    private func resetSubroutesAndExpansion() {
+    private func resetDrawerNavigation() {
         generalNavigationPath.removeAll()
         generalFrameExpanded = false
         generalDestinationDisappeared = true
         isGeneralAnimatingExpand = false
-
         toolsNavigationPath.removeAll()
         toolsFrameExpanded = false
         toolsDestinationDisappeared = true
         isToolsAnimatingExpand = false
+    }
 
+    private func resetModelNavigation() {
         modelNavigationPath.removeAll()
         modelFrameExpanded = false
         modelDestinationDisappeared = true
         isModelAnimatingExpand = false
-        pendingNativeModelExpansion = nil
     }
 
     // MARK: - V3.3 Two-Phase Expand & Shrink (General Drawer Subroutes)
@@ -348,105 +322,38 @@ final class HanlinComposerPopupCoordinator {
         }
     }
 
-    // MARK: - V3.3 Completion-Ordered Two-Phase Expand & Shrink (Model Picker Popover, §4.8)
+    // MARK: - One native model size transition
 
-    /// UIKit owns the outer size. Append the inner route only after its native
-    /// size-transition callback; a separate SwiftUI frame animation can finish
-    /// before the native mask and clip the header/footer.
+    /// Content and target size change together. UIKit performs the only outer
+    /// transition; there is no delayed second push or inner SwiftUI zoom.
     func pushModelSubroute(_ route: ComposerModelSubroute = .allModels, reduceMotion: Bool = false) {
-        guard !modelNavigationPath.contains(route), !isModelAnimatingExpand else { return }
-        if activePopup != .model {
-            activePopup = .model
-        }
-        let capturedGeneration = modelPresentationGeneration
-        modelDestinationDisappeared = false
-
-        let completeRoutePush: @MainActor () -> Void = { [weak self] in
-            guard let self else { return }
-            // A completion from a dismissed presentation must not clear the
-            // animation flag belonging to a newly opened popover.
-            guard self.modelPresentationGeneration == capturedGeneration else { return }
-            guard self.activePopup == .model,
-                  self.modelFrameExpanded,
-                  self.modelNavigationPath.isEmpty,
-                  !self.modelNavigationPath.contains(route) else {
-                self.isModelAnimatingExpand = false
-                return
-            }
-            self.isModelAnimatingExpand = false
-            // The native popover has reached its expanded size.
-            withAnimation(reduceMotion ? nil : .smooth(duration: 0.32)) {
-                self.modelNavigationPath.append(route)
-            }
-        }
-
-        if modelFrameExpanded {
-            completeRoutePush()
-            return
-        }
-
-        if deferAnimationCompletionsForTesting {
-            isModelAnimatingExpand = true
+        guard !modelNavigationPath.contains(route) else { return }
+        if !isModelPresented { open(.model) }
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) {
+            modelDestinationDisappeared = false
             modelFrameExpanded = true
-            pendingAnimationCompletions.append(completeRoutePush)
-            return
+            modelNavigationPath = [route]
+            isModelAnimatingExpand = !reduceMotion
         }
-
-        if reduceMotion {
-            modelFrameExpanded = true
-            completeRoutePush()
-            return
-        }
-
-        pendingNativeModelExpansion = completeRoutePush
-        isModelAnimatingExpand = true
-        modelFrameExpanded = true
     }
 
     func modelFrameResizeDidComplete(presentationID: Int, size: CGSize) {
         guard presentationID == modelPresentationGeneration,
-              activePopup == .model, modelFrameExpanded,
-              size == modelPopoverSize else { return }
-        let completion = pendingNativeModelExpansion
-        pendingNativeModelExpansion = nil
-        completion?()
+              isModelPresented, size == modelPopoverSize else { return }
+        isModelAnimatingExpand = false
     }
 
-    /// Reverse the shared-surface zoom before shrinking the native popover.
-    /// View disappearance can begin before a removal transition has finished.
     func popModelSubroute(reduceMotion: Bool = false) {
         guard !modelNavigationPath.isEmpty else { return }
-        let capturedGeneration = modelPresentationGeneration
-        modelDestinationDisappeared = false
-        let finish: @MainActor () -> Void = { [weak self] in
-            guard let self,
-                  self.modelPresentationGeneration == capturedGeneration,
-                  self.activePopup == .model,
-                  self.modelNavigationPath.isEmpty else { return }
-            self.markModelDestinationDisappeared(reduceMotion: reduceMotion)
-        }
-        if deferAnimationCompletionsForTesting {
+        var transaction = Transaction()
+        transaction.disablesAnimations = true
+        withTransaction(transaction) {
             modelNavigationPath.removeAll()
-            pendingAnimationCompletions.append(finish)
-        } else if reduceMotion {
-            modelNavigationPath.removeAll()
-            finish()
-        } else {
-            withAnimation(.smooth(duration: 0.32), completionCriteria: .removed) {
-                modelNavigationPath.removeAll()
-            } completion: {
-                Task { @MainActor in finish() }
-            }
-        }
-    }
-
-    /// Executes any queued animation completions in deterministic unit tests (`ModelPopoverZoomOrderTests`).
-    func flushPendingAnimationCompletions(firstOnly: Bool = false) {
-        let count = firstOnly ? min(1, pendingAnimationCompletions.count) : pendingAnimationCompletions.count
-        let completions = Array(pendingAnimationCompletions.prefix(count))
-        pendingAnimationCompletions.removeFirst(count)
-        for completion in completions {
-            completion()
+            modelDestinationDisappeared = true
+            modelFrameExpanded = false
+            isModelAnimatingExpand = !reduceMotion
         }
     }
 

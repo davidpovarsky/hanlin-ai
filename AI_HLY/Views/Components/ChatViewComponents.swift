@@ -169,11 +169,17 @@ struct ChatBubbleView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.openWindow) private var openWindow
     @Environment(\.chatExcerptSource) private var excerptSource
+    @Environment(\.chatSourceDestination) private var selectionSourceDestination
+    @Environment(\.locale) private var previewLocale
+    @Environment(\.layoutDirection) private var previewLayoutDirection
+    @Environment(\.colorScheme) private var previewColorScheme
+    @Environment(\.dynamicTypeSize) private var previewDynamicTypeSize
     #if HANLIN_A2UI_POC
     @Environment(\.hanlinA2UIResultProjectionSource) private var a2uiProjectionSource
     @Environment(\.hanlinA2UIAppPresentation) private var a2uiAppPresentation
     #endif
     @State private var isPersonallySaved = false
+    @State private var handledDocumentSelectionID: UUID?
     let temporaryRecord: Bool
     let id: UUID
     let text: String               // 回复内容
@@ -399,6 +405,23 @@ struct ChatBubbleView: View {
             Text("确定要删除吗？删除后不可恢复！")
                 .multilineTextAlignment(.leading)
         }
+        .sheet(isPresented: $isTextSelectionSheetPresented) {
+            TextSelectionView(text: text,
+                savePersonal: { savePersonalExcerpt($0.text, selection: $0) })
+                .environment(\.hanlinMessageCitations, HanlinMessageCitations(messageID: id,
+                    evidence: agentRun?.evidenceItems ?? [], transcript: agentRun?.transcriptItems ?? []))
+        }
+        .sheet(isPresented: $translatedTextSelectionSheetPresented) {
+            TextSelectionView(text: translatedText,
+                savePersonal: { savePersonalExcerpt($0.text, markdown: translatedText, selection: $0) })
+        }
+        .sheet(isPresented: $isKnowledgeWritingSheetPresented) {
+            if let record = recordToWrite {
+                NavigationStack {
+                    KnowledgeWritingView(knowledgeRecord: record, fromSheet: true)
+                }
+            }
+        }
         .sheet(item: $nativeAppSheetRequest) { request in
             NativeAppSessionContainerView(request: request)
                 .presentationDetents([.large])
@@ -411,6 +434,22 @@ struct ChatBubbleView: View {
         .onAppear {
             translatedText = saveTranlatedText?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             translated = !translatedText.isEmpty
+        }
+        .onChange(of: selectionSourceDestination?.id, initial: true) { _, requestID in
+            guard let destination = selectionSourceDestination, destination.id != handledDocumentSelectionID,
+                  destination.messageID == id,
+                  destination.selection?.sourceBlockID?.hasPrefix("hanlin-message:") == true else { return }
+            if destination.sourceDigest == ChatSavedExcerpt.digest(text) {
+                handledDocumentSelectionID = requestID
+                isTextSelectionSheetPresented = true
+            } else {
+                let translation = saveTranlatedText?.trimmingCharacters(in: .whitespacesAndNewlines) ?? translatedText
+                if !translation.isEmpty, destination.sourceDigest == ChatSavedExcerpt.digest(translation) {
+                    handledDocumentSelectionID = requestID
+                    isTranslateExpanded = true
+                    translatedTextSelectionSheetPresented = true
+                }
+            }
         }
         .tint(temporaryRecord ? .primary : nil)
     }
@@ -508,9 +547,6 @@ struct ChatBubbleView: View {
                             .clipShape(Circle())
                     }
                     .buttonStyle(PlainButtonStyle())
-                    .sheet(isPresented: $isTextSelectionSheetPresented) {
-                        TextSelectionView(text: text)
-                    }
                     
                     Button(action: {
                         showDeleteConfirmation = true
@@ -614,9 +650,6 @@ struct ChatBubbleView: View {
                     .accessibilityIdentifier("hanlin-user-bubble")
                     .transition(.move(edge: .trailing).combined(with: .opacity))
                     .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: text.isEmpty)
-                    .sheet(isPresented: $isTextSelectionSheetPresented) {
-                        TextSelectionView(text: text)
-                    }
                 }
             }
         }
@@ -672,6 +705,9 @@ struct ChatBubbleView: View {
                     .foregroundColor(.secondary)
             }
             .padding(.top, 6)
+            .chatMessagePreviewSource { source, point in
+                presentMessagePreview(from: source, at: point)
+            }
         }
     }
 
@@ -814,7 +850,7 @@ struct ChatBubbleView: View {
     private func assistantFooter() -> some View {
         if AgentActivityHeaderPhase.showsStandaloneStatus(
             isRunActive: isMotionRunActive, isCurrentMessage: isLastAssistant,
-            hasActivityHeader: hasAgentActivity
+            hasActivityHeader: hasAgentActivity, hasAnswerText: hasStartedAssistantAnswer
         ) {
             LoadingGradientText(text: operationalState.isEmpty
                 ? String(localized: "Working through your request") : operationalState,
@@ -1658,9 +1694,6 @@ struct ChatBubbleView: View {
             }
             .buttonStyle(PlainButtonStyle())
             .accessibilityIdentifier("hanlin-action-select")
-            .sheet(isPresented: $isTextSelectionSheetPresented) {
-                TextSelectionView(text: text)
-            }
             
             // 语音朗读
             Button(action: {
@@ -1778,13 +1811,6 @@ struct ChatBubbleView: View {
             }
             .buttonStyle(PlainButtonStyle())
             .accessibilityIdentifier("hanlin-action-knowledge")
-            .sheet(isPresented: $isKnowledgeWritingSheetPresented) {
-                if let record = recordToWrite {
-                    NavigationStack {
-                        KnowledgeWritingView(knowledgeRecord: record, fromSheet: true)
-                    }
-                }
-            }
             
             if let onContinue {
                 Button(String(localized: "Continue"), systemImage: "arrow.right") { onContinue() }
@@ -1831,85 +1857,71 @@ struct ChatBubbleView: View {
                     saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
             }
             .padding(.vertical, 4)
-            .contentShape(Rectangle())
-            .contextMenu {
-                // 复制
-                Button(action: {
-                    UIPasteboard.general.string = markdownToPlainText(text)
-                }) {
-                    Label("复制内容", systemImage: "square.on.square")
-                }
-                .accessibilityIdentifier("hanlin-message-menu-copy")
-
-                // 选中文本
-                Button(action: {
-                    isTextSelectionSheetPresented = true
-                }) {
-                    Label("选择文本", systemImage: "text.redaction")
-                }
-
-                // 生成语音
-                Button(action: {
-                    tts.setContextIfNeeded(modelContext)
-                    tts.updateSelectedModel()
-                    tts.setMessageId(id)
-                    tts.toggleSpeech(text: text)
-                }) {
-                    if tts.isAsking {
-                        Label("正在请求", systemImage: "progress.indicator")
-                    } else {
-                        Label("生成语音", systemImage: "waveform")
-                    }
-                }
-
-                // 翻译/删除译文/翻译中…
-                Button(action: translateText) {
-                    if isTranslating {
-                        Label("正在翻译", systemImage: "progress.indicator")
-                    } else if translated {
-                        Label("删除译文", systemImage: "trash")
-                    } else {
-                        HStack {
-                            Image("translate")
-                                .renderingMode(.template)
-                                .font(HanlinTypography.fixed(size: size_14, weight: .medium))
-                                .frame(width: size_24, height: size_24)
-                                .foregroundColor(.secondary)
-                                .clipShape(Circle())
-                            Text("翻译内容")
-                        }
-                    }
-                }
-
-                Button { savePersonalExcerpt(text) } label: {
-                    Label("Save for myself", systemImage: "bookmark")
-                }
-
-                // 存为知识
-                Button(action: {
-                    createAndSaveKnowledgeRecord(with: text)
-                }) {
-                    Label("存为知识", systemImage: "backpack")
-                }
-
-                // 删除消息
-                Button(action: {
-                    showDeleteConfirmation = true
-                }) {
-                    Label("删除消息", systemImage: "trash")
-                }
-            } preview: {
-                ChatMarkdownView(text: text)
-                    .padding()
-                    .frame(width: min(560, max(1, effectiveContainerWidth - 32)))
-                    .fixedSize(horizontal: false, vertical: true)
-                    .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 16))
-            }
+            .environment(\.chatMessageLongPressPreview, { source, point in
+                presentMessagePreview(from: source, at: point)
+            })
         }
-
     }
 
+    private func presentMessagePreview(from source: UIView, at point: CGPoint) {
+        ChatMessagePreviewPresenter.present(from: source, at: point,
+            preferredWidth: effectiveContainerWidth - 32, text: text,
+            citations: HanlinMessageCitations(messageID: id, evidence: agentRun?.evidenceItems ?? [],
+                transcript: agentRun?.transcriptItems ?? []),
+            style: .init(locale: previewLocale, layoutDirection: previewLayoutDirection,
+                colorScheme: previewColorScheme, dynamicTypeSize: previewDynamicTypeSize), actions: messagePreviewActions)
+    }
 
+    private func presentTranslatedMessagePreview(from source: UIView, at point: CGPoint) {
+        ChatMessagePreviewPresenter.present(from: source, at: point,
+            preferredWidth: effectiveContainerWidth - 32, text: translatedText, citations: nil,
+            style: .init(locale: previewLocale, layoutDirection: previewLayoutDirection,
+                colorScheme: previewColorScheme, dynamicTypeSize: previewDynamicTypeSize), actions: [
+                .init(id: "copy", title: String(localized: "复制内容"), symbol: "square.on.square") {
+                    UIPasteboard.general.string = translatedText
+                },
+                .init(id: "select", title: String(localized: "选择文本"), symbol: "text.redaction") {
+                    translatedTextSelectionSheetPresented = true
+                },
+                .init(id: "save-personal", title: String(localized: "Save for myself"), symbol: "bookmark") {
+                    savePersonalExcerpt(translatedText, markdown: translatedText)
+                },
+                .init(id: "knowledge", title: String(localized: "存为知识"), symbol: "backpack") {
+                    createAndSaveKnowledgeRecord(with: translatedText)
+                },
+                .init(id: "delete", title: String(localized: "删除译文"), symbol: "trash", role: .destructive) {
+                    translateText()
+                }
+            ])
+    }
+
+    private var messagePreviewActions: [ChatMessagePreviewPresenter.Action] {
+        [
+            .init(id: "copy", title: String(localized: "复制内容"), symbol: "square.on.square") {
+                UIPasteboard.general.string = markdownToPlainText(text)
+            },
+            .init(id: "select", title: String(localized: "选择文本"), symbol: "text.redaction") {
+                isTextSelectionSheetPresented = true
+            },
+            .init(id: "speech", title: String(localized: "生成语音"), symbol: "waveform") {
+                tts.setContextIfNeeded(modelContext)
+                tts.updateSelectedModel()
+                tts.setMessageId(id)
+                tts.toggleSpeech(text: text)
+            },
+            .init(id: "translate", title: translated ? String(localized: "删除译文") : String(localized: "翻译内容"),
+                  symbol: "character.bubble") { translateText() },
+            .init(id: "save-personal", title: String(localized: "Save for myself"), symbol: "bookmark") {
+                savePersonalExcerpt(text)
+            },
+            .init(id: "knowledge", title: String(localized: "存为知识"), symbol: "backpack") {
+                createAndSaveKnowledgeRecord(with: text)
+            },
+            .init(id: "delete", title: String(localized: "删除消息"), symbol: "trash", role: .destructive) {
+                showDeleteConfirmation = true
+            }
+        ]
+    }
 
     @ViewBuilder
     private func messageContent() -> some View {
@@ -1921,6 +1933,9 @@ struct ChatBubbleView: View {
                 HanlinChatContentView(projection: projection,
                     savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
                     saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
+                    .environment(\.chatMessageLongPressPreview, { source, point in
+                        presentMessagePreview(from: source, at: point)
+                    })
             } else {
                 existingAssistantMarkdown
             }
@@ -1944,12 +1959,6 @@ struct ChatBubbleView: View {
         .foregroundColor(.primary)
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .sheet(isPresented: $isTextSelectionSheetPresented) {
-            TextSelectionView(text: text)
-        }
-        .sheet(isPresented: $translatedTextSelectionSheetPresented) {
-            TextSelectionView(text: translatedText)
-        }
         .animation(
             .spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
             value: [
@@ -2140,6 +2149,19 @@ struct ChatBubbleView: View {
         return status == .pending || status == .running
     }
 
+    /// Provisional/final answer segments are already visible during streaming;
+    /// waiting for run completion leaves a false "working" status above them.
+    /// Interim commentary is not a final answer and may be followed by tools.
+    private var hasStartedAssistantAnswer: Bool {
+        if let run = agentRun, run.hasModernTranscript {
+            return run.transcriptItems.contains {
+                $0.kind == .assistantText && $0.textRole != .interim
+                    && $0.text?.contains(where: { !$0.isWhitespace }) == true
+            }
+        }
+        return text.contains { !$0.isWhitespace }
+    }
+
     /// The activity subtree has its own invalidation boundary. Assistant answer
     /// deltas never rebuild the already completed hierarchy or its tool output.
     private func activityContent() -> some View {
@@ -2151,7 +2173,8 @@ struct ChatBubbleView: View {
         return AgentActivityContentView(run: presentationRun, reasoning: reasoning,
             reasoningTime: reasoningTime, legacyToolContent: toolContent,
             disclosureExpanded: isReasoningExpanded, isExpanded: $isReasoningExpanded,
-            isActive: isMotionRunActive && isLastAssistantGroup, toolApproval: toolApproval)
+            isActive: isMotionRunActive && isLastAssistantGroup,
+            hasAnswerText: hasStartedAssistantAnswer, toolApproval: toolApproval)
             .equatable()
     }
 
@@ -2163,6 +2186,7 @@ struct ChatBubbleView: View {
         let disclosureExpanded: Bool
         @Binding var isExpanded: Bool
         let isActive: Bool
+        let hasAnswerText: Bool
         let toolApproval: ChatToolApprovalPresentation?
         @Environment(\.hanlinRichMessageContext) private var richMessageContext
         @State private var expandedActivityIDs: Set<String> = []
@@ -2174,6 +2198,7 @@ struct ChatBubbleView: View {
                 && lhs.reasoningTime == rhs.reasoningTime
                 && lhs.legacyToolContent == rhs.legacyToolContent
                 && lhs.disclosureExpanded == rhs.disclosureExpanded && lhs.isActive == rhs.isActive
+                && lhs.hasAnswerText == rhs.hasAnswerText
                 && lhs.toolApproval?.requestID == rhs.toolApproval?.requestID
                 && lhs.toolApproval?.callID == rhs.toolApproval?.callID
                 && lhs.toolApproval?.toolName == rhs.toolApproval?.toolName
@@ -2184,32 +2209,94 @@ struct ChatBubbleView: View {
             ProgressSummarySanitizer.sanitizeProviderReasoningSummary(reasoning) ?? ""
         }
 
-        private var headerPhase: AgentActivityHeaderPhase {
+        private func headerPhase(for activities: [AgentDisplayActivity],
+                                 approvals: [String: AgentToolApproval]) -> AgentActivityHeaderPhase {
             AgentActivityHeaderPhase.resolve(isRunActive: isActive,
                 hasPendingApproval: toolApproval != nil || run?.approvals.contains {
                     $0.disposition == .awaiting || $0.disposition == .providerRequired
-                } == true)
+                } == true,
+                hasAnswerText: hasAnswerText,
+                hasActiveOperation: activities.contains {
+                    $0.status == .running && $0.kind != .reasoning && $0.kind != .narrative
+                        && toolApproval?.callID != $0.id
+                        && approvals[$0.id]?.disposition != .awaiting
+                        && approvals[$0.id]?.disposition != .providerRequired
+                })
         }
 
-        private var headerTitle: String {
-            switch headerPhase {
-            case .working: String(localized: "Working through your request")
-            case .awaitingApproval: String(localized: "Waiting for your confirmation")
-            case .history: String(localized: "Activity history")
+        private func headerTitle(for phase: AgentActivityHeaderPhase,
+                                 activeActivities: [AgentDisplayActivity]) -> String {
+            switch phase {
+            case .working:
+                // Collapsed ancestors describe the actual active operation.
+                // The fallback is app status, never claimed to be model text.
+                if activeActivities.count == 1, let activity = activeActivities.first {
+                    return activity.title
+                }
+                return String(localized: "Working through your request")
+            case .awaitingApproval: return String(localized: "Waiting for your confirmation")
+            case .history: return String(localized: "Activity history")
             }
         }
 
         private var hierarchyIsExpanded: Bool { isExpanded || toolApproval != nil }
 
+        private func roundHasHeader(_ round: AgentDisplayRound) -> Bool {
+            round.roundID != nil
+                && round.activities.contains { $0.kind != .reasoning && $0.kind != .narrative }
+        }
+
+        private func roundIsWaiting(_ round: AgentDisplayRound,
+                                    approvals: [String: AgentToolApproval]) -> Bool {
+            round.activities.contains { activity in
+                toolApproval?.callID == activity.id
+                    || approvals[activity.id]?.disposition == .awaiting
+                    || approvals[activity.id]?.disposition == .providerRequired
+            }
+        }
+
+        private func liveActivities(in activities: [AgentDisplayActivity],
+                                      phase: AgentActivityHeaderPhase,
+                                      approvals: [String: AgentToolApproval]) -> [AgentDisplayActivity] {
+            guard phase == .working else { return [] }
+            return activities.filter { activity in
+                guard activity.status == .running, toolApproval?.callID != activity.id,
+                      approvals[activity.id]?.disposition != .awaiting,
+                      approvals[activity.id]?.disposition != .providerRequired else { return false }
+                // Stale model reasoning/progress is not current work once text
+                // of the answer has arrived. Genuine concurrent tools remain live.
+                return !hasAnswerText || (activity.kind != .reasoning && activity.kind != .narrative)
+            }
+        }
+
+        private func shimmerPaths(rounds: [AgentDisplayRound], activeIDs: Set<String>,
+                                  approvals: [String: AgentToolApproval]) -> [AgentActivityShimmerOwner.Path] {
+            let paths = rounds.flatMap { round in
+                round.activities.filter { activeIDs.contains($0.id) }.map { activity in
+                    AgentActivityShimmerOwner.Path(activityID: activity.id,
+                        roundID: roundHasHeader(round) ? round.id : nil,
+                        isRoundExpanded: !collapsedRoundIDs.contains(round.id)
+                            || roundIsWaiting(round, approvals: approvals))
+                }
+            }
+            if paths.isEmpty, rounds.isEmpty, !safeReasoning.isEmpty, !hasAnswerText {
+                return [.init(activityID: "legacy-reasoning", roundID: nil, isRoundExpanded: true)]
+            }
+            return paths
+        }
+
         var body: some View {
             let timeline = run.map(AgentActivityComposer.compose)
-            let expandedIDs = richMessageContext?.state.expandedActivityIDs ?? expandedActivityIDs
-            // Raw payload projection stays lazy and independent of answer deltas.
-            let entries = hierarchyIsExpanded && !expandedIDs.isEmpty
-                ? ClassicChatAgentProjection.projectToolEntries(from: run) : []
-            let entriesByCallID = Dictionary(grouping: entries, by: \.callID)
+            let activities = timeline?.activities ?? []
             let approvals = Dictionary((run?.approvals ?? []).map { ($0.callID, $0) },
                 uniquingKeysWith: { _, latest in latest })
+            let phase = headerPhase(for: activities, approvals: approvals)
+            let activeActivities = liveActivities(in: activities, phase: phase, approvals: approvals)
+            let activeIDs = Set(activeActivities.map(\.id))
+            let rounds = run.flatMap { run in timeline.map { AgentActivityComposer.rounds(for: run, timeline: $0) } } ?? []
+            let paths = shimmerPaths(rounds: rounds, activeIDs: activeIDs, approvals: approvals)
+            let shimmerOwners = AgentActivityShimmerOwner.resolve(isWorking: phase.showsShimmer,
+                isHierarchyExpanded: hierarchyIsExpanded, activePaths: paths)
             if timeline?.activities.isEmpty == false || !safeReasoning.isEmpty
                 || !legacyToolContent.isEmpty || toolApproval != nil {
                 DisclosureGroup(isExpanded: Binding(
@@ -2219,17 +2306,19 @@ struct ChatBubbleView: View {
                         Text(reasoningTime).font(HanlinTypography.caption).foregroundStyle(.secondary)
                     }
                     if let timeline, let run, !timeline.activities.isEmpty {
-                        ForEach(AgentActivityComposer.rounds(for: run, timeline: timeline)) { round in
-                            roundView(round, run: run, entriesByCallID: entriesByCallID, approvals: approvals)
+                        ForEach(rounds) { round in
+                            roundView(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
                         }
                     } else {
                         if !safeReasoning.isEmpty {
-                            Text(safeReasoning).font(HanlinTypography.footnote).textSelection(.enabled)
+                            HanlinActivityTitle(safeReasoning, font: HanlinTypography.footnote,
+                                baseColor: .secondary, isActive: shimmerOwners.contains(.activity("legacy-reasoning")))
+                                .textSelection(.enabled)
                                 .accessibilityIdentifier("hanlin-reasoning-expanded-text")
                         }
                         if !legacyToolContent.isEmpty {
                             DisclosureGroup(isExpanded: $legacyDetailsExpanded) {
-                                technicalText(ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(legacyToolContent))
+                                Self.technicalText(ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(legacyToolContent))
                             } label: {
                                 HanlinActivityHierarchyHeader(title: String(localized: "Tool details"),
                                     symbol: "wrench.and.screwdriver", depth: 1,
@@ -2245,8 +2334,9 @@ struct ChatBubbleView: View {
                         approvalView(pending)
                     }
                 } label: {
-                    HanlinActivityHierarchyHeader(title: headerTitle, symbol: "sparkles",
-                        isExpanded: hierarchyIsExpanded, isActive: headerPhase.showsShimmer)
+                    HanlinActivityHierarchyHeader(title: headerTitle(for: phase, activeActivities: activeActivities),
+                        symbol: "sparkles", isExpanded: hierarchyIsExpanded,
+                        isActive: shimmerOwners.contains(.root))
                         .accessibilityIdentifier("hanlin-reasoning-toggle")
                 }
                 .disclosureGroupStyle(HanlinActivityDisclosureStyle(depth: 0))
@@ -2257,54 +2347,53 @@ struct ChatBubbleView: View {
 
         @ViewBuilder
         private func roundView(_ round: AgentDisplayRound, run: AgentRun,
-                               entriesByCallID: [String: [ClassicProjectedToolCallEntry]],
-                               approvals: [String: AgentToolApproval]) -> some View {
+                               approvals: [String: AgentToolApproval],
+                               shimmerOwners: Set<AgentActivityShimmerOwner>) -> some View {
             // Nest only genuinely attributed rounds. Legacy siblings are never
             // assigned a parent because their rows happen to be adjacent.
-            if round.roundID != nil,
-               round.activities.contains(where: { $0.kind != .reasoning && $0.kind != .narrative }) {
-                let waiting = round.activities.contains { activity in
-                    toolApproval?.callID == activity.id
-                        || approvals[activity.id]?.disposition == .awaiting
-                        || approvals[activity.id]?.disposition == .providerRequired
-                }
+            if roundHasHeader(round) {
+                let waiting = roundIsWaiting(round, approvals: approvals)
                 let expanded = !collapsedRoundIDs.contains(round.id) || waiting
                 DisclosureGroup(isExpanded: Binding(
                     get: { !collapsedRoundIDs.contains(round.id) || waiting },
                     set: { if $0 { collapsedRoundIDs.remove(round.id) }
                         else { collapsedRoundIDs.insert(round.id) } }
                 )) {
-                    roundRows(round, run: run, entriesByCallID: entriesByCallID, approvals: approvals)
+                    roundRows(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
                 } label: {
                     HanlinActivityHierarchyHeader(title: String(localized: "Tools"),
                         symbol: "gearshape.2", depth: 1, isExpanded: expanded,
-                        isActive: isActive && !waiting && round.activities.contains { $0.status == .running })
+                        isActive: shimmerOwners.contains(.round(round.id)))
                 }
                 .disclosureGroupStyle(HanlinActivityDisclosureStyle())
             } else {
-                roundRows(round, run: run, entriesByCallID: entriesByCallID, approvals: approvals)
+                roundRows(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
             }
         }
 
         private func roundRows(_ round: AgentDisplayRound, run: AgentRun,
-                               entriesByCallID: [String: [ClassicProjectedToolCallEntry]],
-                               approvals: [String: AgentToolApproval]) -> some View {
+                               approvals: [String: AgentToolApproval],
+                               shimmerOwners: Set<AgentActivityShimmerOwner>) -> some View {
             VStack(alignment: .leading, spacing: 3) {
                 ForEach(round.activities) { activity in
                     if activity.kind == .reasoning {
                         let summary = AgentActivityComposer.reasoningDisplayText(for: activity, in: run)
                         // A stored placeholder is not historical reasoning text.
-                        if !summary.isEmpty && summary != String(localized: "Thinking") {
-                            Text(summary).font(HanlinTypography.footnote).foregroundStyle(.secondary)
+                        let isCurrent = shimmerOwners.contains(.activity(activity.id))
+                        if !summary.isEmpty && (summary != String(localized: "Thinking")
+                            || (isActive && !hasAnswerText && activity.status == .running)) {
+                            HanlinActivityTitle(summary, font: HanlinTypography.footnote,
+                                baseColor: .secondary, isActive: isCurrent)
                                 .textSelection(.enabled).padding(.vertical, 4)
                                 .accessibilityIdentifier("hanlin-reasoning-expanded-text")
                         }
                     } else if activity.kind == .narrative {
-                        Text(activity.title).font(HanlinTypography.footnote)
-                            .foregroundStyle(.secondary).textSelection(.enabled)
+                        HanlinActivityTitle(activity.title, font: HanlinTypography.footnote,
+                            baseColor: .secondary, isActive: shimmerOwners.contains(.activity(activity.id)))
+                            .textSelection(.enabled)
                     } else {
-                        activityRow(activity, entries: entriesByCallID[activity.id] ?? [],
-                            approval: approvals[activity.id])
+                        activityRow(activity, approval: approvals[activity.id],
+                            isCurrent: shimmerOwners.contains(.activity(activity.id)))
                     }
                 }
             }
@@ -2330,8 +2419,7 @@ struct ChatBubbleView: View {
 
         @ViewBuilder
         private func activityRow(_ activity: AgentDisplayActivity,
-                                 entries: [ClassicProjectedToolCallEntry],
-                                 approval: AgentToolApproval?) -> some View {
+                                 approval: AgentToolApproval?, isCurrent: Bool) -> some View {
             VStack(alignment: .leading, spacing: 0) {
                 if let pending = toolApproval, pending.callID == activity.id {
                     approvalView(pending)
@@ -2344,27 +2432,10 @@ struct ChatBubbleView: View {
                             else { expandedActivityIDs.remove(activity.id) }
                         }
                     )) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            if !activity.queries.isEmpty {
-                                Text(activity.queries.joined(separator: "\n"))
-                                    .font(HanlinTypography.footnote).textSelection(.enabled)
-                            }
-                            ForEach(sourceReferences(for: activity)) { source in
-                                if let url = source.url {
-                                    Link(destination: url) { Label(source.title, systemImage: "link") }
-                                        .font(HanlinTypography.footnote)
-                                }
-                            }
-                            if let input = activity.inputPreview { technicalText(input) }
-                            if entries.isEmpty {
-                                if let output = activity.outputPreview { technicalText(output) }
-                                if let error = activity.errorDescription {
-                                    Text(AgentDiagnosticsRedactor.sanitize(error))
-                                        .font(HanlinTypography.caption).foregroundStyle(.red).textSelection(.enabled)
-                                }
-                            }
-                            ForEach(entries) { toolCallDetails($0) }
-                        }
+                        // Projection belongs to mounted details, not to the
+                        // target expansion flag. Closing must retain the same
+                        // ScrollView subtree until the height reveal finishes.
+                        AgentActivityDetailsView(activity: activity, run: run).equatable()
                     } label: {
                         HanlinToolActivityHeader(title: activityDisplayTitle(activity),
                             status: statusText(activity, approval: approval),
@@ -2373,16 +2444,50 @@ struct ChatBubbleView: View {
                             family: trustedActivityFamily(activity),
                             isActive: isActive && activity.status == .running
                                 && approval?.disposition != .awaiting && approval?.disposition != .providerRequired,
+                            showsShimmer: isCurrent,
                             isExpanded: activityIsExpanded(activity.id),
                             isFailure: activity.status == .failed,
                             startedAt: activity.startedAt, completedAt: activity.completedAt,
-                            sources: sourceReferences(for: activity))
+                            sources: Self.sourceReferences(for: activity))
                     }
                     .disclosureGroupStyle(HanlinActivityDisclosureStyle(isTool: true))
                 }
             }
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-agent-activity-\(activity.id)")
+        }
+
+        /// A dedicated body keeps projection lazy even when DisclosureGroup
+        /// constructs its content value. Expansion is intentionally not an input:
+        /// closing a parent retains this exact payload until it unmounts.
+        private struct AgentActivityDetailsView: View, Equatable {
+            let activity: AgentDisplayActivity
+            let run: AgentRun?
+
+            var body: some View {
+                let entries = ClassicChatAgentProjection.projectToolEntries(from: run, callID: activity.id)
+                return VStack(alignment: .leading, spacing: 8) {
+                    if !activity.queries.isEmpty {
+                        Text(activity.queries.joined(separator: "\n"))
+                            .font(HanlinTypography.footnote).textSelection(.enabled)
+                    }
+                    ForEach(AgentActivityContentView.sourceReferences(for: activity)) { source in
+                        if let url = source.url {
+                            Link(destination: url) { Label(source.title, systemImage: "link") }
+                                .font(HanlinTypography.footnote)
+                        }
+                    }
+                    if let input = activity.inputPreview { AgentActivityContentView.technicalText(input) }
+                    if entries.isEmpty {
+                        if let output = activity.outputPreview { AgentActivityContentView.technicalText(output) }
+                        if let error = activity.errorDescription {
+                            Text(AgentDiagnosticsRedactor.sanitize(error))
+                                .font(HanlinTypography.caption).foregroundStyle(.red).textSelection(.enabled)
+                        }
+                    }
+                    ForEach(entries) { AgentActivityContentView.toolCallDetails($0) }
+                }
+            }
         }
 
         private func approvalView(_ pending: ChatToolApprovalPresentation) -> some View {
@@ -2418,7 +2523,7 @@ struct ChatBubbleView: View {
             }
         }
 
-        private func sourceReferences(for activity: AgentDisplayActivity) -> [HanlinSourceReference] {
+        private static func sourceReferences(for activity: AgentDisplayActivity) -> [HanlinSourceReference] {
             activity.sources.compactMap { source in
                 guard let rawURL = source.url, let url = URL(string: rawURL),
                       ["https", "http"].contains(url.scheme?.lowercased() ?? ""),
@@ -2429,7 +2534,7 @@ struct ChatBubbleView: View {
             }
         }
 
-        private func technicalText(_ text: String) -> some View {
+        private static func technicalText(_ text: String) -> some View {
             ScrollView([.horizontal, .vertical]) {
                 Text(AgentDiagnosticsRedactor.sanitize(text))
                     .font(HanlinTypography.caption.monospaced()).textSelection(.enabled)
@@ -2440,7 +2545,7 @@ struct ChatBubbleView: View {
             .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8))
         }
 
-        private func toolCallDetails(_ entry: ClassicProjectedToolCallEntry) -> some View {
+        private static func toolCallDetails(_ entry: ClassicProjectedToolCallEntry) -> some View {
             VStack(alignment: .leading, spacing: 6) {
                 // The outer row owns title and outcome. Details show the real
                 // call's payload once, rather than another nested status card.
@@ -2500,52 +2605,9 @@ struct ChatBubbleView: View {
                     ChatMarkdownView(text: translatedText,
                         savePersonal: { savePersonalExcerpt($0.text, markdown: translatedText, selection: $0) },
                         saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
-                    .contextMenu {
-                        // 复制内容
-                        Button(action: {
-                            UIPasteboard.general.string = translatedText
-                        }) {
-                            Label("复制内容", systemImage: "square.on.square")
-                        }
-                        // 选择文本
-                        Button(action: {
-                            translatedTextSelectionSheetPresented = true
-                        }) {
-                            Label("选择文本", systemImage: "text.redaction")
-                        }
-                        // 删除译文
-                        Button(action: translateText) {
-                            HStack {
-                                if isTranslating {
-                                    Image(systemName: "clock")
-                                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                                        .frame(width: size_24, height: size_24)
-                                        .foregroundColor(.secondary)
-                                        .clipShape(Circle())
-                                } else if translated {
-                                    Image(systemName: "trash")
-                                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                                        .frame(width: size_24, height: size_24)
-                                        .foregroundColor(.secondary)
-                                        .clipShape(Circle())
-                                } else {
-                                    Image("translate")
-                                        .renderingMode(.template)
-                                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                                        .frame(width: size_24, height: size_24)
-                                        .foregroundColor(.secondary)
-                                        .clipShape(Circle())
-                                }
-                                Text(translated ? "删除译文" : (isTranslating ? "翻译中..." : "翻译内容"))
-                            }
-                        }
-                        // 存为知识
-                        Button(action: {
-                            createAndSaveKnowledgeRecord(with: translatedText)
-                        }) {
-                            Label("存为知识", systemImage: "backpack")
-                        }
-                    }
+                    .environment(\.chatMessageLongPressPreview, { source, point in
+                        presentTranslatedMessagePreview(from: source, at: point)
+                    })
                 }
             }
         }
@@ -3790,6 +3852,7 @@ struct TextSelectionView: View {
     }
 
     let text: String
+    var savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)? = nil
     @Environment(\.dismiss) private var dismiss
     @State private var writingRequest: WritingRequest?
     @State private var selectedText: String?
@@ -3810,8 +3873,18 @@ struct TextSelectionView: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             NavigationStack {
-                // 使用修改后的 TextSelectionTextView，传入绑定变量
-                TextSelectionTextView(text: text, shouldSelectAll: $shouldSelectAll, selectedText: $selectedText)
+                ChatMarkdownView(text: text,
+                    savePersonal: savePersonal,
+                    saveKnowledge: { selection in
+                        selectedText = selection
+                        saveKnowledge()
+                    }, documentSelectionMode: true,
+                    onSelectionChanged: { selection in
+                        let next = selection.text.isEmpty ? nil : selection.text
+                        if selectedText != next { selectedText = next }
+                    }, selectAllRequest: $shouldSelectAll)
+                    .environment(\.chatMarkdownDidRender, nil)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .navigationTitle("选择文本")
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {

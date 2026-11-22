@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "subject": "Hanlin iPad message selection and preview",
+  "author_agent": "selection_preview",
+  "host_id": "host_7ec8382e82747448",
+  "scope": [
+    "User item 3: bounded message preview and stable presentation ownership",
+    "User item 4: continuous native text selection and deliberate longer-hold preview",
+    "Regression protection for attributed streaming updates and exact saved-source coordinates"
+  ],
+  "result": {
+    "portable_native_text_edit_plan": {
+      "status": "passed",
+      "checks": 329,
+      "job_id": "job_58de3b3ef235"
+    },
+    "portable_preview_viewport": {
+      "status": "passed",
+      "checks": 49,
+      "job_id": "job_920bd3580317",
+      "job_status": "failed",
+      "qualification": "The viewport compilation and fixture independently exited 0 after the earlier native edit-plan fixture failed in the same diagnostic job. The job as a whole was not successful."
+    },
+    "swift_syntax": {
+      "status": "passed_for_scoped_sources",
+      "initial_job_id": "job_87e8c171a372",
+      "initial_job_status": "timeout",
+      "initial_scope": "13 renderer Swift files and 6 app Swift files",
+      "initial_qualification": "Both parse invocations emitted exit=0 before the 15-second job timeout. The timeout supplies no completed result for the subsequent compilation/fixture stage.",
+      "changed_files_job_id": "job_58de3b3ef235",
+      "changed_files_scope": [
+        "AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift",
+        "AI_HLY/Views/Components/ChatViewComponents.swift",
+        "Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphUIView.swift"
+      ],
+      "qualification": "Windows swiftc -frontend -parse only; this is not Apple SDK type checking or UIKit execution."
+    },
+    "whitespace": {
+      "status": "passed",
+      "job_id": "job_58de3b3ef235",
+      "commands": [
+        "git diff --check in renderer worktree",
+        "git diff --check in app worktree"
+      ],
+      "qualification": "Both exited 0. Git emitted CRLF conversion warnings in the renderer worktree; no whitespace errors."
+    }
+  },
+  "superseded_failure": {
+    "initial_job_id": "job_b5235a5db6ac",
+    "diagnostic_job_id": "job_920bd3580317",
+    "old_utf16": [
+      13
+    ],
+    "new_utf16": [
+      13,
+      10
+    ],
+    "expected_edit_start_utf16": 0,
+    "actual_edit_start_utf16": 1,
+    "finding": "For CR followed by an appended LF, NSString.rangeOfComposedCharacterSequence returned a boundary between CR and LF on this Foundation runtime. The changed tail must not split that line-break grapheme.",
+    "production_correction": "NativeTextEditPlan now explicitly moves a CR/LF boundary back one UTF-16 unit in both the old and new canonical source strings.",
+    "regressions_retained": [
+      "CR -> CRLF append",
+      "CRLF -> CR deletion",
+      "Attribute change on LF inside CRLF",
+      "Combining marks, ZWJ family, emoji skin tone, stable cross-paragraph selection, attribute-only changes, 100 appends to a 200-paragraph RTL/emoji document"
+    ],
+    "superseded_by": {
+      "job_id": "job_58de3b3ef235",
+      "status": "passed",
+      "checks": 329
+    },
+    "qualification": "The failing jobs are retained as failures, not relabeled as successful validation."
+  },
+  "validation_limits": {
+    "apple_sdk_typecheck_performed_by_this_agent": false,
+    "ios_or_ipados_runtime_executed": false,
+    "simulator_run": false,
+    "physical_ipad_acceptance_performed": false,
+    "native_uikit_xctests_executed": false,
+    "native_uikit_xctests_added": "Tests/MarkdownTextTests/ContinuousDocumentSelectionTests.swift",
+    "ui_performance_measured": false,
+    "claim": "These results verify portable Foundation edit/viewport logic and source syntax. They do not establish native layout, gesture arbitration, selection dragging, accessibility behavior, frame rate, or crash freedom on iPad. Native archive and physical iPad acceptance remain separate evidence."
+  },
+  "implementation_contract": {
+    "preview_hold_seconds": 1,
+    "preview_maximum_movement_points": 10,
+    "selection_guard": "Reject preview when native selection already exists at touch-down; movement/handle dragging keeps selection ownership.",
+    "preview_geometry": "Bounded preferredContentSize with content filling actual UIKit host bounds; explicit locale, layout direction, color scheme, Dynamic Type and citation environment.",
+    "streaming_update": "Canonical previous attributes are compared before native textStorage tail replacement; animated/highlight-mutated textStorage is not the comparison source.",
+    "source_coordinates": "Existing hanlin-part: IDs remain exact. Full-document captures use hanlin-message: and reopen the same full-document surface.",
+    "rich_content": "Ordinary rich block renderers remain; contiguous prose shares native selection, and Select Text provides a single attributed document across block boundaries."
+  },
+  "source_hash_capture": {
+    "captured_at_utc": "2026-11-22T00:56:50.253015+00:00",
+    "repositories": {
+      "renderer": {
+        "worktree": "C:\\Users\\DAVID\\Code\\hanlin-markdown-selection-20261122",
+        "head": "6e884c73352a272c4e7bf8a5917e8b2157bc952e",
+        "branch": "codex/hanlin-document-selection-20261122",
+        "files": [
+          {
+            "path": "scripts/verify-native-text-edit-plan.swift",
+            "size_bytes": 3627,
+            "sha256_bytes": "2c26c8a8c280342bbb8b5a69dbf661869d90367b1e4a42849d02345be5d2c2ed",
+            "sha256_lf_normalized": "2c26c8a8c280342bbb8b5a69dbf661869d90367b1e4a42849d02345be5d2c2ed"
+          },
+          {
+            "path": "Sources/MarkdownText/UI/DocumentView.swift",
+            "size_bytes": 4041,
+            "sha256_bytes": "f55e5aa1f8866c618e0b8a50e1218936541f4bcaadc766b5a1c11479ea01dafe",
+            "sha256_lf_normalized": "f55e5aa1f8866c618e0b8a50e1218936541f4bcaadc766b5a1c11479ea01dafe"
+          },
+          {
+            "path": "Sources/MarkdownText/UI/BlockView.swift",
+            "size_bytes": 2689,
+            "sha256_bytes": "e4b2f5c4a63defb43792cf0b226cd277ce43a3374cb7c66e070e59ba8e892023",
+            "sha256_lf_normalized": "e4b2f5c4a63defb43792cf0b226cd277ce43a3374cb7c66e070e59ba8e892023"
+          },
+          {
+            "path": "Sources/MarkdownText/ContextMenu/MarkdownDocumentSelection.swift",
+            "size_bytes": 1445,
+            "sha256_bytes": "53d019a3d40789df7581719cfd157d3c4b65a3d6289ccc611c959aa2af4599e9",
+            "sha256_lf_normalized": "53d019a3d40789df7581719cfd157d3c4b65a3d6289ccc611c959aa2af4599e9"
+          },
+          {
+            "path": "Sources/MarkdownText/ContextMenu/MarkdownSelectionHighlight.swift",
+            "size_bytes": 4085,
+            "sha256_bytes": "de12ad608f4f73796ecd61a33eeb09be5065c2296a1e19f62fd86f3562a63140",
+            "sha256_lf_normalized": "de12ad608f4f73796ecd61a33eeb09be5065c2296a1e19f62fd86f3562a63140"
+          },
+          {
+            "path": "Sources/MarkdownText/ContextMenu/MarkdownTextSelection.swift",
+            "size_bytes": 2508,
+            "sha256_bytes": "a8146f0a1320641bc815e347aaa4629c67e87189a402adc06ffafa95e9dd2a92",
+            "sha256_lf_normalized": "a8146f0a1320641bc815e347aaa4629c67e87189a402adc06ffafa95e9dd2a92"
+          },
+          {
+            "path": "Sources/MarkdownText/Models/NativeTextEditPlan.swift",
+            "size_bytes": 2269,
+            "sha256_bytes": "aeafb8dda8c01dc3617f6a1707f213d0da0958caa22f8b49f9c29db89bad5584",
+            "sha256_lf_normalized": "aeafb8dda8c01dc3617f6a1707f213d0da0958caa22f8b49f9c29db89bad5584"
+          },
+          {
+            "path": "Sources/MarkdownText/Models/MarkdownSelectionDocument.swift",
+            "size_bytes": 7359,
+            "sha256_bytes": "3ba7546924397e02e0664dbc2c0368472ec57980b80bf6fa7fee9c02a9f60f22",
+            "sha256_lf_normalized": "3ba7546924397e02e0664dbc2c0368472ec57980b80bf6fa7fee9c02a9f60f22"
+          },
+          {
+            "path": "Sources/MarkdownText/Models/RenderableDocument.swift",
+            "size_bytes": 5843,
+            "sha256_bytes": "3c6a760b3486e9924211c75b55982121a25e77981befc11b1798a8b9728b1ff0",
+            "sha256_lf_normalized": "3c6a760b3486e9924211c75b55982121a25e77981befc11b1798a8b9728b1ff0"
+          },
+          {
+            "path": "Sources/MarkdownText/Models/TextSelectionConfig.swift",
+            "size_bytes": 2065,
+            "sha256_bytes": "7aedf52bcbf3a1dfb64836727043b75ffbc789f198ec67f1ec8786ddc5a947f0",
+            "sha256_lf_normalized": "7aedf52bcbf3a1dfb64836727043b75ffbc789f198ec67f1ec8786ddc5a947f0"
+          },
+          {
+            "path": "Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphView+iOS.swift",
+            "size_bytes": 5864,
+            "sha256_bytes": "dc2e2597c2eb872f2a76a8a393bc6a64f78d4bb5d83c32af8f64a10b95ed99d0",
+            "sha256_lf_normalized": "dc2e2597c2eb872f2a76a8a393bc6a64f78d4bb5d83c32af8f64a10b95ed99d0"
+          },
+          {
+            "path": "Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphUIView.swift",
+            "size_bytes": 20764,
+            "sha256_bytes": "4d6f19b2bb20c00bcd68f9704054a309fc280cde719c480678346f86aea05c40",
+            "sha256_lf_normalized": "4d6f19b2bb20c00bcd68f9704054a309fc280cde719c480678346f86aea05c40"
+          },
+          {
+            "path": "Tests/MarkdownTextTests/ContinuousDocumentSelectionTests.swift",
+            "size_bytes": 5109,
+            "sha256_bytes": "a57d3fa3962e47832fe74e4603f3772e6b4436eb7781e83737f350a82b4caf27",
+            "sha256_lf_normalized": "a57d3fa3962e47832fe74e4603f3772e6b4436eb7781e83737f350a82b4caf27"
+          }
+        ]
+      },
+      "app": {
+        "worktree": "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122",
+        "head": "5b0a369dd674a96a3f2583ad331c1ba83ec03501",
+        "branch": "codex/hanlin-ipad-interactions-20261122",
+        "files": [
+          {
+            "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift",
+            "size_bytes": 8328,
+            "sha256_bytes": "31ca28cb27bb8fcdaf331058bd6c82540149b06282e93dfe6affd3fe85bb3f79",
+            "sha256_lf_normalized": "31ca28cb27bb8fcdaf331058bd6c82540149b06282e93dfe6affd3fe85bb3f79"
+          },
+          {
+            "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+            "size_bytes": 271772,
+            "sha256_bytes": "f13cde09d34db6b4fc07673151c321101187e5d238d23b81ef0a2b385646a5c8",
+            "sha256_lf_normalized": "f13cde09d34db6b4fc07673151c321101187e5d238d23b81ef0a2b385646a5c8"
+          },
+          {
+            "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift",
+            "size_bytes": 629,
+            "sha256_bytes": "2441e85cff2c1f2ea304c6a515eb1daaf034f8a4d4793a3c0d4ce8d25f07b320",
+            "sha256_lf_normalized": "2441e85cff2c1f2ea304c6a515eb1daaf034f8a4d4793a3c0d4ce8d25f07b320"
+          },
+          {
+            "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift",
+            "size_bytes": 6804,
+            "sha256_bytes": "12792cc44ab98bcaee864afb9db13959581ce4702fd44e401f6000ec0c46e911",
+            "sha256_lf_normalized": "12792cc44ab98bcaee864afb9db13959581ce4702fd44e401f6000ec0c46e911"
+          },
+          {
+            "path": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+            "size_bytes": 8146,
+            "sha256_bytes": "ee90316ec04be11d7799ad225223a94fa12db88e13a2d94204a0bb4afa57324d",
+            "sha256_lf_normalized": "ee90316ec04be11d7799ad225223a94fa12db88e13a2d94204a0bb4afa57324d"
+          },
+          {
+            "path": "Scripts/Validation/verify_message_preview_metrics.swift",
+            "size_bytes": 2056,
+            "sha256_bytes": "2cb5d7d1bc5311c7eb9ad9ab04cc4ed64a6c57bf0101dc9b4a8873513b35d910",
+            "sha256_lf_normalized": "2cb5d7d1bc5311c7eb9ad9ab04cc4ed64a6c57bf0101dc9b4a8873513b35d910"
+          }
+        ]
+      }
+    },
+    "receipt_job_id": "job_b453e5cd55a0",
+    "qualification": "Hashes were captured from current final source files after validation. Byte hashes reflect actual worktree line endings; LF-normalized hashes are provided for cross-checkout comparison. Earlier failing jobs used the pre-correction helper and do not have these final hashes.",
+    "expected_renderer_commit": "6e884c73352a272c4e7bf8a5917e8b2157bc952e"
+  },
+  "reproducibility": {
+    "shell_independent_python_script": "import pathlib,subprocess,tempfile,sys\nfork=pathlib.Path(r\"C:\\Users\\DAVID\\Code\\hanlin-markdown-selection-20261122\")\napp=pathlib.Path(r\"C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\")\ndef run(label,args,cwd):\n    result=subprocess.run(args,cwd=cwd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,encoding=\"utf-8\",errors=\"replace\",timeout=240)\n    print(label+\" exit=\"+str(result.returncode),flush=True)\n    if result.stdout: print(result.stdout,flush=True)\n    if result.returncode: sys.exit(result.returncode)\nrun(\"Renderer Swift syntax\",[\"swiftc\",\"-frontend\",\"-parse\"]+['scripts/verify-native-text-edit-plan.swift', 'Sources/MarkdownText/UI/DocumentView.swift', 'Sources/MarkdownText/UI/BlockView.swift', 'Sources/MarkdownText/ContextMenu/MarkdownDocumentSelection.swift', 'Sources/MarkdownText/ContextMenu/MarkdownSelectionHighlight.swift', 'Sources/MarkdownText/ContextMenu/MarkdownTextSelection.swift', 'Sources/MarkdownText/Models/NativeTextEditPlan.swift', 'Sources/MarkdownText/Models/MarkdownSelectionDocument.swift', 'Sources/MarkdownText/Models/RenderableDocument.swift', 'Sources/MarkdownText/Models/TextSelectionConfig.swift', 'Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphView+iOS.swift', 'Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphUIView.swift', 'Tests/MarkdownTextTests/ContinuousDocumentSelectionTests.swift'],fork)\nrun(\"App selection Swift syntax\",[\"swiftc\",\"-frontend\",\"-parse\"]+['Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift', 'AI_HLY/Views/Components/ChatViewComponents.swift', 'AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift', 'AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift', 'AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift', 'Scripts/Validation/verify_message_preview_metrics.swift'],app)\nwith tempfile.TemporaryDirectory(prefix=\"hanlin-selection-validation-\") as directory:\n    edit=str(pathlib.Path(directory)/\"native-text-edit-plan.exe\")\n    preview=str(pathlib.Path(directory)/\"message-preview-metrics.exe\")\n    run(\"Native edit plan compilation\",[\"swiftc\",\"Sources/MarkdownText/Models/NativeTextEditPlan.swift\",\"scripts/verify-native-text-edit-plan.swift\",\"-o\",edit],fork)\n    run(\"Native edit plan fixture\",[edit],fork)\n    run(\"Preview metrics compilation\",[\"swiftc\",\"AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift\",\"Scripts/Validation/verify_message_preview_metrics.swift\",\"-o\",preview],app)\n    run(\"Preview metrics fixture\",[preview],app)\nprint(\"Selection/preview portable validation complete\",flush=True)\n",
+    "corrected_final_job_python_script": "import pathlib,subprocess,tempfile,sys\nfork=pathlib.Path(r\"C:\\Users\\DAVID\\Code\\hanlin-markdown-selection-20261122\")\napp=pathlib.Path(r\"C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\")\ndef run(label,args,cwd):\n    result=subprocess.run(args,cwd=cwd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,encoding=\"utf-8\",errors=\"replace\",timeout=120)\n    print(label+\" exit=\"+str(result.returncode),flush=True)\n    if result.stdout: print(result.stdout,flush=True)\n    if result.returncode: sys.exit(result.returncode)\nrun(\"Header/preview Swift syntax\",[\"swiftc\",\"-frontend\",\"-parse\",\"AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift\",\"AI_HLY/Views/Components/ChatViewComponents.swift\"],app)\nrun(\"Native setter Swift syntax\",[\"swiftc\",\"-frontend\",\"-parse\",\"Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphUIView.swift\"],fork)\nwith tempfile.TemporaryDirectory(prefix=\"hanlin-selection-validation-\") as directory:\n    edit=str(pathlib.Path(directory)/\"native-text-edit-plan.exe\")\n    run(\"Native edit plan compilation\",[\"swiftc\",\"Sources/MarkdownText/Models/NativeTextEditPlan.swift\",\"scripts/verify-native-text-edit-plan.swift\",\"-o\",edit],fork)\n    run(\"Native edit plan fixture\",[edit],fork)\nrun(\"Renderer whitespace validation\",[\"git\",\"diff\",\"--check\"],fork)\nrun(\"App whitespace validation\",[\"git\",\"diff\",\"--check\"],app)\nprint(\"Corrected selection validation complete\",flush=True)\n",
+    "source_hash_capture_python_script": "import pathlib,hashlib,subprocess,json,datetime\nroots={\"renderer\":pathlib.Path(r\"C:\\Users\\DAVID\\Code\\hanlin-markdown-selection-20261122\"),\"app\":pathlib.Path(r\"C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\")}\npaths={'renderer': ['scripts/verify-native-text-edit-plan.swift', 'Sources/MarkdownText/UI/DocumentView.swift', 'Sources/MarkdownText/UI/BlockView.swift', 'Sources/MarkdownText/ContextMenu/MarkdownDocumentSelection.swift', 'Sources/MarkdownText/ContextMenu/MarkdownSelectionHighlight.swift', 'Sources/MarkdownText/ContextMenu/MarkdownTextSelection.swift', 'Sources/MarkdownText/Models/NativeTextEditPlan.swift', 'Sources/MarkdownText/Models/MarkdownSelectionDocument.swift', 'Sources/MarkdownText/Models/RenderableDocument.swift', 'Sources/MarkdownText/Models/TextSelectionConfig.swift', 'Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphView+iOS.swift', 'Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphUIView.swift', 'Tests/MarkdownTextTests/ContinuousDocumentSelectionTests.swift'], 'app': ['Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift', 'AI_HLY/Views/Components/ChatViewComponents.swift', 'AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift', 'AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift', 'AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift', 'Scripts/Validation/verify_message_preview_metrics.swift']}\nresult={\"captured_at_utc\":datetime.datetime.now(datetime.timezone.utc).isoformat(),\"repositories\":{}}\nfor name,root in roots.items():\n    files=[]\n    for path in paths[name]:\n        data=(root/path).read_bytes()\n        files.append({\"path\":path,\"size_bytes\":len(data),\"sha256_bytes\":hashlib.sha256(data).hexdigest(),\"sha256_lf_normalized\":hashlib.sha256(data.replace(b\"\\r\\n\",b\"\\n\")).hexdigest()})\n    result[\"repositories\"][name]={\"worktree\":str(root),\"head\":subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],cwd=root,text=True).strip(),\"branch\":subprocess.check_output([\"git\",\"branch\",\"--show-current\"],cwd=root,text=True).strip(),\"files\":files}\nprint(json.dumps(result,ensure_ascii=True),flush=True)\n",
+    "instructions": "Run scripts with Python 3 on the Windows host with swiftc available in PATH. The scripts use the recorded worktrees and temporary executable directories. The first script reproduces scoped syntax and both current Foundation fixtures; the second records the narrower final validation actually executed after the CRLF correction. Neither invokes xcodebuild, simulator tools, XCTest runtime, SwiftPM resolution, CI, signing, or upload.",
+    "evidence_capture_note": "No validation was rerun to write this evidence file. The evidence task retrieved existing job receipts and captured source hashes only."
+  },
+  "job_receipts": [
+    {
+      "id": "job_87e8c171a372",
+      "source": "exec@host_7ec8382e82747448",
+      "host": "host_7ec8382e82747448",
+      "tool": "exec",
+      "status": "timeout",
+      "exit_code": -1,
+      "timeout_s": 15,
+      "started_at": "2026-11-22T00:44:48.235775+00:00",
+      "finished_at": "2026-11-22T00:45:04.318953+00:00",
+      "duration_s": 16.08,
+      "output_truncated": false,
+      "output": "⏱️ Timeout. Output written before the timeout:\nRenderer Swift syntax exit=0\r\nApp selection Swift syntax exit=0"
+    },
+    {
+      "id": "job_b5235a5db6ac",
+      "source": "exec@host_7ec8382e82747448",
+      "host": "host_7ec8382e82747448",
+      "tool": "exec",
+      "status": "failed",
+      "exit_code": 1,
+      "timeout_s": 180,
+      "started_at": "2026-11-22T00:46:20.590157+00:00",
+      "finished_at": "2026-11-22T00:46:57.403464+00:00",
+      "duration_s": 36.81,
+      "output_truncated": false,
+      "output": "Native edit plan compilation exit=0\r\n   Creating library C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-selection-validation-ln1r64y6\\native-text-edit-plan.lib and object C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-selection-validation-ln1r64y6\\native-text-edit-plan.exp\r\n\r\n\r\nNative edit plan fixture exit=3221225501\r\nmain/verify-native-text-edit-plan.swift:8: Precondition failed: Unchanged prefix was unnecessarily replaced\r\nCurrent stack trace:\r\n0    swiftCore.dll                      0x00007ffa85a3e730 swift_reportError + 94\r\n1    swiftCore.dll                      0x00007ffa85addc00 swift_stdlib_reportFatalErrorInFile + 132\r\n2    swiftCore.dll                      0x00007ffa857173e0 StaticString.withUTF8Buffer<A>(_:) + 872\r\n3    swiftCore.dll                      0x00007ffa857167b0 _assertionFailure(_:_:file:line:flags:) + 262\r\n4    native-text-edit-plan.exe          0x00007ff7048d3c2e <unavailable> + 15406\r\n5    native-text-edit-plan.exe          0x00007ff7048d3f82 <unavailable> + 16258\r\n6    native-text-edit-plan.exe          0x00007ff7048d2ffc <unavailable> + 12284\r\n7    native-text-edit-plan.exe          0x00007ff7048d41d9 <unavailable> + 16857\r\n8    native-text-edit-plan.exe          0x00007ff7048d41f0 main + 9\r\n9    native-text-edit-plan.exe          0x00007ff7048d41f0 main + 1727\r\n10   KERNEL32.DLL                       0x00007ffb1e32dd90 BaseThreadInitThunk + 23\r\n11   ntdll.dll                          0x00007ffb1f839c30 RtlUserThreadStart + 44"
+    },
+    {
+      "id": "job_920bd3580317",
+      "source": "exec@host_7ec8382e82747448",
+      "host": "host_7ec8382e82747448",
+      "tool": "exec",
+      "status": "failed",
+      "exit_code": 1,
+      "timeout_s": 180,
+      "started_at": "2026-11-22T00:48:54.097970+00:00",
+      "finished_at": "2026-11-22T00:49:57.648027+00:00",
+      "duration_s": 63.55,
+      "output_truncated": false,
+      "output": "Native edit plan compilation exit=0\r\n   Creating library C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-selection-validation-v_4qtn1h\\native-text-edit-plan.lib and object C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-selection-validation-v_4qtn1h\\native-text-edit-plan.exp\r\n\r\n\r\nNative edit plan fixture exit=3221225501\r\nmain/verify-native-text-edit-plan.swift:8: Precondition failed: Unchanged prefix expected 0, got 1; old UTF16 [13], new UTF16 [13, 10]\r\nCurrent stack trace:\r\n0    swiftCore.dll                      0x00007ffa8541e730 swift_reportError + 94\r\n1    swiftCore.dll                      0x00007ffa854bdc00 swift_stdlib_reportFatalErrorInFile + 132\r\n2    swiftCore.dll                      0x00007ffa850f73e0 StaticString.withUTF8Buffer<A>(_:) + 872\r\n3    swiftCore.dll                      0x00007ffa850f67b0 _assertionFailure(_:_:file:line:flags:) + 262\r\n4    native-text-edit-plan.exe          0x00007ff627c23c2e <unavailable> + 15406\r\n5    native-text-edit-plan.exe          0x00007ff627c24373 <unavailable> + 17267\r\n6    native-text-edit-plan.exe          0x00007ff627c22ffc <unavailable> + 12284\r\n7    native-text-edit-plan.exe          0x00007ff627c245d9 <unavailable> + 17881\r\n8    native-text-edit-plan.exe          0x00007ff627c245f0 main + 9\r\n9    native-text-edit-plan.exe          0x00007ff627c245f0 main + 1823\r\n10   KERNEL32.DLL                       0x00007ffb1e32dd90 BaseThreadInitThunk + 23\r\n11   ntdll.dll                          0x00007ffb1f839c30 RtlUserThreadStart + 44\r\n\r\nPreview metrics compilation exit=0\r\n   Creating library C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-selection-validation-v_4qtn1h\\message-preview-metrics.lib and object C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-selection-validation-v_4qtn1h\\message-preview-metrics.exp\r\n\r\n\r\nPreview metrics fixture exit=0\r\nPASS: 49 message preview viewport checks\r\n\r\nSelection/preview portable validation complete"
+    },
+    {
+      "id": "job_58de3b3ef235",
+      "source": "exec@host_7ec8382e82747448",
+      "host": "host_7ec8382e82747448",
+      "tool": "exec",
+      "status": "succeeded",
+      "exit_code": 0,
+      "timeout_s": 180,
+      "started_at": "2026-11-22T00:52:04.389579+00:00",
+      "finished_at": "2026-11-22T00:52:47.353187+00:00",
+      "duration_s": 42.96,
+      "output_truncated": false,
+      "output": "Header/preview Swift syntax exit=0\r\nNative setter Swift syntax exit=0\r\nNative edit plan compilation exit=0\r\n   Creating library C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-selection-validation-zauesjpt\\native-text-edit-plan.lib and object C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-selection-validation-zauesjpt\\native-text-edit-plan.exp\r\n\r\n\r\nNative edit plan fixture exit=0\r\nPASS: 329 native text edit-plan checks\r\n\r\nRenderer whitespace validation exit=0\r\nwarning: in the working copy of 'Sources/MarkdownText/ContextMenu/MarkdownSelectionHighlight.swift', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'Sources/MarkdownText/ContextMenu/MarkdownTextSelection.swift', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'Sources/MarkdownText/Models/RenderableDocument.swift', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'Sources/MarkdownText/Models/TextSelectionConfig.swift', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'Sources/MarkdownText/UI/BlockView.swift', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'Sources/MarkdownText/UI/DocumentView.swift', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphUIView.swift', LF will be replaced by CRLF the next time Git touches it\r\nwarning: in the working copy of 'Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphView+iOS.swift', LF will be replaced by CRLF the next time Git touches it\r\n\r\nApp whitespace validation exit=0\r\nCorrected selection validation complete"
+    }
+  ]
+}

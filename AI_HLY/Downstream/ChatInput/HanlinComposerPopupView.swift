@@ -53,7 +53,7 @@ struct HanlinComposerGeneralActionsView: View {
     let onOpenPhotoLibrary: () -> Void
     let onOpenDocumentPicker: () -> Void
     let onOpenShareInbox: () -> Void
-    var onOpenMiniApps: (() -> Void)? = nil
+    var miniAppsSession: NativeAppsLaunchSession? = nil
 
     // Mode toggles
     @Binding var ifSearch: Bool
@@ -116,6 +116,8 @@ struct HanlinComposerGeneralActionsView: View {
                             parametersSubpage
                         case .imageSize:
                             imageSizeSubpage
+                        case .miniApps:
+                            if let miniAppsSession { NativeAppsComposerPage(session: miniAppsSession) }
                         }
                     }
                     .onAppear {
@@ -154,6 +156,8 @@ struct HanlinComposerGeneralActionsView: View {
                                 parametersSubpage
                             case .imageSize:
                                 imageSizeSubpage
+                            case .miniApps:
+                                if let miniAppsSession { NativeAppsComposerPage(session: miniAppsSession) }
                             }
                         }
                         .onAppear {
@@ -194,18 +198,15 @@ struct HanlinComposerGeneralActionsView: View {
                 if !capability.isLocal {
                     attachmentTile(title: String(localized: "Camera"), systemImage: "camera.fill",
                                    identifier: "hanlin-general-camera", disabled: isResponding || selectedImages.count >= 5) {
-                        coordinator.closeAll()
                         onOpenCamera()
                     }
                     attachmentTile(title: String(localized: "Photos"), systemImage: "photo.on.rectangle",
                                    identifier: "hanlin-general-photos", disabled: isResponding || selectedImages.count >= 5) {
-                        coordinator.closeAll()
                         onOpenPhotoLibrary()
                     }
                 }
                 attachmentTile(title: String(localized: "Files"), systemImage: "doc.fill",
                                identifier: "hanlin-general-files", disabled: isResponding || selectedDocumentURLs.count >= 5) {
-                    coordinator.closeAll()
                     onOpenDocumentPicker()
                 }
             }
@@ -231,7 +232,6 @@ struct HanlinComposerGeneralActionsView: View {
             // The production share inbox is the only additional home action.
             // It uses the existing import flow and never substitutes demo data.
             Button {
-                coordinator.closeAll()
                 onOpenShareInbox()
             } label: {
                 Label("Shared Items", systemImage: "tray.and.arrow.down")
@@ -324,7 +324,6 @@ struct HanlinComposerGeneralActionsView: View {
                             identifier: "hanlin-general-camera",
                             disabled: isResponding || selectedImages.count >= 5
                         ) {
-                            coordinator.closeAll()
                             onOpenCamera()
                         }
 
@@ -334,7 +333,6 @@ struct HanlinComposerGeneralActionsView: View {
                             identifier: "hanlin-general-photos",
                             disabled: isResponding || selectedImages.count >= 5
                         ) {
-                            coordinator.closeAll()
                             onOpenPhotoLibrary()
                         }
                     }
@@ -345,13 +343,11 @@ struct HanlinComposerGeneralActionsView: View {
                         identifier: "hanlin-general-files",
                         disabled: isResponding || selectedDocumentURLs.count >= 5
                     ) {
-                        coordinator.closeAll()
                         onOpenDocumentPicker()
                     }
                 }
 
                 Button {
-                    coordinator.closeAll()
                     onOpenShareInbox()
                 } label: {
                     Label("Shared Items", systemImage: "tray.and.arrow.down")
@@ -437,7 +433,6 @@ struct HanlinComposerGeneralActionsView: View {
                     .accessibilityIdentifier("hanlin-general-open-tools-button")
 
                     Button {
-                        coordinator.closeAll()
                         onExpandEditor()
                     } label: {
                         navigationRowLabel(
@@ -530,7 +525,6 @@ struct HanlinComposerGeneralActionsView: View {
                                 if !selectedPrompts.contains(where: { $0.id == item.id }) {
                                     selectedPrompts.append(item)
                                 }
-                                coordinator.closeAll()
                             } label: {
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack(spacing: 6) {
@@ -597,11 +591,10 @@ struct HanlinComposerGeneralActionsView: View {
                     }
                 }
             }
-            if let onOpenMiniApps {
+            if miniAppsSession != nil {
                 morphCapabilityTile(title: String(localized: "hanlin.morph.miniAppsTitle"), subtitle: String(localized: "Interfaces in chat"),
                                     symbol: "square.grid.2x2", identifier: "tool-miniApps") {
-                    coordinator.closeAll()
-                    onOpenMiniApps()
+                    coordinator.pushGeneralSubroute(.miniApps, reduceMotion: true)
                 }
             }
             morphCapabilityTile(title: String(localized: "Model Parameters"), subtitle: String(localized: "Model controls"),
@@ -702,7 +695,6 @@ struct HanlinComposerGeneralActionsView: View {
                             )
 
                             Button {
-                                coordinator.closeAll()
                                 onOpenEmbeddingSettings()
                             } label: {
                                 Image(systemName: "slider.horizontal.2.square")
@@ -818,7 +810,6 @@ struct HanlinComposerGeneralActionsView: View {
                                 if !selectedPrompts.contains(where: { $0.id == item.id }) {
                                     selectedPrompts.append(item)
                                 }
-                                coordinator.closeAll()
                             } label: {
                                 HStack(spacing: 10) {
                                     Image(systemName: "text.quote")

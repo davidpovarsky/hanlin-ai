@@ -1,6 +1,29 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "hanlin.apps.search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search Apps"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש יישומים"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索应用"
+          }
+        }
+      }
+    },
     "Request details are unavailable." : {
       "extractionState" : "manual",
       "localizations" : {

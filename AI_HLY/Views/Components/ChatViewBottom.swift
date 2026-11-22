@@ -296,19 +296,20 @@ struct ChatViewBottom: View {
     @State private var showCameraPicker = false
     @State private var showDocumentPicker = false
     @State private var showShareInbox = false
-    @State private var showMiniAppsHub = false
+    @State private var miniAppsLaunchSession = NativeAppsLaunchSession()
     @State private var shareDraftContext: String?
     @State private var isSourceOptionsVisible = false
     @State private var debounceWorkItem: DispatchWorkItem?
     @State private var selectedViewImage: UIImage?
     @State private var isImageViewerPresented: Bool = false
     @State private var isSelect = false
-    @State private var textEditorHeight: CGFloat = 38
+    @State private var textEditorHeight: CGFloat = HanlinMorphStyle.editorMinimumHeight
     @State private var measuredAttachmentPreviewHeight: CGFloat = 0
-    @State private var measuredMorphInputHeight: CGFloat = 52
-    @State private var measuredEditorFrameHeight: CGFloat = 44
+    @State private var measuredMorphInputHeight: CGFloat = HanlinMorphStyle.editorMinimumHeight
+        + HanlinMorphStyle.inputTopInset + HanlinMorphStyle.inputControlsSpacing
+        + HanlinMorphStyle.inputControlHitSize + HanlinMorphStyle.inputControlsInset
+    @State private var measuredEditorFrameHeight: CGFloat = HanlinMorphStyle.editorMinimumHeight
     @State private var measuredCapabilitiesHeight: CGFloat = 42
-    @State private var measuredQuickBarHeight: CGFloat = 46
     @State private var measuredMorphToolbarHeight: CGFloat = 44
     @State private var baselineWorkspaceHeight: CGFloat = 0
     @State private var popupCoordinator = HanlinComposerPopupCoordinator()
@@ -361,6 +362,11 @@ struct ChatViewBottom: View {
     let buttonHeight: CGFloat = 36
 
     var body: some View {
+        composerSurface
+            .modifier(NativeAppsLaunchPresentation(session: miniAppsLaunchSession))
+    }
+
+    private var composerSurface: some View {
         VStack {
             // 只有在需要时才显示“画布”和“滚动到底部”按钮
             if (showScrollToBottomButton
@@ -440,6 +446,86 @@ struct ChatViewBottom: View {
                 model: presentation.model
             )
         }
+        .sheet(isPresented: $voiceExpanded) {
+            VoiceInputView(message: $message, voiceExpanded: $voiceExpanded)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $showCameraPicker) {
+            ImagePicker(selectedImages: $selectedImages, sourceType: .camera, maxImageNumber: 5)
+                .background(.black)
+        }
+        .sheet(isPresented: $showImagePicker) {
+            ImagePicker(selectedImages: $selectedImages, sourceType: .photoLibrary, maxImageNumber: 5)
+                .ignoresSafeArea()
+        }
+        .sheet(isPresented: $showDocumentPicker) {
+            DocumentPicker(selectedDocumentURLs: $selectedDocumentURLs)
+                .ignoresSafeArea()
+        }
+        .sheet(isPresented: $showShareInbox) {
+            NavigationStack {
+                ChavrusaShareInboxView(platform: .shared, useInChat: { batchID in
+                    guard let originalContext = shareDraftContext,
+                          originalContext == effectiveDockContextKey, showShareInbox, !isResponding else {
+                        throw CancellationError()
+                    }
+                    let prepared = try await ChavrusaShareInbox.shared.prepareDraft(
+                        batchID: batchID, availableFileSlots: 5 - selectedDocumentURLs.count)
+                    do {
+                        try Task.checkCancellation()
+                        guard showShareInbox, originalContext == effectiveDockContextKey, !isResponding else {
+                            throw CancellationError()
+                        }
+                        guard selectedDocumentURLs.count + prepared.files.count <= 5 else {
+                            throw ChavrusaShareDraftError.fileLimit
+                        }
+                        if !prepared.text.isEmpty {
+                            message = message.isEmpty ? prepared.text : message + "\n\n" + prepared.text
+                        }
+                        selectedDocumentURLs.append(contentsOf: prepared.files)
+                        showShareInbox = false
+                        shareDraftContext = nil
+                    } catch {
+                        await ChavrusaShareInbox.shared.discardPreparedDraft(prepared)
+                        throw error
+                    }
+                })
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Cancel") { showShareInbox = false; shareDraftContext = nil }
+                            .accessibilityIdentifier("hanlin-share-inbox-cancel")
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $showEmbeddingSettingSheet) {
+            NavigationStack {
+                SelectEmbeddingModelView()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("完成") {
+                                showEmbeddingSettingSheet = false
+                            }
+                        }
+                    }
+            }
+        }
+        .alert("知识背包错误", isPresented: $showKnowledgeAlert) {
+            if isEmbeddingModelError {
+                Button("前往设置") {
+                    showEmbeddingSettingSheet = true
+                }
+            }
+            Button("取消", role: .cancel) { }
+        } message: {
+            Text(knowledgeAlertMessage)
+        }
+        .alert("未启用搜索引擎", isPresented: $showSearchAlert) {
+            Button("确定", role: .cancel) { }
+        } message: {
+            Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。")
+        }
         .onAppear {
             syncDockGeometryAndContext()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // **延迟 0.3 秒触发动画**
@@ -451,6 +537,8 @@ struct ChatViewBottom: View {
         .onChange(of: effectiveDockContextKey) { _, newKey in
             showShareInbox = false
             shareDraftContext = nil
+            voiceExpanded = false
+            inputExpanded = false
             popupCoordinator.dockState.handleContextKeyChange(newKey)
             popupCoordinator.closeAll()
         }
@@ -488,10 +576,7 @@ struct ChatViewBottom: View {
         }
         .onDisappear { debounceWorkItem?.cancel() }
         .onChange(of: isInputActive.wrappedValue) { _, focused in
-            popupCoordinator.dockState.handleInputFocusChange(focused)
-            if focused && (popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools) {
-                popupCoordinator.closeAll()
-            }
+            popupCoordinator.dockState.handleInputFocusChange(focused, preserveExpandedDrawer: true)
         }
         .onChange(of: isMultiSelectMode) {
             isViewLoaded = !isMultiSelectMode
@@ -500,7 +585,7 @@ struct ChatViewBottom: View {
             if newValue && popupCoordinator.activePopup != .general {
                 popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
             } else if !newValue && popupCoordinator.activePopup == .general {
-                popupCoordinator.closeAll()
+                popupCoordinator.close(.general)
             }
             isSourceOptionsVisible = newValue
         }
@@ -696,7 +781,7 @@ struct ChatViewBottom: View {
                         popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
                     }
                 } else if popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools {
-                    popupCoordinator.closeAll()
+                    if let popup = popupCoordinator.activePopup { popupCoordinator.close(popup) }
                 }
             }
         )
@@ -728,10 +813,6 @@ struct ChatViewBottom: View {
         showsDetachedCapabilities ? measuredCapabilitiesHeight + HanlinMorphStyle.hostSpacing : 0
     }
 
-    private var morphQuickBarOverhead: CGFloat {
-        measuredQuickBarHeight + HanlinMorphStyle.hostSpacing
-    }
-
     private var hasComposerAccessories: Bool {
         !selectedImages.isEmpty || !selectedDocumentURLs.isEmpty || !selectedURLs.isEmpty
             || !selectedPrompts.isEmpty || (showModelSuggestions && !filteredModels.isEmpty)
@@ -739,7 +820,7 @@ struct ChatViewBottom: View {
 
     private var morphAccessoryLimit: CGFloat {
         HanlinMorphGeometry.accessoryBudget(
-            availableHeight: max(0, morphAvailableHeight - morphCapabilitiesOverhead - morphQuickBarOverhead),
+            availableHeight: max(0, morphAvailableHeight - morphCapabilitiesOverhead),
             inputHeight: measuredMorphInputHeight,
             toolbarHeight: measuredMorphToolbarHeight,
             isExpanded: morphExpanded.wrappedValue
@@ -754,7 +835,7 @@ struct ChatViewBottom: View {
     }
 
     private var morphHostOverhead: CGFloat {
-        morphQuickBarOverhead + morphCapabilitiesOverhead
+        morphCapabilitiesOverhead
             + (morphVisibleAccessoryHeight > 1 ? morphVisibleAccessoryHeight + HanlinMorphStyle.hostSpacing : 0)
     }
 
@@ -799,14 +880,6 @@ struct ChatViewBottom: View {
                 .disabled(isResponding)
                 .transition(.identity)
             }
-            // The approved reference places model/microphone controls above
-            // the entire glass shell. Putting these inside the input raises the
-            // launcher away from the panel, even when the draft is empty.
-            composerQuickBar
-                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
-                    guard height.isFinite, height > 1, abs(height - measuredQuickBarHeight) > 1 else { return }
-                    measuredQuickBarHeight = height
-                }
             HanlinMorphComposer(
                 isExpanded: morphExpanded,
                 activePage: morphPage,
@@ -821,6 +894,7 @@ struct ChatViewBottom: View {
                     case .general(.prompts): return String(localized: "Prompt Templates")
                     case .general(.parameters): return String(localized: "Model Parameters")
                     case .general(.imageSize): return String(localized: "Image Settings")
+                    case .general(.miniApps): return String(localized: "hanlin.morph.miniAppsTitle")
                     case .tools(.none): return String(localized: "Tools, Skills & MCP")
                     case .tools(.some(.toolsCatalog)): return String(localized: "Tools")
                     case .tools(.some(.skillsCenter)): return String(localized: "Skills")
@@ -848,7 +922,7 @@ struct ChatViewBottom: View {
                 onToolbarHeightChange: { height in
                     if height.isFinite, height > 1, abs(measuredMorphToolbarHeight - height) > 1 { measuredMorphToolbarHeight = height }
                 },
-                isEnabled: !isResponding,
+                isEnabled: true,
                 home: { generalDrawerView(morphHomeOnly: true) },
                 detail: { route in
                     switch route {
@@ -912,13 +986,10 @@ struct ChatViewBottom: View {
             onOpenPhotoLibrary: { showImagePicker = true },
             onOpenDocumentPicker: { showDocumentPicker = true },
             onOpenShareInbox: {
-                popupCoordinator.closeAll()
                 shareDraftContext = effectiveDockContextKey
                 showShareInbox = true
             },
-            onOpenMiniApps: {
-                showMiniAppsHub = true
-            },
+            miniAppsSession: miniAppsLaunchSession,
             ifSearch: $ifSearch,
             ifKnowledge: $ifKnowledge,
             ifThink: $ifThink,
@@ -1082,7 +1153,7 @@ struct ChatViewBottom: View {
         case .thinking: ifThink = false; ifPlanning = false
         case .creative:
             if capability.contextAction(imageGenerationActive: currentModelSnapshot.supportsImageGen) == .chooseModel {
-                if popupCoordinator.activePopup != .model {
+                if !popupCoordinator.isModelPresented {
                     popupCoordinator.open(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
                 }
             } else {
@@ -1379,25 +1450,33 @@ struct ChatViewBottom: View {
 
     // MARK: - 输入栏及底部按钮区域
     private var inputFieldSection: some View {
-        // Preserve the reference's one empty line / two-to-six draft lines.
-        // The native editor already owns 8pt vertical and 4pt horizontal text
-        // insets, so these outer insets reproduce the source's 11/15/51/52pt.
-        let editorBudget = max(38, morphEditorBudget)
-        let isEmpty = message.isEmpty
-        return ZStack(alignment: .bottomTrailing) {
+        let editorBudget = max(HanlinMorphStyle.editorMinimumHeight, morphEditorBudget)
+        let expandedHeight = HanlinMorphGeometry.expandedEditorHeight(
+            availableHeight: morphAvailableHeight, editorBudget: editorBudget)
+        let editorMinimum = inputExpanded ? expandedHeight : HanlinMorphStyle.editorMinimumHeight
+        let editorMaximum = inputExpanded ? expandedHeight : editorBudget
+        return VStack(spacing: HanlinMorphStyle.inputControlsSpacing) {
+            if inputExpanded {
+                HStack {
+                    Text(String(localized: "Message")).font(HanlinTypography.headline)
+                    Spacer(minLength: 0)
+                    Button(String(localized: "Done")) { inputExpanded = false }
+                        .accessibilityIdentifier("hanlin-expanded-editor-close")
+                }
+                .padding(.horizontal, 14)
+                .padding(.top, 6)
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("hanlin-expanded-editor-sheet")
+            }
             NativeMultilineTextEditor(
                 text: $message,
                 textHeight: $textEditorHeight,
                 placeholderText: String(localized: "Message"),
-                minHeight: 38,
-                maxHeight: editorBudget,
-                usesAutomaticLineLimits: true,
-                onPasteImage: { pastedImage in
-                    selectedImages.append(pastedImage)
-                },
-                onPasteFile: { pastedFile in
-                    selectedDocumentURLs.append(pastedFile)
-                },
+                minHeight: editorMinimum,
+                maxHeight: editorMaximum,
+                usesAutomaticLineLimits: !inputExpanded,
+                onPasteImage: { selectedImages.append($0) },
+                onPasteFile: { selectedDocumentURLs.append($0) },
                 onSendMessage: {
                     if Self.shouldEnableSend(
                         message: message,
@@ -1405,36 +1484,30 @@ struct ChatViewBottom: View {
                         selectedDocumentsCount: selectedDocumentURLs.count,
                         selectedPromptsCount: selectedPrompts.count,
                         isResponding: isResponding
-                    ) {
-                        onSendUser()
-                    }
+                    ) { onSendUser() }
                 },
                 onMentionTriggered: { updateModelSuggestions() },
                 onFocusChange: { focused in
-                    popupCoordinator.dockState.handleInputFocusChange(focused)
-                    if focused && (popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools) {
-                        popupCoordinator.closeAll()
-                    }
+                    popupCoordinator.dockState.handleInputFocusChange(focused, preserveExpandedDrawer: true)
                 },
                 onLifecycleEvent: onNativeEditorLifecycle,
                 readCurrentTextState: readCurrentMessageState
             )
-            .frame(height: min(editorBudget, max(38, textEditorHeight.isFinite ? textEditorHeight : 38)))
+            .frame(height: inputExpanded ? expandedHeight
+                : min(editorBudget, max(HanlinMorphStyle.editorMinimumHeight,
+                    textEditorHeight.isFinite ? textEditorHeight : HanlinMorphStyle.editorMinimumHeight)))
             .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
                 guard height.isFinite, height > 1, abs(measuredEditorFrameHeight - height) > 1 else { return }
                 measuredEditorFrameHeight = height
             }
             .focused(isInputActive)
             .accessibilityIdentifier("hanlin-chat-input")
-            .padding(.top, 3)
-            .padding(.leading, 11)
-            .padding(.trailing, isEmpty ? 47 : 11)
-            .padding(.bottom, isEmpty ? 3 : 44)
+            .padding(.horizontal, 11)
+            .padding(.top, HanlinMorphStyle.inputTopInset)
             .onChange(of: message) {
                 popupCoordinator.dockState.handleDraftTextChange(message)
                 debounceWorkItem?.cancel()
-                // Persistence has one owner in the original ChatView.
-                // This debounce only updates composer-local suggestions.
+                // Persistence still has one owner; this is only local lookup.
                 let draft = message
                 let work = DispatchWorkItem {
                     guard message == draft else { return }
@@ -1444,143 +1517,46 @@ struct ChatViewBottom: View {
                 debounceWorkItem = work
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: work)
             }
-
-            composerPrimaryControl
-                .padding(.trailing, HanlinMorphStyle.sendButtonInset)
-                .padding(.bottom, HanlinMorphStyle.sendButtonInset)
+            composerInputControls
         }
         .frame(minHeight: HanlinMorphStyle.launcherSize)
-        .animation(reduceMotion ? nil : .spring(response: 0.38, dampingFraction: 0.88), value: isEmpty)
-        .sheet(isPresented: $inputExpanded) {
-            BottomSheetView(message: $message, isExpanded: $inputExpanded)
-                .accessibilityElement(children: .contain)
-                .accessibilityIdentifier("hanlin-expanded-editor-sheet")
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $voiceExpanded) {
-            VoiceInputView(message: $message, voiceExpanded: $voiceExpanded)
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $showCameraPicker, onDismiss: {
-            showPhotoSourceOptions = false
-        }) {
-            ImagePicker(selectedImages: $selectedImages, sourceType: .camera, maxImageNumber: 5)
-                .background(.black)
-        }
-        .sheet(isPresented: $showImagePicker, onDismiss: {
-            showPhotoSourceOptions = false
-        }) {
-            ImagePicker(selectedImages: $selectedImages, sourceType: .photoLibrary, maxImageNumber: 5)
-                .ignoresSafeArea()
-        }
-        .sheet(isPresented: $showDocumentPicker, onDismiss: {
-            showPhotoSourceOptions = false
-        }) {
-            DocumentPicker(selectedDocumentURLs: $selectedDocumentURLs)
-                .ignoresSafeArea()
-        }
-        .sheet(isPresented: $showMiniAppsHub) {
-            // Reuse the app's real catalogue, storage and launch host. This
-            // stable editor host owns presentation after the Morph page closes.
-            NativeAppsHubView()
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $showShareInbox) {
-            NavigationStack {
-                ChavrusaShareInboxView(platform: .shared, useInChat: { batchID in
-                    guard let originalContext = shareDraftContext,
-                          originalContext == effectiveDockContextKey, showShareInbox, !isResponding else {
-                        throw CancellationError()
-                    }
-                    let prepared = try await ChavrusaShareInbox.shared.prepareDraft(
-                        batchID: batchID, availableFileSlots: 5 - selectedDocumentURLs.count)
-                    do {
-                        try Task.checkCancellation()
-                        guard showShareInbox, originalContext == effectiveDockContextKey, !isResponding else {
-                            throw CancellationError()
-                        }
-                        guard selectedDocumentURLs.count + prepared.files.count <= 5 else {
-                            throw ChavrusaShareDraftError.fileLimit
-                        }
-                        if !prepared.text.isEmpty {
-                            message = message.isEmpty ? prepared.text : message + "\n\n" + prepared.text
-                        }
-                        selectedDocumentURLs.append(contentsOf: prepared.files)
-                        showShareInbox = false
-                        shareDraftContext = nil
-                    } catch {
-                        await ChavrusaShareInbox.shared.discardPreparedDraft(prepared)
-                        throw error
-                    }
-                })
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel") { showShareInbox = false; shareDraftContext = nil }
-                            .accessibilityIdentifier("hanlin-share-inbox-cancel")
-                    }
-                }
-            }
-        }
-        .sheet(isPresented: $showEmbeddingSettingSheet) {
-            NavigationStack {
-                SelectEmbeddingModelView()
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button("完成") {
-                                showEmbeddingSettingSheet = false
-                            }
-                        }
-                    }
-            }
-        }
-        .alert("知识背包错误", isPresented: $showKnowledgeAlert) {
-            if isEmbeddingModelError {
-                Button("前往设置") {
-                    showEmbeddingSettingSheet = true
-                }
-            }
-            Button("取消", role: .cancel) { }
-        } message: {
-            Text(knowledgeAlertMessage)
-        }
-        .alert("未启用搜索引擎", isPresented: $showSearchAlert) {
-            Button("确定", role: .cancel) { }
-        } message: {
-            Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。")
-        }
+        .animation(reduceMotion ? nil : .spring(response: 0.42, dampingFraction: 0.86), value: inputExpanded)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-surface")
     }
 
-    // MARK: - The source quick bar sits outside the three-surface glass shell.
+    // All controls share the editor's material and hit-test bounds. AnyLayout
+    // reflows the same model source instead of replacing it at narrow widths.
     private var composerActionSize: CGFloat { HanlinMorphStyle.sendButtonSize }
 
-    private var composerQuickBar: some View {
+    private var composerInputControls: some View {
         let width = availableWorkspaceSize.width > 0
             ? availableWorkspaceSize.width : popupCoordinator.measuredContainerSize.width
-        let stacksControls = width < 420 || dynamicTypeSize.isAccessibilitySize
+        let inputWidth = max(0, width - HanlinMorphStyle.horizontalInset * 2
+            - HanlinMorphStyle.launcherSize - HanlinMorphStyle.launcherInputSpacing
+            - HanlinMorphStyle.inputControlsInset * 2)
+        let stacksControls = inputWidth < HanlinMorphStyle.inputControlsCompactWidth
+            || dynamicTypeSize.isAccessibilitySize
         let layout = stacksControls
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
-            : AnyLayout(HStackLayout(alignment: .center, spacing: 10))
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: HanlinMorphStyle.inputControlsSpacing))
+            : AnyLayout(HStackLayout(alignment: .center, spacing: HanlinMorphStyle.inputControlsSpacing))
         return layout {
-            // A single instance retains the native popover/focus across resizing.
             composerModelControl
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: HanlinMorphStyle.inputControlHitSize, alignment: .leading)
                 .layoutPriority(1)
-            HStack(spacing: 8) {
+            HStack(spacing: HanlinMorphStyle.inputControlsSpacing) {
                 composerToolsControl
-                if stacksControls { Spacer(minLength: 4) }
                 composerMicrophoneControl
                 composerExpandEditorControl
+                if stacksControls { Spacer(minLength: 0) }
+                composerPrimaryControl
+                    .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
             }
-            .frame(minHeight: composerActionSize)
+            .frame(minHeight: HanlinMorphStyle.inputControlHitSize)
         }
         .frame(minWidth: 0, maxWidth: .infinity)
-        .padding(.horizontal, 20)
-        .padding(.vertical, 6)
+        .padding(.horizontal, HanlinMorphStyle.inputControlsInset)
+        .padding(.bottom, HanlinMorphStyle.inputControlsInset)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-quick-bar")
     }
@@ -1588,18 +1564,18 @@ struct ChatViewBottom: View {
     private var composerExpandEditorControl: some View {
         Button {
             isFeedBack.toggle()
-            inputExpanded = true
+            inputExpanded.toggle()
         } label: {
-            Image(systemName: "arrow.up.left.and.arrow.down.right")
+            Image(systemName: inputExpanded ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
                 .font(HanlinTypography.subheadline)
                 .foregroundStyle(.secondary)
-                .frame(width: composerActionSize, height: composerActionSize)
+                .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(String(localized: "Expand Long Text Editor"))
+        .accessibilityLabel(inputExpanded ? String(localized: "Done") : String(localized: "Expand Long Text Editor"))
         .accessibilityIdentifier("hanlin-composer-expand-editor")
         .hanlinFeedback(.impact, trigger: isFeedBack)
-        .disabled(isResponding)
     }
 
     private var composerToolsControl: some View {
@@ -1613,15 +1589,13 @@ struct ChatViewBottom: View {
         )
         return Button {
             isFeedBack.toggle()
-            popupCoordinator.toggle(.tools, isInputCurrentlyFocused: isInputActive.wrappedValue)
+            popupCoordinator.open(.tools, isInputCurrentlyFocused: isInputActive.wrappedValue)
         } label: {
             ZStack(alignment: .topTrailing) {
                 Image(systemName: (isToolsOpen || isToolsActive) ? "hammer.circle.fill" : "hammer.circle")
                     .font(HanlinTypography.fixed(size: min(size_20 + 5, 36), weight: .regular))
                     .foregroundStyle(
-                        isResponding
-                        ? Color.gray
-                        : (isToolsOpen ? accent : (isToolsActive ? (TemporaryRecord ? Color.primary : Color.hlBrown) : Color.secondary))
+                        isToolsOpen ? accent : (isToolsActive ? (TemporaryRecord ? Color.primary : Color.hlBrown) : Color.secondary)
                     )
                     .frame(width: composerActionSize, height: composerActionSize)
                     .background(
@@ -1647,16 +1621,18 @@ struct ChatViewBottom: View {
                         .offset(x: -1, y: 1)
                 }
             }
+            .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "Tools, Skills & MCP"))
         .accessibilityIdentifier("hanlin-composer-tools-direct")
-        .disabled(isResponding)
         .hanlinFeedback(.impact, trigger: isFeedBack)
     }
 
     private var composerModelControl: some View {
         let accent: Color = TemporaryRecord ? .primary : .hlBluefont
-        let isModelOpen = popupCoordinator.activePopup == .model
+        let isModelOpen = popupCoordinator.isModelPresented
         return HanlinModelZoomPopover(
             isPresented: popupCoordinator.binding(for: .model),
             presentationID: popupCoordinator.modelPresentationGeneration,
@@ -1694,17 +1670,18 @@ struct ChatViewBottom: View {
     private var composerMicrophoneControl: some View {
         Button(action: {
             isFeedBack.toggle()
-            voiceExpanded.toggle()
+            voiceExpanded = true
         }) {
             Image(systemName: "microphone")
                 .font(HanlinTypography.fixed(size: 16, weight: .medium))
-                .foregroundColor(isResponding ? Color.gray : Color(.systemGray))
-                .frame(width: min(size_30, 44), height: min(size_30, 44))
+                .foregroundStyle(.secondary)
+                .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "开始录音"))
         .accessibilityIdentifier("hanlin-chat-mic")
         .hanlinFeedback(.impact, trigger: isFeedBack)
-        .disabled(isResponding)
     }
 
     private var composerPrimaryControl: some View {

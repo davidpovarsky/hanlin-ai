@@ -1,3 +1,24 @@
+import Foundation
+
+/// Finite geometry shared by disclosure measurement and placement. Layout may
+/// probe zero/unspecified sizes while attaching scroll-backed descendants.
+/// In particular, infinity * 0 must never escape as a NaN layer bound.
+public enum ChatDisclosureGeometry {
+    public static func extent(_ value: Double) -> Double {
+        value.isFinite ? max(0, value) : 0
+    }
+
+    public static func fraction(_ progress: Double) -> Double {
+        progress.isFinite ? min(1, max(0, progress)) : 0
+    }
+
+    public static func revealedHeight(naturalHeight: Double, spacing: Double, progress: Double) -> Double {
+        let fullHeight = extent(naturalHeight) + extent(spacing)
+        guard fullHeight.isFinite else { return 0 }
+        return fullHeight * fraction(progress)
+    }
+}
+
 #if canImport(SwiftUI)
 import SwiftUI
 import HanlinPresentationKit
@@ -33,6 +54,7 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         .allowsHitTesting(isExpanded)
         .accessibilityHidden(!isExpanded)
         .onAppear { settle() }
+        .onDisappear { revision += 1 }
         .onChange(of: isExpanded) { _, _ in transition() }
         .onChange(of: motion.isAnimated) { _, animated in
             if !animated { settle() }
@@ -102,8 +124,8 @@ public struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
     }
 }
 
-/// Only the reported height and the gap change. Text always receives an
-/// unconstrained height proposal, including while interrupted/reversed.
+/// Only the reported height and the gap change. Measure unconstrained natural
+/// height, then place the child at that full height during collapse/reversal.
 private struct ChatDisclosureLayout: Layout {
     var progress: CGFloat
     let spacing: CGFloat
@@ -114,19 +136,30 @@ private struct ChatDisclosureLayout: Layout {
 
     func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
         guard let subview = subviews.first else { return .zero }
-        let natural = subview.sizeThatFits(ProposedViewSize(width: proposal.width, height: nil))
-        // Use the same width for measurement and placement. A narrower reported
-        // text width can otherwise rewrap during placement and change its height.
-        let width = proposal.width.flatMap { $0.isFinite ? $0 : nil } ?? natural.width
-        return CGSize(width: width, height: (natural.height + spacing) * min(1, max(0, progress)))
+        let proposedWidth = proposal.width.flatMap { $0.isFinite ? max(0, $0) : nil }
+        let natural = subview.sizeThatFits(ProposedViewSize(width: proposedWidth, height: nil))
+        let width = proposedWidth ?? CGFloat(ChatDisclosureGeometry.extent(Double(natural.width)))
+        let height = ChatDisclosureGeometry.revealedHeight(naturalHeight: Double(natural.height),
+            spacing: Double(spacing), progress: Double(progress))
+        return CGSize(width: width, height: CGFloat(height))
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
         guard let subview = subviews.first else { return }
-        let naturalProposal = ProposedViewSize(width: bounds.width, height: nil)
-        subview.place(at: CGPoint(x: bounds.minX, y: bounds.minY + spacing * min(1, max(0, progress))),
-            anchor: .topLeading, proposal: naturalProposal)
+        let width = CGFloat(ChatDisclosureGeometry.extent(Double(bounds.width)))
+        let natural = subview.sizeThatFits(ProposedViewSize(width: width, height: nil))
+        let naturalHeight = CGFloat(ChatDisclosureGeometry.extent(Double(natural.height)))
+        let gap = CGFloat(ChatDisclosureGeometry.extent(Double(spacing))
+            * ChatDisclosureGeometry.fraction(Double(progress)))
+        let originX = bounds.minX.isFinite ? bounds.minX : 0
+        let originY = bounds.minY.isFinite ? bounds.minY : 0
+        // Preserve V17's full natural child height throughout the reveal. The
+        // enclosing clip changes; nested ScrollViews never receive the shrinking
+        // mask's zero/unspecified height as their attachment viewport.
+        subview.place(at: CGPoint(x: originX, y: originY + gap), anchor: .topLeading,
+            proposal: ProposedViewSize(width: width, height: naturalHeight))
     }
+
 }
 
 #endif

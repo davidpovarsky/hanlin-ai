@@ -26,9 +26,8 @@ public enum HanlinMorphGeometry {
         return min(naturalHeight, maxHeight)
     }
 
-    /// With the source's bottom alignment, a one-line 52pt input places the
-    /// panel 13pt from the launcher. Extra toolbars inside the input enlarge
-    /// this gap and break the original three-surface glass connection.
+    /// The launcher keeps its original bottom anchor. A taller input still
+    /// merges with both its adjacent launcher and the panel above it.
     public static func launcherPanelGap(inputHeight: CGFloat) -> CGFloat {
         HanlinMorphStyle.panelInputSpacing
             + max(0, finiteHeight(inputHeight) - HanlinMorphStyle.launcherSize)
@@ -36,8 +35,8 @@ public enum HanlinMorphGeometry {
 
     public static func pageBudget(availableHeight: CGFloat, accessoryHeight: CGFloat, inputHeight: CGFloat, toolbarHeight: CGFloat) -> CGFloat {
         let available = finiteHeight(availableHeight)
-        // The caller accounts for the quick bar and visible accessory gaps
-        // once. This component owns only its original shell/panel geometry.
+        // The caller accounts for visible accessory gaps once. The toolbar
+        // inside the editor is already included in measured inputHeight.
         let chrome = HanlinMorphStyle.panelInset * 2 + HanlinMorphStyle.panelContentSpacing
             + HanlinMorphStyle.panelInputSpacing + HanlinMorphStyle.topInset + HanlinMorphStyle.bottomInset
         let remaining = available - finiteHeight(accessoryHeight)
@@ -67,6 +66,15 @@ public enum HanlinMorphGeometry {
             : 0
         let shellInsets = HanlinMorphStyle.topInset + HanlinMorphStyle.bottomInset
         return max(0, finiteHeight(availableHeight) - finiteHeight(accessoryHeight) - inputChrome - panelChrome - shellInsets)
+    }
+
+    /// Grow the existing native editor within the keyboard-adjusted budget.
+    /// Even a short draft fills the expanded surface; longer text scrolls there.
+    public static func expandedEditorHeight(availableHeight: CGFloat, editorBudget: CGFloat) -> CGFloat {
+        let budget = finiteHeight(editorBudget)
+        let desired = max(HanlinMorphStyle.expandedEditorMinimumHeight,
+                          finiteHeight(availableHeight) * HanlinMorphStyle.expandedEditorFraction)
+        return min(budget, desired)
     }
 
     public static func isBackSwipe(horizontal: CGFloat, vertical: CGFloat) -> Bool {

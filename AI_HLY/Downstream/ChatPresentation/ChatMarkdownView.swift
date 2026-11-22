@@ -13,11 +13,15 @@ struct ChatMarkdownView: View {
     var savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?
     var saveKnowledge: (@MainActor @Sendable (String) -> Void)?
     var onRendered: (@MainActor @Sendable () -> Void)?
+    var documentSelectionMode = false
+    var onSelectionChanged: (@MainActor (ChatTextQuote) -> Void)?
+    var selectAllRequest: Binding<Bool>?
     @Environment(\.hanlinMessageCitations) private var citations
     @Environment(\.chatExcerptSource) private var source
     @Environment(\.chatSourceDestination) private var destination
     @Environment(\.chatMarkdownSelectionActivity) private var selectionActivity
     @Environment(\.chatMarkdownDidRender) private var markdownDidRender
+    @Environment(\.chatMessageLongPressPreview) private var messagePreview
     @State private var highlightedRequestID: UUID?
 
     var body: some View {
@@ -56,6 +60,13 @@ struct ChatMarkdownView: View {
                 if highlightedRequestID == requestID { highlightedRequestID = nil }
             }
             .markdownSelectionActivity { id, active in selectionActivity?(id, active) }
+            .markdownDocumentSelectionMode(documentSelectionMode)
+            .markdownSelectAllRequest(selectAllRequest)
+            .markdownSelectionChanged { selection in
+                onSelectionChanged?(ChatTextQuote(text: selection.text, renderedText: selection.renderedText,
+                    range: selection.range, sourceBlockID: selection.sourceBlockID))
+            }
+            .markdownLongPressPreview(documentSelectionMode ? nil : messagePreview)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
@@ -64,7 +75,13 @@ struct ChatMarkdownView: View {
               destination.sourceDigest == ChatSavedExcerpt.digest(messageText ?? text),
               let selection = destination.selection, let storedBlockID = selection.sourceBlockID else { return nil }
         let blockID: String
-        if let selectionPartID {
+        let messagePrefix = "hanlin-message:"
+        if storedBlockID.hasPrefix(messagePrefix) {
+            // Whole-document quotes have their own coordinate space. Reopen
+            // that exact surface instead of guessing which model part matched.
+            guard documentSelectionMode else { return nil }
+            blockID = String(storedBlockID.dropFirst(messagePrefix.count))
+        } else if let selectionPartID {
             let prefix = "hanlin-part:\(selectionPartID.uuidString):"
             guard storedBlockID.hasPrefix(prefix) else { return nil }
             blockID = String(storedBlockID.dropFirst(prefix.count))
@@ -77,6 +94,12 @@ struct ChatMarkdownView: View {
 
     private var scopedSavePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)? {
         guard let savePersonal else { return nil }
+        if documentSelectionMode {
+            return { quote in
+                savePersonal(ChatTextQuote(text: quote.text, renderedText: quote.renderedText, range: quote.range,
+                    sourceBlockID: quote.sourceBlockID.map { "hanlin-message:\($0)" }))
+            }
+        }
         guard let selectionPartID else { return savePersonal }
         return { quote in
             savePersonal(ChatTextQuote(text: quote.text, renderedText: quote.renderedText, range: quote.range,

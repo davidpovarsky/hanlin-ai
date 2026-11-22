@@ -2,9 +2,8 @@
 //  HanlinModelPickerPopover.swift
 //  AI_HLY
 //
-//  Compact anchored model picker popover with InteriorOrganizerV3_3 completion-ordered
-//  two-stage size expansion and source-linked geometry morph into searchable provider-grouped
-//  "All Models", styled in Hanlin's original delicate blue glass aesthetic (§4.8).
+//  Compact anchored model picker with one native size transition into a
+//  searchable provider-grouped catalog. UIKit owns the presentation geometry.
 //
 
 import SwiftUI
@@ -26,7 +25,6 @@ struct HanlinModelPickerPopover: View {
     let ifAudio: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Namespace private var allModelsZoom
     @State private var searchText: String = ""
     @State private var appleOnDeviceAvailable = false
     @Environment(\.scenePhase) private var scenePhase
@@ -124,18 +122,13 @@ struct HanlinModelPickerPopover: View {
     }
 
     var body: some View {
-        // A navigation-controller zoom inside a resizing popover can retain an
-        // elliptical transition snapshot (42542971973). Morph the button's
-        // surface in this one hosting hierarchy; never stretch the page's text.
-        ZStack {
+        // The route and the native size change together. A second matched
+        // surface/scale transition produced the visible double entrance.
+        Group {
             if coordinator.modelNavigationPath.isEmpty {
                 compactRootPage
-                    .transition(rootPageTransition)
             } else {
-                morphSurface(cornerRadius: HanlinControlMetrics.popoverCornerRadius)
-                    .transition(.identity)
                 allModelsDestinationPage
-                    .transition(allModelsPageTransition)
             }
         }
         // Fill the native hosting controller's actual bounds. Do not animate a
@@ -155,41 +148,13 @@ struct HanlinModelPickerPopover: View {
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-model-picker-popover")
         .onAppear { appleOnDeviceAvailable = Self.nativeModelIsAvailable() }
-        .onChange(of: coordinator.activePopup) { _, popup in
-            if popup == .model { appleOnDeviceAvailable = Self.nativeModelIsAvailable() }
+        .onChange(of: coordinator.isModelPresented) { _, isPresented in
+            if isPresented { appleOnDeviceAvailable = Self.nativeModelIsAvailable() }
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { appleOnDeviceAvailable = Self.nativeModelIsAvailable() }
         }
         .task { await ModelRefreshService.refreshOpenRouterMetadata(in: modelContext) }
-    }
-
-    private var rootPageTransition: AnyTransition {
-        if reduceMotion { return .identity }
-        return .asymmetric(
-            insertion: .opacity.animation(.easeOut(duration: 0.16).delay(0.16)),
-            removal: .opacity.animation(.easeOut(duration: 0.10))
-        )
-    }
-
-    private var allModelsPageTransition: AnyTransition {
-        if reduceMotion { return .identity }
-        return .asymmetric(
-            insertion: .opacity.combined(with: .scale(scale: 0.96, anchor: .bottom))
-                .animation(.smooth(duration: 0.22).delay(0.10)),
-            removal: .opacity.animation(.easeOut(duration: 0.10))
-        )
-    }
-
-    private func morphSurface(cornerRadius: CGFloat) -> some View {
-        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-            .fill(Color(uiColor: .systemBackground))
-            .overlay {
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .stroke(accentColor.opacity(0.22), lineWidth: 0.8)
-            }
-            .matchedGeometryEffect(id: "all-models-surface", in: allModelsZoom)
-            .allowsHitTesting(false)
     }
 
     // MARK: - Stage 1: Compact Root Page
@@ -239,7 +204,7 @@ struct HanlinModelPickerPopover: View {
                     .padding(.horizontal, HanlinControlMetrics.pageInset)
                     .padding(.vertical, 4)
 
-                // Repaired single Button calling completion-ordered pushModelSubroute (§4.8)
+                // One action changes the page and preferred size together.
                 Button {
                     searchText = ""
                     coordinator.pushModelSubroute(.allModels, reduceMotion: reduceMotion)
@@ -266,7 +231,8 @@ struct HanlinModelPickerPopover: View {
                     .contentShape(.rect(cornerRadius: HanlinControlMetrics.rowCornerRadius))
                 }
                 .buttonStyle(.plain)
-                .background { morphSurface(cornerRadius: HanlinControlMetrics.rowCornerRadius) }
+                .background(accentColor.opacity(0.08),
+                            in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius))
                 .disabled(coordinator.isModelAnimatingExpand)
                 .padding(.horizontal, 6)
                 .padding(.bottom, 8)
@@ -359,7 +325,7 @@ struct HanlinModelPickerPopover: View {
                 guard available else { return }
             }
             onSelectModel(index)
-            coordinator.closeAll()
+            coordinator.close(.model)
         } label: {
             HStack(spacing: 10) {
                 modelIconView(for: model)
