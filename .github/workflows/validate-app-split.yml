@@ -61,6 +61,11 @@ on:
         type: boolean
         required: false
         default: false
+      miniapps_audit_build:
+        description: Read TestFlight status, encryption declaration and internal group counts for this MiniApps build
+        type: string
+        required: false
+        default: ''
       audit_release_resources:
         description: Read existing Apple signing and registration metadata without signing or publishing
         type: boolean
@@ -146,6 +151,7 @@ jobs:
           "$RUNNER_TEMP/hanlin-release-audit/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
       - name: Inspect existing signing, registration and device metadata
         env:
+          MINIAPPS_AUDIT_BUILD: ${{ inputs.miniapps_audit_build }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
           APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}

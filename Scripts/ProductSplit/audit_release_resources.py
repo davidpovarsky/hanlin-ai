@@ -188,6 +188,60 @@ def portal_profile_checks(profiles_data, required, bundle, cert_sha):
             "compatible_profile_count": sum(p.get("status") == "READY_RESOURCE" for p in checks),
             "complete": len(candidates) <= 8 and not bool(profiles_data.get("links", {}).get("next"))}
 
+def miniapps_testflight_status(app_id, build_number):
+    if app_id != "6836449016" or not re.fullmatch(r"[1-9][0-9]*", build_number):
+        raise ValueError("Expected the exact MiniApps App Store Connect identity and a build number")
+    groups_fields = "name,isInternalGroup,hasAccessToAllBuilds"
+    builds = apple_get("/v1/builds", {
+        "filter[app]": app_id, "filter[version]": build_number, "limit": 2,
+        "fields[builds]": "version,processingState,expired,minOsVersion,usesNonExemptEncryption,betaGroups",
+        "include": "betaGroups",
+        "fields[betaGroups]": groups_fields,
+    })
+    if len(builds["data"]) != 1 or builds.get("links", {}).get("next"):
+        raise ValueError("The MiniApps build is missing or ambiguous")
+    build = builds["data"][0]
+    build_id = urllib.parse.quote(build["id"], safe="")
+    beta = apple_get("/v1/builds/" + build_id + "/buildBetaDetail", {
+        "fields[buildBetaDetails]": "internalBuildState,externalBuildState",
+    })["data"]["attributes"]
+    declaration_fields = ("usesEncryption,exempt,containsProprietaryCryptography,"
+                          "containsThirdPartyCryptography,availableOnFrenchStore,appEncryptionDeclarationState")
+    try:
+        declaration = apple_get("/v1/builds/" + build_id + "/appEncryptionDeclaration", {
+            "fields[appEncryptionDeclarations]": declaration_fields,
+        }).get("data")
+        encryption = declaration["attributes"] if declaration else None
+    except AppleReadFailure as error:
+        encryption = {"read_status": str(error)}
+    included = {g["id"] for g in builds.get("included", []) if g["type"] == "betaGroups"}
+    groups = apple_get("/v1/betaGroups", {
+        "filter[app]": app_id, "filter[isInternalGroup]": "true", "limit": 200,
+        "fields[betaGroups]": groups_fields,
+    })
+    if groups.get("links", {}).get("next"):
+        raise ValueError("The MiniApps internal group list was incomplete")
+    internal_groups = []
+    for group in groups["data"]:
+        attributes = group["attributes"]
+        if attributes.get("isInternalGroup") is not True:
+            continue
+        group_id = group["id"]
+        testers = apple_get("/v1/betaTesters", {
+            "filter[betaGroups]": group_id, "fields[betaTesters]": "state", "limit": 200,
+        })
+        if testers.get("links", {}).get("next"):
+            raise ValueError("The MiniApps group tester list was incomplete")
+        states = {}
+        for item in testers["data"]:
+            state = item.get("attributes", {}).get("state") or "UNKNOWN"
+            states[state] = states.get(state, 0) + 1
+        internal_groups.append({"id": group_id, **attributes,
+                                "explicitly_linked": group_id in included, "tester_states": states})
+    return {"build_id": build["id"], **build["attributes"], **beta,
+            "encryption_declaration": encryption, "internal_groups": internal_groups}
+
+
 def apple_resources(cert_sha=None):
     required = ["ASC_KEY_P8", "ASC_KEY_ID", "ASC_ISSUER_ID"]
     missing = [name for name in required if not os.environ.get(name)]
@@ -204,6 +258,12 @@ def apple_resources(cert_sha=None):
                 builds = apple_get("/v1/builds", {"filter[app]": apps[0]["id"],
                     "fields[builds]": "version,processingState,expired", "sort": "-uploadedDate", "limit": 3})
                 item["recent_builds"] = [b.get("attributes", {}) for b in builds.get("data", [])]
+                requested_build = os.environ.get("MINIAPPS_AUDIT_BUILD", "")
+                if role == "miniapps" and requested_build:
+                    try:
+                        item["testflight_audit"] = miniapps_testflight_status(apps[0]["id"], requested_build)
+                    except (AppleReadFailure, ValueError) as error:
+                        item["testflight_audit_error"] = str(error)
         except Exception as error:
             item["app_store_read_error"] = str(error) if isinstance(error, AppleReadFailure) else type(error).__name__
         try:
