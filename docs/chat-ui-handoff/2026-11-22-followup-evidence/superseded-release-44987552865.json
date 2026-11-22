@@ -1,0 +1,29 @@
+{
+  "recordedAtUTC": "2026-11-22T05:25:00Z",
+  "workflowRunID": "44987552865",
+  "workflowRunURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44987552865",
+  "appSourceSHA": "bd497a013b9139e6aaa327385c99cc97e7caa54d",
+  "rendererSourceSHA": "dcef24e2254d3ef6db74b6c30a926d6ea20ae18d",
+  "status": "completed",
+  "conclusion": "cancelled",
+  "releaseAvailability": "NOT_UPLOADED",
+  "reason": "Superseded before upload for a narrow native text attachment provider actor-isolation and framework lifecycle correction.",
+  "languageProbe": {
+    "jobID": "job_e36c7ea08dad",
+    "swiftLanguageVersion": "5",
+    "strictConcurrency": "minimal",
+    "result": "Compiler exit1 for direct access to MainActor owner/property and own isolated methods from a nonisolated callback. Language probe only, not Apple SDK compilation."
+  },
+  "frameworkContract": "Apple NSTextAttachmentViewProvider.loadView documentation assigns invocation to the framework; attachmentBounds must not call the override directly.",
+  "frameworkReference": "https://developer.apple.com/documentation/uikit/nstextattachmentviewprovider/loadview()",
+  "cancellationEvidence": {
+    "requestJobID": "job_4df91c73aeed",
+    "readbackJobID": "job_dd431f9115b1",
+    "watchJobID": "job_a75d6292b545",
+    "watchExitCode": 1,
+    "watchMeaning": "Expected nonzero result for a cancelled workflow; not labeled Apple compilation failure."
+  },
+  "nativeRuntimeProducer": "42926628418",
+  "simulatorExecution": "NOT_RUN",
+  "physicalIPadAcceptance": "NOT_RUN"
+}
