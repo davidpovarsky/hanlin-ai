@@ -123,7 +123,16 @@ def validate_graph(project, provider_manifest=None):
                     # under a normal Xcode Run, not only under CI command overrides.
                     assert settings["CODE_SIGNING_ALLOWED"] == "YES"
                     assert settings["CODE_SIGNING_REQUIRED"] == "YES"
-                    assert settings["CODE_SIGN_STYLE"] == "Automatic"
+                    signing_style = settings["CODE_SIGN_STYLE"]
+                    if signing_style == "$(HANLIN_MINIAPPS_SIGNING_STYLE)":
+                        assert objects[key]["name"] == "Release"
+                        assert settings["HANLIN_MINIAPPS_SIGNING_STYLE"] == "Automatic"
+                        assert settings["HANLIN_MINIAPPS_SIGNING_IDENTITY"] == "Apple Development"
+                        assert settings["CODE_SIGN_IDENTITY[sdk=iphoneos*]"] == "$(HANLIN_MINIAPPS_SIGNING_IDENTITY)"
+                        assert settings["PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]"] == "$(HANLIN_MINIAPPS_PROFILE_SPECIFIER)"
+                        assert "HANLIN_MINIAPPS_PROFILE_SPECIFIER" not in settings
+                    else:
+                        assert signing_style == "Automatic"
                     assert settings["DEVELOPMENT_TEAM"] == "NA6HPWARQ2"
                     assert settings["CODE_SIGN_ENTITLEMENTS"] == "HanlinMiniAppsApp/HanlinMiniApps.entitlements"
                     assert settings["INFOPLIST_FILE"] == "HanlinMiniAppsApp/Info.plist"

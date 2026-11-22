@@ -229,12 +229,22 @@ def main():
                 export = OUT / role
                 archive_cmd = common + ["-scheme", scheme, "-configuration", "Release",
                     "-destination", "generic/platform=iOS", "-derivedDataPath", derived,
-                    "-archivePath", archive, "archive",
-                    "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
-                    "CODE_SIGN_IDENTITY=", "PROVISIONING_PROFILE_SPECIFIER=",
-                    "PROVISIONING_PROFILE="]
+                    "-archivePath", archive, "archive"]
                 if upload_build_number is not None:
-                    archive_cmd.append("CURRENT_PROJECT_VERSION=" + upload_build_number)
+                    # Sign the application at archive time so export preserves its
+                    # entitlements. Only MiniApps Release consumes these overrides.
+                    archive_cmd.extend([
+                        "CURRENT_PROJECT_VERSION=" + upload_build_number,
+                        "HANLIN_MINIAPPS_SIGNING_STYLE=Manual",
+                        "HANLIN_MINIAPPS_SIGNING_IDENTITY=" + distribution_identity,
+                        "HANLIN_MINIAPPS_PROFILE_SPECIFIER=" + profile_mapping[bundle],
+                    ])
+                else:
+                    archive_cmd.extend([
+                        "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
+                        "CODE_SIGN_IDENTITY=", "PROVISIONING_PROFILE_SPECIFIER=",
+                        "PROVISIONING_PROFILE=",
+                    ])
                 result, _ = run(archive_cmd, role + "-archive", 3300, required=False)
                 product["archive"] = "EXECUTED_PASS" if result == 0 else "EXECUTED_FAIL"
                 if result:
