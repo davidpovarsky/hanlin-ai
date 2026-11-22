@@ -200,6 +200,26 @@ def main():
                 run([sys.executable, "Scripts/CI/stage_a2ui_schemas.py", "--source-packages-path", packages,
                      "--derived-data-path", derived, "--evidence", OUT / "original-a2ui-schemas"],
                      "original-schema-generator", 360)
+                if upload_miniapps_testflight:
+                    # Apply the same libssh2 release preparation as Hanlin AI.
+                    # The package artifact lives in this job's private checkout.
+                    frameworks = list((packages / "artifacts").glob(
+                        "**/libssh2.xcframework/ios-arm64_arm64e/libssh2.framework"))
+                    if len(frameworks) != 1:
+                        raise RuntimeError("Expected one pinned iOS libssh2 device framework")
+                    framework = frameworks[0]
+                    binary = framework / "libssh2"
+                    _, architectures = run(["lipo", "-archs", binary], "miniapps-libssh2-input")
+                    if set(architectures.split()) != {"arm64", "arm64e"}:
+                        raise RuntimeError("Unexpected architecture set in pinned iOS libssh2")
+                    stripped = folder / "libssh2-arm64"
+                    run(["lipo", "-remove", "arm64e", "-output", stripped, binary], "miniapps-libssh2-thin")
+                    shutil.move(stripped, binary)
+                    signature = framework / "_CodeSignature"
+                    if signature.is_dir():
+                        shutil.rmtree(signature)
+                    run(["plutil", "-replace", "MinimumOSVersion", "-string", "26.0", framework / "Info.plist"],
+                        "miniapps-libssh2-minimum-os")
             export_options = folder / "ExportOptions.plist"
             options = {
                 "method": "app-store-connect", "destination": "export",
@@ -282,6 +302,20 @@ def main():
                 if len(apps) != 1:
                     raise RuntimeError("Exported product has an ambiguous app payload")
                 run(["codesign", "--verify", "--deep", "--strict", apps[0]], role + "-signature")
+                if upload_miniapps_testflight:
+                    app_info = plistlib.loads((apps[0] / "Info.plist").read_bytes())
+                    orientations = set(app_info.get("UISupportedInterfaceOrientations~ipad", []))
+                    if orientations != {
+                        "UIInterfaceOrientationPortrait", "UIInterfaceOrientationPortraitUpsideDown",
+                        "UIInterfaceOrientationLandscapeLeft", "UIInterfaceOrientationLandscapeRight",
+                    }:
+                        raise RuntimeError("Exported MiniApps app is missing iPad orientations")
+                    ssh_framework = apps[0] / "Frameworks/libssh2.framework"
+                    ssh_info = plistlib.loads((ssh_framework / "Info.plist").read_bytes())
+                    _, ssh_architectures = run(["lipo", "-archs", ssh_framework / "libssh2"],
+                                               "miniapps-export-libssh2")
+                    if ssh_info.get("MinimumOSVersion") != "26.0" or ssh_architectures.strip() != "arm64":
+                        raise RuntimeError("Exported libssh2 does not match the prepared device framework")
                 targets = [apps[0], *apps[0].glob("PlugIns/*.appex")]
                 expected = {b: (name, path) for name, b, _, path in ROLES if name != "miniapps"} if role == "ai" else {
                     b: (name, path) for name, b, _, path in ROLES if name == "miniapps"}
