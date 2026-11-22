@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "base_commit": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+  "source_files": {
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift": "82554012e86036dee09ca12f91ab7b42abed08403f98ae328c2988375b83979b",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift": "7b2c8c7c83fcb2d47fb48b89a609537d4d97a194ce64d851b733c8e8501b3092",
+    "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift": "5911189e04f77ec3c940a7cdb903a53db6c76f1f03a0f217803fdde92a8812e9",
+    "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift": "3496fc24615db8e482aa6b62fc210d916c0b6b3ad28056875df50f9d96ec0bd9",
+    "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolBridge.swift": "a8f78a57576b8135dd02319f4c6bab70e2ee41a236f17d8db8312ef144d8d2a8",
+    "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolDescriptor.swift": "a5d4897f53427ab059750bd5f41a231bc9e079ce7a7639b8b79b17af1b08072c",
+    "AI_HLY/Views/Components/ChatViewComponents.swift": "fbb281ef2181d6d8bd2aa717df5376b0c9d4a84b39016397e1caf7c2fb6ddbce",
+    "AI_HLYTests/AgentRoundPresentationTests.swift": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinIconThumbnailLoader.swift": "9ead1e6d32cea78f619196c3e69bf0c574ca1c46b7aff2a03fc68d6899a36df4",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift": "2279ca4ab590b6ee7089feea1dd1d307ee77a575be8dbc8f170e5969ad132ea9",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolActivityHeader.swift": "21f3b0f344ce324d4057211c10779510120c3a246a4098a51442900ea0372f28",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinToolIconSet.swift": "f64258a4d2def0c90e202c26e08bb34a23b77e7d18ed03388b0407fa6caf51a2"
+  },
+  "exact_test_selector": "AI_HLYTests/AgentActivityHeaderPhaseTests/completedToolDoesNotReuseItsEarlierRunningSummary(),AI_HLYTests/AgentActivityHeaderPhaseTests/failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess(),AI_HLYTests/AgentActivityHeaderPhaseTests/internalPreparationDoesNotCreateToolActivityOrRewriteHistory(),AI_HLYTests/AgentActivityHeaderPhaseTests/mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion(),AI_HLYTests/AgentActivityHeaderPhaseTests/providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer(),AI_HLYTests/AgentActivityHeaderPhaseTests/reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden(),AI_HLYTests/AgentActivityHeaderPhaseTests/onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt(),AI_HLYTests/AgentActivityHeaderPhaseTests/olderStoredRunsDoNotInventPendingRequestReceipt(),AI_HLYTests/AgentActivityHeaderPhaseTests/admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer(),AI_HLYTests/AgentRoundPresentationTests/locationApprovalShowsRealScopeWithoutTrustingProgressNarrative(),AI_HLYTests/AgentRoundPresentationTests/approvalSummaryNeverHidesArgumentsThatNeedReview(),AI_HLYTests/AgentRoundPresentationTests/attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents(),AI_HLYTests/AgentRoundPresentationTests/exactBuiltInOperationsKeepTheirOwnActivityPresentation(),AI_HLYTests/AgentRoundPresentationTests/emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow(),AI_HLYTests/AgentRoundPresentationTests/chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents(),AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay(),AI_HLYTests/AgentRoundPresentationTests/citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner(),AI_HLYTests/AgentRoundPresentationTests/orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors(),AI_HLYTests/AgentRoundPresentationTests/providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText(),AI_HLYTests/AgentRoundPresentationTests/actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay(),AI_HLYTests/AgentRoundPresentationTests/richToolFollowupPreservesPriorAnswerAndStableActivityIdentity(),AI_HLYTests/AgentRoundPresentationTests/actualRoundMarkersOwnReasoningAndParallelSameNameTools(),AI_HLYTests/AgentRoundPresentationTests/legacyActivitiesNeverAcquireAParentFromTheirTimeOrName(),AI_HLYTests/AgentRoundPresentationTests/mcpDeclaredIconsPreferToolThenItsServerForCurrentTheme(),AI_HLYTests/AgentRoundPresentationTests/mcpUnsafeAndMissingIconsKeepServerOrSystemSymbolFallback(),AI_HLYTests/AgentRoundPresentationTests/mcpIconMetadataPreservesLegacyCodableAndSkipsMalformedDecoration(),AI_HLYTests/AgentRoundPresentationTests/mcpIconsSurviveCanonicalCallPersistenceAndActivityProjectionWithoutChangingAuthority(),AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment,AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+  "expected_unit_methods": 27,
+  "expected_ui_methods": 4,
+  "impact_review": "native-icon-impact.json",
+  "impact_review_sha256": "537ea12421173a653927db988d0c2ae756dd757b381d132dc4519210e321b521",
+  "original_unit_evidence": {
+    "run": "45067928645",
+    "source_sha": "139c6bf93f80ef7301182110dcaf086612d9bbbd",
+    "eligible_functions": 32,
+    "eligible_invocations": 36,
+    "status": "SOURCE_ELIGIBLE_PENDING_ENVIRONMENT_COMPARISON"
+  },
+  "weather_methods": {
+    "run": "45073227781",
+    "source_sha": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+    "expected_methods": 2,
+    "status": "AWAIT_ACTUAL_EXECUTION_RESULT",
+    "source_unaffected_by_icons": true
+  },
+  "pinned_mcp_sdk": {
+    "repository": "modelcontextprotocol/swift-sdk",
+    "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+    "version": "0.12.1",
+    "files": [
+      {
+        "path": "Sources/MCP/Server/Tools.swift",
+        "localFile": "Tools.swift",
+        "startLine": 1,
+        "endLine": 160,
+        "url": "https://github.com/modelcontextprotocol/swift-sdk/blob/a0ae212ebf6eab5f754c3129608bc5557637e605/Sources/MCP/Server/Tools.swift"
+      },
+      {
+        "path": "Sources/MCP/Server/Server.swift",
+        "localFile": "Server.swift",
+        "startLine": 1,
+        "endLine": 130,
+        "url": "https://github.com/modelcontextprotocol/swift-sdk/blob/a0ae212ebf6eab5f754c3129608bc5557637e605/Sources/MCP/Server/Server.swift"
+      },
+      {
+        "path": "Sources/MCP/Base/Icon.swift",
+        "localFile": "Icon.swift",
+        "startLine": 1,
+        "endLine": 160,
+        "url": "https://github.com/modelcontextprotocol/swift-sdk/blob/a0ae212ebf6eab5f754c3129608bc5557637e605/Sources/MCP/Base/Icon.swift"
+      },
+      {
+        "path": "Sources/MCP/Base/Lifecycle.swift",
+        "localFile": "Lifecycle.swift",
+        "startLine": 1,
+        "endLine": 120,
+        "url": "https://github.com/modelcontextprotocol/swift-sdk/blob/a0ae212ebf6eab5f754c3129608bc5557637e605/Sources/MCP/Base/Lifecycle.swift"
+      }
+    ],
+    "note": "Original pinned source excerpts previously fetched through the GitHub connector; files ending earlier than the requested range retain their original final line."
+  },
+  "changes": [
+    "Retain declared MCP tool/server artwork through canonical presentation and persisted calls, with unchanged routing/schema/permission authority.",
+    "Use current-theme then neutral tool artwork before the same server artwork; preserve original geometry and SF Symbol fallback.",
+    "Bound candidates to two tool plus two server URLs and reuse the existing streamed128KiB/32px thumbnail pipeline with HTTPS redirect validation.",
+    "Keep legacy saved records and malformed decorative metadata readable."
+  ],
+  "validation_status": "NOT_RUN",
+  "dispatch_policy": "Execute23affectedoriginal+4newunitmethods and4affectedUIjourneys; do not reuse any951UIresult for this changed header/loader."
+}

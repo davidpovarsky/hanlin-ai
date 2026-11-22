@@ -1,6 +1,7 @@
 import Foundation
 
 import HanlinPlatformContracts
+import HanlinPresentationKit
 
 enum AgentDisplayActivityKind: String, Hashable, Sendable {
   case reasoning
@@ -20,6 +21,7 @@ struct AgentDisplayActivity: Identifiable, Hashable {
   var id: String
   var kind: AgentDisplayActivityKind
   var systemImage: String?
+  var icons: HanlinToolIconSet?
   var title: String
   var subtitle: String?
   var narrativeText: String?
@@ -56,11 +58,13 @@ struct AgentDisplayActivity: Identifiable, Hashable {
     isExpandable: Bool = false,
     sourceStepIDs: [UUID] = [],
     executionPresentation: HanlinToolExecutionPresentationDescriptor? = nil,
-    embeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil
+    embeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil,
+    icons: HanlinToolIconSet? = nil
   ) {
     self.id = id
     self.kind = kind
     self.systemImage = systemImage
+    self.icons = icons
     self.title = title
     self.subtitle = subtitle
     self.narrativeText = narrativeText

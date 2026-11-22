@@ -136,7 +136,8 @@ enum AgentActivityComposer {
       ),
       sourceStepIDs: steps.map(\.id),
       executionPresentation: executionPresentation,
-      embeddedPresentation: embeddedPresentation
+      embeddedPresentation: embeddedPresentation,
+      icons: steps.compactMap(\.presentationProfile?.activity.icons).first
     )
   }
 

@@ -78,7 +78,8 @@ enum MCPToolBridge {
                 runningTitle: "\(MCPL10n.string("Running")) \(descriptor.title ?? descriptor.originalName) — \(descriptor.serverDisplayName)",
                 completedTitle: "\(MCPL10n.string("Completed")) — \(descriptor.serverDisplayName)",
                 failedTitle: MCPL10n.string("MCP tool failed"),
-                visibleArgumentKeys: []
+                visibleArgumentKeys: [],
+                icons: descriptor.presentationIcons
             ),
             result: .init(rendererKind: .modernNative, supportsCard: true),
             resultDisplayPolicy: .modelControlled,

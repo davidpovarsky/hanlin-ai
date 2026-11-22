@@ -2455,7 +2455,7 @@ struct ChatBubbleView: View {
                             isFailure: activity.status == .failed,
                             isCancelled: activity.status == .cancelled,
                             startedAt: activity.startedAt, completedAt: activity.completedAt,
-                            sources: Self.sourceReferences(for: activity))
+                            sources: Self.sourceReferences(for: activity), icons: activity.icons)
                     }
                     .disclosureGroupStyle(HanlinActivityDisclosureStyle(isTool: true))
                 }

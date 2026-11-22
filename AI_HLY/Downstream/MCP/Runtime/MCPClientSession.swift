@@ -17,6 +17,7 @@ actor MCPClientSession {
     private let transport: EmbeddedNodeMCPTransport
     private let toolListChangeContinuation: AsyncStream<Void>.Continuation
     private(set) var tools: [MCPToolDescriptor] = []
+    private var serverIcons: [MCP.Icon]?
     private var disconnectTask: Task<Void, Never>?
     private var disconnected = false
 
@@ -37,7 +38,8 @@ actor MCPClientSession {
         await client.onNotification(ToolListChangedNotification.self) { [toolListChangeContinuation] _ in
             toolListChangeContinuation.yield()
         }
-        _ = try await client.connect(transport: transport)
+        let initialization = try await client.connect(transport: transport)
+        serverIcons = initialization.serverInfo.icons.map { Array($0.prefix(8)) }
         tools = try await loadTools()
         return tools
     }
@@ -146,7 +148,8 @@ actor MCPClientSession {
                 readOnlyHint: annotations?["readOnlyHint"] as? Bool,
                 destructiveHint: annotations?["destructiveHint"] as? Bool,
                 requiresApproval: metadata["requiresApproval"] as? Bool,
-                executionPresentation: executionPresentation
+                executionPresentation: executionPresentation,
+                presentationIcons: MCPToolDescriptor.presentationIcons(tool: tool.icons, server: serverIcons)
             ))
         }
         return descriptors

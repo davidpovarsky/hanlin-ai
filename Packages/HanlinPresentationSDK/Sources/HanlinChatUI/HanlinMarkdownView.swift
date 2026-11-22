@@ -1,8 +1,6 @@
 #if canImport(UIKit)
 import SwiftUI
 import UIKit
-import ImageIO
-import UniformTypeIdentifiers
 import SwiftStreamingMarkdown
 import HanlinPresentationKit
 
@@ -102,7 +100,7 @@ public struct HanlinMarkdownView: View {
         // sites together so one slow favicon cannot block all following sites.
         await withTaskGroup(of: (URL, Data?).self) { group in
             for url in missing {
-                group.addTask { (url, try? await HanlinCitationIconLoader.png(from: url)) }
+                group.addTask { (url, try? await HanlinIconThumbnailLoader.png(from: url)) }
             }
             for await (url, data) in group {
                 if let data { loaded[url] = data }
@@ -112,35 +110,6 @@ public struct HanlinMarkdownView: View {
         // Markdown layout while the answer is being streamed.
         guard !Task.isCancelled, loaded != citationIcons else { return }
         citationIcons = loaded
-    }
-}
-
-/// Decode the bounded thumbnail away from the main actor. No icon carries tool
-/// authority, and only the caller's existing, scoped source URLs are consulted.
-private enum HanlinCitationIconLoader {
-    static func png(from url: URL) async throws -> Data? {
-        var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 6)
-        request.httpShouldHandleCookies = false
-        let (bytes, response) = try await URLSession.shared.bytes(for: request)
-        guard let http = response as? HTTPURLResponse, http.statusCode == 200,
-              response.url?.scheme == "https" else { return nil }
-        var data = Data()
-        for try await byte in bytes {
-            try Task.checkCancellation()
-            guard data.count < 131_072 else { throw CocoaError(.fileReadTooLarge) }
-            data.append(byte)
-        }
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil),
-              let icon = CGImageSourceCreateThumbnailAtIndex(source, 0, [
-                kCGImageSourceCreateThumbnailFromImageAlways: true,
-                kCGImageSourceThumbnailMaxPixelSize: 32,
-                kCGImageSourceShouldCacheImmediately: false,
-              ] as CFDictionary) else { return nil }
-        let png = NSMutableData()
-        guard let destination = CGImageDestinationCreateWithData(png, UTType.png.identifier as CFString, 1, nil) else { return nil }
-        CGImageDestinationAddImage(destination, icon, nil)
-        guard CGImageDestinationFinalize(destination) else { return nil }
-        return png as Data
     }
 }
 

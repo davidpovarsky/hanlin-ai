@@ -1,6 +1,7 @@
 import Foundation
 
 import HanlinPlatformContracts
+import HanlinPresentationKit
 
 enum ToolActivityPresentationKind: String, Codable, Hashable, Sendable {
   case search
@@ -22,6 +23,7 @@ struct ToolActivityPresentationDescriptor: Codable, Hashable, Sendable {
   var completedTitle: String
   var failedTitle: String
   var visibleArgumentKeys: [String]
+  var icons: HanlinToolIconSet? = nil
 }
 enum ToolResultRendererKind: String, Codable, Hashable, Sendable {
   case modernNative

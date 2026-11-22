@@ -1,6 +1,11 @@
 #if canImport(SwiftUI)
 import SwiftUI
 import HanlinPresentationKit
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 /// V17's live surface and compact result share one call identity. Only trusted
 /// execution families select motion, and source counts contain observed URLs.
@@ -19,6 +24,7 @@ public struct HanlinToolActivityHeader: View {
     private let isCancelled: Bool
     private let sources: [HanlinSourceReference]
     private let completedAt: Date?
+    private let icons: HanlinToolIconSet?
 
     @Environment(\.chatMotion) private var motion
     @Environment(\.scenePhase) private var scenePhase
@@ -26,11 +32,14 @@ public struct HanlinToolActivityHeader: View {
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOver
     @Environment(\.hanlinActivityBranchVisible) private var branchIsVisible
     @Environment(\.layoutDirection) private var direction
+    @Environment(\.colorScheme) private var colorScheme
     @ScaledMetric(relativeTo: .footnote) private var liveFontSize: CGFloat = 14
     @State private var liveSurfaceMounted: Bool
     @State private var liveOpacity: Double
     @State private var startedAt: Date
     @State private var stoppedAt: Date?
+    @State private var loadedIconURL: URL?
+    @State private var loadedIconData: Data?
 
     private let blue = Color(red: 0.28, green: 0.49, blue: 0.80)
 
@@ -38,12 +47,13 @@ public struct HanlinToolActivityHeader: View {
                 isActive: Bool, showsShimmer: Bool? = nil, isExpanded: Bool = false, isFailure: Bool = false,
                 isCancelled: Bool = false,
                 startedAt: Date? = nil, completedAt: Date? = nil,
-                sources: [HanlinSourceReference] = []) {
+                sources: [HanlinSourceReference] = [], icons: HanlinToolIconSet? = nil) {
         self.title = title; self.status = status; self.symbol = symbol
         self.family = family; self.active = isActive; self.expanded = isExpanded
         self.shimmerActive = showsShimmer ?? isActive
         self.isFailure = isFailure; self.isCancelled = isCancelled
         self.sources = sources; self.completedAt = completedAt
+        self.icons = icons
         let hasSurface = isActive && Self.supportsLiveSurface(family)
         _liveSurfaceMounted = State(initialValue: hasSurface)
         _liveOpacity = State(initialValue: hasSurface ? 1 : 0)
@@ -76,6 +86,7 @@ public struct HanlinToolActivityHeader: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .task(id: iconCandidates) { await loadDeclaredIcon() }
         .task(id: showsLiveSurface) {
             if showsLiveSurface {
                 stoppedAt = nil
@@ -106,11 +117,7 @@ public struct HanlinToolActivityHeader: View {
 
     private var compactTitle: some View {
         HStack(spacing: 8) {
-            Image(systemName: symbol)
-                .font(HanlinTypography.body.weight(.medium))
-                .foregroundStyle(iconColor)
-                .frame(width: 20, height: 22)
-                .accessibilityHidden(true)
+            toolIcon(color: iconColor, width: 20)
             HanlinActivityTitle(title, font: HanlinTypography.subheadline,
                 baseColor: Color.primary.opacity(0.71),
                 isActive: active && shimmerActive && !Self.supportsLiveSurface(family))
@@ -151,13 +158,54 @@ public struct HanlinToolActivityHeader: View {
         }
     }
 
+    private var iconCandidates: [URL] {
+        icons?.candidateURLs(for: colorScheme == .dark ? .dark : .light) ?? []
+    }
+
+    private var declaredIcon: Image? {
+        guard let loadedIconURL, iconCandidates.contains(loadedIconURL),
+              let loadedIconData else { return nil }
+        #if canImport(UIKit)
+        return UIImage(data: loadedIconData).map { Image(uiImage: $0) }
+        #elseif canImport(AppKit)
+        return NSImage(data: loadedIconData).map { Image(nsImage: $0) }
+        #else
+        return nil
+        #endif
+    }
+
+    private func toolIcon(color: Color, width: CGFloat) -> some View {
+        Group {
+            if let declaredIcon {
+                declaredIcon.resizable().scaledToFit()
+            } else {
+                Image(systemName: symbol)
+                    .font(HanlinTypography.body.weight(.medium))
+                    .foregroundStyle(color)
+            }
+        }
+        .frame(width: width, height: 22)
+        .accessibilityHidden(true)
+    }
+
+    private func loadDeclaredIcon() async {
+        let candidates = iconCandidates
+        if loadedIconURL == candidates.first, loadedIconData != nil { return }
+        loadedIconURL = nil; loadedIconData = nil
+        // At most two tool URLs then two server URLs. The original symbol
+        // remains visible throughout loading, rejection and network failure.
+        for url in candidates {
+            guard !Task.isCancelled else { return }
+            guard let data = try? await HanlinIconThumbnailLoader.png(from: url) else { continue }
+            guard !Task.isCancelled, candidates == iconCandidates else { return }
+            loadedIconURL = url; loadedIconData = data
+            return
+        }
+    }
+
     private var liveSurface: some View {
         HStack(spacing: 8) {
-            Image(systemName: symbol)
-                .font(HanlinTypography.body.weight(.medium))
-                .foregroundStyle(blue)
-                .frame(width: 19, height: 22)
-                .accessibilityHidden(true)
+            toolIcon(color: blue, width: 19)
             HanlinActivityTitle(title,
                 font: HanlinTypography.fixed(size: liveFontSize, weight: .medium),
                 baseColor: Color(red: 0.25, green: 0.37, blue: 0.54),
