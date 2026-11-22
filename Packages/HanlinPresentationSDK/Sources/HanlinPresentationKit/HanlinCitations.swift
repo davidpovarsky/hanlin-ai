@@ -6,8 +6,17 @@ public struct HanlinSourceReference: Hashable, Sendable, Identifiable {
     public let title: String
     public let url: URL?
     public let iconURL: URL?
+    public let alternateURLs: [URL]
     public init(id: String, title: String, url: URL?, iconURL: URL? = nil) {
+        self.init(id: id, title: title, url: url, iconURL: iconURL, alternateURLs: [])
+    }
+    public init(id: String, title: String, url: URL?, iconURL: URL? = nil, alternateURLs: [URL]) {
         self.id = id; self.title = title; self.url = url; self.iconURL = iconURL
+        self.alternateURLs = alternateURLs
+    }
+
+    fileprivate func admits(_ candidate: URL) -> Bool {
+        url == candidate || alternateURLs.contains(candidate)
     }
 }
 
@@ -43,10 +52,10 @@ public struct HanlinCitationProjection: Sendable {
         let excluded = excludedMarkdownRanges(text)
         var sentenceUnits = units
         for anchor in anchors.prefix(256) {
-            guard let url = byID[anchor.sourceID]?.url, anchor.range.lowerBound >= 0,
+            guard let source = byID[anchor.sourceID], anchor.range.lowerBound >= 0,
                   anchor.range.upperBound <= units.count, !anchor.range.isEmpty,
                   Range(NSRange(anchor.range), in: text) != nil,
-                  originalLink(value.substring(with: NSRange(anchor.range)), pointsTo: url) else { continue }
+                  originalLink(value.substring(with: NSRange(anchor.range)), pointsTo: source) else { continue }
             for index in anchor.range { sentenceUnits[index] = 32 }
         }
         var grouped: [Int: [HanlinSourceReference]] = [:]
@@ -57,7 +66,7 @@ public struct HanlinCitationProjection: Sendable {
                   Range(NSRange(anchor.range), in: text) != nil,
                   !excluded.contains(where: { NSIntersectionRange($0, NSRange(anchor.range)).length > 0 }) else { continue }
             let raw = value.substring(with: NSRange(anchor.range))
-            let isOriginalLink = source.url.map { originalLink(raw, pointsTo: $0) } ?? false
+            let isOriginalLink = originalLink(raw, pointsTo: source)
             let searchFrom = isOriginalLink ? anchor.range.lowerBound : anchor.range.upperBound
             guard let boundary = sentenceEnd(sentenceUnits, from: searchFrom),
                   !excluded.contains(where: { NSLocationInRange(max(0, boundary - 1), $0) }) else { continue }
@@ -111,7 +120,7 @@ public struct HanlinCitationProjection: Sendable {
                   !isEscaped(start, in: units),
                   let destination = sourceLinkURL(value.substring(with: match.range)),
                   hasCitationLabel(value.substring(with: match.range), url: destination),
-                  let source = sources.first(where: { $0.url == destination }) else { continue }
+                  let source = sources.first(where: { $0.admits(destination) }) else { continue }
             known.append((match.range, source.id))
         }
         var withoutLinks = units
@@ -127,8 +136,8 @@ public struct HanlinCitationProjection: Sendable {
         }
     }
 
-    private static func originalLink(_ text: String, pointsTo url: URL) -> Bool {
-        sourceLinkURL(text) == url
+    private static func originalLink(_ text: String, pointsTo source: HanlinSourceReference) -> Bool {
+        sourceLinkURL(text).map(source.admits) ?? false
     }
 
     private static func hasCitationLabel(_ text: String, url: URL) -> Bool {

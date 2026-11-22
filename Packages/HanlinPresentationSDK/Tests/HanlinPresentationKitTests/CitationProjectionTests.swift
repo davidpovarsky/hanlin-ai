@@ -62,6 +62,24 @@ private let sourceB = HanlinSourceReference(id: "B", title: "Original B", url: U
     #expect(result.markdown.hasSuffix("Next sentence."))
 }
 
+@Test func admittedURLAliasesGroupAsOneSourceWithoutAdmittingUnknownFragments() {
+    let baseURL = URL(string: "https://example.com/reference")!
+    let sectionURL = URL(string: "https://example.com/reference#section")!
+    let source = HanlinSourceReference(id: "page", title: "Returned page", url: baseURL,
+        alternateURLs: [sectionURL])
+    let text = "Supported. [source](https://example.com/reference#section) [source](https://example.com/reference) Unknown. [source](https://example.com/reference#unknown)"
+    let anchors = HanlinCitationProjection.explicitSourceLinkAnchors(text: text, sources: [source])
+    #expect(anchors.count == 2)
+    let result = HanlinCitationProjection.make(text: text, messageID: citationMessage,
+        sources: [source], anchors: anchors)
+    #expect(result.groups.count == 1)
+    #expect(result.groups[0].sources == [source])
+    #expect(result.groups[0].sources[0].url == baseURL)
+    #expect(!result.markdown.contains("[source](https://example.com/reference#section)"))
+    #expect(!result.markdown.contains("[source](https://example.com/reference)"))
+    #expect(result.markdown.hasSuffix("Unknown. [source](https://example.com/reference#unknown)"))
+}
+
 @Test func sourceRecognitionPreservesProseCodeImagesAndUnverifiedLinks() {
     let text = """
     Read [the original](https://a.example/reference) for details.

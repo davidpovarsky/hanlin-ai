@@ -24,7 +24,8 @@ struct HanlinMessageCitations: Sendable {
         evidence.filter(\.wasReturnedToModel).map { item in
             let url = item.url.flatMap(URL.init(string:))
             return .init(id: item.id, title: item.title, url: url,
-                iconURL: url?.host.flatMap { URL(string: "https://\($0)/favicon.ico") })
+                iconURL: url?.host.flatMap { URL(string: "https://\($0)/favicon.ico") },
+                alternateURLs: (item.alternateURLs ?? []).compactMap(URL.init(string:)))
         }
     }
 

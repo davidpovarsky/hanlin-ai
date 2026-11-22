@@ -476,7 +476,8 @@ struct AgentEventAccumulator {
   private mutating func preserveExplicitSourceAnchors(for segmentID: String) {
     guard let text = transcript.item(externalID: segmentID)?.text, !text.isEmpty else { return }
     let references = evidence.items.filter(\.wasReturnedToModel).map {
-      HanlinSourceReference(id: $0.id, title: $0.title, url: $0.url.flatMap(URL.init(string:)))
+      HanlinSourceReference(id: $0.id, title: $0.title, url: $0.url.flatMap(URL.init(string:)),
+        alternateURLs: ($0.alternateURLs ?? []).compactMap(URL.init(string:)))
     }
     let anchors = HanlinCitationProjection.explicitSourceLinkAnchors(text: text, sources: references)
     guard !anchors.isEmpty else { return }

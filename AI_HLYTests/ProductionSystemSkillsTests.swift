@@ -9,6 +9,38 @@ import HanlinScriptCompiler
 @Suite("Production System Skills Verification", .serialized)
 struct ProductionSystemSkillsTests {
 
+    @Test("Weather skill resolves coordinates before querying the numeric weather contract")
+    func weatherSkillResolvesCoordinatesBeforeQuerying() throws {
+        let skill = try #require(SystemSkillsProvider.systemSkills(mapEnabled: true)
+            .first { $0.id.rawValue == "weather" })
+        #expect(skill.preferredToolIDs == ["query_weather", "get_current_location", "query_location"])
+        guard case .inline(let instructions) = skill.instructions else {
+            Issue.record("Weather instructions are missing")
+            return
+        }
+        #expect(instructions.contains("numeric `latitude`"))
+        #expect(instructions.contains("numeric `longitude`"))
+        #expect(instructions.contains("`timeRange`"))
+        #expect(instructions.contains("`get_current_location` with `query` set to `local`"))
+        #expect(instructions.contains("device location permission"))
+        #expect(instructions.contains("`query_location`"))
+    }
+
+    @Test("Weather skill does not advertise disabled location tools")
+    func weatherSkillRespectsDisabledMaps() throws {
+        let skills = SystemSkillsProvider.systemSkills(mapEnabled: false)
+        let weather = try #require(skills.first { $0.id.rawValue == "weather" })
+        #expect(weather.preferredToolIDs == ["query_weather"])
+        #expect(!skills.contains { $0.id.rawValue == "maps_location" })
+        guard case .inline(let instructions) = weather.instructions else {
+            Issue.record("Weather instructions are missing")
+            return
+        }
+        #expect(instructions.contains("coordinates already supplied"))
+        #expect(!instructions.contains("`get_current_location`"))
+        #expect(!instructions.contains("`query_location`"))
+    }
+
     @Test("Code skill prioritizes execute_local_python_code and drops execute_remote_python_code")
     func productionCodeSkillPrefersLocalPythonAndDropsRemote() throws {
         let skills = SystemSkillsProvider.systemSkills(codeEnabled: true)

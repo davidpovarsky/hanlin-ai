@@ -9,101 +9,59 @@ import Foundation
 import MapKit
 import CoreLocation
 import WeatherKit
+import HanlinScriptDeviceServices
 
 @MainActor
-class LocationFetcher: NSObject, CLLocationManagerDelegate {
-    private let manager = CLLocationManager()
-    private var continuation: CheckedContinuation<CLLocationCoordinate2D, Error>?
-
-    override init() {
-        super.init()
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.delegate = self
-    }
-
-    /// 由于标记了 @MainActor，闭包默认就在主线程，无需 Sendable
-    func fetchLocation() async throws -> CLLocationCoordinate2D {
-        if manager.authorizationStatus == .notDetermined {
-            manager.requestWhenInUseAuthorization()
-            try await Task.sleep(nanoseconds: 500_000_000)
-        }
-        if manager.authorizationStatus == .denied || manager.authorizationStatus == .restricted {
-            throw NSError(domain: "LocationError", code: 1, userInfo: [NSLocalizedDescriptionKey: "定位权限未授予"])
-        }
-
-        // 若已有缓存
-        if let cachedLocation = manager.location {
-            return cachedLocation.coordinate
-        }
-
-        return try await withCheckedThrowingContinuation { cont in
-            self.continuation = cont
-            manager.requestLocation()
-
-            // 超时处理
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                if let c = self.continuation {
-                    c.resume(throwing: NSError(
-                        domain: "LocationError",
-                        code: 2,
-                        userInfo: [NSLocalizedDescriptionKey: "获取位置超时"]
-                    ))
-                    self.continuation = nil
-                }
-            }
-        }
-    }
-
-    // CLLocationManagerDelegate
-    nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        Task { @MainActor in
-            self.continuation?.resume(returning: location.coordinate)
-            self.continuation = nil
-        }
-    }
-
-    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        Task { @MainActor in
-            self.continuation?.resume(throwing: error)
-            self.continuation = nil
-        }
-    }
-}
-
-
-// 反向地理编码函数：将坐标转换为真实地址字符串
 func reverseGeocode(coordinate: CLLocationCoordinate2D) async throws -> String {
-    let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-    let geocoder = CLGeocoder()
-    return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<String, Error>) in
-        geocoder.reverseGeocodeLocation(location) { placemarks, error in
-            if let error = error {
-                continuation.resume(throwing: error)
-            } else if let placemark = placemarks?.first {
-                // 尽可能组合多个信息构成地址字符串
-                let name = placemark.name ?? ""
-                let subLocality = placemark.subLocality ?? ""
-                let locality = placemark.locality ?? ""
-                let administrativeArea = placemark.administrativeArea ?? ""
-                let country = placemark.country ?? ""
-                let fullAddress = [name, subLocality, locality, administrativeArea, country]
-                    .filter { !$0.isEmpty }
-                    .joined(separator: ", ")
-                continuation.resume(returning: fullAddress.isEmpty ? "未知位置" : fullAddress)
-            } else {
-                continuation.resume(returning: "未知位置")
-            }
+    let placemarks = try await HanlinAppleLocationService().reverseGeocode(
+        latitude: coordinate.latitude,
+        longitude: coordinate.longitude,
+        localeIdentifier: Locale.current.identifier
+    )
+    guard let placemark = placemarks.first else { return "" }
+    return [placemark.name, placemark.locality, placemark.country]
+        .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
+        .filter { !$0.isEmpty }
+        .reduce(into: [String]()) { parts, part in
+            if !parts.contains(part) { parts.append(part) }
         }
-    }
+        .joined(separator: ", ")
 }
 
+// Use the shared authorization-aware stream; an OS permission prompt has no fixed response time.
+@MainActor
+func getCurrentLocation(
+    fetchCoordinate: @MainActor () async throws -> CLLocationCoordinate2D = {
+        let service = HanlinAppleLocationService()
+        try service.setAccuracy("best")
+        let location = try await service.currentLocation(forceRequest: true)
+        guard location.horizontalAccuracy >= 0 else {
+            throw HanlinAppleDeviceServiceError.noData(.location)
+        }
+        return CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+    },
+    resolveName: @MainActor (CLLocationCoordinate2D) async throws -> String = {
+        try await reverseGeocode(coordinate: $0)
+    }
+) async throws -> Location {
+    try Task.checkCancellation()
+    let coordinate = try await fetchCoordinate()
+    try Task.checkCancellation()
+    guard coordinate.latitude.isFinite, coordinate.longitude.isFinite,
+          CLLocationCoordinate2DIsValid(coordinate) else {
+        throw HanlinAppleDeviceServiceError.noData(.location)
+    }
 
-// MARK: - 直接在函数中调用 LocationFetcher 获取当前设备位置并返回自定义的 Location 结构体
-func getCurrentLocation() async throws -> Location {
-    let fetcher = await LocationFetcher()
-    let coordinate = try await fetcher.fetchLocation()
-    let placeName = try await reverseGeocode(coordinate: coordinate)
+    var placeName = String(localized: "Your current location")
+    do {
+        let resolvedName = try await resolveName(coordinate).trimmingCharacters(in: .whitespacesAndNewlines)
+        if !resolvedName.isEmpty { placeName = resolvedName }
+    } catch {
+        if error is CancellationError { throw error }
+        // A failed address lookup must not discard a valid fix, but cancellation is never success.
+        try Task.checkCancellation()
+    }
+    try Task.checkCancellation()
     return Location(
         identifier: UUID().uuidString,
         name: placeName,

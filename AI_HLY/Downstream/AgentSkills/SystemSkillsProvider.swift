@@ -76,6 +76,15 @@ public enum SystemSkillsProvider {
         }
 
         if weatherEnabled {
+            let coordinateGuidance = mapEnabled
+                ? """
+                - For the user's current location, call `get_current_location` with `query` set to `local`; honor the tool approval and device location permission result.
+                - For a named city or place, call `query_location` with its name as `keyword` and use the returned coordinates.
+                - If location access fails or is declined, ask for a location the user chooses to share. Do not invent coordinates or claim device location is unavailable before trying the available tool.
+                """
+                : """
+                - Map and device-location tools are disabled. Use coordinates already supplied in the conversation, or ask the user to provide coordinates; do not call disabled location tools.
+                """
             if let skillID = try? HanlinSkillID(validating: "weather"),
                let desc = try? HanlinSkillDescriptor(
                    id: skillID,
@@ -83,10 +92,13 @@ public enum SystemSkillsProvider {
                    summary: "Inspect current weather conditions, forecasts, and atmospheric observations.",
                    instructions: .inline("""
                    Retrieve meteorological data:
-                   - Call `query_weather` with city, location name, or coordinates.
+                   - Call `query_weather` with numeric `latitude`, numeric `longitude`, and `timeRange` (`now`, `3d`, `7d`, `10d`, `15d`, or `30d`). A city or location name is not a valid argument to this tool.
+                   \(coordinateGuidance)
                    """),
                    keywords: ["weather", "temperature", "forecast", "rain", "climate", "conditions"],
-                   preferredToolIDs: ["query_weather"]
+                   preferredToolIDs: mapEnabled
+                       ? ["query_weather", "get_current_location", "query_location"]
+                       : ["query_weather"]
                ) {
                 descriptors.append(desc)
             }

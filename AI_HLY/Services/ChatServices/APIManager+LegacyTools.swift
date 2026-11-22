@@ -14,7 +14,8 @@ extension APIManager {
         name: String,
         argumentsJSON: String,
         context: NativeToolExecutionContext,
-        continuation: AsyncThrowingStream<StreamData, Error>.Continuation?
+        continuation: AsyncThrowingStream<StreamData, Error>.Continuation?,
+        currentLocationProvider: @MainActor () async throws -> Location = { try await getCurrentLocation() }
     ) async -> NativeToolResult {
         let currentLanguage = context.localeIdentifier
         let currentLanguagePrefix = currentLanguage.hasPrefix("zh")
@@ -295,19 +296,32 @@ extension APIManager {
                                                 }
                                                 
                                             case "query_weather":
+                                                executionDiagnostics.backendRoute = "remote:weather"
+                                                executionDiagnostics.source = "legacy"
+                                                if Task.isCancelled {
+                                                    executionOutcome = .cancelled
+                                                    executionDiagnostics.failureCategory = executionOutcome.rawValue
+                                                    executionDiagnostics.wasCancelled = true
+                                                    toolResult = String(localized: "Cancelled")
+                                                    break
+                                                }
                                                 // 检查是否有激活的天气服务
                                                 guard let weatherInfo = findUseWeather() else {
+                                                    executionOutcome = .failed
+                                                    executionDiagnostics.failureCategory = executionOutcome.rawValue
                                                     toolResult = currentLanguagePrefix
                                                     ? "当前无激活的天气服务，请先配置天气服务。"
                                                     : "No active weather service configured. Please set one up first."
                                                     useFunctionName = functionName
                                                     break
                                                 }
+                                                executionDiagnostics.backendRoute = "remote:\(weatherInfo.company.lowercased())"
                                                 
                                                 // 天气查询函数
                                                 continuation?.yield(StreamData(operationalState: currentLanguagePrefix ? "正在查询天气" : "Querying Weather"))
                                                 
                                                 do {
+                                                    try Task.checkCancellation()
                                                     // 解析 JSON 参数
                                                     guard
                                                         let jsonData = functionArguments.data(using: .utf8),
@@ -337,15 +351,24 @@ extension APIManager {
                                                         apiKey: weatherInfo.apiKey,
                                                         requestURL: weatherInfo.requestURL
                                                     )
+                                                    try Task.checkCancellation()
                                                     
                                                     toolResult = currentLanguagePrefix
                                                     ? "该位置的天气信息如下：\n\(weatherDescription)"
                                                     : "Weather information for the location:\n\(weatherDescription)"
                                                     
                                                 } catch {
-                                                    toolResult = currentLanguagePrefix
-                                                    ? "天气查询失败：\(error.localizedDescription)"
-                                                    : "Failed to fetch weather: \(error.localizedDescription)"
+                                                    if error is CancellationError || Task.isCancelled {
+                                                        executionOutcome = .cancelled
+                                                        executionDiagnostics.wasCancelled = true
+                                                        toolResult = String(localized: "Cancelled")
+                                                    } else {
+                                                        executionOutcome = .failed
+                                                        toolResult = currentLanguagePrefix
+                                                        ? "天气查询失败：\(error.localizedDescription)"
+                                                        : "Failed to fetch weather: \(error.localizedDescription)"
+                                                    }
+                                                    executionDiagnostics.failureCategory = executionOutcome.rawValue
                                                     useFunctionName = functionName
                                                 }
                                                 
@@ -353,18 +376,32 @@ extension APIManager {
                                                 
                                             case "get_current_location":
                                                 // 获取当前位置函数
+                                                executionDiagnostics.backendRoute = "system:corelocation"
+                                                executionDiagnostics.source = "legacy"
                                                 continuation?.yield(StreamData(operationalState: currentLanguagePrefix ? "获取当前位置" : "Getting Location"))
                                                 do {
-                                                    let location = try await getCurrentLocation()
+                                                    try Task.checkCancellation()
+                                                    let location = try await currentLocationProvider()
+                                                    try Task.checkCancellation()
+                                                    if self.locationsInfo == nil { self.locationsInfo = [] }
+                                                    self.locationsInfo?.append(location)
                                                     useFunctionName = functionName
                                                     toolResult = currentLanguagePrefix ?
                                                     "当前位置为 \(location.name)，坐标：纬度 \(location.latitude)，经度 \(location.longitude)" :
                                                     "Current location is \(location.name), coordinates: latitude \(location.latitude), longitude \(location.longitude)"
                                                     
                                                 } catch {
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "获取当前位置失败：\(error.localizedDescription)" :
-                                                    "Failed to get current location: \(error.localizedDescription)"
+                                                    if error is CancellationError || Task.isCancelled {
+                                                        executionOutcome = .cancelled
+                                                        executionDiagnostics.wasCancelled = true
+                                                        toolResult = String(localized: "Cancelled")
+                                                    } else {
+                                                        executionOutcome = .failed
+                                                        toolResult = currentLanguagePrefix ?
+                                                        "获取当前位置失败：\(error.localizedDescription)" :
+                                                        "Failed to get current location: \(error.localizedDescription)"
+                                                    }
+                                                    executionDiagnostics.failureCategory = executionOutcome.rawValue
                                                     useFunctionName = functionName
                                                 }
                                                 

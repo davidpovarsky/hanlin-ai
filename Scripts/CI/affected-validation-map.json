@@ -1244,6 +1244,20 @@
       ],
       "consumers": []
     },
+    "chat_model_display_name_tests": {
+      "description": "Human-readable model labels preserve the original routing identity",
+      "patterns": [
+        "AI_HLY/Downstream/ChatPresentation/HanlinModelDisplayName.swift",
+        "AI_HLYTests/HanlinModelDisplayNameTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinModelDisplayNameTests"
+      ],
+      "consumers": []
+    },
     "diagnostics_raw_review_tests": {
       "description": "Deliberate encrypted capture authentication and response-only local review",
       "patterns": [
@@ -1261,6 +1275,21 @@
       ],
       "consumers": []
     },
+    "current_location_tool_tests": {
+      "description": "Original current-location authorization, callback ownership and tool result handling",
+      "patterns": [
+        "AI_HLY/Services/ChatServices/MapServices.swift",
+        "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+        "AI_HLYTests/CurrentLocationToolTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CurrentLocationToolTests"
+      ],
+      "consumers": []
+    },
     "chat_auto_follow_tests": {
       "description": "Original-chat layout-driven scroll coalescing and cancellation ownership",
       "patterns": [
@@ -1272,6 +1301,21 @@
       ],
       "unit_suites": [
         "AI_HLYTests/ChatAutoFollowTests"
+      ],
+      "consumers": []
+    },
+    "chat_scroll_viewport_tests": {
+      "description": "Original-chat native viewport attachment, geometry and conversation ownership",
+      "patterns": [
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+        "AI_HLYTests/ChatScrollViewHandleTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatScrollViewHandleTests"
       ],
       "consumers": []
     },

@@ -56,6 +56,9 @@ struct AgentEvidenceItem: Codable, Hashable, Identifiable, Sendable {
 
     var wasReturnedToModel: Bool
     var claimAnchors: [AgentSourceClaimAnchor]?
+    /// Exact additional URLs retained from admitted results for this canonical
+    /// source. Optional so persisted records from before URL aliases still decode.
+    var alternateURLs: [String]?
 
     init(
         id: String = UUID().uuidString,
@@ -73,7 +76,8 @@ struct AgentEvidenceItem: Codable, Hashable, Identifiable, Sendable {
         snippet: String? = nil,
         timestamp: Date? = nil,
         wasReturnedToModel: Bool,
-        claimAnchors: [AgentSourceClaimAnchor]? = nil
+        claimAnchors: [AgentSourceClaimAnchor]? = nil,
+        alternateURLs: [String]? = nil
     ) {
         self.id = id
         self.kind = kind
@@ -91,6 +95,7 @@ struct AgentEvidenceItem: Codable, Hashable, Identifiable, Sendable {
         self.timestamp = timestamp
         self.wasReturnedToModel = wasReturnedToModel
         self.claimAnchors = claimAnchors
+        self.alternateURLs = alternateURLs
     }
 
     var primaryURL: URL? {

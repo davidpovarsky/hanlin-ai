@@ -101,6 +101,71 @@ struct AgentRoundPresentationTests {
         #expect(projection.markdown.hasPrefix("A supported answer. [9F742443]"))
     }
 
+    @Test func sourceURLAliasesSurviveEvidenceDeduplicationAndCodable() throws {
+        let base = "https://example.com/source"
+        let section = base + "#section"
+        let tracking = base + "?utm_source=returned"
+        var evidence = AgentEvidenceAccumulator(items: [
+            .init(kind: .webPage, title: "Original page", url: base, wasReturnedToModel: true)
+        ])
+        evidence.insert(contentsOf: [
+            .init(kind: .webPage, title: "Returned section", url: section, wasReturnedToModel: true),
+            .init(kind: .webPage, title: "Returned variant", url: tracking, wasReturnedToModel: true),
+            .init(kind: .webPage, title: "Never returned", url: base + "#unknown", wasReturnedToModel: false)
+        ])
+        #expect(evidence.items.count == 1)
+        #expect(evidence.items[0].title == "Original page" && evidence.items[0].url == base)
+        #expect(evidence.items[0].alternateURLs == [section, tracking])
+        let restored = try JSONDecoder().decode([AgentEvidenceItem].self,
+            from: JSONEncoder().encode(evidence.items))
+        #expect(AgentEvidenceAccumulator(items: restored).items == evidence.items)
+        let legacy = Data(#"{"id":"legacy","kind":"webPage","title":"Old page","url":"https://example.com/source","wasReturnedToModel":true}"#.utf8)
+        let previous = try JSONDecoder().decode(AgentEvidenceItem.self, from: legacy)
+        #expect(previous.alternateURLs == nil && previous.url == base)
+    }
+
+    @Test func sourceURLAliasesStayBoundedAndKeepOriginalDestination() {
+        let base = "https://example.com/source"
+        var evidence = AgentEvidenceAccumulator(items: [
+            .init(kind: .webPage, title: "Original page", url: base, wasReturnedToModel: true)
+        ])
+        for index in 0..<64 {
+            evidence.insert(contentsOf: [.init(kind: .webPage, title: "Section", url: base + "#section-\(index)",
+                wasReturnedToModel: true)])
+        }
+        #expect(evidence.items.count == 1 && evidence.items[0].url == base)
+        #expect(evidence.items[0].alternateURLs?.count == 32)
+        #expect(evidence.items[0].alternateURLs?.first == base + "#section-0")
+        #expect(evidence.items[0].alternateURLs?.last == base + "#section-31")
+    }
+
+    @Test func sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay() throws {
+        let run = AgentRun(groupID: UUID(), providerID: "openrouter", modelID: "fixture")
+        var adapter = HanlinStreamEventAdapter(runID: run.id)
+        var accumulator = AgentEventAccumulator(run: run)
+        let base = "https://example.com/source"
+        for url in [base, base + "#section"] {
+            accumulator.apply(.sourceObserved(.init(kind: .webPage, title: "Returned page", url: url,
+                wasReturnedToModel: true)))
+        }
+        let answer = "Supported. [source](https://example.com/source#section) Unknown. [source](https://example.com/source#unknown)"
+        for event in adapter.events(from: .init(content: answer)) { accumulator.apply(event) }
+        for event in adapter.completionEvents() { accumulator.apply(event) }
+        let restored = try JSONDecoder().decode(AgentRun.self, from: JSONEncoder().encode(accumulator.run))
+        #expect(restored.evidenceItems.count == 1)
+        #expect(restored.evidenceItems[0].alternateURLs == [base + "#section"])
+        #expect(restored.evidenceItems[0].claimAnchors?.count == 1)
+        #expect(restored.transcriptItems.first(where: { $0.kind == .assistantText })?.text == answer)
+        let citations = HanlinMessageCitations(messageID: UUID(), evidence: restored.evidenceItems,
+            transcript: restored.transcriptItems)
+        #expect(citations.sources.count == 1 && citations.sources[0].url == URL(string: base))
+        let projection = citations.projection(for: answer)
+        #expect(projection.groups.count == 1 && projection.groups[0].sources.count == 1)
+        #expect(projection.groups[0].sources[0].url == URL(string: base))
+        #expect(projection.markdown.hasPrefix("Supported. [9F742443]"))
+        #expect(projection.markdown.hasSuffix("Unknown. [source](https://example.com/source#unknown)"))
+    }
+
     @Test func citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner() throws {
         let run = AgentRun(groupID: UUID(), providerID: "fixture", modelID: "fixture")
         var adapter = HanlinStreamEventAdapter(runID: run.id)
@@ -139,8 +204,12 @@ struct AgentRoundPresentationTests {
     @Test func legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes() {
         let resource = Resource(icon: "https://example.com/favicon.ico", title: "Returned page",
             link: "https://example.com/source")
-        let citations = HanlinMessageCitations(messageID: UUID(), evidence: [], transcript: [], resources: [resource])
+        let section = Resource(icon: resource.icon, title: "Returned section", link: resource.link + "#section")
+        let citations = HanlinMessageCitations(messageID: UUID(), evidence: [], transcript: [], resources: [resource, section])
+        #expect(citations.sources.count == 1 && citations.sources[0].url == URL(string: resource.link))
         #expect(citations.projection(for: "Supported. [source](https://example.com/source)").groups.count == 1)
+        #expect(citations.projection(for: "Supported. [source](https://example.com/source#section)").groups.count == 1)
+        #expect(citations.projection(for: "Unknown. [source](https://example.com/source#unknown)").groups.isEmpty)
         #expect(citations.projection(for: "No explicit anchor. [1]").groups.isEmpty)
         #expect(citations.projection(for: "No anchor at all.").groups.isEmpty)
     }

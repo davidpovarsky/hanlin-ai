@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "executed_at_utc": "2026-11-22T20:06:25.909Z",
+  "status": "EXECUTED_PASS",
+  "passed_count": 8,
+  "scope": "Portable citation and evidence functions only; native integration, UIKit and UI03 remain unexecuted here.",
+  "toolchain": "Swift 6.3.3 (swift-6.3.3-RELEASE); x86_64-unknown-windows-msvc; +assertions",
+  "execution_result": {
+    "ok": true,
+    "output": "CITATION_ALIAS_FUNCTIONS_PASS 8",
+    "duration": 1.3,
+    "returncode": 0
+  },
+  "manifest": {
+    "baseline": "db75e7183a7f92ba9746858ec25ad05163ec81f7",
+    "files": [
+      {
+        "repository_path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinCitations.swift",
+        "name": "HanlinCitations.swift",
+        "sha256": "91cfd8b2ba1480b17da80e22b9a91f540af04aa1312c3edf98f042feca759963",
+        "bytes": 13931
+      },
+      {
+        "repository_path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
+        "name": "AgentEvidenceItem.swift",
+        "sha256": "824b305734a25d0affb96caa760b71e255171a473924a9a167154d7a452d2324",
+        "bytes": 2955
+      },
+      {
+        "repository_path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceAccumulator.swift",
+        "name": "AgentEvidenceAccumulator.swift",
+        "sha256": "4f84ed07467d3c1632dfedf0badeb16894e44002cad673dc2d3dab3ee0b4592d",
+        "bytes": 2396
+      },
+      {
+        "repository_path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceDeduplicator.swift",
+        "name": "AgentEvidenceDeduplicator.swift",
+        "sha256": "784a9e0b09fee0c5b0c9de6972921ae559b3e18556568a66b563663411bb71d4",
+        "bytes": 4169
+      },
+      {
+        "name": "main.swift",
+        "sha256": "6bbfc89a628a2f87af234bcfbfdb8cf1a57031023f2d9cf07256d2b60bb8e262",
+        "bytes": 8702
+      }
+    ],
+    "selection_reason": "Six citation tests exercise the changed exact-URL matcher/link removal, including new alias matching; two new Foundation evidence tests cover admission, canonical dedup, bounded retention, Codable round trip and missing optional field compatibility. No unchanged broad package suite selected. Original source files are copied byte-for-byte; test wrappers/imports removed and #expect becomes precondition.",
+    "not_executed_here": [
+      "sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay",
+      "legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes",
+      "UI03 full app source chip touch"
+    ],
+    "native_reason": "App/run/SwiftUI dependencies require the root-owned native validation.",
+    "selected_functions": [
+      "repeatedSentenceSourcesGroupWithoutDuplicatingProviderLinks",
+      "explicitReturnedSourceLinksWorkWithoutResponsesAnnotations",
+      "admittedURLAliasesGroupAsOneSourceWithoutAdmittingUnknownFragments",
+      "sourceRecognitionPreservesProseCodeImagesAndUnverifiedLinks",
+      "explicitCitationWaitsForItsSentenceAndDoesNotCrossParagraphs",
+      "explicitSourceLinksSupportParenthesizedAndAngleURLs",
+      "sourceURLAliasesSurviveEvidenceDeduplicationAndCodable",
+      "sourceURLAliasesStayBoundedAndKeepOriginalDestination"
+    ]
+  },
+  "compile_result": {
+    "ok": true,
+    "duration": 37.73,
+    "returncode": 0
+  },
+  "compiled_executable_sha256": "6ecc939c482af07896dc2664c2e879b9bc938ba057377a04d1bca9ed198a50ec"
+}

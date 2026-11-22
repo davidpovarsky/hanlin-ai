@@ -749,7 +749,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         // 7. UI-03 Search message and deduplicated citations
         if bodyString.contains("PROMPT_UI03_SEARCH_CITATIONS") {
             if bodyString.contains("ui03-read-2") {
-                emitFinalAnswer("According to the Hanlin reference, classic search rows and citations are restored. [source](https://agent.acceptance/wiki/hanlin) UI03_SEARCH_COMPLETE")
+                emitFinalAnswer("According to the Hanlin reference, classic search rows and citations are restored. [source](https://agent.acceptance/wiki/hanlin#section) UI03_SEARCH_COMPLETE")
             } else if bodyString.contains("ui03-read-1") {
                 emitToolCall(
                     id: "ui03-read-2",

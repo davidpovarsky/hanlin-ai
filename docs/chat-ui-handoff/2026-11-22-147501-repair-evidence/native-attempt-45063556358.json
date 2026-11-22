@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "run_id": "45063556358",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45063556358",
+  "source_sha": "db75e7183a7f92ba9746858ec25ad05163ec81f7",
+  "conclusion": "failure",
+  "failed_job_id": "137334602348",
+  "failed_job": "Plan affected validation and tests",
+  "failed_step": "Run affected validation planner",
+  "apple_compilation_executed": false,
+  "native_tests_executed": 0,
+  "reason": "Fail-closed router found unmapped changed test paths.",
+  "unmapped_paths": [
+    "AI_HLYTests/ChatScrollViewHandleTests.swift",
+    "AI_HLYTests/HanlinModelDisplayNameTests.swift"
+  ],
+  "remediation": "Add precise owning-component routing rules before rerunning the original affected tests. No full-validation fallback or gate bypass."
+}

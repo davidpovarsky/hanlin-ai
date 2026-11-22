@@ -26,7 +26,7 @@ enum LegacyResourcesEvidenceAdapter {
         sequence: Int? = nil,
         wasReturnedToModel: Bool = true
     ) -> [AgentEvidenceItem] {
-        deduplicatedResources(resources).compactMap { resource in
+        let candidates = resources.compactMap { resource -> AgentEvidenceItem? in
             let title = resolvedTitle(resource.title, url: resource.link)
             guard !title.isEmpty else { return nil }
             let kind = AgentEvidenceExtractor.kind(forURL: resource.link, fallback: .webPage)
@@ -43,6 +43,9 @@ enum LegacyResourcesEvidenceAdapter {
                 wasReturnedToModel: wasReturnedToModel
             )
         }
+        // The evidence owner preserves actual returned URL variants while
+        // folding duplicate pages. Pre-deduplicating Resource loses those URLs.
+        return AgentEvidenceAccumulator(items: candidates).items
     }
 
     private static func resolvedTitle(_ title: String, url: String) -> String {
