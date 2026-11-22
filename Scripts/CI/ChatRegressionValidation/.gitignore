@@ -1,0 +1,5 @@
+Baseline/
+evidence/
+DerivedData/
+*.xcodeproj/
+__pycache__/

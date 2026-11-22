@@ -65,11 +65,17 @@ public enum HanlinMorphGeometry {
         return min(naturalHeight, maxHeight)
     }
 
-    /// The launcher keeps its original bottom anchor. A taller input still
-    /// merges with both its adjacent launcher and the panel above it.
+    /// Keep the original panel-to-launcher gap after controls or a long draft
+    /// make the input taller than the 52-point launcher. This is material-only:
+    /// the equal outer negative inset preserves the panel content's layout.
+    public static func panelGlassExtension(inputHeight: CGFloat) -> CGFloat {
+        max(0, finiteHeight(inputHeight) - HanlinMorphStyle.launcherSize)
+    }
+
     public static func launcherPanelGap(inputHeight: CGFloat) -> CGFloat {
         HanlinMorphStyle.panelInputSpacing
             + max(0, finiteHeight(inputHeight) - HanlinMorphStyle.launcherSize)
+            - panelGlassExtension(inputHeight: inputHeight)
     }
 
     public static func pageBudget(availableHeight: CGFloat, accessoryHeight: CGFloat, inputHeight: CGFloat, toolbarHeight: CGFloat) -> CGFloat {
@@ -235,6 +241,12 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
                         .overlay {
                             RoundedRectangle(cornerRadius: HanlinMorphStyle.inputCornerRadius, style: .continuous)
                                 .strokeBorder(blue.opacity(0.30), lineWidth: 0.8)
+                                // An overlapping material must not draw a second
+                                // border through the editor's text and controls.
+                                .mask {
+                                    Rectangle().padding(.top, isExpanded
+                                        ? max(0, panelGlassExtension - HanlinMorphStyle.panelInputSpacing) : 0)
+                                }
                                 .allowsHitTesting(false)
                         }
                 }
@@ -243,6 +255,10 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
         .padding(.horizontal, HanlinMorphStyle.horizontalInset)
         .padding(.top, HanlinMorphStyle.topInset)
         .padding(.bottom, HanlinMorphStyle.bottomInset)
+    }
+
+    private var panelGlassExtension: CGFloat {
+        HanlinMorphGeometry.panelGlassExtension(inputHeight: inputHeight)
     }
 
     private var panel: some View {
@@ -285,14 +301,21 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(HanlinMorphStyle.panelInset)
+        // Only the existing native material reaches down to the original
+        // bottom-aligned plus. Content stays above the editor and keeps its
+        // measured page budget. No fourth glass surface or enlarged merge
+        // radius is introduced, and the launcher does not move.
+        .padding(.bottom, panelGlassExtension)
         .glassEffect(.regular, in: RoundedRectangle(cornerRadius: HanlinMorphStyle.panelCornerRadius, style: .continuous))
         .glassEffectID("composer-panel", in: glassNamespace)
         .glassEffectTransition(.matchedGeometry)
         .overlay {
             RoundedRectangle(cornerRadius: HanlinMorphStyle.panelCornerRadius, style: .continuous)
                 .strokeBorder(blue.opacity(0.26), lineWidth: 0.7)
+                .mask { Rectangle().padding(.bottom, panelGlassExtension) }
                 .allowsHitTesting(false)
         }
+        .padding(.bottom, -panelGlassExtension)
         // Keep the panel addressable without replacing the native toolbar and
         // page controls' own identifiers in the accessibility hierarchy.
         .accessibilityElement(children: .contain)

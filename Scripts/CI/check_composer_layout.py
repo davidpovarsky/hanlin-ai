@@ -71,6 +71,16 @@ struct ComposerLayoutChecks {
                                            "editor exceeds its native height budget")
                                     expect(layout.accessoryHeight >= 0 && layout.accessoryHeight <= accessories,
                                            "accessory scroll viewport exceeds content")
+                                    if panel {
+                                        // Native captures independently check the actual rendered material;
+                                        // this guards the source contract across every budget scenario.
+                                        let panelContentBottom: CGFloat = 200
+                                        let plusTop = panelContentBottom + 13 + layout.inputHeight - 52
+                                        let panelMaterialBottom = panelContentBottom
+                                            + HanlinMorphGeometry.panelGlassExtension(inputHeight: layout.inputHeight)
+                                        expect(abs(plusTop - panelMaterialBottom - 13) < 0.001,
+                                               "panel material stopped short of the original bottom launcher")
+                                    }
                                     let panelChrome = panel ? 32 + 14 + 13 + toolbar + 80 : 0
                                     let capabilityChrome = capabilities > 1 ? capabilities + 6 : 0
                                     let minimumRequired = capabilityChrome + panelChrome + 26 + 102
