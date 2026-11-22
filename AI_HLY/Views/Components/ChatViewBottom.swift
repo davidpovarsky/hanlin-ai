@@ -1368,7 +1368,7 @@ struct ChatViewBottom: View {
                                 Button(action: {
                                     // 用正则表达式匹配最后一次出现的"@…"
                                     if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-                                        message.replaceSubrange(range, with: "@\(model.displayName ?? model.name ?? "未知") ")
+                                        message.replaceSubrange(range, with: "@\(model.presentationName) ")
                                     }
                                     showModelSuggestions = false
                                     isFeedBack.toggle()
@@ -1376,7 +1376,7 @@ struct ChatViewBottom: View {
                                     Image(systemName: "at")
                                         .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
                                         .font(HanlinTypography.footnote)
-                                    highlightedModelText(for: model.displayName ?? model.name ?? "未知")
+                                    highlightedModelText(for: model.presentationName)
                                         .font(HanlinTypography.footnote)
                                         .foregroundColor(.primary)
                                         .lineLimit(1)
@@ -1686,7 +1686,7 @@ struct ChatViewBottom: View {
                         .foregroundStyle(accent)
                         .frame(width: 16, height: 16)
                 }
-                Text(model.displayName ?? model.name ?? "Model")
+                Text(model.presentationName)
                     .font(HanlinTypography.caption.weight(.medium))
                     .foregroundStyle(accent)
                     .lineLimit(1)
@@ -1819,7 +1819,7 @@ struct ChatViewBottom: View {
             } else {
                 // 根据 query 进行不区分大小写的过滤
                 filteredModels = modelTemp.filter { model in
-                    let modelName = model.displayName ?? model.name ?? ""
+                    let modelName = model.presentationName
                     return modelName.localizedCaseInsensitiveContains(query)
                 }
                 filteredModels = Array(filteredModels.prefix(8))

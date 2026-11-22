@@ -1,5 +1,6 @@
 import XCTest
 import UIKit
+import Vision
 
 @MainActor
 final class AgentRuntimeConversationUITests: XCTestCase {
@@ -151,6 +152,132 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertFalse(app.buttons["hanlin-tool-consent-allow-once"].exists)
         let restored = XCTAttachment(screenshot: app.screenshot())
         restored.name = "cold-original-conversation-draft-and-history-without-replay"; restored.lifetime = .keepAlways; add(restored)
+    }
+
+    /// Exercises the production transcript, Host approval and actual Python
+    /// output through the existing controlled provider. No replacement view,
+    /// preinstalled tool result or synthetic scroll geometry is involved.
+    func testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 300
+        let app = XCUIApplication(), nonce = UUID().uuidString
+        XCUIDevice.shared.orientation = .portrait
+        defer { app.terminate(); XCUIDevice.shared.orientation = .portrait }
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        app.launch()
+        openChat(in: app)
+
+        let transcript = app.descendants(matching: .any)["hanlin-chat-transcript"].firstMatch
+        func checkViewport(_ stage: String) {
+            XCTAssertEqual(app.state, .runningForeground, "The production app stopped at \(stage)")
+            XCTAssertTrue(transcript.waitForExistence(timeout: 10))
+            let frame = transcript.frame
+            XCTAssertTrue([frame.minX, frame.minY, frame.width, frame.height].allSatisfy(\.isFinite))
+            XCTAssertGreaterThan(frame.width, 1)
+            XCTAssertGreaterThan(frame.height, 1)
+            let proof = XCTAttachment(string: "stage=\(stage)\nviewport=\(frame)\nwindow=\(app.windows.firstMatch.frame)")
+            proof.name = "chat-viewport-" + stage; proof.lifetime = .keepAlways; add(proof)
+            attachScreenshot("chat-scroll-regression-" + stage, in: app)
+        }
+        func revealAndTap(_ control: XCUIElement) {
+            XCTAssertTrue(control.waitForExistence(timeout: 10))
+            for _ in 0..<4 where !control.isHittable {
+                if control.frame.maxY <= transcript.frame.minY { transcript.swipeDown() }
+                else { transcript.swipeUp() }
+            }
+            XCTAssertTrue(control.isHittable, "The original control must be reachable before tapping")
+            guard control.isHittable else { return }
+            control.tap()
+        }
+        func rotate(_ orientation: UIDeviceOrientation, landscape: Bool) {
+            XCUIDevice.shared.orientation = orientation
+            let window = app.windows.firstMatch
+            let resized = expectation(for: NSPredicate { _, _ in
+                landscape ? window.frame.width > window.frame.height : window.frame.height > window.frame.width
+            }, evaluatedWith: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [resized], timeout: 10), .completed,
+                           "The actual application viewport must rotate")
+        }
+
+        sendPrompt("PHASE2_REAL_PYTHON_" + nonce, in: app)
+        let reviewToggle = app.buttons["hanlin-tool-consent-review-toggle"].firstMatch
+        XCTAssertTrue(reviewToggle.waitForExistence(timeout: 45))
+        let request = app.staticTexts["hanlin-tool-consent-original-request"].firstMatch
+        let identity = app.staticTexts["hanlin-phase2-chat-id"].firstMatch
+        XCTAssertTrue(identity.waitForExistence(timeout: 10))
+        let originalChat = identity.label
+        XCTAssertNotNil(UUID(uuidString: originalChat))
+        let source = "import sys; print('PHASE2_RESULT_\(nonce):' + sys.version.split()[0] + ':' + str(6*7))"
+        revealAndTap(reviewToggle)
+        XCTAssertTrue(request.waitForExistence(timeout: 10))
+        let arguments = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(request.label.utf8)) as? [String: Any])
+        XCTAssertEqual(arguments["source"] as? String, source)
+        revealAndTap(reviewToggle)
+        XCTAssertTrue(request.waitForNonExistence(timeout: 5))
+
+        // Approve through the unchanged original Host continuation, verifying
+        // the exact harmless request. Its existing 30-second deadline remains
+        // authoritative; exercise slower rotations after it has completed.
+        approveOriginalToolRequest(["source": source], in: app)
+        let expected = "PHASE2_VERIFIED_" + nonce + ":3.14.6:42"
+        let answer = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@", expected)).firstMatch
+        XCTAssertTrue(answer.waitForExistence(timeout: 90))
+        XCTAssertTrue(app.buttons["hanlin-chat-stop"].firstMatch.waitForNonExistence(timeout: 15))
+
+        let draft = "UNSENT_SCROLL_" + nonce
+        let input = chatInputElement(in: app)
+        revealAndTap(input); input.typeText(draft)
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        checkViewport("completed-tool-keyboard-portrait")
+        rotate(.landscapeLeft, landscape: true)
+        XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+        XCTAssertEqual(identity.label, originalChat)
+        checkViewport("completed-tool-keyboard-landscape")
+
+        let activity = app.descendants(matching: .any)["hanlin-agent-activity-phase2-python-" + nonce].firstMatch
+        let hierarchy = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
+        if !activity.waitForExistence(timeout: 2) { revealAndTap(hierarchy) }
+        XCTAssertTrue(activity.waitForExistence(timeout: 10))
+        revealAndTap(activity)
+        let details = app.descendants(matching: .any)["hanlin-tool-content-expanded-text"].firstMatch
+        XCTAssertTrue(details.waitForExistence(timeout: 10), "Actual tool details must mount inside the original transcript")
+        for _ in 0..<3 {
+            revealAndTap(hierarchy)
+            XCTAssertTrue(details.waitForNonExistence(timeout: 5))
+            revealAndTap(hierarchy)
+            XCTAssertTrue(details.waitForExistence(timeout: 5), "Reopening must retain the original expanded tool payload")
+        }
+        rotate(.portrait, landscape: false)
+        XCTAssertTrue(details.waitForExistence(timeout: 10))
+        checkViewport("completed-expanded-details-portrait")
+
+        // This replaces the actual conversation/reader, rather than merely
+        // presenting a sheet over the still-mounted chat.
+        let requestCount = app.staticTexts["hanlin-phase2-request-count"].label
+        revealAndTap(chatListToolbarButton("hanlin-new-chat-button", in: app))
+        XCTAssertTrue(app.descendants(matching: .any)["hanlin-info-bubble"].firstMatch.waitForExistence(timeout: 10))
+        let replaced = expectation(for: NSPredicate { _, _ in
+            identity.exists && identity.label != originalChat && UUID(uuidString: identity.label) != nil
+        }, evaluatedWith: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [replaced], timeout: 10), .completed,
+                       "The original transcript must actually be replaced by a different conversation")
+        ensureChatListVisible(in: app)
+        selectChatRow(named: "Agent Acceptance Chat", in: app)
+        XCTAssertTrue(answer.waitForExistence(timeout: 20))
+        XCTAssertEqual(identity.label, originalChat)
+        XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, requestCount,
+                       "Reattaching the transcript cannot replay any provider or tool operation")
+        XCTAssertFalse(app.buttons["hanlin-tool-consent-allow-once"].exists)
+        if !activity.waitForExistence(timeout: 2) { revealAndTap(hierarchy) }
+        XCTAssertTrue(activity.waitForExistence(timeout: 10))
+        if !details.exists { revealAndTap(activity) }
+        XCTAssertTrue(details.waitForExistence(timeout: 10))
+        checkViewport("same-conversation-reattached")
     }
 
     func testDiagnosticsReviewsTheAutomaticallyCapturedRunWithoutSharingItsKey() throws {
@@ -496,6 +623,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     func testUI03SearchMessageAndDeduplicatedCitations() throws {
+        continueAfterFailure = false
         let app = launchAcceptanceApp()
         openChat(in: app)
 
@@ -515,7 +643,58 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let referenceMaterials = app.descendants(matching: .any)["hanlin-reference-materials"].firstMatch
         XCTAssertTrue(referenceMaterials.waitForExistence(timeout: 10), "Reference materials citation section did not render")
 
+        // The original native renderer exposes an inline attachment's source
+        // title in its paragraph label, not as a separate XCUI link. The answer
+        // never contains this title, so the two together prove an attachment.
+        let citedParagraph = app.textViews.matching(NSPredicate(
+            format: "label CONTAINS 'UI03_SEARCH_COMPLETE' AND label CONTAINS 'Hanlin Reference Source'"
+        )).firstMatch
+        XCTAssertTrue(citedParagraph.waitForExistence(timeout: 10),
+                      "The verified source must appear inside the actual native answer paragraph")
+        let allSources = app.buttons.matching(identifier: "hanlin-all-sources")
+        XCTAssertEqual(allSources.count, 1, "A turn must retain exactly one complete sources footer")
         attachScreenshot("UI-03_SearchMessageAndDeduplicatedCitations", in: app)
+
+        // Locate the chip in the actual screenshot, then tap the real native
+        // attachment. No test-only URL callback or synthetic sheet is used.
+        let paragraphScreenshot = citedParagraph.screenshot()
+        let paragraphAttachment = XCTAttachment(screenshot: paragraphScreenshot)
+        paragraphAttachment.name = "UI-03_ActualInlineCitationBeforeTap"
+        paragraphAttachment.lifetime = .keepAlways
+        add(paragraphAttachment)
+        let image = try XCTUnwrap(paragraphScreenshot.image.cgImage)
+        let request = VNRecognizeTextRequest()
+        request.recognitionLevel = .accurate
+        request.recognitionLanguages = ["en-US"]
+        request.usesLanguageCorrection = false
+        try VNImageRequestHandler(cgImage: image, options: [:]).perform([request])
+        let boxes = try (request.results ?? []).compactMap { observation -> CGRect? in
+            guard let text = observation.topCandidates(1).first,
+                  let range = text.string.range(of: "agent.acceptance", options: .caseInsensitive) else { return nil }
+            return try text.boundingBox(for: range)?.boundingBox
+        }
+        XCTAssertEqual(boxes.count, 1, "Expected one actual inline source chip in the paragraph image")
+        let box = try XCTUnwrap(boxes.first)
+        let measuredBox = XCTAttachment(string: "Inline citation rectangle in normalized screenshot coordinates: \(box)")
+        measuredBox.name = "UI-03_MeasuredCitationTapTarget"
+        measuredBox.lifetime = .keepAlways
+        add(measuredBox)
+        citedParagraph.coordinate(withNormalizedOffset: CGVector(dx: box.midX, dy: 1 - box.midY)).tap()
+
+        let sourceSheet = app.descendants(matching: .any)["hanlin-scoped-sources"].firstMatch
+        XCTAssertTrue(sourceSheet.waitForExistence(timeout: 10), "Tapping the inline chip must open its scoped sources")
+        let sourceRows = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'hanlin-source-'"))
+        XCTAssertEqual(sourceRows.count, 1, "This sentence cites one canonical returned source")
+        XCTAssertTrue(sourceRows.firstMatch.label.contains("Hanlin Reference Source"))
+        attachScreenshot("UI-03_InlineCitationScopedSources", in: app)
+        tapElement(app.buttons["hanlin-sources-close"].firstMatch)
+        XCTAssertTrue(citedParagraph.waitForExistence(timeout: 10), "Closing sources must restore the original answer")
+
+        tapElement(allSources.firstMatch)
+        XCTAssertTrue(sourceSheet.waitForExistence(timeout: 10))
+        XCTAssertEqual(sourceRows.count, 1, "Fragment variants of the same returned page must remain deduplicated")
+        tapElement(app.buttons["hanlin-sources-close"].firstMatch)
+        XCTAssertEqual(allSources.count, 1)
     }
 
     func testNativePartialSelectionSaveAndOriginalLongPressPreview() throws {

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "scope": "Pure citation projection functions only; not an iOS app build or UIKit/XCTest validation.",
+  "toolchain": "Swift version 6.3.3 (swift-6.3.3-RELEASE), x86_64-unknown-windows-msvc, +assertions",
+  "source_repository": "davidpovarsky/hanlin-ai",
+  "baseline_commit": "a2cede2099ba100d16f91d23126782327628de6d",
+  "source_path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinCitations.swift",
+  "tests_path": "Packages/HanlinPresentationSDK/Tests/HanlinPresentationKitTests/CitationProjectionTests.swift",
+  "source_sha256": "6cc04e32c8312f3d046d3dc4773c471e4e632cfe0d9a07bd1eb4337e358df6bb",
+  "tests_sha256": "686377bb4cd2f7033a497ed008b4695bd8f852afa49717f0b2b2ab6af434077c",
+  "harness_sha256": "9b358d5c5f2f61ec31a174d553af60ce764920918460fd106c9d00293503d78a",
+  "executable_sha256": "a0c02fc93d1b904152cc145f56ac14d5344c5b9f64ec75e96aab337d275b677f",
+  "harness_derivation": "The eight test function bodies are retained; import Testing and @testable are removed, @Test is removed and #expect is replaced with precondition. All eight functions are called. HanlinCitations.swift is an exact unchanged copy.",
+  "compile_result": {
+    "ok": true,
+    "duration": 23.31,
+    "returncode": 0
+  },
+  "execution_result": {
+    "ok": true,
+    "output": "CITATION_FUNCTIONS_PASS 8",
+    "duration": 1.33,
+    "returncode": 0
+  },
+  "passed_count": 8,
+  "tests": [
+    "citationsRequireActualAnchorsAndCompleteSentences",
+    "repeatedSentenceSourcesGroupWithoutDuplicatingProviderLinks",
+    "rtlEmojiMarkdownAndCodeKeepCorrectCitationBoundaries",
+    "explicitReturnedSourceLinksWorkWithoutResponsesAnnotations",
+    "sourceRecognitionPreservesProseCodeImagesAndUnverifiedLinks",
+    "explicitCitationWaitsForItsSentenceAndDoesNotCrossParagraphs",
+    "explicitSourceLinksSupportParenthesizedAndAngleURLs",
+    "orderedPartsWithEqualOffsetsKeepIndependentSourceTargets"
+  ]
+}

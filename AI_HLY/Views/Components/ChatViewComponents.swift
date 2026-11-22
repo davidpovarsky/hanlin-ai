@@ -410,7 +410,7 @@ struct ChatBubbleView: View {
             TextSelectionView(text: text,
                 savePersonal: { savePersonalExcerpt($0.text, selection: $0) })
                 .environment(\.hanlinMessageCitations, HanlinMessageCitations(messageID: id,
-                    evidence: agentRun?.evidenceItems ?? [], transcript: agentRun?.transcriptItems ?? []))
+                    evidence: agentRun?.evidenceItems ?? [], transcript: agentRun?.transcriptItems ?? [], resources: resources ?? []))
         }
         .sheet(isPresented: $translatedTextSelectionSheetPresented) {
             TextSelectionView(text: translatedText,
@@ -700,7 +700,7 @@ struct ChatBubbleView: View {
                                 )
                         )
                 }
-                Text(model)
+                Text(HanlinModelDisplayName.clean(model))
                     .font(HanlinTypography.caption)
                     .foregroundColor(.secondary)
             }
@@ -1850,7 +1850,7 @@ struct ChatBubbleView: View {
         ChatMessagePreviewPresenter.present(from: source, at: point,
             preferredWidth: effectiveContainerWidth - 32, text: text,
             citations: HanlinMessageCitations(messageID: id, evidence: agentRun?.evidenceItems ?? [],
-                transcript: agentRun?.transcriptItems ?? []),
+                transcript: agentRun?.transcriptItems ?? [], resources: resources ?? []),
             style: .init(locale: previewLocale, layoutDirection: previewLayoutDirection,
                 colorScheme: previewColorScheme, dynamicTypeSize: previewDynamicTypeSize), actions: messagePreviewActions)
     }
@@ -1937,7 +1937,7 @@ struct ChatBubbleView: View {
 
         }
         .environment(\.hanlinMessageCitations, HanlinMessageCitations(messageID: id,
-            evidence: agentRun?.evidenceItems ?? [], transcript: agentRun?.transcriptItems ?? []))
+            evidence: agentRun?.evidenceItems ?? [], transcript: agentRun?.transcriptItems ?? [], resources: resources ?? []))
         .padding(.bottom, 6)
         .foregroundColor(.primary)
         .fixedSize(horizontal: false, vertical: true)
@@ -2238,7 +2238,7 @@ struct ChatBubbleView: View {
         private var hierarchyIsExpanded: Bool { isExpanded || toolApproval != nil }
 
         private func roundHasHeader(_ round: AgentDisplayRound) -> Bool {
-            round.roundID != nil && round.activities.count > 1
+            round.hasHierarchyHeader
         }
 
         private func roundIsWaiting(_ round: AgentDisplayRound,
@@ -2361,8 +2361,9 @@ struct ChatBubbleView: View {
                     roundRows(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
                 } label: {
                     HanlinActivityHierarchyHeader(title: !expanded && !activeTitles.isEmpty
-                        ? activeTitles.joined(separator: " · ") : String(localized: "Thinking & tools"),
-                        symbol: "wrench.and.screwdriver", depth: 1, isExpanded: expanded,
+                        ? activeTitles.joined(separator: " · ")
+                        : (waiting ? String(localized: "Actions requiring your approval") : String(localized: "Thinking & tools")),
+                        symbol: "gearshape.2", depth: 1, isExpanded: expanded,
                         isActive: shimmerOwners.contains(.round(round.id)))
                 }
                 .disclosureGroupStyle(HanlinActivityDisclosureStyle())
@@ -2391,21 +2392,15 @@ struct ChatBubbleView: View {
                                   isCurrent: Bool) -> some View {
             let summary = AgentActivityComposer.reasoningDisplayText(for: activity, in: run)
             let isPlaceholder = summary == String(localized: "Thinking")
-            let title: String = {
-                if isCurrent || !isPlaceholder { return summary }
-                if let startedAt = activity.startedAt, let completedAt = activity.completedAt {
-                    return String(format: String(localized: "Thought for %@"),
-                        AgentActivityDurationFormatter.string(max(0, completedAt.timeIntervalSince(startedAt))))
-                }
-                // Historical interrupted reasoning has no completion duration.
-                // A stopped run must never advertise present-tense Thinking.
-                return String(localized: "Activity history")
+            let title = !isCurrent && isPlaceholder ? String(localized: "Reasoning") : summary
+            let duration: String = {
+                guard !isCurrent, let startedAt = activity.startedAt, let completedAt = activity.completedAt,
+                      completedAt.timeIntervalSince(startedAt) >= 1 else { return "" }
+                return AgentActivityDurationFormatter.string(completedAt.timeIntervalSince(startedAt))
             }()
-            return HanlinActivityTitle(title, font: HanlinTypography.footnote,
-                baseColor: .secondary, isActive: isCurrent,
-                startedAt: activity.startedAt, stoppedAt: isCurrent ? nil : activity.completedAt)
-                .textSelection(.enabled)
-                .padding(.vertical, 4)
+            return HanlinToolActivityHeader(title: title, status: duration, symbol: "sparkles",
+                isActive: isCurrent, showsShimmer: isCurrent,
+                startedAt: activity.startedAt, completedAt: activity.completedAt)
                 .accessibilityIdentifier("hanlin-reasoning-expanded-text")
         }
 
@@ -2450,13 +2445,14 @@ struct ChatBubbleView: View {
                         HanlinToolActivityHeader(title: activityDisplayTitle(activity),
                             status: statusText(activity, approval: approval),
                             symbol: activity.executionPresentation?.resolvedSystemImage
-                                ?? "wrench.and.screwdriver",
+                                ?? activity.systemImage ?? "wrench.and.screwdriver",
                             family: trustedActivityFamily(activity),
                             isActive: isActive && activity.status == .running
                                 && approval?.disposition != .awaiting && approval?.disposition != .providerRequired,
                             showsShimmer: isCurrent,
                             isExpanded: activityIsExpanded(activity.id),
                             isFailure: activity.status == .failed,
+                            isCancelled: activity.status == .cancelled,
                             startedAt: activity.startedAt, completedAt: activity.completedAt,
                             sources: Self.sourceReferences(for: activity))
                     }
@@ -2501,8 +2497,11 @@ struct ChatBubbleView: View {
         }
 
         private func approvalView(_ pending: ChatToolApprovalPresentation) -> some View {
-            HanlinInlineToolApproval(requestID: pending.requestID, toolName: pending.toolName,
+            let summary = AgentToolApprovalSummary.make(toolName: pending.toolName, reviewText: pending.reviewText)
+            return HanlinInlineToolApproval(requestID: pending.requestID, toolName: pending.toolName,
                 reviewText: pending.reviewText, remembersDecision: pending.remembersDecision,
+                displayTitle: summary.title, systemImage: summary.systemImage,
+                scopeSummary: summary.scope, requiresDetailedReview: summary.requiresDetailedReview,
                 answer: pending.answer)
                 .id(pending.requestID)
         }
@@ -2522,6 +2521,21 @@ struct ChatBubbleView: View {
         }
 
         private func trustedActivityFamily(_ activity: AgentDisplayActivity) -> HanlinToolActivityHeader.Family {
+            // Explicit family metadata has precedence over its generic motion
+            // preset; otherwise map/file/image tools lose their family identity.
+            if let family = activity.executionPresentation?.familyID {
+                switch family {
+                case .webSearch: return .webSearch
+                case .sourceSearch: return .sourceSearch
+                case .fileOperation: return .fileOperation
+                case .codeExecution: return .codeExecution
+                case .command: return .command
+                case .imageGeneration: return .imageGeneration
+                case .map: return .map
+                default: break
+                }
+            }
+            if activity.kind == .map { return .map }
             if let animation = activity.executionPresentation?.animation {
                 switch animation {
                 case .search: return .webSearch
@@ -2547,19 +2561,16 @@ struct ChatBubbleView: View {
                       ["https", "http"].contains(url.scheme?.lowercased() ?? ""),
                       let host = url.host, host.lowercased() != "search.local" else { return nil }
                 var icon = URLComponents()
-                icon.scheme = "https"; icon.host = host; icon.path = "/favicon.ico"
+                // Use the existing resource favicon service; many verified
+                // sources have no icon at the historical /favicon.ico path.
+                icon.scheme = "https"; icon.host = "www.google.com"; icon.path = "/s2/favicons"
+                icon.queryItems = [.init(name: "domain", value: host), .init(name: "sz", value: "64")]
                 return HanlinSourceReference(id: source.id, title: source.displayTitle, url: url, iconURL: icon.url)
             }
         }
 
         private static func technicalText(_ text: String) -> some View {
-            ScrollView([.horizontal, .vertical]) {
-                Text(AgentDiagnosticsRedactor.sanitize(text))
-                    .font(HanlinTypography.caption.monospaced()).textSelection(.enabled)
-                    .padding(8)
-                    .accessibilityIdentifier("hanlin-tool-content-expanded-text")
-            }
-            .frame(maxHeight: 280)
+            HanlinToolDetailsText(AgentDiagnosticsRedactor.sanitize(text))
             .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8))
         }
 
@@ -4436,7 +4447,7 @@ struct AICanvasView: View {
                             .symbolEffect(.breathe)
                         Text(isEditingCanvas
                              ? ("编辑中...")
-                             : (model.displayName ?? model.name ?? "Model"))
+                             : model.presentationName)
                         .font(HanlinTypography.fixed(size: size_10, weight: .medium))
                     }
                     .foregroundColor((isEditingCanvas || !model.supportsTextGen) ? Color.gray : Color.hlBluefont)
@@ -4723,7 +4734,7 @@ struct AICanvasView: View {
                         .symbolEffect(.breathe)
                     Text(isEditingCanvas
                          ? ("编辑中...")
-                         : (model.displayName ?? model.name ?? "Model"))
+                         : model.presentationName)
                         .font(HanlinTypography.fixed(size: size_10, weight: .medium))
                 }
                 .foregroundColor(.white)

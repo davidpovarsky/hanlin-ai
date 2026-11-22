@@ -6,6 +6,11 @@ struct AgentDisplayRound: Identifiable {
     let id: String
     let roundID: String?
     var activities: [AgentDisplayActivity]
+
+    /// An explicit model-round marker is the hierarchy boundary even when the
+    /// round contains only one tool or reasoning item. Legacy items keep their
+    /// sibling placement because no source attributes them to a round.
+    var hasHierarchyHeader: Bool { roundID != nil }
 }
 
 extension AgentActivityComposer {

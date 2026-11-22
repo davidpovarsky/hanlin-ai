@@ -57,9 +57,10 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
             endActiveReasoning(into: &events)
         }
         for event in data.agentEvents {
-            if case .sourceCitations(let segmentID, let citations) = event {
-                events.append(.sourceCitations(segmentID: segmentID ?? activeAnswerSegmentID, citations: citations))
-            } else { events.append(event) }
+            // An annotation can share a transport item with its final text.
+            // Apply it after that delta has an actual transcript owner.
+            if case .sourceCitations = event { continue }
+            events.append(event)
         }
 
         if let reasoning = data.reasoning, !reasoning.isEmpty {
@@ -96,6 +97,12 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
                 events.append(.answerSegmentDelta(id: id, text: content))
             }
             lastSemanticEventKind = .assistantText
+        }
+
+        for event in data.agentEvents {
+            if case .sourceCitations(let segmentID, let citations) = event {
+                events.append(.sourceCitations(segmentID: segmentID ?? activeAnswerSegmentID, citations: citations))
+            }
         }
 
         if let state = data.operationalState, !state.isEmpty {

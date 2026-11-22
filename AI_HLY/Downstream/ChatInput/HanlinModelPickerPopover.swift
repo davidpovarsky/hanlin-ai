@@ -93,7 +93,7 @@ struct HanlinModelPickerPopover: View {
         let lower = trimmed.lowercased()
         return visibleIndices.filter { idx in
             let m = models[idx]
-            let display = (m.displayName ?? m.name ?? "").lowercased()
+            let display = m.presentationName.lowercased()
             let rawName = (m.name ?? "").lowercased()
             let company = (m.company ?? "").lowercased()
             let pinyin = (m.displayName ?? "").toPinyin().lowercased()
@@ -332,7 +332,7 @@ struct HanlinModelPickerPopover: View {
                     .frame(width: 28, height: 28)
 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(model.displayName ?? model.name ?? "Unknown")
+                    Text(model.presentationName)
                         .font(HanlinTypography.subheadline.weight(isSelected ? .semibold : .regular))
                         .foregroundStyle(isSelected ? accentColor : .primary)
                         .lineLimit(1)

@@ -21,7 +21,7 @@ public struct HanlinMarkdownView: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.layoutDirection) private var layoutDirection
     @State private var listener = HanlinMarkdownListener()
-    @State private var citationIcons: [String: Data] = [:]
+    @State private var citationIcons: [URL: Data] = [:]
 
     public init(text: String, imageConfig: ImageConfig = .disabled,
                 citationGroups: [HanlinCitationGroup] = [],
@@ -39,7 +39,9 @@ public struct HanlinMarkdownView: View {
         let _ = dynamicTypeSize
         let _ = listener.update(onSelectionAction: onSelectionAction, onRendered: onRendered)
         MarkdownView(text: text, config: config, listener: listener, documentParts: documentParts)
-            .task(id: citationGroups.map(\.url)) { await loadCitationIcons() }
+            // A growing sentence or a new part changes its scoped link, not
+            // the source icon. Do not cancel/restart downloads for each delta.
+            .task(id: citationIconURLs) { await loadCitationIcons() }
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
@@ -57,9 +59,9 @@ public struct HanlinMarkdownView: View {
         let codeFonts = TextFonts(normal: UIFont.monospacedSystemFont(ofSize: HanlinTypography.uiFont(.callout).pointSize, weight: .regular),
             italic: nil, bold: nil, boldItalic: nil, preferredLetterSpacing: nil, preferredLineHeight: nil)
         return MarkdownRenderConfig.default
-            .withCitationConfig(value: .init(font: HanlinTypography.uiFont(.caption2),
+            .withCitationConfig(value: .init(font: HanlinTypography.uiFont(.caption1),
                 textColor: .secondary, backgroundColor: Color.secondary.opacity(0.10),
-                iconsByCitationURL: citationIcons, iconOnTrailingEdge: layoutDirection == .rightToLeft))
+                iconsByCitationURL: iconsByCitationURL, iconOnTrailingEdge: layoutDirection == .rightToLeft))
             .withImageConfig(imageConfig)
             .withShouldAnimateText(value: false)
             .withBlockSpacing(value: 12)
@@ -76,19 +78,35 @@ public struct HanlinMarkdownView: View {
             ]))
     }
 
+    private var citationIconURLs: [URL] {
+        var seen = Set<URL>()
+        return Array(citationGroups.compactMap { $0.sources.first?.iconURL }
+            .filter { $0.scheme == "https" && seen.insert($0).inserted }.prefix(24))
+    }
+
+    private var iconsByCitationURL: [String: Data] {
+        var result: [String: Data] = [:]
+        for group in citationGroups {
+            if let url = group.sources.first?.iconURL, let data = citationIcons[url] {
+                result[group.url.absoluteString] = data
+            }
+        }
+        return result
+    }
+
     private func loadCitationIcons() async {
-        let groups = Array(citationGroups.prefix(24))
-        let visibleKeys = Set(groups.map { $0.url.absoluteString })
+        let visibleKeys = Set(citationIconURLs)
         var loaded = citationIcons.filter { visibleKeys.contains($0.key) }
-        for group in groups {
-            guard loaded[group.url.absoluteString] == nil,
-                  let url = group.sources.first?.iconURL, url.scheme == "https" else { continue }
-            do {
-                if let png = try await HanlinCitationIconLoader.png(from: url) {
-                    try Task.checkCancellation()
-                    loaded[group.url.absoluteString] = png
-                }
-            } catch { if Task.isCancelled { return } }
+        let missing = citationIconURLs.filter { loaded[$0] == nil }
+        // Each thumbnail already has a byte/decode/time bound. Fetch distinct
+        // sites together so one slow favicon cannot block all following sites.
+        await withTaskGroup(of: (URL, Data?).self) { group in
+            for url in missing {
+                group.addTask { (url, try? await HanlinCitationIconLoader.png(from: url)) }
+            }
+            for await (url, data) in group {
+                if let data { loaded[url] = data }
+            }
         }
         // One publication per source batch. Each icon must not rebuild the full
         // Markdown layout while the answer is being streamed.

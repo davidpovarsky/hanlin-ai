@@ -15,6 +15,7 @@ import HanlinChatCore
 import HanlinAgentCore
 import HanlinHostContracts
 import HanlinPlatformContracts
+import HanlinPresentationKit
 
 // MARK: - 数据结构定义
 struct splitMarkerGroup {
@@ -541,8 +542,10 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     } else {
                         self.dataIndex! += 1
                     }
-                    let title = combinedTitles[i]
+                    let title = combinedTitles.indices.contains(i) ? combinedTitles[i] : "Source"
+                    let sourceURL = combinedLinks.indices.contains(i) ? combinedLinks[i] : ""
                     md += "[\(self.dataIndex ?? i+1)] \(title)\n"
+                    if !sourceURL.isEmpty { md += "Source URL: \(sourceURL)\n" }
                     md += content.prefix(6000) + "\n\n"
                 }
             } else {
@@ -553,8 +556,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             
             // 构造最终回复
             let prefix = isZh
-                ? "搜索关键词：\(query)\n\n网络资料，供您参考，引用内容时在对应的内容后标注 [index] 引用：\n\n\(md)"
-                : "Search keywords: \(query)\n\nWeb materials for your reference. When citing content, please indicate with [index] after the corresponding content:\n\(md)"
+                ? "搜索关键词：\(query)\n\n网络资料：请在完整句子后的标点后用 [source](原始来源URL) 引用对应来源：\n\n\(md)"
+                : "Search keywords: \(query)\n\nWeb materials: cite each supported sentence after its punctuation using [source](the exact Source URL):\n\(md)"
             
             let searchResult = prefix
             
@@ -672,6 +675,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     }
                     
                     md += "## [\(self.dataIndex ?? i+1)] \(paper.title)\n\n"
+                    md += "Source URL: \(paper.idLink)\n\n"
                     md += isZh
                         ? "**发表时间：** \(paper.published)\n\n"
                         : "**Published Date:** \(paper.published)\n\n"
@@ -708,8 +712,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             
             // 构造最终回复
             let prefix = isZh
-                ? "搜索关键词：\(query)\n\narXiv 文献资料，供您参考，引用内容时在对应的内容后标注 [index] 引用：\n\n\(md)"
-                : "Search keywords: \(query)\n\narXiv papers for your reference. When citing content, please indicate with [index] after the corresponding content:\n\n\(md)"
+                ? "搜索关键词：\(query)\n\narXiv 文献资料：请在完整句子后的标点后用 [source](原始来源URL) 引用对应来源：\n\n\(md)"
+                : "Search keywords: \(query)\n\narXiv papers: cite each supported sentence after its punctuation using [source](the exact Source URL):\n\n\(md)"
             
             let searchResult = prefix
             
@@ -1328,7 +1332,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             guidelineSection,
             goalSection,
             userInfoSection,
-            memorySection
+            memorySection,
+            HanlinCitationProjection.modelInstructions
         ].filter { !$0.isEmpty }
 
         var result = sections.joined(separator: "\n\n")
@@ -1472,7 +1477,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             personalitySection,
             userInfoSection,
             systemSection,
-            memorySection
+            memorySection,
+            HanlinCitationProjection.modelInstructions
         ].filter { !$0.isEmpty }
         
         var result = allSections.joined(separator: "\n\n")
@@ -2141,15 +2147,18 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     } else {
                         self.dataIndex! += 1
                     }
-                    markdownContent.append("[\(self.dataIndex ?? index + 1)]: \(title)\n\(content.prefix(6000))\n\n")
+                    let sourceURL = combinedLinks.indices.contains(index) ? combinedLinks[index] : ""
+                    markdownContent.append("[\(self.dataIndex ?? index + 1)]: \(title)\n")
+                    if !sourceURL.isEmpty { markdownContent.append("Source URL: \(sourceURL)\n") }
+                    markdownContent.append("\(content.prefix(6000))\n\n")
                 }
             } else {
                 markdownContent.append(Locale.preferredLanguages.first?.hasPrefix("zh") ?? true ? "未找到相关信息\n" : "No relevant information found\n")
             }
             
             let userMessage = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
-                ? "搜索关键词：\(optimizedQuery)\n\n网络资料，供您参考，引用内容时在对应的内容后标注 [index] 引用：\n\n\(markdownContent)"
-                : "Search keywords: \(optimizedQuery)\n\nWeb materials for your reference. When citing content, please indicate with [index] after the corresponding content:\n\(markdownContent)"
+                ? "搜索关键词：\(optimizedQuery)\n\n网络资料：请在完整句子后的标点后用 [source](原始来源URL) 引用对应来源：\n\n\(markdownContent)"
+                : "Search keywords: \(optimizedQuery)\n\nWeb materials: cite each supported sentence after its punctuation using [source](the exact Source URL):\n\(markdownContent)"
             
             // 记录搜索数据
             self.searchText = userMessage.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -2173,13 +2182,13 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         let extractedWebPages = await fetchWebPageContent(from: selectedURLs)
         if !extractedWebPages.isEmpty {
             var webContentMarkdown = ""
-            for (_, title, content, icon) in extractedWebPages {
+            for (url, title, content, _) in extractedWebPages {
                 if self.dataIndex == nil {
                     self.dataIndex = 1
                 } else {
                     self.dataIndex! += 1
                 }
-                webContentMarkdown.append("- [\(self.dataIndex ?? 1)](\(title))(\(icon))\n  \(content.prefix(5000))\n\n")
+                webContentMarkdown.append("[\(self.dataIndex ?? 1)] \(title)\nSource URL: \(url)\n\(content.prefix(5000))\n\n")
             }
             let webMessage = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
             ? "\n网页内容，供您参考：\n\n\(webContentMarkdown)"

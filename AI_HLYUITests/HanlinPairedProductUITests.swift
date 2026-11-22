@@ -188,6 +188,11 @@ final class HanlinPairedProductUITests: XCTestCase {
         typeNativeText(prompt, into: editor, failureMessage: "Native typing must preserve the original request before Send")
         XCTAssertEqual(editor.value as? String, prompt, "Native typing must preserve the original request before Send")
         tap(ai, "hanlin-chat-send")
+        tap(ai, "hanlin-tool-consent-review-toggle")
+        let originalRequest = ai.staticTexts["hanlin-tool-consent-original-request"].firstMatch
+        XCTAssertTrue(originalRequest.waitForExistence(timeout: 15),
+            "Review the actual cross-product request before allowing its original continuation")
+        XCTAssertFalse(originalRequest.label.isEmpty)
         tap(ai, "hanlin-tool-consent-allow-once")
         pairedRequestStartedAt = Date()
         XCTAssertTrue(mini.wait(for: .runningForeground, timeout: 45))

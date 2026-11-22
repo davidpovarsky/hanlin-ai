@@ -164,6 +164,10 @@ struct ChatView: View {
     @State private var measuredComposerHeight: CGFloat = 0
     @State private var chatContainerWidth: CGFloat = 0
 
+    private struct TranscriptBottomTarget: Hashable {
+        let conversationID: UUID
+    }
+
     // 提示词管理相关
     @State private var selectedPrompts: [PromptRepo] = []   // 选中的提示词
 
@@ -448,6 +452,10 @@ struct ChatView: View {
             ScrollViewReader { scrollViewProxy in
                 buildScrollContent(scrollViewProxy).padding(.bottom, 6)
             }
+            // A reader may retain a pending scroll context until its native
+            // scroll view attaches. Never carry that context to another chat.
+            // Keyboard, split-view resizing and activity updates keep this ID.
+            .id(effectiveChatSessionID)
         } composer: {
                 if !isExternalCompactComposerHost {
                     ChatViewBottom(
@@ -1048,9 +1056,9 @@ struct ChatView: View {
                 cancelSourceScroll()
                 return
             }
-            guard transcriptScrollView.generation == viewportGeneration,
-                  nativeSelectionIDs.isEmpty, !autoFollowController.state.isUserInteracting,
-                  let layout = transcriptScrollView.layout(conversationID: conversationID) else { return }
+            guard nativeSelectionIDs.isEmpty, !autoFollowController.state.isUserInteracting,
+                  let layout = transcriptScrollView.layout(conversationID: conversationID,
+                      expectedGeneration: viewportGeneration) else { return }
             if layout.hasScrollableContent {
                 var transaction = Transaction(animation: nil)
                 transaction.disablesAnimations = true
@@ -1116,9 +1124,12 @@ struct ChatView: View {
 
                     // 底部留白
                     Color.clear
-                        .padding(.bottom, dynamicBottomPadding())
+                        // Give the lazy scroll target an actual finite extent;
+                        // padding around an unconstrained Color has no intrinsic
+                        // content height during initial/reattachment measurement.
+                        .frame(height: dynamicBottomPadding())
                         .animation(.easeInOut(duration: 0.5), value: dynamicBottomPadding())
-                        .id("BottomPadding")
+                        .id(TranscriptBottomTarget(conversationID: effectiveChatSessionID))
                 }
                 .onChange(of: agentSessionOwner.consent.pending?.id) { _, _ in
                     scheduleAutoFollow(using: scrollViewProxy, animated: true)
@@ -1135,6 +1146,7 @@ struct ChatView: View {
             // anchor also restores offsets during HostingScrollView attachment,
             // bypassing the finite-viewport and current-request checks below.
             .scrollIndicators(.hidden)
+            .accessibilityIdentifier("hanlin-chat-transcript")
             .refreshable {
                 loadMoreMessages()
             }
@@ -1247,8 +1259,8 @@ struct ChatView: View {
                 scheduleScrollWhenViewportReady(using: scrollViewProxy)
             }
             .onDisappear {
+                guard transcriptScrollView.deactivate(conversationID: effectiveChatSessionID) else { return }
                 cancelSourceScroll()
-                transcriptScrollView.deactivate()
                 autoFollowController.invalidateLayout()
             }
     }
@@ -1264,12 +1276,13 @@ struct ChatView: View {
     
     // 聊天时滚动到最底层
     private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy, animated: Bool = true) {
+        let target = TranscriptBottomTarget(conversationID: effectiveChatSessionID)
         if animated {
             withAnimation(.easeOut(duration: 0.18)) {
-                scrollViewProxy.scrollTo("BottomPadding", anchor: .bottom)
+                scrollViewProxy.scrollTo(target, anchor: .bottom)
             }
         } else {
-            scrollViewProxy.scrollTo("BottomPadding", anchor: .bottom)
+            scrollViewProxy.scrollTo(target, anchor: .bottom)
         }
     }
 
@@ -1289,8 +1302,8 @@ struct ChatView: View {
         autoFollowController.scheduleScroll(animated: animated, force: force) { animate in
             guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty,
                   effectiveChatSessionID == conversationID,
-                  transcriptScrollView.generation == viewportGeneration,
-                  transcriptScrollView.layout(conversationID: conversationID)?.hasScrollableContent == true else { return }
+                  transcriptScrollView.layout(conversationID: conversationID,
+                      expectedGeneration: viewportGeneration)?.hasScrollableContent == true else { return }
             scrollToLastMessage(using: scrollViewProxy, animated: animate)
         }
     }
@@ -1627,7 +1640,7 @@ struct ChatView: View {
     private func openHistory() {
         // 如果输入框有草稿内容，则优先保存草稿
         if !message.isEmpty {
-            chatRecord.infoDescription = "[草稿] \(message)"
+            chatRecord.infoDescription = "[\(String(localized: "Draft"))] \(message)"
             chatRecord.input = message
         } else {
             chatRecord.input = ""
@@ -1647,9 +1660,9 @@ struct ChatView: View {
                 if chatTemps.count >= 2 {
                     let secondLastMessage = chatTemps[chatTemps.count - 2]
                     let previewText = secondLastMessage.text?.replacingOccurrences(of: "\n", with: " ").prefix(80)
-                    chatRecord.infoDescription = "[图像] \(previewText ?? "")"
+                    chatRecord.infoDescription = "[\(String(localized: "Image"))] \(previewText ?? "")"
                 } else {
-                    chatRecord.infoDescription = "[图像]"
+                    chatRecord.infoDescription = "[\(String(localized: "Image"))]"
                 }
                 } else {
                     chatRecord.infoDescription = ""
@@ -2314,10 +2327,10 @@ struct ChatView: View {
                                             .replacingOccurrences(of: "\n", with: " ")
                                             .trimmingCharacters(in: .whitespacesAndNewlines)
                                             .prefix(80) ?? ""
-                                        chatRecord.infoDescription = "[图像] \(previewText)"
+                                        chatRecord.infoDescription = "[\(String(localized: "Image"))] \(previewText)"
                                         chatRecord.lastEdited = previousMessage.timestamp
                                     } else {
-                                        chatRecord.infoDescription = "[图像]"
+                                        chatRecord.infoDescription = "[\(String(localized: "Image"))]"
                                         chatRecord.lastEdited = assistantMessage.timestamp
                                     }
                                 }
@@ -2370,12 +2383,8 @@ struct ChatView: View {
                        index < chatTemps.count {
                         operationalState = ""
                         operationalDescription = ""
-                        let responseErrorText: String
-                        if currentLanguage.hasPrefix("zh") {
-                            responseErrorText = "⚠️ 响应错误：\(error.localizedDescription)"
-                        } else {
-                            responseErrorText = "⚠️ Response error: \(error.localizedDescription)"
-                        }
+                        let responseErrorText = "⚠️ " + String(
+                            format: String(localized: "Response error: %@"), error.localizedDescription)
                         chatTemps[index].text = responseErrorText
                         chatTemps[index].role = "error"
                         chatTemps[index].modelDisplayName = "system"
@@ -2427,13 +2436,7 @@ struct ChatView: View {
         respondIndex = 0
         operationalState = ""
         operationalDescription = ""
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let responseInterruptedText: String
-        if currentLanguage.hasPrefix("zh") {
-            responseInterruptedText = "🛑 响应已打断"
-        } else {
-            responseInterruptedText = "🛑 Response interrupted"
-        }
+        let responseInterruptedText = "🛑 \(String(localized: "Response interrupted"))"
         
         let infoMessage = ChatMessages(
             role: "information",

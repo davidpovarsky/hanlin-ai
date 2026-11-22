@@ -48,3 +48,68 @@ private let sourceB = HanlinSourceReference(id: "B", title: "Original B", url: U
     #expect(result.markdown.hasPrefix("**מקור 😀 מדויק.** [9F742443]"))
     #expect(result.markdown.hasSuffix("```swift\nlet value = 1.0\n```"))
 }
+
+@Test func explicitReturnedSourceLinksWorkWithoutResponsesAnnotations() {
+    let text = "A supported sentence. [source](https://a.example/reference) [2](https://b.example/reference) Next sentence."
+    let anchors = HanlinCitationProjection.explicitSourceLinkAnchors(text: text, sources: [sourceA, sourceB])
+    #expect(anchors.count == 2)
+    let result = HanlinCitationProjection.make(text: text, messageID: citationMessage,
+        sources: [sourceA, sourceB], anchors: anchors)
+    #expect(result.groups.count == 1)
+    #expect(result.groups[0].sources == [sourceA, sourceB])
+    #expect(result.markdown.hasPrefix("A supported sentence. [9F742443]"))
+    #expect(!result.markdown.contains("[source]") && !result.markdown.contains("[2]"))
+    #expect(result.markdown.hasSuffix("Next sentence."))
+}
+
+@Test func sourceRecognitionPreservesProseCodeImagesAndUnverifiedLinks() {
+    let text = """
+    Read [the original](https://a.example/reference) for details.
+    A sentence. [Read more](https://a.example/reference)
+    Unknown claim. [source](https://unknown.example/reference)
+    Unmapped claim. [1]
+    An image. ![source](https://a.example/reference)
+    Escaped. \\[source](https://a.example/reference)
+    `Code sentence. [source](https://a.example/reference)`
+    ``Code ` sentence. [source](https://a.example/reference)``
+    ```markdown
+    A code sample. [source](https://a.example/reference)
+    ```
+    """
+    #expect(HanlinCitationProjection.explicitSourceLinkAnchors(text: text, sources: [sourceA]).isEmpty)
+}
+
+@Test func explicitCitationWaitsForItsSentenceAndDoesNotCrossParagraphs() {
+    let unfinished = "Unfinished [source](https://a.example/reference)"
+    let separated = "Previous sentence.\n\n[source](https://a.example/reference)"
+    #expect(HanlinCitationProjection.explicitSourceLinkAnchors(text: unfinished, sources: [sourceA]).isEmpty)
+    #expect(HanlinCitationProjection.explicitSourceLinkAnchors(text: separated, sources: [sourceA]).isEmpty)
+    let complete = "**מקור 😀 מדויק.** [source](https://a.example/reference)"
+    let anchors = HanlinCitationProjection.explicitSourceLinkAnchors(text: complete, sources: [sourceA])
+    let result = HanlinCitationProjection.make(text: complete, messageID: citationMessage,
+        sources: [sourceA], anchors: anchors)
+    #expect(result.groups.count == 1)
+    #expect(result.markdown.hasPrefix("**מקור 😀 מדויק.** [9F742443]"))
+}
+
+@Test func explicitSourceLinksSupportParenthesizedAndAngleURLs() {
+    let source = HanlinSourceReference(id: "wiki", title: "Exact page",
+        url: URL(string: "https://example.com/wiki/Topic_(detail)"))
+    for text in ["Supported. [source](https://example.com/wiki/Topic_(detail))",
+                 "Supported. [source](<https://example.com/wiki/Topic_(detail)>)"] {
+        let anchors = HanlinCitationProjection.explicitSourceLinkAnchors(text: text, sources: [source])
+        #expect(anchors.count == 1)
+        let result = HanlinCitationProjection.make(text: text, messageID: citationMessage, sources: [source], anchors: anchors)
+        #expect(result.groups.count == 1)
+        #expect(!result.markdown.contains("[source]"))
+    }
+}
+
+@Test func orderedPartsWithEqualOffsetsKeepIndependentSourceTargets() {
+    let a = HanlinCitationProjection.make(text: "Claim A.", messageID: citationMessage,
+        sources: [sourceA], anchors: [.init(sourceID: "A", range: 0..<8)], namespace: "part-A")
+    let b = HanlinCitationProjection.make(text: "Claim B.", messageID: citationMessage,
+        sources: [sourceB], anchors: [.init(sourceID: "B", range: 0..<8)], namespace: "part-B")
+    #expect(a.groups.count == 1 && b.groups.count == 1)
+    #expect(a.groups[0].url != b.groups[0].url)
+}

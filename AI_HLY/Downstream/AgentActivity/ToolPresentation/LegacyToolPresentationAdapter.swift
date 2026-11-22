@@ -55,6 +55,25 @@ enum LegacyToolPresentationAdapter {
     ]
 
     private static func activityDescriptor(for name: String) -> ToolActivityPresentationDescriptor {
+        // Exact built-in semantics precede broad words such as "search".
+        // A nearby-place or calendar search is not a web-search operation.
+        switch name {
+        case "get_current_location":
+            return descriptor(.navigate, "location", "Checking your location", "Checked your location", [])
+        case "query_location":
+            return descriptor(.navigate, "map", "Searching locations", "Searched locations", ["keyword"])
+        case "search_nearby_locations":
+            return descriptor(.navigate, "map", "Searching nearby places", "Searched nearby places", ["keyword", "coordinate"])
+        case "get_route":
+            return descriptor(.navigate, "map", "Planning a route", "Planned a route", ["start", "end", "mode"])
+        case "query_weather":
+            return descriptor(.inspect, "cloud.sun", "Checking the weather", "Checked the weather", ["latitude", "longitude", "timeRange"])
+        case "search_calendar_and_reminders":
+            return descriptor(.inspect, "calendar", "Searching the calendar", "Searched the calendar", ["keyword", "start_date", "end_date"])
+        case "write_system_event":
+            return descriptor(.write, "calendar", "Updating the calendar", "Updated the calendar", ["title", "start_date", "end_date"])
+        default: break
+        }
         if name.contains("search") {
             return descriptor(.search, "magnifyingglass", "Searching the web", "Searched the web", ["query", "keyword"])
         }

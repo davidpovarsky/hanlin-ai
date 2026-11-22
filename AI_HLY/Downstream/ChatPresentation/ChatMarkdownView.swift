@@ -69,14 +69,14 @@ struct ChatMarkdownView: View {
     /// surrounding native document owns selection across their boundaries.
     private var projectedDocument: (text: String, parts: [MarkdownDocumentPart]?, groups: [HanlinCitationGroup]) {
         guard let documentParts else {
-            let projection = citations?.projection(for: text)
+            let projection = citations?.projection(for: text, partID: selectionPartID?.uuidString)
             return (projection?.markdown ?? text, nil, projection?.groups ?? [])
         }
         var groups: [HanlinCitationGroup] = []
         var urls = Set<URL>()
         let parts = documentParts.map { part -> MarkdownDocumentPart in
             guard case .markdown(let markdown) = part.content else { return part }
-            let projection = citations?.projection(for: markdown)
+            let projection = citations?.projection(for: markdown, partID: part.id)
             for group in projection?.groups ?? [] where urls.insert(group.url).inserted { groups.append(group) }
             return MarkdownDocumentPart(id: part.id, sourcePrefix: part.sourcePrefix,
                 markdown: projection?.markdown ?? markdown)

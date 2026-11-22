@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import HanlinPresentationKit
 
 struct AgentEventAccumulator {
   private(set) var run: AgentRun
@@ -66,8 +67,12 @@ struct AgentEventAccumulator {
     case .sourceCitations(let segmentID, let citations):
       for citation in citations {
         var source = citation.source
-        if let segmentID, let text = transcript.item(externalID: segmentID)?.text,
-           text.hasSuffix(citation.text), !citation.text.isEmpty,
+        let candidates = transcript.items.filter { item in
+          item.kind == .assistantText && item.externalID != nil && item.text?.hasSuffix(citation.text) == true
+            && (segmentID == nil || item.externalID == segmentID)
+        }
+        if candidates.count == 1, let item = candidates.first,
+           let segmentID = item.externalID, let text = item.text, !citation.text.isEmpty,
            citation.range.lowerBound >= 0, citation.range.upperBound <= citation.text.utf16.count {
           let base = text.utf16.count - citation.text.utf16.count
           source.claimAnchors = [.init(providerTextPartID: citation.textPartID, transcriptSegmentID: segmentID,
@@ -370,6 +375,7 @@ struct AgentEventAccumulator {
 
     case .answerSegmentEnded(let id, let disposition):
       transcript.endAnswerSegment(externalID: id, disposition: disposition)
+      preserveExplicitSourceAnchors(for: id)
       if disposition == .final {
         run.finalAnswer = Self.nonemptyText(transcript.item(externalID: id)?.text)
       }
@@ -420,6 +426,9 @@ struct AgentEventAccumulator {
       transcript.complete(externalID: id)
 
     case .runCompleted:
+      for item in transcript.items where item.kind == .assistantText {
+        if let id = item.externalID { preserveExplicitSourceAnchors(for: id) }
+      }
       closeRunningSteps(as: .completed)
       transcript.closeActiveItems(as: .completed)
       run.finalAnswer = transcript.selectFinalAnswerForCompletedRun()
@@ -462,6 +471,25 @@ struct AgentEventAccumulator {
         sequence: sequence
       )
     }
+  }
+
+  private mutating func preserveExplicitSourceAnchors(for segmentID: String) {
+    guard let text = transcript.item(externalID: segmentID)?.text, !text.isEmpty else { return }
+    let references = evidence.items.filter(\.wasReturnedToModel).map {
+      HanlinSourceReference(id: $0.id, title: $0.title, url: $0.url.flatMap(URL.init(string:)))
+    }
+    let anchors = HanlinCitationProjection.explicitSourceLinkAnchors(text: text, sources: references)
+    guard !anchors.isEmpty else { return }
+    let digest = ChatSavedExcerpt.digest(text)
+    let byID = Dictionary(evidence.items.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+    let sources = anchors.compactMap { anchor -> AgentEvidenceItem? in
+      guard var source = byID[anchor.sourceID] else { return nil }
+      source.claimAnchors = [.init(providerTextPartID: "markdown:\(segmentID)", transcriptSegmentID: segmentID,
+        prefixSHA256: digest, prefixUTF16Length: text.utf16.count,
+        startUTF16: anchor.range.lowerBound, endUTF16: anchor.range.upperBound)]
+      return source
+    }
+    evidence.insert(contentsOf: sources)
   }
 
   private static func activityStatus(

@@ -16,6 +16,7 @@ public struct HanlinToolActivityHeader: View {
     private let shimmerActive: Bool
     private let expanded: Bool
     private let isFailure: Bool
+    private let isCancelled: Bool
     private let sources: [HanlinSourceReference]
     private let completedAt: Date?
 
@@ -35,12 +36,14 @@ public struct HanlinToolActivityHeader: View {
 
     public init(title: String, status: String, symbol: String, family: Family = .generic,
                 isActive: Bool, showsShimmer: Bool? = nil, isExpanded: Bool = false, isFailure: Bool = false,
+                isCancelled: Bool = false,
                 startedAt: Date? = nil, completedAt: Date? = nil,
                 sources: [HanlinSourceReference] = []) {
         self.title = title; self.status = status; self.symbol = symbol
         self.family = family; self.active = isActive; self.expanded = isExpanded
         self.shimmerActive = showsShimmer ?? isActive
-        self.isFailure = isFailure; self.sources = sources; self.completedAt = completedAt
+        self.isFailure = isFailure; self.isCancelled = isCancelled
+        self.sources = sources; self.completedAt = completedAt
         let hasSurface = isActive && Self.supportsLiveSurface(family)
         _liveSurfaceMounted = State(initialValue: hasSurface)
         _liveOpacity = State(initialValue: hasSurface ? 1 : 0)
@@ -49,7 +52,7 @@ public struct HanlinToolActivityHeader: View {
 
     private static func supportsLiveSurface(_ family: Family) -> Bool {
         switch family {
-        case .webSearch, .sourceSearch, .codeExecution, .command: true
+        case .webSearch, .sourceSearch, .codeExecution, .command, .map: true
         // A file percentage, flight path or price requires structured Host
         // progress. Never substitute a demo timer or invent those semantics.
         default: false
@@ -105,7 +108,7 @@ public struct HanlinToolActivityHeader: View {
         HStack(spacing: 8) {
             Image(systemName: symbol)
                 .font(HanlinTypography.body.weight(.medium))
-                .foregroundStyle(.gray)
+                .foregroundStyle(iconColor)
                 .frame(width: 20, height: 22)
                 .accessibilityHidden(true)
             HanlinActivityTitle(title, font: HanlinTypography.subheadline,
@@ -125,6 +128,11 @@ public struct HanlinToolActivityHeader: View {
                         .font(HanlinTypography.footnote.weight(.medium))
                         .foregroundStyle(Color(red: 0.69, green: 0.40, blue: 0.26))
                         .accessibilityHidden(true)
+                } else if isCancelled {
+                    Image(systemName: "minus.circle")
+                        .font(HanlinTypography.footnote)
+                        .foregroundStyle(Color.secondary.opacity(0.70))
+                        .accessibilityHidden(true)
                 }
                 Text(status).font(HanlinTypography.caption.weight(.medium))
                     .foregroundStyle(isFailure
@@ -133,6 +141,14 @@ public struct HanlinToolActivityHeader: View {
             }
         }
         .frame(minHeight: 41)
+    }
+
+    private var iconColor: Color {
+        switch family {
+        case .webSearch, .sourceSearch, .map: blue
+        case .fileOperation: Color(red: 0.40, green: 0.50, blue: 0.70)
+        default: .gray
+        }
     }
 
     private var liveSurface: some View {
@@ -186,25 +202,28 @@ public struct HanlinToolActivityHeader: View {
     }
 
     private func sourceIcons(compact: Bool) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: -7) {
-                ForEach(compact ? sources : Array(sources.suffix(6))) { source in
-                    AsyncImage(url: source.iconURL) { image in image.resizable().scaledToFit() }
-                    placeholder: {
-                        Image(systemName: "globe").font(HanlinTypography.caption2).foregroundStyle(.secondary)
-                    }
-                    .frame(width: 17, height: 17)
-                    .padding(3)
-                    .background(.white, in: Circle())
-                    .overlay(Circle().stroke(.white, lineWidth: 1.5))
-                    .shadow(color: .black.opacity(0.10), radius: 1.5, y: 1)
-                    .accessibilityHidden(true)
+        // A small bounded stack preserves the screenshot's overlapping icons
+        // without mounting another ScrollView inside an animated disclosure.
+        // The adjacent real count and the details retain the complete list.
+        HStack(spacing: -7) {
+            ForEach(compact ? Array(sources.prefix(8)) : Array(sources.suffix(6))) { source in
+                AsyncImage(url: source.iconURL) { image in image.resizable().scaledToFit() }
+                placeholder: {
+                    Image(systemName: "globe").font(HanlinTypography.caption2).foregroundStyle(.secondary)
                 }
+                .frame(width: 17, height: 17)
+                .padding(3)
+                .background(.white, in: Circle())
+                .overlay(Circle().stroke(.white, lineWidth: 1.5))
+                .shadow(color: .black.opacity(0.10), radius: 1.5, y: 1)
+                .accessibilityHidden(true)
             }
-            .padding(.horizontal, 2)
         }
-        .frame(minWidth: 0, idealWidth: compact ? 146 : 120, maxWidth: compact ? 146 : 120)
+        .padding(.horizontal, 2)
+        .frame(minWidth: 0, idealWidth: min(CGFloat(sources.count) * 16 + 11, compact ? 146 : 120),
+            maxWidth: compact ? 146 : 120, alignment: .leading)
         .frame(height: 29)
+        .clipped()
     }
 
     private func webScanner(seconds: Double) -> some View {

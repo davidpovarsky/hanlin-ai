@@ -24,6 +24,7 @@ public struct HanlinSourcesButton: View {
 }
 
 public struct HanlinSourcesList: View {
+    @Environment(\.dismiss) private var dismiss
     public let sources: [HanlinSourceReference]
     public let title: String
     public let open: @MainActor (HanlinSourceReference) -> Void
@@ -39,7 +40,14 @@ public struct HanlinSourcesList: View {
                         Text(source.title).foregroundStyle(.primary).multilineTextAlignment(.leading)
                     }.padding(.vertical, 4)
                 }.buttonStyle(.plain)
+                    .accessibilityIdentifier("hanlin-source-\(source.id)")
             }.navigationTitle(title).navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") { dismiss() }
+                            .accessibilityIdentifier("hanlin-sources-close")
+                    }
+                }
         }.accessibilityIdentifier("hanlin-scoped-sources")
     }
 }

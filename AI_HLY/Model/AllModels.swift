@@ -82,6 +82,10 @@ class AllModels {
 }
 
 extension AllModels {
+    var presentationName: String {
+        HanlinModelDisplayName.resolve(displayName: displayName, modelName: name)
+    }
+
     var catalogMetadata: ProviderModelCatalogMetadata? {
         guard let data = catalogMetadataJSON?.data(using: .utf8) else { return nil }
         return try? JSONDecoder().decode(ProviderModelCatalogMetadata.self, from: data)

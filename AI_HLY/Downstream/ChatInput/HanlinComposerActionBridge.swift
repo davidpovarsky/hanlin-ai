@@ -85,7 +85,7 @@ struct HanlinComposerActionBridge {
 
         init(model: AllModels?) {
             self.modelName = model?.name ?? ""
-            self.displayName = model?.displayName ?? model?.name ?? String(localized: "Select Model")
+            self.displayName = model?.presentationName ?? String(localized: "Select Model")
             self.company = model?.company ?? "UNKNOWN"
             self.identity = model?.identity ?? "model"
             self.icon = model?.icon ?? "sparkles"

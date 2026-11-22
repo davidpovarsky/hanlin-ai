@@ -23,6 +23,16 @@ enum AgentActivityComposer {
       makeActivity(steps, approval: steps.first?.toolCallID.flatMap { approvals[$0] })
     }
     activities = removeNarrativeDuplicates(activities)
+    activities.removeAll { activity in
+      // An empty, sub-second provider reasoning fragment is a transport
+      // boundary, not useful history. Keep real summaries and longer work;
+      // preserve the original steps/transcript unchanged for diagnostics.
+      guard activity.kind == .reasoning, activity.status == .completed,
+        let start = activity.startedAt, let end = activity.completedAt,
+        end.timeIntervalSince(start) < 1
+      else { return false }
+      return reasoningDisplayText(for: activity, in: run) == String(localized: "Thinking")
+    }
 
     let duration = run.completedAt.map { max(0, $0.timeIntervalSince(run.startedAt)) }
     return AgentDisplayTimeline(

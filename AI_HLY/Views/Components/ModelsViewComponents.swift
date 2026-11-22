@@ -281,10 +281,10 @@ struct AddOnlineModelView: View {
             return
         }
 
-        // 无论是否重复，都自动添加 _repeat_UUID 以确保唯一性
+        // Keep the routing identifier unique; the display name is the user's label.
         let uniqueUUID = UUID().uuidString
         let trimmedName = baseName + "_repeat_\(uniqueUUID)"
-        let trimmedDisplayName = baseDisplayName + "_repeat_\(uniqueUUID)"
+        let trimmedDisplayName = baseDisplayName
         
         // 设置厂商信息
         let finalCompany: String = {
@@ -899,7 +899,7 @@ struct AddAgentView: View {
                 Section(header: Text(String(localized: "基础模型"))) {
                     Picker(String(localized: "选择基础模型"), selection: $selectedModel) {
                         ForEach(filteredBaseModel, id: \.id) { model in
-                            Text(model.displayName ?? "Unknown")
+                            Text(model.presentationName)
                                 .tag(model as AllModels?)
                         }
                     }
@@ -1140,7 +1140,7 @@ struct EditModelSheetView: View {
 
     init(model: AllModels) {
         self.model = model
-        _editedDisplayName = State(initialValue: model.displayName ?? "")
+        _editedDisplayName = State(initialValue: HanlinModelDisplayName.clean(model.displayName ?? ""))
         _editedBriefDescription = State(initialValue: model.briefDescription ?? "")
         _editedCharacterDesign = State(initialValue: model.characterDesign ?? "")
         _editedSupportsTextGen = State(initialValue: model.supportsTextGen)
@@ -1207,7 +1207,7 @@ struct EditModelSheetView: View {
                     Section(header: Text(String(localized: "编辑基础模型"))) {
                         Picker(String(localized: "选择基础模型"), selection: $selectedBaseModel) {
                             ForEach(filteredBaseModels, id: \.id) { model in
-                                Text(model.displayName ?? "Unknown")
+                                Text(model.presentationName)
                                     .tag(model as AllModels?)
                             }
                         }
@@ -1224,7 +1224,7 @@ struct EditModelSheetView: View {
                         Text(String(localized: "通过选择新的基础模型复制该智能体"))
                         Picker(String(localized: "选择基础模型"), selection: $selectedCopyBaseModel) {
                             ForEach(filteredBaseModels, id: \.id) { model in
-                                Text(model.displayName ?? "Unknown")
+                                Text(model.presentationName)
                                     .tag(model as AllModels?)
                             }
                         }
@@ -1450,7 +1450,7 @@ struct BaseModelCardView: View {
 
             VStack(alignment: .leading) {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    Text(model.displayName ?? "Unknown")
+                    Text(model.presentationName)
                         .font(HanlinTypography.subheadline)
                 }
                 HStack(spacing: 6) {

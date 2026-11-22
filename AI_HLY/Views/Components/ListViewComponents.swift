@@ -86,10 +86,10 @@ struct ChatRowView: View {
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
-            return "昨天"
+            return String(localized: "Yesterday")
         } else if let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date()),
                   calendar.isDate(date, inSameDayAs: twoDaysAgo) {
-            return "前天"
+            return String(localized: "Two days ago")
         } else {
             // 超过前天，显示“月-日”
             dateFormatter.dateFormat = "MM-dd"
@@ -98,16 +98,28 @@ struct ChatRowView: View {
     }
     
     private func highlightedText(_ text: String, searchText: String) -> AttributedString? {
-        var attributedString = AttributedString(text)
+        // Older conversations persisted Chinese markers. Localize only those
+        // exact leading markers for display, preserving the saved draft itself.
+        let draftMarker = "[\(String(localized: "Draft"))]"
+        let imageMarker = "[\(String(localized: "Image"))]"
+        let displayText: String
+        if text.hasPrefix("[草稿]") {
+            displayText = draftMarker + text.dropFirst("[草稿]".count)
+        } else if text.hasPrefix("[图像]") {
+            displayText = imageMarker + text.dropFirst("[图像]".count)
+        } else {
+            displayText = text
+        }
+        var attributedString = AttributedString(displayText)
         attributedString.font = .caption
         
         // 检查开头是否为 "[草稿]" 或 "[图像]" 并做颜色处理
-        if text.hasPrefix("[草稿]") {
-            if let draftRange = attributedString.range(of: "[草稿]") {
+        if displayText.hasPrefix(draftMarker) {
+            if let draftRange = attributedString.range(of: draftMarker) {
                 attributedString[draftRange].foregroundColor = .hlRed
             }
-        } else if text.hasPrefix("[图像]") {
-            if let imageRange = attributedString.range(of: "[图像]") {
+        } else if displayText.hasPrefix(imageMarker) {
+            if let imageRange = attributedString.range(of: imageMarker) {
                 attributedString[imageRange].foregroundColor = .hlGreen
             }
         }
@@ -138,18 +150,16 @@ struct ChatRowView: View {
         
         // 构建富文本对象
         var attributedName = AttributedString(name)
-        let lowerName = name.lowercased()
-        let lowerSearch = trimmedSearch.lowercased()
-        
-        // 遍历查找所有匹配项，并设置高亮颜色
-        var searchRange = lowerName.startIndex..<lowerName.endIndex
-        while let foundRange = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
+        // Unicode case conversion can change string length. Keep search and
+        // conversion indices in the original title's coordinate space.
+        var searchRange = name.startIndex..<name.endIndex
+        while let foundRange = name.range(of: trimmedSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(foundRange, in: name)
             if let attrRange = Range(nsRange, in: attributedName) {
                 attributedName[attrRange].foregroundColor = .hlBlue
                 attributedName[attrRange].font = .headline.bold()
             }
-            searchRange = foundRange.upperBound..<lowerName.endIndex
+            searchRange = foundRange.upperBound..<name.endIndex
         }
         
         return Text(attributedName)
