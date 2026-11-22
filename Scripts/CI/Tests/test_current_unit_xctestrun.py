@@ -322,33 +322,43 @@ class CurrentUnitXctestrunTests(unittest.TestCase):
         head = git("rev-parse", "HEAD").decode().strip()
         provenance = self.log / "06-diagnostics-build-provenance.json"
         provenance.write_text(json.dumps({"sourceCommit": head, "trackedWorkspaceModified": False}))
+        developer = self.root / "Test Xcode.app/Contents/Developer"
+        xcodebuild = developer / "usr/bin/xcodebuild"
+        xcodebuild.parent.mkdir(parents=True)
+        xcodebuild.touch()
+        version_plist = developer.parent / "version.plist"
+        version_plist.write_bytes(plistlib.dumps({
+            "CFBundleShortVersionString": "27.2", "ProductBuildVersion": "27B52",
+        }))
         real_command = subprocess.check_output
         observed = []
 
         def command(arguments, **kwargs):
             observed.append(arguments)
-            if arguments == ["xcode-select", "-p"]:
-                return b"/Synthetic/Xcode/Developer\n"
-            if arguments == ["xcodebuild", "-version"]:
-                return b"Synthetic Xcode fixture\n"
             return real_command(arguments, **kwargs)
 
         with mock.patch.dict(os.environ, {"GITHUB_RUN_ID": self.context["run_id"],
-                                         "GITHUB_RUN_ATTEMPT": "1", "GITHUB_SHA": head}), \
+                                         "GITHUB_RUN_ATTEMPT": "1", "GITHUB_SHA": head,
+                                         "DEVELOPER_DIR": str(developer)}), \
                 mock.patch.object(admission.subprocess, "check_output", side_effect=command):
             before = admission.build_context(self.root, self.products, self.log, "Debug",
                                              ",".join(DATA_SELECTORS))
             self.assertFalse(before["tracked_workspace_modified"])
+            self.assertEqual(before["developer_directory"], str(developer.resolve()))
+            self.assertEqual(before["xcode_version"], "Xcode 27.2\nBuild version 27B52")
+            version_plist.write_bytes(plistlib.dumps({
+                "CFBundleShortVersionString": "27.2", "ProductBuildVersion": "27B53",
+            }))
             source.write_text("let original = 2\n")
             after = admission.build_context(self.root, self.products, self.log, "Debug",
                                             ",".join(DATA_SELECTORS))
             self.assertTrue(after["tracked_workspace_modified"])
+            self.assertEqual(after["xcode_version"], "Xcode 27.2\nBuild version 27B53")
             self.assertNotEqual(before["tracked_diff_sha256"], after["tracked_diff_sha256"])
             provenance.write_text(json.dumps({"sourceCommit": "f" * 40, "trackedWorkspaceModified": True}))
             with self.assertRaisesRegex(RuntimeError, "different source"):
                 admission.build_context(self.root, self.products, self.log, "Debug", "AI_HLYTests")
-        self.assertTrue(all("-resolvePackageDependencies" not in args and "-project" not in args
-                            and "-scheme" not in args for args in observed))
+        self.assertTrue(all(args[0] == "git" for args in observed))
         self.assertIn(
             ["git", "--no-optional-locks", "rev-parse", "HEAD"],
             observed,

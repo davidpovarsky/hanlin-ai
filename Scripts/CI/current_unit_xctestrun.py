@@ -141,9 +141,6 @@ def build_context(repository, products, log, configuration, selectors):
             "Current GitHub run and attempt are required")
     git_deadline = time.monotonic() + GIT_TOTAL_BUDGET_SECONDS
 
-    def command(arguments, *, timeout_seconds=30):
-        return subprocess.check_output(arguments, cwd=repository, timeout=timeout_seconds)
-
     head = run_git_command(["git", "--no-optional-locks", "rev-parse", "HEAD"],
                            cwd=repository, timeout_seconds=GIT_REV_PARSE_TIMEOUT_SECONDS,
                            deadline=git_deadline).decode().strip()
@@ -157,12 +154,25 @@ def build_context(repository, products, log, configuration, selectors):
     require(type(provenance.get("trackedWorkspaceModified")) is bool,
             "Build provenance lacks its tracked-tree qualification")
     require(configuration in ("Debug", "Release"), "Unsupported original app configuration")
+    configured_developer = Path(os.environ.get("DEVELOPER_DIR", ""))
+    require(configured_developer.is_absolute(), "The selected Xcode Developer directory is required")
+    developer = configured_developer.resolve(strict=True)
+    require(developer.name == "Developer" and (developer / "usr/bin/xcodebuild").is_file(),
+            "Selected Developer directory does not contain xcodebuild")
+    # The Mac job selects this exact Xcode before building. Read its installed
+    # version at each phase without launching Xcode again during admission.
+    version_info = plistlib.loads((developer.parent / "version.plist").read_bytes())
+    version = version_info.get("CFBundleShortVersionString") or version_info.get("ProductVersion")
+    build = version_info.get("ProductBuildVersion")
+    require(isinstance(version, str) and bool(re.fullmatch(r"[0-9]+(?:\.[0-9]+)*", version))
+            and isinstance(build, str) and bool(re.fullmatch(r"[A-Za-z0-9]+", build)),
+            "Selected Xcode version plist lacks a valid release and build")
     return {
         "run_id": run_id, "run_attempt": attempt, "source_sha": head,
         "configuration": configuration, "selectors": selected_identifiers(selectors),
         "products_root": str(products),
-        "developer_directory": command(["xcode-select", "-p"]).decode().strip(),
-        "xcode_version": command(["xcodebuild", "-version"]).decode().strip(),
+        "developer_directory": str(developer),
+        "xcode_version": f"Xcode {version}\nBuild version {build}",
         "tracked_diff_sha256": hashlib.sha256(diff).hexdigest(),
         "tracked_workspace_modified": bool(diff),
         "diagnostics_provenance_sha256": sha256(provenance_path),

@@ -2020,6 +2020,8 @@ jobs:
           mkdir -p "$LOG_DIR" build
           selected_xcode="$(python3 Scripts/CI/select_stable_xcode.py)"
           sudo xcode-select -s "$selected_xcode/Contents/Developer"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
           {
             sw_vers
             xcode-select -p
