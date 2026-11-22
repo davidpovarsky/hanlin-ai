@@ -93,6 +93,31 @@ def read(args: list[str], timeout: int = 20, *, cwd: Path = ROOT) -> str:
     return subprocess.check_output(args, cwd=cwd, text=True, timeout=timeout).strip()
 
 
+def capture_boot_failure() -> None:
+    """Retain a small, bounded log of the three simulator runtime services."""
+    log = OUT / "boot-failure-unified.log"
+    try:
+        run(["log", "show", "--last", "6m", "--style", "compact", "--predicate",
+             'process == "simdiskimaged" OR process == "cryptexd" OR process == "CoreSimulatorService"'],
+            log, 20, check=False)
+    except OSError as error:
+        write_json(OUT / "boot-failure-observation.json", {"error": type(error).__name__})
+    finally:
+        if log.is_file():
+            original_bytes = log.stat().st_size
+            with log.open("rb") as source:
+                source.seek(max(0, original_bytes - 256 * 1024))
+                lines = source.read().splitlines()
+            # Drop a possibly partial first line after seeking into the file.
+            if original_bytes > 256 * 1024:
+                lines = lines[1:]
+            retained = b"\n".join(lines[-1000:]) + b"\n"
+            log.write_bytes(retained)
+            write_json(OUT / "boot-failure-log-retention.json", {
+                "original_bytes": original_bytes, "retained_bytes": len(retained),
+                "maximum_lines": 1000, "maximum_tail_bytes": 256 * 1024})
+
+
 def ensure_xcodegen() -> dict:
     """Use the repository's Homebrew bootstrap, with observed tools and limits."""
     executable = shutil.which("xcodegen")
@@ -186,8 +211,25 @@ def phase(stage: Path, name: str, revision: str, selectors: list[str], device: s
         raise RuntimeError(f"{name}: native renderer checkout does not equal its exact requested pin")
     write_json(folder / "renderer-source.json", {"requested": revision, "resolved": resolved})
     if name == "baseline":
-        run(["xcrun", "simctl", "boot", device], OUT / "boot.log", 30)
-        run(["xcrun", "simctl", "bootstatus", device, "-b"], OUT / "bootstatus.log", 150)
+        # Read disk-image state before any boot, using the existing environment
+        # probe command. Observations never substitute for bootstatus success.
+        run(["xcrun", "simctl", "runtime", "list", "-j"],
+            OUT / "runtime-images-before-boot.json", 30, check=False)
+        memory_tool = shutil.which("vm_stat")
+        write_json(OUT / "memory-observation.json", {"tool": memory_tool})
+        if memory_tool:
+            run([memory_tool], OUT / "memory-before-boot.log", 10, check=False)
+        try:
+            run(["xcrun", "simctl", "boot", device], OUT / "boot.log", 30)
+            # Match the existing production cold-boot budget in
+            # Scripts/CI/stage_simulator_fixtures.py. Failure remains fatal.
+            run(["xcrun", "simctl", "bootstatus", device, "-b"], OUT / "bootstatus.log", 300)
+        except (RuntimeError, OSError):
+            try:
+                capture_boot_failure()
+            except OSError:
+                pass  # Preserve the original failed boot verdict.
+            raise
     destination = ["-destination", f"platform=iOS Simulator,id={device}", "-destination-timeout", "30"]
     code = run(["xcodebuild", "test", *common, *destination, "-disableAutomaticPackageResolution",
                 "-parallel-testing-enabled", "NO", "-maximum-concurrent-test-simulator-destinations", "1",
@@ -215,7 +257,10 @@ def main() -> None:
     xcodegen = ensure_xcodegen()
     write_json(OUT / "toolchain.json", {"source_sha": source, "developer_dir": os.environ["DEVELOPER_DIR"],
         "xcode": read(["xcodebuild", "-version"]), "sdk": read(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"]),
-        "xcodegen": xcodegen})
+        "xcodegen": xcodegen, "runner": {
+            "image_os": os.environ.get("ImageOS"), "image_version": os.environ.get("ImageVersion"),
+            "runner_os": os.environ.get("RUNNER_OS"), "runner_arch": os.environ.get("RUNNER_ARCH"),
+            "platform": platform.platform(), "machine": platform.machine()}})
     first_launch_status = run(["xcodebuild", "-checkFirstLaunchStatus"],
                               OUT / "first-launch-status.log", 30, check=False)
     if first_launch_status:
