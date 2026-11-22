@@ -759,12 +759,23 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                     name: "read_web_page",
                     arguments: #"{"url":"https://agent.acceptance/wiki/hanlin#section","progress_summary":"Read the referenced section."}"#
                 )
-            } else {
+            } else if let output = toolResult("ui03-python-consent") {
+                guard output.contains("UI03_LOCAL_RESULT_42") else {
+                    emitFinalAnswer("UI03_LOCAL_PYTHON_NOT_VERIFIED"); return
+                }
                 emitToolCall(
                     id: "ui03-read-1",
                     name: "read_web_page",
                     arguments: #"{"url":"https://agent.acceptance/wiki/hanlin","progress_summary":"Read the requested reference page."}"#
                 )
+            } else if let loaded = toolResult("ui03-load-code") {
+                guard loaded.contains("loaded successfully") else {
+                    emitFinalAnswer("UI03_CODE_SKILL_NOT_VERIFIED"); return
+                }
+                emitToolCall(id: "ui03-python-consent", name: "execute_local_python_code",
+                    arguments: #"{"source":"print('UI03_LOCAL_RESULT_' + str(6 * 7))","progress_summary":"Verify the requested local calculation before reading the sources."}"#)
+            } else {
+                emitToolCall(id: "ui03-load-code", name: "load_skill", arguments: #"{"skill_id":"code"}"#)
             }
             return
         }

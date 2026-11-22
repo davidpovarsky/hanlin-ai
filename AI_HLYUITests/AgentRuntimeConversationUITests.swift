@@ -634,6 +634,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         continueAfterFailure = false
         let app = launchAcceptanceApp(language: hebrew ? "he" : "en", locale: hebrew ? "he_IL" : "en_US")
         let screenshotPrefix = hebrew ? "UI-03_HE_RTL" : "UI-03"
+        let verificationSource = "print('UI03_LOCAL_RESULT_' + str(6 * 7))"
         openChat(in: app)
 
         sendPrompt(hebrew ? "PROMPT_UI03_SEARCH_CITATIONS_HE" : "PROMPT_UI03_SEARCH_CITATIONS", in: app)
@@ -648,9 +649,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
                            "The pending compact approval must keep raw request details closed")
             XCTAssertEqual(allow.label, "לאשר פעם אחת")
             XCTAssertEqual(deny.label, "לדחות")
-            XCTAssertTrue(review.label.contains("קורא מקור"), "The actual approval action title must be Hebrew")
+            XCTAssertTrue(review.label.contains("מריץ קוד"), "The actual Python approval action title must be Hebrew")
             XCTAssertTrue(review.label.contains("ממתין לאישור"), "The actual pending status must be Hebrew")
-            XCTAssertTrue(scope.label.contains("https://agent.acceptance/wiki/hanlin"))
+            XCTAssertTrue(scope.label.contains(verificationSource), "The compact scope must show the actual bounded Python operation")
             let labels = owner.staticTexts.allElementsBoundByIndex.map(\.label)
                 + owner.buttons.allElementsBoundByIndex.map(\.label)
             XCTAssertFalse(labels.contains { $0.contains("??") || $0.contains("\u{FFFD}") },
@@ -661,9 +662,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             self.add(pending)
             self.attachScreenshot(screenshotPrefix + "_PendingApprovalInOriginalChat", in: app)
         } : nil
-        approveOriginalToolRequest(["url": "https://agent.acceptance/wiki/hanlin"], in: app,
+        // Public page reads deliberately do not require consent. Exercise the
+        // original privileged Python approval before those unchanged read calls.
+        approveOriginalToolRequest(["source": verificationSource], in: app,
                                    inspectPendingCard: inspectHebrewApproval)
-        approveOriginalToolRequest(["url": "https://agent.acceptance/wiki/hanlin#section"], in: app)
 
         let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI03_SEARCH_COMPLETE'")

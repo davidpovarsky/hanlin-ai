@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "run_id": "45066248406",
+  "source_commit": "da407b595e7da5d526e2179b3551c28a7c0b0e26",
+  "conclusion": "failure",
+  "native_tests_executed": 1,
+  "native_tests_failed": 1,
+  "failure": "UI03 incorrectly expected approval for public read_web_page, which is intentionally an unprompted read.",
+  "failure_test": "AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+  "duration_seconds": 112.95489597320557,
+  "app_compiled": true,
+  "artifact_id": "14772316722",
+  "artifact_sha256": "a6653feedfa0c37a9b9f7dbc012e293b2d41ae7a14724e3d07a670925eb843be",
+  "inspection_run_id": "45068340999",
+  "inspection_artifact_id": "14772575914",
+  "inspection_artifact_sha256": "372cb4510d61310d98f239928977378483d41bbbde54f35056275a51d0c202f7",
+  "visual_observation": "Actual original app video at105s shows Hebrew answer, inline domain chip and one deduplicated sources footer. No approval was due. Source-chip interaction was not reached by this failed test.",
+  "repair": "Exercise real privileged local Python consent before the unchanged two public reads; keep permission policy and all citation interaction assertions."
+}

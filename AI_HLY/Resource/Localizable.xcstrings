@@ -7715,7 +7715,7 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ask any questions."
+            "value" : "אפשר לשאול כל שאלה"
           }
         }
       }
@@ -7834,19 +7834,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📚 Reference"
+            "value" : "Sources"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📚 参考资料"
+            "value" : "来源"
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "📚 התייחסות"
+            "value" : "מקורות"
           }
         }
       }
@@ -14209,6 +14209,7 @@
       }
     },
     "资料内容" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -14219,7 +14220,13 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Information Content"
+            "value" : "תוכן המקור"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "资料内容"
           }
         }
       }

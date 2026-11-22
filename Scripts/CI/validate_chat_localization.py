@@ -14,7 +14,7 @@ CATALOGS = {
         "Remembered permissions apply across your conversations on this device. System permissions remain controlled in Settings.",
         "Revoke all tool permissions", "Revoke permission for %@", "Revoke permission",
         "Sensitive tools will ask before their first use.", "No remembered tool permissions",
-        "Tool permissions", "Collapse",
+        "Tool permissions", "Collapse", "Message", "reference_materials", "资料内容",
         "This permission will also apply in your other conversations.",
         "Allow and remember", "Allowed and remembered", "Thought for %@", "Waiting for model response",
         "Allow once", "Deny", "Awaiting approval", "Allowed once", "Not approved",

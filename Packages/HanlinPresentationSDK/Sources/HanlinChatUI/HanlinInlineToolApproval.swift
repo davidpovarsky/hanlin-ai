@@ -17,10 +17,25 @@ public struct HanlinInlineToolApproval: View {
     @State private var detailsExpanded = false
     @State private var detailsReviewed = false
     @State private var decisionSubmitted = false
+    @Environment(\.colorScheme) private var colorScheme
     @ScaledMetric(relativeTo: .footnote) private var titleSize: CGFloat = 14
 
     private let blue = Color(red: 0.28, green: 0.49, blue: 0.80)
-    private let ink = Color(red: 0.27, green: 0.43, blue: 0.65)
+    private var ink: Color {
+        colorScheme == .dark
+            ? Color(red: 0.66, green: 0.79, blue: 0.98)
+            : Color(red: 0.27, green: 0.43, blue: 0.65)
+    }
+    private var surfaceFill: Color {
+        colorScheme == .dark
+            ? Color(red: 0.11, green: 0.15, blue: 0.21)
+            : Color(red: 0.952, green: 0.971, blue: 0.990)
+    }
+    private var allowButtonFill: Color {
+        colorScheme == .dark
+            ? Color(red: 0.18, green: 0.25, blue: 0.35)
+            : Color.white.opacity(0.82)
+    }
 
     public init(requestID: String, toolName: String, reviewText: String, remembersDecision: Bool = false,
                 displayTitle: String? = nil, systemImage: String = "hand.raised",
@@ -81,7 +96,7 @@ public struct HanlinInlineToolApproval: View {
             .padding(.vertical, 9)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(RoundedRectangle(cornerRadius: 13, style: .continuous)
-                .fill(Color(red: 0.952, green: 0.971, blue: 0.990)))
+                .fill(surfaceFill))
             .overlay(RoundedRectangle(cornerRadius: 13, style: .continuous)
                 .stroke(blue.opacity(0.16), lineWidth: 0.8))
 
@@ -164,7 +179,7 @@ public struct HanlinInlineToolApproval: View {
                     .font(HanlinTypography.caption.weight(.semibold))
                     .foregroundStyle(ink)
                     .padding(.horizontal, 13).frame(minHeight: 36)
-                    .background(.white.opacity(0.82), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .background(allowButtonFill, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
                     .overlay(RoundedRectangle(cornerRadius: 8, style: .continuous)
                         .stroke(blue.opacity(0.14), lineWidth: 0.7))
                     .contentShape(Rectangle())
