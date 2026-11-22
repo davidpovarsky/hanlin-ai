@@ -35,6 +35,7 @@ def build() -> dict:
     ref("shareProviderCopy", "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareItemLoader.swift", "return provider.loadFileRepresentation(")
     ref("shareRead", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "func pendingBatches()")
     ref("shareReview", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift", "struct ChavrusaShareInboxView")
+    ref("shareDraft", "AI_HLY/Views/Components/ChatViewBottom.swift", "ChavrusaShareInbox.shared.prepareDraft(")
     ref("shareSelection", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift", "var shareActionTargets:")
     ref("translationSnapshot", "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift", "HanlinExtensionNodeView(")
     ref("extensionIntent", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift", "public func perform()")
@@ -71,7 +72,7 @@ def build() -> dict:
 
     tracked = subprocess.check_output(["git", "ls-files", "*.swift"], cwd=ROOT, text=True, encoding="utf-8").splitlines()
     share_references = [p for p in tracked if p.startswith("AI_HLY/") and "ChavrusaShareInbox" in (ROOT / p).read_text(encoding="utf-8-sig")]
-    if share_references != ["AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift"]:
+    if share_references != ["AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift", "AI_HLY/Views/Components/ChatViewBottom.swift"]:
         raise ValueError(f"Share inbox callers changed; re-audit reachability: {share_references}")
     optional_surfaces = {symbol: [p for p in tracked if re.search(rf"\b{symbol}\b", (ROOT / p).read_text(encoding="utf-8-sig"))]
                          for symbol in ["ControlWidget", "CSSearchableIndex", "CoreSpotlight"]}
@@ -86,8 +87,8 @@ def build() -> dict:
         entitlements[file] = {"declared": plistlib.loads(data), "sha256": hashlib.sha256(data).hexdigest(),
                               "exportedSignatureVerified": False}
     paths = {
-        "share": {"target": "ChavrusaChatShare", "refs": ["shareWrite", "shareOwnedStore", "shareProviderCopy", "shareRead", "shareReview", "shareSelection", "extensionQueue", "extensionReceipts", "resume", "headless"],
-                  "stop": "Owned batches feed a Host chooser of installed NativeScript declared share actions, bound to generation/entry/action, durable INT-02 receipts, cancellation and actual result review. Busy VM leaves unstarted actions queued. Source wiring is not an executed share-sheet/UI/device proof; Expo action parity remains disconnected. Historical share-inbox.json is retained.", "owner": "INT-04"},
+        "share": {"target": "ChavrusaChatShare", "refs": ["shareWrite", "shareOwnedStore", "shareProviderCopy", "shareRead", "shareReview", "shareDraft", "shareSelection", "extensionQueue", "extensionReceipts", "resume", "headless"],
+                  "stop": "Owned batches feed a Host chooser of installed NativeScript declared share actions, bound to generation/entry/action, durable INT-02 receipts, cancellation and actual result review, or prepare an immutable Composer chat draft (discarding staged copies on cancellation/rollback). Busy VM leaves unstarted actions queued. Source wiring is not an executed share-sheet/UI/device proof; Expo action parity remains disconnected. Historical share-inbox.json is retained.", "owner": "INT-04"},
         "translation": {"target": "ChavrusaChatTranslationProvider", "refs": ["translationSnapshot", "extensionIntent", "extensionQueue", "resume", "expoExposureRejection"],
                         "stop": "Declarative snapshot/action continuation is not an NS/Expo runtime route. Resume requires an appIntent entrypoint; Expo non-widget exposure is rejected.", "owner": "INT-02/INT-03"},
         "widget": {"target": "HanlinScriptingWidgets", "refs": ["widgetBundle", "widgetIntent", "widgetCallback"],
