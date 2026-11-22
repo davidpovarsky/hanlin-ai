@@ -171,7 +171,14 @@ def main():
             ]
             for profile in profiles:
                 install_profile(profile, profile_directories, installed_profiles)
-            profile_mapping = {profile["bundle"]: profile["uuid"] for profile in profiles}
+            for profile in profiles:
+                if upload_miniapps_testflight:
+                    name = profile["name"]
+                    if not isinstance(name, str) or not name.strip() or any(ch in name for ch in "\r\n"):
+                        raise RuntimeError("Verified MiniApps profile has no usable display name")
+                    # The working Hanlin AI signing route uses the CMS Name as Xcode's specifier.
+                    profile["specifier"] = name
+            profile_mapping = {profile["bundle"]: profile.get("specifier", profile["uuid"]) for profile in profiles}
             state["installed_profile_readback"] = {}
             installed_profile_receipt(profiles, profile_directories, state["installed_profile_readback"])
             _, sdk = run(["xcrun", "--sdk", "iphoneos", "--show-sdk-version"], "device-sdk")
@@ -280,7 +287,10 @@ def main():
                         if upload_build_number is not None and product["ipa_build"] != upload_build_number:
                             raise RuntimeError("Exported IPA build number does not match requested upload build number")
                     name, source = expected[identity]
-                    decoded = subprocess.run(["security", "cms", "-D", "-i", str(target / "embedded.mobileprovision")],
+                    embedded_profile = target / "embedded.mobileprovision"
+                    if upload_miniapps_testflight and embedded_profile.read_bytes() != profiles[0]["content"]:
+                        raise RuntimeError("MiniApps export did not embed the exact verified profile")
+                    decoded = subprocess.run(["security", "cms", "-D", "-i", str(embedded_profile)],
                                              capture_output=True, timeout=20, check=True)
                     check = evaluate_profile(plistlib.loads(decoded.stdout),
                         plistlib.loads((ROOT / source).read_bytes()), identity,

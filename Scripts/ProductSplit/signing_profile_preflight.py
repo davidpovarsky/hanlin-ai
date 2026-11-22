@@ -579,6 +579,7 @@ def run_profile_discovery_preflight(folder, profiles, team, identity, certificat
                      "required_entitlements_source": source,
                      "required_entitlements_sha256": hashlib.sha256(entitlements.read_bytes()).hexdigest()}
             receipt["native_products"].append(entry)
+            specifier = profile.get("specifier", profile["uuid"])
             archive = work / (role + ".xcarchive")
             bounded(["xcodebuild", "-project", project, "-scheme", "ProfileDiscovery",
                      "-configuration", "Release", "-destination", "generic/platform=iOS",
@@ -586,7 +587,7 @@ def run_profile_discovery_preflight(folder, profiles, team, identity, certificat
                      "PRODUCT_BUNDLE_IDENTIFIER=" + profile["bundle"],
                      "CODE_SIGN_STYLE=Manual", "DEVELOPMENT_TEAM=" + team,
                      "CODE_SIGN_IDENTITY=" + identity,
-                     "PROVISIONING_PROFILE_SPECIFIER=" + profile["uuid"], "PROVISIONING_PROFILE=",
+                     "PROVISIONING_PROFILE_SPECIFIER=" + specifier, "PROVISIONING_PROFILE=",
                      "CODE_SIGN_ENTITLEMENTS=" + str(entitlements), "APS_ENVIRONMENT=production",
                      "HANLIN_PROFILE_DISCOVERY_NONCE=" + nonce],
                     "profile-discovery-" + role + "-archive", entry, "archive")
@@ -595,7 +596,7 @@ def run_profile_discovery_preflight(folder, profiles, team, identity, certificat
                 "method": "app-store-connect", "destination": "export", "signingStyle": "manual",
                 "teamID": team, "signingCertificate": identity, "uploadSymbols": False,
                 "manageAppVersionAndBuildNumber": False, "stripSwiftSymbols": True,
-                "provisioningProfiles": {profile["bundle"]: profile["uuid"]}
+                "provisioningProfiles": {profile["bundle"]: specifier}
             }))
             options.chmod(0o600)
             exported = work / (role + "-export")

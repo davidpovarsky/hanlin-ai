@@ -171,7 +171,7 @@ def resolve_profile(role, bundle, required, certificate_sha, certificate_id, tea
                          ",".join(check["missing_or_mismatched_entitlement_keys"]))
     profile_uuid = str(uuid.UUID(profile["UUID"])).upper()
     facts.update(check)
-    return {"bundle": bundle, "uuid": profile_uuid, "content": raw}, facts
+    return {"bundle": bundle, "uuid": profile_uuid, "name": profile.get("Name"), "content": raw}, facts
 
 
 def resolve_original_profiles(certificate_sha, private_directory, facts, roles=None):
