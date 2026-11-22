@@ -30,7 +30,7 @@ final class HanlinMiniAppsProvider {
         self.platform = platform
     }
 
-    func catalog() async throws -> [HanlinMiniAppCatalogItem] {
+    func refreshCatalog() async throws {
         await platform.restore()
         try requirePackageServices()
         await host.refresh(installedPackages: platform.installedPackages)
@@ -38,16 +38,16 @@ final class HanlinMiniAppsProvider {
         if Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier {
             try? HanlinSplitLiveTarget.exportCatalog()
         }
-        return host.visibleItems
     }
 
     func launch(_ selected: HanlinMiniAppCatalogItem, includesDismissControl: Bool = true) async throws -> AnyView {
         guard !launching else { throw Failure.launchInProgress }
         launching = true
         defer { launching = false }
-        // Refresh canonical descriptors/authorization before using a retained row.
-        let current = try await catalog()
-        guard let item = current.first(where: { $0 == selected }) else { throw Failure.staleSelection }
+        // Visibility is a catalog preference. An authorized foreground request
+        // still resolves against the current canonical registrations.
+        try await refreshCatalog()
+        guard let item = host.items.first(where: { $0 == selected }) else { throw Failure.staleSelection }
         switch item.engine {
         case .swift:
             let view = try host.swiftDestination(for: item).view

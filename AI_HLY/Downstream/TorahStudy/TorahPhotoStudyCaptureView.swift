@@ -45,6 +45,9 @@ public struct TorahPhotoStudyCaptureView: View {
 
                 if let bookTitle = identifiedBookTitle {
                     resultCardView(title: bookTitle)
+                } else if presentsSourceReader, let identificationStatus {
+                    Text(identificationStatus)
+                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()

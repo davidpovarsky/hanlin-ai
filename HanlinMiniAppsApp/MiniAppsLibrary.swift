@@ -81,7 +81,7 @@ struct MiniAppsLibrary: View {
 
     private func refreshCatalog() async {
         do {
-            _ = try await provider.catalog()
+            try await provider.refreshCatalog()
             catalogError = nil
         } catch {
             catalogError = error.localizedDescription
