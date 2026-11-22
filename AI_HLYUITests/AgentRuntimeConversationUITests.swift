@@ -623,12 +623,46 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     func testUI03SearchMessageAndDeduplicatedCitations() throws {
+        try exerciseUI03SearchMessageAndDeduplicatedCitations(hebrew: false)
+    }
+
+    func testUI03HebrewRTLSearchMessageAndDeduplicatedCitations() throws {
+        try exerciseUI03SearchMessageAndDeduplicatedCitations(hebrew: true)
+    }
+
+    private func exerciseUI03SearchMessageAndDeduplicatedCitations(hebrew: Bool) throws {
         continueAfterFailure = false
-        let app = launchAcceptanceApp()
+        let app = launchAcceptanceApp(language: hebrew ? "he" : "en", locale: hebrew ? "he_IL" : "en_US")
+        let screenshotPrefix = hebrew ? "UI-03_HE_RTL" : "UI-03"
         openChat(in: app)
 
-        sendPrompt("PROMPT_UI03_SEARCH_CITATIONS", in: app)
-        approveOriginalToolRequest(["url": "https://agent.acceptance/wiki/hanlin"], in: app)
+        sendPrompt(hebrew ? "PROMPT_UI03_SEARCH_CITATIONS_HE" : "PROMPT_UI03_SEARCH_CITATIONS", in: app)
+        let inspectHebrewApproval: ((XCUIElement) -> Void)? = hebrew ? { owner in
+            let review = owner.buttons["hanlin-tool-consent-review-toggle"].firstMatch
+            let allow = owner.buttons["hanlin-tool-consent-allow-once"].firstMatch
+            let deny = owner.buttons["hanlin-tool-consent-deny"].firstMatch
+            let scope = owner.descendants(matching: .any)["hanlin-tool-consent-visible-request"].firstMatch
+            XCTAssertTrue(review.isHittable && allow.isHittable,
+                          "The compact Hebrew approval and its original action must be visible together")
+            XCTAssertFalse(owner.staticTexts["hanlin-tool-consent-original-request"].exists,
+                           "The pending compact approval must keep raw request details closed")
+            XCTAssertEqual(allow.label, "לאשר פעם אחת")
+            XCTAssertEqual(deny.label, "לדחות")
+            XCTAssertTrue(review.label.contains("קורא מקור"), "The actual approval action title must be Hebrew")
+            XCTAssertTrue(review.label.contains("ממתין לאישור"), "The actual pending status must be Hebrew")
+            XCTAssertTrue(scope.label.contains("https://agent.acceptance/wiki/hanlin"))
+            let labels = owner.staticTexts.allElementsBoundByIndex.map(\.label)
+                + owner.buttons.allElementsBoundByIndex.map(\.label)
+            XCTAssertFalse(labels.contains { $0.contains("??") || $0.contains("\u{FFFD}") },
+                           "The actual Hebrew approval card must not contain corrupted labels")
+            let pending = XCTAttachment(screenshot: owner.screenshot())
+            pending.name = screenshotPrefix + "_CompactPendingApprovalBeforeReview"
+            pending.lifetime = .keepAlways
+            self.add(pending)
+            self.attachScreenshot(screenshotPrefix + "_PendingApprovalInOriginalChat", in: app)
+        } : nil
+        approveOriginalToolRequest(["url": "https://agent.acceptance/wiki/hanlin"], in: app,
+                                   inspectPendingCard: inspectHebrewApproval)
         approveOriginalToolRequest(["url": "https://agent.acceptance/wiki/hanlin#section"], in: app)
 
         let finalAnswer = app.descendants(matching: .any).matching(
@@ -651,15 +685,20 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         )).firstMatch
         XCTAssertTrue(citedParagraph.waitForExistence(timeout: 10),
                       "The verified source must appear inside the actual native answer paragraph")
+        if hebrew {
+            XCTAssertTrue(citedParagraph.label.contains("המקורות משולבים בתוך ההודעה"),
+                          "The original answer must contain the Hebrew paragraph, not the English fixture")
+            XCTAssertFalse(citedParagraph.label.contains("??") || citedParagraph.label.contains("\u{FFFD}"))
+        }
         let allSources = app.buttons.matching(identifier: "hanlin-all-sources")
         XCTAssertEqual(allSources.count, 1, "A turn must retain exactly one complete sources footer")
-        attachScreenshot("UI-03_SearchMessageAndDeduplicatedCitations", in: app)
+        attachScreenshot(screenshotPrefix + "_SearchMessageAndDeduplicatedCitations", in: app)
 
         // Locate the chip in the actual screenshot, then tap the real native
         // attachment. No test-only URL callback or synthetic sheet is used.
         let paragraphScreenshot = citedParagraph.screenshot()
         let paragraphAttachment = XCTAttachment(screenshot: paragraphScreenshot)
-        paragraphAttachment.name = "UI-03_ActualInlineCitationBeforeTap"
+        paragraphAttachment.name = screenshotPrefix + "_ActualInlineCitationBeforeTap"
         paragraphAttachment.lifetime = .keepAlways
         add(paragraphAttachment)
         let image = try XCTUnwrap(paragraphScreenshot.image.cgImage)
@@ -676,7 +715,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertEqual(boxes.count, 1, "Expected one actual inline source chip in the paragraph image")
         let box = try XCTUnwrap(boxes.first)
         let measuredBox = XCTAttachment(string: "Inline citation rectangle in normalized screenshot coordinates: \(box)")
-        measuredBox.name = "UI-03_MeasuredCitationTapTarget"
+        measuredBox.name = screenshotPrefix + "_MeasuredCitationTapTarget"
         measuredBox.lifetime = .keepAlways
         add(measuredBox)
         citedParagraph.coordinate(withNormalizedOffset: CGVector(dx: box.midX, dy: 1 - box.midY)).tap()
@@ -686,7 +725,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let sourceRows = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'hanlin-source-'"))
         XCTAssertEqual(sourceRows.count, 1, "This sentence cites one canonical returned source")
         XCTAssertTrue(sourceRows.firstMatch.label.contains("Hanlin Reference Source"))
-        attachScreenshot("UI-03_InlineCitationScopedSources", in: app)
+        attachScreenshot(screenshotPrefix + "_InlineCitationScopedSources", in: app)
         tapElement(app.buttons["hanlin-sources-close"].firstMatch)
         XCTAssertTrue(citedParagraph.waitForExistence(timeout: 10), "Closing sources must restore the original answer")
 
@@ -695,6 +734,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertEqual(sourceRows.count, 1, "Fragment variants of the same returned page must remain deduplicated")
         tapElement(app.buttons["hanlin-sources-close"].firstMatch)
         XCTAssertEqual(allSources.count, 1)
+        if hebrew {
+            XCTAssertTrue(citedParagraph.waitForExistence(timeout: 10))
+            let paragraph = XCTAttachment(screenshot: citedParagraph.screenshot())
+            paragraph.name = screenshotPrefix + "_FinalHebrewParagraph"
+            paragraph.lifetime = .keepAlways
+            add(paragraph)
+            attachScreenshot(screenshotPrefix + "_FinalRTLAnswer", in: app)
+        }
     }
 
     func testNativePartialSelectionSaveAndOriginalLongPressPreview() throws {
@@ -1687,9 +1734,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         return app
     }
 
-    private func launchAcceptanceApp() -> XCUIApplication {
+    private func launchAcceptanceApp(language: String = "en", locale: String = "en_US") -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchArguments += ["-AppleLanguages", "(\(language))", "-AppleLocale", locale]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
         app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
@@ -1730,6 +1777,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     /// Approve only the exact fixture business request through the original UI.
     /// This is not another chat turn, an injected grant, or a tool-result stub.
     private func approveOriginalToolRequest(_ expected: [String: String], in app: XCUIApplication,
+                                            inspectPendingCard: ((XCUIElement) -> Void)? = nil,
                                             file: StaticString = #filePath, line: UInt = #line) {
         let owner = app.descendants(matching: .any).matching(
             NSPredicate(format: "identifier BEGINSWITH 'hanlin-tool-approval-'")).firstMatch
@@ -1764,6 +1812,20 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             return false
         }
 
+        if let inspectPendingCard {
+            // Reveal the real compact card before opening its original details.
+            // This optional witness leaves the existing English journey unchanged.
+            for reveal in 0...3 {
+                let pending = currentOwner()
+                if pending.buttons["hanlin-tool-consent-review-toggle"].firstMatch.isHittable,
+                   pending.buttons["hanlin-tool-consent-allow-once"].firstMatch.isHittable { break }
+                guard reveal < 3 else { break }
+                let scroll = app.scrollViews.containing(.any, identifier: ownerID).firstMatch
+                guard scroll.exists else { break }
+                scroll.swipeUp()
+            }
+            inspectPendingCard(currentOwner())
+        }
         let reviewed = tapOwnedButton("hanlin-tool-consent-review-toggle")
         XCTAssertTrue(reviewed, "The original approval must be reachable", file: file, line: line)
         guard reviewed else { return }

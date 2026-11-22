@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "base_commit": "ad3a13dfe3fa491adeb8c9c278b254de33f5fd9c",
+  "primary_native_run": "45064949924",
+  "primary_native_status": "pending",
+  "production_ui_behavior_changed": false,
+  "purpose": "Verify compact real Host approval and an inline citation in a Hebrew RTL original conversation, matching the owner screenshots.",
+  "exact_test_selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+  "changes": [
+    "Parameterize the existing original UI03 journey and app launch language, retaining its English path and all original arguments/source/touch assertions.",
+    "Add a Hebrew controlled answer only for the new explicit UI03_HE prompt.",
+    "Retain actual compact approval, scoped source sheet and Hebrew paragraph screenshots for visual inspection."
+  ],
+  "source_files": {
+    "AI_HLYUITests/AgentRuntimeConversationUITests.swift": "79f8e5464f45617ac8436f5ca7e837a926707f9be6b56607a8f20c20bd2b29f7",
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": "c5b12715d33a819ef321f2c3e6e6c29ca69269b355f9a20d54b4cbc7cc19c412"
+  },
+  "status": "native_execution_pending"
+}

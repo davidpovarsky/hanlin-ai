@@ -748,8 +748,11 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
 
         // 7. UI-03 Search message and deduplicated citations
         if bodyString.contains("PROMPT_UI03_SEARCH_CITATIONS") {
+            let hebrew = bodyString.contains("PROMPT_UI03_SEARCH_CITATIONS_HE")
             if bodyString.contains("ui03-read-2") {
-                emitFinalAnswer("According to the Hanlin reference, classic search rows and citations are restored. [source](https://agent.acceptance/wiki/hanlin#section) UI03_SEARCH_COMPLETE")
+                emitFinalAnswer(hebrew
+                    ? "לפי המקור של Hanlin, החיפוש מציג תוצאות מסודרות והמקורות משולבים בתוך ההודעה. [מקור](https://agent.acceptance/wiki/hanlin#section) אפשר לפתוח את המקור ולחזור לתשובה. UI03_SEARCH_COMPLETE"
+                    : "According to the Hanlin reference, classic search rows and citations are restored. [source](https://agent.acceptance/wiki/hanlin#section) UI03_SEARCH_COMPLETE")
             } else if bodyString.contains("ui03-read-1") {
                 emitToolCall(
                     id: "ui03-read-2",
