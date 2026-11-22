@@ -354,6 +354,8 @@ struct ChatViewBottom: View {
     @ScaledMetric(relativeTo: .body) var size_44: CGFloat = 44
     @ScaledMetric(relativeTo: .body) var size_80: CGFloat = 80
 
+    @ScaledMetric(relativeTo: .body) var followLatestSymbolSize: CGFloat = 14
+
     let buttonHeight: CGFloat = 36
 
     var body: some View {
@@ -405,16 +407,13 @@ struct ChatViewBottom: View {
                     if showScrollToBottomButton {
                         Button(action: { needScrollToBottomButton.toggle() }) {
                             Image(systemName: "arrow.down")
-                                .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                                .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                .font(HanlinTypography.fixed(size: followLatestSymbolSize, weight: .semibold))
+                                .foregroundStyle(Color.primary.opacity(0.77))
                                 .frame(width: buttonHeight, height: buttonHeight)
-                                .clipShape(Circle())
-                                .background(
-                                    GlassView(style: .systemUltraThinMaterial)
-                                        .clipShape(Circle())
-                                        .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
-                                )
+                                .background(Color(uiColor: .systemBackground), in: Circle())
+                                .shadow(color: .black.opacity(0.12), radius: 8, y: 2)
                         }
+                        .buttonStyle(.plain)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                         .animation(.spring(response: 0.5, dampingFraction: 0.7),
                                    value: showScrollToBottomButton)

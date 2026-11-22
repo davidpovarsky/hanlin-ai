@@ -309,6 +309,55 @@ class CurrentUnitXctestrunTests(unittest.TestCase):
             with self.subTest(selectors=selectors), self.assertRaises(RuntimeError):
                 admission.selected_identifiers(selectors)
 
+    def test_version_query_timeout_retries_only_a_fresh_bounded_query(self):
+        arguments = ["xcodebuild", "-version"]
+        failure = subprocess.TimeoutExpired(arguments, 30, output=b"incomplete stale output")
+        with mock.patch.object(admission.subprocess, "check_output",
+                               side_effect=[failure, b"Xcode 27.2\nBuild version 27B52\n"]) as command, \
+                mock.patch.object(admission.sys, "stderr"):
+            version = admission.current_xcode_version(self.root)
+        self.assertEqual(version, "Xcode 27.2\nBuild version 27B52")
+        self.assertEqual(command.call_args_list, [
+            mock.call(arguments, cwd=self.root, timeout=30),
+            mock.call(arguments, cwd=self.root, timeout=60),
+        ])
+
+    def test_second_version_timeout_cannot_fall_back_to_a_sealed_version(self):
+        self.prepare()
+        self.generated()
+        self.seal()
+        arguments = ["xcodebuild", "-version"]
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=[
+                subprocess.TimeoutExpired(arguments, 30),
+                subprocess.TimeoutExpired(arguments, 60)]) as command, \
+                mock.patch.object(admission.sys, "stderr"), \
+                self.assertRaises(subprocess.TimeoutExpired):
+            admission.current_xcode_version(self.root)
+        self.assertEqual(command.call_count, 2)
+        self.assertEqual(json.loads((self.log / admission.RECEIPT).read_bytes())["status"], "SEALED")
+        self.assertFalse((self.log / admission.ADMISSION).exists())
+
+    def test_version_query_command_failure_is_not_retried(self):
+        failure = subprocess.CalledProcessError(1, ["xcodebuild", "-version"])
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=failure) as command, \
+                self.assertRaises(subprocess.CalledProcessError):
+            admission.current_xcode_version(self.root)
+        self.assertEqual(command.call_count, 1)
+
+    def test_fresh_version_after_timeout_cannot_admit_a_different_toolchain(self):
+        self.prepare()
+        self.generated()
+        self.seal()
+        with mock.patch.object(admission.subprocess, "check_output", side_effect=[
+                subprocess.TimeoutExpired(["xcodebuild", "-version"], 30),
+                b"Xcode 27.3\nBuild version 27C10\n"]), \
+                mock.patch.object(admission.sys, "stderr"):
+            version = admission.current_xcode_version(self.root)
+        with self.assertRaisesRegex(RuntimeError, "changed"):
+            admission.admit(self.products, self.log,
+                            {**self.context, "xcode_version": version}, DEVICE)
+        self.assertFalse((self.log / admission.ADMISSION).exists())
+
     def test_build_context_reads_actual_git_revision_dirty_diff_and_provenance(self):
         def git(*arguments):
             return subprocess.check_output(["git", "-c", "core.hooksPath=" + str(self.root / "no-hooks"),

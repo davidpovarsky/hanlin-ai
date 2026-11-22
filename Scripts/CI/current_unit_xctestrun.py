@@ -90,6 +90,21 @@ def descriptors(products):
     return candidates
 
 
+def current_xcode_version(repository):
+    # The read-only version query can stall just after a fresh simulator boots.
+    # Retry only that timeout, once, with a bounded fresh query. Never substitute
+    # the prepared/sealed receipt's version: its equality check must still fail
+    # if the selected toolchain changed or cannot be observed now.
+    arguments = ["xcodebuild", "-version"]
+    try:
+        output = subprocess.check_output(arguments, cwd=repository, timeout=30)
+    except subprocess.TimeoutExpired:
+        print("Current Xcode version query timed out after 30 seconds; retrying once "
+              "with a 60-second limit. Product admission is still pending.", file=sys.stderr)
+        output = subprocess.check_output(arguments, cwd=repository, timeout=60)
+    return output.decode().strip()
+
+
 def build_context(repository, products, log, configuration, selectors):
     repository = Path(repository).resolve(strict=True)
     products = Path(products).resolve()
@@ -120,7 +135,7 @@ def build_context(repository, products, log, configuration, selectors):
         "configuration": configuration, "selectors": selected_identifiers(selectors),
         "products_root": str(products),
         "developer_directory": command(["xcode-select", "-p"]).decode().strip(),
-        "xcode_version": command(["xcodebuild", "-version"]).decode().strip(),
+        "xcode_version": current_xcode_version(repository),
         "tracked_diff_sha256": hashlib.sha256(diff).hexdigest(),
         "tracked_workspace_modified": bool(diff),
         "diagnostics_provenance_sha256": sha256(provenance_path),
