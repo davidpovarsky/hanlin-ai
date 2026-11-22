@@ -25,49 +25,94 @@ struct ChatMarkdownView: View {
     @State private var highlightedRequestID: UUID?
 
     var body: some View {
-        let citationProjection = citations?.projection(for: text)
-        HanlinMarkdownView(text: citationProjection?.markdown ?? text,
-            imageConfig: imageConfig, citationGroups: citationProjection?.groups ?? [],
-            contextMenuItems: contextMenuItems,
-            onRendered: {
-                onRendered?()
-                if let messageID = source?.messageID { markdownDidRender?(messageID) }
-            }, onSelectionAction: { id, selection in
-                if id == "hanlin.savePersonal" {
-                    scopedSavePersonal?(ChatTextQuote(text: selection.text, renderedText: selection.renderedText,
-                        range: selection.range, sourceBlockID: selection.sourceBlockID))
-                } else if id == "hanlin.saveKnowledge" { saveKnowledge?(selection.text) }
-            })
-            // The native paragraph retains its OpenURLAction. Keep its presenter
-            // with the renderer rather than an independently updating bubble.
-            .modifier(ChatLinkPresentation(citationGroups: citationProjection?.groups ?? []))
-            .markdownCodeBlockRenderer { block in
-                guard block.isFenceClosed == true else { return nil }
-                let language = block.language?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-                let kind: String
-                switch language {
-                case "mermaid": kind = "mermaid"
-                case "diff", "patch": kind = "diff"
-                default: return nil
-                }
-                return AnyView(ChatCodeFenceView(blockID: block.id, kind: kind, source: block.code))
-            }
-            .markdownSelectionHighlight(highlight)
-            .task(id: destination?.id) {
-                highlightedRequestID = destination?.id
-                guard let requestID = destination?.id else { return }
-                do { try await Task.sleep(for: .seconds(4)) } catch { return }
-                if highlightedRequestID == requestID { highlightedRequestID = nil }
-            }
-            .markdownSelectionActivity { id, active in selectionActivity?(id, active) }
+        highlightedRenderer
             .markdownDocumentSelectionMode(documentSelectionMode)
             .markdownSelectAllRequest(selectAllRequest)
-            .markdownSelectionChanged { selection in
-                onSelectionChanged?(ChatTextQuote(text: selection.text, renderedText: selection.renderedText,
-                    range: selection.range, sourceBlockID: selection.sourceBlockID))
-            }
-            .markdownLongPressPreview(documentSelectionMode ? nil : messagePreview)
+            .markdownSelectionChanged(selectionChangedHandler)
+            .markdownLongPressPreview(longPressPreviewHandler)
             .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// Keep independent opaque view boundaries so the Swift type checker does
+    /// not infer renderer callbacks and every selection modifier in one expression.
+    private var highlightedRenderer: some View {
+        linkedRenderer
+            .markdownSelectionHighlight(highlight)
+            .task(id: destination?.id) { await updateHighlightLifetime() }
+            .markdownSelectionActivity(selectionActivityHandler)
+    }
+
+    private var linkedRenderer: some View {
+        let projection = citations?.projection(for: text)
+        let renderedText: String = projection?.markdown ?? text
+        let groups: [HanlinCitationGroup] = projection?.groups ?? []
+        let renderer: HanlinMarkdownView = HanlinMarkdownView(
+            text: renderedText,
+            imageConfig: imageConfig,
+            citationGroups: groups,
+            contextMenuItems: contextMenuItems,
+            onRendered: renderedHandler,
+            onSelectionAction: selectionActionHandler
+        )
+        // The native paragraph retains its OpenURLAction. Keep its presenter
+        // with the renderer rather than an independently updating bubble.
+        return renderer
+            .modifier(ChatLinkPresentation(citationGroups: groups))
+            .markdownCodeBlockRenderer(Self.codeBlockRenderer)
+    }
+
+    private var renderedHandler: @MainActor @Sendable () -> Void {
+        {
+            onRendered?()
+            if let messageID = source?.messageID { markdownDidRender?(messageID) }
+        }
+    }
+
+    private var selectionActionHandler: @MainActor @Sendable (String, MarkdownTextSelection) -> Void {
+        { actionID, selection in
+            if actionID == "hanlin.savePersonal" {
+                scopedSavePersonal?(ChatTextQuote(text: selection.text, renderedText: selection.renderedText,
+                    range: selection.range, sourceBlockID: selection.sourceBlockID))
+            } else if actionID == "hanlin.saveKnowledge" {
+                saveKnowledge?(selection.text)
+            }
+        }
+    }
+
+    private var selectionActivityHandler: @MainActor @Sendable (UUID, Bool) -> Void {
+        { activityID, active in selectionActivity?(activityID, active) }
+    }
+
+    private var selectionChangedHandler: @MainActor (MarkdownTextSelection) -> Void {
+        { selection in
+            onSelectionChanged?(ChatTextQuote(text: selection.text, renderedText: selection.renderedText,
+                range: selection.range, sourceBlockID: selection.sourceBlockID))
+        }
+    }
+
+    private var longPressPreviewHandler: (@MainActor (UIView, CGPoint) -> Void)? {
+        guard !documentSelectionMode else { return nil }
+        return messagePreview
+    }
+
+    private static let codeBlockRenderer: MarkdownCodeBlockRenderer = { block in
+        guard block.isFenceClosed == true else { return nil }
+        let language = block.language?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let kind: String
+        switch language {
+        case "mermaid": kind = "mermaid"
+        case "diff", "patch": kind = "diff"
+        default: return nil
+        }
+        return AnyView(ChatCodeFenceView(blockID: block.id, kind: kind, source: block.code))
+    }
+
+    private func updateHighlightLifetime() async {
+        let requestID = destination?.id
+        highlightedRequestID = requestID
+        guard let requestID else { return }
+        do { try await Task.sleep(for: .seconds(4)) } catch { return }
+        if highlightedRequestID == requestID { highlightedRequestID = nil }
     }
 
     private var highlight: MarkdownSelectionHighlight? {
