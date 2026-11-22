@@ -132,7 +132,13 @@ class AppleReadFailure(Exception):
     pass
 
 def apple_get(path, parameters):
-    # Fixed Apple origin, GET only; no redirects or mutation methods.
+    return apple_request(path, parameters)
+
+
+def apple_request(path, parameters, *, invitation=None):
+    # On this support branch, the only permitted write is the pinned invitation resend.
+    if invitation is not None and path != "/v1/betaTesterInvitations":
+        raise ValueError("Unexpected Apple write endpoint")
     import jwt
     now = int(time.time())
     token = jwt.encode({"iss": os.environ["ASC_ISSUER_ID"], "iat": now, "exp": now + 600,
@@ -142,8 +148,16 @@ def apple_get(path, parameters):
     class NoRedirect(urllib.request.HTTPRedirectHandler):
         def redirect_request(self, req, fp, code, msg, headers, newurl):
             return None
-    request = urllib.request.Request("https://api.appstoreconnect.apple.com" + path + "?" +
-        urllib.parse.urlencode(parameters), headers={"Authorization": "Bearer " + token}, method="GET")
+    url = "https://api.appstoreconnect.apple.com" + path
+    if parameters:
+        url += "?" + urllib.parse.urlencode(parameters)
+    headers = {"Authorization": "Bearer " + token}
+    body = None
+    if invitation is not None:
+        headers["Content-Type"] = "application/json"
+        body = json.dumps(invitation).encode("utf-8")
+    request = urllib.request.Request(url, headers=headers, data=body,
+                                     method="POST" if invitation is not None else "GET")
     try:
         with urllib.request.build_opener(NoRedirect).open(request, timeout=30) as response:
             raw = response.read(2 * 1024 * 1024 + 1)
@@ -255,6 +269,48 @@ def miniapps_testflight_status(app_id, build_number):
             "encryption_declaration": encryption, "internal_groups": internal_groups}
 
 
+def resend_owner_invitation():
+    app_id = "6836449016"
+    group_id = "88d8d2f6-fbe4-49d6-b3a6-70942b115692"
+    status = miniapps_testflight_status(app_id, "6601")
+    groups = [g for g in status["internal_groups"] if g["id"] == group_id and g["explicitly_linked"]]
+    if (status["build_id"] != "a98e948c-a986-4290-b82a-f34f6a9194de"
+            or status["processingState"] != "VALID" or status["expired"]
+            or status["internalBuildState"] != "IN_BETA_TESTING" or len(groups) != 1):
+        raise ValueError("MiniApps build 6601 is not active in the expected internal group")
+    owners = apple_get("/v1/users", {
+        "filter[roles]": "ACCOUNT_HOLDER", "fields[users]": "username,roles", "limit": 2,
+    })
+    if len(owners["data"]) != 1 or owners.get("links", {}).get("next"):
+        raise ValueError("Could not uniquely identify the App Store Connect Account Holder")
+    attributes = owners["data"][0]["attributes"]
+    owner = attributes["username"].strip().casefold()
+    if "ACCOUNT_HOLDER" not in attributes["roles"] or "@" not in owner:
+        raise ValueError("Could not confirm the Account Holder email")
+    testers = apple_get("/v1/betaTesters", {
+        "filter[betaGroups]": group_id, "filter[email]": owner,
+        "fields[betaTesters]": "email,state", "limit": 2,
+    })
+    matching = [t for t in testers["data"] if t["attributes"].get("email", "").strip().casefold() == owner]
+    if len(matching) != 1 or testers.get("links", {}).get("next"):
+        raise ValueError("The existing MiniApps internal tester does not match the Account Holder")
+    tester = matching[0]
+    if tester["attributes"].get("state") not in {"INVITED", "NOT_INVITED"}:
+        raise ValueError("The matching tester does not have a pending invitation")
+    result = apple_request("/v1/betaTesterInvitations", {}, invitation={
+        "data": {"type": "betaTesterInvitations", "relationships": {
+            "app": {"data": {"type": "apps", "id": app_id}},
+            "betaTester": {"data": {"type": "betaTesters", "id": tester["id"]}},
+        }},
+    })
+    if result["data"].get("type") != "betaTesterInvitations" or not result["data"].get("id"):
+        raise ValueError("Apple did not return a valid invitation receipt")
+    print(json.dumps({"status": "INVITATION_ACCEPTED_BY_APPLE", "build": "6601",
+                      "recipient": "VERIFIED_ACCOUNT_HOLDER",
+                      "masked_address": owner[0] + "…" + owner[owner.index("@"):],
+                      "invitation_id": result["data"]["id"]}, ensure_ascii=False))
+
+
 def apple_resources(cert_sha=None):
     required = ["ASC_KEY_P8", "ASC_KEY_ID", "ASC_ISSUER_ID"]
     missing = [name for name in required if not os.environ.get(name)]
@@ -348,6 +404,8 @@ def main():
         "product_acceptance": "SEPARATE_NATIVE_GATES_REQUIRED", "release_decision": "NO_GO",
         "limitations": "Resource checks do not establish OS trust-chain validation, key revocation, a signed archive, physical-device acceptance or publication readiness.",
     }
+    if os.environ.get("MINIAPPS_RESEND_OWNER_INVITE") == "true":
+        resend_owner_invitation()
     out = ROOT / "build/release-resource-audit"
     out.mkdir(parents=True, exist_ok=True)
     (out / "sanitized-report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

@@ -61,6 +61,11 @@ on:
         type: boolean
         required: false
         default: false
+      miniapps_resend_owner_invite:
+        description: Retry the existing verified Account Holder invitation for MiniApps build 6601
+        type: boolean
+        required: false
+        default: false
       miniapps_audit_build:
         description: Read TestFlight status, encryption declaration and internal group counts for this MiniApps build
         type: string
@@ -151,6 +156,7 @@ jobs:
           "$RUNNER_TEMP/hanlin-release-audit/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
       - name: Inspect existing signing, registration and device metadata
         env:
+          MINIAPPS_RESEND_OWNER_INVITE: ${{ inputs.miniapps_resend_owner_invite }}
           MINIAPPS_AUDIT_BUILD: ${{ inputs.miniapps_audit_build }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
