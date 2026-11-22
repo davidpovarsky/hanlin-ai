@@ -8,12 +8,24 @@ struct HanlinMessageCitations: Sendable {
     let messageID: UUID
     let evidence: [AgentEvidenceItem]
     let segments: [String: String]
+    private let resourceIconsByURL: [String: URL]
 
     init(messageID: UUID, evidence: [AgentEvidenceItem], transcript: [AgentTranscriptItem],
          resources: [Resource] = []) {
         self.messageID = messageID
         self.evidence = AgentEvidenceAccumulator(items: evidence + LegacyResourcesEvidenceAdapter.items(
             from: resources, providerName: nil)).items
+        resourceIconsByURL = resources.reduce(into: [:]) { icons, resource in
+            guard let sourceKey = AgentEvidenceDeduplicator.normalizedURL(resource.link),
+                  icons[sourceKey] == nil else { return }
+            let icon = resource.icon.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard icon.utf8.count <= 8_192, var components = URLComponents(string: icon),
+                  components.scheme?.lowercased() == "https", components.host?.isEmpty == false,
+                  components.user == nil, components.password == nil else { return }
+            components.scheme = "https"
+            guard let url = components.url else { return }
+            icons[sourceKey] = url
+        }
         segments = Dictionary(transcript.compactMap { item -> (String, String)? in
             guard item.kind == .assistantText, let id = item.externalID, let text = item.text else { return nil }
             return (id, text)
@@ -23,8 +35,13 @@ struct HanlinMessageCitations: Sendable {
     var sources: [HanlinSourceReference] {
         evidence.filter(\.wasReturnedToModel).map { item in
             let url = item.url.flatMap(URL.init(string:))
+            // Keep the reader's actual icon (including CDN paths) for the same
+            // returned source. This lookup never creates citation destinations.
+            let suppliedIcon = ([item.url].compactMap { $0 } + (item.alternateURLs ?? []))
+                .lazy.compactMap { AgentEvidenceDeduplicator.normalizedURL($0) }
+                .compactMap { resourceIconsByURL[$0] }.first
             return .init(id: item.id, title: item.title, url: url,
-                iconURL: url?.host.flatMap { URL(string: "https://\($0)/favicon.ico") },
+                iconURL: suppliedIcon ?? url?.host.flatMap { URL(string: "https://\($0)/favicon.ico") },
                 alternateURLs: (item.alternateURLs ?? []).compactMap(URL.init(string:)))
         }
     }

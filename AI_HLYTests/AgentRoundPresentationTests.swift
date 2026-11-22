@@ -214,6 +214,47 @@ struct AgentRoundPresentationTests {
         #expect(citations.projection(for: "No anchor at all.").groups.isEmpty)
     }
 
+    @Test func suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection() throws {
+        let base = "https://example.com/source"
+        let section = base + "#section"
+        let tracking = base + "?utm_source=returned"
+        let icon = "https://cdn.example.com/brand/actual-icon.png"
+        let evidence = AgentEvidenceItem(kind: .webPage, title: "Original page", url: base,
+            wasReturnedToModel: true)
+        let resources = [
+            Resource(icon: "", title: "Original page", link: base),
+            Resource(icon: icon, title: "Returned section", link: section),
+            Resource(icon: "https://cdn.example.com/second-icon.png", title: "Returned variant", link: tracking)
+        ]
+        let citations = HanlinMessageCitations(messageID: UUID(), evidence: [evidence], transcript: [], resources: resources)
+        #expect(citations.sources.count == 1)
+        let source = try #require(citations.sources.first)
+        #expect(source.id == AgentEvidenceDeduplicator.stableID(for: evidence))
+        #expect(source.url == URL(string: base))
+        #expect(source.alternateURLs.map(\.absoluteString) == [section, tracking])
+        #expect(source.iconURL == URL(string: icon))
+        let projection = citations.projection(for: "מקור אמיתי. [מקור](\(section))")
+        #expect(projection.groups.count == 1)
+        #expect(projection.groups.first?.sources.first?.iconURL == URL(string: icon))
+        #expect(citations.projection(for: "Unknown. [source](\(base)#unreturned)").groups.isEmpty)
+        #expect(citations.projection(for: "An icon is not a source. [source](\(icon))").groups.isEmpty)
+    }
+
+    @Test func missingOrUnsafeResourceFaviconsKeepTheExistingDefault() throws {
+        let base = "https://example.com/source"
+        let evidence = AgentEvidenceItem(kind: .webPage, title: "Returned page", url: base, wasReturnedToModel: true)
+        let expected = URL(string: "https://example.com/favicon.ico")
+        let withoutResources = HanlinMessageCitations(messageID: UUID(), evidence: [evidence], transcript: [])
+        #expect(withoutResources.sources.first?.iconURL == expected)
+        for icon in ["", "file:///tmp/icon.png", "data:image/png;base64,AA==",
+                     "http://cdn.example.com/icon.png", "https://user:password@cdn.example.com/icon.png"] {
+            let citations = HanlinMessageCitations(messageID: UUID(), evidence: [evidence], transcript: [],
+                resources: [Resource(icon: icon, title: "Returned page", link: base)])
+            #expect(citations.sources.count == 1)
+            #expect(citations.sources.first?.iconURL == expected)
+        }
+    }
+
     @Test func providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText() throws {
         let run = AgentRun(groupID: UUID(), providerID: "fixture", modelID: "fixture")
         var adapter = HanlinStreamEventAdapter(runID: run.id)
