@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "3b6138be596ffdfc05758264ec36bec0e3c8a4af",
+  "sourceCommit": "887ae35df9dc0edd5b3bca939c8c8552aeac35fe",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -5772,7 +5772,7 @@
     {
       "id": "INT06-SHELL-SOURCE",
       "owner": "INT-06",
-      "detail": "Generic RuntimeKind.shell still uses the linked native string parser; the public command-string tool uses the portable-shell route. Align the documented source semantics without adding another shell engine."
+      "detail": "Generic RuntimeKind.shell routes command strings through the portable-shell broker while HanlinRuntimeWireProtocol rejects separate runtime argv; structured argv executeShell remains on the direct linked ios_system route. Actual NS/Expo shell execution and argv-rejection receipts remain pending."
     },
     {
       "id": "INT03-NS-RESULT",
@@ -5815,7 +5815,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
-      "sha256": "ce9e10937895c7009e709568bd448222f09bddd9bcfa15cc178726b459a910e7"
+      "sha256": "5f24ed0174ff4378b28ea8f32b14de8b99dc73cf348b00008e101fdfd670631b"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
@@ -5827,7 +5827,7 @@
     },
     {
       "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
-      "sha256": "649671e40292cbcdfded8a34869e581f6d9ad51839f241c45b312510208ae0c8"
+      "sha256": "4de156d4d47545cf9955619d8cc7f765d6b34f597b2256bd87199d65f2d77559"
     },
     {
       "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
@@ -5959,7 +5959,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-      "sha256": "9443a12286831f386d9a7db06b833902d041fe46d990e2014885a10d99b612fb"
+      "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
@@ -5975,7 +5975,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "b86334ac389d296140ab07d084973503802b6185b3bd30180abd92823f6bb216"
+      "sha256": "54cb4c393f37b53cacae4825c5a60088770b8d6ddda4f4ab03732f072f909e4f"
     },
     {
       "path": "Scripts/Expo/build-probe.mjs",

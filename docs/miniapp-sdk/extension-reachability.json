@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "3b6138be596ffdfc05758264ec36bec0e3c8a4af",
+  "sourceCommit": "887ae35df9dc0edd5b3bca939c8c8552aeac35fe",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -20,7 +20,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
-      "sha256": "ce9e10937895c7009e709568bd448222f09bddd9bcfa15cc178726b459a910e7"
+      "sha256": "5f24ed0174ff4378b28ea8f32b14de8b99dc73cf348b00008e101fdfd670631b"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
@@ -32,7 +32,7 @@
     },
     {
       "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
-      "sha256": "649671e40292cbcdfded8a34869e581f6d9ad51839f241c45b312510208ae0c8"
+      "sha256": "4de156d4d47545cf9955619d8cc7f765d6b34f597b2256bd87199d65f2d77559"
     },
     {
       "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
@@ -164,7 +164,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-      "sha256": "9443a12286831f386d9a7db06b833902d041fe46d990e2014885a10d99b612fb"
+      "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
@@ -180,7 +180,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "b86334ac389d296140ab07d084973503802b6185b3bd30180abd92823f6bb216"
+      "sha256": "54cb4c393f37b53cacae4825c5a60088770b8d6ddda4f4ab03732f072f909e4f"
     },
     {
       "path": "Scripts/Expo/build-probe.mjs",
@@ -257,9 +257,7 @@
     "boundary": "Historical owner delivery only; not current branch/signature/matrix acceptance"
   },
   "targetsDeclaredInProject": [
-    "AI_HLYTests",
     "AI_HLYUITests",
-    "AI_Hanlin",
     "ChavrusaChatNotificationService",
     "ChavrusaChatShare",
     "ChavrusaChatTranslationProvider",
@@ -362,15 +360,21 @@
     },
     "shareRead": {
       "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
-      "line": 44,
+      "line": 189,
       "anchor": "func pendingBatches()",
-      "sha256": "e245ee24d7e28c26a54bf675ff28e0c7d0514e25a98df5014357bbfb056e3d7b"
+      "sha256": "3ff58adcf9354e348f20f6ad7cb38d9879b4966383eacdd79c18475185bafa1c"
     },
     "shareReview": {
       "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
       "line": 6,
       "anchor": "struct ChavrusaShareInboxView",
-      "sha256": "c17925e6be38369da566491e226f4115e5c1ae1cd1eeb182a6a1ecd22cdba27b"
+      "sha256": "9b3be12b53e815d5cf195565bc8689f628cd8bc3b9c90ce3cef5ff3635544549"
+    },
+    "shareDraft": {
+      "file": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "line": 468,
+      "anchor": "ChavrusaShareInbox.shared.prepareDraft(",
+      "sha256": "0a12b392bad4c9450ab8fade12d19d3b976208e2446b2c283f905c7cc1c2bbb7"
     },
     "shareSelection": {
       "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
@@ -410,21 +414,21 @@
     },
     "resume": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1445,
+      "line": 1620,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "4925e42ae9e87acf8cd9adde0778ac5cce4816491cd8c52833e745719230ccfd"
+      "sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 788,
+      "line": 953,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "4925e42ae9e87acf8cd9adde0778ac5cce4816491cd8c52833e745719230ccfd"
+      "sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a"
     },
     "expoIntentRejection": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1562,
+      "line": 1741,
       "anchor": "guard entrypoint.runtimeProfile != .hanlinExpo else",
-      "sha256": "4925e42ae9e87acf8cd9adde0778ac5cce4816491cd8c52833e745719230ccfd"
+      "sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a"
     },
     "expoExposureRejection": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
@@ -458,9 +462,9 @@
     },
     "hostShortcuts": {
       "file": "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
-      "line": 92,
+      "line": 80,
       "anchor": "struct ChavrusaChatShortcuts",
-      "sha256": "d7e80b76d7ed74a87b6bd34d925e0cb35c72dcf4c189750aaea0f9b3bac35145"
+      "sha256": "dc03b7e85fd99d5b82ac53d61a66bdd960d28e077fbac9b0fa30109ce3b81a38"
     },
     "notification": {
       "file": "ChavrusaChatNotificationService/NotificationService.swift",
@@ -526,7 +530,7 @@
       "file": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
       "line": 18,
       "anchor": "func execute(",
-      "sha256": "ce9e10937895c7009e709568bd448222f09bddd9bcfa15cc178726b459a910e7"
+      "sha256": "5f24ed0174ff4378b28ea8f32b14de8b99dc73cf348b00008e101fdfd670631b"
     },
     "callerContext": {
       "file": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -544,31 +548,31 @@
       "file": "AI_HLY/AI_HLY.swift",
       "line": 103,
       "anchor": "@main",
-      "sha256": "1bbe9fbe5c63be0212c98e008ccb3c554125892e9fe2d67a4ce81c080d394bd1"
+      "sha256": "0ee9045305afe4f0be964ed18fd41d39fa20a48b4cbe1a342849ad2d4b8b3676"
     },
     "projectTargets": {
       "file": "AI_HLY.xcodeproj/project.pbxproj",
-      "line": 1473,
+      "line": 1429,
       "anchor": "/* Begin PBXNativeTarget section */",
-      "sha256": "a196ca6c60e72b1c5258fd7f098dc911399f9fa8ccd1bc5a1bee7034563e10c8"
+      "sha256": "33c14341a8815cbe0214e023c8cdfc7b6b89516b8dcc09d321c554762ef61a57"
     },
     "audit": {
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "2e487d5e0c9d6cdce6f9fed8317e63658e60e52a9d46e56808f53390288bff9f"
+      "sha256": "89ae5993714a93e999a39730d98b7ca9102c461dc08b26fefd43fec5c632c735"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",
       "line": 3,
       "anchor": "<plist",
-      "sha256": "b1b502583064e0a676b4c03aac8d3dddb52f66b19a58fe043bee7c6001331bc0"
+      "sha256": "726655ce3d22c2284ad163be69b10f14f12f9c5f3f8433bbae0441657bd54f43"
     },
     "ChavrusaChatTranslationProviderInfo": {
       "file": "ChavrusaChatTranslationProvider/Info.plist",
       "line": 3,
       "anchor": "<plist",
-      "sha256": "d1f31a7e8285fe638bfa1e01304264b30f02e82401e6d70dcfaab4b12ebe8507"
+      "sha256": "710d2d5d2751bbf674ba6955e5057dffe29bed0f5d413ad452c60a86cfe39e10"
     },
     "HanlinScriptingWidgetsInfo": {
       "file": "HanlinScriptingWidgets/Info.plist",
@@ -592,13 +596,14 @@
         "shareProviderCopy",
         "shareRead",
         "shareReview",
+        "shareDraft",
         "shareSelection",
         "extensionQueue",
         "extensionReceipts",
         "resume",
         "headless"
       ],
-      "stop": "Owned batches feed a Host chooser of installed NativeScript declared share actions, bound to generation/entry/action, durable INT-02 receipts, cancellation and actual result review. Busy VM leaves unstarted actions queued. Source wiring is not an executed share-sheet/UI/device proof; Expo action parity remains disconnected. Historical share-inbox.json is retained.",
+      "stop": "Owned batches feed a Host chooser of installed NativeScript declared share actions, bound to generation/entry/action, durable INT-02 receipts, cancellation and actual result review, or prepare an immutable Composer chat draft (discarding staged copies on cancellation/rollback). Busy VM leaves unstarted actions queued. Source wiring is not an executed share-sheet/UI/device proof; Expo action parity remains disconnected. Historical share-inbox.json is retained.",
       "owner": "INT-04"
     },
     "translation": {
