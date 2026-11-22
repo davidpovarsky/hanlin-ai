@@ -4,8 +4,7 @@ enum AgentActivityComposer {
   static func compose(_ run: AgentRun) -> AgentDisplayTimeline {
     let meaningful = run.steps
       .sorted { $0.sequence < $1.sequence }
-      .filter { !AgentActivityCompositionPolicy.isInternalTransport($0) }
-      .filter { AgentActivityCompositionPolicy.displayKind(for: $0.kind) != nil }
+      .filter(AgentActivityCompositionPolicy.isVisibleToolActivity)
 
     var groups: [[AgentActivityStep]] = []
     var groupIndexByCallID: [String: Int] = [:]
@@ -68,7 +67,7 @@ enum AgentActivityComposer {
       // A parsed call or an approval receipt is not a successful execution.
       // Once execution exists, its real lifecycle determines the outcome.
       switch approval.disposition {
-      case .awaiting, .providerRequired, .allowedOnce: status = .pending
+      case .awaiting, .providerRequired, .allowedOnce, .allowedAlways: status = .pending
       case .notApproved: status = .cancelled
       }
     }
@@ -100,6 +99,7 @@ enum AgentActivityComposer {
     let executionPresentation =
       steps.compactMap(\.canonicalExecutionPresentation).first
       ?? steps.compactMap(\.presentationProfile?.canonicalExecutionPresentation).first
+      ?? steps.compactMap(\.presentationProfile).first?.resolvedExecutionPresentation
     let embeddedPresentation =
       steps.compactMap(\.canonicalEmbeddedPresentation).first
       ?? steps.compactMap(\.presentationProfile?.canonicalEmbeddedPresentation).first

@@ -1,6 +1,7 @@
 import SwiftUI
 import SwiftData
 import UIKit
+import HanlinPresentationKit
 
 /// UIKit owns the system popover morph and its single size transition.
 /// The source is a real bar item, as required by Apple's iOS 26 popover morph;
@@ -11,16 +12,19 @@ struct HanlinModelZoomPopover<Source: View, Content: View>: UIViewControllerRepr
     let presentationID: Int
     let contentSize: CGSize
     let onResizeCompleted: @MainActor (Int, CGSize) -> Void
+    let onPresentationChange: (@MainActor (UUID, Bool) -> Void)?
     let source: Source
     let content: Content
 
     init(isPresented: Binding<Bool>, presentationID: Int, contentSize: CGSize,
          onResizeCompleted: @escaping @MainActor (Int, CGSize) -> Void,
+         onPresentationChange: (@MainActor (UUID, Bool) -> Void)? = nil,
          @ViewBuilder source: () -> Source, @ViewBuilder content: () -> Content) {
         _isPresented = isPresented
         self.presentationID = presentationID
         self.contentSize = contentSize
         self.onResizeCompleted = onResizeCompleted
+        self.onPresentationChange = onPresentationChange
         self.source = source()
         self.content = content()
     }
@@ -29,7 +33,8 @@ struct HanlinModelZoomPopover<Source: View, Content: View>: UIViewControllerRepr
         HanlinModelPopoverController(
             source: HanlinModelHostedView(content: source, environment: context.environment),
             content: HanlinModelHostedView(content: content, environment: context.environment),
-            contentSize: contentSize
+            contentSize: contentSize,
+            onPresentationChange: onPresentationChange
         )
     }
 
@@ -41,7 +46,8 @@ struct HanlinModelZoomPopover<Source: View, Content: View>: UIViewControllerRepr
             // Route replacement suppresses SwiftUI animations; UIKit still
             // owns the one popover size animation (except under Reduce Motion).
             animatedResize: !context.environment.accessibilityReduceMotion,
-            onResizeCompleted: onResizeCompleted
+            onResizeCompleted: onResizeCompleted,
+            onPresentationChange: onPresentationChange
         )
     }
 
@@ -82,6 +88,10 @@ final class HanlinModelSizingHost<Content: View>: UIHostingController<HanlinMode
     init(content: HanlinModelHostedView<Content>) {
         super.init(rootView: content)
         sizingOptions = []
+        // UIPopoverPresentationController already keeps its viewport above the
+        // keyboard. Applying the keyboard region again inside this small host
+        // can reduce the catalog's usable height to zero.
+        safeAreaRegions = .container
     }
 
     @available(*, unavailable)
@@ -157,21 +167,29 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
     private let sourceHost: UIHostingController<HanlinModelHostedView<Source>>
     private let sourceToolbar = UIToolbar()
     private lazy var sourceItem = UIBarButtonItem(customView: sourceHost.view)
+    private lazy var sourceWidthConstraint = sourceHost.view.widthAnchor.constraint(equalToConstant: 28)
     private var content: HanlinModelHostedView<Content>
     private var contentSize: CGSize
     private var popupHost: HanlinModelSizingHost<Content>?
     private var onResizeCompleted: (@MainActor (Int, CGSize) -> Void)?
+    private let keyboardOwnershipID = UUID()
+    private var onPresentationChange: (@MainActor (UUID, Bool) -> Void)?
     private var presentation: Binding<Bool>?
     private var requested = false
     private var requestID = 0
     private var presentedID = 0
 
-    init(source: HanlinModelHostedView<Source>, content: HanlinModelHostedView<Content>, contentSize: CGSize) {
+    init(source: HanlinModelHostedView<Source>, content: HanlinModelHostedView<Content>, contentSize: CGSize,
+         onPresentationChange: (@MainActor (UUID, Bool) -> Void)?) {
         sourceHost = UIHostingController(rootView: source)
         self.content = content
         self.contentSize = contentSize
+        self.onPresentationChange = onPresentationChange
         super.init(nibName: nil, bundle: nil)
-        sourceHost.sizingOptions = .intrinsicContentSize
+        // The toolbar custom view receives explicit bounds below. Allowing its
+        // intrinsic size to compete with SwiftUI's row proposal leaves stale
+        // source-item geometry after narrow-window or keyboard transitions.
+        sourceHost.sizingOptions = []
         // This host embeds a toolbar button, not a window root. Its enclosing
         // SwiftUI composer already handles the keyboard and container insets.
         // Applying those regions again made the source hundreds of points tall.
@@ -186,8 +204,13 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
         view.backgroundColor = .clear
         addChild(sourceHost)
         sourceHost.view.backgroundColor = .clear
+        sourceHost.view.translatesAutoresizingMaskIntoConstraints = false
         sourceHost.view.setContentHuggingPriority(.required, for: .horizontal)
         sourceHost.view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        NSLayoutConstraint.activate([
+            sourceWidthConstraint,
+            sourceHost.view.heightAnchor.constraint(equalToConstant: HanlinMorphStyle.inputControlHitSize)
+        ])
 
         // Keep the existing SwiftUI label/action, hosted in an actual system
         // toolbar item. UIKit owns the glass and replaces this item during the
@@ -211,29 +234,42 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
         reconcilePresentation()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let width = max(1, view.bounds.width - HanlinMorphStyle.modelSourceHorizontalInset)
+        if abs(sourceWidthConstraint.constant - width) > 0.5 {
+            sourceWidthConstraint.constant = width
+            sourceToolbar.setNeedsLayout()
+        }
+        // A request may arrive before the source has its first nonzero bounds.
+        if requested, popupHost == nil { reconcilePresentation() }
+    }
+
     func sourceSize(in proposal: CGSize) -> CGSize {
         if proposal.width.isFinite && proposal.width <= 0 {
             return CGSize(width: 44, height: 44)
         }
-        let horizontalInset: CGFloat = 16
+        let horizontalInset = HanlinMorphStyle.modelSourceHorizontalInset
         let width = proposal.width.isFinite && proposal.width > 0 ? proposal.width : 10_000
         let label = sourceHost.sizeThatFits(in: CGSize(
             width: max(1, width - horizontalInset), height: 10_000))
         // Reserve the system bar's hit target inside the composer. Measuring
         // just the 28pt label clips the native glass and its source geometry.
         let labelWidth = label.width.isFinite ? max(0, label.width) : 0
-        let labelHeight = label.height.isFinite ? max(0, label.height) : 0
         return CGSize(width: min(width, max(44, labelWidth + horizontalInset)),
-                      height: max(44, labelHeight))
+                      height: HanlinMorphStyle.inputControlHitSize)
     }
 
     func update(source: HanlinModelHostedView<Source>, content: HanlinModelHostedView<Content>,
                 isPresented: Binding<Bool>, presentationID: Int, contentSize: CGSize,
-                animatedResize: Bool, onResizeCompleted: @escaping @MainActor (Int, CGSize) -> Void) {
+                animatedResize: Bool, onResizeCompleted: @escaping @MainActor (Int, CGSize) -> Void,
+                onPresentationChange: (@MainActor (UUID, Bool) -> Void)?) {
         sourceHost.rootView = source
+        sourceHost.view.setNeedsLayout()
         self.content = content
         self.contentSize = contentSize
         self.onResizeCompleted = onResizeCompleted
+        self.onPresentationChange = onPresentationChange
         presentation = isPresented
         requested = isPresented.wrappedValue
         requestID = presentationID
@@ -279,6 +315,10 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
         popover.delegate = self
         presentedID = requestID
         popupHost = host
+        // Keep the source workspace keyboard-adjusted when focus moves from
+        // its editor into this popover's native search. This ends after the
+        // native dismissal, not when a SwiftUI request first changes to false.
+        onPresentationChange?(keyboardOwnershipID, true)
         present(host, animated: true) { [weak self] in self?.reconcilePresentation() }
     }
 
@@ -292,6 +332,7 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
     private func didDismiss(_ host: HanlinModelSizingHost<Content>) {
         guard popupHost === host else { return }
         popupHost = nil
+        onPresentationChange?(keyboardOwnershipID, false)
         // A late dismissal must not close a newly requested presentation.
         if requested, requestID == presentedID {
             requested = false
@@ -303,6 +344,8 @@ final class HanlinModelPopoverController<Source: View, Content: View>: UIViewCon
     func shutdown() {
         requested = false
         presentation = nil
+        onPresentationChange?(keyboardOwnershipID, false)
+        onPresentationChange = nil
         popupHost?.dismiss(animated: false)
         popupHost = nil
     }

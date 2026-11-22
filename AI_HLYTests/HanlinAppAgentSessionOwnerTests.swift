@@ -2104,12 +2104,12 @@ private final class ProviderCredentialTestFixture {
         #expect(coordinator.acceptedOrigin(forReceivingWindowID: window) == nil && coordinator.lastFailure == .correlationMismatch)
     }
 
-    @Test func actualNativeBoundaryRejectsLossyOrInvalidInputAndChangedContextBeforeEffects() async throws {
+    @Test func actualNativeBoundaryPreservesExactInputsAndRejectsInvalidOrChangedContextBeforeEffects() async throws {
         let cases: [(input: String, invalidate: Bool, calls: Int, code: HanlinErrorCode?)] = [
             (#"{"value":9007199254740993}"#, false, 1, nil),
-            (#"{"value":1.234567890123456789}"#, false, 0, .schemaProjectionWidensInput),
+            (#"{"value":1.234567890123456789}"#, false, 1, nil),
             (#"{}"#, false, 0, .invalidArguments),
-            (#"{"value":1,"K":1,"\u212A":2}"#, false, 0, .schemaProjectionWidensInput),
+            (#"{"value":1,"K":1,"\u212A":2}"#, false, 1, nil),
             (#"{"value":1}"#, true, 0, .operationUnavailable)
         ]
         for item in cases {
@@ -2139,7 +2139,10 @@ private final class ProviderCredentialTestFixture {
                 }))
             let host = HanlinAppHostIntegration(identity: identity, store: store, isCurrent: { current })
             host.toolAdapter = adapter
-            host.confirmInvocation = { _ in true }
+            host.confirmInvocation = { _, _ in
+            Issue.record("A non-sensitive read unexpectedly requested consent")
+            return false
+        }
             let catalog = try await host.catalog(for: identity.context)
             let dispatcher = HanlinHostDispatcher(host: host)
             // A stale context suppresses delivery but retains the original no-dispatch receipt.
@@ -2207,7 +2210,10 @@ private final class ProviderCredentialTestFixture {
             preparedTools: .init(authority: authority, executors: executors, legacySources: [search]))
         let host = HanlinAppHostIntegration(identity: identity, store: store, isCurrent: { current })
         host.toolAdapter = adapter
-        host.confirmInvocation = { _ in true }
+        host.confirmInvocation = { _, _ in
+            Issue.record("A non-sensitive read unexpectedly requested consent")
+            return false
+        }
         let catalog = try await host.catalog(for: identity.context)
         for _ in 0..<8 {
             #expect(try await host.catalog(for: identity.context).revision == catalog.revision)
@@ -2236,11 +2242,19 @@ private final class ProviderCredentialTestFixture {
             providerCallID: "stale-search", runID: UUID(), step: 0, session: identity, catalog: catalog, limits: .init())
         #expect(stale.result.effectState == .notDispatched && calls.count == 1)
 
-        // A change while the user reviews the request must invalidate the cached route too.
-        adapter.preparedTools = .init(authority: authority, executors: executors, legacySources: [search])
+        // A manifest that explicitly requests consent still revalidates its route after review.
+        let sensitiveDescriptor = HanlinToolDescriptor(
+            logicalID: search.descriptor.logicalID, descriptorRevision: search.descriptor.descriptorRevision,
+            owner: search.descriptor.owner, title: search.descriptor.title, summary: search.descriptor.summary,
+            inputSchema: search.descriptor.inputSchema, risk: .sensitiveRead, presentation: search.descriptor.presentation)
+        let sensitiveSource = HanlinCanonicalToolAuthority.LegacySource(
+            descriptor: sensitiveDescriptor, preferredAlias: search.preferredAlias, modelSchema: search.modelSchema,
+            toolName: search.toolName, presentationProfile: search.presentationProfile, resultTitle: search.resultTitle)
+        let sensitiveAuthority = try HanlinCanonicalToolAuthority.build(nativeSources: [], mcpTools: [], legacySources: [sensitiveSource])
+        adapter.preparedTools = .init(authority: sensitiveAuthority, executors: executors, legacySources: [sensitiveSource])
         let restored = try await host.catalog(for: identity.context)
-        #expect(restored.revision == catalog.revision)
-        host.confirmInvocation = { _ in
+        #expect(restored.revision != catalog.revision)
+        host.confirmInvocation = { _, _ in
             adapter.preparedTools = .init(authority: changedAuthority, executors: executors, legacySources: [changedSource])
             return true
         }
@@ -2267,7 +2281,7 @@ private final class ProviderCredentialTestFixture {
             let alias = "fixture_general_operation", profile = ToolPresentationProfile.generic(toolName: alias)
             let schema = NativeToolSchema.function(name: alias, description: "Original injected operation",
                 parameters: NativeToolSchema.object(properties: [:], required: []))
-            let source = HanlinCanonicalToolAuthority.NativeSource(entry: .init(name: alias, title: "Fixture", summary: "Fixture", presentationProfile: profile),
+            let source = HanlinCanonicalToolAuthority.NativeSource(entry: .init(name: alias, title: "Fixture", summary: "Fixture", isSensitive: true, presentationProfile: profile),
                 canonicalSchema: schema, modelSchema: schema, preferredAlias: alias)
             let authority = try HanlinCanonicalToolAuthority.build(nativeSources: [source], mcpTools: [])
             var calls = 0, callbackCount = 0
@@ -2281,17 +2295,25 @@ private final class ProviderCredentialTestFixture {
             let host = HanlinAppHostIntegration(identity: identity, store: store, isCurrent: { true })
             host.toolAdapter = adapter
             var confirmations = 0
-            host.confirmInvocation = { invocation in
+            var rememberedGrantID: UUID?
+            defer {
+                if let rememberedGrantID { _ = HanlinToolApprovalStore.shared.revoke(id: rememberedGrantID) }
+            }
+            host.confirmInvocation = { invocation, scope in
                 confirmations += 1
                 if expires {
                     let remaining = max(0, invocation.request.deadline?.timeIntervalSinceNow ?? 0)
                     try? await Task.sleep(for: .seconds(remaining + 0.01))
                 }
+                if approved {
+                    guard HanlinToolApprovalStore.shared.remember(scope, title: alias) else { return false }
+                    rememberedGrantID = HanlinToolApprovalStore.shared.grants.first { $0.scope == scope }?.id
+                }
                 return approved
             }
             let catalog = try await host.catalog(for: identity.context)
             let tool = try #require(catalog.tools.first(where: { $0.route.alias == alias }))
-            #expect(tool.descriptor.risk == .read) // Current shadow metadata is not a no-write guarantee.
+            #expect(tool.descriptor.risk == .sensitiveRead) // Explicit sensitivity drives consent, independently of effects.
             #expect(tool.writeGuarantee == .hostManagedMutation)
             let dispatcher = HanlinHostDispatcher(host: host), run = UUID()
             let limits = try HanlinToolInvocationLimits(timeoutMilliseconds: expires ? 1_000 : 30_000)

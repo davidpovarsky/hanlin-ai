@@ -16,14 +16,25 @@ final class RuntimeUserOperation: @unchecked Sendable {
     struct Snapshot: Sendable {
         let reason: String?
         let outputBytes: Int64
+        let completedWorkUnits: Int64
         let finished: Bool
         let succeeded: Bool
+
+        /// Progress covers work discovered so far, plus the real finalization
+        /// step. The total grows as the provider discovers additional work;
+        /// it is not an estimate of the duration or eventual response length.
+        var progressTotalUnits: Int64 { completedWorkUnits + 1 }
+        var progressCompletedUnits: Int64 {
+            succeeded && finished && reason == nil ? progressTotalUnits : completedWorkUnits
+        }
     }
 
     let id: UUID
     private let lock = NSLock()
     private var reason: String?
     private var outputBytes: Int64 = 0
+    private var completedWorkUnits: Int64 = 0
+    private var recordedEvents: Set<String> = []
     private var jobBytes: [UUID: Int64] = [:]
     private var handlers: [UUID: @Sendable (String) -> Void] = [:]
     private var cancelProducer: (@Sendable () -> Void)?
@@ -40,7 +51,8 @@ final class RuntimeUserOperation: @unchecked Sendable {
     }
 
     var snapshot: Snapshot {
-        lock.withLock { Snapshot(reason: reason, outputBytes: outputBytes, finished: finished, succeeded: succeeded) }
+        lock.withLock { Snapshot(reason: reason, outputBytes: outputBytes,
+            completedWorkUnits: completedWorkUnits, finished: finished, succeeded: succeeded) }
     }
 
     func bindProducerCancellation(_ cancel: @escaping @Sendable () -> Void) {
@@ -87,6 +99,16 @@ final class RuntimeUserOperation: @unchecked Sendable {
         lock.withLock { addBytes(Int64(bytes)) }
     }
 
+    /// A provider/Host lifecycle receipt is real progress even when a tool
+    /// returns no text. Replayed receipts and polling never add units.
+    func recordWorkEvent(id: String) {
+        guard !id.isEmpty else { return }
+        lock.withLock {
+            guard !finished, reason == nil, recordedEvents.insert(id).inserted else { return }
+            completeWorkUnit()
+        }
+    }
+
     /// Polling the same durable journal must not manufacture more progress.
     func recordJobOutput(id: UUID, stdout: Int64, stderr: Int64) {
         guard stdout >= 0, stderr >= 0 else { return }
@@ -107,6 +129,20 @@ final class RuntimeUserOperation: @unchecked Sendable {
 
     func markFailed() { lock.withLock { succeeded = false } }
 
+    /// Finishing a nested stream is a receipt, not cancellation of its owning
+    /// conversation. Only cancellation stops that producer; only the root
+    /// stream owns cancellation of the shared run.
+    static func handleStreamTermination<Element>(
+        _ termination: AsyncThrowingStream<Element, Error>.Continuation.Termination,
+        ownsRun: Bool,
+        cancelProducer: @Sendable () -> Void,
+        cancelOwnedRun: @Sendable () -> Void
+    ) {
+        guard case .cancelled = termination else { return }
+        cancelProducer()
+        if ownsRun { cancelOwnedRun() }
+    }
+
     static func finishStream<Element>(_ continuation: AsyncThrowingStream<Element, Error>.Continuation) {
         if let operation = current, let reason = operation.snapshot.reason {
             continuation.finish(throwing: RuntimeOperationInterruptionError(operationID: operation.id, reason: reason))
@@ -119,12 +155,18 @@ final class RuntimeUserOperation: @unchecked Sendable {
             handlers.removeAll()
             cancelProducer = nil // Break the producer Task/context ownership cycle.
             jobBytes.removeAll()
+            recordedEvents.removeAll()
         }
     }
 
     private func addBytes(_ count: Int64) {
-        guard !finished else { return }
+        guard !finished, reason == nil else { return }
         let sum = outputBytes.addingReportingOverflow(count)
         outputBytes = sum.overflow ? Int64.max : sum.partialValue
+        completeWorkUnit()
+    }
+
+    private func completeWorkUnit() {
+        if completedWorkUnits < Int64.max - 1 { completedWorkUnits += 1 }
     }
 }

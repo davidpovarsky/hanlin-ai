@@ -16,6 +16,45 @@ public enum HanlinMorphGeometry {
         value.isFinite ? max(0, value) : 0
     }
 
+    /// One local layout result owns the editor, its controls and their glass.
+    /// Global origin changes never feed back into these heights. The native
+    /// editor supplies only its content height; control chrome is a single row.
+    public struct Layout: Equatable {
+        public let editorHeight: CGFloat
+        public let editorMaximumHeight: CGFloat
+        public let inputHeight: CGFloat
+        public let accessoryHeight: CGFloat
+        public let hostOverhead: CGFloat
+    }
+
+    public static func layout(availableHeight: CGFloat, accessoryNaturalHeight: CGFloat,
+                              capabilitiesHeight: CGFloat, naturalEditorHeight: CGFloat,
+                              toolbarHeight: CGFloat, isPanelExpanded: Bool,
+                              isEditorExpanded: Bool) -> Layout {
+        let available = finiteHeight(availableHeight)
+        let capabilities = finiteHeight(capabilitiesHeight)
+        let capabilityOverhead = capabilities > 1 ? capabilities + HanlinMorphStyle.hostSpacing : 0
+        let panelMinimum: CGFloat = isPanelExpanded
+            ? HanlinMorphStyle.panelInset * 2 + HanlinMorphStyle.panelContentSpacing
+                + HanlinMorphStyle.panelInputSpacing + finiteHeight(toolbarHeight) + HanlinMorphStyle.minimumPageHeight
+            : 0
+        let editorAndAccessories = max(0, available - capabilityOverhead - panelMinimum
+            - HanlinMorphStyle.topInset - HanlinMorphStyle.bottomInset - HanlinMorphStyle.inputChromeHeight)
+        let desiredEditor = isEditorExpanded
+            ? max(HanlinMorphStyle.expandedEditorMinimumHeight, available * HanlinMorphStyle.expandedEditorFraction)
+            : max(HanlinMorphStyle.editorMinimumHeight, finiteHeight(naturalEditorHeight))
+        let editorHeight = max(HanlinMorphStyle.editorMinimumHeight, min(desiredEditor, editorAndAccessories))
+        let accessoryLimit = max(0, editorAndAccessories - editorHeight - HanlinMorphStyle.hostSpacing)
+        let measuredAccessory = min(finiteHeight(accessoryNaturalHeight), accessoryLimit)
+        let accessoryHeight = measuredAccessory > 1 ? measuredAccessory : 0
+        let accessoryOverhead = accessoryHeight > 0 ? accessoryHeight + HanlinMorphStyle.hostSpacing : 0
+        return Layout(editorHeight: editorHeight,
+            editorMaximumHeight: max(HanlinMorphStyle.editorMinimumHeight, editorAndAccessories - accessoryOverhead),
+            inputHeight: editorHeight + HanlinMorphStyle.inputChromeHeight,
+            accessoryHeight: accessoryHeight,
+            hostOverhead: capabilityOverhead + accessoryOverhead)
+    }
+
     public static func viewportLimit(availableHeight: CGFloat) -> CGFloat {
         max(HanlinMorphStyle.minimumPageHeight, finiteHeight(availableHeight) * 0.72)
     }
@@ -90,12 +129,12 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
     @Binding var activePage: Page?
     let availableHeight: CGFloat
     let accessoryHeight: CGFloat
+    let inputHeight: CGFloat
     let title: (Page?) -> String
     let subtitle: (Page?) -> String
     let backIdentifier: (Page) -> String
     let onOpen: () -> Void
     let onBackgroundTap: () -> Void
-    let onInputHeightChange: (CGFloat) -> Void
     let onToolbarHeightChange: (CGFloat) -> Void
     var isEnabled: Bool = true
     @ViewBuilder let home: () -> Home
@@ -104,7 +143,6 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
 
     @Namespace private var glassNamespace
     @State private var swipeOffset: CGFloat = 0
-    @State private var measuredInputHeight: CGFloat = 52
     @State private var measuredToolbarHeight: CGFloat = 44
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -114,12 +152,12 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
         activePage: Binding<Page?>,
         availableHeight: CGFloat,
         accessoryHeight: CGFloat,
+        inputHeight: CGFloat,
         title: @escaping (Page?) -> String,
         subtitle: @escaping (Page?) -> String,
         backIdentifier: @escaping (Page) -> String,
         onOpen: @escaping () -> Void,
         onBackgroundTap: @escaping () -> Void,
-        onInputHeightChange: @escaping (CGFloat) -> Void,
         onToolbarHeightChange: @escaping (CGFloat) -> Void,
         isEnabled: Bool = true,
         @ViewBuilder home: @escaping () -> Home,
@@ -130,12 +168,12 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
         self._activePage = activePage
         self.availableHeight = availableHeight
         self.accessoryHeight = accessoryHeight
+        self.inputHeight = inputHeight
         self.title = title
         self.subtitle = subtitle
         self.backIdentifier = backIdentifier
         self.onOpen = onOpen
         self.onBackgroundTap = onBackgroundTap
-        self.onInputHeightChange = onInputHeightChange
         self.onToolbarHeightChange = onToolbarHeightChange
         self.isEnabled = isEnabled
         self.home = home
@@ -186,14 +224,9 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
 
                     // The host supplies the actual editor and send/stop controls.
                     input()
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: HanlinMorphStyle.launcherSize)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .frame(height: inputHeight, alignment: .top)
                         .layoutPriority(1)
-                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
-                            guard height.isFinite, height > 1, abs(height - measuredInputHeight) > 1 else { return }
-                            measuredInputHeight = height
-                            onInputHeightChange(height)
-                        }
                         .background {
                             Color.clear.contentShape(Rectangle()).onTapGesture(perform: onBackgroundTap)
                         }
@@ -225,7 +258,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
             HanlinMorphMeasuredPages(id: pageID, maxHeight: HanlinMorphGeometry.pageBudget(
                 availableHeight: availableHeight,
                 accessoryHeight: accessoryHeight,
-                inputHeight: measuredInputHeight,
+                inputHeight: inputHeight,
                 toolbarHeight: measuredToolbarHeight
             )) {
                 VStack(alignment: .leading, spacing: 14) {

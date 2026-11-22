@@ -41,17 +41,10 @@ struct ClassicProjectedToolCallEntry: Equatable, Sendable, Identifiable {
         }
     }
 
-    static let metaToolNames: Set<String> = [
-        "load_skill",
-        "read_skill_resource",
-        "tool_search",
-        "read_tool_result",
-        "report_progress"
-    ]
+    static let metaToolNames = AgentActivityVisibilityPolicy.internalToolNames
 
     static func isMetaTool(_ name: String) -> Bool {
-        let normalized = name.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        return metaToolNames.contains(normalized)
+        AgentActivityVisibilityPolicy.isInternalTool(name)
     }
 
     /// Formats a single entry for `ChatBubbleView.toolContentView()`, always keeping its own tool label
@@ -435,6 +428,7 @@ struct ClassicChatAgentProjection {
             let rawCallID = step.toolCallID ?? step.externalID ?? step.id.uuidString
             let stepTitle = step.title.trimmingCharacters(in: .whitespacesAndNewlines)
             let canonicalToolName = toolNameByCallID[rawCallID]
+                ?? step.subtitle
                 ?? (stepTitle.isEmpty ? "tool" : stepTitle)
             let isMeta = ClassicProjectedToolCallEntry.isMetaTool(canonicalToolName)
 
@@ -508,8 +502,14 @@ struct ClassicChatAgentProjection {
         fallbackToolName: String,
         to assistantMessage: ChatMessages
     ) {
+        let hadEntries = !entries.isEmpty
+        let entries = entries.filter { !$0.isMetaSkillOrDiscoveryTool }
         guard !entries.isEmpty else {
-            if (assistantMessage.toolName ?? "").isEmpty && !fallbackToolName.isEmpty {
+            if hadEntries {
+                assistantMessage.toolContent = ""
+                assistantMessage.toolName = ""
+            } else if (assistantMessage.toolName ?? "").isEmpty && !fallbackToolName.isEmpty
+                && !ClassicProjectedToolCallEntry.isMetaTool(fallbackToolName) {
                 assistantMessage.toolName = fallbackToolName
             }
             return

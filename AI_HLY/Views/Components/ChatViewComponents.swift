@@ -153,13 +153,14 @@ extension View {
     }
 }
 
-/// An immutable presentation of the Host's one-use request. Only its original
+/// An immutable presentation of the Host's verified request. Only its original
 /// continuation can decide; an activity row never synthesizes permission.
 struct ChatToolApprovalPresentation {
     let requestID: String
     let callID: String
     let toolName: String
     let reviewText: String
+    var remembersDecision: Bool = false
     let answer: (Bool) -> Void
 }
 
@@ -664,7 +665,6 @@ struct ChatBubbleView: View {
             assistantHeader()
             assistantImageSection()
             assistantTextSection()
-            assistantFooter()
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-assistant-bubble")
@@ -842,22 +842,6 @@ struct ChatBubbleView: View {
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
             }
-        }
-    }
-
-    // MARK: Live status belongs only to the current, active response.
-    @ViewBuilder
-    private func assistantFooter() -> some View {
-        if AgentActivityHeaderPhase.showsStandaloneStatus(
-            isRunActive: isMotionRunActive, isCurrentMessage: isLastAssistant,
-            hasActivityHeader: hasAgentActivity, hasAnswerText: hasStartedAssistantAnswer
-        ) {
-            LoadingGradientText(text: operationalState.isEmpty
-                ? String(localized: "Working through your request") : operationalState,
-                isActive: true)
-                .padding(5)
-                .contentTransition(.opacity)
-                .animation(chatMotion.updateAnimation, value: operationalState)
         }
     }
 
@@ -1851,11 +1835,10 @@ struct ChatBubbleView: View {
     @ViewBuilder
     private var existingAssistantMarkdown: some View {
         if !text.isEmpty {
-            HanlinMixedOriginalText(text: text) { segment in
-                ChatMarkdownView(text: segment,
-                    savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
-                    saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
-            }
+            HanlinInlineMessageDocument(parts: [.init(id: "answer", content: .markdown(text: text, sourcePrefix: ""))],
+                messageText: text,
+                savePersonal: { savePersonalExcerpt($0.text, selection: $0) },
+                saveKnowledge: { createAndSaveKnowledgeRecord(with: $0) })
             .padding(.vertical, 4)
             .environment(\.chatMessageLongPressPreview, { source, point in
                 presentMessagePreview(from: source, at: point)
@@ -2138,9 +2121,8 @@ struct ChatBubbleView: View {
 
     private var hasAgentActivity: Bool {
         showsAgentActivitySummary && (toolApproval != nil || agentRun?.steps.contains {
-            !AgentActivityCompositionPolicy.isInternalTransport($0)
-                && AgentActivityCompositionPolicy.displayKind(for: $0.kind) != nil
-        } == true || !sanitizedReasoningDisplay.isEmpty || hasToolContentForDisplay)
+            AgentActivityCompositionPolicy.isVisibleToolActivity($0)
+        } == true || (agentRun == nil && hasToolContentForDisplay))
     }
 
     private var isMotionRunActive: Bool {
@@ -2203,10 +2185,7 @@ struct ChatBubbleView: View {
                 && lhs.toolApproval?.callID == rhs.toolApproval?.callID
                 && lhs.toolApproval?.toolName == rhs.toolApproval?.toolName
                 && lhs.toolApproval?.reviewText == rhs.toolApproval?.reviewText
-        }
-
-        private var safeReasoning: String {
-            ProgressSummarySanitizer.sanitizeProviderReasoningSummary(reasoning) ?? ""
+                && lhs.toolApproval?.remembersDecision == rhs.toolApproval?.remembersDecision
         }
 
         private func headerPhase(for activities: [AgentDisplayActivity],
@@ -2228,12 +2207,8 @@ struct ChatBubbleView: View {
                                  activeActivities: [AgentDisplayActivity]) -> String {
             switch phase {
             case .working:
-                // Collapsed ancestors describe the actual active operation.
-                // The fallback is app status, never claimed to be model text.
-                if activeActivities.count == 1, let activity = activeActivities.first {
-                    return activity.title
-                }
-                return String(localized: "Working through your request")
+                return hierarchyIsExpanded ? String(localized: "Tools")
+                    : activeActivities.map(\.title).joined(separator: " · ")
             case .awaitingApproval: return String(localized: "Waiting for your confirmation")
             case .history: return String(localized: "Activity history")
             }
@@ -2242,8 +2217,7 @@ struct ChatBubbleView: View {
         private var hierarchyIsExpanded: Bool { isExpanded || toolApproval != nil }
 
         private func roundHasHeader(_ round: AgentDisplayRound) -> Bool {
-            round.roundID != nil
-                && round.activities.contains { $0.kind != .reasoning && $0.kind != .narrative }
+            round.roundID != nil && round.activities.count > 1
         }
 
         private func roundIsWaiting(_ round: AgentDisplayRound,
@@ -2263,9 +2237,7 @@ struct ChatBubbleView: View {
                 guard activity.status == .running, toolApproval?.callID != activity.id,
                       approvals[activity.id]?.disposition != .awaiting,
                       approvals[activity.id]?.disposition != .providerRequired else { return false }
-                // Stale model reasoning/progress is not current work once text
-                // of the answer has arrived. Genuine concurrent tools remain live.
-                return !hasAnswerText || (activity.kind != .reasoning && activity.kind != .narrative)
+                return activity.kind != .reasoning && activity.kind != .narrative
             }
         }
 
@@ -2278,9 +2250,6 @@ struct ChatBubbleView: View {
                         isRoundExpanded: !collapsedRoundIDs.contains(round.id)
                             || roundIsWaiting(round, approvals: approvals))
                 }
-            }
-            if paths.isEmpty, rounds.isEmpty, !safeReasoning.isEmpty, !hasAnswerText {
-                return [.init(activityID: "legacy-reasoning", roundID: nil, isRoundExpanded: true)]
             }
             return paths
         }
@@ -2297,26 +2266,17 @@ struct ChatBubbleView: View {
             let paths = shimmerPaths(rounds: rounds, activeIDs: activeIDs, approvals: approvals)
             let shimmerOwners = AgentActivityShimmerOwner.resolve(isWorking: phase.showsShimmer,
                 isHierarchyExpanded: hierarchyIsExpanded, activePaths: paths)
-            if timeline?.activities.isEmpty == false || !safeReasoning.isEmpty
-                || !legacyToolContent.isEmpty || toolApproval != nil {
+            if timeline?.activities.isEmpty == false
+                || (run == nil && !legacyToolContent.isEmpty) || toolApproval != nil {
                 DisclosureGroup(isExpanded: Binding(
                     get: { hierarchyIsExpanded }, set: { isExpanded = $0 }
                 )) {
-                    if let reasoningTime, !reasoningTime.isEmpty {
-                        Text(reasoningTime).font(HanlinTypography.caption).foregroundStyle(.secondary)
-                    }
                     if let timeline, let run, !timeline.activities.isEmpty {
                         ForEach(rounds) { round in
                             roundView(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
                         }
                     } else {
-                        if !safeReasoning.isEmpty {
-                            HanlinActivityTitle(safeReasoning, font: HanlinTypography.footnote,
-                                baseColor: .secondary, isActive: shimmerOwners.contains(.activity("legacy-reasoning")))
-                                .textSelection(.enabled)
-                                .accessibilityIdentifier("hanlin-reasoning-expanded-text")
-                        }
-                        if !legacyToolContent.isEmpty {
+                        if run == nil && !legacyToolContent.isEmpty {
                             DisclosureGroup(isExpanded: $legacyDetailsExpanded) {
                                 Self.technicalText(ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(legacyToolContent))
                             } label: {
@@ -2335,7 +2295,7 @@ struct ChatBubbleView: View {
                     }
                 } label: {
                     HanlinActivityHierarchyHeader(title: headerTitle(for: phase, activeActivities: activeActivities),
-                        symbol: "sparkles", isExpanded: hierarchyIsExpanded,
+                        symbol: "wrench.and.screwdriver", isExpanded: hierarchyIsExpanded,
                         isActive: shimmerOwners.contains(.root))
                         .accessibilityIdentifier("hanlin-reasoning-toggle")
                 }
@@ -2354,6 +2314,7 @@ struct ChatBubbleView: View {
             if roundHasHeader(round) {
                 let waiting = roundIsWaiting(round, approvals: approvals)
                 let expanded = !collapsedRoundIDs.contains(round.id) || waiting
+                let activeTitles = round.activities.filter { $0.status == .running }.map(\.title)
                 DisclosureGroup(isExpanded: Binding(
                     get: { !collapsedRoundIDs.contains(round.id) || waiting },
                     set: { if $0 { collapsedRoundIDs.remove(round.id) }
@@ -2361,8 +2322,9 @@ struct ChatBubbleView: View {
                 )) {
                     roundRows(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
                 } label: {
-                    HanlinActivityHierarchyHeader(title: String(localized: "Tools"),
-                        symbol: "gearshape.2", depth: 1, isExpanded: expanded,
+                    HanlinActivityHierarchyHeader(title: !expanded && !activeTitles.isEmpty
+                        ? activeTitles.joined(separator: " · ") : String(localized: "Tools"),
+                        symbol: "wrench.and.screwdriver", depth: 1, isExpanded: expanded,
                         isActive: shimmerOwners.contains(.round(round.id)))
                 }
                 .disclosureGroupStyle(HanlinActivityDisclosureStyle())
@@ -2376,25 +2338,8 @@ struct ChatBubbleView: View {
                                shimmerOwners: Set<AgentActivityShimmerOwner>) -> some View {
             VStack(alignment: .leading, spacing: 3) {
                 ForEach(round.activities) { activity in
-                    if activity.kind == .reasoning {
-                        let summary = AgentActivityComposer.reasoningDisplayText(for: activity, in: run)
-                        // A stored placeholder is not historical reasoning text.
-                        let isCurrent = shimmerOwners.contains(.activity(activity.id))
-                        if !summary.isEmpty && (summary != String(localized: "Thinking")
-                            || (isActive && !hasAnswerText && activity.status == .running)) {
-                            HanlinActivityTitle(summary, font: HanlinTypography.footnote,
-                                baseColor: .secondary, isActive: isCurrent)
-                                .textSelection(.enabled).padding(.vertical, 4)
-                                .accessibilityIdentifier("hanlin-reasoning-expanded-text")
-                        }
-                    } else if activity.kind == .narrative {
-                        HanlinActivityTitle(activity.title, font: HanlinTypography.footnote,
-                            baseColor: .secondary, isActive: shimmerOwners.contains(.activity(activity.id)))
-                            .textSelection(.enabled)
-                    } else {
-                        activityRow(activity, approval: approvals[activity.id],
-                            isCurrent: shimmerOwners.contains(.activity(activity.id)))
-                    }
+                    activityRow(activity, approval: approvals[activity.id],
+                        isCurrent: shimmerOwners.contains(.activity(activity.id)))
                 }
             }
         }
@@ -2439,8 +2384,8 @@ struct ChatBubbleView: View {
                     } label: {
                         HanlinToolActivityHeader(title: activityDisplayTitle(activity),
                             status: statusText(activity, approval: approval),
-                            symbol: activity.systemImage ?? (activity.status == .failed
-                                ? "exclamationmark.circle" : "wrench.and.screwdriver"),
+                            symbol: activity.executionPresentation?.resolvedSystemImage
+                                ?? "wrench.and.screwdriver",
                             family: trustedActivityFamily(activity),
                             isActive: isActive && activity.status == .running
                                 && approval?.disposition != .awaiting && approval?.disposition != .providerRequired,
@@ -2492,7 +2437,8 @@ struct ChatBubbleView: View {
 
         private func approvalView(_ pending: ChatToolApprovalPresentation) -> some View {
             HanlinInlineToolApproval(requestID: pending.requestID, toolName: pending.toolName,
-                reviewText: pending.reviewText, answer: pending.answer)
+                reviewText: pending.reviewText, remembersDecision: pending.remembersDecision,
+                answer: pending.answer)
                 .id(pending.requestID)
         }
 
@@ -2511,7 +2457,14 @@ struct ChatBubbleView: View {
         }
 
         private func trustedActivityFamily(_ activity: AgentDisplayActivity) -> HanlinToolActivityHeader.Family {
-            switch activity.executionPresentation?.familyID {
+            if let animation = activity.executionPresentation?.animation {
+                switch animation {
+                case .search: return .webSearch
+                case .execution: return .codeExecution
+                case .common: return .generic
+                }
+            }
+            return switch activity.executionPresentation?.familyID {
             case .webSearch?: .webSearch
             case .sourceSearch?: .sourceSearch
             case .fileOperation?: .fileOperation

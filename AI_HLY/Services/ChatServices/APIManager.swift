@@ -2475,7 +2475,6 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                                     capabilitySession: AssistantCapabilitySession? = nil
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         
-        var updatedMessages = messages
         let stableChatID = assistantToolScope.chatID?.uuidString ?? groupID.uuidString
         let session = capabilitySession ?? AssistantCapabilitySession(
             chatID: stableChatID,
@@ -2487,39 +2486,14 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                   original.temporary == assistantToolScope.isTemporaryChat else { throw HanlinHostError.staleContext }
         }
 
-        // Register authentic image attachments for current chat turn synchronously and collect opaque handles
-        var registeredAttachmentHandles: [String] = []
-        #if canImport(UIKit)
-        for msg in messages {
-            if let imgs = msg.images {
-                for img in imgs {
-                    if let data = img.jpegData(compressionQuality: 0.9) ?? img.pngData() {
-                        if let handle = try? await AuthorizedAttachmentRegistry.shared.register(
-                            data: data,
-                            mimeType: "image/jpeg",
-                            chatID: stableChatID,
-                            requestID: currentRunID.uuidString
-                        ) {
-                            registeredAttachmentHandles.append(handle)
-                        }
-                    }
-                }
-            }
-        }
-        #endif
-
-        // Provide model-visible opaque attachment handles for tool calls (such as torah_ocr_excerpt)
-        if !registeredAttachmentHandles.isEmpty {
-            let handleNotes = registeredAttachmentHandles.enumerated().map { idx, h in
-                "[Image \(idx + 1) Attachment Handle: \(h)]"
-            }.joined(separator: " ")
-            if let lastIdx = updatedMessages.indices.last(where: { updatedMessages[$0].role == "user" }) {
-                updatedMessages[lastIdx].text += "\n\n" + handleNotes
-            }
-        }
-        
         return AsyncThrowingStream<StreamData, Error> { continuation in
             let userOperation = depth == 0 ? RuntimeUserOperation(id: currentRunID) : RuntimeUserOperation.current
+            // Establish the OS handoff before scheduling the producer or any
+            // attachment/preparation await, while the original send is active.
+            if depth == 0, AgentRunLifecycleCoordinator.shared.isCurrentRun(currentRunID), let userOperation {
+                RuntimeBackgroundContinuation.shared.begin(userOperation)
+                userOperation.recordWorkEvent(id: "run:admitted")
+            }
             let producerTask = RuntimeUserOperation.producerTask(operation: userOperation) {
                 defer {
                     if depth == 0 {
@@ -2536,6 +2510,40 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 var diagnosticsUsage: AgentTokenUsage?
                 var diagnosticsFinishReason: String?
                 do {
+                    var updatedMessages = messages
+                    // Register authentic attachments inside the protected original operation.
+                    var registeredAttachmentHandles: [String] = []
+                    #if canImport(UIKit)
+                    for msg in messages {
+                        try userOperation?.checkInterruption()
+                        try Task.checkCancellation()
+                        if let imgs = msg.images {
+                            for img in imgs {
+                                if let data = img.jpegData(compressionQuality: 0.9) ?? img.pngData() {
+                                    if let handle = try? await AuthorizedAttachmentRegistry.shared.register(
+                                        data: data,
+                                        mimeType: "image/jpeg",
+                                        chatID: stableChatID,
+                                        requestID: currentRunID.uuidString
+                                    ) {
+                                        registeredAttachmentHandles.append(handle)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endif
+
+                    // Provide model-visible opaque attachment handles for tool calls (such as torah_ocr_excerpt)
+                    if !registeredAttachmentHandles.isEmpty {
+                        let handleNotes = registeredAttachmentHandles.enumerated().map { idx, h in
+                            "[Image \(idx + 1) Attachment Handle: \(h)]"
+                        }.joined(separator: " ")
+                        if let lastIdx = updatedMessages.indices.last(where: { updatedMessages[$0].role == "user" }) {
+                            updatedMessages[lastIdx].text += "\n\n" + handleNotes
+                        }
+                    }
+                    try userOperation?.checkInterruption()
                     let currentLanguagePrefix = currentLanguage.hasPrefix("zh")
                     var tempFormattedMessages: [[String: Any]]
                     var finalFormattedMessages: [[String: Any]]
@@ -2794,7 +2802,6 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
 
                     if modelInfo.agentCapabilities.supportsNativeToolCalling
                         || self.agentSessionOwner.canRequestNativeStructured(chatConfig) {
-                        if depth == 0, let userOperation { RuntimeBackgroundContinuation.shared.begin(userOperation) }
                         await self.agentDiagnosticsRecorder?.setAgentEngineKind("swift_ai_sdk")
                         try await self.processSDKAgentEngine(
                             runID: currentRunID,
@@ -2865,6 +2872,12 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     
                     // 处理流式响应
                     for try await event in result {
+                        try userOperation?.checkInterruption()
+                        userOperation?.recordStreamBytes((event.content?.utf8.count ?? 0)
+                            + (event.reasoning?.utf8.count ?? 0))
+                        if let finishReason = event.finishReason {
+                            userOperation?.recordWorkEvent(id: "legacy-step:\(depth):\(finishReason)")
+                        }
                         if self.isCancelled {
                             RuntimeUserOperation.finishStream(continuation)
                             self.isCancelled = false
@@ -3184,11 +3197,14 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 self.activeAgentRunID = currentRunID
                 AgentRunLifecycleCoordinator.shared.attachProducerTask(producerTask, for: currentRunID)
             }
-            continuation.onTermination = { @Sendable _ in
-                producerTask.cancel()
-                Task { @MainActor in
-                    AgentRunLifecycleCoordinator.shared.cancelRun(runID: currentRunID)
-                }
+            continuation.onTermination = { @Sendable termination in
+                RuntimeUserOperation.handleStreamTermination(termination, ownsRun: depth == 0,
+                    cancelProducer: { producerTask.cancel() },
+                    cancelOwnedRun: {
+                        Task { @MainActor in
+                            AgentRunLifecycleCoordinator.shared.cancelRun(runID: currentRunID)
+                        }
+                    })
             }
         }
     }
@@ -3960,6 +3976,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 break // Metadata only; canonical parts are delivered through the session projection.
 
             case .stepStarted(let index, let prep):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "step:\(index):started")
                 currentStepID = toolAdapter?.currentRoundID
                 visibleFinalCharacters = 0
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response", modelRoundID: currentStepID))
@@ -4008,6 +4025,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 continuation.yield(StreamData(reasoning: text))
 
             case .source(let sourceID, let url, let title):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "source:\(sourceID)")
                 if let parsedURL = URL(string: url),
                    let scheme = parsedURL.scheme?.lowercased(),
                    (scheme == "http" || scheme == "https"),
@@ -4026,6 +4044,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 continuation.yield(StreamData(agentEvents: [.sourceCitations(segmentID: nil, citations: admitted)]))
 
             case .file(let mediaType, let data):
+                RuntimeUserOperation.current?.recordStreamBytes(data.count)
                 #if canImport(UIKit)
                 if mediaType.lowercased().hasPrefix("image/"), let img = UIImage(data: data) {
                     continuation.yield(StreamData(image_content: [img]))
@@ -4033,6 +4052,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 #endif
 
             case .toolApprovalRequest(let request):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "approval:\(request.approvalID):requested")
                 continuation.yield(StreamData(
                     toolContent: currentLanguagePrefix ? "请求执行工具：\(request.toolName)" : "Requesting approval for tool: \(request.toolName)",
                     toolName: request.toolName,
@@ -4044,6 +4064,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 ))
 
             case .toolApprovalResolved(let request, let allowed):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "approval:\(request.approvalID):resolved")
                 continuation.yield(StreamData(agentEvents: [.toolApprovalChanged(.init(
                     id: request.approvalID, canonicalRunID: agentEvent.runID,
                     callID: request.toolCallID, toolName: request.toolName,
@@ -4064,15 +4085,19 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 ))
 
             case .toolCallArgumentsStarted(let id, let name):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "tool:\(id):arguments-started")
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在使用工具" : "Using Tools"))
 
             case .toolCallArgumentsDelta(let id, let delta):
+                RuntimeUserOperation.current?.recordStreamBytes(delta.utf8.count)
                 continuation.yield(StreamData(agentEvents: [.toolCallArgumentsDelta(id: id, delta: delta)]))
 
             case .toolCall:
                 break
 
             case .toolResult(let callID, let name, let modelText, let resultRef, let isError):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "tool:\(callID):result")
+                RuntimeUserOperation.current?.recordStreamBytes(modelText.utf8.count)
                 guard let toolAdapter, let preparedAssistantTools else { throw HanlinAppleProviderError.unsupportedTools }
                 if !isError { hasCompletedToolAction = true }
                 if !toolAdapter.completedCallIDs.contains(callID) {
@@ -4130,6 +4155,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 }
 
             case .stepFinished(let index, let finishReason, let usage, let meaningfulCount):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "step:\(index):finished")
                 if let stepID = currentStepID {
                     let tokenUsage = AgentTokenUsage(
                         inputTokens: usage.inputTokens,

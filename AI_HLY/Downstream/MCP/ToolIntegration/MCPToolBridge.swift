@@ -72,15 +72,17 @@ enum MCPToolBridge {
         ToolPresentationProfile(
             identity: "mcp.\(descriptor.serverID.uuidString).\(descriptor.originalName)",
             activity: .init(
-                kind: .execute,
-                systemImage: "server.rack",
+                kind: descriptor.executionPresentation?.resolvedAnimation == .search ? .search
+                    : descriptor.executionPresentation?.resolvedAnimation == .execution ? .execute : .generic,
+                systemImage: descriptor.executionPresentation?.resolvedSystemImage ?? "wrench.and.screwdriver",
                 runningTitle: "\(MCPL10n.string("Running")) \(descriptor.title ?? descriptor.originalName) — \(descriptor.serverDisplayName)",
                 completedTitle: "\(MCPL10n.string("Completed")) — \(descriptor.serverDisplayName)",
                 failedTitle: MCPL10n.string("MCP tool failed"),
                 visibleArgumentKeys: []
             ),
             result: .init(rendererKind: .modernNative, supportsCard: true),
-            resultDisplayPolicy: .modelControlled
+            resultDisplayPolicy: .modelControlled,
+            canonicalExecutionPresentation: descriptor.executionPresentation
         )
     }
 

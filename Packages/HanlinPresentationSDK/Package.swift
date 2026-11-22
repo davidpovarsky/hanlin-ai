@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/davidpovarsky/hanlin-streaming-markdown",
-                 revision: "6e884c73352a272c4e7bf8a5917e8b2157bc952e")
+                 revision: "dcef24e2254d3ef6db74b6c30a926d6ea20ae18d")
     ],
     targets: [
         .target(name: "HanlinPresentationKit"),

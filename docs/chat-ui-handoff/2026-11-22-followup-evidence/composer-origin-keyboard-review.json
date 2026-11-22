@@ -1,0 +1,30 @@
+{
+  "scope": "Composer origin and native model-search keyboard ownership review; syntax validation only.",
+  "reviewed_at_utc": "2026-11-22T04:33:22Z",
+  "final_source_hashes": {
+    "AI_HLY/Views/Components/ChatViewBottom.swift": "0a12b392bad4c9450ab8fade12d19d3b976208e2446b2c283f905c7cc1c2bbb7",
+    "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift": "57bf747fa6778f835620e5f5cdf46b24722c669fdccba501e987841c1ecda5b1",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift": "729ae08bec5d2280fcddf363b3f27f5181287fd8f3537c00c4b1b79c36549d95"
+  },
+  "domain_result": "composer-layout-result.json",
+  "domain_logic_changed_after_pass": false,
+  "syntax_validation": {
+    "job_id": "job_272ef8f56f11",
+    "command": "swiftc -frontend -parse",
+    "exit_code": 0,
+    "files": [
+      "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift",
+      "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift"
+    ]
+  },
+  "source_review": [
+    "ChatViewBottom and HanlinMorphComposer use only host-local available size and a single layout result for editor, controls and glass. Removed global UIScreen keyboard subtraction and asynchronous enclosing input/editor frame feedback.",
+    "The model toolbar custom view is constrained to 44pt height and the source controller's local width; UIKit sourceItem anchors its popover. Popup content applies only container safe area.",
+    "The compact keyboard probe converts the typed keyboard screen frame through its actual UIWindow into local bounds. Its .global reads are DEBUG/HANLIN_TESTING diagnostics only.",
+    "Native model presentation supplies an owner token before presentation; its registered composer keeps keyboard avoidance when focus enters model search. Dismissal and dismantle remove that token. Old tokens cannot clear newer owners.",
+    "Original 52pt plus, bottom alignment, 10pt input/plus gap, 13pt panel/input gap and 32pt shared glass merge distance remain unchanged."
+  ],
+  "native_validation": "Not run. Physical iPad tests must exercise narrow/wide transitions, Stage Manager/global-origin changes, keyboard show/hide, expand/collapse, model-search focus and native popover dismissal.",
+  "apple_reference": "https://developer.apple.com/documentation/swiftui/uihostingcontroller/safearearegions"
+}

@@ -76,6 +76,7 @@ final class NativeToolCatalog {
             if let sourceApp {
                 entry.sourceAppID = sourceApp.id
                 entry.sourceAppTitle = sourceApp.title
+                entry.requiredCapabilities = Array(Set(entry.requiredCapabilities + sourceApp.requiredCapabilities)).sorted()
                 if entry.systemImage == "wrench.and.screwdriver" {
                     entry.systemImage = sourceApp.systemImage
                 }

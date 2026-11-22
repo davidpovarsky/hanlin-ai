@@ -48,10 +48,12 @@ enum AgentActivityTitleBuilder {
         let normalized = AgentActivityDeduplicator.normalized(value) ?? ""
         // A permission receipt describes consent, never the result or the name
         // of the subsequent operation. Keep it in the approval state only.
-        let permissionLabels = ["Allowed once", "Awaiting approval", "Not approved",
+        let permissionLabels = ["Allowed once", "Allowed and remembered", "Awaiting approval", "Not approved",
+            String(localized: "Allowed and remembered"),
             String(localized: "Allowed once"), String(localized: "Awaiting approval"),
             String(localized: "Not approved")]
-        return ["done", "using a tool", "progress update", "עדכון התקדמות"].contains(normalized)
+        return ["done", "using a tool", "using tools", "loading skill", "loading skill...",
+            "working through your request", "preparing your answer", "progress update", "עדכון התקדמות"].contains(normalized)
             || permissionLabels.contains { AgentActivityDeduplicator.normalized($0) == normalized }
     }
 }

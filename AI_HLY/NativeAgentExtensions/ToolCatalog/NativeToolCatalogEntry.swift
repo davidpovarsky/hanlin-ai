@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import HanlinPlatformContracts
 
 struct NativeToolCatalogEntry: Identifiable, Hashable {
     var id: String { name }
@@ -14,6 +15,8 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
     var keywords: [String]
     var examples: [String]
     var isSensitive: Bool
+    var requiredCapabilities: [String]
+    var approval: HanlinToolApprovalDescriptor?
     var systemImage: String
     var sourceAppID: String?
     var sourceAppTitle: String?
@@ -29,6 +32,8 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         keywords: [String] = [],
         examples: [String] = [],
         isSensitive: Bool = false,
+        requiredCapabilities: [String] = [],
+        approval: HanlinToolApprovalDescriptor? = nil,
         systemImage: String = "wrench.and.screwdriver",
         sourceAppID: String? = nil,
         sourceAppTitle: String? = nil,
@@ -43,6 +48,8 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         self.keywords = keywords
         self.examples = examples
         self.isSensitive = isSensitive
+        self.requiredCapabilities = requiredCapabilities
+        self.approval = approval
         self.systemImage = systemImage
         self.sourceAppID = sourceAppID
         self.sourceAppTitle = sourceAppTitle

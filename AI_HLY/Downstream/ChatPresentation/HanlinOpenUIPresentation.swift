@@ -5,6 +5,7 @@ import Observation
 import HanlinPresentationKit
 import HanlinRichUI
 import HanlinHostContracts
+import SwiftStreamingMarkdown
 
 /// Lives in the existing ChatView. SwiftData's original rows remain the sole
 /// durable owner; rendering a history row never restores tool authority.
@@ -131,34 +132,81 @@ extension EnvironmentValues {
     }
 }
 
-/// Keeps Hanlin's original Markdown view/selection actions. Only marked OpenUI
-/// blocks are sent to the embedded renderer, in their exact stream order.
-struct HanlinMixedOriginalText<Markdown: View>: View {
-    let text: String
-    var namespace: String = "answer"
-    @ViewBuilder let markdown: (String) -> Markdown
+/// A message has one native text document even when its ordered stream includes
+/// OpenUI or A2UI. Rich controls keep their original SDK owners and action scopes.
+@MainActor
+struct HanlinInlineMessageDocument: View {
+    struct Part {
+        enum Content {
+            case markdown(text: String, sourcePrefix: String)
+            case embedded(@MainActor @Sendable () -> AnyView)
+        }
+        let id: String
+        let content: Content
+    }
+
+    let parts: [Part]
+    let messageText: String
+    var savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?
+    var saveKnowledge: (@MainActor @Sendable (String) -> Void)?
     @Environment(\.hanlinRichMessageContext) private var context
 
     var body: some View {
-        if let context, text.contains("```openui-lang") {
-            let parts = OpenUIInlineParts.split(text, identity: context.state.identity,
-                catalogs: context.state.profile.profile.catalogIDs, isStreaming: context.isStreaming)
-            VStack(alignment: .leading, spacing: 8) {
-                ForEach(parts) { originalPart in
-                    let part = MessageRichPart(id: namespace + "/" + originalPart.id,
-                        identity: originalPart.identity, streamOrder: originalPart.streamOrder,
-                        catalogVersions: originalPart.catalogVersions, payload: originalPart.payload,
-                        isComplete: originalPart.isComplete)
-                    switch part.payload {
-                    case .markdown(let text): markdown(text)
+        let document = compose()
+        ChatMarkdownView(text: messageText, messageText: messageText,
+            documentParts: document.parts, embeddedBlockRenderer: document.renderer,
+            savePersonal: savePersonal, saveKnowledge: saveKnowledge)
+    }
+
+    private struct Composition {
+        let parts: [MarkdownDocumentPart]
+        let renderer: MarkdownEmbeddedBlockRenderer
+    }
+
+    private func compose() -> Composition {
+        var output: [MarkdownDocumentPart] = []
+        var rich: [String: @MainActor @Sendable () -> AnyView] = [:]
+        for part in parts {
+            switch part.content {
+            case .embedded(let render):
+                output.append(MarkdownDocumentPart(id: part.id))
+                rich[part.id] = render
+            case .markdown(let text, let sourcePrefix):
+                guard let context, text.contains("```openui-lang") else {
+                    output.append(MarkdownDocumentPart(id: part.id, sourcePrefix: sourcePrefix, markdown: text))
+                    continue
+                }
+                let segments = OpenUIInlineParts.split(text, identity: context.state.identity,
+                    catalogs: context.state.profile.profile.catalogIDs, isStreaming: context.isStreaming)
+                for segment in segments {
+                    let id = part.id + "/" + segment.id
+                    switch segment.payload {
+                    case .markdown(let text):
+                        output.append(MarkdownDocumentPart(id: id,
+                            sourcePrefix: sourcePrefix + "openui-segment:" + segment.id + ":", markdown: text))
                     case .openUI:
-                        OpenUIBlock(part: part, state: context.state, configuration: .init(nativeComponent: { element, _ in
-                            guard ["TextContent", "MarkDownRenderer", "Paragraph"].contains(element.typeName) else { return nil }
-                            return AnyView(markdown(element.properties["text"]?.string ?? element.properties["textMarkdown"]?.string ?? ""))
-                        }), perform: context.perform)
+                        let scoped = MessageRichPart(id: id, identity: segment.identity,
+                            streamOrder: segment.streamOrder, catalogVersions: segment.catalogVersions,
+                            payload: segment.payload, isComplete: segment.isComplete)
+                        // An embedded app has no authored prose range. Its
+                        // controls remain interactive; copying surrounding text
+                        // does not invent a textual value or expose action data.
+                        output.append(MarkdownDocumentPart(id: id))
+                        rich[id] = { AnyView(openUIBlock(scoped, context: context)) }
                     }
                 }
             }
-        } else { markdown(text) }
+        }
+        let renderers = rich
+        return Composition(parts: output, renderer: { id in renderers[id]?() })
+    }
+
+    private func openUIBlock(_ part: MessageRichPart, context: HanlinRichMessageContext) -> some View {
+        OpenUIBlock(part: part, state: context.state, configuration: .init(nativeComponent: { element, _ in
+            guard ["TextContent", "MarkDownRenderer", "Paragraph"].contains(element.typeName) else { return nil }
+            return AnyView(ChatMarkdownView(text: element.properties["text"]?.string
+                ?? element.properties["textMarkdown"]?.string ?? "", messageText: messageText,
+                savePersonal: savePersonal, saveKnowledge: saveKnowledge))
+        }), perform: context.perform)
     }
 }

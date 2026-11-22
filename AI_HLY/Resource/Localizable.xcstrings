@@ -1,6 +1,282 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "The permission change could not be saved. Please try again." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The permission change could not be saved. Please try again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?? ???? ????? ?? ????? ??????. ?? ????? ???."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?????????????"
+          }
+        }
+      }
+    },
+    "Remembered permissions apply across your conversations on this device. System permissions remain controlled in Settings." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remembered permissions apply across your conversations on this device. System permissions remain controlled in Settings."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "??????? ??????? ???? ??? ?????? ??? ?????? ???. ?????? ?????? ????? ??????? ???????."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????????????????????????????????"
+          }
+        }
+      }
+    },
+    "Revoke all tool permissions" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revoke all tool permissions"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????? ?? ?????? ?????"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????????"
+          }
+        }
+      }
+    },
+    "Revoke permission for %@" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revoke permission for %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????? ????? ???? %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?? %@ ???"
+          }
+        }
+      }
+    },
+    "Revoke permission" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revoke permission"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????? ?????"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????"
+          }
+        }
+      }
+    },
+    "Sensitive tools will ask before their first use." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sensitive tools will ask before their first use."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "???? ?????? ????? ????? ???? ?????? ??????."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????????????????"
+          }
+        }
+      }
+    },
+    "No remembered tool permissions" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No remembered tool permissions"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "??? ?????? ???? ??????"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "??????????"
+          }
+        }
+      }
+    },
+    "Tool permissions" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tool permissions"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?????? ????"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????"
+          }
+        }
+      }
+    },
+    "Collapse" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collapse"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?????"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "??"
+          }
+        }
+      }
+    },
+    "This permission will also apply in your other conversations." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This permission will also apply in your other conversations."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?????? ???? ???? ?? ?????? ?????? ???."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "???????????????"
+          }
+        }
+      }
+    },
+    "Allow and remember" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow and remember"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????? ??????"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?????"
+          }
+        }
+      }
+    },
+    "Allowed and remembered" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allowed and remembered"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "???? ?????"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "??????"
+          }
+        }
+      }
+    },
     "hanlin.apps.search" : {
       "extractionState" : "manual",
       "localizations" : {

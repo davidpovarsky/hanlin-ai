@@ -124,13 +124,45 @@ public struct HanlinToolExecutionPresentationDescriptor: Codable, Hashable, Send
     /// render its own compact execution visualization.
     public let customHandler: String?
 
+    /// Optional SF Symbol from the manifest. Presentation metadata grants no authority.
+    public let systemImage: String?
+    /// A host-rendered preset; manifests cannot supply executable animation code.
+    public let animation: HanlinToolExecutionAnimationPreset?
+
+    public var resolvedSystemImage: String {
+        guard let systemImage,
+              !systemImage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return "wrench.and.screwdriver"
+        }
+        return systemImage
+    }
+
+    public var resolvedAnimation: HanlinToolExecutionAnimationPreset {
+        if let animation { return animation }
+        switch familyID {
+        case .webSearch?, .sourceSearch?: return .search
+        case .command?, .codeExecution?: return .execution
+        default: return .common
+        }
+    }
+
     public init(
         familyID: HanlinExecutionPresentationFamilyID? = nil,
-        customHandler: String? = nil
+        customHandler: String? = nil,
+        systemImage: String? = nil,
+        animation: HanlinToolExecutionAnimationPreset? = nil
     ) {
         self.familyID = familyID
         self.customHandler = customHandler
+        self.systemImage = systemImage
+        self.animation = animation
     }
+}
+
+public enum HanlinToolExecutionAnimationPreset: String, Codable, CaseIterable, Hashable, Sendable {
+    case search
+    case execution
+    case common
 }
 
 /// Extensible identifier for tool execution presentation families.

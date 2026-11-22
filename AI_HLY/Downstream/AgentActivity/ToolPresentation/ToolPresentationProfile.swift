@@ -64,12 +64,29 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
     self.canonicalEmbeddedPresentation = canonicalEmbeddedPresentation
   }
 
+  /// Uses explicit provider/native profile metadata, never tool-name heuristics.
+  var resolvedExecutionPresentation: HanlinToolExecutionPresentationDescriptor {
+    let preset: HanlinToolExecutionAnimationPreset
+    switch activity.kind {
+    case .search, .retrieve: preset = .search
+    case .execute, .calculate: preset = .execution
+    default: preset = .common
+    }
+    return .init(
+      familyID: canonicalExecutionPresentation?.familyID,
+      customHandler: canonicalExecutionPresentation?.customHandler,
+      systemImage: canonicalExecutionPresentation?.systemImage ?? activity.systemImage,
+      animation: canonicalExecutionPresentation?.animation
+        ?? (canonicalExecutionPresentation?.familyID == nil ? preset : canonicalExecutionPresentation?.resolvedAnimation)
+    )
+  }
+
   static func generic(toolName: String) -> ToolPresentationProfile {
     ToolPresentationProfile(
       identity: "generic.\(toolName)",
       activity: ToolActivityPresentationDescriptor(
         kind: .generic,
-        systemImage: "sparkles",
+        systemImage: "wrench.and.screwdriver",
         runningTitle: String(localized: "Using a tool"),
         completedTitle: String(localized: "Used a tool"),
         failedTitle: String(localized: "Tool failed"),
@@ -124,18 +141,8 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
       default: return .generic
       }
     }()
-    let systemImage: String = {
-      switch presentation.executionPresentation?.familyID {
-      case .webSearch?: return "magnifyingglass"
-      case .sourceSearch?: return "doc.text"
-      case .codeExecution?: return "terminal"
-      case .map?: return "map"
-      case .command?: return "terminal"
-      case .fileOperation?: return "folder"
-      case .imageGeneration?: return "photo"
-      default: return "sparkles"
-      }
-    }()
+    let systemImage = presentation.executionPresentation?.resolvedSystemImage
+      ?? "wrench.and.screwdriver"
     let supportsCard = presentation.embeddedPresentation != nil
     return ToolPresentationProfile(
       identity: "canonical.\(toolName)",

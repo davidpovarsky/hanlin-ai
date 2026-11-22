@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import UIKit
 
 @MainActor
 enum RuntimeLifecycleBridge {
@@ -19,6 +20,11 @@ enum RuntimeLifecycleBridge {
     private static var lastHandledScenePhase: ScenePhase?
 
     static func prepareApplication() async {
+        RuntimeBackgroundContinuation.shared.onProtectionEnded = {
+            Task { @MainActor in
+                await handleScenePhase(.background, forceResourceReconciliation: true)
+            }
+        }
         if prepared { return }
         if let preparationTask {
             await preparationTask.value
@@ -48,13 +54,15 @@ enum RuntimeLifecycleBridge {
         prepared = true
     }
 
-    static func handleScenePhase(_ phase: ScenePhase) async {
+    static func handleScenePhase(_ phase: ScenePhase, forceResourceReconciliation: Bool = false) async {
         guard !isUnitTestHost else { return }
         let predecessor = sceneTransitionTask
         let transitionID = UUID()
         let task = Task { @MainActor in
             if let predecessor { await predecessor.value }
-            guard lastHandledScenePhase != phase else { return }
+            if forceResourceReconciliation, phase == .background,
+               UIApplication.shared.applicationState != .background { return }
+            guard forceResourceReconciliation || lastHandledScenePhase != phase else { return }
             if phase == .active { await AppRuntimeCore.shared.handleForegroundIfLaunched() }
             await MCPRuntimeProvider.shared.handleScenePhase(phase)
             lastHandledScenePhase = phase

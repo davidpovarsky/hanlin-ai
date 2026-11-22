@@ -87,7 +87,8 @@ public enum HanlinMorphStyle {
     public static let inputControlsInset: CGFloat = 8
     public static let inputControlsSpacing: CGFloat = 4
     public static let inputControlHitSize: CGFloat = 44
-    public static let inputControlsCompactWidth: CGFloat = 360
+    public static let inputChromeHeight: CGFloat = inputTopInset + inputControlsSpacing + inputControlHitSize + inputControlsInset
+    public static let modelSourceHorizontalInset: CGFloat = 16
     public static let expandedEditorFraction: CGFloat = 0.70
     public static let expandedEditorMinimumHeight: CGFloat = 180
     public static let cardCornerRadius: CGFloat = 17

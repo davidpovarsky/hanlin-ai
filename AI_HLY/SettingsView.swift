@@ -117,6 +117,14 @@ struct SettingsView: View {
                     }
                     .accessibilityIdentifier("hanlin-skill-center-link")
                     NavigationLink {
+                        HanlinToolPermissionsView()
+                            .onAppear { isPushed = true }.onDisappear { isPushed = false }
+                            .toolbar(.hidden, for: .tabBar)
+                    } label: {
+                        Label(String(localized: "Tool permissions"), systemImage: "hand.raised")
+                    }
+                    .accessibilityIdentifier("hanlin-tool-permissions-link")
+                    NavigationLink {
                         HanlinMiniAppTransferView(mode: .send)
                             .onAppear { isPushed = true }.onDisappear { isPushed = false }
                     } label: {

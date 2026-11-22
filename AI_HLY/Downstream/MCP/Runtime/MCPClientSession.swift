@@ -1,4 +1,6 @@
 import Foundation
+import HanlinPlatformContracts
+import HanlinAgentCore
 import MCP
 
 struct MCPToolCallOutput: Sendable {
@@ -45,17 +47,22 @@ actor MCPClientSession {
         return tools
     }
 
-    func call(name: String, argumentsJSON: String) async throws -> MCPToolCallOutput {
-        let arguments: [String: Value]?
-        if argumentsJSON.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            arguments = nil
-        } else {
-            guard let data = argumentsJSON.data(using: .utf8),
-                  case .object(let object) = try JSONDecoder().decode(Value.self, from: data) else {
-                throw MCPError.invalidPackageSpec
-            }
-            arguments = object
+    /// The wire SDK has its own numeric projection. Display DTO admission never
+    /// authorizes rounding the actual remote operation input.
+    nonisolated static func checkedArguments(_ argumentsJSON: String) throws -> [String: Value]? {
+        if argumentsJSON.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return nil }
+        let data = Data(argumentsJSON.utf8)
+        guard case .object(let object) = try JSONDecoder().decode(Value.self, from: data) else {
+            throw MCPError.invalidPackageSpec
         }
+        try HanlinHostSchemaValidation.requireSameValue(
+            originalJSON: data, projectedJSON: JSONEncoder().encode(object)
+        )
+        return object
+    }
+
+    func call(name: String, argumentsJSON: String) async throws -> MCPToolCallOutput {
+        let arguments = try Self.checkedArguments(argumentsJSON)
         // The pinned SDK's async convenience returns a tuple that discards
         // structuredContent. Its public RequestContext preserves the full result.
         let owner = RuntimeUserOperation.current
@@ -117,6 +124,15 @@ actor MCPClientSession {
                 discriminator: "\(server.id.uuidString):\(tool.name)"
             )
             let originalSchema = await transport.originalSchema(toolName: tool.name)
+            // Read declared annotations/_meta, without interpreting tool names as policy.
+            let encodedTool = try JSONSerialization.jsonObject(with: JSONEncoder().encode(tool)) as? [String: Any]
+            let annotations = encodedTool?["annotations"] as? [String: Any]
+            let metadata = ((encodedTool?["_meta"] as? [String: Any])?["hanlin"] as? [String: Any]) ?? [:]
+            let executionPresentation: HanlinToolExecutionPresentationDescriptor?
+            if let value = metadata["executionPresentation"] as? [String: Any],
+               let bytes = try? JSONSerialization.data(withJSONObject: value) {
+                executionPresentation = try? JSONDecoder().decode(HanlinToolExecutionPresentationDescriptor.self, from: bytes)
+            } else { executionPresentation = nil }
             descriptors.append(MCPToolDescriptor(
                 serverID: server.id,
                 serverSlug: server.slug,
@@ -126,7 +142,11 @@ actor MCPClientSession {
                 title: tool.title,
                 summary: tool.description,
                 inputSchemaJSON: try originalSchema ?? JSONEncoder().encode(tool.inputSchema),
-                originalInputSchemaVerified: originalSchema != nil
+                originalInputSchemaVerified: originalSchema != nil,
+                readOnlyHint: annotations?["readOnlyHint"] as? Bool,
+                destructiveHint: annotations?["destructiveHint"] as? Bool,
+                requiresApproval: metadata["requiresApproval"] as? Bool,
+                executionPresentation: executionPresentation
             ))
         }
         return descriptors

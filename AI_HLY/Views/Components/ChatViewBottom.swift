@@ -274,16 +274,15 @@ struct ChatViewBottom: View {
 
     var isInputActive: FocusState<Bool>.Binding
     var dockContextKey: String? = nil
+    /// Both workspace hosts supply their current, keyboard-adjusted viewport.
     var availableWorkspaceSize: CGSize = .zero
-    /// The persistent compact host supplies its usable native safe-area viewport.
-    var workspaceUsesKeyboardSafeArea: Bool = false
     var onNativeEditorLifecycle: ((UITextView, NativeMultilineTextEditor.LifecycleEvent) -> Void)? = nil
+    var onModelPopoverPresentationChange: (@MainActor (UUID, Bool) -> Void)? = nil
     /// Synchronous read from the same owner written by the message Binding.
     var readCurrentMessageState: (() -> NativeMultilineTextEditor.TextState?)? = nil
 
     @Environment(\.modelContext) private var context
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
@@ -304,14 +303,10 @@ struct ChatViewBottom: View {
     @State private var isImageViewerPresented: Bool = false
     @State private var isSelect = false
     @State private var textEditorHeight: CGFloat = HanlinMorphStyle.editorMinimumHeight
+    @State private var compactEditorHeight: CGFloat = HanlinMorphStyle.editorMinimumHeight
     @State private var measuredAttachmentPreviewHeight: CGFloat = 0
-    @State private var measuredMorphInputHeight: CGFloat = HanlinMorphStyle.editorMinimumHeight
-        + HanlinMorphStyle.inputTopInset + HanlinMorphStyle.inputControlsSpacing
-        + HanlinMorphStyle.inputControlHitSize + HanlinMorphStyle.inputControlsInset
-    @State private var measuredEditorFrameHeight: CGFloat = HanlinMorphStyle.editorMinimumHeight
     @State private var measuredCapabilitiesHeight: CGFloat = 42
     @State private var measuredMorphToolbarHeight: CGFloat = 44
-    @State private var baselineWorkspaceHeight: CGFloat = 0
     @State private var popupCoordinator = HanlinComposerPopupCoordinator()
     @State private var selectedMCPCountForChat: Int = 0
     @State private var capabilityMCPProvider = MCPRuntimeProvider.shared
@@ -544,31 +539,16 @@ struct ChatViewBottom: View {
         }
         .onChange(of: availableWorkspaceSize) { _, newSize in
             if newSize.height > 160 {
-                if popupCoordinator.dockState.keyboardHeight == 0 && newSize.height > baselineWorkspaceHeight {
-                    baselineWorkspaceHeight = newSize.height
-                }
                 popupCoordinator.dockState.availableHeight = newSize.height
             }
             if newSize.width > 120 && newSize.height > 120 {
                 popupCoordinator.measuredContainerSize = newSize
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification)) { notification in
-            guard !workspaceUsesKeyboardSafeArea,
-                  let endFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-            let screenHeight = UIScreen.main.bounds.height
-            let overlap = max(0, screenHeight - endFrame.minY)
-            popupCoordinator.dockState.updateKeyboardOverlap(
-                overlap,
-                baselineContainerHeight: baselineWorkspaceHeight
-            )
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)) { _ in
-            popupCoordinator.dockState.updateKeyboardOverlap(0, baselineContainerHeight: baselineWorkspaceHeight)
-        }
         .onChange(of: textEditorHeight) { _, newHeight in
             guard newHeight.isFinite, newHeight > 1 else { return }
             popupCoordinator.dockState.measuredInputHeight = newHeight
+            if !inputExpanded, abs(compactEditorHeight - newHeight) > 1 { compactEditorHeight = newHeight }
         }
         .onChange(of: attachmentOverheadHeightEstimate) { _, newOverhead in
             if newOverhead == 0 { measuredAttachmentPreviewHeight = 0 }
@@ -798,19 +778,11 @@ struct ChatViewBottom: View {
     }
 
     private var morphAvailableHeight: CGFloat {
-        if workspaceUsesKeyboardSafeArea {
-            return availableWorkspaceSize.height.isFinite ? max(0, availableWorkspaceSize.height) : 0
-        }
-        let height = popupCoordinator.dockState.availableHeight - popupCoordinator.dockState.keyboardHeight
-        return height.isFinite ? max(0, height) : 0
+        availableWorkspaceSize.height.isFinite ? max(0, availableWorkspaceSize.height) : 0
     }
 
     private var showsDetachedCapabilities: Bool {
         !morphExpanded.wrappedValue && !detachedCapabilities.isEmpty
-    }
-
-    private var morphCapabilitiesOverhead: CGFloat {
-        showsDetachedCapabilities ? measuredCapabilitiesHeight + HanlinMorphStyle.hostSpacing : 0
     }
 
     private var hasComposerAccessories: Bool {
@@ -818,47 +790,28 @@ struct ChatViewBottom: View {
             || !selectedPrompts.isEmpty || (showModelSuggestions && !filteredModels.isEmpty)
     }
 
-    private var morphAccessoryLimit: CGFloat {
-        HanlinMorphGeometry.accessoryBudget(
-            availableHeight: max(0, morphAvailableHeight - morphCapabilitiesOverhead),
-            inputHeight: measuredMorphInputHeight,
-            toolbarHeight: measuredMorphToolbarHeight,
-            isExpanded: morphExpanded.wrappedValue
-        )
-    }
-
-    private var morphVisibleAccessoryHeight: CGFloat {
-        guard hasComposerAccessories else { return 0 }
-        // A real attachment supplies an initial estimate so its natural-size
-        // measurement never requires mounting a zero-height native scroll view.
-        return min(max(measuredAttachmentPreviewHeight, attachmentOverheadHeightEstimate), morphAccessoryLimit)
-    }
-
-    private var morphHostOverhead: CGFloat {
-        morphCapabilitiesOverhead
-            + (morphVisibleAccessoryHeight > 1 ? morphVisibleAccessoryHeight + HanlinMorphStyle.hostSpacing : 0)
-    }
-
-    private var morphEditorBudget: CGFloat {
-        HanlinMorphGeometry.editorBudget(
+    private var morphLayout: HanlinMorphGeometry.Layout {
+        HanlinMorphGeometry.layout(
             availableHeight: morphAvailableHeight,
-            accessoryHeight: morphHostOverhead,
-            inputHeight: measuredMorphInputHeight,
-            editorHeight: measuredEditorFrameHeight,
+            accessoryNaturalHeight: hasComposerAccessories
+                ? max(measuredAttachmentPreviewHeight, attachmentOverheadHeightEstimate) : 0,
+            capabilitiesHeight: showsDetachedCapabilities ? measuredCapabilitiesHeight : 0,
+            naturalEditorHeight: compactEditorHeight,
             toolbarHeight: measuredMorphToolbarHeight,
-            isExpanded: morphExpanded.wrappedValue
+            isPanelExpanded: morphExpanded.wrappedValue,
+            isEditorExpanded: inputExpanded
         )
     }
 
     private var morphComposer: some View {
         let availableHeight = morphAvailableHeight
+        let layout = morphLayout
         let visibleCapabilities = detachedCapabilities
         let showCapabilities = showsDetachedCapabilities
-        let accessoryLimit = morphAccessoryLimit
-        let visibleAccessoryHeight = morphVisibleAccessoryHeight
+        let visibleAccessoryHeight = layout.accessoryHeight
         return VStack(spacing: HanlinMorphStyle.hostSpacing) {
             if hasComposerAccessories, visibleAccessoryHeight > 1 {
-                ScrollView(.vertical, showsIndicators: measuredAttachmentPreviewHeight > accessoryLimit) {
+                ScrollView(.vertical, showsIndicators: measuredAttachmentPreviewHeight > visibleAccessoryHeight) {
                     composerInputAccessories
                 }
                 .frame(height: visibleAccessoryHeight)
@@ -884,7 +837,8 @@ struct ChatViewBottom: View {
                 isExpanded: morphExpanded,
                 activePage: morphPage,
                 availableHeight: availableHeight,
-                accessoryHeight: morphHostOverhead,
+                accessoryHeight: layout.hostOverhead,
+                inputHeight: layout.inputHeight,
                 title: { page in
                     switch page {
                     case nil: return String(localized: "Action Center")
@@ -916,9 +870,6 @@ struct ChatViewBottom: View {
                     showMaxTokensSlider = false
                     showMaxMessagesNumSlider = false
                 },
-                onInputHeightChange: { height in
-                    if height.isFinite, height > 1, abs(measuredMorphInputHeight - height) > 1 { measuredMorphInputHeight = height }
-                },
                 onToolbarHeightChange: { height in
                     if height.isFinite, height > 1, abs(measuredMorphToolbarHeight - height) > 1 { measuredMorphToolbarHeight = height }
                 },
@@ -932,6 +883,7 @@ struct ChatViewBottom: View {
                 },
                 input: { inputFieldSection }
             )
+            .animation(reduceMotion ? nil : .spring(response: 0.42, dampingFraction: 0.86), value: inputExpanded)
         }
         .onChange(of: popupCoordinator.dockState.mode) { _, mode in
             popupCoordinator.syncFromDockModeChange(mode)
@@ -949,9 +901,7 @@ struct ChatViewBottom: View {
     private func syncDockGeometryAndContext() {
         popupCoordinator.dockState.handleContextKeyChange(effectiveDockContextKey)
         popupCoordinator.dockState.measuredInputHeight = textEditorHeight
-        if workspaceUsesKeyboardSafeArea {
-            popupCoordinator.dockState.updateKeyboardOverlap(0)
-        }
+        popupCoordinator.dockState.updateKeyboardOverlap(0)
         popupCoordinator.dockState.attachmentOverheadHeight = max(measuredAttachmentPreviewHeight, attachmentOverheadHeightEstimate)
         if availableWorkspaceSize.height > 160 {
             popupCoordinator.dockState.availableHeight = availableWorkspaceSize.height
@@ -1016,7 +966,7 @@ struct ChatViewBottom: View {
                     try? context.save()
                 }
             },
-            onExpandEditor: { inputExpanded = true },
+            onExpandEditor: { if !message.isEmpty { inputExpanded = true } },
             onSendObserve: { onSendObserve() },
             embeddedInDrawer: true,
             embeddedInMorph: true,
@@ -1450,24 +1400,11 @@ struct ChatViewBottom: View {
 
     // MARK: - 输入栏及底部按钮区域
     private var inputFieldSection: some View {
-        let editorBudget = max(HanlinMorphStyle.editorMinimumHeight, morphEditorBudget)
-        let expandedHeight = HanlinMorphGeometry.expandedEditorHeight(
-            availableHeight: morphAvailableHeight, editorBudget: editorBudget)
-        let editorMinimum = inputExpanded ? expandedHeight : HanlinMorphStyle.editorMinimumHeight
-        let editorMaximum = inputExpanded ? expandedHeight : editorBudget
+        let layout = morphLayout
+        let editorMinimum = inputExpanded ? layout.editorHeight : HanlinMorphStyle.editorMinimumHeight
+        let editorMaximum = inputExpanded ? layout.editorHeight : layout.editorMaximumHeight
+        let showsExpansionControl = !message.isEmpty
         return VStack(spacing: HanlinMorphStyle.inputControlsSpacing) {
-            if inputExpanded {
-                HStack {
-                    Text(String(localized: "Message")).font(HanlinTypography.headline)
-                    Spacer(minLength: 0)
-                    Button(String(localized: "Done")) { inputExpanded = false }
-                        .accessibilityIdentifier("hanlin-expanded-editor-close")
-                }
-                .padding(.horizontal, 14)
-                .padding(.top, 6)
-                .accessibilityElement(children: .contain)
-                .accessibilityIdentifier("hanlin-expanded-editor-sheet")
-            }
             NativeMultilineTextEditor(
                 text: $message,
                 textHeight: $textEditorHeight,
@@ -1493,18 +1430,25 @@ struct ChatViewBottom: View {
                 onLifecycleEvent: onNativeEditorLifecycle,
                 readCurrentTextState: readCurrentMessageState
             )
-            .frame(height: inputExpanded ? expandedHeight
-                : min(editorBudget, max(HanlinMorphStyle.editorMinimumHeight,
-                    textEditorHeight.isFinite ? textEditorHeight : HanlinMorphStyle.editorMinimumHeight)))
-            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
-                guard height.isFinite, height > 1, abs(measuredEditorFrameHeight - height) > 1 else { return }
-                measuredEditorFrameHeight = height
-            }
+            .frame(height: layout.editorHeight)
             .focused(isInputActive)
             .accessibilityIdentifier("hanlin-chat-input")
+            // The corner button never intercepts the native selection/caret area.
+            .padding(.trailing, showsExpansionControl ? HanlinMorphStyle.inputControlHitSize : 0)
             .padding(.horizontal, 11)
             .padding(.top, HanlinMorphStyle.inputTopInset)
+            .overlay(alignment: .topTrailing) {
+                if showsExpansionControl {
+                    composerExpandEditorControl
+                        .padding(.trailing, 3)
+                        .padding(.top, 2)
+                }
+            }
             .onChange(of: message) {
+                if message.isEmpty {
+                    inputExpanded = false
+                    compactEditorHeight = HanlinMorphStyle.editorMinimumHeight
+                }
                 popupCoordinator.dockState.handleDraftTextChange(message)
                 debounceWorkItem?.cancel()
                 // Persistence still has one owner; this is only local lookup.
@@ -1520,41 +1464,29 @@ struct ChatViewBottom: View {
             composerInputControls
         }
         .frame(minHeight: HanlinMorphStyle.launcherSize)
-        .animation(reduceMotion ? nil : .spring(response: 0.42, dampingFraction: 0.86), value: inputExpanded)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-surface")
     }
 
-    // All controls share the editor's material and hit-test bounds. AnyLayout
-    // reflows the same model source instead of replacing it at narrow widths.
+    // Keep one fixed-height row in the editor's material. The model's title
+    // compresses first; no width, font or keyboard change creates another row.
     private var composerActionSize: CGFloat { HanlinMorphStyle.sendButtonSize }
 
     private var composerInputControls: some View {
-        let width = availableWorkspaceSize.width > 0
-            ? availableWorkspaceSize.width : popupCoordinator.measuredContainerSize.width
-        let inputWidth = max(0, width - HanlinMorphStyle.horizontalInset * 2
-            - HanlinMorphStyle.launcherSize - HanlinMorphStyle.launcherInputSpacing
-            - HanlinMorphStyle.inputControlsInset * 2)
-        let stacksControls = inputWidth < HanlinMorphStyle.inputControlsCompactWidth
-            || dynamicTypeSize.isAccessibilitySize
-        let layout = stacksControls
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: HanlinMorphStyle.inputControlsSpacing))
-            : AnyLayout(HStackLayout(alignment: .center, spacing: HanlinMorphStyle.inputControlsSpacing))
-        return layout {
+        HStack(spacing: HanlinMorphStyle.inputControlsSpacing) {
             composerModelControl
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: HanlinMorphStyle.inputControlHitSize, alignment: .leading)
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                .frame(height: HanlinMorphStyle.inputControlHitSize)
+            composerToolsControl
                 .layoutPriority(1)
-            HStack(spacing: HanlinMorphStyle.inputControlsSpacing) {
-                composerToolsControl
-                composerMicrophoneControl
-                composerExpandEditorControl
-                if stacksControls { Spacer(minLength: 0) }
-                composerPrimaryControl
-                    .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
-            }
-            .frame(minHeight: HanlinMorphStyle.inputControlHitSize)
+            composerMicrophoneControl
+                .layoutPriority(1)
+            composerPrimaryControl
+                .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
+                .layoutPriority(1)
         }
         .frame(minWidth: 0, maxWidth: .infinity)
+        .frame(height: HanlinMorphStyle.inputControlHitSize)
         .padding(.horizontal, HanlinMorphStyle.inputControlsInset)
         .padding(.bottom, HanlinMorphStyle.inputControlsInset)
         .accessibilityElement(children: .contain)
@@ -1573,7 +1505,7 @@ struct ChatViewBottom: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(inputExpanded ? String(localized: "Done") : String(localized: "Expand Long Text Editor"))
+        .accessibilityLabel(inputExpanded ? String(localized: "Collapse") : String(localized: "Expand Long Text Editor"))
         .accessibilityIdentifier("hanlin-composer-expand-editor")
         .hanlinFeedback(.impact, trigger: isFeedBack)
     }
@@ -1639,7 +1571,8 @@ struct ChatViewBottom: View {
             contentSize: popupCoordinator.modelPopoverSize,
             onResizeCompleted: { generation, size in
                 popupCoordinator.modelFrameResizeDidComplete(presentationID: generation, size: size)
-            }
+            },
+            onPresentationChange: onModelPopoverPresentationChange
         ) {
             Button {
                 isFeedBack.toggle()
@@ -1758,6 +1691,7 @@ struct ChatViewBottom: View {
                     .foregroundStyle(accent)
                     .lineLimit(1)
                     .truncationMode(.tail)
+                    .minimumScaleFactor(0.8)
                     .frame(maxWidth: 132, alignment: .leading)
             } else {
                 Image(systemName: "cpu")
@@ -1767,12 +1701,14 @@ struct ChatViewBottom: View {
                     .font(HanlinTypography.caption.weight(.medium))
                     .foregroundStyle(.secondary)
                     .lineLimit(1)
+                    .truncationMode(.tail)
+                    .minimumScaleFactor(0.8)
             }
             Image(systemName: "chevron.up.chevron.down")
                 .font(HanlinTypography.fixed(size: 9, weight: .bold))
                 .foregroundStyle(accent.opacity(0.75))
         }
-        .padding(.horizontal, 9)
+        .padding(.horizontal, 7)
         .padding(.vertical, 5)
         .frame(minHeight: 28)
         .background(

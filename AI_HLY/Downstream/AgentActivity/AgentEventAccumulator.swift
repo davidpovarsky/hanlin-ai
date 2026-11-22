@@ -314,6 +314,7 @@ struct AgentEventAccumulator {
           step.status = .pending
           step.userFacingSummary = String(localized: "Awaiting approval")
         case .allowedOnce: step.userFacingSummary = String(localized: "Allowed once")
+        case .allowedAlways: step.userFacingSummary = String(localized: "Allowed and remembered")
         case .notApproved:
           step.status = .cancelled; step.completedAt = Date()
           step.userFacingSummary = String(localized: "Not approved")

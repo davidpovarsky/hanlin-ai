@@ -429,9 +429,11 @@ struct HanlinCompactChatWorkspace: View {
             isInputActive: $isCompactComposerInputActive,
             dockContextKey: activeComposerKey,
             availableWorkspaceSize: availableSize,
-            workspaceUsesKeyboardSafeArea: true,
             onNativeEditorLifecycle: { editor, event in
                 keyboardOwner.observe(editor, event: event)
+            },
+            onModelPopoverPresentationChange: { id, presented in
+                keyboardOwner.modelPopoverPresentationChanged(id, presented: presented)
             },
             readCurrentMessageState: {
                 if let endpoint { return endpoint.readCurrentMessageState?() }
@@ -479,6 +481,20 @@ private struct HanlinCompactKeyboardAvoidance: ViewModifier {
 final class HanlinCompactKeyboardOwner {
     private(set) weak var editor: UITextView?
     fileprivate weak var observer: HanlinCompactKeyboardFrameView?
+    private var modelPopoverIDs: Set<UUID> = []
+
+    /// The model picker is part of this composer's keyboard context. Its native
+    /// search may take focus without moving the source below the keyboard.
+    /// Tokens prevent a late dismissal from clearing a newer presentation.
+    func modelPopoverPresentationChanged(_ id: UUID, presented: Bool) {
+        let changed = presented ? modelPopoverIDs.insert(id).inserted : modelPopoverIDs.remove(id) != nil
+        guard changed else { return }
+        observer?.ownershipDidChange(presented ? "model-presented" : "model-dismissed")
+    }
+
+    fileprivate var ownsKeyboardFocus: Bool {
+        editor?.isFirstResponder == true || !modelPopoverIDs.isEmpty
+    }
 
     func observe(_ editor: UITextView, event: NativeMultilineTextEditor.LifecycleEvent) {
         switch event {
@@ -628,16 +644,16 @@ fileprivate final class HanlinCompactKeyboardFrameView: UIView {
         keyboardScreenBounds = nil
     }
 
-    private var ownsFirstResponder: Bool {
+    private var ownsKeyboardContext: Bool {
         guard owner.observer === self,
               let window, window === observedWindow, window.isKeyWindow,
               window.windowScene?.activationState == .foregroundActive,
               let editor = owner.editor, editor.window === window else { return false }
-        return editor.isFirstResponder
+        return owner.ownsKeyboardFocus
     }
 
     private func currentOverlap() -> CGFloat {
-        guard ownsFirstResponder,
+        guard ownsKeyboardContext,
               let window, let screen = keyboardScreen,
               window.windowScene?.screen === screen,
               let frame = keyboardFrame, keyboardScreenBounds == screen.bounds else { return 0 }
@@ -675,7 +691,7 @@ fileprivate final class HanlinCompactKeyboardFrameView: UIView {
             guard let window, let screen = keyboardScreen, let keyboardFrame else { return nil }
             return convert(screen.coordinateSpace.convert(keyboardFrame, to: window), from: window)
         }()
-        let facts = "bounds=\(bounds) screenFrame=\(String(describing: keyboardFrame)) localFrame=\(String(describing: localFrame)) registered=\(owner.editor != nil) firstResponder=\(owner.editor?.isFirstResponder == true) sameWindow=\(owner.editor?.window != nil && owner.editor?.window === window) keyWindow=\(window?.isKeyWindow == true) activeScene=\(window?.windowScene?.activationState == .foregroundActive) owns=\(ownsFirstResponder) overlap=\(currentOverlap())"
+        let facts = "bounds=\(bounds) screenFrame=\(String(describing: keyboardFrame)) localFrame=\(String(describing: localFrame)) registered=\(owner.editor != nil) firstResponder=\(owner.editor?.isFirstResponder == true) sameWindow=\(owner.editor?.window != nil && owner.editor?.window === window) keyWindow=\(window?.isKeyWindow == true) activeScene=\(window?.windowScene?.activationState == .foregroundActive) owns=\(ownsKeyboardContext) overlap=\(currentOverlap())"
         if reason == "layout" {
             guard facts != lastLayoutWitness else { return }
             lastLayoutWitness = facts

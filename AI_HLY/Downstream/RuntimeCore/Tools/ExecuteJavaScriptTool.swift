@@ -4,7 +4,7 @@ struct ExecuteJavaScriptTool: NativeTool {
     let name = "execute_javascript_code"
 
     var catalogEntry: NativeToolCatalogEntry {
-        .init(name: name, title: RuntimeL10n.string("JavaScript"), summary: RuntimeL10n.string("Run JavaScript with JavaScriptCore or the embedded Node worker runtime."), categories: ["runtime", "code", "javascript"], keywords: ["javascript", "node", "jscore"], examples: ["Evaluate this JavaScript"], systemImage: "curlybraces", presentationProfile: RuntimeToolSupport.profile(name: name, image: "curlybraces", running: "Running JavaScript", completed: "JavaScript completed", arguments: ["source", "runtime"]))
+        .init(name: name, title: RuntimeL10n.string("JavaScript"), summary: RuntimeL10n.string("Run JavaScript with JavaScriptCore or the embedded Node worker runtime."), categories: ["runtime", "code", "javascript"], keywords: ["javascript", "node", "jscore"], examples: ["Evaluate this JavaScript"], isSensitive: true, systemImage: "curlybraces", presentationProfile: RuntimeToolSupport.profile(name: name, image: "curlybraces", running: "Running JavaScript", completed: "JavaScript completed", arguments: ["source", "runtime"]))
     }
 
     func openAIToolSchema() -> [String: Any] {

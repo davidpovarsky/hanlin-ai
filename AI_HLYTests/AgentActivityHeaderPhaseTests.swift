@@ -14,11 +14,13 @@ struct AgentActivityHeaderPhaseTests {
     }
 
     @Test func permissionWaitPausesShimmerAndCanResumeOnlyWhileActive() {
-        #expect(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false) == .working)
+        #expect(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false,
+            hasActiveOperation: true) == .working)
         let waiting = AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: true)
         #expect(waiting == .awaitingApproval)
         #expect(!waiting.showsShimmer)
-        #expect(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false).showsShimmer)
+        #expect(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false,
+            hasActiveOperation: true).showsShimmer)
         #expect(!AgentActivityHeaderPhase.resolve(isRunActive: false, hasPendingApproval: false).showsShimmer)
     }
 
@@ -29,7 +31,7 @@ struct AgentActivityHeaderPhaseTests {
             isRunActive: true, isCurrentMessage: false, hasActivityHeader: false))
         #expect(!AgentActivityHeaderPhase.showsStandaloneStatus(
             isRunActive: true, isCurrentMessage: true, hasActivityHeader: true))
-        #expect(AgentActivityHeaderPhase.showsStandaloneStatus(
+        #expect(!AgentActivityHeaderPhase.showsStandaloneStatus(
             isRunActive: true, isCurrentMessage: true, hasActivityHeader: false))
     }
 
@@ -79,6 +81,24 @@ struct AgentActivityHeaderPhaseTests {
             activePaths: [leaf]) == [.root])
         #expect(Owner.resolve(isWorking: false, isHierarchyExpanded: true,
             activePaths: [leaf]).isEmpty)
+    }
+
+    @Test func internalPreparationDoesNotCreateToolActivityOrRewriteHistory() {
+        let steps = [
+            AgentActivityStep(externalID: "call:discovery", sequence: 0, kind: .toolCall,
+                title: "Using Tools", subtitle: "load_skill", status: .completed, output: "Loading skill..."),
+            AgentActivityStep(externalID: "execution:discovery", sequence: 1, kind: .toolExecution,
+                title: "Loading skill...", subtitle: "load_skill", status: .completed),
+            AgentActivityStep(externalID: "progress:transport", sequence: 2, kind: .progress,
+                title: "Preparing your answer", status: .running),
+            AgentActivityStep(externalID: "execution:route", sequence: 3, kind: .map,
+                title: "Route", subtitle: "get_route", status: .failed, errorDescription: "Route unavailable")
+        ]
+        let run = AgentRun(groupID: UUID(), steps: steps)
+        let timeline = AgentActivityComposer.compose(run)
+        #expect(timeline.activities.map(\.id) == ["route"])
+        #expect(timeline.activities.first?.status == .failed)
+        #expect(run.steps == steps)
     }
 
     @Test func mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion() {

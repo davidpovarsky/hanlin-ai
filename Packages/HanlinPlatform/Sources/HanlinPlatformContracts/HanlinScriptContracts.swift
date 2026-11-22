@@ -94,6 +94,7 @@ public struct HanlinScriptExportedTool: Codable, Hashable, Sendable {
     public let requiredCapabilities: [HanlinCapabilityID]
     public let risk: HanlinRiskLevel
     public let requiresApproval: Bool
+    public let executionPresentation: HanlinToolExecutionPresentationDescriptor?
 
     public init(
         id: HanlinToolID,
@@ -103,7 +104,8 @@ public struct HanlinScriptExportedTool: Codable, Hashable, Sendable {
         outputSchema: HanlinJSONSchemaDocument? = nil,
         requiredCapabilities: [HanlinCapabilityID] = [],
         risk: HanlinRiskLevel = .passive,
-        requiresApproval: Bool = false
+        requiresApproval: Bool = false,
+        executionPresentation: HanlinToolExecutionPresentationDescriptor? = nil
     ) {
         self.id = id
         self.title = title
@@ -113,6 +115,7 @@ public struct HanlinScriptExportedTool: Codable, Hashable, Sendable {
         self.requiredCapabilities = requiredCapabilities
         self.risk = risk
         self.requiresApproval = requiresApproval
+        self.executionPresentation = executionPresentation
     }
 }
 

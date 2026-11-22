@@ -1,0 +1,26 @@
+{
+  "recorded_at_utc": "2026-11-22T04:23:44.225304+00:00",
+  "validation_scope": "Actual composer geometry and CGFloat metrics, compiled with Foundation; no SwiftUI/UIKit/native UI execution.",
+  "source_hashes": {
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift": "45454e8c5080ff002999672abcbd9ba6b4ecc5cda9a59c8e7c7751aa8786e4fa",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinDesignCatalog.swift": "58a33bd987cc324ba44fa9c64ce911772c2f88c16f4b78e9f1bf4122716741db",
+    "AI_HLY/Views/Components/ChatViewBottom.swift": "55d7a6a347612c002b309a2b53bfa8b1c9cc05e5898387ed2a0d953c2351aa1f",
+    "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift": "85c751521fb804c1bd242235c51da55ad21993a1920292f80b870eb16f4e1268",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift": "61718dc90a5c9edc5063db6cc7f2423b4da16be4331b7a70445c1a52febc741a",
+    "AI_HLYTests/HanlinMorphComposerTests.swift": "7daabd97cf1b13341b92eb978ea8db60a1e2823a7d70c38f51a8cb8f17f6f410",
+    "Scripts/CI/check_composer_layout.py": "12abe00f2b5e297350fcc6863382210119db8afeb933e48d70fbc2bff8b95dc4"
+  },
+  "compiler": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions",
+  "compile_returncode": 0,
+  "compile_output": "   Creating library C:\\Users\\DAVID\\Code\\hanlin-composer-layout-check-20261122\\ComposerLayoutChecks.lib and object C:\\Users\\DAVID\\Code\\hanlin-composer-layout-check-20261122\\ComposerLayoutChecks.exp\n\n",
+  "run_returncode": 0,
+  "output": "COMPOSER_LAYOUT_PASS scenarios=384 assertions=1955\n",
+  "parser_validation": {
+    "command": "swiftc -frontend -parse",
+    "scope": "Six changed Swift files: ChatViewBottom, HanlinModelZoomPopover, HanlinCompactChatWorkspace, HanlinMorphComposer, HanlinDesignCatalog, HanlinMorphComposerTests.",
+    "exit_code": 0,
+    "job_id": "job_0143a9e4a13b",
+    "limitations": "Syntax only; Apple-framework type checking and native rendering were not performed."
+  },
+  "domain_job_id": "job_494397863679"
+}

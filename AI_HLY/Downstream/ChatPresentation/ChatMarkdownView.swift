@@ -10,6 +10,8 @@ struct ChatMarkdownView: View {
     /// Ordered model parts parse independently, so their block IDs need a stable namespace.
     var selectionPartID: UUID? = nil
     var messageText: String? = nil
+    var documentParts: [MarkdownDocumentPart]? = nil
+    var embeddedBlockRenderer: MarkdownEmbeddedBlockRenderer? = nil
     var savePersonal: (@MainActor @Sendable (ChatTextQuote) -> Void)?
     var saveKnowledge: (@MainActor @Sendable (String) -> Void)?
     var onRendered: (@MainActor @Sendable () -> Void)?
@@ -30,6 +32,7 @@ struct ChatMarkdownView: View {
             .markdownSelectAllRequest(selectAllRequest)
             .markdownSelectionChanged(selectionChangedHandler)
             .markdownLongPressPreview(longPressPreviewHandler)
+            .markdownEmbeddedBlockRenderer(embeddedBlockRenderer)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 
@@ -43,22 +46,42 @@ struct ChatMarkdownView: View {
     }
 
     private var linkedRenderer: some View {
-        let projection = citations?.projection(for: text)
-        let renderedText: String = projection?.markdown ?? text
-        let groups: [HanlinCitationGroup] = projection?.groups ?? []
+        let input = projectedDocument
+        let renderedText: String = input.text
+        let groups: [HanlinCitationGroup] = input.groups
         let renderer: HanlinMarkdownView = HanlinMarkdownView(
             text: renderedText,
             imageConfig: imageConfig,
             citationGroups: groups,
             contextMenuItems: contextMenuItems,
             onRendered: renderedHandler,
-            onSelectionAction: selectionActionHandler
+            onSelectionAction: selectionActionHandler,
+            documentParts: input.parts
         )
         // The native paragraph retains its OpenURLAction. Keep its presenter
         // with the renderer rather than an independently updating bubble.
         return renderer
             .modifier(ChatLinkPresentation(citationGroups: groups))
             .markdownCodeBlockRenderer(Self.codeBlockRenderer)
+    }
+
+    /// Citation rewriting stays scoped to the original Markdown parts. The
+    /// surrounding native document owns selection across their boundaries.
+    private var projectedDocument: (text: String, parts: [MarkdownDocumentPart]?, groups: [HanlinCitationGroup]) {
+        guard let documentParts else {
+            let projection = citations?.projection(for: text)
+            return (projection?.markdown ?? text, nil, projection?.groups ?? [])
+        }
+        var groups: [HanlinCitationGroup] = []
+        var urls = Set<URL>()
+        let parts = documentParts.map { part -> MarkdownDocumentPart in
+            guard case .markdown(let markdown) = part.content else { return part }
+            let projection = citations?.projection(for: markdown)
+            for group in projection?.groups ?? [] where urls.insert(group.url).inserted { groups.append(group) }
+            return MarkdownDocumentPart(id: part.id, sourcePrefix: part.sourcePrefix,
+                markdown: projection?.markdown ?? markdown)
+        }
+        return (text, parts, groups)
     }
 
     private var renderedHandler: @MainActor @Sendable () -> Void {
@@ -126,6 +149,11 @@ struct ChatMarkdownView: View {
             // that exact surface instead of guessing which model part matched.
             guard documentSelectionMode else { return nil }
             blockID = String(storedBlockID.dropFirst(messagePrefix.count))
+        } else if documentParts != nil {
+            // The structured parser already scoped every original block ID.
+            // Highlight lookup still requires exact ID, text and UTF-16 range;
+            // it never searches repeated words in a different model part.
+            blockID = storedBlockID
         } else if let selectionPartID {
             let prefix = "hanlin-part:\(selectionPartID.uuidString):"
             guard storedBlockID.hasPrefix(prefix) else { return nil }
@@ -145,7 +173,7 @@ struct ChatMarkdownView: View {
                     sourceBlockID: quote.sourceBlockID.map { "hanlin-message:\($0)" }))
             }
         }
-        guard let selectionPartID else { return savePersonal }
+        guard documentParts == nil, let selectionPartID else { return savePersonal }
         return { quote in
             savePersonal(ChatTextQuote(text: quote.text, renderedText: quote.renderedText, range: quote.range,
                 sourceBlockID: quote.sourceBlockID.map { "hanlin-part:\(selectionPartID.uuidString):\($0)" }))

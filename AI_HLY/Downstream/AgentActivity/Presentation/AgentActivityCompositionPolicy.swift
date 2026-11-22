@@ -1,6 +1,12 @@
 import Foundation
 
 enum AgentActivityCompositionPolicy {
+    static func isVisibleToolActivity(_ step: AgentActivityStep) -> Bool {
+        AgentActivityVisibilityPolicy.showsInvocation(kind: step.kind.rawValue,
+            toolName: step.subtitle,
+            hasIdentity: step.externalID?.isEmpty == false)
+    }
+
     private static let transportPhrases = [
         "processing", "sending request", "waiting for model response", "request started",
         "request completed", "parsing response", "stream opened", "stream closed",

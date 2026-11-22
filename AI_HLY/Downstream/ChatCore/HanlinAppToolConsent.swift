@@ -3,7 +3,8 @@ import Observation
 import HanlinHostContracts
 import HanlinAgentCore
 
-/// Live, one-use approval in the original conversation. History never recreates a grant.
+/// Live consent for a verified scope. A remembered host grant is independent of
+/// conversation history; provider-only requests remain one-use.
 @MainActor @Observable
 final class HanlinAppToolConsent {
     struct Request: Identifiable {
@@ -13,17 +14,25 @@ final class HanlinAppToolConsent {
         let providerCallID: String
         let originalArgumentsJSON: Data?
         let providerApprovalID: String?
+        let approvalScope: HanlinToolApprovalScope?
+        var remembersDecision: Bool { approvalScope != nil }
         var activityID: String { providerApprovalID ?? id.uuidString }
     }
     private(set) var pending: Request?
     @ObservationIgnored var onChange: ((Request, Bool?) -> Void)?
     @ObservationIgnored private var continuation: CheckedContinuation<Bool, Never>?
     @ObservationIgnored private var deadlineTask: Task<Void, Never>?
+    @ObservationIgnored private let grants: HanlinToolApprovalStore
 
-    func request(_ invocation: HanlinHostInvocation) async -> Bool {
-        await request(.init(id: UUID(), tool: invocation.request.aliasUsed,
+    init(grants: HanlinToolApprovalStore = .shared) { self.grants = grants }
+
+    func request(_ invocation: HanlinHostInvocation, approvalScope: HanlinToolApprovalScope) async -> Bool {
+        guard !Task.isCancelled else { return false }
+        if grants.allows(approvalScope) { return true }
+        return await request(.init(id: UUID(), tool: invocation.request.aliasUsed,
             canonicalRunID: invocation.runID, providerCallID: invocation.providerCallID,
-            originalArgumentsJSON: invocation.originalArgumentsJSON, providerApprovalID: nil),
+            originalArgumentsJSON: invocation.originalArgumentsJSON, providerApprovalID: nil,
+            approvalScope: approvalScope),
             deadline: invocation.request.deadline)
     }
 
@@ -31,7 +40,7 @@ final class HanlinAppToolConsent {
         await request(.init(id: UUID(), tool: approval.request.toolName,
             canonicalRunID: approval.runID, providerCallID: approval.request.toolCallID,
             originalArgumentsJSON: Data(approval.request.argumentsJSON.utf8),
-            providerApprovalID: approval.request.approvalID), deadline: approval.deadline)
+            providerApprovalID: approval.request.approvalID, approvalScope: nil), deadline: approval.deadline)
     }
 
     private func request(_ request: Request, deadline: Date?) async -> Bool {
@@ -57,12 +66,18 @@ final class HanlinAppToolConsent {
     }
 
     func answer(id: UUID, allowed: Bool) {
-        guard pending?.id == id else { return }
-        if let pending { onChange?(pending, allowed) }
+        guard let pending, pending.id == id else { return }
+        let accepted: Bool
+        if allowed, let scope = pending.approvalScope {
+            accepted = grants.remember(scope, title: pending.tool)
+        } else {
+            accepted = allowed
+        }
+        onChange?(pending, accepted)
         let reply = continuation
         deadlineTask?.cancel(); deadlineTask = nil
-        pending = nil; continuation = nil
-        reply?.resume(returning: allowed)
+        self.pending = nil; continuation = nil
+        reply?.resume(returning: accepted)
     }
 
     func revoke() {

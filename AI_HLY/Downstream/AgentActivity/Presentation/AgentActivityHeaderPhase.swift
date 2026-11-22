@@ -10,7 +10,7 @@ enum AgentActivityHeaderPhase: Equatable, Sendable {
                         hasAnswerText: Bool = false, hasActiveOperation: Bool = false) -> Self {
         guard isRunActive else { return .history }
         if hasPendingApproval && !hasActiveOperation { return .awaitingApproval }
-        return hasAnswerText && !hasActiveOperation ? .history : .working
+        return hasActiveOperation ? .working : .history
     }
 
     var showsShimmer: Bool { self == .working }
@@ -19,7 +19,9 @@ enum AgentActivityHeaderPhase: Equatable, Sendable {
         isRunActive: Bool, isCurrentMessage: Bool, hasActivityHeader: Bool,
         hasAnswerText: Bool = false
     ) -> Bool {
-        isRunActive && isCurrentMessage && !hasActivityHeader && !hasAnswerText
+        // Transport state is not a tool invocation. The send/stop control owns
+        // request lifetime; there is no synthetic "preparing your answer" row.
+        false
     }
 }
 
@@ -39,8 +41,8 @@ enum AgentActivityShimmerOwner: Hashable, Sendable {
 
     static func resolve(isWorking: Bool, isHierarchyExpanded: Bool,
                         activePaths: [Path]) -> Set<Self> {
-        guard isWorking else { return [] }
-        guard isHierarchyExpanded, !activePaths.isEmpty else { return [.root] }
+        guard isWorking, !activePaths.isEmpty else { return [] }
+        guard isHierarchyExpanded else { return [.root] }
         return Set(activePaths.map { path in
             if let roundID = path.roundID, !path.isRoundExpanded { return .round(roundID) }
             return .activity(path.activityID)

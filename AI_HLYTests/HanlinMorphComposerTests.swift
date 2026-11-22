@@ -5,6 +5,48 @@ import Testing
 
 @Suite("Morph composer reference geometry")
 struct HanlinMorphComposerTests {
+    @Test("A single layout reserves the native controls inside the input glass")
+    func unifiedInputAndPanelLayout() {
+        let layout = HanlinMorphGeometry.layout(availableHeight: 400, accessoryNaturalHeight: 0,
+            capabilitiesHeight: 0, naturalEditorHeight: 38, toolbarHeight: 44,
+            isPanelExpanded: true, isEditorExpanded: true)
+        #expect(layout.editorHeight == 127)
+        #expect(layout.inputHeight == 191)
+        #expect(layout.inputHeight - layout.editorHeight == HanlinMorphStyle.inputChromeHeight)
+        #expect(HanlinMorphGeometry.pageBudget(availableHeight: 400,
+            accessoryHeight: layout.hostOverhead, inputHeight: layout.inputHeight,
+            toolbarHeight: 44) == 80)
+    }
+
+    @Test("Attachments cannot displace the controls or the open panel's minimum page")
+    func unifiedAccessoryBudget() {
+        let layout = HanlinMorphGeometry.layout(availableHeight: 400, accessoryNaturalHeight: 1000,
+            capabilitiesHeight: 42, naturalEditorHeight: 38, toolbarHeight: 44,
+            isPanelExpanded: true, isEditorExpanded: false)
+        #expect(layout.editorHeight == 38)
+        #expect(layout.inputHeight == 102)
+        #expect(layout.accessoryHeight == 35)
+        #expect(layout.hostOverhead == 89)
+        #expect(HanlinMorphGeometry.pageBudget(availableHeight: 400,
+            accessoryHeight: layout.hostOverhead, inputHeight: layout.inputHeight,
+            toolbarHeight: 44) == 80)
+    }
+
+    @Test("Keyboard resize uses the host viewport once and restores the same local layout")
+    func keyboardViewportRoundTrip() {
+        func layout(_ height: CGFloat) -> HanlinMorphGeometry.Layout {
+            HanlinMorphGeometry.layout(availableHeight: height, accessoryNaturalHeight: 62,
+                capabilitiesHeight: 0, naturalEditorHeight: 160, toolbarHeight: 44,
+                isPanelExpanded: true, isEditorExpanded: true)
+        }
+        let original = layout(800)
+        let keyboard = layout(400)
+        #expect(keyboard.inputHeight < original.inputHeight)
+        #expect(keyboard.inputHeight - keyboard.editorHeight == original.inputHeight - original.editorHeight)
+        #expect(layout(800) == original)
+        #expect(keyboard.editorHeight >= HanlinMorphStyle.editorMinimumHeight)
+    }
+
     @Test("Natural page height is bounded by the reference viewport")
     func heightAndOverflow() {
         let limit = HanlinMorphGeometry.viewportLimit(availableHeight: 500)

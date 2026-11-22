@@ -1,0 +1,20 @@
+{
+  "scope": "Syntax parsing of two app files changed after job_857b1358cd81; this is not Apple SDK type checking or device execution.",
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "-module-name",
+    "HanlinToolPolicyWireSyntax",
+    "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\\AI_HLY\\Downstream\\MCP\\Runtime\\MCPClientSession.swift",
+    "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\\AI_HLY\\Downstream\\ChatCore\\HanlinAppHostIntegration.swift"
+  ],
+  "returncode": 0,
+  "durationSeconds": 1.328,
+  "sources": {
+    "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift": "56cca1e2bb56f8a54b0d661ce01ccec6343cb210053c68d45023b8df6e107729",
+    "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift": "9e0aede19c18b052630ab134554665780f57d97cba07b5c57acd90de109f15c9"
+  },
+  "stdout": "",
+  "stderr": ""
+}

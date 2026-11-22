@@ -90,8 +90,9 @@ enum MCPCanonicalShadowAdapter {
             ]),
             inputSchema: schema,
             outputSchema: nil,
-            risk: .read,
-            presentation: .init(compactStyle: .automatic)
+            risk: tool.destructiveHint == true ? .destructive : (tool.readOnlyHint == true ? .read : .write),
+            presentation: .init(compactStyle: .automatic, executionPresentation: tool.executionPresentation),
+            approval: .init(requiresApproval: tool.requiresApproval ?? (tool.readOnlyHint != true || tool.destructiveHint == true))
         )
     }
 

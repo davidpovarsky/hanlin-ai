@@ -4,6 +4,27 @@ import Testing
 
 @Suite("Original user-operation continuation ownership")
 struct RuntimeUserOperationTests {
+    @Test func finiteProgressReflectsDiscoveredWorkWithoutTimerOrReceiptInflation() throws {
+        let operation = RuntimeUserOperation()
+        operation.recordWorkEvent(id: "step:1:started")
+        operation.recordStreamBytes(24)
+        operation.recordWorkEvent(id: "tool:route:result")
+        for _ in 0..<100 {
+            operation.recordWorkEvent(id: "tool:route:result")
+            _ = operation.snapshot
+        }
+        let snapshot = operation.snapshot
+        #expect(snapshot.completedWorkUnits == 3)
+        let progress = Progress(totalUnitCount: snapshot.progressTotalUnits)
+        progress.completedUnitCount = snapshot.progressCompletedUnits
+        #expect(!progress.isIndeterminate)
+        #expect(progress.fractionCompleted > 0 && progress.fractionCompleted < 1)
+        try operation.markSucceeded()
+        #expect(operation.snapshot.progressCompletedUnits < operation.snapshot.progressTotalUnits)
+        operation.finish()
+        #expect(operation.snapshot.progressCompletedUnits == operation.snapshot.progressTotalUnits)
+    }
+
     @Test func interruptionIsFirstCauseAndCallbacksMayReenterWithoutDeadlock() throws {
         let operation = RuntimeUserOperation()
         let observed = Observations()

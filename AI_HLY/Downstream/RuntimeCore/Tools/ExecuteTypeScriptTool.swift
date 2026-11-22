@@ -4,7 +4,7 @@ struct ExecuteTypeScriptTool: NativeTool {
     let name = "execute_typescript_code"
 
     var catalogEntry: NativeToolCatalogEntry {
-        .init(name: name, title: RuntimeL10n.string("TypeScript"), summary: RuntimeL10n.string("Compile with Hanlin's pinned TypeScript compiler and optionally execute with embedded Node."), categories: ["runtime", "code", "typescript"], keywords: ["typescript", "tsc", "node"], examples: ["Compile and run this TypeScript"], systemImage: "t.square", presentationProfile: RuntimeToolSupport.profile(name: name, image: "t.square", running: "Compiling TypeScript", completed: "TypeScript completed", arguments: ["source", "file_name", "compile_only"]))
+        .init(name: name, title: RuntimeL10n.string("TypeScript"), summary: RuntimeL10n.string("Compile with Hanlin's pinned TypeScript compiler and optionally execute with embedded Node."), categories: ["runtime", "code", "typescript"], keywords: ["typescript", "tsc", "node"], examples: ["Compile and run this TypeScript"], isSensitive: true, systemImage: "t.square", presentationProfile: RuntimeToolSupport.profile(name: name, image: "t.square", running: "Compiling TypeScript", completed: "TypeScript completed", arguments: ["source", "file_name", "compile_only"]))
     }
 
     func openAIToolSchema() -> [String: Any] {

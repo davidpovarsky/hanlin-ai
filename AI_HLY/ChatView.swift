@@ -1481,6 +1481,7 @@ struct ChatView: View {
                 reviewText: AgentDiagnosticsRedactor.sanitize(request.originalArgumentsJSON.map {
                     String(decoding: $0, as: UTF8.self)
                 } ?? "{}"),
+                remembersDecision: request.remembersDecision,
                 answer: { allowed in agentSessionOwner.consent.answer(id: request.id, allowed: allowed) }
             )
         }()

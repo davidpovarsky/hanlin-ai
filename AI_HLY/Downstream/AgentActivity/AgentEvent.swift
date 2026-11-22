@@ -114,7 +114,7 @@ enum AgentAnswerDisposition: String, Codable, Hashable, Sendable {
 /// A receipt of a real approval request. Persisted presentation never grants
 /// permission; only the current Host consent continuation can answer it.
 struct AgentToolApproval: Codable, Hashable, Sendable, Identifiable {
-  enum Disposition: String, Codable, Sendable { case awaiting, allowedOnce, notApproved, providerRequired }
+  enum Disposition: String, Codable, Sendable { case awaiting, allowedOnce, allowedAlways, notApproved, providerRequired }
   let id: String
   let canonicalRunID: UUID?
   let callID: String

@@ -15,7 +15,8 @@ struct AgentActivityHeaderChecks {
             check(history == .history, "A terminal/reopened message must be history")
             check(!history.showsShimmer, "A stale approval must not revive historical motion")
         }
-        let working = AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false)
+        let working = AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false,
+            hasActiveOperation: true)
         check(working == .working && working.showsShimmer, "Only live work shimmers")
         let waiting = AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: true)
         check(waiting == .awaitingApproval && !waiting.showsShimmer, "Permission wait stops the live title")
@@ -26,7 +27,7 @@ struct AgentActivityHeaderChecks {
                         let actual = AgentActivityHeaderPhase.showsStandaloneStatus(
                             isRunActive: active, isCurrentMessage: current,
                             hasActivityHeader: hasHeader, hasAnswerText: hasAnswer)
-                        let expected = active && current && !hasHeader && !hasAnswer
+                        let expected = false
                         check(actual == expected, "Standalone status stops on the first answer text")
                     }
                 }
@@ -40,7 +41,7 @@ struct AgentActivityHeaderChecks {
                             hasPendingApproval: pending, hasAnswerText: answer,
                             hasActiveOperation: operation)
                         let expected: AgentActivityHeaderPhase = !active ? .history
-                            : pending && !operation ? .awaitingApproval : answer && !operation ? .history : .working
+                            : pending && !operation ? .awaitingApproval : operation ? .working : .history
                         check(phase == expected, "Answer activity transition preserves real tool/approval lifetime")
                     }
                 }
@@ -65,7 +66,23 @@ struct AgentActivityHeaderChecks {
         check(Owner.resolve(isWorking: false, isHierarchyExpanded: true,
             activePaths: parallel).isEmpty, "Terminal or approval wait has no animated owner")
         check(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
-            activePaths: []) == [.root], "Startup with no child uses the root")
+            activePaths: []).isEmpty, "No real invocation means no synthetic active ancestor")
+        check(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false) == .history,
+            "Provider latency must not fabricate preparing-answer activity")
+        for name in ["load_skill", "read_skill_resource", "tool_search", "report_progress", "read_tool_result"] {
+            for kind in ["toolCall", "toolExecution", "codeExecution"] {
+                check(!AgentActivityVisibilityPolicy.showsInvocation(kind: kind, toolName: name, hasIdentity: true),
+                    "Internal capability preparation remains out of the activity tree")
+            }
+        }
+        for name in ["search_online", "get_route", "python", "mcp__custom__load_skill_report"] {
+            check(AgentActivityVisibilityPolicy.showsInvocation(kind: "toolExecution", toolName: name, hasIdentity: true),
+                "Actual tool calls survive exact internal-name filtering")
+            check(!AgentActivityVisibilityPolicy.showsInvocation(kind: "progress", toolName: name, hasIdentity: true),
+                "Progress prose is not a new tool invocation")
+            check(!AgentActivityVisibilityPolicy.showsInvocation(kind: "toolExecution", toolName: name, hasIdentity: false),
+                "No fabricated call without lifecycle identity")
+        }
         // UIKit's crash reports abort on a non-finite scroll/layer bound.
         // Check the production geometry including zero, invalid probes and reversal.
         for height in [0.0, 24, 280, 40_000, -.infinity, .infinity, .nan, -1] {

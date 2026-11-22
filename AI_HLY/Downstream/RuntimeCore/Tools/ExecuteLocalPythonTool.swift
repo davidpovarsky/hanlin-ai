@@ -11,6 +11,7 @@ struct ExecuteLocalPythonTool: NativeTool {
             categories: ["runtime", "code", "python"],
             keywords: ["python", "local", "offline", "קוד", "פייתון"],
             examples: ["Run this Python code locally", "הרץ את קוד הפייתון מקומית"],
+            isSensitive: true,
             systemImage: "chevron.left.forwardslash.chevron.right",
             presentationProfile: RuntimeToolSupport.profile(name: name, image: "chevron.left.forwardslash.chevron.right", running: "Running local Python", completed: "Local Python completed", arguments: ["source"])
         )

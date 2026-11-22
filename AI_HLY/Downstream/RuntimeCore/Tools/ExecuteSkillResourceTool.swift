@@ -19,6 +19,8 @@ struct ExecuteSkillResourceTool: NativeTool {
             categories: ["runtime", "skills", "code"],
             keywords: ["skill", "script", "resource", "execute", "python", "js"],
             examples: ["Run skill script", "הרץ סקריפט מתוך ה-Skill"],
+            isSensitive: true,
+            approval: .init(scopeParameters: ["skill_id", "relative_path"]),
             systemImage: "terminal",
             presentationProfile: RuntimeToolSupport.profile(
                 name: name,

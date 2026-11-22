@@ -1,6 +1,52 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Background continuation was not available before the system suspended the app." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background continuation was not available before the system suspended the app."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "???? ?????? ???? ?? ??? ???? ???? ??????? ????? ?? ?????????."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?????????????????????"
+          }
+        }
+      }
+    },
+    "Processed %@" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processed %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "????? %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "??? %@"
+          }
+        }
+      }
+    },
     "Run normal Python source with embedded CPython 3.14.6 on this device. It works offline and does not use the remote Piston service. Script arguments become sys.argv entries. Packages installed by Hanlin's local package manager are available, including compatible wheels and source builds. Third-party packages such as requests are not preinstalled: inspect/install/probe them with manage_runtime_packages before importing, or use standard-library urllib.request for HTTP. After a missing import, review any earlier side effects before rerunning the script. Native imports require a registered extension linked and signed with the app; arbitrary desktop binaries cannot become iOS extensions.": {
       "extractionState": "manual",
       "localizations": {

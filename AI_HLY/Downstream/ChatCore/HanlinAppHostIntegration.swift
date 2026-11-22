@@ -15,7 +15,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
     weak var splitSession: HanlinAgentSession?
     var splitRowReference: (@MainActor @Sendable () -> HanlinAppAgentRowReference?)?
     var toolAdapter: HanlinAISDKToolAdapter?
-    var confirmInvocation: (@MainActor @Sendable (HanlinHostInvocation) async -> Bool)?
+    var confirmInvocation: (@MainActor @Sendable (HanlinHostInvocation, HanlinToolApprovalScope) async -> Bool)?
     private let store: HanlinAppConversationStore
     private let isCurrent: @MainActor @Sendable () -> Bool
     private var validationPlans: [Data: HanlinHostSchemaValidation] = [:]
@@ -67,7 +67,8 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
                 owner: source?.owner ?? .system, title: source?.title ?? .init(["en": definition.name]),
                 summary: source?.summary ?? .init(["en": definition.description]), inputSchema: input,
                 outputSchema: source?.outputSchema, capabilities: source?.capabilities ?? [],
-                risk: source?.risk ?? .read, presentation: source?.presentation ?? .init())
+                risk: source?.risk ?? .read, presentation: source?.presentation ?? .init(),
+                approval: source?.approval)
             // The legacy shadow catalog currently labels general native/legacy tools .read.
             // That is not an authoritative no-mutation promise (e.g. manage_calendar can write).
             // Only these existing metadata/progress implementations are proven business-read-only.
@@ -125,12 +126,15 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
                       let splitSession, splitSession.identity == invocation.session,
                       let row = splitRowReference?(),
                       let deadline = invocation.request.deadline, deadline > Date() else { throw HanlinHostError.staleContext }
-                // The same one-use Host consent applies before leaving this app.
-                guard let confirmInvocation, await confirmInvocation(invocation) else { throw HanlinHostError.denied }
+                // External-app effects require the same scoped manifest consent.
+                guard let approvalScope = try HanlinToolApprovalScopeFactory.scope(for: invocation, tool: entry, adapter: toolAdapter),
+                      let confirmInvocation, await confirmInvocation(invocation, approvalScope) else { throw HanlinHostError.denied }
                 try Task.checkCancellation()
                 _ = try await context(for: invocation.session)
                 guard deadline > Date(), splitRowReference?() == row,
-                      (try await catalog(for: invocation.session.context)).revision == current.revision else { throw HanlinHostError.staleContext }
+                      (try await catalog(for: invocation.session.context)).revision == current.revision,
+                      try HanlinToolApprovalScopeFactory.scope(for: invocation, tool: entry, adapter: toolAdapter) == approvalScope,
+                      HanlinToolApprovalStore.shared.allows(approvalScope) else { throw HanlinHostError.staleContext }
                 return try await splitCoordinator.execute(invocation, host: self, session: splitSession, row: row)
             } catch { return noDispatch(invocation, error: error) }
         }
@@ -165,11 +169,14 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
                 validationPlans[definition.inputSchemaData] = plan
             }
             try plan.validate(argumentsJSON: original)
-            try HanlinHostSchemaValidation.requireSameValue(originalJSON: original,
-                projectedJSON: invocation.request.arguments.canonicalJSONData())
+            try HanlinHostSchemaValidation.requirePortableProjection(
+                originalJSON: original, projected: invocation.request.arguments)
             // Audit the exact existing metadata extraction now and again immediately before the
             // original executor. No replacement metadata parser or alternate business value exists.
             let extraction = ToolInvocationMetadataExtractor.extract(from: String(decoding: original, as: UTF8.self))
+            if case .mcp? = toolAdapter?.preparedTools.authority.resolution(alias: invocation.request.aliasUsed)?.backend {
+                _ = try MCPClientSession.checkedArguments(extraction.sanitizedArgumentsJSON)
+            }
             try HanlinHostSchemaValidation.requireSameValue(originalJSON: original,
                 projectedJSON: Data(extraction.sanitizedArgumentsJSON.utf8), removingMetadataKeys: [
                     ToolSchemaDecorator.progressSummaryKey, ToolSchemaDecorator.resultPresentationKey])
@@ -177,8 +184,12 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
             try Task.checkCancellation()
             guard deadline > Date() else { throw HanlinHostError.staleContext }
         } catch { return noDispatch(invocation, error: error) }
-        if entry.writeGuarantee != .readOnly {
-            guard let confirmInvocation, await confirmInvocation(invocation) else {
+        let approvalScope: HanlinToolApprovalScope?
+        do {
+            approvalScope = try HanlinToolApprovalScopeFactory.scope(for: invocation, tool: entry, adapter: toolAdapter)
+        } catch { return noDispatch(invocation, error: error) }
+        if let approvalScope {
+            guard let confirmInvocation, await confirmInvocation(invocation, approvalScope) else {
                 return noDispatch(invocation, error: HanlinHostError.denied)
             }
             // The sheet can stay open while selection, source, or deadline changes.
@@ -201,6 +212,11 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
                 }
                 _ = try self.store.requireOriginalConversation()
                 try self.requireOriginalRoute(entry, definition: definition, adapter: adapter)
+                let currentScope = try HanlinToolApprovalScopeFactory.scope(for: invocation, tool: entry, adapter: adapter)
+                guard currentScope == approvalScope else { throw HanlinHostError.staleContext }
+                if let currentScope, !HanlinToolApprovalStore.shared.allows(currentScope) {
+                    throw HanlinHostError.denied
+                }
                 try HanlinHostSchemaValidation.requireSameValue(originalJSON: original,
                     projectedJSON: Data(actualArguments.utf8), removingMetadataKeys: [
                         ToolSchemaDecorator.progressSummaryKey, ToolSchemaDecorator.resultPresentationKey])
@@ -233,7 +249,7 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
             // Metadata tools have no prepared business executor; their existing implementation
             // is read-only. All general operations mark entry at the adapter's actual boundary.
             if entry.writeGuarantee == .readOnly { observation.enteredExecutor = true }
-            return try await SkillRuntimeAuthorization.$approved.withValue(entry.writeGuarantee != .readOnly) {
+            return try await SkillRuntimeAuthorization.$approved.withValue(approvalScope != nil) {
                 try await definition.execute(arguments, callID)
             }
         }

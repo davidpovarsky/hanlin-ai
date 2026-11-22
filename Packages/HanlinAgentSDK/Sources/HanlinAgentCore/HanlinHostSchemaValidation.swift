@@ -2,6 +2,7 @@ import AISDKProvider
 import Foundation
 import JSON
 import HanlinExactJSONSchema
+import HanlinPlatformContracts
 
 /// A transient, bounded validation plan. JSON/JSONSchema are implementation details, not a
 /// second canonical value, transcript, permission authority or persistent store.
@@ -75,6 +76,61 @@ public struct HanlinHostSchemaValidation: Sendable {
         let projection = try parse(projectedJSON)
         guard try JSONComparison.equals(original, projection, limits: limits) else { throw Failure.lossyProjection }
         try Task.checkCancellation()
+    }
+
+    /// The portable DTO deliberately uses binary64 numbers. Prove that it is the
+    /// deterministic projection of the retained original; it is never an executor input.
+    /// Exact original-schema and original-to-executor comparisons remain mandatory.
+    public static func requirePortableProjection(originalJSON: Data, projected: HanlinJSONValue) throws {
+        _ = try parse(originalJSON)
+        let expected = try HanlinJSONValue.decodeCanonicalJSON(originalJSON)
+        guard try expected.canonicalJSONData() == projected.canonicalJSONData() else {
+            throw Failure.lossyProjection
+        }
+        try Task.checkCancellation()
+    }
+
+    /// Reads only declared identity fields for a consent scope. Non-string identities
+    /// fail closed; other payload data never enters a durable grant.
+    public static func topLevelStringFields(argumentsJSON: Data, keys: [String]) throws -> [String: String] {
+        guard keys.count <= 32, keys.allSatisfy({ !$0.isEmpty && $0.utf8.count <= 128 }) else {
+            throw Failure.inputTooLarge
+        }
+        guard case .object(let object) = try parse(argumentsJSON) else { throw Failure.invalidArguments }
+        var fields: [String: String] = [:]
+        for key in keys {
+            guard let value = object[key] else { continue }
+            guard case .string(let text) = value else { throw Failure.invalidArguments }
+            fields[key] = text
+        }
+        return fields
+    }
+
+    /// Removes only the named top-level host fields using exact decimal/scalar JSON.
+    /// Nested coordinates, integers, object keys, and string spellings are retained.
+    public static func extractStringMetadata(
+        argumentsJSON: Data, keys: [String]
+    ) throws -> (argumentsJSON: Data, strings: [String: String], presentKeys: Set<String>) {
+        guard keys.count <= 2, Set(keys).count == keys.count else { throw Failure.lossyProjection }
+        let root = try parse(argumentsJSON)
+        guard case .object(var object) = root else { return (argumentsJSON, [:], []) }
+        var strings: [String: String] = [:]
+        var present: Set<String> = []
+        for key in keys {
+            guard let value = object[key] else { continue }
+            present.insert(key)
+            if case .string(let text) = value { strings[key] = text }
+            object = try object.removing(JSONKey(key), limits: limits)
+        }
+        // Do not rewrite an untouched document at all.
+        guard !present.isEmpty else { return (argumentsJSON, strings, present) }
+        var bounded = limits
+        bounded[.outputBytes] = UInt64(maximumBytes)
+        let bytes = try JSONWriter(options: .init(
+            limits: bounded, keyOrder: .scalar, numberStyle: .normalized
+        )).write(.object(object))
+        try Task.checkCancellation()
+        return (bytes, strings, present)
     }
 
     /// The existing provider schema API uses Double and String dictionaries. Check its actual

@@ -551,6 +551,10 @@ final class MCPRuntimeProvider {
             }
             await refreshSnapshots()
         case .background:
+            // Backgrounding the UI is not cancellation of the original user
+            // operation. Its OS continuation owns these workers until completion
+            // or expiry; stopping them here breaks in-flight MCP tool requests.
+            guard !RuntimeBackgroundContinuation.shared.isKeepingUserWorkAlive else { return }
             await controller.stopAll()
             await refreshSnapshots()
         case .inactive: break

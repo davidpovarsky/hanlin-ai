@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// The user reviews the same immutable request the original Host will validate again.
-/// Dismissal, timeout, cancellation and context changes all revoke this one-use request.
+/// Dismissal, timeout, cancellation and context changes reject the pending request.
 struct HanlinToolConsentSheet: View {
     let request: HanlinAppToolConsent.Request
     let answer: (Bool) -> Void
@@ -11,7 +11,9 @@ struct HanlinToolConsentSheet: View {
             Form {
                 Section {
                     LabeledContent("Tool", value: request.tool)
-                    Text("This operation uses Hanlin’s access. Review its request before allowing it once.")
+                    Text(request.remembersDecision
+                        ? String(localized: "This permission will also apply in your other conversations.")
+                        : String(localized: "This operation uses Hanlin’s access. Review its request before allowing it once."))
                         .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                 }
                 Section("Request") {
@@ -27,7 +29,7 @@ struct HanlinToolConsentSheet: View {
                     Button("Cancel", role: .cancel) { answer(false) }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Allow once") { answer(true) }
+                    Button(request.remembersDecision ? String(localized: "Allow and remember") : String(localized: "Allow once")) { answer(true) }
                         .accessibilityIdentifier("hanlin-tool-consent-allow-once")
                 }
             }

@@ -52,7 +52,7 @@ final class HanlinAppAgentSessionOwner {
             onApprovalEvent?(pendingApprovalRowID, .init(id: request.activityID,
                 canonicalRunID: request.canonicalRunID, callID: request.providerCallID,
                 toolName: request.tool, reviewText: AgentDiagnosticsRedactor.sanitize(review),
-                disposition: allowed.map { $0 ? .allowedOnce : .notApproved } ?? .awaiting))
+                disposition: allowed.map { $0 ? (request.remembersDecision ? .allowedAlways : .allowedOnce) : .notApproved } ?? .awaiting))
         }
     }
 
@@ -307,9 +307,9 @@ final class HanlinAppAgentSessionOwner {
             let originalHost = HanlinAppHostIntegration(identity: identity, store: originalStore, isCurrent: { [weak self] in
                 self?.contextGeneration == generation
             })
-            originalHost.confirmInvocation = { [weak self] invocation in
+            originalHost.confirmInvocation = { [weak self] invocation, approvalScope in
                 guard let self, self.contextGeneration == generation else { return false }
-                return await self.consent.request(invocation)
+                return await self.consent.request(invocation, approvalScope: approvalScope)
             }
             let originalSession = HanlinAgentSession(identity: identity, host: originalHost, engine: originalEngine,
                 store: originalStore, capabilities: originalHost, interactions: originalHost)

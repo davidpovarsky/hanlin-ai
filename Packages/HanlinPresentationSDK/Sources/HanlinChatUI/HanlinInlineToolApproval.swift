@@ -8,6 +8,7 @@ public struct HanlinInlineToolApproval: View {
     public let requestID: String
     public let toolName: String
     public let reviewText: String
+    public let remembersDecision: Bool
     private let answer: (Bool) -> Void
     @State private var detailsExpanded = false
     @State private var decisionSubmitted = false
@@ -16,10 +17,11 @@ public struct HanlinInlineToolApproval: View {
     private let blue = Color(red: 0.28, green: 0.49, blue: 0.80)
     private let ink = Color(red: 0.27, green: 0.43, blue: 0.65)
 
-    public init(requestID: String, toolName: String, reviewText: String,
+    public init(requestID: String, toolName: String, reviewText: String, remembersDecision: Bool = false,
                 answer: @escaping (Bool) -> Void) {
         self.requestID = requestID; self.toolName = toolName
         self.reviewText = reviewText; self.answer = answer
+        self.remembersDecision = remembersDecision
     }
 
     public var body: some View {
@@ -111,7 +113,9 @@ public struct HanlinInlineToolApproval: View {
                     .font(HanlinTypography.caption).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            Text("Review this operation before allowing it once.")
+            Text(LocalizedStringKey(remembersDecision
+                ? "This permission will also apply in your other conversations."
+                : "Review this operation before allowing it once."))
                 .font(HanlinTypography.caption2).foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -140,7 +144,8 @@ public struct HanlinInlineToolApproval: View {
             .buttonStyle(.plain)
             .accessibilityIdentifier("hanlin-tool-consent-deny")
             Button { submit(true) } label: {
-                Text("Allow once").font(HanlinTypography.caption.weight(.semibold))
+                Text(LocalizedStringKey(remembersDecision ? "Allow and remember" : "Allow once"))
+                    .font(HanlinTypography.caption.weight(.semibold))
                     .foregroundStyle(ink)
                     .padding(.horizontal, 13).frame(minHeight: 36)
                     .background(.white.opacity(0.82), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
@@ -150,7 +155,7 @@ public struct HanlinInlineToolApproval: View {
             }
             .buttonStyle(.plain)
             .disabled(!hasReviewText)
-            .accessibilityIdentifier("hanlin-tool-consent-allow-once")
+            .accessibilityIdentifier(remembersDecision ? "hanlin-tool-consent-allow-remember" : "hanlin-tool-consent-allow-once")
         }
         .fixedSize(horizontal: true, vertical: false)
         .disabled(decisionSubmitted)

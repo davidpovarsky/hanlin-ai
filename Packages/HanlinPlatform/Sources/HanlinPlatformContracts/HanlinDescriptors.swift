@@ -581,6 +581,7 @@ public struct HanlinToolDescriptor: Codable, Hashable, Sendable {
     public let capabilities: [HanlinCapabilityID]
     public let risk: HanlinRiskLevel
     public let presentation: HanlinToolPresentationDescriptor
+    public let approval: HanlinToolApprovalDescriptor?
 
     public init(
         logicalID: HanlinLogicalToolID,
@@ -592,7 +593,8 @@ public struct HanlinToolDescriptor: Codable, Hashable, Sendable {
         outputSchema: HanlinJSONSchemaDocument? = nil,
         capabilities: [HanlinCapabilityID] = [],
         risk: HanlinRiskLevel,
-        presentation: HanlinToolPresentationDescriptor
+        presentation: HanlinToolPresentationDescriptor,
+        approval: HanlinToolApprovalDescriptor? = nil
     ) {
         self.logicalID = logicalID
         self.descriptorRevision = descriptorRevision
@@ -604,6 +606,7 @@ public struct HanlinToolDescriptor: Codable, Hashable, Sendable {
         self.capabilities = capabilities
         self.risk = risk
         self.presentation = presentation
+        self.approval = approval
     }
 }
 

@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "task": "Inline native selection across Markdown rich blocks and ordered model parts, follow-up after TestFlight 145401",
+  "recorded_at_utc": "2026-11-22T04:40:00Z",
+  "baseline": {
+    "app": "f49b81fd",
+    "app_branch": "codex/hanlin-ipad-followup-20261122",
+    "renderer": "6e884c73352a272c4e7bf8a5917e8b2157bc952e",
+    "renderer_branch": "codex/hanlin-cross-block-selection-20261122"
+  },
+  "observed_cause": [
+    "IMG_0734.jpeg shows selection stopping at the thematic divider before the next Hebrew paragraph.",
+    "MarkdownSelectionDocument.build flushed the native prose group before every non-prose block.",
+    "HanlinMixedOriginalText and HanlinChatContentView created separate Markdown views around OpenUI/A2UI ordered parts."
+  ],
+  "implementation": [
+    "One native UITextView represents the complete inline document, including view-backed TextKit attachment positions for rich blocks and explicitly supplied embedded UI.",
+    "Existing rich SwiftUI block types/actions are hosted using UIHostingConfiguration and the current complete SwiftUI environment.",
+    "Structured MarkdownDocumentPart input retains original part/block source prefixes and refuses duplicate source coordinates. Markdown syntax cannot create trusted embedded parts.",
+    "Only completed unchanged parts reuse parsed snapshots; the existing canonical NativeTextEditPlan updates the changed native tail and preserves selection in unchanged prefixes.",
+    "Copy/save expands rich attachment positions to exact stored text, leaving bookmark offsets in the native UTF-16 coordinate space. Nontext embedded app controls have no invented textual payload.",
+    "One-second stationary preview arbitration is unchanged. Rich buttons and links are excluded from that preview recognizer.",
+    "Nested rich text leaves defer selection to the enclosing native document while a precise public UITextInput glyph hit path and accessibility actions preserve URL/citation taps.",
+    "The native wrapper explicitly subscribes to embedded renderer, code fence/renderer, locale, layout direction, color scheme and Dynamic Type, refreshing rich hosts even when their native text position is unchanged."
+  ],
+  "public_api_changes": [
+    "MarkdownDocumentPart(id:sourcePrefix:markdown:) and MarkdownDocumentPart(id:selectionText:)",
+    "MarkdownView.init(text:config:listener:documentParts:) optional final argument",
+    "HanlinMarkdownView.init(...,documentParts:) optional final argument",
+    "View.markdownEmbeddedBlockRenderer(_:) with @MainActor @Sendable (String) -> AnyView?"
+  ],
+  "validation": [
+    {
+      "job_id": "job_270d20ad89c2",
+      "status": "succeeded",
+      "exit_code": 0,
+      "duration_s": 23.75,
+      "started_at": "2026-11-22T04:31:49.573700+00:00",
+      "finished_at": "2026-11-22T04:32:13.319395+00:00",
+      "timeout_s": 180,
+      "output_truncated": false,
+      "pass_lines": [
+        "PASS renderer syntax (18 changed Swift files)",
+        "PASS app syntax (5 changed selection surfaces, A2UI enabled)",
+        "PASS cross-block-selection-domain 41 checks; Foundation only, no UIKit runtime claim",
+        "PASS whitespace"
+      ],
+      "scope": "Windows Swift syntax for 18 changed renderer files and 5 app surfaces with HANLIN_A2UI_POC; actual Foundation production source-coordinate/attachment text policy compiled and executed (41 checks)."
+    },
+    {
+      "job_id": "job_b037753a2c8d",
+      "status": "succeeded",
+      "exit_code": 0,
+      "duration_s": 2.92,
+      "started_at": "2026-11-22T04:33:56.782547+00:00",
+      "finished_at": "2026-11-22T04:33:59.697861+00:00",
+      "timeout_s": 120,
+      "output_truncated": false,
+      "pass_lines": [
+        "PASS embedded link delta syntax (2 files)",
+        "PASS whitespace"
+      ],
+      "scope": "Scoped syntax for the two nested-link fix files; no domain fixture rerun."
+    },
+    {
+      "job_id": "job_abf42cc5edfd",
+      "status": "succeeded",
+      "exit_code": 0,
+      "duration_s": 3.94,
+      "started_at": "2026-11-22T04:34:53.838664+00:00",
+      "finished_at": "2026-11-22T04:34:57.778042+00:00",
+      "timeout_s": 120,
+      "output_truncated": false,
+      "pass_lines": [
+        "PASS grapheme link delta syntax",
+        "PASS whitespace"
+      ],
+      "scope": "Scoped syntax for the one grapheme-boundary hardening file; no domain fixture rerun."
+    },
+    {
+      "job_id": "job_22c33b46b548",
+      "status": "succeeded",
+      "exit_code": 0,
+      "duration_s": 10.43,
+      "started_at": "2026-11-22T04:37:16.654644+00:00",
+      "finished_at": "2026-11-22T04:37:27.086572+00:00",
+      "timeout_s": 120,
+      "output_truncated": false,
+      "pass_lines": [
+        "PASS attachment NSCoder delta syntax"
+      ],
+      "scope": "Scoped syntax for explicit failable attachment NSCoder initializer return."
+    },
+    {
+      "job_id": "job_263b59503a4f",
+      "status": "succeeded",
+      "exit_code": 0,
+      "duration_s": 26.18,
+      "started_at": "2026-11-22T04:39:28.276367+00:00",
+      "finished_at": "2026-11-22T04:39:54.455984+00:00",
+      "timeout_s": 120,
+      "output_truncated": false,
+      "pass_lines": [
+        "PASS final attachment environment and NSCoder syntax",
+        "PASS whitespace"
+      ],
+      "scope": "Final syntax for attachment provider and explicit renderer/fence/locale/layout/theme/Dynamic Type environment subscriptions. No unchanged domain fixtures repeated."
+    }
+  ],
+  "reproducible_commands": {
+    "renderer_syntax": "$files=@(git diff --name-only -- '*.swift') + @(git ls-files --others --exclude-standard -- '*.swift'); swiftc -frontend -parse @files",
+    "app_syntax": "swiftc -frontend -parse -D HANLIN_A2UI_POC AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift AI_HLY/Downstream/ChatPresentation/HanlinChatContentView.swift AI_HLY/Downstream/ChatPresentation/HanlinOpenUIPresentation.swift Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift AI_HLY/Views/Components/ChatViewComponents.swift",
+    "portable_fixture": "swiftc Sources/MarkdownText/Models/MarkdownDocumentPart.swift Sources/MarkdownText/ContextMenu/MarkdownSelectionText.swift Tests/Portable/CrossBlockSelectionMain.swift -o <temporary-output>/hanlin-cross-block-selection-domain.exe; execute that binary",
+    "whitespace": "git diff --check"
+  },
+  "retained_apple_tests": [
+    "Tests/MarkdownTextTests/ContinuousDocumentSelectionTests.swift: reported Hebrew list/divider/paragraph, complete code payload, source namespaces across structured parts, duplicate host IDs, unchanged rich attachment prefix during streaming.",
+    "Tests/MarkdownTextTests/MarkdownDocumentBoundaryTests.swift: exact rich text substitution and distinct source namespaces."
+  ],
+  "limits": [
+    "Windows -frontend -parse is syntax-only; it does not typecheck UIKit or SwiftUI.",
+    "UIKit XCTest cases were updated/added but were not executed in this task.",
+    "No simulator, native Apple build, real-device gesture measurement, snapshot comparison, CI run, commit or push was performed by this agent.",
+    "Rich views occupy atomic native selection positions; their own controls and copy/expand actions remain available. The surrounding message selection crosses those positions continuously.",
+    "Apple archive compilation and iPad verification remain required for TextKit attachment sizing, native selection handles, embedded control interaction and accessibility.",
+    "Earlier 329 edit-plan / 49 preview-metrics results retain their original provenance; they were not rerun or relabeled as cross-block runtime acceptance.",
+    "The final shared ChatViewComponents hash identifies the syntax-checked snapshot, including concurrent root changes; later root changes require their own provenance."
+  ],
+  "peer_review": {
+    "reviewer": "composer_interactions",
+    "addressed": [
+      "isSelectable=false also disables UIKit link interaction; added precise public scoped link hit dispatch/accessibility actions for embedded leaves.",
+      "offset-1 can point inside a Unicode cluster; link geometry now resolves complete composed-character spans before creating UITextRange.",
+      "Final source review made the failable NSCoder initializer return explicit and subscribed the native wrapper to rich renderer/environment changes."
+    ],
+    "reviewed": "Initializer labels, typed callbacks, provider lifetime, weak attachment ownership and environment handoff; no further concrete issue reported."
+  },
+  "primary_api_references": [
+    "https://developer.apple.com/documentation/uikit/nstextattachmentviewprovider",
+    "https://developer.apple.com/documentation/uikit/nstextattachment",
+    "https://developer.apple.com/documentation/swiftui/uihostingconfiguration",
+    "https://developer.apple.com/documentation/uikit/uicontentconfiguration-9eib5/makecontentview()",
+    "https://developer.apple.com/documentation/uikit/nstextlayoutmanager/invalidatelayout(for:)",
+    "https://developer.apple.com/documentation/uikit/nstextrange/init(location:).md",
+    "https://developer.apple.com/documentation/uikit/uitextview/isselectable",
+    "https://developer.apple.com/documentation/uikit/uitextinput/firstrect(for:).md"
+  ],
+  "validated_source_hashes": {
+    "renderer/Sources/MarkdownText/ContextMenu/MarkdownTextSelection.swift": {
+      "sha256": "6e3ce183745ef070b2cec8a60cf090304ec5dc0786b7f09175c58b4310742064",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/MarkdownView.swift": {
+      "sha256": "84d9048f79902b7c62a0928f2d893ca37286e8b340659164fb28c72eeef9b34d",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/Models/MarkdownRenderable.swift": {
+      "sha256": "533438c5ea5e9b8103c35eebdcb7e1fe2a9c8eb62743da0b97be9b254b427417",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/Models/MarkdownSelectionDocument.swift": {
+      "sha256": "8256c23fbe0ed8f70a999d4107cd45d8e4021da124bcdc700afd37b0192f2b5d",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/Models/RenderableDocument.swift": {
+      "sha256": "b25507068b55956e01ae0e5840582d44e81f6e53a390189128cced29e245bc84",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/UI/BlockView.swift": {
+      "sha256": "24017fe42463db9655f397c65b3e3ea3b543cd005ff3ca3d43c05ba68cbd7d17",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/UI/CodeBlockView.swift": {
+      "sha256": "559774dc92b52eed6ace1abb4ad47f7458f5f51164489cb87d0d3ca97b96d168",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphUIView.swift": {
+      "sha256": "992acb39e09f4686884563d60e24eb15ed8c83290d7897d50056cf1a1e29a2be",
+      "validated_in": "job_abf42cc5edfd"
+    },
+    "renderer/Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphView+iOS.swift": {
+      "sha256": "612250253da37e2b9c29402c23136f6bff58c2c5d5430aaa49efb7d16e9c4f50",
+      "validated_in": "job_263b59503a4f"
+    },
+    "renderer/Tests/MarkdownTextTests/ContinuousDocumentSelectionTests.swift": {
+      "sha256": "125f14e80182e4ee6d48a2b8025e0d7f006599d7e364176907feaac7143d5748",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/ContextMenu/MarkdownSelectionText.swift": {
+      "sha256": "e51b6072029d0d753dc726a12ca83051abf9d344fa1ab976545a59ac71c4ac56",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/Models/MarkdownDocumentPart.swift": {
+      "sha256": "dc82119b3010e74faa2f03340bc933e19ffc0dd7d586d00dce85fd1ed75979f5",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/Models/MarkdownRenderable+Namespace.swift": {
+      "sha256": "e748b29c1a7450493499dd66a3fb31d738f70aa7aa36f13fedbe0924be3277b7",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/Parser/MarkdownDocumentParser.swift": {
+      "sha256": "f76d399cbef77b767a6bc265c523d13255651351169979ed896ad341c6b36aaf",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/UI/MarkdownEmbeddedBlockRenderer.swift": {
+      "sha256": "ebd5756a3eef339ef7284c062d599ee73b504c94a1bc56386e6a1d4b83ff7954",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Sources/MarkdownText/UI/Paragraph/UIKit/MarkdownRichBlockAttachment.swift": {
+      "sha256": "e6f89586b4076438fea0d59ce0627b53b5060c0667acb0cc6cf4ce2480efa0e6",
+      "validated_in": "job_263b59503a4f"
+    },
+    "renderer/Tests/MarkdownTextTests/MarkdownDocumentBoundaryTests.swift": {
+      "sha256": "5991cc7a5c212ac2ae3719f33881a390df1d33e725e5ba84bc2b726953cc6f46",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "renderer/Tests/Portable/CrossBlockSelectionMain.swift": {
+      "sha256": "b7fe5ef226731fe401445995c2df8e648575ad2eec83f979b14845c9322a58f7",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "app/AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift": {
+      "sha256": "db8b4fa082eff8ffa16ad7f0133ede91250c963fdc2bc0c6cf2dc228eb07bda9",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "app/AI_HLY/Downstream/ChatPresentation/HanlinChatContentView.swift": {
+      "sha256": "2ee5adc679309eebca4fbf1377ce00d5af0c7625e3b807934592fd08e6ba089a",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "app/AI_HLY/Downstream/ChatPresentation/HanlinOpenUIPresentation.swift": {
+      "sha256": "f37bdf3c28b1eefed1da8bbfa61cdc22f743da0c252de867597ac072196132c1",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "app/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift": {
+      "sha256": "19515e4b098e4538f65269acaaa6115d29a1200e6c5aba1f87d5facd525e3429",
+      "validated_in": "job_270d20ad89c2"
+    },
+    "app/AI_HLY/Views/Components/ChatViewComponents.swift": {
+      "sha256": "3a3258718482e72e0b8475df8c71e5676b5dc1eca65b8ba0c73001865d3c00a3",
+      "validated_in": "job_270d20ad89c2"
+    }
+  }
+}

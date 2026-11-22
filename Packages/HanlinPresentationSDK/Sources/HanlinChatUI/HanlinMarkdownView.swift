@@ -13,6 +13,7 @@ import HanlinPresentationKit
 public struct HanlinMarkdownView: View {
     public let text: String
     private let imageConfig: ImageConfig
+    private let documentParts: [MarkdownDocumentPart]?
     private let citationGroups: [HanlinCitationGroup]
     private let contextMenuItems: [TextContextMenuItem]
     private let onRendered: (@MainActor @Sendable () -> Void)?
@@ -26,8 +27,10 @@ public struct HanlinMarkdownView: View {
                 citationGroups: [HanlinCitationGroup] = [],
                 contextMenuItems: [TextContextMenuItem] = [],
                 onRendered: (@MainActor @Sendable () -> Void)? = nil,
-                onSelectionAction: (@MainActor @Sendable (String, MarkdownTextSelection) -> Void)? = nil) {
+                onSelectionAction: (@MainActor @Sendable (String, MarkdownTextSelection) -> Void)? = nil,
+                documentParts: [MarkdownDocumentPart]? = nil) {
         self.text = text; self.imageConfig = imageConfig
+        self.documentParts = documentParts
         self.citationGroups = citationGroups; self.contextMenuItems = contextMenuItems
         self.onRendered = onRendered; self.onSelectionAction = onSelectionAction
     }
@@ -35,7 +38,7 @@ public struct HanlinMarkdownView: View {
     public var body: some View {
         let _ = dynamicTypeSize
         let _ = listener.update(onSelectionAction: onSelectionAction, onRendered: onRendered)
-        MarkdownView(text: text, config: config, listener: listener)
+        MarkdownView(text: text, config: config, listener: listener, documentParts: documentParts)
             .task(id: citationGroups.map(\.url)) { await loadCitationIcons() }
             .frame(maxWidth: .infinity, alignment: .leading)
     }

@@ -16,6 +16,8 @@ struct ManageRuntimePackagesTool: NativeTool {
                 "Install a Python package",
                 "Preview an npm package"
             ],
+            isSensitive: true,
+            approval: .init(actionParameter: "action", nonSensitiveActions: ["list", "preview"], scopeParameters: ["runtime"]),
             systemImage: "shippingbox",
             presentationProfile: RuntimeToolSupport.profile(
                 name: name,

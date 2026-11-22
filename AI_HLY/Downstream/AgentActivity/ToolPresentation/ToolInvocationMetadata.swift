@@ -1,4 +1,5 @@
 import Foundation
+import HanlinAgentCore
 
 struct ToolInvocationMetadata: Codable, Hashable, Sendable {
     var progressSummary: String?
@@ -13,8 +14,10 @@ struct ToolInvocationExtractionResult: Hashable, Sendable {
 
 enum ToolInvocationMetadataExtractor {
     static func extract(from argumentsJSON: String) -> ToolInvocationExtractionResult {
-        guard let data = argumentsJSON.data(using: .utf8),
-              var object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+        guard let extraction = try? HanlinHostSchemaValidation.extractStringMetadata(
+            argumentsJSON: Data(argumentsJSON.utf8),
+            keys: [ToolSchemaDecorator.progressSummaryKey, ToolSchemaDecorator.resultPresentationKey]
+        ) else {
             return ToolInvocationExtractionResult(
                 sanitizedArgumentsJSON: argumentsJSON,
                 metadata: ToolInvocationMetadata(progressSummary: nil, resultPresentation: .none),
@@ -23,28 +26,21 @@ enum ToolInvocationMetadataExtractor {
         }
 
         let summary = ProgressSummarySanitizer.sanitize(
-            object.removeValue(forKey: ToolSchemaDecorator.progressSummaryKey) as? String
+            extraction.strings[ToolSchemaDecorator.progressSummaryKey]
         )
-        let rawPresentation = object.removeValue(forKey: ToolSchemaDecorator.resultPresentationKey)
+        let rawPresentation = extraction.strings[ToolSchemaDecorator.resultPresentationKey]
         let request: ToolResultPresentationRequest
         let invalid: Bool
-        if let raw = rawPresentation as? String,
+        if let raw = rawPresentation,
            let decoded = ToolResultPresentationRequest(rawValue: raw) {
             request = decoded
             invalid = false
         } else {
             request = .none
-            invalid = rawPresentation != nil
+            invalid = extraction.presentKeys.contains(ToolSchemaDecorator.resultPresentationKey)
         }
 
-        let sanitizedJSON: String
-        if JSONSerialization.isValidJSONObject(object),
-           let sanitizedData = try? JSONSerialization.data(withJSONObject: object, options: [.sortedKeys]),
-           let string = String(data: sanitizedData, encoding: .utf8) {
-            sanitizedJSON = string
-        } else {
-            sanitizedJSON = argumentsJSON
-        }
+        let sanitizedJSON = String(decoding: extraction.argumentsJSON, as: UTF8.self)
 
         return ToolInvocationExtractionResult(
             sanitizedArgumentsJSON: sanitizedJSON,

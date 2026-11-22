@@ -704,6 +704,15 @@
                 },
                 "customHandler": {
                   "type": "string"
+                },
+                "systemImage": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "animation": {
+                  "type": "string",
+                  "enum": ["search", "execution", "common"]
                 }
               },
               "type": "object"
@@ -764,6 +773,22 @@
             "supportsExpandedPresentation"
           ],
           "type": "object"
+        },
+        "approval": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "requiresApproval": { "type": "boolean" },
+            "actionParameter": { "type": "string", "minLength": 1, "maxLength": 128 },
+            "nonSensitiveActions": {
+              "type": "array", "maxItems": 64, "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1, "maxLength": 128 }
+            },
+            "scopeParameters": {
+              "type": "array", "maxItems": 31, "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          }
         },
         "risk": {
           "$ref": "#/$defs/risk"

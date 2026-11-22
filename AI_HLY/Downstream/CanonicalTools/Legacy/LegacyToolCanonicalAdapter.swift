@@ -58,6 +58,23 @@ enum LegacyToolCanonicalAdapter {
         return words
     }
 
+    /// Explicit built-in sensitivity declarations. Public lookups remain unprompted;
+    /// personal data and mutating operations use remembered scoped consent.
+    private static func risk(for toolName: String) -> HanlinRiskLevel {
+        switch toolName {
+        case "retrieve_memory", "search_calendar_and_reminders", "get_current_location",
+             "fetch_step_details", "fetch_energy_details", "fetch_nutrition_details", "search_knowledge_bag":
+            return .sensitiveRead
+        case "save_memory", "update_memory", "write_system_event", "create_knowledge_document",
+             "create_canvas", "edit_canvas", "make_nutrition_data":
+            return .write
+        case "create_web_view", "execute_remote_python_code", "execute_python_code":
+            return .privileged
+        default:
+            return .read
+        }
+    }
+
     /// Converts active legacy tools into canonical tool authority sources.
     static func sources(
         memoryEnabled: Bool = true,
@@ -104,7 +121,7 @@ enum LegacyToolCanonicalAdapter {
             let presentationProfile = LegacyToolPresentationAdapter.profile(for: name) ?? .generic(toolName: name)
             let presentationDesc = HanlinToolPresentationDescriptor(
                 compactStyle: .automatic,
-                executionPresentation: nil,
+                executionPresentation: presentationProfile.resolvedExecutionPresentation,
                 embeddedPresentation: presentationProfile.canonicalEmbeddedPresentation
             )
 
@@ -133,7 +150,7 @@ enum LegacyToolCanonicalAdapter {
                 inputSchema: document,
                 outputSchema: nil,
                 capabilities: [],
-                risk: .read,
+                risk: risk(for: name),
                 presentation: presentationDesc
             )
 

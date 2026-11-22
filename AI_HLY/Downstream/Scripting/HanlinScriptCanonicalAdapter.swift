@@ -21,7 +21,9 @@ enum HanlinScriptCanonicalAdapter {
                 outputSchema: snapshot.tool.outputSchema,
                 capabilities: snapshot.tool.requiredCapabilities,
                 risk: snapshot.tool.risk,
-                presentation: .init(compactStyle: .automatic)
+                presentation: .init(compactStyle: .automatic,
+                    executionPresentation: snapshot.tool.executionPresentation),
+                approval: .init(requiresApproval: snapshot.tool.requiresApproval)
             )
             let parametersData = try snapshot.tool.inputSchema.canonicalJSONData()
             guard let parameters = try JSONSerialization.jsonObject(

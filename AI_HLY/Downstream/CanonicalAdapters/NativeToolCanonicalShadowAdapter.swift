@@ -115,12 +115,14 @@ enum NativeToolCanonicalShadowAdapter {
       summary: try LocalizedValue(["en": entry.summary]),
       inputSchema: document,
       outputSchema: nil,
+      capabilities: try entry.requiredCapabilities.map { try HanlinCapabilityID(validating: $0) },
       risk: entry.isSensitive ? .sensitiveRead : .read,
       presentation: .init(
         compactStyle: .automatic,
-        executionPresentation: entry.presentationProfile.canonicalExecutionPresentation,
+        executionPresentation: entry.presentationProfile.resolvedExecutionPresentation,
         embeddedPresentation: entry.presentationProfile.canonicalEmbeddedPresentation
-      )
+      ),
+      approval: entry.approval
     )
     return .init(descriptor: descriptor, findings: findings)
   }

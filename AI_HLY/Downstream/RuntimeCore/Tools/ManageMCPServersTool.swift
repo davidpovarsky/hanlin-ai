@@ -16,6 +16,9 @@ struct ManageMCPServersTool: NativeTool {
                 "Preview or install an MCP server package",
                 "Enable and start an MCP server for the current chat"
             ],
+            isSensitive: true,
+            approval: .init(actionParameter: "action", nonSensitiveActions: ["status", "list", "preview", "list_tools"],
+                            scopeParameters: ["server", "tool_name"]),
             systemImage: "server.rack",
             presentationProfile: RuntimeToolSupport.profile(
                 name: name,
