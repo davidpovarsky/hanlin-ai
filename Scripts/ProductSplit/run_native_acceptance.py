@@ -61,7 +61,7 @@ def main():
         state['sha'] = command(['git', 'rev-parse', 'HEAD'], 'source-sha.txt').strip()
         tracked = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
         sources = sorted(ROOT/p for p in tracked if p and Path(p).suffix in {
-            '.swift', '.mm', '.m', '.h', '.hpp', '.cpp', '.json', '.plist', '.entitlements', '.xcconfig', '.xcscheme',
+            '.swift', '.mm', '.m', '.h', '.hpp', '.cpp', '.json', '.plist', '.entitlements', '.xcconfig', '.xcscheme', '.xcstrings',
             '.mjs', '.js', '.cjs', '.sh', '.py', '.yml', '.yaml', '.tsx', '.ts'
         } and (ROOT/p).is_file())
         inputs = {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
@@ -90,13 +90,13 @@ def main():
         simulator = command(['xcrun', 'simctl', 'create', 'HanlinSplit-'+os.environ.get('GITHUB_RUN_ID','local'),
                              device['identifier'], runtime['identifier']], 'created-simulator.txt').strip()
         state.update(simulator=simulator, runtime=runtime, device=device)
-        destinations = command(['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
-                                '-showdestinations', *package_arguments], 'destinations.log', timeout=120)
-        destination = next(line for line in destinations.splitlines() if simulator.lower() in line.lower())
-        state['architecture'] = re.search(r'arch:\s*(\w+)', destination).group(1)
-        if state['architecture'] not in runtime['supportedArchitectures']:
-            raise RuntimeError('Xcode destination architecture is unsupported by selected runtime')
-        state['architecture_evidence'] = destination.strip()
+        # The owned device, SDK and runtime are already identified by simctl.
+        # Asking xcodebuild to list destinations resolves the entire workspace
+        # again, including remote package fetches (timed out in 45076078756).
+        # The real build below verifies the destination and the emitted binary.
+        host_architecture = os.uname().machine
+        if host_architecture not in runtime['supportedArchitectures']:
+            raise RuntimeError('Mac architecture is unsupported by the selected simulator runtime')
         # Run 44248480774 compiled successfully, but its immediate cold-boot install,
         # screenshot and simulator log all timed out before either selected UI case.
         # Start only this owned device before compilation so its first-boot services
@@ -135,6 +135,13 @@ def main():
         executable_name = info['CFBundleExecutable']
         if Path(executable_name).name != executable_name:
             raise RuntimeError('Built executable must remain inside its original app bundle')
+        binary_architectures = command(['xcrun', 'lipo', '-archs', str(app_product/executable_name)],
+                                       'simulator-executable-architectures.txt').split()
+        if host_architecture not in binary_architectures:
+            raise RuntimeError('Built simulator executable does not contain the Mac architecture')
+        state['architecture'] = host_architecture
+        state['architecture_evidence'] = {'simctl_runtime_architectures': runtime['supportedArchitectures'],
+                                          'built_executable_architectures': binary_architectures}
         command(['codesign', '--verify', '--deep', '--strict', str(app_product)], 'simulator-signature.log')
         entitlement_source = ROOT/'HanlinMiniAppsApp/HanlinMiniApps.entitlements'
         required_groups = plistlib.loads(entitlement_source.read_bytes())['com.apple.security.application-groups']
