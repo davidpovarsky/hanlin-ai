@@ -91,6 +91,8 @@ Renderer `cbcbdda4aa3d279cfbdecbbee4647111990dbc6f` corrects only the rich text 
 
 The original Swift5/minimal-concurrency probe failed with the expected isolation errors. The corrected provider boundary typecheck and actual syntax parse passed; 25 cache assertions passed, including 1,024 concurrent requests producing one pending handoff. These are language/cache checks, not Apple SDK or physical gesture evidence. The prior 41 selection-boundary checks remain separately recorded and were not rerun. See `2026-11-22-evidence/selection-provider-isolation-followup.json` and `2026-11-22-followup-evidence/superseded-release-44987552865.json`.
 
+A final pre-window lifecycle correction in renderer `ebbbf889276098f3642448e5439ad049c3cd2d6c` retains geometry invalidation while a live text view has not yet entered its window. Dismantling clears the attachment environment, so weak-owner plus live-environment checks still suppress torn-down views. The +4/-2 provider delta passed syntax and whitespace checks in `job_96ea72e02d8c`; no unchanged cache/selection tests were rerun. The separate addendum is `2026-11-22-evidence/selection-provider-prewindow-followup.json`.
+
 ## Release route
 
 Use workflow `310046367` (`build-ios26-unsigned-ipa.yml`) with:
@@ -104,4 +106,4 @@ runtime_publish_release=false
 testflight_audience_source_build=143801
 ```
 
-Renderer revision `cbcbdda4aa3d279cfbdecbbee4647111990dbc6f` was committed, pushed and independently read back from its remote branch; all3 app pins now reference that exact revision. Record app source SHA, renderer SHA, workflow ID/run/attempt, build number, IPA/runtime receipts, Apple's processing state and internal audience readiness. Do not reuse the prior145401 receipt as the result of this follow-up.
+Renderer revision `ebbbf889276098f3642448e5439ad049c3cd2d6c` was committed, pushed and independently read back from its remote branch; all3 app pins now reference that exact revision. Record app source SHA, renderer SHA, workflow ID/run/attempt, build number, IPA/runtime receipts, Apple's processing state and internal audience readiness. Do not reuse the prior145401 receipt as the result of this follow-up.
