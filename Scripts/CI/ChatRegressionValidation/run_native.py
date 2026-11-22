@@ -29,6 +29,27 @@ def write_json(path: Path, value) -> None:
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
 
 
+def capture_timeout_diagnostics(pid: int, log: Path) -> None:
+    """Retain bounded process state without arguments or environment secrets."""
+    folder = log.parent / (log.stem + "-timeout")
+    folder.mkdir(parents=True, exist_ok=True)
+    commands = [
+        ("processes", ["ps", "-axo", "pid,ppid,pgid,state,pcpu,pmem,etime,comm"], 5),
+        ("sample", ["sample", str(pid), "1", "10", "-file", str(folder / "process.sample.txt")], 8)
+    ]
+    receipts = []
+    for label, arguments, limit in commands:
+        with (folder / (label + ".log")).open("w", encoding="utf-8") as output:
+            try:
+                result = subprocess.run(arguments, stdout=output, stderr=subprocess.STDOUT,
+                                        timeout=limit, check=False)
+                receipts.append({"diagnostic": label, "exit_code": result.returncode, "limit_seconds": limit})
+            except (subprocess.TimeoutExpired, OSError) as error:
+                output.write(f"Diagnostic unavailable: {type(error).__name__}\n")
+                receipts.append({"diagnostic": label, "error": type(error).__name__, "limit_seconds": limit})
+    write_json(folder / "diagnostics.json", {"timed_out_pid": pid, "diagnostics": receipts})
+
+
 def run(args: list[str], log: Path, timeout: int, *, cwd: Path = ROOT, check: bool = True,
         env: dict[str, str] | None = None) -> int:
     """Bound the whole command process group, retaining diagnostics on failure."""
@@ -41,11 +62,23 @@ def run(args: list[str], log: Path, timeout: int, *, cwd: Path = ROOT, check: bo
         try:
             code = process.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
-            os.killpg(process.pid, signal.SIGTERM)
+            # The deadline is still a failure even if the process exits while
+            # diagnostics run. Sample only our child, then terminate its group.
+            try:
+                capture_timeout_diagnostics(process.pid, log)
+            except OSError as error:
+                stream.write(f"Timeout diagnostic unavailable: {type(error).__name__}\n")
+            try:
+                os.killpg(process.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
             try:
                 process.wait(timeout=10)
             except subprocess.TimeoutExpired:
-                os.killpg(process.pid, signal.SIGKILL)
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
                 process.wait(timeout=10)
             stream.write("\nBounded command timeout; no execution success is inferred.\n")
             code = 124
@@ -141,17 +174,22 @@ def phase(stage: Path, name: str, revision: str, selectors: list[str], device: s
     folder.mkdir()
     project = stage / "Scripts/CI/ChatRegressionValidation/HanlinChatRegression.xcodeproj"
     common = ["-project", str(project), "-scheme", "HanlinChatRegression", "-configuration", "Debug",
-              "-destination", f"platform=iOS Simulator,id={device}", "-destination-timeout", "30",
               "-derivedDataPath", str(stage / "DerivedData"),
               "-clonedSourcePackagesDirPath", str(stage / "SourcePackages"),
               "CODE_SIGNING_ALLOWED=NO", "ENABLE_TESTABILITY=YES"]
+    # Package resolution needs no running simulator or concrete destination.
+    # Resolve the baseline before booting, as the established release route does.
     run(["xcodebuild", "-resolvePackageDependencies", *common], folder / "resolve.log", 240)
     checkout = stage / "SourcePackages/checkouts/hanlin-streaming-markdown"
     resolved = read(["git", "rev-parse", "HEAD"], cwd=checkout)
     if resolved != revision:
         raise RuntimeError(f"{name}: native renderer checkout does not equal its exact requested pin")
     write_json(folder / "renderer-source.json", {"requested": revision, "resolved": resolved})
-    code = run(["xcodebuild", "test", *common, "-disableAutomaticPackageResolution",
+    if name == "baseline":
+        run(["xcrun", "simctl", "boot", device], OUT / "boot.log", 30)
+        run(["xcrun", "simctl", "bootstatus", device, "-b"], OUT / "bootstatus.log", 150)
+    destination = ["-destination", f"platform=iOS Simulator,id={device}", "-destination-timeout", "30"]
+    code = run(["xcodebuild", "test", *common, *destination, "-disableAutomaticPackageResolution",
                 "-parallel-testing-enabled", "NO", "-maximum-concurrent-test-simulator-destinations", "1",
                 "-resultBundlePath", str(folder / "Tests.xcresult"),
                 *["-only-testing:" + test for test in selectors]], folder / "test.log", 720, check=False)
@@ -178,6 +216,10 @@ def main() -> None:
     write_json(OUT / "toolchain.json", {"source_sha": source, "developer_dir": os.environ["DEVELOPER_DIR"],
         "xcode": read(["xcodebuild", "-version"]), "sdk": read(["xcrun", "--sdk", "iphonesimulator", "--show-sdk-version"]),
         "xcodegen": xcodegen})
+    first_launch_status = run(["xcodebuild", "-checkFirstLaunchStatus"],
+                              OUT / "first-launch-status.log", 30, check=False)
+    if first_launch_status:
+        raise RuntimeError("Selected Xcode first-launch preflight failed; inspect its retained status before bootstrap")
     baseline_available = run(["git", "cat-file", "-e", BASELINE_APP + ":Packages/HanlinPresentationSDK/Package.swift"],
                              OUT / "baseline-availability.log", 20, check=False)
     if baseline_available:
@@ -212,8 +254,6 @@ def main() -> None:
                 or ownership.get("simulator") != observed_device):
             raise RuntimeError("Selected simulator has no matching native creation receipt")
         device = observed_device
-        run(["xcrun", "simctl", "boot", device], OUT / "boot.log", 30)
-        run(["xcrun", "simctl", "bootstatus", device, "-b"], OUT / "bootstatus.log", 150)
 
         with tempfile.TemporaryDirectory(prefix="hanlin-chat-regression-", dir=os.environ.get("RUNNER_TEMP")) as work:
             stage = Path(work)

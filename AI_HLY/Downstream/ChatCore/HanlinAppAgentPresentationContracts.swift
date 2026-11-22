@@ -25,6 +25,7 @@ protocol HanlinAppAgentPresentationConsumer: AnyObject {
     func installed(session: HanlinAgentSession)
     func validateCompleteParts(_ parts: [HanlinChatStructuredPart]) throws
     func receive(_ event: HanlinAgentEvent, binding: HanlinAppAgentRowBinding) throws
+    func hasVisibleModelOutput(_ event: HanlinAgentEvent) -> Bool
     func completed(_ completion: HanlinAgentRunCompletion)
     func hostResult(_ result: HanlinHostResultEvent)
     func hostProgress(_ progress: HanlinHostProgressEvent)
@@ -35,6 +36,7 @@ protocol HanlinAppAgentPresentationConsumer: AnyObject {
 
 extension HanlinAppAgentPresentationConsumer {
     var modelInstructions: String? { nil }
+    func hasVisibleModelOutput(_ event: HanlinAgentEvent) -> Bool { false }
     func hostResult(_ result: HanlinHostResultEvent) {}
     func hostProgress(_ progress: HanlinHostProgressEvent) {}
 }

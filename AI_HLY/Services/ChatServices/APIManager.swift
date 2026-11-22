@@ -2851,6 +2851,13 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     // 推送请求状态
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "等待模型响应" : "Waiting for model response"))
                     
+                    let legacyRequestID = diagnosticsRoundID ?? UUID()
+                    userOperation?.updateModelPhase(.waitingForResponse)
+                    continuation.yield(StreamData(agentEvents: [.modelRequestStarted(id: legacyRequestID.uuidString)],
+                        modelRoundID: legacyRequestID))
+                    defer {
+                        continuation.yield(StreamData(agentEvents: [.modelRequestEnded(id: legacyRequestID.uuidString)]))
+                    }
                     let chatEngine = self.chatEngineFactory()
                     let result = await chatEngine.stream(request: request, configuration: chatConfig,
                         transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver,
@@ -3010,6 +3017,13 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                             }
                             
                             if responseData.content != nil || responseData.reasoning != nil {
+                                // Describe the admitted UI content, after planning,
+                                // inline reasoning and audio transcription normalize it.
+                                if responseData.content?.contains(where: { !$0.isWhitespace }) == true {
+                                    userOperation?.updateModelPhase(.responding)
+                                } else if responseData.reasoning?.contains(where: { !$0.isWhitespace }) == true {
+                                    userOperation?.updateModelPhase(.thinking)
+                                }
                                 if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
                                     await recorder.recordStreamEvent(
                                         roundID: diagnosticsRoundID,
@@ -3886,6 +3900,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         let converted = Self.convertFormattedMessagesToSDKMessages(formattedMessages)
         let baseSystemPrompt = converted.baseSystemPrompt
         let sdkMessages = converted.messages
+        let userOperation = RuntimeUserOperation.current
 
         let toolAdapter = preparedAssistantTools.map { prepared in HanlinAISDKToolAdapter(
             session: session,
@@ -3896,7 +3911,24 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             supportsReportProgress: modelInfo.agentCapabilities.supportsReportProgressTool,
             callbacks: HanlinAISDKToolAdapter.Callbacks(
                 onStreamData: { continuation.yield($0) },
-                onAgentEvent: { continuation.yield(StreamData(agentEvents: [$0])) },
+                onAgentEvent: { event in
+                    switch event {
+                    case .toolExecutionStarted(let execution):
+                        if !AgentActivityVisibilityPolicy.isInternalTool(execution.name) {
+                            let profile = prepared.presentationProfile(for: execution.name)
+                            let title = ToolPresentationRegistry.presentation(for: execution.name, profile: profile).runningDescription
+                            userOperation?.beginTool(id: execution.id, title: title)
+                        }
+                    case .toolExecutionCompleted(let id, _), .toolExecutionFailed(let id, _):
+                        userOperation?.endTool(id: id)
+                    case .toolApprovalChanged(let approval):
+                        userOperation?.updateApproval(id: approval.callID, isPending: approval.disposition == .awaiting
+                            || approval.disposition == .providerRequired)
+                    default:
+                        break
+                    }
+                    continuation.yield(StreamData(agentEvents: [event]))
+                },
                 onProgressMessage: { continuation.yield(StreamData(agentEvents: [.progressMessage($0)])) },
                 currentReasoningSummary: { [weak self] in self?.toolMessageReasoning }
             ),
@@ -3958,6 +3990,12 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         do {
         for try await agentEvent in sdkStream {
             try agentSessionOwner.receive(agentEvent, uiRunID: runID)
+            if agentSessionOwner.hasVisibleModelOutput(agentEvent, uiRunID: runID) {
+                userOperation?.updateModelPhase(.responding)
+                if let stepID = currentStepID {
+                    continuation.yield(StreamData(agentEvents: [.modelRequestEnded(id: stepID.uuidString)]))
+                }
+            }
             let event = agentEvent.event
             self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.event", round: currentStepID, text: String(describing: event))
             try RuntimeUserOperation.current?.checkInterruption()
@@ -3977,14 +4015,19 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
 
             case .stepStarted(let index, let prep):
                 RuntimeUserOperation.current?.recordWorkEvent(id: "step:\(index):started")
-                currentStepID = toolAdapter?.currentRoundID
+                userOperation?.updateModelPhase(.waitingForResponse)
+                currentStepID = toolAdapter?.takePreparedRoundID(forStep: index) ?? UUID()
                 visibleFinalCharacters = 0
+                if let stepID = currentStepID {
+                    continuation.yield(StreamData(agentEvents: [.modelRequestStarted(id: stepID.uuidString)]))
+                }
                 continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response", modelRoundID: currentStepID))
 
             case .textDelta(let text):
                 self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.content", round: currentStepID, text: text)
                 visibleFinalCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
                 RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
+                if text.contains(where: { !$0.isWhitespace }) { userOperation?.updateModelPhase(.responding) }
                 if self.toolMessage == nil { self.toolMessage = "" }
                 self.toolMessage?.append(text)
                 if let stepID = currentStepID {
@@ -4002,6 +4045,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 if case .textDelta(let text) = part.payload {
                     visibleFinalCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
                     RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
+                    if text.contains(where: { !$0.isWhitespace }) { userOperation?.updateModelPhase(.responding) }
                     if self.toolMessage == nil { self.toolMessage = "" }
                     self.toolMessage?.append(text)
                     // Existing text is a history/search/fallback projection. Ordered presentation
@@ -4012,6 +4056,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             case .reasoningDelta(let text):
                 self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.reasoning", round: currentStepID, text: text)
                 RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
+                if text.contains(where: { !$0.isWhitespace }) { userOperation?.updateModelPhase(.thinking) }
                 if self.toolMessageReasoning == nil { self.toolMessageReasoning = "" }
                 self.toolMessageReasoning?.append(text)
                 if let stepID = currentStepID {
@@ -4047,12 +4092,17 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                 RuntimeUserOperation.current?.recordStreamBytes(data.count)
                 #if canImport(UIKit)
                 if mediaType.lowercased().hasPrefix("image/"), let img = UIImage(data: data) {
+                    userOperation?.updateModelPhase(.responding)
+                    if let stepID = currentStepID {
+                        continuation.yield(StreamData(agentEvents: [.modelRequestEnded(id: stepID.uuidString)]))
+                    }
                     continuation.yield(StreamData(image_content: [img]))
                 }
                 #endif
 
             case .toolApprovalRequest(let request):
                 RuntimeUserOperation.current?.recordWorkEvent(id: "approval:\(request.approvalID):requested")
+                userOperation?.updateApproval(id: request.toolCallID, isPending: true)
                 continuation.yield(StreamData(
                     toolContent: currentLanguagePrefix ? "请求执行工具：\(request.toolName)" : "Requesting approval for tool: \(request.toolName)",
                     toolName: request.toolName,
@@ -4065,6 +4115,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
 
             case .toolApprovalResolved(let request, let allowed):
                 RuntimeUserOperation.current?.recordWorkEvent(id: "approval:\(request.approvalID):resolved")
+                userOperation?.updateApproval(id: request.toolCallID, isPending: false)
                 continuation.yield(StreamData(agentEvents: [.toolApprovalChanged(.init(
                     id: request.approvalID, canonicalRunID: agentEvent.runID,
                     callID: request.toolCallID, toolName: request.toolName,
@@ -4073,6 +4124,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
 
             case .toolOutputDenied(let toolCallID, let toolName):
                 let executionID = "\(toolCallID):execution"
+                userOperation?.updateApproval(id: toolCallID, isPending: false)
+                userOperation?.endTool(id: executionID)
                 let deniedText = currentLanguagePrefix ? "工具执行被拒绝：\(toolName)" : "Tool execution denied: \(toolName)"
                 continuation.yield(StreamData(
                     toolContent: deniedText,
@@ -4157,6 +4210,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             case .stepFinished(let index, let finishReason, let usage, let meaningfulCount):
                 RuntimeUserOperation.current?.recordWorkEvent(id: "step:\(index):finished")
                 if let stepID = currentStepID {
+                    continuation.yield(StreamData(agentEvents: [.modelRequestEnded(id: stepID.uuidString)]))
                     let tokenUsage = AgentTokenUsage(
                         inputTokens: usage.inputTokens,
                         outputTokens: usage.outputTokens,
@@ -4171,9 +4225,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                         usage: tokenUsage,
                         meaningfulEventCount: meaningfulCount
                     )
-                    if toolAdapter?.currentRoundID == stepID {
-                        toolAdapter?.currentRoundID = nil
-                    }
+                    toolAdapter?.finishPreparedRound(forStep: index, roundID: stepID)
+                    currentStepID = nil
                 }
 
             case .finished(let reason, let usage):

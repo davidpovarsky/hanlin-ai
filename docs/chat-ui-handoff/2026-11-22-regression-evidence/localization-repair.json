@@ -1,0 +1,104 @@
+{
+  "updated": [
+    {
+      "path": "AI_HLY/Resource/Localizable.xcstrings",
+      "keys": 14,
+      "sha256": "d7a8dd885efc0c6611ea9299cc1bcef160dbb16f86c226e4096e47f7ecfb9fab"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
+      "keys": 7,
+      "sha256": "4cf11a72d5cc7533172451cb46a08879ea1094938b560aef4059b3c3c42a6d4d"
+    }
+  ],
+  "expected": {
+    "AI_HLY/Resource/Localizable.xcstrings": {
+      "The permission change could not be saved. Please try again.": [
+        "לא ניתן לשמור את שינוי ההרשאה. נסה שוב.",
+        "无法保存权限更改，请重试。"
+      ],
+      "Remembered permissions apply across your conversations on this device. System permissions remain controlled in Settings.": [
+        "ההרשאות שנשמרו חלות על כל השיחות שלך במכשיר הזה. הרשאות המערכת מנוהלות בהגדרות.",
+        "已保存的权限适用于此设备上的所有对话。系统权限仍在设置中管理。"
+      ],
+      "Revoke all tool permissions": [
+        "ביטול כל הרשאות הכלים",
+        "撤销所有工具权限"
+      ],
+      "Revoke permission for %@": [
+        "ביטול ההרשאה עבור %@",
+        "撤销 %@ 的权限"
+      ],
+      "Revoke permission": [
+        "ביטול הרשאה",
+        "撤销权限"
+      ],
+      "Sensitive tools will ask before their first use.": [
+        "כלים רגישים יבקשו אישור לפני השימוש הראשון.",
+        "敏感工具会在首次使用前请求许可。"
+      ],
+      "No remembered tool permissions": [
+        "אין הרשאות כלים שמורות",
+        "没有已保存的工具权限"
+      ],
+      "Tool permissions": [
+        "הרשאות כלים",
+        "工具权限"
+      ],
+      "Collapse": [
+        "צמצום",
+        "收起"
+      ],
+      "This permission will also apply in your other conversations.": [
+        "ההרשאה הזאת תחול גם בשיחות האחרות שלך.",
+        "此权限也适用于你的其他对话。"
+      ],
+      "Allow and remember": [
+        "לאשר ולזכור",
+        "允许并记住"
+      ],
+      "Allowed and remembered": [
+        "אושר ונשמר",
+        "已允许并记住"
+      ],
+      "Thought for %@": [
+        "חשב במשך %@",
+        "思考了%@"
+      ],
+      "Waiting for model response": [
+        "ממתין לתגובת המודל",
+        "等待模型响应"
+      ]
+    },
+    "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings": {
+      "Background continuation was not available before the system suspended the app.": [
+        "לא ניתן היה להמשיך ברקע לפני שהמערכת השעתה את האפליקציה.",
+        "系统挂起应用前，后台继续执行不可用。"
+      ],
+      "Waiting for a response": [
+        "ממתין לתגובה",
+        "等待回复"
+      ],
+      "Thinking": [
+        "חושב",
+        "正在思考"
+      ],
+      "Writing the response": [
+        "כותב את התשובה",
+        "正在撰写回复"
+      ],
+      "Waiting for your approval": [
+        "ממתין לאישור שלך",
+        "等待你的批准"
+      ],
+      "Response complete": [
+        "התשובה הושלמה",
+        "回复已完成"
+      ],
+      "Response stopped": [
+        "התגובה נעצרה",
+        "回复已停止"
+      ]
+    }
+  }
+}

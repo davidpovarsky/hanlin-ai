@@ -1,8 +1,8 @@
 import Foundation
 
 enum AgentActivityCompositionPolicy {
-    static func isVisibleToolActivity(_ step: AgentActivityStep) -> Bool {
-        AgentActivityVisibilityPolicy.showsInvocation(kind: step.kind.rawValue,
+    static func isVisibleActivity(_ step: AgentActivityStep) -> Bool {
+        AgentActivityVisibilityPolicy.showsActivity(kind: step.kind.rawValue,
             toolName: step.subtitle,
             hasIdentity: step.externalID?.isEmpty == false)
     }

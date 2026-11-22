@@ -47,6 +47,15 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
             endActiveReasoning(into: &events)
             lastSemanticEventKind = .toolActivity
         }
+        // The first admitted non-text answer may end the request's waiting
+        // receipt without a text delta. Close only reasoning for that exact
+        // model round; keep answer-segment finalization owned by completion.
+        if data.agentEvents.contains(where: {
+            if case .modelRequestEnded(let id) = $0 { return id == modelRoundID?.uuidString }
+            return false
+        }) {
+            endActiveReasoning(into: &events)
+        }
         for event in data.agentEvents {
             if case .sourceCitations(let segmentID, let citations) = event {
                 events.append(.sourceCitations(segmentID: segmentID ?? activeAnswerSegmentID, citations: citations))
@@ -156,7 +165,8 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
              .searchStarted, .searchCompleted:
             return true
         case .sourceObserved, .sourceCitations,
-             .runStarted, .modelRoundStarted, .answerSegmentStarted, .answerSegmentDelta,
+             .runStarted, .modelRoundStarted, .modelRequestStarted, .modelRequestEnded,
+             .answerSegmentStarted, .answerSegmentDelta,
              .answerSegmentEnded, .runCompleted, .runFailed, .runCancelled:
             return false
         }
