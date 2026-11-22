@@ -92,6 +92,7 @@
     "HanlinMiniAppCore",
     "HanlinNativeScriptRuntime",
     "HanlinParityMiniApp",
+    "HanlinPresentationKit",
     "HanlinPlatformContracts",
     "HanlinProductSplit",
     "HanlinScriptCompiler",
