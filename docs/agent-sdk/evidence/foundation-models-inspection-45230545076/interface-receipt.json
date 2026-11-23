@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "xcode": "Xcode 27.2\nBuild version 27B52",
+  "sdkVersion": "27.2",
+  "modelExecution": "NOT_RUN",
+  "availability": "deviceNotEligible",
+  "status": "DECLARATIONS_READ",
+  "interface": "System/Library/Frameworks/FoundationModels.framework/Modules/FoundationModels.swiftmodule/arm64-apple-ios-simulator.swiftinterface",
+  "interfaceSHA256": "7d29c5b8e1aa76f8b362f2b17f3b29e87418ff4f730822c3f725aa41989bed14",
+  "interfaceBytes": 217372,
+  "excerptSHA256": "d1d50574ae65c19a319d7f8427944cc36a0373affcd8db3fba3fd6a3d531e2e0",
+  "excerptRanges": [
+    {
+      "startLine": 16,
+      "endLine": 56
+    },
+    {
+      "startLine": 97,
+      "endLine": 129
+    },
+    {
+      "startLine": 258,
+      "endLine": 518
+    },
+    {
+      "startLine": 522,
+      "endLine": 529
+    },
+    {
+      "startLine": 533,
+      "endLine": 586
+    },
+    {
+      "startLine": 590,
+      "endLine": 595
+    },
+    {
+      "startLine": 599,
+      "endLine": 640
+    },
+    {
+      "startLine": 799,
+      "endLine": 1087
+    },
+    {
+      "startLine": 1123,
+      "endLine": 1183
+    },
+    {
+      "startLine": 1200,
+      "endLine": 1417
+    },
+    {
+      "startLine": 1482,
+      "endLine": 1507
+    },
+    {
+      "startLine": 1514,
+      "endLine": 1589
+    },
+    {
+      "startLine": 1637,
+      "endLine": 1676
+    },
+    {
+      "startLine": 1720,
+      "endLine": 1751
+    },
+    {
+      "startLine": 1754,
+      "endLine": 3009
+    },
+    {
+      "startLine": 3196,
+      "endLine": 3246
+    },
+    {
+      "startLine": 3248,
+      "endLine": 3591
+    },
+    {
+      "startLine": 3653,
+      "endLine": 3803
+    },
+    {
+      "startLine": 3807,
+      "endLine": 3831
+    }
+  ],
+  "availabilityQuery": {
+    "status": "PASS",
+    "receipt": "availability-query/receipt.json",
+    "executionTarget": "macOS runner host; not iOS Simulator"
+  }
+}
