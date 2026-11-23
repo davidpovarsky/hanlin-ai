@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
-import {expoRanges,latestMetadata,generatedHostVersions} from '../resolve-upstreams.mjs';
-import {mergeOriginal} from '../refresh-original-sources.mjs';
+import {expoRanges,latestMetadata,generatedHostVersions,generatedExpoHostVersions} from '../resolve-upstreams.mjs';
+import {mergeOriginal,originalInHostTarget} from '../refresh-original-sources.mjs';
 import {sourceBuildIdentity} from '../../Expo/build-original-expo-source.mjs';
 
 test('Expo uses its published coherent matrix rather than unrelated latest React or Worklets',()=>{
@@ -42,4 +42,16 @@ test('conflicting native changes produce a repair diff and fail instead of disca
   const cache=await mkdtemp(path.join(tmpdir(),'hanlin-original-conflict-'));
   try {await assert.rejects(mergeOriginal({local:Buffer.from('host\n'),previous:Buffer.from('original\n'),next:Buffer.from('upstream\n'),cache,label:'Component.swift'}),/three-way conflict/);}
   finally {await rm(cache,{recursive:true,force:true});}
+});
+
+test('original widget imports use the existing unified widget target namespace',()=>{
+  const original=Buffer.from('import SwiftUI\nimport ExpoModulesCore\nimport ExpoUI\npublic struct OriginalView {}\n');
+  const target='Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/AccessoryWidgetBackgroundView.swift';
+  assert.equal(originalInHostTarget(original,target).toString(),'import SwiftUI\npublic struct OriginalView {}\n');
+  assert.equal(originalInHostTarget(original,'Packages/Other/OriginalView.swift'),original);
+});
+test('actual native host ABI metadata changes with the original React Native and Hermes graph',()=>{
+  const text=generatedExpoHostVersions({expo:{expo:'58.0.26','@expo/ui':'58.0.29','react-native':'0.88.1','@nativescript/react-native':'9.1.2','react-native-worklets':'0.13.0'}},'260318099.0.5');
+  assert.match(text,/runtimeVersion = "58\.0\.29"/);
+  assert.match(text,/nativeApiAbiIdentity = "rn0\.88\.1-hermes260318099\.0\.5"/);
 });

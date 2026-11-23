@@ -51,6 +51,13 @@ function npmMapping(entry) {
   for(const [prefix,name] of mappings)if(entry.upstream.startsWith(prefix))return {name,relative:entry.upstream.slice(prefix.length)};
   throw new Error(`No original npm source mapping for ${entry.upstream}`);
 }
+export function originalInHostTarget(bytes,local) {
+  if(!local.startsWith('Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/'))return bytes;
+  // This existing extension target compiles the original Core/UI widget types
+  // together in one module. The original source's imports of those same modules
+  // are namespace changes, not replacements for their implementation.
+  return Buffer.from(bytes.toString().replace(/^import (ExpoModulesCore|ExpoUI)\r?\n/gm,''));
+}
 
 export async function refreshOriginalSources({root,cache,publications,archives}) {
   const manifestPath='docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json';
@@ -98,7 +105,7 @@ export async function refreshOriginalSources({root,cache,publications,archives})
       adapterContracts.push(contract);entry.sourceRole='host-adapter';entry.latestUpstreamContract=contract;entry.localSHA256=sha(local);
       continue;
     }
-    const merged=await mergeOriginal({local,previous,next,cache,label:entry.local+' <- '+entry.upstream});
+    const merged=await mergeOriginal({local,previous:originalInHostTarget(previous,entry.local),next:originalInHostTarget(next,entry.local),cache,label:entry.local+' <- '+entry.upstream});
     files.set(entry.local,merged);
     const changed=sha(previous)!==sha(next);
     if(changed)changes.push({path:entry.local,originalBeforeSHA256:sha(previous),originalAfterSHA256:sha(next),adapted:Buffer.compare(merged,next)!==0});
