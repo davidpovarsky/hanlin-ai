@@ -325,7 +325,7 @@ struct HanlinApplicationEmbeddingTests {
         context.insert(original); context.insert(namesake)
         try context.save()
         let originalID = original.persistentModelID, namesakeID = namesake.persistentModelID
-        let announcement = try #require(HanlinConversationMutation.rename(original, title: "Renamed שלום",
+        let announcement = try #require(try HanlinConversationMutation.rename(original, title: "Renamed שלום",
             announceChange: true, in: context))
         try HanlinConversationMutation.setPinned(original, isPinned: true, in: context)
         #expect(original.persistentModelID == originalID && original.isPinned)

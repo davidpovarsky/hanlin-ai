@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-23T19:12:04.175007+00:00",
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45238831508",
+  "runSource": "39a10b1cbf4645b629f556ea312e2576a4e566db",
+  "runAttempt": 1,
+  "nativeJobID": 137917939932,
+  "runConclusion": "failure",
+  "failurePhase": "test target compilation before test execution",
+  "diagnostic": "macro expansion #require: call can throw, but it is not marked with try",
+  "file": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+  "method": "conversationMetadataMutatesOnlyTheOriginalRowsAndPreservesAnnouncement()",
+  "originalLine": 328,
+  "sourceBeforeSHA256": "57fa4d549f51f1cec1f17571ec69c56e62176c6169c5946628aa5165fd9fcd17",
+  "sourceAfterSHA256": "d647361dbef8f576f18e13fc852df7f61b7d06a7f5757e5b29bfd503aafc4463",
+  "change": "Add inner try to the existing throwing rename call inside #require; keep the outer try for the requirement itself. No production, assertion, method or selection changes.",
+  "originalJobLog": {
+    "bytes": 26337432,
+    "sha256": "774daaa290455ac86b3f8a6f6faf4b8ec84f2063df894c291116a0c4a86cdab0",
+    "retainedOraclePath": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-nativescript-search-continuation-20261123/terminal/native-job.log",
+    "excerptStartLine": 122383,
+    "excerptLineCount": 15
+  },
+  "verification": {
+    "syntaxParse": "PASS",
+    "appleCompilationAfterFix": "NOT_RUN",
+    "selectedNativeInvocations": 342,
+    "selectedNativeInvocationStatus": "NOT_RUN"
+  },
+  "releaseAssets": "UNPUBLISHED; failed producer is ineligible"
+}
