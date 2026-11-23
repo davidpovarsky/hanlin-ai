@@ -1,0 +1,252 @@
+[
+  {
+    "path": "HanlinSDK.lock.json",
+    "bytes": 101,
+    "sha256": "ff5aafa29354ed2c7580a0682835d0eb4a43e0730f1ce1b61f051c221e4f09d0"
+  },
+  {
+    "path": "Motion.xcresult.tar.gz",
+    "bytes": 39435350,
+    "sha256": "485725da75aa484da0742309924892dab8f3867c567dde140e539f1005d5e982"
+  },
+  {
+    "path": "boot-initial.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "bootstatus-attempt-1.log",
+    "bytes": 139,
+    "sha256": "cb4435c24107dac7a8857e1c7986124b095c26812a5508830dd82abaf08b87b1"
+  },
+  {
+    "path": "bootstatus.log",
+    "bytes": 399,
+    "sha256": "4fe7068725e8e44b9587a116aada720c0caa8813335cb395d938472841953c32"
+  },
+  {
+    "path": "build-duration-seconds.txt",
+    "bytes": 4,
+    "sha256": "f06f93d621eb3e0ee0831f6bec1903d2a0368696212bf1d7efe07b19d78c6bd5"
+  },
+  {
+    "path": "build.log",
+    "bytes": 1263726,
+    "sha256": "3e019850dd67c267d14d8ada1f33fee8f0f8d65aa8259ef03a8e2ce6598891c2"
+  },
+  {
+    "path": "ci-performance-report.json",
+    "bytes": 2406,
+    "sha256": "b2f6c4cebc51d020850fbdcc3c52b3e1c630a7460f9c52ef1cb362be52654aad"
+  },
+  {
+    "path": "device-strategy.txt",
+    "bytes": 6,
+    "sha256": "02db0d2659c9d48bc15f81a388594fc0e3cf4c780fdc27ea21e0671afc37de19"
+  },
+  {
+    "path": "devices.json",
+    "bytes": 22084,
+    "sha256": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32"
+  },
+  {
+    "path": "generated-project.pbxproj",
+    "bytes": 15508,
+    "sha256": "a43c1059259d0f6f68a9d6b39b6cf49e31c61d530d27590b05b1aa99d6f07efb"
+  },
+  {
+    "path": "generated-target-settings.json",
+    "bytes": 1436,
+    "sha256": "142280d23338be4f7585eb71c3f560f1405a29e4fb20391d372f0c9b4e346cf0"
+  },
+  {
+    "path": "macro-input-admission.json",
+    "bytes": 900,
+    "sha256": "ca9ee381a5bedb490b15e7363abee0506d69bac2e2f6bba8159df201c6957859"
+  },
+  {
+    "path": "macro-input-verification.json",
+    "bytes": 900,
+    "sha256": "ca9ee381a5bedb490b15e7363abee0506d69bac2e2f6bba8159df201c6957859"
+  },
+  {
+    "path": "macro-source.json",
+    "bytes": 1130,
+    "sha256": "e4116358061980dba289af972479444ac20ec5fcc14d6a98ce50b3cc66a9b4ec"
+  },
+  {
+    "path": "motion-Package.resolved",
+    "bytes": 2222,
+    "sha256": "c3d602a21e0adf396417bb7d1bd50e290bedbafa33472fabdeba15b9c666da3e"
+  },
+  {
+    "path": "motion-boot-readiness.json",
+    "bytes": 1442,
+    "sha256": "9ef29c30dc5944081db30b5a5ee6dad2ba3f2c9cc20cfb65f8d068d7e4e957c5"
+  },
+  {
+    "path": "motion-first120s.mp4",
+    "bytes": 7120055,
+    "sha256": "08b2abc4e3b785bd0d9bbb411c21ad6325ca8e7cdb3e2f3e987387749a01aceb"
+  },
+  {
+    "path": "owned-simulator-cleanup.log",
+    "bytes": 88,
+    "sha256": "b1d87fa8bfccdaf3d5b57202df0c3adee2478daee258224691db33b3662711b7"
+  },
+  {
+    "path": "owned-sources.tar.gz",
+    "bytes": 15288656,
+    "sha256": "c06ab3dd21eff2f53b7fe2d21b0a849fe39195b13449cd0fe947e2847a76e52a"
+  },
+  {
+    "path": "preflight-duration-seconds.txt",
+    "bytes": 4,
+    "sha256": "a739c9f8c9968c03553730c28210af55c32a2748834e750b889d63dc4e7545ea"
+  },
+  {
+    "path": "preflight.txt",
+    "bytes": 962,
+    "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+  },
+  {
+    "path": "preparation.json",
+    "bytes": 99165,
+    "sha256": "95a5421c6beff0bac1e5473d21e0394e9bcb6345706f1029de78cb1484c9beca"
+  },
+  {
+    "path": "process-status.txt",
+    "bytes": 27,
+    "sha256": "e9a5bdca7e32335bc64704071e56d1f4e5590ded4ab54d6209f08f118e43e0c9"
+  },
+  {
+    "path": "project.json",
+    "bytes": 1837,
+    "sha256": "b3414f9fb78c3cddd0becc66b0fb3120e842b5858eb44452aed8a8da5773a224"
+  },
+  {
+    "path": "proof-inputs.json",
+    "bytes": 99165,
+    "sha256": "95a5421c6beff0bac1e5473d21e0394e9bcb6345706f1029de78cb1484c9beca"
+  },
+  {
+    "path": "raw-result-status.json",
+    "bytes": 232,
+    "sha256": "3d362ba5715809b0ee0691442ec6ec94edf291380fd611b4474940656ee3458d"
+  },
+  {
+    "path": "requested-scope.txt",
+    "bytes": 11,
+    "sha256": "d8dba5cf11d918468abd1a23c703efde392a35659de1e9622bb66c874d133666"
+  },
+  {
+    "path": "resolve-duration-seconds.txt",
+    "bytes": 4,
+    "sha256": "bf335a61bf8c81a35fd7430b604f6073cbfae046567cf7971658336af16e4442"
+  },
+  {
+    "path": "resolve.log",
+    "bytes": 2687,
+    "sha256": "33cae8fc879e1d3ce55872fa09866f9c5cc7911a47fb38b92064dae60e820ada"
+  },
+  {
+    "path": "resolved-before-macro.json",
+    "bytes": 2222,
+    "sha256": "c3d602a21e0adf396417bb7d1bd50e290bedbafa33472fabdeba15b9c666da3e"
+  },
+  {
+    "path": "results-duration-seconds.txt",
+    "bytes": 2,
+    "sha256": "aa67a169b0bba217aa0aa88a65346920c84c42447c36ba5f7ea65f422c1fe5d8"
+  },
+  {
+    "path": "runtimes.json",
+    "bytes": 60604,
+    "sha256": "386969242e77898fd5a924dfbae4d8da5cbeecd3a4a1839b6f6328433ee0537d"
+  },
+  {
+    "path": "sdk-input-verification.json",
+    "bytes": 171,
+    "sha256": "59709453076dbd9b0ada169115b5630dfaf0eeeabb826d57dddd945fa9b3fea3"
+  },
+  {
+    "path": "sdk-installation.json",
+    "bytes": 1549,
+    "sha256": "53bd980df1929da1a692cdc416fe04b17637c7093b0b76c8f17209b803fac8f2"
+  },
+  {
+    "path": "sdk-resolved-inputs.json",
+    "bytes": 423576,
+    "sha256": "5b8803ab86f6e117ebdd2193a6a8a24e13cdf79cc22b6de25d888c085d359637"
+  },
+  {
+    "path": "selected-device.txt",
+    "bytes": 37,
+    "sha256": "71f4c45c5e49fd3c83f36414b6c7f91b5b0c63247acfc08fb63bf5d13b591e6a"
+  },
+  {
+    "path": "selected-scope.txt",
+    "bytes": 11,
+    "sha256": "d8dba5cf11d918468abd1a23c703efde392a35659de1e9622bb66c874d133666"
+  },
+  {
+    "path": "selected-sdk-Package.swift",
+    "bytes": 2008,
+    "sha256": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4"
+  },
+  {
+    "path": "selected-sdk-manifest.json",
+    "bytes": 2413,
+    "sha256": "41eeb2e6c87be6dee04f652afcff1be839c5a4dce0f412aa72ff172eb11191ff"
+  },
+  {
+    "path": "source-sha.txt",
+    "bytes": 41,
+    "sha256": "0c51214fbfe0868a294c9723d582a28b052b92d273725664d83040c35dbca508"
+  },
+  {
+    "path": "test-duration-seconds.txt",
+    "bytes": 4,
+    "sha256": "87574c1abffa14d93d932b1f75f4360b83c6d1ccf3e514c6ca4de4081a9fbd31"
+  },
+  {
+    "path": "test-runner-diagnostics/owned-processes.json",
+    "bytes": 2,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+    "path": "test.log",
+    "bytes": 9212,
+    "sha256": "8adc498d8e452dc386e3ae8f581d8d2e5186e3b3684ce90072219376d948a782"
+  },
+  {
+    "path": "tests.json",
+    "bytes": 2684,
+    "sha256": "1714c302d69dba4708a98720d9c1a579579d87b6e395b73f78b6fdab9b749a86"
+  },
+  {
+    "path": "verified-environment.json",
+    "bytes": 81347,
+    "sha256": "0aa9a6c13d141a6203665170a54545cf939c246232a2d14622d513b0d29ab1f4"
+  },
+  {
+    "path": "video-status.json",
+    "bytes": 306,
+    "sha256": "fbd61fe875e00ab18ba734fdcdf8086fa9e4e425429a4ff939846913adafd9f2"
+  },
+  {
+    "path": "video.log",
+    "bytes": 443,
+    "sha256": "b8a9fe7d18d95117540d6d95483b1bfd04c3de323606483a3756137b50eda659"
+  },
+  {
+    "path": "xcodegen-install.log",
+    "bytes": 327,
+    "sha256": "5543c39402b2867d94bc6d9c2f8f3108dd11a86c87515448a3a3d4932506347d"
+  },
+  {
+    "path": "xcodegen.log",
+    "bytes": 188,
+    "sha256": "8b6c9859d2b8d3e6320b69e67cfe6f2c716362bc1727816b689ba5644d00ed68"
+  }
+]
