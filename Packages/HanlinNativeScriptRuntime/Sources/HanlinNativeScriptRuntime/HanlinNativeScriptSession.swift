@@ -9,6 +9,10 @@ public final class HanlinNativeScriptSession {
     private static let supportedSwiftUIVersion = "4.0.2"
     private static weak var activeSession: HanlinNativeScriptSession?
 
+    /// The pinned upstream NativeScript wrapper owns a process-global main VM.
+    /// Check before publishing any session-specific provider or presentation state.
+    public static var activeSessionIdentifier: String? { activeSession?.sessionID }
+
     public static var sharedRuntimeURL: URL? {
         if let envPath = ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_SHARED_RUNTIME_PATH"] {
             let envURL = URL(fileURLWithPath: envPath)

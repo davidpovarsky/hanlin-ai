@@ -136,6 +136,7 @@ const declarationOutputs = new Map(await Promise.all(declarationNames.map(async 
   name,
   await fs.readFile(path.join(declarationRoot, name)),
 ])));
+declarationOutputs.set('miniapps.d.ts', await fs.readFile(path.join(referenceRoot, 'Overlays', 'miniapps.d.ts')));
 const manifestFiles = {
   'scripting-foundation.d.ts': sha256(declarationsBytes),
   'runtime-registration.json': sha256(metadataBytes),

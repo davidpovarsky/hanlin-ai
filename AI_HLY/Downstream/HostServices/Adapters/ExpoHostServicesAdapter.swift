@@ -9,16 +9,19 @@ import HanlinScriptUI
 public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, HanlinExpoHostServicesProvider {
     public let sessionID: String
     public let context: HanlinHostCallContext
+    private let externalMiniAppOperation: HanlinMiniAppExternalOperation?
 
     public init(
         appID: HanlinAppID,
         installedPackageID: HanlinInstalledPackageID? = nil,
         grantedCapabilities: Set<String>,
-        sessionID: String = UUID().uuidString.lowercased()
+        sessionID: String = UUID().uuidString.lowercased(),
+        externalMiniAppOperation: HanlinMiniAppExternalOperation? = nil
     ) {
         let validatedSessionID = (try? HanlinAppSessionID(validating: sessionID))
             ?? (try! HanlinAppSessionID(validating: UUID().uuidString.lowercased()))
         self.sessionID = validatedSessionID.rawValue
+        self.externalMiniAppOperation = externalMiniAppOperation
         self.context = HanlinHostCallContext.forMiniApp(
             appID: appID,
             installedPackageID: installedPackageID,
@@ -54,6 +57,9 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     }
 
     public func invoke(operation: String, payloadJSON: String) async throws -> String {
+        if operation.hasPrefix("miniapps."), let externalMiniAppOperation {
+            return try await externalMiniAppOperation(operation, payloadJSON)
+        }
         let payloadData = Data(payloadJSON.utf8)
         switch operation {
         case "capabilities.has":

@@ -14,6 +14,7 @@ import HanlinNativeScriptCoreSupport
 public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendable, HanlinNativeServicesProvider {
     public let sessionID: String
     public let context: HanlinHostCallContext
+    private let externalMiniAppOperation: HanlinMiniAppExternalOperation?
 
     private struct RegisteredActionHandler {
         typealias InvokeFn = (String, String, @escaping (String?, String?) -> Void) -> Void
@@ -32,9 +33,11 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         installedPackageID: HanlinInstalledPackageID? = nil,
         grantedCapabilities: Set<String>,
         sessionID: String = UUID().uuidString.lowercased(),
-        canPresentUI: Bool = true
+        canPresentUI: Bool = true,
+        externalMiniAppOperation: HanlinMiniAppExternalOperation? = nil
     ) {
         self.sessionID = sessionID
+        self.externalMiniAppOperation = externalMiniAppOperation
         let appSession = try! HanlinAppSessionID(validating: sessionID)
         self.context = HanlinHostCallContext.forMiniApp(
             appID: appID,
@@ -324,6 +327,28 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         completion: @escaping (String?, String?) -> Void
     ) {
         nonisolated(unsafe) let safeCompletion = completion
+        if targetID == "hanlin.cross-app", let externalMiniAppOperation {
+            let requestID = UUID().uuidString.lowercased()
+            _ = lock.withLock {
+                guard !runtimeRequestsInvalidated else { return false }
+                runtimeRequests[requestID] = Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    defer { _ = self.lock.withLock { self.runtimeRequests.removeValue(forKey: requestID) } }
+                    do {
+                        let response = try await externalMiniAppOperation(action, payloadJSON)
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(response, nil)
+                    } catch {
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(nil, error.localizedDescription)
+                    }
+                }
+                return true
+            }
+            return
+        }
         guard let caller = context.appID else {
             safeCompletion(nil, "Unauthorized: No active Mini App session context.")
             return

@@ -665,6 +665,12 @@
 			isa = PBXBuildFile;
 			fileRef = AC1900000000000000000130;
 		};
+		5A455D1CE7DD9747544C429A = { isa = PBXBuildFile; fileRef = 10D8B14397FF408416D24D50; };
+		AA2EE09EBEA951A8D246ABF6 = { isa = PBXBuildFile; productRef = C0F20F8DB55A21AFC010BCE2; };
+		5C9E09846872D07C4D50662E = { isa = PBXBuildFile; productRef = 26B9238591CBD8BD492D137C; };
+		FD2B21070BBD04C64242ADD1 = {isa = PBXBuildFile; fileRef = 6B236C9460137676E26D4468; };
+		D50F4D163E01EE6798757607 = {isa = PBXBuildFile; productRef = D7532BF517832175AD2CF8EE; };
+		9D281EC999A9E368745F917A = {isa = PBXBuildFile; productRef = 499632C6BDF7BBBDF296C7D6; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1358,6 +1364,8 @@
 			path = "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings";
 			sourceTree = SOURCE_ROOT;
 		};
+		10D8B14397FF408416D24D50 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift"; sourceTree = SOURCE_ROOT; };
+		6B236C9460137676E26D4468 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1656,6 +1664,7 @@
 				"Downstream/ProductSplit/HanlinSplitMailbox.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift" ,
+				"Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift" ,
 				"Downstream/RuntimeCore/Core/AppRuntimeCore.swift" ,
@@ -2200,6 +2209,8 @@
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
 			files = (
+				"AA2EE09EBEA951A8D246ABF6" ,
+				"5C9E09846872D07C4D50662E" ,
 				"F800000000000000000000B5" ,
 				"F800000000000000000000B6" ,
 				"F800000000000000000000B7" ,
@@ -2630,6 +2641,8 @@
 			"fileSystemSynchronizedGroups" = ("F80000000000000000000003", );
 			"name" = "HanlinMiniApps";
 			packageProductDependencies = (
+				"C0F20F8DB55A21AFC010BCE2" ,
+				"26B9238591CBD8BD492D137C" ,
 				"F80000000000000000000051" ,
 				"F80000000000000000000052" ,
 				"F80000000000000000000053" ,
@@ -3016,6 +3029,7 @@
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			files = (
+				"5A455D1CE7DD9747544C429A" ,
 				"F926BAA61CFBBF736F943D1C" ,
 				"F919A2D150582186EC03055E" ,
 				"F9A7168DD69AF06B26512861" ,
@@ -3097,7 +3111,8 @@
 		F96EF6D85246FA36B39BE515 = {
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("F927041F0B429D7A68AD6E86", "AC4F02D6D50561F3F8BF1799", );
+			"files" = (
+				"FD2B21070BBD04C64242ADD1","F927041F0B429D7A68AD6E86", "AC4F02D6D50561F3F8BF1799", );
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		FA30C73C6864055FEECAD847 /* W1-007 bootstrap */ = {
@@ -4343,6 +4358,10 @@
 			package = AC1900000000000000000001;
 			productName = HanlinMiniAppsUI;
 		};
+		C0F20F8DB55A21AFC010BCE2 = { isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsBridge; };
+		26B9238591CBD8BD492D137C = { isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsPicker; };
+		D7532BF517832175AD2CF8EE = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsBridge; };
+		499632C6BDF7BBBDF296C7D6 = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinTextStudioMiniApp; };
 /* End XCSwiftPackageProductDependency section */
 
 /* Integrated standalone target and transport objects */
@@ -4469,7 +4488,9 @@
 			"dependencies" = ("C0CA92CB46DB8D474390D107", );
 			"fileSystemSynchronizedGroups" = ("C1D9E69575D3B7BC691961CD", );
 			"name" = "HanlinMiniAppsTests";
-			"packageProductDependencies" = ("F80000000000000000000053", "A10000000000000000000015", "C10000000000000000000021", );
+			"packageProductDependencies" = (
+				"499632C6BDF7BBBDF296C7D6",
+				"D7532BF517832175AD2CF8EE","F80000000000000000000053", "A10000000000000000000015", "C10000000000000000000021", );
 			"productName" = "HanlinMiniAppsTests";
 			"productReference" = "145350813A91990EA5F13A88";
 			"productType" = "com.apple.product-type.bundle.unit-test";
@@ -4507,7 +4528,9 @@
 		EE337AFAF2E9CA5BC30BC377 = {
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("27E5EA35A3EEA9C6064501CA", "48464889287ACCC43468009D", "E40956A56BB0674B33B35099", );
+			"files" = (
+				"9D281EC999A9E368745F917A",
+				"D50F4D163E01EE6798757607","27E5EA35A3EEA9C6064501CA", "48464889287ACCC43468009D", "E40956A56BB0674B33B35099", );
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		F820C81AA4E27696CB4C26CD = {

@@ -791,6 +791,11 @@ public final class HanlinScriptingApplicationSession {
             }
             return HanlinScriptingNativeJSON.success(NSNull())
         }
+        if operation.hasPrefix("miniapps.") {
+            return HanlinScriptingNativeJSON.success(
+                try await systemLoader(operation, payloadJSON).nativeObject
+            )
+        }
         if operation.hasPrefix("pasteboard.") || operation == "safari.openURL" {
             let allowed = operation.hasPrefix("pasteboard.") ? pasteboardAllowed : openURLAllowed
             guard allowed else {
@@ -1607,6 +1612,22 @@ private extension HanlinScriptingApplicationSession {
           __hanlinNativeAsync(id, operation, JSON.stringify(payload));
         });
       }
+
+      globalThis.MiniApps = Object.freeze({
+        getContext: () => nativeCallAsync("miniapps.context").then(JSON.parse),
+        complete: async result => {
+          const receipt = JSON.parse(await nativeCallAsync("miniapps.complete", result));
+          void nativeCallAsync("miniapps.return").catch(() => {});
+          return receipt;
+        },
+        cancel: async () => {
+          const receipt = JSON.parse(await nativeCallAsync("miniapps.cancel"));
+          void nativeCallAsync("miniapps.return").catch(() => {});
+          return receipt;
+        },
+        readAttachment: id => nativeCallAsync("miniapps.readAttachment", {id}).then(JSON.parse),
+        writeAttachment: file => nativeCallAsync("miniapps.writeAttachment", file).then(JSON.parse)
+      });
 
       function resolveNativeRequest(id, json) {
         const request = nativeRequests.get(id);

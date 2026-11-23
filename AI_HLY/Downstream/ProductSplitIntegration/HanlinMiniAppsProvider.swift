@@ -44,10 +44,13 @@ final class HanlinMiniAppsProvider {
         if let error = host.lastError { throw Failure.unavailable(error) }
         if Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier {
             try? HanlinSplitLiveTarget.exportCatalog()
+            try HanlinExternalMiniAppCatalog.publish(host.items)
         }
     }
 
-    func launch(_ selected: HanlinMiniAppCatalogItem, includesDismissControl: Bool = true) async throws -> AnyView {
+    func launch(_ selected: HanlinMiniAppCatalogItem, includesDismissControl: Bool = true,
+                sharedInput: HanlinValue? = nil,
+                completeSharedRequest: (@MainActor @Sendable (HanlinValue) async throws -> Void)? = nil) async throws -> AnyView {
         guard !launching else { throw Failure.launchInProgress }
         launching = true
         defer { launching = false }
@@ -57,7 +60,8 @@ final class HanlinMiniAppsProvider {
         guard let item = host.items.first(where: { $0 == selected }) else { throw Failure.staleSelection }
         switch item.engine {
         case .swift:
-            let view = try host.swiftDestination(for: item).view
+            let view = try host.swiftDestination(for: item, sharedInput: sharedInput,
+                                                 completeSharedRequest: completeSharedRequest).view
             return AnyView(view.environment(\.hanlinMiniAppShowsDismissControl, includesDismissControl))
         case .nativeScript, .expo, .scriptingJSC:
             guard let package = platform.installedPackages.first(where: {

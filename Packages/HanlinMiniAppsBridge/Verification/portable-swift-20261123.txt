@@ -1,0 +1,52 @@
+Test Suite 'All tests' started at 2026-11-23 21:00:05.470
+Test Suite 'Debug-linux-aarch64.xctest' started at 2026-11-23 21:00:05.476
+Test Suite 'Debug-linux-aarch64.xctest' passed at 2026-11-23 21:00:05.476
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-11-23 21:00:05.476
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Test catalogProjectionPreservesIdentityAndRejectsDuplicateEntries() started.
+◇ Test concurrentStoresDoNotLosePreferenceUpdates() started.
+◇ Test callbackVariantsPreserveContextAndEncodeErrors() started.
+◇ Test favoritesEditAndVisibilitySurviveReopen() started.
+◇ Test largeInputAndAttachmentRemainByteExact() started.
+◇ Test newWindowDefaultAndDistinctInvocationIdentity() started.
+◇ Test requestRoundTripColdReturnAndDurableAcknowledgement() started.
+◇ Test unicodeSelectionReplacementInsertionAndChangedSelection() started.
+◇ Test wrongSourceAcknowledgementPreservesOriginalResult() started.
+◇ Test duplicateDeliveryCannotOverwriteOrReplayCompletedResult() started.
+◇ Test unsupportedOnDiskSchemaIsNotSilentlyReset() started.
+✔ Test callbackVariantsPreserveContextAndEncodeErrors() passed after 0.137 seconds.
+✔ Test catalogProjectionPreservesIdentityAndRejectsDuplicateEntries() passed after 0.137 seconds.
+✔ Test favoritesEditAndVisibilitySurviveReopen() passed after 0.137 seconds.
+✔ Test newWindowDefaultAndDistinctInvocationIdentity() passed after 0.137 seconds.
+✔ Test requestRoundTripColdReturnAndDurableAcknowledgement() passed after 0.137 seconds.
+✔ Test unicodeSelectionReplacementInsertionAndChangedSelection() passed after 0.135 seconds.
+✔ Test wrongSourceAcknowledgementPreservesOriginalResult() passed after 0.135 seconds.
+✔ Test duplicateDeliveryCannotOverwriteOrReplayCompletedResult() passed after 0.135 seconds.
+✔ Test unsupportedOnDiskSchemaIsNotSilentlyReset() passed after 0.137 seconds.
+✔ Test concurrentStoresDoNotLosePreferenceUpdates() passed after 0.139 seconds.
+✔ Test largeInputAndAttachmentRemainByteExact() passed after 0.200 seconds.
+✔ Test run with 11 tests in 0 suites passed after 0.201 seconds.
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 211]
+[Planning deferred tasks]
+[17 / 72] HanlinMiniAppsPicker
+[45 / 76] HanlinMiniAppsBridge
+[53 / 80] HanlinMiniAppsPicker
+[55 / 81] HanlinMiniAppsPicker
+[65 / 84] HanlinMiniAppsBridgeTests-product
+[68 / 86] HanlinMiniAppsBridgeTests-product
+[68 / 86]
+[75 / 86]
+[75 / 86] HanlinMiniAppsBridgeTests-product
+[79 / 87] HanlinMiniAppsBridgeTests-product
+[83 / 90] HanlinMiniAppsBridgeTests-test-runner
+[87 / 90] HanlinMiniAppsBridgeTests-test-runner
+[91 / 91] HanlinMiniAppsBridgeTests-test-runner
+Build complete! (13.54 secs)
+
+EXIT_CODE=0

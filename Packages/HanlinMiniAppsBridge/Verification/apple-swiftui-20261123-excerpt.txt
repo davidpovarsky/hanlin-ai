@@ -1,0 +1,12 @@
+Selected Actions log lines (not the complete compiler log).
+Run: https://github.com/davidpovarsky/apple-devtools/actions/runs/45268107140
+
+validate	Run actions/checkout@v6	2026-11-23T21:17:37.4813380Z 3d0c6d1d35d4c04a79036eb9caceedd8fa303364
+validate	Focused Apple validation	2026-11-23T21:17:38.8310880Z   APPLE_XCODE: stable
+validate	Focused Apple validation	2026-11-23T21:17:38.8311400Z   APPLE_SDK: iphonesimulator
+validate	Focused Apple validation	2026-11-23T21:17:38.8312490Z   APPLE_PATH: Packages/HanlinMiniAppsBridge/Verification/AppleCompilation/BridgeCompilation.xcodeproj
+validate	Focused Apple validation	2026-11-23T21:17:38.8313710Z   APPLE_SCHEME: HanlinMiniAppsBridgeCompilation
+validate	Focused Apple validation	2026-11-23T21:17:38.8314770Z   APPLE_DESTINATION: generic/platform=iOS Simulator
+validate	Focused Apple validation	2026-11-23T21:18:46.8356310Z 1297:** BUILD SUCCEEDED **
+validate	Focused Apple validation	2026-11-23T21:18:46.8358070Z full_log=.apple-devtools-logs/build.log
+validate	Run actions/upload-artifact@v4	2026-11-23T21:18:48.6975130Z No files were found with the provided path: source/.apple-devtools-logs

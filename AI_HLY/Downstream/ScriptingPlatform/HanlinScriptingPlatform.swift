@@ -84,6 +84,8 @@ final class HanlinScriptingPlatform {
     private var bundler: HanlinScriptingBundler?
     private var extensionStore: HanlinScriptExtensionStore?
     private var invocationExecutor: HanlinInvocationExecutor?
+    /// Supplied by the owning MiniApps scene; never a process-global current request.
+    var externalMiniAppOperation: HanlinMiniAppExternalOperation?
     private var applicationSession: HanlinScriptingApplicationSession?
     private var nativeScriptSession: HanlinNativeScriptSession?
     private var nativeScriptHostServices: NativeScriptHostServicesAdapter?
@@ -765,20 +767,16 @@ final class HanlinScriptingPlatform {
                     appID: appID,
                     installedPackageID: package.record.installedPackageID,
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
-                    sessionID: sessionID
+                    sessionID: sessionID,
+                    externalMiniAppOperation: externalMiniAppOperation
                 )
-                HanlinNativeServicesHostProvider.setActiveContainer(
-                    appID: appID.rawValue,
-                    dataRoot: dataRootStr,
-                    stateDir: stateDirStr,
-                    docsDir: docsDirStr,
-                    cacheDir: cacheDirStr,
-                    grantedCapabilities: package.grantedCapabilities.map(\.rawValue)
-                )
-                HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
-                HanlinNativeServicesBridge.register(adapter)
-
-                needsFreshProcessForTransfer = true
+                // The pinned NativeScript main VM is process-wide. Check before
+                // changing a legacy provider belonging to another scene.
+                guard HanlinNativeScriptSession.activeSessionIdentifier == nil else {
+                    throw NSError(domain: "HanlinMiniApps.NativeScript", code: 1,
+                        userInfo: [NSLocalizedDescriptionKey:
+                            "Another NativeScript app is open. Its runtime is preserved in its existing window."])
+                }
                 let session = try HanlinNativeScriptSession(
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
                     environment: env,
@@ -786,6 +784,19 @@ final class HanlinScriptingPlatform {
                 )
                 nativeScriptSession = session
                 nativeScriptHostServices = adapter
+                HanlinNativeServicesHostProvider.setActiveContainer(
+                    appID: appID.rawValue,
+                    dataRoot: dataRootStr,
+                    stateDir: stateDirStr,
+                    docsDir: docsDirStr,
+                    cacheDir: cacheDirStr,
+                    grantedCapabilities: package.grantedCapabilities.map(\.rawValue),
+                    sessionID: sessionID
+                )
+                HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
+                HanlinNativeServicesBridge.register(adapter)
+
+                needsFreshProcessForTransfer = true
                 try session.start()
                 activeApplicationID = id
                 activeNativeScriptController = session.containerController
@@ -807,7 +818,8 @@ final class HanlinScriptingPlatform {
                     appID: package.appID,
                     installedPackageID: package.record.installedPackageID,
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
-                    sessionID: sessionID
+                    sessionID: sessionID,
+                    externalMiniAppOperation: externalMiniAppOperation
                 )
                 HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
                 let isNativeAPIGranted = true // Native API access follows the active runtime, not legacy grants.
@@ -929,18 +941,20 @@ final class HanlinScriptingPlatform {
         }
         if let session = nativeScriptSession {
             HanlinNativeServicesBridge.unregisterProvider(forSessionID: session.sessionID)
+            HanlinNativeServicesHostProvider.clearActiveContainer(forSessionID: session.sessionID)
+            if let adapter = nativeScriptHostServices {
+                HanlinNativeServicesBridge.clearLegacyProvider(ifMatches: adapter)
+            }
+            session.shutdown()
         }
-        HanlinNativeServicesBridge.register(nil)
-        HanlinNativeServicesHostProvider.clearActiveContainer()
-        nativeScriptSession?.shutdown()
         nativeScriptSession = nil
         nativeScriptHostServices = nil
         if expoSession != nil {
             NSLog("HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK")
         }
         expoSession?.shutdown()
-        HanlinExpoNativeAPIManager.revokeActiveSession()
         if let session = expoSession {
+            HanlinExpoNativeAPIManager.revokeSession(sessionID: session.sessionID)
             HanlinExpoHostServicesBridge.unregister(sessionID: session.sessionID)
         }
         expoSession = nil
@@ -992,7 +1006,8 @@ final class HanlinScriptingPlatform {
             )
         }
 
-        guard nativeScriptSession == nil, !isExecutingHeadlessNativeScriptAction, !isLaunching else {
+        guard nativeScriptSession == nil, HanlinNativeScriptSession.activeSessionIdentifier == nil,
+              !isExecutingHeadlessNativeScriptAction, !isLaunching else {
             // NativeScript iOS currently supports one runtime isolate per process.
             if let invocationID, queuedNativeScriptAdmissions.contains(invocationID) {
                 throw HanlinInvocationNotStarted()
@@ -1763,6 +1778,9 @@ final class HanlinScriptingPlatform {
         _ operation: String,
         payloadJSON: String
     ) async throws -> HanlinScriptingSystemResult {
+        if operation.hasPrefix("miniapps."), let externalMiniAppOperation {
+            return .string(try await externalMiniAppOperation(operation, payloadJSON))
+        }
         guard payloadJSON.utf8.count <= 24 * 1_024 * 1_024,
               let data = payloadJSON.data(using: .utf8),
               let payload = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {

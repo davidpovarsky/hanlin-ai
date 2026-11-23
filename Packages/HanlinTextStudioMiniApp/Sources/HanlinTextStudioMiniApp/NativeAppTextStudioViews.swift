@@ -18,6 +18,9 @@ public struct NativeAppTextStudioRootView: View {
     public let initialText: String?
     public let initialTransform: NativeAppTextStudioTransform?
     public let initialScreen: String?
+    public let onReturn: (@MainActor @Sendable (String) async throws -> Void)?
+    @State private var isReturning = false
+    @State private var returnError: String?
 
     @StateObject private var store: NativeAppTextStudioStore
     @State private var selectedTab: Tab = .editor
@@ -29,7 +32,8 @@ public struct NativeAppTextStudioRootView: View {
         pasteboard: any TextStudioPasteboard = StandardTextStudioPasteboard(),
         initialText: String? = nil,
         initialTransform: NativeAppTextStudioTransform? = nil,
-        initialScreen: String? = nil
+        initialScreen: String? = nil,
+        onReturn: (@MainActor @Sendable (String) async throws -> Void)? = nil
     ) {
         self.service = service
         self.storage = storage
@@ -37,6 +41,7 @@ public struct NativeAppTextStudioRootView: View {
         self.initialText = initialText
         self.initialTransform = initialTransform
         self.initialScreen = initialScreen
+        self.onReturn = onReturn
         _store = StateObject(wrappedValue: NativeAppTextStudioStore(storage: storage))
         if let initialScreen {
             switch initialScreen {
@@ -72,8 +77,28 @@ public struct NativeAppTextStudioRootView: View {
         }
         .navigationTitle("Text Studio")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if let onReturn {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(Locale.current.language.languageCode?.identifier == "he" ? "החזרת הטקסט" : "Return text") {
+                        guard !isReturning else { return }
+                        isReturning = true
+                        Task {
+                            defer { isReturning = false }
+                            do { try await onReturn(store.draft) }
+                            catch { returnError = error.localizedDescription }
+                        }
+                    }
+                    .disabled(isReturning)
+                    .accessibilityIdentifier("miniapps.textstudio.return")
+                }
+            }
+        }
+        .alert("MiniApps", isPresented: Binding(
+            get: { returnError != nil }, set: { if !$0 { returnError = nil } }
+        )) { Button("OK") { returnError = nil } } message: { Text(returnError ?? "") }
         .task {
-            if !didApplyInitialText, let initialText, !initialText.isEmpty {
+            if !didApplyInitialText, let initialText {
                 didApplyInitialText = true
                 store.draft = initialText
             }
@@ -100,6 +125,7 @@ public struct NativeAppTextStudioEditorView: View {
     public var body: some View {
         VStack(spacing: 0) {
             TextEditor(text: $store.draft)
+                .accessibilityIdentifier("miniapps.textstudio.editor")
                 .font(.body.monospaced())
                 .padding(12)
                 #if canImport(UIKit)

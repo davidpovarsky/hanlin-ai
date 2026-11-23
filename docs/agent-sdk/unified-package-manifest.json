@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceOwnership": "one original source path per target",
   "applicationModule": "AI_Hanlin",
-  "applicationSourceCount": 507,
+  "applicationSourceCount": 508,
   "selectedProducts": null,
   "products": [
     "HanlinHostContracts",
@@ -15,6 +15,8 @@
     "HanlinExpoWidgetNative",
     "HanlinExpoRuntime",
     "HanlinExpoWidgetSubset",
+    "HanlinMiniAppsBridge",
+    "HanlinMiniAppsPicker",
     "HanlinNativeScriptRuntime",
     "HanlinParityMiniApp",
     "HanlinExtensionContracts",
@@ -50,7 +52,7 @@
     "TorahLibraryKit",
     "HanlinApplication"
   ],
-  "targets": 108,
+  "targets": 111,
   "localPackageEdgesRemaining": 0,
   "inputs": {
     "Packages/HanlinAgentSDK/Package.swift": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
@@ -58,6 +60,7 @@
     "Packages/HanlinExpoNativeAPI/Package.swift": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d",
     "Packages/HanlinExpoRuntime/Package.swift": "3c63a7cc0751b86e445e4048413c61553269e0d0fd087d01544c24dccb8f379c",
     "Packages/HanlinExpoWidgetSubset/Package.swift": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41",
+    "Packages/HanlinMiniAppsBridge/Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
     "Packages/HanlinNativeScriptRuntime/Package.swift": "f2798b093e8df72923abc135e4999f2614c32e8de1d495c480e6fd8fd4db9b34",
     "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
     "Packages/HanlinPlatform/Package.swift": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665",
