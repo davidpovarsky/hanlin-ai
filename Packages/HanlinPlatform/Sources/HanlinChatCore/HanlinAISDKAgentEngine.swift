@@ -152,7 +152,7 @@ public actor HanlinAISDKAgentEngine {
         guard !modelMessages.isEmpty else {
             throw HanlinAISDKError.invalidConversation("At least one user or assistant message is required.")
         }
-        let initialTools = try Self.makeTools(definitions)
+        let initialTools = try Self.makeTools(definitions, providerKind: resolvedProvider.descriptor.kind)
         let settings = CallSettings(
             maxOutputTokens: configuration.maxTokens,
             temperature: configuration.temperature == HanlinChatGenerationDefaults.temperature
@@ -312,6 +312,7 @@ public actor HanlinAISDKAgentEngine {
                                 meaningfulEventCount += 1
                                 continuation.yield(.toolCallArgumentsDelta(id: id, delta: delta))
                             case .toolCall(let call):
+                                try Self.validateNativeToolInput(call.input, providerKind: resolvedProvider.descriptor.kind)
                                 meaningfulEventCount += 1
                                 continuation.yield(.toolCall(Self.toolCall(from: call)))
                             case .toolResult(let result):
@@ -372,7 +373,7 @@ public actor HanlinAISDKAgentEngine {
                                             }
                                         }
                                         currentDefinitions = latestDefinitions
-                                        currentTools = try Self.makeTools(latestDefinitions)
+                                        currentTools = try Self.makeTools(latestDefinitions, providerKind: resolvedProvider.descriptor.kind)
                                         stepOffset = nextOffset
                                         shouldReloadToolsAndContinue = true
                                         break
@@ -429,7 +430,7 @@ public actor HanlinAISDKAgentEngine {
                                 }
                             case .toolApprovalRequest(let request):
                                 meaningfulEventCount += 1
-                                let approval = try Self.approvalRequest(from: request)
+                                let approval = try Self.approvalRequest(from: request, providerKind: resolvedProvider.descriptor.kind)
                                 guard seenApprovalIDs.insert(approval.approvalID).inserted,
                                       seenApprovalCallIDs.insert(approval.toolCallID).inserted else {
                                     throw HanlinAISDKError.invalidConversation("Ambiguous tool approval request.")
@@ -474,8 +475,10 @@ public actor HanlinAISDKAgentEngine {
         }
     }
 
-    private static func approvalRequest(from request: ToolApprovalRequestOutput) throws -> HanlinAISDKToolApprovalRequest {
+    private static func approvalRequest(from request: ToolApprovalRequestOutput,
+                                        providerKind: HanlinAISDKProviderKind) throws -> HanlinAISDKToolApprovalRequest {
         let call = request.toolCall
+        try validateNativeToolInput(call.input, providerKind: providerKind)
         guard !request.approvalId.isEmpty, request.approvalId.utf8.count <= 512,
               !call.toolCallId.isEmpty, call.toolCallId.utf8.count <= 512,
               !call.toolName.isEmpty, call.toolName.utf8.count <= 512 else {
@@ -498,8 +501,26 @@ public actor HanlinAISDKAgentEngine {
                      providerExecuted: call.providerExecuted == true)
     }
 
+    /// Defend both execution and approval paths, including injected native providers.
+    /// The native adapter also rejects these before emitting any call. Provider metadata
+    /// is not an authority to declare original numeric input.
+    private static func validateNativeToolInput(_ input: JSONValue,
+                                                providerKind: HanlinAISDKProviderKind) throws {
+        guard providerKind == .appleOnDevice else { return }
+        func containsNumber(_ value: JSONValue) -> Bool {
+            switch value {
+            case .number: true
+            case .array(let values): values.contains(where: containsNumber)
+            case .object(let values): values.values.contains(where: containsNumber)
+            case .null, .bool, .string: false
+            }
+        }
+        guard !containsNumber(input) else { throw HanlinAISDKError.nativeUnsupportedToolInput }
+    }
+
     private static func makeTools(
-        _ definitions: [HanlinAISDKToolDefinition]
+        _ definitions: [HanlinAISDKToolDefinition],
+        providerKind: HanlinAISDKProviderKind
     ) throws -> ToolSet {
         var aliases = Set<String>()
         for definition in definitions {
@@ -519,6 +540,7 @@ public actor HanlinAISDKAgentEngine {
                 validator: { value in
                     do {
                         let converted = try jsonValue(from: value)
+                        try validateNativeToolInput(converted, providerKind: providerKind)
                         return .success(value: converted)
                     } catch {
                         return .failure(error: TypeValidationError.wrap(value: value, cause: error))
@@ -531,6 +553,7 @@ public actor HanlinAISDKAgentEngine {
                 needsApproval: definition.requiresApproval ? .always : nil,
                 execute: { input, options in
                     try Task.checkCancellation()
+                    try validateNativeToolInput(input, providerKind: providerKind)
                     let arguments: String
                     let provenance: HanlinAISDKToolInputProvenance
                     if let raw = options.rawInput {
@@ -540,7 +563,10 @@ public actor HanlinAISDKAgentEngine {
                             throw HanlinAISDKError.invalidToolSchema(name: definition.name)
                         }
                         arguments = raw.json
-                        provenance = .acceptedOriginal
+                        // The native framework exposes structured GeneratedContent, not original
+                        // model JSON tokens. The producer's parsed-string rawInput cannot upgrade
+                        // that origin. This decision uses the trusted resolved provider descriptor.
+                        provenance = providerKind == .appleOnDevice ? .normalized : .acceptedOriginal
                     } else {
                         arguments = try jsonString(input)
                         provenance = .normalized

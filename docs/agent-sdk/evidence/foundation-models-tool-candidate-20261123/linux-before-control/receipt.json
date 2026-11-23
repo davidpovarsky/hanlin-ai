@@ -1,0 +1,26 @@
+{
+  "head": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "source_sha256": {
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "aaf8ae687d478710c2b4388f19350164a606facd02b70375743c808629cbe524",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift": "c8e0ecfdda95960195c3454f76d35fa5bd6c48c08781e920d39903157416eb92",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05"
+  },
+  "scope": "Original HanlinChatCore + pinned SwiftAISDK producer, deterministic V3 model; Linux portable engine controls, not FoundationModels or native model execution",
+  "started_utc": "2026-11-23T18:03:13.890736+00:00",
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary",
+    "--jobs",
+    "4",
+    "--filter",
+    "HanlinAppleToolInputBoundaryTests"
+  ],
+  "exit_code": 1,
+  "finished_utc": "2026-11-23T18:04:55.226064+00:00",
+  "outputs": {
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr.log": "6ec8b6228b5206ceaf96b6e18685cf01fe40b8020d589a0338487bc68fc3ac4c"
+  }
+}

@@ -1,0 +1,128 @@
+Fetching https://github.com/davidpovarsky/swift-ai-sdk.git from cache
+Fetched https://github.com/davidpovarsky/swift-ai-sdk.git from cache (0.70s)
+Fetching https://github.com/apple/swift-argument-parser
+[1/19442] Fetching swift-argument-parser
+Fetched https://github.com/apple/swift-argument-parser (1.77s)
+Fetching https://github.com/weichsel/ZIPFoundation.git
+[1/7709] Fetching zipfoundation
+Fetched https://github.com/weichsel/ZIPFoundation.git (1.50s)
+Fetching https://github.com/SwiftyJSON/SwiftyJSON.git
+[1/6320] Fetching swiftyjson
+Fetched https://github.com/SwiftyJSON/SwiftyJSON.git (0.95s)
+Computing version for https://github.com/SwiftyJSON/SwiftyJSON.git
+Computed https://github.com/SwiftyJSON/SwiftyJSON.git at 5.0.1 (6.42s)
+Computing version for https://github.com/weichsel/ZIPFoundation.git
+Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.21 (0.27s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.8.2 (0.27s)
+Creating working copy for https://github.com/SwiftyJSON/SwiftyJSON.git
+Working copy of https://github.com/SwiftyJSON/SwiftyJSON.git resolved at 5.0.1
+Creating working copy for https://github.com/apple/swift-argument-parser
+Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at e7bf34111e603ca977becd007dd4e5bb109af857
+Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.21
+Building for debugging...
+[Computing dependencies]
+[Constructing description]
+[Pre-planning 1 / 480]
+[Planning 303 / 480]
+[Planning deferred tasks]
+[Constructing 800 / 1078]
+[43 / 210] GoogleProvider
+[110 / 216] EventSourceParser
+[111 / 219] HanlinPlatformContracts
+[112 / 226] AISDKProvider
+[113 / 226] EventSourceParser
+[129 / 226] EventSourceParser
+[131 / 227] EventSourceParser
+[132 / 227] EventSourceParser
+[134 / 227] EventSourceParser
+[135 / 227] AISDKZodAdapter
+[136 / 227] AISDKProvider-product
+[137 / 227]
+[138 / 227]
+[141 / 231] AISDKZodAdapter
+[142 / 232] HanlinPlatformContracts
+[145 / 232] AISDKZodAdapter
+[150 / 232] AISDKZodAdapter
+[151 / 233]
+[153 / 238] AISDKProviderUtils
+[154 / 238] AISDKProviderUtils
+[155 / 238] AISDKProviderUtils
+[156 / 239] AISDKProviderUtils
+[161 / 239] AISDKProviderUtils
+[162 / 239] OpenAIProvider
+[164 / 240]
+[166 / 244] OpenAIProvider
+[167 / 245] OpenAIProvider
+[168 / 245] OpenAIProvider
+[170 / 246] OpenAIProvider
+[176 / 246] AISDKProviderUtils
+[178 / 246] OpenAIProvider-product
+[179 / 247] OpenAICompatibleProvider
+[181 / 250] OpenAICompatibleProvider
+[182 / 250] OpenAICompatibleProvider
+[184 / 250] OpenAICompatibleProvider
+[187 / 250] OpenAICompatibleProvider
+[190 / 254] GoogleProvider
+[191 / 254] GoogleProvider
+[192 / 254] GoogleProvider
+[197 / 255]
+[198 / 259] GatewayProvider
+[206 / 262] AnthropicProvider
+[207 / 263] OpenAICompatibleProvider
+[208 / 263] AnthropicProvider
+[212 / 263] AnthropicProvider
+[217 / 264] GoogleProvider
+[219 / 265] GoogleProvider
+[223 / 269] AISDKJSONSchema
+[224 / 269] AISDKJSONSchema
+[226 / 269] AISDKJSONSchema
+[231 / 270]
+[232 / 271] AISDKZodAdapter
+[233 / 282] SwiftAISDK
+[235 / 282] AISDKZodAdapter
+[236 / 282] AISDKZodAdapter
+[236 / 283] SwiftAISDK
+[238 / 283] SwiftAISDK
+[239 / 283] SwiftAISDK
+error: SwiftCompile normal aarch64 /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/TypedTool.swift failed with a nonzero exit code. Command line:     cd /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build
+    builtin-SwiftPerFileCompile TypedTool.swift
+/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/TypedTool.swift:87:136: [1;31merror: [1;39mreference to var 'stderr' is not concurrency-safe because it involves shared mutable state[0;0m
+ [0;36m85 |[0;0m                 // DX: do not crash the process if tool output decoding fails.
+ [0;36m86 |[0;0m                 // Fall back to returning the raw JSON output to the model and surface the issue via stderr.
+ [0;36m87 |[0;0m                 fputs("tool(toModelOutput): Failed to decode tool output to typed value; falling back to raw JSON. Error: \(error)\n", stderr)
+    [0;36m|[0;0m                                                                                                                                        `- [1;31merror: [1;39mreference to var 'stderr' is not concurrency-safe because it involves shared mutable state[0;0m
+ [0;36m88 |[0;0m                 return .json(value: json)
+ [0;36m89 |[0;0m             }
+
+/usr/include/stdio.h:151:14: [1;39mnote: [1;39mvar declared here[0;0m
+[0;36m149 |[0;0m extern FILE *stdin;		/* Standard input stream.  */
+[0;36m150 |[0;0m extern FILE *stdout;		/* Standard output stream.  */
+[0;36m151 |[0;0m extern FILE *stderr;		/* Standard error output stream.  */
+    [0;36m|[0;0m              `- [1;39mnote: [1;39mvar declared here[0;0m
+[0;36m152 |[0;0m /* C89/C99 say they're macros.  Make them happy.  */
+[0;36m153 |[0;0m #define stdin stdin
+
+/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/TypedTool.swift:266:143: [1;31merror: [1;39mreference to var 'stderr' is not concurrency-safe because it involves shared mutable state[0;0m
+[0;36m264 |[0;0m                 // DX: do not crash the process if tool output decoding fails.
+[0;36m265 |[0;0m                 // Fall back to returning the raw JSON output to the model and surface the issue via stderr.
+[0;36m266 |[0;0m                 fputs("dynamicTool(toModelOutput): Failed to decode tool output to typed value; falling back to raw JSON. Error: \(error)\n", stderr)
+    [0;36m|[0;0m                                                                                                                                               `- [1;31merror: [1;39mreference to var 'stderr' is not concurrency-safe because it involves shared mutable state[0;0m
+[0;36m267 |[0;0m                 return .json(value: json)
+[0;36m268 |[0;0m             }
+
+/usr/include/stdio.h:151:14: [1;39mnote: [1;39mvar declared here[0;0m
+[0;36m149 |[0;0m extern FILE *stdin;		/* Standard input stream.  */
+[0;36m150 |[0;0m extern FILE *stdout;		/* Standard output stream.  */
+[0;36m151 |[0;0m extern FILE *stderr;		/* Standard error output stream.  */
+    [0;36m|[0;0m              `- [1;39mnote: [1;39mvar declared here[0;0m
+[0;36m152 |[0;0m /* C89/C99 say they're macros.  Make them happy.  */
+[0;36m153 |[0;0m #define stdin stdin
+Failed frontend command:
+/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/bin/swift-frontend -frontend -c -filelist /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/sources-2 -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockImageModelV3.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockImageModelV4.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockLanguageModelV2.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockLanguageModelV3.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockLanguageModelV4.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockSpeechModelV4.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockTranscriptionModelV4.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockValues.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockVideoModelV3.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/MockVideoModelV4.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Test/NotImplemented.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/HttpMCPTransport.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/JSONRPCMessage.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/MCPClient.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/MCPTransport.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/MCPTypes.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/MockMCPTransport.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/OAuth.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/OAuthTypes.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/OAuthUtil.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/MCP/SseMCPTransport.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Tool/TypedTool.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Transcribe/StreamTranscribe.swift -primary-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/checkouts/swift-ai-sdk/Sources/SwiftAISDK/Transcribe/StreamTranscribeResult.swift -supplementary-output-file-map /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/supplementaryOutputs-32 -target aarch64-unknown-linux-gnu -Xllvm -aarch64-use-tbi -disable-objc-interop -I /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Products/Debug-linux-aarch64 -module-cache-path /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/ModuleCache.noindex -color-diagnostics -Xcc -fcolor-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=4 -suppress-warnings -swift-version 6 -Onone -D SWIFT_PACKAGE -D DEBUG -D SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE -D Xcode -serialize-debugging-options -enable-experimental-feature DebugDescriptionMacro -empty-abi-descriptor -external-plugin-path /mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/host/plugins/testing\#/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/bin/swift-plugin-server -validate-clang-modules-once -clang-build-session-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build -enable-anonymous-context-mangled-names -file-compilation-dir /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build -Xcc -fno-omit-frame-pointer -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -Xcc -I/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Products/Debug-linux-aarch64/include -Xcc -I/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/DerivedSources-normal/aarch64 -Xcc -I/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/DerivedSources/aarch64 -Xcc -I/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -no-auto-bridging-header-chaining -module-name SwiftAISDK -package-name swift_ai_sdk -const-gather-protocols-file /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/SwiftAISDK_const_extract_protocols.json -in-process-plugin-server-path /mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/host/libSwiftInProcPluginServer.so -plugin-path /mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/host/plugins -plugin-path /mnt/development/tooling/swiftly/toolchains/6.4.3/usr/local/lib/swift/host/plugins -parse-as-library -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockImageModelV3.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockImageModelV4.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockLanguageModelV2.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockLanguageModelV3.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockLanguageModelV4.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockSpeechModelV4.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockTranscriptionModelV4.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockValues.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockVideoModelV3.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockVideoModelV4.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/NotImplemented.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/HttpMCPTransport.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/JSONRPCMessage.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MCPClient.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MCPTransport.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MCPTypes.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockMCPTransport.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/OAuth.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/OAuthTypes.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/OAuthUtil.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/SseMCPTransport.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/TypedTool.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/StreamTranscribe.o -o /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out/Intermediates.noindex/SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/StreamTranscribeResult.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockImageModelV3.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockImageModelV4.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockLanguageModelV2.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockLanguageModelV3.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockLanguageModelV4.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockSpeechModelV4.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockTranscriptionModelV4.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockValues.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockVideoModelV3.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockVideoModelV4.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/NotImplemented.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/HttpMCPTransport.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/JSONRPCMessage.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MCPClient.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MCPTransport.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MCPTypes.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/MockMCPTransport.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/OAuth.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/OAuthTypes.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/OAuthUtil.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/SseMCPTransport.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/TypedTool.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/StreamTranscribe.o -index-unit-output-path /SwiftAISDK.build/Debug-linux-aarch64/SwiftAISDK-t.build/Objects-normal/aarch64/StreamTranscribeResult.o -index-store-path /mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out -index-system-modules
+[240 / 283] SwiftAISDK
+error: Build failed
+error: fatalError
