@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "utc": "2026-11-23T23:41:32.909900+00:00",
+  "status": "FROZEN_PREPARATION_ONLY_NOT_DISPATCHED",
+  "source_input_commit": "2381719e4a6ed2a2c5520d017980123121fba058",
+  "source_cherry_picks": {
+    "ab06b4129e23c8f9ce9c1a4229e72a3d99bbf5d4": "52b13b3df2d09bbe4b70d32c9d962c70ec057c1c",
+    "1b3c4cf0e27683b0af106a8e97b1c7c453062d08": "2381719e4a6ed2a2c5520d017980123121fba058"
+  },
+  "reviewed_ci_commit": "34f4ef563985d90d0fe7ba86fb6fa9d729c25ddf",
+  "producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "source_sha256": {
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift": "39e14e004a2b1d894ded12b666160dadc2900a00aafafa33974caa56c5a31a06",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift": "65b14d1853f09c600643cbbc9016723916f56baf95c7a223d8808ed765cadde1",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSchema.swift": "8cffe156a8f8346f6b2fa25b8d5b237382d3185b2e24ff7e72bcb98684edafaf",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolHistory.swift": "623c15f05db11d4830685a665f765aa53a11c143a51436a73fd1942fdf2b72e1",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSchemaTests.swift": "7cf017f5f196455239011846ee529057eb17e5bc45821450ea4ed4aedadbe423",
+    "Packages/HanlinAgentSDK/Package.swift": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+    "Packages/HanlinAgentSDK/Package.resolved": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+    "Packages/HanlinPlatform/Package.swift": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665",
+    "Packages/HanlinPlatform/Package.resolved": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+    "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "3e418cc3d9dd57a16f709ebe52cb48e46646ffa4380a48c3332b86aa92f4edea",
+    "Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py": "928388954c0ff0c673c82bd80647c5e81149756e3c9a0f67871588256a114d87",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_cancellation_recheck.py": "40d2db50d9ed58d1bafea8f3cf7fcbe3c1e749cbe8ce69296e580c300fa13f44",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py": "3543dcc8bb30ac050e8203aa4d05cfdc39f7d175308c336a66794482a25c81da",
+    "Scripts/CI/IntegrationValidation/verify_stop_continuation_delta.py": "74f5f2e4beb3b96bb11de1842be661586cffa51e04f9730919d3014535f52f75",
+    "Scripts/CI/IntegrationValidation/reuse_native_tool_baseline.py": "bfd5c3fda502efcca6e562fc999c6fea86eebf5f6612c6f3bcc22239ad0a86db",
+    "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py": "41720f0fa414875f05a3b96e9364e6659c230f96a4d5cbb708fad801eb3b3afb",
+    "Scripts/CI/Tests/test_native_tool_cancellation_recheck_report.py": "8bed4ac93f79b667faccaeb74faca9db0d18b23974b894309fc1732f79c45c3e",
+    "Scripts/CI/select_stable_xcode.py": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f",
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "afeed29d2451d17f835230166cb2da894d574aa4474ca296b770ebb68e1f3d8c",
+    "Scripts/CI/Tests/Fixtures/native-cancellation-07431/reference.json": "676dbcdb376fa334925385bf6ce0b17e777cb2b24b74168a3edcd7d5a250c6c0",
+    "Scripts/CI/Tests/Fixtures/native-cancellation-07431/qualification.json": "20b215c22293308cc5d82e5aaaa71e929dd4e6f714db387beadc1f65e7d5df57",
+    "Scripts/CI/Tests/Fixtures/native-cancellation-07431/current-source-sha256.json": "b9dcaf9f525ba1e572aa18105818501d9fe180ef913f31a12d8fb33db193573e"
+  },
+  "reference_sha256": "676dbcdb376fa334925385bf6ce0b17e777cb2b24b74168a3edcd7d5a250c6c0",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "request": {
+    "ref": "codex/hanlin-sdk02-stop-continuation-20261123",
+    "inputs": {
+      "composer_validation_only": "false",
+      "nativescript_metadata_validation_only": "false",
+      "runtime_job_foundation_only": "false",
+      "markdown_renderer_validation_only": "false",
+      "code_fence_webkit_validation_only": "false",
+      "diagnostics_capture_validation_only": "false",
+      "testflight_upload": "false",
+      "runtime_bundle_only": "false",
+      "runtime_publish_release": "false",
+      "phase1_validation_only": "false",
+      "fast_validation_only": "false",
+      "nativescript_poc_only": "false",
+      "force_clean_build": "false",
+      "measure_warm_rebuild": "false",
+      "simulator_e2e_only": "false",
+      "full_validation": "false",
+      "target_validation_group": "agent_sdk_exact_source_proof",
+      "exact_test_selector": "HanlinNativeToolCancellationRecheck"
+    }
+  },
+  "execution_scope": {
+    "current_native_core_invocations": 11,
+    "current_native_sdk_invocations": 4,
+    "current_invocations": 15,
+    "core_selectors": [
+      "HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)",
+      "HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+      "HanlinChatCoreTests/HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost()"
+    ],
+    "sdk_selectors": [
+      "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+      "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+      "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+      "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()"
+    ],
+    "case_ids": [
+      "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized [false]",
+      "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized [true]",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":[{\\\"number\\\":1.25}]}\",false]",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":[{\\\"number\\\":1.25}]}\",true]",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":{\\\"number\\\":1e100}}\",false]",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":{\\\"number\\\":1e100}}\",true]",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":0}\",false]",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":0}\",true]",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":9007199254740993}\",false]",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":9007199254740993}\",true]",
+      "HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor",
+      "HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory",
+      "HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory",
+      "HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute",
+      "HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost"
+    ],
+    "current_method_groups": 7,
+    "current_ios_agent_core_build": "REQUIRED",
+    "simulator_launch": false,
+    "current_baseline_invocations": 0,
+    "current_producer_suite_invocations": 0,
+    "current_old_whole_suite_invocations": 0,
+    "current_process_keys": [
+      "native_core_test_exit",
+      "native_sdk_test_exit",
+      "ios_build_exit"
+    ],
+    "must_remain_null_process_keys": [
+      "core_test_exit",
+      "sdk_test_exit",
+      "delta_test_exit",
+      "baseline_core_exit"
+    ]
+  },
+  "reuse_scope": {
+    "product_invocations": 21,
+    "current_admission": "PENDING_ACTUAL_SOURCE_TOOLCHAIN_LOCK_AND_RESULT_GUARDS",
+    "original_c93": {
+      "run_id": 45259715158,
+      "source": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "producer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "cases": "CloudCore2 + Schema13 + pure schema/history2",
+      "count": 17
+    },
+    "original_header": {
+      "run_id": 45273580428,
+      "source": "2c41a1b7ed6b191be7529550ae1ca4501632ce8d",
+      "producer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "cases": "Authorization rejection1",
+      "count": 1
+    },
+    "original_bridge": {
+      "run_id": 45282347722,
+      "source": "6b0030926cd771f2dd9995fd01aecd1efe8bcf4e",
+      "producer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "cases": "direct doGenerate1",
+      "count": 1
+    },
+    "original_delta": {
+      "run_id": 45273687114,
+      "source": "e1a295ba60396997a6127c6c2e2c4e6e75f508b3",
+      "producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+      "cases": "finite cloud allowed/denied stop2",
+      "count": 2
+    },
+    "historical_e7_baseline": {
+      "run_id": 45240721804,
+      "run_attempt": 2,
+      "native_expected_failures": 10,
+      "cloud_passes": 2,
+      "current_07431_equivalence": false,
+      "mode": "HISTORICAL_REFERENCE_ONLY"
+    }
+  },
+  "local_validation": {
+    "new_report_control_methods": 4,
+    "status": "PASS",
+    "apple_execution": false,
+    "unchanged_old_controls_rerun": 0
+  },
+  "native_current_status": "NOT_RUN",
+  "ios_current_status": "NOT_RUN",
+  "shipping_gates": "ALL_FOUR_CLOSED",
+  "SystemLanguageModel": "NOT_RUN",
+  "watcher_and_acquisition": "Only after root source/route review: one POST, exact immutable source/attempt readback, one finite watcher, one terminal acquisition; original ZIP kept once, selective small-original extraction."
+}

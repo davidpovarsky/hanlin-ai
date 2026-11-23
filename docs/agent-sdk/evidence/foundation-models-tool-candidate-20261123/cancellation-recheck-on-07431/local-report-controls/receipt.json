@@ -1,0 +1,20 @@
+{
+  "kind": "LOCAL_REPORT_CONTROLS_NOT_NATIVE_EXECUTION",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_native_tool_cancellation_recheck_report",
+    "-v"
+  ],
+  "started_utc": "2026-11-23T23:37:56.661489+00:00",
+  "finished_utc": "2026-11-23T23:37:57.364323+00:00",
+  "exit_code": 0,
+  "source_sha256": {
+    "Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py": "928388954c0ff0c673c82bd80647c5e81149756e3c9a0f67871588256a114d87",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_cancellation_recheck.py": "40d2db50d9ed58d1bafea8f3cf7fcbe3c1e749cbe8ce69296e580c300fa13f44",
+    "Scripts/CI/Tests/test_native_tool_cancellation_recheck_report.py": "8bed4ac93f79b667faccaeb74faca9db0d18b23974b894309fc1732f79c45c3e"
+  },
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e4d2e137891124602f354b71533523068f9d3691dff5b15e55594f1dad5f3477"
+}

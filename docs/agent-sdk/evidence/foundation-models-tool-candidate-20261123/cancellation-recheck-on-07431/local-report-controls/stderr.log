@@ -1,0 +1,9 @@
+test_complete_partition_preserves_original_attribution (Scripts.CI.Tests.test_native_tool_cancellation_recheck_report.NativeCancellationAdmissionTests.test_complete_partition_preserves_original_attribution) ... ok
+test_original_cancellation_failure_and_missing_parameter_remain_failures (Scripts.CI.Tests.test_native_tool_cancellation_recheck_report.NativeCancellationAdmissionTests.test_original_cancellation_failure_and_missing_parameter_remain_failures) ... ok
+test_selectors_bind_authentic_identifiers_and_block_old_basenames (Scripts.CI.Tests.test_native_tool_cancellation_recheck_report.NativeCancellationAdmissionTests.test_selectors_bind_authentic_identifiers_and_block_old_basenames) ... ok
+test_source_toolchain_and_checkout_changes_block_reuse (Scripts.CI.Tests.test_native_tool_cancellation_recheck_report.NativeCancellationAdmissionTests.test_source_toolchain_and_checkout_changes_block_reuse) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.614s
+
+OK
