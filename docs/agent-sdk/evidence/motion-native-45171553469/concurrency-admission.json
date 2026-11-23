@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-11-23T12:08:59.887641+00:00",
+  "expected_source": "32b3168d73a9b92c3a774bcbb97f95941d8a4db7",
+  "published_ref": "32b3168d73a9b92c3a774bcbb97f95941d8a4db7\trefs/heads/codex/hanlin-sdk-unification-20261123",
+  "active_same_branch_runs": [],
+  "motion_owner_lock": "ACQUIRED",
+  "prior_owned_watchers": [],
+  "prior_C_watch": {
+    "ended_at": "2026-11-23T11:52:39.306649+00:00",
+    "run_id": 45166004801,
+    "watcher_exit_code": 0,
+    "status": "WATCH_ENDED",
+    "workflow_status": "completed",
+    "workflow_conclusion": "success"
+  },
+  "concurrency_group": "Build iOS 26 Unsigned IPA-refs/heads/codex/hanlin-sdk-unification-20261123-chat_motion_product",
+  "root_exact_test_group_distinct": true,
+  "capacity_and_boot_qualification": {
+    "run_id": 45166004801,
+    "native_job_id": 137663002114,
+    "boot": "READY_FROM_NATIVE_BOOTSTATUS; fresh; no recovery",
+    "C": "1/1 Passed",
+    "workflow": "success"
+  },
+  "D_and_following_helpers_sha256": "a3426d8dc8e2e2a48f452328854372d8fbc9ef15cd0ef1a5ad0292a84f1e0a81",
+  "D_and_following_helpers_byte_identical_to": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "fixture_app_sha256": "0c1491dfa227b98332b446e15f3c84de1346f2daf71a9247c6d8e7f6cf2103c2",
+  "fixture_app_byte_identical_to": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "selected_source_resource_paths_diff_from_C": [],
+  "workflow_sha256": "d8523462b044a399724eca2b510827939f6ed896f7cb4ff7cd8af0b3b5d63fd1"
+}
