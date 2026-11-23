@@ -38,10 +38,11 @@ function exportedCallableNames(entry, capitalized) {
 
 const rules = JSON.parse(await readFile(rulesPath, 'utf8'));
 const reviewedCapabilities = JSON.parse(await readFile(reviewedCapabilitiesPath, 'utf8'));
+const installedExpoUI = JSON.parse(await readFile(resolve(scriptRoot, 'node_modules', '@expo', 'ui', 'package.json'), 'utf8')).version;
 const configuration = {
-  runtimeVersion: '58.0.3',
+  runtimeVersion: installedExpoUI,
   bridgeVersion: '3.0.0',
-  expoUIVersion: '58.0.3',
+  expoUIVersion: installedExpoUI,
   expoViews: exportedCallableNames(resolve(expoRoot, 'index.d.ts'), true),
   expoModifiers: exportedCallableNames(resolve(expoRoot, 'modifiers', 'index.d.ts'), false),
   expoReviewedViews: reviewedCapabilities.views,

@@ -6,6 +6,7 @@ import { execSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import https from 'node:https';
 import http from 'node:http';
+import { buildOriginalExpoSource } from './build-original-expo-source.mjs';
 
 const scriptRoot = resolve(import.meta.dirname);
 const repositoryRoot = resolve(scriptRoot, '..', '..');
@@ -402,6 +403,12 @@ async function prepare() {
           await rm(targetDir, { recursive: true, force: true });
         }
       }
+      if (item.source === 'npm-source') {
+        if (process.platform !== 'darwin') throw new Error(`[HanlinExpo] ${item.name}@${item.version} is source-only; the current original native artifact must be built with Xcode. An older binary is not compatible.`);
+        if (!['ExpoUI', 'ExpoModulesJSI'].includes(item.name)) throw new Error(`[HanlinExpo] Missing original source producer for ${item.name}`);
+        console.log(`[HanlinExpo] ${item.name}@${item.version} will be built from its original installed sources.`);
+        continue;
+      }
       console.log(`[HanlinExpo] Fetching ${item.name}...`);
       const downloadURL = item.tarball || item.url;
       const fileName = basename(new URL(downloadURL).pathname);
@@ -437,6 +444,7 @@ async function prepare() {
       );
       console.log(`[HanlinExpo] Staged ${item.name} -> ${item.target}`);
     }
+    await buildOriginalExpoSource({ root: repositoryRoot });
     console.log('[HanlinExpo] All dependencies staged successfully.');
 
     async function stageModularHeaders() {
@@ -1243,6 +1251,19 @@ template <typename CharTransformT = fnv1a_identity>
         const targetJsiXcf = resolve(artifactsRoot, 'ExpoModulesJSI.xcframework');
         await rm(targetJsiXcf, { recursive: true, force: true });
         await cp(builtXCFramework, targetJsiXcf, { recursive: true, verbatimSymlinks: true });
+        const sourceItem = lock.artifacts.find(item => item.name === 'ExpoModulesJSI');
+        const sourceBuildReceipt = {
+          schemaVersion: 1,
+          name: sourceItem.name,
+          version: sourceItem.version,
+          sha256: sourceItem.sha256,
+          sourceBuildInputSHA256: sha256(await readFile(resolve(scriptRoot, 'package-lock.json'))),
+          producerSHA256: sha256(await readFile(buildScript)),
+          xcode: execSync('xcodebuild -version', { encoding: 'utf8' }).trim(),
+          nativeBuild: 'original expo-modules-jsi SwiftPM build-xcframework.sh',
+        };
+        await writeFile(resolve(targetJsiXcf, '.artifact-manifest.json'), JSON.stringify(sourceBuildReceipt, null, 2) + '\n');
+        await writeFile(resolve(targetJsiXcf, '.source-build-receipt.json'), JSON.stringify(sourceBuildReceipt, null, 2) + '\n');
         console.log('[HanlinExpo] ExpoModulesJSI.xcframework built and staged successfully.');
       }
     }

@@ -70,6 +70,7 @@ export async function inputReceipt(root=repositoryRoot) {
     files.push({path:relative,sha256:sha(bytes)});
   }
   for(const relative of ['Scripts/MiniApps','Packages/HanlinExpoUI','Packages/HanlinExpoNativeAPIJS',
+    'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services',
     'docs/miniapp-sdk','docs/hanlin-nativescript-guide.md','docs/hanlin-expo-runtime.md']) {
     async function walk(src,prefix) {
       const info=await stat(src);
@@ -106,6 +107,12 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       const destination=path.join(staging,engine);
       await mkdir(destination,{recursive:true});
       await copyAuthoringTree(path.join(source,'node_modules'),path.join(destination,'node_modules'),files,engine+'/node_modules');
+      if(engine==='nativescript') {
+        const hostServices=path.join(root,'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services');
+        await copyAuthoringTree(hostServices,path.join(destination,'node_modules/@hanlin/host-services'),files,'nativescript/node_modules/@hanlin/host-services');
+        graph.versions['@hanlin/host-services']=(await readJSON(path.join(hostServices,'package.json'))).version;
+      }
+
       for(const name of ['package.json','package-lock.json',...(engine==='expo'?['babel.config.cjs','metro.config.cjs']:[])]) {
         const bytes=await readFile(path.join(source,name));
         await writeFile(path.join(destination,name),bytes);
@@ -121,13 +128,19 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
         compilerOptions.customConditions=['react-native'];
       } else {
         compilerOptions.lib=['ES2023'];
-        compilerOptions.types=['@nativescript/types'];
+        compilerOptions.types=['@nativescript/core/global-types','@nativescript/types'];
         compilerOptions.experimentalDecorators=true;
+        // NativeScript's original consumer configuration skips checking the
+        // internals of upstream .d.ts files. Strict user/API checking remains on;
+        // callers can explicitly request declaration-body diagnostics as well.
+        compilerOptions.skipLibCheck=true;
       }
       await writeJSON(path.join(destination,'tsconfig.json'),{compilerOptions});
       engines[engine]={toolingRoot:engine,tsconfigPath:engine+'/tsconfig.json',
         typescriptPath:engine+'/node_modules/typescript/lib/typescript.js',
         packageVersions:graph.versions,
+        typeCheckingPolicy:{strictSource:true,checkOriginalDeclarationBodies:engine==='expo',
+          explanation:engine==='expo'?'Original declarations and source are checked.':'Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.'},
         docs:engine==='expo'?['docs/hanlin-expo-runtime.md','docs/miniapp-sdk/README.md']:['docs/hanlin-nativescript-guide.md','docs/miniapp-sdk/README.md'],
         capabilities:engine==='expo'?['foreground','native-ui','host-services','prepared-widgets']:['foreground','native-ui','host-services','esm-package'],
         build:{nativeHostRebuildRequiredForNativeDependencyChanges:true}};

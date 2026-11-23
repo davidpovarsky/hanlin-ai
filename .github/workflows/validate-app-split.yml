@@ -244,6 +244,15 @@ jobs:
           fi
           plutil -lint AI_HLY.xcodeproj/project.pbxproj HanlinMiniAppsApp/HanlinMiniApps.entitlements
           python3 Scripts/ProductSplit/verify_targets.py
+      - name: Resolve current original MiniApp sources and exact build graph
+        if: ${{ !inputs.signing_preflight_only }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$SPLIT_EVIDENCE/upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$SPLIT_EVIDENCE/upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$SPLIT_EVIDENCE/upstream-resolution.log"
+          cp build/acceptance/miniapp-upstreams/resolution.json "$SPLIT_EVIDENCE/upstream-resolution.json"
+          git diff --binary > "$SPLIT_EVIDENCE/upstream-inputs.patch"
       - name: Restore existing Swift package dependency cache
         if: ${{ !inputs.signing_preflight_only }}
         id: split-sourcepackages
@@ -328,6 +337,8 @@ jobs:
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/Expo
           node Scripts/Expo/prepare-ios-dependencies.mjs
+          node Scripts/Expo/prepare-types.mjs
+          node Scripts/Expo/build-probe.mjs
           bash Scripts/Runtime/prepare-runtime-core.sh
           bash Scripts/Runtime/prepare-runtime-host.sh
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
@@ -343,6 +354,15 @@ jobs:
           CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
           EOF
           } 2>&1 | tee "$SPLIT_EVIDENCE/native-dependencies.log"
+      - name: Export exact prepared native artifacts for reuse
+        if: ${{ !inputs.signing_preflight_only }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/SDK/native_artifacts.py export --root "$GITHUB_WORKSPACE" --output "$SPLIT_EVIDENCE/prepared-native"
+          python3 Scripts/SDK/native_artifacts.py verify --catalog "$SPLIT_EVIDENCE/prepared-native/native-artifacts.json" --assets "$SPLIT_EVIDENCE/prepared-native"
+          cp Scripts/MiniApps/upstream-resolution.json "$SPLIT_EVIDENCE/prepared-native/upstream-resolution.json"
+          cp "$SPLIT_EVIDENCE/upstream-inputs.patch" "$SPLIT_EVIDENCE/prepared-native/upstream-inputs.patch"
       - name: Restore verified input timestamps for incremental compilation
         if: ${{ !inputs.signing_preflight_only }}
         continue-on-error: true

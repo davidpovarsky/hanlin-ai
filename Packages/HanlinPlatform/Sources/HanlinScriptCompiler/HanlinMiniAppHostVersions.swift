@@ -8,4 +8,5 @@ enum HanlinMiniAppHostVersions {
     static let expoUIVersion = "58.0.3"
     static let expoWidgetsVersion = "58.0.3"
     static let reactNativeVersion = "0.88.0"
+    static let scriptWidgetRevision = "68f04194f00222558c44d5a832e7617a96f62574"
 }

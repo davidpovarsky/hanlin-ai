@@ -564,13 +564,20 @@
     },
     {
       "repository": "expo/expo",
-      "commit": "917a61b581baeb852aa4fe331da2c1395d824351",
       "upstream": "packages/expo-widgets/bundle/react-stub.ts",
-      "upstreamBlob": "dc78634f06d13b7272197056d0f829ab9e0f793f",
+      "upstreamBlob": "16be27cd7aae097fc59e8f1c9d8ad4ff9c8c94f7",
       "local": "Scripts/Widgets/vendor/expo-widgets/bundle/react-stub.ts",
-      "localSHA256": "2f8fb792f53b57d64e3b55d0a8bb5df8a047f9cb9bef18c718a8dc83d661653e",
+      "localSHA256": "e4766a01d0aa515f4e74a6805e908d7668a2a61a307a4f89da1bd141735d3b71",
       "byteIdentical": false,
-      "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source."
+      "adaptation": "Complete original current Expo widget React mount implementation with a Hanlin default-export adapter using those same original functions.",
+      "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351",
+      "upstreamPublication": {
+        "package": "expo-widgets",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
+        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "path": "bundle/react-stub.ts"
+      }
     },
     {
       "repository": "expo/expo",
