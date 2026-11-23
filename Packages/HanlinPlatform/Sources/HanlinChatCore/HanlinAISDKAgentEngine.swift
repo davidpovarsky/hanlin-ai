@@ -45,7 +45,8 @@ public actor HanlinAISDKAgentEngine {
         self.resolvesProviderFromConfiguration = true
         self.resolvedProvider = try HanlinAISDKProviderFactory.resolve(
             configuration: configuration,
-            fetch: fetch
+            fetch: configuration.apiType?.lowercased() == "openai-responses"
+                ? HanlinChatGPTPlanTransport.makeFetch(base: fetch) : fetch
         )
     }
 
@@ -136,7 +137,10 @@ public actor HanlinAISDKAgentEngine {
             throw HanlinAISDKError.invalidConversation("An injected provider owns its transport.")
         }
         let resolvedProvider = try transport.map {
-            try HanlinAISDKProviderFactory.resolve(configuration: configuration, fetch: $0.fetch)
+            try HanlinAISDKProviderFactory.resolve(
+                configuration: configuration,
+                fetch: configuration.apiType?.lowercased() == "openai-responses"
+                    ? HanlinChatGPTPlanTransport.makeFetch(base: $0.fetch) : $0.fetch)
         } ?? self.resolvedProvider
         if structuredResponse != nil, !HanlinNativeStructuredResponse.supports(resolvedProvider.descriptor) {
             throw HanlinNativeStructuredResponseError.unsupportedProviderOrModel
@@ -157,11 +161,10 @@ public actor HanlinAISDKAgentEngine {
         // those fields are rejected even if the user configured them for an
         // ordinary paid OpenAI API model.
         let usesChatGPTPlan = configuration.apiType?.lowercased() == "openai-responses"
-        // The current ChatGPT-plan Responses preview requires namespaced
-        // tools. Until the AI SDK supports this wire format, do not send
-        // unsupported flat function tools that would reject inference.
-        // Hosts must surface this limitation instead of claiming actions.
-        let initialTools: ToolSet = usesChatGPTPlan ? [:] : try Self.makeTools(definitions)
+        // The shared plan transport places these original definitions into the
+        // official additional_tools contract. Keep the same tools, approval
+        // machinery, and executors for API credentials and plan credentials.
+        let initialTools: ToolSet = try Self.makeTools(definitions)
         let settings = CallSettings(
             maxOutputTokens: usesChatGPTPlan ? nil : configuration.maxTokens,
             temperature: usesChatGPTPlan ? nil :
