@@ -83,6 +83,19 @@ struct HanlinAppleToolSessionBridgeTests {
 
 }
 
+@Suite("FoundationModels transport metadata admission")
+struct HanlinAppleToolHeaderAdmissionTests {
+    @Test("A non-User-Agent header is rejected before native executor entry")
+    @MainActor
+    func rejectsUnsupportedTransportHeader() async throws {
+        guard #available(iOS 27.0, macOS 27.0, *) else {
+            Issue.record("Native framework acceptance requires iOS 27 or macOS 27.")
+            return
+        }
+        try await NativeToolSessionBridgeChecks().rejectsUnsupportedTransportHeader()
+    }
+}
+
 // Availability belongs to the implementation, not to Swift Testing discovery.
 @available(iOS 27.0, macOS 27.0, *)
 private struct NativeToolSessionBridgeChecks {
@@ -146,6 +159,19 @@ private struct NativeToolSessionBridgeChecks {
         #expect(outcome.effects.isEmpty)
         #expect(outcome.approvals.isEmpty)
         #expect(await state.cancelled)
+    }
+
+    func rejectsUnsupportedTransportHeader() async throws {
+        let state = FixtureState(mode: .twoCalls)
+        let provider = HanlinAppleLanguageModel(toolBridgeModel: FixtureModel(state: state))
+        do {
+            _ = try await provider.doGenerate(options: .init(
+                prompt: [.user(content: [.text(.init(text: "ORIGINAL_USER"))], providerOptions: nil)],
+                tools: [.function(.init(name: "native_echo", inputSchema: try Self.schemaValue()))],
+                headers: ["uSeR-aGeNt": "fixture-agent", "Authorization": "fixture-unsupported"]))
+            Issue.record("An unsupported transport header must be rejected before generation.")
+        } catch HanlinAppleProviderError.unsupportedSettings {}
+        #expect(await state.requests.isEmpty)
     }
 
     func nativeGeneratePreservesToolCalls() async throws {
