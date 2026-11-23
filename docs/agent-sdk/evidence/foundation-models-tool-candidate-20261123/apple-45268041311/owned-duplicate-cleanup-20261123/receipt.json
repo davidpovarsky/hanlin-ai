@@ -1,0 +1,25 @@
+{
+  "completed_utc": "2026-11-23T21:15:51.261245+00:00",
+  "verified_plan_sha256": "b1e44e3d9a0dd726368f519b3cb6d66f24c42b4c589ec9eb1e34f5d81585cf10",
+  "removed_paths": [
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/attempt-2/original/BaselineCoreTests.xcresult",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/attempt-2/original/CoreTests.xcresult",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/attempt-2/original/IOSBuild.xcresult",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/attempt-2/original/SDKTests.xcresult",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/attempt-2/original/producer-source.tar",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/attempt-2/original/tested-source.tar",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/recheck-1/original/CoreTests.xcresult",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/recheck-1/original/IOSBuild.xcresult",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/recheck-1/original/SDKTests.xcresult",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/recheck-1/original/producer-source.tar",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/recheck-1/original/tested-source.tar"
+  ],
+  "removed_logical_bytes": 387047060,
+  "removed_disk_kib": 400032,
+  "free_bytes_after": 2555154432,
+  "retained_original_archives": [
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/attempt-2/14853499914.zip",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/recheck-1/14860542354.zip"
+  ],
+  "tracked_git_status": ""
+}

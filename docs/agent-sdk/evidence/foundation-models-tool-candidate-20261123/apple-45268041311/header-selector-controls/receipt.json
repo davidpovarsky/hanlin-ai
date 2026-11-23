@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-23T21:37:11.713382+00:00",
+  "scope": "ONE newly added selector control only; no native or old Python controls rerun",
+  "before_exit": 1,
+  "after_exit": 0,
+  "original_run": 45268041311,
+  "original_selector_result": "0 executed / 5 NOT_RUN; strict report BLOCKED",
+  "reference_case_source": "authenticated452597 SDKTests.json nodeIdentifier fields for four original methods; new fifth function bound to source declaration, not claimed executed",
+  "production_and_swift_tests": "BYTE_IDENTICAL_TO846",
+  "logs": {
+    "after.stderr.log": "1d641fcb02771bc3bd6e87a687e357ad0136c16af3b3d47b023c47c5b4f6a883",
+    "before.stderr.log": "8b18a52575c8d1172ebf96b28fe3fdc8546f5cd6841e2ff34a311c52e5f58e09",
+    "before.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "after.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

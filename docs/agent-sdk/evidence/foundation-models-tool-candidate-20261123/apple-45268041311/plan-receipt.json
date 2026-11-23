@@ -1,0 +1,53 @@
+{
+  "utc": "2026-11-23T21:46:38.230482+00:00",
+  "status": "FROZEN_SOURCE_READY_FOR_REVIEW_NO_RETRY_DISPATCH",
+  "fix_commit": "46d60604c2c9f6e7d0aba1f13b9d131c4c525df0",
+  "branch": "codex/hanlin-sdk02-native-tool-adapter-20261123",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "target_validation_group": "agent_sdk_exact_source_proof",
+  "exact_test_selector": "HanlinNativeToolHeaderRecheck",
+  "all_unrelated_boolean_inputs": false,
+  "scope": {
+    "current_sdk_cases": 5,
+    "current_core_cases": 0,
+    "current_baseline_cases": 0,
+    "current_ios_build": false,
+    "ios_compile_reuse": {
+      "run_id": 45268041311,
+      "source": "846ca37aaee19f46dccca3cd39c7d6762d2561f4",
+      "requirement": "404 unchanged package hashes, both actual pre/post raw lock bytes, authenticated original successful build command/output, exact Xcode/Swift/SDK/OS/select-xcode fingerprints",
+      "current_ios_build_exit": null,
+      "mode": "REUSED_VERIFIED"
+    },
+    "accepted_cases_reuse": 28,
+    "baseline_case_reuse": 12,
+    "simulator_launch": false,
+    "shipping_gates": "CLOSED"
+  },
+  "current_header_run": {
+    "run_id": 45268041311,
+    "source": "846ca37aaee19f46dccca3cd39c7d6762d2561f4",
+    "test_counts": {
+      "PASS": 0,
+      "FAIL": 0,
+      "NOT_RUN": 5
+    },
+    "ios_compile": "PASS",
+    "diagnosis": "Missing terminal literal parentheses in Swift Testing method selectors selected zero tests; actual original log and testNodes agree; not a report-format issue"
+  },
+  "local_controls": {
+    "selector_before": "FAIL",
+    "selector_after": "PASS",
+    "compile_reuse_and_affected_report_methods": 3,
+    "compile_reuse_controls": "PASS",
+    "initial_fixture_error": "3 setup errors retained; fixed select-xcode original log source; no native execution"
+  },
+  "source_sha256": {
+    "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py": "2430b21c9a19277c87565df6b33cd43c553b8f9b51d3358e1ec23e12efe40060",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_header_recheck.py": "d725d318ca24f062c47c430708f6fce81bc93ccc6baa956adaaaddc2230c0bb9",
+    "Scripts/CI/IntegrationValidation/reuse_native_header_ios_build.py": "a2662de378628bc740234f158827af937c18b295357029e17f116b73edb5781f",
+    "Scripts/CI/Tests/test_native_tool_header_recheck_report.py": "cfc42e917997cb1db6905d7f6fca6b4b7ee852ec577240c99b17c1d482da8ef7"
+  },
+  "compile_reference_manifest_sha256": "e87046d8b0944d0eb91d7001050ba668b2902210dc43fc2d4131f58ce2ceebea",
+  "package_tree_equal_to": "846ca37aaee19f46dccca3cd39c7d6762d2561f4"
+}

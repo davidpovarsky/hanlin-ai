@@ -1,0 +1,41 @@
+test_original28_are_reused_separately_from_only_five_fixture_executions (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_original28_are_reused_separately_from_only_five_fixture_executions) ... ERROR
+test_ios_compile_reuse_rejects_mismatch_and_pretended_current_execution (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_ios_compile_reuse_rejects_mismatch_and_pretended_current_execution) ... ERROR
+test_function_selectors_match_authenticated_original_swift_identifiers (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_function_selectors_match_authenticated_original_swift_identifiers) ... ERROR
+
+======================================================================
+ERROR: test_original28_are_reused_separately_from_only_five_fixture_executions (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_original28_are_reused_separately_from_only_five_fixture_executions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/Scripts/CI/Tests/test_native_tool_header_recheck_report.py", line 39, in setUp
+    shutil.copyfile(self.reference / name, self.evidence / name)
+  File "/usr/lib/python3.12/shutil.py", line 260, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/04-select-xcode.stdout.log'
+
+======================================================================
+ERROR: test_ios_compile_reuse_rejects_mismatch_and_pretended_current_execution (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_ios_compile_reuse_rejects_mismatch_and_pretended_current_execution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/Scripts/CI/Tests/test_native_tool_header_recheck_report.py", line 39, in setUp
+    shutil.copyfile(self.reference / name, self.evidence / name)
+  File "/usr/lib/python3.12/shutil.py", line 260, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/04-select-xcode.stdout.log'
+
+======================================================================
+ERROR: test_function_selectors_match_authenticated_original_swift_identifiers (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_function_selectors_match_authenticated_original_swift_identifiers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/Scripts/CI/Tests/test_native_tool_header_recheck_report.py", line 39, in setUp
+    shutil.copyfile(self.reference / name, self.evidence / name)
+  File "/usr/lib/python3.12/shutil.py", line 260, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/04-select-xcode.stdout.log'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.005s
+
+FAILED (errors=3)

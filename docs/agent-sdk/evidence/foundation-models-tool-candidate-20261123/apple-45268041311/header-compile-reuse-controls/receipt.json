@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-23T21:43:15.411652+00:00",
+  "scope": "Three specifically affected header selection/build-reuse report controls; current five-case outcomes are fixtures, original compile reference is authenticated452680",
+  "methods": [
+    "test_original28_are_reused_separately_from_only_five_fixture_executions",
+    "test_ios_compile_reuse_rejects_mismatch_and_pretended_current_execution",
+    "test_function_selectors_match_authenticated_original_swift_identifiers"
+  ],
+  "exit": 1,
+  "swift_execution": "NOT_RUN",
+  "prior13_controls": "NOT_REPLAYED",
+  "logs": {
+    "controls.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "controls.stderr.log": "66fa6ba779224682f89fdce5d5058900e24d1008e8b9e5031fb31e3b451374e4"
+  }
+}

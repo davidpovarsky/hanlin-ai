@@ -1,0 +1,8 @@
+test_original28_are_reused_separately_from_only_five_fixture_executions (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_original28_are_reused_separately_from_only_five_fixture_executions) ... ok
+test_ios_compile_reuse_rejects_mismatch_and_pretended_current_execution (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_ios_compile_reuse_rejects_mismatch_and_pretended_current_execution) ... ok
+test_function_selectors_match_authenticated_original_swift_identifiers (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_function_selectors_match_authenticated_original_swift_identifiers) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.505s
+
+OK

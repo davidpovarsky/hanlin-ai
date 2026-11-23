@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-23T21:43:46.589839+00:00",
+  "scope": "Three affected header selection/build-reuse controls after fixing local fixture source for select-xcode log; no Swift execution",
+  "methods": [
+    "test_original28_are_reused_separately_from_only_five_fixture_executions",
+    "test_ios_compile_reuse_rejects_mismatch_and_pretended_current_execution",
+    "test_function_selectors_match_authenticated_original_swift_identifiers"
+  ],
+  "exit": 0,
+  "original_failed_fixture": "header-compile-reuse-controls:3 setup errors due to select-xcode files not retained in old28-case fixture; actual452680 logs now used",
+  "prior13_controls": "NOT_REPLAYED",
+  "logs": {
+    "controls.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "controls.stderr.log": "994f25bbe0b45b2ba74b788f9470097a5035f763a967c8c3b72ff79c1ec24320"
+  }
+}

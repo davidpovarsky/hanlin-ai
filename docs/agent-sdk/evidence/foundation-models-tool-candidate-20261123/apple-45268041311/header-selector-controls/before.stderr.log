@@ -1,0 +1,16 @@
+test_function_selectors_match_authenticated_original_swift_identifiers (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_function_selectors_match_authenticated_original_swift_identifiers) ... FAIL
+
+======================================================================
+FAIL: test_function_selectors_match_authenticated_original_swift_identifiers (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_function_selectors_match_authenticated_original_swift_identifiers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/Scripts/CI/Tests/test_native_tool_header_recheck_report.py", line 165, in test_function_selectors_match_authenticated_original_swift_identifiers
+    self.assertCountEqual(header.HEADER_SELECTORS, authentic)
+AssertionError: Element counts were not equal:
+
+Diff is 1291 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.022s
+
+FAILED (failures=1)

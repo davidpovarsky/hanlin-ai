@@ -1,0 +1,47 @@
+{
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "sha": "846ca37aaee19f46dccca3cd39c7d6762d2561f4",
+  "remote_sha": "846ca37aaee19f46dccca3cd39c7d6762d2561f4",
+  "utc": "2026-11-23T21:16:49.153222+00:00",
+  "request": {
+    "ref": "codex/hanlin-sdk02-native-tool-adapter-20261123",
+    "inputs": {
+      "composer_validation_only": "false",
+      "nativescript_metadata_validation_only": "false",
+      "runtime_job_foundation_only": "false",
+      "markdown_renderer_validation_only": "false",
+      "code_fence_webkit_validation_only": "false",
+      "diagnostics_capture_validation_only": "false",
+      "testflight_upload": "false",
+      "runtime_bundle_only": "false",
+      "runtime_publish_release": "false",
+      "phase1_validation_only": "false",
+      "fast_validation_only": "false",
+      "nativescript_poc_only": "false",
+      "force_clean_build": "false",
+      "measure_warm_rebuild": "false",
+      "simulator_e2e_only": "false",
+      "full_validation": "false",
+      "target_validation_group": "agent_sdk_exact_source_proof",
+      "exact_test_selector": "HanlinNativeToolHeaderRecheck"
+    }
+  },
+  "prior_run_ids": [
+    45259715158,
+    45240721804
+  ],
+  "scope": {
+    "current_sdk_invocations": 5,
+    "accepted_passes_reused": 28,
+    "baseline_reused_invocations": 12,
+    "core_processes": 0,
+    "baseline_processes": 0,
+    "ios_agent_core_build": true,
+    "simulator_launch": false,
+    "shipping_gates": "CLOSED"
+  },
+  "finished_utc": "2026-11-23T21:16:50.823391+00:00",
+  "exit": 0,
+  "stdout": "",
+  "stderr": ""
+}

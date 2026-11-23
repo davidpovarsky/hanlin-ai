@@ -1,0 +1,7 @@
+{
+  "exact_test_selector": "HanlinNativeToolHeaderRecheck",
+  "target_validation_group": "agent_sdk_exact_source_proof",
+  "baseline": "REUSE_REQUESTED",
+  "run_id": "45268041311",
+  "run_attempt": "1"
+}
