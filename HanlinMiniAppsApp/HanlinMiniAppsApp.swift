@@ -171,7 +171,7 @@ private struct HanlinMiniAppsWindow: View {
 
 /// Constructed only after the real storage preparation succeeded.
 private struct HanlinMiniAppsReadyRoot: View {
-    @State private var provider = HanlinMiniAppsProvider(platform: HanlinScriptingPlatform())
+    @State private var provider = HanlinMiniAppsProvider(platform: .shared)
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {

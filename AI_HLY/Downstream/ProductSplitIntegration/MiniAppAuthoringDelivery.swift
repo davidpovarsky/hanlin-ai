@@ -117,6 +117,9 @@ enum MiniAppAuthoringDelivery {
         await platform.installPreview()
         if platform.activity == .idle, let sourceDigest,
            let package = platform.installedPackages.first(where: { $0.record.sourceDigest == sourceDigest }) {
+            // Publish the same actual installed registry before telling the agent
+            // that the package is available in the companion catalog.
+            try await HanlinMiniAppsProvider(platform: platform).refreshCatalog()
             try store.record(.init(transferID: id, status: .installed,
                 installedPackageID: package.record.installedPackageID.rawValue))
         } else {

@@ -80,7 +80,7 @@ final class HanlinScriptingPlatform {
         var rows = (preview?.findings ?? []).map { finding in
             HanlinMiniAppAuthoringDiagnostic(
                 code: finding.code ?? "PACKAGE_COMPATIBILITY",
-                category: finding.severity == .error ? "error" : "warning",
+                category: finding.severity.rawValue,
                 message: finding.message, file: finding.sourcePath, remediation: finding.rationale)
         }
         rows.append(contentsOf: authoringReport?.diagnostics ?? [])
