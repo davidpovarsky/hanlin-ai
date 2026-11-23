@@ -152,13 +152,21 @@ public actor HanlinAISDKAgentEngine {
         guard !modelMessages.isEmpty else {
             throw HanlinAISDKError.invalidConversation("At least one user or assistant message is required.")
         }
+        // ChatGPT plan inference supports the stateless Responses route only.
+        // Do not send sampling controls or max_output_tokens in this preview:
+        // those fields are rejected even if the user configured them for an
+        // ordinary paid OpenAI API model.
+        let usesChatGPTPlan = configuration.apiType?.lowercased() == "openai-responses"
         let initialTools = try Self.makeTools(definitions)
         let settings = CallSettings(
-            maxOutputTokens: configuration.maxTokens,
-            temperature: configuration.temperature == HanlinChatGenerationDefaults.temperature
-                ? nil : configuration.temperature,
-            topP: configuration.topP == HanlinChatGenerationDefaults.topP ? nil : configuration.topP,
-            maxRetries: 2
+            maxOutputTokens: usesChatGPTPlan ? nil : configuration.maxTokens,
+            temperature: usesChatGPTPlan ? nil :
+                (configuration.temperature == HanlinChatGenerationDefaults.temperature
+                    ? nil : configuration.temperature),
+            topP: usesChatGPTPlan ? nil :
+                (configuration.topP == HanlinChatGenerationDefaults.topP
+                    ? nil : configuration.topP),
+            maxRetries: usesChatGPTPlan ? 0 : 2
         )
 
         // nil means run until the model completes, the user cancels or a real error occurs.
