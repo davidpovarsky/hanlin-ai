@@ -213,8 +213,13 @@ struct HanlinApplicationModelAccess {
 
     func updateProvider(_ value: HanlinApplicationProviderConfiguration) throws -> HanlinApplicationProvider {
         let row = try provider(value.identifier)
-        try validate(value, isNew: row.from == .custom)
+        let customizesRequest = row.from == .system &&
+            (row.requestURL != value.endpoint?.absoluteString || row.apiType != value.api.original)
+        try validate(value, isNew: row.from == .custom || customizesRequest)
         try HanlinAppProviderCredentials.shared.saveMetadata(for: row, expectedStoredValue: row.key, in: context) { row in
+            // This same original row becomes host-owned when its request endpoint
+            // or dialect is explicitly customized. Catalog refresh must not undo it.
+            if customizesRequest { row.from = .custom }
             row.name = value.displayName; row.requestURL = value.endpoint?.absoluteString
             row.isHidden = !value.isEnabled; row.apiType = value.api.original
             row.autoProbeCapabilities = value.autoProbeCapabilities

@@ -301,6 +301,18 @@ explicit `providerCredential` access use the original versioned credential
 writer/resolver. Clearing selects an empty current credential; it does not claim
 to erase previously retained recovery generations or historical backups.
 
+The original startup and conversation-creation catalog refresh reconciles providers
+by their exact `identifier` (`APIKeys.company`), never their editable display names.
+Custom routes configured before bootstrap remain the same rows, including a
+custom route using a built-in identifier. Renaming a built-in retains its row,
+credential reference and name. Explicitly changing its request endpoint or API
+dialect transfers that same row to custom ownership, so later catalog refresh
+preserves the override. Existing ambiguous legacy routing duplicates are retained;
+programmatic access reports `duplicateProvider` instead of choosing or deleting a
+credential-bearing row. Custom model metadata is likewise excluded from built-in
+catalog metadata refresh. See the [identity correction receipt](HanlinProviderPreloadIdentity20261123.md)
+for the focused regression selectors and validation boundary.
+
 The focused native test
 `HanlinApplicationEmbeddingTests/programmaticProviderAndModelUseOriginalRowsAndProtectedWriter`
 checks provider metadata, protected credential rotation/clear, stable model

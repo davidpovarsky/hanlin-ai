@@ -12,6 +12,19 @@ struct HanlinApplicationEmbeddingTests {
             configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none))
     }
 
+    private func providerFixture() throws -> (ModelContainer, HanlinApplicationModelAccess, HanlinApplicationCredentials) {
+        let container = try ModelContainer(for: APIKeys.self, AllModels.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none))
+        let policy = HanlinApplicationCredentials(service: "hanlin.preload.tests." + UUID().uuidString)
+        HanlinApplicationCredentialRegistry.shared.register(container, credentials: policy)
+        return (container, .init(context: container.mainContext), policy)
+    }
+
+    private func removeFixtureCredentials(_ policy: HanlinApplicationCredentials) {
+        SecItemDelete([kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: policy.service] as CFDictionary)
+    }
+
     @Test
     func providerCredentialLookupUsesTheRecordsContainer() throws {
         let app = "hanlin.embedding.tests." + UUID().uuidString.lowercased()
@@ -141,5 +154,122 @@ struct HanlinApplicationEmbeddingTests {
         #expect(try snapshot.decodedImageData() == images)
         #expect(HanlinConversationMessageSnapshot(id: id).groupID == id)
         _ = HanlinToolActivityView(message: snapshot)
+    }
+
+    @Test
+    func providerPreloadingPreservesDistinctRoutingIdentitiesWithEqualNames() throws {
+        let (container, access, policy) = try providerFixture()
+        defer { removeFixtureCredentials(policy) }
+        for identifier in ["HOST_FIRST", "HOST_SECOND"] {
+            try access.createProvider(.init(identifier: identifier, displayName: "Same display name",
+                endpoint: URL(string: "https://example.invalid/" + identifier)), credential: "synthetic-" + identifier)
+        }
+        let first = try access.provider("HOST_FIRST"), second = try access.provider("HOST_SECOND")
+        let firstID = first.persistentModelID, secondID = second.persistentModelID
+        let firstKey = first.key, secondKey = second.key
+        preloadAPIKeysIfNeeded(context: container.mainContext)
+        #expect(try access.provider("HOST_FIRST").persistentModelID == firstID)
+        #expect(try access.provider("HOST_SECOND").persistentModelID == secondID)
+        #expect(first.key == firstKey && second.key == secondKey)
+        #expect(try access.providerCredential("HOST_FIRST") == "synthetic-HOST_FIRST")
+        #expect(try access.providerCredential("HOST_SECOND") == "synthetic-HOST_SECOND")
+    }
+
+    @Test
+    func providerPreloadingKeepsCustomBuiltinRoutingOverride() throws {
+        let (container, access, policy) = try providerFixture()
+        defer { removeFixtureCredentials(policy) }
+        try access.createProvider(.init(identifier: "OPENAI", displayName: "Host-owned route",
+            endpoint: URL(string: "https://example.invalid/messages"), api: .anthropic), credential: "synthetic-host-route")
+        let original = try access.provider("OPENAI")
+        let id = original.persistentModelID, reference = original.key
+        preloadAPIKeysIfNeeded(context: container.mainContext)
+        preloadAPIKeysIfNeeded(context: container.mainContext)
+        let restored = try access.provider("OPENAI") // Exactly one original routing identity.
+        #expect(restored.persistentModelID == id && restored.key == reference)
+        #expect(restored.name == "Host-owned route" && restored.from == .custom)
+        #expect(restored.requestURL == "https://example.invalid/messages" && restored.apiType == .anthropic)
+        #expect(try access.providerCredential("OPENAI") == "synthetic-host-route")
+    }
+
+    @Test
+    func providerPreloadingPreservesRenamedBuiltinCredentials() throws {
+        let (container, access, policy) = try providerFixture()
+        defer { removeFixtureCredentials(policy) }
+        preloadAPIKeysIfNeeded(context: container.mainContext)
+        try access.setProviderCredential("synthetic-builtin", provider: "OPENAI")
+        let original = try access.provider("OPENAI")
+        let id = original.persistentModelID, reference = original.key
+        var configuration = HanlinApplicationProvider(original).configuration
+        configuration.displayName = "Renamed by the host"
+        try access.updateProvider(configuration)
+        preloadAPIKeysIfNeeded(context: container.mainContext)
+        let restored = try access.provider("OPENAI")
+        #expect(restored.persistentModelID == id && restored.key == reference)
+        #expect(restored.name == "Renamed by the host" && restored.from == .system)
+        #expect(try access.providerCredential("OPENAI") == "synthetic-builtin")
+    }
+
+    @Test
+    func explicitBuiltinRequestOverrideStaysHostOwnedDuringPreload() throws {
+        let (container, access, policy) = try providerFixture()
+        defer { removeFixtureCredentials(policy) }
+        preloadAPIKeysIfNeeded(context: container.mainContext)
+        try access.setProviderCredential("synthetic-custom-endpoint", provider: "OPENAI")
+        let original = try access.provider("OPENAI")
+        let id = original.persistentModelID, reference = original.key
+        var configuration = HanlinApplicationProvider(original).configuration
+        configuration.endpoint = URL(string: "https://example.invalid/v1/messages")
+        configuration.api = .anthropic
+        try access.updateProvider(configuration)
+        preloadAPIKeysIfNeeded(context: container.mainContext)
+        let restored = try access.provider("OPENAI")
+        #expect(restored.persistentModelID == id && restored.key == reference)
+        #expect(restored.from == .custom && restored.apiType == .anthropic)
+        #expect(restored.requestURL == configuration.endpoint?.absoluteString)
+        #expect(try access.providerCredential("OPENAI") == "synthetic-custom-endpoint")
+    }
+
+    @Test
+    func providerPreloadingRetainsAmbiguousLegacyCredentialRows() throws {
+        let (container, access, policy) = try providerFixture()
+        defer { removeFixtureCredentials(policy) }
+        let first = APIKeys(name: "Legacy first", company: "OPENAI", requestURL: "https://first.invalid")
+        let second = APIKeys(name: "Legacy second", company: "OPENAI", requestURL: "https://second.invalid")
+        try HanlinAppProviderCredentials.shared.insert(first, value: "synthetic-first", in: container.mainContext)
+        try HanlinAppProviderCredentials.shared.insert(second, value: "synthetic-second", in: container.mainContext)
+        let firstID = first.persistentModelID, secondID = second.persistentModelID
+        let firstKey = first.key, secondKey = second.key
+        preloadAPIKeysIfNeeded(context: container.mainContext)
+        #expect(throws: HanlinApplicationModelConfigurationError.self) { try access.provider("OPENAI") }
+        let rows = try container.mainContext.fetch(FetchDescriptor<APIKeys>()).filter { $0.company == "OPENAI" }
+        #expect(Set(rows.map(\.persistentModelID)) == Set([firstID, secondID]))
+        #expect(first.key == firstKey && second.key == secondKey)
+        #expect(first.requestURL == "https://first.invalid" && second.requestURL == "https://second.invalid")
+        #expect(try HanlinAppProviderCredentials.shared.resolve(first) == "synthetic-first")
+        #expect(try HanlinAppProviderCredentials.shared.resolve(second) == "synthetic-second")
+    }
+
+    @Test
+    func modelPreloadingKeepsCustomMetadataForMatchingCatalogName() throws {
+        let (container, _, policy) = try providerFixture()
+        defer { removeFixtureCredentials(policy) }
+        let catalog = try #require(getModelList().first { $0.name?.isEmpty == false && $0.company != "LOCAL" })
+        let model = AllModels(name: catalog.name, displayName: "Host-owned model",
+            position: 900, company: "HOST_ROUTING_ID", price: -1, isHidden: true,
+            supportsSearch: !catalog.supportsSearch, supportsTextGen: !catalog.supportsTextGen,
+            supportsMultimodal: !catalog.supportsMultimodal, supportsReasoning: !catalog.supportsReasoning,
+            supportReasoningChange: !catalog.supportReasoningChange, supportsImageGen: !catalog.supportsImageGen,
+            supportsVoiceGen: !catalog.supportsVoiceGen, supportsToolUse: !catalog.supportsToolUse,
+            systemProvision: false)
+        container.mainContext.insert(model)
+        try container.mainContext.save()
+        let id = model.id, capabilities = HanlinApplicationModelCapabilities(model)
+        preloadModelDataIfNeeded(context: container.mainContext)
+        let rows = try container.mainContext.fetch(FetchDescriptor<AllModels>()).filter { $0.id == id }
+        #expect(rows.count == 1)
+        #expect(model.company == "HOST_ROUTING_ID" && model.displayName == "Host-owned model")
+        #expect(model.position == 900 && model.price == -1 && model.isHidden)
+        #expect(HanlinApplicationModelCapabilities(model) == capabilities)
     }
 }
