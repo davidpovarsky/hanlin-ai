@@ -76,6 +76,9 @@ def main():
                 HEADER_EXPECTED, HEADER_SELECTORS, REFERENCE_PATH as HEADER_REFERENCE_PATH,
                 prepare_header_reuse, summarize_header_recheck,
             )
+            from reuse_native_header_ios_build import (
+                REFERENCE_PATH as HEADER_IOS_REFERENCE_PATH, prepare_reuse as prepare_header_ios_reuse,
+            )
         (evidence / "selected-route.json").write_text(json.dumps(dict(
             exact_test_selector=selector, target_validation_group=inputs["target_validation_group"],
             baseline="REUSE_REQUESTED" if reuse_baseline else "FRESH_REQUESTED",
@@ -114,6 +117,8 @@ def main():
         if header_recheck:
             workflow_paths += ["Scripts/CI/IntegrationValidation/verify_native_tool_header_recheck.py"]
             workflow_paths += [str(path.relative_to(root)) for path in sorted((root / HEADER_REFERENCE_PATH).iterdir()) if path.is_file()]
+            workflow_paths += ["Scripts/CI/IntegrationValidation/reuse_native_header_ios_build.py"]
+            workflow_paths += [str(path.relative_to(root)) for path in sorted((root / HEADER_IOS_REFERENCE_PATH).rglob("*")) if path.is_file()]
         for relative in workflow_paths:
             if (root / relative).read_bytes() != subprocess.check_output(["git", "show", head + ":" + relative], cwd=root):
                 raise RuntimeError("Workflow source differs from Git: " + relative)
@@ -212,6 +217,8 @@ def main():
             if header_recheck:
                 prepare_header_reuse(root, evidence)
                 statuses["accepted_cases_execution"] = "REUSED_VERIFIED"
+                prepare_header_ios_reuse(root, evidence)
+                statuses["ios_build_execution"] = "REUSED_VERIFIED"
             # No baseline subprocess ran. Its original exit belongs to the
             # separate authenticated reference, never to current process status.
         else:
@@ -234,10 +241,11 @@ def main():
             "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests",
         ]
         statuses["sdk_test_exit"] = test("SDKTests", sdk, sdk_scheme, sdk_selectors)
-        statuses["ios_build_exit"], _ = run("IOSBuild", [
-            "xcodebuild", "build", "-scheme", "HanlinAgentCore", "-destination", "generic/platform=iOS Simulator",
-            "-derivedDataPath", scratch / "IOSDerivedData", "-resultBundlePath", evidence / "IOSBuild.xcresult", *common
-        ], cwd=sdk, check=False)
+        if not header_recheck:
+            statuses["ios_build_exit"], _ = run("IOSBuild", [
+                "xcodebuild", "build", "-scheme", "HanlinAgentCore", "-destination", "generic/platform=iOS Simulator",
+                "-derivedDataPath", scratch / "IOSDerivedData", "-resultBundlePath", evidence / "IOSBuild.xcresult", *common
+            ], cwd=sdk, check=False)
     except Exception as error:
         statuses["preparation_exit"] = 1
         (evidence / "preparation-error.txt").write_text(str(error) + "\n")

@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 
 from reuse_native_tool_baseline import validate_reuse
+from reuse_native_header_ios_build import validate_reuse as validate_ios_build_reuse
 from verify_native_tool_candidate import EXPECTED, inspect_result
 
 REFERENCE_PATH = "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158"
@@ -22,7 +23,7 @@ HEADER_EXPECTED = {
     "HanlinAppleToolHeaderAdmissionTests": {"rejectsUnsupportedTransportHeader": None},
 }
 HEADER_SELECTORS = [
-    "HanlinAgentCoreTests/" + suite + "/" + method
+    "HanlinAgentCoreTests/" + suite + "/" + method + "()"
     for suite, methods in HEADER_EXPECTED.items() for method in methods
 ]
 PERMITTED_SOURCE = {
@@ -162,7 +163,7 @@ def summarize_header_recheck(evidence):
         statuses = read(evidence / "process-status.json")
     except (OSError, ValueError):
         statuses = {}
-    reused, baseline_receipt = None, None
+    reused, baseline_receipt, ios_receipt = None, None, None
     baseline_cases, _, baseline_errors = inspect_result(
         evidence, "BaselineCoreTests", EXPECTED["CoreTests"], baseline=True)
     try:
@@ -181,14 +182,7 @@ def summarize_header_recheck(evidence):
         require(sorted(selected) == sorted(HEADER_SELECTORS), "current five method selectors changed")
         require(tests[0]["exit_code"] == statuses.get("sdk_test_exit"),
                 "SDK test process status does not match its command")
-        builds = [c for c in commands if c["argv"][:2] == ["xcodebuild", "build"]]
-        require(len(builds) == 1 and builds[0]["name"] == "IOSBuild" and
-                builds[0]["exit_code"] == statuses.get("ios_build_exit"),
-                "current iOS build process or status missing")
-        build_args = builds[0]["argv"]
-        require(build_args[build_args.index("-scheme") + 1] == "HanlinAgentCore" and
-                build_args[build_args.index("-destination") + 1] == "generic/platform=iOS Simulator",
-                "current dependent iOS build scope changed")
+        ios_receipt = validate_ios_build_reuse(evidence)
     except (OSError, ValueError, KeyError, TypeError, IndexError) as error:
         errors.append(str(error))
     baseline_ok = (baseline_receipt is not None and not baseline_errors and len(baseline_cases) == 12 and
@@ -201,7 +195,7 @@ def summarize_header_recheck(evidence):
     passed = (not errors and len(cases) == len(methods) == 5 and
               all(row["status"] == "PASS" for row in cases) and reused is not None and
               all(type(statuses.get(key)) is int and statuses[key] == 0
-                  for key in ("preparation_exit", "sdk_test_exit", "ios_build_exit")))
+                  for key in ("preparation_exit", "sdk_test_exit")) and ios_receipt is not None)
     for row in cases:
         row["execution"] = "EXECUTED" if row["status"] in {"PASS", "FAIL"} else "NOT_RUN"
     return dict(
@@ -214,7 +208,7 @@ def summarize_header_recheck(evidence):
         baseline_execution="REUSED_VERIFIED" if baseline_ok else "REUSE_INVALID",
         baseline_cases=baseline_cases, baseline_reuse=baseline_receipt,
         errors=sorted(errors), process_status=statuses,
-        ios_agent_core_compile="PASS" if statuses.get("ios_build_exit") == 0 else
-            "NOT_RUN" if statuses.get("ios_build_exit") is None else "FAIL",
+        ios_agent_core_compile="REUSED_VERIFIED" if ios_receipt is not None else "REUSE_INVALID",
+        ios_build_reuse=ios_receipt,
         shipping_native_tool_capability=False, system_model_generation="NOT_RUN",
     )
