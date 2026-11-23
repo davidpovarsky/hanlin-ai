@@ -1,0 +1,137 @@
+{
+  "source": "d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13",
+  "target": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "fixtureInputs": {
+    "same": false,
+    "count": 10,
+    "changed": [
+      {
+        "path": ".github/workflows/testflight.yml",
+        "before": {
+          "path": ".github/workflows/testflight.yml",
+          "bytes": 43060,
+          "sha256": "6d11af69940ca0633c683db2adc31787ce9cb0b3bbbf5c3479060296040a5a15",
+          "matchesRecordedRevision": true
+        },
+        "after": {
+          "path": ".github/workflows/testflight.yml",
+          "bytes": 43060,
+          "sha256": "c73889a17322eec05954209b9cb154797eed9233760a10deca259b82e04615cc",
+          "matchesRecordedRevision": true
+        }
+      }
+    ]
+  },
+  "sdkGraphInputs": {
+    "same": false,
+    "count": 23,
+    "changed": [
+      {
+        "path": "AI_HLY.xcodeproj/project.pbxproj",
+        "before": {
+          "path": "AI_HLY.xcodeproj/project.pbxproj",
+          "bytes": 200923,
+          "sha256": "d1113ad4826f9f4f7e610914a914dcd9d368985f50cc73073a2cfd8934aa726c"
+        },
+        "after": {
+          "path": "AI_HLY.xcodeproj/project.pbxproj",
+          "bytes": 198762,
+          "sha256": "fd9a3ce112321a37438d2f12f29ea41848a144bb1dc27fb1a371174a54c4ac93"
+        }
+      },
+      {
+        "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+        "before": {
+          "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+          "bytes": 13039,
+          "sha256": "cc05971fb8ad2348ffbf7f159b32da4f87ceb48a81e7cb739d1e33a20dfee15d"
+        },
+        "after": {
+          "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+          "bytes": 13863,
+          "sha256": "d2415b1a1550086c740c5888ce74fc75f0be7ddcf03c8252b42673d370a58b25"
+        }
+      },
+      {
+        "path": "Scripts/SDK/generate_manifest.py",
+        "before": {
+          "path": "Scripts/SDK/generate_manifest.py",
+          "bytes": 16110,
+          "sha256": "10e6ce09e056e13f9ed22d2f5946d851239c1d1cfca6e331c566fc178bd25c7f"
+        },
+        "after": {
+          "path": "Scripts/SDK/generate_manifest.py",
+          "bytes": 16110,
+          "sha256": "daa37ca278597897afb041a8af477a59bf09930fcfaaa65460855a0cf427c35a"
+        }
+      }
+    ]
+  },
+  "sdkSourceAndResourceFiles": {
+    "same": true,
+    "count": 364,
+    "changed": []
+  },
+  "generatedSHA256": {
+    "equal": true,
+    "before": {
+      "Package.swift": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+      "docs/agent-sdk/unified-package-manifest.json": "34e46751fd4075cd97f262afdd063ed222e38a34195671244bbb279c61555dcd"
+    },
+    "after": {
+      "Package.swift": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+      "docs/agent-sdk/unified-package-manifest.json": "34e46751fd4075cd97f262afdd063ed222e38a34195671244bbb279c61555dcd"
+    }
+  },
+  "projectSpecSHA256": {
+    "equal": true,
+    "before": "b3414f9fb78c3cddd0becc66b0fb3120e842b5858eb44452aed8a8da5773a224",
+    "after": "b3414f9fb78c3cddd0becc66b0fb3120e842b5858eb44452aed8a8da5773a224"
+  },
+  "selectedProducts": {
+    "equal": true,
+    "before": [
+      "HanlinChatUI"
+    ],
+    "after": [
+      "HanlinChatUI"
+    ]
+  },
+  "runtimeBinaryTargets": {
+    "equal": true,
+    "before": [],
+    "after": []
+  },
+  "sdkSourceAndResourceSHA256": {
+    "equal": true,
+    "before": "041b30413b86a2766d4b713008e1f8f3f017bb938105ef5abbe37d79b698145e",
+    "after": "041b30413b86a2766d4b713008e1f8f3f017bb938105ef5abbe37d79b698145e"
+  },
+  "selected_job_equal": true,
+  "top_level_prefix_equal": true,
+  "native_execution": "No replay; original452784 remains on frozen d8 source",
+  "testflight_consumption_review": {
+    "only_change": "Unselected signing check_target AI_Hanlin to HanlinApp",
+    "exact_inverse_restores_old_bytes": true,
+    "actual_motion_consumer": "Scripts/CI/ChatRegressionValidation/run_native.py:record_macro_configuration",
+    "consumed_headless_flags": [
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation"
+    ],
+    "consumed_matching_lines_equal": true,
+    "matching_lines": [
+      {
+        "line": 378,
+        "source": "-skipPackagePluginValidation -skipMacroValidation; then"
+      },
+      {
+        "line": 490,
+        "source": "-skipPackagePluginValidation -skipMacroValidation \\"
+      }
+    ],
+    "full_file_hashes_remain_different": true
+  },
+  "interpretation": "Selected Motion compilation/runtime inputs and actual consumed harness values are equivalent. Broad provenance hashes differ and are preserved; the original native result retains its d8 origin.",
+  "status": "SOURCE_EQUIVALENCE_QUALIFIED_PENDING_NATIVE_RESULT",
+  "native_result": "NOT_CLAIMED; independently owned B452784 is still being observed"
+}
