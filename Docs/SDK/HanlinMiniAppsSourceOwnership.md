@@ -31,7 +31,7 @@ The later original source at `bcb1a2954c8cfbd36035c08aafb4acbca7a6a5fb` separate
 After preparing the original application runtime, the complete original companion composition is available directly:
 
 ```swift
-import HanlinApplication
+import AI_Hanlin // Module provided by the HanlinApplication product.
 import SwiftUI
 
 @MainActor
