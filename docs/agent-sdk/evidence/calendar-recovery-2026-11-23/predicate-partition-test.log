@@ -1,0 +1,17 @@
+Building for debugging...
+[Using on-disk description]
+[2 / 9] HanlinScriptDeviceServices
+[8 / 13] CalendarProofTests-product
+[12 / 18] HanlinScriptDeviceServices
+[16 / 19] CalendarProofTests-product
+[23 / 25] CalendarProofTests-test-runner
+[26 / 26] CalendarProofTests-test-runner
+Build complete! (3.55 secs)
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "Shared calendar requests" started.
+◇ Test broadSearchRetainsPresentAndFutureInsteadOfEventKitTruncation() started.
+✔ Test broadSearchRetainsPresentAndFutureInsteadOfEventKitTruncation() passed after 0.004 seconds.
+✔ Suite "Shared calendar requests" passed after 0.004 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.004 seconds.

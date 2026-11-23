@@ -1,0 +1,69 @@
+{
+  "created_utc": "2026-11-23T02:35:59.123950+00:00",
+  "base_commit": "603576fa0aec5af1eea403d402f9ff676f3f09c8",
+  "branch": "codex/hanlin-sdk-calendar-20261123",
+  "environment": {
+    "host": "Oracle torah-social",
+    "runtime": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+    "swift_language_mode": 6,
+    "package_tools_version": "6.2"
+  },
+  "proof_runs": [
+    {
+      "status": "PASS",
+      "scope": "Portable request validation and callback lifetime only; full package/apple frameworks excluded",
+      "command": "swift test --package-path /tmp/hanlin-sdk-calendar-proof-20261123 -j 2",
+      "methods": 12,
+      "concrete_cases": 17,
+      "log": "test.log",
+      "source_note": "Before addition of eventIntervals helper and the thirteenth test; twelve existing test bodies and all exercised production methods unchanged by that addition."
+    },
+    {
+      "status": "PASS",
+      "scope": "Added EventKit predicate partition regression",
+      "command": "swift test --package-path /tmp/hanlin-sdk-calendar-proof-20261123 -j 2 --filter broadSearchRetainsPresentAndFutureInsteadOfEventKitTruncation",
+      "methods": 1,
+      "concrete_cases": 1,
+      "log": "predicate-partition-test.log"
+    },
+    {
+      "status": "PASS",
+      "scope": "Swift frontend parse only, seven changed/new Swift files",
+      "log": "syntax-results.json"
+    }
+  ],
+  "prior_expression_reproductions": [
+    {
+      "expression": "DateInterval(start: later, end: earlier)",
+      "exit_code": -5,
+      "termination": "SIGTRAP",
+      "log": "interval-original-crash.log"
+    },
+    {
+      "expression": "Int.max * 60",
+      "exit_code": -5,
+      "termination": "SIGTRAP",
+      "log": "alarm-original-crash.log"
+    }
+  ],
+  "not_run": [
+    "Apple EventKit typecheck/runtime",
+    "AI_HLYTests/CalendarToolTests (4 methods, 6 cases)",
+    "Physical-device reproduction of supplied 147501 CALayer/HostingScrollView crash",
+    "Calendar permission dialogs and live read/write on iOS"
+  ],
+  "current_source_sha256": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinCalendarRequest.swift": "6cddcd71438af595a6f50ffc2635661b719dde9994d698b73894ad72f08b5469",
+    "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinCalendarCallbackOperation.swift": "d47aa7eddd43e1298cb450c19d31ea4666b7a3ba59af31c7609be6cfbbf15a08",
+    "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinAppleCalendarService.swift": "02b0eab4bd8f7612dc5056edae3534d17bb4178e630bf8e5c53ecfcad218fde2",
+    "AI_HLY/Services/ChatServices/CalendarService.swift": "c20abdc48d8c929a208d0cf3d4b03293a999e619869334ccc498c6475033ca2e",
+    "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift": "ebad39151fe374489a9678a03a235398161ce0f2d312c56f7902ba3f42e4538a",
+    "AI_HLYTests/CalendarToolTests.swift": "e17bf71fb41f65bbb64f182f7cb29530ae765a02d2984595898c81eb8713dc70",
+    "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinCalendarRequestTests.swift": "23e4107dbc52d5812574d1401f0bdd88cab66081f625c8b46150323b26e1bea5"
+  },
+  "limitations": [
+    "Original expression reproductions do not establish causality of the provided physical crash.",
+    "Deadline/cancellation ends async callback waits; synchronous EventKit queries can only check between predicates.",
+    "Portable proof package uses exact two Foundation-only SDK sources and test file, with no Apple framework stubs."
+  ]
+}

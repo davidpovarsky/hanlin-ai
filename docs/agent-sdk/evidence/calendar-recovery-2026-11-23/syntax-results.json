@@ -1,0 +1,37 @@
+[
+  {
+    "file": "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinCalendarRequest.swift",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "file": "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinCalendarCallbackOperation.swift",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "file": "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinAppleCalendarService.swift",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "file": "AI_HLY/Services/ChatServices/CalendarService.swift",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "file": "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "file": "AI_HLYTests/CalendarToolTests.swift",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinCalendarRequestTests.swift",
+    "exit": 0,
+    "output": ""
+  }
+]
