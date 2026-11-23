@@ -1,0 +1,3 @@
+2026-11-23T11:48:28.4165600Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/SettingsView.swift:249:56: error: converting non-Sendable function value to '@MainActor @Sendable () -> Void' may introduce data races
+2026-11-23T11:48:28.4718380Z     |                                                        `- error: converting non-Sendable function value to '@MainActor @Sendable () -> Void' may introduce data races
+2026-11-23T11:48:46.0780250Z ** TEST BUILD FAILED **

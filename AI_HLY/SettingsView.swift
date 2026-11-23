@@ -244,9 +244,9 @@ struct SettingsView: View {
             .accessibilityIdentifier("hanlin-settings-list")
             .navigationTitle(String(localized: "设置", bundle: HanlinLocalization.bundle))
             .toolbar {
-                if let onDone {
+                if onDone != nil {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button(hanlin: "Done", action: onDone).accessibilityIdentifier("hanlin-profile-done")
+                        Button(hanlin: "Done") { self.onDone?() }.accessibilityIdentifier("hanlin-profile-done")
                     }
                 }
             }

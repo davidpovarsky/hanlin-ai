@@ -3,6 +3,7 @@ import HanlinExtensionContracts
 import HanlinScriptExtensions
 import HanlinTranslationUI
 import SwiftUI
+import ExtensionKit
 @preconcurrency import Translation
 @preconcurrency import TranslationUIProvider
 

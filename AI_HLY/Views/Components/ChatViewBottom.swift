@@ -11,6 +11,7 @@ import SwiftData
 import UniformTypeIdentifiers
 import UIKit
 import HanlinPresentationKit
+import HanlinChatUI
 
 
 struct InputTextField: UIViewRepresentable {

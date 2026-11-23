@@ -1,0 +1,125 @@
+{
+  "total_count": 6,
+  "artifacts": [
+    {
+      "id": 14815811789,
+      "node_id": "MDg6QXJ0aWZhY3QxNDgxNTgxMTc4OQ==",
+      "name": "ci-performance-report",
+      "size_in_bytes": 1071,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14815811789",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14815811789/zip",
+      "expired": false,
+      "digest": "sha256:87243c8a74d2a70c1e8b91eb350f005e138f384061329dbdac3cdd60c2376590",
+      "created_at": "2026-11-23T11:49:21Z",
+      "updated_at": "2026-11-23T11:49:21Z",
+      "expires_at": "2026-12-23T11:49:21Z",
+      "workflow_run": {
+        "id": 45163990486,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-unification-20261123",
+        "head_sha": "32da9e314e22bbf22391fcf8902302acfbb281e2"
+      }
+    },
+    {
+      "id": 14815751898,
+      "node_id": "MDg6QXJ0aWZhY3QxNDgxNTc1MTg5OA==",
+      "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+      "size_in_bytes": 1486087,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14815751898",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14815751898/zip",
+      "expired": false,
+      "digest": "sha256:e24985621b6993657b818618187b89113cefd27b79c67aa08b14b67767394dc6",
+      "created_at": "2026-11-23T11:48:53Z",
+      "updated_at": "2026-11-23T11:48:53Z",
+      "expires_at": "2026-12-07T11:48:52Z",
+      "workflow_run": {
+        "id": 45163990486,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-unification-20261123",
+        "head_sha": "32da9e314e22bbf22391fcf8902302acfbb281e2"
+      }
+    },
+    {
+      "id": 14815522357,
+      "node_id": "MDg6QXJ0aWZhY3QxNDgxNTUyMjM1Nw==",
+      "name": "provider-conformance-summary",
+      "size_in_bytes": 2220,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14815522357",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14815522357/zip",
+      "expired": false,
+      "digest": "sha256:e86b5a5babd9a2de44fb2fb45678332d81a6bdea649eae7f41ad6c97345c7091",
+      "created_at": "2026-11-23T11:49:20Z",
+      "updated_at": "2026-11-23T11:49:20Z",
+      "expires_at": "2026-12-23T11:49:20Z",
+      "workflow_run": {
+        "id": 45163990486,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-unification-20261123",
+        "head_sha": "32da9e314e22bbf22391fcf8902302acfbb281e2"
+      }
+    },
+    {
+      "id": 14815325005,
+      "node_id": "MDg6QXJ0aWZhY3QxNDgxNTMyNTAwNQ==",
+      "name": "hanlin-sdk-native-prepared",
+      "size_in_bytes": 184426220,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14815325005",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14815325005/zip",
+      "expired": false,
+      "digest": "sha256:0450ef2f7df2bbb92aba5e0e7a2825fcd118902aa9d5b444748bca4e8c4d10c6",
+      "created_at": "2026-11-23T11:33:21Z",
+      "updated_at": "2026-11-23T11:33:21Z",
+      "expires_at": "2026-12-23T11:33:19Z",
+      "workflow_run": {
+        "id": 45163990486,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-unification-20261123",
+        "head_sha": "32da9e314e22bbf22391fcf8902302acfbb281e2"
+      }
+    },
+    {
+      "id": 14814320936,
+      "node_id": "MDg6QXJ0aWZhY3QxNDgxNDMyMDkzNg==",
+      "name": "ci-validation-plan",
+      "size_in_bytes": 13729,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14814320936",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14814320936/zip",
+      "expired": false,
+      "digest": "sha256:e44d7bf4542f0160e929356fe31aa15cc7c0e840e41cabf5993b43b19021adc9",
+      "created_at": "2026-11-23T11:18:46Z",
+      "updated_at": "2026-11-23T11:18:46Z",
+      "expires_at": "2026-12-07T11:18:44Z",
+      "workflow_run": {
+        "id": 45163990486,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-unification-20261123",
+        "head_sha": "32da9e314e22bbf22391fcf8902302acfbb281e2"
+      }
+    },
+    {
+      "id": 14812529080,
+      "node_id": "MDg6QXJ0aWZhY3QxNDgxMjUyOTA4MA==",
+      "name": "hanlin-foundation-models-interface",
+      "size_in_bytes": 7215,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14812529080",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14812529080/zip",
+      "expired": false,
+      "digest": "sha256:5640ba69032743687ed8dd9db4be006ec401360e3038f8f6f953a90d48bb9025",
+      "created_at": "2026-11-23T11:26:25Z",
+      "updated_at": "2026-11-23T11:26:25Z",
+      "expires_at": "2026-12-07T11:26:24Z",
+      "workflow_run": {
+        "id": 45163990486,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-unification-20261123",
+        "head_sha": "32da9e314e22bbf22391fcf8902302acfbb281e2"
+      }
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import HanlinLocalization
 //
 
 import SwiftUI
+import SwiftData
 @preconcurrency import Speech
 @preconcurrency import AVFoundation
 import Combine
