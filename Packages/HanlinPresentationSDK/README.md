@@ -6,17 +6,30 @@ network backend. The original Hanlin app imports these canonical implementations
 
 ## Products
 
+- `HanlinLocalization`: the original localized string catalogs, images, semantic
+  colors and shared bundle access.
 - `HanlinPresentationKit`: versioned profiles/catalogs/shells, conversation
   assignments, per-message state and chronological OpenUI inline framing.
 - `HanlinRichUI`: the original pinned Thesys React renderer and component library
   in a local WKWebView; native SwiftUI controls and Swift Charts use the same
   upstream `lang-core` parser, evaluator, bindings, action plans and query manager.
-- `HanlinChatUI`: the original workspace container, motion presets, shimmer,
-  natural-height disclosure, inline Host consent, and a native research inspector.
+- `HanlinChatUI`: the original Composer, native editor, message bubbles, Markdown,
+  code fences, scrolling, motion, shimmer, inline consent and host composition.
+- `HanlinAgentActivityCore`: original activity/run DTOs, composition, projection
+  and immutable activity snapshots.
+- `HanlinAgentActivityUI`: the original activity hierarchy, detail disclosures,
+  step rows and approval presentation with host-owned callbacks.
+- `HanlinA2UI`: original A2UI sessions, result ownership, official surfaces and
+  rich media; see [the A2UI entry points below](#original-a2ui-and-rich-media).
+- `HanlinMiniAppsUI`: the original independent `HanlinMiniAppsLibrary` and
+  `HanlinMiniAppsServices`. The current rich catalog and runtime-aware companion
+  composition belong to `HanlinApplication`; see [the MiniApps guide](../../Docs/SDK/HanlinMiniAppsSourceOwnership.md).
 
-Ordinary Markdown remains the host's existing renderer. Hanlin keeps
-`ChatMarkdownView` and the original A2UI owner; marked rich blocks are ordered
-inside the same existing assistant row. OpenUI itself has no A2UI compile flag.
+Hanlin imports the canonical `HanlinMarkdownView`, A2UI renderer and rich-result
+owners from these products. Its former UI implementation paths are aliases or
+host adapters; the host retains its actual conversation, persistence and transport
+ownership. Marked rich blocks stay ordered inside the same existing assistant
+row. OpenUI itself has no A2UI compile flag.
 
 ## Host configuration
 

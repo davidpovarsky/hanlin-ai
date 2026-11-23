@@ -15,7 +15,7 @@ engine, or persistence implementation.
 | `HanlinConversationView(context:conversationID:)` | Original `ChatView` |
 | `HanlinSettingsView(context:onDone:)` | Original `SettingsView` and editors |
 | `HanlinLibraryView` | Original personal library and exact source-selection routes |
-| `HanlinApplicationPanelView(context:panel:)` | Original models, providers, skills, MCP, runtimes, or MiniApps panel |
+| `HanlinApplicationPanelView(context:panel:)` | All 16 original management panels: `.models`, `.providers`, `.skills`, `.mcp`, `.runtimes`, `.miniApps`, `.prompts`, `.memory`, `.translations`, `.knowledge`, `.diagnostics`, `.toolPermissions`, `.guide`, `.costs`, `.support`, `.shareInbox` |
 
 The independent `HanlinChatUI`, `HanlinPresentationKit`, `HanlinRichUI`,
 `HanlinAgentCore`, and platform products remain the entry points for lighter
