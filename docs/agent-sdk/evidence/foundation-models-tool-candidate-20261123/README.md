@@ -100,3 +100,8 @@ NOT_RUN. No public capability gate changed.
 ## Actual Apple attempt 2 and current repair
 
 See [the original Apple outcomes and focused recheck plan](apple-45240721804-attempt-2/README.md). The frozen f311 candidate executed5 PASS,7 FAIL,20 NOT_RUN; baseline10 expected failures and2 cloud passes were authenticated, and iOS AgentCore built. The repaired source has not executed. This supersedes the earlier provisional argument-display grammar: actual Swift displays keep embedded quotation marks literal, so complete source-bound display matching is used. No shipping capability was enabled.
+
+
+## Recheck45259715158
+
+[Original Apple recheck and exact outcomes](apple-45259715158/README.md): 28 PASS,4 FAIL,0 NOT_RUN; current iOS AgentCore build PASS. Core12 now all pass with unchanged assertions. Baseline12 is authenticated reuse only. Four framework-to-engine cases fail before executor entry because of unsupportedSettings; the source diagnosis and affected repair scope are retained. Public capability stays disabled.

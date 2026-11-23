@@ -1,0 +1,8 @@
+[
+  {
+    "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)",
+    "exit_code": 0,
+    "raw_file": "22-SDKTests-arguments-0.stdout.log",
+    "sha256": "08439b6ad1a8a92a1db2f713aa0e2ae909d769d0222c4d1044504c31d6267a6f"
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "mode": "REUSED_VERIFIED",
+  "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+  "run_id": 45240721804,
+  "run_attempt": 2,
+  "artifact_id": 14853499914,
+  "zip_sha256": "39820954debd7ed83a3b0a38e5b01673c7378f673d2ae5d75510899281ebb05e",
+  "reference_manifest_sha256": "ba8a05d787ab250ad4400c85cea842e5b7ec23e5a8af4d3f6ec1c70c94a5afb2",
+  "current_source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+  "baseline_commit": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "baseline_scope_files": 238,
+  "baseline_scope_sha256": "e922cf9034d9d249a4eea1696bd3df27428096ed6d98bad622013c90f5319625",
+  "raw_lock_sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+  "toolchain_sha256": {
+    "xcode": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+    "swift": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "macos-sdk": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "ios-sdk": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "os": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c"
+  },
+  "original_baseline_exit": 65,
+  "original_baseline_invocations": {
+    "FAIL": 10,
+    "PASS": 2
+  },
+  "baseline_export_sha256": "5a1da0ade219ac177d3e664c65939ce03a8c8f5ea817d83fd0e980c180203d84",
+  "scope": "Original baseline outcomes reused; no baseline process executed in the current run."
+}

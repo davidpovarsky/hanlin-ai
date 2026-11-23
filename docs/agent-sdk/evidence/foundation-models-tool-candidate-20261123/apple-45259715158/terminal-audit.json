@@ -1,0 +1,53 @@
+{
+  "receipt": {
+    "run_id": 45259715158,
+    "run_attempt": 1,
+    "source": "c93b966e6c378f56b98d7805b5086a72d3061803",
+    "utc": "2026-11-23T20:45:16.292667+00:00",
+    "artifact_id": 14860542354,
+    "artifact_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14860542354",
+    "zip_bytes": 117348666,
+    "zip_sha256": "e3301405f1b28281ca93cc1ce5086c19a0f2e25976ffee2da4eff825dbcf3e09",
+    "api_digest_verified": true,
+    "api_run_source_verified": true,
+    "zip_crc": "PASS",
+    "acquisition_count": 1
+  },
+  "evidence_root": "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-native-candidate-acceptance/recheck-1/original",
+  "commands_with_verified_original_outputs": 23,
+  "source_hashes_verified": 404,
+  "workflow_hashes_verified": 22,
+  "actual_locks_verified": 2,
+  "failing_commands": [
+    {
+      "name": "SDKTests",
+      "exit_code": 65,
+      "stdout": "20-SDKTests.stdout.log",
+      "stderr": "20-SDKTests.stderr.log"
+    }
+  ],
+  "summary_reproduction": "PASS",
+  "candidate_status": "BLOCKED",
+  "baseline_status": "PASS",
+  "system_model_generation": "NOT_RUN",
+  "shipping_native_tool_capability": false,
+  "selected_route": {
+    "exact_test_selector": "HanlinNativeToolCandidateRecheck",
+    "target_validation_group": "agent_sdk_exact_source_proof",
+    "baseline": "REUSE_REQUESTED",
+    "run_id": "45259715158",
+    "run_attempt": "1"
+  },
+  "candidate_counts": {
+    "PASS": 28,
+    "FAIL": 4,
+    "NOT_RUN": 0
+  },
+  "baseline_counts": {
+    "PASS": 2,
+    "FAIL": 10,
+    "NOT_RUN": 0
+  },
+  "baseline_execution": "REUSED_VERIFIED",
+  "ios_agent_core_compile": "PASS"
+}

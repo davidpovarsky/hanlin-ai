@@ -1,0 +1,25 @@
+{
+  "artifact_id": 14853499914,
+  "baseline_commit": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "files_sha256": {
+    "05-xcode.stdout.log": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+    "06-swift.stdout.log": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "07-macos-sdk.stdout.log": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "08-ios-sdk.stdout.log": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "09-os.stdout.log": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+    "BaselineCoreTests.json": "5a1da0ade219ac177d3e664c65939ce03a8c8f5ea817d83fd0e980c180203d84",
+    "artifact-receipt.json": "5eb7b0ecb5539fcc1494a69df69b3068b138cdaf3e50983371beb47449915bf5",
+    "baseline-variant.json": "f8f9727707a246302af0fe91740cc53c8d9aa525815ab74c26465bec93f7ee58",
+    "commands.json": "bd9c811bf8a63818f3fcd5143844bd53c10abdd5c468701147c456617606bbaa",
+    "core-Package.resolved": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+    "process-status.json": "ab842f6cc89bde3bed296cb56cb3e659ee56983bac9c203dffcfdb04c8ec9ad1",
+    "producer-commit.txt": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+    "terminal-run.json": "f3f1a0bf512d615c2161030464e8207de7a408e7ad53dd3866180315505ce0d7",
+    "tested-source-sha256.json": "723df62caf58ceb1fe13e998a834eb041ad1e329a5a9162535f933860f41324b"
+  },
+  "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "run_attempt": 2,
+  "run_id": 45240721804,
+  "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+  "zip_sha256": "39820954debd7ed83a3b0a38e5b01673c7378f673d2ae5d75510899281ebb05e"
+}

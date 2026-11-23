@@ -1,0 +1,107 @@
+{
+  "utc": "2026-11-23T20:41:21.288828+00:00",
+  "scope": "Source-bound producer migration impact; no new execution or pin change",
+  "candidate_source": "c93b966e6c378f56b98d7805b5086a72d3061803",
+  "current_producer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "prospective_producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "source_sha256": {
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "52b011d931fcae6c9be2da94ade98e00a13b5fd8379812f8ad293cd9bcbf98ab",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "484933369535fd96b5c17d77532ec9e63c2481a1d46b8515c3e8dcb50078988c"
+  },
+  "matrix": [
+    {
+      "scope": "Candidate Core normalized native",
+      "invocations": 2,
+      "fixture_finish": "toolCalls -> stop(text only)",
+      "guard": "Completed tool step; shared old/new continuation predicate",
+      "proof": "Original f311: PASS; current c93 pending"
+    },
+    {
+      "scope": "Candidate Core cloud original",
+      "invocations": 2,
+      "fixture_finish": "toolCalls -> stop(text only)",
+      "guard": "Completed tool step; shared old/new continuation predicate",
+      "proof": "Original f311: PASS; current c93 pending"
+    },
+    {
+      "scope": "Candidate Core rejected native numbers",
+      "invocations": 8,
+      "fixture_finish": "First stream emits toolCalls; no valid second request expected",
+      "guard": "Invalid call retains input and produces error output. Native stopWhen must reject before next request under either producer. Scheduling may stop earlier.",
+      "proof": "Original f311:7 FAIL/providerCalls2 +1 PASS/providerCalls1; no full event trace. Current c93 pending"
+    },
+    {
+      "scope": "Bridge canonical allow and deny",
+      "invocations": 2,
+      "fixture_finish": "toolCalls handoff -> stop(text only)",
+      "guard": "Same completed-output continuation predicate; no new finish-label branch",
+      "proof": "Previously NOT_RUN; current c93 pending"
+    },
+    {
+      "scope": "Bridge invalid numeric sibling",
+      "invocations": 1,
+      "fixture_finish": "Bridge throws before emitting any toolCall or finish",
+      "guard": "No completed-tool step reaches changed guard",
+      "proof": "Previously NOT_RUN; current c93 pending"
+    },
+    {
+      "scope": "Bridge cancellation",
+      "invocations": 1,
+      "fixture_finish": "Awaiting executor cancelled before response completion",
+      "guard": "No completed-tool step reaches changed guard",
+      "proof": "Previously NOT_RUN; current c93 pending"
+    },
+    {
+      "scope": "Bridge direct doGenerate",
+      "invocations": 1,
+      "fixture_finish": "Provider accumulates toolCalls without producer streamText loop",
+      "guard": "Producer guard bypassed",
+      "proof": "Previously NOT_RUN; current c93 pending"
+    },
+    {
+      "scope": "Bridge schema constructor and history rejection",
+      "invocations": 2,
+      "fixture_finish": null,
+      "guard": "No producer invocation",
+      "proof": "Previously NOT_RUN; current c93 pending"
+    },
+    {
+      "scope": "Schema suite",
+      "invocations": 13,
+      "fixture_finish": null,
+      "guard": "No producer invocation",
+      "proof": "Previously NOT_RUN; current c93 pending"
+    }
+  ],
+  "candidate_count": 32,
+  "new_finish_label_branch_current_coverage": 0,
+  "baseline": {
+    "invocations": 12,
+    "source": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+    "producer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+    "run": 45240721804,
+    "attempt": 2,
+    "outcomes": {
+      "FAIL": 10,
+      "PASS": 2
+    },
+    "fixture_finish": "toolCalls -> stop(text only)",
+    "reuse_policy": "Existing reference stays exact e7-only; a07431 current lock/pin must reject admission."
+  },
+  "minimal_new_hanlin_controls": [
+    "Completed allowed original-engine tool with stop finish continues once with exact correlated output and final response.",
+    "Denied tool with stop finish has zero effect and continues with exact correlated denial.",
+    "Rejected native numeric tool with stop finish remains providerCalls1 with zero approval/effect."
+  ],
+  "not_new_execution": [
+    "All behavior equivalence statements are source reasoning.",
+    "No complete original stream trace was recorded for boundary counters.",
+    "Upstream6-case source/toolchain evidence is owned by release_hosts.",
+    "Current32 run and all public native gates remain unchanged."
+  ],
+  "producer_guard_sha256": {
+    "e7bf34111e603ca977becd007dd4e5bb109af857": "b9f6de97279affdfea026c1c1a4e4ba2561446d2f852b96bdb787b7648f4debf",
+    "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8": "f50df181f9fa6c4bf33ab52c76a8a2b5ac07b1965cea5421ad6eafad168c1a1d"
+  }
+}

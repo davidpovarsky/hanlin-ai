@@ -1,0 +1,19 @@
+2026-11-23 20:31:57.911 xcodebuild[4686:18727] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:c2f3d8c3c50a09cab4d39dbcad6bb4d4abca76e4, name:My Mac }
+{ platform:macOS, arch:x86_64, id:c2f3d8c3c50a09cab4d39dbcad6bb4d4abca76e4, name:My Mac }
+{ platform:macOS, arch:arm64, variant:Mac Catalyst, id:c2f3d8c3c50a09cab4d39dbcad6bb4d4abca76e4, name:My Mac }
+{ platform:macOS, arch:x86_64, variant:Mac Catalyst, id:c2f3d8c3c50a09cab4d39dbcad6bb4d4abca76e4, name:My Mac }
+{ platform:macOS, arch:arm64, variant:DriverKit, id:c2f3d8c3c50a09cab4d39dbcad6bb4d4abca76e4, name:My Mac }
+{ platform:macOS, arch:arm64, variant:Designed for [iPad,iPhone], id:c2f3d8c3c50a09cab4d39dbcad6bb4d4abca76e4, name:My Mac }
+{ platform:macOS, arch:arm64_32, variant:Designed for [iPad,iPhone], id:c2f3d8c3c50a09cab4d39dbcad6bb4d4abca76e4, name:My Mac }
+{ platform:macOS, arch:arm64e.x1, variant:Designed for [iPad,iPhone], id:c2f3d8c3c50a09cab4d39dbcad6bb4d4abca76e4, name:My Mac }
+2026-11-23 20:35:12.705 xcodebuild[4686:36660]  DVTAssertions: Warning in IDEFrameworks/IDEFoundation/Execution/LaunchSystem/IDELaunchSession.m:395
+Details:  setRunnablePIDWithDiagnostics:logSection:andCompletionHandler: called without a completion handler - blocking until diagnostics setup completes. Callers should migrate to using a completion handler for better performance.
+Object:   <IDELaunchSession: 0x7492c12400>
+Method:   -setRunnablePIDWithDiagnostics:logSection:andCompletionHandler:
+Thread:   <NSThread: 0x74922bafc0>{number = 162, name = (null)}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 20:35:15.856 xcodebuild[4686:18727] [MT] IDETestOperationsObserverDebug: 3.764 elapsed -- Testing started completed.
+2026-11-23 20:35:15.857 xcodebuild[4686:18727] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-23 20:35:15.857 xcodebuild[4686:18727] [MT] IDETestOperationsObserverDebug: 3.764 sec, +3.764 sec -- end
