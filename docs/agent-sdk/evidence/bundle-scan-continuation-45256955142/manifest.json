@@ -1,0 +1,48 @@
+{
+  "runId": 45256955142,
+  "source": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+  "status": "NOT_RUN",
+  "statusScope": "342 selected application invocations before terminal result",
+  "files": [
+    {
+      "path": "request.json",
+      "bytes": 2088,
+      "sha256": "a35d7db74a12ccfffc049c126aff9a554dd641f4bdb8f4561afa03236f70d7ef"
+    },
+    {
+      "path": "plan.json",
+      "bytes": 273913,
+      "sha256": "5d78d56ce5f9fcc9b20264d88785f30c1a35e85ab8633096c6e2d326e48130c3"
+    },
+    {
+      "path": "admission.json",
+      "bytes": 1272,
+      "sha256": "65c4315f54672a73c8cecbffc32d4c73c9f1562da8baa79dff0b10e6fbf67e15"
+    },
+    {
+      "path": "dispatch-intent.json",
+      "bytes": 2334,
+      "sha256": "42780a77308d60062fdcbde3419b7a0a462b06b20e3b47bc2248fd44a2506243"
+    },
+    {
+      "path": "dispatch-ack.json",
+      "bytes": 174,
+      "sha256": "c6c72ea9f0aa7f3d39831544e1d7a5081862f834c2ab12715f7bb59af32be2df"
+    },
+    {
+      "path": "run.json",
+      "bytes": 14628,
+      "sha256": "00f10d94f0b02099cc668a00a2df62eb12c1c316613f28347858c866345ca494"
+    },
+    {
+      "path": "inventory-source-rebind.json",
+      "bytes": 10910,
+      "sha256": "02ae53753cd7fd1a1f9f329fac7ba22747fd219e7e6f483931efbb169c9da4a0"
+    },
+    {
+      "path": "watch-start.json",
+      "bytes": 363,
+      "sha256": "c7c882d635d8f5d99023d35fb79aa6251f39ff7c056b9a464c38c5ecdacd48ae"
+    }
+  ]
+}

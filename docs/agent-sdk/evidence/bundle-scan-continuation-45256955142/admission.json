@@ -1,0 +1,46 @@
+{
+  "head": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+  "activeRuns": [],
+  "recentRuns": [
+    {
+      "conclusion": "failure",
+      "databaseId": 45246711373,
+      "headSha": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45238831508,
+      "headSha": "39a10b1cbf4645b629f556ea312e2576a4e566db",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45230545076,
+      "headSha": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45224582718,
+      "headSha": "8429dbb6cb66e266504b8d055586829ba7aa61f7",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45218713371,
+      "headSha": "7f6a960eb341e3a6642db390d4b5de0b2e3448fc",
+      "status": "completed"
+    }
+  ],
+  "selectedGroups": [
+    "app_unit_tests",
+    "runtimecore_host",
+    "simulator_targeted_ui"
+  ],
+  "previousRun": 45246711373,
+  "previousBuild": "PASS",
+  "previousSelectedInvocations": "NOT_RUN",
+  "sourceRepair": "3137a54b64b7a97bc2101edb9e0d11f3e77c2774",
+  "review": "Independent source review PASS; no replay of portable controls."
+}
