@@ -25,7 +25,9 @@
     ".agents/**",
     "Tools/ai-team/**",
     "Docs/SDK/HanlinMessageBubblePreservation.json",
-    "Docs/SDK/HanlinNavigationIntegration20261123.json"
+    "Docs/SDK/HanlinNavigationIntegration20261123.json",
+    "Docs/SDK/HanlinMCPPublicModelVerification20261123.json",
+    "Docs/SDK/HanlinSelectedProfileIdentity20261123.json"
   ],
   "components": {
     "ci_router": {
@@ -1715,7 +1717,8 @@
         "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
         "AI_HLYTests/HanlinConversationControllerTests.swift",
         "AI_HLYTests/HanlinConversationProjectionTests.swift",
-        "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift"
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+        "AI_HLYTests/HanlinMCPEmbeddingTests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
@@ -1723,7 +1726,8 @@
       "unit_suites": [
         "AI_HLYTests/HanlinApplicationEmbeddingTests",
         "AI_HLYTests/HanlinConversationProjectionTests",
-        "AI_HLYTests/HanlinApplicationSystemIntegrationTests"
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests",
+        "AI_HLYTests/HanlinMCPEmbeddingTests"
       ],
       "consumers": [
         "app_core"
