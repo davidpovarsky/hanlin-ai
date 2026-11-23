@@ -328,9 +328,24 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     ) {
         nonisolated(unsafe) let safeCompletion = completion
         if targetID == "hanlin.cross-app", let externalMiniAppOperation {
-            Task { @MainActor in
-                do { safeCompletion(try await externalMiniAppOperation(action, payloadJSON), nil) }
-                catch { safeCompletion(nil, error.localizedDescription) }
+            let requestID = UUID().uuidString.lowercased()
+            _ = lock.withLock {
+                guard !runtimeRequestsInvalidated else { return false }
+                runtimeRequests[requestID] = Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    defer { _ = self.lock.withLock { self.runtimeRequests.removeValue(forKey: requestID) } }
+                    do {
+                        let response = try await externalMiniAppOperation(action, payloadJSON)
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(response, nil)
+                    } catch {
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(nil, error.localizedDescription)
+                    }
+                }
+                return true
             }
             return
         }

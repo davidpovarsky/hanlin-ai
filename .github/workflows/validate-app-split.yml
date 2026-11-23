@@ -95,7 +95,7 @@ on:
       native_test_scope:
         description: Original standalone storage/UI or actual NativeScript and Expo companion controls
         type: choice
-        options: [baseline, production_runtimes, cross_app]
+        options: [baseline, production_runtimes]
         required: false
         default: baseline
       paired_test_scope:
@@ -116,30 +116,6 @@ permissions:
   contents: read
 
 jobs:
-  cross-app-apple-identity:
-    if: ${{ inputs.native_test_scope == 'cross_app' }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v7.0.1
-      - name: Prepare existing Apple API authentication
-        run: |
-          python3 -m venv "$RUNNER_TEMP/miniapps-identity"
-          "$RUNNER_TEMP/miniapps-identity/bin/pip" install --quiet "PyJWT[crypto]==2.10.1"
-      - name: Read existing consumer identities and App Groups capability
-        env:
-          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
-        run: '"$RUNNER_TEMP/miniapps-identity/bin/python" Scripts/ProductSplit/audit_cross_app_identity.py'
-      - name: Retain sanitized Apple identity evidence
-        if: always()
-        uses: actions/upload-artifact@v7.0.2
-        with:
-          name: miniapps-cross-app-identities-${{ github.run_id }}
-          path: build/app-split-evidence/cross-app-apple-identities.json
-          if-no-files-found: error
-          retention-days: 14
   register-original-product:
     if: ${{ inputs.prepare_miniapps_registration }}
     runs-on: ubuntu-latest
@@ -384,20 +360,6 @@ jobs:
         if: ${{ !inputs.paired_product_acceptance && !inputs.signed_release_archives }}
         shell: bash
         run: python3 Scripts/ProductSplit/run_native_acceptance.py
-      - name: Retain actual MiniApps simulator product for consumer acceptance
-        if: ${{ inputs.native_test_scope == 'cross_app' && always() }}
-        shell: bash
-        run: python3 Scripts/ProductSplit/export_cross_app_simulator.py
-      - name: Upload actual MiniApps producer for paired consumer tests
-        if: ${{ inputs.native_test_scope == 'cross_app' && always() }}
-        uses: actions/upload-artifact@v7.0.2
-        with:
-          name: miniapps-cross-app-simulator-${{ github.run_id }}
-          path: |
-            build/app-split-evidence/HanlinMiniApps-simulator.zip
-            build/app-split-evidence/producer-manifest.json
-          if-no-files-found: warn
-          retention-days: 14
       - name: Exercise actual request, return, cancellation and transfer across both products
         if: ${{ inputs.paired_product_acceptance && !inputs.signed_release_archives }}
         shell: bash

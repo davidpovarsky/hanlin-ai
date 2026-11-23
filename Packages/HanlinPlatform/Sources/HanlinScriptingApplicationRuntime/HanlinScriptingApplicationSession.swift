@@ -1615,8 +1615,16 @@ private extension HanlinScriptingApplicationSession {
 
       globalThis.MiniApps = Object.freeze({
         getContext: () => nativeCallAsync("miniapps.context").then(JSON.parse),
-        complete: result => nativeCallAsync("miniapps.complete", result).then(JSON.parse),
-        cancel: () => nativeCallAsync("miniapps.cancel").then(JSON.parse),
+        complete: async result => {
+          const receipt = JSON.parse(await nativeCallAsync("miniapps.complete", result));
+          void nativeCallAsync("miniapps.return").catch(() => {});
+          return receipt;
+        },
+        cancel: async () => {
+          const receipt = JSON.parse(await nativeCallAsync("miniapps.cancel"));
+          void nativeCallAsync("miniapps.return").catch(() => {});
+          return receipt;
+        },
         readAttachment: id => nativeCallAsync("miniapps.readAttachment", {id}).then(JSON.parse),
         writeAttachment: file => nativeCallAsync("miniapps.writeAttachment", file).then(JSON.parse)
       });

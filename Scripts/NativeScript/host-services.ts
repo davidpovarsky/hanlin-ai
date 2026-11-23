@@ -101,8 +101,16 @@ export function createHostServices() {
   }
   const miniapps: MiniAppSharing = {
     getContext: () => share('miniapps.context'),
-    complete: output => share('miniapps.complete', output),
-    cancel: () => share('miniapps.cancel'),
+    complete: async output => {
+      const receipt = await share<{ok: true}>('miniapps.complete', output);
+      void share('miniapps.return').catch(() => {});
+      return receipt;
+    },
+    cancel: async () => {
+      const receipt = await share<{ok: true}>('miniapps.cancel');
+      void share('miniapps.return').catch(() => {});
+      return receipt;
+    },
     readAttachment: id => share('miniapps.readAttachment', {id}),
     writeAttachment: file => share('miniapps.writeAttachment', file),
   };

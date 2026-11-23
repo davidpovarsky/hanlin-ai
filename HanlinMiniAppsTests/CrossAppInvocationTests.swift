@@ -95,6 +95,7 @@ final class CrossAppInvocationTests: XCTestCase {
         let session = HanlinExternalMiniAppSession(requestID: original.id, store: store, openSource: { _ in false })
         try session.restoreRequest()
         _ = try await session.perform("miniapps.complete", payload: #""retained""#)
+        _ = try await session.perform("miniapps.return", payload: "{}")
         XCTAssertEqual(try store.pendingResults(sourceAppID: original.source.appID).map(\.text), ["retained"])
         XCTAssertNotNil(session.error)
         XCTAssertFalse(session.returning)

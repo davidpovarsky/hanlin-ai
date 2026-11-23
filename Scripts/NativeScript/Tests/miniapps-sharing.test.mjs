@@ -21,11 +21,11 @@ test('cross-app facade keeps each captured native session and all payload bytes'
   await second.writeAttachment({base64: 'AP+A', name: 'מקור.bin'});
   await first.readAttachment('attachment-uuid');
   await second.cancel();
-  assert.deepEqual(seen.map(x => x.id), ['first','second','first','second','first','second']);
+  assert.deepEqual(seen.map(x => x.id), ['first','second','first','first','second','first','second','second']);
   assert.ok(seen.every(x => x.target === 'hanlin.cross-app' && x.capability === 'miniapps'));
   assert.deepEqual(seen[2].payload, output);
-  assert.equal(seen[3].payload.base64, 'AP+A');
-  assert.deepEqual(seen[4].payload, { id: 'attachment-uuid' });
+  assert.equal(seen[4].payload.base64, 'AP+A');
+  assert.deepEqual(seen[5].payload, { id: 'attachment-uuid' });
   delete globalThis.HanlinNativeServicesBridge;
 });
 

@@ -335,6 +335,13 @@ def main():
         state['duration_seconds'] = time.time()-state['started_at']
         (EVIDENCE/'native-acceptance-duration-seconds.txt').write_text(str(int(state['duration_seconds']))+'\n')
         (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
+        if TEST_SCOPE == 'cross_app' and state.get('build') == 'EXECUTED_PASS':
+            exported = subprocess.run([sys.executable, 'Scripts/ProductSplit/export_cross_app_simulator.py'],
+                                      cwd=ROOT, capture_output=True, text=True)
+            (EVIDENCE/'producer-export.log').write_text(exported.stdout + exported.stderr)
+            if exported.returncode:
+                state['producer_export'] = 'FAILED'
+                (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
         # No deletion/erase: preserve the dedicated device for failure diagnosis.
     return 0 if state['status'] == 'EXECUTED_PASS' else 1
 

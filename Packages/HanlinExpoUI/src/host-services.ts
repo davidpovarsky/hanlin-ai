@@ -74,8 +74,16 @@ async function invoke<T>(operation: string, payload: unknown): Promise<T> {
 export const hostServices = {
   miniapps: {
     getContext: () => invoke<MiniAppSharedContext>('miniapps.context', {}),
-    complete: (output: string | MiniAppOutput) => invoke<{ok: true}>('miniapps.complete', output),
-    cancel: () => invoke<{ok: true}>('miniapps.cancel', {}),
+    complete: async (output: string | MiniAppOutput) => {
+      const receipt = await invoke<{ok: true}>('miniapps.complete', output);
+      void invoke('miniapps.return', {}).catch(() => {});
+      return receipt;
+    },
+    cancel: async () => {
+      const receipt = await invoke<{ok: true}>('miniapps.cancel', {});
+      void invoke('miniapps.return', {}).catch(() => {});
+      return receipt;
+    },
     readAttachment: (id: string) => invoke<{base64: string}>('miniapps.readAttachment', {id}),
     writeAttachment: (file: {base64: string; name?: string; typeIdentifier?: string}) => invoke<MiniAppContent>('miniapps.writeAttachment', file),
   } satisfies MiniAppSharing,

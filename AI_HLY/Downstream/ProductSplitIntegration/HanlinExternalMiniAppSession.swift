@@ -129,10 +129,14 @@ final class HanlinExternalMiniAppSession {
             let item = try mailbox().writeAttachment(data, name: input["name"], typeIdentifier: input["typeIdentifier"])
             return String(decoding: try JSONEncoder().encode(item), as: UTF8.self)
         case "miniapps.complete":
-            try await completeJSON(Data(payload.utf8))
+            try await completeJSON(Data(payload.utf8), returnsToSource: false)
             return #"{"ok":true}"#
         case "miniapps.cancel":
-            try await finish(MiniAppResult(requestID: request.id, status: .cancelled))
+            try await finish(MiniAppResult(requestID: request.id, status: .cancelled), returnsToSource: false)
+            return #"{"ok":true}"#
+        case "miniapps.return":
+            await returnToSource()
+            releaseEngine()
             return #"{"ok":true}"#
         default:
             throw failure("Unknown MiniApps operation.")
@@ -152,6 +156,10 @@ final class HanlinExternalMiniAppSession {
         loadGeneration = UUID()
         loading = false
         request = nil
+        releaseEngine()
+    }
+
+    private func releaseEngine() {
         platform?.dismissActiveApplication()
         platform?.externalMiniAppOperation = nil
         view = nil
@@ -186,7 +194,7 @@ final class HanlinExternalMiniAppSession {
         try await completeJSON(value.jsonValue().canonicalJSONData())
     }
 
-    private func completeJSON(_ data: Data) async throws {
+    private func completeJSON(_ data: Data, returnsToSource: Bool = true) async throws {
         guard let request else { throw failure("The shared request is not ready.") }
         let value = try JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed])
         let receipt: MiniAppResult
@@ -207,10 +215,10 @@ final class HanlinExternalMiniAppSession {
                 items: [.init(kind: .json, text: String(decoding: data, as: UTF8.self),
                               typeIdentifier: "public.json")])
         }
-        try await finish(receipt)
+        try await finish(receipt, returnsToSource: returnsToSource)
     }
 
-    private func finish(_ receipt: MiniAppResult) async throws {
+    private func finish(_ receipt: MiniAppResult, returnsToSource: Bool = true) async throws {
         let mailbox = try mailbox()
         if let saved = try mailbox.result(id: requestID) {
             result = saved
@@ -218,7 +226,10 @@ final class HanlinExternalMiniAppSession {
             try mailbox.complete(receipt)
             result = receipt
         }
-        await returnToSource()
+        if returnsToSource {
+            await returnToSource()
+            releaseEngine()
+        }
     }
 
     static func inputValue(_ request: MiniAppInvocation) -> HanlinValue {
@@ -299,7 +310,7 @@ public struct HanlinExternalMiniAppView: View {
             .navigationTitle(session.request?.source.documentTitle ?? "MiniApps")
             .task { await session.load() }
             .alert(label("MiniApps", "מיני אפליקציות"), isPresented: Binding(
-                get: { session.error != nil && session.view != nil },
+                get: { session.error != nil },
                 set: { if !$0 { session.error = nil } }
             )) { Button(label("OK", "אישור")) { session.error = nil } }
               message: { Text(session.error ?? "") }
