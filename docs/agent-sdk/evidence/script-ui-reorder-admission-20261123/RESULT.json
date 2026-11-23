@@ -1,0 +1,74 @@
+{
+  "at": "2026-11-23T10:56:44.981452+00:00",
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/package",
+    "--scratch-path",
+    "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/compiled",
+    "-j",
+    "1",
+    "-Xswiftc",
+    "-strict-concurrency=complete",
+    "--filter",
+    "HanlinScriptUIReorderAdmissionTests",
+    "--xunit-output",
+    "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/tests.xml"
+  ],
+  "exit_code": 0,
+  "duration_seconds": 7.1859643161296844,
+  "status": "EXECUTED_PASS_PORTABLE_RECONCILER",
+  "expected_cases": [
+    "duplicateCurrentChildKeysAreRejected",
+    "duplicateReorderSequenceIsRejected",
+    "invalidNestedBatchKeepsPublishedRootAndAllowsRecovery",
+    "mismatchedRequestedKeySetsAreRejected",
+    "missingCurrentChildKeysAreRejected",
+    "validReorderPreservesNodesAndPropertyPatches"
+  ],
+  "cases": [
+    {
+      "name": "validReorderPreservesNodesAndPropertyPatches()",
+      "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+      "seconds": "0.005056549",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "invalidNestedBatchKeepsPublishedRootAndAllowsRecovery()",
+      "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+      "seconds": "0.00525507",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "mismatchedRequestedKeySetsAreRejected()",
+      "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+      "seconds": "0.005059749",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "duplicateCurrentChildKeysAreRejected()",
+      "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+      "seconds": "0.00506083",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "missingCurrentChildKeysAreRejected()",
+      "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+      "seconds": "0.005063949",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "duplicateReorderSequenceIsRejected()",
+      "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+      "seconds": "0.001278087",
+      "status": "EXECUTED_PASS"
+    }
+  ],
+  "warning_count": 0,
+  "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+  "compiled_scope": "Complete original HanlinPlatformContracts; complete original HanlinScriptUIContracts and minimally changed HanlinScriptUIReconciler; actual new six-case Swift Testing source",
+  "full_HanlinScriptUI_Apple_module": "NOT_RUN",
+  "SwiftUI_model_execution": "NOT_RUN",
+  "native_or_CI_runs": 0
+}

@@ -1,0 +1,15 @@
+diff --git a/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift b/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift
+index 8b5315e1..6202917d 100644
+--- a/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift
++++ b/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift
+@@ -96,6 +96,10 @@ public enum HanlinScriptUIReconciler {
+             }
+         case let .reorder(parent, keys):
+             return try updating(root, at: parent.indices) { current in
++                let currentKeys = current.children.compactMap(\.key)
++                guard currentKeys.count == current.children.count else { throw HanlinScriptUIError.keySetMismatch }
++                guard Set(currentKeys).count == currentKeys.count else { throw HanlinScriptUIError.duplicateKey(currentKeys.first ?? "") }
++                guard Set(keys).count == keys.count else { throw HanlinScriptUIError.duplicateKey(keys.first ?? "") }
+                 let keyed = Dictionary(uniqueKeysWithValues: current.children.compactMap { node in node.key.map { ($0, node) } })
+                 guard keyed.count == current.children.count, Set(keyed.keys) == Set(keys) else { throw HanlinScriptUIError.keySetMismatch }
+                 return .init(kind: current.kind, key: current.key, properties: current.properties, children: try keys.map {

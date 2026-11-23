@@ -1,0 +1,18 @@
+warning: 'package': Source files for target HanlinScriptUITests should be located under 'Tests/HanlinScriptUITests', 'Tests', or a custom sources path can be set with the 'path' property in Package.swift
+warning: 'package': Source files for target HanlinScriptUITests should be located under 'Tests/HanlinScriptUITests', 'Tests', or a custom sources path can be set with the 'path' property in Package.swift
+Building for debugging...
+[Constructing description]
+[Planning deferred tasks]
+[31 / 51] HanlinScriptUIReorderProof_HanlinPlatformContracts
+[35 / 55] HanlinPlatformContracts
+[36 / 55] HanlinPlatformContracts
+[37 / 55] HanlinPlatformContracts
+[46 / 57] HanlinScriptUI
+[48 / 60] HanlinScriptUI
+[49 / 60] HanlinScriptUI
+[50 / 60] HanlinScriptUI
+[59 / 64] Reproduce-product
+[60 / 64] Reproduce-product
+[63 / 65]
+[65 / 65] Reproduce-product
+Build complete! (33.10 secs)

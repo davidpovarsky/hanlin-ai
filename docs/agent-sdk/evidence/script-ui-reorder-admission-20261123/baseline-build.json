@@ -1,0 +1,19 @@
+{
+  "at": "2026-11-23T10:55:01.091905+00:00",
+  "command": [
+    "swift",
+    "build",
+    "--package-path",
+    "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/package",
+    "--scratch-path",
+    "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/compiled",
+    "-j",
+    "1",
+    "-Xswiftc",
+    "-strict-concurrency=complete",
+    "--product",
+    "Reproduce"
+  ],
+  "exit_code": 0,
+  "duration_seconds": 34.51790291629732
+}

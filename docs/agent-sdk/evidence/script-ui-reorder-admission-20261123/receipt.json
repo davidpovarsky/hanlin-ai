@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T10:58:14.021402+00:00",
+  "baseline_head": "3b7789230f5fae228436d24788f2a0d062748120",
+  "root_source_equivalence_head": "8538287fc7f17af6a5b2a0e7333ffed356b64a9a",
+  "bug": "Public reorder request with duplicate keys poisons a unique root; following reorder traps while building Dictionary(uniqueKeysWithValues:)",
+  "reproduction": {
+    "at": "2026-11-23T10:55:03.040634+00:00",
+    "command": [
+      "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/compiled/out/Products/Debug-linux-aarch64/Reproduce"
+    ],
+    "exit_code": -5,
+    "signal": "SIGTRAP",
+    "duration_seconds": 0.6287982258945704,
+    "core_dump_enabled": false,
+    "expected_original_trap": true,
+    "source": "actual unmodified original HanlinScriptUIReconciler.swift and complete original contract declarations"
+  },
+  "repair": "Four added admission lines reject missing or duplicate current keys and duplicate requested keys before the unchanged dictionary/reorder implementation, using existing errors and uniqueness conventions",
+  "scope": [
+    "HanlinScriptUIReconciler applying(.reorder) admission",
+    "Six new focused Swift Testing regressions in the existing HanlinScriptUITests target"
+  ],
+  "source_inputs": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift",
+      "bytes": 7439,
+      "sha256": "5fc4857c1fdc2fa5ec8e64e6773c6dbb92bac4cc3aa0b917d982de8868397b4b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReorderAdmissionTests.swift",
+      "bytes": 4527,
+      "sha256": "061022397e588ac8e10455b52349ce4edd83fdd82ec0056621857b6def8c897d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIContracts.swift",
+      "bytes": 6153,
+      "sha256": "0d1f1692bf0eefacbe6ec2a55aaed952effffc1e3ff9fdd3b2cbce01604143aa"
+    }
+  ],
+  "result": {
+    "at": "2026-11-23T10:56:44.981452+00:00",
+    "command": [
+      "swift",
+      "test",
+      "--package-path",
+      "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/package",
+      "--scratch-path",
+      "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/compiled",
+      "-j",
+      "1",
+      "-Xswiftc",
+      "-strict-concurrency=complete",
+      "--filter",
+      "HanlinScriptUIReorderAdmissionTests",
+      "--xunit-output",
+      "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/tests.xml"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 7.1859643161296844,
+    "status": "EXECUTED_PASS_PORTABLE_RECONCILER",
+    "expected_cases": [
+      "duplicateCurrentChildKeysAreRejected",
+      "duplicateReorderSequenceIsRejected",
+      "invalidNestedBatchKeepsPublishedRootAndAllowsRecovery",
+      "mismatchedRequestedKeySetsAreRejected",
+      "missingCurrentChildKeysAreRejected",
+      "validReorderPreservesNodesAndPropertyPatches"
+    ],
+    "cases": [
+      {
+        "name": "validReorderPreservesNodesAndPropertyPatches()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.005056549",
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "name": "invalidNestedBatchKeepsPublishedRootAndAllowsRecovery()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.00525507",
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "name": "mismatchedRequestedKeySetsAreRejected()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.005059749",
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "name": "duplicateCurrentChildKeysAreRejected()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.00506083",
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "name": "missingCurrentChildKeysAreRejected()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.005063949",
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "name": "duplicateReorderSequenceIsRejected()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.001278087",
+        "status": "EXECUTED_PASS"
+      }
+    ],
+    "warning_count": 0,
+    "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+    "compiled_scope": "Complete original HanlinPlatformContracts; complete original HanlinScriptUIContracts and minimally changed HanlinScriptUIReconciler; actual new six-case Swift Testing source",
+    "full_HanlinScriptUI_Apple_module": "NOT_RUN",
+    "SwiftUI_model_execution": "NOT_RUN",
+    "native_or_CI_runs": 0
+  },
+  "limitations": [
+    "Portable full PlatformContracts plus whole Foundation-only ScriptUI contracts/reconciler sources; the SwiftUI/Charts/WebKit sources were not compiled",
+    "Transactional publication proved at the actual value-reconciler call/assignment boundary, not by executing the Apple SwiftUI model",
+    "No UI reconstruction, no native/CI dispatch, no broad previous suite replay"
+  ],
+  "baseline_build_warning_count": 2,
+  "evidence_sha256": {
+    "RESULT.json": "bd722e77a5a12195b7bf70ec4b4ae4bdc9c5d3f3180646094e0f803416728f35",
+    "baseline-build.json": "d276859cd7b1ac6e9295ffa9511cf8ec675f8819ee48002e9beeff9bb94db779",
+    "baseline-build.log": "a55766e45d17330012697714441e96558a679095e95a9a17b3003b16585640f1",
+    "baseline-child-stderr.txt": "9d566ce31bb9a16ac1657dd515caf997b08c3538bb95cb921cca22d3f7b1386d",
+    "baseline-reproduction.json": "6bf04987f65e3fd6b4170436a3cb18d35f7e5aaec239371ec67d7c26a2f2ca44",
+    "fixed-inputs.json": "2ba4723e40d630c2680cf5a9ba8f5b3c8d83e5d9b4f8cc7d7835096e3dba0234",
+    "plan.json": "d0cad1d5f008fbc1a311842f5a31834c7c4f27f79ab4d3e8f81a9e9da82b3517",
+    "product.patch": "064e8ed1bba72b09e0ab765126145d717f1a79a83b90a937affcd87291b9353d",
+    "proof-Package.swift": "0e94efa9d08e8354319e8fa71286ae7d8069a537faa13fc929e5ae90851d0168",
+    "reproduce.swift": "19d98e7db99805d30068a6a44aef34cde5f7e7fb4556877bcfd3a8b0fb41da4b",
+    "swift-test.log": "286091066e86112378b4db8ad764bbb215b8fdc37f14a6658920f6d4b53d20f7",
+    "tests-swift-testing.xml": "472a6cda9ef9a5e39bed546ce663326ea4867819a85ae3f7ac18065a5f652846"
+  }
+}

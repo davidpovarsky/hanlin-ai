@@ -1,0 +1,33 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 182]
+[Planning deferred tasks]
+[11 / 33] HanlinScriptUI
+[13 / 34] HanlinScriptUI
+[14 / 34] HanlinScriptUI
+[19 / 34] HanlinScriptUITests-product
+[22 / 38] HanlinScriptUITests-product
+[25 / 38] HanlinScriptUITests-product
+[31 / 39] HanlinScriptUITests-product
+[34 / 42] HanlinScriptUITests-test-runner
+[36 / 42] HanlinScriptUITests-test-runner
+[43 / 43] AllIncludingTests
+Build complete! (6.24 secs)
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "ScriptUI reorder admission" started.
+◇ Test "An invalid nested reorder does not commit an earlier patch in its batch" started.
+◇ Test "A current child without a key cannot be reordered" started.
+◇ Test "Valid keyed reordering preserves full nodes and subsequent property patches" started.
+◇ Test "Missing and unknown requested child keys remain rejected" started.
+◇ Test "Duplicate current child keys are rejected before dictionary construction" started.
+◇ Test "The original duplicate-key poisoning sequence throws before changing the tree" started.
+✔ Test "A current child without a key cannot be reordered" passed after 0.005 seconds.
+✔ Test "Valid keyed reordering preserves full nodes and subsequent property patches" passed after 0.005 seconds.
+✔ Test "Missing and unknown requested child keys remain rejected" passed after 0.005 seconds.
+✔ Test "An invalid nested reorder does not commit an earlier patch in its batch" passed after 0.005 seconds.
+✔ Test "Duplicate current child keys are rejected before dictionary construction" passed after 0.005 seconds.
+✔ Test "The original duplicate-key poisoning sequence throws before changing the tree" passed after 0.001 seconds.
+✔ Suite "ScriptUI reorder admission" passed after 0.006 seconds.
+✔ Test run with 6 tests in 1 suite passed after 0.007 seconds.
