@@ -155,9 +155,18 @@ private struct NativeToolSessionBridgeChecks {
         #expect(await state.requests.count == 1)
         consumer.cancel()
         let outcome = await consumer.value
+        // Consumer termination and executor acknowledgement are separate signals.
+        // The original producer schedules its stop request asynchronously.
+        let acknowledgementDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while !(await state.cancelled), ContinuousClock.now < acknowledgementDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
         #expect(outcome.failure != nil)
         #expect(outcome.effects.isEmpty)
         #expect(outcome.approvals.isEmpty)
+        #expect(outcome.text.isEmpty)
+        #expect(outcome.toolCalls.isEmpty)
+        #expect(await state.requests.count == 1)
         #expect(await state.cancelled)
     }
 
@@ -269,6 +278,9 @@ private struct NativeToolSessionBridgeChecks {
                 default: break
                 }
             }
+            // Stream iteration may end normally when its consumer is cancelled.
+            // This observes that consumer Task's cancellation, not a provider error.
+            try Task.checkCancellation()
         } catch { outcome.failure = String(describing: error) }
         return outcome
     }

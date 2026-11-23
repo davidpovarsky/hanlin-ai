@@ -97,7 +97,7 @@ enum HanlinAppleToolSessionBridge {
         continuation.yield(.textStart(id: textID, providerMetadata: nil))
         do {
             // A framework-required empty trigger is removed by onPrompt before model invocation.
-            // historyTransform independently supplies only the validated canonical history.
+            // The profile keeps its DynamicInstructions in the framework model request.
             // Neither this transient native transcript nor the trigger is persisted in Hanlin.
             for try await snapshot in session.streamResponse(to: Prompt(""), options: generation) {
                 try Task.checkCancellation()
@@ -179,7 +179,6 @@ enum HanlinAppleToolSessionBridge {
                 nativeHistory.removeLast()
                 try await state.removedTrigger()
             }
-            .historyTransform { _ in canonical.entries }
             .onToolCall { call in
                 try Task.checkCancellation()
                 try await state.intercept(call, history: Array(nativeHistory), canonical: canonical, tools: tools)
