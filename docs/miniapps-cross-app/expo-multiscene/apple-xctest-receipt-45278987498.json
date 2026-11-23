@@ -1,0 +1,44 @@
+{
+  "status": "APPLE_XCTEST_TARGET_PASSED",
+  "source_commit": "3666d715ae360e79d0945202302911e1d1034b74",
+  "production_commit": "8cb1d5fd094ebf3c4943fa5129ae1cc4df056654",
+  "run_url": "https://github.com/davidpovarsky/apple-devtools/actions/runs/45278987498",
+  "job_id": 138058143193,
+  "destination": "platform=iOS Simulator,name=iPhone 17,OS=27.0",
+  "sdk": "iPhoneSimulator27.0",
+  "xcode_path": "/Applications/Xcode_27.app/Contents/Developer",
+  "command_operation": "test-focused",
+  "only_testing": "HanlinExpoMultiSceneTests",
+  "observed_result": "** TEST SUCCEEDED **",
+  "configured_case_count": 12,
+  "configured_cases": [
+    "testOpeningBPreservesAAndItsExistingGrantBehavior",
+    "testClosingBOnlyClearsBAndAPreservesItsUIKitHostNamespace",
+    "testUnboundRuntimeNeverInheritsTheMostRecentWindow",
+    "testUnknownAndRepeatedCloseCannotRevokeAnotherOwner",
+    "testLegacyCleanupRequiresAnUnambiguousOwner",
+    "testUIKitRootsResolveTheirOwnNestedViews",
+    "testReusedRuntimeAddressRequiresExplicitNewOwnerBinding",
+    "testRegistryDoesNotKeepClosedWorkletAlive",
+    "testExplicitGlobalInvalidationRemovesAllSessionsAndWorklets",
+    "testOnlyFirstOwnerRegistersAndOnlyLastOwnerUnregisters",
+    "testRepeatedStartAndShutdownAreIdempotent",
+    "testFailedUnstartedWindowCannotUnregisterALiveWindow"
+  ],
+  "source_sha256": {
+    "Packages/HanlinExpoNativeAPI/bridge-source/HanlinExpoNativeAPIGate.h": "5de9a8692962be0f0bd8d7f86b80d48f655af40c09b593b0ddc418a68f083274",
+    "Packages/HanlinExpoNativeAPI/bridge-source/HanlinExpoNativeAPIGate.mm": "80c57c694b80acc568c6fdfadad2a555e684bcbac2ba65f1caea3133f9f27329",
+    "Packages/HanlinExpoNativeAPI/bridge-source/HanlinExpoSessionRuntimeRegistry.h": "22b0fdf40fdb8fa705bed498f2800a50d4188e6c9f348019bad88d973ff9c166",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoModifierOwnership.swift": "c09d74d45f650b1bc4aa8348052e2594163cb6bc28b6d747a958d67db96446f2",
+    "Tests/ExpoMultiScene/HanlinExpoNativeAPISessionTests.mm": "3673ea5d326f651a7aab00330197e080ec35baf9b87d1cad62b4c44253338fba",
+    "Tests/ExpoMultiScene/HanlinExpoModifierOwnershipTests.swift": "06f68cfbb660e2c33d6c423a45e4f7bc34aec815a0e680b82b7e84a86a8b41eb",
+    "Tests/ExpoMultiScene/HanlinExpoMultiSceneTests.xcodeproj/project.pbxproj": "e152452fe1a796760368ab60ab40f36d4c698e7af04b3b30a50374940d9553f0",
+    "Tests/ExpoMultiScene/HanlinExpoMultiSceneTests.xcodeproj/xcshareddata/xcschemes/HanlinExpoMultiSceneTests.xcscheme": "c0993bdc5180b592cb4085c641a52d34bfc33ba3f35d16f12c39eb5a4f0440be"
+  },
+  "log_excerpt_sha256": "1c800c077c6570b7dd73db3a9676602733b4cbd9b3c95f4511a26e9834534fe7",
+  "limitations": [
+    "The toolkit filters test output and does not upload hidden log directory; no per-case xcresult artifact was downloaded.",
+    "Worklet values are unit-test doubles; this does not claim two full Expo/Hermes apps were launched.",
+    "Only the failed harness build-action setting was corrected; no completed baseline proof was repeated."
+  ]
+}

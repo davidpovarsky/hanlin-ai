@@ -1,0 +1,18 @@
+2026-11-23T22:22:47.5611510Z Image: xcode-27-arm64
+2026-11-23T22:22:56.4311620Z   ref: 3666d715ae360e79d0945202302911e1d1034b74
+2026-11-23T22:22:56.9764800Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 3666d715ae360e79d0945202302911e1d1034b74
+2026-11-23T22:23:00.4437280Z  * branch            3666d715ae360e79d0945202302911e1d1034b74 -> FETCH_HEAD
+2026-11-23T22:23:00.4503990Z [command]/opt/homebrew/bin/git rev-parse --verify --quiet 3666d715ae360e79d0945202302911e1d1034b74^{object}
+2026-11-23T22:23:00.4652510Z 3666d715ae360e79d0945202302911e1d1034b74
+2026-11-23T22:23:00.4869620Z [command]/opt/homebrew/bin/git checkout --progress --force 3666d715ae360e79d0945202302911e1d1034b74
+2026-11-23T22:23:03.1476910Z 3666d715ae360e79d0945202302911e1d1034b74
+2026-11-23T22:23:04.3963340Z   APPLE_PATH: Tests/ExpoMultiScene/HanlinExpoMultiSceneTests.xcodeproj
+2026-11-23T22:23:04.3963700Z   APPLE_SCHEME: HanlinExpoMultiSceneTests
+2026-11-23T22:23:04.3964020Z   APPLE_DESTINATION: platform=iOS Simulator,name=iPhone 17,OS=27.0
+2026-11-23T22:23:04.3964720Z   APPLE_ONLY_TESTING: HanlinExpoMultiSceneTests
+2026-11-23T22:23:17.7230850Z     SDKROOT = /Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk
+2026-11-23T22:23:17.7231860Z     SUPPORTED_PLATFORMS = iphonesimulator
+2026-11-23T22:23:17.7232560Z     SWIFTC_PASS_SDKROOT = YES
+2026-11-23T22:31:39.2937760Z 531:** TEST SUCCEEDED **
+2026-11-23T22:32:18.8926740Z   include-hidden-files: false
+2026-11-23T22:32:21.7365420Z No files were found with the provided path: source/.apple-devtools-logs
