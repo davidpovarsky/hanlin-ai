@@ -70,9 +70,10 @@ foreign container is rejected before either account's owner can be revoked.
 The fourth reopens a real original SwiftData store read-only and requires actual
 rename/pin/delete save failures and rollback.
 
-One added method is in the existing original owner suite:
+Two added methods are in the existing original owner suite:
 
 - `HanlinAppAgentSessionOwnerTests/deletingConversationDuringOriginalEnginePreparationCannotAdmitLateSession`
+- `HanlinAppAgentSessionOwnerTests/stoppingInlineToolReleasesOnlyItsLeaseBeforeNonCooperativeExecutorDrains`
 
 It pauses the original injected engine factory, deletes the original row, then
 resumes that factory. No late Session may install, and no original row/message
@@ -85,7 +86,7 @@ temporary-store assertions.
 All ten changed/new Swift source/test files passed Oracle Swift syntax parsing;
 `git diff --check` passed. These checks do not establish native SwiftData,
 SwiftUI, Keychain, runtime or visual acceptance. No CI was dispatched by this
-lane. The five new methods and affected original owner/projection/UI closure
+lane. The six new methods and affected original owner/projection/UI closure
 require the parent's integrated Apple gate; no prior receipt is relabeled as a
 test of these new changes.
 
@@ -93,3 +94,18 @@ The source changes add two original application files, so regenerate the
 aggregate application manifest before the combined native compile. They do not
 change standalone AgentCore, Host Contracts, ChatUI or Lorvex's selected package
 closure.
+
+## Review follow-up: ordinary Stop and detached temporary title edits
+
+The owner retains its current inline operation UUID and exact run lease. Ordinary
+Stop revokes/releases that lease synchronously before waiting for a tool that
+ignores cancellation. Its old defer remains token-guarded and cannot release a
+newly admitted lease. The native regression pauses the actual injected native
+executor, approves only its synthetic tool, stops the owner, admits the next
+lease while the old executor is still paused, then drains the old executor and
+asserts it cannot emit more activity or release the new lease. It cleans up only
+its uniquely named synthetic approval grant.
+
+The manual title-edit path now passes its original temporary-chat flag as well.
+The existing metadata regression verifies that renaming a detached temporary
+row keeps it ephemeral and inserts no persistent conversation/message.

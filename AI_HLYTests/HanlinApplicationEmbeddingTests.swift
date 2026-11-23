@@ -341,6 +341,12 @@ struct HanlinApplicationEmbeddingTests {
         #expect(throws: HanlinConversationMutationError.emptyTitle) {
             try HanlinConversationMutation.rename(original, title: "", announceChange: true, in: context)
         }
+        let temporary = ChatRecords(name: "Detached temporary title", type: "chat")
+        try HanlinConversationMutation.rename(temporary, title: "Renamed temporary title",
+            announceChange: false, in: context, temporary: true)
+        #expect(temporary.name == "Renamed temporary title" && temporary.modelContext == nil)
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).count == 2)
+        #expect(try context.fetch(FetchDescriptor<ChatMessages>()).count == 1)
     }
 
     @Test

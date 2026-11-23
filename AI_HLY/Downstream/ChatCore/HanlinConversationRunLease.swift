@@ -91,6 +91,16 @@ final class HanlinConversationRunLease {
         callback?()
     }
 
+    /// Revokes only this original turn, including ordinary Stop. A non-cooperative
+    /// producer may drain later, but it cannot keep the conversation occupied.
+    func revoke() {
+        guard !isRevoked else { return }
+        isRevoked = true
+        let callback = onRevocation
+        release()
+        callback?()
+    }
+
     func release() {
         onRevocation = nil
         guard Self.active[key]?.lease?.token == token else { return }

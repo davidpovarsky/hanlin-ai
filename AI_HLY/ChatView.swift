@@ -703,7 +703,8 @@ struct ChatView: View {
                                 if chatTitle != newChatTitle {
                                     do {
                                         let newMessage = try HanlinConversationMutation.rename(chatRecord,
-                                            title: newChatTitle, announceChange: true, in: context)
+                                            title: newChatTitle, announceChange: true, in: context,
+                                            temporary: TemporaryRecord)
                                         chatTitle = newChatTitle
                                         if let newMessage, !chatTemps.contains(where: { $0.id == newMessage.id }) {
                                             chatTemps.append(newMessage)

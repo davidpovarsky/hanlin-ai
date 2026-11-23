@@ -41,6 +41,7 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var inlineToolTasks: [UUID: Task<String, Error>] = [:]
     @ObservationIgnored private var inlineToolRowID: UUID?
     @ObservationIgnored private var activeInlineOperationID: UUID?
+    @ObservationIgnored private var activeInlineLease: (operationID: UUID, lease: HanlinConversationRunLease)?
     @ObservationIgnored private var restoreInlineCallbacks: (@MainActor () -> Void)?
     @ObservationIgnored var onApprovalEvent: ((UUID?, AgentToolApproval) -> Void)?
     @ObservationIgnored var onAgentEvent: ((HanlinAgentEvent) -> Void)?
@@ -104,6 +105,7 @@ final class HanlinAppAgentSessionOwner {
             let turnLease = try HanlinConversationRunLease.acquire(owner: self)
             defer { turnLease.release() }
             activeInlineOperationID = id
+            activeInlineLease = (id, turnLease)
             inlineToolRowID = rowID
             inlineToolIsRunning = true
             activeUIRunID = binding.reference.uiRunID; activeReference = binding.reference; completion = nil
@@ -146,12 +148,15 @@ final class HanlinAppAgentSessionOwner {
         return try await withTaskCancellationHandler { try await work.value } onCancel: { work.cancel() }
     }
 
-    private func finishInlineOperation(ifCurrent id: UUID) {
+    private func finishInlineOperation(ifCurrent id: UUID, revoke: Bool = false) {
         guard activeInlineOperationID == id else { return }
+        let lease = activeInlineLease?.operationID == id ? activeInlineLease?.lease : nil
+        activeInlineOperationID = nil
+        activeInlineLease = nil
+        if revoke { lease?.revoke() } else { lease?.release() }
         let restore = restoreInlineCallbacks
         restoreInlineCallbacks = nil
         restore?()
-        activeInlineOperationID = nil
         inlineToolRowID = nil; inlineToolIsRunning = false
         activeUIRunID = nil; activeReference = nil
         activeUserOperation = nil
@@ -542,7 +547,7 @@ final class HanlinAppAgentSessionOwner {
         inlineOrigins.removeAll()
         for task in inlineToolTasks.values { task.cancel() }
         inlineToolTasks.removeAll(); inlineToolTail = nil
-        if let id = activeInlineOperationID { finishInlineOperation(ifCurrent: id) }
+        if let id = activeInlineOperationID { finishInlineOperation(ifCurrent: id, revoke: true) }
         historyGeneration = nil
         contextGeneration = nil
         if let session { splitCoordinator.invalidate(session: session.identity) }
