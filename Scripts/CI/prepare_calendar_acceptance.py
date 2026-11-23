@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import plistlib
+import time
 
 from current_unit_xctestrun import HOST_ID, original_unit_target, product_path
 from owned_simulator_receipts import verify_owned_simulator
@@ -15,6 +16,10 @@ from stage_simulator_fixtures import INSTALL_TIMEOUT_SECONDS, run_bounded
 
 SUITE = "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
 METHOD = SUITE + "/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow"
+
+# The owned, booted simulator exceeded 20s while granting native calendar access.
+# Keep cold privacy-service setup bounded separately from product test deadlines.
+PRIVACY_TIMEOUT_SECONDS = 120.0
 
 
 def selected(selectors: str) -> bool:
@@ -40,12 +45,15 @@ def prepare(selectors, manifest, products, log, run_id, run_attempt,
     commands = []
     for command, timeout in [
         (["xcrun", "simctl", "install", simulator, str(host)], INSTALL_TIMEOUT_SECONDS),
-        (["xcrun", "simctl", "privacy", simulator, "grant", "calendar", HOST_ID], 20),
-        (["xcrun", "simctl", "privacy", simulator, "grant", "reminders", HOST_ID], 20),
+        (["xcrun", "simctl", "privacy", simulator, "grant", "calendar", HOST_ID], PRIVACY_TIMEOUT_SECONDS),
+        (["xcrun", "simctl", "privacy", simulator, "grant", "reminders", HOST_ID], PRIVACY_TIMEOUT_SECONDS),
     ]:
+        started = time.monotonic()
         result = runner(command, timeout_seconds=timeout)
         commands.append({"command": command, "exit_code": result.returncode,
-                         "stdout": result.stdout, "stderr": result.stderr})
+                         "stdout": result.stdout, "stderr": result.stderr,
+                         "timeout_seconds": timeout,
+                         "elapsed_seconds": time.monotonic() - started})
         if result.returncode:
             (log / "08-calendar-native-staging.json").write_text(json.dumps(
                 {"status": "FAIL", "owned_simulator": owned, "commands": commands}, indent=2) + "\n")
