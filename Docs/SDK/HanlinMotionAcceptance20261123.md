@@ -1,16 +1,20 @@
 # Motion acceptance and canonical SDK fixture — 2026-11-23
 
-## Current continuation — 23 November, 16:30 UTC
+## Current continuation — integrated row correction, 23 November
 
-C has since passed its original native assertions and full-screen landscape visual review in [45166004801](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45166004801), exact source `3a9e1681f03080412d0ee934a00b307f3d7ae59c`; its [original evidence](../../docs/agent-sdk/evidence/motion-native-45166004801/) is preserved. No Presentation/Motion input changed between that source and `5d0ea90d98b405d38b66bb735198b945225877ba`, so C is not selected again.
+The latest executed original B, [45223225171 attempt2](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45223225171/attempts/2) at `c1c9fde5299124953d7ced72748dc09b50b72f7f`, **FAILed** intermediate reversal after31.573s. All three burst callbacks arrived45.0/71.6ms apart but each measured zero pre-action height. Later B checks were **NOT_RUN**. [Original logs and reviewed native frames](../../docs/agent-sdk/evidence/motion-native-45223225171/attempt-2/README.md) preserve the result.
 
-A remains unaccepted; B still lacks its required intermediate reversal and later assertions. D run45181755996 failed at owned simulator boot/recovery before tests. One D-only continuation [45217195070](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45217195070) has acquired a runner on exact5d0ea90d; its result is pending. It retains all original six input variants × two scroll phases and never accepts B by itself.
+The proof's header and disclosure are now one stable VStack row, matching the existing production `HanlinActivityDisclosureStyle` and original D probe. This changes only proof containment; product animation, presets, telemetry, gestures and assertions are unchanged. The cause remains a lifecycle/layout hypothesis until native verification. [Exact source comparison](../../docs/agent-sdk/evidence/motion-proof-row-20261123/README.md) records the correction and limits.
 
-The existing native wrapper now supports `reversal-b`, selected by `MotionUITests/testBRapidReversalPresetSwitchAndPersistence`. This route runs and requires exactly the original B method. It prevents a future B repair from unnecessarily repeating C. All existing routes, result/video/source gates, simulator readiness bounds, gestures, timings and assertions are preserved. [Portable selector verification](../../docs/agent-sdk/evidence/motion-b-only-route-20261123/receipt.json) is source/harness evidence only; no new native B pass is claimed.
+One original **B+C** run, [45236783905](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45236783905), was dispatched at18:17UTC on frozen integrated source `0b74c6c1df60926c09a00560598af478bafb3e75`. Its [dispatch and source admission](../../docs/agent-sdk/evidence/motion-native-45236783905/README.md) record all364 selected production/resource files and all23 recorded graph inputs unchanged from executed c1; only the reviewed fixture row differs. **Actual attempt1 is BLOCKED / B+C NOT_RUN**: native bootstatus timed out181.406s, recovery shutdown timed out24.310s, and later read-only CoreSimulator diagnostics also timed out. No build or test executed; the row correction remains native-unverified. C is included because its original layout/interaction path uses that changed row.
 
-The sections below retain the earlier observations and their source-specific limitations.
+C's prior genuine native assertions and full-screen landscape visual review remain **PASS within their historical source scope**: [45166004801](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45166004801) at `3a9e1681f03080412d0ee934a00b307f3d7ae59c`. That result cannot alone accept the changed proof layout. A's original five-presets/twenty-cycles scope remains required afterward.
 
-## Current acceptance remains open
+D [45217195070](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45217195070) at `5d0ea90d98b405d38b66bb735198b945225877ba` captured all12 original observations. Its test passed, with status **DIAGNOSTIC_CAPTURED**; it never substitutes for B acceptance. The [native observations](../../docs/agent-sdk/evidence/motion-native-45217195070/README.md) include genuine intermediate geometry in the original production probe. D is not selected again. Full original chat, host and physical-device acceptance remain separate.
+
+The sections below retain earlier source-specific findings and their original boundaries.
+
+## Earlier canonical acceptance at 6772dce6
 
 The current canonical SDK run **45133334293 at6772dce6 executed B and C**: B failed its intermediate-reversal assertion; C passed its XCTest assertions. The original source/resource, resolved dependency and packaged-bundle accounting all completed before those cases. Native video shows visible warm animation, but the recorded rapid burst did not reverse at an intermediate height. No product timing or algorithm change is justified by the evidence. Clean landscape visual acceptance remains open because its original screenshot is clipped. A retains its historical wait failure. D has no new executed result: attempt1 stopped in simulator preflight; its single unchanged failed-job retry could not acquire a hosted runner and executed zero steps. See [the current native receipt and reviewed frames](../../docs/agent-sdk/evidence/motion-native-45133334293/README.md).
 
@@ -49,7 +53,7 @@ The profile selects ChatUI, Localization, PresentationKit and RichUI source root
 
 The preparation receipt hashes every selected canonical source/resource file and all generator/manifest/pin inputs, including HanlinChatAppearance.swift. It retains the generated selected Package.swift, installer receipt and product lock. After the Apple build, the existing runner records actual resolved dependency checkout revisions and file bytes, the actual Package.resolved, and the packaged SDK resource bundles before executing the original tests. Its simulator selection, gestures, recording logic, result gates and diagnostic-only distinction are retained.
 
-## Minimal next native work
+## Earlier next-step assessment after 45133334293
 
 The affected B/C scope has executed once on the corrected full source-bound fixture. B remains failed, and C’s automated pass is preserved for unchanged scope. The smallest remaining input comparison is the existing original **input-diagnostic** D case if scheduled; no new animation or timing implementation is proposed. A still requires its original **cycles** scope once the B result is resolved. Do not rerun C merely because B failed; its clean landscape capture is a separate unresolved visual obligation. A successful D remains DIAGNOSTIC_CAPTURED.
 
