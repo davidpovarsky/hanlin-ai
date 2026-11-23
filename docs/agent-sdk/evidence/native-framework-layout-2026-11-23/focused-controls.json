@@ -1,0 +1,26 @@
+{
+  "command": [
+    "sudo",
+    "-n",
+    "-u",
+    "ubuntu",
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_native_artifacts.NativeArtifactsTests.test_versioned_framework_metadata_binary_paths_and_link_chain_roundtrip",
+    "test_native_artifacts.NativeArtifactsTests.test_versioned_framework_rejects_foreign_binary_metadata_and_missing_platform",
+    "test_native_artifacts.NativeArtifactsTests.test_deferred_internal_links_still_reject_a_resolved_escape"
+  ],
+  "returncode": 0,
+  "wall_seconds": 0.17578077781945467,
+  "source_sha256": {
+    "Scripts/SDK/native_artifacts.py": "bd5a5b2eebcc39a05b1da54940ebdf997e83eb38643e50c8405ff14c2167f96b",
+    "Scripts/SDK/tests/test_native_artifacts.py": "f9bd3ac72f43f58ce5b0dbd83d43f8426153e0d593456fc93d77c05cfe21f2e8"
+  },
+  "log_sha256": "870595662b92071c7d25f8af008116a8d486153e5daf38f4e64269e9ebc62f22",
+  "old_controller_tests_rerun": 0,
+  "runtime_builds": 0,
+  "apple_tests": 0
+}

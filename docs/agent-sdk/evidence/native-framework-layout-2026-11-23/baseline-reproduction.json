@@ -1,0 +1,17 @@
+{
+  "source_files": 180,
+  "results": [
+    {
+      "target": "TNSWidgets",
+      "error": "FileNotFoundError",
+      "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/nativescript-core-9.1.0-layout/prepared/Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64_x86_64-maccatalyst/TNSWidgets.framework/Info.plist",
+      "baseline_script_sha256": "50b5a1637a0d9512e33553fc2d5e000f1787f9a165e338eb07945f8e68200ffa"
+    },
+    {
+      "target": "NSCWinterTC",
+      "error": "FileNotFoundError",
+      "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/nativescript-core-9.1.0-layout/prepared/Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64_x86_64-maccatalyst/NSCWinterTC.framework/Info.plist",
+      "baseline_script_sha256": "50b5a1637a0d9512e33553fc2d5e000f1787f9a165e338eb07945f8e68200ffa"
+    }
+  ]
+}

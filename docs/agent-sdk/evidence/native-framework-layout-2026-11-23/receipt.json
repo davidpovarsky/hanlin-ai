@@ -1,0 +1,22 @@
+{
+  "failed_run": "45119023783",
+  "failed_source": "d49a4fd4115b8335105d2991bf74ab4d7f6aad2d",
+  "failed_step": "Export original prepared Hanlin SDK native artifacts",
+  "failed_log_sha256": "bb7288de9b6c53574b180adc1eb0c89853d26a9a7b3161b6e299042f1d3056ad",
+  "before_exporter_sha256": "50b5a1637a0d9512e33553fc2d5e000f1787f9a165e338eb07945f8e68200ffa",
+  "after_exporter_sha256": "bd5a5b2eebcc39a05b1da54940ebdf997e83eb38643e50c8405ff14c2167f96b",
+  "original_package_lock_sha256": "17f34a1d12fdf55e4a8c44572639ee75df3b5ab4bdb65ffa54712e5f2d737984",
+  "cause": "Versioned Catalyst framework metadata is at Resources/Info.plist; executable is explicitly declared by XCFramework BinaryPath under Versions/A, without a root executable alias.",
+  "changed_scope": [
+    "Scripts/SDK/native_artifacts.py",
+    "Scripts/SDK/tests/test_native_artifacts.py"
+  ],
+  "real_frameworks": 2,
+  "original_slices_retained": 10,
+  "new_focused_control_methods": 3,
+  "new_focused_control_cases": 6,
+  "old_controls_rerun": 0,
+  "runtime_builds": 0,
+  "apple_compilation": "NOT_RUN",
+  "full14plus4": "NOT_RUN"
+}

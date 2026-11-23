@@ -17,6 +17,32 @@ native = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(native)
 
 
+def versioned_fixture(root):
+    # This small fixture checks packaging behavior only. The source-bound
+    # acceptance also exports both genuine, locked NativeScript frameworks.
+    source = root / "Versioned.xcframework"
+    source.mkdir()
+    libraries = []
+    for variant in ("device", "simulator", "maccatalyst"):
+        identifier = "ios-arm64" + ("-" + variant if variant != "device" else "")
+        framework = source / identifier / "Versioned.framework"
+        version = framework / "Versions/A" if variant == "maccatalyst" else framework
+        metadata = version / "Resources/Info.plist" if variant == "maccatalyst" else version / "Info.plist"
+        metadata.parent.mkdir(parents=True)
+        metadata.write_bytes(plistlib.dumps({"CFBundleExecutable": "Versioned"}))
+        (version / "Versioned").write_bytes(b"!<arch>\npackaging-only-test-fixture")
+        (version / "Versioned").chmod(0o755)
+        if variant == "maccatalyst":
+            (framework / "Versions/Current").symlink_to("A")
+            (framework / "Resources").symlink_to("Versions/Current/Resources")
+        binary = "Versioned.framework/" + ("Versions/Current/" if variant == "maccatalyst" else "") + "Versioned"
+        libraries.append({"LibraryIdentifier": identifier, "LibraryPath": "Versioned.framework",
+                          "BinaryPath": binary, "SupportedPlatform": "ios", "SupportedArchitectures": ["arm64"],
+                          **({"SupportedPlatformVariant": variant} if variant != "device" else {})})
+    (source / "Info.plist").write_bytes(plistlib.dumps({"AvailableLibraries": libraries}))
+    return source, libraries
+
+
 class NativeArtifactsTests(unittest.TestCase):
     def test_archive_roundtrip_preserves_bytes_permissions_and_internal_symlinks(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -38,6 +64,68 @@ class NativeArtifactsTests(unittest.TestCase):
             self.assertEqual((output / source.name / "current").read_bytes(), binary.read_bytes())
             self.assertTrue((output / source.name / "current").is_symlink())
             self.assertTrue((output / source.name / "binary").stat().st_mode & stat.S_IXUSR)
+
+    def test_versioned_framework_metadata_binary_paths_and_link_chain_roundtrip(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source, _ = versioned_fixture(root)
+            libraries = native.framework_libraries(source, "Versioned")
+            self.assertEqual(len(libraries), 3)
+            catalyst = next(item for item in libraries if item["variant"] == "maccatalyst")
+            self.assertEqual(catalyst["binary"], "ios-arm64-maccatalyst/Versioned.framework/Versions/A/Versioned")
+            archive = root / "Versioned.xcframework.zip"
+            native.archive_paths(archive, [(source, native.PurePosixPath(source.name))])
+            catalog = {"artifacts": [{"archive": archive.name, "checksum": native.digest(archive),
+                "bytes": archive.stat().st_size, "kind": "xcframework", "root": source.name,
+                "target": "Versioned", "libraries": libraries}], "supportArtifacts": []}
+            native.verify(catalog, root)
+            output = root / "installed"
+            output.mkdir()
+            native.extract_verified(archive, native.digest(archive), output, source.name)
+            self.assertEqual(native.framework_libraries(output / source.name, "Versioned"), libraries)
+            framework = output / source.name / "ios-arm64-maccatalyst/Versioned.framework"
+            self.assertTrue((framework / "Resources").is_symlink())
+            self.assertTrue((framework / "Versions/Current").is_symlink())
+            self.assertEqual((framework / "Resources/Info.plist").read_bytes(),
+                             (framework / "Versions/A/Resources/Info.plist").read_bytes())
+            self.assertTrue((framework / "Versions/A/Versioned").stat().st_mode & stat.S_IXUSR)
+
+    def test_versioned_framework_rejects_foreign_binary_metadata_and_missing_platform(self):
+        for mutation in ("foreign_binary", "executable_mismatch", "foreign_metadata", "missing_simulator"):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                source, libraries = versioned_fixture(root)
+                item = libraries[-1]
+                framework = source / item["LibraryIdentifier"] / item["LibraryPath"]
+                if mutation == "foreign_binary":
+                    item["BinaryPath"] = "Other.framework/Versioned"
+                elif mutation == "executable_mismatch":
+                    item["BinaryPath"] = "Versioned.framework/Versions/A/AnotherName"
+                elif mutation == "foreign_metadata":
+                    (framework / "Resources").unlink()
+                    (framework / "Resources").symlink_to(root)
+                    (root / "Info.plist").write_bytes(plistlib.dumps({"CFBundleExecutable": "Versioned"}))
+                else:
+                    libraries[:] = [value for value in libraries if value.get("SupportedPlatformVariant") != "simulator"]
+                (source / "Info.plist").write_bytes(plistlib.dumps({"AvailableLibraries": libraries}))
+                with self.assertRaises(ValueError):
+                    native.framework_libraries(source, "Versioned")
+
+    def test_deferred_internal_links_still_reject_a_resolved_escape(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            archive = root / "chain.zip"
+            with zipfile.ZipFile(archive, "w") as stream:
+                stream.writestr("Native.xcframework/deep/keep", b"fixture")
+                for name, target in (("alias", ".."), ("escape", "alias/../../outside")):
+                    info = zipfile.ZipInfo("Native.xcframework/deep/" + name)
+                    info.create_system = 3
+                    info.external_attr = (stat.S_IFLNK | 0o777) << 16
+                    stream.writestr(info, target)
+            output = root / "installed"
+            output.mkdir()
+            with self.assertRaisesRegex(ValueError, "escapes its root"):
+                native.extract_verified(archive, native.digest(archive), output, "Native.xcframework")
 
     def test_corrupt_checksum_stops_before_installing_any_file(self):
         with tempfile.TemporaryDirectory() as directory:

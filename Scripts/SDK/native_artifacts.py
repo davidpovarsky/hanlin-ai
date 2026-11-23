@@ -107,15 +107,28 @@ def framework_libraries(root: Path, target: str) -> list[dict]:
         if not library.exists():
             raise ValueError(f"Missing prepared library: {library}")
         if library.suffix == ".framework":
-            framework_info = plistlib.loads((library / "Info.plist").read_bytes())
+            metadata = library / "Info.plist"
+            if not metadata.exists() and not metadata.is_symlink():
+                metadata = library / "Resources" / "Info.plist"
+            inside(library, metadata)
+            framework_info = plistlib.loads(metadata.read_bytes())
             executable = framework_info.get("CFBundleExecutable", library.stem)
             relative(executable)
-            binary = library / executable
+            # Versioned Catalyst frameworks declare their actual executable in
+            # BinaryPath and need not contain a root-level executable alias.
+            binary = (root / identifier / relative(item["BinaryPath"])
+                      if "BinaryPath" in item else library / executable)
+            inside(library, binary)
+            if binary.name != executable:
+                raise ValueError(f"Declared framework binary differs from CFBundleExecutable: {binary}")
         else:
             binary = library
         inside(root, binary)
         if not binary.is_file():
             raise ValueError(f"Missing native binary: {binary}")
+        # ZIP symlinks retain their link bytes. Bind the catalog to the actual
+        # regular executable member so verification hashes native bytes.
+        binary = binary.resolve()
         with binary.open("rb") as stream:
             prefix = stream.read(8)
         if prefix[:4] not in MACHO and prefix != b"!<arch>\n":
@@ -129,7 +142,7 @@ def framework_libraries(root: Path, target: str) -> list[dict]:
         result.append({
             "identifier": identifier, "platform": item.get("SupportedPlatform"),
             "variant": variant, "architectures": archs,
-            "binary": str(binary.relative_to(root)), "binarySHA256": digest(binary),
+            "binary": str(binary.relative_to(root.resolve())), "binarySHA256": digest(binary),
         })
     if not {"device", "simulator"}.issubset(platforms):
         raise ValueError(f"{target} must retain real arm64 iOS device and Simulator slices")
@@ -276,6 +289,9 @@ def extract_verified(archive_path: Path, checksum: str, destination: Path, expec
         for output, target in links:
             output.parent.mkdir(parents=True, exist_ok=True)
             output.symlink_to(target)
+        # A framework's root aliases may precede Versions/Current in the ZIP.
+        # Validate the complete link graph only after every internal link exists.
+        for output, _ in links:
             inside(destination, output)
             if not output.exists():
                 raise ValueError(f"Broken installed symlink: {output}")
