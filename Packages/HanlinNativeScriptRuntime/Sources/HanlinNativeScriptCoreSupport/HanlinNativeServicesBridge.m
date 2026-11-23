@@ -333,6 +333,14 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
     [_sessionLock unlock];
 }
 
++ (void)clearLegacyProviderIfMatches:(id<HanlinNativeServicesProvider>)provider {
+    [_sessionLock lock];
+    if (_currentProvider == provider) {
+        _currentProvider = nil;
+    }
+    [_sessionLock unlock];
+}
+
 + (nullable id<HanlinNativeServicesProvider>)legacyProvider {
     [_sessionLock lock];
     id<HanlinNativeServicesProvider> p = _currentProvider;
