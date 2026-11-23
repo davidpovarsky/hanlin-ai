@@ -1,0 +1,139 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 5095,
+      "sha256": "dae2e0bdb4b6bf2fb9952bce9338bf36c2857430c73941b978769be63b33a2c5"
+    },
+    {
+      "path": "artifact-retrieval.json",
+      "bytes": 309,
+      "sha256": "cd88d5bf5735dedef42c9f442a292d5f878f6bf3a520fcb7c33af2cc28c01d4c"
+    },
+    {
+      "path": "build-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "c730812f002668e7c68d8c0a2f2c4d96f430b9364ec4928329ddd2f25e0f1534"
+    },
+    {
+      "path": "macro-input-admission.json",
+      "bytes": 900,
+      "sha256": "3906fc5069dbdbc3c380f009d07d4b7dc1974b2fa162dd637d9597eeb2f6c1f8"
+    },
+    {
+      "path": "macro-input-verification.json",
+      "bytes": 900,
+      "sha256": "3906fc5069dbdbc3c380f009d07d4b7dc1974b2fa162dd637d9597eeb2f6c1f8"
+    },
+    {
+      "path": "preflight.txt",
+      "bytes": 962,
+      "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+    },
+    {
+      "path": "process-status.txt",
+      "bytes": 27,
+      "sha256": "e9a5bdca7e32335bc64704071e56d1f4e5590ded4ab54d6209f08f118e43e0c9"
+    },
+    {
+      "path": "proof-inputs.json",
+      "bytes": 98944,
+      "sha256": "79ed8c821bd96245b127041585fd7017c6ce53c9d2187f3b4070e95e4323b25a"
+    },
+    {
+      "path": "raw-result-status.json",
+      "bytes": 232,
+      "sha256": "7a7e7e1e1dc98e123ce283d9d7cf9e347dbc40a292ff93d124f4751fe826c494"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 18179,
+      "sha256": "117c67315c4ce4263234caff7dccd113d2f24afca4d7b1913c37dee2d2e34379"
+    },
+    {
+      "path": "results-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "25d4f2a86deb5e2574bb3210b67bb24fcc4afb19f93a7b65a057daa874a9d18e"
+    },
+    {
+      "path": "sdk-input-verification.json",
+      "bytes": 171,
+      "sha256": "4150cd96c5c17b57e116ecfd06e15f6037564b45f6b70416f7435b400d9e7ab2"
+    },
+    {
+      "path": "sdk-resolved-inputs.json",
+      "bytes": 423576,
+      "sha256": "2fae3a3d93d01a98f8c703ad4a0ecb758adc34f8a6c2397b13dc88e7145a5329"
+    },
+    {
+      "path": "test-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "f16c302d5d30e1d3fbe955cf4f637f58a871adeba597922e3baad0aeeb13f656"
+    },
+    {
+      "path": "test.log",
+      "bytes": 37457,
+      "sha256": "02eec2666e8a4be8b40982a679b84d6860ffaa4d5cb174b81622ae35b32ce2da"
+    },
+    {
+      "path": "tests.json",
+      "bytes": 3538,
+      "sha256": "283b74cc43026017666cf68825edb2ee46a0b6ac4d7f2a93568f461d00859a1b"
+    },
+    {
+      "path": "video-status.json",
+      "bytes": 305,
+      "sha256": "77512aff2c56572432a8a81fb5be95a2f301a56bf6b30258c3b60c4be34a8836"
+    },
+    {
+      "path": "visual/028ef51d26d10d663300.png",
+      "bytes": 159053,
+      "sha256": "028ef51d26d10d663300097c49a88ff80a683eb3a896f6e27a115206369885d9"
+    },
+    {
+      "path": "visual/6aa76d91593c0923c377.png",
+      "bytes": 210831,
+      "sha256": "6aa76d91593c0923c377390319bceae2248fb979678454d632b6ed612d863698"
+    },
+    {
+      "path": "visual/burst-native-counter-16p1-filter.log",
+      "bytes": 19695,
+      "sha256": "63a72d59ca7677e745a2ed1bc28a054243a57f0ee28bc2553fefa2d73f0361e4"
+    },
+    {
+      "path": "visual/burst-native-counter-16p1.png",
+      "bytes": 262773,
+      "sha256": "6341751fce8043f933295680ca11910bb3f9281e8e12eb90c82479b5b621cd2c"
+    },
+    {
+      "path": "visual/burst-native-footer-filter.log",
+      "bytes": 19303,
+      "sha256": "2bfd7d738e46981b4afd126f916102e416c06b54090779d160538afb0e38f5ad"
+    },
+    {
+      "path": "visual/burst-native-footer-trace.json",
+      "bytes": 6549,
+      "sha256": "cbc45e006db5a7199de98cb72b01e20175664c1dc8e009a9c1f5c0cc4f46d5d6"
+    },
+    {
+      "path": "visual/extraction-receipt.json",
+      "bytes": 1469,
+      "sha256": "c4ad44ab34bdd7a27289c5447686ebbc5f8437a756df905902f6df5706799c8f"
+    },
+    {
+      "path": "visual/faa4ee413e06f3c844b6.png",
+      "bytes": 546936,
+      "sha256": "faa4ee413e06f3c844b6a5104846919210db2a5d230fa1d4ba69b4b50181b6b2"
+    },
+    {
+      "path": "visual/native-footer-pixel-trace.json",
+      "bytes": 30324,
+      "sha256": "5d94e4b9243cfe7ffa32628cd841767a8ce9a0ed39684fc138cab7cd4c4932c7"
+    },
+    {
+      "path": "visual/video-metadata.json",
+      "bytes": 219,
+      "sha256": "d9d3b34395f6bd8a8fcff6c4b0ad0e73949d11c61f89d66fb0a2edb59547c63b"
+    }
+  ]
+}

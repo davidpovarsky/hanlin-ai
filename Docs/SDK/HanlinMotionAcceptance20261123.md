@@ -2,15 +2,15 @@
 
 ## Current acceptance remains open
 
-The latest recorded failures do **not** establish a new unresolved animation implementation defect. They do establish incomplete acceptance: A and D failed observation/reset waits, and B did not demonstrate a reversal while the rendered height was intermediate. C passed on the historical source. A post-failure snapshot showing collapsed is insufficient to prove that collapse completed before the waiter deadline, so A/D are not silently converted to passes.
+The current canonical SDK run **45133334293 at6772dce6 executed B and C**: B failed its intermediate-reversal assertion; C passed its XCTest assertions. The original source/resource, resolved dependency and packaged-bundle accounting all completed before those cases. Native video shows visible warm animation, but the recorded rapid burst did not reverse at an intermediate height. No product timing or algorithm change is justified by the evidence. Clean landscape visual acceptance remains open because its original screenshot is clipped. A/D retain their historical wait failures and were not rerun. See [the current native receipt and reviewed frames](../../docs/agent-sdk/evidence/motion-native-45133334293/README.md).
 
 The [Motion Asana task](https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546846740594), comment `1220728546279038` at 2026-11-20 02:23 UTC, records an iPad A16 / iPadOS 27.2 run with product source **c456b7240d7b43f52de6b1090bfd82d41ec27eb7** and launcher **a8a9cbbfdbb711d301a04e7f2b93df0792349e27**.
 
 | Case and exact selector suffix | Latest recorded run | Observed outcome and interpretation |
 | --- | --- | --- |
 | A — `testAAllFivePresetsTwentyCompleteCyclesEach` | [44648588449](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44648588449) | Collapse waiter failed after 190 of 200 toggle actions; subsequent state read was collapsed. No stuck animation is established. From the unchanged test ordering, action190 corresponds to the fifteenth cycle of the final, **No animations** preset; this is an inference from the original case source. |
-| B — `testBRapidReversalPresetSwitchAndPersistence` | [44648241434](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44648241434) | All three actions were delivered. The first gap was5.2ms; intermediate geometry was not measured. This supersedes the older one-of-three delivery failure but does not satisfy rapid reversal. The remainder of B cannot be treated as passed. |
-| C — `testCReadableLongContentRTLTypeOrientationAndCompletion` | [44648241434](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44648241434) | Passed long content, RTL, large type, orientation and settling on the recorded historical source. |
+| B — `testBRapidReversalPresetSwitchAndPersistence` | [45133334293](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45133334293) @6772dce6 | **FAILED**,40.123s. Two warm-up plus three burst actions delivered; burst gaps56.9/59.2ms, cached pre-action heights0/0/0. Original native frames show the footer still collapsed with counters3 and4, and moving after counter5. Later B assertions are NOT_RUN. |
+| C — `testCReadableLongContentRTLTypeOrientationAndCompletion` | [45133334293](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45133334293) @6772dce6 | **EXECUTED_PASS**,33.586s, original XCTest long content/RTL/type/orientation/completion assertions. Portrait images reviewed. The landscape capture has a black/clipped region, so a clean landscape visual pass is not established. |
 | D — `testDRapidInputDiagnosticOnly` | [44648453626](https://github.com/davidpovarsky/hanlin-ai/actions/runs/44648453626) | Reset waiter failed; subsequent static and animated states both read collapsed. D only records native input diagnostics and never accepts A/B/C. |
 
 The full selectors have prefix `ChatMotionProofUITests/MotionUITests/`. The source observations and exact task comments are retained in the [receipt](../../docs/agent-sdk/evidence/motion-acceptance-and-fixture-20261123.json). This audit reused existing reports and task comments and did not re-download large native artifacts.
@@ -23,7 +23,7 @@ An older C pass in44358121911@a9085987 (39.352s) and A’s historical100 cycles 
 
 ## Changes already present before this repair
 
-Current fixture bodies and tests include **836a8a4a**. It keeps per-frame measurements away from the accessibility observation tree, bounds AX historical arrays while keeping the full on-disk timeline, and prewarms B using real native expand/collapse actions. B still requires an exact3-action burst, two gaps below0.5s, at least one action at intermediate rendered geometry, correct settling, nested expansion retention, native drag cancellation, persistence and Reduce Motion. No thresholds or gestures are weakened here. No verified native result for that later fixture was found in the task or checked-in receipts.
+Current fixture bodies and tests include **836a8a4a**. It keeps per-frame measurements away from the accessibility observation tree, bounds AX historical arrays while keeping the full on-disk timeline, and prewarms B using real native expand/collapse actions. B still requires an exact3-action burst, two gaps below0.5s, at least one action at intermediate rendered geometry, correct settling, nested expansion retention, native drag cancellation, persistence and Reduce Motion. No thresholds or gestures are weakened here. No verified native result for that later fixture existed at the initial audit. The current6772dce6 run now records actual B failure and C automated pass with those original assertions unchanged.
 
 Historical C cannot stand in for the current production closure: c94e6fcf added disclosure disappearance revision invalidation;72bf6f2b restored original V17 letter shimmer and its1.95s relaxed period;20e6bd51 changed finite/full-natural-height geometry. The new scoped appearance/preset APIs8250e4ce preserve original defaults, but their SDK integration is also not proved by an older copied-source fixture.
 
@@ -41,11 +41,11 @@ The preparation receipt hashes every selected canonical source/resource file and
 
 ## Minimal next native work
 
-Use the existing root-owned native scheduling mechanism after the source/profile mapping is correct. Run scope **affected** first: unchanged B and C on the actual selected SDK. This checks the unaccepted native prewarm and the changed geometry/localization closure. Then run original scope **cycles** once for all five presets times twenty complete cycles; no current pass closes the latest A failure. Run **input-diagnostic** only if input delivery or reset observation still needs D’s comparison. A successful D remains DIAGNOSTIC_CAPTURED.
+The affected B/C scope has executed once on the corrected full source-bound fixture. B remains failed, and C’s automated pass is preserved for unchanged scope. The smallest remaining input comparison is the existing original **input-diagnostic** D case if scheduled; no new animation or timing implementation is proposed. A still requires its original **cycles** scope once the B result is resolved. Do not rerun C merely because B failed; its clean landscape capture is a separate unresolved visual obligation. A successful D remains DIAGNOSTIC_CAPTURED.
 
 If a wait fails, retain the measured timeline, exact AX receipt and phase timestamps before diagnosing a product defect. Do not increase thresholds, remove the intermediate-geometry requirement, or modify the production animation to satisfy an observer that did not exercise the intended transition.
 
-The component fixture remains distinct from original full-chat, streaming Markdown, paused-user scroll, compact multitasking and physical-device acceptance. Root’s original host/UI gates own those scopes. This lane dispatched no CI and made no animation algorithm or timing changes.
+The component fixture remains distinct from original full-chat, streaming Markdown, paused-user scroll, compact multitasking and physical-device acceptance. Root’s original host/UI gates own those scopes. The initial source audit dispatched no CI. The later bounded native attempts below and the current45133334293 B/C run used the existing workflow; no animation algorithm or timing changes were made.
 
 ## Actual canonical native attempt: 45122303559
 

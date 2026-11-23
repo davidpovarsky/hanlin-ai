@@ -1,0 +1,385 @@
+Command line invocation:
+    /Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project ChatMotionProof.xcodeproj -scheme ChatMotionProof -destination "platform=iOS Simulator,id=28C09969-2D46-42DF-839B-65460F4CC288" -destination-timeout 60 -derivedDataPath /Users/runner/work/_temp/hanlin-motion-ui.dIazWi9a/DerivedData -resultBundlePath /Users/runner/work/_temp/hanlin-motion-ui.dIazWi9a/Motion.xcresult -disableAutomaticPackageResolution -skipMacroValidation -parallel-testing-enabled NO -test-timeouts-enabled YES -default-test-execution-time-allowance 600 -maximum-test-execution-time-allowance 720 CODE_SIGNING_ALLOWED=NO "-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence" "-only-testing:ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  cmark-gfm: https://github.com/swiftlang/swift-cmark.git @ 0.9.0
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  HanlinSDK: /Users/runner/work/_temp/hanlin-motion-ui.dIazWi9a/proof/Vendor/HanlinSDK
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+
+Writing result bundle at path:
+	/Users/runner/work/_temp/hanlin-motion-ui.dIazWi9a/Motion.xcresult
+
+2026-11-23 08:40:55.498012+0000 ChatMotionProofUITests-Runner[26797:80010] [Default] Running tests...
+2026-11-23 08:40:56.017713+0000 ChatMotionProofUITests-Runner[26797:80010] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-23 08:41:23.275.
+Test Suite 'ChatMotionProofUITests.xctest' started at 2026-11-23 08:41:23.280.
+Test Suite 'MotionUITests' started at 2026-11-23 08:41:23.281.
+Test Case '-[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence]' started.
+    t =     0.01s Start Test at 2026-11-23 08:41:23.292
+objc[26797]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.E7gKXb/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x105d58310) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.E7gKXb/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x105d8c398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+2026-11-23 08:41:27.713 xcodebuild[25003:75377] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 08:41:27.720 xcodebuild[25003:75377] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.72s Set Up
+    t =     1.73s     Open ai.hanlin.motion-proof
+    t =     1.73s         Launch ai.hanlin.motion-proof
+    t =    10.67s             Setting up automation session
+    t =    21.44s             Wait for ai.hanlin.motion-proof to idle
+    t =    25.87s     Waiting 10.0s for "proof-thinking" Button to exist
+    t =    26.94s         Checking `Expect predicate `existsNoRetry == 1` for object "proof-thinking" Button`
+    t =    26.94s             Checking existence of `"proof-thinking" Button`
+<unknown>:0: warning: -[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    28.82s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    28.82s     Find the "proof-geometry-state" StaticText
+    t =    29.24s Find the "proof-thinking" Button
+    t =    29.66s Tap "proof-thinking" Button
+    t =    29.66s     Wait for ai.hanlin.motion-proof to idle
+    t =    29.66s     Find the "proof-thinking" Button
+    t =    29.85s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    30.78s         Wait for com.apple.springboard to idle
+    t =    31.17s     Synthesize event
+    t =    31.73s     Wait for ai.hanlin.motion-proof to idle
+    t =    33.09s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    33.09s     Find the "proof-geometry-state" StaticText
+    t =    33.37s Checking existence of `"proof-summary" StaticText`
+    t =    33.44s Tap "proof-thinking" Button
+    t =    33.44s     Wait for ai.hanlin.motion-proof to idle
+    t =    33.44s     Find the "proof-thinking" Button
+    t =    33.57s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    33.67s         Wait for com.apple.springboard to idle
+    t =    33.73s     Synthesize event
+    t =    34.10s     Wait for ai.hanlin.motion-proof to idle
+    t =    35.19s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    35.19s     Find the "proof-geometry-state" StaticText
+    t =    35.30s Checking existence of `"proof-summary" StaticText`
+    t =    35.37s Find the "proof-action-receipt" StaticText
+    t =    35.48s Find the "proof-geometry-state" StaticText
+    t =    35.55s Added attachment named 'original-toggle-prewarm-baseline-receipt'
+    t =    35.56s Find the "proof-geometry-state" StaticText
+    t =    35.63s Tap "proof-thinking" Button with 3 taps and 1 touch
+    t =    35.64s     Wait for ai.hanlin.motion-proof to idle
+    t =    35.64s     Find the "proof-thinking" Button
+    t =    35.75s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    35.85s         Wait for com.apple.springboard to idle
+    t =    35.91s     Synthesize event
+    t =    36.39s     Wait for ai.hanlin.motion-proof to idle
+    t =    36.88s Find the "proof-action-receipt" StaticText
+    t =    37.20s Find the "proof-geometry-state" StaticText
+    t =    37.29s Added attachment named 'original-toggle-rapid-action-receipt'
+/Users/runner/work/_temp/hanlin-motion-ui.dIazWi9a/proof/UITests/MotionUITests.swift:160: error: -[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence] : XCTAssertTrue failed - Rapid reversal must observe at least one later burst action at intermediate geometry: Optional("actions=5;expanded=true;natural=100.0;visible=106.0;gaps=2.2300,2.1837,0.0569,0.0592;intermediate=false,false,false,false;scrollY=0.0;orientation=portrait;actionVisible=0.0,106.0,0.0,0.0,0.0")
+    t =    38.23s Tear Down
+    t =    38.23s     Setting device orientation to Portrait
+    t =    38.28s         Device orientation changed to Portrait
+    t =    38.33s         Wait for ai.hanlin.motion-proof to idle
+    t =    38.34s         Wait for com.apple.springboard to idle
+    t =    38.35s     Terminate ai.hanlin.motion-proof:27723
+Test Case '-[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence]' failed (40.123 seconds).
+2026-11-23 08:42:03.416693+0000 ChatMotionProofUITests-Runner[26797:80010] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-11-23 08:42:03.421237+0000 ChatMotionProofUITests-Runner[26797:81612] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-11-23 08:42:06.581500+0000 ChatMotionProofUITests-Runner[28224:84035] [Default] Running tests...
+2026-11-23 08:42:06.763292+0000 ChatMotionProofUITests-Runner[28224:84035] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-11-23 08:42:19.977.
+Test Suite 'ChatMotionProofUITests.xctest' started at 2026-11-23 08:42:19.978.
+Test Suite 'MotionUITests' started at 2026-11-23 08:42:19.978.
+Test Case '-[ChatMotionProofUITests.MotionUITests testCReadableLongContentRTLTypeOrientationAndCompletion]' started.
+    t =     0.05s Start Test at 2026-11-23 08:42:20.030
+    t =     0.12s Set Up
+    t =     0.13s     Open ai.hanlin.motion-proof
+    t =     0.13s         Launch ai.hanlin.motion-proof
+2026-11-23 08:42:20.143 xcodebuild[25003:75377] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 08:42:20.143 xcodebuild[25003:75377] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     2.16s             Setting up automation session
+objc[28224]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.E7gKXb/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x103308310) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.E7gKXb/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10335c398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =    10.43s             Wait for ai.hanlin.motion-proof to idle
+    t =    14.30s     Waiting 10.0s for "proof-thinking" Button to exist
+    t =    15.36s         Checking `Expect predicate `existsNoRetry == 1` for object "proof-thinking" Button`
+    t =    15.36s             Checking existence of `"proof-thinking" Button`
+<unknown>:0: warning: -[ChatMotionProofUITests.MotionUITests testCReadableLongContentRTLTypeOrientationAndCompletion] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    15.82s Tap "proof-long" Button
+    t =    15.82s     Wait for ai.hanlin.motion-proof to idle
+    t =    15.90s     Find the "proof-long" Button
+    t =    16.05s     Check for interrupting elements affecting "proof-long" Button
+    t =    16.17s         Wait for com.apple.springboard to idle
+    t =    16.25s     Synthesize event
+    t =    16.85s     Wait for ai.hanlin.motion-proof to idle
+    t =    16.86s Tap "proof-rtl" Button
+    t =    16.86s     Wait for ai.hanlin.motion-proof to idle
+    t =    16.87s     Find the "proof-rtl" Button
+    t =    17.04s     Check for interrupting elements affecting "proof-rtl" Button
+    t =    17.15s         Wait for com.apple.springboard to idle
+    t =    17.18s     Synthesize event
+    t =    17.49s     Wait for ai.hanlin.motion-proof to idle
+    t =    17.50s Tap "proof-type" Button
+    t =    17.50s     Wait for ai.hanlin.motion-proof to idle
+    t =    17.52s     Find the "proof-type" Button
+    t =    17.67s     Check for interrupting elements affecting "proof-type" Button
+    t =    17.90s         Wait for com.apple.springboard to idle
+    t =    17.96s     Synthesize event
+    t =    18.42s     Wait for ai.hanlin.motion-proof to idle
+    t =    18.43s Tap "proof-thinking" Button
+    t =    18.43s     Wait for ai.hanlin.motion-proof to idle
+    t =    18.44s     Find the "proof-thinking" Button
+    t =    18.87s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    19.08s         Wait for com.apple.springboard to idle
+    t =    19.12s     Synthesize event
+    t =    19.54s     Wait for ai.hanlin.motion-proof to idle
+    t =    20.68s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    20.68s     Find the "proof-geometry-state" StaticText
+    t =    20.79s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    21.39s Added attachment named 'long-rtl-accessibility-type-portrait'
+    t =    21.40s Setting device orientation to Landscape Left
+    t =    21.40s     Device orientation changed to Landscape Left
+    t =    21.62s     Interface orientation changed to Landscape Right
+    t =    21.94s     Wait for ai.hanlin.motion-proof to idle
+    t =    22.52s     Wait for com.apple.springboard to idle
+    t =    23.71s Checking `Expect predicate `value CONTAINS "orientation=landscape"` for object "proof-geometry-state" StaticText`
+    t =    23.71s     Find the "proof-geometry-state" StaticText
+    t =    24.86s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    24.86s     Find the "proof-geometry-state" StaticText
+    t =    25.23s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    25.67s Added attachment named 'long-rtl-accessibility-type-landscape'
+    t =    25.67s Tap "proof-finish" Button
+    t =    25.67s     Wait for ai.hanlin.motion-proof to idle
+    t =    25.68s     Find the "proof-finish" Button
+    t =    25.88s     Check for interrupting elements affecting "proof-finish" Button
+    t =    25.99s         Wait for com.apple.springboard to idle
+    t =    26.03s     Synthesize event
+    t =    26.45s     Wait for ai.hanlin.motion-proof to idle
+    t =    26.45s Find the "proof-effective-motion" StaticText
+    t =    26.52s Setting device orientation to Portrait
+    t =    26.52s     Device orientation changed to Portrait
+    t =    26.83s     Interface orientation changed to Portrait
+    t =    27.07s     Wait for ai.hanlin.motion-proof to idle
+    t =    27.45s     Wait for com.apple.springboard to idle
+    t =    28.55s Checking `Expect predicate `value CONTAINS "orientation=portrait"` for object "proof-geometry-state" StaticText`
+    t =    28.55s     Find the "proof-geometry-state" StaticText
+    t =    29.66s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    29.66s     Find the "proof-geometry-state" StaticText
+    t =    29.75s Find the "proof-thinking" Button
+    t =    29.87s Tap "proof-thinking" Button
+    t =    29.87s     Wait for ai.hanlin.motion-proof to idle
+    t =    29.87s     Find the "proof-thinking" Button
+    t =    29.94s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    30.03s         Wait for com.apple.springboard to idle
+    t =    30.09s     Synthesize event
+    t =    30.43s     Wait for ai.hanlin.motion-proof to idle
+    t =    31.48s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    31.48s     Find the "proof-geometry-state" StaticText
+    t =    31.55s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    31.97s Added attachment named 'completed-closed-portrait'
+    t =    31.97s Tear Down
+    t =    31.97s     Setting device orientation to Portrait
+    t =    31.98s         Wait for ai.hanlin.motion-proof to idle
+    t =    31.98s         Wait for com.apple.springboard to idle
+    t =    31.99s     Terminate ai.hanlin.motion-proof:28693
+Test Case '-[ChatMotionProofUITests.MotionUITests testCReadableLongContentRTLTypeOrientationAndCompletion]' passed (33.586 seconds).
+Test Suite 'MotionUITests' passed at 2026-11-23 08:42:53.615.
+	 Executed 1 test, with 0 failures (0 unexpected) in 33.586 (33.637) seconds
+Test Suite 'ChatMotionProofUITests.xctest' passed at 2026-11-23 08:42:53.621.
+	 Executed 1 test, with 0 failures (0 unexpected) in 33.586 (33.643) seconds
+Test Suite 'Selected tests' passed at 2026-11-23 08:42:53.622.
+	 Executed 1 test, with 0 failures (0 unexpected) in 33.586 (33.645) seconds
+2026-11-23 08:43:19.880 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (44mm) (9DC4C83D-BC52-420A-AAA0-35DBBCE62ECA) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm: SimDeviceType : Apple Watch SE 3 (44mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.881 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Ultra 4 (49mm) (BCB3C139-0F79-47D8-BCF2-5D39AA0D1C00) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm: SimDeviceType : Apple Watch Ultra 4 (49mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcf000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.881 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (42mm) (0F2F315B-5869-49D4-A5C9-42A5585869D7) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm: SimDeviceType : Apple Watch Series 12 (42mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcee00>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.881 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (40mm) (59D98431-6DC6-4BA6-90DE-5EA5F59715D1) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm: SimDeviceType : Apple Watch SE 3 (40mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980200>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.881 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (46mm) (CD8A490F-5B2C-485E-8F11-CD8596FA4AAE) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm: SimDeviceType : Apple Watch Series 12 (46mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fce000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.907 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (40mm) (59D98431-6DC6-4BA6-90DE-5EA5F59715D1) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm: SimDeviceType : Apple Watch SE 3 (40mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980200>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.907 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (40mm) (59D98431-6DC6-4BA6-90DE-5EA5F59715D1) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm: SimDeviceType : Apple Watch SE 3 (40mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980200>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.908 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (44mm) (9DC4C83D-BC52-420A-AAA0-35DBBCE62ECA) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm: SimDeviceType : Apple Watch SE 3 (44mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.908 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (44mm) (9DC4C83D-BC52-420A-AAA0-35DBBCE62ECA) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm: SimDeviceType : Apple Watch SE 3 (44mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.909 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (42mm) (0F2F315B-5869-49D4-A5C9-42A5585869D7) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm: SimDeviceType : Apple Watch Series 12 (42mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcee00>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.909 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (42mm) (0F2F315B-5869-49D4-A5C9-42A5585869D7) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm: SimDeviceType : Apple Watch Series 12 (42mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcee00>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.910 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (46mm) (CD8A490F-5B2C-485E-8F11-CD8596FA4AAE) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm: SimDeviceType : Apple Watch Series 12 (46mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fce000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.911 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (46mm) (CD8A490F-5B2C-485E-8F11-CD8596FA4AAE) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm: SimDeviceType : Apple Watch Series 12 (46mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fce000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.911 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Ultra 4 (49mm) (BCB3C139-0F79-47D8-BCF2-5D39AA0D1C00) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm: SimDeviceType : Apple Watch Ultra 4 (49mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcf000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:19.911 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Ultra 4 (49mm) (BCB3C139-0F79-47D8-BCF2-5D39AA0D1C00) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm: SimDeviceType : Apple Watch Ultra 4 (49mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcf000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.009 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (40mm) (59D98431-6DC6-4BA6-90DE-5EA5F59715D1) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm: SimDeviceType : Apple Watch SE 3 (40mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980200>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.009 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (40mm) (59D98431-6DC6-4BA6-90DE-5EA5F59715D1) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm: SimDeviceType : Apple Watch SE 3 (40mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-40mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980200>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.009 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (44mm) (9DC4C83D-BC52-420A-AAA0-35DBBCE62ECA) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm: SimDeviceType : Apple Watch SE 3 (44mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.010 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch SE 3 (44mm) (9DC4C83D-BC52-420A-AAA0-35DBBCE62ECA) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm: SimDeviceType : Apple Watch SE 3 (44mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-SE-3-44mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47980000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.010 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (42mm) (0F2F315B-5869-49D4-A5C9-42A5585869D7) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm: SimDeviceType : Apple Watch Series 12 (42mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcee00>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.010 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (42mm) (0F2F315B-5869-49D4-A5C9-42A5585869D7) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm: SimDeviceType : Apple Watch Series 12 (42mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-42mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcee00>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.011 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (46mm) (CD8A490F-5B2C-485E-8F11-CD8596FA4AAE) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm: SimDeviceType : Apple Watch Series 12 (46mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fce000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.011 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Series 12 (46mm) (CD8A490F-5B2C-485E-8F11-CD8596FA4AAE) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm: SimDeviceType : Apple Watch Series 12 (46mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Series-12-46mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fce000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.013 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Ultra 4 (49mm) (BCB3C139-0F79-47D8-BCF2-5D39AA0D1C00) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm: SimDeviceType : Apple Watch Ultra 4 (49mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcf000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:20.014 xcodebuild[25003:75377] [MT] DVTAssertions: Warning in DVTiOSFrameworks/IDEiOSSupportCore/DVTiPhoneSimulator.m:661
+Details:  SimDevice native architecture is nil. Device: SimDevice : Apple Watch Ultra 4 (49mm) (BCB3C139-0F79-47D8-BCF2-5D39AA0D1C00) : state={ Shutdown } deviceType={ com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm: SimDeviceType : Apple Watch Ultra 4 (49mm) (com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm) } runtime={ com.apple.CoreSimulator.SimRuntime.watchOS-27-0: (null) }, supportedArches: (
+)
+Object:   <DVTiPhoneSimulator: 0x7b47fcf000>
+Method:   -nativeArchitecture
+Thread:   <_NSMainThread: 0x1051f4dc0>{number = 1, name = main}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 08:43:48.866 xcodebuild[25003:75377] [MT] IDETestOperationsObserverDebug: 218.380 elapsed -- Testing started completed.
+2026-11-23 08:43:48.866 xcodebuild[25003:75377] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-23 08:43:48.866 xcodebuild[25003:75377] [MT] IDETestOperationsObserverDebug: 218.380 sec, +218.380 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/_temp/hanlin-motion-ui.dIazWi9a/Motion.xcresult
+
+Failing tests:
+	MotionUITests.testBRapidReversalPresetSwitchAndPersistence()
+
+** TEST EXECUTE FAILED **
+
+Testing started
