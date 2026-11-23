@@ -48,12 +48,36 @@ intervening await. Only the owner should tear down its runtime.
 
 ## Minimum complete architecture
 
-Independent NativeScript UI instances require an upstream artifact change: move
-the main runtime into each object, scope config/tasks/application cache to its
-isolate, route presentation/host services by session, and isolate environment and
-package-root ownership. Verify two independent controllers, timers, callbacks,
-module loads, inputs and teardown. Rebuild and pin actual binary provenance.
+Keeping the current whole-application wrapper would require an upstream artifact
+change: scope its main runtime, config, tasks and application cache per instance,
+then route presentation, Host Services and package paths by session. The separate
+Node-API interoperability APIs could instead underpin a host-owned application
+runner, but that is a new engine/module/filesystem/bootstrap/presenter integration,
+not a transparent dependency update. Either route needs actual two-window proof
+for distinct roots, timers, callbacks, module loads, inputs and independent teardown.
 Deleting only the Hanlin singleton guard cannot provide that behavior.
+
+## Current supported runtime review
+
+The official latest stable iOS release `v9.1.1` and published SPM prerelease
+`9.1.2-next.2026-11-23-45255582945` were inspected without changing dependencies.
+Both still hold one process-global main runtime. Their initialization writes the
+shared configuration and destroys the previous main runtime before replacing it.
+The current Node-API runtime repository at `8cdc398d30339e809fc2c491238e0af0deb3442d`
+keeps the same single-main-wrapper architecture and a shared application path.
+
+The Node-API bridge itself does expose per-environment native interoperability.
+That provides useful building blocks for a separate host integration; it does not
+provide an independent whole-package launch contract compatible with our current
+`runMainApplication` entrypoints. Existing package entries call `Application.run`
+and use its one embedded primary window. `NativeWindow` can support multiple
+cooperating views of one application, but using it here would require an explicit
+per-invocation view factory, bound services and a scene-aware presenter.
+
+Exact release dates, official SPM checksum, source blob hashes, published npm
+channels and source links are retained in
+`multiwindow-current-upstream-20261123.json`. No runtime binary was downloaded,
+no migration was applied, and no prior native tests were repeated for this review.
 
 ## Verification
 
