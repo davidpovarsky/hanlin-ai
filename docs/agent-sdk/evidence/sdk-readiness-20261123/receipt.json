@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "f1f6d745b178b28fe26fe94434aae4e0f5bf4a7c",
+  "files": {
+    "README.md": "12f68c35ee1c4ad0c0c901927c30948b90d774d00cc1cf9578a05ad8e75b226e",
+    "anytype-selected-source.json": "370c299fc11b699cc4eade9183e7e11b5e98d2259804600214208aec451a18cb",
+    "lorvex-selected-source.json": "15d146c82749861869fffa4f31c59a76df66c8779d8550d2ee349cb86fcd1d60",
+    "maktabah-selected-source.json": "8afc9baaee0e472cde5e4d24e13c6034f0e538350e820de5bf002d22450a35f0",
+    "native-publication-readiness.json": "1e4f61da0c9b751ff32cbb90a74988eb94e99081deb2d3d1727c68419d6384c7",
+    "sdk07-live-provider-availability.json": "ca11865ea2cd0308ff8ac5af151b1482a99b858b2e40f99f1ab2cfda9aab7fad",
+    "source-graph.json": "4a1546aed7796bbd643bf8acb7e3bf2a705e77dae40925cb7174deb64307fbd1"
+  },
+  "selectedSourceCount": {
+    "maktabah": 545,
+    "lorvex": 535,
+    "anytype": 547
+  },
+  "gitTreeHashEncoding": "SHA256 of exact UTF-8 stdout from git ls-tree -r REV -- SOURCE_PATHS in receipt order, including terminal newlines",
+  "validation": "All recorded original bytes/file modes, generated receipts, declared counts and source-change boundaries were asserted during collection. No native tests or installer reruns in this audit."
+}

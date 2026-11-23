@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "status": "BLOCKED",
+  "reason": "Publication requires completed successful original producer. Prepared artifacts from failed45177292887 cannot qualify.",
+  "candidateCommit": "f1f6d745b178b28fe26fe94434aae4e0f5bf4a7c",
+  "expectedProducerCommit": "7f6a960eb341e3a6642db390d4b5de0b2e3448fc",
+  "expectedProducerRun": 45218713371,
+  "producerSourceInputEquality": "PASS",
+  "sourceInputSHA256": {
+    "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "Scripts/Expo/dependency-lock.json": "d9ded3b3d73b1d563d149e1456ffaf8d2bfecdf222ecca6657aafb10cc4ea536",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "38d7825492e0c68c9e50a4273cf254648ff8ae81b185716fdbc032709dbca1a4",
+    "Scripts/ExpoNativeAPI/dependency-lock.json": "2a2717c43e5396128dfa8b48baa6951a5d9f79661c9d9cc76d0c01fbf8021704",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "1ee5f051f6315fcef4ce08ea7cb5db882c39c18a9b3f02a06733d2aed4bab35d",
+    "Scripts/NativeScript/dependency-lock.json": "7e03d1d97c25f13d1242667f4bba8635391452028cb4e3fb38c0ab215ad2ff8f",
+    "Scripts/NativeScript/package-lock.json": "17f34a1d12fdf55e4a8c44572639ee75df3b5ab4bdb65ffa54712e5f2d737984",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "814cb0ff5b5aa4575c0daaced0014e461d51d108059f4cccb396f9c1d5c6e5a5",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "4dbef40b5f3892a3fee323e974ea6827d5011f7f1b2871a3963130fb0ab8c789",
+    "Scripts/Runtime/prepare-runtime-core.sh": "8765967fdba85cc77dcbf3c02936993c39bf186d7327560a3d84590222710a10"
+  },
+  "requiredXCFrameworks": 14,
+  "requiredSupportArchives": 4,
+  "publishedCatalogAtCandidate": "unpublished",
+  "newPublicationPerformed": false
+}
