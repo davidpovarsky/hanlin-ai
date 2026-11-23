@@ -1,0 +1,71 @@
+{
+  "utc": "2026-11-23T20:59:22.358423+00:00",
+  "scope": "New local report controls and syntax only; no native tests",
+  "results": [
+    {
+      "name": "header-report-controls",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_native_tool_header_recheck_report.py",
+        "-v"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "test_exact_five_methods_and_diagnostics_cannot_be_replaced_by_aggregates (test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_exact_five_methods_and_diagnostics_cannot_be_replaced_by_aggregates) ... ok\ntest_original28_are_reused_separately_from_only_five_fixture_executions (test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_original28_are_reused_separately_from_only_five_fixture_executions) ... ok\ntest_reuse_rejects_changed_inputs_or_fabricated_current_execution (test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_reuse_rejects_changed_inputs_or_fabricated_current_execution) ... ok\ntest_source_preserves_all_original_seven_helpers_and_exact_header_selector (test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_source_preserves_all_original_seven_helpers_and_exact_header_selector) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.299s\n\nOK\n"
+    },
+    {
+      "name": "swift-syntax-only",
+      "argv": [
+        "/usr/local/bin/swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift",
+        "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "shell-syntax",
+      "argv": [
+        "bash",
+        "-n",
+        "Scripts/CI/IntegrationValidation/run_agent_sdk.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "runner-syntax",
+      "argv": [
+        "python3",
+        "-B",
+        "-c",
+        "from pathlib import Path; p=Path('Scripts/CI/IntegrationValidation/run_native_tool_candidate.py'); compile(p.read_text(),str(p),'exec')"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

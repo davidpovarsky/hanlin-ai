@@ -1,0 +1,38 @@
+{
+  "utc": "2026-11-23T21:13:51.809268+00:00",
+  "status": "NATIVE_NOT_RUN_REVIEW_READY",
+  "base": "c22381a5787d55fd15b401dd826a9a41d765bdbe",
+  "producer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "group": "agent_sdk_exact_source_proof",
+  "selector": "HanlinNativeToolHeaderRecheck",
+  "exact_sdk_selectors": [
+    "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory",
+    "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory",
+    "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute",
+    "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor",
+    "HanlinAgentCoreTests/HanlinAppleToolHeaderAdmissionTests/rejectsUnsupportedTransportHeader"
+  ],
+  "current_expected_executed_invocations": 5,
+  "prior_passes_reused_after_source_admission": 28,
+  "prior_passes_source": "c93b966e6c378f56b98d7805b5086a72d3061803",
+  "prior_passes_run": 45259715158,
+  "baseline_expected_invocations_reused": 12,
+  "baseline_original_run": 45240721804,
+  "current_core_processes": 0,
+  "current_baseline_processes": 0,
+  "current_ios_agent_core_build_required": true,
+  "simulator_launch": false,
+  "shipping_gates": "CLOSED",
+  "local_new_report_methods": "PASS_4_METHODS",
+  "swift_parse": "PASS_SYNTAX_ONLY",
+  "source_sha256": {
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+    "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "c6a2954ad6a6bc026a8abbe52808388efbefe6df681d43aea1337d40d961ef3a",
+    "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py": "833cf01a1f31ba5f4bf0fd2ddfb13c6a309b3508cd65d218cb68357c5876737c",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_header_recheck.py": "9a9a9afcb04c54c57f9b7e3eda31e7f27feddb2181309734eb53f10f3be84a30",
+    "Scripts/CI/Tests/test_native_tool_header_recheck_report.py": "a1ccb7cb8b5ae07f06017e28b0277c01707229b82e56faa2b24c7ced21a7ffb8"
+  },
+  "reference_sha256": "785bf2b27c4c9ec5b4c107135a52bc9568f1c12f4e07cea67c469b12c3310ddd"
+}

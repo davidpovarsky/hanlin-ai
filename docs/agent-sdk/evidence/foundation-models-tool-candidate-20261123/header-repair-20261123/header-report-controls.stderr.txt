@@ -1,0 +1,9 @@
+test_exact_five_methods_and_diagnostics_cannot_be_replaced_by_aggregates (test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_exact_five_methods_and_diagnostics_cannot_be_replaced_by_aggregates) ... ok
+test_original28_are_reused_separately_from_only_five_fixture_executions (test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_original28_are_reused_separately_from_only_five_fixture_executions) ... ok
+test_reuse_rejects_changed_inputs_or_fabricated_current_execution (test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_reuse_rejects_changed_inputs_or_fabricated_current_execution) ... ok
+test_source_preserves_all_original_seven_helpers_and_exact_header_selector (test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_source_preserves_all_original_seven_helpers_and_exact_header_selector) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.299s
+
+OK

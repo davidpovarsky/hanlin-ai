@@ -105,3 +105,8 @@ See [the original Apple outcomes and focused recheck plan](apple-45240721804-att
 ## Recheck45259715158
 
 [Original Apple recheck and exact outcomes](apple-45259715158/README.md): 28 PASS,4 FAIL,0 NOT_RUN; current iOS AgentCore build PASS. Core12 now all pass with unchanged assertions. Baseline12 is authenticated reuse only. Four framework-to-engine cases fail before executor entry because of unsupportedSettings; the source diagnosis and affected repair scope are retained. Public capability stays disabled.
+
+
+## User-Agent admission repair
+
+[Exact five-case repair plan](header-repair-20261123/README.md) admits producer User-Agent metadata without passing it into native history. Four failed test bodies stay unchanged; one separate unsupported-header control is added. Five current invocations plus a current iOS build are proposed, with28 prior PASSs and baseline12 separately admitted as reuse. All repaired native outcomes remain NOT_RUN until the reviewed run.
