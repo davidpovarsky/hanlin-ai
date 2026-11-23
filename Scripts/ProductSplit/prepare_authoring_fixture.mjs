@@ -13,7 +13,7 @@ const source = [
   'import {Application, Page, Label} from "@nativescript/core";',
   'Application.run({create: () => {',
   '  const page = new Page();',
-  '  page.title = "MiniApp Authoring Acceptance";',
+  '  page.actionBar.title = "MiniApp Authoring Acceptance";',
   '  const label = new Label();',
   '  label.text = "MiniApp repair result " + answer;',
   '  label.accessibilityIdentifier = "miniapp-authoring-result";',

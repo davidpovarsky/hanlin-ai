@@ -114,7 +114,7 @@ final class MiniAppRepairCoordinator {
             Diagnostic report: \(reportURL.path(percentEncoded: false))
             \(extractionMessage)
 
-            Use get_miniapp_sdk for the current host APIs, original library types and examples. Use validate_miniapp with the working project; its sourceRoot identifies the editable project inside source/. Repair the actual source, run validation again, build with build_miniapp and deliver the resulting archive with import_miniapp. Query import_miniapp with the returned transfer_id for the actual installation result. Preserve package identity, functionality and user data. Report real compiler errors with their file/line/column; do not hide errors or treat a queued import as installed. Legacy Scripting is frozen; active targets are Expo, NativeScript and ScriptWidget.
+            Use get_miniapp_sdk for the current host APIs, original library types and examples. Use validate_miniapp with the working project; its sourceRoot identifies the editable project inside source/. Use write_miniapp to repair the actual source in that sourceRoot, run validation again, build with build_miniapp and deliver the resulting archive with import_miniapp. Query import_miniapp with the returned transfer_id for the actual installation result. Preserve package identity, functionality and user data. Report real compiler errors with their file/line/column; do not hide errors or treat a queued import as installed. Legacy Scripting is frozen; active targets are Expo, NativeScript and ScriptWidget.
 
             Diagnostics:
             \(report)
