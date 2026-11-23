@@ -1,0 +1,41 @@
+Test Suite 'All tests' started at 2026-11-23 22:03:57.148
+Test Suite 'Debug-linux-aarch64.xctest' started at 2026-11-23 22:03:57.164
+Test Suite 'Debug-linux-aarch64.xctest' passed at 2026-11-23 22:03:57.164
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-11-23 22:03:57.164
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite MiniAppAuthoringTransferTests started.
+◇ Test durableRequestRetainsOriginalBytesAndStructuredReport() started.
+◇ Test wakeURLDoesNotAcceptAnotherPurposeOrEmbeddedParameters() started.
+◇ Test duplicateTransferNeverReplacesOriginalPackage() started.
+◇ Test missingPayloadAndReservedNameNeverPublishReadyRequest() started.
+◇ Test installedReceiptSurvivesRestartAndCannotRegressToQueued() started.
+✔ Test wakeURLDoesNotAcceptAnotherPurposeOrEmbeddedParameters() passed after 0.059 seconds.
+✔ Test durableRequestRetainsOriginalBytesAndStructuredReport() passed after 0.059 seconds.
+✔ Test missingPayloadAndReservedNameNeverPublishReadyRequest() passed after 0.059 seconds.
+✔ Test duplicateTransferNeverReplacesOriginalPackage() passed after 0.059 seconds.
+✔ Test installedReceiptSurvivesRestartAndCannotRegressToQueued() passed after 0.081 seconds.
+✔ Suite MiniAppAuthoringTransferTests passed after 0.081 seconds.
+✔ Test run with 5 tests in 1 suite passed after 0.082 seconds.
+
+Building for debugging...
+[Computing dependencies]
+[Constructing description]
+[Pre-planning 1 / 95]
+[Planning deferred tasks]
+[27 / 49] HanlinProductSplit
+[29 / 51] HanlinProductSplit
+[37 / 55] TransferTests-product
+[38 / 55] TransferTests-product
+[43 / 56] TransferTests-product
+[48 / 57] TransferTests-product
+[48 / 57] HanlinProductSplit
+[49 / 57] TransferTests-product
+[53 / 60] TransferTests-test-runner
+[57 / 60] TransferTests-test-runner
+[60 / 61] TransferTests-test-runner
+[61 / 61] TransferTests-test-runner
+Build complete! (18.76 secs)
