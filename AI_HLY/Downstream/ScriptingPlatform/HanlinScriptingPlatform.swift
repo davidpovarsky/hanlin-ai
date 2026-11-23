@@ -551,7 +551,7 @@ final class HanlinScriptingPlatform {
             preview = result.1
             capabilityApprovals = .init(requests: result.1.requestedCapabilities)
             activity = .previewReady
-            print("HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=\(result.1.canInstall) entrypoints=\(result.1.entrypoints.count)")
+            print("HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=\(canInstallPreview) entrypoints=\(result.1.entrypoints.count)")
         } catch {
             guard importOperationID == operationID else { return }
             let message = Self.safeMessage(error)
@@ -565,7 +565,7 @@ final class HanlinScriptingPlatform {
         activeStoreOperations += 1
         defer { activeStoreOperations -= 1 }
         guard activity != .installing else { return }
-        print("HANLIN_INSTALL_PREVIEW_STARTED: canInstall=\(preview?.canInstall ?? false)")
+        print("HANLIN_INSTALL_PREVIEW_STARTED: canInstall=\(canInstallPreview)")
         guard let preview, canInstallPreview, let stagedPackage,
               let store, let bundler, let stagingRoot else {
             activity = .failed("This package did not pass Import Preview.")

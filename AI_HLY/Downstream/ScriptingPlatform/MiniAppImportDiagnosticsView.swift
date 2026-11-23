@@ -120,11 +120,26 @@ struct MiniAppImportDiagnosticsView: View {
 private struct MiniAppImportDiagnosticRow: View {
     let diagnostic: HanlinMiniAppAuthoringDiagnostic
 
+    private var symbol: String {
+        switch diagnostic.category {
+        case "error": "xmark.octagon.fill"
+        case "warning": "exclamationmark.triangle"
+        default: "info.circle"
+        }
+    }
+
+    private var tint: Color {
+        switch diagnostic.category {
+        case "error": .red
+        case "warning": .orange
+        default: .secondary
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Label(diagnostic.code,
-                systemImage: diagnostic.category == "error" ? "xmark.octagon.fill" : "exclamationmark.triangle")
-                .foregroundStyle(diagnostic.category == "error" ? Color.red : Color.orange)
+            Label(diagnostic.code, systemImage: symbol)
+                .foregroundStyle(tint)
                 .font(HanlinTypography.caption.monospaced())
             if let line = diagnostic.line {
                 Text("Line \(line), column \(diagnostic.column ?? 1)", bundle: HanlinLocalization.bundle)

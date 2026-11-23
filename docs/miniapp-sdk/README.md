@@ -1,80 +1,90 @@
-# Existing MiniApp SDK source authority
+# MiniApp SDK and original library authoring
 
-This is the SDK-01 / INT-01 audit of the existing NativeScript and Expo packages,
-not another SDK or runtime. Status: **IN_PROGRESS**. Public syntax and source
-wiring do not establish execution through every extension or a signed device.
+## Active scope
 
-- [SDK source inventory](source-inventory.json): public exports, Objective-C
-  declarations, version/lock records, manifest families and exact source hashes.
-- [Extension reachability](extension-reachability.md): four real extensions ×
-  two engines × five canonical runtimes, plus foreground/Live Activity/Intent/
-  Shortcuts paths. Its [JSON](extension-reachability.json) links exact file/line/
-  hash references and reads SDK version authority from the source inventory.
-- Existing authoring guides remain [Expo](../hanlin-expo-runtime.md),
-  [NativeScript](../hanlin-nativescript-guide.md) and
-  [HanlinExpoUI](../../Packages/HanlinExpoUI/README.md).
+The active engines are **Expo / React Native / Expo UI**, **NativeScript**, and **ScriptWidget**. Their original libraries, declarations, compilers and native host integrations are the implementation authority. Existing Hanlin facades connect these libraries to the two original products.
 
-## Version boundaries observed in source
+Dedicated legacy Scripting-JSC / ScriptUI development is frozen. Existing code, stored packages and shared services are retained. A custom home entrypoint and expansion of the optional full Apple SDK type generator are outside this work.
 
-NativeScript Core/iOS are pinned to9.1.0, with the separately embedded SwiftUI
-provider contract4.0.2. Expo tooling locks Expo58.0.0, ExpoUI58.0.3, React19.3.0,
-RN0.88.0 and Worklets0.13.1. `@hanlin/expo-ui` package version1.0.0 differs from
-its generated bridge version3.0.0. Its peer dependencies now match the pinned
-Expo/React/RN versions; no resolved dependency identity changed during that
-metadata correction. The optional native-api facade1.0.0 re-exports upstream9.1.2.
-These are source/lock contracts; installed Host/Hermes/metadata and signed binary
-observations remain separate obligations.
+## Use the SDK installed with the host
 
-The `@typescript/typescript6` npm package pinned as6.0.2 reports compiler6.0.3
-internally. The audit records both identities and the actual compiler module
-hash. It does not rename the package or claim the source inventory is a strict
-TypeScript/Metro/native SDK acceptance run.
+Call `get_miniapp_sdk` with the desired engine before creating or changing a package. Its response identifies the actual compiler, package versions, host contracts, declaration entrypoints and documentation paths. Use `resource` to read the original declarations or documentation. The complete file inventory is available as `miniapp-sdk.json`; the ordinary response summarizes it so the agent can navigate it without receiving tens of thousands of file records.
 
-The `script.json` decoder preserves unknown metadata; this does not make an
-unknown entrypoint executable. Its contract differs from the canonical compiled
-app's `HanlinAppManifest.schema.json`. NS/Expo prepared `package.json` versions,
-plugins, analyzer rules and archive validation are additional contracts. SDK-02
-still owns the complete authored schema/validator/examples, and SDK-03/04 own
-per-public-API typing and native execution evidence.
+The SDK is prepared from the same inputs as the native host. It includes original npm declarations and tooling, native types already supplied by those libraries, Hanlin's actual bridge declarations, and the installed ScriptWidget component/API declarations. A declaration is not proof that an arbitrary new native module is present in a shipped app. Consult the host contract returned for that engine.
 
-## Drift checks
+Versions written in an older guide or historical audit are not the authority for a newly built host. Read the exact installed manifest. In particular, npm package versions, a bridge's public contract version and the native ABI identity are distinct values.
 
-After the repository's normal Expo tooling installation:
+## Original-library updates during the app build
 
-```powershell
-node Scripts/Audit/audit-miniapp-sdk.mjs --check
-py -3 Scripts/Audit/audit_miniapp_reachability.py --check
+`Scripts/MiniApps/resolve-upstreams.mjs` resolves current original sources before native dependency preparation. Expo's own dependency matrix supplies the compatible React/React Native and related versions. Native source revisions, npm publications, native artifact inputs, generated host versions and declaration inputs are recorded together.
+
+The source refresher preserves original implementations and the existing, explicit Hanlin namespace/host adapters. A real source conflict must be reconciled; reporting an old framework as a newer version is not a successful update. The build produces the native frameworks, original source bundles and SDK from those resolved inputs. See [Original upstream build](ORIGINAL_UPSTREAM_BUILD.md).
+
+A new native dependency becomes available through a host build. A MiniApp archive contains its authored JavaScript/TypeScript, resources, engine contract and compiled bundle; its authoring operation does not invoke Xcode on the phone.
+
+## Agent tools
+
+| Tool | Input and result |
+| --- | --- |
+| `get_miniapp_sdk` | Optional `engine`, optional SDK-relative `resource`. Returns the current host's actual types, documentation and version contract. |
+| `write_miniapp` | Optional `project_path`, and `files` with a relative `path` plus either UTF-8 `content` or binary `base64`. Creates a project when no path is given. Returns the editable `sourceRoot`. |
+| `validate_miniapp` | `engine` and absolute `project_path`. Runs the original TypeScript compiler and package-consistency checks, with structured code/file/line/column diagnostics. |
+| `build_miniapp` | `engine`, `project_path`, optional new `archive_path`. Validates, builds with the original engine toolchain, and retains sources, maps and resources in the resulting archive. |
+| `import_miniapp` | Either `archive_path` to queue a package in Hanlin MiniApps, or `transfer_id` to read the actual installation receipt. |
+
+The five tools use the original tool catalog and agent execution pipeline. They do not add a Hanlin approval prompt or a file-count/size quota.
+
+### Authoring sequence
+
+1. Read the selected engine's SDK contract and original declaration entrypoints.
+2. Create `script.json`, `package.json`, `tsconfig.json`, the entry source, resources and `hanlin.authoring.json` with `write_miniapp`.
+3. Validate the project. Correct the reported source locations using the returned `sourceRoot`.
+4. Build. Expo uses original Metro/Babel; NativeScript emits the module graph for the original Core runtime; ScriptWidget retains source for its original widget compiler.
+5. Import the returned `archivePath`.
+6. Query the returned transfer ID until the receiver reports its actual result. `queued` or opening a URL does not mean `installed`.
+
+A minimal authoring descriptor is:
+
+```json
+{
+  "schemaVersion": 1,
+  "engine": "nativescript",
+  "entry": "index.ts",
+  "tsconfig": "tsconfig.json"
+}
 ```
 
-An audit-only parser can be supplied without installing the entire Expo tree:
+Use `expo` with a TSX entry or `scriptwidget` for those engines. Engine-specific package fields and dependency versions come from the installed SDK. Source-bearing imported packages have an outer descriptor pointing at their retained `source/` directory. Passing that extracted archive root to the write tool targets its editable source; unrelated files are preserved.
 
-```powershell
-npm install --prefix build/sdk-audit-tools --ignore-scripts --no-audit --no-fund 'typescript@npm:@typescript/typescript6@6.0.2'
-node Scripts/Audit/audit-miniapp-sdk.mjs --check --typescript-module build/sdk-audit-tools/node_modules/typescript/lib/typescript.js
-```
+For an external development environment, `Scripts/MiniApps/miniapp.mjs` uses the same authoring module and staged original SDK as the application. It is not a separate typechecker or implementation of the engines.
 
-Use `--write` on the SDK audit only after reviewing changes; the Python audit
-regenerates without `--check`. A base commit plus any uncommitted audit sources
-is explicitly distinguished from the exact file hashes. Unrelated later commits
-do not invalidate an unchanged inventory solely because HEAD advanced. Source
-changes or a new Share inbox caller require re-audit. No new automatic workflow
-triggers, native rebuild, package installation in a MiniApp, cloud upload or
-runtime execution is performed by either check.
+## Typechecking and import diagnostics
 
-The [owned Share ingress](OWNED_SHARE_INGRESS_2026-11-13.md) now copies temporary
-attachments and connects installed NS action selection to durable receipts in
-source; actual action/UI/physical acceptance remains open.
-The [strict Expo checks](EXPO_STRICT_TYPES_AND_FILE_WIRE_2026-11-14.md) cover the
-full UI/native-api declarations without skipLibCheck, exact negative diagnostics,
-and real Metro template bundling. They do not certify every native adapter.
-Current gaps include full Share system-sheet/Expo/physical acceptance,
-Expo non-widget exposure/intent rejection, NS single-active-session arbitration,
-full per-surface NS/Expo receipt acceptance, differing generic Shell source
-semantics and unpublished SystemServicesBroker bindings. The new
-[NS runtime facade](NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md) exposes all five
-canonical engines, full receipts and session-owned cancellation in source;
-native VM/metadata execution remains pending. Legacy Expo backend/name/failure
-cases actually passed in43315911311; these are native adapter tests, not every
-JS-module/system-ingress consumer. The recorded17 system
-method declarations and permissive capability metadata are not iOS availability
-or OS permission proof. INT-02…07 and SDK-02…08 remain open.
+The project is checked against actual original declarations. NativeScript's base configuration follows its upstream declaration-check policy while checking authored source strictly; projects can explicitly request declaration checking as well. The validation report identifies `strict`, `skipLibCheck` and whether dependency declarations were checked. Expo strict declaration validation and actual Metro production are separate operations.
+
+An archive that carries source is checked again during import. A supplied success report is not accepted as a replacement for the current compiler. Source hashes and compiled hashes detect inconsistent package contents; they do not identify a trusted publisher.
+
+The native diagnostic sheet groups package and compiler findings by file, with severity, stable error code, one-based source location and the original message. It retains malformed archives too. Its repair button sends the exact original archive and diagnostic report into a dedicated conversation in Hanlin AI. The original composer and agent then use the tools above to repair, rebuild and return the package. See [Import diagnostics and repair](IMPORT_REPAIR.md).
+
+Compiled JavaScript without original TypeScript cannot reveal erased TypeScript types. Its manifest/runtime compatibility can still be checked, and the sheet describes which check actually ran.
+
+## Entry points and native surfaces
+
+The current integration connects ordinary launch, declared Share actions, App Intents/Shortcuts, translation continuation, widgets and Live Activities. The standalone MiniApps target includes its own Share, Translation and Widgets extensions using its own product storage namespace.
+
+The native snippet currently displays durable invocation status and results. Translation currently continues selected input in the foreground MiniApp. These are not evidence of arbitrary package-defined custom snippet or translation-extension UI. Surface support and native runtime results must be evaluated separately. See [Current surface implementation](../miniapps/entrypoints-and-system-surfaces.md).
+
+## Guides and evidence
+
+- [Expo authoring](../hanlin-expo-runtime.md)
+- [NativeScript authoring](../hanlin-nativescript-guide.md)
+- [ScriptWidget authoring](SCRIPTWIDGET_AUTHORING.md)
+- [Hanlin Expo UI facade](../../Packages/HanlinExpoUI/README.md)
+- [Original-library build and provenance](ORIGINAL_UPSTREAM_BUILD.md)
+- [Diagnostic and repair contract](IMPORT_REPAIR.md)
+- [Portable authoring evidence](evidence/2026-11-23-authoring-portable.json)
+- [Executed portable transfer tests](evidence/authoring-repair-20261123/transfer-tests.json)
+
+Native acceptance is defined by the `miniapp_authoring` scope of `validate-app-split.yml`. It builds both actual products and exercises original NativeScript/Expo controls, embedded authoring tools, a malformed archive, real source diagnostics, the sheet and repair/import handoff on one iPad Simulator. Its recorded run and xcresult determine PASS/FAIL; source wiring, portable tests and syntax parsing do not establish native success.
+
+Older [source inventory](source-inventory.json), [reachability audit](extension-reachability.md), and dated handoffs remain historical snapshots. Their old version numbers and disconnected-surface findings must not override the installed SDK manifest or current source/evidence.

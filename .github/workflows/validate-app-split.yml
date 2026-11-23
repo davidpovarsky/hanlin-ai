@@ -339,6 +339,7 @@ jobs:
           node Scripts/Expo/prepare-ios-dependencies.mjs
           node Scripts/Expo/prepare-types.mjs
           node Scripts/Expo/build-probe.mjs
+          node Scripts/ExpoNativeAPI/build-probes.mjs
           bash Scripts/Runtime/prepare-runtime-core.sh
           bash Scripts/Runtime/prepare-runtime-host.sh
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip

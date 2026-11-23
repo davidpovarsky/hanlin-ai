@@ -410,6 +410,69 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         closeExpoApp()
     }
 
+    func testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets() throws {
+        openApps()
+        importAndInstall(archive: "ExpoNativeAPIProbeA")
+
+        launchInstalledPackage(named: "Hanlin Expo Native API Probe A")
+
+        // 1. Verify Host & NavigationStack rendered
+        let titlePredicate = NSPredicate(format: "label CONTAINS 'Hanlin Expo + NativeScript Hybrid'")
+        let titleText = app.descendants(matching: .any).matching(titlePredicate).firstMatch
+        XCTAssertTrue(titleText.waitForExistence(timeout: 30), "Hybrid title did not render")
+
+        // 2. Verify Worklets runtime executed runOnUI to query UIDevice.currentDevice.systemVersion
+        let systemVersionPredicate = NSPredicate(format: "label CONTAINS 'iOS System Version:' AND NOT label CONTAINS 'Loading...' AND NOT label CONTAINS 'Error' AND NOT label CONTAINS 'failed'")
+        let systemVersionText = app.descendants(matching: .any).matching(systemVersionPredicate).firstMatch
+        XCTAssertTrue(systemVersionText.waitForExistence(timeout: 20), "UIDevice systemVersion was not retrieved via runOnUI Worklet")
+
+        // 3. Verify Fabric Component (NativeScriptUIViewComponentView) hosting UILabel inside RNHostView
+        let nativeLabelPredicate = NSPredicate(format: "label CONTAINS 'Native UIKit Label: Probe Variant A (Hebrew RTL Ready)'")
+        let nativeLabel = app.descendants(matching: .any).matching(nativeLabelPredicate).firstMatch
+        XCTAssertTrue(nativeLabel.waitForExistence(timeout: 15), "Native UIKit UILabel Fabric host did not render Variant A text")
+
+        // 4. Verify native UISwitch with two-way target-action
+        let switchStatusPredicate = NSPredicate(format: "label CONTAINS 'Native Switch Status: DISABLED (OFF)'")
+        let switchStatus = app.descendants(matching: .any).matching(switchStatusPredicate).firstMatch
+        XCTAssertTrue(switchStatus.waitForExistence(timeout: 10), "Initial switch status marker was missing")
+
+        let uiSwitch = app.switches.firstMatch
+        XCTAssertTrue(uiSwitch.waitForExistence(timeout: 10), "Native UISwitch did not render")
+        if !uiSwitch.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(uiSwitch.isHittable, "Native UISwitch was not hittable")
+        uiSwitch.tap()
+
+        let updatedSwitchStatusPredicate = NSPredicate(format: "label CONTAINS 'Native Switch Status: ENABLED (ON)'")
+        let updatedSwitchStatus = app.descendants(matching: .any).matching(updatedSwitchStatusPredicate).firstMatch
+        XCTAssertTrue(updatedSwitchStatus.waitForExistence(timeout: 10), "Native UISwitch ValueChanged action failed to update state")
+
+        // 5. Test native UIViewController mounting via defineUIViewController
+        let mountVCButton = app.buttons.matching(NSPredicate(format: "label CONTAINS 'Mount Native UIViewController'")).firstMatch
+        XCTAssertTrue(mountVCButton.waitForExistence(timeout: 10), "Mount UIViewController button was missing")
+        if !mountVCButton.isHittable {
+            app.swipeUp()
+        }
+        mountVCButton.tap()
+
+        let controllerLabelPredicate = NSPredicate(format: "label CONTAINS 'Hosted Native UIViewController'")
+        let controllerLabel = app.descendants(matching: .any).matching(controllerLabelPredicate).firstMatch
+        XCTAssertTrue(controllerLabel.waitForExistence(timeout: 15), "Native UIViewController view did not mount in RNHostView")
+
+        // Toggle off
+        let hideVCButton = app.buttons.matching(NSPredicate(format: "label CONTAINS 'Hide Native Controller'")).firstMatch
+        XCTAssertTrue(hideVCButton.waitForExistence(timeout: 5), "Hide Native Controller button was missing")
+        if !hideVCButton.isHittable {
+            app.swipeUp()
+        }
+        hideVCButton.tap()
+        XCTAssertTrue(waitUntil(timeout: 5) { !controllerLabel.exists }, "Native UIViewController did not unmount")
+
+        // 6. Clean host return
+        closeExpoApp()
+    }
+
     private func openApps() {
         let manage = app.buttons["hanlin-apps-add"].firstMatch
         XCTAssertTrue(manage.waitForExistence(timeout: 30),

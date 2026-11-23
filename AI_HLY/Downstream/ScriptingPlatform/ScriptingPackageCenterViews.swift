@@ -304,6 +304,14 @@ struct ScriptingInstalledPackageDetailView: View {
                 Section(hanlin: "Widget instances") {
                     ForEach(widgetInstances, id: \.entityID) { instance in
                         LabeledContent(instance.displayName, value: instance.engine.rawValue)
+                        if instance.engine == .scriptwidget {
+                            NavigationLink {
+                                platform.scriptWidgetServicesView(for: instance.entityID)
+                            } label: {
+                                Label(hanlin: "Services and Data", systemImage: "slider.horizontal.3")
+                            }
+                            .accessibilityIdentifier("hanlin-widget-services-\(instance.entityID)")
+                        }
                     }
                     Picker(hanlin: "Copy from", selection: $sourceInstanceID) {
                         ForEach(widgetInstances, id: \.entityID) { instance in

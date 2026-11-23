@@ -1,6 +1,23 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Services and Data": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Services and Data"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירותים ונתונים"
+          }
+        }
+      }
+    },
     "Imported package": {
       "extractionState": "manual",
       "localizations": {

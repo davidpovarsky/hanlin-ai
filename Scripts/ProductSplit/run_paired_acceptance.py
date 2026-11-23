@@ -23,7 +23,8 @@ TEST_PLANS = {
         "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
         "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
         "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
-        "AI_HLYUITests/MiniAppAuthoringUITests"], 7),
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+        "AI_HLYUITests/MiniAppAuthoringUITests"], 8),
     "cross_product": (["AI_HLYUITests/HanlinPairedProductUITests"], 3),
     "shared_ingress": (["AI_HLYTests/ShareInboxHostIntegrationTests", "AI_HLYUITests/HanlinShareInboxUITests"], 5),
     "product_and_share": (["AI_HLYUITests/HanlinPairedProductUITests",
@@ -149,8 +150,9 @@ def main():
             and not r.get("isInternal") and r["identifier"].endswith("iOS-" + sdk.replace(".", "-")))
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
+        device_family = "iPad" if TEST_SCOPE == "miniapp_authoring" else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
-            if item.get("productFamily") == "iPhone" and item["identifier"] in supported)
+            if item.get("productFamily") == device_family and item["identifier"] in supported)
         _, raw = command(["xcrun", "simctl", "create",
             "HanlinPaired-" + os.environ.get("GITHUB_RUN_ID", "local"),
             device["identifier"], runtime["identifier"]], "created-simulator.txt")
@@ -269,7 +271,8 @@ def main():
             authoring_fixtures(documents)
             runtime_inputs = [
                 ROOT / "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
-                ROOT / "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo"]
+                ROOT / "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+                ROOT / "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo"]
             state["runtime_inputs"] = []
             for source in runtime_inputs:
                 destination = documents / source.name
@@ -282,14 +285,15 @@ def main():
                 state["runtime_inputs"].append({"source": str(source.relative_to(ROOT)), "sha256": digest})
             runtime_selectors = [
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
-                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"]
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets"]
             runtime_result = EVIDENCE / "OriginalRuntimes.xcresult"
             argv = base + ["-scheme", "HanlinMiniApps", "test-without-building",
                 "-resultBundlePath", str(runtime_result)]
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
             code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
             state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
-                runtime_selectors, 2, code)
+                runtime_selectors, 3, code)
         if TEST_SCOPE in {"cross_product", "product_and_share"}:
             archive = fixture_archive(state["sha"])
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
