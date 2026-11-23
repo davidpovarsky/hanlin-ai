@@ -1,0 +1,1344 @@
+[
+  {
+    "typeName": "AI_Hanlin.EnableChavrusaNotificationsIntent",
+    "mangledTypeName": "9AI_Hanlin33EnableChavrusaNotificationsIntentV",
+    "kind": "struct",
+    "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+    "line": 33,
+    "conformances": [
+      "AppIntents.AppIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "AI_Hanlin"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "some AppIntents.ProvidesDialog",
+        "substitutedMangledTypeName": "9AI_Hanlin33EnableChavrusaNotificationsIntentV7performQryYaKFQOy_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ProvidesDialog"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "10AppIntents0A6IntentPAAE16parameterSummaryQrvpZQOy9AI_Hanlin027EnableChavrusaNotificationsC0V_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      }
+    ],
+    "properties": [
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 34,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "Foundation.LocalizedStringResource",
+          "arguments": [
+            {
+              "label": "",
+              "type": "Swift.String.LocalizationValue",
+              "valueKind": "RawLiteral",
+              "value": "Enable Hanlin Notifications"
+            },
+            {
+              "label": "table",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "RawLiteral",
+              "value": "HanlinAppIntents"
+            },
+            {
+              "label": "locale",
+              "type": "Foundation.Locale",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "bundle",
+              "type": "Foundation.LocalizedStringResource.BundleDescription",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "comment",
+              "type": "Swift.Optional<Swift.StaticString>",
+              "valueKind": "NilLiteral"
+            }
+          ]
+        }
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 35,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentDescription",
+          "arguments": [
+            {
+              "label": "",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Enables notifications for Hanlin after you grant system permission."
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "categoryName",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "searchKeywords",
+              "type": "Swift.Array<Foundation.LocalizedStringResource>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "openAppWhenRun",
+        "type": "Swift.Bool",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 36,
+        "valueKind": "RawLiteral",
+        "value": "true"
+      }
+    ]
+  },
+  {
+    "typeName": "AI_Hanlin.ScheduleChavrusaAlarmIntent",
+    "mangledTypeName": "9AI_Hanlin27ScheduleChavrusaAlarmIntentV",
+    "kind": "struct",
+    "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+    "line": 55,
+    "conformances": [
+      "AppIntents.AppIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "AI_Hanlin"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "some AppIntents.ProvidesDialog",
+        "substitutedMangledTypeName": "9AI_Hanlin27ScheduleChavrusaAlarmIntentV7performQryYaKFQOy_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ProvidesDialog"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "10AppIntents0A6IntentPAAE16parameterSummaryQrvpZQOy9AI_Hanlin021ScheduleChavrusaAlarmC0V_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      }
+    ],
+    "properties": [
+      {
+        "label": "_hour",
+        "type": "AppIntents.IntentParameter<Swift.Int>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 61,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Int>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Hour"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Swift.Int>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "controlStyle",
+              "type": "AppIntents.IntentParameter<Swift.Int>.IntControlStyle",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "inclusiveRange",
+              "type": "Swift.Optional<(lowerBound: Swift.Int, upperBound: Swift.Int)>",
+              "valueKind": "Tuple",
+              "value": [
+                {
+                  "type": "Swift.Int",
+                  "valueKind": "RawLiteral",
+                  "value": "0"
+                },
+                {
+                  "type": "Swift.Int",
+                  "valueKind": "RawLiteral",
+                  "value": "23"
+                }
+              ]
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "_minute",
+        "type": "AppIntents.IntentParameter<Swift.Int>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 64,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Int>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Minute"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Swift.Int>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "controlStyle",
+              "type": "AppIntents.IntentParameter<Swift.Int>.IntControlStyle",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "inclusiveRange",
+              "type": "Swift.Optional<(lowerBound: Swift.Int, upperBound: Swift.Int)>",
+              "valueKind": "Tuple",
+              "value": [
+                {
+                  "type": "Swift.Int",
+                  "valueKind": "RawLiteral",
+                  "value": "0"
+                },
+                {
+                  "type": "Swift.Int",
+                  "valueKind": "RawLiteral",
+                  "value": "59"
+                }
+              ]
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "_alarmTitle",
+        "type": "AppIntents.IntentParameter<Swift.String>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 67,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.String>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Title"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputOptions",
+              "type": "Swift.Optional<Swift.String.IntentInputOptions>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 56,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "Foundation.LocalizedStringResource",
+          "arguments": [
+            {
+              "label": "",
+              "type": "Swift.String.LocalizationValue",
+              "valueKind": "RawLiteral",
+              "value": "Schedule an Alarm with Hanlin"
+            },
+            {
+              "label": "table",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "RawLiteral",
+              "value": "HanlinAppIntents"
+            },
+            {
+              "label": "locale",
+              "type": "Foundation.Locale",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "bundle",
+              "type": "Foundation.LocalizedStringResource.BundleDescription",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "comment",
+              "type": "Swift.Optional<Swift.StaticString>",
+              "valueKind": "NilLiteral"
+            }
+          ]
+        }
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 57,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentDescription",
+          "arguments": [
+            {
+              "label": "",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Schedules a system alarm at the time you choose."
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "categoryName",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "searchKeywords",
+              "type": "Swift.Array<Foundation.LocalizedStringResource>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "openAppWhenRun",
+        "type": "Swift.Bool",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 58,
+        "valueKind": "RawLiteral",
+        "value": "false"
+      },
+      {
+        "label": "hour",
+        "type": "Swift.Int",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 61,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Int>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Hour"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Swift.Int>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "controlStyle",
+              "type": "AppIntents.IntentParameter<Swift.Int>.IntControlStyle",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "inclusiveRange",
+              "type": "Swift.Optional<(lowerBound: Swift.Int, upperBound: Swift.Int)>",
+              "valueKind": "Tuple",
+              "value": [
+                {
+                  "type": "Swift.Int",
+                  "valueKind": "RawLiteral",
+                  "value": "0"
+                },
+                {
+                  "type": "Swift.Int",
+                  "valueKind": "RawLiteral",
+                  "value": "23"
+                }
+              ]
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+            "line": 60,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "InitCall",
+                "value": {
+                  "type": "Foundation.LocalizedStringResource",
+                  "arguments": [
+                    {
+                      "label": "",
+                      "type": "Swift.String.LocalizationValue",
+                      "valueKind": "RawLiteral",
+                      "value": "Hour"
+                    },
+                    {
+                      "label": "table",
+                      "type": "Swift.Optional<Swift.String>",
+                      "valueKind": "RawLiteral",
+                      "value": "HanlinAppIntents"
+                    },
+                    {
+                      "label": "locale",
+                      "type": "Foundation.Locale",
+                      "valueKind": "Runtime"
+                    },
+                    {
+                      "label": "bundle",
+                      "type": "Foundation.LocalizedStringResource.BundleDescription",
+                      "valueKind": "Runtime"
+                    },
+                    {
+                      "label": "comment",
+                      "type": "Swift.Optional<Swift.StaticString>",
+                      "valueKind": "NilLiteral"
+                    }
+                  ]
+                }
+              },
+              {
+                "label": "inclusiveRange",
+                "type": "Swift.Optional<(lowerBound: Swift.Int, upperBound: Swift.Int)>",
+                "valueKind": "Tuple",
+                "value": [
+                  {
+                    "type": "Swift.Int",
+                    "valueKind": "RawLiteral",
+                    "value": "0"
+                  },
+                  {
+                    "type": "Swift.Int",
+                    "valueKind": "RawLiteral",
+                    "value": "23"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$hour",
+        "type": "AppIntents.IntentParameter<Swift.Int>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 61,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "minute",
+        "type": "Swift.Int",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 64,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Int>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Minute"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Swift.Int>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "controlStyle",
+              "type": "AppIntents.IntentParameter<Swift.Int>.IntControlStyle",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "inclusiveRange",
+              "type": "Swift.Optional<(lowerBound: Swift.Int, upperBound: Swift.Int)>",
+              "valueKind": "Tuple",
+              "value": [
+                {
+                  "type": "Swift.Int",
+                  "valueKind": "RawLiteral",
+                  "value": "0"
+                },
+                {
+                  "type": "Swift.Int",
+                  "valueKind": "RawLiteral",
+                  "value": "59"
+                }
+              ]
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+            "line": 63,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "InitCall",
+                "value": {
+                  "type": "Foundation.LocalizedStringResource",
+                  "arguments": [
+                    {
+                      "label": "",
+                      "type": "Swift.String.LocalizationValue",
+                      "valueKind": "RawLiteral",
+                      "value": "Minute"
+                    },
+                    {
+                      "label": "table",
+                      "type": "Swift.Optional<Swift.String>",
+                      "valueKind": "RawLiteral",
+                      "value": "HanlinAppIntents"
+                    },
+                    {
+                      "label": "locale",
+                      "type": "Foundation.Locale",
+                      "valueKind": "Runtime"
+                    },
+                    {
+                      "label": "bundle",
+                      "type": "Foundation.LocalizedStringResource.BundleDescription",
+                      "valueKind": "Runtime"
+                    },
+                    {
+                      "label": "comment",
+                      "type": "Swift.Optional<Swift.StaticString>",
+                      "valueKind": "NilLiteral"
+                    }
+                  ]
+                }
+              },
+              {
+                "label": "inclusiveRange",
+                "type": "Swift.Optional<(lowerBound: Swift.Int, upperBound: Swift.Int)>",
+                "valueKind": "Tuple",
+                "value": [
+                  {
+                    "type": "Swift.Int",
+                    "valueKind": "RawLiteral",
+                    "value": "0"
+                  },
+                  {
+                    "type": "Swift.Int",
+                    "valueKind": "RawLiteral",
+                    "value": "59"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$minute",
+        "type": "AppIntents.IntentParameter<Swift.Int>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 64,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "alarmTitle",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 67,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.String>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Title"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputOptions",
+              "type": "Swift.Optional<Swift.String.IntentInputOptions>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+            "line": 66,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "InitCall",
+                "value": {
+                  "type": "Foundation.LocalizedStringResource",
+                  "arguments": [
+                    {
+                      "label": "",
+                      "type": "Swift.String.LocalizationValue",
+                      "valueKind": "RawLiteral",
+                      "value": "Title"
+                    },
+                    {
+                      "label": "table",
+                      "type": "Swift.Optional<Swift.String>",
+                      "valueKind": "RawLiteral",
+                      "value": "HanlinAppIntents"
+                    },
+                    {
+                      "label": "locale",
+                      "type": "Foundation.Locale",
+                      "valueKind": "Runtime"
+                    },
+                    {
+                      "label": "bundle",
+                      "type": "Foundation.LocalizedStringResource.BundleDescription",
+                      "valueKind": "Runtime"
+                    },
+                    {
+                      "label": "comment",
+                      "type": "Swift.Optional<Swift.StaticString>",
+                      "valueKind": "NilLiteral"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$alarmTitle",
+        "type": "AppIntents.IntentParameter<Swift.String>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 67,
+        "valueKind": "Runtime"
+      }
+    ]
+  },
+  {
+    "typeName": "AI_Hanlin.ChavrusaChatShortcuts",
+    "mangledTypeName": "9AI_Hanlin21ChavrusaChatShortcutsV",
+    "kind": "struct",
+    "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+    "line": 96,
+    "conformances": [
+      "AppIntents.AppShortcutsProvider",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppShortcutsProvider",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "AI_Hanlin"
+      }
+    ],
+    "associatedTypeAliases": [],
+    "properties": [
+      {
+        "label": "appShortcuts",
+        "type": "Swift.Array<AppIntents.AppShortcut>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 97,
+        "valueKind": "Builder",
+        "value": {
+          "type": "AppIntents.AppShortcutsBuilder",
+          "members": [
+            {
+              "kind": "buildExpression",
+              "element": {
+                "valueKind": "InitCall",
+                "value": {
+                  "type": "AppIntents.AppShortcut",
+                  "arguments": [
+                    {
+                      "label": "intent",
+                      "type": "AI_Hanlin.ScheduleChavrusaAlarmIntent",
+                      "valueKind": "InitCall",
+                      "value": {
+                        "type": "AI_Hanlin.ScheduleChavrusaAlarmIntent",
+                        "arguments": []
+                      }
+                    },
+                    {
+                      "label": "phrases",
+                      "type": "Swift.Array<AppIntents.AppShortcutPhrase<AI_Hanlin.ScheduleChavrusaAlarmIntent>>",
+                      "valueKind": "Array",
+                      "value": [
+                        {
+                          "valueKind": "InterpolatedStringLiteral",
+                          "value": {
+                            "segments": [
+                              {
+                                "valueKind": "RawLiteral",
+                                "value": "Schedule an alarm in "
+                              },
+                              {
+                                "valueKind": "Enum",
+                                "value": {
+                                  "name": "applicationName"
+                                }
+                              },
+                              {
+                                "valueKind": "RawLiteral",
+                                "value": ""
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "label": "shortTitle",
+                      "type": "Foundation.LocalizedStringResource",
+                      "valueKind": "InitCall",
+                      "value": {
+                        "type": "Foundation.LocalizedStringResource",
+                        "arguments": [
+                          {
+                            "label": "",
+                            "type": "Swift.String.LocalizationValue",
+                            "valueKind": "RawLiteral",
+                            "value": "Schedule Alarm"
+                          },
+                          {
+                            "label": "table",
+                            "type": "Swift.Optional<Swift.String>",
+                            "valueKind": "RawLiteral",
+                            "value": "HanlinAppIntents"
+                          },
+                          {
+                            "label": "locale",
+                            "type": "Foundation.Locale",
+                            "valueKind": "Runtime"
+                          },
+                          {
+                            "label": "bundle",
+                            "type": "Foundation.LocalizedStringResource.BundleDescription",
+                            "valueKind": "Runtime"
+                          },
+                          {
+                            "label": "comment",
+                            "type": "Swift.Optional<Swift.StaticString>",
+                            "valueKind": "NilLiteral"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "label": "systemImageName",
+                      "type": "Swift.String",
+                      "valueKind": "RawLiteral",
+                      "value": "alarm"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "kind": "buildExpression",
+              "element": {
+                "valueKind": "InitCall",
+                "value": {
+                  "type": "AppIntents.AppShortcut",
+                  "arguments": [
+                    {
+                      "label": "intent",
+                      "type": "AI_Hanlin.EnableChavrusaNotificationsIntent",
+                      "valueKind": "InitCall",
+                      "value": {
+                        "type": "AI_Hanlin.EnableChavrusaNotificationsIntent",
+                        "arguments": []
+                      }
+                    },
+                    {
+                      "label": "phrases",
+                      "type": "Swift.Array<AppIntents.AppShortcutPhrase<AI_Hanlin.EnableChavrusaNotificationsIntent>>",
+                      "valueKind": "Array",
+                      "value": [
+                        {
+                          "valueKind": "InterpolatedStringLiteral",
+                          "value": {
+                            "segments": [
+                              {
+                                "valueKind": "RawLiteral",
+                                "value": "Enable notifications in "
+                              },
+                              {
+                                "valueKind": "Enum",
+                                "value": {
+                                  "name": "applicationName"
+                                }
+                              },
+                              {
+                                "valueKind": "RawLiteral",
+                                "value": ""
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "label": "shortTitle",
+                      "type": "Foundation.LocalizedStringResource",
+                      "valueKind": "InitCall",
+                      "value": {
+                        "type": "Foundation.LocalizedStringResource",
+                        "arguments": [
+                          {
+                            "label": "",
+                            "type": "Swift.String.LocalizationValue",
+                            "valueKind": "RawLiteral",
+                            "value": "Enable Notifications"
+                          },
+                          {
+                            "label": "table",
+                            "type": "Swift.Optional<Swift.String>",
+                            "valueKind": "RawLiteral",
+                            "value": "HanlinAppIntents"
+                          },
+                          {
+                            "label": "locale",
+                            "type": "Foundation.Locale",
+                            "valueKind": "Runtime"
+                          },
+                          {
+                            "label": "bundle",
+                            "type": "Foundation.LocalizedStringResource.BundleDescription",
+                            "valueKind": "Runtime"
+                          },
+                          {
+                            "label": "comment",
+                            "type": "Swift.Optional<Swift.StaticString>",
+                            "valueKind": "NilLiteral"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "label": "systemImageName",
+                      "type": "Swift.String",
+                      "valueKind": "RawLiteral",
+                      "value": "bell.badge"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "typeName": "AI_Hanlin.HanlinApplicationIntentsPackage",
+    "mangledTypeName": "9AI_Hanlin0B25ApplicationIntentsPackageV",
+    "kind": "struct",
+    "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+    "line": 115,
+    "conformances": [
+      "AppIntents.AppIntentsPackage"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntentsPackage",
+        "conformanceDefiningModule": "AI_Hanlin"
+      }
+    ],
+    "associatedTypeAliases": [],
+    "properties": [
+      {
+        "label": "includedPackages",
+        "type": "Swift.Array<any AppIntents.AppIntentsPackage.Type>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "line": 116,
+        "valueKind": "Array",
+        "value": [
+          {
+            "valueKind": "Type",
+            "value": {
+              "type": "HanlinScriptingWidgets.HanlinWidgetIntentsPackage",
+              "mangledName": "22HanlinScriptingWidgets0A20WidgetIntentsPackageV"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -145,8 +145,10 @@ configuration retains `chavrusachat://openVisionView`. Other hosts configure
 `systemIntegrations.visionURL` and register/handle their own URL scheme, or present
 `HanlinVisionView` from their own existing
 routing action. Notification and alarm intents retain the original system
-permission requests. Original intent translations now resolve from the shared
-localization bundle without copying its catalogs into every app.
+permission requests. Intent metadata labels use the canonical generated
+HanlinAppIntents table referenced in each participating executable's resources,
+as described below. Ordinary runtime/UI translations retain the shared module
+bundle.
 
 The registration follows Apple's
 [AppIntentsPackage contract](https://developer.apple.com/documentation/appintents/appintentspackage)
@@ -186,8 +188,9 @@ following **file reference** to its Xcode target resources:
 
 Reference the file in the installed canonical checkout; do not maintain a
 second translated catalog in the host. Xcode compiles this table into that
-executable's main bundle because AppIntents metadata extraction accepts
-bundle: .main. The SDK's ordinary SwiftUI/runtime localized strings continue
+executable's main bundle. The SDK metadata declarations use the documented
+default-main LocalizedStringResource initializer and the HanlinAppIntents table.
+The SDK's ordinary SwiftUI/runtime localized strings continue
 to use the original shared module bundle. Hanlin's own app and widget Xcode
 targets already include this resource through the canonical project updater.
 

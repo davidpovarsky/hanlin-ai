@@ -4,6 +4,16 @@
 
 This packet preserves the completed read-only comparison. No acceptance test, installer, artifact download, publication or Host pin update was performed.
 
+## Later terminal qualification
+
+Producer 45238831508 is **FAIL** during test compilation. Its prepared artifact 14850817502 is ineligible. The original smoke proves 0 Clang errors, all ten required host-baseline metadata names, 107 selected frameworks plus 23 identical duplicates and seven original AppIntents exports. It does not prove a final signed app or test execution. See [the authentic smoke receipt](../nativescript-metadata-45238831508/README.md).
+
+The necessary continuation is [45246711373](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45246711373) at 36d3c51bdba93ada2c2722ed0e9b99109d84a616, in progress at the parent's notification. Parent alone watches it. The only non-evidence change after reviewed 4c7 is an inner try in one existing test expression; all 1,627 selected Host records and eleven declared preparation inputs remain unchanged by that inspected diff. No accepted test or installer was replayed.
+
+The independent SDK06 owner's 19:05:25Z comment 1220828267827775 identifies a correctly rejected unsorted preload and a single-entry ordering fix c099e7ebb968cd4c646a372b1632db4e9a0a6668. Its actual-loader control was still NOT_RUN at that update. Run 45237901921 remains FAIL before simulator/build/test, on the separate 116cc SDK lineage. This lane did not take over its job or acquire its artifact.
+
+The exact current qualifiers are in latest-qualification.json. The earlier qualification.json remains an unchanged historical observation. Publication, final pins and fresh installations remain held.
+
 ## Source boundary
 
 - Previous source: 7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d.
@@ -57,4 +67,4 @@ The main 32 selected scopes / 342 authored expected invocations still require or
 
 The FoundationModels tool candidate remains isolated and public capability stays closed. Integrating later AgentCore/ChatCore changes would require a new selected-source impact review for all three Hosts.
 
-Before final distribution, align the stale early SDK_INSTALLATION.md sentence claiming all intent translations use the shared module bundle with its correct later Host AppIntents section. Metadata uses the generated main-bundle table; ordinary runtime/UI localization stays modular. This packet changes only evidence.
+The stale early SDK_INSTALLATION.md localization sentence is corrected in this evidence follow-up. Intent metadata uses the canonical generated HostResources table in each executable main bundle through the documented default-main initializer; ordinary runtime/UI localization stays modular. This is a documentation correction with no source, installer or asset change.

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-23T19:21:43.916163+00:00",
+  "run": 45238831508,
+  "sourceCommit": "39a10b1cbf4645b629f556ea312e2576a4e566db",
+  "status": "SCOPED_METADATA_PASS_PRODUCER_FAIL_TESTS_NOT_RUN",
+  "nativeTestsRunByThisLane": 0,
+  "preparedNativeArtifactsAcquired": 0,
+  "publishedAssets": 0,
+  "sourceEdits": 0,
+  "retention": "Original smoke ZIP once; original metadata copied from that verified ZIP; original job log reused from parent, not downloaded again. Scope review contains no new execution.",
+  "files": {
+    "README.md": {
+      "bytes": 6775,
+      "sha256": "05eb21f37fffc0b9b7d3abb493d46d4a8b43be98210de6855f21369200ad3676"
+    },
+    "acquisition.json": {
+      "bytes": 15191,
+      "sha256": "768f290ad298082d59bd1827849c341e29216dfc160f690477d1f47394c4753f"
+    },
+    "app-build-events.json": {
+      "bytes": 1332,
+      "sha256": "f1bd60c95dbfddc59eb385b08b9d511de0864892429aaffbe8bd0ee16211eb30"
+    },
+    "appintents-extractors.json": {
+      "bytes": 26504,
+      "sha256": "2a1cca96100ebd660fa49bccbb7071a36e5e700aed150057c4db8ffc935099da"
+    },
+    "original-app-intents-metadata/AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingAppIntents.swiftconstvalues": {
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "original-app-intents-metadata/AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftConstValuesFileList": {
+      "bytes": 677,
+      "sha256": "ca7ce2c62c4892c776d8c1e4107e2e4f091402b8abe0031db2eba37162793baf"
+    },
+    "original-app-intents-metadata/AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftFileList": {
+      "bytes": 404,
+      "sha256": "2cebfd9fa8f56b8e9e02d70187f8d04156256d30395828a5a330481fec49aff6"
+    },
+    "original-app-intents-metadata/AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftconstvalues": {
+      "bytes": 1578,
+      "sha256": "6df886727079702747670b4546bb5f2ba06be18103a45dfe6bbffcf42ff950e9"
+    },
+    "original-app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/ChavrusaSystemIntegrations.swiftconstvalues": {
+      "bytes": 48021,
+      "sha256": "6b11b3b4230fd3a1a0046d2282d105f9f286461378b28a75b46e55a8ba1d1ed2"
+    },
+    "original-app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/VisionIntent.swiftconstvalues": {
+      "bytes": 6853,
+      "sha256": "65e21925abdc1ecac37d5fff5a066de5a309848b206207e57b4ab10b46c859f7"
+    },
+    "original-app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingAppIntents.swiftconstvalues": {
+      "bytes": 34872,
+      "sha256": "eda0ac185be7fd354f90142b5a9aa12ca5e28804fbfd028dd2f3480bf1cb8a3b"
+    },
+    "original-app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftConstValuesFileList": {
+      "bytes": 679,
+      "sha256": "d8256773ac6bb66ba76328a18bc38f49a6e04dac2ff44fe3a7bf2e447a3da63f"
+    },
+    "original-app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftFileList": {
+      "bytes": 379,
+      "sha256": "58288dec228d9aa0e4a813b4b24f592a5f7bb007630f0cc4e6ceed1ed952cf24"
+    },
+    "original-app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftconstvalues": {
+      "bytes": 25429,
+      "sha256": "88ac098af2184b6c0756bdebed5d56eaf99112f0a1d74b9d4e22a80be69d0916"
+    },
+    "original-app-intents-metadata/receipt.json": {
+      "bytes": 2836,
+      "sha256": "d12369d6c1debb1eddf69248710d6982185e09e4eae7bfa78413698d4b7d9100"
+    },
+    "original-native-metadata/HanlinMetadataInput.h": {
+      "bytes": 2316,
+      "sha256": "5c1251646d4c8de07f3ff64f833033848fb9c11c5493b082076f9ab56419767a"
+    },
+    "original-native-metadata/HanlinMetadataInput.inventory.json": {
+      "bytes": 98811,
+      "sha256": "161a43708d1ec1bdc7ed301df322b29f76767b25bef8144bd83349eb862913b8"
+    },
+    "original-native-metadata/provenance.json": {
+      "bytes": 933,
+      "sha256": "b763edf9f1081f2c29c5982981c7a8ed22acd2345e437aca85d11ada4784949c"
+    },
+    "original-native-metadata/visibility.json": {
+      "bytes": 928,
+      "sha256": "07d0157bcaeedead59541b0776fc17f0e21f77bae6eff272c8f954ed4ca696de"
+    },
+    "original-unit-descriptor-receipt.json": {
+      "bytes": 3059,
+      "sha256": "48782b3ecce7e6b8f48434499a0331bdf4a50d450a5b55dc799e1dce3c667cdb"
+    },
+    "request.json": {
+      "bytes": 2088,
+      "sha256": "a35d7db74a12ccfffc049c126aff9a554dd641f4bdb8f4561afa03236f70d7ef"
+    },
+    "scope-verification.json": {
+      "bytes": 3939,
+      "sha256": "f52ded0c994ff9bb650e2b18a664457c1b71c2249507d0eac5479769e4117b44"
+    },
+    "simulator-smoke-14851982748.zip": {
+      "bytes": 3623566,
+      "sha256": "b182d1ebf821eaed35bc1f67365260080f2f11b5ead2873067f97d6926b61c6b"
+    },
+    "test-compile-errors.json": {
+      "bytes": 4498,
+      "sha256": "f81c6545fabf5d55673a7a0983a67407456f903daf44443b4d17d4c461bda3d6"
+    }
+  }
+}
