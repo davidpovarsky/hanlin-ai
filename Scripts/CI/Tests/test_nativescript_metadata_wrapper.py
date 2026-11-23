@@ -60,6 +60,100 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             'framework module ' + (module or name) + ' { umbrella header "Entry.h" export * }')
         return framework
 
+    def test_metadata_search_view_deduplicates_plain_module_copies_and_retains_unique_frameworks(self):
+        with tempfile.TemporaryDirectory(prefix="Hanlin metadata ") as name:
+            root = Path(name)
+            # Xcode stages the same binary in Products and PackageFrameworks.
+            # The plain libssh2 module is then also an upstream -idirafter input.
+            products = root / "Debug-iphonesimulator"
+            packages = products / "PackageFrameworks"
+            first = self.framework(packages, "libssh2")
+            (first / "Modules/module.modulemap").write_text(
+                'module libssh2 { header "../Headers/Entry.h" export * }')
+            second = products / first.name
+            shutil.copytree(first, second)
+            package_only = self.framework(packages, "PackageOnly")
+            host_only = self.framework(products, "HostOnly")
+            before = {str(p): p.read_bytes() for d in [first, second, package_only, host_only]
+                      for p in d.rglob("*") if p.is_file()}
+            view = root / "owned metadata" / "frameworks"
+            inventory = root / "search.inventory.json"
+            search_roots = HEADERS.write_framework_search_view(
+                [packages, products, packages], view, inventory)
+            entries = {p.name: p for directory in search_roots for p in directory.iterdir()}
+            self.assertEqual(set(entries), {"libssh2.framework", "PackageOnly.framework", "HostOnly.framework"})
+            self.assertEqual(len(search_roots), 3)
+            self.assertTrue(entries[first.name].samefile(first))
+            self.assertTrue(entries[host_only.name].samefile(host_only))
+            records = json.loads(inventory.read_text())
+            copies = [v for v in records if v["framework"] == "libssh2.framework"]
+            self.assertEqual([v["status"] for v in copies],
+                             ["SELECTED", "DEDUPLICATED_IDENTICAL"])
+            self.assertEqual(copies[1]["selectedFrameworkPath"], str(first.resolve()))
+            self.assertEqual(copies[0]["inputSHA256"], copies[1]["inputSHA256"])
+            # Source products and the actual binary/link graph are never mutated.
+            self.assertEqual(before, {str(p): p.read_bytes() for d in [first, second, package_only, host_only]
+                                      for p in d.rglob("*") if p.is_file()})
+
+    def test_metadata_search_view_rejects_a_changed_transitive_header_before_exposing_a_view(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            first = self.framework(root / "first", "libssh2")
+            second = root / "second" / first.name
+            shutil.copytree(first, second)
+            (second / "Headers/Exported.h").write_text("// changed libssh2 API")
+            view = root / "owned-view"
+            inventory = root / "search.inventory.json"
+            with self.assertRaisesRegex(RuntimeError, "Conflicting framework/module headers"):
+                HEADERS.write_framework_search_view([first.parent, second.parent], view, inventory)
+            self.assertFalse(view.exists())
+            records = json.loads(inventory.read_text())
+            self.assertEqual(records[-1]["status"], "CONFLICT")
+            self.assertNotEqual(records[0]["inputSHA256"], records[1]["inputSHA256"])
+
+    def test_metadata_search_view_keeps_identical_module_aliases_on_one_physical_owner(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            first = self.framework(root / "first", "Canonical")
+            alias = root / "second/Alias.framework"
+            shutil.copytree(first, alias)
+            view = root / "owned-view"
+            search_roots = HEADERS.write_framework_search_view([first.parent, alias.parent], view,
+                                                               root / "search.inventory.json")
+            entries = {p.name: p for directory in search_roots for p in directory.iterdir()}
+            self.assertEqual(set(entries), {"Canonical.framework", "Alias.framework"})
+            self.assertTrue(entries["Canonical.framework"].samefile(entries["Alias.framework"]))
+
+    def test_metadata_search_view_preserves_a_real_symlink_alias_spelling(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            first = self.framework(root / "first", "Canonical")
+            alias = root / "second/Alias.framework"
+            alias.parent.mkdir()
+            alias.symlink_to(first, target_is_directory=True)
+            search_roots = HEADERS.write_framework_search_view([first.parent, alias.parent],
+                root / "view", root / "search.inventory.json")
+            entries = {p.name: p for directory in search_roots for p in directory.iterdir()}
+            self.assertEqual(set(entries), {"Canonical.framework", "Alias.framework"})
+            self.assertTrue(entries["Alias.framework"].samefile(first))
+
+    def test_metadata_search_view_separates_existing_case_distinct_frameworks(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            upper = self.framework(root / "products", "React")
+            lower = self.framework(root / "modular-headers", "react")
+            (lower / "Modules/module.modulemap").unlink()
+            (lower / "Headers/Exported.h").write_text("// distinct non-modular React support")
+            search_roots = HEADERS.write_framework_search_view([upper.parent, lower.parent],
+                root / "view", root / "search.inventory.json")
+            self.assertEqual(len(search_roots), 2)
+            entries = {p.name: p for directory in search_roots for p in directory.iterdir()}
+            self.assertTrue(entries["React.framework"].samefile(upper))
+            self.assertTrue(entries["react.framework"].samefile(lower))
+            # Each directory has one spelling, so case folding cannot co-locate
+            # the original two owners on the macOS metadata build volume.
+            self.assertNotEqual(entries["React.framework"].parent, entries["react.framework"].parent)
+
     def test_identical_framework_copies_keep_search_order_and_all_unique_frameworks(self):
         with tempfile.TemporaryDirectory(prefix="Hanlin metadata ") as name:
             root = Path(name)
@@ -207,6 +301,8 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             header.write_text("// generated header")
             products = root / "products"
             products.mkdir()
+            selected_framework = self.framework(products / "PackageFrameworks", "libssh2")
+            shutil.copytree(selected_framework, products / selected_framework.name)
             diagnostic = products / "metadata-generation-stderr-arm64.txt"
             diagnostic.write_text("error: missing native module\n")
             (products / "metadata-arm64.bin").write_bytes(b"NSObject\0UIView\0")
@@ -226,14 +322,20 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             (framework / "Headers/UIKit.h").write_text("// SDK fixture")
             (framework / "Modules/module.modulemap").write_text('framework module UIKit { umbrella header "UIKit.h" }')
             env = {"OBJROOT": str(objroot), "SRCROOT": str(root), "TARGET_TEMP_DIR": str(root / "target"),
-                   "PLATFORM_NAME": "iphonesimulator", "CONFIGURATION_BUILD_DIR": str(products), "SDKROOT": str(sdk)}
+                   "PLATFORM_NAME": "iphonesimulator", "CONFIGURATION_BUILD_DIR": str(products), "SDKROOT": str(sdk),
+                   "FRAMEWORK_SEARCH_PATHS": shlex.join([str(selected_framework.parent), str(products)])}
             with patch.dict(os.environ, env), patch.object(WRAPPER, "__file__", str(generator / "wrapper.py")), \
                  patch.object(WRAPPER.sys, "argv", ["wrapper", "arm64"]), \
                  patch.dict(sys.modules, {"metadata_public_headers": HEADERS}), \
                  patch.object(WRAPPER.subprocess, "run") as run, contextlib.redirect_stdout(io.StringIO()):
                 run.return_value.returncode = 0
                 self.assertEqual(WRAPPER.main(), 1)
+                child_environment = run.call_args.kwargs["env"]
+                expected_view = root / "target/HanlinNativeScriptSwiftMetadata-arm64/Frameworks/0000"
+                self.assertEqual(shlex.split(child_environment["FRAMEWORK_SEARCH_PATHS"]), [str(expected_view)])
+                self.assertIn("-fno-modules", child_environment["OTHER_CFLAGS"])
             retained = root / "build/acceptance/nativescript-metadata/iphonesimulator-arm64"
+            self.assertTrue((retained / "FrameworkSearchView.inventory.json").is_file())
             self.assertEqual((retained / diagnostic.name).read_bytes(), diagnostic.read_bytes())
             self.assertEqual((retained / "metadata-arm64.bin").read_bytes(), b"NSObject\0UIView\0")
             self.assertIn('"HanlinNativeServicesBridge": false', (retained / "visibility.json").read_text())

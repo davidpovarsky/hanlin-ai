@@ -10,8 +10,12 @@ The explicit bundle: .main candidate was rejected by Xcode 27.2's metadata extra
 in run 45224582718 even though both original package source files were recompiled.
 Foundation exposes both Bundle and BundleDescription initializer overloads; only the
 BundleDescription overload supplies the default bundle. Omitting the explicit argument
-selects that documented default-capable form. This is a source correction awaiting the
-next original Apple build, not a claim that a Linux syntax check proves metadata export.
+selects that documented default-capable form. Actual run 45230545076 subsequently
+exported Metadata.appintents for the shared HanlinScriptingWidgets target, original
+HanlinScriptingWidgetsHost extension and shared AI_Hanlin target. Retained original
+constant metadata confirms the BundleDescription overload and HanlinAppIntents table.
+The final application build then failed in separate NativeScript libssh2 discovery;
+runtime locale acceptance remains NOT_RUN.
 
 Scripts/SDK/generate_app_intents_resources.py derives the eighteen required keys for
 English, Hebrew and Simplified Chinese from the one canonical
@@ -38,9 +42,10 @@ checks deferred title localization and the actual app/extension bundles in all t
 languages. It is not claimed as passed before Apple execution.
 
 Original failure: [45177292887](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45177292887).
-Latest native attempt: [45224582718](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45224582718)
-passed RuntimeCore preflight, native export and SwiftPM resolution, then failed AppIntents
-metadata export. All 32 selected application/unit/UI scopes remain NOT_RUN in that attempt.
+Latest completed native attempt: [45230545076](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45230545076).
+Three original AppIntents target exports PASS; complete app/test build FAIL at subsequent
+NativeScript libssh2 discovery. All 32 selected scopes (310 authored methods / 342 expected
+invocations) remain NOT_RUN. [Authenticated original evidence](../../docs/agent-sdk/evidence/appintents-export-libssh2-45230545076/README.md).
 
 Primary API references:
 - [AppEntity localized type representation](https://developer.apple.com/documentation/appintents/defining-app-entities-for-your-custom-data-types)

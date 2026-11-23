@@ -162,7 +162,7 @@ def main() -> int:
         environment = os.environ.copy()
         root = Path(required_env("SRCROOT"))
         sys.path.insert(0, str(root / "Scripts/NativeScript"))
-        from metadata_public_headers import write_public_umbrella
+        from metadata_public_headers import write_framework_search_view, write_public_umbrella
         core_support_dir = root / "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include"
         tool_root = root / "build/nativescript-metadata-tool"
         tool = tool_root / "bin/objc-metadata-generator"
@@ -173,11 +173,16 @@ def main() -> int:
         umbrella = module_root / "HanlinMetadataInput.h"
         evidence = root / "build/acceptance/nativescript-metadata" / f"{platform_name}-{arch}"
         evidence.mkdir(parents=True, exist_ok=True)
+        search_view = module_root / "Frameworks"
+        search_inventory = evidence / "FrameworkSearchView.inventory.json"
         try:
+            search_paths = write_framework_search_view(
+                [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))],
+                search_view, search_inventory)
+            environment["FRAMEWORK_SEARCH_PATHS"] = shlex.join(str(p) for p in search_paths)
             write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
                                   sorted(core_support_dir.glob("*.h")) + swift_headers,
-                                  [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))],
-                                  framework_names=HOST_FRAMEWORKS)
+                                  search_paths, framework_names=HOST_FRAMEWORKS)
         finally:
             for path in [umbrella, umbrella.with_suffix(".inventory.json"), tool_root / "provenance.json"]:
                 if path.is_file():

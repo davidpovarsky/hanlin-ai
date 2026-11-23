@@ -1,0 +1,35 @@
+test_metadata_search_view_deduplicates_plain_module_copies_and_retains_unique_frameworks (Scripts.CI.Tests.test_nativescript_metadata_wrapper.NativeScriptMetadataWrapperTests.test_metadata_search_view_deduplicates_plain_module_copies_and_retains_unique_frameworks) ... ERROR
+test_metadata_search_view_rejects_a_changed_transitive_header_before_exposing_a_view (Scripts.CI.Tests.test_nativescript_metadata_wrapper.NativeScriptMetadataWrapperTests.test_metadata_search_view_rejects_a_changed_transitive_header_before_exposing_a_view) ... ERROR
+test_metadata_search_view_keeps_identical_module_aliases_on_one_physical_owner (Scripts.CI.Tests.test_nativescript_metadata_wrapper.NativeScriptMetadataWrapperTests.test_metadata_search_view_keeps_identical_module_aliases_on_one_physical_owner) ... ERROR
+
+======================================================================
+ERROR: test_metadata_search_view_deduplicates_plain_module_copies_and_retains_unique_frameworks (Scripts.CI.Tests.test_nativescript_metadata_wrapper.NativeScriptMetadataWrapperTests.test_metadata_search_view_deduplicates_plain_module_copies_and_retains_unique_frameworks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/CI/Tests/test_nativescript_metadata_wrapper.py", line 81, in test_metadata_search_view_deduplicates_plain_module_copies_and_retains_unique_frameworks
+    HEADERS.write_framework_search_view(
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'metadata_public_headers' has no attribute 'write_framework_search_view'
+
+======================================================================
+ERROR: test_metadata_search_view_rejects_a_changed_transitive_header_before_exposing_a_view (Scripts.CI.Tests.test_nativescript_metadata_wrapper.NativeScriptMetadataWrapperTests.test_metadata_search_view_rejects_a_changed_transitive_header_before_exposing_a_view)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/CI/Tests/test_nativescript_metadata_wrapper.py", line 107, in test_metadata_search_view_rejects_a_changed_transitive_header_before_exposing_a_view
+    HEADERS.write_framework_search_view([first.parent, second.parent], view, inventory)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'metadata_public_headers' has no attribute 'write_framework_search_view'
+
+======================================================================
+ERROR: test_metadata_search_view_keeps_identical_module_aliases_on_one_physical_owner (Scripts.CI.Tests.test_nativescript_metadata_wrapper.NativeScriptMetadataWrapperTests.test_metadata_search_view_keeps_identical_module_aliases_on_one_physical_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/CI/Tests/test_nativescript_metadata_wrapper.py", line 120, in test_metadata_search_view_keeps_identical_module_aliases_on_one_physical_owner
+    HEADERS.write_framework_search_view([first.parent, alias.parent], view,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'metadata_public_headers' has no attribute 'write_framework_search_view'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.009s
+
+FAILED (errors=3)

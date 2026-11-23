@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "parentSource": "0b74c6c1df60926c09a00560598af478bafb3e75",
+  "failedRun": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45230545076",
+  "failedRunSource": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "scope": "NativeScript metadata discovery only; original products, link graph, package pins and native runtime unchanged",
+  "controls": {
+    "initialNewAPICases": {
+      "errors": 3,
+      "note": "New API did not exist; not an independent native-Clang reproduction."
+    },
+    "reviewedAffectedCases": {
+      "passed": 16,
+      "failed": 0,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "Scripts.CI.Tests.test_nativescript_metadata_wrapper",
+        "-v"
+      ]
+    }
+  },
+  "nativeStatus": "NOT_RUN",
+  "review": "Independent read-only review identified and resolved real symlink-alias and case-distinct React/react ownership issues. No reviewer test replay.",
+  "sha256": {
+    "Scripts/NativeScript/metadata_public_headers.py": "5a8a110a3fe4a692faede3211a22b0326065cd43026a4f47c3e3d7d1d5de4e5f",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+    "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": "264785f23bd24531e2a3e967b6decc4944c72726f5387b969ffc450d8ec32414"
+  },
+  "rawLogs": {
+    "reviewed-after-controls.log": "a911c4e5fea4b4ce896564709611cc1ca1b67f5c4474a82dc157089e18425179",
+    "before-controls.log": "0b44a5cd1d2ca905625ef59ac7968a1a65feea12e2fbc7eca6665e4ab19804a0"
+  },
+  "upstream": {
+    "repository": "https://github.com/NativeScript/ios",
+    "source": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+    "files": {
+      "upstream-launcher-v9.1.0.py": "16daef6ea4191d6b5fe7cbd0adc97b201a80f91870f4c5fda698e7828465abe3",
+      "upstream-main-v9.1.0.cpp": "88943e6a0a5fad5eb35300b18c09b3ce9a74a850a7f8473ba3fa6f05e2cd1b0a",
+      "upstream-parser-v9.1.0.cpp": "614ca3c0135e053548c09143d1d7b751590871127a8b61a377a7796c8d44eebb"
+    }
+  }
+}
