@@ -32,6 +32,19 @@ cp \
   "${WORK_ROOT}/"
 cp -R "${HOST_SOURCE}/Tests" "${WORK_ROOT}/Tests"
 
+# MiniApp authoring consumes the same original npm packages as the native host.
+# This is included with the tool implementation, not installed during an agent run.
+if [[ -f "${HOST_SOURCE}/miniapp-authoring.mjs" ]]; then
+  for tooling in Expo NativeScript; do
+    if [[ ! -f "${REPOSITORY_ROOT}/Scripts/${tooling}/node_modules/typescript/lib/typescript.js" ]]; then
+      npm ci --ignore-scripts --no-audit --no-fund --prefix "${REPOSITORY_ROOT}/Scripts/${tooling}"
+    fi
+  done
+  node "${REPOSITORY_ROOT}/Scripts/Expo/prepare-types.mjs"
+  node "${REPOSITORY_ROOT}/Scripts/MiniApps/generate-scriptwidget-types.mjs" --check
+  node "${REPOSITORY_ROOT}/Scripts/MiniApps/stage-sdk.mjs" --repository="${REPOSITORY_ROOT}" --output="${WORK_ROOT}/MiniAppSDK"
+fi
+
 (
   cd "${WORK_ROOT}"
   npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund

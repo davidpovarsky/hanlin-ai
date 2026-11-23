@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "repository": "https://github.com/everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Editor/editorfe/src/scriptWidgetAPI.js",
+      "local": "scriptWidgetAPI.js",
+      "sha256": "96188291e43d94907922ae5ebbdec1cc4eb6bd394b0696f47d835f7dc5301e1b"
+    },
+    {
+      "repository": "https://github.com/everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Editor/editorfe/src/storageAPICatalog.js",
+      "local": "storageAPICatalog.js",
+      "sha256": "9b9cb5e46575b38697d56d0263fa147d50cd9bef6685f82ddd175ebe561b9f45"
+    },
+    {
+      "repository": "https://github.com/everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Editor/editorfe/src/dataAPICatalog.js",
+      "local": "dataAPICatalog.js",
+      "sha256": "71958adac054862f6fe41100c6709bdbbdae7ed59a07f322f934ad2f73d70e88"
+    },
+    {
+      "repository": "https://github.com/everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "LICENSE",
+      "local": "LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "repository": "https://github.com/everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "NOTICE",
+      "local": "NOTICE",
+      "sha256": "9c66a31a160e44905959f8e02f59f91325439e75e869d9ef7de52ad1983a1a06"
+    },
+    {
+      "repository": "https://github.com/everettjf/scriptwidget",
+      "commit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "upstream": "Editor/editorfe/src/systemAPICatalog.js",
+      "local": "systemAPICatalog.js",
+      "sha256": "78f83702de1766718ebfde97151a373094fe38f2e480d0b915d99e968b862c90"
+    }
+  ]
+}

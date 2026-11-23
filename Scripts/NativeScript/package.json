@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "@nativescript/ios": "9.1.0",
+    "@nativescript/types": "9.1.0",
     "@nativescript/vite": "8.0.0",
     "typescript": "5.9.3",
     "vite": "8.0.0"

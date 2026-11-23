@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "preserve",
+    "lib": [
+      "ES2023"
+    ],
+    "strict": true,
+    "skipLibCheck": false,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false,
+    "types": []
+  },
+  "files": [
+    "components.d.ts",
+    "host-globals.d.ts"
+  ]
+}
