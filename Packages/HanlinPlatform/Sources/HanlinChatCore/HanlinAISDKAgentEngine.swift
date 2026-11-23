@@ -156,12 +156,8 @@ public actor HanlinAISDKAgentEngine {
         // Do not send sampling controls or max_output_tokens in this preview:
         // those fields are rejected even if the user configured them for an
         // ordinary paid OpenAI API model.
-        let usesChatGPTPlan = configuration.apiType?.lowercased() == "openai-responses"
-        // The current ChatGPT-plan Responses preview requires namespaced
-        // tools. Until the AI SDK supports this wire format, do not send
-        // unsupported flat function tools that would reject inference.
-        // Hosts must surface this limitation instead of claiming actions.
-        let initialTools: ToolSet = usesChatGPTPlan ? [:] : try Self.makeTools(definitions)
+        let usesChatGPTPlan = configuration.apiType?.lowercased() == "openai-chatgpt-plan"
+        let initialTools = try Self.makeTools(definitions)
         let settings = CallSettings(
             maxOutputTokens: usesChatGPTPlan ? nil : configuration.maxTokens,
             temperature: usesChatGPTPlan ? nil :

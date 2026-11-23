@@ -39,7 +39,7 @@ public enum HanlinAISDKProviderFactory {
         } else if company == "GOOGLE" || company == "GEMINI" || apiType.contains("gemini") {
             kind = .google
         } else if company == "OPENAI" && !isOpenAICompatibleHost(configuration.endpoint.host) {
-            kind = apiType == "openai-responses" ? .openAIResponses : .openAI
+            kind = ["openai-responses", "openai-chatgpt-plan"].contains(apiType) ? .openAIResponses : .openAI
         } else {
             kind = .openAICompatible
         }
@@ -131,7 +131,9 @@ extension HanlinAISDKProviderFactory {
                 apiKey: configuration.apiKey,
                 headers: descriptor.headers,
                 name: "hanlin-openai",
-                fetch: fetch
+                fetch: configuration.apiType?.lowercased() == "openai-chatgpt-plan"
+                    ? HanlinChatGPTPlanTransport.wrap(fetch ?? makeFetch(sessionConfiguration: .default))
+                    : fetch
             ))
             if descriptor.kind == .openAIResponses {
                 model = provider.responses(descriptor.modelID)
