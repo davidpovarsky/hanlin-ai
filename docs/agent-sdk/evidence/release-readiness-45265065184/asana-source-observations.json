@@ -1,0 +1,40 @@
+{
+  "SDK06": {
+    "taskId": "1220769818981326",
+    "name": "SDK06 | המשך ראיות קבלה מ־22.11.2026 — פתוח",
+    "completed": false,
+    "modifiedAt": "2026-11-23T20:45:21.555Z",
+    "lastComment": {
+      "gid": "1220828318044889",
+      "created_at": "2026-11-23T20:45:21.554Z",
+      "created_by": {
+        "gid": "1219597879016933",
+        "name": "דוד פוברסקי",
+        "resource_type": "user"
+      },
+      "resource_type": "story",
+      "text": "שלב SDK — תיקון closure שולב, פורסם ונשלח להרצה.\nמקור56b4caafae1c0898b483717abed495f2e3b9281b כולל תיקון226934: BlockMarkupChangerMock.swift המקורי נוסף כקובץ השמיני בפרויקט הרכיב. שתי שורות המקור וה-central הותאמו;85 input rows,70 module origins ו67 preloads נשמרו וסדר ה-preloads נותר ממויין. קובצי המוצר עצמם אינם משתנים בתיקון זה. custody המקור+ראיות c53830a6fb1916a4d077ddef122db085accb791070fa997f5248cee8a8ba7f5b.\nהרצה45262248686/1 נשלחה פעם אחת והזהות המדויקת אומתה; במועד האימות היא queued. יש observer יחיד, אין rerun או replay של הבדיקות ההיסטוריות. הצלחת compile/enumeration וכל23 הבדיקות עדיין ממתינה לתוצאת המקור האמיתית.\nhttps://github.com/davidpovarsky/anytype-swift/actions/runs/45262248686",
+      "type": "comment",
+      "resource_subtype": "comment_added"
+    }
+  },
+  "SDK07": {
+    "taskId": "1220542174542004",
+    "name": "[HANLIN-SDK-07][P1][OTZARIA] נקודת חיבור SDK והכנת HostAdapter ל־API המאוחד העתידי — ללא מיפוי API",
+    "completed": false,
+    "modifiedAt": "2026-11-23T20:45:30.140Z",
+    "lastComment": {
+      "gid": "1220832272391940",
+      "created_at": "2026-11-23T20:45:30.140Z",
+      "created_by": {
+        "gid": "1219597879016933",
+        "name": "דוד פוברסקי",
+        "resource_type": "user"
+      },
+      "resource_type": "story",
+      "text": "[תומר / סוכן אינטגרציה | SDK07 — שם הסוד קיים; בעל הרצה חיה פעיל ומיפוי תלות משותפת, 23.11.2026]\n\nהעדכון הקודם של missing-secret אינו משקף עוד את בדיקת המטא־דאטה החדשה: ב־20:25:32 UTC GitHub דיווח ש־OTZARIA_LIVE_GEMINI_API_KEY קיים בין 11 שמות ה־repository secrets של Maktabah. נקרא רק קיום השם, ללא ערך. זו אינה בדיקת תוקף credential או קבלת ספק חי.\n\nלפני ההרצה הצרה שהוכנה, בדיקת admission מצאה שכבר פועלת הרצה מקורית של בעל המשימה:\nhttps://github.com/davidpovarsky/Maktabah/actions/runs/45253606271\nמקור 0123b569d489984ade291b5c065eb5fe6500dec6, ענף codex/otzaria-hanlin-stream-continuation-20261123, התחלה 19:53:30 UTC. לכן לא נשלחה הרצה כפולה ולא נפתח watcher או הורדת artifact במסלול האינטגרציה. בעל ההרצה המקורי שומר על הבעלות על התוצאה ועל ניקוי הקלט הזמני שלו.\n\nמיפוי המקור חשוב: ההרצה הזו קשורה ל־App07845de8c335a975027fd375f287a85754da51ab, ל־Hanlin gitlink ca3c91f2233bf5c77990643b29a874aac8704639 ול־SwiftAI07431abccbfb151ca2dab67bca6cf86fcb2bd3b8. היא אינה הרצה של ה־Host הקנוני06613ff/SDK32da. הענפים התפצלו, ויש ביניהם שינויים אמיתיים ב־Host session/adapter/search observation ובדיאגנוסטיקת UI; בענף החי אין HanlinSDK.lock.json. אין להעביר את התוצאה העתידית אוטומטית לגרסת SDK אחרת.\n\nנמצא תיקון משותף רלוונטי:07431 הוא צאצא מדויק של producer e7bf הנוכחי. קובץ הייצור היחיד ששונה הוא Sources/SwiftAISDK/GenerateText/StreamTextActor.swift. המשך השיחה נקבע לפי תוצאות כלים שהושלמו ותנאי העצירה הקיימים, ולא לפי הדרישה שספק יחזיר דווקא finishReason=toolCalls. אין שינוי API ציבורי, מניפסט חבילה, ספק או אימות. הסוכן הראשי אישר אימוץ מרכזי של התיקון, עם10 מיקומי pin ויצירת המניפסט הקנוני; במסלול הדוח לא בוצע שינוי pin.\n\nאימות GitHub עצמאי: https://github.com/davidpovarsky/swift-ai-sdk/actions/runs/45246940299 הסתיימה SUCCESS על07431; מטא־דאטת artifact14854169874 תואמת ל־941711bytes ול־SHA256 da9e526111151bdf15fd910a4e57a3679a1a2df23b235f4009dfbdb2cb81125d. קבלת בעל המשימה המקורית מדווחת4185 מתודות מקוריות ללא כשל/דילוג ושש הפעלות focused על פני חמש מתודות, עם reuse של ראיות red/green. שער ה־CI המקורי, שבודק את מלאי הזהויות והכישלונות, נבדק במקור. לא הורד שוב XML ולא הורצו שוב הבדיקות לצורך הדוח. תחום ההרצה: x86_64 macOS26/Xcode26.6; זו אינה קבלת iOS27 או ספק חי.\n\nה־Host הקנוני נשאר נקי ב־06613ff עם SDK32da. כל545 רשומות המקור שנבחרו עדיין תואמות למועמד Hanlin0b40, פרט לתוספת הקטלוג שכבר סויגה מול32da. אימוץ07431 ישנה את התלות הטרנזיטיבית גם אם קובצי ה־Host/SDK המקומיים יישארו זהים; ה־pin הסופי והתקנתו ייקשרו למקור ולראיות הסופיים. Host48 וה־UI ללא שליחה שומרים על שיוכם ההיסטורי ולא הורצו שוב.\n\nדוח מקור והכנת הפצה פורסם ב־5ab54bfd6123ab946b829890d1ff33c089318b54:\nhttps://github.com/davidpovarsky/hanlin-ai/tree/5ab54bfd6123ab946b829890d1ff33c089318b54/docs/agent-sdk/evidence/release-readiness-45256955142\nהסטטוס: ACTIVE_EXTERNAL_OWNER לקבלה החיה; final Host adoption והפצת Native18 עדיין HELD/NOT_RUN. המשימה נשארת פתוחה.",
+      "type": "comment",
+      "resource_subtype": "comment_added"
+    }
+  }
+}

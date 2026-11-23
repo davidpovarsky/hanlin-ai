@@ -1,0 +1,244 @@
+{
+  "recordedUTC": "2026-11-23T21:06:35.686593+00:00",
+  "owner": "/root/release_hosts",
+  "sourceCommit": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "previousQualifiedSource": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+  "parentReportedMainRun": 45265065184,
+  "mainRunQueried": false,
+  "mainWatcherCreated": false,
+  "nativeArtifactsAcquired": false,
+  "sourceStatus": "READ_ONLY_QUALIFIED",
+  "hosts": {
+    "anytype": {
+      "consumerCommit": "988f451959af1a40d1bc49bd6ed3798a730f5e37",
+      "currentSDKPin": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+      "selectedProducts": [
+        "HanlinHostContracts",
+        "HanlinPlatformContracts",
+        "HanlinAgentCore",
+        "HanlinPersistenceAdapters",
+        "HanlinChatCore",
+        "HanlinScriptUI",
+        "HanlinChatUI",
+        "HanlinPresentationKit"
+      ],
+      "sourcePaths": [
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+        "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+        "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+        "Packages/HanlinPlatform/Sources/HanlinChatCore",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+        "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+      ],
+      "sourceRecordCount": 547,
+      "priorSourceRecordSHA256": "56db02ef689f000ef424bcd6b94e4cf6b7c0631f6fd30428b3028253ace0e61b",
+      "currentSourceRecordSHA256": "5cd98f19aa0eb84d9431cdccf35006727dd9a2b37cb8523f9f41dd483fd4674a",
+      "changedRecords": [
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+          "before": {
+            "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+            "mode": "100644",
+            "type": "blob",
+            "gitBlob": "76607169b6c2e4b7680b4df35ac32e00a4376d56"
+          },
+          "after": {
+            "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+            "mode": "100644",
+            "type": "blob",
+            "gitBlob": "4eae8887f742c67a6ecdf464a9aa5cd98dedac87"
+          }
+        }
+      ],
+      "unchangedRecordCount": 546,
+      "finalPinInstall": "NOT_RUN",
+      "scope": "Same selected source membership and modes; one original disclosure component changes. Shared external producer also changes, independently of these selected-file hashes."
+    },
+    "lorvex": {
+      "consumerCommit": "575a4322f261b86803d927b500232d6007542f8b",
+      "currentSDKPin": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+      "selectedProducts": [
+        "HanlinAgentCore",
+        "HanlinHostContracts",
+        "HanlinPersistenceAdapters",
+        "HanlinPlatformContracts",
+        "HanlinChatCore",
+        "HanlinChatUI",
+        "HanlinPresentationKit"
+      ],
+      "sourcePaths": [
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+        "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+        "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+        "Packages/HanlinPlatform/Sources/HanlinChatCore",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+        "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+        "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+      ],
+      "sourceRecordCount": 535,
+      "priorSourceRecordSHA256": "7627b83ba2faf22d9c1140600f7da59c4ac0d0edeab692fefc978196cec552b3",
+      "currentSourceRecordSHA256": "02ee2ef77ddcb863fd34b494ac8b4bb5c94aa7e6eb0c006498c8a716ec402171",
+      "changedRecords": [
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+          "before": {
+            "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+            "mode": "100644",
+            "type": "blob",
+            "gitBlob": "76607169b6c2e4b7680b4df35ac32e00a4376d56"
+          },
+          "after": {
+            "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+            "mode": "100644",
+            "type": "blob",
+            "gitBlob": "4eae8887f742c67a6ecdf464a9aa5cd98dedac87"
+          }
+        }
+      ],
+      "unchangedRecordCount": 534,
+      "finalPinInstall": "NOT_RUN",
+      "scope": "Same selected source membership and modes; one original disclosure component changes. Shared external producer also changes, independently of these selected-file hashes."
+    },
+    "maktabah": {
+      "consumerCommit": "06613ffcff6d53985318341f9d8adc3246df7fd5",
+      "currentSDKPin": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+      "selectedProducts": [
+        "HanlinHostContracts",
+        "HanlinAgentCore",
+        "HanlinChatCore",
+        "HanlinScriptUI",
+        "HanlinChatUI",
+        "HanlinPresentationKit",
+        "HanlinRichUI",
+        "HanlinPlatformContracts"
+      ],
+      "sourcePaths": [
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+        "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+        "Packages/HanlinPlatform/Sources/HanlinChatCore",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+        "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+      ],
+      "sourceRecordCount": 545,
+      "priorSourceRecordSHA256": "2e9d17ec227b5d0401292df1e9e93feb706578356145ba2d73eed092460dc3bd",
+      "currentSourceRecordSHA256": "efa48190d230148ed64e2805f197ca7d05403604466c9d0418d0c3e8762b8457",
+      "changedRecords": [
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+          "before": {
+            "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+            "mode": "100644",
+            "type": "blob",
+            "gitBlob": "76607169b6c2e4b7680b4df35ac32e00a4376d56"
+          },
+          "after": {
+            "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+            "mode": "100644",
+            "type": "blob",
+            "gitBlob": "4eae8887f742c67a6ecdf464a9aa5cd98dedac87"
+          }
+        }
+      ],
+      "unchangedRecordCount": 544,
+      "finalPinInstall": "NOT_RUN",
+      "scope": "Same selected source membership and modes; one original disclosure component changes. Shared external producer also changes, independently of these selected-file hashes."
+    }
+  },
+  "motion": {
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+    "consumers": [
+      "HanlinActivityHierarchy.swift",
+      "HanlinInlineToolApproval.swift",
+      "HanlinDisclosureGroupStyle inside HanlinAnimatedDisclosure.swift"
+    ],
+    "change": "Retains measured mounted content through animated collapse/reversal; removes completion-time unmount/revision. Zero-height clipping, hit-testing, accessibility and settle reset remain.",
+    "executionQualification": "Original Motion lane owns changed behavior acceptance. This source inspection makes no native/UI PASS claim."
+  },
+  "producer": {
+    "before": "e7bf34111e603ca977becd007dd4e5bb109af857",
+    "after": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+    "adoptionCommit": "09a05c7107b2e91e3408b64e5b83ab39044693a7",
+    "soleProductionDelta": "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift",
+    "scope": "All three profiles select AgentCore/ChatCore, so all share the completed-tool-result continuation dependency. Historical e7 tests keep their original attribution; source graphs are no longer identical.",
+    "coordinatedCIPinFixes": [
+      "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
+      "Scripts/CI/IntegrationValidation/run_host_schema.sh",
+      "Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh"
+    ],
+    "exactFetch": "run_agent_sdk.sh fetches the requested full producer SHA before detached checkout; old branch clone removed",
+    "reviewedUpstreamEvidence": "../release-readiness-45256955142/swiftai-07431/"
+  },
+  "nativePreparation": {
+    "count": 11,
+    "inputSHA256": {
+      "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "Scripts/Expo/dependency-lock.json": "d9ded3b3d73b1d563d149e1456ffaf8d2bfecdf222ecca6657aafb10cc4ea536",
+      "Scripts/Expo/prepare-ios-dependencies.mjs": "38d7825492e0c68c9e50a4273cf254648ff8ae81b185716fdbc032709dbca1a4",
+      "Scripts/ExpoNativeAPI/dependency-lock.json": "2a2717c43e5396128dfa8b48baa6951a5d9f79661c9d9cc76d0c01fbf8021704",
+      "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "1ee5f051f6315fcef4ce08ea7cb5db882c39c18a9b3f02a06733d2aed4bab35d",
+      "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+      "Scripts/NativeScript/dependency-lock.json": "7e03d1d97c25f13d1242667f4bba8635391452028cb4e3fb38c0ab215ad2ff8f",
+      "Scripts/NativeScript/package-lock.json": "17f34a1d12fdf55e4a8c44572639ee75df3b5ab4bdb65ffa54712e5f2d737984",
+      "Scripts/NativeScript/prepare-ios-dependencies.mjs": "814cb0ff5b5aa4575c0daaced0014e461d51d108059f4cccb396f9c1d5c6e5a5",
+      "Scripts/Runtime/prepare-runtime-core.sh": "8765967fdba85cc77dcbf3c02936993c39bf186d7327560a3d84590222710a10"
+    },
+    "changedSincePrevious": [],
+    "currentMaterializedMatchesGit": true,
+    "helperContractExpanded": false,
+    "publication": "HELD until an eligible successful producer and its actual acceptance are admitted; all previously failed prepared artifacts remain ineligible"
+  },
+  "coverage": {
+    "products": 44,
+    "targets": 108,
+    "originalApplicationSwiftSources": 507,
+    "childManifests": 18,
+    "localPackageEdgesRemaining": 0
+  },
+  "SDK06": {
+    "ownerLatestControllerSource": "56b4caafae1c0898b483717abed495f2e3b9281b",
+    "ownerLatestRun": 45262248686,
+    "ownerObservedStatus": "queued at20:45:21Z comment; not queried here",
+    "productAcceptance": "NOT_RUN / owner pending",
+    "scopeBoundary": "Existing exact510 original Host component records and unchanged test assertions remain qualified only at their recorded source boundary. The eighth original mock is1430B SHA3648c5cda4541c0b5297cce33835132a0ebea72f521a66917360cc0bf9dc48cc and was independently proven equal at75bd/988f. The newer controller source and85/70/67 inventory are owner-reported; controller not fetched/imported/executed. A future23methods/32cases result does not itself qualify the newer shared Hanlin engine or disclosure."
+  },
+  "SDK07": {
+    "latestOwnerOutcome": "No newer outcome in the one-time task read; latest comment20:45:30Z is prior source-scope report",
+    "externalLiveRun": 45253606271,
+    "externalSource": "0123b569d489984ade291b5c065eb5fe6500dec6",
+    "externalSDK": "ca3c91f2233bf5c77990643b29a874aac8704639",
+    "externalProducer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+    "canonicalConsumer": "06613ffcff6d53985318341f9d8adc3246df7fd5",
+    "canonicalSDK": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+    "qualification": "External live branch has additional actual Host/session/adapter/UI differences; future result cannot automatically qualify canonical consumer. Existing external owner retains watcher/acquisition/credential cleanup."
+  },
+  "activity": {
+    "newTests": 0,
+    "newInstalls": 0,
+    "hostPinChanges": 0,
+    "CIQueries": 0,
+    "newArtifactDownloads": 0,
+    "filesRemoved": 0
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "recordedUTC": "2026-11-23T21:04:19.983404+00:00",
+  "owner": "/root/release_hosts",
+  "freeBytes": 1294213120,
+  "extractions": [
+    {
+      "extraction": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-app-scan-45246711373/extracted",
+      "preservedOriginalZIP": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-app-scan-45246711373/simulator-smoke-14856943977.zip",
+      "zipBytes": 3812403,
+      "zipSHA256": "b0e060b4472132dae4b938ad36e8abf1d23ac35d9604f1ebe1efbded0b5c9e0a",
+      "fileCount": 70,
+      "recoverableAllocatedBytes": 23601152,
+      "reproducibleFileBytes": 23289933,
+      "extraFiles": [],
+      "missingFiles": [],
+      "mismatchedFiles": [],
+      "reconstruction": "Extract the preserved authenticated ZIP to this same folder; no network or native tooling required",
+      "action": "INVENTORY_ONLY_NOT_REMOVED"
+    },
+    {
+      "extraction": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-appintents-libssh2-45230545076/extracted",
+      "preservedOriginalZIP": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-appintents-libssh2-45230545076/simulator-smoke-14849715568.zip",
+      "zipBytes": 3893728,
+      "zipSHA256": "822d58b4853deb384896071ade17f4982599b61bbb7dfb72faf5cbc3a258c695",
+      "fileCount": 62,
+      "recoverableAllocatedBytes": 23678976,
+      "reproducibleFileBytes": 23418447,
+      "extraFiles": [],
+      "missingFiles": [],
+      "mismatchedFiles": [],
+      "reconstruction": "Extract the preserved authenticated ZIP to this same folder; no network or native tooling required",
+      "action": "INVENTORY_ONLY_NOT_REMOVED"
+    },
+    {
+      "extraction": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-localization-scan-45256955142/original",
+      "preservedOriginalZIP": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-localization-scan-45256955142/simulator-smoke-14860023107.zip",
+      "zipBytes": 5098802,
+      "zipSHA256": "f659bec8fe284616e3ee323d0f2a37e5bd1749440551fe70bc8fc128d12438db",
+      "fileCount": 72,
+      "recoverableAllocatedBytes": 27963392,
+      "reproducibleFileBytes": 27647766,
+      "extraFiles": [],
+      "missingFiles": [],
+      "mismatchedFiles": [],
+      "reconstruction": "Extract the preserved authenticated ZIP to this same folder; no network or native tooling required",
+      "action": "INVENTORY_ONLY_NOT_REMOVED"
+    },
+    {
+      "extraction": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-nativescript-complete-45238831508/extracted",
+      "preservedOriginalZIP": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-nativescript-complete-45238831508/simulator-smoke-14851982748.zip",
+      "zipBytes": 3623566,
+      "zipSHA256": "b182d1ebf821eaed35bc1f67365260080f2f11b5ead2873067f97d6926b61c6b",
+      "fileCount": 63,
+      "recoverableAllocatedBytes": 23052288,
+      "reproducibleFileBytes": 22782435,
+      "extraFiles": [],
+      "missingFiles": [],
+      "mismatchedFiles": [],
+      "reconstruction": "Extract the preserved authenticated ZIP to this same folder; no network or native tooling required",
+      "action": "INVENTORY_ONLY_NOT_REMOVED"
+    }
+  ],
+  "onlyOwnWorktreesInspected": true,
+  "filesRemoved": 0,
+  "decodedXCResultIntermediates": "Not nominated: reconstruction transform is not retained in their short receipt"
+}
