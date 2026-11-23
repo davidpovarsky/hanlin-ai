@@ -1,0 +1,14 @@
+[
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/davidpovarsky/hanlin-ai/blob/c1c9fde5299124953d7ced72748dc09b50b72f7f/.github",
+    "start_line": 1,
+    "start_column": null,
+    "end_line": 1,
+    "end_column": null,
+    "annotation_level": "failure",
+    "title": "",
+    "message": "The job was not acquired by Runner of type hosted even after multiple attempts",
+    "raw_details": ""
+  }
+]
