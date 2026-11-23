@@ -38,8 +38,10 @@ add a second catalog, persistence layer, credential store, or startup path.
   are not logged because they may contain original row values.
 - Original model metadata refresh now stays inside `systemProvision`. Original
   model naming, built-in metadata, ordering, local-model ownership and Apple
-  catalog registration remain in the same loader. Existing model duplicate
-  handling is unchanged by this focused provider correction.
+  catalog registration remain in the same loader. The subsequent focused duplicate audit also preserves custom models and ambiguous
+  equal-name groups by their original UUIDs; it does not choose or erase a row
+  according to fetch order. Only unique catalog-owned rows follow normal refresh
+  and retirement. Malformed custom metadata remains available for repair.
 
 The original built-in provider catalog contains 29 explicit routing identifiers;
 a source inventory found no duplicate identifier. No key material was used in
@@ -47,7 +49,7 @@ this inventory or placed in this receipt.
 
 ## Focused native acceptance additions
 
-All six methods extend the existing `HanlinApplicationEmbeddingTests` suite,
+The first six methods extend the existing `HanlinApplicationEmbeddingTests` suite,
 which is already selected in the combined native acceptance workflow. Fixtures
 use actual in-memory SwiftData rows and isolated Keychain services, not additional
 full application contexts or a replacement runtime. They clean up only their
@@ -73,3 +75,24 @@ Oracle, and no historical test receipt is relabeled as validation of this new
 behavior. The prepared combined Apple gate must execute the six added methods
 before their native results can be accepted. Existing DATA-05 receipts remain
 applicable only to their original unchanged inputs.
+
+## Follow-up: original custom model duplicate preservation
+
+The original model loader used a name-to-first-row map and deleted every later
+row with that name, including custom rows from distinct providers and rows
+selected through their public UUID. The same loader now groups by the existing
+routing name, refreshes only an unambiguous system-owned row, and retains every
+custom or ambiguous legacy group. Unambiguous removed built-ins and invalid
+system defaults keep their original cleanup behavior. The local-model exception
+and Apple catalog registration remain unchanged. Model refresh now also
+checkpoints pending edits and rolls back its uncommitted changes on failure.
+
+Two additional native regressions are in the existing embedding suite:
+
+- `HanlinApplicationEmbeddingTests/modelPreloadingPreservesDistinctCustomRowsWithEqualNames`
+- `HanlinApplicationEmbeddingTests/modelPreloadingRetainsBuiltinCustomNameCollision`
+
+These assert UUID, provider, capability and metadata retention, including a
+malformed custom legacy row. The two changed Swift files parse and the diff
+check passes on Oracle. Their native result remains pending; no separate CI was
+launched for this follow-up.

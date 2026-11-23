@@ -272,4 +272,46 @@ struct HanlinApplicationEmbeddingTests {
         #expect(model.position == 900 && model.price == -1 && model.isHidden)
         #expect(HanlinApplicationModelCapabilities(model) == capabilities)
     }
+    @Test
+    func modelPreloadingPreservesDistinctCustomRowsWithEqualNames() throws {
+        let (container, _, policy) = try providerFixture()
+        defer { removeFixtureCredentials(policy) }
+        let first = AllModels(name: "legacy-shared-name", displayName: "First custom model",
+            position: 900, company: "HOST_FIRST", supportsToolUse: true, systemProvision: false)
+        let second = AllModels(name: "legacy-shared-name", displayName: "Second custom model",
+            position: 901, company: "HOST_SECOND", supportsReasoning: true, systemProvision: false)
+        let malformed = AllModels(name: nil, displayName: "Retained legacy custom metadata",
+            position: 902, company: "HOST_LEGACY", systemProvision: false)
+        for model in [first, second, malformed] { container.mainContext.insert(model) }
+        try container.mainContext.save()
+        let ids = Set([first.id, second.id, malformed.id])
+        preloadModelDataIfNeeded(context: container.mainContext)
+        let retained = try container.mainContext.fetch(FetchDescriptor<AllModels>()).filter { ids.contains($0.id) }
+        #expect(Set(retained.map(\.id)) == ids)
+        #expect(first.company == "HOST_FIRST" && first.supportsToolUse)
+        #expect(second.company == "HOST_SECOND" && second.supportsReasoning)
+        #expect(malformed.displayName == "Retained legacy custom metadata")
+    }
+
+    @Test
+    func modelPreloadingRetainsBuiltinCustomNameCollision() throws {
+        let (container, _, policy) = try providerFixture()
+        defer { removeFixtureCredentials(policy) }
+        let builtin = try #require(getModelList().first { $0.name?.isEmpty == false && $0.company != "LOCAL" })
+        let custom = AllModels(name: builtin.name, displayName: "Host-owned collision",
+            position: 900, company: "HOST_ROUTING_ID", price: -1, isHidden: true,
+            supportsToolUse: !builtin.supportsToolUse, systemProvision: false)
+        container.mainContext.insert(builtin)
+        container.mainContext.insert(custom)
+        try container.mainContext.save()
+        let ids = Set([builtin.id, custom.id])
+        let company = builtin.company, capabilities = HanlinApplicationModelCapabilities(custom)
+        preloadModelDataIfNeeded(context: container.mainContext)
+        let retained = try container.mainContext.fetch(FetchDescriptor<AllModels>()).filter { ids.contains($0.id) }
+        #expect(Set(retained.map(\.id)) == ids)
+        #expect(builtin.company == company && builtin.systemProvision)
+        #expect(custom.company == "HOST_ROUTING_ID" && custom.price == -1 && custom.isHidden)
+        #expect(!custom.systemProvision && HanlinApplicationModelCapabilities(custom) == capabilities)
+    }
+
 }

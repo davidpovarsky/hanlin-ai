@@ -11,23 +11,23 @@ import Foundation
 // MARK: - 模型数据预加载
 @MainActor
 func preloadModelDataIfNeeded(context: ModelContext) {
+    var checkpointEstablished = false
     do {
+        if context.hasChanges { try context.save() }
+        checkpointEstablished = true
         let fetchDescriptor = FetchDescriptor<AllModels>()
         let existingData = try context.fetch(fetchDescriptor)
-        
-        // 删除无效数据：如果 name 为空，则视为无效
-        var validModelsMap: [String: AllModels] = [:]
+
+        // Model UUIDs, not equal routing/display names, identify stored rows.
+        // Preserve custom and ambiguous legacy rows instead of selecting one by
+        // fetch order. Only an unambiguous catalog-owned row may be refreshed.
+        var validModelsMap: [String: [AllModels]] = [:]
         var modelsToDelete: [AllModels] = []
         for model in existingData {
             if HanlinAppleModelCatalogAdapter.isNative(model) { continue }
             if let name = model.name, !name.isEmpty {
-                // 如果同名记录已存在，则保留第一个，其他重复的记录标记删除
-                if validModelsMap[name] == nil {
-                    validModelsMap[name] = model
-                } else {
-                    modelsToDelete.append(model)
-                }
-            } else {
+                validModelsMap[name, default: []].append(model)
+            } else if model.systemProvision {
                 modelsToDelete.append(model)
             }
         }
@@ -35,7 +35,8 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         // 更新或插入预定义模型数据
         let predefinedModels = getModelList()  // 预定义模型列表
         for model in predefinedModels {
-            if let name = model.name, let existingModel = validModelsMap[name] {
+            if let name = model.name, let matches = validModelsMap[name] {
+                guard matches.count == 1, let existingModel = matches.first else { continue }
                 // 若记录已存在，则更新（系统预置的才更新部分字段）
                 if existingModel.systemProvision {
 //                    existingModel.displayName = model.displayName
@@ -79,6 +80,7 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         for model in existingData {
             if model.systemProvision,
                let name = model.name,
+               validModelsMap[name]?.count == 1,
                !predefinedModelNames.contains(name),
                model.company != "LOCAL" {
                 context.delete(model)
@@ -86,10 +88,10 @@ func preloadModelDataIfNeeded(context: ModelContext) {
             }
         }
         
-        // 删除前面标记的无效或重复数据
+        // 仅删除前面标记的无效系统数据
         for model in modelsToDelete {
             context.delete(model)
-            print("删除无效/重复模型：\(model.name ?? "Unknown")")
+            print("删除无效系统模型：\(model.name ?? "Unknown")")
         }
         
         try context.save()
@@ -97,7 +99,8 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         print("模型数据同步完成")
         
     } catch {
-        print("读取/更新/插入模型数据失败：\(error)")
+        if checkpointEstablished { context.rollback() }
+        print("读取/更新/插入模型数据失败")
     }
 }
 
