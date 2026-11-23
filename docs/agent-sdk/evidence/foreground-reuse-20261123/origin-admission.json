@@ -1,0 +1,13 @@
+{
+  "origin_run": 45133337462,
+  "head_sha": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "artifact_id": 14803354012,
+  "digest": "sha256:83ecd7184113a12e058b5211637105ef10ec151abd0e9058686af90df567ca50",
+  "bytes": 18239253,
+  "zip_crc": "PASS",
+  "actual_original_raw_cases": 53,
+  "runner_input_match": [
+    "Scripts/ProductSplit/run_portable.py",
+    "Scripts/ProductSplit/provenance.py"
+  ]
+}
