@@ -9,7 +9,7 @@ import subprocess
 import sys
 import tempfile
 
-from verify_native_tool_candidate import summarize
+from verify_native_tool_candidate import EXPECTED, read_cases, summarize
 
 BASE = "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d"
 PRODUCER = "e7bf34111e603ca977becd007dd4e5bb109af857"
@@ -146,6 +146,29 @@ def main():
                 _, output = run(result + "-cases", ["xcrun", "xcresulttool", "get", "test-results", "tests",
                                 "--path", bundle, "--format", "json"], check=False)
                 (evidence / (result + ".json")).write_bytes(output.read_bytes())
+                # Retain richer per-method exports from this same execution. If
+                # a new Xcode shape cannot be interpreted, the verifier blocks
+                # and these originals permit review without rerunning tests.
+                suites = EXPECTED["SDKTests" if result == "SDKTests" else "CoreTests"]
+                parameterized = {suite + "/" + method for suite, methods in suites.items()
+                                 for method, arguments in methods.items() if arguments is not None}
+                seen, exports = set(), []
+                for case in read_cases(evidence, result)[0]:
+                    identifier = case.get("nodeIdentifier")
+                    if not isinstance(identifier, str):
+                        continue
+                    method = identifier.split("(", 1)[0]
+                    if method not in parameterized or identifier in seen:
+                        continue
+                    seen.add(identifier)
+                    detail_code, detail_output = run(
+                        result + "-arguments-" + str(len(exports)),
+                        ["xcrun", "xcresulttool", "get", "test-results", "test-details",
+                         "--path", bundle, "--test-id", identifier, "--format", "json"],
+                        check=False, timeout=120)
+                    exports.append(dict(method=identifier, exit_code=detail_code,
+                                        raw_file=detail_output.name, sha256=sha(detail_output)))
+                (evidence / (result + "-argument-detail-exports.json")).write_text(json.dumps(exports, indent=2))
             return code
 
         boundary = ["HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests"]
@@ -205,7 +228,7 @@ def main():
                     raise RuntimeError("No actual post-build resolved locks were retained")
             except Exception as error:
                 statuses["preparation_exit"] = 1
-                (evidence / "resolution-error.txt").write_text(str(error) + "\\n")
+                (evidence / "resolution-error.txt").write_text(str(error) + "\n")
         (evidence / "process-status.json").write_text(json.dumps(statuses, indent=2))
         result = summarize(evidence)
         (evidence / "summary.json").write_text(json.dumps(result, indent=2))

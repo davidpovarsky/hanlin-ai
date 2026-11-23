@@ -62,3 +62,37 @@ There are 12 new methods and 32 planned parameterized cases across three suites.
 The native compile/control route must prove actual API compatibility, pre-effect batch handoff, exact identities, trigger removal, denied-call continuation, cancellation and schema construction. No native result is currently marked PASS.
 
 Even if deterministic framework controls pass, actual SystemLanguageModel tool choice and continuation need eligible hardware with a ready model. Unsupported schemas/metadata remain explicit errors. Original HostIntegration/session and real-app acceptance require review before capability activation. Hosted deviceNotEligible and fixture results cannot be relabeled as native model acceptance.
+
+## Exact invocation review correction
+
+Review of the initial report verifier found that its twelve aggregate method
+nodes could pass without the parameterized executions. The corrected verifier
+requires **32 candidate invocations** and separately **12 baseline invocations**:
+native normalized-input 2, numeric rejection 8, cloud preservation 2, rejected
+schemas 12, supported-schema 1, and seven framework bridge controls. The baseline
+must reproduce all ten native failures while both cloud invocations pass, with
+the normal xcodebuild test-failure exit 65. Timeouts, signals and other
+infrastructure exits cannot establish the negative control.
+
+Every parameterized method must contain each exact authored argument tuple once,
+with its own executed result and a unique argument URL bound to that method.
+Numeric JSON remains a raw string in this comparison; reformatting, replacing,
+duplicating or truncating it fails verification. Aggregate-only results, missing
+or extra arguments, unknown formats, skips and unknown statuses cannot pass.
+
+The existing original Xcode export at
+docs/continuation-20261117/acceptance/run-44383943178/08-downstream-unit-test-results.json
+already demonstrates Test Case children of type Arguments, individual results,
+quoted string displays and nodeIdentifierURL with an argument hash. This is
+format evidence only, not execution evidence for the new candidate. A two-value
+argument display has not yet been observed for these new controls. The parser
+accepts only exact JSON string/Bool values or their comma-separated tuple
+(optionally parenthesized); any different or truncated shape remains BLOCKED.
+The same Apple invocation retains detailed per-method xcresult exports and the
+original result bundles for interpretation without replaying accepted tests.
+
+Ten local Python methods passed after this repair, including source-bound
+inventory validation and adversarial report fixtures. These are verifier and
+selector controls only. Actual Apple compile, all 32 candidate invocations, the
+12 baseline invocations, and eligible SystemLanguageModel execution remain
+NOT_RUN. No public capability gate changed.

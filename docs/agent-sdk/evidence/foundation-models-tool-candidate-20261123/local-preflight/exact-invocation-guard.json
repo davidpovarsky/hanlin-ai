@@ -1,0 +1,60 @@
+{
+  "utc": "2026-11-23T18:37:27.209793+00:00",
+  "classification": "LOCAL_REPORT_GUARD_ONLY",
+  "source_sha256": {
+    "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py": "7e978646fb7662cbef53fcb965ff58d5f6fcce64bd2bc4c8b8337f389c905947",
+    "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py": "7f9fb5d47a91fbe551bb5107f59f230064f1be6f68abcd0d86afe96cdb8282f5",
+    "Scripts/CI/Tests/test_native_tool_candidate_report.py": "3974b23330393991c54c2be7b8f8147752c60631ac029845e44c15ce8ca4c449"
+  },
+  "checks": [
+    {
+      "name": "invocation-guard-unittest",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "Scripts/CI/Tests/test_native_tool_candidate_report.py",
+        "-v"
+      ],
+      "started_utc": "2026-11-23T18:37:26.701646+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "ed6d577634347fb408504bafedca7b8f69f7a1a4d17758fbdd2d3464a5b4d68a"
+    },
+    {
+      "name": "invocation-guard-pycompile",
+      "argv": [
+        "python3",
+        "-m",
+        "py_compile",
+        "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py",
+        "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py",
+        "Scripts/CI/Tests/test_native_tool_candidate_report.py"
+      ],
+      "started_utc": "2026-11-23T18:37:27.144392+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "invocation-guard-diff",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_utc": "2026-11-23T18:37:27.193868+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "historical_argument_shape": {
+    "path": "docs/continuation-20261117/acceptance/run-44383943178/08-downstream-unit-test-results.json",
+    "sha256": "02ee6e50dbde98ef3e279b96922974961a52ce618d56548e88167cfc4d1c42d8",
+    "scope": "Previously retained original export; format only, not candidate acceptance"
+  },
+  "candidate_native_tests": "NOT_RUN",
+  "baseline_native_tests": "NOT_RUN",
+  "shipping_native_tool_capability": false
+}
