@@ -1,0 +1,8 @@
+test_actual_process_output_and_closed_pipe_timeout_are_bounded (__main__.AvailabilityInspectorControls.test_actual_process_output_and_closed_pipe_timeout_are_bounded) ... ok
+test_default_does_not_query_availability (__main__.AvailabilityInspectorControls.test_default_does_not_query_availability) ... ok
+test_fixture_failure_and_unavailability_never_claim_model_execution (__main__.AvailabilityInspectorControls.test_fixture_failure_and_unavailability_never_claim_model_execution) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.529s
+
+OK
