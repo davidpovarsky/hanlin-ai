@@ -49,6 +49,8 @@ struct HanlinPendingFirstTurn: Identifiable, Sendable {
 
     var status: Status
     var acceptedUserMessageID: UUID? = nil
+    var restoresHomeDraft = true
+    var preservesConversationSettings = false
 
     nonisolated var id: UUID { submissionID }
 

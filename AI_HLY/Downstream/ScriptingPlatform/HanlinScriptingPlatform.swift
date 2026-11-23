@@ -62,6 +62,57 @@ final class HanlinScriptingPlatform {
 
     private(set) var activity: Activity = .idle
     private(set) var preview: HanlinImportPreview?
+    private(set) var authoringReport: HanlinMiniAppAuthoringReport?
+    private(set) var importAttemptID = UUID()
+    private var importOperationID: UUID?
+    private var retainedImportArchive: URL?
+    private var repairWakeURL: URL?
+
+    var canInstallPreview: Bool {
+        preview?.canInstall == true && (authoringReport?.succeeded ?? true)
+    }
+
+    var canRepairImport: Bool {
+        (stagedPackage?.archiveURL ?? retainedImportArchive) != nil
+    }
+
+    var importDiagnostics: [HanlinMiniAppAuthoringDiagnostic] {
+        var rows = (preview?.findings ?? []).map { finding in
+            HanlinMiniAppAuthoringDiagnostic(
+                code: finding.code ?? "PACKAGE_COMPATIBILITY",
+                category: finding.severity == .error ? "error" : "warning",
+                message: finding.message, file: finding.sourcePath, remediation: finding.rationale)
+        }
+        rows.append(contentsOf: authoringReport?.diagnostics ?? [])
+        if case .failed(let message) = activity, !rows.contains(where: { $0.message == message }) {
+            rows.append(.init(code: "PACKAGE_IMPORT", category: "error", message: message))
+        }
+        return rows
+    }
+
+    func importDiagnosticJSON() throws -> Data {
+        let report = HanlinMiniAppAuthoringReport(
+            engine: authoringReport?.engine ?? preview?.manifest?.hanlinRuntime ?? "unknown",
+            operation: "import", succeeded: canInstallPreview,
+            diagnostics: importDiagnostics, sourceRoot: authoringReport?.sourceRoot,
+            sdk: authoringReport?.sdk)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        return try encoder.encode(report)
+    }
+
+    func prepareImportRepair() throws -> URL {
+        if let repairWakeURL { return repairWakeURL }
+        guard let archive = stagedPackage?.archiveURL ?? retainedImportArchive else {
+            throw MiniAppAuthoringTransferStore.StoreError.missingPayload
+        }
+        let url = try MiniAppAuthoringDelivery.prepareRepair(
+            archive: archive,
+            originalFileName: preview?.source.originalFileName ?? archive.lastPathComponent,
+            diagnostics: importDiagnosticJSON())
+        repairWakeURL = url
+        return url
+    }
     private(set) var installedPackages: [HanlinStoredPackageSnapshot] = []
     private(set) var bootstrapError: String?
     private(set) var pendingResumeCommands: [HanlinScriptResumeCommand] = []
@@ -424,6 +475,9 @@ final class HanlinScriptingPlatform {
         defer { activeStoreOperations -= 1 }
         print("HANLIN_IMPORT_PACKAGE_STARTED: url=\(sourceURL.path(percentEncoded: false))")
         discardPreview()
+        let operationID = UUID()
+        importOperationID = operationID
+        importAttemptID = operationID
         guard let analyzer, let stagingRoot else {
             let message = bootstrapError ?? "Scripting platform is unavailable."
             print("HANLIN_IMPORT_PACKAGE_BOOTSTRAP_GUARD_FAILED: \(message)")
@@ -432,10 +486,18 @@ final class HanlinScriptingPlatform {
         }
         activity = .importing
         do {
+            let copyRoot = stagingRoot.appending(path: "repair-input-\(operationID.uuidString.lowercased())",
+                directoryHint: .isDirectory)
+            try FileManager.default.createDirectory(at: copyRoot, withIntermediateDirectories: true)
+            let ownedArchive = copyRoot.appending(path: sourceURL.lastPathComponent)
+            let accessed = sourceURL.startAccessingSecurityScopedResource()
+            defer { if accessed { sourceURL.stopAccessingSecurityScopedResource() } }
+            try FileManager.default.copyItem(at: sourceURL, to: ownedArchive)
+            retainedImportArchive = ownedArchive
             let center = packageCenter
             let result = try await Task.detached(priority: .userInitiated) {
                 let staged = try center.stageAndInspect(
-                    sourceURL: sourceURL,
+                    sourceURL: ownedArchive,
                     stagingParent: stagingRoot
                 )
                 do {
@@ -445,12 +507,42 @@ final class HanlinScriptingPlatform {
                     throw error
                 }
             }.value
+            guard importOperationID == operationID else {
+                try? center.discard(result.0)
+                return
+            }
+            var checkedReport: HanlinMiniAppAuthoringReport?
+            if FileManager.default.fileExists(atPath:
+                result.0.packageRoot.appending(path: "hanlin.authoring.json").path) {
+                let engine: String
+                if result.1.entrypoints.contains(where: { $0.runtimeProfile == .hanlinExpo }) {
+                    engine = "expo"
+                } else if result.1.entrypoints.contains(where: { $0.runtimeProfile == .hanlinNativeScript }) {
+                    engine = "nativescript"
+                } else {
+                    engine = result.1.entrypoints.contains(where: { $0.widgetEngine == .scriptwidget })
+                        ? "scriptwidget" : "unknown"
+                }
+                do {
+                    checkedReport = try await MiniAppAuthoringService.validate(project: result.0.packageRoot, engine: engine)
+                } catch {
+                    checkedReport = .init(engine: engine, operation: "validate", succeeded: false,
+                        diagnostics: [.init(code: "AUTHORING_VALIDATION", category: "error",
+                            message: error.localizedDescription)])
+                }
+            }
+            guard importOperationID == operationID else {
+                try? center.discard(result.0)
+                return
+            }
+            authoringReport = checkedReport
             stagedPackage = result.0
             preview = result.1
             capabilityApprovals = .init(requests: result.1.requestedCapabilities)
             activity = .previewReady
             print("HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=\(result.1.canInstall) entrypoints=\(result.1.entrypoints.count)")
         } catch {
+            guard importOperationID == operationID else { return }
             let message = Self.safeMessage(error)
             print("HANLIN_IMPORT_PACKAGE_CATCH_ERROR: \(message)")
             activity = .failed(message)
@@ -463,7 +555,7 @@ final class HanlinScriptingPlatform {
         defer { activeStoreOperations -= 1 }
         guard activity != .installing else { return }
         print("HANLIN_INSTALL_PREVIEW_STARTED: canInstall=\(preview?.canInstall ?? false)")
-        guard let preview, preview.canInstall, let stagedPackage,
+        guard let preview, canInstallPreview, let stagedPackage,
               let store, let bundler, let stagingRoot else {
             activity = .failed("This package did not pass Import Preview.")
             return
@@ -580,6 +672,13 @@ final class HanlinScriptingPlatform {
     }
 
     func discardPreview() {
+        importOperationID = nil
+        authoringReport = nil
+        repairWakeURL = nil
+        if let retainedImportArchive {
+            try? FileManager.default.removeItem(at: retainedImportArchive.deletingLastPathComponent())
+        }
+        retainedImportArchive = nil
         if let stagedPackage { try? packageCenter.discard(stagedPackage) }
         stagedPackage = nil
         preview = nil

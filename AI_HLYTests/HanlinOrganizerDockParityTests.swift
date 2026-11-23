@@ -997,6 +997,114 @@ struct PendingFirstTurnTests {
         #expect(bridge.pendingFirstTurn?.isPendingHandoff == false)
     }
 
+    @Test("Imported MiniApp repair uses the mounted composer once and preserves Home and conversation settings")
+    func importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings() {
+        let bridge = HanlinActiveComposerSessionBridge()
+        bridge.homeMessage = "Unsent Home draft"
+        bridge.homeSelectedURLs = ["https://example.com/unsent"]
+        bridge.homeIfThink = true
+        let createdChatID = UUID()
+        let submissionID = UUID()
+        let model = AllModels(name: "gpt-4o-mini", displayName: "GPT-4o Mini", position: 0, company: "OPENAI")
+        #expect(bridge.beginImportedFirstTurn(submissionID: submissionID,
+            text: "Repair the attached source with the original compiler", documentURLs: [],
+            targetChatID: createdChatID, selectedModelIndex: 0))
+        #expect(bridge.pendingFirstTurn?.status == .awaitingEndpoint(targetChatID: createdChatID))
+        #expect(bridge.homeMessage == "Unsent Home draft")
+        #expect(bridge.homeSelectedURLs == ["https://example.com/unsent"])
+        var transferredText = ""
+        var userSendDispatched = 0
+        var temperature = 0.45
+        var maxTokens = 16384
+        var thinks = true
+        var usesTools = false
+        let record = ChatRecords(id: createdChatID, name: "MiniApp repair", type: "chat", lastEdited: Date())
+        let endpoint = HanlinActiveComposerSessionBridge.Endpoint(
+            sessionID: createdChatID,
+            registrationToken: UUID(),
+            isReadyToSend: true,
+            chatRecord: record,
+            modelTemp: [model],
+            temporaryRecord: false,
+            respondIndex: 0,
+            selectedModelIndex: .constant(0),
+            showScrollToBottomButton: .constant(false),
+            needScrollToBottomButton: .constant(false),
+            isMultiSelectMode: .constant(false),
+            selectedMessageIDs: .constant([]),
+            chatTemps: .constant([]),
+            showTemperatureSlider: .constant(false),
+            temperature: Binding(get: { temperature }, set: { temperature = $0 }),
+            showTopPSlider: .constant(false),
+            topP: .constant(0.95),
+            showMaxTokensSlider: .constant(false),
+            maxTokens: Binding(get: { maxTokens }, set: { maxTokens = $0 }),
+            showMaxMessagesNumSlider: .constant(false),
+            maxMessagesNum: .constant(12),
+            message: Binding(get: { transferredText }, set: { transferredText = $0 }),
+            selectedImages: .constant([]),
+            selectedDocumentURLs: .constant([]),
+            selectedURLs: .constant([]),
+            selectedPrompts: .constant([]),
+            showPhotoSourceOptions: .constant(false),
+            showModelSuggestions: .constant(false),
+            filteredModels: .constant([]),
+            isResponding: .constant(false),
+            isFeedBack: .constant(false),
+            ifKnowledge: .constant(false),
+            ifSearch: .constant(false),
+            ifToolUse: Binding(get: { usesTools }, set: { usesTools = $0 }),
+            ifThink: Binding(get: { thinks }, set: { thinks = $0 }),
+            ifAudio: .constant(false),
+            ifPlanning: .constant(false),
+            thinkingLength: .constant(0),
+            showKnowledgeAlert: .constant(false),
+            knowledgeAlertMessage: .constant(""),
+            showSearchAlert: .constant(false),
+            selectedImageSize: .constant("1024x1024"),
+            imageReversePrompt: .constant(""),
+            onSelectModel: { _ in },
+            onSendUser: { userSendDispatched += 1 },
+            onSendObserve: {},
+            onCancel: {}
+        )
+
+        bridge.register(endpoint: endpoint)
+        #expect(transferredText == "Repair the attached source with the original compiler")
+        #expect(userSendDispatched == 1)
+        #expect(bridge.pendingFirstTurn?.status == .dispatched(targetChatID: createdChatID))
+        #expect(temperature == 0.45)
+        #expect(maxTokens == 16384)
+        #expect(thinks)
+        #expect(usesTools)
+        #expect(bridge.homeMessage == "Unsent Home draft")
+        #expect(bridge.homeSelectedURLs == ["https://example.com/unsent"])
+        #expect(bridge.homeIfThink)
+        #expect(bridge.beginImportedFirstTurn(submissionID: submissionID, text: "Duplicate delivery",
+            documentURLs: [], targetChatID: createdChatID, selectedModelIndex: 0))
+        bridge.register(endpoint: endpoint)
+        #expect(userSendDispatched == 1)
+        #expect(transferredText == "Repair the attached source with the original compiler")
+    }
+
+    @Test("Cancelled MiniApp handoff preserves the unrelated Home draft and rejects a second in-flight repair")
+    func cancelledMiniAppRepairPreservesHomeDraft() {
+        let bridge = HanlinActiveComposerSessionBridge()
+        bridge.homeMessage = "Unrelated unsent text"
+        bridge.homeIfSearch = true
+        let firstID = UUID()
+        let chatID = UUID()
+        #expect(bridge.beginImportedFirstTurn(submissionID: firstID, text: "Repair request",
+            documentURLs: [], targetChatID: chatID, selectedModelIndex: 0))
+        #expect(!bridge.beginImportedFirstTurn(submissionID: UUID(), text: "Second request",
+            documentURLs: [], targetChatID: UUID(), selectedModelIndex: 0))
+        #expect(bridge.pendingFirstTurn?.submissionID == firstID)
+        bridge.cancelPendingFirstTurn()
+        #expect(bridge.pendingFirstTurn?.status == .cancelled(reason: "Cancelled by navigation"))
+        #expect(bridge.homeMessage == "Unrelated unsent text")
+        #expect(bridge.homeIfSearch)
+    }
+
     @Test("6.2 Cancelling pending first turn before endpoint registration prevents late execution")
     func cancellingPendingFirstTurnPreventsExecution() {
         let bridge = HanlinActiveComposerSessionBridge()

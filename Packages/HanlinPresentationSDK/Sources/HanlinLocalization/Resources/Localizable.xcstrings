@@ -1,6 +1,312 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Imported package": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imported package"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חבילה מיובאת"
+          }
+        }
+      }
+    },
+    "Errors": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Errors"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שגיאות"
+          }
+        }
+      }
+    },
+    "Warnings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warnings"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אזהרות"
+          }
+        }
+      }
+    },
+    "TypeScript validation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TypeScript validation"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת טיפוסי TypeScript"
+          }
+        }
+      }
+    },
+    "Passed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passed"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עבר בהצלחה"
+          }
+        }
+      }
+    },
+    "Needs correction": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Needs correction"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרש תיקון"
+          }
+        }
+      }
+    },
+    "This package does not include an authoring project. Package compatibility was inspected, but original TypeScript types cannot be reconstructed from compiled JavaScript.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This package does not include an authoring project. Package compatibility was inspected, but original TypeScript types cannot be reconstructed from compiled JavaScript."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "החבילה אינה כוללת פרויקט מקור לעריכה. נבדקה תאימות החבילה, אך אי אפשר לשחזר טיפוסי TypeScript מקוריים מקוד JavaScript שכבר קומפל."
+          }
+        }
+      }
+    },
+    "TypeScript validation has not run. The original package is kept with the import diagnostic.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TypeScript validation has not run. The original package is kept with the import diagnostic."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת טיפוסי TypeScript טרם הורצה. החבילה המקורית נשמרה יחד עם שגיאת הייבוא."
+          }
+        }
+      }
+    },
+    "Send to Hanlin AI to fix": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send to Hanlin AI to fix"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שליחה לתיקון ב־Hanlin AI"
+          }
+        }
+      }
+    },
+    "Diagnostic report copied.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostic report copied."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דוח השגיאות הועתק."
+          }
+        }
+      }
+    },
+    "Copy diagnostic report": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy diagnostic report"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתקת דוח השגיאות"
+          }
+        }
+      }
+    },
+    "The original package and this report are sent together. Hanlin AI opens a dedicated repair conversation and can rebuild, validate, and return the corrected package.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The original package and this report are sent together. Hanlin AI opens a dedicated repair conversation and can rebuild, validate, and return the corrected package."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "החבילה המקורית והדוח נשלחים יחד. Hanlin AI פותח שיחה ייעודית לתיקון ויכול לבנות, לבדוק ולהחזיר את החבילה המתוקנת."
+          }
+        }
+      }
+    },
+    "Package diagnostics": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Package diagnostics"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת החבילה"
+          }
+        }
+      }
+    },
+    "Repair request saved and Hanlin AI opened.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repair request saved and Hanlin AI opened."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בקשת התיקון נשמרה ו־Hanlin AI נפתח."
+          }
+        }
+      }
+    },
+    "Hanlin AI could not be opened. The repair request is saved; retry after opening Hanlin AI.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hanlin AI could not be opened. The repair request is saved; retry after opening Hanlin AI."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן לפתוח את Hanlin AI. בקשת התיקון נשמרה; אפשר לנסות שוב לאחר פתיחת האפליקציה."
+          }
+        }
+      }
+    },
+    "Line %lld, column %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Line %lld, column %lld"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שורה %lld, עמודה %lld"
+          }
+        }
+      }
+    },
+    "Review package diagnostics": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review package diagnostics"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הצגת דוח השגיאות"
+          }
+        }
+      }
+    },
+    "MiniApp repair unavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MiniApp repair unavailable"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן להתחיל בתיקון החבילה"
+          }
+        }
+      }
+    },
     "Actions requiring your approval": {
       "extractionState": "manual",
       "localizations": {

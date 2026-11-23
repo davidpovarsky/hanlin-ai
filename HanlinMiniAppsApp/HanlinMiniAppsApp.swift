@@ -86,7 +86,18 @@ private struct HanlinMiniAppsWindow: View {
             }
             .task(id: bootstrap.phase == .ready ? incomingURL : nil) {
                 guard bootstrap.phase == .ready, let url = incomingURL else { return }
-                if let requestID = MiniAppBridgeStore.requestID(from: url) {
+                if let transferID = MiniAppAuthoringTransfer.reference(in: url, purpose: .install) {
+                    do {
+                        try await MiniAppAuthoringDelivery.receiveImport(transferID, platform: .shared)
+                    } catch {
+                        HanlinScriptingPlatform.shared.reportImportFailure(error)
+                        if let store = try? MiniAppAuthoringDelivery.store() {
+                            try? store.record(.init(transferID: transferID, status: .failed,
+                                message: error.localizedDescription))
+                        }
+                    }
+                    showsImport = true
+                } else if let requestID = MiniAppBridgeStore.requestID(from: url) {
                     do {
                         let mailbox = try MiniAppBridgeStore()
                         guard let request = try mailbox.request(id: requestID) else {

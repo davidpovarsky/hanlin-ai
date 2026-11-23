@@ -16,6 +16,7 @@ struct ScriptingPackageImportView: View {
     let platform: HanlinScriptingPlatform
     @Environment(\.dismiss) private var dismiss
     @State private var showsImporter = false
+    @State private var diagnosticsSelection: MiniAppImportDiagnosticsSelection?
     private var stagedDocumentPackages: [URL] {
         guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
               let contents = try? FileManager.default.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil) else {
@@ -55,12 +56,22 @@ struct ScriptingPackageImportView: View {
                 }
             }
 
+            if !platform.importDiagnostics.isEmpty {
+                Section {
+                    Button {
+                        diagnosticsSelection = .init(id: platform.importAttemptID)
+                    } label: {
+                        Label(hanlin: "Review package diagnostics", systemImage: "list.bullet.rectangle")
+                    }
+                    .accessibilityIdentifier("hanlin-import-diagnostics-open")
+                }
+            }
             if let preview = platform.preview {
                 Section {
                     Button(hanlin: "Install") { Task { await platform.installPreview() } }
                         .accessibilityIdentifier("hanlin-package-install")
                         .disabled(
-                            !preview.canInstall
+                            !platform.canInstallPreview
                                 || platform.activity == .installing
                         )
                     Button(hanlin: "Discard", role: .destructive) { platform.discardPreview() }
@@ -105,6 +116,15 @@ struct ScriptingPackageImportView: View {
             if platform.activity == .idle && platform.preview != nil {
                 platform.discardPreview()
             }
+        }
+        .onChange(of: platform.activity, initial: true) {
+            if platform.activity != .importing && platform.activity != .installing,
+               platform.importDiagnostics.contains(where: { $0.category == "error" }) {
+                diagnosticsSelection = .init(id: platform.importAttemptID)
+            }
+        }
+        .sheet(item: $diagnosticsSelection) { _ in
+            NavigationStack { MiniAppImportDiagnosticsView(platform: platform) }
         }
         .id(platform.preview == nil ? "browse" : "preview")
         .accessibilityIdentifier("hanlin-package-import-list")
