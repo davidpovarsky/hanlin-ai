@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "acquiredAt": "2026-11-23T17:50:21.352754+00:00",
+  "run": 45230545076,
+  "sourceSHA": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "artifactId": 14847222630,
+  "artifactBytes": 29954,
+  "artifactSHA256": "2d9b488d5379041733f3a5a4e4bab68cf832e40caee4bfe2eacf153619413e64",
+  "crcStatus": "PASS",
+  "modelExecution": "NOT_RUN",
+  "toolExecution": "NOT_RUN",
+  "files": [
+    {
+      "path": "availability-query/availability.swift",
+      "bytes": 1438,
+      "sha256": "27b70911b258ba1eaa53502eef3e61f9efe594a6cdf87341fb8d104c70cdaba6"
+    },
+    {
+      "path": "availability-query/compile.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "availability-query/compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "availability-query/compiler-version.stderr.log",
+      "bytes": 30,
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+    },
+    {
+      "path": "availability-query/compiler-version.stdout.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "availability-query/query.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "availability-query/query.stdout.log",
+      "bytes": 222,
+      "sha256": "a18ec252484933aa75f0d0e08a41a44aa5d78a3f107a54f574dedd888f463bbc"
+    },
+    {
+      "path": "availability-query/receipt.json",
+      "bytes": 5362,
+      "sha256": "60918e4729f65b0411c1abcf164331de4869808a794cb2e6a750c23eefcdd73c"
+    },
+    {
+      "path": "availability-query/sdk-path.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "availability-query/sdk-path.stdout.log",
+      "bytes": 104,
+      "sha256": "ef0267694b48b092db5b5d7800411bba8eaad357d65f739b69b5c8b262c50409"
+    },
+    {
+      "path": "availability-query/sdk-version.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "availability-query/sdk-version.stdout.log",
+      "bytes": 5,
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    {
+      "path": "availability-query/xcode-version.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "availability-query/xcode-version.stdout.log",
+      "bytes": 31,
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+    },
+    {
+      "path": "declarations.txt",
+      "bytes": 193265,
+      "sha256": "d1d50574ae65c19a319d7f8427944cc36a0373affcd8db3fba3fd6a3d531e2e0"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 1862,
+      "sha256": "6368aa6eb68421cdec99845d567b0ded98ae5c631ecca64f96b8dff726eab695"
+    }
+  ],
+  "verificationAt": "2026-11-23T17:52:01.216536+00:00",
+  "sourceInspectorSHA256": "074697f9c4e2ca92b990e63bfcc818a3d46a79ea7f321561f1e26686d8cf5995",
+  "sourceInspectorBlob": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d:Scripts/CI/inspect_foundation_models_interface.py",
+  "embeddedSwiftSourceMatchesPinnedInspector": true,
+  "nestedCommandLogHashesVerified": 12,
+  "excerptHashVerified": true,
+  "observation": {
+    "availability": "deviceNotEligible",
+    "modelExecution": "NOT_RUN",
+    "osVersion": "Version 27.0.1 (Build 26A434)",
+    "platform": "macOS",
+    "query": "SystemLanguageModel.default.availability",
+    "schemaVersion": 1,
+    "toolExecution": "NOT_RUN"
+  },
+  "availabilityQueryStatus": "PASS",
+  "toolCapability": "NOT_QUERIED",
+  "iOSExecution": "NOT_RUN",
+  "parentRunStatusAtAcquisition": "in_progress",
+  "parentRunConclusionAtAcquisition": null,
+  "nativePublicationQualification": "NOT_GRANTED: no completed successful producer observed by this diagnostic acquisition"
+}
