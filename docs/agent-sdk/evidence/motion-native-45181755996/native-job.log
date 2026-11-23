@@ -1,0 +1,228 @@
+﻿2026-11-23T13:23:34.7135980Z Current runner version: '2.338.2'
+2026-11-23T13:23:34.7154540Z ##[group]Runner Image Provisioner
+2026-11-23T13:23:34.7155140Z Hosted Compute Agent
+2026-11-23T13:23:34.7155910Z Version: 20261103.629
+2026-11-23T13:23:34.7156380Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-23T13:23:34.7156860Z Build Date: 2026-11-03T17:26:59Z
+2026-11-23T13:23:34.7157300Z Worker ID: {0137c7d2-8671-4a1a-b315-be3eafbebf3a}
+2026-11-23T13:23:34.7157760Z Region: westus
+2026-11-23T13:23:34.7158120Z Cloud: MacCloud
+2026-11-23T13:23:34.7158510Z ##[endgroup]
+2026-11-23T13:23:34.7161060Z ##[group]Operating System
+2026-11-23T13:23:34.7161490Z macOS
+2026-11-23T13:23:34.7161840Z 27.0.1
+2026-11-23T13:23:34.7162180Z 26A434
+2026-11-23T13:23:34.7162520Z ##[endgroup]
+2026-11-23T13:23:34.7162900Z ##[group]Runner Image
+2026-11-23T13:23:34.7163300Z Image: xcode-27-arm64
+2026-11-23T13:23:34.7163670Z Version: 20261104.0337.1
+2026-11-23T13:23:34.7164650Z Included Software: https://github.com/actions/runner-images/blob/xcode-27-arm64/20261104.0337/images/macos/xcode-27-arm64-Readme.md
+2026-11-23T13:23:34.7165780Z Image Release: https://github.com/actions/runner-images/releases/tag/xcode-27-arm64%2F20261104.0337
+2026-11-23T13:23:34.7166480Z ##[endgroup]
+2026-11-23T13:23:34.7167330Z ##[group]GITHUB_TOKEN Permissions
+2026-11-23T13:23:34.7168760Z Actions: read
+2026-11-23T13:23:34.7169120Z Contents: read
+2026-11-23T13:23:34.7169460Z Metadata: read
+2026-11-23T13:23:34.7169810Z ##[endgroup]
+2026-11-23T13:23:34.7171320Z Secret source: Actions
+2026-11-23T13:23:34.7171890Z Cache mode: write
+2026-11-23T13:23:34.7172450Z Prepare workflow directory
+2026-11-23T13:23:34.7479420Z Prepare all required actions
+2026-11-23T13:23:34.7514540Z Getting action download info
+2026-11-23T13:23:35.1969430Z Download action repository 'actions/checkout@v7.0.1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-11-23T13:23:35.5163510Z Download action repository 'actions/upload-artifact@v7.0.2' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-11-23T13:23:35.7031700Z Complete job name: Original Motion input diagnostic (D)
+2026-11-23T13:23:35.7805620Z ##[group]Run actions/checkout@v7.0.1
+2026-11-23T13:23:35.7806780Z with:
+2026-11-23T13:23:35.7807140Z   repository: davidpovarsky/hanlin-ai
+2026-11-23T13:23:35.7810450Z   token: ***
+2026-11-23T13:23:35.7811550Z   ssh-strict: true
+2026-11-23T13:23:35.7812490Z   ssh-user: git
+2026-11-23T13:23:35.7812850Z   persist-credentials: true
+2026-11-23T13:23:35.7813220Z   clean: true
+2026-11-23T13:23:35.7813560Z   sparse-checkout-cone-mode: true
+2026-11-23T13:23:35.7813950Z   fetch-depth: 1
+2026-11-23T13:23:35.7814300Z   fetch-tags: false
+2026-11-23T13:23:35.7814710Z   show-progress: true
+2026-11-23T13:23:35.7815050Z   lfs: false
+2026-11-23T13:23:35.7815370Z   submodules: false
+2026-11-23T13:23:35.7815710Z   set-safe-directory: true
+2026-11-23T13:23:35.7816090Z   allow-unsafe-pr-checkout: false
+2026-11-23T13:23:35.7816930Z ##[endgroup]
+2026-11-23T13:23:36.3967480Z Syncing repository: davidpovarsky/hanlin-ai
+2026-11-23T13:23:36.3970150Z ##[group]Getting Git version info
+2026-11-23T13:23:36.3971100Z Working directory is '/Users/runner/work/hanlin-ai/hanlin-ai'
+2026-11-23T13:23:36.3972340Z [command]/opt/homebrew/bin/git version
+2026-11-23T13:23:36.5210850Z git version 2.56.0
+2026-11-23T13:23:36.5227430Z ##[endgroup]
+2026-11-23T13:23:36.5247690Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/f739c676-a83a-4b85-84ce-5c7ecf72b067/.gitconfig'
+2026-11-23T13:23:36.5265460Z Temporarily overriding HOME='/Users/runner/work/_temp/f739c676-a83a-4b85-84ce-5c7ecf72b067' before making global git config changes
+2026-11-23T13:23:36.5269330Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T13:23:36.5273400Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+2026-11-23T13:23:36.5546420Z Deleting the contents of '/Users/runner/work/hanlin-ai/hanlin-ai'
+2026-11-23T13:23:36.5548490Z ##[group]Determining repository object format
+2026-11-23T13:23:36.5551620Z ##[endgroup]
+2026-11-23T13:23:36.5564590Z ##[group]Initializing the repository
+2026-11-23T13:23:36.5568580Z [command]/opt/homebrew/bin/git init /Users/runner/work/hanlin-ai/hanlin-ai
+2026-11-23T13:23:36.5838170Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-23T13:23:36.5842590Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-23T13:23:36.5946360Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-23T13:23:36.5976100Z hint: call:
+2026-11-23T13:23:36.5976960Z hint:
+2026-11-23T13:23:36.5977570Z hint: 	git config --global init.defaultBranch <name>
+2026-11-23T13:23:36.5978220Z hint:
+2026-11-23T13:23:36.5980030Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-23T13:23:36.5981070Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-23T13:23:36.5981820Z hint:
+2026-11-23T13:23:36.5985170Z hint: 	git branch -m <name>
+2026-11-23T13:23:36.5987250Z hint:
+2026-11-23T13:23:36.5988090Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-23T13:23:36.5989410Z Initialized empty Git repository in /Users/runner/work/hanlin-ai/hanlin-ai/.git/
+2026-11-23T13:23:36.5991310Z [command]/opt/homebrew/bin/git remote add origin https://github.com/davidpovarsky/hanlin-ai
+2026-11-23T13:23:36.6145760Z ##[endgroup]
+2026-11-23T13:23:36.6180850Z ##[group]Disabling automatic garbage collection
+2026-11-23T13:23:36.6275420Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-11-23T13:23:36.6392740Z ##[endgroup]
+2026-11-23T13:23:36.6396040Z ##[group]Setting up auth
+2026-11-23T13:23:36.6396700Z Removing SSH command configuration
+2026-11-23T13:23:36.6397640Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T13:23:36.6402390Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T13:23:36.8076980Z Removing HTTP extra header
+2026-11-23T13:23:36.8078360Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T13:23:36.8974860Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T13:23:37.0629920Z Removing includeIf entries pointing to credentials config files
+2026-11-23T13:23:37.0728140Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T13:23:37.1043070Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T13:23:37.3070470Z [command]/opt/homebrew/bin/git config --file /Users/runner/work/_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-23T13:23:37.3155070Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path /Users/runner/work/_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config
+2026-11-23T13:23:37.3268970Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path /Users/runner/work/_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config
+2026-11-23T13:23:37.3378630Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config
+2026-11-23T13:23:37.3520940Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config
+2026-11-23T13:23:37.3615140Z ##[endgroup]
+2026-11-23T13:23:37.3616510Z ##[group]Fetching the repository
+2026-11-23T13:23:37.3621570Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +5d0ea90d98b405d38b66bb735198b945225877ba:refs/remotes/origin/codex/hanlin-sdk-unification-20261123
+2026-11-23T13:23:40.4789830Z From https://github.com/davidpovarsky/hanlin-ai
+2026-11-23T13:23:40.4792400Z  * [new ref]         5d0ea90d98b405d38b66bb735198b945225877ba -> origin/codex/hanlin-sdk-unification-20261123
+2026-11-23T13:23:40.4816300Z [command]/opt/homebrew/bin/git branch --list --remote origin/codex/hanlin-sdk-unification-20261123
+2026-11-23T13:23:40.4932430Z   origin/codex/hanlin-sdk-unification-20261123
+2026-11-23T13:23:40.4949890Z [command]/opt/homebrew/bin/git rev-parse refs/remotes/origin/codex/hanlin-sdk-unification-20261123
+2026-11-23T13:23:40.5032260Z 5d0ea90d98b405d38b66bb735198b945225877ba
+2026-11-23T13:23:40.5036220Z ##[endgroup]
+2026-11-23T13:23:40.5037200Z ##[group]Determining the checkout info
+2026-11-23T13:23:40.5038640Z ##[endgroup]
+2026-11-23T13:23:40.5047500Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-11-23T13:23:40.5193510Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-23T13:23:40.5280470Z ##[group]Checking out the ref
+2026-11-23T13:23:40.5285140Z [command]/opt/homebrew/bin/git checkout --progress --force -B codex/hanlin-sdk-unification-20261123 refs/remotes/origin/codex/hanlin-sdk-unification-20261123
+2026-11-23T13:23:41.6238590Z Updating files:  67% (4419/6523)
+2026-11-23T13:23:41.6343000Z Updating files:  68% (4436/6523)
+2026-11-23T13:23:41.6461570Z Updating files:  69% (4501/6523)
+2026-11-23T13:23:41.6578170Z Updating files:  70% (4567/6523)
+2026-11-23T13:23:41.6749660Z Updating files:  71% (4632/6523)
+2026-11-23T13:23:41.6853310Z Updating files:  72% (4697/6523)
+2026-11-23T13:23:41.6960950Z Updating files:  73% (4762/6523)
+2026-11-23T13:23:41.7126930Z Updating files:  74% (4828/6523)
+2026-11-23T13:23:41.7196760Z Updating files:  75% (4893/6523)
+2026-11-23T13:23:41.7328010Z Updating files:  76% (4958/6523)
+2026-11-23T13:23:41.7465930Z Updating files:  77% (5023/6523)
+2026-11-23T13:23:41.7640810Z Updating files:  78% (5088/6523)
+2026-11-23T13:23:41.7732890Z Updating files:  79% (5154/6523)
+2026-11-23T13:23:41.7852720Z Updating files:  80% (5219/6523)
+2026-11-23T13:23:41.8011300Z Updating files:  81% (5284/6523)
+2026-11-23T13:23:41.8135050Z Updating files:  82% (5349/6523)
+2026-11-23T13:23:41.8245670Z Updating files:  83% (5415/6523)
+2026-11-23T13:23:41.8407160Z Updating files:  84% (5480/6523)
+2026-11-23T13:23:41.8567240Z Updating files:  85% (5545/6523)
+2026-11-23T13:23:41.9367710Z Updating files:  86% (5610/6523)
+2026-11-23T13:23:42.0426970Z Updating files:  87% (5676/6523)
+2026-11-23T13:23:42.0572580Z Updating files:  88% (5741/6523)
+2026-11-23T13:23:42.0745140Z Updating files:  89% (5806/6523)
+2026-11-23T13:23:42.1237990Z Updating files:  90% (5871/6523)
+2026-11-23T13:23:42.1364510Z Updating files:  91% (5936/6523)
+2026-11-23T13:23:42.1483870Z Updating files:  92% (6002/6523)
+2026-11-23T13:23:42.1605980Z Updating files:  93% (6067/6523)
+2026-11-23T13:23:42.1766280Z Updating files:  94% (6132/6523)
+2026-11-23T13:23:42.1962900Z Updating files:  95% (6197/6523)
+2026-11-23T13:23:42.2410180Z Updating files:  96% (6263/6523)
+2026-11-23T13:23:42.2534700Z Updating files:  97% (6328/6523)
+2026-11-23T13:23:42.2637040Z Updating files:  98% (6393/6523)
+2026-11-23T13:23:42.2800750Z Updating files:  99% (6458/6523)
+2026-11-23T13:23:42.2801590Z Updating files: 100% (6523/6523)
+2026-11-23T13:23:42.2801980Z Updating files: 100% (6523/6523), done.
+2026-11-23T13:23:42.2945230Z Switched to a new branch 'codex/hanlin-sdk-unification-20261123'
+2026-11-23T13:23:42.2954330Z branch 'codex/hanlin-sdk-unification-20261123' set up to track 'origin/codex/hanlin-sdk-unification-20261123'.
+2026-11-23T13:23:42.3004850Z ##[endgroup]
+2026-11-23T13:23:42.3167910Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-11-23T13:23:42.3269220Z 5d0ea90d98b405d38b66bb735198b945225877ba
+2026-11-23T13:23:42.3742750Z ##[group]Run bash docs/chat-motion/run_motion_ui.sh
+2026-11-23T13:23:42.3743270Z [36;1mbash docs/chat-motion/run_motion_ui.sh[0m
+2026-11-23T13:23:42.3803490Z shell: /bin/bash -e {0}
+2026-11-23T13:23:42.3803880Z env:
+2026-11-23T13:23:42.3804170Z   HANLIN_MOTION_SCOPE: input-diagnostic
+2026-11-23T13:23:42.3804530Z   HANLIN_MOTION_DEVICE_STRATEGY: fresh
+2026-11-23T13:23:42.3804890Z ##[endgroup]
+2026-11-23T13:23:42.9698670Z /Applications/Xcode_27.0.0.app: Xcode 27.0
+2026-11-23T13:23:42.9699650Z Build version 27A266a
+2026-11-23T13:23:43.4257830Z /Applications/Xcode_27.2.0.app: Xcode 27.2
+2026-11-23T13:23:43.4261530Z Build version 27B52
+2026-11-23T13:23:43.5101150Z /Applications/Xcode.app: Xcode 27.1
+2026-11-23T13:23:43.5102490Z Build version 27A9275
+2026-11-23T13:28:18.7351890Z swift-driver version: 1.168.6 Motion preflight failed: Owned Motion recovery shutdown failed
+2026-11-23T13:29:26.9533150Z ##[error]Process completed with exit code 1.
+2026-11-23T13:29:28.6326390Z ##[group]Run actions/upload-artifact@v7.0.2
+2026-11-23T13:29:28.6328160Z with:
+2026-11-23T13:29:28.6329370Z   name: chat-motion-ui-45181755996
+2026-11-23T13:29:28.6413800Z   path: build/chat-motion-ui-evidence
+2026-11-23T13:29:28.6415800Z   if-no-files-found: error
+2026-11-23T13:29:28.6417010Z   retention-days: 30
+2026-11-23T13:29:28.6420480Z   compression-level: 6
+2026-11-23T13:29:28.6421140Z   overwrite: false
+2026-11-23T13:29:28.6422230Z   include-hidden-files: false
+2026-11-23T13:29:28.6423340Z   archive: true
+2026-11-23T13:29:28.6423910Z ##[endgroup]
+2026-11-23T13:29:36.7760610Z With the provided path, there will be 19 files uploaded
+2026-11-23T13:29:36.7761560Z Artifact name is valid!
+2026-11-23T13:29:36.7761900Z Root directory input is valid!
+2026-11-23T13:29:37.4248580Z Uploading artifact: chat-motion-ui-45181755996.zip
+2026-11-23T13:29:37.4522850Z Beginning upload of artifact content to blob storage
+2026-11-23T13:29:38.5854460Z Uploaded bytes 13368
+2026-11-23T13:29:38.6727890Z Finished uploading artifact content to blob storage!
+2026-11-23T13:29:38.6845380Z SHA256 digest of uploaded artifact is 11dc996521fd17b43e0df9761d1ad1b3d61e1d70de3c12654058aa1124284ea1
+2026-11-23T13:29:38.7006060Z Finalizing artifact upload
+2026-11-23T13:29:39.2949390Z Artifact chat-motion-ui-45181755996 successfully finalized. Artifact ID 14821829613
+2026-11-23T13:29:39.3121350Z Artifact chat-motion-ui-45181755996 has been successfully uploaded! Final size is 13368 bytes. Artifact ID is 14821829613
+2026-11-23T13:29:39.3205820Z Artifact download URL: https://github.com/davidpovarsky/hanlin-ai/actions/runs/45181755996/artifacts/14821829613
+2026-11-23T13:29:39.4674660Z Post job cleanup.
+2026-11-23T13:29:41.3047560Z [command]/opt/homebrew/bin/git version
+2026-11-23T13:29:41.4191450Z git version 2.56.0
+2026-11-23T13:29:41.4872320Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/fc24b591-3b3a-4606-b74b-fa023f3e32bd/.gitconfig'
+2026-11-23T13:29:41.4992320Z Temporarily overriding HOME='/Users/runner/work/_temp/fc24b591-3b3a-4606-b74b-fa023f3e32bd' before making global git config changes
+2026-11-23T13:29:41.5192840Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-23T13:29:41.5382130Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+2026-11-23T13:29:41.5736910Z Removing SSH command configuration
+2026-11-23T13:29:41.5847940Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-23T13:29:41.6606270Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-23T13:29:42.5810950Z Removing HTTP extra header
+2026-11-23T13:29:42.6036670Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-23T13:29:42.6597030Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-23T13:29:43.0791270Z Removing includeIf entries pointing to credentials config files
+2026-11-23T13:29:43.0907900Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-23T13:29:43.1125670Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+2026-11-23T13:29:43.1359400Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+2026-11-23T13:29:43.1783080Z includeif.gitdir:/github/workspace/.git.path
+2026-11-23T13:29:43.1907860Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-23T13:29:43.2363810Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+2026-11-23T13:29:43.2500270Z /Users/runner/work/_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config
+2026-11-23T13:29:43.2826750Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path \/Users\/runner\/work\/_temp\/git\-credentials\-72e4d283\-0349\-4fe7\-ae92\-7699da3113cd\.config
+2026-11-23T13:29:43.3236810Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+2026-11-23T13:29:43.3341550Z /Users/runner/work/_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config
+2026-11-23T13:29:43.3706010Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path \/Users\/runner\/work\/_temp\/git\-credentials\-72e4d283\-0349\-4fe7\-ae92\-7699da3113cd\.config
+2026-11-23T13:29:43.4192980Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-11-23T13:29:43.4354120Z /github/runner_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config
+2026-11-23T13:29:43.4759570Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-72e4d283\-0349\-4fe7\-ae92\-7699da3113cd\.config
+2026-11-23T13:29:43.5181680Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-23T13:29:43.5333030Z /github/runner_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config
+2026-11-23T13:29:43.5735450Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-72e4d283\-0349\-4fe7\-ae92\-7699da3113cd\.config
+2026-11-23T13:29:43.6131790Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-23T13:29:44.0960040Z Removing credentials config '/Users/runner/work/_temp/git-credentials-72e4d283-0349-4fe7-ae92-7699da3113cd.config'
+2026-11-23T13:29:44.1745310Z Cleaning up orphan processes

@@ -1,0 +1,46 @@
+{
+  "source": "verified-environment.json, original artifact14821829613",
+  "source_sha256": "c5d50aabf89592c986c800b6f47fd39a665622c059b001e85bb6d91842402968",
+  "sdk": "27.2",
+  "runtime": {
+    "isAvailable": true,
+    "version": "27.2",
+    "isInternal": false,
+    "buildversion": "24B8117",
+    "supportedArchitectures": [
+      "arm64"
+    ],
+    "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+    "platform": "iOS",
+    "bundlePath": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.4BSro7/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime",
+    "runtimeRoot": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.4BSro7/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot",
+    "lastUsage": {
+      "arm64": "0001-01-01T00:00:00Z"
+    },
+    "name": "iOS 27.2"
+  },
+  "device": {
+    "dataPath": "/Users/runner/Library/Developer/CoreSimulator/Devices/2A61907E-0777-469F-85A4-AF14567E2DB5/data",
+    "dataPathSize": 18337792,
+    "logPath": "/Users/runner/Library/Logs/CoreSimulator/2A61907E-0777-469F-85A4-AF14567E2DB5",
+    "udid": "2A61907E-0777-469F-85A4-AF14567E2DB5",
+    "isAvailable": true,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB",
+    "state": "Shutdown",
+    "name": "Hanlin-Phase2-Motion-45181755996"
+  },
+  "model": "iPad Pro 13-inch (M5)",
+  "ownership": {
+    "schema_version": 1,
+    "operation": "simctl_create",
+    "run_id": "45181755996",
+    "run_attempt": "1",
+    "simulator": "2A61907E-0777-469F-85A4-AF14567E2DB5",
+    "name": "Hanlin-Phase2-Motion-45181755996",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+    "device_type": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB",
+    "source_device": "D03256B1-4569-435F-8D92-E2BDD4ED7058",
+    "absent_before_create": true
+  },
+  "meaning": "Preflight selection only; availability does not establish native boot readiness."
+}

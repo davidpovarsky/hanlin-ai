@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2416,
+      "sha256": "3b56fce3a6859b9b923a97350df335f1d3fc6f4d2c25f57b5e26299bbec3bd77"
+    },
+    {
+      "path": "artifact-verification.json",
+      "bytes": 731,
+      "sha256": "a535074681bddc4cf54afc02bd2e851cee659c108d0d46a5177af3c85e85fb24"
+    },
+    {
+      "path": "artifacts-terminal.json",
+      "bytes": 764,
+      "sha256": "b12356f9df50a6758a7d002bdef9f8d1607c95d7ba40609f8bd1f987a5508bdf"
+    },
+    {
+      "path": "boot-initial.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bootstatus-attempt-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bootstatus.log",
+      "bytes": 261,
+      "sha256": "85d5973b94b0e4c95d24435a6d2c7990eee5e2606e5a48b07bd640947d06f7ef"
+    },
+    {
+      "path": "ci-performance-report.json",
+      "bytes": 2035,
+      "sha256": "c074f7101b9bcfeba2776baba2be957dfa4bdb0bb898391f8664d1feffa4f344"
+    },
+    {
+      "path": "concurrency-admission.json",
+      "bytes": 2544,
+      "sha256": "f5e08093d727a94c7165a9862e93311898eb7075512cb99ee475fa9b28c7b49a"
+    },
+    {
+      "path": "core-simulator-log.timeout",
+      "bytes": 24,
+      "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb"
+    },
+    {
+      "path": "device-strategy.txt",
+      "bytes": 6,
+      "sha256": "02db0d2659c9d48bc15f81a388594fc0e3cf4c780fdc27ea21e0671afc37de19"
+    },
+    {
+      "path": "devices-after.timeout",
+      "bytes": 24,
+      "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb"
+    },
+    {
+      "path": "dispatch-ack.json",
+      "bytes": 121,
+      "sha256": "709ad7be1dc920463b10c0f97db0ecee2f02f5029dd64ad8951f57bbf33e6e14"
+    },
+    {
+      "path": "dispatch-intent.json",
+      "bytes": 1238,
+      "sha256": "3aec8244d91d32d24c3837782d0b48bbb13cac0fac45bbdbaa9b2288cc766fc1"
+    },
+    {
+      "path": "dispatch-receipt.json",
+      "bytes": 556,
+      "sha256": "3e403c69ce8fc0ccc02dbe5940fc8adb13efe9c00b40be28548a586989621f88"
+    },
+    {
+      "path": "environment-summary.json",
+      "bytes": 2070,
+      "sha256": "9454d21a77d339b9a37fe599b268f65f7b463676e0be78cd988335179c5f34df"
+    },
+    {
+      "path": "motion-boot-readiness.json",
+      "bytes": 1961,
+      "sha256": "cdc482ddffc3c85fdfc2b768100c60ceefb7d58b27136b1aa7373839deb2e989"
+    },
+    {
+      "path": "native-job.json",
+      "bytes": 2430,
+      "sha256": "2cedc5e2319598716e527bb0a164c7d4b6c116966a7d81b73c8e88bfb2884ff2"
+    },
+    {
+      "path": "native-job.log",
+      "bytes": 19477,
+      "sha256": "85c855a24c1491ed4f5ec74280ebc6d6cb4db8c296f93b11734cb3245b38375f"
+    },
+    {
+      "path": "original-artifact-inventory.json",
+      "bytes": 3500,
+      "sha256": "4519cf8e4421bde60d00ddbbd1e17bc81d11595306ed4b68c36e9c245e823dab"
+    },
+    {
+      "path": "owned-simulator-cleanup.log",
+      "bytes": 1683,
+      "sha256": "692015b0476089ff7199d338618e7f86267aa8289311a39cd0cf12e37a954124"
+    },
+    {
+      "path": "preflight-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "ce16e9dea9b0c470e088bc121136ee735118e474eafbf78a69828bf6f51490df"
+    },
+    {
+      "path": "preflight.txt",
+      "bytes": 962,
+      "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+    },
+    {
+      "path": "process-status.txt",
+      "bytes": 28,
+      "sha256": "5fecb30c9edeef67794fce1856d1b70fc392c560e8e3459bc2662c377e2f0b3d"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 3739,
+      "sha256": "97730beb47490964058d6c1f39b4e89fdd236d54eb32020c0c8b96062f167293"
+    },
+    {
+      "path": "requested-scope.txt",
+      "bytes": 17,
+      "sha256": "6ad2ebf1c8ea86183a5c729a7c063461f65b152e056155a2515424821719badf"
+    },
+    {
+      "path": "shutdown-recovery.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "source-sha.txt",
+      "bytes": 41,
+      "sha256": "299739f54f94542468f59388030f3d2e09e6a2c16ec5127936a70b85f768c46e"
+    },
+    {
+      "path": "terminal-run.json",
+      "bytes": 16322,
+      "sha256": "fe3b0792b14040f11d54d0ea240e9b040032fa6aa8114af439c713b220ff41af"
+    },
+    {
+      "path": "watch-ended.json",
+      "bytes": 201,
+      "sha256": "d48f819f8e5e53a6f42e3de38d774613b44e5908d4b52dcf707614514f8951ad"
+    },
+    {
+      "path": "watch-start.json",
+      "bytes": 499,
+      "sha256": "b65a1db55f621d18903a7af63b4dbb3545832f5c3d9ac851a0d84be0ad5e1990"
+    },
+    {
+      "path": "watcher-job.json",
+      "bytes": 178,
+      "sha256": "8fc4eb319da9edec692bdd43eed0c0f8d99ac37ce6e4ee5c33952d94422df963"
+    },
+    {
+      "path": "xcodegen-install.log",
+      "bytes": 327,
+      "sha256": "5543c39402b2867d94bc6d9c2f8f3108dd11a86c87515448a3a3d4932506347d"
+    }
+  ]
+}

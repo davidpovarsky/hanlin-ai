@@ -1,0 +1,28 @@
+{
+  "id": 14821829613,
+  "bytes": 13368,
+  "sha256": "11dc996521fd17b43e0df9761d1ad1b3d61e1d70de3c12654058aa1124284ea1",
+  "api_size_digest_match": true,
+  "zip_crc": "PASS",
+  "members": [
+    "boot-initial.log",
+    "bootstatus-attempt-1.log",
+    "bootstatus.log",
+    "ci-performance-report.json",
+    "core-simulator-log.timeout",
+    "device-strategy.txt",
+    "devices-after.timeout",
+    "devices.json",
+    "motion-boot-readiness.json",
+    "owned-simulator-cleanup.log",
+    "preflight-duration-seconds.txt",
+    "preflight.txt",
+    "process-status.txt",
+    "requested-scope.txt",
+    "runtimes.json",
+    "shutdown-recovery.log",
+    "source-sha.txt",
+    "verified-environment.json",
+    "xcodegen-install.log"
+  ]
+}

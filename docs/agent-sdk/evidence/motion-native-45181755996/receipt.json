@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T13:33:24.764822+00:00",
+  "run_id": 45181755996,
+  "attempt": 1,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45181755996",
+  "source_sha": "5d0ea90d98b405d38b66bb735198b945225877ba",
+  "workflow_conclusion": "failure",
+  "native_job_id": 137717051719,
+  "native_job_conclusion": "failure",
+  "native_job_started_at": "2026-11-23T13:23:33Z",
+  "native_job_completed_at": "2026-11-23T13:30:14Z",
+  "runner_id": 1000024686,
+  "runner_name": "GitHub Actions 1000024686",
+  "dispatch_posts": 1,
+  "selector": "ChatMotionProofUITests/MotionUITests/testDRapidInputDiagnosticOnly",
+  "scope": "input-diagnostic",
+  "requested_variants_per_phase": 6,
+  "requested_scroll_phases": [
+    "native-default",
+    "immediate-touch-down"
+  ],
+  "independent_coordinate_variant_requested": true,
+  "actual_case_count": 0,
+  "case_receipts": "NOT_CREATED",
+  "aggregate_diagnostic_receipt": "NOT_CREATED",
+  "native_preparation": "PREFLIGHT_FAILED",
+  "boot": "NOT_READY",
+  "build": "NOT_RUN",
+  "XCTest": "NOT_RUN",
+  "visual_evidence": "NOT_CAPTURED",
+  "fixture_preparation": "NOT_RUN",
+  "original_failure": "Owned Motion recovery shutdown failed",
+  "boot_attempts": [
+    {
+      "name": "boot-initial",
+      "command": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "2A61907E-0777-469F-85A4-AF14567E2DB5"
+      ],
+      "timeout_seconds": 15.0,
+      "return_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 5.227,
+      "output_file": "boot-initial.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bootstatus-attempt-1",
+      "command": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "2A61907E-0777-469F-85A4-AF14567E2DB5",
+        "-b"
+      ],
+      "timeout_seconds": 180.0,
+      "return_code": 124,
+      "timed_out": true,
+      "elapsed_seconds": 181.168,
+      "output_file": "bootstatus-attempt-1.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "shutdown-recovery",
+      "command": [
+        "xcrun",
+        "simctl",
+        "shutdown",
+        "2A61907E-0777-469F-85A4-AF14567E2DB5"
+      ],
+      "timeout_seconds": 20.0,
+      "return_code": 124,
+      "timed_out": true,
+      "elapsed_seconds": 22.491,
+      "output_file": "shutdown-recovery.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "A_B_C": "NOT_SELECTED",
+  "artifact": {
+    "id": 14821829613,
+    "bytes": 13368,
+    "sha256": "11dc996521fd17b43e0df9761d1ad1b3d61e1d70de3c12654058aa1124284ea1",
+    "api_size_digest": "MATCH",
+    "zip_crc": "PASS",
+    "original_member_count": 19,
+    "oracle_archive": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/Motion/native-5d0ea90d-diagnostic/artifact.zip"
+  },
+  "source_admission": "Pre-dispatch source checks only: original D and subsequent helpers plus App.swift match6772; selected source/resources and Motion paths match successful C3a9e. No fixture/compiler/dependency/native UI execution occurred in this run.",
+  "watcher": {
+    "job_id": "job_32c2f012cf8b",
+    "status": "ENDED",
+    "ended_at": "2026-11-23T13:30:32.446353+00:00",
+    "pid_exists_after_exit": {
+      "2800185": false,
+      "2800186": false
+    },
+    "owner_lock_free": true
+  },
+  "remaining": "B original failure unresolved; D observations missing; A unexecuted on current source. Paired3 still requires root full app compile qualification.",
+  "followup": "No retry, probe, source change, timing change or assertion change. Preserve this NOT_RUN result pending coordinated native readiness."
+}
