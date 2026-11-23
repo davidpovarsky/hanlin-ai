@@ -1,0 +1,39 @@
+{
+  "application_source_sha": "07845de8c335a975027fd375f287a85754da51ab",
+  "application_trees": {
+    "Maktabah-iOSUITests": "442ea1cf71c846eaa131a15f2b85fa4e30e205bd",
+    "Maktabah.xcodeproj": "f61421e8677027ffa18364226b4ee68a0937dfc5",
+    "Source": "4b2abd687328725fb7a7f0ca635b2cab9e0f0c0b",
+    "Vendor": "ee5b415a5ccb9db9fda2b0e8d6ce3748cdeaea6e"
+  },
+  "baseline_live_consent_source": "96c5b1b60c15a9a0cf1c4356f9822c64d9864c86",
+  "branch": "codex/otzaria-hanlin-stream-continuation-20261123",
+  "credential_accessed_by_preparation": false,
+  "driver_sha256": "bb6c785e92aa46b669140701074b22dd67f9eb968777f207822aec6d248a4881",
+  "evidence_sha256": {
+    "docs/hq-integration/hanlin-stream-continuation-20261123/CI_PREPARATION.md": "f1d65a10dfc918a85f6785ae8339a1147837ad09d50a7ed611bf98d4f85da0da",
+    "docs/hq-integration/hanlin-stream-continuation-20261123/CORE_APPLE_VALIDATION.json": "eb66eacd21e1fe694281d9856073dc7adfce5c5c8af53dc08adab92cfed08ff7",
+    "docs/hq-integration/hanlin-stream-continuation-20261123/DEPENDENCY_ADOPTION.json": "84717bec8dfbb7e306483954ba889d9221082543e21826dc4ef6cb1b429d4bdb",
+    "docs/hq-integration/hanlin-stream-continuation-20261123/HOST_LOCK_ADOPTION.json": "4fad1c4cfaf0ca5919c3ded60195555e392658d250d680a8384c18241e4e8da5",
+    "docs/hq-integration/hanlin-stream-continuation-20261123/previous-live/CLEANUP_BINDING.json": "95315f10acee207ece317bb2b8a9bcd83377842f4f8ae4b23fcb588c30446657",
+    "docs/hq-integration/hanlin-stream-continuation-20261123/previous-live/DIAGNOSIS.json": "e737261ee3d4f3d6f10e4fb3eaf2bb00b95e33d878910eb7cb54fdbdc6307d86"
+  },
+  "execution_input_count": 286,
+  "execution_inputs_sha256": "72433e25b9ea1257d712c48fca7bb7b6420493ca09ed7e023ac5b32c68abab00",
+  "hanlin_gitlink": "ca3c91f2233bf5c77990643b29a874aac8704639",
+  "historical_passes_reused_as_current_acceptance": false,
+  "inputs_sha256": "2ce2990301c879097990bd38333ece10141b288851446189917648aa50a14a41",
+  "native_result": "NOT_RUN",
+  "original_native_case_timeout_seconds": 600,
+  "original_source_wait_seconds": 180,
+  "provider_called_by_preparation": false,
+  "qualified_core_full_suite_failed": 0,
+  "qualified_core_full_suite_methods": 4185,
+  "qualified_core_full_suite_skipped": 0,
+  "qualified_core_run": 45246940299,
+  "repository": "davidpovarsky/Maktabah",
+  "schema_version": 1,
+  "source_guard_sha256": "b81d9a69be317a2ece0200e6e6e1f36a5864377bf5a0b229e09ef08d32156752",
+  "swift_ai_sdk_source_sha": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "workflow_sha256": "0f53fc10f08b437b48d2bbddb8aad351f14c486b53b73b73e6d17c61687d1085"
+}

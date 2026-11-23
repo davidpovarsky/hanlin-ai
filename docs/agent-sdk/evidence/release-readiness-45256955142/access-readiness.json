@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-11-23T20:25:32.089852+00:00",
+  "secretNamesOnly": {
+    "endpoint": "repos/davidpovarsky/Maktabah/actions/secrets",
+    "exitCode": 0,
+    "data": {
+      "required_name_present": true,
+      "total_count": 11
+    },
+    "error": null
+  },
+  "secretValuesRead": false,
+  "liveWorkflowSource": "Maktabah06613ff:.github/workflows/otzaria-hanlin-live-native.yml",
+  "nativeReleaseIndexFirst100": {
+    "endpoint": "repos/davidpovarsky/hanlin-ai/releases?per_page=100",
+    "exitCode": 0,
+    "data": [],
+    "error": null
+  },
+  "repositoryAccess": {
+    "endpoint": "repos/davidpovarsky/hanlin-ai",
+    "exitCode": 0,
+    "data": {
+      "archived": false,
+      "disabled": false,
+      "full_name": "davidpovarsky/hanlin-ai",
+      "permissions": {
+        "admin": true,
+        "maintain": true,
+        "pull": true,
+        "push": true,
+        "triage": true
+      },
+      "private": false
+    },
+    "error": null
+  },
+  "diskBytes": {
+    "total": 105089261568,
+    "used": 102288605184,
+    "free": 2783879168
+  },
+  "artifactsAcquired": 0,
+  "uploadsAttempted": 0,
+  "publicationAdmission": "HELD_PENDING_COMPLETED_SUCCESS_AND_ORIGINAL_ACCEPTANCE",
+  "nativeAssetSizes": "UNKNOWN_FOR_PENDING_RUN_UNTIL_TERMINAL_ARTIFACT_INDEX"
+}

@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-11-23T20:38:58.988453+00:00",
+  "metadataOnly": true,
+  "artifactDownloads": 0,
+  "results": {
+    "run": {
+      "endpoint": "repos/davidpovarsky/swift-ai-sdk/actions/runs/45246940299",
+      "exitCode": 0,
+      "data": {
+        "conclusion": "success",
+        "created_at": "2026-11-23T19:15:01Z",
+        "head_branch": "codex/otzaria-tool-result-continuation-20261123",
+        "head_sha": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "html_url": "https://github.com/davidpovarsky/swift-ai-sdk/actions/runs/45246940299",
+        "id": 45246940299,
+        "path": ".github/workflows/otzaria-stream-continuation.yml",
+        "run_attempt": 1,
+        "status": "completed",
+        "updated_at": "2026-11-23T19:29:41Z"
+      },
+      "error": null
+    },
+    "artifact": {
+      "endpoint": "repos/davidpovarsky/swift-ai-sdk/actions/artifacts/14854169874",
+      "exitCode": 0,
+      "data": {
+        "digest": "sha256:da9e526111151bdf15fd910a4e57a3679a1a2df23b235f4009dfbdb2cb81125d",
+        "expired": false,
+        "expires_at": "2026-12-07T19:29:20Z",
+        "id": 14854169874,
+        "name": "otzaria-stream-continuation-evidence",
+        "size_in_bytes": 941711,
+        "workflow_run": {
+          "head_branch": "codex/otzaria-tool-result-continuation-20261123",
+          "head_repository_id": 1385655332,
+          "head_sha": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+          "id": 45246940299,
+          "repository_id": 1385655332
+        }
+      },
+      "error": null
+    }
+  }
+}

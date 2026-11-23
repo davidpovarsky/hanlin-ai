@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-23T20:43:36.636768+00:00",
+  "status": "SOURCE_READY_FINAL_DEPENDENCY_ADOPTION_AND_NATIVE_ACCEPTANCE_PENDING",
+  "sourceReviewed": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+  "productionEdits": 0,
+  "pinUpdates": 0,
+  "testsRun": 0,
+  "simulatorRuns": 0,
+  "artifactAcquisitions": 0,
+  "watchersStarted": 0,
+  "liveDispatches": 0,
+  "secretValuesRead": false,
+  "publishedAssets": 0,
+  "files": {
+    "README.md": {
+      "bytes": 8686,
+      "sha256": "5977455bf3e835047b8dd6386951c3664b6d889bc020f4ff07c9e593d099915e"
+    },
+    "access-readiness.json": {
+      "bytes": 1264,
+      "sha256": "2ca42d8868aabfff945aeefca330153c44e67f40731cb831bb6b5c3016fa7151"
+    },
+    "otzaria/admission-readback.json": {
+      "bytes": 12073,
+      "sha256": "712826172e843fed6f9463ccf4939461bddc19d052325483d15d7e1ae659b8ac"
+    },
+    "otzaria/external-live-owner-evidence.json": {
+      "bytes": 15799,
+      "sha256": "a6cdc19b9ddc94d67e744228c14e65f09203005d482edb27c357105e37521a11"
+    },
+    "otzaria/external-live-source.json": {
+      "bytes": 66528,
+      "sha256": "15080af79adc188d574253102101f9c1f1a9c9fb8e37adf928092e8e70d53ed2"
+    },
+    "publication-and-installation.md": {
+      "bytes": 4755,
+      "sha256": "ae7b697fe066beac7e68335d4f5a9068ae07071a2b29ed133b18560aea9e2457"
+    },
+    "source-qualification.json": {
+      "bytes": 9063,
+      "sha256": "55e435cf1b8a1c09ccf06e05e9fd7c4aac507fea7da06c5e07d8363b4ce80e04"
+    },
+    "storage-readiness.json": {
+      "bytes": 1485,
+      "sha256": "6ba7caa2129a6bb5894d2e0bf50bda3ea9ea0756d7bbcca89c2f3a1e1d5b56c6"
+    },
+    "swiftai-07431/core-github-metadata.json": {
+      "bytes": 1542,
+      "sha256": "02177a9330c548a618c2f0a13b488e6f3a8029055468b7239296dcd68c92a9ac"
+    },
+    "swiftai-07431/evidence-scope.json": {
+      "bytes": 3015,
+      "sha256": "780291f38f18aab94efff1ec77d8adbc34d8f75f2ab758428b79ecbbd568dc8c"
+    },
+    "swiftai-07431/integration-plan.json": {
+      "bytes": 3130,
+      "sha256": "7e306ad53dcacff3c71d99ee210d9e69a539bb3ec03befab92be02388f1d76bf"
+    },
+    "swiftai-07431/owner-evidence/CI_PREPARATION.md": {
+      "bytes": 1856,
+      "sha256": "f1d65a10dfc918a85f6785ae8339a1147837ad09d50a7ed611bf98d4f85da0da"
+    },
+    "swiftai-07431/owner-evidence/CORE_APPLE_VALIDATION.json": {
+      "bytes": 3603,
+      "sha256": "eb66eacd21e1fe694281d9856073dc7adfce5c5c8af53dc08adab92cfed08ff7"
+    },
+    "swiftai-07431/owner-evidence/DEPENDENCY_ADOPTION.json": {
+      "bytes": 3408,
+      "sha256": "84717bec8dfbb7e306483954ba889d9221082543e21826dc4ef6cb1b429d4bdb"
+    },
+    "swiftai-07431/owner-evidence/HOST_LOCK_ADOPTION.json": {
+      "bytes": 1261,
+      "sha256": "4fad1c4cfaf0ca5919c3ded60195555e392658d250d680a8384c18241e4e8da5"
+    },
+    "swiftai-07431/owner-evidence/LIVE_STREAM_SOURCE_ADMISSION.json": {
+      "bytes": 2592,
+      "sha256": "0894017ad748ac4f74611864d428ab16348920b359d52ea7d1cca50fa6b1b318"
+    },
+    "swiftai-07431/owner-evidence/prior-live-diagnosis.json": {
+      "bytes": 7250,
+      "sha256": "e737261ee3d4f3d6f10e4fb3eaf2bb00b95e33d878910eb7cb54fdbdc6307d86"
+    },
+    "swiftai-07431/production.diff": {
+      "bytes": 1414,
+      "sha256": "8db5b2cd5fa4d92b721dc5be5de2454e4484a0fa72d9f475ffecdf05bd699fe6"
+    },
+    "swiftai-07431/source-comparison.json": {
+      "bytes": 3827,
+      "sha256": "d38d785e9f22c9e5234d0e6469ec8b85a3fe7241baf7ea30fc08911e952060d3"
+    }
+  }
+}
