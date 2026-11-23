@@ -149,15 +149,27 @@ def main():
             owner_plan = ROOT / "Config/MiniAppsOwnerSigningPlan.json"
             if (os.environ.get("SPLIT_SIGNING_PREFLIGHT_ONLY", "false").lower() == "true"
                     and owner_plan.is_file()):
-                from cross_app_owner_provisioning import run_cross_app_owner_provisioning
-                state["scope"] = "Explicit registered cross-app owner group provisioning and signed probes only."
-                state["cross_app_owner_provisioning"] = {}
-                run_cross_app_owner_provisioning(
-                    folder, owner_plan, team=os.environ["APPLE_TEAM_ID"],
-                    identity=distribution_identity, certificate_sha=cert_sha, keychain=keychain,
-                    installed_profiles=installed_profiles, run=run,
-                    receipt=state["cross_app_owner_provisioning"])
-                state["status"] = "CROSS_APP_PROVISIONING_PASS"
+                operation = json.loads(owner_plan.read_bytes()).get("operation", "provision")
+                if operation == "refresh-profile-readback":
+                    from owner_profile_readback import run_cross_app_owner_readback
+                    state["scope"] = "Fresh profile grants and existing identity metadata only; no native archive."
+                    state["cross_app_owner_readback"] = {}
+                    run_cross_app_owner_readback(
+                        folder, owner_plan, team=os.environ["APPLE_TEAM_ID"],
+                        certificate_sha=cert_sha, receipt=state["cross_app_owner_readback"])
+                    state["status"] = "CROSS_APP_PROFILE_READBACK_COMPLETE"
+                elif operation == "provision":
+                    from cross_app_owner_provisioning import run_cross_app_owner_provisioning
+                    state["scope"] = "Explicit registered cross-app owner group provisioning and signed probes only."
+                    state["cross_app_owner_provisioning"] = {}
+                    run_cross_app_owner_provisioning(
+                        folder, owner_plan, team=os.environ["APPLE_TEAM_ID"],
+                        identity=distribution_identity, certificate_sha=cert_sha, keychain=keychain,
+                        installed_profiles=installed_profiles, run=run,
+                        receipt=state["cross_app_owner_provisioning"])
+                    state["status"] = "CROSS_APP_PROVISIONING_PASS"
+                else:
+                    raise ValueError("Unknown explicit cross-app owner signing operation")
             else:
                 state["provisioning_profiles"] = []
                 profiles = resolve_original_profiles(cert_sha, folder, state["provisioning_profiles"])
@@ -323,7 +335,7 @@ def main():
             (OUT / "acceptance.json").write_text(json.dumps(state, indent=2) + "\n")
             shutil.copy2(OUT / "acceptance.json", OUT.parent / "acceptance.json")
             print(json.dumps(state))
-    return 0 if state["status"] in {"EXECUTED_PASS", "PROVISIONING_PREFLIGHT_PASS", "CROSS_APP_PROVISIONING_PASS"} and state["cleanup"] == "PASS" else 1
+    return 0 if state["status"] in {"EXECUTED_PASS", "PROVISIONING_PREFLIGHT_PASS", "CROSS_APP_PROVISIONING_PASS", "CROSS_APP_PROFILE_READBACK_COMPLETE"} and state["cleanup"] == "PASS" else 1
 
 if __name__ == "__main__":
     sys.exit(main())

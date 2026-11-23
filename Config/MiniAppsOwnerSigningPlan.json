@@ -185,5 +185,7 @@
     "Every existing granted group is preserved; an owner private group is requested only when no family profile has a private group.",
     "The existing producer profile is reused as account evidence; no duplicate producer provisioning probe is run.",
     "This optional plan activates only the existing signing-preflight workflow in this isolated branch."
-  ]
+  ],
+  "operation": "refresh-profile-readback",
+  "previous_provisioning_run": 45286408333
 }

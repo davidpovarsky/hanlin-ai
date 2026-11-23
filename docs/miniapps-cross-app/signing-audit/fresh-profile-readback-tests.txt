@@ -1,0 +1,10 @@
+test_native_security_output_matches_exact_valid_identity_fingerprint (__main__.OwnerProfileReadbackTests.test_native_security_output_matches_exact_valid_identity_fingerprint) ... ok
+test_profile_issued_before_probe_is_not_reused_as_current_assignment (__main__.OwnerProfileReadbackTests.test_profile_issued_before_probe_is_not_reused_as_current_assignment) ... ok
+test_same_run_profile_is_reconciled_without_duplicate_creation (__main__.OwnerProfileReadbackTests.test_same_run_profile_is_reconciled_without_duplicate_creation) ... ok
+test_uncertain_create_is_never_retried (__main__.OwnerProfileReadbackTests.test_uncertain_create_is_never_retried) ... ok
+test_wrong_owner_certificate_readback_is_rejected (__main__.OwnerProfileReadbackTests.test_wrong_owner_certificate_readback_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.011s
+
+OK

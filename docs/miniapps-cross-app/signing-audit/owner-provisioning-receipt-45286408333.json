@@ -1,0 +1,130 @@
+{
+  "run_id": 45286408333,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45286408333",
+  "source_sha": "03e30c642f833243ebfee2d7619362fecd720d49",
+  "job_id": 138083781846,
+  "artifact_id": 14873072920,
+  "artifact_sha256": "e4865da596a66022b0d594c7a159d2012caff17b01e7a3ba4db4ec2c2dc29529",
+  "result": "FAILED_BEFORE_AUTOMATIC_DEVELOPMENT_ARCHIVE",
+  "existing_distribution_identity": {
+    "status": "READY_RESOURCE",
+    "checks": {
+      "private_key_matches": true,
+      "valid_dates": true,
+      "team_matches": true,
+      "distribution_identity": true
+    },
+    "expiration": "2027-09-07T07:25:00+00:00",
+    "public_certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+    "os_codesigning_trust": "VERIFIED"
+  },
+  "development_identities_before_count": 12,
+  "temporary_development_identities": [],
+  "temporary_development_identity_cleanup": "PASS",
+  "cleanup": "PASS",
+  "per_product": [
+    {
+      "role": "otzaria",
+      "bundle_id": "com.davidpovarsky.chavrusatext",
+      "status": "XCODE_AUTOMATIC_PROVISIONING_FAILED",
+      "requested_app_groups": [
+        "group.com.davidpovarsky.chavrusatext",
+        "group.com.davidpovarsky.itorah",
+        "group.com.itorah.shared"
+      ],
+      "required_distribution_entitlement_keys": [
+        "aps-environment",
+        "com.apple.developer.icloud-container-identifiers",
+        "com.apple.developer.icloud-services",
+        "com.apple.developer.ubiquity-container-identifiers",
+        "com.apple.developer.ubiquity-kvstore-identifier",
+        "com.apple.security.application-groups"
+      ],
+      "xcode_archive_exit": 65
+    },
+    {
+      "role": "anytype",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2",
+      "status": "XCODE_AUTOMATIC_PROVISIONING_FAILED",
+      "requested_app_groups": [
+        "group.com.itorah.shared",
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "required_distribution_entitlement_keys": [
+        "aps-environment",
+        "com.apple.developer.associated-domains",
+        "com.apple.developer.networking.multicast",
+        "com.apple.developer.usernotifications.communication",
+        "com.apple.security.application-groups"
+      ],
+      "xcode_archive_exit": 65
+    },
+    {
+      "role": "anytype_share",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+      "status": "XCODE_AUTOMATIC_PROVISIONING_FAILED",
+      "requested_app_groups": [
+        "group.com.itorah.shared",
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "required_distribution_entitlement_keys": [
+        "com.apple.security.application-groups"
+      ],
+      "xcode_archive_exit": 65
+    },
+    {
+      "role": "anytype_notification",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+      "status": "XCODE_AUTOMATIC_PROVISIONING_FAILED",
+      "requested_app_groups": [
+        "group.com.itorah.shared",
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "required_distribution_entitlement_keys": [
+        "com.apple.security.application-groups"
+      ],
+      "xcode_archive_exit": 65
+    },
+    {
+      "role": "anytype_widget",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+      "status": "XCODE_AUTOMATIC_PROVISIONING_FAILED",
+      "requested_app_groups": [
+        "group.com.itorah.shared",
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "required_distribution_entitlement_keys": [
+        "com.apple.security.application-groups"
+      ],
+      "xcode_archive_exit": 65
+    }
+  ],
+  "native_error": "Apple account has reached maximum number of development certificates; Xcode requests choosing a certificate to revoke. No existing identity was revoked.",
+  "limitations": [
+    "No owner shared/private group provisioning or signed app success is established by this failed run.",
+    "Before-provisioning profile snapshots do not establish the current group assignment after the attempt; a fresh profile readback is scheduled.",
+    "Earlier devicectl visible-device count is local hardware visibility, not Apple account registered-device inventory."
+  ],
+  "configured_signing_secret_names_audit": {
+    "hanlin-ai": [
+      "APPLE_CERTIFICATE_P12_B64",
+      "APPLE_CERTIFICATE_PASSWORD",
+      "ASC_ISSUER_ID",
+      "ASC_KEY_ID",
+      "ASC_KEY_P8"
+    ],
+    "Maktabah": [
+      "APPLE_CERTIFICATE_P12_B64",
+      "APPLE_CERTIFICATE_PASSWORD",
+      "ASC_ISSUER_ID",
+      "ASC_KEY_ID",
+      "ASC_KEY_P8"
+    ],
+    "anytype-swift": [],
+    "notes": [
+      "No separate development identity secret is configured in these three owned repositories.",
+      "Maktabah legacy P12_DATA/P12_PASSWORD and Anytype Match credentials are referenced by workflows but absent from their configured repository secret names.",
+      "No secret value was requested by the metadata audit."
+    ]
+  }
+}
