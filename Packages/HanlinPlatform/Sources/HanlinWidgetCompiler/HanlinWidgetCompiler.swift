@@ -12,6 +12,13 @@ public struct HanlinWidgetPackageMetadata: Codable, Sendable {
     public let sourceFormat: SourceFormat
     public let actions: [HanlinWidgetActionDeclaration]
     public let families: [String]
+    public init(abiVersion: UInt32 = 1, sourceFormat: SourceFormat,
+                actions: [HanlinWidgetActionDeclaration] = [], families: [String]) {
+        self.abiVersion = abiVersion
+        self.sourceFormat = sourceFormat
+        self.actions = actions
+        self.families = families
+    }
 }
 
 public enum HanlinWidgetCompiler {
@@ -22,6 +29,27 @@ public enum HanlinWidgetCompiler {
         guard let engine = manifest.declaredWidgetEngine, engine != .legacy,
               let field = manifest.unknownFields["hanlinWidget"] else { throw HanlinWidgetProgramError.invalidProgram }
         let metadata = try JSONDecoder().decode(HanlinWidgetPackageMetadata.self, from: field.canonicalJSONData())
+        return try prepare(engine: engine, metadata: metadata, entryPath: entryPath, files: files)
+    }
+
+    public static func preparePresentation(_ declaration: HanlinNativePresentationMetadata,
+                                           files: [String: Data]) throws -> HanlinWidgetProgram {
+        guard declaration.engine != .legacy,
+              HanlinArchivePolicy.normalizedRelativePath(declaration.sourcePath) == declaration.sourcePath,
+              let format = HanlinWidgetPackageMetadata.SourceFormat(rawValue: declaration.sourceFormat) else {
+            throw HanlinWidgetProgramError.invalidSource
+        }
+        // Native presentation sources are a self-contained editable module tree.
+        // The foreground Metro/NativeScript artifact is not a compiler input.
+        let directory = (declaration.sourcePath as NSString).deletingLastPathComponent
+        let scoped = directory.isEmpty ? files : files.filter { $0.key.hasPrefix(directory + "/") }
+        return try prepare(engine: declaration.engine,
+            metadata: .init(sourceFormat: format, actions: declaration.actions, families: ["systemLarge"]),
+            entryPath: declaration.sourcePath, files: scoped)
+    }
+
+    private static func prepare(engine: HanlinWidgetEngine, metadata: HanlinWidgetPackageMetadata,
+                                entryPath: String, files: [String: Data]) throws -> HanlinWidgetProgram {
         guard metadata.abiVersion == HanlinWidgetProgram.abiVersion,
               let source = files[entryPath], source.count <= 512 * 1_024 else { throw HanlinWidgetProgramError.invalidSource }
         var sources: [String: String] = [:]
@@ -55,7 +83,7 @@ public enum HanlinWidgetCompiler {
             throw HanlinWidgetProgramError.compilationFailed("Compiler produced no output or exceeded its budget")
         }
         var imports: [String: String] = [:]
-        if engine == .scriptwidget {
+        if engine == .scriptwidget, context.objectForKeyedSubscript("__hanlinWidgetUsesModules")?.toBool() != true {
             for (path, code) in sources where path != entryPath {
                 guard code.utf8.count <= 512 * 1_024 else { throw HanlinWidgetProgramError.invalidSource }
                 let output = context.objectForKeyedSubscript("__hanlinCompileWidget")?.call(withArguments: [[

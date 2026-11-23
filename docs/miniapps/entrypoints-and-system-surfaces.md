@@ -147,3 +147,121 @@ and one shared transaction for original storage and compatibility aliases.
 Linux Swift syntax parsing and SwiftPM manifest evaluation passed. Execution
 of these native tests, Apple typechecking, signed entitlements and device data
 access require the Apple CI/device gate; no pass is inferred from syntax parsing.
+
+## Interactive native snippets and translation panels
+
+`script.json.nativePresentations` binds an explicit `appIntent` or
+`translationUI` exposure to a separate, editable native presentation program.
+It accepts the original `expo` widget renderer or `scriptwidget` compiler,
+native APIs and renderer. These are not WidgetKit instances, and do not appear
+as artificial entries in the widget picker. The foreground app may still use
+Expo or NativeScript independently.
+
+```json
+{
+  "nativePresentations": {
+    "appIntents": {
+      "engine": "scriptwidget",
+      "sourcePath": "native/search.tsx",
+      "sourceFormat": "tsx",
+      "actions": [
+        {"id":"loadMore","kind":"function","handler":"loadMore"}
+      ]
+    },
+    "translation": {
+      "engine": "scriptwidget",
+      "sourcePath": "native/search.tsx",
+      "sourceFormat": "tsx",
+      "actions": [
+        {"id":"loadMore","kind":"function","handler":"loadMore"}
+      ],
+      "input": {
+        "title":"Search text",
+        "placeholder":"Enter a word or sentence",
+        "submitTitle":"Search again"
+      }
+    }
+  }
+}
+```
+
+The source directory is a self-contained module/resource tree. ScriptWidget
+modules export a default render function, and named action handlers. The
+original Babel/JSX compiler resolves local imports at install time; foreign
+foreground-framework imports are errors, rather than an implicit legacy
+Scripting execution path. The import preview reports errors at the native
+source path. The installer writes each verified compiled program below
+`presentations/<entrypoint-id-sha256>.json` before publishing the exposure.
+
+**Shortcuts:** choose **Show MiniApp Snippet**, select an installed native
+presentation, and supply text/JSON parameters. Its SnippetIntent renders the
+actual program in the system result UI. Buttons execute declared original
+engine actions and return an updated snippet. It does not require a queued
+foreground action to manufacture a snippet. Existing **Run Script Action** and
+durable receipt snippets remain available for foreground actions.
+
+**Translation:** the same program renders inside the native
+TranslationUIProvider extension. The optional input descriptor presents a
+native editable text field and submit button. New queries get a new presentation
+session. The host calls Apple's real `expandSheet()` and
+`finish(translation:)` APIs; replacement availability is the source
+application's `allowsReplacement` value.
+
+ScriptWidget receives `$getenv("presentation")` / `$widget.presentation`:
+
+```ts
+{
+  kind: "snippet" | "translationUI",
+  sessionID: string,
+  inputText: string,
+  parameters: JSONValue,
+  allowsReplacement: boolean
+}
+```
+
+Its translation host binding exposes `$presentation.expandSheet()` and
+`$presentation.finish(replacementText?)`. The original renderer's buttons may
+supply `actionParameters`; named handlers receive
+`{ parameters, value? }`. Expo layouts receive the same presentation context in
+the renderer environment and may return
+`__hanlinPresentationEffect: { expandsSheet, finishRequested, replacementText? }`
+from their original callback. This host transport does not replace the original
+engine APIs.
+
+State is scoped to product store, installation, active generation, entrypoint,
+program digest, input and session UUID. Actions validate the current immutable
+program and declared handler, and explicit action nonces prevent retrying one
+tap twice. Two simultaneous snippets never share view state. Removing or
+changing the exposure invalidates earlier requests.
+
+### Modular text search parity and evidence
+
+The Expo sample is version **1.4.0**. Its native subtree preserves eleven engine,
+normalization, grouping, localization and snippet-model modules from the exact
+user attachment, SHA-256
+`3f81e380acefbafade23effea989e969cce6a404a3754cfbdb33609408802b15`.
+`native/original-source-proof.json` records each original module and local
+adaptations. Only transport/storage integration is changed in those modules:
+the native panel uses the original ScriptWidget `$http` and storage APIs.
+
+Native presentations support grouped search results, preferred and alternative
+versions, full text and version details, pagination, source links, input changes,
+errors and retry, plus actual selected-text replacement. Pagination uses an
+explicit native **Load more results** button in the system snippet; the source
+Scripting snippet used an on-appear scroll sentinel. The interactive native
+surface is a port of the behavior, not execution of the frozen Scripting UI.
+
+`node --test Scripts/MiniApps/test-native-presentations.mjs` executes the actual
+original compiler and ported module graph: typed local imports/actions,
+foreign-import rejection, original top-level async compatibility, and the
+sample's grouped search/version/full-text/pagination/replacement flow. HTTP
+responses in that deterministic JavaScript test are fixtures, not a claim of a
+device network test. Four Apple cases in
+`AI_HLYTests/HanlinNativePresentationTests.swift` cover original async providers,
+state isolation, all seven native Dynamic Island regions, and stale-generation
+or other-product rejection. Apple test results must come from the native gate.
+
+The host also captures original `$dynamic_island` seven-region values as
+`HanlinScriptWidgetDynamicIsland`. Function JSX components resolve before native
+rendering. `$component` retains upstream's registration diagnostic behavior; it
+does not invent a separate component registry.

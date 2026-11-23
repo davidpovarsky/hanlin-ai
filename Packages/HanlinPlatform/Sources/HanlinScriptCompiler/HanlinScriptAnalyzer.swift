@@ -184,6 +184,25 @@ public struct HanlinScriptAnalyzer: Sendable {
             }
         }
 
+        do {
+            for (entrypointID, declaration) in try HanlinNativePresentationMetadata.declarations(in: package.manifest) {
+                guard entrypoints.contains(where: {
+                    $0.id == entrypointID && [.appIntent, .translationUI].contains($0.kind)
+                }) else { throw HanlinWidgetProgramError.invalidProgram }
+                do {
+                    _ = try HanlinWidgetCompiler.preparePresentation(declaration, files: files)
+                } catch {
+                    findings.append(.init(state: .unsupported, severity: .error,
+                        sourcePath: declaration.sourcePath, message: "Native presentation preparation failed: \(error)",
+                        code: "MINIAPP_NATIVE_PRESENTATION_INVALID"))
+                }
+            }
+        } catch {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                message: "Native presentations must name an existing appIntent or translationUI entrypoint: \(error)",
+                code: "MINIAPP_NATIVE_PRESENTATION_INVALID"))
+        }
+
         var capabilities: [HanlinCapabilityID: HanlinCapabilityRequest] = [:]
         for declaredCapability in package.manifest.declaredCapabilities {
             let purpose = declaredCapability.rawValue == "ios-native-api"

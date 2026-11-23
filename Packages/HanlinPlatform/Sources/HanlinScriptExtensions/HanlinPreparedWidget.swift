@@ -11,10 +11,12 @@ public struct HanlinWidgetActionContext: Codable, Hashable, Sendable {
     public let environment: [String: HanlinValue]
     public let actions: [HanlinWidgetActionDeclaration]
     public let resources: [String: URL]
+    public let presentation: HanlinNativePresentationRequest?
 
     public init(identity: HanlinScriptExtensionIdentity, engine: HanlinWidgetEngine,
                 artifactSHA256: String, family: String, environment: [String: HanlinValue] = [:],
-                actions: [HanlinWidgetActionDeclaration] = [], resources: [String: URL] = [:]) {
+                actions: [HanlinWidgetActionDeclaration] = [], resources: [String: URL] = [:],
+                presentation: HanlinNativePresentationRequest? = nil) {
         self.identity = identity
         self.engine = engine
         self.artifactSHA256 = artifactSHA256
@@ -22,6 +24,7 @@ public struct HanlinWidgetActionContext: Codable, Hashable, Sendable {
         self.environment = environment
         self.actions = actions
         self.resources = resources
+        self.presentation = presentation
     }
 }
 

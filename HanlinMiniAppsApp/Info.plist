@@ -130,5 +130,7 @@
 	</dict>
 	<key>ScriptWidgetServiceKeychainGroup</key>
 	<string>$(AppIdentifierPrefix)com.itorah.hanlinminiapps.scriptwidget.services</string>
+	<key>com.apple.developer.translation-ui-provider.network-access</key>
+	<true/>
 </dict>
 </plist>

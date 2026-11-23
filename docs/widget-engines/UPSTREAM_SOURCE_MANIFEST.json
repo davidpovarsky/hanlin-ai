@@ -188,9 +188,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagButton.swift",
       "upstreamBlob": "25322f0747ef96cd4179775d2552aa30e43f1dc0",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagButton.swift",
-      "localSHA256": "73faa10f02fe94c9ef526810e6630805caff13d7dca9374b8d0c1b30c8ec4d19",
+      "localSHA256": "349a3ff9d109dced7830f55aa479bc2b431f45a30b2f8ae87617e217d647df3f",
       "byteIdentical": false,
-      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs."
     },
     {
       "repository": "everettjf/scriptwidget",
@@ -318,9 +318,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagToggle.swift",
       "upstreamBlob": "0c33188263deb182ba10c58a2187ca8eff8a318d",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagToggle.swift",
-      "localSHA256": "75682d8d9cd51623ad78c2647d8dd2838a7ffe82570926a25f5c5767df6294aa",
+      "localSHA256": "26c72b45362356ec2b01673c3d3426867f935b2aca0fcabe542c0818e5618626",
       "byteIdentical": false,
-      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs."
     },
     {
       "repository": "everettjf/scriptwidget",
@@ -338,9 +338,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/ScriptWidgetElementView.swift",
       "upstreamBlob": "7cbdd84cd1a5a67a89e52c759f493e2816e092e6",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/ScriptWidgetElementView.swift",
-      "localSHA256": "5a415b485046fcfdf522604464b6cfb5a9bc85d6c89e5f0b69e2a465fa9e357e",
+      "localSHA256": "a11a6a49399ecfeb7ce80300cf47e8b11fbfac94baa3f9cbb15bbfc0b50a4cf4",
       "byteIdentical": false,
-      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs."
     },
     {
       "repository": "everettjf/scriptwidget",
@@ -605,9 +605,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
-      "localSHA256": "35eda755938508899e9f69c855036eaac138cad73af653f0217390cd8416b8a7",
+      "localSHA256": "fd95fbae7ecd7f917c6ef0be9d002d84010d8f25210759ac214d29538da15a15",
       "byteIdentical": false,
-      "adaptation": "Source-derived original JSExport/util/custom-component lifecycle; Hanlin one-shot VM owner, verified files, typed transactional storage, bounded HTTP and prepared Sendable tree. Aggregate preparation charges scalar children/UTF-8 keys/canonical values, enforces 1000 nodes/64 depth/256-KiB materials/1-MiB encoded DTO and cooperative five-second deadline. Not a byte-identical copy or hard VM-memory/preemption guarantee."
+      "adaptation": "Source-derived original JSExport/util/custom-component lifecycle; Hanlin one-shot VM owner, verified files, typed transactional storage, bounded HTTP and prepared Sendable tree. Aggregate preparation charges scalar children/UTF-8 keys/canonical values, enforces 1000 nodes/64 depth/256-KiB materials/1-MiB encoded DTO and cooperative five-second deadline. Not a byte-identical copy or hard VM-memory/preemption guarantee. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs."
     },
     {
       "repository": "everettjf/scriptwidget",
@@ -615,9 +615,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
-      "localSHA256": "307c1898c7a1a00ecb624d25a65576518c12ff69d813c93a79ecc9237d360ed8",
+      "localSHA256": "5f42f6db1e4beaad0679babfa0ac0ba47bf637a65b3aa4fa28a3bc96da59711b",
       "byteIdentical": false,
-      "adaptation": "ScriptWidgetCompiler guard visitor and async $main wrapper adapted; Expo module compiler adapter is Hanlin-owned."
+      "adaptation": "ScriptWidgetCompiler guard visitor and async $main wrapper adapted; Expo module compiler adapter is Hanlin-owned. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs."
     },
     {
       "repository": "expo/expo",

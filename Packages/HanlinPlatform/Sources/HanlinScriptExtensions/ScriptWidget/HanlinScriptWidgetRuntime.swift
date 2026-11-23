@@ -13,6 +13,16 @@ public struct HanlinScriptWidgetError: Error, LocalizedError, Sendable {
 public struct HanlinScriptWidgetExecution: Sendable {
     public let node: HanlinScriptWidgetPreparedNode
     public let values: [String: HanlinValue]
+    public let presentationEffect: HanlinNativePresentationEffect
+    public let dynamicIsland: HanlinScriptWidgetDynamicIsland?
+    public init(node: HanlinScriptWidgetPreparedNode, values: [String: HanlinValue],
+                presentationEffect: HanlinNativePresentationEffect = .init(),
+                dynamicIsland: HanlinScriptWidgetDynamicIsland? = nil) {
+        self.node = node
+        self.values = values
+        self.presentationEffect = presentationEffect
+        self.dynamicIsland = dynamicIsland
+    }
 }
 
 /// Original ScriptWidget native API/session lifecycle plus Hanlin's prepared
@@ -30,7 +40,7 @@ public struct HanlinScriptWidgetRuntime: Sendable {
 
     public func run(program: HanlinWidgetProgram, values: [String: HanlinValue],
                     environment: [String: HanlinValue], actionID: String? = nil,
-                    actionValue: Bool? = nil, nativeRoot: URL? = nil,
+                    actionValue: Bool? = nil, actionParameters: HanlinValue = .null, nativeRoot: URL? = nil,
                     nativeIdentity: String? = nil) throws -> HanlinScriptWidgetExecution {
         try program.validate(engine: .scriptwidget)
         guard let context = JSContext(), let util = Self.resource("util.js") else {
@@ -54,9 +64,38 @@ public struct HanlinScriptWidgetRuntime: Sendable {
         let completion = HanlinScriptWidgetCompletion()
         let deadline = ContinuousClock.now.advanced(by: .seconds(HanlinOriginalScriptWidgetSession.executionTimeout))
         var rendered: ScriptWidgetRuntimeElement?
+        var presentationEffect = HanlinNativePresentationEffect()
+        var dynamicRegions: [String: ScriptWidgetRuntimeElement] = [:]
         native.onJavaScriptQueue {
             native.installAPIs()
             context.setObject(ScriptWidgetRuntimeElement.self, forKeyedSubscript: "$element" as NSString)
+            // Original $component is a registration diagnostic; function JSX
+            // components are resolved by the original element/freeze pipeline.
+            let component: @convention(block) (String, JSValue) -> Void = { name, _ in
+                NSLog("ScriptWidget component: %@", name)
+            }
+            context.setObject(component, forKeyedSubscript: "$component" as NSString)
+            let dynamicIsland: @convention(block) (NSDictionary) -> Void = { regions in
+                let expanded = regions["expanded"] as? NSDictionary ?? [:]
+                let values: [(String, Any?)] = [
+                    ("expandedLeading", expanded["leading"]), ("expandedTrailing", expanded["trailing"]),
+                    ("expandedCenter", expanded["center"]), ("expandedBottom", expanded["bottom"]),
+                    ("compactLeading", regions["compactLeading"]), ("compactTrailing", regions["compactTrailing"]),
+                    ("minimal", regions["minimal"])
+                ]
+                var captured: [String: ScriptWidgetRuntimeElement] = [:]
+                for (key, value) in values {
+                    guard let value, !(value is NSNull) else { continue }
+                    guard let element = value as? ScriptWidgetRuntimeElement else {
+                        completion.finish(.failure(HanlinScriptWidgetError("Dynamic Island region must be a ScriptWidget element: " + key)))
+                        return
+                    }
+                    captured[key] = element
+                }
+                dynamicRegions = captured
+            }
+            context.setObject(dynamicIsland, forKeyedSubscript: "$dynamic_island" as NSString)
+
             // $storage.get/set are Hanlin's compatibility additions. Every
             // original storage operation below still calls its JSExport class.
             let get: @convention(block) (String) -> Any = { [weak native] key in
@@ -95,12 +134,48 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             context.setObject(getenv, forKeyedSubscript: "$getenv" as NSString)
             context.setObject(environment.mapValues { $0.toAny() }, forKeyedSubscript: "$widget" as NSString)
             context.setObject(actionID ?? "", forKeyedSubscript: "__hanlinAction" as NSString)
-            context.setObject(actionValue.map { ["value": $0] } ?? [:], forKeyedSubscript: "__hanlinEvent" as NSString)
+            var event: [String: Any] = ["parameters": actionParameters.toAny()]
+            if let actionValue { event["value"] = actionValue }
+            context.setObject(event, forKeyedSubscript: "__hanlinEvent" as NSString)
+            let expand: @convention(block) () -> Void = {
+                guard case let .object(presentation)? = environment["presentation"],
+                      presentation["kind"] == .string("translationUI") else {
+                    completion.finish(.failure(HanlinScriptWidgetError("expandSheet is available in a translation presentation")))
+                    return
+                }
+                presentationEffect.expandsSheet = true
+            }
+            let finish: @convention(block) (JSValue) -> Void = { value in
+                guard case let .object(presentation)? = environment["presentation"],
+                      presentation["kind"] == .string("translationUI") else {
+                    completion.finish(.failure(HanlinScriptWidgetError("finish is available in a translation presentation")))
+                    return
+                }
+                let text: String? = value.isNull || value.isUndefined ? nil : value.toString()
+                presentationEffect.finishRequested = true
+                presentationEffect.replacementText = text
+            }
+            context.setObject(expand, forKeyedSubscript: "__hanlinPresentationExpand" as NSString)
+            context.setObject(finish, forKeyedSubscript: "__hanlinPresentationFinish" as NSString)
+            context.evaluateScript("""
+                globalThis.$presentation = {
+                  expandSheet: __hanlinPresentationExpand,
+                  finish: text => __hanlinPresentationFinish(text == null ? null : String(text))
+                };
+                """)
             let render: @convention(block) (ScriptWidgetRuntimeElement) -> Void = { rendered = $0 }
             let error: @convention(block) (String) -> Void = { completion.finish(.failure(HanlinScriptWidgetError($0))) }
             let finished: @convention(block) () -> Void = { [weak native] in
-                guard let native, let current = JSContext.current(), let rendered else {
-                    completion.finish(.failure(HanlinScriptWidgetError("The script did not call $render")))
+                guard let native, let current = JSContext.current() else {
+                    completion.finish(.failure(HanlinScriptWidgetError("The native rendering session ended")))
+                    return
+                }
+                let expanded = ["expandedLeading", "expandedCenter", "expandedTrailing", "expandedBottom"]
+                    .compactMap { dynamicRegions[$0] }
+                let fallback = expanded.isEmpty ? ["compactLeading", "compactTrailing", "minimal"].compactMap { dynamicRegions[$0] } : expanded
+                guard let rendered = rendered ?? (fallback.isEmpty ? nil :
+                    ScriptWidgetRuntimeElement(tagString: "vstack", props: [:], children: fallback)) else {
+                    completion.finish(.failure(HanlinScriptWidgetError("The script did not call $render or $dynamic_island")))
                     return
                 }
                 do {
@@ -110,8 +185,17 @@ public struct HanlinScriptWidgetRuntime: Sendable {
                     guard try JSONEncoder().encode(frozen).count <= 1_024 * 1_024 else {
                         throw HanlinScriptWidgetError("Widget prepared payload budget exceeded")
                     }
+                    var regions: [String: HanlinScriptWidgetPreparedNode] = [:]
+                    for (key, element) in dynamicRegions {
+                        regions[key] = try freeze(element, depth: 1, budget: &budget, active: &active, context: current)
+                    }
+                    let island: HanlinScriptWidgetDynamicIsland? = regions.isEmpty ? nil : .init(
+                        expandedLeading: regions["expandedLeading"], expandedTrailing: regions["expandedTrailing"],
+                        expandedCenter: regions["expandedCenter"], expandedBottom: regions["expandedBottom"],
+                        compactLeading: regions["compactLeading"], compactTrailing: regions["compactTrailing"], minimal: regions["minimal"])
                     try budget.checkTime()
-                    completion.finish(.success(.init(node: frozen, values: try HanlinWidgetJSON.dictionary(native.values()))))
+                    completion.finish(.success(.init(node: frozen, values: try HanlinWidgetJSON.dictionary(native.values()),
+                        presentationEffect: presentationEffect, dynamicIsland: island)))
                 } catch { completion.finish(.failure(error)) }
             }
             context.setObject(render, forKeyedSubscript: "$render" as NSString)
@@ -131,8 +215,9 @@ public struct HanlinScriptWidgetRuntime: Sendable {
         native.onJavaScriptQueue {
             native.finish()
             rendered = nil
+            dynamicRegions.removeAll()
             context.exceptionHandler = nil
-            for key in ["$render", "$error", "$storage", "__hanlinFinishWidget", "__hanlinGetWidgetValue", "__hanlinSetWidgetValue"] {
+            for key in ["$render", "$dynamic_island", "$component", "$error", "$storage", "$presentation", "__hanlinPresentationExpand", "__hanlinPresentationFinish", "__hanlinFinishWidget", "__hanlinGetWidgetValue", "__hanlinSetWidgetValue"] {
                 context.setObject(nil, forKeyedSubscript: key as NSString)
             }
         }

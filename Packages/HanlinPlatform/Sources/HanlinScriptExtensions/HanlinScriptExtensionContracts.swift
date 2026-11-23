@@ -1,6 +1,7 @@
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptUI
+import HanlinScriptContracts
 
 public enum HanlinScriptExtensionContext: String, Codable, CaseIterable, Hashable, Sendable {
     case widget
@@ -240,17 +241,20 @@ public struct HanlinScriptIntentEntityRecord: Codable, Hashable, Sendable {
     public let id: String
     public let displayName: String
     public let subtitle: String?
+    public let nativePresentation: HanlinNativePresentationDescriptor?
 
     public init(
         identity: HanlinScriptExtensionIdentity,
         id: String,
         displayName: String,
-        subtitle: String? = nil
+        subtitle: String? = nil,
+        nativePresentation: HanlinNativePresentationDescriptor? = nil
     ) {
         self.identity = identity
         self.id = id
         self.displayName = displayName
         self.subtitle = subtitle
+        self.nativePresentation = nativePresentation
     }
 }
 
@@ -374,6 +378,7 @@ public struct HanlinScriptTranslationUISnapshot: Codable, Hashable, Sendable, Id
     public let isBeta: Bool
     public let entrypointID: String
     public let rootNode: HanlinScriptUINode?
+    public let nativePresentation: HanlinNativePresentationDescriptor?
 
     public init(
         identity: HanlinScriptExtensionIdentity,
@@ -384,7 +389,8 @@ public struct HanlinScriptTranslationUISnapshot: Codable, Hashable, Sendable, Id
         accentHex: String? = nil,
         isBeta: Bool = false,
         entrypointID: String,
-        rootNode: HanlinScriptUINode? = nil
+        rootNode: HanlinScriptUINode? = nil,
+        nativePresentation: HanlinNativePresentationDescriptor? = nil
     ) {
         self.identity = identity
         self.appID = appID
@@ -395,6 +401,7 @@ public struct HanlinScriptTranslationUISnapshot: Codable, Hashable, Sendable, Id
         self.isBeta = isBeta
         self.entrypointID = entrypointID
         self.rootNode = rootNode
+        self.nativePresentation = nativePresentation
     }
 }
 

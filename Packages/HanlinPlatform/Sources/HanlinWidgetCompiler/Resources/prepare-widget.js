@@ -27,10 +27,85 @@ function __hanlinCompileWidget(input) {
       } }
     } };
   };
+  // ScriptWidget native surfaces use the original JSX transform and a local
+  // CommonJS closure. Imports remain package sources; no foreground VM is used.
+  function compileScriptWidgetModules() {
+    const compiled = {};
+    let sourceBytes = 0;
+    function resolve(name, parent) {
+      if (!name.startsWith('.')) throw new Error('Unsupported ScriptWidget import: ' + name);
+      const parts = parent.split('/'); parts.pop();
+      for (const part of name.split('/')) {
+        if (part === '..') { if (!parts.length) throw new Error('ScriptWidget import escapes package'); parts.pop(); }
+        else if (part !== '.') parts.push(part);
+      }
+      const base = parts.join('/');
+      const found = [base, ...['.js', '.jsx', '.ts', '.tsx'].map(ext => base + ext),
+        ...['/index.js', '/index.jsx', '/index.ts', '/index.tsx'].map(ext => base + ext)]
+        .find(path => path in input.files);
+      if (!found) throw new Error('Missing ScriptWidget module: ' + name);
+      return found;
+    }
+    function compile(path) {
+      if (path in compiled) return;
+      const bytes = encodeURIComponent(input.files[path]).replace(/%[A-F\d]{2}/gi, 'x').length;
+      sourceBytes += bytes;
+      if (bytes > 524288 || sourceBytes > 2097152) throw new Error('ScriptWidget source graph exceeds budget');
+      compiled[path] = '';
+      const dependencies = [];
+      const dependencyPlugin = () => ({ visitor: {
+        ImportDeclaration(p) { dependencies.push(p.node.source.value); },
+        ExportNamedDeclaration(p) { if (p.node.source) dependencies.push(p.node.source.value); },
+        ExportAllDeclaration(p) { dependencies.push(p.node.source.value); },
+        CallExpression(p) {
+          if (p.node.callee.type === 'Identifier' && p.node.callee.name === 'require') {
+            const argument = p.node.arguments[0];
+            if (p.node.arguments.length !== 1 || !argument || argument.type !== 'StringLiteral') {
+              throw new Error('ScriptWidget require must use a literal module path');
+            }
+            dependencies.push(argument.value);
+          }
+        }
+      } });
+      const typed = /\.tsx?$/.test(path);
+      compiled[path] = Babel.transform(input.files[path], {
+        filename: path, presets: typed ? ['typescript', 'scriptwidget'] : ['scriptwidget'],
+        plugins: [dependencyPlugin, 'transform-modules-commonjs', guardPlugin]
+      }).code;
+      for (const name of dependencies) compile(resolve(name, path));
+    }
+    compile(input.entry);
+    const factories = Object.keys(compiled).sort().map(path =>
+      JSON.stringify(path) + ': function(module, exports, require) {\n' + compiled[path] + '\n}');
+    const paths = Object.keys(compiled);
+    const calls = input.actions.filter(action => action.handler).map(action => {
+      if (!/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(action.handler)) throw new Error('Invalid action handler');
+      return 'case ' + JSON.stringify(action.id) + ': await entry[' + JSON.stringify(action.handler) + '](__hanlinEvent); break;';
+    }).join('\n');
+    return 'async function $main() { try {\n' +
+      'const factories = {' + factories.join(',\n') + '}; const cache = {};\n' +
+      'const paths = ' + JSON.stringify(paths) + ';\n' +
+      'function resolve(name,parent) { const parts=parent.split("/"); parts.pop(); for(const part of name.split("/")) { if(part==="..") parts.pop(); else if(part!==".") parts.push(part); } const base=parts.join("/"); return [base,...[".js",".jsx",".ts",".tsx","/index.js","/index.jsx","/index.ts","/index.tsx"].map(x=>base+x)].find(x=>paths.includes(x)); }\n' +
+      'function load(path) { if(cache[path])return cache[path].exports; const module={exports:{}}; cache[path]=module; factories[path](module,module.exports,name=>load(resolve(name,path))); return module.exports; }\n' +
+      'const entry=load(' + JSON.stringify(input.entry) + ');\n' +
+      'if(__hanlinAction) { switch(__hanlinAction) {\n' + calls +
+      '\ndefault: throw new Error("Undeclared native presentation action"); } }\n' +
+      'if(typeof entry.default!=="function")throw new Error("ScriptWidget module must export a default render function");\n' +
+      'await entry.default();\n} catch(e) { $error(String(e)); } }';
+  }
+  globalThis.__hanlinWidgetUsesModules = false;
   if (input.engine === 'scriptwidget-import') {
     return Babel.transform(input.files[input.entry], { presets:['scriptwidget'], plugins:[guardPlugin] }).code;
   }
   if (input.engine === 'scriptwidget') {
+    const sourceAST = Babel.transform(input.files[input.entry], {
+      filename: input.entry, ast: true, code: false,
+      presets: input.format === 'tsx' ? ['typescript', 'scriptwidget'] : input.format === 'jsx' ? ['scriptwidget'] : []
+    }).ast;
+    if (sourceAST.program.body.some(node => node.type === 'ImportDeclaration' || node.type.startsWith('Export'))) {
+      globalThis.__hanlinWidgetUsesModules = true;
+      return compileScriptWidgetModules();
+    }
     const calls = input.actions.filter(a => a.handler).map(a => {
       if (!/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(a.handler)) throw new Error('Invalid action handler');
       return 'case ' + JSON.stringify(a.id) + ': await ' + a.handler + '(__hanlinEvent); break;';
@@ -42,7 +117,7 @@ function __hanlinCompileWidget(input) {
       '\ndefault: throw new Error("Undeclared widget action"); } }\n' +
       '} catch(e) { $error(String(e)); } }';
     return Babel.transform(wrapped, {
-      presets: input.format === 'jsx' ? ['scriptwidget'] : [],
+      presets: input.format === 'tsx' ? ['typescript', 'scriptwidget'] : input.format === 'jsx' ? ['scriptwidget'] : [],
       plugins: [guardPlugin]
     }).code;
   }

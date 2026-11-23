@@ -1362,13 +1362,28 @@ final class HanlinScriptingPlatform {
             do {
                 let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
                 let displayName = package.manifest?.name ?? package.record.packageID.rawValue
+                let nativeDeclarations = try package.manifest.map(HanlinNativePresentationMetadata.declarations) ?? [:]
+                func publishNativePresentation(_ entrypointID: String) throws -> HanlinNativePresentationDescriptor? {
+                    guard let declaration = nativeDeclarations[entrypointID] else { return nil }
+                    let path = HanlinNativePresentationMetadata.artifactPath(for: entrypointID)
+                    let bytes = try Data(contentsOf: artifactRoot.appending(path: path))
+                    let program = try JSONDecoder().decode(HanlinWidgetProgram.self, from: bytes)
+                    try program.validate(engine: declaration.engine)
+                    let artifact = try extensionStore.storeArtifact(data: bytes,
+                        installedPackageID: package.record.installedPackageID, generation: package.record.activeGeneration)
+                    return .init(engine: declaration.engine, programRef: artifact.ref,
+                        programSHA256: artifact.sha256, input: declaration.input)
+                }
 
                 // Translation UI Discovery
                 let translationEntrypoints = package.entrypoints.filter { $0.kind == .translationUI }
                 for entrypoint in translationEntrypoints {
                     let fileURL = artifactRoot.appending(path: entrypoint.sourcePath)
-                    let rootNode: HanlinScriptUINode
-                    if entrypoint.sourcePath.hasSuffix(".json"),
+                    let nativePresentation = try publishNativePresentation(entrypoint.id)
+                    let rootNode: HanlinScriptUINode?
+                    if nativePresentation != nil {
+                        rootNode = nil
+                    } else if entrypoint.sourcePath.hasSuffix(".json"),
                        let data = try? Data(contentsOf: fileURL),
                        let snapshot = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {
                         rootNode = snapshot
@@ -1418,7 +1433,8 @@ final class HanlinScriptingPlatform {
                         accentHex: accentHex,
                         isBeta: isBeta,
                         entrypointID: entrypoint.id,
-                        rootNode: rootNode
+                        rootNode: rootNode,
+                        nativePresentation: nativePresentation
                     ))
                 }
 
@@ -1514,6 +1530,12 @@ final class HanlinScriptingPlatform {
                         continue
                     }
 
+                    let nativePresentation = try publishNativePresentation(entrypoint.id)
+                    if entrypoint.runtimePolicyID == "native-presentation-v1", let nativePresentation {
+                        intentEntities.append(.init(identity: identity, id: entrypoint.exportedSymbol ?? entrypoint.id,
+                            displayName: displayName, nativePresentation: nativePresentation))
+                        continue
+                    }
                     if entrypoint.runtimeProfile == .hanlinNativeScript || entrypoint.runtimeProfile == .hanlinExpo {
                         var actionIDs: [(id: String, title: String)] = []
                         let intentURL = artifactRoot.appending(path: entrypoint.sourcePath)
@@ -1534,8 +1556,11 @@ final class HanlinScriptingPlatform {
                                 actionIDs.append((id: action.id.rawValue, title: action.title.resolved(locale: .current)))
                             }
                         }
+                        if nativePresentation != nil && actionIDs.isEmpty {
+                            actionIDs.append((id: entrypoint.exportedSymbol ?? entrypoint.id, title: displayName))
+                        }
                         for item in actionIDs {
-                            intentEntities.append(.init(identity: identity, id: item.id, displayName: item.title))
+                            intentEntities.append(.init(identity: identity, id: item.id, displayName: item.title, nativePresentation: nativePresentation))
                         }
                         continue
                     }

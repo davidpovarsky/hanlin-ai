@@ -1,7 +1,7 @@
 {
   "name": "חיפוש טקסטים מודולרי — Expo",
-  "version": "1.3.0",
-  "description": "Native SwiftUI text search with Expo, Share, Shortcuts and Translation continuation.",
+  "version": "1.4.0",
+  "description": "Original native Expo search app, Share, interactive native Shortcuts snippets and editable Translation UI with original ScriptWidget services.",
   "entry": "bundle.js",
   "runInApp": true,
   "hanlinRuntime": "hanlin-expo",
@@ -46,5 +46,86 @@
   "intentInputTypes": [
     "Text",
     "URLs"
-  ]
+  ],
+  "nativePresentations": {
+    "appIntents": {
+      "engine": "scriptwidget",
+      "sourcePath": "native/search.tsx",
+      "sourceFormat": "tsx",
+      "actions": [
+        {
+          "id": "retry",
+          "kind": "function",
+          "handler": "retry"
+        },
+        {
+          "id": "toggleVersions",
+          "kind": "function",
+          "handler": "toggleVersions"
+        },
+        {
+          "id": "loadFullText",
+          "kind": "function",
+          "handler": "loadFullText"
+        },
+        {
+          "id": "closeFullText",
+          "kind": "function",
+          "handler": "closeFullText"
+        },
+        {
+          "id": "loadMore",
+          "kind": "function",
+          "handler": "loadMore"
+        },
+        {
+          "id": "replaceText",
+          "kind": "function",
+          "handler": "replaceText"
+        }
+      ]
+    },
+    "translation": {
+      "engine": "scriptwidget",
+      "sourcePath": "native/search.tsx",
+      "sourceFormat": "tsx",
+      "actions": [
+        {
+          "id": "retry",
+          "kind": "function",
+          "handler": "retry"
+        },
+        {
+          "id": "toggleVersions",
+          "kind": "function",
+          "handler": "toggleVersions"
+        },
+        {
+          "id": "loadFullText",
+          "kind": "function",
+          "handler": "loadFullText"
+        },
+        {
+          "id": "closeFullText",
+          "kind": "function",
+          "handler": "closeFullText"
+        },
+        {
+          "id": "loadMore",
+          "kind": "function",
+          "handler": "loadMore"
+        },
+        {
+          "id": "replaceText",
+          "kind": "function",
+          "handler": "replaceText"
+        }
+      ],
+      "input": {
+        "title": "טקסט לחיפוש",
+        "placeholder": "כתוב מילה או משפט",
+        "submitTitle": "חפש מחדש"
+      }
+    }
+  }
 }

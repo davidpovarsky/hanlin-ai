@@ -9,14 +9,16 @@ public struct HanlinWidgetActionCommand: Codable, Hashable, Sendable {
     public let target: String
     public let nonce: String
     public var desiredValue: Bool?
+    public var parameters: HanlinValue?
 
     public init(context: HanlinWidgetActionContext, actionID: String, target: String? = nil,
-                nonce: String = "", desiredValue: Bool? = nil) {
+                nonce: String = "", desiredValue: Bool? = nil, parameters: HanlinValue? = nil) {
         self.context = context
         self.actionID = actionID
         self.target = target ?? actionID
         self.nonce = nonce
         self.desiredValue = desiredValue
+        self.parameters = parameters
     }
 }
 
