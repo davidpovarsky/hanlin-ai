@@ -134,7 +134,9 @@ public enum HanlinWidgetPreparation {
                 prepared = .expo(node: try HanlinWidgetJSON.value(node), context: context)
                 return snapshot
             }
-            let result = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state?.values ?? [:], environment: environment)
+            let result = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state?.values ?? [:], environment: environment,
+                nativeRoot: store.root.appendingPathComponent("ScriptWidgetOriginal/v1", isDirectory: true),
+                nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(widget.identity, artifactSHA256: digest))
             prepared = .scriptwidget(node: result.node, context: context)
             // ScriptWidget scripts can populate typed storage during timeline
             // preparation too. Publish those writes in this same transaction;

@@ -36,5 +36,40 @@
 		<key>NotificationCategoryIdentifier</key>
 		<string>CHAVRUSA_REMINDER</string>
 	</dict>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Your mini apps use Calendar to read the calendars you choose and create or update requested events.</string>
+	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<string>Your mini apps add calendar events when you request them.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>Your mini apps read and update the reminders you choose.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Your mini apps use the contacts you select for their requested features.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your mini apps use your location for features such as nearby places and local weather.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your selected widgets use location to keep local information current.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Your mini apps display the Health information you choose to share.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Your mini apps display photos and albums you choose.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Your mini apps save images when you request them.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Your mini apps display the current music item.</string>
+	<key>NSHomeKitUsageDescription</key>
+	<string>Your mini apps display and control the Home accessories and scenes you select.</string>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>Your mini apps schedule system alarms when you request them.</string>
+	<key>HanlinScriptWidgetICloudContainerIdentifier</key>
+	<string>iCloud.com.itorah.chavrusachat</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>ScriptWidget</key>
+		<string>Your selected mini app uses precise location for the feature you requested.</string>
+	</dict>
+	<key>NSWidgetWantsLocation</key>
+	<true/>
+	<key>ScriptWidgetServiceKeychainGroup</key>
+	<string>$(AppIdentifierPrefix)com.itorah.chavrusachat.scriptwidget.services</string>
 </dict>
 </plist>

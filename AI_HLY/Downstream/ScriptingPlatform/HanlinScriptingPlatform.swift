@@ -1,3 +1,4 @@
+import SwiftUI
 import HanlinLocalization
 import CryptoKit
 import CoreFoundation
@@ -760,6 +761,16 @@ final class HanlinScriptingPlatform {
         guard installedPackages.contains(where: { $0.record.installedPackageID == id && $0.entrypoints.contains(where: { $0.kind == .widget }) }) else { return }
         guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
         try extensionStore.invalidateWidgetActions(installedPackageID: id)
+    }
+
+    @ViewBuilder
+    func scriptWidgetServicesView(for entityID: String) -> some View {
+        if let extensionStore {
+            HanlinScriptWidgetServicesView(store: extensionStore, entityID: entityID)
+        } else {
+            ContentUnavailableView("Widget Services", systemImage: "externaldrive.badge.exclamationmark",
+                description: Text("The shared widget store is unavailable."))
+        }
     }
 
     func widgetInstances(for id: HanlinInstalledPackageID) throws -> [HanlinWidgetInstance] {

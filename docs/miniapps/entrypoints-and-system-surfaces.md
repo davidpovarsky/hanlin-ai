@@ -96,3 +96,54 @@ This host API is separate from the upstream expo-widgets Live Activity module. T
 - Scripts/CI/IntegrationValidation/test_project_graph.py: independently owned native targets, actual embedding and original SDK linkage.
 - Scripts/NativeScript/build-host-services.mjs: strict original TypeScript compiler, valid and invalid API fixtures, and generated declaration drift.
 - Scripts/NativeScript/Tests/live-activities.test.mjs: real facade routing against a controlled transport; this does not claim ActivityKit execution.
+
+## Original ScriptWidget native services
+
+`HanlinScriptWidgetOriginal` compiles the upstream native API/core source at
+`4da256d58247bbafb9a5cd443a285250b97b3c4b`, in its own Swift 5 module. The source
+manifest records each original path, Git blob, local hash and host adaptation.
+The original support scripts (`core.js`, `util.js`, `moment.min.js`) use that
+same commit. Native providers are real framework implementations: EventKit,
+Contacts, HealthKit, CoreLocation, HomeKit, Photos, MediaPlayer, AlarmKit,
+UserNotifications, MapKit, URLSession, Security, and the original file/cloud
+storage and service-account code.
+
+The prepared Hanlin widget executes with the original `ScriptWidgetRunningState`,
+`ScriptWidgetExecutionSession`, JSExport registrations and Promise delivery.
+Native async operations now settle on the upstream callback queue before the
+surrounding Hanlin state transaction commits. The previous immediate
+“unsupported asynchronous operation” rejection and separate synchronous HTTP
+implementation were removed. The existing immutable Hanlin renderer remains the
+UI boundary; this does not claim every upstream system-surface presentation has
+been embedded.
+
+Original `$storage` reads, JSON operations and compare-and-set use an execution
+transaction adapter. Its current instance values are committed by the existing
+Hanlin widget store; original native metadata, grants and mutation receipts use
+the original durable backend. The native installation identity is the canonical
+Hanlin widget identity plus exact artifact hash. AI and MiniApps use separate
+product roots. Native account credentials use separate product service Keychain
+groups, shared only with the matching widget extension.
+
+Packages that supply original `widget.json` retain its original API permissions
+and data-source declarations. Existing Hanlin widgets without that manifest
+receive a host manifest enabling the supported original APIs, without another
+Hanlin approval prompt. Apple system authorization and the original providers'
+API contracts still apply. Native settings are reachable through
+`platform.scriptWidgetServicesView(for: instance.entityID)`: original Calendar,
+Reminders, Photos, Music, Contacts/Home/document selection, cloud connection and
+service-account UI, plus native Health/Location setup using the original types.
+Successful selection changes reload the actual widget timelines.
+
+The apps and matching widget targets declare the original APIs' actual privacy
+usage descriptions, HealthKit/HomeKit capabilities, iCloud container and service
+Keychain group. Updated device profiles must contain those native capabilities;
+a source-level declaration alone is not evidence that a signed device build has
+those entitlements.
+
+Four new Apple-host tests exercise real provider registration/device values,
+the actual async `$documents.list()` path, original Promise failure delivery,
+and one shared transaction for original storage and compatibility aliases.
+Linux Swift syntax parsing and SwiftPM manifest evaluation passed. Execution
+of these native tests, Apple typechecking, signed entitlements and device data
+access require the Apple CI/device gate; no pass is inferred from syntax parsing.

@@ -223,8 +223,20 @@ let package = Package(
             ]
         ),
         .target(
+            name: "HanlinScriptWidgetOriginal",
+            dependencies: [
+                "HanlinExtensionContracts",
+                .product(name: "ZIPFoundation", package: "ZIPFoundation")
+            ],
+            exclude: ["Original/LICENSE.txt", "Original/NOTICE.txt"],
+            resources: [.copy("Resources/support.bundle")],
+            swiftSettings: [.swiftLanguageMode(.v5)],
+            linkerSettings: [.linkedFramework("JavaScriptCore")]
+        ),
+        .target(
             name: "HanlinScriptExtensions",
             dependencies: [
+                "HanlinScriptWidgetOriginal",
                 "HanlinExtensionContracts",
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
                 "HanlinPlatformContracts",

@@ -102,7 +102,9 @@ public enum HanlinWidgetActionExecutor {
                         state.values[key] = .bool(value)
                     }
                     let execution = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state.values,
-                        environment: environment, actionID: action.handler == nil ? nil : action.id, actionValue: command.desiredValue)
+                        environment: environment, actionID: action.handler == nil ? nil : action.id, actionValue: command.desiredValue,
+                        nativeRoot: store.root.appendingPathComponent("ScriptWidgetOriginal/v1", isDirectory: true),
+                        nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(identity, artifactSHA256: digest))
                     state.values = execution.values
                 case .legacy: throw HanlinWidgetActionError.invalidIdentity
                 }
