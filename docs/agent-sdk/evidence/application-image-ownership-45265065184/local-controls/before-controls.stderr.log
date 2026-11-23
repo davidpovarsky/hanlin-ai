@@ -1,0 +1,47 @@
+test_checked_in_hosts_link_only_the_shared_application_image (test_host_link_ownership.HostLinkOwnershipTests.test_checked_in_hosts_link_only_the_shared_application_image) ... FAIL
+test_generator_preserves_declared_source_closure_and_all_unrelated_objects (test_host_link_ownership.HostLinkOwnershipTests.test_generator_preserves_declared_source_closure_and_all_unrelated_objects) ... FAIL
+
+======================================================================
+FAIL: test_checked_in_hosts_link_only_the_shared_application_image (test_host_link_ownership.HostLinkOwnershipTests.test_checked_in_hosts_link_only_the_shared_application_image)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123/Scripts/SDK/tests/test_host_link_ownership.py", line 38, in test_checked_in_hosts_link_only_the_shared_application_image
+    self.assert_single_owner(self.project)
+  File "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123/Scripts/SDK/tests/test_host_link_ownership.py", line 35, in assert_single_owner
+    self.assertEqual(products, ["HanlinApplication"], name)
+AssertionError: Lists differ: ['HanlinPresentationKit', 'HanlinRichUI', 'Hanlin[938 chars]cts'] != ['HanlinApplication']
+
+First differing element 0:
+'HanlinPresentationKit'
+'HanlinApplication'
+
+First list contains 48 additional elements.
+First extra element 1:
+'HanlinRichUI'
+
+Diff is 1213 characters long. Set self.maxDiff to None to see it. : AI_Hanlin
+
+======================================================================
+FAIL: test_generator_preserves_declared_source_closure_and_all_unrelated_objects (test_host_link_ownership.HostLinkOwnershipTests.test_generator_preserves_declared_source_closure_and_all_unrelated_objects)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123/Scripts/SDK/tests/test_host_link_ownership.py", line 66, in test_generator_preserves_declared_source_closure_and_all_unrelated_objects
+    self.assert_single_owner(after)
+  File "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123/Scripts/SDK/tests/test_host_link_ownership.py", line 35, in assert_single_owner
+    self.assertEqual(products, ["HanlinApplication"], name)
+AssertionError: Lists differ: ['HanlinPresentationKit', 'HanlinRichUI', 'Hanlin[938 chars]cts'] != ['HanlinApplication']
+
+First differing element 0:
+'HanlinPresentationKit'
+'HanlinApplication'
+
+First list contains 48 additional elements.
+First extra element 1:
+'HanlinRichUI'
+
+Diff is 1213 characters long. Set self.maxDiff to None to see it. : AI_Hanlin
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.450s
+
+FAILED (failures=2)

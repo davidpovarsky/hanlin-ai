@@ -172,7 +172,13 @@ def validate_agent_sdk_linkage(project, repository):
                   for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
                   for file in objects[phase]["files"] if objects[file].get("productRef") in products]
         assert len(declared) == len(required) and set(declared) == required, name + ": unexpected SDK dependency"
-        assert len(linked) == len(required) and set(linked) == required, name + ": SDK product is not actually linked"
+        required_linked = {"HanlinApplication"} if name in {"AI_Hanlin", "AI_HLYTests"} else set()
+        assert len(linked) == len(required_linked) and set(linked) == required_linked, name + ": SDK image ownership mismatch"
+        if required_linked:
+            all_linked = [objects[objects[file]["productRef"]]["productName"]
+                          for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
+                          for file in objects[phase]["files"] if "productRef" in objects[file]]
+            assert all_linked == ["HanlinApplication"], name + ": duplicate implementation linked beside the Application image"
     ai_id, ai = targets["AI_Hanlin"]
     groups = [objects[key] for key in ai["fileSystemSynchronizedGroups"]
               if objects[key].get("path") == "AI_HLY"]
@@ -202,4 +208,6 @@ def validate_agent_sdk_linkage(project, repository):
             assert (repository / "Packages" / sibling / filename).is_file(), "Incomplete canonical module definition"
     return {"ai_products": sorted(expected), "unit_test_products": ["HanlinAgentCore", "HanlinApplication"],
             "miniapps_agent_products": [], "sdk_application_sources": len(sources),
-            "host_sources": sorted(host_swift), "native_adapter": adapter, "apple_compilation": "NOT_RUN"}
+            "host_sources": sorted(host_swift), "native_adapter": adapter,
+            "linked_application_products": {"AI_Hanlin": ["HanlinApplication"], "AI_HLYTests": ["HanlinApplication"]},
+            "apple_compilation": "NOT_RUN"}

@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-23T21:58:56.793408+00:00",
+  "run": 45265065184,
+  "attempt": 1,
+  "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "producer_conclusion": "failure",
+  "artifact_id": 14864733741,
+  "artifact_name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+  "zip_path": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-tests-45265065184/original-smoke-artifact.zip",
+  "zip_bytes": 66998891,
+  "zip_sha256": "62dab969033c2f5db51bf9b9e31640521eec6f3848e08b8c20e2ee1a359679e9",
+  "api_source_digest_size_verified": true,
+  "acquisition_count": 1,
+  "download_exit": 0,
+  "native_prepared": "INELIGIBLE_NOT_ACQUIRED",
+  "zip_crc": "PASS",
+  "safe_unique_member_paths": true,
+  "members": 3482,
+  "expanded_bytes": 89206542,
+  "archive_member_inventory_sha256": "469e0cfba2db1b779b2f88fa77a972557182d15522736ff2c77d63f0adb30936"
+}

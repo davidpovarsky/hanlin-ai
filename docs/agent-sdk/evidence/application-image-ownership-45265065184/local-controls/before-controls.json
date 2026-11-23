@@ -1,0 +1,17 @@
+{
+  "utc": "2026-11-23T22:17:14.810990+00:00",
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_host_link_ownership.HostLinkOwnershipTests.test_checked_in_hosts_link_only_the_shared_application_image",
+    "test_host_link_ownership.HostLinkOwnershipTests.test_generator_preserves_declared_source_closure_and_all_unrelated_objects"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123/Scripts/SDK/tests",
+  "exit": 1,
+  "scope": "Two newly authored ownership regression controls; no native execution."
+}
