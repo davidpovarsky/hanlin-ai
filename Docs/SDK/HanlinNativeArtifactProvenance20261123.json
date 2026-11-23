@@ -1,0 +1,102 @@
+{
+  "active_producer_run": 45177292887,
+  "active_producer_source": "2549bb1395045e1514ec6c273239fcdaf18af207",
+  "actual_execution": {
+    "affected_existing_selection_control": {
+      "methods": 1,
+      "passed": true,
+      "seconds": "0.184"
+    },
+    "after": {
+      "cases": 8,
+      "new_methods": 4,
+      "passed": true,
+      "seconds": "1.212"
+    },
+    "before": {
+      "cases": 7,
+      "failed_cases": 7,
+      "methods": 3,
+      "seconds": "0.432"
+    },
+    "native_runtime_builds_or_tests": 0,
+    "old_unaffected_methods_reexecuted": 0
+  },
+  "declared_preparation_inputs": [
+    "RuntimeDependencies.lock.json",
+    "Scripts/Expo/dependency-lock.json",
+    "Scripts/Expo/prepare-ios-dependencies.mjs",
+    "Scripts/ExpoNativeAPI/dependency-lock.json",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+    "Scripts/NativeScript/dependency-lock.json",
+    "Scripts/NativeScript/package-lock.json",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+    "Scripts/NativeScript/build-metadata-tool.py",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+    "Scripts/Runtime/prepare-runtime-core.sh"
+  ],
+  "evidence_files": {
+    "affected-selection-control.log": "7660628b69a5e9d57b83dc7f6e3ef5b6033b7c3c62df4bf559574d0433911838",
+    "after.log": "537b05781a43054beaf02951cb18110aaf0fc340561caaafe54c7d25196328c5",
+    "after/cached-host-source.json": "221b388d5ec0577f06d98f84d64f54b17e1091d047e3ce5223e2c7f70b29b071",
+    "after/check-host-module.json": "c94bb157fdca2b59063b14b20e06765a5072db6e439709387549d40d5dd6ffc2",
+    "after/check-pinned-input.json": "20195b89e49af4dd23902a3da4611e58bbdcb0ef3d23690c1a7767b4ed64bee3",
+    "after/dirty-input.json": "c76bc091208a5702b6fc4448ac29d56869757c5a23a408f4d2aea9127dedd7bd",
+    "after/missing-input.json": "933d86f8a11ef18b6315ffc73ba8251fac9efd7a0642b0de0a9375a3ca945ae1",
+    "after/pinned-input-sparse.json": "72fc8d220d6261cea04f5b8a0847f2a0fed0ea8541e03fe034515b014987ddaa",
+    "after/staged-host-source.json": "3febc510cd9427c8d89d17279561a9d80bedaebe9a1ebce05a4531187a944ad0",
+    "before.log": "8f79cb118dbd67c1ef03e5f54fac01c8a9f89479c86c754ba204e36b50fa8ea3",
+    "before/cached-host-source.json": "5acc4df82528bd35bbf9a4264ab367b9729267722b0bf16b1ea0ca1d5feb040d",
+    "before/check-host-module.json": "205b3bca4382dd847d5e66373a99421e396d54e7f9b6fea1cf5110fba80fce1f",
+    "before/check-pinned-input.json": "c96fbdf959d7d7c72e4e4185639a8e7c7b47d17f03f841ef440cf7e11c370eb5",
+    "before/dirty-input.json": "13e79a1a9d1aa0c800fee0ac26f2a13b4e9309bce982f69739203741f1678935",
+    "before/missing-input.json": "0d92133d07423234423fdebe1ecf9229f54d9c533738381adc39acb22fdd68f1",
+    "before/pinned-input-sparse.json": "d198b6c9e84889ee6ef84523e09290b4cfbc95b0f4fd4adccf03a9bec2e35d2a",
+    "before/staged-host-source.json": "01d069e793cd69860010f6b99db7275b8248bc851b0102e313882707e77a31d3"
+  },
+  "installer_change": "Only 3-line native verify-source invocation inside existing nonempty managedNativeTargets branch; removing it reconstructs complete prior install.py.",
+  "peer_review": {
+    "production_sha256": {
+      "Scripts/SDK/install.py": "e449630d2c861c338f5406cbc659dec904a30b2200d9674d0162231c3e7ae9d2",
+      "Scripts/SDK/native_artifacts.py": "ecb76ee7aaec7938fefbe16c2627b5ed1a9a1ba6b9145a49a823216b34ab15e6"
+    },
+    "result": "NO_CONCRETE_BLOCKER",
+    "reviewer": "sdk_presentation",
+    "scope": "Read-only review of the exact two production hashes, pinned Git reads, sparse inputs, selected support, fresh/resumed Node Host validation and installer check ordering. No tests/downloads/CI."
+  },
+  "producer_source_comparison": {
+    "all_identical": true,
+    "host_bytes": 597839,
+    "host_files": 131,
+    "mode_path_blob_records": 143,
+    "records_sha256": "71c71c222423172c8e8ea0f47946f82e0c35491393a550a9cf118b5d66418c9e"
+  },
+  "producer_status": "PENDING_ROOT_OWNED_FINAL_RESULT_NOT_PUBLICATION_ELIGIBLE",
+  "production_sha256": {
+    "Scripts/SDK/install.py": "e449630d2c861c338f5406cbc659dec904a30b2200d9674d0162231c3e7ae9d2",
+    "Scripts/SDK/native_artifacts.py": "ecb76ee7aaec7938fefbe16c2627b5ed1a9a1ba6b9145a49a823216b34ab15e6"
+  },
+  "recorded_at": "2026-11-23T13:26:22.331502+00:00",
+  "repair_files_are_declared_preparation_inputs": false,
+  "schema": "hanlin-native-consumer-provenance-v1",
+  "scope_limit": "Actual Git/sparse and original Python validator protocol proof. Fixture framework/Host bytes are not published assets or native acceptance. Full-profile install/publication waits for eligible real producer and original18 assets.",
+  "source_base": "91949a1d7904744c97f951ad4ec63a91d487d058",
+  "test_sha256": {
+    "Scripts/SDK/tests/test_native_artifacts.py": "90094228fa8e2dec474e49d14251ce5afe1036babba4af77300198658e50f3d1",
+    "Scripts/SDK/tests/test_native_provenance.py": "a9fee2d128b62e5b75f783fd5f3d94c7f2c721960d8cf228c0292ee5b7bfa3ae"
+  },
+  "unchanged_original_functions": {
+    "archive_members": "7c2d6cd10bad4b4731ec2a9197b5b7883a28565fcc8568496d684762e8b42faf",
+    "archive_paths": "a179f222609e786f91545ab0cc76106ae3e4ed76437684a6c80de3bb6df75841",
+    "export": "53e7f87ddd15e6c309d329beb7eadfe37eca85afcb84827c6b73df9c1ccb4eec",
+    "extract_verified": "901d13d79945f68c0dd76343ebe5491188abf2d2cf141f2a0558c49ee10203c3",
+    "framework_libraries": "781270978e0c3457f86d4d3861934411e2b00bd63a0988deb83d68d33884161f",
+    "host_stage": "e358af4fa0a661da1a1ac2dc903d52a889a6dbcf2d7e6a296e315b4b3261fe44",
+    "load_catalog": "74e70169504901f8f007aa97cf15faccdff2236dfdcca357bfdb74c68070df69",
+    "publish": "8e4c5e74c9878047c63cbbcaabc496c60d714d5540697ada4ea37d87b8d8414c",
+    "source_commit": "d6cd2932487c17c7fe37242d24db68fcbfcdb19b0dd13a1c2741f157fb350bfb",
+    "source_inputs": "69da27190ed2a9fe2ffcc3989923f0571c38b6773920fc04ba49cfbc7afd1fca",
+    "support_paths": "05f2408826a9238c26ee29129079c12dae3b3223ebb42cfae992f13981e97a56",
+    "verify": "530925b4618d1d02499225d97ce98e4dd3b72a8c9a87d3b7905f34e686842220"
+  }
+}
