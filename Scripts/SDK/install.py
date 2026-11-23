@@ -16,6 +16,7 @@ import tempfile
 REPOSITORY_URL = "https://github.com/davidpovarsky/hanlin-ai.git"
 GENERATED = ("Package.swift", "docs/agent-sdk/unified-package-manifest.json")
 RECEIPT = ".hanlin-sdk/installation.json"
+APP_INTENTS_HOST_RESOURCES = "Packages/HanlinWidgetSDK/HostResources"
 # Read canonical manifests and graph metadata before materializing product sources.
 # Non-cone patterns deliberately exclude unrelated app resources and native blobs.
 BOOTSTRAP_PATTERNS = (
@@ -182,6 +183,9 @@ def selected_source_paths(root: Path, description: dict) -> list[str]:
         # The original packaged metadata launcher imports these canonical helpers.
         paths.update(("Scripts/NativeScript/metadata_public_headers.py",
                       "Scripts/NativeScript/build-metadata-tool.py"))
+    if any(target["name"] == "HanlinScriptingWidgets" for target in description["targets"]):
+        # AppIntents indexes this canonical table in the host main bundle.
+        paths.add(APP_INTENTS_HOST_RESOURCES)
     return sorted(paths)
 
 
@@ -278,6 +282,8 @@ def install(host: Path, lock_path: Path, destination: str, cache: Path,
         # The full application manifest inventories its original Swift/resource
         # files. Regenerate only after this selected source tree is materialized.
         description = generate_profile(root, lock["products"])
+    if APP_INTENTS_HOST_RESOURCES in paths:
+        run([sys.executable, str(root / "Scripts/SDK/generate_app_intents_resources.py"), "--check"], cwd=root)
     receipt["checkoutMode"] = "sparse"
     receipt["sourcePaths"] = paths
     receipt["sparsePatterns"] = patterns
@@ -316,6 +322,8 @@ def check(host: Path, lock_path: Path, relative: str) -> dict:
             or receipt["products"] != lock["products"] or git(root, "rev-parse", "HEAD") != lock["revision"]
             or generated_hashes(root) != receipt["generatedSHA256"]):
         raise ValueError("SDK installation does not match the host lock and generated profile")
+    if APP_INTENTS_HOST_RESOURCES in receipt.get("sourcePaths", []):
+        run([sys.executable, str(root / "Scripts/SDK/generate_app_intents_resources.py"), "--check"], cwd=root)
     # Check that managed native installation paths still exist without a download.
     if receipt.get("managedNativeTargets"):
         run([sys.executable, str(root / "Scripts/SDK/native_artifacts.py"), "verify-source",
