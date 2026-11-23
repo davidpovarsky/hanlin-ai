@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "status": "NOT_READY",
+  "device": "B24EEC92-46D9-48A2-B640-79C4674B9F53",
+  "strategy": "fresh",
+  "run_id": "45236783905",
+  "run_attempt": "1",
+  "attempts": [
+    {
+      "name": "boot-initial",
+      "command": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "B24EEC92-46D9-48A2-B640-79C4674B9F53"
+      ],
+      "timeout_seconds": 15.0,
+      "return_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.329,
+      "output_file": "boot-initial.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bootstatus-attempt-1",
+      "command": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "B24EEC92-46D9-48A2-B640-79C4674B9F53",
+        "-b"
+      ],
+      "timeout_seconds": 180.0,
+      "return_code": 124,
+      "timed_out": true,
+      "elapsed_seconds": 181.406,
+      "output_file": "bootstatus-attempt-1.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "shutdown-recovery",
+      "command": [
+        "xcrun",
+        "simctl",
+        "shutdown",
+        "B24EEC92-46D9-48A2-B640-79C4674B9F53"
+      ],
+      "timeout_seconds": 20.0,
+      "return_code": 124,
+      "timed_out": true,
+      "elapsed_seconds": 24.31,
+      "output_file": "shutdown-recovery.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "recovery_count": 1,
+  "scope": "Simulator readiness only; Motion product tests NOT_RUN",
+  "ownership": {
+    "simulator": "B24EEC92-46D9-48A2-B640-79C4674B9F53",
+    "run_id": "45236783905",
+    "run_attempt": "1",
+    "name": "Hanlin-Phase2-Motion-45236783905",
+    "selection_sha256": "bbb1ad88b798a2423c36542b104af2a1ff818930d44cfb5218b4cc43eabe965b"
+  },
+  "recovery_reason": "FIRST_NATIVE_BOOTSTATUS_TIMEOUT",
+  "error": "Owned Motion recovery shutdown failed"
+}

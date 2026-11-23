@@ -1,0 +1,12 @@
+{
+  "time": "2026-11-23T18:17:23.883056+00:00",
+  "source": "0b74c6c1df60926c09a00560598af478bafb3e75",
+  "ref": "codex/hanlin-sdk-motion-integrated-row-20261123",
+  "scope": "affected original B+C",
+  "owner": "/root/motion_acceptance",
+  "parent_review": "Exact e59 row accepted; integrated 0b74 source authorized.",
+  "active_motion_jobs": [],
+  "timings_assertions": "UNCHANGED",
+  "C_reason": "Shared proof row changed; C directly uses its expanded layout.",
+  "paired3": "HELD: no full app compile PASS"
+}
