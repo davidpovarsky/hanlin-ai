@@ -128,7 +128,7 @@ private struct HanlinMiniAppsReadyRoot: View {
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
-        MiniAppsLibrary(services: .connected(to: provider))
+        MiniAppsLibrary(provider: provider)
                 .task {
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
                 }

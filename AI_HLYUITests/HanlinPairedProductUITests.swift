@@ -74,8 +74,7 @@ final class HanlinPairedProductUITests: XCTestCase {
         XCTAssertFalse(ai.alerts["Mini App result unavailable"].exists)
         XCTAssertFalse(ai.buttons["hanlin-tool-consent-allow-once"].exists)
         mini.terminate(); mini.launch()
-        tap(mini, "hanlin-miniapp-hanlin.demo.swift-parity")
-        tap(mini, "hanlin-miniapps-open")
+        tap(mini, "hanlin-package-card-Swift Parity")
         XCTAssertTrue(name.waitForExistence(timeout: 15))
         XCTAssertEqual(name.value as? String, before)
     }
@@ -125,9 +124,14 @@ final class HanlinPairedProductUITests: XCTestCase {
         assertText(mini, "Transfer complete. Your mini apps are ready.")
         mini.terminate(); mini.launch()
         let imported = mini.descendants(matching: .any).matching(NSPredicate(
-            format: "identifier BEGINSWITH 'hanlin-miniapp-' AND label CONTAINS %@", "Hanlin Transfer Acceptance")).firstMatch
+            format: "identifier BEGINSWITH 'hanlin-package-card-' AND label CONTAINS %@", "Hanlin Transfer Acceptance")).firstMatch
+        for _ in 0..<5 {
+            if imported.exists && imported.isHittable { break }
+            mini.swipeUp()
+        }
         XCTAssertTrue(imported.waitForExistence(timeout: 30))
-        imported.tap(); tap(mini, "hanlin-miniapps-open")
+        XCTAssertTrue(imported.isHittable)
+        imported.tap()
         assertText(mini, "Saved by the original ScriptUI runtime")
 
         // Fresh process guarantees every old runtime owner has finished before rollback.
@@ -137,7 +141,7 @@ final class HanlinPairedProductUITests: XCTestCase {
         tap(mini, "Restore previous data")
         assertText(mini, "Previous data restored. The original copy in Hanlin is unchanged.")
         mini.terminate(); mini.launch()
-        XCTAssertTrue(item(mini, "hanlin-miniapps-management").waitForExistence(timeout: 30))
+        XCTAssertTrue(item(mini, "hanlin-apps-add").waitForExistence(timeout: 30))
         XCTAssertFalse(imported.exists, "Rollback must restore the actual pre-transfer catalog")
 
         ai.terminate(); ai.launchEnvironment["HANLIN_SCRIPTUI_E2E"] = "1"; ai.launch()
@@ -162,7 +166,7 @@ final class HanlinPairedProductUITests: XCTestCase {
     private func beginOriginalRequest(_ prompt: String) throws -> String {
         // Publish the real companion catalog before the original Host resolves it.
         mini.launch()
-        XCTAssertTrue(item(mini, "hanlin-miniapp-hanlin.demo.swift-parity").waitForExistence(timeout: 45))
+        XCTAssertTrue(item(mini, "hanlin-package-card-Swift Parity").waitForExistence(timeout: 45))
         mini.terminate()
         ai.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         ai.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString

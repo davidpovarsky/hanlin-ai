@@ -33,6 +33,11 @@ final class HanlinMiniAppsProvider {
     }
 
     func catalog() async throws -> [HanlinMiniAppCatalogItem] {
+        try await refreshCatalog()
+        return host.visibleItems
+    }
+
+    func refreshCatalog() async throws {
         await platform.restore()
         try requirePackageServices()
         await host.refresh(installedPackages: platform.installedPackages)
@@ -40,16 +45,16 @@ final class HanlinMiniAppsProvider {
         if Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier {
             try? HanlinSplitLiveTarget.exportCatalog()
         }
-        return host.visibleItems
     }
 
     func launch(_ selected: HanlinMiniAppCatalogItem, includesDismissControl: Bool = true) async throws -> AnyView {
         guard !launching else { throw Failure.launchInProgress }
         launching = true
         defer { launching = false }
-        // Refresh canonical descriptors/authorization before using a retained row.
-        let current = try await catalog()
-        guard let item = current.first(where: { $0 == selected }) else { throw Failure.staleSelection }
+        // Visibility is a catalog preference. An authorized foreground request
+        // still resolves against the current canonical registrations.
+        try await refreshCatalog()
+        guard let item = host.items.first(where: { $0 == selected }) else { throw Failure.staleSelection }
         switch item.engine {
         case .swift:
             let view = try host.swiftDestination(for: item).view
@@ -77,6 +82,23 @@ final class HanlinMiniAppsProvider {
             guard producedApplication else { throw Failure.launchDidNotProduceApplication }
             return AnyView(ScriptingApplicationContainerView(platform: platform))
         }
+    }
+
+    func launch(packageID: HanlinInstalledPackageID) async throws -> AnyView {
+        guard !launching else { throw Failure.launchInProgress }
+        launching = true
+        defer { launching = false }
+
+        await platform.restore()
+        try requirePackageServices()
+        await platform.launch(packageID)
+        if case .failed(let message) = platform.activity { throw Failure.unavailable(message) }
+        guard platform.activeApplicationID == packageID,
+              platform.activeApplicationModel != nil || platform.activeNativeScriptController != nil
+                || platform.activeExpoController != nil else {
+            throw Failure.launchDidNotProduceApplication
+        }
+        return AnyView(ScriptingApplicationContainerView(platform: platform))
     }
 
     func packageManagement() throws -> AnyView {

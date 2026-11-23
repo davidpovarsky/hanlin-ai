@@ -15,18 +15,22 @@ PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000
           "HanlinNotificationExtension":"AC1900000000000000000042",
           "HanlinTranslationUI":"AC1900000000000000000043",
           "HanlinWidgetUI":"AC1900000000000000000044",
-           "HanlinMiniAppsUI":"AC1900000000000000000045"}
+           "HanlinMiniAppsUI":"AC1900000000000000000045",
+           "HanlinPresentationKit":"AC1800000000000000000002",
+           "TorahLibraryKit":"F70000000000000000000051"}
 
 # Preserve existing target/build IDs. Four slots per target remain disjoint
 # from product IDs, shared source IDs and the original localization test IDs.
 # Additional products use explicit free IDs without shifting existing allocations.
 EXTRA_PRODUCT_BUILDS = {
-    ("HanlinMiniApps", "HanlinMiniAppsUI"): "AC1900000000000000000046"
+    ("HanlinMiniApps", "HanlinMiniAppsUI"): "AC1900000000000000000046",
+    ("HanlinMiniApps", "HanlinPresentationKit"): "AC1900000000000000000047",
+    ("HanlinMiniApps", "TorahLibraryKit"): "AC1900000000000000000048"
 }
 TARGET_PRODUCTS={
     "AI_Hanlin": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
     "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
-    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI"],
+    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit"],
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
     "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
     "ChavrusaChatTranslationProvider": ["HanlinTranslationUI", "HanlinExtensionContracts"],
@@ -145,7 +149,16 @@ def update():
     source_files=list(objects[source_phase]["files"])
     shared=["AI_HLY/Downstream/SDK/HanlinApplicationResources.swift",
             "AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift",
-            "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift"]
+            "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift",
+            "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift",
+            "AI_HLY/Downstream/TorahStudy/TorahOCRService.swift",
+            "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+            "AI_HLY/Downstream/TorahStudy/TorahSourceReaderView.swift",
+            "AI_HLY/Downstream/TorahStudy/TorahStudyNavigationRouter.swift",
+            "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift",
+            "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
+            "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+            "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift"]
     shared_group="F9F4C452EBF2FA6B1274B4D7"
     shared_children=list(objects[shared_group]["children"])
     for index,path in enumerate(shared):

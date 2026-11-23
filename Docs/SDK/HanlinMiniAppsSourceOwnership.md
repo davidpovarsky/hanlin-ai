@@ -1,6 +1,6 @@
 # Original MiniApps library in the shared SDK
 
-The original standalone MiniApps search, catalog, detail, launch, package-management routing and transfer presentation are now public in `HanlinMiniAppsUI`. The executable uses aliases to these same implementations. Its existing `MiniAppsLibrary(services: .connected(to: provider))` call remains unchanged.
+The latest original rich catalog, cards, search, hide/restore, package details, photo-study action and companion transfer presentation are shared by Hanlin and MiniApps through the canonical SDK. `NativeAppsCatalogView` and `HanlinMiniAppsCatalogView` are public in the runtime-aware `HanlinApplication` product (`AI_Hanlin`). The original lightweight navigation-split library and services remain available independently in `HanlinMiniAppsUI`.
 
 ## Independent original UI
 
@@ -21,6 +21,32 @@ HanlinMiniAppsLibrary(
 ```
 
 `originalTransferView` is an `AnyView`, matching the existing host presentation seam. The busy callback is read while building the original toolbar, so an observable transfer owner retains its live disable behavior. The library retains the original navigation split, search ordering, error state, refresh tasks, sheets, fullscreen presentations, accessibility identifiers and control layout. Hosts place and style the original view using SwiftUI composition.
+
+## Latest original rich catalog
+
+The later original source at `bcb1a2954c8cfbd36035c08aafb4acbca7a6a5fb` separated the rich catalog from its Hanlin-only model-context composition. That original implementation is now canonical in `AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift`; `NativeAppsHubView` consumes it, and the MiniApps executable aliases the shared `HanlinMiniAppsCatalogView` composition.
+
+`NativeAppsCatalogView` exposes complete public initialization for preparation, refresh, item launch, installed-package launch, source-reader presentation and additional toolbar content. It renders the original cards, menus, editable hide controls, hidden-app restoration, package sheets and photo-study entry. These runtime-aware surfaces use the existing canonical platform/catalog owners; choose `HanlinMiniAppsUI` when supplying an independent host's catalog and launch services to the original lightweight library.
+
+After preparing the original application runtime, the complete original companion composition is available directly:
+
+```swift
+import HanlinApplication
+import SwiftUI
+
+@MainActor
+struct OriginalMiniAppsScreen: View {
+    var body: some View {
+        HanlinMiniAppsCatalogView()
+    }
+}
+```
+
+This view retains its original provider for the SwiftUI view lifetime. The first-party executable continues to inject its retained provider. It publishes the canonical companion catalog before showing the catalog as ready, preserves the original launch fence and presents the exact existing transfer screen. The provider's additive `refreshCatalog` and installed-package launch path retain the original bootstrap, enabled-package, engine-output and authorization checks. Foreground requests resolve against canonical registrations; catalog visibility remains a preference.
+
+`TorahPhotoStudyCaptureView(presentsSourceReader: true)` preserves the later original local source-reader sheet and visible identification/error feedback. The default remains the original navigation-router behavior. The companion declares the original `maktabah` query scheme for that existing handoff. Bundle IDs, entitlements, saved schemas and release configuration are unchanged.
+
+The companion's single-key local catalog from the later branch is already represented identically in the shared 1,118-key localization catalog. No resource copy is added. All labels use the canonical bundle through the existing SwiftSyntax routing.
 
 ## Existing Hanlin runtime composition
 
@@ -55,6 +81,13 @@ The executable retains its `@main`, bundle identity, entitlements, storage prepa
 
 ## Verification and impact
 
+The later catalog replay preserves **51/51 original function/computed-property bodies** from `bcb1a295` across the catalog, Hub, photo capture, provider and companion composition. Normalization is limited to canonical localization routing and the public type name. Public constructors, retained provider storage and immutable identity isolation are separate integration seams. All 17 affected Swift files parsed; the existing 15 graph controls and both manifest/project idempotence checks passed. The production target validator now checks 75 shared source files and the original independent MiniApps target.
+
+Existing native test selectors follow the later original rich catalog. The current stronger consent original-request review assertions are retained, even though the later branch removed them. The previously queued paired run `45128030798` at `199b8c99` was cancelled once before any job steps, compilation or tests because these source changes invalidated that planned gate. Fresh native acceptance of the integrated source remains required. Historical `bcb1a295` successes retain their original source/platform scope.
+
+The first lightweight extraction separately established the following evidence:
+
+
 The source-preservation receipt compares all **12 original function/computed-property bodies** across the three original owners. Only the explicit shared localization routing and the two transfer injections are normalized. Public access, complete constructors and nonisolated immutable presentation identity are recorded separately. Seven changed Swift sources parsed successfully. The existing **15 graph controls passed**, including the original provider inventory and rejection of AgentCore leakage into MiniApps.
 
 The older `IntegrationValidation/validate.py` whole-project historical identity assertion still rejects a pre-existing SDK source-ownership change in `D79AD5752DB545F9000646D4/files`; it is not used as a successful current SDK gate. The current `test_project_graph.py` controls verify the actual canonical graph.
@@ -63,7 +96,9 @@ The generated `HanlinChatUI` selected manifest and all **363 selected source/res
 
 Evidence:
 
+- [Latest original catalog preservation](../../docs/agent-sdk/evidence/latest-original-miniapps-catalog-20261123.json)
+- [Latest original catalog verification](../../docs/agent-sdk/evidence/latest-original-miniapps-verification-20261123.json)
 - [Original member-body preservation](../../docs/agent-sdk/evidence/miniapps-source-extraction-20261123.json)
 - [Selected ChatUI closure comparison](../../docs/agent-sdk/evidence/miniapps-chatui-closure-20261123.json)
 - [Focused verification receipt](../../docs/agent-sdk/evidence/miniapps-verification-20261123.json)
-- Reproduce the body comparison with `Scripts/SDK/verify_miniapps_source_preservation.py` and the existing `Scripts/Extensions/inspect_source_preservation.swift` inspector.
+- Reproduce the body comparison with `Scripts/SDK/verify_miniapps_source_preservation.py` and the existing `Scripts/Extensions/inspect_source_preservation.swift` inspector. Pass `--catalog` to verify the later rich-catalog source.

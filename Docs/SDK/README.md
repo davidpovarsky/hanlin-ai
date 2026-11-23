@@ -1,6 +1,6 @@
 # Hanlin SDK: one original implementation, selectable products
 
-The repository's root package is **HanlinSDK**. Its generated graph is derived from the original module manifests and source paths. Hanlin's own application and extension executables are thin owners of app identity, entitlements and OS entry points; the shared implementation lives in the SDK. The current complete graph exposes **44 products and 108 targets**, including **505 original application Swift source files** in the preserved `AI_Hanlin` module. The [generated inventory](../../docs/agent-sdk/unified-package-manifest.json) is the authoritative list.
+The repository's root package is **HanlinSDK**. Its generated graph is derived from the original module manifests and source paths. Hanlin's own application and extension executables are thin owners of app identity, entitlements and OS entry points; the shared implementation lives in the SDK. The current complete graph exposes **44 products and 108 targets**, including **507 original application Swift source files** in the preserved `AI_Hanlin` module. The [generated inventory](../../docs/agent-sdk/unified-package-manifest.json) is the authoritative list.
 
 ## Choose what the host needs
 

@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T07:21:03.871209+00:00",
+  "original_source": "bcb1a2954c8cfbd36035c08aafb4acbca7a6a5fb",
+  "integration_base": "199b8c996f56097faf76a881efaf788c8e7d27a2",
+  "preservation": "latest-original-miniapps-catalog-20261123.json",
+  "swift_parse": {
+    "files": [
+      "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift",
+      "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift",
+      "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+      "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
+      "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "AI_HLY/Downstream/TorahStudy/TorahSourceReaderView.swift",
+      "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift",
+      "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
+      "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+      "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "AI_HLYUITests/HanlinPairedProductUITests.swift",
+      "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+      "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "Package.swift",
+      "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift"
+    ],
+    "exit_code": 0,
+    "compiler": "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/bin/swiftc",
+    "scope": "Swift syntax only; Apple typecheck/runtime not claimed"
+  },
+  "source_graph": {
+    "status": "SOURCE_VALIDATED",
+    "shared_source_count": 75,
+    "graph": {
+      "miniapps_products": [
+        "HanlinA2UI",
+        "HanlinAgentActivityCore",
+        "HanlinExpoNativeAPI",
+        "HanlinExpoRuntime",
+        "HanlinExtensionContracts",
+        "HanlinLocalization",
+        "HanlinMiniAppCore",
+        "HanlinMiniAppsUI",
+        "HanlinNativeScriptRuntime",
+        "HanlinParityMiniApp",
+        "HanlinPlatformContracts",
+        "HanlinPresentationKit",
+        "HanlinProductSplit",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptExtensions",
+        "HanlinScriptStore",
+        "HanlinScriptUI",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptingSDK",
+        "HanlinSefariaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinWikipediaMiniApp",
+        "IOSSystemLite",
+        "SWCompression",
+        "TorahLibraryKit",
+        "ZIPFoundation"
+      ],
+      "miniapps_source_groups": [
+        "HanlinMiniAppsApp"
+      ],
+      "deployment_target": "27.0",
+      "signed_or_install_proof": false
+    },
+    "sdk": {
+      "ai_products": [
+        "HanlinAgentCore",
+        "HanlinApplication",
+        "HanlinHostContracts",
+        "HanlinPersistenceAdapters"
+      ],
+      "unit_test_products": [
+        "HanlinAgentCore",
+        "HanlinApplication"
+      ],
+      "miniapps_agent_products": [],
+      "sdk_application_sources": 505,
+      "host_sources": [
+        "AI_HLY.swift"
+      ],
+      "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+      "apple_compilation": "NOT_RUN"
+    },
+    "ios_build": "NOT_RUN",
+    "ios_ui": "NOT_RUN",
+    "signed_group": "NOT_RUN"
+  },
+  "graph_controls": {
+    "command": "python3 -m unittest discover -s Scripts/CI/IntegrationValidation -p test_project_graph.py",
+    "tests": 15,
+    "failures": 0,
+    "elapsed_seconds": 0.44
+  },
+  "idempotence_checks": [
+    "Scripts/SDK/update_project.py --check",
+    "Scripts/SDK/generate_manifest.py --check"
+  ],
+  "localization": {
+    "changed_files": 4,
+    "edits": 57,
+    "parsed_files": 17,
+    "original_literal_preservation": "All original Swift string segments retained in original order; callback structure and unrelated source bytes preserved. Only the recorded bundle, label-initializer and color-reference edits are applied.",
+    "added_catalog_copies": 0,
+    "later_companion_catalog_key_count": 1,
+    "canonical_catalog_key_count": 1118,
+    "later_key_identical_in_canonical_catalog": true
+  },
+  "public_surfaces": [
+    "NativeAppsCatalogView<AdditionalToolbar>",
+    "HanlinMiniAppsCatalogView",
+    "TorahPhotoStudyCaptureView(presentsSourceReader:)"
+  ],
+  "backward_compatible_surfaces": [
+    "HanlinMiniAppsUI.HanlinMiniAppsLibrary",
+    "HanlinMiniAppsUI.HanlinMiniAppsServices",
+    "HanlinMiniAppsServices.connectedToHanlin()"
+  ],
+  "source_and_test_limits": [
+    "Original bcb member bodies preserved; public construction/provider State lifetime/isolation are separately added seams",
+    "No new engine, provider authority, grant store or UI implementation",
+    "Stronger current consent original-request review assertions retained",
+    "Original host identity, entitlements, saved schemas and release settings retained"
+  ],
+  "obsolete_native_gate": {
+    "run": 45128030798,
+    "source": "199b8c996f56097faf76a881efaf788c8e7d27a2",
+    "cancelled_before_job_steps": true,
+    "native_tests_executed": 0,
+    "reason": "Later original shared catalog/photo/provider source must be integrated before the final affected native gate"
+  },
+  "apple_compilation": "NOT_RUN for this later catalog replay",
+  "ui_acceptance": "PENDING exact integrated source; prior runs not relabeled"
+}

@@ -56,10 +56,10 @@ final class HanlinMiniAppsUITests: XCTestCase {
 
     func testPackageImportUsesExistingPreviewScreen() throws {
         app.launch()
-        let manage = app.buttons["hanlin-miniapps-management"]
+        let manage = app.buttons["hanlin-apps-add"]
         XCTAssertTrue(manage.waitForExistence(timeout: 30))
         manage.tap()
-        let importPackage = app.buttons["hanlin-miniapps-package-import"]
+        let importPackage = app.buttons["hanlin-import-script-package"]
         XCTAssertTrue(importPackage.waitForExistence(timeout: 15))
         importPackage.tap()
         XCTAssertTrue(app.buttons["hanlin-file-importer"].waitForExistence(timeout: 15))
@@ -68,10 +68,10 @@ final class HanlinMiniAppsUITests: XCTestCase {
     func testInstalledScriptUIAppearsAndRunsAfterRestart() throws {
         executionTimeAllowance = 240
         app.launch()
-        let manage = app.buttons["hanlin-miniapps-management"]
+        let manage = app.buttons["hanlin-apps-add"]
         XCTAssertTrue(manage.waitForExistence(timeout: 30))
         manage.tap()
-        let importPackage = app.buttons["hanlin-miniapps-package-import"]
+        let importPackage = app.buttons["hanlin-import-script-package"]
         XCTAssertTrue(importPackage.waitForExistence(timeout: 15))
         importPackage.tap()
         let archive = app.buttons["HanlinScriptUIValid"]
@@ -91,9 +91,18 @@ final class HanlinMiniAppsUITests: XCTestCase {
         let installed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: install)
         XCTAssertEqual(XCTWaiter.wait(for: [installed], timeout: 60), .completed)
         app.navigationBars["Script Package"].buttons["Done"].tap()
-        let close = app.buttons["hanlin-miniapps-management-close"]
+        let close = app.buttons["hanlin-apps-add-done"]
         XCTAssertTrue(close.waitForExistence(timeout: 15))
         close.tap()
+        let scriptCard = app.buttons["hanlin-package-card-Hanlin ScriptUI Valid"].firstMatch
+        revealCard(scriptCard)
+        scriptCard.press(forDuration: 1)
+        let info = app.buttons["hanlin-package-information-menu-item"].firstMatch
+        XCTAssertTrue(info.waitForExistence(timeout: 10))
+        info.tap()
+        let detailsDone = app.buttons["hanlin-package-details-done"].firstMatch
+        XCTAssertTrue(detailsDone.waitForExistence(timeout: 10))
+        detailsDone.tap()
         try openScriptUI()
         let increment = app.buttons["Increment"]
         XCTAssertTrue(increment.waitForExistence(timeout: 30))
@@ -105,24 +114,73 @@ final class HanlinMiniAppsUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Count 0"].waitForExistence(timeout: 30))
     }
 
+    func testOriginalCardMenuHideRestoreAndSearch() {
+        app.launch()
+        let card = app.buttons["hanlin-package-card-Swift Parity"].firstMatch
+        revealCard(card)
+        let actions = app.buttons["hanlin-app-actions-hanlin.demo.swift-parity"].firstMatch
+        XCTAssertTrue(actions.waitForExistence(timeout: 10))
+        actions.tap()
+        XCTAssertTrue(app.buttons["Open"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["Hide App"].exists)
+        app.buttons["App Information"].tap()
+        XCTAssertTrue(app.navigationBars["App Information"].waitForExistence(timeout: 10))
+        app.navigationBars["App Information"].buttons["Done"].tap()
+
+        app.buttons["Edit"].tap()
+        let hide = app.buttons["Hide Swift Parity"].firstMatch
+        XCTAssertTrue(hide.waitForExistence(timeout: 10))
+        hide.tap()
+        XCTAssertTrue(card.waitForNonExistence(timeout: 10))
+        app.buttons["Done"].tap()
+
+        app.buttons["hanlin-apps-add"].tap()
+        XCTAssertTrue(app.staticTexts["Hidden Apps"].waitForExistence(timeout: 10))
+        app.buttons["Swift Parity"].tap()
+        app.buttons["hanlin-apps-add-done"].tap()
+        revealCard(card)
+
+        let search = app.searchFields["Search Apps"].firstMatch
+        if !search.isHittable { app.swipeDown() }
+        XCTAssertTrue(search.waitForExistence(timeout: 15))
+        search.tap()
+        search.typeText("Swift Parity")
+        XCTAssertTrue(card.waitForExistence(timeout: 10))
+    }
+
+    func testOriginalPhotoStudyActionOpensCapture() {
+        app.launch()
+        let capture = app.buttons["hanlin-apps-torah-capture"].firstMatch
+        XCTAssertTrue(capture.waitForExistence(timeout: 30))
+        capture.tap()
+        XCTAssertTrue(app.navigationBars["צילום ולימוד ספר"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["בחר תמונה"].exists)
+        XCTAssertTrue(app.buttons["צלם"].exists)
+        XCTAssertFalse(app.buttons["זהה מקור"].isEnabled)
+    }
+
+    private func revealCard(_ card: XCUIElement) {
+        XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 30))
+        for _ in 0..<5 {
+            if card.exists && card.isHittable { break }
+            app.swipeUp()
+        }
+        XCTAssertTrue(card.waitForExistence(timeout: 15))
+        XCTAssertTrue(card.isHittable)
+    }
+
     private func openScriptUI() throws {
         let row = app.descendants(matching: .any).matching(NSPredicate(
-            format: "identifier BEGINSWITH 'hanlin-miniapp-' AND label CONTAINS %@", "Hanlin ScriptUI Valid"
+            format: "identifier BEGINSWITH 'hanlin-package-card-' AND label CONTAINS %@", "Hanlin ScriptUI Valid"
         )).firstMatch
-        XCTAssertTrue(row.waitForExistence(timeout: 30))
+        revealCard(row)
         row.tap()
-        let open = app.buttons["hanlin-miniapps-open"]
-        XCTAssertTrue(open.waitForExistence(timeout: 15))
-        open.tap()
     }
 
     private func openParity() throws {
-        let row = app.descendants(matching: .any)["hanlin-miniapp-hanlin.demo.swift-parity"].firstMatch
-        XCTAssertTrue(row.waitForExistence(timeout: 30))
+        let row = app.descendants(matching: .any)["hanlin-package-card-Swift Parity"].firstMatch
+        revealCard(row)
         row.tap()
-        let open = app.buttons["hanlin-miniapps-open"]
-        XCTAssertTrue(open.waitForExistence(timeout: 15))
-        open.tap()
     }
 }
 
@@ -353,15 +411,15 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
     }
 
     private func openApps() {
-        let manage = app.buttons["hanlin-miniapps-management"].firstMatch
+        let manage = app.buttons["hanlin-apps-add"].firstMatch
         XCTAssertTrue(manage.waitForExistence(timeout: 30),
                       "The independent MiniApps catalog must be ready")
     }
 
     private func importAndInstall(archive: String) {
         openApps()
-        app.buttons["hanlin-miniapps-management"].tap()
-        let importButton = app.buttons["hanlin-miniapps-package-import"].firstMatch
+        app.buttons["hanlin-apps-add"].tap()
+        let importButton = app.buttons["hanlin-import-script-package"].firstMatch
         XCTAssertTrue(importButton.waitForExistence(timeout: 15))
         importButton.tap()
         let list = app.collectionViews["hanlin-package-import-list"].firstMatch
@@ -390,7 +448,7 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         let done = app.navigationBars["Script Package"].buttons["Done"].firstMatch
         XCTAssertTrue(done.waitForExistence(timeout: 10))
         done.tap()
-        let close = app.buttons["hanlin-miniapps-management-close"].firstMatch
+        let close = app.buttons["hanlin-apps-add-done"].firstMatch
         XCTAssertTrue(close.waitForExistence(timeout: 10))
         close.tap()
         openApps()
@@ -398,19 +456,14 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
     }
 
     private func launchInstalledPackage(named name: String) {
-        let open = app.buttons["hanlin-miniapps-open"].firstMatch
-        if !open.exists {
-            let row = app.descendants(matching: .any).matching(NSPredicate(
-                format: "identifier BEGINSWITH 'hanlin-miniapp-' AND label CONTAINS %@", name
-            )).firstMatch
-            XCTAssertTrue(row.waitForExistence(timeout: 30))
-            XCTAssertTrue(row.isHittable)
-            row.tap()
+        let card = app.buttons["hanlin-package-card-\(name)"].firstMatch
+        for _ in 0..<5 {
+            if card.exists && card.isHittable { break }
+            app.swipeUp()
         }
-        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS[c] %@", name))
-            .firstMatch.waitForExistence(timeout: 15), "The original selected package must own this detail")
-        XCTAssertTrue(open.waitForExistence(timeout: 15))
-        open.tap()
+        XCTAssertTrue(card.waitForExistence(timeout: 30))
+        XCTAssertTrue(card.isHittable)
+        card.tap()
     }
 
     private func closeNativeScriptApp() { closeRuntimeApplication() }
@@ -422,8 +475,8 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         XCTAssertTrue(close.isHittable)
         close.tap()
         XCTAssertTrue(close.waitForNonExistence(timeout: 15))
-        XCTAssertTrue(app.buttons["hanlin-miniapps-open"].firstMatch.waitForExistence(timeout: 15),
-                      "Closing the real runtime must return to the same companion catalog detail")
+        XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 15),
+                      "Closing the real runtime must return to the Apps catalog")
     }
 
     private func waitUntil(timeout: TimeInterval, condition: () -> Bool) -> Bool {

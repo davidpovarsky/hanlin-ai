@@ -8,11 +8,13 @@ import argparse, difflib, hashlib, json, re, subprocess, tempfile
 from pathlib import Path
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--base", default="65fdc2ed9cd1ed563b86d98cee2dab7f665f714c")
+parser.add_argument("--base")
+parser.add_argument("--catalog", action="store_true", help="Verify the later original rich catalog/photo/provider source")
 parser.add_argument("--inspector", required=True)
 parser.add_argument("--report", required=True)
 parser.add_argument("--git-user")
 args = parser.parse_args()
+args.base = args.base or ("bcb1a2954c8cfbd36035c08aafb4acbca7a6a5fb" if args.catalog else "65fdc2ed9cd1ed563b86d98cee2dab7f665f714c")
 git = (["sudo", "-n", "-u", args.git_user] if args.git_user else []) + ["git"]
 pairs = {
     "HanlinMiniAppsApp/MiniAppsLibrary.swift": ["Packages/HanlinPresentationSDK/Sources/HanlinMiniAppsUI/HanlinMiniAppsLibrary.swift"],
@@ -20,12 +22,20 @@ pairs = {
         "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift"],
     "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift": ["AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift"],
 }
+if args.catalog:
+    pairs = {
+        "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift": ["AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift"],
+        "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift": ["AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift"],
+        "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift": ["AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift"],
+        "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift": ["AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift"],
+        "HanlinMiniAppsApp/MiniAppsLibrary.swift": ["AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift"],
+    }
 literal = r'"(?:[^"\\]|\\.)*"'
 
 def normalize(source):
     source = re.sub(r",\s*bundle:\s*HanlinLocalization\.bundle", "", source)
-    source = re.sub(r"\b(Button|Label|Section|ContentUnavailableView|LabeledContent)\(\s*hanlin:\s*", r"\1(", source)
-    source = re.sub(r"(\.(?:navigationTitle|alert))\(Text\((" + literal + r")\)", r"\1(\2", source)
+    source = re.sub(r"\b(Button|Label|Section|ContentUnavailableView|LabeledContent|ProgressView)\(\s*hanlin:\s*", r"\1(", source)
+    source = re.sub(r"(\.(?:navigationTitle|alert|accessibilityLabel))\(Text\((" + literal + r")\)", r"\1(\2", source)
     source = re.sub(r"prompt:\s*Text\((" + literal + r")\)", r"prompt: \1", source)
     source = source.replace("transferView()", "HanlinMiniAppTransferView(mode: .receive)")
     source = source.replace("isTransferringProductData()", "HanlinScriptingPlatform.shared.isTransferringProductData")
@@ -35,7 +45,7 @@ def inventory(path):
     return json.loads(subprocess.check_output([args.inspector, str(path)], text=True))
 
 def key(name):
-    name = name.replace("HanlinMiniAppsLibrary.", "MiniAppsLibrary.").replace("HanlinMiniAppsServices.", "MiniAppsServices.").replace("HanlinMiniAppsForegroundBridge.", "MiniAppsForegroundBridge.")
+    name = name.replace("HanlinMiniAppsCatalogView.", "MiniAppsLibrary.").replace("HanlinMiniAppsLibrary.", "MiniAppsLibrary.").replace("HanlinMiniAppsServices.", "MiniAppsServices.").replace("HanlinMiniAppsForegroundBridge.", "MiniAppsForegroundBridge.")
     return "MiniAppsServices." + name if name == "connected(to:)" else name
 
 checks, provenance, prepared = [], [], []
@@ -72,7 +82,7 @@ with tempfile.TemporaryDirectory(prefix="hanlin-miniapps-provenance-") as tempor
 report = {"base": args.base,
           "scope": "Original function and computed-property bodies; new public constructors, immutable identity isolation and host callback storage are separate seams.",
           "normalizations": ["Canonical localization bundle and original control forwarding helpers",
-                             "Injected exact original transfer view and live transfer-busy callback"],
+                             "Injected exact original transfer view and live transfer-busy callback" if not args.catalog else "Public type name for the original companion composition"],
           "source_provenance": provenance, "checks": checks,
           "passed": sum(x["pass"] for x in checks), "total": len(checks),
           "apple_compilation": "Not performed by this source-preservation check", "device_acceptance": "Not claimed"}

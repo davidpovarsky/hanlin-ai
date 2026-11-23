@@ -613,6 +613,50 @@
 			isa = PBXBuildFile;
 			fileRef = AC1900000000000000000104;
 		};
+		AC1900000000000000000047 = {
+			isa = PBXBuildFile;
+			productRef = AC1800000000000000000002;
+		};
+		AC1900000000000000000048 = {
+			isa = PBXBuildFile;
+			productRef = F70000000000000000000051;
+		};
+		AC1900000000000000000107 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000106;
+		};
+		AC1900000000000000000109 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000108;
+		};
+		AC190000000000000000010B = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000010A;
+		};
+		AC190000000000000000010D = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000010C;
+		};
+		AC190000000000000000010F = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000010E;
+		};
+		AC1900000000000000000111 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000110;
+		};
+		AC1900000000000000000113 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000112;
+		};
+		AC1900000000000000000115 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000114;
+		};
+		AC1900000000000000000117 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000116;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1246,6 +1290,60 @@
 			path = "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift";
 			sourceTree = SOURCE_ROOT;
 		};
+		AC1900000000000000000106 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000108 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/TorahStudy/TorahOCRService.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000010A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000010C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/TorahStudy/TorahSourceReaderView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000010E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/TorahStudy/TorahStudyNavigationRouter.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000110 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000112 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000114 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000116 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift";
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1542,6 +1640,7 @@
 				"Downstream/ProductSplit/HanlinSplitLiveTarget.swift" ,
 				"Downstream/ProductSplit/HanlinSplitMailbox.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift" ,
+				"Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift" ,
 				"Downstream/RuntimeCore/Core/AppRuntimeCore.swift" ,
@@ -1783,6 +1882,7 @@
 				"NativeAppPlatform/AppsHub/NativeAppDetailView.swift" ,
 				"NativeAppPlatform/AppsHub/NativeAppSessionContainerView.swift" ,
 				"NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift" ,
+				"NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift" ,
 				"NativeAppPlatform/AppsHub/NativeAppsHubView.swift" ,
 				"NativeAppPlatform/BuiltinApps/BuiltinAppsIndex.swift" ,
 				"NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift" ,
@@ -2112,6 +2212,8 @@
 				"AC1900000000000000000014" ,
 				"AC1900000000000000000015" ,
 				"AC1900000000000000000046" ,
+				"AC1900000000000000000047" ,
+				"AC1900000000000000000048" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2242,6 +2344,15 @@
 				"AC1900000000000000000100" ,
 				"AC1900000000000000000102" ,
 				"AC1900000000000000000104" ,
+				"AC1900000000000000000106" ,
+				"AC1900000000000000000108" ,
+				"AC190000000000000000010A" ,
+				"AC190000000000000000010C" ,
+				"AC190000000000000000010E" ,
+				"AC1900000000000000000110" ,
+				"AC1900000000000000000112" ,
+				"AC1900000000000000000114" ,
+				"AC1900000000000000000116" ,
 			);
 			"name" = "MiniApps Shared Implementation";
 			"sourceTree" = "<group>";
@@ -2506,6 +2617,8 @@
 				"AC1900000000000000000005" ,
 				"AC1900000000000000000040" ,
 				"AC1900000000000000000045" ,
+				"AC1800000000000000000002" ,
+				"F70000000000000000000051" ,
 			);
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
@@ -2928,6 +3041,15 @@
 				"AC1900000000000000000101" ,
 				"AC1900000000000000000103" ,
 				"AC1900000000000000000105" ,
+				"AC1900000000000000000107" ,
+				"AC1900000000000000000109" ,
+				"AC190000000000000000010B" ,
+				"AC190000000000000000010D" ,
+				"AC190000000000000000010F" ,
+				"AC1900000000000000000111" ,
+				"AC1900000000000000000113" ,
+				"AC1900000000000000000115" ,
+				"AC1900000000000000000117" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
