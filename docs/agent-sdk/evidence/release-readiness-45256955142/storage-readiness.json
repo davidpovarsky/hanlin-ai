@@ -1,0 +1,33 @@
+{
+  "observedFreeBytes": 2722193408,
+  "observationScope": "Oracle filesystem; free space can change while other owners are active.",
+  "priorFailedPreparedArtifact": {
+    "id": 14855355631,
+    "outerZIPBytes": 184427438,
+    "eligible": false,
+    "downloaded": false
+  },
+  "trackedSourceRootsInspected": [
+    "AI_HLY",
+    "Packages",
+    "Scripts/SDK",
+    "Scripts/NativeScript/build-metadata-tool.py",
+    "Scripts/NativeScript/metadata_public_headers.py",
+    "Package.swift",
+    "docs/agent-sdk/unified-package-manifest.json",
+    "docs/native-artifacts.json"
+  ],
+  "trackedSourceFilesInspected": 2979,
+  "trackedSourceBytesInspected": 90849249,
+  "scope": "These roots are a source-size reference, not a complete installed Native18 expansion bound.",
+  "requiredBeforeLargeMaterialization": [
+    "Fresh free-space check",
+    "Assigned successful producer unique archive outer size/digest",
+    "Outer ZIP central-directory sum before extraction",
+    "Inner18 archive expansion sizes before full installation",
+    "Preserve raw archive/receipts; recover only own reproducible intermediates if necessary"
+  ],
+  "possibleCacheReuse": "Original native downloader addresses cache files as checksum-archive. Verified exported archives may be hardlinked into the owned cache under that exact original naming to avoid duplicate cached bytes; original size/hash validation and anonymous release readback remain intact.",
+  "filesDeleted": 0,
+  "nativeArtifactsAcquired": 0
+}

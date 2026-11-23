@@ -1,0 +1,1588 @@
+{
+  "recordedAt": "2026-11-23T20:32:46.245248+00:00",
+  "activeExternalRunObservedOnce": 45253606271,
+  "sourceCommit": "0123b569d489984ade291b5c065eb5fe6500dec6",
+  "sourceOnlyQueries": {
+    "commit": {
+      "endpoint": "repos/davidpovarsky/Maktabah/commits/0123b569d489984ade291b5c065eb5fe6500dec6",
+      "exitCode": 0,
+      "data": {
+        "files": [
+          {
+            "additions": 2,
+            "deletions": 2,
+            "filename": ".github/workflows/otzaria-hanlin-live-native.yml",
+            "sha": "1282f20ca90ab98d8281b27e709982a816e0476f",
+            "status": "modified"
+          },
+          {
+            "additions": 4,
+            "deletions": 4,
+            "filename": "Scripts/CI/hq-stage2-focused-apple.inputs.json",
+            "sha": "bacfbce99c98b01f2f256b51035d569732176f1f",
+            "status": "modified"
+          },
+          {
+            "additions": 1,
+            "deletions": 1,
+            "filename": "Scripts/CI/runtime27-hanlin-live.py",
+            "sha": "17789825863e5c851d2297e8b20d2ea5ead9b55f",
+            "status": "modified"
+          },
+          {
+            "additions": 261,
+            "deletions": 0,
+            "filename": "Scripts/CI/verify-hanlin-stream-continuation-source.py",
+            "sha": "5cd41d89506d3b7ee0f3421a5843d327997f6e00",
+            "status": "added"
+          },
+          {
+            "additions": 9,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/CI_PREPARATION.md",
+            "sha": "44e7fbc7cea9ab5763814d759879eff4ffd634ce",
+            "status": "added"
+          },
+          {
+            "additions": 93,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/CORE_APPLE_VALIDATION.json",
+            "sha": "5c621d1c711ef47fa79a25cdc4d37d71d35e40a7",
+            "status": "added"
+          },
+          {
+            "additions": 72,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/DEPENDENCY_ADOPTION.json",
+            "sha": "f29f5ac76ffecac033532e1c4677a858b4ba026f",
+            "status": "added"
+          },
+          {
+            "additions": 23,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/HOST_LOCK_ADOPTION.json",
+            "sha": "02d97699c610d0a317b2f0d99ac8253ecbee9899",
+            "status": "added"
+          },
+          {
+            "additions": 1729,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/LIVE_STREAM_EXECUTION_INPUTS.json",
+            "sha": "eb7ce26b6ecd16d66a6ea0a5a3da910c54dd3a83",
+            "status": "added"
+          },
+          {
+            "additions": 39,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/LIVE_STREAM_SOURCE_ADMISSION.json",
+            "sha": "0a494ddc5afde026764ac0a2ad8076c6c13325fe",
+            "status": "added"
+          },
+          {
+            "additions": 40,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/previous-live/CLEANUP_BINDING.json",
+            "sha": "619e0b990f041595f8cbee71259a304db4e52c76",
+            "status": "added"
+          },
+          {
+            "additions": 113,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/previous-live/DIAGNOSIS.json",
+            "sha": "fad5dec8b4c4c9ad71c9adc85349b3989a5e59b7",
+            "status": "added"
+          }
+        ],
+        "message": "ci(hanlin): bind original Live case to Apple-qualified continuation [skip ci]",
+        "parents": [
+          "07845de8c335a975027fd375f287a85754da51ab"
+        ],
+        "sha": "0123b569d489984ade291b5c065eb5fe6500dec6"
+      },
+      "error": null
+    },
+    "compareCanonical": {
+      "endpoint": "repos/davidpovarsky/Maktabah/compare/06613ffcff6d53985318341f9d8adc3246df7fd5...0123b569d489984ade291b5c065eb5fe6500dec6",
+      "exitCode": 0,
+      "data": {
+        "ahead_by": 21,
+        "behind_by": 30,
+        "commits": [
+          {
+            "message": "Exercise the original consent switch with one native thumb drag",
+            "sha": "783c908b3c09940039d46a45c82aa732d487ba44"
+          },
+          {
+            "message": "Bind the focused native consent drag to its exact reviewed source",
+            "sha": "81039998e66bba1d7310455d80a3c50e59785699"
+          },
+          {
+            "message": "Preserve the original book-access button as a child accessibility element",
+            "sha": "3b4345bd0ae33b83c2ff4ae7697164343f0792b8"
+          },
+          {
+            "message": "Bind the single original fresh-read case to the actual accessibility container fix",
+            "sha": "6591bba49d2b5a28d02b763c4360406843fce4cf"
+          },
+          {
+            "message": "ci: bind Live to reviewed accessibility source and available provider model",
+            "sha": "4624635d0f29e3bda7ff1f0ecd1097f8b2d37db1"
+          },
+          {
+            "message": "Bound owned Simulator shutdown phases and retain original Live9 failure",
+            "sha": "9533a8017adadecf770b19811e72b495f32e90f7"
+          },
+          {
+            "message": "Prepare Live11 post-send diagnostic on original Live10 lineage [skip ci]",
+            "sha": "438de95a675f34006bee54e339b37d88c87c032a"
+          },
+          {
+            "message": "Bind Live11 diagnostic source and historical no-send evidence [skip ci]",
+            "sha": "1303eb9f5d29c9165cf121aa4db377dd21ac8246"
+          },
+          {
+            "message": "Admit original Hanlin Live11 manual diagnostic continuation [skip ci]",
+            "sha": "fdb78a44778c318b277506f0b09ba91c3b678e91"
+          },
+          {
+            "message": "Observe original Hanlin stream boundaries without payloads [skip ci]",
+            "sha": "d4b1825bd5645f4949e4b57e48a73022c3b7cba1"
+          },
+          {
+            "message": "Bind reviewed Hanlin diagnostics to manual Live12 source admission [skip ci]",
+            "sha": "ece3eabb15f9dcae012ef48ee8ec4eeb8a8821f9"
+          },
+          {
+            "message": "ci(hanlin): bind one manual Live12 original-event diagnostic continuation",
+            "sha": "9bee6104e2938767b4e4e1047c56da8991d621fb"
+          },
+          {
+            "message": "Fix cold-search eligibility observation for original Hanlin execution [skip ci]",
+            "sha": "869f6a5a5eedbc94484467fe1c92f2802f497cda"
+          },
+          {
+            "message": "Prepare exact cold-search Live13 source and credential admission [skip ci]",
+            "sha": "98824916ec5e9b0ffae2056eb98598a44bf038c8"
+          },
+          {
+            "message": "Bind original manual Hanlin live case to reviewed cold-search repair",
+            "sha": "aa7741b16d00fbee8dea8ff67a25cf1cc7c0a9e3"
+          },
+          {
+            "message": "test(hanlin): retain original consent semantic wait and scoped failure evidence [skip ci]",
+            "sha": "7841f4af33142f72936ca97428733b3059f806b0"
+          },
+          {
+            "message": "ci(hanlin): bind manual Live consent observation to exact source [skip ci]",
+            "sha": "96c5b1b60c15a9a0cf1c4356f9822c64d9864c86"
+          },
+          {
+            "message": "fix(hanlin): consume shared SDK tool-result continuation",
+            "sha": "fb5abff01b1ae7958ab6c6733ff715ff615ae7b8"
+          },
+          {
+            "message": "fix(hanlin): align host resolved SDK with shared continuation",
+            "sha": "41f4242e83a17773e39a4b17ba2450f1e9b2ddfb"
+          },
+          {
+            "message": "fix(hanlin): adopt the complete Apple-qualified shared SDK revision [skip ci]",
+            "sha": "07845de8c335a975027fd375f287a85754da51ab"
+          },
+          {
+            "message": "ci(hanlin): bind original Live case to Apple-qualified continuation [skip ci]",
+            "sha": "0123b569d489984ade291b5c065eb5fe6500dec6"
+          }
+        ],
+        "files": [
+          {
+            "additions": 2,
+            "deletions": 2,
+            "filename": ".github/workflows/otzaria-hanlin-live-native.yml",
+            "sha": "1282f20ca90ab98d8281b27e709982a816e0476f",
+            "status": "modified"
+          },
+          {
+            "additions": 73,
+            "deletions": 1,
+            "filename": "Maktabah-iOSUITests/HanlinConsumerAcceptanceTests.swift",
+            "sha": "0ea8241d50712b3e01f2790ae7927047df0e49a4",
+            "status": "modified"
+          },
+          {
+            "additions": 1,
+            "deletions": 1,
+            "filename": "Maktabah.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+            "sha": "9218f083dac5fa2157a83e05064ec73eb1fd154c",
+            "status": "modified"
+          },
+          {
+            "additions": 1,
+            "deletions": 1,
+            "filename": "Scripts/CI/completion-focused-native.py",
+            "sha": "3f4b2563e0eacea1cf3b47273158f19951c6d908",
+            "status": "modified"
+          },
+          {
+            "additions": 5,
+            "deletions": 5,
+            "filename": "Scripts/CI/hq-stage2-focused-apple.inputs.json",
+            "sha": "bacfbce99c98b01f2f256b51035d569732176f1f",
+            "status": "modified"
+          },
+          {
+            "additions": 2,
+            "deletions": 2,
+            "filename": "Scripts/CI/run-faithful-ipad-matrix.py",
+            "sha": "90d6572c34c8a6cbf9f12f1a0d2fca51786ed63b",
+            "status": "modified"
+          },
+          {
+            "additions": 5,
+            "deletions": 5,
+            "filename": "Scripts/CI/runtime27-hanlin-live.py",
+            "sha": "17789825863e5c851d2297e8b20d2ea5ead9b55f",
+            "status": "modified"
+          },
+          {
+            "additions": 46,
+            "deletions": 11,
+            "filename": "Scripts/CI/shutdown-faithful-simulator.py",
+            "sha": "612904d55dc57dcaef3579e40e4259902d57984c",
+            "status": "modified"
+          },
+          {
+            "additions": 284,
+            "deletions": 0,
+            "filename": "Scripts/CI/verify-hanlin-live-consent-source.py",
+            "sha": "dc12df5c51d8032e3af902cc310aff520b3e8664",
+            "status": "added"
+          },
+          {
+            "additions": 124,
+            "deletions": 0,
+            "filename": "Scripts/CI/verify-hanlin-live11-source.py",
+            "sha": "69c4e6691b8a6ae6d3705453a62f6b9ad476762a",
+            "status": "added"
+          },
+          {
+            "additions": 276,
+            "deletions": 0,
+            "filename": "Scripts/CI/verify-hanlin-live12-source.py",
+            "sha": "1772e45d2f5a4941402e85d76e006c7bb0d2fd0a",
+            "status": "added"
+          },
+          {
+            "additions": 250,
+            "deletions": 0,
+            "filename": "Scripts/CI/verify-hanlin-live13-source.py",
+            "sha": "d0e01a3b4e1fd5abdefd4e5353e131e6eebedf74",
+            "status": "added"
+          },
+          {
+            "additions": 261,
+            "deletions": 0,
+            "filename": "Scripts/CI/verify-hanlin-stream-continuation-source.py",
+            "sha": "5cd41d89506d3b7ee0f3421a5843d327997f6e00",
+            "status": "added"
+          },
+          {
+            "additions": 184,
+            "deletions": 4,
+            "filename": "Source/ChavrusaText/HanlinHostAdapter/OtzariaHanlinChatSession.swift",
+            "sha": "28167e2212c50df668df96ba8ae96fbcda69109d",
+            "status": "modified"
+          },
+          {
+            "additions": 1,
+            "deletions": 0,
+            "filename": "Source/ChavrusaText/HanlinHostAdapter/OtzariaHanlinChatView.swift",
+            "sha": "5f5819f67abb19eb83db8f25632cc9ee25fc1e84",
+            "status": "modified"
+          },
+          {
+            "additions": 1,
+            "deletions": 1,
+            "filename": "Source/ChavrusaText/HanlinHostAdapter/OtzariaHanlinHostAdapter.swift",
+            "sha": "66bd4dabf501e26d08e6bab22657bbc562330422",
+            "status": "modified"
+          },
+          {
+            "additions": 25,
+            "deletions": 2,
+            "filename": "Source/Otzaria/Actions/Integration/ActionBackendCoordinatorFacade.swift",
+            "sha": "64bf41582f6a360f4aff620494fc3b71b5eefbc3",
+            "status": "modified"
+          },
+          {
+            "additions": 107,
+            "deletions": 1,
+            "filename": "Source/Otzaria/Actions/Integration/ActionLiveBackendBridge.swift",
+            "sha": "193466880eeb3f3b29e645d3634acc1a70d306ec",
+            "status": "modified"
+          },
+          {
+            "additions": 48,
+            "deletions": 0,
+            "filename": "Source/Otzaria/Actions/Sources/OtzariaActionCore/Engine/ActionExecutor.swift",
+            "sha": "a62aa1b847da66894cd42fea0e3b90bb948bc452",
+            "status": "modified"
+          },
+          {
+            "additions": 16,
+            "deletions": 0,
+            "filename": "Source/Otzaria/Actions/Sources/OtzariaActionCore/Ports/ActionPorts.swift",
+            "sha": "786020324e2b83dad99b6201c013fb6c1506df03",
+            "status": "modified"
+          },
+          {
+            "additions": 251,
+            "deletions": 0,
+            "filename": "Source/Otzaria/Actions/Tests/OtzariaActionCoreTests/Engine/ExistingSearchPreparationObservationTests.swift",
+            "sha": "e9577bcf7ea8dad8aef136c2b66c0ede7e796344",
+            "status": "added"
+          },
+          {
+            "additions": 1,
+            "deletions": 1,
+            "filename": "Vendor/HanlinSDK",
+            "sha": "ca3c91f2233bf5c77990643b29a874aac8704639",
+            "status": "modified"
+          },
+          {
+            "additions": 35,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/CONTROL_EXECUTION_OBSERVATION.json",
+            "sha": "287725a6075ecb6c6694141cff30a94b78b9c480",
+            "status": "added"
+          },
+          {
+            "additions": 9,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/CONTROL_EXECUTION_TOOL_OUTPUT.txt",
+            "sha": "9c93171191d4233cb5efbfe8282d836ea122eac3",
+            "status": "added"
+          },
+          {
+            "additions": 101,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/HEART_SOURCE_REVIEW.json",
+            "sha": "810ac21f7e914af48913dc270ffaf224e770c773",
+            "status": "added"
+          },
+          {
+            "additions": 13,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/README.md",
+            "sha": "30d11f309adef36aec7de1f8632b6f08c5b41c06",
+            "status": "added"
+          },
+          {
+            "additions": 751,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/candidate/Scripts/CI/run-faithful-ipad-matrix.py",
+            "sha": "90d6572c34c8a6cbf9f12f1a0d2fca51786ed63b",
+            "status": "added"
+          },
+          {
+            "additions": 65,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/candidate/Scripts/CI/shutdown-faithful-simulator.py",
+            "sha": "612904d55dc57dcaef3579e40e4259902d57984c",
+            "status": "added"
+          },
+          {
+            "additions": 100,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/credential-lifecycle/EXECUTED_LIVE9_SUCCESSOR_1.py",
+            "sha": "0fe9c434f7ad627711745fb7b0492d684893b2e8",
+            "status": "added"
+          },
+          {
+            "additions": 82,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/credential-lifecycle/FIRST_CONTROLLER_TERMINAL.json",
+            "sha": "b4d7409db1b434f5a290dd44bf811ed2268138c4",
+            "status": "added"
+          },
+          {
+            "additions": 7,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/credential-lifecycle/SUCCESSOR_SOURCE_TRANSPORT_BINDING.json",
+            "sha": "6a7cd2248db8fe5176e8b31ebd18845fa6b1d7b4",
+            "status": "added"
+          },
+          {
+            "additions": 86,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/credential-lifecycle/SUCCESSOR_TERMINAL_LIFECYCLE.json",
+            "sha": "e7b11341191b63d4e54854e6067c6f2cc5e460d8",
+            "status": "added"
+          },
+          {
+            "additions": 25,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/ARTIFACTS.json",
+            "sha": "150b89adf7f2e8c968a94354a14792dded5c3450",
+            "status": "added"
+          },
+          {
+            "additions": 90,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/INTAKE.json",
+            "sha": "a40b76279f6827af6d809cb92f09d3b9e2d3e576",
+            "status": "added"
+          },
+          {
+            "additions": 217,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/JOBS.json",
+            "sha": "26f93cde9ddc23370ed61e25102b7ebff0838346",
+            "status": "added"
+          },
+          {
+            "additions": 1356,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/JOB_LOG_DECODED.txt",
+            "sha": "8afe6faafd35b4156958ce2e88c7665ed229fa3f",
+            "status": "added"
+          },
+          {
+            "additions": 13,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/OWNED_SECRET_CLEANUP.json",
+            "sha": "903bb08ef606c143f7d0735398157d085e813464",
+            "status": "added"
+          },
+          {
+            "additions": 1,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/ROOT_INDEPENDENT_SECRET_ABSENCE.json",
+            "sha": "89d5eb87792ffd1c352ccbf5e29f7e23d630ebbe",
+            "status": "added"
+          },
+          {
+            "additions": 47,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/ROOT_ORIGINAL_FAILURE_REVIEW.json",
+            "sha": "5ed9c68db803268bf4fc049a65bc4047c13ec9d2",
+            "status": "added"
+          },
+          {
+            "additions": 224,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/RUN.json",
+            "sha": "797f225ef2d70f9be1a4433db7df3040ac79795a",
+            "status": "added"
+          },
+          {
+            "additions": 86,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/TERMINAL_LIFECYCLE.json",
+            "sha": "d8197d07f64027dc802b85369c777154dc5e0d2c",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence.zip",
+            "sha": "dd0ccd2dc367ec4458673af8c35d3eadad8c6d92",
+            "status": "added"
+          },
+          {
+            "additions": 65,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/admission.json",
+            "sha": "c1a295ea32d0d6c87a62bd1f6ca72504e628e1d6",
+            "status": "added"
+          },
+          {
+            "additions": 12,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/app-group-resolver-interface.json",
+            "sha": "f92963541709e1524b442699a94ce95bde741821",
+            "status": "added"
+          },
+          {
+            "additions": 11,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/artifact-isolation.json",
+            "sha": "1614c6c4c172671edba496202a8dcb0e90c5792a",
+            "status": "added"
+          },
+          {
+            "additions": 13,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/declarations.json",
+            "sha": "88a4fd20cd222b1f5f1a9cf81569afe0930af405",
+            "status": "added"
+          },
+          {
+            "additions": 448,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/faithful-ipad-matrix.json",
+            "sha": "3bfe35bd4806f824ea7bbc8abe2260a4a6d07cba",
+            "status": "added"
+          },
+          {
+            "additions": 50,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/miniTest10-native-fixture-install-11-before-reboot.json",
+            "sha": "9cd0178abaa93c8a229d048f35d463690a045598",
+            "status": "added"
+          },
+          {
+            "additions": 50,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/miniTest10-native-fixture-install-11.json",
+            "sha": "9cd0178abaa93c8a229d048f35d463690a045598",
+            "status": "added"
+          },
+          {
+            "additions": 5,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/miniTest10-native-fixture-termination-11-before-reboot.json",
+            "sha": "186b7f7eb5ba3733061ba9672fdf56c905bbc5cd",
+            "status": "added"
+          },
+          {
+            "additions": 5,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/miniTest10-native-fixture-termination-11.json",
+            "sha": "186b7f7eb5ba3733061ba9672fdf56c905bbc5cd",
+            "status": "added"
+          },
+          {
+            "additions": 974,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/original-build-result.json",
+            "sha": "347c68138e17e0e6e8ac444e258ee05625eb908c",
+            "status": "added"
+          },
+          {
+            "additions": 11,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/python-oracle-environment.json",
+            "sha": "dae145cc240fb502ed602aba7f8cec16b749e47d",
+            "status": "added"
+          },
+          {
+            "additions": 29,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/result.json",
+            "sha": "0467df3b118222a7c4d412d173852924a0859a87",
+            "status": "added"
+          },
+          {
+            "additions": 24,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/selection.json",
+            "sha": "09894d9496b26b7ed0372824bbc4b2fe4636a748",
+            "status": "added"
+          },
+          {
+            "additions": 1427,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/source-after.json",
+            "sha": "4b5b3b935e0aa10c1e1f81cb4422d1e34a0f6d16",
+            "status": "added"
+          },
+          {
+            "additions": 1427,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/evidence/source-before.json",
+            "sha": "4b5b3b935e0aa10c1e1f81cb4422d1e34a0f6d16",
+            "status": "added"
+          },
+          {
+            "additions": 98,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/root_verify_original_failure.py",
+            "sha": "b79bbf155e0910850b816f6df29435d7a65fd075",
+            "status": "added"
+          },
+          {
+            "additions": 69,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/source/Scripts/CI/prepare-faithful-ipad-fixtures.py",
+            "sha": "6d0edd1148cae033344e05905843af362810f99b",
+            "status": "added"
+          },
+          {
+            "additions": 751,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/source/Scripts/CI/run-faithful-ipad-matrix.py",
+            "sha": "fc09c8277be8f20c091277766ead4506263ae246",
+            "status": "added"
+          },
+          {
+            "additions": 25,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/source/Scripts/CI/runtime27-fixture-recovery.py",
+            "sha": "40b650adf7bc5604294f3c288fbbf18d74c37606",
+            "status": "added"
+          },
+          {
+            "additions": 599,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/source/Scripts/CI/runtime27-hanlin-live.py",
+            "sha": "e24ca30dbc96333cf951a0e4bdfc9e9dbdf199e1",
+            "status": "added"
+          },
+          {
+            "additions": 227,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/source/Scripts/CI/runtime27_interruption.py",
+            "sha": "1fb612721275dc2f3109a955ec97403789e7f7c6",
+            "status": "added"
+          },
+          {
+            "additions": 30,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/source/Scripts/CI/shutdown-faithful-simulator.py",
+            "sha": "5b6e91b26df4cb914d84edde9cdf59b86e538c5b",
+            "status": "added"
+          },
+          {
+            "additions": 50,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/original-run45048898269/source/Scripts/CI/test-shutdown-faithful-simulator.py",
+            "sha": "af495bd83a179c4ec6682db42a8becac8a754d18",
+            "status": "added"
+          },
+          {
+            "additions": 20,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/run-faithful-ipad-matrix.patch",
+            "sha": "8b11a0f69106e96bca19681aae71b61da954cc57",
+            "status": "added"
+          },
+          {
+            "additions": 79,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/shutdown-faithful-simulator.patch",
+            "sha": "fb681be701fa10a7de1ad5ce40ae72ffc79445fa",
+            "status": "added"
+          },
+          {
+            "additions": 101,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live10-shutdown/test_shutdown_budget_diagnostics.py",
+            "sha": "8524bdbe8950002c185ec753217101d7bb1e2c4c",
+            "status": "added"
+          },
+          {
+            "additions": 68,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/PREPARATION.json",
+            "sha": "3ae2a1a9ddb4c2a7b32181ab1971eb05e1205fdf",
+            "status": "added"
+          },
+          {
+            "additions": 9,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/OFFICIAL_REFERENCE.json",
+            "sha": "fc5ef9e72ad88e865e725008b4131f4cc09caba0",
+            "status": "added"
+          },
+          {
+            "additions": 58,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/PROBE_CURRENT.py",
+            "sha": "575ce965f5f930b6576bc43e89a6704a9b636123",
+            "status": "added"
+          },
+          {
+            "additions": 54,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/PROBE_LEGACY.py",
+            "sha": "fa1eceaaf0734533c1deee333e739abd6e56757c",
+            "status": "added"
+          },
+          {
+            "additions": 24,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/current-model/RESULT.json",
+            "sha": "2564a4e035148ce5f84908883b1e8bae554ab39f",
+            "status": "added"
+          },
+          {
+            "additions": 1,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/current-model/request.json",
+            "sha": "bf866173007328c13fda862eb30d6fabd67998cb",
+            "status": "added"
+          },
+          {
+            "additions": 1,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/current-model/response.redacted.json",
+            "sha": "bbe21257ee092af9dd4c45df1d9af9a9b72b5aa6",
+            "status": "added"
+          },
+          {
+            "additions": 17,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/legacy-model/RESULT.json",
+            "sha": "0aff8de06df6cc0acefddb31bccef38e3b571745",
+            "status": "added"
+          },
+          {
+            "additions": 12,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/legacy-model/ROOT_HTTP_RECLASSIFICATION.json",
+            "sha": "8eacd8f522496c06e37209203b3e07516429469d",
+            "status": "added"
+          },
+          {
+            "additions": 1,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/legacy-model/request.json",
+            "sha": "9620e0551f201f9966f5d8142927e1edb1a43c37",
+            "status": "added"
+          },
+          {
+            "additions": 8,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/hanlin-live9-accessibility/provider-access/legacy-model/response.redacted.json",
+            "sha": "d156fbb8c1699cf628f9f964fab4c5cb8bcde4aa",
+            "status": "added"
+          },
+          {
+            "additions": 42,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/native-book-accessibility/PREPARATION.json",
+            "sha": "499cdf4b09768098a406078ef33e92d1bf275391",
+            "status": "added"
+          },
+          {
+            "additions": 206,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/native-book-accessibility/PRIOR_ACTUAL_AX_EXCERPTS.json",
+            "sha": "26145e9bb2b89540bf45168ef79371d039a85e60",
+            "status": "added"
+          },
+          {
+            "additions": 44,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/native-book-accessibility/PRIOR_ARCHIVE_INTAKE.json",
+            "sha": "126100af7b8cca4855d32495593880386493fd8b",
+            "status": "added"
+          },
+          {
+            "additions": 24,
+            "deletions": 0,
+            "filename": "docs/hq-integration/completion-20261122/native-consent-drag/PREPARATION.json",
+            "sha": "a6785a1b5d9d262a3e805f38941a9ab8fc0001a7",
+            "status": "added"
+          },
+          {
+            "additions": 72,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-cold-search-20261123/COLD_SEARCH_PEER_REVIEW.json",
+            "sha": "6363b73f906f924188375f808ae2174fcb3ece0a",
+            "status": "added"
+          },
+          {
+            "additions": 31,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-cold-search-20261123/CORE_CONTROLS_RESULT.json",
+            "sha": "263724327070dd5a306e57a8396327b31ba4461f",
+            "status": "added"
+          },
+          {
+            "additions": 17,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-cold-search-20261123/CORE_CONTROLS_swift-test.stderr",
+            "sha": "4e316a72471f945fa814faa6392c0a9c9d84d7cc",
+            "status": "added"
+          },
+          {
+            "additions": 40,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-cold-search-20261123/CORE_CONTROLS_swift-test.stdout",
+            "sha": "97e3327bc800d8955d0e8ec616cc129ad8910345",
+            "status": "added"
+          },
+          {
+            "additions": 11,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-cold-search-20261123/IMPLEMENTATION_SCOPE.md",
+            "sha": "8d430f61717543d8c6406ee77dedd4cd548ca8fa",
+            "status": "added"
+          },
+          {
+            "additions": 294,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-cold-search-20261123/PRODUCT_DIFF.patch",
+            "sha": "026f02a9020ad7b518ab1031eed0a252dda1b16a",
+            "status": "added"
+          },
+          {
+            "additions": 18,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-cold-search-20261123/README.md",
+            "sha": "d083e913e96c2c94624f55909c3d074d2fd6a80e",
+            "status": "added"
+          },
+          {
+            "additions": 53,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-cold-search-20261123/SOURCE_CORRESPONDENCE.json",
+            "sha": "71e6800e6ad1659b43d0b428df87913f8d3f70ef",
+            "status": "added"
+          },
+          {
+            "additions": 45,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-cold-search-20261123/SWIFT_SYNTAX_PARSE.json",
+            "sha": "6f08fadcb66a642f38119d24f67660e262ee3e1e",
+            "status": "added"
+          },
+          {
+            "additions": 35,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/CI_INPUT_CHANGE_MAP.json",
+            "sha": "7f31942e64d94ab0c0013a356955b3d58a5a9e62",
+            "status": "added"
+          },
+          {
+            "additions": 18,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/CI_INVERSES.json",
+            "sha": "9bdeba5cf14543c3f8ec8ac0541feb59bf7e9ee3",
+            "status": "added"
+          },
+          {
+            "additions": 16,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/CI_PREPARATION.md",
+            "sha": "74aa232835868741985bdd255578997ec0bcbf30",
+            "status": "added"
+          },
+          {
+            "additions": 1724,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/LIVE_CONSENT_EXECUTION_INPUTS.json",
+            "sha": "4e5fd6232d5582e378c7f31e3cb2e0d35be65f5c",
+            "status": "added"
+          },
+          {
+            "additions": 43,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/LIVE_CONSENT_SOURCE_ADMISSION.json",
+            "sha": "f8b69ac4341b41770c4fdd1d54c1a71ef4f5e42a",
+            "status": "added"
+          },
+          {
+            "additions": 10,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/PREPARATION_ADMINISTRATION.json",
+            "sha": "2251c78ef7dcc17b42f3ad0d45051bf8222a66cb",
+            "status": "added"
+          },
+          {
+            "additions": 11,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/README.md",
+            "sha": "9d93f1744ae11c440b258e079d6d10be9546a836",
+            "status": "added"
+          },
+          {
+            "additions": 222,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/SOURCE_DOCUMENT_INDEX.json",
+            "sha": "1344c53dd627a325aaa48404b560d5c16f4a7cdf",
+            "status": "added"
+          },
+          {
+            "additions": 38,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/SOURCE_INVERSE.json",
+            "sha": "6f0057e19c7bd6030ca0b455530a0ceb352fe151",
+            "status": "added"
+          },
+          {
+            "additions": 24,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/SOURCE_PREPARATION.json",
+            "sha": "4c00638e70328863f256640df64587a3d9420053",
+            "status": "added"
+          },
+          {
+            "additions": 13,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/WORKFLOW_ONLY.patch",
+            "sha": "caf04beb00c80b00e155b539daec7da469afa505",
+            "status": "added"
+          },
+          {
+            "additions": 30,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/reviewed-proposal/INDEX.json",
+            "sha": "6ab10dd17ab5e2506de874d9a32c8cf660259314",
+            "status": "added"
+          },
+          {
+            "additions": 62,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/reviewed-proposal/PROPOSAL.diff",
+            "sha": "72aadae18cec6b3236f60348dd95f3b12fa62600",
+            "status": "added"
+          },
+          {
+            "additions": 9,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/reviewed-proposal/REVIEW.md",
+            "sha": "6a31725a25e2107652f883ed846db025c63281c9",
+            "status": "added"
+          },
+          {
+            "additions": 63,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/reviewed-proposal/SOURCE_PROPOSAL.json",
+            "sha": "fc64e9117c0b2e6e84f012731e40ea9c40bd14f8",
+            "status": "added"
+          },
+          {
+            "additions": 845,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/reviewed-proposal/after.swift",
+            "sha": "0ea8241d50712b3e01f2790ae7927047df0e49a4",
+            "status": "added"
+          },
+          {
+            "additions": 792,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/reviewed-proposal/before.swift",
+            "sha": "a4acb5e4f57badf3b352ddedc6c797f50ef67be9",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/14808460459.zip",
+            "sha": "9a2aaa6b34a232159eef1f4dc0d6aff438688e56",
+            "status": "added"
+          },
+          {
+            "additions": 257,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/ARTIFACT_ADMISSION.json",
+            "sha": "1515defe24ba0f32f1a94d5cd5f5c6e9e21d1798",
+            "status": "added"
+          },
+          {
+            "additions": 6,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/ASANA_UPDATE.json",
+            "sha": "c84d69d4c66fd6a6a71a8aea6bf8a2615ae1d1b9",
+            "status": "added"
+          },
+          {
+            "additions": 41,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/CLEANUP_BINDING.json",
+            "sha": "8cfe3557bf072f5a77ccee6f1e6ae850379ffa1f",
+            "status": "added"
+          },
+          {
+            "additions": 230,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/INTAKE.json",
+            "sha": "d61e3327eee78d1932c1fb0f6888e920ebdc6465",
+            "status": "added"
+          },
+          {
+            "additions": 29,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/REVIEW.md",
+            "sha": "7d2e47ecf385ba1c424b9a66438ba1a13bfeb9b9",
+            "status": "added"
+          },
+          {
+            "additions": 1757,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/SOURCE_CORRESPONDENCE.json",
+            "sha": "22791132cf2035921c86a126a5c3e1a81bbee92b",
+            "status": "added"
+          },
+          {
+            "additions": 97,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/admission.json",
+            "sha": "885c13fbaa4e25a416da2c55856e51d65ee1811a",
+            "status": "added"
+          },
+          {
+            "additions": 12,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/app-group-resolver-interface.json",
+            "sha": "f92963541709e1524b442699a94ce95bde741821",
+            "status": "added"
+          },
+          {
+            "additions": 11,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/artifact-isolation.json",
+            "sha": "b9716c89224482727ce2531eb56e956ff937aebd",
+            "status": "added"
+          },
+          {
+            "additions": 1,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/connection-stages.json",
+            "sha": "23ffe47740a2573fdae920a5a56a99d37aa7c28c",
+            "status": "added"
+          },
+          {
+            "additions": 13,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/declarations.json",
+            "sha": "88a4fd20cd222b1f5f1a9cf81569afe0930af405",
+            "status": "added"
+          },
+          {
+            "additions": 461,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/faithful-ipad-matrix.json",
+            "sha": "47b02e6b1839630d075e3fabcf8b4220f2945635",
+            "status": "added"
+          },
+          {
+            "additions": 11,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/fixture-container.json",
+            "sha": "effe4f8d5b5155a4ed384608e752b168664d7aab",
+            "status": "added"
+          },
+          {
+            "additions": 19,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/fixture-oracle-11.json",
+            "sha": "96c840b0385d92c0c4270273630cf43cc1467ac0",
+            "status": "added"
+          },
+          {
+            "additions": 36,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/fixture-query.json",
+            "sha": "82fc9c83cc4f4e400a99ab7970cd877164019781",
+            "status": "added"
+          },
+          {
+            "additions": 50,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/miniTest10-native-fixture-install-11.json",
+            "sha": "5be3d64af2a1ba372c684a5ef99e854164a30e84",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/original-build-result.json",
+            "sha": "4e909bea2523d5612398e5e52475d2228963f2c3",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/original-test-details.json",
+            "sha": "dbe40d1b708a5860315bc474f14be8e29487f1a9",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/ownership.json",
+            "sha": "8037053ea5cd8d2f15472443cdf0e8c8dbeb25e6",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/python-oracle-environment.json",
+            "sha": "dae145cc240fb502ed602aba7f8cec16b749e47d",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/result.json",
+            "sha": "aaa2fa1d7ee35a88269ba1168a9a6fcf1a4e47a6",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/selection.json",
+            "sha": "09894d9496b26b7ed0372824bbc4b2fe4636a748",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/source-after.json",
+            "sha": "4b9374cf4b03003570ba3c8e82e450d4949c7bab",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/source-before.json",
+            "sha": "4b9374cf4b03003570ba3c8e82e450d4949c7bab",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/test-case-execution-11.json",
+            "sha": "13c1e614f8310519dfd01802abbd9c3e9344d0b7",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/test-simulator-11.log",
+            "sha": "352163c9b9c3f72fcf9dabccb97c5b2201e2dfc2",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/verified-11.json",
+            "sha": "e98cd132fd7f4f372ef91da3dcdb1e8d7f5e1b65",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/verified-11.summary.json",
+            "sha": "ca2f88dc07b932920200b9e848bdd5aa5a269954",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/admitted/verified-11.tests.json",
+            "sha": "f1a9cc00b321dea774559fc56a430736aa6e501c",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/artifacts.json",
+            "sha": "b32df8458f41fecfd9f7e65b7d2feea8ee8038ab",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/jobs.json",
+            "sha": "4d5c4ed7356c8e76788f3e6522aade9dcae541f1",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live-consent-20261123/runtime-45145388957/run.json",
+            "sha": "2228a4725d3d31e5e46216d75453dff7e231911f",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-20261123/LIVE11_SOURCE_ADMISSION.json",
+            "sha": "1b05832714235ebf8eb9529109bddbb222f63016",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-20261123/LOCAL_PREPARATION_RECEIPT.json",
+            "sha": "8a4c7d606de90c8a2893733d477d68c798563007",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-20261123/README.md",
+            "sha": "019ac9b5b08b741947c665dd1258f98efd434b9e",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-20261123/SOURCE_ADMISSION_RESULT.json",
+            "sha": "b099dad33a06e19c3df651b270c6b18b94d3f115",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-20261123/source-admission-attempt1.log",
+            "sha": "66414cc1c40582c0ca322ecaa3e8409ac05ea636",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-diagnosis-20261123/CONTROL.stderr.log",
+            "sha": "b54ddaac79322353fde2cf7a0a02c80a1af779ba",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-diagnosis-20261123/CONTROL.stdout.log",
+            "sha": "527282fb2c6632ab7200d337d1c45fc17e4393b6",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-diagnosis-20261123/CONTROL_RESULT.json",
+            "sha": "f295ee6ee1395c427368505031295851fb653c90",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-diagnosis-20261123/DIAGNOSTIC_ONLY.patch",
+            "sha": "397c70e4ced5559e6204d4a1bcaf895e3d495fe2",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-diagnosis-20261123/DIAGNOSTIC_SOURCE_DELTA.json",
+            "sha": "749d57a8f1c05bc7ced8d952b6f119adfc972542",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-diagnosis-20261123/README.md",
+            "sha": "41e8e639ce5b786ca2ace31bd968a510116c5f54",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-diagnosis-20261123/SOURCE_PROVENANCE.json",
+            "sha": "5356e1a6e1d49e604ccbc2264f4a4d0b786f6746",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-diagnosis-20261123/SWIFT_SYNTAX_PARSE.json",
+            "sha": "fe938c81598e33def2e52a82c8d7a20e94991520",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live11-diagnosis-20261123/diagnostic_controls.py",
+            "sha": "f466956fb9d0235a45b04a4f81676436c912b068",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live12-20261123/LIVE12_EXECUTION_INPUTS.json",
+            "sha": "fe8c3023438eea7650d262ad1e6739a553565ca3",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live12-20261123/LIVE12_SOURCE_ADMISSION.json",
+            "sha": "afecd9789232fc6512b4a4297d6c0843a28143d4",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live12-20261123/README.md",
+            "sha": "d6b316e055be9a36cd1e6dd86c67c79c7f859cdf",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live12-20261123/REVIEWED_DIAGNOSTIC_REUSE.json",
+            "sha": "efcdb6adcaa91465bdc4d21cd8350c7c6e518c4f",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live12-20261123/WORKFLOW_ONLY.patch",
+            "sha": "fb06753b2050b2b4f843a4800d630b792fff9eb1",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/CONTROLLER_IDENTITY.stderr.log",
+            "sha": "30299d4722aff5ddb2e945d496290872b65e8746",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/CONTROLLER_IDENTITY.stdout.log",
+            "sha": "71291d3b31e5137d1bc058c66d9246340b22ec5b",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/CONTROLLER_SOURCE_REVIEW.json",
+            "sha": "ecb4ffa93752f262aeae707b9c1124e3224877ef",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/LIVE12_INTAKE.json",
+            "sha": "1e6fd6bc7cc8f94cd3289598a8dff32f89f75079",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/LIVE13_EXECUTION_INPUTS.json",
+            "sha": "4d34f5a32c7fbc74b8a0d7b8c76c3baa1c34df6a",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/LIVE13_SOURCE_ADMISSION.json",
+            "sha": "e3dcea6ddcb9fdf60a403c5fe97f6ff215628f52",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/README.md",
+            "sha": "4370f5054c191cc54688b0734912e0bcd4b036c2",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/WORKFLOW_ONLY.patch",
+            "sha": "98c73ff473349c697cc1b4d3d5e9f60123a3cf84",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/live13-controller.py",
+            "sha": "35ad9b16b603210e30bb3d8995e26c71100b9e2e",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-live13-20261123/test-live13-controller-identity.py",
+            "sha": "6360f83df7231de986671b3514253936779c973a",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/CI_PREPARATION.md",
+            "sha": "44e7fbc7cea9ab5763814d759879eff4ffd634ce",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/CORE_APPLE_VALIDATION.json",
+            "sha": "5c621d1c711ef47fa79a25cdc4d37d71d35e40a7",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/DEPENDENCY_ADOPTION.json",
+            "sha": "f29f5ac76ffecac033532e1c4677a858b4ba026f",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/HOST_LOCK_ADOPTION.json",
+            "sha": "02d97699c610d0a317b2f0d99ac8253ecbee9899",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/LIVE_STREAM_EXECUTION_INPUTS.json",
+            "sha": "eb7ce26b6ecd16d66a6ea0a5a3da910c54dd3a83",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/LIVE_STREAM_SOURCE_ADMISSION.json",
+            "sha": "0a494ddc5afde026764ac0a2ad8076c6c13325fe",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/previous-live/CLEANUP_BINDING.json",
+            "sha": "619e0b990f041595f8cbee71259a304db4e52c76",
+            "status": "added"
+          },
+          {
+            "additions": 0,
+            "deletions": 0,
+            "filename": "docs/hq-integration/hanlin-stream-continuation-20261123/previous-live/DIAGNOSIS.json",
+            "sha": "fad5dec8b4c4c9ad71c9adc85349b3989a5e59b7",
+            "status": "added"
+          }
+        ],
+        "merge_base_commit": "6736f7a1a3eda82fd70d70d4a192c9ba15a09282",
+        "status": "diverged",
+        "total_commits": 21
+      },
+      "error": null
+    },
+    "sdkLock": {
+      "endpoint": "repos/davidpovarsky/Maktabah/contents/HanlinSDK.lock.json?ref=0123b569d489984ade291b5c065eb5fe6500dec6",
+      "exitCode": 1,
+      "data": null,
+      "error": "gh: Not Found (HTTP 404)\n"
+    },
+    "buildInputs": {
+      "endpoint": "repos/davidpovarsky/Maktabah/contents/Scripts/CI/hq-stage2-focused-apple.inputs.json?ref=0123b569d489984ade291b5c065eb5fe6500dec6",
+      "exitCode": 0,
+      "data": {
+        "encoding": "base64",
+        "name": "hq-stage2-focused-apple.inputs.json",
+        "path": "Scripts/CI/hq-stage2-focused-apple.inputs.json",
+        "sha": "bacfbce99c98b01f2f256b51035d569732176f1f",
+        "sha256": "2ce2990301c879097990bd38333ece10141b288851446189917648aa50a14a41",
+        "bytes": 4333,
+        "decoded": {
+          "application_source_sha": "07845de8c335a975027fd375f287a85754da51ab",
+          "application_trees": {
+            "Maktabah.xcodeproj": "f61421e8677027ffa18364226b4ee68a0937dfc5",
+            "Source": "4b2abd687328725fb7a7f0ca635b2cab9e0f0c0b",
+            "Vendor": "ee5b415a5ccb9db9fda2b0e8d6ce3748cdeaea6e"
+          },
+          "artifacts": [
+            {
+              "destination": "Vendor/OtzariaSearchEngine",
+              "id": 14596463166,
+              "name": "ios-build-otzaria-xcframework",
+              "producer_attempt": 1,
+              "producer_job": 136041463727,
+              "producer_job_name": "Build or restore Otzaria framework",
+              "producer_required_steps": [
+                "Build Otzaria production semantic XCFramework",
+                "Verify Otzaria framework and semantic host build",
+                "Confirm exact pinned and pristine upstream checkout",
+                "Run actions/upload-artifact@v4"
+              ],
+              "producer_run": 44661774024,
+              "producer_run_conclusion": "failure",
+              "producer_sha": "99f7927e4da72f2463417f5c2de2c4d20c6aa168",
+              "sha256": "efc73de90d74fdd380ffecfa334fe9dcece38519832b89cf3fb2a5741dcc25ad",
+              "size_in_bytes": 201330360,
+              "tar": "OtzariaSearchEngine.xcframework.tar"
+            },
+            {
+              "destination": "Vendor/ZayitSearchPort/build",
+              "id": 14595389912,
+              "name": "ios-build-zayit-xcframework",
+              "producer_attempt": 1,
+              "producer_job": 136041463406,
+              "producer_job_name": "Build or restore Zayit framework",
+              "producer_required_steps": [
+                "Build Zayit XCFramework",
+                "Verify Zayit framework",
+                "Run actions/upload-artifact@v4"
+              ],
+              "producer_run": 44661774024,
+              "producer_run_conclusion": "failure",
+              "producer_sha": "99f7927e4da72f2463417f5c2de2c4d20c6aa168",
+              "sha256": "64f4ba7b8d6cfced525732699fd1958ca0cc5ec836369dcf839d91df855914d7",
+              "size_in_bytes": 123727544,
+              "tar": "MaktabahZayitSearch.xcframework.tar"
+            },
+            {
+              "destination": "build",
+              "id": 12763481138,
+              "name": "ios-build-swift-packages",
+              "producer_run": 40566258679,
+              "sha256": "9c0eb8afe950b93d40ed78507da45a7050babc39945f7fa3ae47d29db1686fdd",
+              "tar": "SourcePackages.tar"
+            },
+            {
+              "id": 13658066283,
+              "name": "sefaria-embedded-validation-manifests",
+              "producer_run": 42577170165,
+              "sha256": "12cc781436c0459acb05060211ef5f3e109791e7f5297d8bf61e1b38c74f8cda"
+            }
+          ],
+          "embedded_js_overlay_paths": [
+            "Vendor/SefariaMobile/Integration/JS/chavrusaRPCFacade.js"
+          ],
+          "engine_producer_sha": "99f7927e4da72f2463417f5c2de2c4d20c6aa168",
+          "engine_trees": {
+            "Vendor/OtzariaSearchEngine": "5a6c6501c021ffadcde31254239617f10cd1a362",
+            "Vendor/ZayitSearchPort": "a121537e72fb10ce7c710ad55f7d084a0427cf2d",
+            "Vendor/ZayitSearchPort/Rust": "13cb3a06c609b05ad6e48c630d8d2cbb18bdfde8",
+            "Vendor/ZayitSearchPort/Upstream": "db6dc60006a51db83ec2c6feed1158e4da1a617b"
+          },
+          "hanlin_gitlink": "ca3c91f2233bf5c77990643b29a874aac8704639",
+          "otzaria_test_additions_sha256": "ef5d287ee888b306fab1ddf0e75242245f756976370129c433f1276a96b5611e",
+          "rebuild_zayit_framework": false,
+          "resource_bundle_sha256": "9094dbbfd97292abc5329213c5c3476476bff4afe63bcf798a06b1fb77eb9530",
+          "resource_producer_sha": "70810eec46ad1fec6f30d983bf31e5f922dacb61",
+          "resources": {
+            "sources/calendar.json": {
+              "sha256": "9613a13f8ce57d20bb1b5b480dc93acca4b354956e30ac0056d617c997025ca7",
+              "size": 1651059
+            },
+            "sources/hebrew_categories.json": {
+              "sha256": "f3dd97c47a9a4dadb9d2b29d1cceeeb26d25b56b36dbf7518a1b40faaa008f1d",
+              "size": 16121
+            },
+            "sources/packages.json": {
+              "sha256": "3c472a17c8716929c6e0b941f6e2916ae798493a0f29719fd6ff47e7f5ddeaba",
+              "size": 238990
+            },
+            "sources/people.json": {
+              "sha256": "b9befdeea0c67a0a519e49e8ca108f16ab46843a238c667db665bf6095c930c4",
+              "size": 52354
+            },
+            "sources/search_toc.json": {
+              "sha256": "6d90cc6d333333f8f6bd6aeda723a3b3fb8a2733d6b3b518baa808a86c058c05",
+              "size": 829599
+            },
+            "sources/toc.json": {
+              "sha256": "0622b6567fd9e5d1950315007abd9d0e93f8716a9f8c92431b44116eb3a8a963",
+              "size": 4172545
+            },
+            "sources/topic_toc.json": {
+              "sha256": "282603e38c227de9c345c215193de2849ecf66d40c17cf874a63ac068f1a225c",
+              "size": 1810962
+            }
+          },
+          "sefaria_gitlink": "2fd173a5a3bd32d94a9ba1222e4e32a37f6bd23c"
+        }
+      },
+      "error": null
+    }
+  },
+  "watchedOrDownloaded": false,
+  "dispatchedByThisLane": false
+}

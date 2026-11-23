@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "approvedByIntegrationOwner": true,
+  "actualPinEditsByThisLane": 0,
+  "canonicalSourceReviewed": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+  "replaceRevision": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "adoptRevision": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "operativePinPaths": [
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "Package.swift",
+    "Packages/HanlinAgentSDK/Package.resolved",
+    "Packages/HanlinAgentSDK/Package.swift",
+    "Packages/HanlinParityMiniApp/Package.resolved",
+    "Packages/HanlinPlatform/Package.resolved",
+    "Packages/HanlinPlatform/Package.swift",
+    "Packages/HanlinSefariaMiniApp/Package.resolved",
+    "Packages/HanlinTextStudioMiniApp/Package.resolved",
+    "Packages/HanlinWikipediaMiniApp/Package.resolved"
+  ],
+  "authoredSourcePinPaths": [
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "Packages/HanlinAgentSDK/Package.resolved",
+    "Packages/HanlinAgentSDK/Package.swift",
+    "Packages/HanlinParityMiniApp/Package.resolved",
+    "Packages/HanlinPlatform/Package.resolved",
+    "Packages/HanlinPlatform/Package.swift",
+    "Packages/HanlinSefariaMiniApp/Package.resolved",
+    "Packages/HanlinTextStudioMiniApp/Package.resolved",
+    "Packages/HanlinWikipediaMiniApp/Package.resolved"
+  ],
+  "generatedRoot": "Package.swift",
+  "generator": [
+    "python3",
+    "Scripts/SDK/generate_manifest.py"
+  ],
+  "generatorMustUseFullProfile": true,
+  "alsoRegenerated": "docs/agent-sdk/unified-package-manifest.json",
+  "preserve": {
+    "otherDependencyRevisions": true,
+    "platformAndCompilerSettings": true,
+    "allOriginalSourcePaths": true,
+    "publicProducts": 44,
+    "targets": 108,
+    "originalAppSwiftFiles": 507
+  },
+  "hostEffects": {
+    "allThreeProfilesUse": [
+      "HanlinAgentCore",
+      "HanlinChatCore",
+      "SwiftAISDK"
+    ],
+    "selectedSourceRecordsMayRemainIdentical": 1627,
+    "transitiveDependencyIdentityChanges": true,
+    "generatedHostProfileManifestsChange": true,
+    "finalPinnedHostInstallationRequired": true,
+    "externalOtzariaHostTransplantRequired": false
+  },
+  "native18Effects": {
+    "declaredPreparationInputs": 11,
+    "SwiftAIIsPreparationInput": false,
+    "inputContractExpanded": false,
+    "archiveRebuildRequiredByThisSourceOnlyChange": false,
+    "eligibleSuccessfulProducerStillRequired": true,
+    "nodeHostSourceGuardUnchanged": true
+  },
+  "remainingCompatibility": {
+    "arm64IOS27FinalSource": "NOT_RUN; next necessary original342-case app continuation binds final producer.",
+    "SDK02Candidate": "Current45259715158 remains on e7; native owner maps exact fixture/stop-condition impact separately.",
+    "externalLive": "45253606271 has a diverged Host and ca3c/07431 source. Its future result requires exact source binding; no automatic canonical32da claim.",
+    "fullProfileAndFinalHostInstallations": "NOT_RUN until published catalog/final source pin.",
+    "actualEventKitConversation": "Original native method remains NOT_RUN; generic continuation fix is not EventKit runtime evidence."
+  }
+}
