@@ -156,6 +156,25 @@ struct ListView: View {
                 )
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: HanlinConversationMutation.didChange)) { notification in
+            guard let change = HanlinConversationMutation.change(from: notification, in: modelContext.container) else { return }
+            if case .deleted = change.kind {
+                if let selectedChatRecord, ObjectIdentifier(selectedChatRecord) == change.originalRow {
+                    self.selectedChatRecord = nil
+                }
+                compactWorkspacePath.removeAll { route in
+                    if case .chat(let id) = route { return id == change.conversationID }
+                    return false
+                }
+                if sessionBridge.expectedActiveSessionID == change.conversationID {
+                    sessionBridge.expectedActiveSessionID = nil
+                }
+                sessionBridge.clearCachedDraft(for: change.conversationID)
+                matchedSnippets.removeValue(forKey: change.conversationID)
+                infoDescriptionCache.removeValue(forKey: change.conversationID)
+            }
+            forceRefresh.toggle()
+        }
         .task(id: requestedSelection?.id) {
             guard let request = requestedSelection else { return }
             guard splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID) == nil else {
@@ -288,13 +307,9 @@ struct ListView: View {
             .onDisappear {
                 // 当编辑面板关闭时，将编辑好的 icon/color 回写到对应 record
                 guard let editingRecord = editingRecord else { return }
-                editingRecord.icon = editingIcon
-                editingRecord.color = editingColor.name
-                editingRecord.name = editingTitle
                 do {
-                    try modelContext.save()
-                    // 切换 forceRefresh 强制刷新列表
-                    forceRefresh.toggle()
+                    try HanlinConversationMutation.updateAppearance(editingRecord, title: editingTitle,
+                        icon: editingIcon, color: editingColor.name, in: modelContext)
                 } catch {
                     print("Error saving icon or color: \(error.localizedDescription)")
                 }
@@ -630,24 +645,18 @@ struct ListView: View {
     }
     
     private func togglePin(_ record: ChatRecords) {
-        record.isPinned.toggle()
         do {
-            try modelContext.save()
-            // 置顶后强制刷新列表视图
-            forceRefresh.toggle()
+            try HanlinConversationMutation.setPinned(record, isPinned: !record.isPinned, in: modelContext)
         } catch {
             print("Error saving pin state: \(error.localizedDescription)")
         }
     }
-    
+
     private func deleteChat(_ record: ChatRecords) {
-        DispatchQueue.main.async {
-            modelContext.delete(record)
-            do {
-                try modelContext.save()
-            } catch {
-                print("Error deleting chat: \(error.localizedDescription)")
-            }
+        do {
+            try HanlinConversationMutation.delete(record, in: modelContext)
+        } catch {
+            print("Error deleting chat: \(error.localizedDescription)")
         }
     }
     

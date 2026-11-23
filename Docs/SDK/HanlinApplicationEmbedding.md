@@ -319,6 +319,41 @@ checks provider metadata, protected credential rotation/clear, stable model
 UUIDs, original provider-suffixed model naming, capability preservation and
 exact-row deletion in the real SwiftData/Keychain implementations.
 
+## Manage original conversations
+
+Use the same original-row mutation writer as the Hanlin list and chat toolbar:
+
+```swift
+try context.renameConversation(conversationID, title: "Research notes")
+try context.setConversationPinned(conversationID, isPinned: true)
+let clearedMessage = try context.clearConversationHistory(conversationID)
+try context.deleteConversation(conversationID)
+```
+
+Renaming preserves the original title-change information row by default. Set
+`announceChange: false` for the original metadata-only behavior. Pinning leaves
+the original last-edited ordering metadata intact. The original list appearance
+editor uses the same writer for its existing title, icon and color fields.
+
+Clear-history retains the conversation UUID, title, unsent draft, canvas and
+independent saved excerpts. Its existing original-store transaction clears
+visible and canonical history together and advances the empty revision barrier;
+it does not erase an account or physical backups. Deletion removes the exact
+original conversation and its existing cascading messages.
+
+Both destructive operations synchronously revoke pending original preparation,
+stream ownership, consent and inline tool authority before changing data.
+Late old projections cannot insert messages or finalize a newer run. A cached
+headless controller is permanently invalidated when its conversation is deleted;
+its subsequent send/refresh throws. The public context returns a fresh controller
+only for an actual existing original row.
+
+Mutations checkpoint prior pending edits and return genuine save failures.
+Their own failed changes are rolled back. The original mounted UI and retained
+headless controllers receive a change only after a successful original-store
+save. Details and focused native test selectors are in the
+[conversation mutation receipt](HanlinConversationMutations20261123.md).
+
 ## Construct activity input from host-owned state
 
 `HanlinConversationMessageSnapshot` has a public initializer so a host using

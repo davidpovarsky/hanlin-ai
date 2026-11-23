@@ -1,4 +1,5 @@
 import Foundation
+import HanlinHostContracts
 import Security
 import SwiftData
 import Testing
@@ -312,6 +313,137 @@ struct HanlinApplicationEmbeddingTests {
         #expect(builtin.company == company && builtin.systemProvision)
         #expect(custom.company == "HOST_ROUTING_ID" && custom.price == -1 && custom.isHidden)
         #expect(!custom.systemProvision && HanlinApplicationModelCapabilities(custom) == capabilities)
+    }
+
+    @Test
+    func conversationMetadataMutatesOnlyTheOriginalRowsAndPreservesAnnouncement() throws {
+        let container = try ModelContainer(for: ChatRecords.self, ChatMessages.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none))
+        let context = container.mainContext
+        let original = ChatRecords(name: "Equal original title", type: "chat", input: "Unsent original draft")
+        let namesake = ChatRecords(name: "Equal original title", type: "chat")
+        context.insert(original); context.insert(namesake)
+        try context.save()
+        let originalID = original.persistentModelID, namesakeID = namesake.persistentModelID
+        let announcement = try #require(HanlinConversationMutation.rename(original, title: "Renamed שלום",
+            announceChange: true, in: context))
+        try HanlinConversationMutation.setPinned(original, isPinned: true, in: context)
+        #expect(original.persistentModelID == originalID && original.isPinned)
+        #expect(original.name == "Renamed שלום" && original.input == "Unsent original draft")
+        #expect(namesake.persistentModelID == namesakeID && namesake.name == "Equal original title" && !namesake.isPinned)
+        #expect(announcement.role == "information" && announcement.record === original)
+        let chinese = (Locale.preferredLanguages.first ?? "zh-Hans").hasPrefix("zh")
+        #expect(announcement.text == (chinese ? "群聊名称被修改为“Renamed שלום”"
+            : "Group chat name has been changed to \"Renamed שלום\""))
+        #expect(try HanlinConversationMutation.rename(original, title: "Renamed שלום",
+            announceChange: true, in: context) == nil)
+        #expect(try context.fetch(FetchDescriptor<ChatMessages>()).count == 1)
+        #expect(throws: HanlinConversationMutationError.emptyTitle) {
+            try HanlinConversationMutation.rename(original, title: "", announceChange: true, in: context)
+        }
+    }
+
+    @Test
+    func conversationDeletionRevokesPreparationAndRejectsLateProjection() throws {
+        let container = try ModelContainer(for: ChatRecords.self, ChatMessages.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none))
+        let context = container.mainContext
+        let original = ChatRecords(name: "Original pending turn", type: "chat")
+        let assistant = ChatMessages(role: "assistant", text: "Partial original answer", record: original)
+        context.insert(original); context.insert(assistant); try context.save()
+        let id = try #require(original.id), owner = HanlinAppAgentSessionOwner()
+        let request = HanlinAppAgentSessionOwner.Request(conversation: original, conversationID: id,
+            sceneID: UUID(), rowID: assistant.id, uiRunID: UUID(), temporary: false, interaction: nil)
+        let access = try owner.prepareDataAccess(request: request, modelContext: context)
+        let lease = try HanlinConversationRunLease.acquire(container: container, conversationID: id)
+        let coordinator = AgentRunCoordinator(groupID: assistant.groupID, providerID: "fixture", modelID: "fixture")
+        let projection = HanlinConversationStreamProjection(record: original, context: context,
+            messages: [assistant], assistant: assistant, coordinator: coordinator, lease: lease)
+        var revokedBeforeDelete = false
+        lease.onRevoke {
+            revokedBeforeDelete = lease.isRevoked && !original.isDeleted
+            #expect(throws: HanlinHostError.staleContext) {
+                try owner.requireDataAccess(access, request: request, modelContext: context)
+            }
+        }
+        try HanlinConversationMutation.delete(original, in: context)
+        #expect(revokedBeforeDelete)
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+        #expect(try context.fetch(FetchDescriptor<ChatMessages>()).isEmpty)
+        projection.consume(StreamData(content: "Late answer must not return"))
+        #expect(throws: CancellationError.self) { try projection.finish() }
+        projection.fail(HanlinHostError.cancelled)
+        projection.cancel()
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+        #expect(try context.fetch(FetchDescriptor<ChatMessages>()).isEmpty)
+
+        let replacement = ChatRecords(id: id, name: "Distinct replacement row", type: "chat")
+        context.insert(replacement); try context.save()
+        let next = try HanlinConversationRunLease.acquire(container: container, conversationID: id)
+        defer { next.release() }
+        lease.release()
+        #expect(throws: HanlinHostError.duplicateInvocation) {
+            try HanlinConversationRunLease.acquire(container: container, conversationID: id)
+        }
+        #expect(replacement.agentSDKRecordData == nil)
+    }
+
+    @Test
+    func conversationMutationRejectsAForeignContainerBeforeRevocation() throws {
+        @MainActor func database() throws -> ModelContainer {
+            try ModelContainer(for: ChatRecords.self, ChatMessages.self,
+                configurations: ModelConfiguration(isStoredInMemoryOnly: true, cloudKitDatabase: .none))
+        }
+        let first = try database(), second = try database(), id = UUID()
+        let firstRow = ChatRecords(id: id, name: "First account row", type: "chat")
+        let secondRow = ChatRecords(id: id, name: "Second account row", type: "chat")
+        first.mainContext.insert(firstRow); second.mainContext.insert(secondRow)
+        try first.mainContext.save(); try second.mainContext.save()
+        let firstLease = try HanlinConversationRunLease.acquire(container: first, conversationID: id)
+        let secondLease = try HanlinConversationRunLease.acquire(container: second, conversationID: id)
+        defer { firstLease.release(); secondLease.release() }
+        #expect(throws: HanlinHostError.staleContext) {
+            try HanlinConversationMutation.delete(firstRow, in: second.mainContext)
+        }
+        #expect(!firstLease.isRevoked && !secondLease.isRevoked)
+        try HanlinConversationMutation.delete(firstRow, in: first.mainContext)
+        #expect(firstLease.isRevoked && !secondLease.isRevoked)
+        #expect(try second.mainContext.fetch(FetchDescriptor<ChatRecords>()).first === secondRow)
+    }
+
+    @Test
+    func conversationMetadataAndDeletionReturnSaveFailuresAndRollback() throws {
+        let directory = FileManager.default.temporaryDirectory.appending(path: "hanlin-mutation-" + UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appending(path: "Original.store")
+        @MainActor func database(allowsSave: Bool) throws -> ModelContainer {
+            try ModelContainer(for: ChatRecords.self, ChatMessages.self,
+                configurations: ModelConfiguration(url: url, allowsSave: allowsSave, cloudKitDatabase: .none))
+        }
+        @MainActor func seed() throws {
+            let container = try database(allowsSave: true)
+            let row = ChatRecords(name: "Durable original title", type: "chat", input: "Durable unsent draft")
+            let message = ChatMessages(role: "user", text: "Durable original history", record: row)
+            container.mainContext.insert(row); container.mainContext.insert(message)
+            try container.mainContext.save()
+        }
+        try seed()
+        let container = try database(allowsSave: false), context = container.mainContext
+        context.autosaveEnabled = false
+        let row = try #require(context.fetch(FetchDescriptor<ChatRecords>()).first)
+        let operations: [@MainActor () throws -> Void] = [
+            { _ = try HanlinConversationMutation.rename(row, title: "Must not persist", announceChange: true, in: context) },
+            { try HanlinConversationMutation.setPinned(row, isPinned: true, in: context) },
+            { try HanlinConversationMutation.delete(row, in: context) }
+        ]
+        for operation in operations {
+            do { try operation(); Issue.record("Read-only original store reported mutation success") }
+            catch { #expect(!context.hasChanges) }
+            #expect(row.name == "Durable original title" && row.input == "Durable unsent draft" && !row.isPinned)
+            #expect(try context.fetch(FetchDescriptor<ChatRecords>()).count == 1)
+            #expect(try context.fetch(FetchDescriptor<ChatMessages>()).map(\.text) == ["Durable original history"])
+        }
     }
 
 }

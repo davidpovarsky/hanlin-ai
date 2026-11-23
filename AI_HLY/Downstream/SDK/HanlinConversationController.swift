@@ -123,6 +123,7 @@ public final class HanlinConversationController {
     #if HANLIN_A2UI_POC
     @ObservationIgnored let nativePresentation = HanlinA2UIAppPresentation()
     #endif
+    @ObservationIgnored private var conversationWasDeleted = false
     @ObservationIgnored private var activeToken: UUID?
     @ObservationIgnored private var activeLease: HanlinConversationRunLease?
     @ObservationIgnored private var activeTask: Task<Void, Never>?
@@ -158,11 +159,13 @@ public final class HanlinConversationController {
     /// this admitted run; late work cannot cancel a later send.
     public func send(_ request: HanlinConversationRequest) throws
         -> AsyncThrowingStream<HanlinConversationUpdate, Error> {
+        guard !conversationWasDeleted else { throw HanlinApplicationError.conversationNotFound(conversationID) }
         guard activeToken == nil else { throw HanlinHostError.duplicateInvocation }
         _ = try application.record(conversationID)
         activeLease = try .acquire(container: application.modelContainer, conversationID: conversationID)
         let token = UUID()
         activeToken = token
+        activeLease?.onRevoke { [weak self] in self?.stop(ifCurrent: token) }
         state = .preparing
         return AsyncThrowingStream { continuation in
             self.continuation = continuation
@@ -193,10 +196,34 @@ public final class HanlinConversationController {
     }
 
     public func refreshHistory() throws {
+        guard !conversationWasDeleted else { throw HanlinApplicationError.conversationNotFound(conversationID) }
         guard activeToken == nil else { throw HanlinHostError.duplicateInvocation }
         let record = try application.record(conversationID)
         messages = (record.messages ?? []).sorted { $0.timestamp < $1.timestamp }
             .map(HanlinConversationMessageSnapshot.init)
+    }
+
+    func conversationDidChange(_ change: HanlinConversationMutation.Change) {
+        switch change.kind {
+        case .deleted:
+            stop()
+            conversationWasDeleted = true
+            messages = []
+            pendingApproval = nil
+        case .historyCleared:
+            // The writer already revoked the old turn synchronously.
+            try? refreshHistory()
+        case .metadata:
+            guard let messageID = change.messageID,
+                  let row = try? application.record(conversationID),
+                  let announcement = row.messages?.first(where: { $0.id == messageID }) else { return }
+            if let projection {
+                if !projection.messages.contains(where: { $0.id == messageID }) {
+                    projection.messages.append(announcement)
+                }
+                publish(projection)
+            } else { try? refreshHistory() }
+        }
     }
 
     private func stop(ifCurrent token: UUID) {
@@ -426,12 +453,24 @@ public final class HanlinConversationController {
 }
 
 @MainActor
-private enum HanlinConversationControllerRegistry {
+enum HanlinConversationControllerRegistry {
     private final class Entry {
         weak var value: HanlinConversationController?
         init(_ value: HanlinConversationController) { self.value = value }
     }
     private static var entries: [ObjectIdentifier: [UUID: Entry]] = [:]
+
+    static func conversationDidChange(_ change: HanlinConversationMutation.Change, in container: ModelContainer) {
+        let matching = entries.compactMap { key, conversations -> (ObjectIdentifier, HanlinConversationController)? in
+            guard let value = conversations[change.conversationID]?.value,
+                  value.application.modelContainer === container else { return nil }
+            return (key, value)
+        }
+        for (key, value) in matching {
+            value.conversationDidChange(change)
+            if case .deleted = change.kind { entries[key]?.removeValue(forKey: change.conversationID) }
+        }
+    }
 
     static func controller(application: HanlinApplicationContext, conversationID: UUID) throws -> HanlinConversationController {
         entries = entries.mapValues { $0.filter { $0.value.value != nil } }.filter { !$0.value.isEmpty }

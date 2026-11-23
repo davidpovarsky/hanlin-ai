@@ -40,6 +40,8 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var inlineToolTail: Task<Void, Never>?
     @ObservationIgnored private var inlineToolTasks: [UUID: Task<String, Error>] = [:]
     @ObservationIgnored private var inlineToolRowID: UUID?
+    @ObservationIgnored private var activeInlineOperationID: UUID?
+    @ObservationIgnored private var restoreInlineCallbacks: (@MainActor () -> Void)?
     @ObservationIgnored var onApprovalEvent: ((UUID?, AgentToolApproval) -> Void)?
     @ObservationIgnored var onAgentEvent: ((HanlinAgentEvent) -> Void)?
 
@@ -99,21 +101,32 @@ final class HanlinAppAgentSessionOwner {
             let request = try inlineInteraction(rowID: rowID, partID: partID, actionID: alias, arguments: arguments)
             guard let session, let adapter = host?.toolAdapter,
                   let binding = bindings.first(where: { $0.session == session.identity && $0.reference.messageID == rowID }) else { throw HanlinHostError.staleContext }
+            let turnLease = try HanlinConversationRunLease.acquire(owner: self)
+            defer { turnLease.release() }
+            activeInlineOperationID = id
             inlineToolRowID = rowID
             inlineToolIsRunning = true
             activeUIRunID = binding.reference.uiRunID; activeReference = binding.reference; completion = nil
             activeUserOperation = userOperation
             let previousCallbacks = adapter.callbacks
             let previousApproval = onApprovalEvent
-            adapter.callbacks.onAgentEvent = onEvent
-            adapter.callbacks.onStreamData = { data in for event in data.agentEvents { onEvent(event) } }
+            restoreInlineCallbacks = { [weak self] in
+                adapter.callbacks = previousCallbacks
+                self?.onApprovalEvent = previousApproval
+            }
+            let emit: @MainActor (AgentEvent) -> Void = { [weak self] event in
+                guard !turnLease.isRevoked, self?.activeInlineOperationID == id,
+                      self?.session?.identity == session.identity else { return }
+                onEvent(event)
+            }
+            adapter.callbacks.onAgentEvent = emit
+            adapter.callbacks.onStreamData = { data in for event in data.agentEvents { emit(event) } }
             adapter.callbacks.onProgressMessage = nil
-            onApprovalEvent = { _, approval in onEvent(.toolApprovalChanged(approval)) }
+            onApprovalEvent = { _, approval in emit(.toolApprovalChanged(approval)) }
             defer {
-                adapter.callbacks = previousCallbacks; onApprovalEvent = previousApproval
-                inlineToolRowID = nil; inlineToolIsRunning = false
-                activeUIRunID = nil; activeReference = nil
-                activeUserOperation = nil
+                // A cancelled old inline task may drain after a new turn starts.
+                // Its cleanup must not reset that newer owner's callbacks/state.
+                finishInlineOperation(ifCurrent: id)
             }
             let reference = "hanlin.app.row.v1:" + (try JSONEncoder().encode(HanlinAppAgentStoredRowReference(reference: binding.reference, session: session.identity))).base64EncodedString()
             let output = try await session.executePresentationTool(request, alias: alias,
@@ -121,7 +134,7 @@ final class HanlinAppAgentSessionOwner {
                 presentationReference: reference, onStarted: { [weak self] event in
                     guard let self else { throw HanlinHostError.cancelled }
                     try receive(event, uiRunID: binding.reference.uiRunID)
-                    onEvent(.modelRoundStarted(id: event.runID.uuidString))
+                    emit(.modelRoundStarted(id: event.runID.uuidString))
                 })
             try producerStreamDrained(uiRunID: binding.reference.uiRunID)
             guard !output.isError else { throw HanlinInlineToolError(message: output.modelText) }
@@ -131,6 +144,17 @@ final class HanlinAppAgentSessionOwner {
         inlineToolTail = Task { _ = try? await work.value }
         defer { inlineToolTasks.removeValue(forKey: id) }
         return try await withTaskCancellationHandler { try await work.value } onCancel: { work.cancel() }
+    }
+
+    private func finishInlineOperation(ifCurrent id: UUID) {
+        guard activeInlineOperationID == id else { return }
+        let restore = restoreInlineCallbacks
+        restoreInlineCallbacks = nil
+        restore?()
+        activeInlineOperationID = nil
+        inlineToolRowID = nil; inlineToolIsRunning = false
+        activeUIRunID = nil; activeReference = nil
+        activeUserOperation = nil
     }
 
     /// Read-only history on conversation open. No engine, Host, Session or interaction admission
@@ -159,9 +183,12 @@ final class HanlinAppAgentSessionOwner {
                 namespace: namespace, conversationID: conversationID, temporary: temporary)
             store = originalStore
         }
+        _ = try originalStore.requireOriginalConversation()
+        let registration = HanlinConversationRunLease.register(owner: self,
+            container: modelContext.container, conversationID: conversationID)
         let record = try await originalStore.load(conversationID, namespace: namespace)
         try Task.checkCancellation()
-        guard historyGeneration == token, !starting, activeUIRunID == nil,
+        guard !registration.isRevoked, historyGeneration == token, !starting, activeUIRunID == nil,
               session?.identity == originalSession, contextGeneration == originalGeneration,
               store === originalStore else { throw HanlinHostError.staleContext }
         _ = try originalStore.requireOriginalConversation()
@@ -215,6 +242,8 @@ final class HanlinAppAgentSessionOwner {
         }
         _ = try HanlinAppConversationStore.requireOriginalConversation(context: modelContext,
             conversation: request.conversation, conversationID: request.conversationID, temporary: request.temporary)
+        HanlinConversationRunLease.register(owner: self, container: modelContext.container,
+            conversationID: request.conversationID)
         let access = DataAccess(epoch: UUID(), namespace: namespace)
         dataAccessBinding = .init(access: access, request: request, context: modelContext, storageOwner: modelContext.container)
         return access
@@ -292,6 +321,10 @@ final class HanlinAppAgentSessionOwner {
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
         guard request.conversation.id == request.conversationID else { throw HanlinHostError.staleContext }
         if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
+        _ = try HanlinAppConversationStore.requireOriginalConversation(context: modelContext,
+            conversation: request.conversation, conversationID: request.conversationID, temporary: request.temporary)
+        let registration = HanlinConversationRunLease.register(owner: self,
+            container: modelContext.container, conversationID: request.conversationID)
         // Preserve the existing canonical writer before loading/replaying its
         // record into another owner or constructing another model engine.
         guard !splitCoordinator.hasRunningSession(for: request.conversationID) else {
@@ -307,11 +340,12 @@ final class HanlinAppAgentSessionOwner {
         if !matches {
             guard request.interaction == nil else { throw HanlinHostError.staleContext }
             await invalidate(preservingDataAccess: dataAccess)
+            guard !registration.isRevoked else { throw HanlinHostError.staleContext }
             if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
             let generation = UUID()
             contextGeneration = generation
             let originalEngine = try await engineFactory()
-            guard contextGeneration == generation else { throw HanlinHostError.staleContext }
+            guard !registration.isRevoked, contextGeneration == generation else { throw HanlinHostError.staleContext }
             let context = HanlinHostContext(namespace: namespace, sceneID: request.sceneID, generation: generation,
                 objectReference: request.conversationID.uuidString, localeIdentifier: Locale.current.identifier)
             let identity = HanlinHostSession(conversationID: request.conversationID, context: context)
@@ -407,7 +441,8 @@ final class HanlinAppAgentSessionOwner {
             effectiveSystemPrompt = [systemPrompt, instructions].compactMap { $0 }.joined(separator: "\n\n")
         }
         // Engine preparation and history loading can suspend. Recheck the
-        // original coordinator immediately before admitting this new turn.
+        // original coordinator and destructive-mutation generation before admission.
+        guard !registration.isRevoked else { throw HanlinHostError.staleContext }
         guard !splitCoordinator.hasRunningSession(for: request.conversationID) else {
             throw HanlinHostError.unresolvedWrite
         }
@@ -487,7 +522,8 @@ final class HanlinAppAgentSessionOwner {
                 namespace: namespace, conversationID: conversationID, temporary: temporary)
         }
         cancel()
-        let replacement = try originalStore.clearHistory(replacementText: replacementText)
+        let replacement = try HanlinConversationMutation.clearHistory(conversation, in: modelContext,
+            temporary: temporary, replacementText: replacementText, originalStore: originalStore)
         store = originalStore
         bindings = []
         inlineToolRowID = nil
@@ -506,6 +542,7 @@ final class HanlinAppAgentSessionOwner {
         inlineOrigins.removeAll()
         for task in inlineToolTasks.values { task.cancel() }
         inlineToolTasks.removeAll(); inlineToolTail = nil
+        if let id = activeInlineOperationID { finishInlineOperation(ifCurrent: id) }
         historyGeneration = nil
         contextGeneration = nil
         if let session { splitCoordinator.invalidate(session: session.identity) }

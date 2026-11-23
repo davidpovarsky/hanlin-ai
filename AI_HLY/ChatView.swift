@@ -609,6 +609,11 @@ struct ChatView: View {
                 NotificationCenter.default.post(name: .hideTabBar, object: true) // 仅在紧凑模式下隐藏 TabBar
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: HanlinConversationMutation.didChange)) { notification in
+            guard let change = HanlinConversationMutation.change(from: notification, in: context.container),
+                  change.originalRow == ObjectIdentifier(chatRecord) else { return }
+            applyConversationChange(change)
+        }
         .onChange(of: chatScenePhase) { _, phase in
             if phase != .active, !TemporaryRecord {
                 openHistory()
@@ -650,9 +655,8 @@ struct ChatView: View {
             if TemporaryRecord && sessionBridge?.isTransitioningLayoutMode != true {
                 agentSessionOwner.cancel() // Revoke synchronously before deleting the original conversation.
                 sessionBridge?.clearCachedDraft(for: effectiveChatSessionID)
-                context.delete(chatRecord)
                 do {
-                    try context.save()
+                    try HanlinConversationMutation.delete(chatRecord, in: context, temporary: true)
                 } catch {
                     print("退出时删除临时聊天记录失败: \(error)")
                 }
@@ -697,28 +701,13 @@ struct ChatView: View {
                         TextField(String(localized: "请输入群聊名称", bundle: HanlinLocalization.bundle, locale: hanlinLocalizationLocale), text: $newChatTitle, onCommit: {
                             if !newChatTitle.isEmpty {
                                 if chatTitle != newChatTitle {
-                                    chatTitle = newChatTitle
-                                    let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-                                    
-                                    let text: String
-                                    if currentLanguage.hasPrefix("zh") {
-                                        text = "群聊名称被修改为“\(chatTitle)”"
-                                    } else {
-                                        text = "Group chat name has been changed to \"\(chatTitle)\""
-                                    }
-                                    
-                                    let newMessage = ChatMessages(
-                                        role: "information",
-                                        text: text,
-                                        modelDisplayName: "system",
-                                        timestamp: Date(),
-                                        record: chatRecord
-                                    )
-                                    chatRecord.name = chatTitle
-                                    chatTemps.append(newMessage)
-                                    context.insert(newMessage)
                                     do {
-                                        try context.save()
+                                        let newMessage = try HanlinConversationMutation.rename(chatRecord,
+                                            title: newChatTitle, announceChange: true, in: context)
+                                        chatTitle = newChatTitle
+                                        if let newMessage, !chatTemps.contains(where: { $0.id == newMessage.id }) {
+                                            chatTemps.append(newMessage)
+                                        }
                                     } catch {
                                         print("Failed to save message: \(error)")
                                     }
@@ -1303,8 +1292,13 @@ struct ChatView: View {
                   row.agentRun != nil else { throw HanlinHostError.staleContext }
             var coordinator: AgentRunCoordinator?
             var deniedThisInvocation = false
+            let originalSession = agentSessionOwner.session?.identity
+            func canPublish() -> Bool {
+                originalSession != nil && agentSessionOwner.session?.identity == originalSession
+                    && !chatRecord.isDeleted && !row.isDeleted
+            }
             func publish() {
-                guard let coordinator else { return }
+                guard canPublish(), let coordinator else { return }
                 row.agentRun = coordinator.run
                 if activeAgentRun?.id == coordinator.runID { activeAgentRun = coordinator.run }
                 #if HANLIN_A2UI_POC
@@ -1318,6 +1312,7 @@ struct ChatView: View {
                         if coordinator == nil, let latest = row.agentRun { coordinator = AgentRunCoordinator(continuingActivity: latest) }
                         coordinator?.consume([event]); publish()
                     }
+                guard canPublish() else { throw HanlinHostError.staleContext }
                 coordinator?.complete(); publish()
                 if !TemporaryRecord { try context.save() }
                 return (try? JSONDecoder().decode(PresentationValue.self, from: Data(result.utf8))) ?? .string(result)
@@ -1326,7 +1321,7 @@ struct ChatView: View {
                 else if deniedThisInvocation { coordinator?.complete() }
                 else { coordinator?.fail(error) }
                 publish()
-                if !TemporaryRecord { try? context.save() }
+                if canPublish(), !TemporaryRecord { try? context.save() }
                 throw error
             }
         }
@@ -1606,6 +1601,9 @@ struct ChatView: View {
     }
     
     private func openHistory() {
+        // A disappearing/deleted view must not mutate a detached original row.
+        guard (try? HanlinConversationMutation.requireOriginal(chatRecord, in: context,
+            temporary: TemporaryRecord)) != nil else { return }
         // 如果输入框有草稿内容，则优先保存草稿
         if !message.isEmpty {
             chatRecord.infoDescription = "[\(String(localized: "Draft", bundle: HanlinLocalization.bundle))] \(message)"
@@ -1646,23 +1644,49 @@ struct ChatView: View {
     
     private func newConversation() {
         if isResponding { handleCancellation() }
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let clearedText = currentLanguage.hasPrefix("zh")
-            ? "一切都是崭新的✨" : "Everything is brand new ✨"
+        let clearedText = HanlinConversationMutation.originalClearedText
         do {
             guard let conversationID = chatRecord.id else { throw HanlinHostError.staleContext }
             let replacement = try agentSessionOwner.clearHistory(conversation: chatRecord,
                 conversationID: conversationID, modelContext: context, temporary: TemporaryRecord,
                 replacementText: clearedText)
             // Publish the success state only after the single original-store save succeeds.
-            chatTemps = [replacement]
-            selectedMessageIDs.removeAll()
-            isMultiSelectMode = false
-            cancelSourceScroll()
-            autoFollowController.invalidateLayout()
-            autoFollowController.resumeFollowing(reason: "conversationCleared")
+            applyClearedHistory(replacement)
         } catch {
             showClearChatError = true
+        }
+    }
+
+    private func applyClearedHistory(_ replacement: ChatMessages) {
+        guard chatTemps.count != 1 || chatTemps.first?.id != replacement.id else { return }
+        allMessages = [replacement]
+        loadedMessageCount = 1
+        chatTemps = [replacement]
+        topVisibleMessageID = replacement.id
+        selectedMessageIDs.removeAll()
+        isMultiSelectMode = false
+        cancelSourceScroll()
+        autoFollowController.invalidateLayout()
+        autoFollowController.resumeFollowing(reason: "conversationCleared")
+    }
+
+    private func applyConversationChange(_ change: HanlinConversationMutation.Change) {
+        switch change.kind {
+        case .metadata:
+            chatTitle = chatRecord.name ?? "Unknown"
+            if let id = change.messageID,
+               let announcement = chatRecord.messages?.first(where: { $0.id == id }),
+               !chatTemps.contains(where: { $0.id == id }) { chatTemps.append(announcement) }
+        case .historyCleared:
+            if let id = change.messageID, let replacement = chatRecord.messages?.first(where: { $0.id == id }) {
+                applyClearedHistory(replacement)
+            }
+        case .deleted:
+            chatTemps = []
+            allMessages = []
+            loadedMessageCount = 0
+            selectedMessageIDs.removeAll()
+            cancelSourceScroll()
         }
     }
 
@@ -1687,16 +1711,22 @@ struct ChatView: View {
         // 捕获需要的值，避免在 Task 中访问 MainActor 隔离属性
         let currentContext = context
         let record = chatRecord
-        
+        let originalTitle = record.name
+        let temporary = TemporaryRecord
+
         // 启动异步任务，不阻塞主对话
         Task {
             do {
                 let optimizer = SystemOptimizer(context: currentContext)
                 let title = try await optimizer.autoChatName(historyMessage: historyMessage)
                 if !title.isEmpty {
-                    await MainActor.run {
+                    try await MainActor.run {
+                        // A delayed automatic title cannot overwrite a manual rename
+                        // or resurrect a conversation removed while optimization ran.
+                        guard record.name == originalTitle else { return }
+                        try HanlinConversationMutation.rename(record, title: title, announceChange: false,
+                            in: currentContext, temporary: temporary)
                         chatTitle = title
-                        record.name = title
                     }
                 }
             } catch {
@@ -1845,6 +1875,10 @@ struct ChatView: View {
         let turnProjection = HanlinConversationStreamProjection(record: chatRecord, context: context,
             messages: chatTemps, assistant: assistantPlaceholder, coordinator: agentCoordinator, lease: turnLease)
         activeTurnProjection = turnProjection
+        turnLease.onRevoke {
+            guard activeTurnProjection === turnProjection else { return }
+            handleCancellation()
+        }
 
         Task {
             defer { turnLease.release() }

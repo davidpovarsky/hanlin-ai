@@ -1404,6 +1404,38 @@ private final class ProviderCredentialTestFixture {
         #expect(owner.session == nil && row.agentSDKRecordData == committed)
     }
 
+    @Test func deletingConversationDuringOriginalEnginePreparationCannotAdmitLateSession() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original suspended preparation", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let recorder = AppPresentationRecorder(), gate = AppHistoryWriteGate()
+        owner.presentation = recorder
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id,
+            sceneID: UUID(), rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let config = configuration()
+        let queue = AppPartQueue([try .init(messageID: request.rowID, partID: UUID(), sequence: 0,
+            payload: .textDelta("Late preparation must not install"))])
+        let pending = Task { @MainActor in
+            try await owner.stream(request: request, modelContext: context, configuration: config,
+                engineFactory: {
+                    await gate.pause()
+                    return factory(config, queue: queue)
+                }, toolAdapter: nil, messages: [.init(role: .user, text: "Original")], systemPrompt: nil)
+        }
+        await gate.waitUntilPaused()
+        do { try HanlinConversationMutation.delete(row, in: context) }
+        catch { gate.release(); _ = try? await pending.value; throw error }
+        gate.release()
+        do {
+            _ = try await pending.value
+            Issue.record("A deleted original conversation admitted delayed engine preparation")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(owner.session == nil && recorder.installed.isEmpty)
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+        #expect(try context.fetch(FetchDescriptor<ChatMessages>()).isEmpty)
+    }
+
     @Test func originalTypedAttachmentStorePreservesBytesAndRejectsForeignSessionMetadataAndTurn() async throws {
         let registry = AuthorizedAttachmentRegistry(), attachments: any HanlinAttachmentStore = registry
         let image = try #require(Data(base64Encoded: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="))

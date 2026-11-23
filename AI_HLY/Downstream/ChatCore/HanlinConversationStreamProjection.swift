@@ -41,6 +41,7 @@ final class HanlinConversationStreamProjection {
     }
 
     func consume(_ data: StreamData, hasCanonicalParts: Bool = false) {
+        guard lease?.isRevoked != true else { return }
         let rawAgentEvents = eventAdapter.events(from: data)
 
         let agentEvents = agentProjection.deduplicateEvents(rawAgentEvents)
@@ -310,6 +311,7 @@ final class HanlinConversationStreamProjection {
     /// with the caller; every persisted payload is finalized here once.
     func finish(hasCanonicalParts: Bool = false, hasStructuredContent: Bool = false) throws {
         defer { lease?.release() }
+        guard lease?.isRevoked != true else { throw CancellationError() }
         agentCoordinator.consume(eventAdapter.completionEvents())
         var completionSeenBlocks = Set<String>()
         ClassicChatAgentProjection.syncAgentRunProjection(agentCoordinator.run,
@@ -381,6 +383,7 @@ final class HanlinConversationStreamProjection {
     }
 
     func appendPersistenceError(_ error: Error) {
+        guard lease?.isRevoked != true else { return }
         let text = currentLanguage.hasPrefix("zh")
             ? "⚠️ 数据同步失败: \(error.localizedDescription)，本轮问答不会被同步。"
             : "⚠️ Data synchronization failed: \(error.localizedDescription). This round of Q&A will not be synchronized."
@@ -392,6 +395,7 @@ final class HanlinConversationStreamProjection {
 
     func fail(_ error: Error) {
         defer { lease?.release() }
+        guard lease?.isRevoked != true else { return }
         completionStatus = "failed"
         agentCoordinator.fail(error)
         groupBeginMessage.agentRun = agentCoordinator.run
@@ -410,6 +414,7 @@ final class HanlinConversationStreamProjection {
 
     func cancel() {
         defer { lease?.release() }
+        guard lease?.isRevoked != true else { return }
         completionStatus = "cancelled"
         agentCoordinator.cancel()
         groupBeginMessage.agentRun = agentCoordinator.run
@@ -428,6 +433,7 @@ final class HanlinConversationStreamProjection {
     }
 
     static func appendCancellation(to messages: inout [ChatMessages], record: ChatRecords, context: ModelContext) {
+        guard !record.isDeleted else { return }
         let information = ChatMessages(role: "information",
             text: "🛑 \(String(localized: "Response interrupted", bundle: HanlinLocalization.bundle))",
             modelName: "system", modelDisplayName: "system", timestamp: Date(), record: record)
