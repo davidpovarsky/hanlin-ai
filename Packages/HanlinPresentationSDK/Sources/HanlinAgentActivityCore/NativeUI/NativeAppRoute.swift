@@ -1,7 +1,7 @@
 import Foundation
 
 
-public struct NativeAppRoute: Identifiable, Codable, Hashable {
+public struct NativeAppRoute: Identifiable, Codable, Hashable, Sendable {
     public var id: String {
         [appID, screen, stablePayloadID].filter { !$0.isEmpty }.joined(separator: ":")
     }
@@ -28,7 +28,7 @@ public struct NativeAppRoute: Identifiable, Codable, Hashable {
     }
 }
 
-public enum NativeAppRoutePayload: Codable, Hashable {
+public enum NativeAppRoutePayload: Codable, Hashable, Sendable {
     case empty
     case dictionary([String: String])
 

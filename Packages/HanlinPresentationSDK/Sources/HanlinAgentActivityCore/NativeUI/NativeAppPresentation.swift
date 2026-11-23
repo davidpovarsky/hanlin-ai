@@ -1,12 +1,12 @@
 import Foundation
 
-public enum NativeAppPresentationStyle: String, Hashable, Codable {
+public enum NativeAppPresentationStyle: String, Hashable, Codable, Sendable {
     case fullScreen
     case largeSheet
     case newWindow
 }
 
-public struct NativeAppLaunchRequest: Identifiable, Hashable, Codable {
+public struct NativeAppLaunchRequest: Identifiable, Hashable, Codable, Sendable {
     public let id: UUID
     public let appID: String
     public let presentationStyle: NativeAppPresentationStyle

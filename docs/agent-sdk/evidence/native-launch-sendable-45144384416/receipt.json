@@ -1,0 +1,50 @@
+{
+  "source": "9e4fbcbdeed05aa8dea0ab3c55997a73383f92b4",
+  "before_module_exit": 0,
+  "before_external_client_exit": 1,
+  "input_sha256": {
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppRoute.swift": "d117cd4b5747a86004cfd2cc170143ed8582c9e5fcabe1f90f5fb4ad1cb15d66",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppPresentation.swift": "1713b8f2f15b1c7cb1e534b3549735ff291e4056ff0b18486b146a653960b272"
+  },
+  "external_client_sha256": "cde24c838ec24ff73f02da28a9ce7839aa5a5722694b62708486c98d802d2b00",
+  "scope": "Two complete original Foundation files as a separate imported public module, Swift6 strict concurrency; not the full app",
+  "after": {
+    "module_exit": 0,
+    "external_client_exit": 0,
+    "conformances": "Compiler-checked Sendable; no unchecked conformance or relaxed isolation",
+    "whole_file_preservation": {
+      "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppRoute.swift": {
+        "before_sha256": "d117cd4b5747a86004cfd2cc170143ed8582c9e5fcabe1f90f5fb4ad1cb15d66",
+        "after_sha256": "c528572f8994122de6f2a13a23818ce64b5a0f853a7ed908c0adb54dd4e13855",
+        "whole_file_equal_after_removing_added_conformances": true
+      },
+      "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppPresentation.swift": {
+        "before_sha256": "1713b8f2f15b1c7cb1e534b3549735ff291e4056ff0b18486b146a653960b272",
+        "after_sha256": "2db9b77afdf1ca7c2dc763c1a45fcd522e7147ccd60ee5aae2a4b5e72136e492",
+        "whole_file_equal_after_removing_added_conformances": true
+      }
+    }
+  },
+  "logs": [
+    {
+      "file": "before-module.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "before-client.log",
+      "bytes": 5030,
+      "sha256": "ce89fb49522fdaa2e516473594f1d65ec09581102663502734da280edaeaa30d"
+    },
+    {
+      "file": "after-module.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "after-client.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
