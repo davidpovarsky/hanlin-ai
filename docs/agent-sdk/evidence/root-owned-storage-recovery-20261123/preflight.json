@@ -1,0 +1,617 @@
+{
+  "utc": "2026-11-23T21:55:35.489477+00:00",
+  "scope": "Exactly three root-owned duplicate selections explicitly authorized by /root; preserve original ZIPs and receipts.",
+  "prior_inventory_sha256": "3ce4f56401d8633773d97195e7b5887d4bdaebb7808e4289097aa76eb79e0275",
+  "checks": [
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-sendability-retry-20261123/compiler-failure/original-xcodebuild-simulator.log",
+      "kind": "file",
+      "allocated_bytes": 10600448,
+      "original_zip": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-sendability-retry-20261123/compiler-failure/original-smoke-artifact.zip",
+      "original_zip_bytes": 1329748,
+      "original_zip_sha256": "c95eb7b9af4eea50de1207e97ace4ff7c2e1baeb2a67cac477c5da524cd08198",
+      "receipt": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-sendability-retry-20261123/compiler-failure/original-artifact-receipt.json",
+      "receipt_sha256": "902ee5a1db13562f5982853faa259a656e188d602c08859f40e4adca7ffbe59b",
+      "artifact_id": 14807767611,
+      "run_id": 45150840748,
+      "source": "ab46931b776f1701d554b230aa3dd7d8166dfa76",
+      "members": [
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-sendability-retry-20261123/compiler-failure/original-xcodebuild-simulator.log",
+          "archiveMember": "simulator-logs/06-xcodebuild-simulator.log",
+          "bytes": 10596484,
+          "sha256": "d08647bc877a6cca0251a6f449f6595ecaa08521e605418e6ac511153116a64b",
+          "archive_bytes_equal": true
+        }
+      ],
+      "identities": {
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-sendability-retry-20261123/compiler-failure/original-xcodebuild-simulator.log": [
+          2064,
+          4982492,
+          10596484,
+          1795429395416711779,
+          33188
+        ]
+      },
+      "no_open_files": {
+        "argv": [
+          "lsof",
+          "-nP",
+          "--",
+          "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-sendability-retry-20261123/compiler-failure/original-xcodebuild-simulator.log"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence",
+      "kind": "directory",
+      "allocated_bytes": 9809920,
+      "original_zip": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/simulator-smoke-logs.zip",
+      "original_zip_bytes": 1204724,
+      "original_zip_sha256": "b1a77242770173e7f2f842acc5f18d68b339a20132536b0ac5d151b737ebfe81",
+      "receipt": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/readback-artifacts.json",
+      "receipt_sha256": "b954476fd844d32d73d4bd579c96783d755e12a5468c4823758b207d9696fb73",
+      "artifact_id": 14796004037,
+      "run_id": 45126861232,
+      "source": "705f1bd81587d7133aec4d1cd7f9a2b802e7ded6",
+      "members": [
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence/06-xcodebuild-simulator.log",
+          "archiveMember": "simulator-logs/06-xcodebuild-simulator.log",
+          "bytes": 9794264,
+          "sha256": "ef4aff8fa54405afa85b0b1ff407b9468a627b1d8a60a4cf7d8591eb5d564959",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence/sdk-native-export.log",
+          "archiveMember": "simulator-logs/sdk-native-export.log",
+          "bytes": 1439,
+          "sha256": "713e83ebe7e08d1d8792ee2c17d04c3614ca537ef835503ee6741d7ce41c4865",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence/sdk-native-verify.log",
+          "archiveMember": "simulator-logs/sdk-native-verify.log",
+          "bytes": 65,
+          "sha256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86",
+          "archive_bytes_equal": true
+        }
+      ],
+      "identities": {
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence": [
+          2064,
+          5041673,
+          4096,
+          1795418170417465497,
+          17901
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence/sdk-native-verify.log": [
+          2064,
+          5041680,
+          65,
+          1795418170401681285,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence/06-xcodebuild-simulator.log": [
+          2064,
+          5041681,
+          9794264,
+          1795418170418185821,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence/sdk-native-export.log": [
+          2064,
+          5041677,
+          1439,
+          1795418170401461603,
+          33188
+        ]
+      },
+      "no_open_files": {
+        "argv": [
+          "lsof",
+          "-nP",
+          "+D",
+          "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact",
+      "kind": "directory",
+      "allocated_bytes": 11927552,
+      "original_zip": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-simulator-logs.zip",
+      "original_zip_bytes": 1486087,
+      "original_zip_sha256": "e24985621b6993657b818618187b89113cefd27b79c67aa08b14b67767394dc6",
+      "receipt": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/artifact-index.json",
+      "receipt_sha256": "70f6877db95ad8f6323e56c988a534d70e6731983030099a79f60bbe53e6900a",
+      "artifact_id": 14815751898,
+      "run_id": 45163990486,
+      "source": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+      "members": [
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/01-cache-mode.log",
+          "archiveMember": "simulator-logs/01-cache-mode.log",
+          "bytes": 240,
+          "sha256": "f0d639c249409279df9dff0e861f19f934e22989486f7d342a18a44b7cc47569",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/01-environment.log",
+          "archiveMember": "simulator-logs/01-environment.log",
+          "bytes": 963,
+          "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/02-prepare-runtime-core.log",
+          "archiveMember": "simulator-logs/02-prepare-runtime-core.log",
+          "bytes": 1125,
+          "sha256": "8697d1d13c0b1cbc48405781d1132377295ee886148aab3ada8f20e01214f26f",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/03-package-runtime-host.log",
+          "archiveMember": "simulator-logs/03-package-runtime-host.log",
+          "bytes": 16442,
+          "sha256": "42e736a80a7922a77845375fd52db1096bf438d6d111caab29ac4ac7672818d1",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/04-runtime-preflight.log",
+          "archiveMember": "simulator-logs/04-runtime-preflight.log",
+          "bytes": 1736,
+          "sha256": "ffe0af0206650208afb46e4f34c525e7a604df7a0f7c0dc09d211de5a918290a",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/05-cache-input-capture.log",
+          "archiveMember": "simulator-logs/05-cache-input-capture.log",
+          "bytes": 103,
+          "sha256": "4c56de1bdd23013bd7cf306681cf696456bde9977e600e7b6d03b45a1f46058c",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/05-cache-input-restore.log",
+          "archiveMember": "simulator-logs/05-cache-input-restore.log",
+          "bytes": 46,
+          "sha256": "11083745170de91dcbe17fa5b4e18d24f0cbc6923d8d241af153c25d718f94ef",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/05-resolve-packages.log",
+          "archiveMember": "simulator-logs/05-resolve-packages.log",
+          "bytes": 3627,
+          "sha256": "69d5d42cc50ee033fccbdf3a48a3e2321b515e1021e90346bc7f1854cb6b76d7",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/05-stage-modular-headers-duration-seconds.txt",
+          "archiveMember": "simulator-logs/05-stage-modular-headers-duration-seconds.txt",
+          "bytes": 3,
+          "sha256": "3840bc236ee03aacbb1ef7d5108ddfa347c59f10b68d4174affbb53140f31273",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/06-current-unit-xctestrun.json",
+          "archiveMember": "simulator-logs/06-current-unit-xctestrun.json",
+          "bytes": 2844,
+          "sha256": "02083aac9dc59b4ce828d8b229eb96d7c2a402023c8f0249eb7838f31175e28d",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/06-diagnostics-build-provenance.json",
+          "archiveMember": "simulator-logs/06-diagnostics-build-provenance.json",
+          "bytes": 6712,
+          "sha256": "a06e3415d3461274710702b10ac9b58eee5d5e514250eac51dbced12307c5cf1",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/06-unit-xctestrun-prepare.log",
+          "archiveMember": "simulator-logs/06-unit-xctestrun-prepare.log",
+          "bytes": 122,
+          "sha256": "d4d719ad8de6a9e90319526a80dc4793e87cb3f819190d6b1c123747d0ffc677",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/06-xcodebuild-simulator.log",
+          "archiveMember": "simulator-logs/06-xcodebuild-simulator.log",
+          "bytes": 10635898,
+          "sha256": "66732cc9a1c1b9f471e24e29ec102508181d70ab17bf565880461e95c5ed441a",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/09-host-resources.log",
+          "archiveMember": "simulator-logs/09-host-resources.log",
+          "bytes": 77482,
+          "sha256": "9663ba0ec60d20d5b1cbf15b33f1b05237c0ae9dac2e154df78b17055034aa5e",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/Resolved-Package.resolved",
+          "archiveMember": "simulator-logs/Resolved-Package.resolved",
+          "bytes": 10180,
+          "sha256": "6634fc599022b6cee5d3c1a5b6f6395f2aba9ab5cd565cde4b0f0712bdaf4b0e",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~6bpX2P_QKFgLhgKWDIRcckjXEv1Jv4eQ-Z6LM5O7g8DKo1HACiTEeIlypYnZwaXpSuCyTcrWFtFvbf_FgJVz9g==",
+          "archiveMember": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~6bpX2P_QKFgLhgKWDIRcckjXEv1Jv4eQ-Z6LM5O7g8DKo1HACiTEeIlypYnZwaXpSuCyTcrWFtFvbf_FgJVz9g==",
+          "bytes": 961613,
+          "sha256": "c35619a9993583fa50f379b39802402ff770a922ded45cacc1adf5dda3f0cb5b",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~kiTqN2-N_cyqB3f0PWUpLNVpNG48F1h90h6HheSGMzXXEg0zg2VFbz_UdYw5vI89Sp8KqYD6GehgglS5maotcw==",
+          "archiveMember": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~kiTqN2-N_cyqB3f0PWUpLNVpNG48F1h90h6HheSGMzXXEg0zg2VFbz_UdYw5vI89Sp8KqYD6GehgglS5maotcw==",
+          "bytes": 34537,
+          "sha256": "7e65e12a95961a53f872f5a3ba7233669c909db8ce0649c388e62cbc3d2aa84a",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~uMwbNG04icjbPf-XqzDW2fgjJf_PGGAUWOZWq9Bm_1qubfEuigaIS1njCSd4az9YVf4jbu0R3GCohzF0I70Gbg==",
+          "archiveMember": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~uMwbNG04icjbPf-XqzDW2fgjJf_PGGAUWOZWq9Bm_1qubfEuigaIS1njCSd4az9YVf4jbu0R3GCohzF0I70Gbg==",
+          "bytes": 294,
+          "sha256": "044a47401837178ca6d32bcf3d85d9b7f0d1f099e11ec1519d2b3c8d7a1dc0f2",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~6bpX2P_QKFgLhgKWDIRcckjXEv1Jv4eQ-Z6LM5O7g8DKo1HACiTEeIlypYnZwaXpSuCyTcrWFtFvbf_FgJVz9g==",
+          "archiveMember": "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~6bpX2P_QKFgLhgKWDIRcckjXEv1Jv4eQ-Z6LM5O7g8DKo1HACiTEeIlypYnZwaXpSuCyTcrWFtFvbf_FgJVz9g==",
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~kiTqN2-N_cyqB3f0PWUpLNVpNG48F1h90h6HheSGMzXXEg0zg2VFbz_UdYw5vI89Sp8KqYD6GehgglS5maotcw==",
+          "archiveMember": "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~kiTqN2-N_cyqB3f0PWUpLNVpNG48F1h90h6HheSGMzXXEg0zg2VFbz_UdYw5vI89Sp8KqYD6GehgglS5maotcw==",
+          "bytes": 133,
+          "sha256": "b29d9c8ca96941a39d707a728ec88c8d0495b65b21ecb72d642f43fdfe67c4b3",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~uMwbNG04icjbPf-XqzDW2fgjJf_PGGAUWOZWq9Bm_1qubfEuigaIS1njCSd4az9YVf4jbu0R3GCohzF0I70Gbg==",
+          "archiveMember": "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~uMwbNG04icjbPf-XqzDW2fgjJf_PGGAUWOZWq9Bm_1qubfEuigaIS1njCSd4az9YVf4jbu0R3GCohzF0I70Gbg==",
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Info.plist",
+          "archiveMember": "simulator-logs/SimulatorBuildResult.xcresult/Info.plist",
+          "bytes": 776,
+          "sha256": "8c33bf1e3e207cb67c401eaf4d8c7c7e2c3724ad43c50e77d58d66473ef7a537",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/a2ui-generation/compiler.log",
+          "archiveMember": "simulator-logs/a2ui-generation/compiler.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/a2ui-generation/result.json",
+          "archiveMember": "simulator-logs/a2ui-generation/result.json",
+          "bytes": 2632,
+          "sha256": "0eb6e2d66535ca30b54ed3afb90aeccb9069fd5a0ca791553f10e16149e61ecf",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/foundation-models-interface/declarations.txt",
+          "archiveMember": "simulator-logs/foundation-models-interface/declarations.txt",
+          "bytes": 60798,
+          "sha256": "812d8f15063b0e8fa2573568ee84eee86344d17a3c81c2383a35dd26df27938c",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/foundation-models-interface/receipt.json",
+          "archiveMember": "simulator-logs/foundation-models-interface/receipt.json",
+          "bytes": 1221,
+          "sha256": "d7d19e0e2875a90026aa4289503297daf8d4db100fc44bb46405b0846f7f8789",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/performance-summary.json",
+          "archiveMember": "simulator-logs/performance-summary.json",
+          "bytes": 107,
+          "sha256": "c9dbceeea60dc1d2ebb3fe380f7501e2bca63527717f50bfc6f70a34f3108162",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/performance-summary.md",
+          "archiveMember": "simulator-logs/performance-summary.md",
+          "bytes": 3472,
+          "sha256": "bf90988f2e273b943b60e5a13de1384051a8fb3d99732936c2089dd6a6d5953a",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/sdk-native-export.log",
+          "archiveMember": "simulator-logs/sdk-native-export.log",
+          "bytes": 1439,
+          "sha256": "d69dd63bdcf148a2b73456b2e4ca32a0dabc1ddd0271f59cbf99869e49bc56b9",
+          "archive_bytes_equal": true
+        },
+        {
+          "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/sdk-native-verify.log",
+          "archiveMember": "simulator-logs/sdk-native-verify.log",
+          "bytes": 65,
+          "sha256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86",
+          "archive_bytes_equal": true
+        }
+      ],
+      "identities": {
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact": [
+          2064,
+          4997490,
+          4096,
+          1795435250385341437,
+          17901
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs": [
+          2064,
+          4997491,
+          4096,
+          1795435250405013510,
+          17901
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/01-environment.log": [
+          2064,
+          4997493,
+          963,
+          1795435250385533318,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/a2ui-generation": [
+          2064,
+          4997516,
+          4096,
+          1795435250404346546,
+          17901
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/04-runtime-preflight.log": [
+          2064,
+          4997496,
+          1736,
+          1795435250385919760,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/09-host-resources.log": [
+          2064,
+          4997505,
+          77482,
+          1795435250402130614,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult": [
+          2064,
+          4997507,
+          4096,
+          1795435250404055585,
+          17901
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/06-current-unit-xctestrun.json": [
+          2064,
+          4997501,
+          2844,
+          1795435250386258322,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/Resolved-Package.resolved": [
+          2064,
+          4997506,
+          10180,
+          1795435250402312215,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/sdk-native-verify.log": [
+          2064,
+          4997525,
+          65,
+          1795435250405073791,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/05-cache-input-restore.log": [
+          2064,
+          4997498,
+          46,
+          1795435250386046601,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/06-xcodebuild-simulator.log": [
+          2064,
+          4997504,
+          10635898,
+          1795435250401403489,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/06-unit-xctestrun-prepare.log": [
+          2064,
+          4997503,
+          122,
+          1795435250386403283,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/06-diagnostics-build-provenance.json": [
+          2064,
+          4997502,
+          6712,
+          1795435250386336603,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/sdk-native-export.log": [
+          2064,
+          4997524,
+          1439,
+          1795435250405013510,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/performance-summary.md": [
+          2064,
+          4997522,
+          3472,
+          1795435250404870069,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/03-package-runtime-host.log": [
+          2064,
+          4997495,
+          16442,
+          1795435250385819520,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/foundation-models-interface": [
+          2064,
+          4997519,
+          4096,
+          1795435250404403507,
+          17901
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/02-prepare-runtime-core.log": [
+          2064,
+          4997494,
+          1125,
+          1795435250385677359,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/05-cache-input-capture.log": [
+          2064,
+          4997497,
+          103,
+          1795435250385987081,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/performance-summary.json": [
+          2064,
+          4997523,
+          107,
+          1795435250404941710,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/01-cache-mode.log": [
+          2064,
+          4997492,
+          240,
+          1795435250385435398,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/05-stage-modular-headers-duration-seconds.txt": [
+          2064,
+          4997500,
+          3,
+          1795435250386187442,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/05-resolve-packages.log": [
+          2064,
+          4997499,
+          3627,
+          1795435250386121362,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/a2ui-generation/compiler.log": [
+          2064,
+          4997517,
+          0,
+          1795435250404127665,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/a2ui-generation/result.json": [
+          2064,
+          4997518,
+          2632,
+          1795435250404346546,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data": [
+          2064,
+          4997508,
+          4096,
+          1795435250403992744,
+          17901
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Info.plist": [
+          2064,
+          4997515,
+          776,
+          1795435250404127665,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/foundation-models-interface/declarations.txt": [
+          2064,
+          4997520,
+          60798,
+          1795435250404403507,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/foundation-models-interface/receipt.json": [
+          2064,
+          4997521,
+          1221,
+          1795435250404771829,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~kiTqN2-N_cyqB3f0PWUpLNVpNG48F1h90h6HheSGMzXXEg0zg2VFbz_UdYw5vI89Sp8KqYD6GehgglS5maotcw==": [
+          2064,
+          4997512,
+          133,
+          1795435250403933224,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~kiTqN2-N_cyqB3f0PWUpLNVpNG48F1h90h6HheSGMzXXEg0zg2VFbz_UdYw5vI89Sp8KqYD6GehgglS5maotcw==": [
+          2064,
+          4997510,
+          34537,
+          1795435250403763703,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~6bpX2P_QKFgLhgKWDIRcckjXEv1Jv4eQ-Z6LM5O7g8DKo1HACiTEeIlypYnZwaXpSuCyTcrWFtFvbf_FgJVz9g==": [
+          2064,
+          4997509,
+          961613,
+          1795435250403403501,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~6bpX2P_QKFgLhgKWDIRcckjXEv1Jv4eQ-Z6LM5O7g8DKo1HACiTEeIlypYnZwaXpSuCyTcrWFtFvbf_FgJVz9g==": [
+          2064,
+          4997511,
+          1,
+          1795435250403865424,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~uMwbNG04icjbPf-XqzDW2fgjJf_PGGAUWOZWq9Bm_1qubfEuigaIS1njCSd4az9YVf4jbu0R3GCohzF0I70Gbg==": [
+          2064,
+          4997513,
+          1,
+          1795435250403992744,
+          33188
+        ],
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact/simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~uMwbNG04icjbPf-XqzDW2fgjJf_PGGAUWOZWq9Bm_1qubfEuigaIS1njCSd4az9YVf4jbu0R3GCohzF0I70Gbg==": [
+          2064,
+          4997514,
+          294,
+          1795435250404055585,
+          33188
+        ]
+      },
+      "no_open_files": {
+        "argv": [
+          "lsof",
+          "-nP",
+          "+D",
+          "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    }
+  ],
+  "allocated_bytes": 32337920
+}
