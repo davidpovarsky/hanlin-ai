@@ -140,7 +140,7 @@
     "observedStateAtTimeout": "Running Foreground",
     "observedStateSource": "Original decoded XCTest session log, line 15987",
     "appActivateAfterAssertionExecuted": false,
-    "cause": "The synthesized Home action did not produce the required background state; the reason remains unproven. No SDK crash is established by this assertion."
+    "cause": "XCTest did not observe the required background state within its existing wait. The exact final video frame does show SpringBoard, so delayed transition versus stale XCTest state remains unresolved. No SDK crash is established by this assertion."
   },
   "timelineUTC": [
     {
@@ -256,8 +256,23 @@
           "seconds": 68.5,
           "review": "Oracle native read_media, original resolution",
           "observed": "Underlying original document after the sheet disappears; this frame does not show SpringBoard."
+        },
+        {
+          "file": "video-frames/frame-last.png",
+          "sha256": "b745121c016e59f33aad41afaa13f5f84e14b756afada41b43dd8dc2626e9f93",
+          "seconds": 69.94,
+          "frameIndex": 673,
+          "review": "Oracle native read_media, original resolution",
+          "observed": "Exact final encoded video frame shows SpringBoard/Home screen, with Anytype icon and test runner icon. It does not prove the app remained alive or satisfy the unchanged XCTest background-state assertion."
         }
-      ]
+      ],
+      "totalEncodedFrames": 674,
+      "recordingRequestUTC": {
+        "startedAcknowledged": "09:27:51.629",
+        "stopRequested": "09:29:10.127",
+        "stopAcknowledged": "09:29:10.333",
+        "timingLimit": "Encoded PTS and request/acknowledgement times do not by themselves establish an exact frame wall clock; no assumed linear alignment is used."
+      }
     },
     "limitations": [
       "No pixel-baseline comparison.",
