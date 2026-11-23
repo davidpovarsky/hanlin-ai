@@ -14,14 +14,19 @@ PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000
           "HanlinShareExtensionUI":"AC1900000000000000000041",
           "HanlinNotificationExtension":"AC1900000000000000000042",
           "HanlinTranslationUI":"AC1900000000000000000043",
-          "HanlinWidgetUI":"AC1900000000000000000044"}
+          "HanlinWidgetUI":"AC1900000000000000000044",
+           "HanlinMiniAppsUI":"AC1900000000000000000045"}
 
 # Preserve existing target/build IDs. Four slots per target remain disjoint
 # from product IDs, shared source IDs and the original localization test IDs.
+# Additional products use explicit free IDs without shifting existing allocations.
+EXTRA_PRODUCT_BUILDS = {
+    ("HanlinMiniApps", "HanlinMiniAppsUI"): "AC1900000000000000000046"
+}
 TARGET_PRODUCTS={
     "AI_Hanlin": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
     "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
-    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts"],
+    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI"],
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
     "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
     "ChavrusaChatTranslationProvider": ["HanlinTranslationUI", "HanlinExtensionContracts"],
@@ -95,7 +100,6 @@ def update():
             "\t\t\tisa = XCSwiftPackageProductDependency;\n\t\t\tpackage = "+ROOT_PACKAGE+";\n\t\t\tproductName = "+name+";\n")
     targets={v["name"]:(k,v) for k,v in objects.items() if v.get("isa")=="PBXNativeTarget"}
     for index,(name,required) in enumerate(TARGET_PRODUCTS.items()):
-        assert len(required) <= 4, "The stable target build-ID allocation has four slots"
         key,target=targets[name]
         products=list(target.get("packageProductDependencies",[]))
         for product in required:
@@ -112,7 +116,10 @@ def update():
         if name=="AI_Hanlin":
             linked=[k for k in linked if objects[k].get("fileRef") not in {"A10000000000000000000020","A10000000000000000000021"}]
         for offset,product in enumerate(required):
-            build_id="AC19"+f"{10+index*4+offset:020X}"
+            build_id=EXTRA_PRODUCT_BUILDS.get((name,product))
+            if build_id is None:
+                assert offset < 4, "Allocate an explicit free ID for an additional target product"
+                build_id="AC19"+f"{10+index*4+offset:020X}"
             if build_id not in linked:linked.append(build_id)
             text=insert_object(text,"PBXBuildFile",build_id,
                 "\t\t\tisa = PBXBuildFile;\n\t\t\tproductRef = "+PRODUCTS[product]+";\n")
@@ -137,7 +144,8 @@ def update():
     source_phase=next(k for k in mini["buildPhases"] if objects[k]["isa"]=="PBXSourcesBuildPhase")
     source_files=list(objects[source_phase]["files"])
     shared=["AI_HLY/Downstream/SDK/HanlinApplicationResources.swift",
-            "AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift"]
+            "AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift",
+            "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift"]
     shared_group="F9F4C452EBF2FA6B1274B4D7"
     shared_children=list(objects[shared_group]["children"])
     for index,path in enumerate(shared):

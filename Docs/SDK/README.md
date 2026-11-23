@@ -1,6 +1,6 @@
 # Hanlin SDK: one original implementation, selectable products
 
-The repository's root package is **HanlinSDK**. Its generated graph is derived from the original module manifests and source paths. Hanlin's own application and extension executables are thin owners of app identity, entitlements and OS entry points; the shared implementation lives in the SDK. The current complete graph exposes **43 products and 107 targets**, including **502 original application Swift source files** in the preserved `AI_Hanlin` module. The [generated inventory](../../docs/agent-sdk/unified-package-manifest.json) is the authoritative list.
+The repository's root package is **HanlinSDK**. Its generated graph is derived from the original module manifests and source paths. Hanlin's own application and extension executables are thin owners of app identity, entitlements and OS entry points; the shared implementation lives in the SDK. The current complete graph exposes **44 products and 108 targets**, including **503 original application Swift source files** in the preserved `AI_Hanlin` module. The [generated inventory](../../docs/agent-sdk/unified-package-manifest.json) is the authoritative list.
 
 ## Choose what the host needs
 
@@ -15,6 +15,7 @@ The repository's root package is **HanlinSDK**. Its generated graph is derived f
 | Scripting contracts, compiler, store, runtime and SwiftUI components | `HanlinMiniAppCore`, `HanlinScriptContracts`, `HanlinScriptCompiler`, `HanlinScriptStore`, `HanlinScriptRuntime`, `HanlinScriptingSDK`, `HanlinScriptUI` | Original module APIs; select the public products actually imported by the host |
 | Scripting host services, device services, extension actions and application runtime | `HanlinScriptServices`, `HanlinScriptDeviceServices`, `HanlinScriptExtensions`, `HanlinScriptingApplicationRuntime` | [Extension host policy](HanlinExtensionSourceOwnership.md), [native asset contract](../../docs/agent-sdk/NATIVE_ARTIFACT_DISTRIBUTION.md) |
 | NativeScript and Expo runtimes/components | `HanlinNativeScriptRuntime`, `HanlinExpoNativeAPI`, `HanlinExpoWidgetNative`, `HanlinExpoRuntime`, `HanlinExpoWidgetSubset` | [Native distribution and required host-stage commands](../../docs/agent-sdk/NATIVE_ARTIFACT_DISTRIBUTION.md) |
+| Original MiniApps catalog, search, detail and launch UI | `HanlinMiniAppsUI` | [Independent library and original runtime composition](HanlinMiniAppsSourceOwnership.md) |
 | Original MiniApps and content packages | `HanlinParityMiniApp`, `HanlinSefariaMiniApp`, `HanlinTextStudioMiniApp`, `HanlinWikipediaMiniApp`, `TorahLibraryKit` | Existing module APIs and original host integrations |
 | Shared skill format, runtime support and product contracts | `HanlinSkillFormat`, `HanlinQuickJS` (module `CQuickJS`), `IOSSystemLite`, `HanlinProductSplit` | Original module manifests and interfaces |
 

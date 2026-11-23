@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceOwnership": "one original source path per target",
   "applicationModule": "AI_Hanlin",
-  "applicationSourceCount": 502,
+  "applicationSourceCount": 503,
   "selectedProducts": null,
   "products": [
     "HanlinHostContracts",
@@ -38,6 +38,7 @@
     "HanlinRichUI",
     "HanlinChatUI",
     "HanlinA2UI",
+    "HanlinMiniAppsUI",
     "HanlinProductSplit",
     "HanlinQuickJS",
     "HanlinSefariaMiniApp",
@@ -49,7 +50,7 @@
     "TorahLibraryKit",
     "HanlinApplication"
   ],
-  "targets": 107,
+  "targets": 108,
   "localPackageEdgesRemaining": 0,
   "inputs": {
     "Packages/HanlinAgentSDK/Package.swift": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
@@ -60,7 +61,7 @@
     "Packages/HanlinNativeScriptRuntime/Package.swift": "f2798b093e8df72923abc135e4999f2614c32e8de1d495c480e6fd8fd4db9b34",
     "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
     "Packages/HanlinPlatform/Package.swift": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
-    "Packages/HanlinPresentationSDK/Package.swift": "41edf9d2393105bedc93af9592a51a4a7f6d6041e16a14efcf399d58292fe6b5",
+    "Packages/HanlinPresentationSDK/Package.swift": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4",
     "Packages/HanlinProductSplit/Package.swift": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
     "Packages/HanlinQuickJS/Package.swift": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",
     "Packages/HanlinSefariaMiniApp/Package.swift": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c",

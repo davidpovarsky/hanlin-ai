@@ -605,6 +605,14 @@
 			isa = PBXBuildFile;
 			productRef = AC1900000000000000000040;
 		};
+		AC1900000000000000000046 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000045;
+		};
+		AC1900000000000000000105 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000104;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1232,6 +1240,12 @@
 			path = "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift";
 			sourceTree = SOURCE_ROOT;
 		};
+		AC1900000000000000000104 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift";
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1528,6 +1542,7 @@
 				"Downstream/ProductSplit/HanlinSplitLiveTarget.swift" ,
 				"Downstream/ProductSplit/HanlinSplitMailbox.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift" ,
+				"Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift" ,
 				"Downstream/RuntimeCore/Core/AppRuntimeCore.swift" ,
 				"Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift" ,
@@ -2096,6 +2111,7 @@
 				"AC1900000000000000000013" ,
 				"AC1900000000000000000014" ,
 				"AC1900000000000000000015" ,
+				"AC1900000000000000000046" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2225,6 +2241,7 @@
 				"F9D13E533BA075330ABABCC1" ,
 				"AC1900000000000000000100" ,
 				"AC1900000000000000000102" ,
+				"AC1900000000000000000104" ,
 			);
 			"name" = "MiniApps Shared Implementation";
 			"sourceTree" = "<group>";
@@ -2488,6 +2505,7 @@
 				"AC1900000000000000000004" ,
 				"AC1900000000000000000005" ,
 				"AC1900000000000000000040" ,
+				"AC1900000000000000000045" ,
 			);
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
@@ -2909,6 +2927,7 @@
 				"ACA931B7202707E9925B1262" ,
 				"AC1900000000000000000101" ,
 				"AC1900000000000000000103" ,
+				"AC1900000000000000000105" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -4155,6 +4174,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AC1900000000000000000001;
 			productName = HanlinWidgetUI;
+		};
+		AC1900000000000000000045 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinMiniAppsUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 

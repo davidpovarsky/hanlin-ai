@@ -1,5 +1,6 @@
 import HanlinLocalization
 import HanlinMiniAppCore
+import HanlinMiniAppsUI
 import HanlinPlatformContracts
 import HanlinProductSplit
 import HanlinScriptStore
@@ -117,5 +118,38 @@ private struct HanlinMiniAppsPackageManagement: View {
             NavigationStack { ScriptingPackageImportView(platform: platform) }
         }
         .task { await platform.restore() }
+    }
+}
+
+// The application adapters supply the same original provider and transfer view.
+// The independent library module never initializes an engine or App Group store.
+extension HanlinMiniAppsServices {
+    /// Activated by the app composition root only after the existing services
+    /// dependency cut and target graph have been delivered and verified.
+    static func connected(to provider: HanlinMiniAppsProvider) -> Self {
+        Self(catalog: { try await provider.catalog() },
+             launch: { try await provider.launch($0) },
+             packageManagement: { try provider.packageManagement() })
+    }
+
+}
+
+public extension HanlinMiniAppsServices {
+    /// Use after preparing the original application runtime for the host process.
+    /// Reuses its catalog, grants, installed registry and launch implementation.
+    @MainActor
+    static func connectedToHanlin() -> Self {
+        .connected(to: HanlinMiniAppsProvider())
+    }
+}
+
+public extension HanlinMiniAppsLibrary {
+    /// Compose the original library with Hanlin's existing transfer screen and
+    /// live transfer lock. Runtime preparation stays with the composition root.
+    @MainActor
+    init(services: HanlinMiniAppsServices) {
+        self.init(services: services,
+                  transferView: { AnyView(HanlinMiniAppTransferView(mode: .receive)) },
+                  isTransferringProductData: { HanlinScriptingPlatform.shared.isTransferringProductData })
     }
 }

@@ -12,7 +12,8 @@ let package = Package(
         .library(name: "HanlinPresentationKit", targets: ["HanlinPresentationKit"]),
         .library(name: "HanlinRichUI", targets: ["HanlinRichUI"]),
         .library(name: "HanlinChatUI", targets: ["HanlinChatUI"]),
-        .library(name: "HanlinA2UI", targets: ["HanlinA2UI"])
+        .library(name: "HanlinA2UI", targets: ["HanlinA2UI"]),
+        .library(name: "HanlinMiniAppsUI", targets: ["HanlinMiniAppsUI"])
     ],
     dependencies: [
         .package(path: "../HanlinPlatform"),
@@ -25,6 +26,11 @@ let package = Package(
     ],
     targets: [
         .target(name: "HanlinLocalization", resources: [.process("Resources")]),
+        .target(name: "HanlinMiniAppsUI", dependencies: [
+            "HanlinLocalization",
+            .product(name: "HanlinMiniAppCore", package: "HanlinPlatform"),
+            .product(name: "HanlinPlatformContracts", package: "HanlinPlatform")
+        ]),
         .target(name: "HanlinPresentationKit"),
         .target(name: "HanlinAgentActivityCore", dependencies: [
             "HanlinPresentationKit", "HanlinLocalization",

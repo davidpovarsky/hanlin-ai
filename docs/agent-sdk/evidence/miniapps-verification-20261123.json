@@ -1,0 +1,51 @@
+{
+  "source_base": "030464be",
+  "source_preservation": "12/12 original function/computed-property bodies passed",
+  "swift_parser": "Swift6.4.3 frontend -parse; seven changed sources passed",
+  "sources": [
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "sha256": "ce1c2571af40642fbf5690ebe374248fd50550acdb0b06bbb0c714dc94d041f9"
+    },
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsServices.swift",
+      "sha256": "1364b29c08db993caa6a13d7d2134534ba293af30d8698ff4e80caca0486f428"
+    },
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "sha256": "83c2be80504977ef86eab3ca2ff1904c3e4a9a8de508897935fb8a5b6e0163aa"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "sha256": "a2e91e79550378c0d306d0f19aa874853c5c9a1cc4727efa7aa35e646bae65a9"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift",
+      "sha256": "d965dedf74c260f9d47aeb580677ba58a364d459d6d5af3b777894855e90260b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinMiniAppsUI/HanlinMiniAppsLibrary.swift",
+      "sha256": "2bdadc9e549e6b31202fbac66bc36780b239d00c71048a3c44fe97292ae36a7b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinMiniAppsUI/HanlinMiniAppsServices.swift",
+      "sha256": "0a0efd44f373f4069e39388b5a85a8b568943d8496abea6d121e246e9162f0db"
+    }
+  ],
+  "graph_controls": {
+    "command": "python3 -m unittest test_project_graph.py -v",
+    "passed": 15,
+    "log_sha256": "88ba21288d8c3692d5e1b27a954ab7fc7331a586850652d3a9083af78781edf5"
+  },
+  "legacy_project_identity_validation": {
+    "status": "FAILED_PREEXISTING_SDK_OWNERSHIP_CHANGE",
+    "reason": "Historical dd700c03 identity assertion rejects D79AD5752DB545F9000646D4/files, already empty at source65 before this extraction."
+  },
+  "full_graph": {
+    "products": 44,
+    "targets": 108,
+    "application_sources": 503
+  },
+  "native_compilation": "NOT_RUN_BY_THIS_CHANGE",
+  "ui_acceptance": "NOT_CLAIMED"
+}
