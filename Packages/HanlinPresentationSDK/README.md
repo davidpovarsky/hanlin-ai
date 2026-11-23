@@ -146,3 +146,24 @@ Xcode evidence are recorded separately under `docs/continuation-20261117`.
 The Torah sample is a reusable catalog and reference shell. It is not an Otzaria
 ActionCore adapter, has no local Torah database, and does not prove Otzaria native
 integration. That work belongs to the separately authorized Otzaria phase.
+
+## Original code fences and transcript scrolling
+
+The SDK also owns the production Mermaid/diff renderer and its pinned local assets.
+ChatCodeFenceView(blockID:kind:source:onTrace:) provides the original source toggle,
+copy/share/expand actions, diff layouts and WebKit preview. ChatCodeFenceEngine,
+ChatCodeFenceDocument and ChatCodeFenceWebView are public for hosts composing
+their own containers. Asset validation, renderer cache, cancellation and the
+script-disabled visible document remain the original implementation.
+
+ChatAutoFollowController, ChatAutoFollowLayout and ChatScrollViewHandle expose
+the original coalescing, user pause/resume, finite geometry checks and native
+viewport lifetime management. A host binds its real UIScrollView and conversation
+ID; it keeps ownership of its transcript and scroll position actions. Creating a
+controller does not select a conversation or access an application singleton.
+
+An optional HanlinPresentationTraceHandler routes diagnostics to the host's
+existing sink on the main actor. The SDK does not open an application log file.
+Hanlin injects its existing logger; importing apps can provide their own sink.
+The app's former source paths are aliases, and the asset builder writes directly
+to the shared package so upgrades cannot recreate an app-only renderer.

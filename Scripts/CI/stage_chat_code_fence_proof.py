@@ -7,18 +7,25 @@ import shutil
 
 
 def stage(root: pathlib.Path, output: pathlib.Path) -> None:
-    source = root / "AI_HLY/Downstream/ChatPresentation/CodeFences"
+    presentation = root / "Packages/HanlinPresentationSDK/Sources"
+    source = presentation / "HanlinChatUI/CodeFences"
     destination = output / "Sources/HanlinCodeFenceProof"
     destination.mkdir(parents=True, exist_ok=True)
     files = list(source.glob("*.swift")) + [
-        root / "AI_HLY/NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift",
-        root / "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+        presentation / "HanlinChatUI/HanlinPresentationDiagnostics.swift",
     ]
     evidence = []
     for file in files:
         shutil.copy2(file, destination / file.name)
         evidence.append({"path": file.relative_to(root).as_posix(), "sha256": hashlib.sha256(file.read_bytes()).hexdigest()})
     shutil.copytree(source / "Resources", destination / "Resources", dirs_exist_ok=True)
+    # Compile the exact canonical typography/profile module used by the renderer;
+    # the focused package neither copies an app logger nor invents a typography stub.
+    kit = output / "Sources/HanlinPresentationKit"
+    kit.mkdir(parents=True, exist_ok=True)
+    for file in sorted((presentation / "HanlinPresentationKit").glob("*.swift")):
+        shutil.copy2(file, kit / file.name)
+        evidence.append({"path": file.relative_to(root).as_posix(), "sha256": hashlib.sha256(file.read_bytes()).hexdigest()})
     tests = output / "Tests/HanlinCodeFenceProofTests"
     tests.mkdir(parents=True, exist_ok=True)
     shutil.copy2(root / "AI_HLYTests/ChatCodeFenceTests.swift", tests / "ChatCodeFenceTests.swift")
@@ -26,10 +33,16 @@ def stage(root: pathlib.Path, output: pathlib.Path) -> None:
         evidence.append({"path": file.relative_to(root).as_posix(), "sha256": hashlib.sha256(file.read_bytes()).hexdigest()})
     (output / "Package.swift").write_text('''// swift-tools-version: 6.0
 import PackageDescription
-let package = Package(name: "HanlinCodeFenceProof", platforms: [.iOS("26.0")],
+let package = Package(name: "HanlinCodeFenceProof", platforms: [.iOS("27.0")],
     products: [.library(name: "HanlinCodeFenceProof", targets: ["HanlinCodeFenceProof"])],
     targets: [
-        .target(name: "HanlinCodeFenceProof", resources: [.process("Resources")]),
+        .target(name: "HanlinPresentationKit"),
+        .target(name: "HanlinCodeFenceProof", dependencies: ["HanlinPresentationKit"],
+                resources: [.copy("Resources/HanlinCodeFenceAssets.json"),
+                            .copy("Resources/HanlinCodeFenceRenderer.js"),
+                            .copy("Resources/HanlinCodeFenceRenderer.css"),
+                            .copy("Resources/HanlinCodeFenceRenderer.js.LEGAL.txt"),
+                            .copy("Resources/HanlinCodeFenceThirdPartyLicenses.txt")]),
         .testTarget(name: "HanlinCodeFenceProofTests", dependencies: ["HanlinCodeFenceProof"])
     ])
 ''', encoding="utf8", newline="\n")
