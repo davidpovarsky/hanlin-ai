@@ -1,0 +1,695 @@
+[
+  {
+    "typeName": "HanlinScriptingWidgets.HanlinScriptPackageEntity",
+    "mangledTypeName": "22HanlinScriptingWidgets0A19ScriptPackageEntityV",
+    "kind": "struct",
+    "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+    "line": 12,
+    "conformances": [
+      "AppIntents.AppEntity",
+      "AppIntents.AppValue",
+      "AppIntents.DisplayRepresentable",
+      "Swift.Identifiable",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents.TypeDisplayRepresentable",
+      "AppIntents._IntentValue",
+      "Swift.Sendable",
+      "AppIntents.InstanceDisplayRepresentable",
+      "Swift.SendableMetatype",
+      "Foundation.CustomLocalizedStringResourceConvertible"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppEntity",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.AppValue",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.DisplayRepresentable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "Swift.Identifiable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.TypeDisplayRepresentable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents._IntentValue",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.InstanceDisplayRepresentable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "Foundation.CustomLocalizedStringResourceConvertible",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "DefaultQuery",
+        "substitutedTypeName": "HanlinScriptingWidgets.HanlinScriptPackageEntityQuery",
+        "substitutedMangledTypeName": "22HanlinScriptingWidgets0A24ScriptPackageEntityQueryV"
+      },
+      {
+        "typeAliasName": "ID",
+        "substitutedTypeName": "Swift.String",
+        "substitutedMangledTypeName": "SS"
+      },
+      {
+        "typeAliasName": "ValueType",
+        "substitutedTypeName": "HanlinScriptingWidgets.HanlinScriptPackageEntity",
+        "substitutedMangledTypeName": "22HanlinScriptingWidgets0A19ScriptPackageEntityV"
+      },
+      {
+        "typeAliasName": "UnwrappedType",
+        "substitutedTypeName": "HanlinScriptingWidgets.HanlinScriptPackageEntity",
+        "substitutedMangledTypeName": "22HanlinScriptingWidgets0A19ScriptPackageEntityV"
+      },
+      {
+        "typeAliasName": "Specification",
+        "substitutedTypeName": "AppIntents.EmptyResolverSpecification<HanlinScriptingWidgets.HanlinScriptPackageEntity>",
+        "substitutedMangledTypeName": "10AppIntents26EmptyResolverSpecificationVy22HanlinScriptingWidgets0F19ScriptPackageEntityVG"
+      }
+    ],
+    "properties": [
+      {
+        "label": "id",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 15,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "displayName",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 16,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "identity",
+        "type": "HanlinScriptExtensions.HanlinScriptExtensionIdentity",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 17,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "typeDisplayRepresentation",
+        "type": "AppIntents.TypeDisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 13,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.TypeDisplayRepresentation",
+          "arguments": [
+            {
+              "label": "name",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Widget instance"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "numericFormat",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            }
+          ]
+        }
+      },
+      {
+        "label": "defaultQuery",
+        "type": "HanlinScriptingWidgets.HanlinScriptPackageEntityQuery",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 14,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "HanlinScriptingWidgets.HanlinScriptPackageEntityQuery",
+          "arguments": []
+        }
+      },
+      {
+        "label": "displayRepresentation",
+        "type": "AppIntents.DisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 18,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.DisplayRepresentation",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InterpolatedStringLiteral",
+              "value": {
+                "segments": [
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": ""
+                  },
+                  {
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            {
+              "label": "subtitle",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "image",
+              "type": "Swift.Optional<AppIntents.DisplayRepresentation.Image>",
+              "valueKind": "NilLiteral"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "typeName": "HanlinScriptingWidgets.HanlinScriptPackageEntityQuery",
+    "mangledTypeName": "22HanlinScriptingWidgets0A24ScriptPackageEntityQueryV",
+    "kind": "struct",
+    "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+    "line": 33,
+    "conformances": [
+      "AppIntents.EnumerableEntityQuery",
+      "AppIntents.EntityStringQuery",
+      "AppIntents.EntityQuery",
+      "AppIntents.DynamicOptionsProvider",
+      "AppIntents.PersistentlyIdentifiable",
+      "Swift.Sendable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.EnumerableEntityQuery",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.EntityStringQuery",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.EntityQuery",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.DynamicOptionsProvider",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "Entity",
+        "substitutedTypeName": "HanlinScriptingWidgets.HanlinScriptPackageEntity",
+        "substitutedMangledTypeName": "22HanlinScriptingWidgets0A19ScriptPackageEntityV"
+      },
+      {
+        "typeAliasName": "Result",
+        "substitutedTypeName": "Swift.Array<HanlinScriptingWidgets.HanlinScriptPackageEntity>",
+        "substitutedMangledTypeName": "Say22HanlinScriptingWidgets0A19ScriptPackageEntityVG"
+      },
+      {
+        "typeAliasName": "Result",
+        "substitutedTypeName": "Swift.Array<HanlinScriptingWidgets.HanlinScriptPackageEntity>",
+        "substitutedMangledTypeName": "Say22HanlinScriptingWidgets0A19ScriptPackageEntityVG"
+      },
+      {
+        "typeAliasName": "DefaultValue",
+        "substitutedTypeName": "HanlinScriptingWidgets.HanlinScriptPackageEntity",
+        "substitutedMangledTypeName": "22HanlinScriptingWidgets0A19ScriptPackageEntityV"
+      }
+    ],
+    "properties": []
+  },
+  {
+    "typeName": "HanlinScriptingWidgets.HanlinWidgetConfigurationIntent",
+    "mangledTypeName": "22HanlinScriptingWidgets0A25WidgetConfigurationIntentV",
+    "kind": "struct",
+    "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+    "line": 81,
+    "conformances": [
+      "AppIntents.WidgetConfigurationIntent",
+      "AppIntents.AppIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.WidgetConfigurationIntent",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "HanlinScriptingWidgets"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "NeverResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "10AppIntents0A6IntentPAAE16parameterSummaryQrvpZQOy22HanlinScriptingWidgets0f19WidgetConfigurationC0V_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      }
+    ],
+    "properties": [
+      {
+        "label": "_package",
+        "type": "AppIntents.IntentParameter<Swift.Optional<HanlinScriptingWidgets.HanlinScriptPackageEntity>>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 86,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Optional<HanlinScriptingWidgets.HanlinScriptPackageEntity>>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Widget instance"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<HanlinScriptingWidgets.HanlinScriptPackageEntity>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 82,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "Foundation.LocalizedStringResource",
+          "arguments": [
+            {
+              "label": "",
+              "type": "Swift.String.LocalizationValue",
+              "valueKind": "RawLiteral",
+              "value": "Widget instance"
+            },
+            {
+              "label": "table",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "RawLiteral",
+              "value": "HanlinAppIntents"
+            },
+            {
+              "label": "locale",
+              "type": "Foundation.Locale",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "bundle",
+              "type": "Foundation.LocalizedStringResource.BundleDescription",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "comment",
+              "type": "Swift.Optional<Swift.StaticString>",
+              "valueKind": "NilLiteral"
+            }
+          ]
+        }
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 83,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentDescription",
+          "arguments": [
+            {
+              "label": "",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Choose an installed instance. Placements using the same instance share state."
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "categoryName",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "searchKeywords",
+              "type": "Swift.Array<Foundation.LocalizedStringResource>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "package",
+        "type": "Swift.Optional<HanlinScriptingWidgets.HanlinScriptPackageEntity>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 86,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Optional<HanlinScriptingWidgets.HanlinScriptPackageEntity>>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Widget instance"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<HanlinScriptingWidgets.HanlinScriptPackageEntity>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+            "line": 85,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "InitCall",
+                "value": {
+                  "type": "Foundation.LocalizedStringResource",
+                  "arguments": [
+                    {
+                      "label": "",
+                      "type": "Swift.String.LocalizationValue",
+                      "valueKind": "RawLiteral",
+                      "value": "Widget instance"
+                    },
+                    {
+                      "label": "table",
+                      "type": "Swift.Optional<Swift.String>",
+                      "valueKind": "RawLiteral",
+                      "value": "HanlinAppIntents"
+                    },
+                    {
+                      "label": "locale",
+                      "type": "Foundation.Locale",
+                      "valueKind": "Runtime"
+                    },
+                    {
+                      "label": "bundle",
+                      "type": "Foundation.LocalizedStringResource.BundleDescription",
+                      "valueKind": "Runtime"
+                    },
+                    {
+                      "label": "comment",
+                      "type": "Swift.Optional<Swift.StaticString>",
+                      "valueKind": "NilLiteral"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$package",
+        "type": "AppIntents.IntentParameter<Swift.Optional<HanlinScriptingWidgets.HanlinScriptPackageEntity>>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 86,
+        "valueKind": "Runtime"
+      }
+    ]
+  }
+]

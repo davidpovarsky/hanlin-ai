@@ -1,10 +1,10 @@
 # Guarded Native publication and immutable installation
 
-These commands are prepared, **NOT_RUN**. Parent owns producer 45238831508, its terminal result and sole artifact-acquisition assignment.
+These commands are prepared, **NOT_RUN**. Producer 45238831508 failed and its prepared artifact 14850817502 is permanently ineligible. Parent owns the necessary continuation 45246711373 at 36d3c51bdba93ada2c2722ed0e9b99109d84a616, its terminal result and sole artifact-acquisition assignment.
 
 ## 1. Successful producer and single acquisition
 
-Require run 45238831508 to be completed/success in davidpovarsky/hanlin-ai with head 39a10b1cbf4645b629f556ea312e2576a4e566db. Export success from a failed run is insufficient. Reconcile actual selected acceptance identities/arguments before acceptance.
+Require the assigned continuation run 45246711373 to be completed/success in davidpovarsky/hanlin-ai with head 36d3c51bdba93ada2c2722ed0e9b99109d84a616. It was only in progress at this update; do not acquire its prepared artifact yet. Export success from a failed run is insufficient. Reconcile actual selected acceptance identities/arguments before acceptance.
 
 From the owner's terminal original run/jobs/artifact indices, select exactly one unexpired artifact named hanlin-sdk-native-prepared. Verify workflow_run identity/source, size and advertised SHA256. Its ID/digest stay unset until admission. The sole assigned acquirer can then fetch its raw ZIP once:
 
@@ -16,7 +16,7 @@ Check disk/memory before large extraction. Use an owned isolated worktree at the
 
 ## 2. Exact catalog and archive checks
 
-Require sourceCommit=39a10b1cbf4645b629f556ea312e2576a4e566db, scope=full, missingTargets=[], exactly 14 unique original framework and four support records. Require the complete eleven-name inputSHA256 set to match exact Git and materialized source through the original verify_source_inputs guard. Retain the independently checked metadata helper hash from qualification.json.
+Require sourceCommit=36d3c51bdba93ada2c2722ed0e9b99109d84a616, scope=full, missingTargets=[], exactly 14 unique original framework and four support records. Require the complete eleven-name inputSHA256 set to match exact Git and materialized source through the original verify_source_inputs guard. Retain the independently checked metadata helper hash from qualification.json. The precise binding of this additional source helper to preparation and installed archives is under read-only provenance review; this recipe does not pre-approve publication.
 
 With PREPARED set to the authenticated extraction directory, run the original source's verifier:
 
@@ -34,7 +34,7 @@ Do not use --allow-selected-targets. The original publisher derives sdk-native-v
 
 The CLI does not query producer completion itself; the preceding successful-producer guard is mandatory. The existing publish-sdk-native-artifacts workflow implements that guard, but need not be registered/dispatched merely to run the equivalent original CLI route on Oracle.
 
-Integrate the resulting published catalog into docs/native-artifacts.json on an isolated descendant, preserving its producer sourceCommit. Use the canonical generator for any required manifest update, inspect the exact diff, commit/push and allow parent integration. Call the resulting full 40-character source commit FINAL_SDK_SHA. Neither 39a nor 4c7 presently contains a published catalog and neither is a final installation pin.
+Integrate the resulting published catalog into docs/native-artifacts.json on an isolated descendant, preserving its producer sourceCommit. Use the canonical generator for any required manifest update, inspect the exact diff, commit/push and allow parent integration. Call the resulting full 40-character source commit FINAL_SDK_SHA. Neither the compared 39a/4c7 source nor continuation 36d presently contains a published catalog; none is a final installation pin.
 
 ## 4. Real full-profile pinned installation
 
