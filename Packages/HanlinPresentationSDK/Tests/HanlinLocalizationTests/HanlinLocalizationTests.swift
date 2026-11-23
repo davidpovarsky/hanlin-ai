@@ -42,7 +42,7 @@ struct HanlinLocalizedControlTests {
         let _: Toggle<Text> = Toggle(hanlin: "Enabled", isOn: .constant(true))
         let _: Picker<Text, Int, Text> = Picker(hanlin: "Action", selection: .constant(0)) { Text(verbatim: "option") }
         let _: Menu<Text, Text> = Menu(hanlin: "Actions") { Text(verbatim: "option") }
-        let _: Menu<Text, Label<Text, Image>> = Menu(hanlin: "Actions", systemImage: "ellipsis") { Text(verbatim: "option") }
+        let _: Menu<Label<Text, Image>, Text> = Menu(hanlin: "Actions", systemImage: "ellipsis") { Text(verbatim: "option") }
         let _: Section<Text, Text, EmptyView> = Section(hanlin: "Sources") { Text(verbatim: "source") }
         let _: LabeledContent<Text, Text> = LabeledContent(hanlin: "Name", value: "host-owned value")
         let _: Link<Text> = Link(hanlin: "Open source", destination: URL(string: "https://example.com")!)
@@ -54,6 +54,10 @@ struct HanlinLocalizedControlTests {
             hanlin: "Content unavailable", systemImage: "rectangle.slash", description: Text(verbatim: "description"))
         let _: Image = Image(hanlinAsset: "applogo")
         let _: Color = .hanlinHLBlue
+        let _: Color = Color.hanlinHLBlue
+        let _ = Text(verbatim: "original foreground").foregroundStyle(.hanlinHLOrange)
+        let _ = Text(verbatim: "original background").background(.hanlinHLBlue)
+        let _ = Circle().fill(.hanlinHLBlue)
         #expect(HanlinLocalization.bundle.bundleURL != Bundle.main.bundleURL)
     }
 }
@@ -66,6 +70,8 @@ import UIKit
 @Suite("Original iOS visual assets")
 struct HanlinOriginalAssetTests {
     @Test func sharedAssetsLoadFromTheirCanonicalBundle() throws {
+        // Preserve the original UIColor-taking Color initializer as well.
+        let _: Color = Color(.hanlinHLBlue)
         for image in ["applogo", "defaultIcon", "prompt", "translate", "translate_circle"] {
             _ = try #require(UIImage(named: image, in: HanlinLocalization.bundle, compatibleWith: nil))
         }
