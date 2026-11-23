@@ -1,0 +1,132 @@
+{
+  "utc": "2026-11-23T22:28:05.085388+00:00",
+  "base": "e1d936c27e4e89736c622e398af8fb0094094d5a",
+  "status": "PASS",
+  "exactChangedObjects": {
+    "B1000000000000000000000B": {
+      "remoteInfo": {
+        "before": "AI_Hanlin",
+        "after": "HanlinApp"
+      }
+    },
+    "E3000000000000000000000A": {
+      "remoteInfo": {
+        "before": "AI_Hanlin",
+        "after": "HanlinApp"
+      }
+    },
+    "D7B6C3C02D50A55D004E3AD6": {
+      "name": {
+        "before": "AI_Hanlin",
+        "after": "HanlinApp"
+      }
+    },
+    "E30000000000000000000007": {
+      "buildSettings": {
+        "TEST_TARGET_NAME": {
+          "before": "AI_Hanlin",
+          "after": "HanlinApp"
+        }
+      }
+    },
+    "E30000000000000000000008": {
+      "buildSettings": {
+        "TEST_TARGET_NAME": {
+          "before": "AI_Hanlin",
+          "after": "HanlinApp"
+        }
+      }
+    },
+    "D7B6C3E62D50A55E004E3AD6": {
+      "buildSettings": {
+        "PRODUCT_NAME": {
+          "before": "$(TARGET_NAME)",
+          "after": "AI_Hanlin"
+        }
+      }
+    },
+    "D7B6C3E72D50A55E004E3AD6": {
+      "buildSettings": {
+        "PRODUCT_NAME": {
+          "before": "$(TARGET_NAME)",
+          "after": "AI_Hanlin"
+        }
+      }
+    }
+  },
+  "allOtherProjectObjectsUnchanged": true,
+  "sourcePhaseOrLinkPhaseChanges": 0,
+  "packageSwiftByteIdentical": true,
+  "packageSHA256": "9d479c23f1e3609f4da4252abf120f9ce0349948bd0367955099168e5a3f9ed1",
+  "generatedInventoryExactlyEqual": true,
+  "products": 44,
+  "targets": 108,
+  "originalApplicationSources": 507,
+  "manifestInputs": 18,
+  "localPackageEdgesRemaining": 0,
+  "originalGraphGate": {
+    "miniapps_products": [
+      "HanlinA2UI",
+      "HanlinAgentActivityCore",
+      "HanlinExpoNativeAPI",
+      "HanlinExpoRuntime",
+      "HanlinExtensionContracts",
+      "HanlinLocalization",
+      "HanlinMiniAppCore",
+      "HanlinMiniAppsUI",
+      "HanlinNativeScriptRuntime",
+      "HanlinParityMiniApp",
+      "HanlinPlatformContracts",
+      "HanlinPresentationKit",
+      "HanlinProductSplit",
+      "HanlinScriptCompiler",
+      "HanlinScriptContracts",
+      "HanlinScriptDeviceServices",
+      "HanlinScriptExtensions",
+      "HanlinScriptStore",
+      "HanlinScriptUI",
+      "HanlinScriptingApplicationRuntime",
+      "HanlinScriptingSDK",
+      "HanlinSefariaMiniApp",
+      "HanlinTextStudioMiniApp",
+      "HanlinWikipediaMiniApp",
+      "IOSSystemLite",
+      "SWCompression",
+      "TorahLibraryKit",
+      "ZIPFoundation"
+    ],
+    "miniapps_source_groups": [
+      "HanlinMiniAppsApp"
+    ],
+    "deployment_target": "27.0",
+    "signed_or_install_proof": false
+  },
+  "originalLinkageGate": {
+    "ai_products": [
+      "HanlinAgentCore",
+      "HanlinApplication",
+      "HanlinHostContracts",
+      "HanlinPersistenceAdapters"
+    ],
+    "unit_test_products": [
+      "HanlinAgentCore",
+      "HanlinApplication"
+    ],
+    "miniapps_agent_products": [],
+    "sdk_application_sources": 507,
+    "host_sources": [
+      "AI_HLY.swift"
+    ],
+    "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+    "linked_application_products": {
+      "HanlinApp": [
+        "HanlinApplication"
+      ],
+      "AI_HLYTests": [
+        "HanlinApplication"
+      ]
+    },
+    "apple_compilation": "NOT_RUN"
+  },
+  "nativeExecution": "NOT_RUN"
+}

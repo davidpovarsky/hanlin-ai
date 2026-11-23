@@ -60,7 +60,7 @@ def validate_graph(project, provider_manifest=None):
     root = objects[project["rootObject"]]
     targets = [objects[key] for key in root["targets"]]
     mini = next(target for target in targets if target["name"] == "HanlinMiniApps")
-    ai = next(target for target in targets if target["name"] == "AI_Hanlin")
+    ai = next(target for target in targets if target["name"] == "HanlinApp")
     assert mini["productType"] == "com.apple.product-type.application"
     assert mini["dependencies"] == [], "MiniApps must not depend on the AI app/extensions"
     groups = [objects[key]["path"] for key in mini["fileSystemSynchronizedGroups"]]
@@ -164,22 +164,22 @@ def validate_agent_sdk_linkage(project, repository):
                 and value.get("package") == package and value["productName"] in expected}
     assert set(products.values()) == expected, "SDK product identity mismatch"
     targets = {objects[key]["name"]: (key, objects[key]) for key in root["targets"]}
-    assert {"AI_Hanlin", "AI_HLYTests", "HanlinMiniApps"} <= targets.keys()
+    assert {"HanlinApp", "AI_HLYTests", "HanlinMiniApps"} <= targets.keys()
     for name, (_, target) in targets.items():
-        required = expected if name == "AI_Hanlin" else {"HanlinAgentCore", "HanlinApplication"} if name == "AI_HLYTests" else set()
+        required = expected if name == "HanlinApp" else {"HanlinAgentCore", "HanlinApplication"} if name == "AI_HLYTests" else set()
         declared = [products[key] for key in target.get("packageProductDependencies", []) if key in products]
         linked = [products[objects[file]["productRef"]]
                   for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
                   for file in objects[phase]["files"] if objects[file].get("productRef") in products]
         assert len(declared) == len(required) and set(declared) == required, name + ": unexpected SDK dependency"
-        required_linked = {"HanlinApplication"} if name in {"AI_Hanlin", "AI_HLYTests"} else set()
+        required_linked = {"HanlinApplication"} if name in {"HanlinApp", "AI_HLYTests"} else set()
         assert len(linked) == len(required_linked) and set(linked) == required_linked, name + ": SDK image ownership mismatch"
         if required_linked:
             all_linked = [objects[objects[file]["productRef"]]["productName"]
                           for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
                           for file in objects[phase]["files"] if "productRef" in objects[file]]
             assert all_linked == ["HanlinApplication"], name + ": duplicate implementation linked beside the Application image"
-    ai_id, ai = targets["AI_Hanlin"]
+    ai_id, ai = targets["HanlinApp"]
     groups = [objects[key] for key in ai["fileSystemSynchronizedGroups"]
               if objects[key].get("path") == "AI_HLY"]
     assert len(groups) == 1, "AI must retain its original executable/resource folder"
@@ -203,11 +203,12 @@ def validate_agent_sdk_linkage(project, repository):
     assert adapter in sources and (repository / "AI_HLY" / adapter).is_file(), "Native adapter excluded from SDK"
     for key in objects[ai["buildConfigurationList"]]["buildConfigurations"]:
         assert objects[key]["buildSettings"].get("PRODUCT_MODULE_NAME") == "HanlinApp", "Host must preserve AI_Hanlin model module identity"
+        assert objects[key]["buildSettings"].get("PRODUCT_NAME") == "AI_Hanlin", "Host target rename must preserve the original app product"
     for sibling in ("HanlinAgentSDK", "HanlinPlatform"):
         for filename in ("Package.swift", "Package.resolved"):
             assert (repository / "Packages" / sibling / filename).is_file(), "Incomplete canonical module definition"
     return {"ai_products": sorted(expected), "unit_test_products": ["HanlinAgentCore", "HanlinApplication"],
             "miniapps_agent_products": [], "sdk_application_sources": len(sources),
             "host_sources": sorted(host_swift), "native_adapter": adapter,
-            "linked_application_products": {"AI_Hanlin": ["HanlinApplication"], "AI_HLYTests": ["HanlinApplication"]},
+            "linked_application_products": {"HanlinApp": ["HanlinApplication"], "AI_HLYTests": ["HanlinApplication"]},
             "apple_compilation": "NOT_RUN"}

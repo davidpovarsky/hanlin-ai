@@ -27,7 +27,7 @@ for p in inputs:assert (root/p).read_bytes()==subprocess.check_output(['git','sh
 hashes={p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in inputs}
 (out/'input-sha256.json').write_text(json.dumps(hashes,indent=2))
 scheme=ET.parse(root/'AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme')
-assert any(ref.get('BlueprintName')=='AI_Hanlin' for ref in scheme.iter('BuildableReference'))
+assert any(ref.get('BlueprintName')=='HanlinApp' for ref in scheme.iter('BuildableReference'))
 command=['xcodebuild','-resolvePackageDependencies','-project','AI_HLY.xcodeproj','-scheme','AI_HLY','-clonedSourcePackagesDirPath',str(pathlib.Path(os.environ['RUNNER_TEMP'])/'skill-format-app-sourcepackages')]
 (out/'command.json').write_text(json.dumps(command))
 status={'classification':'NOT_RUN','builds':0,'tests':0,

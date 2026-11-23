@@ -27,13 +27,13 @@ class ProjectGraphTests(unittest.TestCase):
         validate_agent_sdk_linkage(self.project, ROOT)
 
     def test_agent_sdk_requires_framework_link_not_just_declaration(self):
-        ai = next(value for value in self.objects.values() if value.get("name") == "AI_Hanlin"
+        ai = next(value for value in self.objects.values() if value.get("name") == "HanlinApp"
                   and value.get("isa") == "PBXNativeTarget")
         phase = next(self.objects[key] for key in ai["buildPhases"]
                      if self.objects[key]["isa"] == "PBXFrameworksBuildPhase")
         phase["files"] = [key for key in phase["files"]
-                          if self.objects.get(self.objects[key].get("productRef"), {}).get("productName") != "HanlinAgentCore"]
-        with self.assertRaisesRegex(AssertionError, "not actually linked"):
+                          if self.objects.get(self.objects[key].get("productRef"), {}).get("productName") != "HanlinApplication"]
+        with self.assertRaisesRegex(AssertionError, "SDK image ownership mismatch"):
             validate_agent_sdk_linkage(self.project, ROOT)
 
     def test_agent_sdk_does_not_leak_into_miniapps(self):

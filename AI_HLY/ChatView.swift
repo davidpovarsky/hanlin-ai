@@ -316,7 +316,7 @@ struct ChatView: View {
         if let inset = externalComposerBottomInset, inset.isFinite { return max(0, inset) }
         if isExternalCompactComposerHost {
             let height = externalDockHeight + 24
-            return height.isFinite ? max(225, height) : 225
+            return height.isFinite ? max(24, height) : 24
         }
         return Self.calculateDynamicBottomPadding(
             measuredComposerHeight: measuredComposerHeight,

@@ -1,0 +1,99 @@
+{
+  "run": 45265065184,
+  "attempt": 1,
+  "sourceCommit": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "artifact": {
+    "id": 14864733741,
+    "size": 66998891,
+    "sha256": "62dab969033c2f5db51bf9b9e31640521eec6f3848e08b8c20e2ee1a359679e9"
+  },
+  "originalJobLog": {
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-localization-continuation-20261123/terminal/native-job.log",
+    "size": 33389598,
+    "sha256": "ceb69962a075e1214fa128f2f92af2c39db62c0ac674b4dbf37efec08acdd87f",
+    "targetNameCollisions": [
+      {
+        "line": 3479,
+        "text": "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T21:23:39.6252650Z     Target 'AI_Hanlin' in project 'AI_HLY'"
+      },
+      {
+        "line": 3626,
+        "text": "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T21:23:41.1721530Z     Target 'AI_Hanlin' in project 'HanlinSDK'"
+      }
+    ]
+  },
+  "originalTestManifests": [
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-tests-45265065184/original/simulator-logs/06-generated-unit.xctestrun",
+      "archiveMember": "simulator-logs/06-generated-unit.xctestrun",
+      "size": 10396,
+      "sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c",
+      "fields": [
+        {
+          "route": [
+            "AI_HLYTests"
+          ],
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+          "BlueprintName": "AI_HLYTests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYTests.xctest"
+        },
+        {
+          "route": [
+            "AI_HLYUITests"
+          ],
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_HLYUITests-Runner.app",
+          "UITargetAppPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin",
+          "BlueprintName": "AI_HLYUITests",
+          "IsUITestBundle": true,
+          "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYUITests.xctest"
+        }
+      ],
+      "authenticatedArchiveMember": {
+        "name": "simulator-logs/06-generated-unit.xctestrun",
+        "bytes": 10396,
+        "compressed_bytes": 1517,
+        "sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c",
+        "crc32": "5e6731aa",
+        "directory": false,
+        "unix_mode": 33188
+      }
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-tests-45265065184/original/simulator-logs/06-generated-unit-manifests/AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+      "archiveMember": "simulator-logs/06-generated-unit-manifests/AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+      "size": 10396,
+      "sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c",
+      "fields": [
+        {
+          "route": [
+            "AI_HLYTests"
+          ],
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+          "BlueprintName": "AI_HLYTests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYTests.xctest"
+        },
+        {
+          "route": [
+            "AI_HLYUITests"
+          ],
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_HLYUITests-Runner.app",
+          "UITargetAppPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin",
+          "BlueprintName": "AI_HLYUITests",
+          "IsUITestBundle": true,
+          "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYUITests.xctest"
+        }
+      ],
+      "authenticatedArchiveMember": {
+        "name": "simulator-logs/06-generated-unit-manifests/AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+        "bytes": 10396,
+        "compressed_bytes": 1517,
+        "sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c",
+        "crc32": "5e6731aa",
+        "directory": false,
+        "unix_mode": 33188
+      }
+    }
+  ],
+  "diagnosis": "Original Xcode application target and original SDK target share a name; generated UI target path lacks .app despite the correct scheme product and unit host path. This source repair disambiguates the Xcode target; native verification of regenerated UI path is NOT_RUN.",
+  "memberInventorySHA256": "469e0cfba2db1b779b2f88fa77a972557182d15522736ff2c77d63f0adb30936"
+}

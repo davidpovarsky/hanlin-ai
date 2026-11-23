@@ -154,7 +154,7 @@ def generate(selected_products=None):
             target_edges[t["name"]]=edges
             target_remote[t["name"]]=remote
             targets.append(target(t,folder,local_products))
-    app=next(o for o in objects.values() if o.get("isa")=="PBXNativeTarget" and o.get("name")=="AI_Hanlin")
+    app=next(o for o in objects.values() if o.get("isa")=="PBXNativeTarget" and o.get("name")=="HanlinApp")
     app_deps=[]
     for ref in app["packageProductDependencies"]:
         product=objects[ref]

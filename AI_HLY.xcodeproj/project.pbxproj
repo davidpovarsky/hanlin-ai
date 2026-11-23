@@ -673,14 +673,14 @@
 			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D7B6C3C02D50A55D004E3AD6;
-			remoteInfo = AI_Hanlin;
+			remoteInfo = HanlinApp;
 		};
 		E3000000000000000000000A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D7B6C3C02D50A55D004E3AD6;
-			remoteInfo = AI_Hanlin;
+			remoteInfo = HanlinApp;
 		};
 		D20000000000000000000010 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2341,7 +2341,7 @@
 			"buildRules" = ();
 			"dependencies" = ("D20000000000000000000060", "E40000000000000000000060", "E50000000000000000000060", "E60000000000000000000060", );
 			"fileSystemSynchronizedGroups" = ("D7B6C3C32D50A55D004E3AD6", );
-			"name" = "AI_Hanlin";
+			"name" = HanlinApp;
 			packageProductDependencies = (
 				"AC1800000000000000000002" ,
 				"AC1800000000000000000003" ,
@@ -3059,7 +3059,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AI_Hanlin;
+				TEST_TARGET_NAME = HanlinApp;
 			};
 			name = Debug;
 		};
@@ -3078,7 +3078,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AI_Hanlin;
+				TEST_TARGET_NAME = HanlinApp;
 			};
 			name = Release;
 		};
@@ -3351,7 +3351,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AI_Hanlin;
 				PRODUCT_MODULE_NAME = HanlinApp;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -3653,7 +3653,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AI_Hanlin;
 				PRODUCT_MODULE_NAME = HanlinApp;
 				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat App Store";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

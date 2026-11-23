@@ -1,0 +1,132 @@
+{
+  "utc": "2026-11-23T22:28:49.866519+00:00",
+  "command": [
+    "git",
+    "-C",
+    "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123",
+    "grep",
+    "-n",
+    "-I",
+    "-F",
+    "AI_Hanlin",
+    "HEAD",
+    "--",
+    ".github",
+    "Scripts",
+    "*.xcconfig",
+    "*.xcscheme"
+  ],
+  "excluded": "historical fixtures/evidence and independent Composer native proof target",
+  "remaining": [
+    {
+      "path": ".github/workflows/testflight.yml",
+      "line": 463,
+      "text": "          check_target AI_Hanlin \"$APP_BUNDLE_ID\" \"$MAIN_PROFILE_SPECIFIER\" AI_HLY/AI_HLY.entitlements"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinSimulatorAcceptance.xcscheme",
+      "line": 6,
+      "text": "        <BuildableReference BuildableIdentifier=\"primary\" BlueprintIdentifier=\"D7B6C3C02D50A55D004E3AD6\" BuildableName=\"AI_Hanlin.app\" BlueprintName=\"HanlinApp\" ReferencedContainer=\"container:AI_HLY.xcodeproj\">"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinSimulatorAcceptance.xcscheme",
+      "line": 29,
+      "text": "      <BuildableReference BuildableIdentifier=\"primary\" BlueprintIdentifier=\"D7B6C3C02D50A55D004E3AD6\" BuildableName=\"AI_Hanlin.app\" BlueprintName=\"HanlinApp\" ReferencedContainer=\"container:AI_HLY.xcodeproj\">"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinSimulatorAcceptance.xcscheme",
+      "line": 39,
+      "text": "      <BuildableReference BuildableIdentifier=\"primary\" BlueprintIdentifier=\"D7B6C3C02D50A55D004E3AD6\" BuildableName=\"AI_Hanlin.app\" BlueprintName=\"HanlinApp\" ReferencedContainer=\"container:AI_HLY.xcodeproj\">"
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "line": 99,
+      "text": "        \"hostAppIntent\": {\"target\": \"AI_Hanlin / HanlinScriptExtensions\", \"refs\": [\"extensionIntent\", \"extensionQueue\", \"extensionReceipts\", \"extensionExecutor\", \"resume\", \"requestBroker\", \"headless\", \"nativeSession\", \"expoIntentRejection\"],"
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "line": 101,
+      "text": "        \"shortcuts\": {\"target\": \"HanlinScriptingWidgets / AI_Hanlin\", \"refs\": [\"shortcutIntent\", \"hostShortcuts\", \"extensionQueue\", \"extensionReceipts\", \"extensionExecutor\", \"resume\", \"headless\", \"expoIntentRejection\"],"
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "line": 103,
+      "text": "        \"foreground\": {\"target\": \"AI_Hanlin\", \"refs\": [\"nativeBridge\", \"nativeAdapter\", \"nativeSession\", \"expoFacade\", \"expoModule\", \"expoAdapter\", \"runtimeBroker\", \"callerContext\"],"
+    },
+    {
+      "path": "Scripts/Audit/generate_contract_inventory.py",
+      "line": 401,
+      "text": "            \"target\": \"Reference only; not packaged or compiled by AI_Hanlin\","
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "line": 197,
+      "text": "    block = re.search(r'\\.target\\(name: \"AI_Hanlin\",[\\s\\S]*?sources: (\\[[^\\n]*\\]),\\n', manifest)"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "line": 206,
+      "text": "        assert objects[key][\"buildSettings\"].get(\"PRODUCT_NAME\") == \"AI_Hanlin\", \"Host target rename must preserve the original app product\""
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "line": 199,
+      "text": "        '.target(name: \"AI_Hanlin\", dependencies: '+array(list(dict.fromkeys(app_deps)))+',\\n'"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "line": 206,
+      "text": "    products[\"HanlinApplication\"]='.library(name: \"HanlinApplication\", targets: [\"AI_Hanlin\"])'"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "line": 207,
+      "text": "    product_targets[\"HanlinApplication\"]=[\"AI_Hanlin\"]"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "line": 211,
+      "text": "    target_edges[\"AI_Hanlin\"]=[json.loads(x) for x in app_deps if x.startswith('\"')]"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "line": 213,
+      "text": "    target_remote[\"AI_Hanlin\"]={re.search(r'package: \"([^\"]+)\"',x)[1].lower()"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "line": 240,
+      "text": "             \"applicationModule\":\"AI_Hanlin\" if \"AI_Hanlin\" in chosen_targets else None,"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "line": 241,
+      "text": "             \"applicationSourceCount\":len(app_sources) if \"AI_Hanlin\" in chosen_targets else 0,"
+    },
+    {
+      "path": "Scripts/SDK/install.py",
+      "line": 281,
+      "text": "    if any(target[\"name\"] == \"AI_Hanlin\" for target in description[\"targets\"]):"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_bundle_resources.py",
+      "line": 29,
+      "text": "        manifest = {\"targets\": [{\"name\": \"AI_Hanlin\", \"path\": \"AI_HLY\", \"resources\": ["
+    },
+    {
+      "path": "Scripts/SDK/tests/test_host_link_ownership.py",
+      "line": 114,
+      "text": "        self.assertIn(\"AI_Hanlin\", target_names)"
+    },
+    {
+      "path": "Scripts/Validation/run_tool_policy_checks.py",
+      "line": 68,
+      "text": "    .target(name: \"AI_Hanlin\"),"
+    },
+    {
+      "path": "Scripts/Validation/run_tool_policy_checks.py",
+      "line": 69,
+      "text": "    .testTarget(name: \"ToolPolicyChecks\", dependencies: [\"HanlinAgentCore\", \"HanlinPlatformContracts\", \"AI_Hanlin\"])"
+    }
+  ]
+}

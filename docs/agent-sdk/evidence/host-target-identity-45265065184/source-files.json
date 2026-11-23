@@ -1,0 +1,92 @@
+{
+  "base": "e1d936c27e4e89736c622e398af8fb0094094d5a",
+  "utc": "2026-11-23T22:31:26.404254+00:00",
+  "files": [
+    {
+      "path": ".github/workflows/testflight.yml",
+      "bytes": 43060,
+      "sha256": "c73889a17322eec05954209b9cb154797eed9233760a10deca259b82e04615cc",
+      "gitBlob": "a77dc5b45a6162792a7baec1a85349ae4851eec2"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 198762,
+      "sha256": "fd9a3ce112321a37438d2f12f29ea41848a144bb1dc27fb1a371174a54c4ac93",
+      "gitBlob": "cd51333a404aee58b5fab9d4d35498d3d5c18388"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "bytes": 5514,
+      "sha256": "5513779c414d4978d5a1e0f9aa316e573bc75a521ef38276d079d00f767ad62d",
+      "gitBlob": "f1f84e4e437ed801db4558c071aecd87c962ba67"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinSimulatorAcceptance.xcscheme",
+      "bytes": 3500,
+      "sha256": "7ce50ebfb37adddadcb81348241eb840c8a70e54074d9a37d7c11a9b91ab1801",
+      "gitBlob": "f2681331dd9f4fa2bb01f5a95e85bc982d982f58"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "bytes": 13863,
+      "sha256": "d2415b1a1550086c740c5888ce74fc75f0be7ddcf03c8252b42673d370a58b25",
+      "gitBlob": "0e4b56175f5372389188c0ae4f3cbda1d335993e"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/resolve_skill_format_app.sh",
+      "bytes": 4843,
+      "sha256": "52eeb197b29c8ea6af5fd83b8fcb33b1a60cc1c94738be72c0a79a2b5a452561",
+      "gitBlob": "199d199ce1d8c69058cbc81150458d0e789335d3"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/test_project_graph.py",
+      "bytes": 7757,
+      "sha256": "4d838d78a384e8d92e5315db0a217cb677c16b12fc6934622308309322239f82",
+      "gitBlob": "2eb9269b697d0f0af9ff7d17a226e45db08ab63a"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/test_ios_system_project_resources.py",
+      "bytes": 3637,
+      "sha256": "a83b28811fca3748fd00b9c5d4fa16358522e920de208b7c6668cfd221c869ff",
+      "gitBlob": "db89e8c84844c0043d2d715d653e7bc42939079f"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/test_runtime_host_source_exclusion.py",
+      "bytes": 2547,
+      "sha256": "7683e739c3ace5c4a312a02065b40e92be5be5ea333228ca7f9c4030bda4adc5",
+      "gitBlob": "c064c9ab47ab66ece70ee0f499cb60414e8fc158"
+    },
+    {
+      "path": "Scripts/Runtime/validate_ios_system_resources.py",
+      "bytes": 9391,
+      "sha256": "239eb92f6d2fd24431795994b76372604e397ba80f51618bcec2b5a0d060664b",
+      "gitBlob": "5e0e995c0dddd12336d56201b0856bf6616752f6"
+    },
+    {
+      "path": "Scripts/Runtime/validate_runtime_host_source_exclusion.py",
+      "bytes": 2517,
+      "sha256": "893aefded5bb3d8ce39e5300cac4d4c1fd7918d4f66ce45451b937c2fef05a09",
+      "gitBlob": "9bd390a452ad67499e98aa2fd7cdf7ec967c027b"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "bytes": 16110,
+      "sha256": "daa37ca278597897afb041a8af477a59bf09930fcfaaa65460855a0cf427c35a",
+      "gitBlob": "c1dcbbdfad635e1cd4eb10ae9981a02ae58990e2"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_host_link_ownership.py",
+      "bytes": 7199,
+      "sha256": "4aa985137fe9a4992aff8b6e12d92c03e01e3ac4deaa4da37ba27c4f6f31b43a",
+      "gitBlob": "54123bd58fe8e3e7b43210c9cb4a04f678617e7b"
+    },
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "bytes": 17977,
+      "sha256": "4153acbbc3c40490260b58ca045b5826e1106cb6d16ce8163802d7d99780c166",
+      "gitBlob": "27115c7e1d2717738e1dae80d304f5e8d6600bf7"
+    }
+  ],
+  "nativeVerification": "NOT_RUN",
+  "workflowPublish": "No CLI push; parent owns connected GitHub exact-tree integration."
+}

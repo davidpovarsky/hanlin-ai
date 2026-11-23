@@ -18,9 +18,9 @@ NODE_MODULES = PurePosixPath("Downstream/RuntimeCore/Node/Host/node_modules")
 def validate_project(text: str) -> dict[str, object]:
     objects = parse_project(text)["objects"]
     targets = [(key, value) for key, value in objects.items()
-               if value.get("isa") == "PBXNativeTarget" and value.get("name") == "AI_Hanlin"]
+               if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinApp"]
     if len(targets) != 1:
-        raise ValueError("RuntimeCore requires exactly one AI_Hanlin app target.")
+        raise ValueError("RuntimeCore requires exactly one HanlinApp app target.")
     target_id, target = targets[0]
     groups = [(key, objects[key]) for key in target.get("fileSystemSynchronizedGroups", [])
               if objects[key].get("isa") == "PBXFileSystemSynchronizedRootGroup"

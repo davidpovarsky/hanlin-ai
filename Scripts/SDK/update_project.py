@@ -29,7 +29,7 @@ EXTRA_PRODUCT_BUILDS = {
     ("HanlinMiniApps", "TorahLibraryKit"): "AC1900000000000000000048"
 }
 TARGET_PRODUCTS={
-    "AI_Hanlin": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
+    "HanlinApp": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
     "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
     "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit"],
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
@@ -90,7 +90,7 @@ def insert_object(text,section,key,body):
 # Keep the original declarations available to the SDK manifest generator and
 # compiler. Only the original Application image owns their linked implementation
 # in these two processes; other executables retain their independent products.
-HOST_LINK_OWNERS = {"AI_Hanlin": "HanlinApplication", "AI_HLYTests": "HanlinApplication"}
+HOST_LINK_OWNERS = {"HanlinApp": "HanlinApplication", "AI_HLYTests": "HanlinApplication"}
 
 
 def application_product_closure(manifest):
@@ -177,7 +177,7 @@ def update(package=None):
                       if "productRef" not in objects[key]
                       or objects[objects[key]["productRef"]]["productName"] == owner
                       or not product_is_covered(objects[objects[key]["productRef"]], objects, closure)]
-        if name=="AI_Hanlin":
+        if name=="HanlinApp":
             linked=[k for k in linked if objects[k].get("fileRef") not in {"A10000000000000000000020","A10000000000000000000021"}]
         for offset,product in enumerate(required):
             if owner and product != owner and product in closure[0]:
@@ -190,18 +190,23 @@ def update(package=None):
             text=insert_object(text,"PBXBuildFile",build_id,
                 "\t\t\tisa = PBXBuildFile;\n\t\t\tproductRef = "+PRODUCTS[product]+";\n")
         text=edit_object(text,phase,lambda b:replace_list(b,"files",linked))
-        host_modules={"AI_Hanlin":"HanlinApp", "HanlinScriptingWidgets":"HanlinScriptingWidgetsHost"}
+        host_modules={"HanlinApp":"HanlinApp", "HanlinScriptingWidgets":"HanlinScriptingWidgetsHost"}
         if name in host_modules:
             # The SDK owns the original implementation module names, preserving
             # SwiftData and persisted AppIntent/AppEntity/ActivityAttributes identity.
             for config in objects[target["buildConfigurationList"]]["buildConfigurations"]:
                 def settings(b):
                     module=host_modules[name]
+                    if name == "HanlinApp":
+                        b,count=re.subn(r'"?PRODUCT_NAME"? = [^;]+;',
+                                        "PRODUCT_NAME = AI_Hanlin;",b,count=1)
+                        if count != 1:
+                            raise ValueError("Missing original app product name")
                     if "PRODUCT_MODULE_NAME" in b:
                         return re.sub(r'"?PRODUCT_MODULE_NAME"? = [^;]+;',
                                       "PRODUCT_MODULE_NAME = "+module+";",b)
-                    return re.sub(r'"?PRODUCT_NAME"? = "\$\(TARGET_NAME\)";',
-                                  'PRODUCT_NAME = "$(TARGET_NAME)";\n\t\t\t\tPRODUCT_MODULE_NAME = '+module+';',b)
+                    return re.sub(r'("?PRODUCT_NAME"? = [^;]+;)',
+                                  lambda match: match[0]+'\n\t\t\t\tPRODUCT_MODULE_NAME = '+module+';',b,count=1)
                 text=edit_object(text,config,settings)
     # The standalone MiniApps executable compiles the same small original
     # runtime/provider closure. Runtime configuration must not pull the chat
@@ -276,7 +281,7 @@ def update(package=None):
         "\t\t\tisa = PBXFileReference;\n\t\t\tlastKnownFileType = text.json.xcstrings;\n"
         "\t\t\tpath = \"Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings\";\n"
         "\t\t\tsourceTree = SOURCE_ROOT;\n")
-    for name, build in [("AI_Hanlin", "AC1900000000000000000131"),
+    for name, build in [("HanlinApp", "AC1900000000000000000131"),
                         ("HanlinScriptingWidgets", "AC1900000000000000000132")]:
         target=targets[name][1]
         phase=next(k for k in target["buildPhases"] if objects[k]["isa"]=="PBXResourcesBuildPhase")
