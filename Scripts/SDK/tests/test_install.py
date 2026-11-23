@@ -139,6 +139,29 @@ class SDKInstallTests(unittest.TestCase):
         self.assertTrue(alternates.is_file())
         self.assertIn(str(self.repository / ".git/objects"), alternates.read_text())
 
+
+    def test_sparse_bootstrap_never_materializes_unselected_application_payload(self):
+        payload = self.repository / "AI_HLY/Unselected/large-runtime.dat"
+        payload.parent.mkdir(parents=True)
+        payload.write_bytes(b"unselected application resource" * 1024)
+        generator = self.repository / "Scripts/SDK/generate_manifest.py"
+        generator.write_text(GENERATOR.replace(
+            'root=Path(__file__).resolve().parents[2]',
+            'root=Path(__file__).resolve().parents[2]\n'
+            'assert not (root/"AI_HLY/Unselected/large-runtime.dat").exists(), "unselected payload materialized before product filtering"'))
+        self.git("add", ".")
+        self.git("commit", "-m", "Guard against full checkout before profile selection")
+        self.revision = self.git("rev-parse", "HEAD")
+        self.lock_products(["HanlinAgentCore"])
+        receipt = self.install()
+        sdk = self.host / "Vendor/HanlinSDK"
+        self.assertEqual(receipt["checkoutMode"], "sparse")
+        self.assertFalse((sdk / "AI_HLY/Unselected/large-runtime.dat").exists())
+        self.assertTrue((sdk / "Sources/CanonicalCore/Value.swift").is_file())
+        self.assertEqual(installer.git(sdk, "ls-files", "-t", "--", "AI_HLY/Unselected/large-runtime.dat"),
+                         "S AI_HLY/Unselected/large-runtime.dat")
+        self.assertEqual(installer.check(self.host, self.lock, "Vendor/HanlinSDK")["state"], "installed")
+
     def test_mutable_ref_and_destination_escape_are_rejected(self):
         self.lock.write_text(json.dumps({"revision": "main", "products": ["HanlinAgentCore"]}))
         with self.assertRaisesRegex(ValueError, "immutable"):

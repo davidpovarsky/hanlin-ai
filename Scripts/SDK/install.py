@@ -16,6 +16,15 @@ import tempfile
 REPOSITORY_URL = "https://github.com/davidpovarsky/hanlin-ai.git"
 GENERATED = ("Package.swift", "docs/agent-sdk/unified-package-manifest.json")
 RECEIPT = ".hanlin-sdk/installation.json"
+# Read canonical manifests and graph metadata before materializing product sources.
+# Non-cone patterns deliberately exclude unrelated app resources and native blobs.
+BOOTSTRAP_PATTERNS = (
+    "/.gitignore", "/.gitattributes", "/Package.swift",
+    "/Scripts/SDK/", "/Scripts/CI/IntegrationValidation/project_graph.py",
+    "/Packages/*/Package.swift", "/AI_HLY.xcodeproj/project.pbxproj",
+    "/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "/docs/agent-sdk/unified-package-manifest.json", "/docs/native-artifacts.json",
+)
 
 
 def sha256(path: Path) -> str:
@@ -29,9 +38,9 @@ def write_json(path: Path, value: object) -> None:
     temporary.replace(path)
 
 
-def run(arguments: list[str], *, cwd: Path | None = None) -> str:
+def run(arguments: list[str], *, cwd: Path | None = None, input_text: str | None = None) -> str:
     result = subprocess.run(arguments, cwd=cwd, text=True, stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE, check=False)
+                            stderr=subprocess.PIPE, input=input_text, check=False)
     if result.returncode:
         raise RuntimeError(result.stderr.strip() or result.stdout.strip() or
                            f"{arguments[0]} failed with exit {result.returncode}")
@@ -134,6 +143,57 @@ def has_commit(root: Path, revision: str) -> bool:
                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
 
 
+def sparse_checkout(root: Path, patterns: list[str] | tuple[str, ...], *, materialize: bool) -> None:
+    if materialize:
+        run(["git", "-C", str(root), "sparse-checkout", "set", "--no-cone", "--stdin"],
+            input_text="\n".join(patterns) + "\n")
+    else:
+        # Configure before the first checkout, so a blob-filtered clone never
+        # downloads or writes unrelated native/app files even temporarily.
+        git(root, "config", "core.sparseCheckout", "true")
+        git(root, "config", "core.sparseCheckoutCone", "false")
+        path = Path(git(root, "rev-parse", "--git-path", "info/sparse-checkout"))
+        if not path.is_absolute():
+            path = root / path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("\n".join(patterns) + "\n")
+
+
+def selected_source_paths(root: Path, description: dict) -> list[str]:
+    paths = set()
+    for target in description["targets"]:
+        if target["type"] == "binary":
+            continue
+        default = ("Tests/" if target["type"] == "test" else "Sources/") + target["name"]
+        path = target.get("path") or default
+        resolved = (root / path).resolve()
+        if not resolved.is_relative_to(root.resolve()) or resolved == root.resolve():
+            raise ValueError(f"Unsupported canonical target path: {path}")
+        paths.add(resolved.relative_to(root.resolve()).as_posix())
+        # SwiftPM permits relative header directories outside the target root.
+        for setting in target.get("settings", []):
+            relative = setting.get("kind", {}).get("headerSearchPath", {}).get("_0")
+            if relative:
+                header = (resolved / relative).resolve()
+                if not header.is_relative_to(root.resolve()) or header == root.resolve():
+                    raise ValueError(f"Header search path escapes the selected SDK sources: {relative}")
+                paths.add(header.relative_to(root.resolve()).as_posix())
+    if any(target["name"] in {"TNSWidgets", "NSCWinterTC"} for target in description["targets"]):
+        # The original packaged metadata launcher imports these canonical helpers.
+        paths.update(("Scripts/NativeScript/metadata_public_headers.py",
+                      "Scripts/NativeScript/build-metadata-tool.py"))
+    return sorted(paths)
+
+
+def source_patterns(paths: list[str]) -> list[str]:
+    # An anchored directory pattern also includes its entire original resource tree.
+    patterns = list(BOOTSTRAP_PATTERNS)
+    for path in paths:
+        escaped = "".join(chr(92) + character if character in "\\*?[]" else character for character in path)
+        patterns.append("/" + escaped + ("" if path.endswith(".py") else "/"))
+    return list(dict.fromkeys(patterns))
+
+
 def prepare_checkout(host: Path, lock: dict, relative: str, repository: str = REPOSITORY_URL,
                      source_cache: Path | None = None) -> tuple[Path, dict | None]:
     destination = destination_path(host, relative)
@@ -151,6 +211,7 @@ def prepare_checkout(host: Path, lock: dict, relative: str, repository: str = RE
         receipt = json.loads(receipt_path.read_text()) if receipt_path.exists() else None
         verify_owned_changes(destination, receipt)
         reset_generated(destination)
+        sparse_checkout(destination, BOOTSTRAP_PATTERNS, materialize=True)
         if git(destination, "rev-parse", "HEAD") != lock["revision"]:
             if not has_commit(destination, lock["revision"]):
                 git(destination, "fetch", "--no-tags", "--depth=1", "origin", lock["revision"])
@@ -166,6 +227,7 @@ def prepare_checkout(host: Path, lock: dict, relative: str, repository: str = RE
                 run(["git", "clone", "--filter=blob:none", "--no-checkout", repository, str(checkout)])
             if not has_commit(checkout, lock["revision"]):
                 git(checkout, "fetch", "--no-tags", "--depth=1", "origin", lock["revision"])
+            sparse_checkout(checkout, BOOTSTRAP_PATTERNS, materialize=False)
             git(checkout, "checkout", "--detach", lock["revision"])
             if git(checkout, "rev-parse", "HEAD") != lock["revision"]:
                 raise ValueError("Fetched SDK revision does not match the host lock")
@@ -203,6 +265,16 @@ def install(host: Path, lock_path: Path, destination: str, cache: Path,
                "generatedSHA256": generated_hashes(root)}
     write_json(root / RECEIPT, receipt)
     description = generate_profile(root, lock["products"])
+    paths = selected_source_paths(root, description)
+    patterns = source_patterns(paths)
+    sparse_checkout(root, patterns, materialize=True)
+    if any(target["name"] == "AI_Hanlin" for target in description["targets"]):
+        # The full application manifest inventories its original Swift/resource
+        # files. Regenerate only after this selected source tree is materialized.
+        description = generate_profile(root, lock["products"])
+    receipt["checkoutMode"] = "sparse"
+    receipt["sourcePaths"] = paths
+    receipt["sparsePatterns"] = patterns
     receipt["generatedSHA256"] = generated_hashes(root)
     receipt["state"] = "profile-ready"
     binary_targets = [item for item in description["targets"] if item["type"] == "binary"]

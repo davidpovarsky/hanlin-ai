@@ -25,9 +25,9 @@ python3 /path/to/hanlin-ai/Scripts/SDK/install.py \
 It performs these steps:
 
 1. Fetches the canonical Hanlin repository and verifies the full locked commit.
-2. Prepares the ignored `Vendor/HanlinSDK` checkout.
+2. Prepares the ignored `Vendor/HanlinSDK` sparse checkout with only canonical manifest metadata.
 3. Runs `Scripts/SDK/generate_manifest.py --products ...` in that checkout.
-4. Verifies that the generated manifest exposes exactly the selected products.
+4. Verifies the selected products and materializes only their original target source/resource paths.
 5. Installs published native assets only if that product closure contains managed native binary targets.
 6. Saves a receipt with the source revision, selected products and generated file hashes.
 
@@ -81,3 +81,33 @@ The test generator is an explicitly isolated fixture for installer behavior. It 
 The measured remote SwiftPM fixtures also showed that unused binary declarations still affect lightweight consumers. Selected profile generation is therefore required even after binary URLs are published; the original target/source definitions remain shared.
 
 Evidence is retained in [consumer-installation-2026-11-23](evidence/consumer-installation-2026-11-23/receipt.json).
+
+## Selected source checkout
+
+Before its first Git checkout, the installer enables sparse checkout for the
+canonical module manifests, project dependency metadata and shared installer
+scripts. It derives the requested product closure from those original manifests
+and only then materializes the selected target source/resource directories.
+Unselected application resources and native blobs are never written to disk
+during this bootstrap. Remote clones use Git's blob filter; an Oracle
+`--source-cache` installation reuses the existing object store without
+copying it.
+
+Full application selection materializes its original `AI_HLY` source tree and
+then regenerates the app source/resource inventory. The same original source
+files remain authoritative. NativeScript selection additionally includes the
+original public-header inventory and metadata-tool provenance helpers used by
+its packaged host launcher.
+
+The receipt records `checkoutMode: "sparse"`, selected source paths, and sparse
+patterns alongside the locked revision and generated manifest hash. Updating a
+product or revision first checks for user source edits, then adjusts this managed
+checkout. It does not replace edited files.
+
+A focused bootstrap regression makes the pinned generator fail if an unrelated
+app resource was ever materialized before product selection. That regression
+passed, in addition to the eight existing Git/update/native-selection checks
+rerun for this changed checkout path. See
+`evidence/consumer-installation-2026-11-23/sparse-bootstrap-regression.txt` and
+`sparse-installer-regressions.txt`. These checks verify installation mechanics;
+the original host's acceptance remains separately recorded.
