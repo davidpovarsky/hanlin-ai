@@ -33,6 +33,8 @@ Register both new packages in the aggregate SDK generator. Register all four new
 
 Set **`PRODUCT_MODULE_NAME = HanlinScriptingWidgetsHost`** only for the original widget executable entry target in Debug and Release. Keep its `PRODUCT_NAME`, extension bundle identifier, widget kind, principal/entry behavior and entitlements. This makes the original persisted implementation type identities (`HanlinScriptingWidgets.HanlinWidgetConfigurationIntent`, `HanlinScriptingWidgets.HanlinScriptPackageEntity`, `HanlinScriptingWidgets.HanlinRunScriptActionIntent`, and `HanlinScriptingWidgets.HanlinScriptActionEntity`) remain the same after extraction. Existing parameter names and scoped entity identifiers are unchanged; the original `widgetEntityMigrations` and unique short-ID action migration algorithms are preserved.
 
+A widget executable declaring `WidgetBundle` and `some Widget` directly imports both `SwiftUI` and `WidgetKit`, in addition to its selected Hanlin products. These Apple protocol names are not supplied by the SDK facade import.
+
 The shared `HanlinGenericLiveActivityAttributes` already belonged to `HanlinScriptExtensions` and keeps that identity. The share and notification targets retain their original local principal subclass names; their inherited implementation moves to the SDK.
 
 ## Cold-start host configuration

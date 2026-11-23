@@ -29,3 +29,14 @@ The earlier native-prepared artifact 14796481588 was uploaded successfully befor
 this compiler failure (184426234 bytes; SHA256
 0156e8faf203f58e0d177e69d8f53d7b33fd7fd456b8065babb978edf28b1666).
 Its preparation result does not make this failed application build successful.
+
+
+## Subsequent original host import correction
+
+The next original full-app run [45133911239](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45133911239), at66845991bc06fd008b21dc24bf55d84a9e3a1d56, progressed to the thin widget executable and failed before any selected unit/UI test. The complete original compiler log contains three errors at HanlinScriptingWidgets/HanlinScriptingWidgets.swift: unresolved Widget and WidgetBundle, with the resulting @main entry-point error. Its direct SwiftUI import had been omitted when the host wrapper was reduced; the original603576fa file contained that import.
+
+The correction adds only `import SwiftUI` to the thin original host entry point. Removing that one added line reproduces the previous file byte for byte. Canonical widget bodies, timeline, App Intents, initializer policy, resources, source identities and package graph are unchanged. The other thin OS entry points were inspected for this same direct-protocol import issue; no equivalent omission was found. This does not add an alternative widget or generic fallback policy.
+
+Original artifact14803110248:1,042,365bytes; SHA25603b9d7c9528ae7c3994ccb7d7f4cb46917a9176b09219928cfadcab1300aec70; all ZIP CRCs verified. Original simulator-logs/06-xcodebuild-simulator.log:7,684,890bytes; SHA256d2511cdc89c268aeab692e5a49e23384e5179d47b42354e47ec70cdb653f21df. [Exact receipt and compiler diagnostics](../../docs/agent-sdk/evidence/widget-host-import-45133911239/receipt.json).
+
+The prepared native asset artifact was retained by the failed run but is not eligible for publication. The corrected host still requires the existing full-app native gate. No selected test passed or failed in this build-only failure, and no portable import/string assertion is presented as Apple compilation proof.

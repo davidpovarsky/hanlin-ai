@@ -1,6 +1,7 @@
 import AppIntents
 import HanlinExtensionContracts
 import HanlinWidgetUI
+import SwiftUI
 import WidgetKit
 
 @main
