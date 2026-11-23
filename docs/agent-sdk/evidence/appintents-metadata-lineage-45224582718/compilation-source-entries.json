@@ -1,0 +1,34 @@
+[
+  {
+    "line": 68809,
+    "text": "SwiftCompile normal arm64 Compiling\\ HanlinScriptingAppIntents.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+  },
+  {
+    "line": 68811,
+    "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+  },
+  {
+    "line": 68817,
+    "text": "SwiftCompile normal arm64 Compiling\\ HanlinScriptingWidgets.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+  },
+  {
+    "line": 68819,
+    "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+  },
+  {
+    "line": 69065,
+    "text": "SwiftCompile normal arm64 Compiling\\ HanlinScriptingAppIntents.swift /Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift (in target 'HanlinScriptingWidgets' from project 'AI_HLY')"
+  },
+  {
+    "line": 69067,
+    "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift (in target 'HanlinScriptingWidgets' from project 'AI_HLY')"
+  },
+  {
+    "line": 69093,
+    "text": "SwiftCompile normal arm64 Compiling\\ HanlinScriptingWidgets.swift /Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift (in target 'HanlinScriptingWidgets' from project 'AI_HLY')"
+  },
+  {
+    "line": 69095,
+    "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift (in target 'HanlinScriptingWidgets' from project 'AI_HLY')"
+  }
+]

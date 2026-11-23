@@ -1,0 +1,49 @@
+Command line invocation:
+    /Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -scheme AI_HLY -resolvePackageDependencies -clonedSourcePackagesDirPath build/SourcePackages -skipPackagePluginValidation -skipMacroValidation
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ e7bf341
+  HanlinSDK: /Users/runner/work/hanlin-ai/hanlin-ai @ local
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.0
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+
+resolved source packages: SwiftAISDK, HanlinSDK, XMLCoder, swift-markdown, TreeSitterBash, SwiftDraw, LLM, TreeSitter, iosMath, MathJaxSwift, Equatable, LaTeXSwiftUI, RichTextKit, swift-argument-parser, SwiftSoup, NetworkImage, SwiftUI-Shimmer, swift-system, SWCompression, SwiftStreamingMarkdown, swift-json-schema, NativeScriptSDK, swift-syntax, swift-log, swift-collections, A2UISwiftCore, Yams, swift-markdown-ui, HTMLEntities, mcp-swift-sdk, CoreXLSX, ZIPFoundation, SwiftyJSON, swift-nio, BitByteData, EventSource, swift-atomics, HighlightSwift, SwiftTreeSitter, cmark-gfm

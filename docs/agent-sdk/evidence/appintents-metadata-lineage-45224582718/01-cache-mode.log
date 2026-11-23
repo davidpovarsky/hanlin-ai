@@ -1,0 +1,10 @@
+force_clean_build=false
+SourcePackages=exact-hit
+DerivedData=miss
+build_mode=cold
+selected_xcode=27.2
+selected_xcode_build=27B52
+runner_arch=arm64
+iphonesimulator_sdk=27.2
+SourcePackages_save=skip_exact_hit
+DerivedData_save=skip_failed_job
