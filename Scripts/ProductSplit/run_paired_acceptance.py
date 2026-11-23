@@ -24,7 +24,8 @@ TEST_PLANS = {
         "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
         "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
         "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
-        "AI_HLYUITests/MiniAppAuthoringUITests"], 8),
+        "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+        "AI_HLYUITests/MiniAppAuthoringUITests"], 12),
     "cross_product": (["AI_HLYUITests/HanlinPairedProductUITests"], 3),
     "shared_ingress": (["AI_HLYTests/ShareInboxHostIntegrationTests", "AI_HLYUITests/HanlinShareInboxUITests"], 5),
     "product_and_share": (["AI_HLYUITests/HanlinPairedProductUITests",
@@ -97,6 +98,25 @@ def authoring_fixtures(documents):
     receipt["archiveSHA256"] = hashlib.sha256(destination.read_bytes()).hexdigest()
     receipt["invalidArchiveSHA256"] = hashlib.sha256(invalid.read_bytes()).hexdigest()
     (EVIDENCE / "authoring-fixture-provenance.json").write_text(json.dumps(receipt, indent=2) + "\n")
+    valid_source = Path(receipt["validPreparedPackagePath"])
+    valid_archive = EVIDENCE / "NativeScriptAuthoringExample.hanlinNativeScript"
+    with zipfile.ZipFile(valid_archive, "x", zipfile.ZIP_DEFLATED) as packed:
+        for file in sorted(valid_source.rglob("*")):
+            if file.is_file():
+                packed.write(file, file.relative_to(valid_source).as_posix())
+    command(["node", "Scripts/MiniApps/miniapp.mjs", "build",
+        "--sdk", str(sdk_extract / "MiniAppSDK"), "--engine", "expo",
+        "--project", str(ROOT / "Scripts/Expo/miniapps/modular-text-search"),
+        "--archive", str(EVIDENCE / "ModularTextSearch.hanlinExpo"),
+        "--report", str(EVIDENCE / "modular-search-build.json")],
+        "modular-search-build.log", timeout=300)
+    sample_report = json.loads((EVIDENCE / "modular-search-build.json").read_text())
+    if not sample_report.get("succeeded"):
+        raise RuntimeError("The actual original modular-search source did not build for this host")
+    (EVIDENCE / "sample-package-hashes.json").write_text(json.dumps({
+        file.name: hashlib.sha256(file.read_bytes()).hexdigest()
+        for file in [valid_archive, EVIDENCE / "ModularTextSearch.hanlinExpo"]
+    }, indent=2) + "\n")
     # The SDK already lives in the shipping app/archive; this extraction is only
     # the fixture producer's temporary compiler input, never an installed result.
     shutil.rmtree(sdk_extract)

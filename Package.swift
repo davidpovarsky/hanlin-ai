@@ -379,8 +379,17 @@ let package = Package(
             path: "Packages/HanlinPlatform/Tests/HanlinChatCoreTests"
         ),
         .target(
+            name: "HanlinScriptWidgetOriginal",
+            dependencies: [.target(name: "HanlinExtensionContracts"), .product(name: "ZIPFoundation", package: "ZIPFoundation")],
+            path: "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal",
+            exclude: ["Original/LICENSE.txt", "Original/NOTICE.txt"],
+            resources: [.copy("Resources/support.bundle")],
+            swiftSettings: [.swiftLanguageMode(.v5)],
+            linkerSettings: [.linkedFramework("JavaScriptCore")]
+        ),
+        .target(
             name: "HanlinScriptExtensions",
-            dependencies: [.target(name: "HanlinExtensionContracts"), .product(name: "SwiftyJSON", package: "SwiftyJSON"), .target(name: "HanlinPlatformContracts"), .target(name: "HanlinScriptContracts"), .target(name: "HanlinScriptStore"), .target(name: "HanlinScriptUI"), .target(name: "HanlinChatCore")],
+            dependencies: [.target(name: "HanlinScriptWidgetOriginal"), .target(name: "HanlinExtensionContracts"), .product(name: "SwiftyJSON", package: "SwiftyJSON"), .target(name: "HanlinPlatformContracts"), .target(name: "HanlinScriptContracts"), .target(name: "HanlinScriptStore"), .target(name: "HanlinScriptUI"), .target(name: "HanlinChatCore")],
             path: "Packages/HanlinPlatform/Sources/HanlinScriptExtensions",
             exclude: ["ScriptWidget/Original/MIT-previous.txt", "ScriptWidget/Original/LICENSE.txt", "ScriptWidget/Original/NOTICE.txt", "ScriptWidget/Original/Component/Attributes/Animation/ClockHandKit-LICENSE.txt"],
             resources: [.copy("Resources/support.bundle"), .copy("Resources/ExpoWidgets.bundle")],

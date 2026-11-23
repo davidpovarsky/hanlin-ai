@@ -107,7 +107,14 @@ def main():
     entitlements = plistlib.loads((ROOT / "HanlinMiniAppsApp/HanlinMiniApps.entitlements").read_bytes())
     assert set(entitlements["com.apple.security.application-groups"]) == {
         "group.com.itorah.chavrusachat", "group.com.itorah.shared"}
-    assert "com.apple.developer.icloud-container-identifiers" not in entitlements
+    # The original ScriptWidget native cloud/document services use the existing
+    # declared container. Product persistence ownership remains checked above.
+    assert entitlements["com.apple.developer.icloud-container-identifiers"] == [
+        "iCloud.com.itorah.chavrusachat"]
+    assert set(entitlements["com.apple.developer.icloud-services"]) == {"CloudKit", "CloudDocuments"}
+    assert entitlements["com.apple.developer.homekit"] is True
+    assert entitlements["keychain-access-groups"] == [
+        "$(AppIdentifierPrefix)com.itorah.hanlinminiapps.scriptwidget.services"]
     info = plistlib.loads((ROOT / "HanlinMiniAppsApp/Info.plist").read_bytes())
     assert info["UTImportedTypeDeclarations"]
     assert info["CFBundleURLTypes"][0]["CFBundleURLSchemes"] == ["hanlinminiapps"]

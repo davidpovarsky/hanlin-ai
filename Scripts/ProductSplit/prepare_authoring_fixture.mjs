@@ -35,6 +35,8 @@ for (const [name, value] of Object.entries(files))
 await fs.writeFile(path.join(project, 'index.ts'), source);
 const built = await runMiniAppOperation({operation: 'build', engine: 'nativescript', projectRoot: project}, {sdkRoot});
 if (!built.succeeded) throw new Error('Actual original SDK fixture build failed:\n' + JSON.stringify(built, null, 2));
+const validPreparedPackagePath = path.join(output, 'valid-package');
+await fs.cp(built.preparedPackagePath, validPreparedPackagePath, {recursive: true, errorOnExist: true, force: false});
 const negative = source.replace('answer: number = 42', 'answer: number = "wrong"');
 await fs.writeFile(path.join(built.preparedPackagePath, 'source', 'index.ts'), negative);
 // Keep the original output and original successful report. The shipping importer
@@ -44,7 +46,7 @@ const checked = await runMiniAppOperation({operation: 'validate', engine: 'nativ
 if (checked.succeeded || !checked.diagnostics.some(item => item.code === 'TS2322' && item.file === 'index.ts' && item.line === 1))
   throw new Error('Negative fixture did not expose the real source diagnostic: ' + JSON.stringify(checked));
 const sha = value => createHash('sha256').update(value).digest('hex');
-const receipt = {schemaVersion: 1, sdk: built.sdk, preparedPackagePath: built.preparedPackagePath,
+const receipt = {schemaVersion: 1, sdk: built.sdk, preparedPackagePath: built.preparedPackagePath, validPreparedPackagePath,
   sourceSHA256: sha(source), negativeSourceSHA256: sha(negative),
   build: built, negativeValidation: checked, scope: 'Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded.'};
 await fs.writeFile(path.join(output, 'fixture.json'), JSON.stringify(receipt, null, 2) + '\n');
