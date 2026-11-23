@@ -1,0 +1,49 @@
+{
+  "utc": "2026-11-23T19:05:57.692938+00:00",
+  "run_id": 45240721804,
+  "run_attempt": 1,
+  "job_id": 137924304553,
+  "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+  "source_scope_sha256": {
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift": "65b14d1853f09c600643cbbc9016723916f56baf95c7a223d8808ed765cadde1",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolHistory.swift": "623c15f05db11d4830685a665f765aa53a11c143a51436a73fd1942fdf2b72e1",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSchema.swift": "8cffe156a8f8346f6b2fa25b8d5b237382d3185b2e24ff7e72bcb98684edafaf",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "52b011d931fcae6c9be2da94ade98e00a13b5fd8379812f8ad293cd9bcbf98ab",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSchemaTests.swift": "7cf017f5f196455239011846ee529057eb17e5bc45821450ea4ed4aedadbe423",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "b2938adaa7cba8ee547980c5b5a6047d414009cb3b0077b5fb3b2c9419f1d6dc",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "9ebefece37869982b4569942af7f61f0c01c61a21ade627f6868b7b438d4b079",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift": "39e14e004a2b1d894ded12b666160dadc2900a00aafafa33974caa56c5a31a06",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05"
+  },
+  "classification": "BLOCKED_RUNNER_ACQUISITION",
+  "run_conclusion": "failure",
+  "job_conclusion": "cancelled",
+  "runner_id": 0,
+  "executed_steps": 0,
+  "artifact_count": 0,
+  "artifact_download_count": 0,
+  "candidate_invocations": {
+    "planned": 32,
+    "status": "NOT_RUN"
+  },
+  "baseline_invocations": {
+    "planned": 12,
+    "status": "NOT_RUN"
+  },
+  "apple_compile": "NOT_RUN",
+  "system_model_generation": "NOT_RUN",
+  "shipping_native_tool_capability": false,
+  "evidence_sha256": {
+    "dispatch-receipt.json": "167601c7088dd8ac79ba4e8cbf4f280290ad301c40ddb7a8a9772d52640615b9",
+    "terminal-check-annotations.json": "89104ba4006b5814d8007c70acab442722cc8cbba521ff7c0d333a51b8b6a287",
+    "acquire.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "dispatch-request.json": "0ce903d20d1d58972ae6171167df827825c364a785a45caeab1cf52ac873149b",
+    "terminal-artifacts.json": "cf9aab5f56815f2d460071d44b89e551e254d9c6b41a31d973e77a75a13c329f",
+    "watcher-result.json": "9f7994d1385254c788e4a14318a1974e049b7222e8a80593d8db7c3830249f9a",
+    "terminal-check.json": "b257c5c1a98190111a08a407482eddbdb16ef1515e3a298b9cae06b335941849",
+    "terminal-run.json": "312b7ed71206e15239e5bb9cf42984495023255434de6d587787134d86a07137",
+    "observed-run.json": "78cbe543f73dcf05926ee33bd7302a5dc1d0fbc77abd4b41c791abbfe8195511",
+    "acquire.stdout.txt": "beefc1bc9a000f45ce6edbfd1d98d00a121847715f43fbd41264f1a30fddf0cf",
+    "terminal-jobs.json": "9efa6d04075435075458da65f127c7ac1862df16c38ab6ff3176228f46fdeb5f"
+  }
+}

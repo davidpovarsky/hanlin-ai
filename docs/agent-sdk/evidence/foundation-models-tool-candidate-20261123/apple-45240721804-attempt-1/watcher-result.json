@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "job": {
+    "id": "job_1bc200db4c39",
+    "type": "job_result",
+    "source": "exec@host_299cf75f6b338ecd",
+    "severity": "info",
+    "tool": "exec",
+    "host": "host_299cf75f6b338ecd",
+    "status": "succeeded",
+    "exit_code": 0,
+    "created_at": 1795459232.657996,
+    "started_at": "2026-11-23T18:40:32.745418+00:00",
+    "finished_at": "2026-11-23T18:56:38.349809+00:00",
+    "duration_s": 965.6,
+    "error": null,
+    "output_truncated": false,
+    "timeout_s": 3500,
+    "read": false,
+    "notified": {
+      "telegram": null,
+      "resend": null
+    },
+    "notify_spec": {},
+    "output": "{\"utc\": \"2026-11-23T18:40:33.751037+00:00\", \"run_id\": 45240721804, \"head_sha\": \"f31147911a74e8984f2a510d6e11aec0bfb12975\", \"status\": \"queued\", \"conclusion\": null, \"selected_jobs\": [{\"id\": 137924304553, \"run_id\": 45240721804, \"workflow_name\": \"Build iOS 26 Unsigned IPA\", \"head_branch\": \"codex/hanlin-sdk02-native-tool-adapter-20261123\", \"run_url\": \"https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45240721804\", \"run_attempt\": 1, \"node_id\": \"CR_kwDOTTRem88AAAAgHO3eqQ\", \"head_sha\": \"f31147911a74e8984f2a510d6e11aec0bfb12975\", \"url\": \"https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/137924304553\", \"html_url\": \"https://github.com/davidpovarsky/hanlin-ai/actions/runs/45240721804/job/137924304553\", \"status\": \"queued\", \"conclusion\": null, \"created_at\": \"2026-11-23T18:39:32Z\", \"started_at\": \"2026-11-23T18:39:32Z\", \"completed_at\": null, \"name\": \"Exact-source Agent SDK Apple tests\", \"steps\": [], \"check_run_url\": \"https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/137924304553\", \"labels\": [\"xcode-27\"], \"runner_id\": 0, \"runner_name\": \"\", \"runner_group_id\": 0, \"runner_group_name\": \"\"}], \"other_non_skipped\": []}\n{\"utc\": \"2026-11-23T18:56:38.337757+00:00\", \"run_id\": 45240721804, \"head_sha\": \"f31147911a74e8984f2a510d6e11aec0bfb12975\", \"status\": \"completed\", \"conclusion\": \"failure\", \"selected_jobs\": [{\"id\": 137924304553, \"run_id\": 45240721804, \"workflow_name\": \"Build iOS 26 Unsigned IPA\", \"head_branch\": \"codex/hanlin-sdk02-native-tool-adapter-20261123\", \"run_url\": \"https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45240721804\", \"run_attempt\": 1, \"node_id\": \"CR_kwDOTTRem88AAAAgHO3eqQ\", \"head_sha\": \"f31147911a74e8984f2a510d6e11aec0bfb12975\", \"url\": \"https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/137924304553\", \"html_url\": \"https://github.com/davidpovarsky/hanlin-ai/actions/runs/45240721804/job/137924304553\", \"status\": \"completed\", \"conclusion\": \"cancelled\", \"created_at\": \"2026-11-23T18:39:32Z\", \"started_at\": \"2026-11-23T18:39:32Z\", \"completed_at\": \"2026-11-23T18:56:21Z\", \"name\": \"Exact-source Agent SDK Apple tests\", \"steps\": [], \"check_run_url\": \"https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/137924304553\", \"labels\": [\"xcode-27\"], \"runner_id\": 0, \"runner_name\": \"\", \"runner_group_id\": 0, \"runner_group_name\": \"\"}], \"other_non_skipped\": []}\nTERMINAL failure"
+  }
+}

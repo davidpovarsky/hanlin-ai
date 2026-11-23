@@ -1,0 +1,17 @@
+{
+  "request": {
+    "ref": "codex/hanlin-sdk02-native-tool-adapter-20261123",
+    "inputs": {
+      "target_validation_group": "agent_sdk_exact_source_proof",
+      "exact_test_selector": "HanlinNativeToolCandidate"
+    }
+  },
+  "head": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+  "remote_head": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+  "started_utc": "2026-11-23T18:39:29.629963+00:00",
+  "finished_utc": "2026-11-23T18:39:31.285068+00:00",
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "prior_run_ids": []
+}
