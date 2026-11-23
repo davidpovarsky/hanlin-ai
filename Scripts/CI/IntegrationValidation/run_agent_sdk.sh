@@ -1,5 +1,14 @@
 #!/bin/bash
 set -euo pipefail
+# This separate composed-source delta never invokes old acceptance suites.
+if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_STOP_SELECTOR'
+import json,sys
+inputs=json.load(open(sys.argv[1])).get('inputs',{})
+sys.exit(0 if inputs.get('exact_test_selector') == 'HanlinStopContinuationDelta' else 1)
+PY_STOP_SELECTOR
+then
+  exec python3 "$(git rev-parse --show-toplevel)/Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py"
+fi
 # Only this explicit isolated-candidate selector changes the legacy selection.
 if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_SELECTOR'
 import json,sys
