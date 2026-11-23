@@ -144,145 +144,157 @@ def main():
             if not re.search(r'(?m)^\s*\d+\)\s+' + distribution_identity + r'\s+"', identities):
                 raise RuntimeError("The existing distribution identity is not trusted for local code signing")
             state["existing_distribution_identity"]["os_codesigning_trust"] = "VERIFIED"
-            state["provisioning_profiles"] = []
-            profiles = resolve_original_profiles(cert_sha, folder, state["provisioning_profiles"])
-            # Xcode's current cache and the established legacy cache both receive
-            # the same verified bytes. Cleanup removes only this job's own files.
-            profile_directories = [
-                Path.home() / "Library/Developer/Xcode/UserData/Provisioning Profiles",
-                Path.home() / "Library/MobileDevice/Provisioning Profiles",
-            ]
-            for profile in profiles:
-                install_profile(profile, profile_directories, installed_profiles)
-            profile_mapping = {profile["bundle"]: profile["uuid"] for profile in profiles}
-            state["installed_profile_readback"] = {}
-            installed_profile_receipt(profiles, profile_directories, state["installed_profile_readback"])
-            preflight_only = os.environ.get("SPLIT_SIGNING_PREFLIGHT_ONLY", "false").lower() == "true"
-            _, sdk = run(["xcrun", "--sdk", "iphoneos", "--show-sdk-version"], "device-sdk")
-            if int(sdk.strip().split(".")[0]) != 27:
-                raise RuntimeError("The current stable iOS 27 SDK is required")
-            run(["xcodebuild", "-version"], "xcode-version")
-            run(["xcrun", "swiftc", "--version"], "swift-version")
-            state["provisioning_preflight"] = {}
-            run_profile_discovery_preflight(
-                folder, profiles, os.environ["APPLE_TEAM_ID"], distribution_identity,
-                cert_sha, run, state["provisioning_preflight"])
-            derived = ROOT / "build/ReleaseDerivedData"
-            packages = ROOT / "build/SourcePackages"
-            common = ["xcodebuild", "-project", "AI_HLY.xcodeproj",
-                      "-clonedSourcePackagesDirPath", packages,
-                      "-skipPackagePluginValidation", "-skipMacroValidation"]
-            if not preflight_only:
-                run(common + ["-scheme", "AI_HLY", "-resolvePackageDependencies"], "resolve-original-packages", 600)
-                run([sys.executable, "Scripts/CI/stage_a2ui_schemas.py", "--source-packages-path", packages,
-                     "--derived-data-path", derived, "--evidence", OUT / "original-a2ui-schemas"],
-                     "original-schema-generator", 360)
-            export_options = folder / "ExportOptions.plist"
-            options = {
-                "method": "app-store-connect", "destination": "export",
-                "signingStyle": "manual", "teamID": os.environ["APPLE_TEAM_ID"],
-                "signingCertificate": distribution_identity, "uploadSymbols": False,
-                "manageAppVersionAndBuildNumber": False, "stripSwiftSymbols": True
-            }
-            product_archives = [] if preflight_only else [
-                ("miniapps", "HanlinMiniApps", "com.itorah.hanlinminiapps"),
-                ("ai", "AI_HLY", "com.itorah.chavrusachat")]
-            for role, scheme, bundle in product_archives:
-                product = {"role": role, "bundle_id": bundle, "archive": "NOT_RUN", "export": "NOT_RUN",
-                           "entitlements": "NOT_RUN"}
-                state["products"].append(product)
-                selected_bundles = {b for r, b, _, _ in ROLES
-                                    if (r == "miniapps") == (role == "miniapps")}
-                options["provisioningProfiles"] = {b: profile_mapping[b] for b in selected_bundles}
-                export_options.write_bytes(plistlib.dumps(options))
-                export_options.chmod(0o600)
-                archive = ROOT / "build/ReleaseArchives" / (scheme + ".xcarchive")
-                archive.parent.mkdir(exist_ok=True)
-                export = OUT / role
-                result, _ = run(common + ["-scheme", scheme, "-configuration", "Release",
-                    "-destination", "generic/platform=iOS", "-derivedDataPath", derived,
-                    "-archivePath", archive, "archive",
-                    "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
-                    "CODE_SIGN_IDENTITY=", "PROVISIONING_PROFILE_SPECIFIER=",
-                    "PROVISIONING_PROFILE="],
-                    role + "-archive", 3300, required=False)
-                product["archive"] = "EXECUTED_PASS" if result == 0 else "EXECUTED_FAIL"
-                if result:
-                    continue
-                info = plistlib.loads((archive / "Info.plist").read_bytes())
-                application = info.get("ApplicationProperties", {})
-                if application.get("CFBundleIdentifier") != bundle:
-                    raise RuntimeError("Archive identity does not match the original product")
-                product["version"] = application.get("CFBundleShortVersionString")
-                product["build"] = application.get("CFBundleVersion")
-                product["profile_cache_at_export"] = {}
-                installed_profile_receipt(
-                    [profile for profile in profiles if profile["bundle"] in selected_bundles],
-                    profile_directories, product["profile_cache_at_export"])
-                result, _ = run(["xcodebuild", "-exportArchive", "-archivePath", archive,
-                    "-exportPath", export, "-exportOptionsPlist", export_options],
-                    role + "-export", 600, required=False)
-                product["export"] = "EXECUTED_PASS" if result == 0 else "EXECUTED_FAIL"
-                if result:
-                    continue
-                ipas = list(export.glob("*.ipa"))
-                if len(ipas) != 1:
-                    raise RuntimeError("Export must contain exactly one product IPA")
-                product["ipa_sha256"] = hashlib.sha256(ipas[0].read_bytes()).hexdigest()
-                product["ipa_file"] = str(ipas[0].relative_to(OUT))
-                extract = folder / (role + "-export")
-                with zipfile.ZipFile(ipas[0]) as package:
-                    for member in package.infolist():
-                        if member.filename.startswith("/") or ".." in Path(member.filename).parts:
-                            raise RuntimeError("Unsafe IPA member")
-                    package.extractall(extract)
-                apps = list((extract / "Payload").glob("*.app"))
-                if len(apps) != 1:
-                    raise RuntimeError("Exported product has an ambiguous app payload")
-                run(["codesign", "--verify", "--deep", "--strict", apps[0]], role + "-signature")
-                targets = [apps[0], *apps[0].glob("PlugIns/*.appex")]
-                expected = {b: (name, path) for name, b, _, path in ROLES if name != "miniapps"} if role == "ai" else {
-                    b: (name, path) for name, b, _, path in ROLES if name == "miniapps"}
-                observed = {}
-                for target in targets:
-                    bundle_info = plistlib.loads((target / "Info.plist").read_bytes())
-                    identity = bundle_info["CFBundleIdentifier"]
-                    if identity not in expected:
-                        raise RuntimeError("Unexpected signed extension or product")
-                    name, source = expected[identity]
-                    decoded = subprocess.run(["security", "cms", "-D", "-i", str(target / "embedded.mobileprovision")],
-                                             capture_output=True, timeout=20, check=True)
-                    check = evaluate_profile(plistlib.loads(decoded.stdout),
-                        plistlib.loads((ROOT / source).read_bytes()), identity,
-                        os.environ["APPLE_TEAM_ID"], cert_sha, datetime.now(timezone.utc))
-                    signed = subprocess.run(["codesign", "--display", "--entitlements", "-", "--xml", str(target)],
-                                            capture_output=True, timeout=20, check=True)
-                    raw_entitlements = signed.stdout + signed.stderr
-                    start = raw_entitlements.find(b"<?xml")
-                    end = raw_entitlements.find(b"</plist>", start)
-                    if start < 0 or end < start:
-                        raise RuntimeError("Signed product did not expose its real entitlements")
-                    signed_profile = plistlib.loads(decoded.stdout)
-                    signed_profile["Entitlements"] = plistlib.loads(raw_entitlements[start:end + len(b"</plist>")])
-                    actual = evaluate_profile(signed_profile, plistlib.loads((ROOT / source).read_bytes()),
-                                              identity, os.environ["APPLE_TEAM_ID"], cert_sha,
-                                              datetime.now(timezone.utc))
-                    check["actual_signature_entitlements"] = actual["checks"]["required_entitlements_covered"]
-                    check["actual_signature_identity"] = actual["checks"]["bundle_matches"]
-                    if actual["status"] != "READY_RESOURCE":
-                        check["status"] = "BLOCKED"
-                        check["actual_signature_missing_keys"] = actual["missing_or_mismatched_entitlement_keys"]
-                    observed[identity] = check
-                if set(observed) != set(expected) or any(v["status"] != "READY_RESOURCE" for v in observed.values()):
-                    product["profile_checks"] = observed
-                    raise RuntimeError("Exported profiles do not cover every original product entitlement")
-                product.update(entitlements="EXECUTED_PASS", profile_checks=observed)
-            if preflight_only:
-                state["status"] = "PROVISIONING_PREFLIGHT_PASS"
-                state["scope"] = "Original identity and entitlement provisioning preflight only; original product archives were not run."
+            owner_plan = ROOT / "Config/MiniAppsOwnerSigningPlan.json"
+            if (os.environ.get("SPLIT_SIGNING_PREFLIGHT_ONLY", "false").lower() == "true"
+                    and owner_plan.is_file()):
+                from cross_app_owner_provisioning import run_cross_app_owner_provisioning
+                state["scope"] = "Explicit registered cross-app owner group provisioning and signed probes only."
+                state["cross_app_owner_provisioning"] = {}
+                run_cross_app_owner_provisioning(
+                    folder, owner_plan, team=os.environ["APPLE_TEAM_ID"],
+                    identity=distribution_identity, certificate_sha=cert_sha, run=run,
+                    receipt=state["cross_app_owner_provisioning"])
+                state["status"] = "CROSS_APP_PROVISIONING_PASS"
             else:
-                state["status"] = "EXECUTED_PASS" if len(state["products"]) == 2 and all(
-                    p["entitlements"] == "EXECUTED_PASS" for p in state["products"]) else "SIGNING_OR_BUILD_FAILED"
+                state["provisioning_profiles"] = []
+                profiles = resolve_original_profiles(cert_sha, folder, state["provisioning_profiles"])
+                # Xcode's current cache and the established legacy cache both receive
+                # the same verified bytes. Cleanup removes only this job's own files.
+                profile_directories = [
+                    Path.home() / "Library/Developer/Xcode/UserData/Provisioning Profiles",
+                    Path.home() / "Library/MobileDevice/Provisioning Profiles",
+                ]
+                for profile in profiles:
+                    install_profile(profile, profile_directories, installed_profiles)
+                profile_mapping = {profile["bundle"]: profile["uuid"] for profile in profiles}
+                state["installed_profile_readback"] = {}
+                installed_profile_receipt(profiles, profile_directories, state["installed_profile_readback"])
+                preflight_only = os.environ.get("SPLIT_SIGNING_PREFLIGHT_ONLY", "false").lower() == "true"
+                _, sdk = run(["xcrun", "--sdk", "iphoneos", "--show-sdk-version"], "device-sdk")
+                if int(sdk.strip().split(".")[0]) != 27:
+                    raise RuntimeError("The current stable iOS 27 SDK is required")
+                run(["xcodebuild", "-version"], "xcode-version")
+                run(["xcrun", "swiftc", "--version"], "swift-version")
+                state["provisioning_preflight"] = {}
+                run_profile_discovery_preflight(
+                    folder, profiles, os.environ["APPLE_TEAM_ID"], distribution_identity,
+                    cert_sha, run, state["provisioning_preflight"])
+                derived = ROOT / "build/ReleaseDerivedData"
+                packages = ROOT / "build/SourcePackages"
+                common = ["xcodebuild", "-project", "AI_HLY.xcodeproj",
+                          "-clonedSourcePackagesDirPath", packages,
+                          "-skipPackagePluginValidation", "-skipMacroValidation"]
+                if not preflight_only:
+                    run(common + ["-scheme", "AI_HLY", "-resolvePackageDependencies"], "resolve-original-packages", 600)
+                    run([sys.executable, "Scripts/CI/stage_a2ui_schemas.py", "--source-packages-path", packages,
+                         "--derived-data-path", derived, "--evidence", OUT / "original-a2ui-schemas"],
+                         "original-schema-generator", 360)
+                export_options = folder / "ExportOptions.plist"
+                options = {
+                    "method": "app-store-connect", "destination": "export",
+                    "signingStyle": "manual", "teamID": os.environ["APPLE_TEAM_ID"],
+                    "signingCertificate": distribution_identity, "uploadSymbols": False,
+                    "manageAppVersionAndBuildNumber": False, "stripSwiftSymbols": True
+                }
+                product_archives = [] if preflight_only else [
+                    ("miniapps", "HanlinMiniApps", "com.itorah.hanlinminiapps"),
+                    ("ai", "AI_HLY", "com.itorah.chavrusachat")]
+                for role, scheme, bundle in product_archives:
+                    product = {"role": role, "bundle_id": bundle, "archive": "NOT_RUN", "export": "NOT_RUN",
+                               "entitlements": "NOT_RUN"}
+                    state["products"].append(product)
+                    selected_bundles = {b for r, b, _, _ in ROLES
+                                        if (r == "miniapps") == (role == "miniapps")}
+                    options["provisioningProfiles"] = {b: profile_mapping[b] for b in selected_bundles}
+                    export_options.write_bytes(plistlib.dumps(options))
+                    export_options.chmod(0o600)
+                    archive = ROOT / "build/ReleaseArchives" / (scheme + ".xcarchive")
+                    archive.parent.mkdir(exist_ok=True)
+                    export = OUT / role
+                    result, _ = run(common + ["-scheme", scheme, "-configuration", "Release",
+                        "-destination", "generic/platform=iOS", "-derivedDataPath", derived,
+                        "-archivePath", archive, "archive",
+                        "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
+                        "CODE_SIGN_IDENTITY=", "PROVISIONING_PROFILE_SPECIFIER=",
+                        "PROVISIONING_PROFILE="],
+                        role + "-archive", 3300, required=False)
+                    product["archive"] = "EXECUTED_PASS" if result == 0 else "EXECUTED_FAIL"
+                    if result:
+                        continue
+                    info = plistlib.loads((archive / "Info.plist").read_bytes())
+                    application = info.get("ApplicationProperties", {})
+                    if application.get("CFBundleIdentifier") != bundle:
+                        raise RuntimeError("Archive identity does not match the original product")
+                    product["version"] = application.get("CFBundleShortVersionString")
+                    product["build"] = application.get("CFBundleVersion")
+                    product["profile_cache_at_export"] = {}
+                    installed_profile_receipt(
+                        [profile for profile in profiles if profile["bundle"] in selected_bundles],
+                        profile_directories, product["profile_cache_at_export"])
+                    result, _ = run(["xcodebuild", "-exportArchive", "-archivePath", archive,
+                        "-exportPath", export, "-exportOptionsPlist", export_options],
+                        role + "-export", 600, required=False)
+                    product["export"] = "EXECUTED_PASS" if result == 0 else "EXECUTED_FAIL"
+                    if result:
+                        continue
+                    ipas = list(export.glob("*.ipa"))
+                    if len(ipas) != 1:
+                        raise RuntimeError("Export must contain exactly one product IPA")
+                    product["ipa_sha256"] = hashlib.sha256(ipas[0].read_bytes()).hexdigest()
+                    product["ipa_file"] = str(ipas[0].relative_to(OUT))
+                    extract = folder / (role + "-export")
+                    with zipfile.ZipFile(ipas[0]) as package:
+                        for member in package.infolist():
+                            if member.filename.startswith("/") or ".." in Path(member.filename).parts:
+                                raise RuntimeError("Unsafe IPA member")
+                        package.extractall(extract)
+                    apps = list((extract / "Payload").glob("*.app"))
+                    if len(apps) != 1:
+                        raise RuntimeError("Exported product has an ambiguous app payload")
+                    run(["codesign", "--verify", "--deep", "--strict", apps[0]], role + "-signature")
+                    targets = [apps[0], *apps[0].glob("PlugIns/*.appex")]
+                    expected = {b: (name, path) for name, b, _, path in ROLES if name != "miniapps"} if role == "ai" else {
+                        b: (name, path) for name, b, _, path in ROLES if name == "miniapps"}
+                    observed = {}
+                    for target in targets:
+                        bundle_info = plistlib.loads((target / "Info.plist").read_bytes())
+                        identity = bundle_info["CFBundleIdentifier"]
+                        if identity not in expected:
+                            raise RuntimeError("Unexpected signed extension or product")
+                        name, source = expected[identity]
+                        decoded = subprocess.run(["security", "cms", "-D", "-i", str(target / "embedded.mobileprovision")],
+                                                 capture_output=True, timeout=20, check=True)
+                        check = evaluate_profile(plistlib.loads(decoded.stdout),
+                            plistlib.loads((ROOT / source).read_bytes()), identity,
+                            os.environ["APPLE_TEAM_ID"], cert_sha, datetime.now(timezone.utc))
+                        signed = subprocess.run(["codesign", "--display", "--entitlements", "-", "--xml", str(target)],
+                                                capture_output=True, timeout=20, check=True)
+                        raw_entitlements = signed.stdout + signed.stderr
+                        start = raw_entitlements.find(b"<?xml")
+                        end = raw_entitlements.find(b"</plist>", start)
+                        if start < 0 or end < start:
+                            raise RuntimeError("Signed product did not expose its real entitlements")
+                        signed_profile = plistlib.loads(decoded.stdout)
+                        signed_profile["Entitlements"] = plistlib.loads(raw_entitlements[start:end + len(b"</plist>")])
+                        actual = evaluate_profile(signed_profile, plistlib.loads((ROOT / source).read_bytes()),
+                                                  identity, os.environ["APPLE_TEAM_ID"], cert_sha,
+                                                  datetime.now(timezone.utc))
+                        check["actual_signature_entitlements"] = actual["checks"]["required_entitlements_covered"]
+                        check["actual_signature_identity"] = actual["checks"]["bundle_matches"]
+                        if actual["status"] != "READY_RESOURCE":
+                            check["status"] = "BLOCKED"
+                            check["actual_signature_missing_keys"] = actual["missing_or_mismatched_entitlement_keys"]
+                        observed[identity] = check
+                    if set(observed) != set(expected) or any(v["status"] != "READY_RESOURCE" for v in observed.values()):
+                        product["profile_checks"] = observed
+                        raise RuntimeError("Exported profiles do not cover every original product entitlement")
+                    product.update(entitlements="EXECUTED_PASS", profile_checks=observed)
+                if preflight_only:
+                    state["status"] = "PROVISIONING_PREFLIGHT_PASS"
+                    state["scope"] = "Original identity and entitlement provisioning preflight only; original product archives were not run."
+                else:
+                    state["status"] = "EXECUTED_PASS" if len(state["products"]) == 2 and all(
+                        p["entitlements"] == "EXECUTED_PASS" for p in state["products"]) else "SIGNING_OR_BUILD_FAILED"
         except Exception as error:
             state["error"] = sanitize(str(error))
             if state["status"] == "NOT_RUN":
@@ -308,7 +320,7 @@ def main():
             (OUT / "acceptance.json").write_text(json.dumps(state, indent=2) + "\n")
             shutil.copy2(OUT / "acceptance.json", OUT.parent / "acceptance.json")
             print(json.dumps(state))
-    return 0 if state["status"] in {"EXECUTED_PASS", "PROVISIONING_PREFLIGHT_PASS"} and state["cleanup"] == "PASS" else 1
+    return 0 if state["status"] in {"EXECUTED_PASS", "PROVISIONING_PREFLIGHT_PASS", "CROSS_APP_PROVISIONING_PASS"} and state["cleanup"] == "PASS" else 1
 
 if __name__ == "__main__":
     sys.exit(main())

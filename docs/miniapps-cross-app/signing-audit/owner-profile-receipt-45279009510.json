@@ -1,0 +1,272 @@
+{
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45279009510",
+  "source_commit": "30e01e1a955b46154a278e504c1fcb118abefec2",
+  "timestamp": "2026-11-23T22:37:53.718851+00:00",
+  "status": "OWNER_RESOURCES_READ_BACK",
+  "owner_team": "NA6HPWARQ2",
+  "artifact_sha256": "7d76a157523f1bcce782ea196bffe6d6aad2bbcbaed558d2d3c6aaf5aae330c0",
+  "products": [
+    {
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+      "resource_id": "4Y4ZRZD6LF",
+      "name": "Anytype AnytypeWidget",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "com.gloiiire.anytype.torahtrial.NA6HPWARQ2.AnytypeShareExtension",
+      "resource_id": "6999ZXH355",
+      "name": "Pinkha Torah Trial AnytypeShareExtension",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "com.davidpovarsky.chavrusatext",
+      "resource_id": "7F445975JM",
+      "name": "ChavrusaText",
+      "capabilities": [
+        "APP_GROUPS",
+        "ICLOUD",
+        "ICLOUD_EXTENDED_SHARE_ACCESS",
+        "IN_APP_PURCHASE",
+        "PUSH_NOTIFICATIONS"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 78,
+      "active_profile_count": 76,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [
+        [
+          "group.com.davidpovarsky.chavrusatext",
+          "group.com.davidpovarsky.itorah"
+        ]
+      ],
+      "representative_profile": {
+        "resource_id": "MT859RH6M6",
+        "portal_name": "ChavrusaText_App_Store_Automated_35660249014_1",
+        "profile_type": "IOS_APP_STORE",
+        "profile_state": "ACTIVE",
+        "portal_expiration": "2027-09-07T07:25:00.000+00:00",
+        "name": "ChavrusaText_App_Store_Automated_35660249014_1",
+        "uuid": "fa5c0d12-fe97-4769-9058-8db2abdc6bbd",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.com.davidpovarsky.chavrusatext",
+        "app_groups": [
+          "group.com.davidpovarsky.chavrusatext",
+          "group.com.davidpovarsky.itorah"
+        ],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "active": true,
+        "usable_existing_shared_group_profile": false
+      }
+    },
+    {
+      "bundle_id": "com.gloiiire.anytype.torahtrial.NA6HPWARQ2.homewidget",
+      "resource_id": "A2J8UYZ658",
+      "name": "Pinkha Torah Trial AnytypeWidget",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+      "resource_id": "F234VTD7KH",
+      "name": "Anytype AnytypeNotificationServiceExtension",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "com.gloiiire.anytype.torahtrial.NA6HPWARQ2",
+      "resource_id": "GS8LDYP7UR",
+      "name": "Anytype Torah Trial",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "com.gloiiire.anytype.torahtrial.NA6HPWARQ2.AnytypeNotificationExtension",
+      "resource_id": "GXYTFMZNYB",
+      "name": "Pinkha Torah Trial AnytypeNotificationServiceExtension",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "com.gloiiire.pinkha.NA6HPWARQ2",
+      "resource_id": "KL7FJZ2ZW8",
+      "name": "Pinkha",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "io.anytype.app.NA6HPWARQ2",
+      "resource_id": "KTRM7V4TCD",
+      "name": "Anytype",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "com.Drn.maktabah.NA6HPWARQ2",
+      "resource_id": "RYQP688K9B",
+      "name": "Maktabah",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+      "resource_id": "SQCVS5F3BA",
+      "name": "Anytype AnytypeShareExtension",
+      "capabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 0,
+      "active_profile_count": 0,
+      "shared_group_profile_count": 0,
+      "observed_profile_group_sets": [],
+      "representative_profile": null
+    },
+    {
+      "bundle_id": "com.itorah.hanlinminiapps",
+      "resource_id": "ZMP944AT2R",
+      "name": "Hanlin MiniApps",
+      "capabilities": [
+        "APP_GROUPS",
+        "EXTENDED_VIRTUAL_ADDRESSING",
+        "HEALTHKIT",
+        "IN_APP_PURCHASE",
+        "USERNOTIFICATIONS_TIMESENSITIVE",
+        "WEATHERKIT"
+      ],
+      "profile_inventory_complete": true,
+      "profile_count": 1,
+      "active_profile_count": 1,
+      "shared_group_profile_count": 1,
+      "observed_profile_group_sets": [
+        [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      ],
+      "representative_profile": {
+        "resource_id": "7V7WFACZT8",
+        "portal_name": "Hanlin miniapps App Store 44383723446",
+        "profile_type": "IOS_APP_STORE",
+        "profile_state": "ACTIVE",
+        "portal_expiration": "2027-09-07T07:25:00.000+00:00",
+        "name": "Hanlin miniapps App Store 44383723446",
+        "uuid": "340e5061-5117-4840-b518-677d08ce5fcf",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.com.itorah.hanlinminiapps",
+        "app_groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": true,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": true,
+        "compatible_with_existing_certificate": true,
+        "distribution": true,
+        "active": true,
+        "usable_existing_shared_group_profile": true
+      }
+    }
+  ],
+  "interpretation": "Owner Anytype identities exist but have no profiles. Their assigned private group is not inferred from APP_GROUPS capability alone. New profiles will read existing grants before any App ID updates."
+}

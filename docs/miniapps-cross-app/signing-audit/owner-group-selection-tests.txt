@@ -1,0 +1,8 @@
+Original signing branch body remains byte-equivalent after indentation.
+Both changed Python sources parse.
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+exit=0

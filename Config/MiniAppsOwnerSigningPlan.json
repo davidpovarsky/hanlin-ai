@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "scope": "miniapps-cross-app-owner-groups",
+  "owner_team": "NA6HPWARQ2",
+  "shared_group": "group.com.itorah.shared",
+  "identity_audit": {
+    "run_id": 45279009510,
+    "source_sha": "30e01e1a955b46154a278e504c1fcb118abefec2",
+    "artifact_sha256": "7d76a157523f1bcce782ea196bffe6d6aad2bbcbaed558d2d3c6aaf5aae330c0"
+  },
+  "native_storage_families": {
+    "anytype_owner": {
+      "preferred_existing_groups": [
+        "group.io.anytype.app.NA6HPWARQ2",
+        "group.io.anytype.app"
+      ],
+      "new_group_if_no_existing_grants": "group.io.anytype.app.NA6HPWARQ2"
+    }
+  },
+  "products": [
+    {
+      "role": "otzaria",
+      "bundle_id": "com.davidpovarsky.chavrusatext",
+      "apple_bundle_resource_id": "7F445975JM",
+      "entitlements": {
+        "aps-environment": "development",
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.davidpovarsky.chavrusatext"
+        ],
+        "com.apple.developer.icloud-services": [
+          "CloudDocuments",
+          "CloudKit"
+        ],
+        "com.apple.developer.ubiquity-container-identifiers": [
+          "iCloud.com.davidpovarsky.chavrusatext"
+        ],
+        "com.apple.developer.ubiquity-kvstore-identifier": "$(TeamIdentifierPrefix)$(CFBundleIdentifier)",
+        "com.apple.security.application-groups": [
+          "group.com.davidpovarsky.chavrusatext",
+          "group.com.davidpovarsky.itorah",
+          "group.com.itorah.shared"
+        ]
+      },
+      "source_entitlements": {
+        "revision": "fb369f911d38ce7e7f10be6c2e4a68df1c875067",
+        "path": "Source/ChavrusaText-iOS.entitlements",
+        "sha256": "bc3644771d2b7181653126c9cb29bfbade51ec152d22825e45b1659a9692f4cc"
+      }
+    },
+    {
+      "role": "anytype",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2",
+      "apple_bundle_resource_id": "KTRM7V4TCD",
+      "native_storage_family": "anytype_owner",
+      "entitlements": {
+        "aps-environment": "development",
+        "com.apple.developer.associated-domains": [
+          "applinks:invite-stage.any.coop",
+          "applinks:invite.any.coop"
+        ],
+        "com.apple.developer.networking.multicast": true,
+        "com.apple.developer.usernotifications.communication": true,
+        "com.apple.security.application-groups": [
+          "group.com.itorah.shared"
+        ]
+      },
+      "source_entitlements": {
+        "revision": "e65cefbfa52608e6ebd5f7ab9ab076b00937b059",
+        "path": "Anytype/Anytype.entitlements",
+        "sha256": "ca47074b2f6ad2cf22ad484c8e6dc5ffc32be9d0258c595391962cbaf8ed6605"
+      },
+      "owner_mapping": "Upstream native group is replaced only for the owner overlay by the group resolved from Apple profile readback; original source/defaults are unchanged."
+    },
+    {
+      "role": "anytype_share",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+      "apple_bundle_resource_id": "SQCVS5F3BA",
+      "native_storage_family": "anytype_owner",
+      "entitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.shared"
+        ]
+      },
+      "source_entitlements": {
+        "revision": "e65cefbfa52608e6ebd5f7ab9ab076b00937b059",
+        "path": "AnytypeShareExtension/AnytypeShareExtension.entitlements",
+        "sha256": "e5b405ffdff588db48bc8ca8d56dde1ba9546b2dd4309b9c2612cb39cfddaa37"
+      },
+      "owner_mapping": "Upstream native group is replaced only for the owner overlay by the group resolved from Apple profile readback; original source/defaults are unchanged."
+    },
+    {
+      "role": "anytype_notification",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+      "apple_bundle_resource_id": "F234VTD7KH",
+      "native_storage_family": "anytype_owner",
+      "entitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.shared"
+        ]
+      },
+      "source_entitlements": {
+        "revision": "e65cefbfa52608e6ebd5f7ab9ab076b00937b059",
+        "path": "AnytypeNotificationServiceExtension/AnytypeNotificationServiceExtension.entitlements",
+        "sha256": "e5b405ffdff588db48bc8ca8d56dde1ba9546b2dd4309b9c2612cb39cfddaa37"
+      },
+      "owner_mapping": "Upstream native group is replaced only for the owner overlay by the group resolved from Apple profile readback; original source/defaults are unchanged."
+    },
+    {
+      "role": "anytype_widget",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+      "apple_bundle_resource_id": "4Y4ZRZD6LF",
+      "native_storage_family": "anytype_owner",
+      "entitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.shared"
+        ]
+      },
+      "source_entitlements": {
+        "revision": "e65cefbfa52608e6ebd5f7ab9ab076b00937b059",
+        "path": null,
+        "note": "The owner widget target needs the same native storage group as its containing app."
+      },
+      "owner_mapping": "Upstream native group is replaced only for the owner overlay by the group resolved from Apple profile readback; original source/defaults are unchanged."
+    }
+  ],
+  "producer_existing_profile": {
+    "bundle_id": "com.itorah.hanlinminiapps",
+    "resource_id": "ZMP944AT2R",
+    "name": "Hanlin MiniApps",
+    "capabilities": [
+      "APP_GROUPS",
+      "EXTENDED_VIRTUAL_ADDRESSING",
+      "HEALTHKIT",
+      "IN_APP_PURCHASE",
+      "USERNOTIFICATIONS_TIMESENSITIVE",
+      "WEATHERKIT"
+    ],
+    "profile_inventory_complete": true,
+    "profile_count": 1,
+    "active_profile_count": 1,
+    "shared_group_profile_count": 1,
+    "observed_profile_group_sets": [
+      [
+        "group.com.itorah.chavrusachat",
+        "group.com.itorah.shared"
+      ]
+    ],
+    "representative_profile": {
+      "resource_id": "7V7WFACZT8",
+      "portal_name": "Hanlin miniapps App Store 44383723446",
+      "profile_type": "IOS_APP_STORE",
+      "profile_state": "ACTIVE",
+      "portal_expiration": "2027-09-07T07:25:00.000+00:00",
+      "name": "Hanlin miniapps App Store 44383723446",
+      "uuid": "340e5061-5117-4840-b518-677d08ce5fcf",
+      "team_ids": [
+        "NA6HPWARQ2"
+      ],
+      "app_identifier_prefixes": [
+        "NA6HPWARQ2"
+      ],
+      "application_identifier": "NA6HPWARQ2.com.itorah.hanlinminiapps",
+      "app_groups": [
+        "group.com.itorah.chavrusachat",
+        "group.com.itorah.shared"
+      ],
+      "expiration": "2027-09-07T07:25:00+00:00",
+      "checks": {
+        "owner_team_matches": true,
+        "bundle_matches": true,
+        "not_expired": true,
+        "shared_group_granted": true,
+        "existing_distribution_certificate_matches": true
+      },
+      "signed_profile_supports_shared_group": true,
+      "compatible_with_existing_certificate": true,
+      "distribution": true,
+      "active": true,
+      "usable_existing_shared_group_profile": true
+    }
+  },
+  "scope_notes": [
+    "All product bundle identities below are already registered in the owner account.",
+    "Current group assignments are read from existing or newly issued profiles before Xcode changes App IDs.",
+    "Every existing granted group is preserved; an owner private group is requested only when no family profile has a private group.",
+    "The existing producer profile is reused as account evidence; no duplicate producer provisioning probe is run.",
+    "This optional plan activates only the existing signing-preflight workflow in this isolated branch."
+  ]
+}

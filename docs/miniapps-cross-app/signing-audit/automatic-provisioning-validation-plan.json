@@ -1,0 +1,17 @@
+{
+  "scope": "Existing owner identity native App Group discovery, official Xcode automatic provisioning, signed probe readback",
+  "checks": [
+    "Live registered identity lookup",
+    "Reuse compatible profile or POST a profile for current App ID without changing assignments",
+    "Resolve actual native group and preserve all current profile groups",
+    "Xcode ASC-key automatic provisioning with REGISTER_APP_GROUPS=YES",
+    "Verify embedded profile and signed binary groups, original distribution certificate, unchanged existing capabilities"
+  ],
+  "production_app_install_or_upload": false,
+  "baseline_repeats": "None; only three new native-group selection tests. Existing MiniApps profile grant reused.",
+  "source_sha256": {
+    "Scripts/ProductSplit/prepare_signed_products.py": "44cb08e5c1e1a9f5506e9395c33d5c4b0ea70e764f5dc80c4a7c9cb296793c44",
+    "Scripts/ProductSplit/cross_app_owner_provisioning.py": "729d3b334e30e619a0a1ec4ba7c5e0f5f8ed8af240641d71c831515d946ea8de",
+    "Config/MiniAppsOwnerSigningPlan.json": "14f02616c8c5010b5216b42a016303b56cbc317f5016f18b1380adda8ce7f229"
+  }
+}
