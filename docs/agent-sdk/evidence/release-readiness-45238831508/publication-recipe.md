@@ -16,7 +16,7 @@ Check disk/memory before large extraction. Use an owned isolated worktree at the
 
 ## 2. Exact catalog and archive checks
 
-Require sourceCommit=36d3c51bdba93ada2c2722ed0e9b99109d84a616, scope=full, missingTargets=[], exactly 14 unique original framework and four support records. Require the complete eleven-name inputSHA256 set to match exact Git and materialized source through the original verify_source_inputs guard. Retain the independently checked metadata helper hash from qualification.json. The precise binding of this additional source helper to preparation and installed archives is under read-only provenance review; this recipe does not pre-approve publication.
+Require sourceCommit=36d3c51bdba93ada2c2722ed0e9b99109d84a616, scope=full, missingTargets=[], exactly 14 unique original framework and four support records. Require the complete eleven-name inputSHA256 set to match exact Git and materialized source through the original verify_source_inputs guard. Retain the independently checked metadata helper hash from qualification.json. The bounded review is retained in metadata-helper-boundary.json: the helper is source-selected for the later Host metadata phase and is not a Native18 preparation/archive input. The normal shared installer checks that source. No per-helper runner-byte claim or additional publication gate is introduced.
 
 With PREPARED set to the authenticated extraction directory, run the original source's verifier:
 
