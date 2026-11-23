@@ -66,7 +66,7 @@ let package = Package(
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", exact: "5.0.1"),
         .package(
             url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
-            revision: "e7bf34111e603ca977becd007dd4e5bb109af857"
+            revision: "29c966696795fe1431bca7afd8cb91011c665a41"
         ),
         .package(
             url: "https://github.com/weichsel/ZIPFoundation.git",
