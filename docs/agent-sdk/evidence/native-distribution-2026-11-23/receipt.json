@@ -1,0 +1,29 @@
+{
+  "state": "PACKAGING_AND_DEPENDENCY_PROOFS_PASS_PUBLICATION_PENDING",
+  "exporterTests": {
+    "methods": 5,
+    "status": "PASS",
+    "log": "exporter-tests.log"
+  },
+  "selectedInstallTest": {
+    "methods": 1,
+    "status": "PASS",
+    "log": "selected-install-test.log"
+  },
+  "realNativeArtifact": "NodeMobile from frozen producer; exported ZIP matches SwiftPM compute-checksum; no engine rebuild",
+  "sourceArchive": "frozen-runtime-receipt.json",
+  "coreExport": "core-export-receipt.json",
+  "unsafeFlags": "unsafe-flags-receipt.json",
+  "productClosure": "product-closure-receipt.json",
+  "notRun": [
+    "Full14-artifact original Apple export",
+    "Publication/upload and public URL readback",
+    "Original Apple host build using installed selected SDK",
+    "Python and NativeScript host-stage execution"
+  ],
+  "sourceSHA256": {
+    "Scripts/SDK/native_artifacts.py": "84a32c3d64ea2c2c1065e861937d9717594d147ce23a1063370cda23d462b7b7",
+    "Scripts/SDK/tests/test_native_artifacts.py": "19fc2b6873310c053206fc9086a30dbcd51b66497de6cb10ca2df27e08985bda",
+    ".github/workflows/publish-sdk-native-artifacts.yml": "11e560f7ae2333360ca334907e162f45815e65a7a07b5c7eea011da84496aae5"
+  }
+}

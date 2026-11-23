@@ -1,0 +1,19 @@
+{
+  "swift": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+  "fixtureCommit": "cf0d5e1734554649ad069769e773385fa3c4e171",
+  "scope": "Actual SwiftPM remote HTTP source-control fixture; not an original Hanlin host build",
+  "results": {
+    "version": {
+      "exitCode": 0,
+      "tail": "Building for debugging...\n[Computing dependencies]\n[Pre-planning 1\u2009/\u200967]\n[Planning deferred tasks]\n[22\u2009/\u200933] UnsafeLibrary\n[24\u2009/\u200935] UnsafeLibrary\n[32\u2009/\u200938] Consumer-product\n[33\u2009/\u200938] Consumer-product\n[36\u2009/\u200939] UnsafeLibrary\n[40\u2009/\u200940] Consumer-product\nBuild complete! (6.06 secs)\nFetching http://127.0.0.1:33751/UnsafeLibrary.git\nFetched http://127.0.0.1:33751/UnsafeLibrary.git (0.05s)\nComputing version for http://127.0.0.1:33751/UnsafeLibrary.git\nComputed http://127.0.0.1:33751/UnsafeLibrary.git at 1.0.0 (0.48s)\nCreating working copy for http://127.0.0.1:33751/UnsafeLibrary.git\nWorking copy of http://127.0.0.1:33751/UnsafeLibrary.git resolved at 1.0.0\n"
+    },
+    "revision": {
+      "exitCode": 0,
+      "tail": "Building for debugging...\n[Constructing description]\n[Planning deferred tasks]\n[22\u2009/\u200933] UnsafeLibrary\n[24\u2009/\u200935] UnsafeLibrary\n[33\u2009/\u200938] Consumer-product\n[36\u2009/\u200939] AllExcludingTests\n[40\u2009/\u200940] Consumer-product\nBuild complete! (5.88 secs)\nFetching http://127.0.0.1:33751/UnsafeLibrary.git from cache\nFetched http://127.0.0.1:33751/UnsafeLibrary.git from cache (0.03s)\nCreating working copy for http://127.0.0.1:33751/UnsafeLibrary.git\nWorking copy of http://127.0.0.1:33751/UnsafeLibrary.git resolved at cf0d5e1734554649ad069769e773385fa3c4e171\n"
+    },
+    "installed": {
+      "exitCode": 0,
+      "tail": "Building for debugging...\n[Constructing description]\n[Planning deferred tasks]\n[22\u2009/\u200933] UnsafeLibrary\n[24\u2009/\u200935] UnsafeLibrary\n[32\u2009/\u200938] Consumer-product\n[33\u2009/\u200938] Consumer-product\n[36\u2009/\u200939] Consumer-product\n[40\u2009/\u200940] Consumer-product\nBuild complete! (5.21 secs)\n"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "state": "PASS_PREPARED_NOT_PUBLISHED",
+  "sourceArchiveSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+  "swiftPMChecksum": "2f3efea1868261b6878f529612ed93b21c7b2da433f025ef47bff9df16b700b8",
+  "artifact": {
+    "archive": "NodeMobile.xcframework.zip",
+    "bytes": 35086561,
+    "checksum": "2f3efea1868261b6878f529612ed93b21c7b2da433f025ef47bff9df16b700b8",
+    "installPath": "Vendor/NodeMobile/NodeMobile.xcframework",
+    "kind": "xcframework",
+    "libraries": [
+      {
+        "architectures": [
+          "arm64"
+        ],
+        "binary": "ios-arm64-simulator/NodeMobile.framework/NodeMobile",
+        "binarySHA256": "a0daa0ebeb6a1f819726fff5228f2efadd58be9b8475ffe142edc992194bb8a0",
+        "identifier": "ios-arm64-simulator",
+        "platform": "ios",
+        "variant": "simulator"
+      },
+      {
+        "architectures": [
+          "arm64"
+        ],
+        "binary": "ios-arm64/NodeMobile.framework/NodeMobile",
+        "binarySHA256": "86492ee2e27c580f38747522a443094b5db02aa74b9460b3a593545f5bc2a23c",
+        "identifier": "ios-arm64",
+        "platform": "ios",
+        "variant": null
+      }
+    ],
+    "root": "NodeMobile.xcframework",
+    "target": "NodeMobile",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-ef5a256a459728eadc7cb979fef952db4021150f33e4ecfb0521cbb993d5f950/NodeMobile.xcframework.zip"
+  },
+  "runtimeRebuilt": false
+}

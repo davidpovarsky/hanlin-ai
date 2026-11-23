@@ -1,0 +1,10 @@
+test_archive_paths_and_symlinks_cannot_escape_installation (__main__.NativeArtifactsTests.test_archive_paths_and_symlinks_cannot_escape_installation) ... ok
+test_archive_roundtrip_preserves_bytes_permissions_and_internal_symlinks (__main__.NativeArtifactsTests.test_archive_roundtrip_preserves_bytes_permissions_and_internal_symlinks) ... ok
+test_catalog_rejects_retargeted_url_and_changed_content_identity (__main__.NativeArtifactsTests.test_catalog_rejects_retargeted_url_and_changed_content_identity) ... ok
+test_corrupt_checksum_stops_before_installing_any_file (__main__.NativeArtifactsTests.test_corrupt_checksum_stops_before_installing_any_file) ... ok
+test_missing_or_non_native_slices_are_not_publishable (__main__.NativeArtifactsTests.test_missing_or_non_native_slices_are_not_publishable) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.012s
+
+OK
