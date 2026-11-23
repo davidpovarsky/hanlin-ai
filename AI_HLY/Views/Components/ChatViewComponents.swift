@@ -28,133 +28,9 @@ import HanlinChatUI
 import HanlinPresentationKit
 
 
-struct LoadingGradientText: View {
-    let text: String
-    var textColor: Color = .gray
-    var font: Font = HanlinTypography.body.weight(.medium)
-    var isActive: Bool = true
-
-    var body: some View {
-        HanlinActivityTitle(text, font: font, baseColor: textColor, isActive: isActive)
-    }
-}
-
-/// Deliver touch-down immediately to controls inside a single containing
-/// transcript `UIScrollView` without changing `canCancelContentTouches`,
-/// scroll enablement, pan recognition, or global `UIAppearance`.
-@MainActor
-struct ChatScrollImmediateContentTouches: UIViewRepresentable {
-    var onScrollViewChanged: @MainActor (UIScrollView?) -> Void = { _ in }
-
-    func makeUIView(context: Context) -> ConfigurationView {
-        let view = ConfigurationView()
-        view.onScrollViewChanged = onScrollViewChanged
-        view.isUserInteractionEnabled = false
-        view.isAccessibilityElement = false
-        view.backgroundColor = .clear
-        return view
-    }
-
-    func updateUIView(_ uiView: ConfigurationView, context: Context) {
-        uiView.onScrollViewChanged = onScrollViewChanged
-        uiView.applyIfNeeded()
-    }
-
-    func sizeThatFits(_ proposal: ProposedViewSize, uiView: ConfigurationView, context: Context) -> CGSize? {
-        .zero
-    }
-
-    static func dismantleUIView(_ uiView: ConfigurationView, coordinator: ()) {
-        uiView.restoreOriginalValue()
-        uiView.onScrollViewChanged = { _ in }
-    }
-
-    final class ConfigurationView: UIView {
-        var onScrollViewChanged: @MainActor (UIScrollView?) -> Void = { _ in }
-        private weak var observedScrollView: UIScrollView?
-        private var originalDelaysContentTouches: Bool?
-
-        override func didMoveToWindow() {
-            super.didMoveToWindow()
-            if window == nil {
-                restoreOriginalValue()
-            } else {
-                applyIfNeeded()
-            }
-        }
-
-        override func didMoveToSuperview() {
-            super.didMoveToSuperview()
-            applyIfNeeded()
-        }
-
-        override func layoutSubviews() {
-            super.layoutSubviews()
-            applyIfNeeded()
-        }
-
-        func restoreOriginalValue() {
-            if let scrollView = observedScrollView, let original = originalDelaysContentTouches {
-                scrollView.delaysContentTouches = original
-            }
-            observedScrollView = nil
-            originalDelaysContentTouches = nil
-            onScrollViewChanged(nil)
-        }
-
-        func applyIfNeeded() {
-            guard let window else {
-                restoreOriginalValue()
-                return
-            }
-            if let scrollView = observedScrollView,
-               scrollView.window === window,
-               isDescendant(of: scrollView) {
-                if scrollView.delaysContentTouches {
-                    scrollView.delaysContentTouches = false
-                }
-                onScrollViewChanged(scrollView)
-                return
-            }
-            var ancestor = superview
-            var containingScrollView: UIScrollView?
-            while let view = ancestor {
-                if let scrollView = view as? UIScrollView, !(scrollView is UITextView) {
-                    containingScrollView = scrollView
-                    break
-                }
-                ancestor = view.superview
-            }
-            guard let scrollView = containingScrollView else {
-                restoreOriginalValue()
-                return
-            }
-            if observedScrollView !== scrollView {
-                restoreOriginalValue()
-                observedScrollView = scrollView
-                originalDelaysContentTouches = scrollView.delaysContentTouches
-            }
-            if scrollView.delaysContentTouches {
-                scrollView.delaysContentTouches = false
-            }
-            onScrollViewChanged(scrollView)
-        }
-    }
-}
-
-extension View {
-    @MainActor
-    func chatScrollImmediateContentTouches(
-        onScrollViewChanged: @escaping @MainActor (UIScrollView?) -> Void = { _ in }
-    ) -> some View {
-        background(alignment: .topLeading) {
-            ChatScrollImmediateContentTouches(onScrollViewChanged: onScrollViewChanged)
-                .frame(width: 0, height: 0)
-                .accessibilityHidden(true)
-                .allowsHitTesting(false)
-        }
-    }
-}
+// Original implementations are shared with standalone SDK consumers.
+typealias LoadingGradientText = HanlinChatUI.LoadingGradientText
+typealias ChatScrollImmediateContentTouches = HanlinChatUI.ChatScrollImmediateContentTouches
 
 typealias ChatToolApprovalPresentation = HanlinAgentActivityUI.ChatToolApprovalPresentation
 
@@ -2397,47 +2273,8 @@ struct ChatBubbleView: View {
     }
 
     // MARK: - 折叠按钮组件
-    private struct ToggleButton: View {
-        let title: String
-        let timeText: String
-        @Binding var isExpanded: Bool
-        var isActive = false
-        var numericCount: Int? = nil
-        var usesAnimatedDisclosure = false
-        @Environment(\.chatMotion) private var motion
-        
-        var body: some View {
-            Button(action: {
-                if usesAnimatedDisclosure { isExpanded.toggle() }
-                else { withAnimation { isExpanded.toggle() } }
-            }) {
-                HStack {
-                    if isActive {
-                        LoadingGradientText(text: title, font: HanlinTypography.caption)
-                    } else {
-                        Text(title).font(HanlinTypography.caption).foregroundColor(Color(.systemGray))
-                    }
-                    Spacer()
-                    if !timeText.isEmpty {
-                        Text(timeText)
-                            .font(HanlinTypography.caption)
-                            .foregroundColor(.gray)
-                            .contentTransition(motion.numericCounts && numericCount != nil
-                                ? .numericText(value: Double(numericCount ?? 0)) : .opacity)
-                            .animation(motion.updateAnimation, value: timeText)
-                    }
-                    Image(systemName: "chevron.down")
-                        .foregroundColor(Color(.systemGray))
-                        .rotationEffect(.degrees(isExpanded ? 180 : 0))
-                        .animation(motion.disclosureAnimation(expanding: isExpanded), value: isExpanded)
-                }
-                .padding(.vertical, 5)
-                .padding(.horizontal, 5)
-                .contentShape(Rectangle())
-            }
-        }
-    }
-    
+    private typealias ToggleButton = HanlinChatUI.HanlinActivityToggleButton
+
     @ViewBuilder
     private func chatBubbleImage() -> some View {
         VStack(alignment: .leading, spacing: 6) {
