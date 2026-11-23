@@ -57,12 +57,8 @@ for required_path in "${required_paths[@]}"; do
   test -e "${required_path}" || { echo "RuntimeCore preflight is missing ${required_path}." >&2; exit 1; }
 done
 
-grep -Fq \
-  'Downstream/RuntimeCore/Node/Host/node_modules,' \
-  "${REPOSITORY_ROOT}/AI_HLY.xcodeproj/project.pbxproj" || {
-    echo "RuntimeCore preflight requires Node Host node_modules to be excluded from the synchronized AI_HLY target." >&2
-    exit 1
-  }
+python3 "${SCRIPT_DIR}/validate_runtime_host_source_exclusion.py" \
+  --project "${REPOSITORY_ROOT}/AI_HLY.xcodeproj/project.pbxproj"
 
 plutil -lint "${NODE_FRAMEWORK}/Info.plist"
 plutil -lint "${PYTHON_FRAMEWORK}/Info.plist"
