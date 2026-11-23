@@ -42,7 +42,8 @@ public struct HanlinToolActivityHeader: View {
     @State private var loadedIconURL: URL?
     @State private var loadedIconData: Data?
 
-    private let blue = Color(red: 0.28, green: 0.49, blue: 0.80)
+    @Environment(\.hanlinChatAppearance) private var appearance
+    private var blue: Color { appearance.toolAccent ?? Color(red: 0.28, green: 0.49, blue: 0.80) }
 
     public init(title: String, status: String, symbol: String, family: Family = .generic,
                 isActive: Bool, showsShimmer: Bool? = nil, isExpanded: Bool = false, isFailure: Bool = false,
@@ -233,7 +234,7 @@ public struct HanlinToolActivityHeader: View {
         .frame(minHeight: 47)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(RoundedRectangle(cornerRadius: 13, style: .continuous)
-            .fill(Color(red: 0.952, green: 0.971, blue: 0.990)))
+            .fill(appearance.toolSurface ?? Color(red: 0.952, green: 0.971, blue: 0.990)))
         .overlay(RoundedRectangle(cornerRadius: 13, style: .continuous)
             .stroke(blue.opacity(0.12), lineWidth: 0.8))
         .accessibilityElement(children: .combine)

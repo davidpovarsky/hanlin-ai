@@ -74,7 +74,8 @@ public struct HanlinDetachedCapabilityChips: View {
         self.open = open; self.disable = disable
     }
 
-    private let blue = Color(red: 58 / 255, green: 124 / 255, blue: 180 / 255)
+    @Environment(\.hanlinChatAppearance) private var appearance
+    private var blue: Color { appearance.capabilityAccent ?? Color(red: 58 / 255, green: 124 / 255, blue: 180 / 255) }
 
     public static func usesCompactLayout(width: CGFloat) -> Bool { width < 510 }
 

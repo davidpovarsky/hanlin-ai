@@ -11,6 +11,7 @@ public struct HanlinUserMessageBubble<Menu: View>: View {
     public let containerWidth: CGFloat
     public let temporaryRecord: Bool
     private let menu: Menu
+    @Environment(\.hanlinChatAppearance) private var appearance
 
     public init(text: String, containerWidth: CGFloat, temporaryRecord: Bool = false,
                 @ViewBuilder contextMenu: () -> Menu) {
@@ -23,8 +24,12 @@ public struct HanlinUserMessageBubble<Menu: View>: View {
             Text(text)
         }
         .padding(10)
-        .background(temporaryRecord ? .primary : Color.hanlinHLBlue)
-        .foregroundColor(temporaryRecord ? Color(.systemBackground) : .white)
+        .background(temporaryRecord
+            ? (appearance.temporaryMessageBackground ?? .primary)
+            : (appearance.userMessageBackground ?? Color.hanlinHLBlue))
+        .foregroundColor(temporaryRecord
+            ? (appearance.temporaryMessageForeground ?? Color(.systemBackground))
+            : (appearance.userMessageForeground ?? .white))
         .contextMenu { menu }
         .clipShape(HanlinMessageCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
         .fixedSize(horizontal: false, vertical: true)

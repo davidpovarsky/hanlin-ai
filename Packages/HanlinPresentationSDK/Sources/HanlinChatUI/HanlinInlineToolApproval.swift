@@ -21,16 +21,17 @@ public struct HanlinInlineToolApproval: View {
     @Environment(\.colorScheme) private var colorScheme
     @ScaledMetric(relativeTo: .footnote) private var titleSize: CGFloat = 14
 
-    private let blue = Color(red: 0.28, green: 0.49, blue: 0.80)
+    @Environment(\.hanlinChatAppearance) private var appearance
+    private var blue: Color { appearance.toolAccent ?? Color(red: 0.28, green: 0.49, blue: 0.80) }
     private var ink: Color {
-        colorScheme == .dark
+        appearance.toolInk ?? (colorScheme == .dark
             ? Color(red: 0.66, green: 0.79, blue: 0.98)
-            : Color(red: 0.27, green: 0.43, blue: 0.65)
+            : Color(red: 0.27, green: 0.43, blue: 0.65))
     }
     private var surfaceFill: Color {
-        colorScheme == .dark
+        appearance.toolSurface ?? (colorScheme == .dark
             ? Color(red: 0.11, green: 0.15, blue: 0.21)
-            : Color(red: 0.952, green: 0.971, blue: 0.990)
+            : Color(red: 0.952, green: 0.971, blue: 0.990))
     }
     private var allowButtonFill: Color {
         colorScheme == .dark

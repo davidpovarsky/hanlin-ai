@@ -188,8 +188,9 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
         self.input = input
     }
 
-    private let blue = HanlinMorphStyle.blue
-    private let azure = HanlinMorphStyle.azure
+    @Environment(\.hanlinChatAppearance) private var appearance
+    private var blue: Color { appearance.composerAccent ?? HanlinMorphStyle.blue }
+    private var azure: Color { appearance.composerHighlight ?? HanlinMorphStyle.azure }
 
     private var pageID: HanlinMorphPageID<Page> {
         activePage.map(HanlinMorphPageID.detail) ?? .home
