@@ -18,16 +18,18 @@ EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
 TEST_SCOPE = os.environ.get('SPLIT_NATIVE_TEST_SCOPE', 'baseline')
 UI_PLANS = {
     'cross_app': (['HanlinMiniAppsTests/CrossAppInvocationTests',
-                  'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests'], 10),
+                  'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
+                  'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests'], 12),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
     # Cross-app adapters and teardown changed: recheck these two runtime cases
-    # and ten new producer/UI cases. Do not repeat unchanged storage tests.
+    # and twelve new producer/UI cases. Do not repeat unchanged storage tests.
     'production_runtimes': ([
         'HanlinMiniAppsTests/CrossAppInvocationTests',
         'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
+        'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
-        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 12),
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 14),
 }
 
 
@@ -85,6 +87,20 @@ def main():
         shutil.copy2(scheme, EVIDENCE/'HanlinMiniApps.xcscheme')
         resolved = ROOT/'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved'
         (EVIDENCE/'Package.resolved').write_bytes(resolved.read_bytes())
+        # Match the existing paired/original-app CI policy for this already
+        # pinned upstream generator. The standalone helper omitted these
+        # command-local noninteractive flags in run 45285438881.
+        a2ui_pin = next(pin for pin in json.loads(resolved.read_bytes())['pins']
+                        if pin['identity'] == 'a2ui')
+        if a2ui_pin['location'] != 'https://github.com/a2ui-project/a2ui' or \
+                a2ui_pin['state']['revision'] != '3ed9601862ecc78027e20ac80ad8b1b98a5d9079':
+            raise RuntimeError('The qualified A2UI generator pin changed; update its build evidence')
+        state['headless_package_policy'] = {
+            'source': 'Scripts/ProductSplit/run_paired_acceptance.py',
+            'source_sha256': hashlib.sha256((ROOT/'Scripts/ProductSplit/run_paired_acceptance.py').read_bytes()).hexdigest(),
+            'a2ui': a2ui_pin,
+            'scope': 'CURRENT_XCODEBUILD_COMMAND_ONLY_NO_GLOBAL_PREFERENCES_CHANGED',
+        }
         runtimes = json.loads(command(['xcrun', 'simctl', 'list', 'runtimes', '-j'], 'runtimes.json'))['runtimes']
         sdk = command(['xcrun', '--sdk', 'iphonesimulator', '--show-sdk-version'], 'simulator-sdk.txt').strip()
         runtime = next(r for r in runtimes if r.get('isAvailable') and not r.get('isInternal')
@@ -124,6 +140,9 @@ def main():
                 '-destination', 'platform=iOS Simulator,id='+simulator+',arch='+architecture,
                 '-parallel-testing-enabled', 'NO',
                 '-derivedDataPath', str(derived), *package_arguments,
+                # Same pinned build-plugin and macro policy used by the
+                # existing original-app and paired-product CI commands.
+                '-skipPackagePluginValidation', '-skipMacroValidation',
                 # Preserve the original target's simulator entitlements. An
                 # unsigned build cannot exercise widget/package publication.
                 'CODE_SIGNING_ALLOWED=YES', 'CODE_SIGNING_REQUIRED=YES', 'CODE_SIGN_IDENTITY=-']
@@ -277,6 +296,11 @@ def main():
                 provenance.append({'source': source.relative_to(ROOT).as_posix(), 'sha256': digest,
                                    'destination': str(destination), 'bytes': source.stat().st_size})
             (EVIDENCE/'runtime-fixtures.json').write_text(json.dumps(provenance, indent=2)+'\n')
+        if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+            command([sys.executable, 'Scripts/ProductSplit/stage_external_modal_fixture.py',
+                     '--simulator-udid', simulator, '--app-path', str(app_product),
+                     '--evidence', str(EVIDENCE/'external-modal')],
+                    'external-modal-staging.log', timeout=180)
         argv = base + ['test-without-building',
                 '-resultBundlePath', str(EVIDENCE/'MiniApps.xcresult')]
         argv += ['-only-testing:' + selector for selector in selectors]
@@ -291,6 +315,14 @@ def main():
             raw = command(['xcrun','xcresulttool','get','test-results','summary','--path',str(result)], 'test-summary.json')
             summary = json.loads(raw)
             state['summary'] = summary
+            try:
+                command(['xcrun', 'xcresulttool', 'export', 'attachments',
+                         '--path', str(result), '--output-path', str(EVIDENCE/'ui-attachments')],
+                        'ui-attachment-export.log', timeout=180)
+                state['ui_attachments'] = 'EXPORTED_FROM_ACTUAL_XCRESULT'
+            except Exception as export_error:
+                # The raw xcresult remains available for read-only export.
+                state['ui_attachment_export_error'] = str(export_error)
             passed, failed = summary.get('passedTests',0), summary.get('failedTests',0)
             command(['xcrun', 'xcresulttool', 'get', 'test-results', 'tests',
                 '--path', str(result)], 'test-nodes.json')
@@ -298,6 +330,11 @@ def main():
                 '--results', str(EVIDENCE/'test-nodes.json'), '--selectors', ','.join(selectors)],
                 'requested-tests.log')
             if process.returncode == 0 and passed == expected_tests and failed == 0 and summary.get('skippedTests',0) == 0:
+                if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+                    state.update(status='RUNTIME_RESULT_VALIDATION_FAILED', ui='EXECUTED_PASS')
+                    staging = json.loads((EVIDENCE/'external-modal/staging.json').read_text())
+                    command(staging['verify_command'], 'external-modal-actual-result.json')
+                    state['external_modal_result'] = 'ACTUAL_RUNTIME_RESULT_VERIFIED'
                 state.update(status='EXECUTED_PASS',ui='EXECUTED_PASS')
             elif failed:
                 state.update(status='TEST_FAILED',ui='TEST_FAILED')
@@ -358,12 +395,18 @@ def main():
         (EVIDENCE/'native-acceptance-duration-seconds.txt').write_text(str(int(state['duration_seconds']))+'\n')
         (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
         if TEST_SCOPE in {'cross_app', 'production_runtimes'} and state.get('build') == 'EXECUTED_PASS':
-            exported = subprocess.run([sys.executable, 'Scripts/ProductSplit/export_cross_app_simulator.py'],
-                                      cwd=ROOT, capture_output=True, text=True)
-            (EVIDENCE/'producer-export.log').write_text(exported.stdout + exported.stderr)
-            if exported.returncode:
+            # Consumers require the actual built app. Preserve genuine UI/build
+            # passes, but an absent export must not leave the delivery gate green.
+            try:
+                command([sys.executable, 'Scripts/ProductSplit/export_cross_app_simulator.py'],
+                        'producer-export.log', timeout=300)
+                state['producer_export'] = 'EXECUTED_PASS'
+            except Exception as export_error:
                 state['producer_export'] = 'FAILED'
-                (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
+                state['producer_export_error'] = str(export_error)
+                if state['status'] == 'EXECUTED_PASS':
+                    state['status'] = 'PRODUCER_EXPORT_FAILED'
+            (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
         # No deletion/erase: preserve the dedicated device for failure diagnosis.
     return 0 if state['status'] == 'EXECUTED_PASS' else 1
 

@@ -85,7 +85,8 @@ final class HanlinMiniAppsProvider {
             case .swift: false
             }
             guard producedApplication else { throw Failure.launchDidNotProduceApplication }
-            return AnyView(ScriptingApplicationContainerView(platform: platform))
+            return AnyView(ScriptingApplicationContainerView(
+                platform: platform, ownsApplicationLifetime: includesDismissControl))
         }
     }
 

@@ -134,6 +134,24 @@ final class CrossAppInvocationTests: XCTestCase {
         XCTAssertNil(sceneIdentity, "Closing the invocation must clear the same scene identity.")
     }
 
+    func testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained() throws {
+        let (root, store) = try fixture()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let original = request("close this invocation")
+        _ = try store.enqueue(original)
+        let session = HanlinExternalMiniAppSession(
+            requestID: original.id, store: store, openSource: { _ in true })
+        try session.restoreRequest()
+        var owner: HanlinExternalMiniAppLifetime? = .init(session: session)
+        weak var weakOwner = owner
+        owner = nil
+        XCTAssertNil(weakOwner)
+        XCTAssertEqual(try store.result(id: original.id)?.status, .cancelled,
+            "Removing the view owner must persist cancellation even if async work retains the session.")
+        XCTAssertNil(session.request)
+        XCTAssertNil(session.view)
+    }
+
     func testActualIncomingRequestsCreateDistinctIPadScenes() async throws {
         XCTAssertEqual(UIDevice.current.userInterfaceIdiom, .pad, "This scope requires the actual iPad destination.")
         let store = try MiniAppBridgeStore()

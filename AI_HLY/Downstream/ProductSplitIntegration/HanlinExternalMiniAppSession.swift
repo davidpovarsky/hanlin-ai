@@ -270,15 +270,29 @@ final class HanlinExternalMiniAppSession {
     }
 }
 
+/// The state lifetime ends when this invocation is removed, not when a child
+/// full-screen presentation temporarily covers it. An async engine load may
+/// retain the session after removal, so the owner must close it independently.
+@MainActor
+final class HanlinExternalMiniAppLifetime {
+    let session: HanlinExternalMiniAppSession
+
+    init(session: HanlinExternalMiniAppSession) { self.session = session }
+
+    isolated deinit { session.close() }
+}
+
 /// Uses the existing MiniApp view and runtime; contains no substitute engine.
 @MainActor
 public struct HanlinExternalMiniAppView: View {
-    @State private var session: HanlinExternalMiniAppSession
+    @State private var lifetime: HanlinExternalMiniAppLifetime
+    private var session: HanlinExternalMiniAppSession { lifetime.session }
 
     private let onClose: () -> Void
 
     public init(requestID: UUID, onClose: @escaping () -> Void = {}) {
-        _session = State(initialValue: HanlinExternalMiniAppSession(requestID: requestID))
+        _lifetime = State(initialValue: HanlinExternalMiniAppLifetime(
+            session: HanlinExternalMiniAppSession(requestID: requestID)))
         self.onClose = onClose
     }
 
@@ -324,7 +338,9 @@ public struct HanlinExternalMiniAppView: View {
                 }
             }
             .navigationTitle(session.request?.source.documentTitle ?? "MiniApps")
-            .task { await session.load() }
+            // Do not retain the state owner in suspended loading work: removal
+            // must close its session even while an engine preparation awaits.
+            .task { [session = lifetime.session] in await session.load() }
             .alert(label("MiniApps", "מיני אפליקציות"), isPresented: Binding(
                 get: { session.error != nil && (session.view != nil || session.result != nil) },
                 set: { if !$0 { session.error = nil } }
@@ -332,7 +348,6 @@ public struct HanlinExternalMiniAppView: View {
               message: { Text(session.error ?? "") }
         }
         .accessibilityIdentifier("miniapps.external.window")
-        .onDisappear { session.close() }
     }
 
     private func label(_ english: String, _ hebrew: String) -> String {

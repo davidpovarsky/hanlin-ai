@@ -419,7 +419,13 @@ struct ScriptingInstalledPackageDetailView: View {
 
 struct ScriptingApplicationContainerView: View {
     let platform: HanlinScriptingPlatform
+    let ownsApplicationLifetime: Bool
     @Environment(\.dismiss) private var dismiss
+
+    init(platform: HanlinScriptingPlatform, ownsApplicationLifetime: Bool = true) {
+        self.platform = platform
+        self.ownsApplicationLifetime = ownsApplicationLifetime
+    }
 
     var body: some View {
         NavigationStack {
@@ -435,12 +441,14 @@ struct ScriptingApplicationContainerView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button(hanlin: "Close") {
-                        platform.dismissActiveApplication()
-                        dismiss()
+                if ownsApplicationLifetime {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(hanlin: "Close") {
+                            platform.dismissActiveApplication()
+                            dismiss()
+                        }
+                        .accessibilityIdentifier("hanlin-script-app-close")
                     }
-                    .accessibilityIdentifier("hanlin-script-app-close")
                 }
             }
         }
@@ -453,7 +461,11 @@ struct ScriptingApplicationContainerView: View {
             }
             .interactiveDismissDisabled()
         }
-        .onDisappear { platform.dismissActiveApplication() }
+        .onDisappear {
+            // An external invocation supplies its own close/return controls and
+            // owns the runtime across this container's nested presentations.
+            if ownsApplicationLifetime { platform.dismissActiveApplication() }
+        }
     }
 }
 
