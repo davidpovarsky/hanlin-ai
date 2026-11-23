@@ -32,6 +32,7 @@ def main():
                     sdk_test_exit=None, ios_build_exit=None)
     commands = []
     scratch = None
+    header_recheck = False
     environment = os.environ.copy()
 
     def run(name, argv, cwd=root, check=True, timeout=1200):
@@ -66,9 +67,15 @@ def main():
         event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
         inputs = event.get("inputs", {})
         selector = inputs.get("exact_test_selector")
-        if selector not in {"HanlinNativeToolCandidate", "HanlinNativeToolCandidateRecheck"} or inputs.get("target_validation_group") != "agent_sdk_exact_source_proof":
+        if selector not in {"HanlinNativeToolCandidate", "HanlinNativeToolCandidateRecheck", "HanlinNativeToolHeaderRecheck"} or inputs.get("target_validation_group") != "agent_sdk_exact_source_proof":
             raise RuntimeError("Native candidate validation requires the exact reviewed opt-in route")
-        reuse_baseline = selector == "HanlinNativeToolCandidateRecheck"
+        header_recheck = selector == "HanlinNativeToolHeaderRecheck"
+        reuse_baseline = selector in {"HanlinNativeToolCandidateRecheck", "HanlinNativeToolHeaderRecheck"}
+        if header_recheck:
+            from verify_native_tool_header_recheck import (
+                HEADER_EXPECTED, HEADER_SELECTORS, REFERENCE_PATH as HEADER_REFERENCE_PATH,
+                prepare_header_reuse, summarize_header_recheck,
+            )
         (evidence / "selected-route.json").write_text(json.dumps(dict(
             exact_test_selector=selector, target_validation_group=inputs["target_validation_group"],
             baseline="REUSE_REQUESTED" if reuse_baseline else "FRESH_REQUESTED",
@@ -104,6 +111,9 @@ def main():
                           "Scripts/CI/select_stable_xcode.py"]
         if reuse_baseline:
             workflow_paths += [str(path.relative_to(root)) for path in sorted((root / REFERENCE_PATH).iterdir()) if path.is_file()]
+        if header_recheck:
+            workflow_paths += ["Scripts/CI/IntegrationValidation/verify_native_tool_header_recheck.py"]
+            workflow_paths += [str(path.relative_to(root)) for path in sorted((root / HEADER_REFERENCE_PATH).iterdir()) if path.is_file()]
         for relative in workflow_paths:
             if (root / relative).read_bytes() != subprocess.check_output(["git", "show", head + ":" + relative], cwd=root):
                 raise RuntimeError("Workflow source differs from Git: " + relative)
@@ -163,7 +173,8 @@ def main():
                 # Retain richer per-method exports from this same execution. If
                 # a new Xcode shape cannot be interpreted, the verifier blocks
                 # and these originals permit review without rerunning tests.
-                suites = EXPECTED["SDKTests" if result == "SDKTests" else "CoreTests"]
+                suites = (HEADER_EXPECTED if header_recheck and result == "SDKTests" else
+                          EXPECTED["SDKTests" if result == "SDKTests" else "CoreTests"])
                 parameterized = {suite + "/" + method for suite, methods in suites.items()
                                  for method, arguments in methods.items() if arguments is not None}
                 seen, exports = set(), []
@@ -198,6 +209,9 @@ def main():
         if reuse_baseline:
             prepare_reuse(root, evidence)
             statuses["baseline_execution"] = "REUSED_VERIFIED"
+            if header_recheck:
+                prepare_header_reuse(root, evidence)
+                statuses["accepted_cases_execution"] = "REUSED_VERIFIED"
             # No baseline subprocess ran. Its original exit belongs to the
             # separate authenticated reference, never to current process status.
         else:
@@ -213,11 +227,13 @@ def main():
                 continue  # The actual resolved locks are retained and verified separately.
             if sha(scratch / relative) != digest:
                 raise RuntimeError("Candidate source was not fully restored before acceptance: " + relative)
-        statuses["core_test_exit"] = test("CoreTests", core, core_scheme, boundary)
-        statuses["sdk_test_exit"] = test("SDKTests", sdk, sdk_scheme, [
+        if not header_recheck:
+            statuses["core_test_exit"] = test("CoreTests", core, core_scheme, boundary)
+        sdk_selectors = HEADER_SELECTORS if header_recheck else [
             "HanlinAgentCoreTests/HanlinAppleToolSchemaTests",
             "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests",
-        ])
+        ]
+        statuses["sdk_test_exit"] = test("SDKTests", sdk, sdk_scheme, sdk_selectors)
         statuses["ios_build_exit"], _ = run("IOSBuild", [
             "xcodebuild", "build", "-scheme", "HanlinAgentCore", "-destination", "generic/platform=iOS Simulator",
             "-derivedDataPath", scratch / "IOSDerivedData", "-resultBundlePath", evidence / "IOSBuild.xcresult", *common
@@ -250,7 +266,7 @@ def main():
                 statuses["preparation_exit"] = 1
                 (evidence / "resolution-error.txt").write_text(str(error) + "\n")
         (evidence / "process-status.json").write_text(json.dumps(statuses, indent=2))
-        result = summarize(evidence)
+        result = summarize_header_recheck(evidence) if header_recheck else summarize(evidence)
         (evidence / "summary.json").write_text(json.dumps(result, indent=2))
         print(json.dumps(result, indent=2))
     return 0 if result["status"] == "PASS" else 1
