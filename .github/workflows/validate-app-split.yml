@@ -189,6 +189,7 @@ jobs:
       RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
       HOST_PROOF_RUN_ID: ${{ inputs.host_proof_run_id }}
       FOREGROUND_PROOF_RUN_ID: ${{ inputs.paired_product_acceptance && inputs.foreground_proof_run_id || '' }}
+      PAIRED_PROOF_REUSE_REQUIRED: ${{ inputs.paired_product_acceptance && inputs.host_proof_run_id != '' && inputs.foreground_proof_run_id != '' }}
       SPLIT_DERIVED_DATA: ${{ github.workspace }}/build/AppSplitDerivedData
       SPLIT_NATIVE_TEST_SCOPE: ${{ inputs.native_test_scope || 'baseline' }}
     steps:
