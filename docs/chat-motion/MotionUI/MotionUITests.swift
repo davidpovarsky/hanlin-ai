@@ -230,6 +230,10 @@ final class MotionUITests: XCTestCase {
         XCUIDevice.shared.orientation = .landscapeLeft
         waitForOrientation(landscape: true)
         waitForGeometry("expanded"); attach("long-rtl-accessibility-type-landscape")
+        let fullScreen = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        fullScreen.name = "long-rtl-accessibility-type-landscape-full-screen"
+        fullScreen.lifetime = .keepAlways
+        add(fullScreen)
         app.buttons["proof-finish"].tap()
         XCTAssertEqual(app.staticTexts["proof-effective-motion"].label, "shimmer=false;numeric=true")
         XCUIDevice.shared.orientation = .portrait
