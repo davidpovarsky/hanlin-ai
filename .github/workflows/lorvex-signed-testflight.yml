@@ -26,20 +26,20 @@ jobs:
     runs-on: xcode-27
     timeout-minutes: 120
     env:
-      APPLE_TEAM_ID: $${{ secrets.APPLE_TEAM_ID }}
-      ASC_KEY_P8: $${{ secrets.ASC_KEY_P8 }}
-      ASC_KEY_ID: $${{ secrets.ASC_KEY_ID }}
-      ASC_ISSUER_ID: $${{ secrets.ASC_ISSUER_ID }}
-      CERTIFICATE_B64: $${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
-      CERTIFICATE_PASSWORD: $${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-      EXPECTED_BUILD: $${{ inputs.build_number }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      CERTIFICATE_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+      CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+      EXPECTED_BUILD: ${{ inputs.build_number }}
       LORVEX_APP_ID: "6838139212"
     steps:
       - name: Checkout pinned Lorvex source from owner's fork
         uses: actions/checkout@v4
         with:
           repository: davidpovarsky/lorvex
-          ref: $${{ inputs.source_ref }}
+          ref: ${{ inputs.source_ref }}
           path: lorvex
           clean: true
           fetch-depth: 1
