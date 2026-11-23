@@ -1,0 +1,23 @@
+{
+  "canonicalSource": "d49a4fd4115b8335105d2991bf74ab4d7f6aad2d",
+  "brokenCaller": ".github/workflows/check-runtime-dependency-updates.yml: node Scripts/Runtime/validate-runtime-localization.mjs",
+  "oldDefault": "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
+  "oldDefaultExists": false,
+  "newDefault": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings",
+  "catalogSHA256": "4cf11a72d5cc7533172451cb46a08879ea1094938b560aef4059b3c3c42a6d4d",
+  "scriptBeforeSHA256": "d87c941eed4fd7cc81c6dee4752d1dbdd00ad5feaa37c3b0b66ac1b05c756d3a",
+  "scriptAfterSHA256": "95558f5bd25da795fe31e179c606ecf8c56f7bc3a849d5d1446987c950582bed",
+  "onlyDefaultLiteralChanged": true,
+  "command": [
+    "node",
+    "/mnt/development/projects/worktrees/hanlin-sdk-calendar-20261123/Scripts/Runtime/validate-runtime-localization.mjs"
+  ],
+  "workingDirectory": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123",
+  "argumentCount": 0,
+  "exitCode": 0,
+  "stdout": "Validated 196 RuntimeL10n localization keys for en, he, zh-Hans.\n",
+  "stderr": "",
+  "validationExecutions": 1,
+  "nativeCIDispatches": 0,
+  "explicitArgumentBehavior": "UNCHANGED; pending frozen native preflight already supplies the canonical SDK catalog explicitly"
+}

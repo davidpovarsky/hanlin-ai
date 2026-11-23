@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const [
   sourceRoot = 'AI_HLY/Downstream/RuntimeCore',
-  catalogPath = 'AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings',
+  catalogPath = 'Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings',
   namespace = 'RuntimeL10n',
 ] = process.argv.slice(2);
 const catalog = JSON.parse(await fs.readFile(catalogPath, 'utf8'));
