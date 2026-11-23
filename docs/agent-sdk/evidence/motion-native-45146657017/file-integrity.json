@@ -2,8 +2,8 @@
   "files": [
     {
       "path": "README.md",
-      "bytes": 2096,
-      "sha256": "4d8f28e289d42085107ca8b78688333233ea55cfd624120fc47311452d67670a"
+      "bytes": 3146,
+      "sha256": "25837489c8a9cd097fb95bfd5cdb03b0db5438a6eb12a28a92d3bec4e8bd83fc"
     },
     {
       "path": "artifact-members.json",
@@ -24,6 +24,21 @@
       "path": "attempt-2-dispatch-receipt.json",
       "bytes": 975,
       "sha256": "aea7961c776b8d60192e0c66ded95906c8cd0d2393d8c27943616be1d1fcc417"
+    },
+    {
+      "path": "attempt-2-native-check-annotations.json",
+      "bytes": 345,
+      "sha256": "da5de6143f97c47a7d912abd5f0cefee4bd742d79aebe6a78a2ce55544ce4f64"
+    },
+    {
+      "path": "attempt-2-native-job.json",
+      "bytes": 1020,
+      "sha256": "599b61707b0433462df490ddc52eca9bf960ba49877fd13d57848ee7c690a10b"
+    },
+    {
+      "path": "attempt-2-result-receipt.json",
+      "bytes": 1408,
+      "sha256": "3a528b5da86ff79aad4de73319a5466787b3c86fa2db9c90b8704e85f1e3dd20"
     },
     {
       "path": "bootstatus.log",
