@@ -60,7 +60,7 @@ struct HanlinOriginalScriptWidgetAPITests {
             Issue.record("The upstream native Promise did not settle.")
             return
         }
-        #expect(native["count"] == .number(0))
+        #expect(native["count"] == .integer(0))
         #expect(native["label"] == .string("בדיקת ספרייה מקורית"))
     }
 
@@ -102,7 +102,7 @@ struct HanlinOriginalScriptWidgetAPITests {
             values: ["title": .string("before"), "object": .object(["value": .number(1)])],
             environment: [:])
         #expect(result.values["title"] == .string("after"))
-        #expect(result.values["object"] == .object(["value": .number(2)]))
+        #expect(result.values["object"] == .object(["value": .integer(2)]))
         #expect(result.values["flag"] == .bool(true))
     }
 }

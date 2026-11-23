@@ -203,8 +203,8 @@ private struct ScriptingImportPreviewSections: View {
         case .hanlinQuickJS: return "Hanlin manifest selected constrained JavaScript."
         case .hanlinNode: return "Hanlin manifest selected a trusted Node worker."
         case .hanlinPython: return "Python entrypoint requires trusted local execution."
-        case .hanlinNativeScript: return "NativeScript 9.1 provides trusted Apple-native interop and Core UI."
-        case .hanlinExpo: return "Expo 58.0 provides dynamic Apple SwiftUI via Expo UI."
+        case .hanlinNativeScript: return "NativeScript provides original native iOS APIs and Core UI."
+        case .hanlinExpo: return "Expo renders React Native and original Expo UI components."
         }
     }
 }
@@ -311,6 +311,7 @@ struct ScriptingInstalledPackageDetailView: View {
                                 Label(hanlin: "Services and Data", systemImage: "slider.horizontal.3")
                             }
                             .accessibilityIdentifier("hanlin-widget-services-\(instance.entityID)")
+                            MiniAppScriptWidgetActivityControls(platform: platform, entityID: instance.entityID)
                         }
                     }
                     Picker(hanlin: "Copy from", selection: $sourceInstanceID) {
@@ -446,6 +447,57 @@ struct ScriptingInstalledPackageDetailView: View {
                 error: error,
                 storeDiagnostic: HanlinScriptExtensionStore.latestDiagnostic
             )
+        }
+    }
+}
+
+private struct MiniAppScriptWidgetActivityControls: View {
+    let platform: HanlinScriptingPlatform
+    let entityID: String
+    @State private var isRunning = false
+    @State private var status: String?
+    @State private var failure: String?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Button { run(starting: true) } label: {
+                    Label(hanlin: "Start Live Activity", systemImage: "waveform.path")
+                }
+                .accessibilityIdentifier("hanlin-widget-live-activity-start-" + entityID)
+                Spacer()
+                Menu {
+                    Button(hanlin: "End Live Activities") { run(starting: false) }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .accessibilityLabel(Text("Live Activities", bundle: HanlinLocalization.bundle))
+                }
+                .accessibilityIdentifier("hanlin-widget-live-activity-menu-" + entityID)
+            }
+            .buttonStyle(.borderless)
+            .disabled(isRunning)
+            if isRunning { ProgressView() }
+            if let status { Text(status).font(HanlinTypography.footnote).foregroundStyle(.secondary) }
+            if let failure { Text(failure).font(HanlinTypography.footnote).foregroundStyle(.red) }
+        }
+    }
+
+    private func run(starting: Bool) {
+        guard !isRunning else { return }
+        isRunning = true
+        failure = nil
+        status = nil
+        Task {
+            defer { isRunning = false }
+            do {
+                if starting {
+                    try await platform.startScriptWidgetLiveActivity(for: entityID)
+                    status = String(localized: "Live Activity started.", bundle: HanlinLocalization.bundle)
+                } else {
+                    try await platform.endScriptWidgetLiveActivities(for: entityID)
+                    status = String(localized: "Live Activities ended.", bundle: HanlinLocalization.bundle)
+                }
+            } catch { failure = error.localizedDescription }
         }
     }
 }

@@ -773,6 +773,31 @@ final class HanlinScriptingPlatform {
         }
     }
 
+    func startScriptWidgetLiveActivity(for entityID: String) async throws {
+#if os(iOS)
+        guard let extensionStore, let snapshot = try extensionStore.load(),
+              let instance = snapshot.widgetInstances.first(where: { $0.entityID == entityID && $0.engine == .scriptwidget }),
+              let widget = snapshot.widgets.first(where: { $0.identity == instance.identity && $0.engine == .scriptwidget }) else {
+            throw HanlinWidgetActionError.inactiveInstance
+        }
+        _ = try await HanlinScriptWidgetLiveActivityController.start(store: extensionStore,
+            entityID: entityID, family: widget.family, title: widget.displayName)
+#else
+        throw HanlinHostServiceError.invalidRequest("Live Activities are unavailable on this platform.")
+#endif
+    }
+
+    func endScriptWidgetLiveActivities(for entityID: String) async throws {
+#if os(iOS)
+        guard let extensionStore, let instance = try extensionStore.load()?.widgetInstances.first(where: {
+            $0.entityID == entityID && $0.engine == .scriptwidget
+        }) else { throw HanlinWidgetActionError.inactiveInstance }
+        try await HanlinScriptWidgetLiveActivityController.endActivities(store: extensionStore, identity: instance.identity)
+#else
+        throw HanlinHostServiceError.invalidRequest("Live Activities are unavailable on this platform.")
+#endif
+    }
+
     func widgetInstances(for id: HanlinInstalledPackageID) throws -> [HanlinWidgetInstance] {
         guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
         return try extensionStore.load()?.widgetInstances.filter { $0.identity.installedPackageID == id } ?? []
@@ -2586,7 +2611,7 @@ final class HanlinScriptingPlatform {
                 let family = payload["family"] as? String ?? snapshot.widgets.first {
                     $0.identity == instance.identity && $0.engine == .scriptwidget
                 }?.family ?? "systemMedium"
-                let id = try HanlinScriptWidgetLiveActivityController.start(
+                let id = try await HanlinScriptWidgetLiveActivityController.start(
                     store: extensionStore, entityID: instance.entityID, family: family,
                     title: payload["title"] as? String ?? package.manifest?.name ?? "MiniApp",
                     values: values, staleDate: staleDate, relevanceScore: relevance)

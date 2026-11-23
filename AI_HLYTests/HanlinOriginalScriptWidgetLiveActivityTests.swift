@@ -120,7 +120,7 @@ struct HanlinOriginalScriptWidgetLiveActivityTests {
             }
         }
         #expect(ActivityAuthorizationInfo().areActivitiesEnabled)
-        let systemID = try HanlinScriptWidgetLiveActivityController.start(store: store,
+        let systemID = try await HanlinScriptWidgetLiveActivityController.start(store: store,
             entityID: instance.entityID, family: "systemMedium", title: "Original system activity", values: ["count": .number(4)])
         do {
             let activity = try #require(Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.first { $0.id == systemID })

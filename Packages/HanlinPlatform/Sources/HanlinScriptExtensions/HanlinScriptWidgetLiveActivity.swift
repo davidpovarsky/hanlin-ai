@@ -115,12 +115,17 @@ extension HanlinScriptWidgetLiveActivityAttributes: ActivityAttributes {}
 public enum HanlinScriptWidgetLiveActivityController {
     public static func start(store: HanlinScriptExtensionStore, entityID: String, family: String,
                              title: String, values: [String: HanlinValue] = [:],
-                             staleDate: Date? = nil, relevanceScore: Double = 0) throws -> String {
-        let prepared = try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
-            entityID: entityID, family: family, values: values, revision: 1, title: title)
-        return try Activity.request(attributes: prepared.attributes,
-            content: ActivityContent(state: prepared.state, staleDate: staleDate, relevanceScore: relevanceScore),
-            pushType: nil).id
+                             staleDate: Date? = nil, relevanceScore: Double = 0) async throws -> String {
+        let prepared = try await Task.detached(priority: .userInitiated) {
+            try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
+                entityID: entityID, family: family, values: values, revision: 1, title: title)
+        }.value
+        try Task.checkCancellation()
+        return try await MainActor.run {
+            try Activity.request(attributes: prepared.attributes,
+                content: ActivityContent(state: prepared.state, staleDate: staleDate, relevanceScore: relevanceScore),
+                pushType: nil).id
+        }
     }
 
     public static func activityIDs(installedPackageID: String) -> [String] {
@@ -140,10 +145,15 @@ public enum HanlinScriptWidgetLiveActivityController {
         guard let activity = Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.first(where: {
             $0.id == systemActivityID && $0.attributes.identity.installedPackageID.rawValue == installedPackageID
         }) else { return false }
-        guard activity.content.state.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
-        let prepared = try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
-            entityID: activity.attributes.entityID, family: activity.attributes.family, values: values,
-            revision: activity.content.state.revision + 1, title: title ?? activity.content.state.title)
+        let attributes = activity.attributes
+        let previous = activity.content.state
+        guard previous.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
+        let prepared = try await Task.detached(priority: .userInitiated) {
+            try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
+                entityID: attributes.entityID, family: attributes.family, values: values,
+                revision: previous.revision + 1, title: title ?? previous.title)
+        }.value
+        try Task.checkCancellation()
         await activity.update(ActivityContent(state: prepared.state, staleDate: staleDate, relevanceScore: relevanceScore))
         return true
     }
@@ -157,15 +167,30 @@ public enum HanlinScriptWidgetLiveActivityController {
         var finalState = activity.content.state
         if title != nil || !values.isEmpty {
             guard finalState.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
-            finalState = try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
-                entityID: activity.attributes.entityID, family: activity.attributes.family, values: values,
-                revision: finalState.revision + 1, title: title ?? finalState.title).state
+            let attributes = activity.attributes
+            let previous = finalState
+            finalState = try await Task.detached(priority: .userInitiated) {
+                try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
+                    entityID: attributes.entityID, family: attributes.family, values: values,
+                    revision: previous.revision + 1, title: title ?? previous.title).state
+            }.value
+            try Task.checkCancellation()
         }
         let dismissalPolicy: ActivityUIDismissalPolicy = if let dismissAfterSeconds {
             dismissAfterSeconds <= 0 ? .immediate : .after(.now.addingTimeInterval(dismissAfterSeconds))
         } else { .default }
         await activity.end(ActivityContent(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
         return true
+    }
+
+    @discardableResult
+    public static func endActivities(store: HanlinScriptExtensionStore, identity: HanlinScriptExtensionIdentity) async throws -> Int {
+        var count = 0
+        for activity in Activity<HanlinScriptWidgetLiveActivityAttributes>.activities where activity.attributes.identity == identity {
+            if try await end(store: store, systemActivityID: activity.id,
+                installedPackageID: identity.installedPackageID.rawValue, dismissAfterSeconds: 0) { count += 1 }
+        }
+        return count
     }
 
     /// Original native button/toggle execution commits state first; the same
