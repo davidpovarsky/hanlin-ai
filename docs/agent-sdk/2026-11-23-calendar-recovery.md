@@ -42,3 +42,10 @@ The callback deadline cannot interrupt an already-running synchronous `EKEventSt
 - [Apple: EKEventStore](https://developer.apple.com/documentation/eventkit/ekeventstore): full-access authorization, reminder fetch token and event store operations.
 
 No manifest, Xcode project, chat presentation, or unrelated lifecycle source was changed by this lane.
+
+
+## Native EventKit continuation acceptance (source ready)
+
+A focused original-app method now seeds three owned real EventKit events at -4, 0 and +4 years plus one real reminder in the CI job's freshly created simulator. It invokes the production calendar executor through the existing canonical authority and app session owner, checks the full default date window, invalid-range recovery, pre-dispatch cancellation recovery, a second turn through the same engine, released conversation lease, and original history reopening. Only deterministic model text is supplied; EventKit and the original calendar dispatcher are not replaced.
+
+The CI hook grants calendar/reminder access only for this selected method or its containing suite, after the existing owned-simulator and original xctestrun identity checks. Cleanup removes only the fixture's saved records. This method is NOT_RUN until actual Apple evidence is attached; Swift parse and two admission controls PASS are source qualification only. It does not claim a cancelled already-stalled native callback or physical-device crash reproduction. See evidence/calendar-native-acceptance-20261123/source-receipt.json.

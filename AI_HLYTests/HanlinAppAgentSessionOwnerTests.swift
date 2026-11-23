@@ -327,6 +327,117 @@ private final class ProviderCredentialTestFixture {
         #expect(phasesAtEvent == [.awaitingApproval, .waitingForResponse, .awaitingApproval, .waitingForResponse])
     }
 
+
+    #if targetEnvironment(simulator)
+    @Test(.timeLimit(.minutes(2)))
+    func actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow() async throws {
+        let fixture = try HanlinEventKitAcceptanceFixture()
+        defer { fixture.removeOwnedItems() }
+        let container = try ModelContainer(for: ChatRecords.self, ToolKeys.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let context = container.mainContext
+        let row = ChatRecords(name: "Native calendar continuation", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), scene = UUID()
+        let rows = [UUID(), UUID()], runs = [UUID(), UUID()]
+        let queue = AppPartQueue(try rows.map {
+            try HanlinChatStructuredPart(messageID: $0, partID: UUID(), sequence: 0,
+                payload: .textDelta("Original chat continues after the native calendar tool"))
+        })
+        let owner = HanlinAppAgentSessionOwner(), recorder = AppPresentationRecorder()
+        owner.presentation = recorder
+        defer { owner.cancel() }
+        let api = APIManager(context: context)
+        let sources = LegacyToolCanonicalAdapter.sources(memoryEnabled: false, mapEnabled: false,
+            calendarEnabled: true, searchEnabled: false, knowledgeEnabled: false, codeEnabled: false,
+            healthEnabled: false, weatherEnabled: false, canvasEnabled: false)
+        let authority = try HanlinCanonicalToolAuthority.build(
+            nativeSources: [], mcpTools: [], legacySources: sources)
+        var dispatchedOutcomes: [NativeToolExecutionOutcome] = []
+        let executors = AssistantToolBridge.Executors(executeNative: { _, _, _, _ in
+            Issue.record("Calendar escaped the original legacy route")
+            return .init(modelText: "Unexpected native route", outcome: .failed)
+        }, executeScripting: { _, _ in
+            Issue.record("Calendar escaped the original legacy route")
+            return .init(modelText: "Unexpected scripting route", outcome: .failed)
+        }, executeLegacy: { name, arguments, toolContext in
+            // The production default invokes the shared SDK EventKit service.
+            let result = await api.executeLegacyTool(name: name, argumentsJSON: arguments,
+                context: toolContext, continuation: nil)
+            dispatchedOutcomes.append(result.outcome)
+            return result
+        })
+        let adapter = HanlinAISDKToolAdapter(session: .init(chatID: id.uuidString, isTemporaryChat: false),
+            preparedTools: .init(authority: authority, executors: executors, legacySources: sources))
+        let config = configuration()
+        var constructions = 0
+        let arguments: HanlinJSONValue = .object([
+            "keyword": .string(fixture.marker), "event_type": .string("both")
+        ])
+        let approve: @MainActor (AgentEvent) -> Void = { event in
+            if case .toolApprovalChanged(let approval) = event, approval.disposition == .awaiting {
+                Task { @MainActor in
+                    guard let pending = owner.consent.pending,
+                          pending.tool == "search_calendar_and_reminders" else { return }
+                    owner.consent.answer(id: pending.id, allowed: true)
+                }
+            }
+        }
+        for index in 0..<2 {
+            let stream = try await owner.stream(request: .init(conversation: row, conversationID: id,
+                sceneID: scene, rowID: rows[index], uiRunID: runs[index], temporary: false, interaction: nil),
+                modelContext: context, configuration: config,
+                engineFactory: { constructions += 1; return factory(config, queue: queue) },
+                toolAdapter: adapter, messages: [.init(role: .user, text: "Read my calendar, then continue")],
+                systemPrompt: nil)
+            for try await event in stream { try owner.receive(event, uiRunID: runs[index]) }
+            try owner.producerStreamDrained(uiRunID: runs[index])
+            if index == 0 {
+                let result = try await owner.executeInlineTool(rowID: rows[0], partID: "native-calendar-read",
+                    alias: "search_calendar_and_reminders", arguments: arguments, onEvent: approve)
+                for title in fixture.titles { #expect(result.contains(title)) }
+                #expect(dispatchedOutcomes == [.succeeded])
+                #expect(!owner.inlineToolIsRunning)
+                do {
+                    _ = try await owner.executeInlineTool(rowID: rows[0], partID: "native-calendar-invalid",
+                        alias: "search_calendar_and_reminders", arguments: .object([
+                            "start_date": .string("2026-12-23"), "end_date": .string("2026-11-23"),
+                            "event_type": .string("calendar")
+                        ]), onEvent: approve)
+                    Issue.record("Reversed native dates unexpectedly succeeded")
+                } catch {}
+                #expect(dispatchedOutcomes.last == .invalidArguments)
+                #expect(!owner.inlineToolIsRunning)
+                let cancelled = Task { @MainActor in
+                    await api.executeLegacyTool(name: "search_calendar_and_reminders",
+                        argumentsJSON: String(decoding: try arguments.canonicalJSONData(), as: UTF8.self),
+                        context: .init(localeIdentifier: "en"), continuation: nil)
+                }
+                cancelled.cancel()
+                let cancelledResult = try await cancelled.value
+                #expect(cancelledResult.outcome == .cancelled && cancelledResult.isError)
+                let recovered = try await owner.executeInlineTool(rowID: rows[0], partID: "native-calendar-recovered",
+                    alias: "search_calendar_and_reminders", arguments: arguments, onEvent: approve)
+                for title in fixture.titles { #expect(recovered.contains(title)) }
+                #expect(dispatchedOutcomes == [.succeeded, .invalidArguments, .succeeded])
+                #expect(!owner.inlineToolIsRunning)
+            }
+        }
+        #expect(constructions == 1 && recorder.installed.count == 1)
+        #expect(recorder.live.map(\.reference.rowID) == rows)
+        #expect(Set(recorder.live.map(\.canonicalRunID)).count == 2)
+        #expect(owner.session != nil && !owner.inlineToolIsRunning)
+        let lease = try HanlinConversationRunLease.acquire(container: container, conversationID: id)
+        lease.release()
+        await owner.invalidate()
+        let reopened = HanlinAppAgentSessionOwner(), replay = AppPresentationRecorder()
+        reopened.presentation = replay
+        try await reopened.restoreHistory(conversation: row, conversationID: id, sceneID: scene,
+            temporary: false, modelContext: context)
+        #expect(Set(replay.replayed.map(\.reference.rowID)) == Set(rows))
+    }
+    #endif
+
     private func database() throws -> ModelContainer {
         try ModelContainer(for: ChatRecords.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
     }

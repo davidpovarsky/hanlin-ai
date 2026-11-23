@@ -1,0 +1,20 @@
+COMMAND ['swiftc', '-frontend', '-parse', 'AI_HLYTests/CalendarToolTests.swift', 'AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift'] EXIT 0
+
+
+COMMAND ['python3', '-m', 'unittest', '-v', 'test_prepare_calendar_acceptance.py'] EXIT 0
+
+test_unowned_simulator_is_rejected_before_install_or_privacy_mutation (test_prepare_calendar_acceptance.CalendarAcceptanceAdmissionTests.test_unowned_simulator_is_rejected_before_install_or_privacy_mutation) ... ok
+test_unrelated_selection_cannot_touch_a_simulator_or_read_products (test_prepare_calendar_acceptance.CalendarAcceptanceAdmissionTests.test_unrelated_selection_cannot_touch_a_simulator_or_read_products) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+
+COMMAND ['git', 'diff', '--check'] EXIT 0
+
+
+ .github/workflows/build-ios26-unsigned-ipa.yml    |   5 +
+ AI_HLYTests/CalendarToolTests.swift               |  64 +++++++++++++
+ AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift | 111 ++++++++++++++++++++++
+ 3 files changed, 180 insertions(+)

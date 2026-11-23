@@ -106,3 +106,67 @@ struct CalendarToolTests {
             configurations: ModelConfiguration(isStoredInMemoryOnly: true))
     }
 }
+
+#if targetEnvironment(simulator)
+import EventKit
+
+/// Owned native records only, in the fresh CI simulator granted by
+/// prepare_calendar_acceptance.py. No EventKit implementation is substituted.
+@MainActor
+final class HanlinEventKitAcceptanceFixture {
+    let store = EKEventStore()
+    let marker = "Hanlin EventKit acceptance " + UUID().uuidString
+    private(set) var titles: [String] = []
+    private var events: [EKEvent] = []
+    private var reminder: EKReminder?
+
+    init() throws {
+        #expect(EKEventStore.authorizationStatus(for: .event) == .fullAccess)
+        #expect(EKEventStore.authorizationStatus(for: .reminder) == .fullAccess)
+        guard EKEventStore.authorizationStatus(for: .event) == .fullAccess,
+              EKEventStore.authorizationStatus(for: .reminder) == .fullAccess else {
+            throw NSError(domain: "HanlinNativeCalendarAcceptance", code: 1, userInfo: [
+                NSLocalizedDescriptionKey: "Native acceptance requires calendar and reminder grants"])
+        }
+        do {
+            let calendar = try #require(store.defaultCalendarForNewEvents,
+                "The owned simulator must expose its real default calendar")
+            let reminderCalendar = try #require(store.defaultCalendarForNewReminders(),
+                "The owned simulator must expose its real default reminder calendar")
+            for offset in [-4, 0, 4] {
+                let event = EKEvent(eventStore: store)
+                event.title = marker + " year " + String(offset)
+                event.startDate = try #require(Calendar.current.date(byAdding: .year, value: offset, to: .now))
+                event.endDate = event.startDate.addingTimeInterval(1800)
+                event.calendar = calendar
+                try store.save(event, span: .thisEvent)
+                events.append(event)
+                titles.append(event.title)
+            }
+            let item = EKReminder(eventStore: store)
+            item.title = marker + " reminder"
+            item.calendar = reminderCalendar
+            item.dueDateComponents = Calendar.current.dateComponents([.year, .month, .day], from: .now)
+            try store.save(item, commit: true)
+            reminder = item
+            titles.append(item.title)
+        } catch {
+            removeOwnedItems()
+            throw error
+        }
+    }
+
+    func removeOwnedItems() {
+        for event in events {
+            do { try store.remove(event, span: .thisEvent) }
+            catch { Issue.record("Failed to remove this fixture's native event: \(error)") }
+        }
+        events.removeAll()
+        if let reminder {
+            do { try store.remove(reminder, commit: true) }
+            catch { Issue.record("Failed to remove this fixture's native reminder: \(error)") }
+        }
+        reminder = nil
+    }
+}
+#endif

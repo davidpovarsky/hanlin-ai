@@ -2753,6 +2753,11 @@ jobs:
                 --configuration "$CONFIGURATION" \
                 --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
                 --simulator-udid "$SIMULATOR_UDID")"
+              python3 Scripts/CI/prepare_calendar_acceptance.py \
+                --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
+                --xctestrun "$unit_xctestrun" \
+                --derived-data "$DERIVED_DATA_PATH" \
+                --log-dir "$LOG_DIR"
               set +e
               xcodebuild test-without-building \
               -xctestrun "$unit_xctestrun" \
