@@ -15,6 +15,7 @@ import Testing
 import UIKit
 #if canImport(HanlinAgentCore)
 import HanlinAgentCore
+import HanlinChatCore
 #endif
 @testable import AI_Hanlin
 
@@ -1158,6 +1159,61 @@ struct ModelPopoverZoomOrderTests {
         #expect(models[nativeIndex].id == native.id) // Unavailable does not rewrite a saved selection.
         #else
         Issue.record("Native picker integration requires HanlinAgentCore linked into the app and test target.")
+        #endif
+    }
+
+    @Test("Native generation keeps default behavior and honors supplied temperature and token limits")
+    func nativeGenerationConfigurationPreservesOriginalSettings() {
+        #if canImport(HanlinAgentCore)
+        let native = HanlinAppleOnDeviceProvider.configuration()
+        let defaults = HanlinAppleModelCatalogAdapter.generationConfiguration()
+        #expect(defaults.temperature == native.temperature)
+        #expect(defaults.topP == native.topP)
+        #expect(defaults.maxTokens == native.maxTokens)
+
+        let requested = HanlinAppleModelCatalogAdapter.generationConfiguration(
+            temperature: 0.45, maxTokens: 768)
+        #expect(requested.temperature == 0.45)
+        #expect(requested.maxTokens == 768)
+        #expect(requested.topP == HanlinChatGenerationDefaults.topP)
+        #expect(requested.modelID == native.modelID)
+        #expect(requested.baseModelID == native.baseModelID)
+        #expect(requested.endpoint == native.endpoint)
+        #expect(requested.apiKey.isEmpty)
+        #expect(!requested.supportsToolUse)
+        #expect(!requested.supportsReasoning)
+        #else
+        Issue.record("Native configuration requires the original HanlinAgentCore and HanlinChatCore modules.")
+        #endif
+    }
+
+    @Test("Explicit native top-P reaches the real provider's unsupported-setting rejection")
+    func nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine() async throws {
+        #if canImport(HanlinAgentCore)
+        let configuration = HanlinAppleModelCatalogAdapter.generationConfiguration(
+            temperature: 0.45, topP: 0.8, maxTokens: 768)
+        // Fail before entering the actual provider if a regression drops top-P.
+        // The original provider rejects this value before checking availability
+        // or creating a FoundationModels session.
+        try #require(configuration.topP == 0.8)
+        let engine = HanlinAISDKAgentEngine(
+            configuration: configuration, model: .v3(HanlinAppleLanguageModel()))
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Unsupported setting admission")],
+            baseSystemPrompt: nil, tools: [],
+            prepareStep: { (_: Int) async in .init(activeToolAliases: []) })
+        var visibleOutput = false
+        do {
+            for try await event in stream {
+                if case .textDelta = event { visibleOutput = true }
+            }
+            Issue.record("The original native provider must reject explicit top-P.")
+        } catch {
+            #expect(error as? HanlinAppleProviderError == .unsupportedSettings)
+        }
+        #expect(!visibleOutput)
+        #else
+        Issue.record("Native settings admission requires the original HanlinAgentCore and HanlinChatCore modules.")
         #endif
     }
 

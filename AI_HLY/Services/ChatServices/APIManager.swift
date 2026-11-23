@@ -2671,7 +2671,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     
                     // 获取与模型厂商匹配的完整 Provider 配置。
                     if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
-                        let nativeConfiguration = try HanlinAppleModelCatalogAdapter.configuration(for: modelInfo)
+                        let nativeConfiguration = try HanlinAppleModelCatalogAdapter.configuration(
+                            for: modelInfo, temperature: temperature, topP: topP, maxTokens: maxTokens)
                         await self.agentDiagnosticsRecorder?.setAgentEngineKind("apple_on_device")
                         try await self.processSDKAgentEngine(runID: currentRunID,
                             formattedMessages: finalFormattedMessages, modelInfo: modelInfo,
