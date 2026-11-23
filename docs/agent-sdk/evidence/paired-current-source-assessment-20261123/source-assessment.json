@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "kind": "READ_ONLY_SOURCE_DEPENDENCY_ASSESSMENT",
+  "originalRun": 45260265662,
+  "originalSource": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+  "centralSource": "9c1428a3361ab5f12a0809110b454f72584b9da1",
+  "nativeStatus": "Pending existing run; this assessment executes no test",
+  "provider": {
+    "base": "e7bf34111e603ca977becd007dd4e5bb109af857",
+    "candidate": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+    "family": "OpenAICompatibleProvider",
+    "steps": [
+      "one ordinary client open_mini_app tool call, finish_reason tool_calls",
+      "actual Host result or confirmed-no-effect cancellation feedback",
+      "final fixture text, finish_reason stop, no new tool work"
+    ],
+    "changedBehaviorReached": false,
+    "interpretation": "Source inference for these exact fixture events only; live stop-after-tool continuation remains separately evidenced"
+  },
+  "motion": {
+    "componentChanged": true,
+    "inlinePromptRemoval": "if-let pending becomes nil independently of disclosure mounted state; identity keyed to requestID",
+    "rootCollapse": "potentially reached automatically when forced approval expansion ends and stored isExpanded is false",
+    "exactRenderingBeforeForegroundHandoff": "UNPROVEN by source review",
+    "businessTaskCouplingFound": false,
+    "remainingCoupling": "Retained display subtree state and transient layout/accessibility timing",
+    "newNativeAcceptance": "NOT_RUN until current-source results"
+  },
+  "cases": [
+    {
+      "method": "testCompanionReturnsActualPrivateValueToOriginalChat",
+      "upstreamEligibility": "Same toolCalls -> stop decisions for exact fixture events",
+      "changedViewLifetime": "Possible automatic parent collapse after approval removal",
+      "businessAssertions": "Actual nonce private value, original chat UUID, no unresolved alert/consent"
+    },
+    {
+      "method": "testCompanionCancellationReturnsWithoutChangingPrivateState",
+      "upstreamEligibility": "Same completed client-error output -> text stop decisions",
+      "changedViewLifetime": "Possible automatic parent collapse after approval removal",
+      "businessAssertions": "Confirmed-no-effect feedback, original chat UUID, unchanged reopened private value"
+    },
+    {
+      "method": "testOriginalPackageAndSavedStateTransferThenRollback",
+      "upstreamEligibility": "No prompt/model response in selected method",
+      "changedViewLifetime": "No activity or approval disclosure interaction in selected transfer path",
+      "businessAssertions": "Original ScriptUI installed state copied, restored previous companion catalog, unchanged original copy"
+    }
+  ],
+  "sourcePoints": {
+    "AI_HLYUITests/HanlinPairedProductUITests.swift": [
+      "42\u201379 original return/cancel methods",
+      "82\u2013150 original transfer/rollback method",
+      "166\u2013204 original prompt/review/allow",
+      "307\u2013321 unchanged60s result marker waiter"
+    ],
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": [
+      "159\u2013177 fixture account and endpoint",
+      "512\u2013536 exact paired response branch",
+      "996\u20131037 tool/text finish payloads"
+    ],
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift": [
+      "31\u201345 compatible provider selection",
+      "162\u2013176 compatible model construction"
+    ],
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift": [
+      "449\u2013501 actual awaited Host dispatch, persisted result and sanctioned model output"
+    ],
+    "AI_HLY/Downstream/ChatCore/HanlinAppToolConsent.swift": [
+      "68\u201380 clears pending before continuation resume"
+    ],
+    "AI_HLY/ChatView.swift": [
+      "1365\u20131368 false-default stored reasoning expansion",
+      "1456\u20131463 pending-derived approval and Host answer"
+    ],
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/HanlinAgentActivityView.swift": [
+      "116 forced hierarchy expansion",
+      "179\u2013217 actual root disclosure",
+      "294\u2013295 unopened activity state",
+      "317\u2013350 if-let approval replacement and normal collapsed activity",
+      "394\u2013401 request keyed approval"
+    ],
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift": [
+      "56\u201358 review opens original details",
+      "105\u2013126 actual disclosure and request state",
+      "197\u2013205 guarded answer without implicit close"
+    ],
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolActivityHeader.swift": [
+      "75\u201376 branch-visible animation guard",
+      "91\u2013117 icon/live-display state tasks",
+      "193\u2013205 bounded icon loader"
+    ],
+    "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift": [
+      "217\u2013226 changed continuation predicate",
+      "1235\u20131255 provider-executed-only deferred tracking",
+      "1397\u20131412 client output/error counts"
+    ]
+  },
+  "claimsExcluded": [
+    "No current-central native paired PASS from old execution",
+    "No live cloud provider proof",
+    "No arbitrary public host-child task coverage",
+    "No new test, simulator or dispatch"
+  ],
+  "recordedAt": "2026-11-23T21:31:39.196999+00:00",
+  "localExactSourceHashes": {
+    "AI_HLYUITests/HanlinPairedProductUITests.swift": {
+      "unchanged": true,
+      "bytes": 23856,
+      "sha256": "eb8e4648b6459bd1832fa1e21603dc394c3474f9b8f7fcc0494a26779b0bde58"
+    },
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": {
+      "unchanged": true,
+      "bytes": 55686,
+      "sha256": "7ea4263920fbb5f8f70b16f8b85b369d480caa98ab0124260cb0fb89ed4b312c"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift": {
+      "unchanged": true,
+      "bytes": 12427,
+      "sha256": "48fb93718f2eb30a0b947aceabb37f2b2b4f0ffaa79bb75c77cafa400401fcc9"
+    },
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift": {
+      "unchanged": true,
+      "bytes": 35047,
+      "sha256": "179e222f04e185d941c0f42416f6df6d391cf308bd79b63af341093c460d1e1b"
+    },
+    "AI_HLY/Downstream/ChatCore/HanlinAppToolConsent.swift": {
+      "unchanged": true,
+      "bytes": 3749,
+      "sha256": "c43051e7a5681c507e69ce8aed378d391fcd1f617f515f6557d910e8dfb50316"
+    },
+    "AI_HLY/ChatView.swift": {
+      "unchanged": true,
+      "bytes": 114232,
+      "sha256": "177acfddd851b5f90d539e4ace7e957bfbc39265da383d0f0ac5e7e5d47e65a6"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/HanlinAgentActivityView.swift": {
+      "unchanged": true,
+      "bytes": 26069,
+      "sha256": "3698c6b5759462a08466b8be9de7d86fbc419237c0dbe881baaf656242f0a8ef"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift": {
+      "unchanged": true,
+      "bytes": 12024,
+      "sha256": "5fe7e40ae61e4dfeb6e36f0d519bf90f4a7ef5c1b865c3dd030bd3561d35e364"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolActivityHeader.swift": {
+      "unchanged": true,
+      "bytes": 13817,
+      "sha256": "fa2998c9a0b7268ca593b0fcb1343b2e673530e8ebf5189902dec9a516277785"
+    },
+    "AI_HLY/Model/ChatMessages.swift": {
+      "unchanged": true,
+      "bytes": 9242,
+      "sha256": "f199d7eedff326e67a0ab44bf994674bd7e9e242bdf91b3bf8beaea8c3700e00"
+    },
+    "AI_HLY/Downstream/ChatCore/HanlinAppSplitOriginCoordinator.swift": {
+      "unchanged": true,
+      "bytes": 30611,
+      "sha256": "0a0eba4689988a157db43d6cbc728d2c39839fcae4435ff4e6c63ff95ea851b3"
+    },
+    "AI_HLY/Downstream/ChatCore/HanlinAppHostSplitTool.swift": {
+      "unchanged": true,
+      "bytes": 1631,
+      "sha256": "ef59f4e905ceb5266ae28e59be088ced9e97ebca9c6d2c764da7750192852cde"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift": {
+      "unchanged": true,
+      "bytes": 4302,
+      "sha256": "7d4e19a8520e352ae53031da54b5c4f5a75795084402f6c3f4e4c57731e7a7bb"
+    },
+    "AI_HLY/Views/Components/ChatViewComponents.swift": {
+      "unchanged": true,
+      "bytes": 247703,
+      "sha256": "715eaf59b335940f43ebbbe8169a5eae5fa0b7de47b998626cf710cf1e59fb76"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "unchanged": true,
+      "bytes": 17071,
+      "sha256": "eeaa19fda98439d33ca452503729d991f1ad3c81257a20c803c632fbcb8bcbb3"
+    },
+    "Tests/ProductSplit/TransferFixture/script.json": {
+      "unchanged": true,
+      "bytes": 109,
+      "sha256": "0dbae2862300eb574d5620d04568b8f554db845fbbda2a525baf859fc86061cc"
+    },
+    "Tests/ProductSplit/TransferFixture/index.tsx": {
+      "unchanged": true,
+      "bytes": 475,
+      "sha256": "1e1ac0652ca1bbbff785ea24c1aed86eb1322a89a66867bd6b62313d8bae944d"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift": {
+      "e59256e8325bcdb71c0e683f6b19e7641642aad8": {
+        "bytes": 7156,
+        "sha256": "91d60f960fd1ca1dea34b1ce34a6a5e99b4e60c2a030be78ac9f996a2533d084"
+      },
+      "9c1428a3361ab5f12a0809110b454f72584b9da1": {
+        "bytes": 7012,
+        "sha256": "ce949b1acce2bf4339f3a2c0a93b3028c50ef918ab9db7dc1d7b0e063c166eef"
+      }
+    }
+  },
+  "upstreamExactSourceHashes": {
+    "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift": {
+      "e7bf34111e603ca977becd007dd4e5bb109af857": {
+        "bytes": 67087,
+        "sha256": "b9f6de97279affdfea026c1c1a4e4ba2561446d2f852b96bdb787b7648f4debf"
+      },
+      "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8": {
+        "bytes": 67180,
+        "sha256": "f50df181f9fa6c4bf33ab52c76a8a2b5ac07b1965cea5421ad6eafad168c1a1d"
+      }
+    },
+    "Sources/OpenAICompatibleProvider/Chat/MapOpenAICompatibleFinishReason.swift": {
+      "e7bf34111e603ca977becd007dd4e5bb109af857": {
+        "bytes": 789,
+        "sha256": "ff5d0d41bb22213d5b54945d8d1fd93bf6b8c053c310e20684648be41d22fec7"
+      },
+      "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8": {
+        "bytes": 789,
+        "sha256": "ff5d0d41bb22213d5b54945d8d1fd93bf6b8c053c310e20684648be41d22fec7"
+      }
+    },
+    "Sources/OpenAIProvider/Chat/OpenAIChatFinishReason.swift": {
+      "e7bf34111e603ca977becd007dd4e5bb109af857": {
+        "bytes": 967,
+        "sha256": "61af3c50ee218da9e633504d284071e15ea06f11bf1e6ce08bde69f0f8e4eeaf"
+      },
+      "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8": {
+        "bytes": 967,
+        "sha256": "61af3c50ee218da9e633504d284071e15ea06f11bf1e6ce08bde69f0f8e4eeaf"
+      }
+    }
+  }
+}
