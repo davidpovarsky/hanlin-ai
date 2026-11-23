@@ -18,16 +18,16 @@ EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
 TEST_SCOPE = os.environ.get('SPLIT_NATIVE_TEST_SCOPE', 'baseline')
 UI_PLANS = {
     'cross_app': (['HanlinMiniAppsTests/CrossAppInvocationTests',
-                  'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests'], 7),
+                  'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests'], 9),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
     # Cross-app adapters and teardown changed: recheck these two runtime cases
-    # and seven new producer/UI cases. Do not repeat unchanged storage tests.
+    # and nine new producer/UI cases. Do not repeat unchanged storage tests.
     'production_runtimes': ([
         'HanlinMiniAppsTests/CrossAppInvocationTests',
         'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
-        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 9),
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 11),
 }
 
 

@@ -26,7 +26,8 @@ private struct HanlinMiniAppsWindow: View {
         _externalRequestID = State(initialValue: requestID)
     }
     @State private var foreground = MiniAppsForegroundBridge()
-    @State private var incomingURL: URL?
+    @State private var incomingURLs: [URL] = []
+    private var incomingURL: URL? { incomingURLs.first }
     @State private var showsImport = false
     @State private var bootstrap = HanlinMiniAppsBootstrap(preparation: Self.prepareStorage)
 
@@ -80,7 +81,9 @@ private struct HanlinMiniAppsWindow: View {
             .task {
                 if bootstrap.phase == .idle { await bootstrap.prepare() }
             }
-            .onOpenURL { incomingURL = $0 }
+            .onOpenURL { url in
+                if !incomingURLs.contains(url) { incomingURLs.append(url) }
+            }
             .task(id: bootstrap.phase == .ready ? incomingURL : nil) {
                 guard bootstrap.phase == .ready, let url = incomingURL else { return }
                 if let requestID = MiniAppBridgeStore.requestID(from: url) {
@@ -107,7 +110,7 @@ private struct HanlinMiniAppsWindow: View {
                 } else {
                     await foreground.open(url)
                 }
-                if incomingURL == url { incomingURL = nil }
+                if incomingURLs.first == url { incomingURLs.removeFirst() }
             }
             .sheet(isPresented: $showsImport) {
                 NavigationStack { ScriptingPackageImportView(platform: .shared) }

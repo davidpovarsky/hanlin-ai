@@ -153,6 +153,11 @@ final class HanlinExternalMiniAppSession {
     }
 
     func close() {
+        if result == nil, let request, let mailbox = try? mailbox() {
+            let cancelled = MiniAppResult(requestID: request.id, status: .cancelled)
+            do { try mailbox.complete(cancelled); result = cancelled }
+            catch { self.error = error.localizedDescription }
+        }
         loadGeneration = UUID()
         loading = false
         request = nil

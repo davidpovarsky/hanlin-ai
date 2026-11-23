@@ -1,5 +1,7 @@
 import Foundation
 import XCTest
+import UIKit
+import HanlinTextStudioMiniApp
 import HanlinMiniAppsBridge
 @testable import HanlinMiniApps
 
@@ -99,5 +101,47 @@ final class CrossAppInvocationTests: XCTestCase {
         XCTAssertEqual(try store.pendingResults(sourceAppID: original.source.appID).map(\.text), ["retained"])
         XCTAssertNotNil(session.error)
         XCTAssertFalse(session.returning)
+    }
+
+    func testTextStudioWindowsRestoreTheirOwnDrafts() throws {
+        let suite = "MiniAppsTests." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let a = UserDefaultsTextStudioStorage(defaults: defaults, keyPrefix: "request-A.")
+        let b = UserDefaultsTextStudioStorage(defaults: defaults, keyPrefix: "request-B.")
+        a.setPersistentString("ראשון", forKey: "draft")
+        b.setPersistentString("שני 👨‍👩‍👧", forKey: "draft")
+        let coldA = UserDefaultsTextStudioStorage(defaults: defaults, keyPrefix: "request-A.")
+        XCTAssertEqual(coldA.persistentString(forKey: "draft"), "ראשון")
+        XCTAssertEqual(b.persistentString(forKey: "draft"), "שני 👨‍👩‍👧")
+        XCTAssertNil(defaults.string(forKey: "draft"), "Shared invocations must preserve ordinary TextStudio draft.")
+        a.setPersistentString("", forKey: "draft")
+        XCTAssertEqual(coldA.persistentString(forKey: "draft"), "", "An intentionally empty restored draft is still a draft.")
+    }
+
+    func testActualIncomingRequestsCreateDistinctIPadScenes() async throws {
+        XCTAssertEqual(UIDevice.current.userInterfaceIdiom, .pad, "This scope requires the actual iPad destination.")
+        let store = try MiniAppBridgeStore()
+        let before = Set(UIApplication.shared.connectedScenes.map { $0.session.persistentIdentifier })
+        let first = request("scene one"), second = request("scene two")
+        let firstURL = try store.enqueue(first), secondURL = try store.enqueue(second)
+        for url in [firstURL, secondURL] {
+            let opened = await withCheckedContinuation { continuation in
+                UIApplication.shared.open(url, options: [:]) { continuation.resume(returning: $0) }
+            }
+            XCTAssertTrue(opened, "The shipping URL scheme must accept the durable invocation.")
+        }
+        let scenes = NSPredicate { _, _ in
+            MainActor.assumeIsolated {
+                Set(UIApplication.shared.connectedScenes.map { $0.session.persistentIdentifier })
+                    .subtracting(before).count >= 2
+            }
+        }
+        await fulfillment(of: [XCTNSPredicateExpectation(predicate: scenes, object: nil)], timeout: 30)
+        let created = UIApplication.shared.connectedScenes.filter { !before.contains($0.session.persistentIdentifier) }
+        XCTAssertGreaterThanOrEqual(created.count, 2)
+        for scene in created {
+            UIApplication.shared.requestSceneSessionDestruction(scene.session, options: nil)
+        }
     }
 }

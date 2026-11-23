@@ -115,9 +115,20 @@ public struct TextStudioMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable
     @MainActor
     public func makeRootView(context: HanlinMiniAppHostContext) -> AnyView {
         let initialText: String?
-        if case let .object(input) = context.sharedInput, case let .string(text) = input["text"] {
-            initialText = text
+        let storage: UserDefaultsTextStudioStorage
+        if case let .object(input) = context.sharedInput {
+            let prefix: String
+            if case let .string(requestID) = input["requestID"] {
+                prefix = "hanlin.miniapps." + requestID + "."
+            } else { prefix = "" }
+            storage = UserDefaultsTextStudioStorage(keyPrefix: prefix)
+            if !prefix.isEmpty, let restored = storage.persistentString(forKey: "draft") {
+                initialText = restored
+            } else if case let .string(text) = input["text"] {
+                initialText = text
+            } else { initialText = nil }
         } else {
+            storage = UserDefaultsTextStudioStorage()
             initialText = nil
         }
         let onReturn: (@MainActor @Sendable (String) async throws -> Void)?
@@ -127,7 +138,7 @@ public struct TextStudioMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable
             onReturn = nil
         }
         return AnyView(NavigationStack {
-            NativeAppTextStudioRootView(initialText: initialText, onReturn: onReturn)
+            NativeAppTextStudioRootView(storage: storage, initialText: initialText, onReturn: onReturn)
                 .hanlinMiniAppDismissControl()
         })
     }

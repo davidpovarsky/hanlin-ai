@@ -670,6 +670,7 @@
 		5C9E09846872D07C4D50662E = { isa = PBXBuildFile; productRef = 26B9238591CBD8BD492D137C; };
 		FD2B21070BBD04C64242ADD1 = {isa = PBXBuildFile; fileRef = 6B236C9460137676E26D4468; };
 		D50F4D163E01EE6798757607 = {isa = PBXBuildFile; productRef = D7532BF517832175AD2CF8EE; };
+		9D281EC999A9E368745F917A = {isa = PBXBuildFile; productRef = 499632C6BDF7BBBDF296C7D6; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4360,6 +4361,7 @@
 		C0F20F8DB55A21AFC010BCE2 = { isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsBridge; };
 		26B9238591CBD8BD492D137C = { isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsPicker; };
 		D7532BF517832175AD2CF8EE = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsBridge; };
+		499632C6BDF7BBBDF296C7D6 = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinTextStudioMiniApp; };
 /* End XCSwiftPackageProductDependency section */
 
 /* Integrated standalone target and transport objects */
@@ -4487,6 +4489,7 @@
 			"fileSystemSynchronizedGroups" = ("C1D9E69575D3B7BC691961CD", );
 			"name" = "HanlinMiniAppsTests";
 			"packageProductDependencies" = (
+				"499632C6BDF7BBBDF296C7D6",
 				"D7532BF517832175AD2CF8EE","F80000000000000000000053", "A10000000000000000000015", "C10000000000000000000021", );
 			"productName" = "HanlinMiniAppsTests";
 			"productReference" = "145350813A91990EA5F13A88";
@@ -4526,6 +4529,7 @@
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
 			"files" = (
+				"9D281EC999A9E368745F917A",
 				"D50F4D163E01EE6798757607","27E5EA35A3EEA9C6064501CA", "48464889287ACCC43468009D", "E40956A56BB0674B33B35099", );
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};

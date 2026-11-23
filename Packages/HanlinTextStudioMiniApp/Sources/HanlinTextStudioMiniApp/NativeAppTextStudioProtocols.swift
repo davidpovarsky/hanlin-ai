@@ -18,29 +18,31 @@ public protocol TextStudioStorage {
 @MainActor
 public final class UserDefaultsTextStudioStorage: TextStudioStorage {
     private let defaults: UserDefaults
+    private let keyPrefix: String
 
-    public init(defaults: UserDefaults = .standard) {
+    public init(defaults: UserDefaults = .standard, keyPrefix: String = "") {
         self.defaults = defaults
+        self.keyPrefix = keyPrefix
     }
 
     public func persistentString(forKey key: String) -> String? {
-        defaults.string(forKey: key)
+        defaults.string(forKey: keyPrefix + key)
     }
 
     public func setPersistentString(_ value: String, forKey key: String) {
-        defaults.set(value, forKey: key)
+        defaults.set(value, forKey: keyPrefix + key)
     }
 
     public func persistentData(forKey key: String) -> Data? {
-        defaults.data(forKey: key)
+        defaults.data(forKey: keyPrefix + key)
     }
 
     public func setPersistentData(_ value: Data, forKey key: String) {
-        defaults.set(value, forKey: key)
+        defaults.set(value, forKey: keyPrefix + key)
     }
 
     public func removePersistentValue(forKey key: String) {
-        defaults.removeObject(forKey: key)
+        defaults.removeObject(forKey: keyPrefix + key)
     }
 }
 
