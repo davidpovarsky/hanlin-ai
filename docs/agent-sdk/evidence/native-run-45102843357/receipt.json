@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "retrievedAt": "2026-11-23T04:03:26.049218+00:00",
+  "repository": "davidpovarsky/hanlin-ai",
+  "runID": 45102843357,
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45102843357",
+  "headSHA": "f120d0fe1b5c0fe874df83e8d4006e79488928a0",
+  "jobID": 137457462750,
+  "jobURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45102843357/job/137457462750",
+  "jobName": "Launch full app on iPad Simulator",
+  "status": "FAIL",
+  "failedStep": "Build full arm64 simulator app",
+  "toolchain": {
+    "xcode": "27.2",
+    "build": "27B52",
+    "simulatorSDK": "27.2"
+  },
+  "comparisonSourceSHA": "b66aa5e0e979f36d1a34b85e08899449b72d1dc2",
+  "fatalSourceSites": [
+    {
+      "file": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinPendingFirstTurn.swift",
+      "line": 19,
+      "diagnostic": "Identifiable conformance crosses MainActor isolation; computed id witness is actor-isolated",
+      "classification": "STILL_PRESENT_AT_COMPARISON_SOURCE",
+      "owner": "root",
+      "originalWitnessLine": 53,
+      "failedSourceBlob": "7e624e920cd9bb4e60ce62564a4a562e8605a6a9",
+      "comparisonSourceBlob": "7e624e920cd9bb4e60ce62564a4a562e8605a6a9"
+    },
+    {
+      "file": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "line": 2172,
+      "diagnostic": "AgentActivityContentView Equatable conformance crosses MainActor isolation; == witness is actor-isolated",
+      "classification": "STILL_PRESENT_AT_COMPARISON_SOURCE",
+      "owner": "presentation agent",
+      "originalWitnessLine": 2187,
+      "failedSourceBlob": "1453a5ead714561b9cbc105412ad19726b188ad9",
+      "comparisonSourceBlob": "6a69f1df2da645d98b2971cd88b811dc92f4a9fb"
+    },
+    {
+      "file": "AI_HLY/KnowledgeListView.swift",
+      "line": 25,
+      "diagnostic": "Color has no member hlBlue",
+      "classification": "SOURCE_FIXED_BEFORE_COMPARISON_SOURCE",
+      "replacement": "hanlinHLBlue",
+      "failedSourceBlob": "126fc3a3e9b12401f2e7651df20df421c51a1dbe",
+      "comparisonSourceBlob": "b4ae667b8b4c1c0320bce78e64a86db1a54996a3",
+      "comparisonLines": [
+        {
+          "line": 26,
+          "text": "@State private var editingColor: Color = .hanlinHLBlue"
+        }
+      ]
+    },
+    {
+      "file": "AI_HLY/ListView.swift",
+      "line": 37,
+      "diagnostic": "Color has no member hlBlue",
+      "classification": "SOURCE_FIXED_BEFORE_COMPARISON_SOURCE",
+      "replacement": "hanlinHLBlue",
+      "failedSourceBlob": "e9edcbab5fb0d399360e9b0d68e3cd51b81b4668",
+      "comparisonSourceBlob": "4f179d8bbb6f6c174efea7ab1ce84aa955be5d79",
+      "comparisonLines": [
+        {
+          "line": 38,
+          "text": "@State private var editingColor: Color = .hanlinHLBlue"
+        }
+      ]
+    },
+    {
+      "file": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "line": 6276,
+      "diagnostic": "Color has no member hlBluefont",
+      "classification": "SOURCE_FIXED_BEFORE_COMPARISON_SOURCE",
+      "failedSourceBlob": "1453a5ead714561b9cbc105412ad19726b188ad9",
+      "comparisonSourceBlob": "6a69f1df2da645d98b2971cd88b811dc92f4a9fb",
+      "comparisonLines": [
+        {
+          "line": 6222,
+          "text": "let playedColor: Color = .hanlinHLBluefont"
+        }
+      ]
+    }
+  ],
+  "successfulPreparationSteps": [
+    {
+      "name": "Prepare pinned NativeScript iOS dependency closure",
+      "conclusion": "success"
+    },
+    {
+      "name": "Prepare verified embedded RuntimeCore",
+      "conclusion": "success"
+    },
+    {
+      "name": "Resolve Swift Package dependencies",
+      "conclusion": "success"
+    }
+  ],
+  "rawLog": {
+    "bytes": 12706650,
+    "sha256": "967db29a673b997ef97e79578df79caacac193a33bbb1dd684a999f4b0c5b479",
+    "oraclePath": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45102843357/job-137457462750.log"
+  },
+  "excludedMatches": [
+    {
+      "logLine": 1534,
+      "diagnostic": "the following command failed with exit code 0 but produced no further output",
+      "classification": "NONFATAL_IN_SUCCESSFUL_EXPO_PREPARATION_STEP; not the failing app build diagnosis"
+    },
+    {
+      "logLines": [
+        275,
+        279
+      ],
+      "classification": "ECHOED_SHELL_VERSION_GUARD_TEXT; actual selected Xcode27.2 passed"
+    }
+  ],
+  "nativeExport": "NOT_PRESENT_IN_THIS_PRODUCER_REVISION",
+  "linking": "NO_LINKER_DIAGNOSTIC_ESTABLISHED; app Swift compilation failed first",
+  "runtimeAndVisualAcceptance": "NOT_RUN",
+  "calendarNativeAcceptance": "NOT_RUN",
+  "followup": "Root owns actual main-actor witnesses; next coherent original producer must validate the repaired source. No new CI was dispatched by this diagnosis.",
+  "excerptNormalization": "Trailing whitespace stripped only; complete original log hash and bytes retained separately"
+}
