@@ -1,0 +1,77 @@
+{
+  "scope": "Exact original full provider-factory enum, complete production model configuration and exact original provider kind/descriptor value definitions. Foundation-only partial module; no transport, app, Apple/UI or live-provider claim.",
+  "base": "226ca1fd6edc788fc5b1c8c29ec3c8aaf38940a2",
+  "inputs": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "sha256": "37040bbbf933960cb47046fbedaeaad953b59371607b0ec3062cbbefb1ee1c1a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift",
+      "sha256": "c8e0ecfdda95960195c3454f76d35fa5bd6c48c08781e920d39903157416eb92"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatModelConfiguration.swift",
+      "sha256": "f7b52386256f944677ef7d96380bdab99be8d724c88236112fdf79841a1edfa6"
+    }
+  ],
+  "extracted_declarations": [
+    {
+      "name": "configuration",
+      "sha256": "f7b52386256f944677ef7d96380bdab99be8d724c88236112fdf79841a1edfa6"
+    },
+    {
+      "name": "providerValueTypes",
+      "sha256": "b8dc1f08e04c0586a3e7ba08cd311a6c3b9f5c2373ab0835d58e53bc1c71eb2b"
+    },
+    {
+      "name": "originalFactoryEnum",
+      "sha256": "d4d7f1813455b8cb8e8a032632ef68b2a021efd27668d4305a7035d647ebed80"
+    }
+  ],
+  "before": {
+    "build_exit": 0,
+    "execute_exit": -5,
+    "diagnostic": "Swift/NativeDictionary.swift:823: Fatal error: Duplicate values for key: 'team'",
+    "elapsed_seconds": 1.225
+  },
+  "after": {
+    "build_exit": 0,
+    "execute_exit": 0,
+    "cases": 2,
+    "stdout": "CASE 1 PASS\nCASE 2 PASS\n",
+    "elapsed_seconds": 0.844,
+    "source_parse_exit": 0,
+    "factory_sha256": "48fb93718f2eb30a0b947aceabb37f2b2b4f0ffaa79bb75c77cafa400401fcc9",
+    "test_sha256": "68d117bfdeab0d628d2b8e4b0c29d41e9f6a653864ad28200fb33026cafae09b",
+    "native_test_execution": "NOT_RUN: the new original Swift Testing method is authored and parsed; the two Foundation-only cases execute the exact extracted production declarations"
+  },
+  "review": "Independent read-only Calendar lane verified descriptor/consumer compatibility and last-explicit-value semantics; no duplicate execution.",
+  "logs": [
+    {
+      "file": "before-build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "before-execution.log",
+      "bytes": 3595,
+      "sha256": "a96feb4b696b2d7c609be7e899d3205339ea221c0e81472eb0fcb122ce2e4737"
+    },
+    {
+      "file": "after-build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "after-execution.log",
+      "bytes": 24,
+      "sha256": "22fefcf7ebc5cc5166d4fcfb2abf0a5b85d1a6d0b846fb4258694fa72ffba930"
+    },
+    {
+      "file": "changed-source-parse.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -55,10 +55,13 @@ public enum HanlinAISDKProviderFactory {
         }
 
         let components = URLComponents(url: configuration.endpoint, resolvingAgainstBaseURL: false)
+        // The public descriptor stores one value per decoded name. Repeated
+        // endpoint keys use the last explicit value; valueless items stay ignored.
         let query = Dictionary(
-            uniqueKeysWithValues: (components?.queryItems ?? []).compactMap { item in
+            (components?.queryItems ?? []).compactMap { item in
                 item.value.map { (item.name, $0) }
-            }
+            },
+            uniquingKeysWith: { _, last in last }
         )
 
         return HanlinAISDKProviderDescriptor(

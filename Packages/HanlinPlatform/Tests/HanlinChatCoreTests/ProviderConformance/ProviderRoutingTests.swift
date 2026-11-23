@@ -180,6 +180,24 @@ struct ProviderRoutingTests {
         #expect(desc.queryParameters["version"] == "2")
     }
 
+    @Test("Repeated endpoint query keys use the last explicit value without crashing")
+    func testRepeatedQueryParametersDoNotCrash() {
+        let config = HanlinChatModelConfiguration(
+            modelID: "custom-model",
+            company: "Proxy",
+            apiType: "openai",
+            endpoint: "https://myproxy.org/v1/chat/completions?team=old&team=ai&team&empty=first&empty=&label=%D7%A9%D7%9C%D7%95%D7%9D&%74eam=final&flag&single=one&Team=capital",
+            credential: "test"
+        )
+        let desc = HanlinAISDKProviderFactory.descriptor(for: config)
+        #expect(desc.kind == .openAICompatible)
+        #expect(desc.baseURL.absoluteString == "https://myproxy.org/v1")
+        #expect(desc.queryParameters == [
+            "team": "final", "empty": "", "label": "שלום",
+            "single": "one", "Team": "capital"
+        ])
+    }
+
     // MARK: - Inventory Gate (Section 6)
 
     @Test("All configured provider companies map to known conformance profiles")
