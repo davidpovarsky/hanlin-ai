@@ -1,0 +1,122 @@
+{
+  "simulator-logs/01-cache-mode.log": {
+    "bytes": 240,
+    "sha256": "f0d639c249409279df9dff0e861f19f934e22989486f7d342a18a44b7cc47569"
+  },
+  "simulator-logs/01-environment.log": {
+    "bytes": 963,
+    "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+  },
+  "simulator-logs/02-prepare-runtime-core.log": {
+    "bytes": 1125,
+    "sha256": "096797bc30f1ead038fbe3f7a4173f3740d20b5df6868077f95a83f810286788"
+  },
+  "simulator-logs/03-package-runtime-host.log": {
+    "bytes": 16428,
+    "sha256": "2965179d7c1a5e0b0cae2e1df72473cdb9b079e5b5410f31354cda82663bd07a"
+  },
+  "simulator-logs/04-runtime-preflight.log": {
+    "bytes": 1736,
+    "sha256": "ffe0af0206650208afb46e4f34c525e7a604df7a0f7c0dc09d211de5a918290a"
+  },
+  "simulator-logs/05-cache-input-capture.log": {
+    "bytes": 103,
+    "sha256": "eedbe4bba410427c619be79200a130f320200376b4890d95a170dfd5736b9eb1"
+  },
+  "simulator-logs/05-cache-input-restore.log": {
+    "bytes": 46,
+    "sha256": "11083745170de91dcbe17fa5b4e18d24f0cbc6923d8d241af153c25d718f94ef"
+  },
+  "simulator-logs/05-resolve-packages.log": {
+    "bytes": 3627,
+    "sha256": "cbb112d4c71930d48fd07f74aae4bcd09bb0fc73820cafc5ab72d4cf4b466afc"
+  },
+  "simulator-logs/05-stage-modular-headers-duration-seconds.txt": {
+    "bytes": 3,
+    "sha256": "a1fb50e6c86fae1679ef3351296fd6713411a08cf8dd1790a4fd05fae8688164"
+  },
+  "simulator-logs/06-current-unit-xctestrun.json": {
+    "bytes": 3059,
+    "sha256": "5e250dfb1a5500eb3ddf04a7f12a48fa7eb40f3eb9e2235d02c9c1a16f9da3fd"
+  },
+  "simulator-logs/06-diagnostics-build-provenance.json": {
+    "bytes": 6712,
+    "sha256": "03a0fafa02a04b23df1ea97e0cb9224daee3c6ff8cb4fde822d65b13589902c7"
+  },
+  "simulator-logs/06-unit-xctestrun-prepare.log": {
+    "bytes": 122,
+    "sha256": "d4d719ad8de6a9e90319526a80dc4793e87cb3f819190d6b1c123747d0ffc677"
+  },
+  "simulator-logs/06-xcodebuild-simulator.log": {
+    "bytes": 10447257,
+    "sha256": "beb477e80fbc190a213fbd0894160a5ade7c101f88b7d0e780b62360e21075be"
+  },
+  "simulator-logs/09-host-resources.log": {
+    "bytes": 72290,
+    "sha256": "6eac15d025e26e14c71b51e21e688c299f0421012d2834c3d35be7b83ad19798"
+  },
+  "simulator-logs/Resolved-Package.resolved": {
+    "bytes": 10180,
+    "sha256": "6634fc599022b6cee5d3c1a5b6f6395f2aba9ab5cd565cde4b0f0712bdaf4b0e"
+  },
+  "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~2GTyQNYBtHPy-co-tVw3l72iAtbtDEFjSWJry_q90Kd8nUlXKwFZxg4Jn9FvwsJywW2DPtjvajYtLJdqHdf2Eg==": {
+    "bytes": 293,
+    "sha256": "1b59f4f5e298823d15ae33ed00ac7d215198d03ba86b8c00e881d373d7876b87"
+  },
+  "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~Rmo1oPDGPPh4s5hVgtxfUQFKx-Tp3CEO6GL1t-9MwkV_aQJRIKb3psBcDBl3tpfmfifL4ykMJismydWW5fYKdw==": {
+    "bytes": 33586,
+    "sha256": "0c1fba136755a524733ff21ec69fdeebfc7ef6d2da5e323d0bdd1c9eba6ec80c"
+  },
+  "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~k4Xb2tsjD7nn2np0h5z6UHy1oEd2p38ASjFqldl1VX5USU4j0AOL0Hu1T2FwhaMYKDht8X2DT0MIo6ojvElsRQ==": {
+    "bytes": 779919,
+    "sha256": "6314ec33c047e6b63baa55e2489c9f1ee3dd6fb05271ece82a8920ae807538e7"
+  },
+  "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~2GTyQNYBtHPy-co-tVw3l72iAtbtDEFjSWJry_q90Kd8nUlXKwFZxg4Jn9FvwsJywW2DPtjvajYtLJdqHdf2Eg==": {
+    "bytes": 1,
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+  },
+  "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~Rmo1oPDGPPh4s5hVgtxfUQFKx-Tp3CEO6GL1t-9MwkV_aQJRIKb3psBcDBl3tpfmfifL4ykMJismydWW5fYKdw==": {
+    "bytes": 133,
+    "sha256": "29011f3cbac23dca6f656728cbd5ce49161d0428331eaf95d47cc0bb4a49440c"
+  },
+  "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~k4Xb2tsjD7nn2np0h5z6UHy1oEd2p38ASjFqldl1VX5USU4j0AOL0Hu1T2FwhaMYKDht8X2DT0MIo6ojvElsRQ==": {
+    "bytes": 1,
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+  },
+  "simulator-logs/SimulatorBuildResult.xcresult/Info.plist": {
+    "bytes": 776,
+    "sha256": "b237e55b4b830097b25a4a7237f4ff735df6c4e79b736ffabe9b28393b14c17c"
+  },
+  "simulator-logs/a2ui-generation/compiler.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "simulator-logs/a2ui-generation/result.json": {
+    "bytes": 2631,
+    "sha256": "b8c801beb89e0d00a57586e2e6a50c15b4cfa69cf45f3d4a1f42111d62068754"
+  },
+  "simulator-logs/foundation-models-interface/declarations.txt": {
+    "bytes": 60798,
+    "sha256": "812d8f15063b0e8fa2573568ee84eee86344d17a3c81c2383a35dd26df27938c"
+  },
+  "simulator-logs/foundation-models-interface/receipt.json": {
+    "bytes": 1221,
+    "sha256": "d7d19e0e2875a90026aa4289503297daf8d4db100fc44bb46405b0846f7f8789"
+  },
+  "simulator-logs/performance-summary.json": {
+    "bytes": 107,
+    "sha256": "c9dbceeea60dc1d2ebb3fe380f7501e2bca63527717f50bfc6f70a34f3108162"
+  },
+  "simulator-logs/performance-summary.md": {
+    "bytes": 3472,
+    "sha256": "bf90988f2e273b943b60e5a13de1384051a8fb3d99732936c2089dd6a6d5953a"
+  },
+  "simulator-logs/sdk-native-export.log": {
+    "bytes": 1439,
+    "sha256": "d3dcfc8d607f54bdf21b480dcd46bd65ff670650e72ea6acfb24a9ce7c4453e2"
+  },
+  "simulator-logs/sdk-native-verify.log": {
+    "bytes": 65,
+    "sha256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86"
+  }
+}
