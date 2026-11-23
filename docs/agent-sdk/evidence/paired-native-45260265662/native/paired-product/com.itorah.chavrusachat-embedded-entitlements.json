@@ -1,0 +1,31 @@
+{
+  "source": "__TEXT,__entitlements",
+  "executable": "AI_Hanlin",
+  "executable_sha256": "4664dc4eb791327cd208efbc705a5d04a07b37cf9a63526d799d4d1f23b09be4",
+  "offset": 13268,
+  "bytes": 1223,
+  "section_sha256": "2294fae0553fe7cc5389e5080a2f3f04ea915518b88ec4095f2f164bc38db946",
+  "entitlements": {
+    "application-identifier": "NA6HPWARQ2.com.itorah.chavrusachat",
+    "aps-environment": "development",
+    "com.apple.developer.healthkit": true,
+    "com.apple.developer.icloud-container-identifiers": [
+      "iCloud.com.itorah.chavrusachat"
+    ],
+    "com.apple.developer.icloud-services": [
+      "CloudKit",
+      "CloudDocuments"
+    ],
+    "com.apple.developer.kernel.extended-virtual-addressing": true,
+    "com.apple.developer.siri": true,
+    "com.apple.developer.translation-app": true,
+    "com.apple.developer.ubiquity-kvstore-identifier": "NA6HPWARQ2.com.itorah.chavrusachat",
+    "com.apple.developer.usernotifications.time-sensitive": true,
+    "com.apple.developer.weatherkit": true,
+    "com.apple.security.application-groups": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ]
+  },
+  "source_entitlements_sha256": "54292b691e208ba5a53cfc4f6b4cd44dc39c237b87f06df0c2c287dac4b73c01"
+}

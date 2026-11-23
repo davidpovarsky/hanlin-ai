@@ -1,0 +1,12 @@
+{
+  "ref": "codex/hanlin-sdk-motion-b-retained-20261123",
+  "inputs": {
+    "target_validation_group": "native_result_inspection",
+    "runtime_bundle_artifact_run_id": "45267860115",
+    "exact_test_selector": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+    "testflight_upload": "false",
+    "runtime_bundle_only": "false",
+    "runtime_publish_release": "false",
+    "full_validation": "false"
+  }
+}
