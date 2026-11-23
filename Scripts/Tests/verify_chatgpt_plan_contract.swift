@@ -197,6 +197,36 @@ private final class FixtureProtocol: URLProtocol, @unchecked Sendable {
             try JSONSerialization.data(withJSONObject: ["revocation_endpoint": "https://auth.openai.com/oauth/revoke"]))
         try await client.revoke(one)
         count += 1
+        let registration = HanlinChatGPTPlanRegistration(credentials: account)
+        let nextHost = HanlinChatGPTPlanClient.makeHostID()
+        let returning = try HanlinChatGPTPlanClient.makeAttempt(hostID: nextHost, loopbackPort: 2345,
+            appName: "Lorvex AI Planner", registration: registration)
+        let returningQuery = URLComponents(url: returning.url, resolvingAgainstBaseURL: false)!.queryItems!
+        try check(returning.clientID == account.clientID && returning.expectedSubject == account.subject &&
+            returningQuery.first { $0.name == "id_token_hint" } == nil &&
+            returningQuery.first { $0.name == "agent_name_hint" } == nil, "token-free returning registration")
+        FixtureProtocol.replies.set("exchange", try JSONSerialization.data(withJSONObject: [
+            "access_token": "fixture-returning", "refresh_token": "fixture-returning-refresh",
+            "id_token": try jwt(key: key, nonce: returning.nonce),
+            "expires_in": 3600, "token_type": "Bearer", "scope": "openid resource.invoke chatgpt.tokens.use.direct"
+        ]))
+        let returningCallback = URL(string: returning.redirectURI.absoluteString + "?state=" + returning.state + "&code=returning")!
+        let returned = try await client.exchange(callback: returningCallback, attempt: returning)
+        try check(returned.clientID == account.clientID && returned.hostID == nextHost, "saved client and current host")
+        count += 1
+        let mismatchAttempt = try HanlinChatGPTPlanClient.makeAttempt(hostID: nextHost, loopbackPort: 2345,
+            appName: "Lorvex AI Planner", registration: registration)
+        FixtureProtocol.replies.set("exchange", try JSONSerialization.data(withJSONObject: [
+            "access_token": "fixture-other", "refresh_token": "fixture-other-refresh",
+            "id_token": try jwt(key: key, nonce: mismatchAttempt.nonce, subject: "other-user"),
+            "expires_in": 3600, "token_type": "Bearer", "scope": "openid resource.invoke chatgpt.tokens.use.direct"
+        ]))
+        do {
+            let mismatchCallback = URL(string: mismatchAttempt.redirectURI.absoluteString + "?state=" + mismatchAttempt.state + "&code=other")!
+            _ = try await client.exchange(callback: mismatchCallback, attempt: mismatchAttempt)
+            throw CheckFailure.failed("returning registration accepted another subject")
+        } catch HanlinChatGPTPlanError.invalidIdentity {}
+        count += 1
         print("PASS: \(count) production SIWC OAuth/wire checks (macOS CryptoKit/Security fixtures, no live account).")
 #else
         print("PASS: \(count) production SIWC wire checks; OAuth CryptoKit/Security checks require Apple.")

@@ -35,15 +35,17 @@ public struct HanlinChatGPTAuthorizationAttempt: Sendable {
     public let state: String
     public let nonce: String
     public let verifier: String
+    public let expectedSubject: String?
 
     public init(url:URL,redirectURI:URL,clientID:String,state:String,
-                nonce:String,verifier:String) {
+                nonce:String,verifier:String,expectedSubject:String? = nil) {
         self.url=url
         self.redirectURI=redirectURI
         self.clientID=clientID
         self.state=state
         self.nonce=nonce
         self.verifier=verifier
+        self.expectedSubject=expectedSubject
     }
 }
 
@@ -61,6 +63,21 @@ public struct HanlinChatGPTPlanCredentials: Codable, Sendable {
     public var canUsePlan: Bool {
         scopes.contains("chatgpt.tokens.use.direct") &&
         scopes.contains("resource.invoke")
+    }
+}
+
+/// Non-secret account registration metadata retained after local sign-out.
+/// Client ID plus verified subject separates registrations even for one email.
+public struct HanlinChatGPTPlanRegistration: Codable, Sendable, Hashable, Identifiable {
+    public var id: String { clientID }
+    public let clientID: String
+    public let subject: String
+    public let email: String?
+
+    public init(credentials: HanlinChatGPTPlanCredentials) {
+        clientID = credentials.clientID
+        subject = credentials.subject
+        email = credentials.email
     }
 }
 
@@ -108,17 +125,26 @@ public actor HanlinChatGPTPlanClient {
 
     public static func makeAttempt(
         hostID: String, loopbackPort: UInt16, previous: HanlinChatGPTPlanCredentials? = nil,
-        appName: String = "Hanlin AI"
+        appName: String = "Hanlin AI",
+        registration: HanlinChatGPTPlanRegistration? = nil
     ) throws -> HanlinChatGPTAuthorizationAttempt {
         guard hostID.hasPrefix("urn:uuid:"),
               UUID(uuidString: String(hostID.dropFirst("urn:uuid:".count))) != nil,
               loopbackPort > 0, !appName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw HanlinChatGPTPlanError.invalidAuthorization
         }
+        if let previous, let registration,
+           (previous.clientID != registration.clientID || previous.subject != registration.subject) {
+            throw HanlinChatGPTPlanError.invalidIdentity
+        }
+        if let registration,
+           (registration.clientID.isEmpty || registration.clientID == "dynamic_agent_client" || registration.subject.isEmpty) {
+            throw HanlinChatGPTPlanError.invalidIdentity
+        }
         let verifier=try random()+random()
         let nonce=try random()
         let state=try random()
-        let client=previous?.clientID ?? "dynamic_agent_client"
+        let client=previous?.clientID ?? registration?.clientID ?? "dynamic_agent_client"
         let redirect=URL(string:
             "http://127.0.0.1:" + String(loopbackPort) + "/auth/callback")!
         var components=URLComponents(string:
@@ -137,11 +163,13 @@ public actor HanlinChatGPTPlanClient {
             URLQueryItem(name:"code_challenge",value:
                 Data(SHA256.hash(data:Data(verifier.utf8))).base64URLEncodedString())
         ]
-        if previous==nil {
+        if client == "dynamic_agent_client" {
             params.append(URLQueryItem(name:"agent_name_hint",value:appName))
         } else {
-            params.append(URLQueryItem(name:"id_token_hint",value:previous!.idToken))
-            if let email=previous?.email {
+            if let idToken = previous?.idToken, !idToken.isEmpty {
+                params.append(URLQueryItem(name:"id_token_hint",value:idToken))
+            }
+            if let email = previous?.email ?? registration?.email {
                 params.append(URLQueryItem(name:"login_hint",value:email))
             }
         }
@@ -150,7 +178,8 @@ public actor HanlinChatGPTPlanClient {
             throw HanlinChatGPTPlanError.invalidAuthorization
         }
         return .init(url:url,redirectURI:redirect,clientID:client,
-                     state:state,nonce:nonce,verifier:verifier)
+                     state:state,nonce:nonce,verifier:verifier,
+                     expectedSubject: previous?.subject ?? registration?.subject)
     }
 
     private struct TokenResponse: Decodable, Sendable {
@@ -247,6 +276,9 @@ public actor HanlinChatGPTPlanClient {
         }
         let claims=try await Self.verifyIdentity(idToken,
             clientID:issuedID,nonce:attempt.nonce,accessToken:response.access_token, session: session)
+        if let expected = attempt.expectedSubject, claims.subject != expected {
+            throw HanlinChatGPTPlanError.invalidIdentity
+        }
         if let priorAccount,claims.subject != priorAccount.subject {
             throw HanlinChatGPTPlanError.invalidIdentity
         }
