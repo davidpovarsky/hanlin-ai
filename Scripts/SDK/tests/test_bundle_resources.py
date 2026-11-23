@@ -2,6 +2,7 @@
 import importlib.util
 from pathlib import Path
 import tempfile
+import shutil
 import unittest
 
 SCRIPT = Path(__file__).resolve().parents[1] / "verify_bundle_resources.py"
@@ -60,6 +61,66 @@ class BundleResourceTests(unittest.TestCase):
             (app / "OldSDK_AI_Hanlin.bundle").mkdir()
             with self.assertRaisesRegex(ValueError, "found 2"):
                 resources.validate(root, app, "AI_Hanlin", manifest)
+
+
+    def framework_copy(self, app, bundle):
+        destination = app / "Frameworks" / "HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework" / bundle.name
+        return shutil.copytree(bundle, destination)
+
+    def test_identical_swiftpm_main_and_framework_bundle_copies_are_validated(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            app, bundle, manifest = self.fixture(root)
+            (bundle / "Assets.car").write_bytes(b"same original compiled asset fixture")
+            copied = self.framework_copy(app, bundle)
+            result = resources.validate(root, app, "AI_Hanlin", manifest)
+            self.assertEqual(result["status"], "PASS")
+            self.assertEqual(result["bundle"], bundle.name)
+            self.assertEqual(result["copiedResourceFiles"], 2)
+            self.assertEqual([row["path"] for row in result["bundleCopies"]],
+                             [bundle.name, str(copied.relative_to(app))])
+            self.assertEqual(len({row["inventorySHA256"] for row in result["bundleCopies"]}), 1)
+
+    def test_different_nested_copy_in_framework_cannot_be_ignored(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            app, bundle, manifest = self.fixture(root)
+            copied = self.framework_copy(app, bundle)
+            (copied / "PythonSupport/module.whl").write_bytes(b"different packaged resource")
+            with self.assertRaisesRegex(ValueError, "Conflicting.*PythonSupport/module.whl"):
+                resources.validate(root, app, "AI_Hanlin", manifest)
+
+    def test_different_processed_resource_in_duplicate_bundle_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            app, bundle, manifest = self.fixture(root)
+            (bundle / "Assets.car").write_bytes(b"original compiled asset fixture")
+            copied = self.framework_copy(app, bundle)
+            (copied / "Assets.car").write_bytes(b"stale compiled asset fixture")
+            with self.assertRaisesRegex(ValueError, "Conflicting.*Assets.car"):
+                resources.validate(root, app, "AI_Hanlin", manifest)
+
+    def test_identical_copies_cannot_mask_a_missing_canonical_resource(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            app, bundle, manifest = self.fixture(root)
+            (bundle / "RuntimeHostResources.zip").rename(app / "RuntimeHostResources.zip")
+            self.framework_copy(app, bundle)
+            result = resources.validate(root, app, "AI_Hanlin", manifest)
+            self.assertEqual(result["status"], "FAIL")
+            self.assertEqual(result["errors"][0]["reason"], "missing from original SDK bundle")
+
+    def test_duplicate_bundle_resource_link_cannot_escape_its_owner(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            app, bundle, manifest = self.fixture(root)
+            copied = self.framework_copy(app, bundle)
+            outside = app / "outside.car"
+            outside.write_bytes(b"external compiled asset fixture")
+            (copied / "Assets.car").symlink_to(outside)
+            with self.assertRaisesRegex(ValueError, "resource escapes"):
+                resources.validate(root, app, "AI_Hanlin", manifest)
+
 
 
 if __name__ == "__main__":

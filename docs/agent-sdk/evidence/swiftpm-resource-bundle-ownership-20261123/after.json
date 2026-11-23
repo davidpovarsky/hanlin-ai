@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.SDK.tests.test_bundle_resources",
+    "-v"
+  ],
+  "exitCode": 0,
+  "testMethods": 8,
+  "scope": "Three affected original resource controls plus five duplicate-copy controls; no Apple execution.",
+  "verifierBeforeSHA256": "528d858d3403dceb937947751863ef1919590fcd7c996df6e9bdc1a5e9196cb5",
+  "verifierAfterSHA256": "321fd8cf770b4461de8514394c1a1397539c483b893a96890a25f9a0c6f5bb5d",
+  "nativeAfterFix": "NOT_RUN",
+  "originalSourceCopyChecks": "Unchanged",
+  "appProductSources": "Unchanged"
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "recordedUTC": "2026-11-23T20:09:30.983469+00:00",
+  "originalRun": 45246711373,
+  "originalSource": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+  "observedGate": "FAIL: original scanner required exactly one matching bundle, but SwiftPM copied one product to the app root and its package-product framework.",
+  "nativeFullAppAndTestsBuild": "PASS at original source",
+  "currentUnitProducts": "PASS at original source",
+  "runtimeCopySignature": "PASS at original source",
+  "nativeSelectedInvocations": 342,
+  "nativeSelectedInvocationStatus": "NOT_RUN",
+  "repair": "Accept only same-identity, complete content/layout-equivalent bundle copies inside the app. Preserve canonical copied-resource comparison and reject conflicts/escapes/missing resources.",
+  "originalCanonicalSourceChecks": "Unchanged",
+  "productSourceChange": false,
+  "portableBefore": {
+    "methods": 1,
+    "errors": 1,
+    "exitCode": 1
+  },
+  "portableAfter": {
+    "methods": 8,
+    "pass": 8,
+    "exitCode": 0
+  },
+  "nativeScanAfterFix": "NOT_RUN",
+  "originalJobLogSHA256": "36ec059cdadb68070c67db73ddc2bf935c3a475bddef228204aa16cf538f735b",
+  "laterCommittedChangesToCompiledAppSource": 0,
+  "laterCommittedPathsCount": 95,
+  "sourceSHA256": {
+    "Scripts/SDK/verify_bundle_resources.py": "321fd8cf770b4461de8514394c1a1397539c483b893a96890a25f9a0c6f5bb5d",
+    "Scripts/SDK/tests/test_bundle_resources.py": "677e0dc6d170f4811545a03146570a85f654888b80a847041dbbe8b3c2218a02"
+  }
+}

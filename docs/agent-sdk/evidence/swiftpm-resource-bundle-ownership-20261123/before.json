@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_identical_swiftpm_main_and_framework_bundle_copies_are_validated",
+    "-v"
+  ],
+  "exitCode": 1,
+  "scope": "Portable fixture of the original two SwiftPM bundle-copy locations; not native byte equality or app test evidence.",
+  "recordedUTC": "2026-11-23T20:06:19.571877+00:00"
+}
