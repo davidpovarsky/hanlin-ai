@@ -1,10 +1,12 @@
 """Archive/export the original products using the owner's existing local identity.
 
-No upload, tester invitation, notification, profile revocation or device registration.
-Build unsigned device archives, then export using only the existing distribution
-certificate. No development identity is created, and no private key is exported
-or backed up. Secrets stay in a temporary private directory/keychain; retained logs
-redact credential identifiers and tokens.
+No upload, tester invitation, notification or device registration.
+Default release work uses only the existing distribution certificate. The explicit
+cross-app owner plan may let Xcode create a temporary development identity for
+automatic group registration; only an exact identity created by that probe is
+revoked after distribution exports. Existing identities are never revoked.
+No private key is exported or backed up. Secrets stay in the owned temporary
+directory/keychain; retained logs redact credential identifiers and tokens.
 """
 from __future__ import annotations
 import base64
@@ -152,7 +154,8 @@ def main():
                 state["cross_app_owner_provisioning"] = {}
                 run_cross_app_owner_provisioning(
                     folder, owner_plan, team=os.environ["APPLE_TEAM_ID"],
-                    identity=distribution_identity, certificate_sha=cert_sha, run=run,
+                    identity=distribution_identity, certificate_sha=cert_sha, keychain=keychain,
+                    installed_profiles=installed_profiles, run=run,
                     receipt=state["cross_app_owner_provisioning"])
                 state["status"] = "CROSS_APP_PROVISIONING_PASS"
             else:

@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "run_id": 45283174782,
+  "source_sha": "fdae34a3cdda0202bd6f3d0b03489fbb510077fe",
+  "artifact_digest": "088cd9a397424d4fa1682036e79ab6873e1f47e94f4e7d3e18f66adced305f36",
+  "receipt_sha256": "2ed72c7594e74511b61c33e7938fb3e6a91a6f839ec6081f5c6cd095ef337a1d",
+  "result": "AUTOMATIC_ARCHIVE_COMMAND_CORRECTION_REQUIRED",
+  "actual_xcode": "27.2",
+  "cause": "Automatic archive rejected explicit distribution certificate identity before account group registration. Xcode requested Apple Development.",
+  "existing_identity_checks": {
+    "private_key_matches": true,
+    "valid_dates": true,
+    "team_matches": true,
+    "distribution_identity": true
+  },
+  "existing_identity_os_trust": "VERIFIED",
+  "cleanup": "PASS",
+  "profile_readback": [
+    {
+      "role": "otzaria",
+      "bundle_id": "com.davidpovarsky.chavrusatext",
+      "registered_identity": {
+        "resource_id": "7F445975JM",
+        "bundle_id": "com.davidpovarsky.chavrusatext",
+        "name": "ChavrusaText",
+        "platform": "UNIVERSAL"
+      },
+      "capabilities_before": [
+        "APP_GROUPS",
+        "ICLOUD",
+        "ICLOUD_EXTENDED_SHARE_ACCESS",
+        "IN_APP_PURCHASE",
+        "PUSH_NOTIFICATIONS"
+      ],
+      "profile_before_app_id_changes": {
+        "name": "ChavrusaText_App_Store_Automated_35660249014_1",
+        "uuid": "fa5c0d12-fe97-4769-9058-8db2abdc6bbd",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.com.davidpovarsky.chavrusatext",
+        "app_groups": [
+          "group.com.davidpovarsky.chavrusatext",
+          "group.com.davidpovarsky.itorah"
+        ],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "resource_id": "MT859RH6M6",
+        "source": "REUSED_EXISTING_PROFILE"
+      },
+      "requested_app_groups": [
+        "group.com.davidpovarsky.chavrusatext",
+        "group.com.davidpovarsky.itorah",
+        "group.com.itorah.shared"
+      ],
+      "xcode_exit": 65
+    },
+    {
+      "role": "anytype",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2",
+      "registered_identity": {
+        "resource_id": "KTRM7V4TCD",
+        "bundle_id": "io.anytype.app.NA6HPWARQ2",
+        "name": "Anytype",
+        "platform": "UNIVERSAL"
+      },
+      "capabilities_before": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_before_app_id_changes": {
+        "name": "MiniApps owner anytype 45283174782",
+        "uuid": "e81d007c-b092-469c-94ff-dcc53dc07cb0",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2",
+        "app_groups": [],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "resource_id": "LRS4TK67PA",
+        "source": "CREATED_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION"
+      },
+      "requested_app_groups": [
+        "group.com.itorah.shared",
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "xcode_exit": 65
+    },
+    {
+      "role": "anytype_share",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+      "registered_identity": {
+        "resource_id": "SQCVS5F3BA",
+        "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+        "name": "Anytype AnytypeShareExtension",
+        "platform": "UNIVERSAL"
+      },
+      "capabilities_before": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_before_app_id_changes": {
+        "name": "MiniApps owner anytype_share 45283174782",
+        "uuid": "29df1233-3f30-4245-a540-9806afd24d3c",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+        "app_groups": [],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "resource_id": "DS6938ZGBU",
+        "source": "CREATED_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION"
+      },
+      "requested_app_groups": [
+        "group.com.itorah.shared",
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "xcode_exit": 65
+    },
+    {
+      "role": "anytype_notification",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+      "registered_identity": {
+        "resource_id": "F234VTD7KH",
+        "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+        "name": "Anytype AnytypeNotificationServiceExtension",
+        "platform": "UNIVERSAL"
+      },
+      "capabilities_before": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_before_app_id_changes": {
+        "name": "MiniApps owner anytype_notification 45283174782",
+        "uuid": "381d3603-3b6e-4109-8132-dd28223be19c",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+        "app_groups": [],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "resource_id": "QRHZ937FNP",
+        "source": "CREATED_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION"
+      },
+      "requested_app_groups": [
+        "group.com.itorah.shared",
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "xcode_exit": 65
+    },
+    {
+      "role": "anytype_widget",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+      "registered_identity": {
+        "resource_id": "4Y4ZRZD6LF",
+        "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+        "name": "Anytype AnytypeWidget",
+        "platform": "UNIVERSAL"
+      },
+      "capabilities_before": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "profile_before_app_id_changes": {
+        "name": "MiniApps owner anytype_widget 45283174782",
+        "uuid": "31a5780d-3797-40db-9961-037ece2390e4",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2.homewidget",
+        "app_groups": [],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "resource_id": "QVQG6FXQ49",
+        "source": "CREATED_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION"
+      },
+      "requested_app_groups": [
+        "group.com.itorah.shared",
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "xcode_exit": 65
+    }
+  ],
+  "private_group_selection": {
+    "anytype_owner": {
+      "group": "group.io.anytype.app.NA6HPWARQ2",
+      "source": "NEW_OWNER_PRIVATE_GROUP_REQUESTED",
+      "observed_groups": []
+    }
+  },
+  "group_registration_verified": false,
+  "corrected_flow": [
+    "Automatic development archive with REGISTER_APP_GROUPS and existing ASC key",
+    "Read/create distribution profile covering every native source entitlement with existing distribution certificate",
+    "Export with exact original distribution identity and verified profile",
+    "Read actual embedded profile and signed binary entitlement values",
+    "Clean up only a development identity newly registered during this probe whose private key is in its owned temporary keychain; never touch preexisting identities"
+  ],
+  "original_default_release_branch_ast_unchanged": true,
+  "focused_new_tests": {
+    "temporary_development_identity_selection": 4,
+    "passed": 4,
+    "prior_group_selection_tests": "NOT_REPEATED_UNCHANGED"
+  },
+  "official_sources": [
+    "https://developer.apple.com/documentation/xcode-release-notes/xcode-13-release-notes",
+    "https://developer.apple.com/documentation/xcode/build-settings-reference",
+    "https://developer.apple.com/documentation/appstoreconnectapi/delete-v1-certificates-_id_"
+  ]
+}
