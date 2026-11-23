@@ -50,7 +50,8 @@
         "docs/hanlin-platform/personal-runtime-completion/*.json",
         "docs/hanlin-platform/contract-audit/**",
         "docs/hanlin-platform/personal-runtime-completion/evidence/**",
-        "Scripts/Runtime/verify-runtime-job-foundation.sh"
+        "Scripts/Runtime/verify-runtime-job-foundation.sh",
+        "Scripts/SDK/**"
       ],
       "direct_validation_groups": [
         "ci_router"
@@ -1700,6 +1701,37 @@
       ],
       "ui_suites": [
         "AI_HLYUITests/HanlinShareInboxUITests"
+      ],
+      "consumers": []
+    },
+    "hanlin_application_sdk": {
+      "description": "Original full application source assembly, injected host facade and public source ownership graph",
+      "patterns": [
+        "AI_HLY/Downstream/SDK/**",
+        "Package.swift",
+        "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+        "AI_HLYTests/HanlinConversationControllerTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinApplicationEmbeddingTests"
+      ],
+      "consumers": [
+        "app_core"
+      ]
+    },
+    "calendar_tool_recovery": {
+      "description": "Original calendar adapter and malformed-input/cancelled callback regressions",
+      "patterns": [
+        "AI_HLYTests/CalendarToolTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CalendarToolTests"
       ],
       "consumers": []
     }
