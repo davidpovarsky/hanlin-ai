@@ -102,3 +102,8 @@ Portable verification confirmed that removing only the four new attachment lines
 The route was published and dispatched once as [45157020895 at646b2291](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45157020895). Its native job could not acquire a hosted runner: runner_id0, zero steps, cancelled after15minutes, and zero artifacts. C is **NOT_RUN** and the requested visual capture is **NOT_CAPTURED**. No build, assertion, screenshot or video executed. The [source-bound terminal receipt and original annotation](../../docs/agent-sdk/evidence/motion-native-45157020895/README.md) preserve that infrastructure outcome; no retry was submitted.
 
 The last executed C result remains the authentic automated pass at6772dce6 with the explicitly unresolved landscape image. A/B/D were not selected by the visual scope. A clean landscape visual pass still requires inspecting both original and full-screen native attachments from an executed C recapture.
+
+
+## 2026-11-23 — D diagnostic executed, original B next
+
+[Original D run 45217195070](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45217195070) completed successfully on source 5d0ea90d98b405d38b66bb735198b945225877ba. All 12 native observations are preserved in [the source-bound receipt](../../docs/agent-sdk/evidence/motion-native-45217195070/README.md). Status is **DIAGNOSTIC_CAPTURED**, not B acceptance. Its original animated control observed intermediate geometry, and immediate-touch-down produced all three callbacks. Independent coordinate taps took 0.78–1.13 seconds and did not exercise mid-animation reversal. No product animation or assertion changed. A/B were NOT_RUN in this diagnostic; C's existing native/visual PASS remains reused.

@@ -1,0 +1,1 @@
+static=collapsed;animated=collapsed; geometry=Optional({"animated":{"natural":64.5,"expanded":false,"visible":0},"static":{"natural":64.5,"expanded":false,"visible":0}})

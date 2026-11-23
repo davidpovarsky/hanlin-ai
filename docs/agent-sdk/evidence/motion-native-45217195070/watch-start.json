@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-23T16:30:41.252591+00:00",
+  "run": 45217195070,
+  "pid": 3046431,
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "gh",
+    "run",
+    "watch",
+    "45217195070",
+    "-R",
+    "davidpovarsky/hanlin-ai",
+    "--exit-status",
+    "--compact",
+    "--interval",
+    "60"
+  ],
+  "bound_seconds": 3300
+}
