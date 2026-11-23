@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 SCRIPTS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(SCRIPTS))
@@ -74,7 +76,7 @@ class MotionSimulatorBootTests(unittest.TestCase):
     def test_first_owned_timeout_allows_only_one_targeted_shutdown_boot_and_fresh_readiness(self):
         result = self.run_fixture([(124, True), (0, False)])
         self.assertEqual(self.operations(), ["boot", "bootstatus", "shutdown", "boot", "bootstatus"])
-        self.assertEqual([seconds for _, seconds, _ in self.calls], [15, 180, 20, 15, 180])
+        self.assertEqual([seconds for _, seconds, _ in self.calls], [15, 300, 20, 15, 300])
         self.assertTrue(all(args[3] == DEVICE and args[:2] == ["xcrun", "simctl"]
                             for args, _, _ in self.calls))
         self.assertEqual(result["status"], "READY_FROM_NATIVE_BOOTSTATUS")
@@ -178,6 +180,77 @@ class MotionSimulatorBootTests(unittest.TestCase):
             "import sys; print('native-exit'); sys.exit(124)"], 5, self.out / "native-exit.log")
         self.assertFalse(failed["timed_out"])
         self.assertEqual(failed["return_code"], 124)
+
+
+    def test_timeout_observations_preserve_real_partial_stdout_and_stderr(self):
+        with self.assertRaises(subprocess.TimeoutExpired) as captured:
+            subprocess.run([sys.executable, "-c",
+                "import sys,time; print('partial-out',flush=True); "
+                "print('partial-error',file=sys.stderr,flush=True); time.sleep(5)"],
+                capture_output=True, timeout=0.3)
+        def observe(command, **kwargs):
+            self.assertIn(kwargs["timeout"], (5, 15))
+            if command[0] != "ps":
+                raise captured.exception
+            return subprocess.CompletedProcess(command, 0, b"", b"")
+        with patch.object(boot.subprocess, "run", side_effect=observe):
+            boot.retain_failure_observations(self.out)
+        for name in ("devices-after", "core-simulator-log"):
+            self.assertIn(b"partial-out", (self.out / (name + ".stdout")).read_bytes())
+            self.assertIn(b"partial-error", (self.out / (name + ".stderr")).read_bytes())
+            self.assertEqual((self.out / (name + ".timeout")).read_text(), "15s observation deadline")
+
+    def test_process_observation_is_bounded_filtered_and_retains_timeout_status(self):
+        uid = os.geteuid()
+        output = (f"101 1 {uid} S /Library/Frameworks/CoreSimulatorService\n"
+                  f"102 1 {uid + 1} S /Library/Frameworks/CoreSimulatorService\n"
+                  f"103 1 {uid} R /usr/bin/unrelated-command\n"
+                  f"104 1 {uid} S /Applications/Xcode.app/Contents/Developer/usr/bin/simctl\n").encode()
+        def observe(command, **kwargs):
+            if command[0] == "ps":
+                self.assertEqual(kwargs["timeout"], 5)
+                self.assertEqual(command, ["ps", "-u", str(uid), "-o", "pid=,ppid=,uid=,stat=,comm="])
+                raise subprocess.TimeoutExpired(command, 5, output=output, stderr=b"partial ps error")
+            return subprocess.CompletedProcess(command, 0, b"[]", b"")
+        with patch.object(boot.subprocess, "run", side_effect=observe):
+            boot.retain_failure_observations(self.out)
+        result = json.loads((self.out / "simulator-process-observation.json").read_text())
+        self.assertTrue(result["timed_out"])
+        self.assertEqual(result["return_code"], 124)
+        self.assertEqual([row["pid"] for row in result["processes"]], [101, 104])
+        self.assertEqual(result["stderr"], "partial ps error")
+
+    def test_startup_context_records_exact_developer_path_without_environment_dump(self):
+        selected = "/Applications/Xcode_27.2.app/Contents/Developer"
+        tool = selected + "/usr/bin/simctl"
+        def locate(command, timeout, output):
+            self.assertEqual(command, ["xcrun", "--find", "simctl"])
+            self.assertEqual(timeout, 5)
+            output.write_text(tool + "\n")
+            return {"command": command, "timeout_seconds": timeout, "return_code": 0,
+                    "timed_out": False, "output_file": output.name}
+        with patch.dict(os.environ, {"DEVELOPER_DIR": selected, "UNRELATED_SECRET": "must-not-be-retained"}), \
+                patch.object(boot, "native_command", side_effect=locate):
+            boot.retain_startup_context(self.out)
+        raw = (self.out / "motion-startup-context.json").read_text()
+        result = json.loads(raw)
+        self.assertEqual(result["developer_dir"], selected)
+        self.assertEqual(result["simctl_path"], tool)
+        self.assertNotIn("must-not-be-retained", raw)
+        self.assertFalse((self.out / "motion-boot-readiness.json").exists())
+
+    def test_missing_diagnostic_tools_do_not_mask_the_readiness_verdict(self):
+        self.selection.write_text(json.dumps(self.original))
+        with self.assertRaisesRegex(RuntimeError, "not eligible"):
+            self.run_fixture([(1, False)])
+        original = (self.out / "motion-boot-readiness.json").read_bytes()
+        with patch.object(boot, "native_command", side_effect=OSError("tool unavailable")), \
+                patch.object(boot.subprocess, "run", side_effect=OSError("observation unavailable")):
+            boot.retain_startup_context(self.out)
+            boot.retain_failure_observations(self.out)
+        self.assertEqual((self.out / "motion-boot-readiness.json").read_bytes(), original)
+        self.assertIn("tool unavailable", (self.out / "motion-startup-context.json").read_text())
+        self.assertIn("observation unavailable", (self.out / "simulator-process-observation.json").read_text())
 
 
 if __name__ == "__main__":

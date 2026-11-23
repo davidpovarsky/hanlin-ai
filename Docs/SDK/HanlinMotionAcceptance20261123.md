@@ -126,3 +126,8 @@ The last executed C result remains the authentic automated pass at6772dce6 with 
 ## 2026-11-23 — Minimal proof row topology correction prepared
 
 The proof groups its unchanged Thinking header and original `HanlinAnimatedDisclosure` inside one VStack, matching `HanlinActivityDisclosureStyle` and original D's production probe. Component, preset, telemetry, gesture, assertion and timeout code is preserved; removing the wrapper restores the executed proof source byte-for-byte. [Exact before/after source and references](../../docs/agent-sdk/evidence/motion-proof-row-20261123/README.md) record portable syntax/closure checks and native **NOT_RUN**. Because C uses this same row for long-content/RTL/type/orientation layout, the next reviewed native run selects original **B+C together** via the existing affected route. C's previous genuine PASS remains historical; A remains subsequent.
+
+
+## 2026-11-23 — Bounded startup repair prepared after four-run comparison
+
+The native bootstatus startup budget is now300s, informed by observed successful cold starts160.355/169.871s under the prior180s boundary. This changes only simulator admission waiting. Original Motion assertions, animation/test deadlines, device criteria, owned-recovery rules and actual native-success requirement are unchanged. Timed-out diagnostic observations retain partial output; selected developer/tool paths and filtered current-user simulator process state are now recorded. [Sixteen focused portable controls pass](../../docs/agent-sdk/evidence/motion-startup-readiness-20261123/README.md). Apple readiness and original A/B/C on this helper are **NOT_RUN**; the previous blocked attempts remain preserved and no new run is claimed.

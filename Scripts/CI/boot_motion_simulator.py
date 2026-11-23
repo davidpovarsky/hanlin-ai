@@ -23,7 +23,8 @@ else:
     from owned_simulator_receipts import verify_owned_motion_creation
 
 BOOT_SECONDS = 15.0
-BOOTSTATUS_SECONDS = 180.0
+# Native cold-start admission only; Motion test/animation deadlines are separate.
+BOOTSTATUS_SECONDS = 300.0
 SHUTDOWN_SECONDS = 20.0
 
 
@@ -136,6 +137,21 @@ def ensure_ready(device, selection, strategy, run_id, run_attempt, runner=native
         (out / "bootstatus.log").write_bytes(b"\n".join(logs))
 
 
+def retain_startup_context(out):
+    # Record selected tooling without dumping unrelated environment variables.
+    context = {"schema_version": 1, "developer_dir": os.environ.get("DEVELOPER_DIR"),
+               "effective_uid": os.geteuid(), "python_executable": sys.executable,
+               "scope": "Read-only startup diagnostics; not simulator readiness"}
+    try:
+        result = native_command(["xcrun", "--find", "simctl"], 5, out / "simctl-tool-path.log")
+        context["simctl_lookup"] = result
+        if result["return_code"] == 0 and not result["timed_out"]:
+            context["simctl_path"] = (out / "simctl-tool-path.log").read_text(errors="replace").strip()
+    except OSError as error:
+        context["simctl_lookup_error"] = str(error)
+    (out / "motion-startup-context.json").write_text(json.dumps(context, indent=2) + "\n")
+
+
 def retain_failure_observations(out):
     # These were already collected by the original Motion wrapper on failure.
     # They diagnose readiness; their state never changes the failed verdict.
@@ -148,8 +164,39 @@ def retain_failure_observations(out):
             result = subprocess.run(command, capture_output=True, timeout=15)
             (out / (name + ".stdout")).write_bytes(result.stdout)
             (out / (name + ".stderr")).write_bytes(result.stderr)
-        except subprocess.TimeoutExpired:
+        except subprocess.TimeoutExpired as error:
+            (out / (name + ".stdout")).write_bytes(error.stdout or b"")
+            (out / (name + ".stderr")).write_bytes(error.stderr or b"")
             (out / (name + ".timeout")).write_text("15s observation deadline", encoding="utf-8")
+        except OSError as error:
+            (out / (name + ".error")).write_text(str(error), encoding="utf-8")
+
+    # Only retain simulator-service names belonging to this runner user. This
+    # never signals a service, reads process environments, or changes readiness.
+    uid = os.geteuid()
+    command = ["ps", "-u", str(uid), "-o", "pid=,ppid=,uid=,stat=,comm="]
+    snapshot = {"schema_version": 1, "command": command, "timeout_seconds": 5,
+                "effective_uid": uid, "processes": [], "timed_out": False}
+    output = b""
+    try:
+        result = subprocess.run(command, capture_output=True, timeout=5)
+        output = result.stdout
+        snapshot.update(return_code=result.returncode, stderr=result.stderr.decode(errors="replace"))
+    except subprocess.TimeoutExpired as error:
+        output = error.stdout or b""
+        snapshot.update(timed_out=True, return_code=124,
+                        stderr=(error.stderr or b"").decode(errors="replace"))
+    except OSError as error:
+        snapshot["error"] = str(error)
+    allowed = {"CoreSimulatorService", "com.apple.CoreSimulator.CoreSimulatorService",
+               "simctl", "Simulator", "SimulatorTrampoline", "launchd_sim"}
+    for line in output.decode(errors="replace").splitlines():
+        fields = line.split(None, 4)
+        if (len(fields) == 5 and all(value.isdigit() for value in fields[:3])
+                and int(fields[2]) == uid and Path(fields[4]).name in allowed):
+            snapshot["processes"].append({"pid": int(fields[0]), "ppid": int(fields[1]),
+                "uid": int(fields[2]), "state": fields[3], "executable": fields[4]})
+    (out / "simulator-process-observation.json").write_text(json.dumps(snapshot, indent=2) + "\n")
 
 
 def main():
@@ -158,6 +205,7 @@ def main():
     parser.add_argument("--selection", type=Path, required=True)
     parser.add_argument("--strategy", choices=("fresh", "ready"), required=True)
     args = parser.parse_args()
+    retain_startup_context(args.selection.parent)
     try:
         ensure_ready(args.device, args.selection, args.strategy,
                      os.environ.get("GITHUB_RUN_ID"), os.environ.get("GITHUB_RUN_ATTEMPT"))
