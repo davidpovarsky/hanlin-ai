@@ -1,0 +1,17 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 2179,
+    "sha256": "730b17d84592ff0593b39017c1b583a96aebefd46fd2e127898681f648946139"
+  },
+  {
+    "path": "receipt.json",
+    "bytes": 7395,
+    "sha256": "14f8d688782696217cfe4dbc480e70be5a82648ad466af450500e942d138d26b"
+  },
+  {
+    "path": "secret-name-presence.json",
+    "bytes": 403,
+    "sha256": "76f4191e1c9460947bccaa07d51384ab7aa7468d53870de5a08b2998036d6805"
+  }
+]
