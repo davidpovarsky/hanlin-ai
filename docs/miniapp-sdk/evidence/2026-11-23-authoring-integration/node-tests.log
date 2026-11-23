@@ -1,0 +1,21 @@
+✔ real TypeScript reports semantic errors with original source locations (3040.716865ms)
+✔ validation uses actual original package declarations from the supplied SDK (2241.814933ms)
+✔ NativeScript package emits a runnable ESM graph and retains exact editable sources (2953.112395ms)
+✔ import rechecks retained source and ignores a stale successful report (3822.343856ms)
+✔ ScriptWidget keeps original source and its explicit ABI declaration (1303.663431ms)
+✔ failed typecheck emits no package (1230.904247ms)
+✔ a requested existing output directory is preserved (1169.51373ms)
+✔ SDK discovery reads its real manifest and requested documentation (7.345843ms)
+✔ bundle-only imports do not receive a fabricated source typecheck pass (5.700833ms)
+✔ modified compiled output is rejected even when retained TypeScript is still valid (3757.122037ms)
+✔ the real CLI archives and revalidates retained source, diagnostics and output identity (5958.732137ms)
+✔ compiler-used sources named build or dist survive source retention and archive revalidation (3664.426218ms)
+✔ NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import (3693.93427ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33584.222356
