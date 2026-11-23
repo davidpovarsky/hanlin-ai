@@ -27,7 +27,20 @@ HanlinMiniAppsLibrary(
 The original `HanlinMiniAppsProvider` remains the catalog and launch authority in `AI_HLY/Downstream/ProductSplitIntegration`. The canonical file now owns the moved `connected(to:)` composition and a public `HanlinMiniAppsServices.connectedToHanlin()` factory. After the host has prepared the original application runtime, importing `AI_Hanlin` and `HanlinMiniAppsUI` also exposes:
 
 ```swift
-HanlinMiniAppsLibrary(services: .connectedToHanlin())
+import AI_Hanlin
+import HanlinMiniAppsUI
+import SwiftUI
+
+// Construct after preparing the original runtime. Keep one services value for
+// the library lifetime so the original provider's launch fence stays alive.
+@MainActor
+struct MiniAppsHostView: View {
+    @State private var services = HanlinMiniAppsServices.connectedToHanlin()
+
+    var body: some View {
+        HanlinMiniAppsLibrary(services: services)
+    }
+}
 ```
 
 That convenience initializer supplies the exact original `HanlinMiniAppTransferView(mode: .receive)` and the exact `HanlinScriptingPlatform.shared.isTransferringProductData` observation. Catalog refresh, stale-selection checks, grants, package registry, engine selection and launch ownership remain in their original provider. The convenience API does not prepare or replace the runtime on behalf of the host.
