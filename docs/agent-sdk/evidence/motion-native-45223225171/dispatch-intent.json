@@ -1,0 +1,16 @@
+{
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "ref": "codex/hanlin-sdk-motion-b-20261123",
+  "source_sha": "c1c9fde5299124953d7ced72748dc09b50b72f7f",
+  "inputs": {
+    "target_validation_group": "chat_motion_product",
+    "exact_test_selector": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+    "testflight_upload": "false",
+    "runtime_bundle_only": "false",
+    "runtime_publish_release": "false",
+    "full_validation": "false"
+  },
+  "created_at": "2026-11-23T17:02:28.050482+00:00",
+  "owner": "motion_acceptance",
+  "scope": "Original B only; D completed; C authentic reuse; paired3 held"
+}

@@ -107,3 +107,8 @@ The last executed C result remains the authentic automated pass at6772dce6 with 
 ## 2026-11-23 — D diagnostic executed, original B next
 
 [Original D run 45217195070](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45217195070) completed successfully on source 5d0ea90d98b405d38b66bb735198b945225877ba. All 12 native observations are preserved in [the source-bound receipt](../../docs/agent-sdk/evidence/motion-native-45217195070/README.md). Status is **DIAGNOSTIC_CAPTURED**, not B acceptance. Its original animated control observed intermediate geometry, and immediate-touch-down produced all three callbacks. Independent coordinate taps took 0.78–1.13 seconds and did not exercise mid-animation reversal. No product animation or assertion changed. A/B were NOT_RUN in this diagnostic; C's existing native/visual PASS remains reused.
+
+
+## 2026-11-23 — B scoped continuation blocked before runner allocation
+
+[Original B-only run45223225171](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45223225171) at c1c9fde5299124953d7ced72748dc09b50b72f7f is **BLOCKED / NOT_RUN**. GitHub cancelled native job137862767156 without a runner, steps or artifacts and reports that the hosted runner was not acquired after multiple attempts. [Exact API receipts and source admission](../../docs/agent-sdk/evidence/motion-native-45223225171/README.md) preserve this boundary. No native assertion was executed; previous B failure remains unresolved. A remains pending, C remains reused after review of the nine additive unused widget localization keys, and D's complete observations remain diagnostic-only. No native rerun was submitted while allocation failure remained unresolved.
