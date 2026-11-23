@@ -1,0 +1,14 @@
+{
+  "status": "EXECUTED_PASS",
+  "return_code": 0,
+  "started_at": "2026-11-23T17:03:07.520817+00:00",
+  "finished_at": "2026-11-23T17:03:07.817056+00:00",
+  "wall_seconds": 0.296239,
+  "platform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "log_sha256": "257c8fcc737fac00184de7a7196c99f3b86a947a59234522ff7894fbe51cfb86",
+  "executed_control_methods": 2,
+  "reused_unchanged_original_control_methods": 9,
+  "actual_provider_methods_executed": 0,
+  "apple_tests_executed": 0
+}

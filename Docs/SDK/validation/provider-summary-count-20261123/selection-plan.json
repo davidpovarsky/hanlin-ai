@@ -1,0 +1,46 @@
+{
+  "status": "PLANNED_FOCUSED_REEXECUTION",
+  "base_sha": "c1c9fde5299124953d7ced72748dc09b50b72f7f",
+  "original_run": 45218713371,
+  "original_job": 137856126084,
+  "original_failed_log_sha256": "5d62e91166e947f22aa75f40c1d9aaf5d55c4a60e880b113da287de5a7062872",
+  "source_catalog_count": 78,
+  "source_catalog_files": {
+    "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift": "c218cc146bdc18bb6ccf7094508285c9894f8617caa716b29fd0bed0c99ff839",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/DirectChatPathConformanceTests.swift": "94f3ec0a2c2625c53e931df02265bf69944b77850449d79dcb014b3380973cb5",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderConformanceScenarioTests.swift": "e7824ccde340596203b5f28370988d493e2b3dba5db68449d026c842a0e7d955",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderFaultInjectionTests.swift": "877fb8044aaf91b38596f4bf7d09789620ee39b393a3e9fa8e8a338d13557732",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderLongHorizonTests.swift": "08f03bc11bdf43bfed054646de0d0f5b4bc0dcaf3a8813214f2feaa6eee76f5a",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderRoutingTests.swift": "68d117bfdeab0d628d2b8e4b0c29d41e9f6a653864ad28200fb33026cafae09b"
+  },
+  "test_module_before_sha256": "cbf658dde62bb734dd56592b86aaa693f84df9e1ff446ff81b083d5a14a3edaa",
+  "test_module_after_sha256": "94243fc598655c19d8afece1892c8a93daeef60b29fa48eee2b3db6bf002fa6d",
+  "summary_generator_sha256": "c33e31d792cfc4ab28a6b7d46e6de32703dd65f9f06be9543acc8a712797c3a3",
+  "unchanged_control_declarations": {
+    "test_g01_same_scenario_tag_must_not_cross_match": "76e73fe958e5fc55ca841a757ed8249037cd7345773f60bd1dd555bb71c1478b",
+    "test_g02_prefix_display_names_must_not_cross_match": "02af3e7eb06adb13743164147a2d0d132b4e051e87821ba5a65e7fddbd74cceb",
+    "test_g03_exact_function_identity_wins": "1ae94ef54d59d426e1ad680abe7ce41edb758b6099242c2aafe6fd0138b042da",
+    "test_g04_exact_fail_maps_only_to_exact_test": "0af61307ca33f382393c58908ac16e1ff1a60468047777cb52c18c8ed5f26cc0",
+    "test_g05_parameterized_aggregate_pass": "4cd1d903892ba1c731665d59ac398b886f2a889d2dec2ded498d634d4c77440c",
+    "test_g06_no_evidence_returns_not_run": "84cb005637b4b1f31e0631d0511913604251fe50b7d3b92e6e1b07c6afd8e9d5",
+    "test_ambiguous_display_names_fail_closed": "2101a9b351d1728fb1add9307c2b1f63020c0e16b0374b567145ec6cc4895b00",
+    "test_gate_fails_on_not_run": "e6ba372772ea3b7dc83622660417555b4751b8cd751ab5f9caf6301437eb092d",
+    "test_gate_allows_unexecuted_when_flag_passed": "00dfade8c6b4665045286cbb710550ce2ee421993f1f43bdd812a71a1b8dbb1b"
+  },
+  "requested_methods": [
+    "Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_fails_when_one_source_test_not_run",
+    "Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_passes_when_all_pass"
+  ],
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_fails_when_one_source_test_not_run",
+    "Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_passes_when_all_pass"
+  ],
+  "actual_provider_methods_executed": 0,
+  "apple_tests_executed": 0,
+  "reason": "The actual catalog gained ProviderRoutingTests.testRepeatedQueryParametersDoNotCrash in046c253d; only two fixture controls assumed77."
+}
