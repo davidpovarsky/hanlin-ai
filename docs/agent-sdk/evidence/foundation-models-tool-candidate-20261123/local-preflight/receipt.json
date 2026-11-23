@@ -1,0 +1,95 @@
+{
+  "scope": "Syntax/parser and report/selector controls only; no native API typecheck or native execution",
+  "time_utc": "2026-11-23T18:26:23.756932+00:00",
+  "source_sha256": {
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolHistory.swift": "623c15f05db11d4830685a665f765aa53a11c143a51436a73fd1942fdf2b72e1",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSchema.swift": "8cffe156a8f8346f6b2fa25b8d5b237382d3185b2e24ff7e72bcb98684edafaf",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "52b011d931fcae6c9be2da94ade98e00a13b5fd8379812f8ad293cd9bcbf98ab",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSchemaTests.swift": "7cf017f5f196455239011846ee529057eb17e5bc45821450ea4ed4aedadbe423",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "b2938adaa7cba8ee547980c5b5a6047d414009cb3b0077b5fb3b2c9419f1d6dc",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+    "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py": "99c5d9e8d61ee584b482a85c4669dffc06080f87e271e4203974eb76c94477b1",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py": "b3539b99ea5baf402c77a11c7697b8faf73bc8e69a0a8f3bc5692f91e6087d9d",
+    "Scripts/CI/Tests/test_native_tool_candidate_report.py": "785b2ba5bb15a5e40d5a2081a11084f14855b6e64dda507edab0c8447e03e6ce",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift": "65b14d1853f09c600643cbbc9016723916f56baf95c7a223d8808ed765cadde1",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "9ebefece37869982b4569942af7f61f0c01c61a21ade627f6868b7b438d4b079",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift": "39e14e004a2b1d894ded12b666160dadc2900a00aafafa33974caa56c5a31a06",
+    "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "2adf47a10e4d0b6b60af3661e60cd900a74333c607ca3be5460b9c9778b03db7"
+  },
+  "commands": [
+    {
+      "argv": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolHistory.swift",
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSchema.swift",
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift",
+        "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSchemaTests.swift",
+        "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift",
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
+        "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+        "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift"
+      ],
+      "exit_code": 0,
+      "stdout": "01-stdout.txt",
+      "stderr": "01-stderr.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "bash",
+        "-n",
+        "Scripts/CI/IntegrationValidation/run_agent_sdk.sh"
+      ],
+      "exit_code": 0,
+      "stdout": "02-stdout.txt",
+      "stderr": "02-stderr.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "Scripts.CI.Tests.test_native_tool_candidate_report",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "03-stdout.txt",
+      "stderr": "03-stderr.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7d6ac96ceebee13cf7e6aabb5c9a95fe6b994f542242652c0be7c89ec6501b19"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "py_compile",
+        "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py",
+        "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py"
+      ],
+      "exit_code": 0,
+      "stdout": "04-stdout.txt",
+      "stderr": "04-stderr.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "05-stdout.txt",
+      "stderr": "05-stderr.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "status": "PASS"
+}

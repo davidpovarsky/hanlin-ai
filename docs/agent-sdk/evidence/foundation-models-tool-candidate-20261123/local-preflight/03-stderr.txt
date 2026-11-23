@@ -1,0 +1,9 @@
+test_exact_new_cases_and_expected_baseline_are_required (Scripts.CI.Tests.test_native_tool_candidate_report.NativeToolCandidateReportTests.test_exact_new_cases_and_expected_baseline_are_required) ... ok
+test_false_green_baseline_and_unexecuted_ios_are_blocked (Scripts.CI.Tests.test_native_tool_candidate_report.NativeToolCandidateReportTests.test_false_green_baseline_and_unexecuted_ios_are_blocked) ... ok
+test_missing_skipped_failed_or_extra_case_cannot_pass (Scripts.CI.Tests.test_native_tool_candidate_report.NativeToolCandidateReportTests.test_missing_skipped_failed_or_extra_case_cannot_pass) ... ok
+test_only_exact_opt_in_changes_the_existing_route (Scripts.CI.Tests.test_native_tool_candidate_report.NativeToolCandidateSelectorTests.test_only_exact_opt_in_changes_the_existing_route) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.304s
+
+OK

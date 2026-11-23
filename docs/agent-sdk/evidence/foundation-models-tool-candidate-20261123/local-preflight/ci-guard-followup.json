@@ -1,0 +1,14 @@
+{
+  "scope": "Changed CI source/lock retention syntax only; native route NOT_RUN",
+  "time_utc": "2026-11-23T18:27:21.976273+00:00",
+  "file": "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py",
+  "sha256": "52320e6198bf6064da328d9c5c24ec98802a895e19f920263d8f2f3111275944",
+  "command": [
+    "python3",
+    "-m",
+    "py_compile",
+    "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/Scripts/CI/IntegrationValidation/run_native_tool_candidate.py"
+  ],
+  "exit_code": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
