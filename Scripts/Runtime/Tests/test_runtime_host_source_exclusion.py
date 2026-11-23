@@ -16,7 +16,7 @@ def project(members: str, *, target: str = TARGET, registered: bool = True) -> s
         objects = {
             %s = {
                 isa = PBXNativeTarget;
-                name = AI_Hanlin;
+                name = HanlinApp;
                 fileSystemSynchronizedGroups = (%s);
             };
             %s = {

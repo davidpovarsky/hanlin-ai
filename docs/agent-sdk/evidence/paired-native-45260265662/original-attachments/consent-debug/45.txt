@@ -1,0 +1,5 @@
+Query chain:
+ →Find: Target Application 'com.itorah.chavrusachat'
+  ↪︎Find: Descendants matching type Any
+    ↪︎Find: Elements matching predicate '"hanlin-tool-consent-review-toggle" IN identifiers'
+      ↪︎Find: First Match
