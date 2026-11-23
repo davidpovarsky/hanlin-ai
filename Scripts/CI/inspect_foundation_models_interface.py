@@ -37,7 +37,8 @@ def inspect(output):
                "extension FoundationModels.SystemLanguageModel.Executor",
                "DynamicProfile", "struct Profile", "class Profile", "protocol Profile",
                "extension FoundationModels.LanguageModelSession.Profile",
-               "func onToolCall", "func historyTransform")
+               "func onToolCall", "func historyTransform",
+               "struct Transcript", "extension FoundationModels.Transcript")
     ranges = []
     for i, line in enumerate(lines):
         relevant = any(x in line for x in needles)
