@@ -191,6 +191,23 @@ public actor HanlinAISDKAgentEngine {
                         // The pinned SDK replaces an empty list with stepCountIs(1).
                         // An explicit never-stop condition preserves the nil-budget contract.
                         var stopConditions: [StopCondition] = [{ _ in false }]
+                        if resolvedProvider.descriptor.kind == .appleOnDevice {
+                            // The producer counts invalid-tool errors as completed outputs
+                            // and may advance before the outer stream consumes the error.
+                            // Stop at its own step boundary so unsupported native numbers
+                            // cannot start another provider request, including approval tools.
+                            stopConditions.append { steps in
+                                guard let lastStep = steps.last else { return false }
+                                return lastStep.toolCalls.contains { call in
+                                    do {
+                                        try Self.validateNativeToolInput(call.input, providerKind: .appleOnDevice)
+                                        return false
+                                    } catch {
+                                        return true
+                                    }
+                                }
+                            }
+                        }
                         if let limit {
                             stopConditions.append(stepCountIs(max(limit - stepOffset, 1)))
                         }
