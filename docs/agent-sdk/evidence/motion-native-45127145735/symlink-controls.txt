@@ -1,0 +1,11 @@
+test_external_directory_link_is_recorded_without_reading_destination (test_motion_input_provenance.MotionInputProvenanceTests.test_external_directory_link_is_recorded_without_reading_destination) ... ok
+test_link_replaced_with_same_target_text_as_regular_file_is_rejected (test_motion_input_provenance.MotionInputProvenanceTests.test_link_replaced_with_same_target_text_as_regular_file_is_rejected) ... ok
+test_missing_regular_file_is_still_rejected (test_motion_input_provenance.MotionInputProvenanceTests.test_missing_regular_file_is_still_rejected) ... ok
+test_modified_link_is_rejected_against_recorded_git_blob (test_motion_input_provenance.MotionInputProvenanceTests.test_modified_link_is_rejected_against_recorded_git_blob) ... ok
+test_original_pinned_directory_and_file_links_record_git_blob_bytes (test_motion_input_provenance.MotionInputProvenanceTests.test_original_pinned_directory_and_file_links_record_git_blob_bytes) ... ok
+test_regular_file_replaced_with_alias_is_rejected (test_motion_input_provenance.MotionInputProvenanceTests.test_regular_file_replaced_with_alias_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.061s
+
+OK

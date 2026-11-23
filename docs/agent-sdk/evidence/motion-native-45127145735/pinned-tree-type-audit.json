@@ -1,0 +1,91 @@
+[
+  {
+    "identity": "equatable",
+    "location": "https://github.com/ordo-one/equatable",
+    "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+    "truncated": false,
+    "tree_entries": 60,
+    "special_entries": []
+  },
+  {
+    "identity": "hanlin-streaming-markdown",
+    "location": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+    "revision": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+    "truncated": false,
+    "tree_entries": 607,
+    "special_entries": [
+      {
+        "path": ".claude/skills",
+        "mode": "120000",
+        "type": "blob",
+        "sha": "2b7a412b8fa0fb7e985b0793321bd4e698f2b6cd",
+        "size": 17,
+        "url": "https://api.github.com/repos/davidpovarsky/hanlin-streaming-markdown/git/blobs/2b7a412b8fa0fb7e985b0793321bd4e698f2b6cd"
+      },
+      {
+        "path": ".github/copilot-instructions.md",
+        "mode": "120000",
+        "type": "blob",
+        "sha": "be77ac83a1895cfa9e271961ba1e565c273c717c",
+        "size": 12,
+        "url": "https://api.github.com/repos/davidpovarsky/hanlin-streaming-markdown/git/blobs/be77ac83a1895cfa9e271961ba1e565c273c717c"
+      },
+      {
+        "path": "CLAUDE.md",
+        "mode": "120000",
+        "type": "blob",
+        "sha": "47dc3e3d863cfb5727b87d785d09abf9743c0a72",
+        "size": 9,
+        "url": "https://api.github.com/repos/davidpovarsky/hanlin-streaming-markdown/git/blobs/47dc3e3d863cfb5727b87d785d09abf9743c0a72"
+      }
+    ]
+  },
+  {
+    "identity": "highlightswift",
+    "location": "https://github.com/appstefan/highlightswift",
+    "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53",
+    "truncated": false,
+    "tree_entries": 38,
+    "special_entries": []
+  },
+  {
+    "identity": "iosmath",
+    "location": "https://github.com/junyan72/iosMath",
+    "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c",
+    "truncated": false,
+    "tree_entries": 151,
+    "special_entries": []
+  },
+  {
+    "identity": "swift-cmark",
+    "location": "https://github.com/swiftlang/swift-cmark.git",
+    "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+    "truncated": false,
+    "tree_entries": 186,
+    "special_entries": []
+  },
+  {
+    "identity": "swift-markdown",
+    "location": "https://github.com/swiftlang/swift-markdown.git",
+    "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+    "truncated": false,
+    "tree_entries": 221,
+    "special_entries": []
+  },
+  {
+    "identity": "swift-syntax",
+    "location": "https://github.com/swiftlang/swift-syntax.git",
+    "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+    "truncated": false,
+    "tree_entries": 1026,
+    "special_entries": []
+  },
+  {
+    "identity": "swiftui-shimmer",
+    "location": "https://github.com/markiv/SwiftUI-Shimmer",
+    "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+    "truncated": false,
+    "tree_entries": 19,
+    "special_entries": []
+  }
+]

@@ -1,0 +1,18 @@
+2026-11-23T07:14:35.0743960Z ** TEST BUILD SUCCEEDED **
+2026-11-23T07:14:35.0744780Z 
+2026-11-23T07:14:38.2944880Z swift-driver version: 1.168.6 Traceback (most recent call last):
+2026-11-23T07:14:38.2956250Z   File "/Users/runner/work/hanlin-ai/hanlin-ai/docs/chat-motion/record_sdk_inputs.py", line 206, in <module>
+2026-11-23T07:14:38.2966890Z     main()
+2026-11-23T07:14:38.2986910Z     ~~~~^^
+2026-11-23T07:14:38.2995340Z   File "/Users/runner/work/hanlin-ai/hanlin-ai/docs/chat-motion/record_sdk_inputs.py", line 202, in main
+2026-11-23T07:14:38.2997150Z     print(json.dumps(operation(args.proof, args.derived_data, args.evidence), indent=2))
+2026-11-23T07:14:38.3027150Z                      ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-11-23T07:14:38.3043840Z   File "/Users/runner/work/hanlin-ai/hanlin-ai/docs/chat-motion/record_sdk_inputs.py", line 166, in record_resolved
+2026-11-23T07:14:38.3078170Z     files = tracked_records(checkout, ["."])
+2026-11-23T07:14:38.3078930Z   File "/Users/runner/work/hanlin-ai/hanlin-ai/docs/chat-motion/record_sdk_inputs.py", line 34, in tracked_records
+2026-11-23T07:14:38.3079770Z     return [file_record(root, name) for name in names]
+2026-11-23T07:14:38.3080140Z             ~~~~~~~~~~~^^^^^^^^^^^^
+2026-11-23T07:14:38.3081150Z   File "/Users/runner/work/hanlin-ai/hanlin-ai/docs/chat-motion/record_sdk_inputs.py", line 22, in file_record
+2026-11-23T07:14:38.3082400Z     raise ValueError(f"A recorded SDK input is not materialized: {path}")
+2026-11-23T07:14:38.3082990Z ValueError: A recorded SDK input is not materialized: .claude/skills
+2026-11-23T07:14:53.3318950Z ##[error]Process completed with exit code 1.

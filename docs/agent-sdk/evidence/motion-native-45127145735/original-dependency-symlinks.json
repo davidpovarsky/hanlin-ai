@@ -1,0 +1,32 @@
+[
+  {
+    "path": ".claude/skills",
+    "git_mode": "120000",
+    "git_blob": "2b7a412b8fa0fb7e985b0793321bd4e698f2b6cd",
+    "target": "../.agents/skills",
+    "target_bytes": 17,
+    "resolved_within_repository": ".agents/skills",
+    "target_tree_mode": "040000",
+    "target_tree_type": "tree"
+  },
+  {
+    "path": ".github/copilot-instructions.md",
+    "git_mode": "120000",
+    "git_blob": "be77ac83a1895cfa9e271961ba1e565c273c717c",
+    "target": "../AGENTS.md",
+    "target_bytes": 12,
+    "resolved_within_repository": "AGENTS.md",
+    "target_tree_mode": "100644",
+    "target_tree_type": "blob"
+  },
+  {
+    "path": "CLAUDE.md",
+    "git_mode": "120000",
+    "git_blob": "47dc3e3d863cfb5727b87d785d09abf9743c0a72",
+    "target": "AGENTS.md",
+    "target_bytes": 9,
+    "resolved_within_repository": "AGENTS.md",
+    "target_tree_mode": "100644",
+    "target_tree_type": "blob"
+  }
+]

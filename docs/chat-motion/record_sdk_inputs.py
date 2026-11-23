@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 
@@ -18,20 +19,41 @@ def digest(data):
 
 def file_record(root, path):
     file = root / path
+    if file.is_symlink():
+        # A Git symlink's bytes are its target text, not the target's contents.
+        # Record directory/dangling links without traversing their destinations.
+        target = os.readlink(file)
+        data = os.fsencode(target)
+        return {"path": path, "bytes": len(data), "sha256": digest(data), "symlink": target}
     if not file.is_file():
         raise ValueError(f"A recorded SDK input is not materialized: {path}")
-    result = {"path": path, "bytes": file.stat().st_size, "sha256": digest(file.read_bytes())}
-    if file.is_symlink():
-        result["symlink"] = str(file.readlink())
-    return result
+    return {"path": path, "bytes": file.stat().st_size, "sha256": digest(file.read_bytes())}
 
 
 def tracked_records(root, paths):
-    raw = run(["git", "-C", str(root), "ls-files", "-z", "--", *paths])
-    names = sorted(set(filter(None, raw.split("\0"))))
-    if not names:
+    raw = run(["git", "-C", str(root), "ls-files", "--stage", "-z", "--", *paths])
+    entries = {}
+    for entry in filter(None, raw.split("\0")):
+        metadata, name = entry.split("\t", 1)
+        mode, blob, stage = metadata.split()
+        if stage != "0" or name in entries or mode not in {"100644", "100755", "120000"}:
+            raise ValueError("Unsupported or unresolved tracked SDK input: " + name)
+        entries[name] = (mode, blob)
+    if not entries:
         raise ValueError("The selected SDK source closure must contain tracked files")
-    return [file_record(root, name) for name in names]
+    records = []
+    for name, (mode, blob) in sorted(entries.items()):
+        record = file_record(root, name)
+        if (mode == "120000") != ("symlink" in record):
+            raise ValueError("Tracked SDK input type differs from Git: " + name)
+        if mode == "120000":
+            expected = subprocess.run(["git", "-C", str(root), "cat-file", "blob", blob],
+                                      capture_output=True, check=True).stdout
+            if os.fsencode(record["symlink"]) != expected:
+                raise ValueError("Tracked SDK symlink differs from its Git blob: " + name)
+            record.update(gitMode=mode, gitBlob=blob)
+        records.append(record)
+    return records
 
 
 def record_profile(proof, source):
@@ -175,7 +197,7 @@ def record_resolved(proof, derived_data, evidence):
     for bundle in sorted(apps[0].rglob("*.bundle")):
         if bundle.is_dir():
             files = [file_record(bundle, path.relative_to(bundle).as_posix())
-                     for path in sorted(bundle.rglob("*")) if path.is_file()]
+                     for path in sorted(bundle.rglob("*")) if path.is_symlink() or path.is_file()]
             bundles.append({"path": bundle.relative_to(apps[0]).as_posix(), "files": files})
     expected = {"HanlinSDK_HanlinLocalization.bundle", "HanlinSDK_HanlinRichUI.bundle", "HanlinSDK_HanlinChatUI.bundle"}
     if not expected.issubset({Path(item["path"]).name for item in bundles}):
