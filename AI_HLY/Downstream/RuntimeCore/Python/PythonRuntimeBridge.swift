@@ -2,6 +2,9 @@ import Foundation
 import IOSSystemLite
 import Synchronization
 
+@_silgen_name("HanlinPythonSetResourceBundle")
+private func HanlinPythonSetResourceBundle(_ bundlePath: UnsafePointer<CChar>)
+
 @_silgen_name("HanlinPythonVersion")
 private func HanlinPythonVersion() -> UnsafePointer<CChar>?
 
@@ -55,11 +58,13 @@ enum PythonRuntimeBridge {
         } onCancel: { cancel(id: id) }
     }
     static func version() throws -> String {
+        HanlinApplicationResources.bundle.bundlePath.withCString(HanlinPythonSetResourceBundle)
         guard let pointer = HanlinPythonVersion() else { throw RuntimeCoreError.runtimeUnavailable(.localPython) }
         return String(cString: pointer).split(separator: " ").first.map(String.init) ?? String(cString: pointer)
     }
 
     static func execute(requestJSON: String) throws -> Data {
+        HanlinApplicationResources.bundle.bundlePath.withCString(HanlinPythonSetResourceBundle)
         let pointer = requestJSON.withCString(HanlinPythonExecute)
         guard let pointer else { throw RuntimeCoreError.runtimeUnavailable(.localPython) }
         defer { HanlinPythonFree(pointer) }

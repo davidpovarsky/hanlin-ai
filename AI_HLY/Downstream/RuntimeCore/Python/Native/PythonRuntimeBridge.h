@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 
+void HanlinPythonSetResourceBundle(const char *bundlePath);
 const char *HanlinPythonVersion(void);
 int HanlinPythonRegisterBundledExtensions(void);
 // Read-only malloc-owned JSON; release with HanlinPythonFree. Never initializes Python.

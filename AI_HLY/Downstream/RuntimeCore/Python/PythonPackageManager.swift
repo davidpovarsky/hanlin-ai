@@ -217,7 +217,7 @@ actor PythonPackageManager {
     }
 
     private func bundled(_ name: String) throws -> URL {
-        guard let url = Bundle.main.url(forResource: name, withExtension: nil) else {
+        guard let url = HanlinApplicationResources.bundle.url(forResource: name, withExtension: nil) else {
             throw RuntimeCoreError.runtimeFailure("Missing bundled Python packaging resource: \(name)")
         }
         return url

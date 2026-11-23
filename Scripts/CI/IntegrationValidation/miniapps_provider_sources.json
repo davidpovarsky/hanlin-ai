@@ -107,7 +107,8 @@
     "HanlinWikipediaMiniApp",
     "IOSSystemLite",
     "SWCompression",
-    "ZIPFoundation"
+    "ZIPFoundation",
+    "HanlinA2UI"
   ],
   "native_framework_refs": [
     "A10000000000000000000020",

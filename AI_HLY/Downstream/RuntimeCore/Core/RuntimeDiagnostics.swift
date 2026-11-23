@@ -4,7 +4,7 @@ actor RuntimeDiagnostics {
     private let manifestURL: URL?
     private var cachedManifest: RuntimeManifest?
 
-    init(manifestURL: URL? = Bundle.main.url(forResource: "RuntimeManifest", withExtension: "json")) {
+    init(manifestURL: URL? = HanlinApplicationResources.bundle.url(forResource: "RuntimeManifest", withExtension: "json")) {
         self.manifestURL = manifestURL
     }
 

@@ -415,7 +415,7 @@ actor NodeRuntimeService {
 
     /// Trusted parser and actual pinned Host compiler only; payload contains data, never code.
     func analyzeSkillSyntax(payload: Data, workspace: URL) async throws -> RuntimeExecutionResult {
-        guard let helper = Bundle.main.url(forResource: "hanlin_typescript_ast", withExtension: "mjs") else {
+        guard let helper = HanlinApplicationResources.bundle.url(forResource: "hanlin_typescript_ast", withExtension: "mjs") else {
             throw RuntimeCoreError.invalidRequest("Bundled TypeScript syntax helper unavailable")
         }
         let compiler = try prepareHostRuntime().appending(path: "node_modules/typescript/lib/typescript.js")
@@ -818,7 +818,7 @@ actor NodeRuntimeService {
     }
 
     private func prepareHostRuntime() throws -> URL {
-        guard let archive = Bundle.main.url(forResource: "RuntimeHostResources", withExtension: "zip") else {
+        guard let archive = HanlinApplicationResources.bundle.url(forResource: "RuntimeHostResources", withExtension: "zip") else {
             throw RuntimeCoreError.runtimeFailure("RuntimeHostResources.zip is missing. Run Scripts/Runtime/prepare-runtime-core.sh before building.")
         }
         

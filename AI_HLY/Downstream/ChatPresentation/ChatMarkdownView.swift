@@ -127,7 +127,9 @@ struct ChatMarkdownView: View {
         case "diff", "patch": kind = "diff"
         default: return nil
         }
-        return AnyView(ChatCodeFenceView(blockID: block.id, kind: kind, source: block.code))
+        return AnyView(ChatCodeFenceView(blockID: block.id, kind: kind, source: block.code, onTrace: { event, fields in
+            NativeToolTraceLogger.shared.log(event, fields)
+        }))
     }
 
     private func updateHighlightLifetime() async {

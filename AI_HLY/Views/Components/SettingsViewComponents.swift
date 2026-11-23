@@ -562,7 +562,7 @@ struct UpdateNotesView: View {
         let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
         // 读取 JSON 数据
-        if let url = Bundle.main.url(forResource: "UpdateNotes", withExtension: "json") {
+        if let url = HanlinApplicationResources.bundle.url(forResource: "UpdateNotes", withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
                 let jsonResult = try JSONDecoder().decode([String: [UpdateNote]].self, from: data)

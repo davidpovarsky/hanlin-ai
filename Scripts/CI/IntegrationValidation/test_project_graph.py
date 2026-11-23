@@ -45,17 +45,17 @@ class ProjectGraphTests(unittest.TestCase):
 
     def test_agent_sdk_requires_canonical_sibling_package(self):
         package = next(value for value in self.objects.values()
-                       if value.get("relativePath") == "Packages/HanlinAgentSDK")
+                       if value.get("relativePath") == ".")
         package["relativePath"] = "../OtherSDK"
         with self.assertRaisesRegex(AssertionError, "canonical local SDK"):
             validate_agent_sdk_linkage(self.project, ROOT)
 
-    def test_agent_sdk_native_adapter_must_be_in_synchronized_ai_sources(self):
+    def test_shared_native_adapter_must_not_compile_again_in_executable(self):
         exception = next(value for value in self.objects.values()
                          if value.get("isa") == "PBXFileSystemSynchronizedBuildFileExceptionSet"
                          and value.get("target") == "D7B6C3C02D50A55D004E3AD6")
-        exception["membershipExceptions"].append("Model/HanlinAppleModelCatalogAdapter.swift")
-        with self.assertRaisesRegex(AssertionError, "adapter excluded"):
+        exception["membershipExceptions"].remove("Model/HanlinAppleModelCatalogAdapter.swift")
+        with self.assertRaisesRegex(AssertionError, "Shared sources must compile only once"):
             validate_agent_sdk_linkage(self.project, ROOT)
 
     def test_agent_sdk_test_import_requires_its_real_product(self):

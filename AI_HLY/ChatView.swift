@@ -159,7 +159,10 @@ struct ChatView: View {
     var matchedMessageID: UUID?                             // 匹配的消息 ID
     @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
-    @State private var autoFollowController = ChatAutoFollowController()
+    @State private var autoFollowController = ChatAutoFollowController(onTrace: { event, fields in
+        guard AgentDiagnosticsConfiguration.level != .off else { return }
+        NativeToolTraceLogger.shared.log(event, fields)
+    })
     @State private var transcriptScrollView = ChatScrollViewHandle()
     @State private var measuredComposerHeight: CGFloat = 0
     @State private var chatContainerWidth: CGFloat = 0

@@ -477,7 +477,7 @@ struct PolishView: View {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
-        guard let url = Bundle.main.url(forResource: "Refinement", withExtension: "json") else {
+        guard let url = HanlinApplicationResources.bundle.url(forResource: "Refinement", withExtension: "json") else {
             print("Refinement.json 文件未找到")
             return []
         }
