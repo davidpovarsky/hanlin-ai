@@ -1,0 +1,10 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 0.049426326528191566,
+  "scope": "Syntax-only Swift parse; not Apple typecheck or full store test execution",
+  "files": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift": "beba9139602322438239f36e42607781940a4d3c2c9a742e5b1987bea24ab5d0",
+    "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift": "5f6305a1357108bf82dc4b2ae0d9b40d448bb1efab237ccee62819655f7faa1b"
+  },
+  "output": ""
+}

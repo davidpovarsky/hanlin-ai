@@ -1,0 +1,2 @@
+{"case":"mismatch","installedIDs":["fixture-install"],"registryBytesUnchanged":true,"status":"ADMITTED_ORIGINAL_SNAPSHOTS"}
+{"case":"mismatch","identities":1,"registryBytesUnchanged":true,"status":"FALLBACK_EXPRESSION_COMPLETED"}

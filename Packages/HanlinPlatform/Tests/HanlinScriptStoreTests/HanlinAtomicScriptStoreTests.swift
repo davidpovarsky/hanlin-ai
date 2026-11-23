@@ -134,6 +134,87 @@ struct HanlinAtomicScriptStoreTests {
         #expect(snapshots.isEmpty == (point == .uninstallRegistryCommitted))
     }
 
+    @Test("Malformed stored identity rejects cold load and restore without changing registry bytes",
+          arguments: [false, true])
+    func persistedRegistryIdentity(duplicatingEntry: Bool) async throws {
+        let fixture = try Fixture()
+        defer { fixture.remove() }
+        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        _ = try await store.install(
+            plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest),
+            artifactDirectory: fixture.first.url, artifactManifest: fixture.first.manifest
+        )
+        let expectedSnapshots = try await store.snapshots()
+        let primary = fixture.storeRoot.appending(path: "registry/catalog.json")
+        let backup = fixture.storeRoot.appending(path: "registry/catalog.backup.json")
+        let valid = try Data(contentsOf: primary)
+        try valid.write(to: backup, options: .atomic)
+        let malformed = try fixture.reindexedRegistry(valid, duplicatingEntry: duplicatingEntry)
+        try malformed.write(to: primary, options: .atomic)
+
+        #expect(throws: HanlinAtomicScriptStoreError.corruptRegistry) {
+            _ = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        }
+        await #expect(throws: HanlinAtomicScriptStoreError.corruptRegistry) {
+            try await store.restore()
+        }
+        #expect(try Data(contentsOf: primary) == malformed)
+        #expect(try Data(contentsOf: backup) == valid)
+        #expect(try await store.snapshots() == expectedSnapshots)
+    }
+
+    @Test("The selected backup must also have matching installed identities")
+    func persistedBackupRegistryIdentity() async throws {
+        let fixture = try Fixture()
+        defer { fixture.remove() }
+        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        _ = try await store.install(
+            plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest),
+            artifactDirectory: fixture.first.url, artifactManifest: fixture.first.manifest
+        )
+        let primary = fixture.storeRoot.appending(path: "registry/catalog.json")
+        let backup = fixture.storeRoot.appending(path: "registry/catalog.backup.json")
+        let malformed = try fixture.reindexedRegistry(Data(contentsOf: primary), duplicatingEntry: true)
+        let undecodable = Data("not a JSON registry".utf8)
+        try malformed.write(to: backup, options: .atomic)
+        try undecodable.write(to: primary, options: .atomic)
+
+        #expect(throws: HanlinAtomicScriptStoreError.corruptRegistry) {
+            _ = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        }
+        #expect(try Data(contentsOf: primary) == undecodable)
+        #expect(try Data(contentsOf: backup) == malformed)
+    }
+
+    @Test("Valid primary precedence and valid backup recovery retain their original data")
+    func validRegistrySelection() async throws {
+        let fixture = try Fixture()
+        defer { fixture.remove() }
+        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        _ = try await store.install(
+            plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest),
+            artifactDirectory: fixture.first.url, artifactManifest: fixture.first.manifest
+        )
+        let expectedSnapshots = try await store.snapshots()
+        let primary = fixture.storeRoot.appending(path: "registry/catalog.json")
+        let backup = fixture.storeRoot.appending(path: "registry/catalog.backup.json")
+        let valid = try Data(contentsOf: primary)
+        let malformed = try fixture.reindexedRegistry(valid, duplicatingEntry: true)
+        try malformed.write(to: backup, options: .atomic)
+        let primaryStore = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        #expect(try await primaryStore.restore() == expectedSnapshots)
+        #expect(try Data(contentsOf: primary) == valid)
+        #expect(try Data(contentsOf: backup) == malformed)
+
+        let undecodable = Data("not a JSON registry".utf8)
+        try valid.write(to: backup, options: .atomic)
+        try undecodable.write(to: primary, options: .atomic)
+        let backupStore = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        #expect(try await backupStore.restore() == expectedSnapshots)
+        #expect(try Data(contentsOf: primary) == undecodable)
+        #expect(try Data(contentsOf: backup) == valid)
+    }
+
     @Test("Artifact corruption fails before catalog mutation")
     func corruption() async throws {
         let fixture = try Fixture()
@@ -725,6 +806,17 @@ private struct Fixture {
             requestedCapabilities: requestedCapabilities,
             grantedCapabilities: grantedCapabilities
         )
+    }
+
+    func reindexedRegistry(_ data: Data, duplicatingEntry: Bool) throws -> Data {
+        var value = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        var packages = try #require(value["packages"] as? [String: Any])
+        let entry = try #require(packages[installedID.rawValue])
+        let alias = try HanlinInstalledPackageID(validating: "fixture-alias")
+        if !duplicatingEntry { packages.removeValue(forKey: installedID.rawValue) }
+        packages[alias.rawValue] = entry
+        value["packages"] = packages
+        return try JSONSerialization.data(withJSONObject: value, options: [.sortedKeys])
     }
 
     func remove() { try? FileManager.default.removeItem(at: root) }

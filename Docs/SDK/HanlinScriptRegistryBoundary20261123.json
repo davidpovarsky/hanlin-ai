@@ -1,0 +1,163 @@
+{
+  "status": "FIXED_PORTABLE_PRODUCTION_BOUNDARY_PROVEN_NATIVE_STORE_TESTS_NOT_RUN",
+  "base": "646b22918b1c56e5a6a16addcb1d3ebd982d3846",
+  "production_source": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+  "before_sha256": "c9daef42c27a295c51bd26b479520de8055e685a711589d5c47a3e26150f0588",
+  "after_sha256": "beba9139602322438239f36e42607781940a4d3c2c9a742e5b1987bea24ab5d0",
+  "reproduction_script": "Scripts/SDK/check_registry_identity_boundary.py",
+  "reproduction_script_sha256": "654110c8b532777d992c3c27fa03f7573be60a02e54da7908cdec31f689cc44f",
+  "production_change": "One private RegistryEntry key/installed-ID predicate shared with existing transfer validation; selected decoded primary/backup registry now throws existing corruptRegistry before snapshots when any key differs.",
+  "before": {
+    "duplicate_primary_exit": -5,
+    "duplicate_backup_exit": -5,
+    "snapshots": [
+      "fixture-install",
+      "fixture-install"
+    ],
+    "error": "Swift Dictionary uniqueKeysWithValues fatal duplicate key",
+    "phase_result_sha256": "7d3ac7f6ec551e15d61c09934b6c45a46462d2a4d5d3400803e52d067905317c"
+  },
+  "after": {
+    "cases": {
+      "duplicate": {
+        "returncode": 0,
+        "terminal": {
+          "case": "duplicate",
+          "error": "corruptRegistry",
+          "registryBytesUnchanged": true,
+          "status": "THREW_EXISTING_ERROR"
+        }
+      },
+      "mismatch": {
+        "returncode": 0,
+        "terminal": {
+          "case": "mismatch",
+          "error": "corruptRegistry",
+          "registryBytesUnchanged": true,
+          "status": "THREW_EXISTING_ERROR"
+        }
+      },
+      "backup-invalid": {
+        "returncode": 0,
+        "terminal": {
+          "case": "backup-invalid",
+          "error": "corruptRegistry",
+          "registryBytesUnchanged": true,
+          "status": "THREW_EXISTING_ERROR"
+        }
+      },
+      "valid-primary": {
+        "returncode": 0,
+        "terminal": {
+          "case": "valid-primary",
+          "identities": 2,
+          "registryBytesUnchanged": true,
+          "status": "FALLBACK_EXPRESSION_COMPLETED"
+        }
+      },
+      "valid-backup": {
+        "returncode": 0,
+        "terminal": {
+          "case": "valid-backup",
+          "identities": 2,
+          "registryBytesUnchanged": true,
+          "status": "FALLBACK_EXPRESSION_COMPLETED"
+        }
+      },
+      "unsupported": {
+        "returncode": 0,
+        "terminal": {
+          "case": "unsupported",
+          "error": "unsupportedRegistryVersion(2)",
+          "registryBytesUnchanged": true,
+          "status": "THREW_EXISTING_ERROR"
+        }
+      }
+    },
+    "phase_result_sha256": "8f07078eb7d7e11c357e0d964a4d81a6267e5514acd0aafa30388fcc8f20cff7"
+  },
+  "storage": {
+    "primary_and_backup_bytes_preserved": true,
+    "before_after_fixture_hashes_equal": true,
+    "automatic_repair_or_migration": false,
+    "selected_primary_does_not_silently_fall_back_after_identity_error": true
+  },
+  "preserved": {
+    "all_complete_contract_files": 29,
+    "contract_inputs_identical": true,
+    "transfer_body_after_inverse_predicate_replacement_sha256": "633de775ca14f7c5abf21d5734c08027e2584c86d9e0e6f04a28a255244956ec",
+    "original_transfer_sha256": "633de775ca14f7c5abf21d5734c08027e2584c86d9e0e6f04a28a255244956ec",
+    "transfer_error_and_inventory_order": "unchanged",
+    "fallback_expression_sha256": "b86ae9fbe382c63c94229f7e7e01c2087b96eb8d20ac6dce942559d9dec41fd5"
+  },
+  "validation": {
+    "portable_cases_before": 6,
+    "portable_cases_after": 6,
+    "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+    "syntax_parse_exit_code": 0,
+    "new_native_methods": [
+      "HanlinAtomicScriptStoreTests.persistedRegistryIdentity(duplicatingEntry:)",
+      "HanlinAtomicScriptStoreTests.persistedBackupRegistryIdentity()",
+      "HanlinAtomicScriptStoreTests.validRegistrySelection()"
+    ],
+    "new_native_parameter_cases": 4,
+    "native_tests_executed": 0,
+    "prior_tests_rerun": 0,
+    "ci_dispatches": 0
+  },
+  "reachability": {
+    "required_stored_input": "A decoded persisted registry indexes an entry under a map key different from its validated record.installedPackageID; two keys may then yield repeated IDs.",
+    "conditional_application_branch": "refreshExtensionSnapshot requires a previousSnapshot and nonempty failedWidgetPackageIDs before evaluating the original activeGenerations dictionary.",
+    "not_proven": [
+      "a valid install/update/tool/import creates the corrupt map",
+      "live WidgetKit failure or a complete application crash",
+      "the user's calendar crash is caused by this registry defect"
+    ]
+  },
+  "proof_scope": "EXACT_PRODUCTION_COLD_LOAD_SNAPSHOTS_AND_DICTIONARY_EXPRESSION_NOT_FULL_APP_OR_WIDGETKIT",
+  "evidence": {
+    "Docs/SDK/registry-identity-20261123/after/backup-invalid.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/after/backup-invalid.stdout": "e0c19634a4482931491508ed9c1f1f7a06c6d0ad7af5c778c6e8e119e70c2fee",
+    "Docs/SDK/registry-identity-20261123/after/build.log": "15f50be6e8543980fe10c3f4e36a1cb2d2ba99059c6ed535adf83c3519cbdbca",
+    "Docs/SDK/registry-identity-20261123/after/duplicate.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/after/duplicate.stdout": "9608fca73a3623b09d086f4a57a509097a2e0f2fe9bafe47f8bf3edb84f6b014",
+    "Docs/SDK/registry-identity-20261123/after/mismatch.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/after/mismatch.stdout": "f92dcd80c40d1e6c6480f2cde6763debe87e5b417b6db722c9a58a4bccf99000",
+    "Docs/SDK/registry-identity-20261123/after/production-provenance.json": "11c1052db8a17e2bc1a2260558b675f660df29a112527e70a889b181574587a4",
+    "Docs/SDK/registry-identity-20261123/after/result.json": "8f07078eb7d7e11c357e0d964a4d81a6267e5514acd0aafa30388fcc8f20cff7",
+    "Docs/SDK/registry-identity-20261123/after/unsupported.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/after/unsupported.stdout": "bf54980f34af9f403a4e915706de6ee68ed8ed02a82bb4b86ce13eafc302bc2d",
+    "Docs/SDK/registry-identity-20261123/after/valid-backup.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/after/valid-backup.stdout": "b221cccd4e751db03c7ed63cf8d6f8fc8fa40f6ab075bf98075b8b7e7b418e82",
+    "Docs/SDK/registry-identity-20261123/after/valid-primary.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/after/valid-primary.stdout": "2b73ce88e7c09136d05b46fc0c48f4a5fda91944163665a8dcd546496f5c134a",
+    "Docs/SDK/registry-identity-20261123/before/backup-invalid.stderr.gz": "a248d667c1d553c5e030096fa954330882650e5bf9c3eaee7937a01d38d9675b",
+    "Docs/SDK/registry-identity-20261123/before/backup-invalid.stdout": "e53ebc864f96e18e45ec8c2a6bf53001580a474dd0264ea5fda9d658b665cac1",
+    "Docs/SDK/registry-identity-20261123/before/build.log": "8c1a2f14b522f558e261d905810f8ec9fdd9080768e1ed3a2ffd76550b2abf50",
+    "Docs/SDK/registry-identity-20261123/before/duplicate.stderr.gz": "47079dcf2153da2f393e5cf0633d93b194fb363c796935f4cafea37de2179397",
+    "Docs/SDK/registry-identity-20261123/before/duplicate.stdout": "b179ff6922ab7ac1569470dd728482a237dc6daf7db00f0e0683693cc2e98864",
+    "Docs/SDK/registry-identity-20261123/before/mismatch.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/before/mismatch.stdout": "4cd728ce896c4f8a319029c0335c3b09a1b91877b18e7ad36a56c549d5ed23aa",
+    "Docs/SDK/registry-identity-20261123/before/production-provenance.json": "479efe5554296fbb83a10b3a6225f6183a3068e58ac5ddbfd1bc7c5de63b8d4c",
+    "Docs/SDK/registry-identity-20261123/before/result.json": "7d3ac7f6ec551e15d61c09934b6c45a46462d2a4d5d3400803e52d067905317c",
+    "Docs/SDK/registry-identity-20261123/before/unsupported.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/before/unsupported.stdout": "bf54980f34af9f403a4e915706de6ee68ed8ed02a82bb4b86ce13eafc302bc2d",
+    "Docs/SDK/registry-identity-20261123/before/valid-backup.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/before/valid-backup.stdout": "b221cccd4e751db03c7ed63cf8d6f8fc8fa40f6ab075bf98075b8b7e7b418e82",
+    "Docs/SDK/registry-identity-20261123/before/valid-primary.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "Docs/SDK/registry-identity-20261123/before/valid-primary.stdout": "2b73ce88e7c09136d05b46fc0c48f4a5fda91944163665a8dcd546496f5c134a",
+    "Docs/SDK/registry-identity-20261123/native-source-parse.json": "30052a373b34399af62a598747adc944c7252b87bb640311e7969d13fb3367d3"
+  },
+  "compressed_original_crash_logs": {
+    "Docs/SDK/registry-identity-20261123/before/duplicate.stderr.gz": {
+      "uncompressed_sha256": "929e05eaca30c1668c2829bc4f854a75912bc4d0e86e7ec55d55de35aff9e122",
+      "uncompressed_bytes": 6338,
+      "reason": "Lossless original crash log; preserves trailing blank lines without changing raw evidence."
+    },
+    "Docs/SDK/registry-identity-20261123/before/backup-invalid.stderr.gz": {
+      "uncompressed_sha256": "d08b45d2b21b72a4236de1bbc454750f826da840d8edd85376ba6ef47aec29e7",
+      "uncompressed_bytes": 6328,
+      "reason": "Lossless original crash log; preserves trailing blank lines without changing raw evidence."
+    }
+  }
+}
