@@ -23,7 +23,9 @@
     "test-results.jsonl",
     ".codex/**",
     ".agents/**",
-    "Tools/ai-team/**"
+    "Tools/ai-team/**",
+    "Docs/SDK/HanlinMessageBubblePreservation.json",
+    "Docs/SDK/HanlinNavigationIntegration20261123.json"
   ],
   "components": {
     "ci_router": {
