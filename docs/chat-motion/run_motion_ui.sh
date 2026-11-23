@@ -95,6 +95,8 @@ elif [[ "$motion_scope" == input-diagnostic ]]; then
   selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testDRapidInputDiagnosticOnly)
 elif [[ "$motion_scope" == visual-c ]]; then
   selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion)
+elif [[ "$motion_scope" == reversal-b ]]; then
+  selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence)
 else
   [[ "$motion_scope" == affected ]]
   selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence
@@ -126,7 +128,7 @@ def visit(n):
         for v in n:visit(v)
 visit(json.loads((e/'tests.json').read_text()))
 scope=(e/'selected-scope.txt').read_text().strip()
-names=['testAAllFivePresetsTwentyCompleteCyclesEach'] if scope=='cycles' else ['testDRapidInputDiagnosticOnly'] if scope=='input-diagnostic' else ['testCReadableLongContentRTLTypeOrientationAndCompletion'] if scope=='visual-c' else ['testBRapidReversalPresetSwitchAndPersistence','testCReadableLongContentRTLTypeOrientationAndCompletion']
+names=['testAAllFivePresetsTwentyCompleteCyclesEach'] if scope=='cycles' else ['testDRapidInputDiagnosticOnly'] if scope=='input-diagnostic' else ['testCReadableLongContentRTLTypeOrientationAndCompletion'] if scope=='visual-c' else ['testBRapidReversalPresetSwitchAndPersistence'] if scope=='reversal-b' else ['testBRapidReversalPresetSwitchAndPersistence','testCReadableLongContentRTLTypeOrientationAndCompletion']
 expected={'MotionUITests/'+name+'()' for name in names}
 assert len(found)==len(expected) and {n['nodeIdentifier'] for n in found}==expected and all(n['result']=='Passed' for n in found)
 if scope=='cycles':
