@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "auditedAt": "2026-11-23T04:15:39.139419+00:00",
+  "repository": "davidpovarsky/anytype-swift",
+  "mode": "READ_ONLY_NO_NATIVE_DISPATCH_NO_ANYTYPE_SOURCE_EDITS",
+  "remoteVerifiedSharedRef": "codex/chatgpt-wave15-shared-20261121",
+  "remoteVerifiedSharedSHA": "fd6f3357cd03da840c00b54a6248dd1a3553ba07",
+  "auditedSourceParent": "e7201ed5554413331d46d6200e2c77370b1b0681",
+  "parentDelta": [
+    "docs/validation/20261123-sdk06-enumeration-quiescence/source-retention-before-dispatch.json"
+  ],
+  "freshUpstreamDevelopSHA": "d857b23ea540be33d6faab4f7a7a1a260ab578c1",
+  "oracleMirror": "/mnt/development/projects/git-mirrors/anytype-swift.git",
+  "existingOtherOwnerHeads": {
+    "shared": "fd6f3357cd03da840c00b54a6248dd1a3553ba07",
+    "sdk06": "02a3873c74230a6932f69aebde6ee454d8a58ca3",
+    "sdk06-selector-continuation": "5d5de0c7c7baa01f2ae69b05cec38da3ec698eb3",
+    "sdk06-enumeration-runtime": "8e2600111a0bf8903b417780d2cd42529cd1c200",
+    "sdk06-quiescence": "3641a01b04e31592476aea6429a637003f4861f3",
+    "hanlin-observer": "be938dd8d860b4be3b8c8a407ba8cd22ed9a3f40"
+  },
+  "ownerIdentityBoundary": "Existing separate worktree/branch ownership is established; names of other main sessions are not exposed to this child agent. Do not take over their lanes.",
+  "sourceBlobs": {
+    "Tools/Hanlin/source.json": "0ac43dc444fa2234c2eb11fb9bebf129dbe4fb94",
+    "Tools/Hanlin/prepare_sdk.py": "99e1286268f7aacb5f5638cfe14633d37c04bccc",
+    "Anytype.xcodeproj/project.pbxproj": "8a2417e8ff32b1b5d094d28c09f7e04d2df28ced",
+    "Modules/PinkhaAnyHanlin/Package.swift": "6a87670364f43a93ff224b0af24947157ee0fc39",
+    "Modules/PinkhaAnyNative/Package.swift": "4870d67fe7134778fbd261c2067fecb646ebdf95",
+    "Tools/AnyEngineValidation/HanlinProviderFixture/verify_canonical.py": "4249109ef05b2bc93c62ee102c159c86fb722ebf",
+    "Tools/AnyEnginePort/verify_source_retention.py": "5b579e9bbb5a82981b5aef7d649f2caf88e998b6",
+    "docs/any-engine-port/SOURCE_REFACTOR_MAP.json": "c7f9d521cb0b59f8a392980cdc2cf451ac79cbcd",
+    "Tools/PinkhaSimulatorGate/coherent_original_products.py": "565b9d467cacb97a90ae61700e020062c53a7ed3"
+  },
+  "currentHanlinRevision": "116cc6be0654a5d11bc56ba00e0310031107ee36",
+  "currentPreparation": "Verified immutable canonical three-package Git archive; no independent engine fork established",
+  "proposedDestination": "Dependencies/Hanlin",
+  "proposedProducts": [
+    "HanlinHostContracts",
+    "HanlinPlatformContracts",
+    "HanlinAgentCore",
+    "HanlinPersistenceAdapters",
+    "HanlinChatCore",
+    "HanlinScriptUI",
+    "HanlinChatUI",
+    "HanlinPresentationKit"
+  ],
+  "canonicalFixtureComparison": {
+    "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderResponseFixtures.swift",
+    "revisions": [
+      "116cc6be0654a5d11bc56ba00e0310031107ee36",
+      "b66aa5e0e979f36d1a34b85e08899449b72d1dc2"
+    ],
+    "bytesEach": 16063,
+    "sha256Each": "de14c4620dfe2f8b49eb104eb22ca1467efa85ab31ff2968547d0cfb00e9f17a",
+    "status": "BYTE_IDENTICAL_READ_ONLY_COMPARISON"
+  },
+  "tasks": {
+    "sdk06Parent": "1220542414733348",
+    "sdk06CurrentContinuation": "1220769818981326",
+    "hq": "1220541349302681"
+  },
+  "asanaReportedCurrentAcceptance": {
+    "taskLastModifiedAt": "2026-11-23T04:05:26.115Z",
+    "nativeUIRun": "45096079315",
+    "source": "d254a4a1ccd9288f585ff9374088cbaf965b36b4",
+    "native": "prepareRealHostFixture PASS",
+    "ui": "testRealNativeConsentCreatePageAndAuthorityRevocation PASS",
+    "required22Checks": "PASS in original receipt and actual UI attachment",
+    "overall": "FAIL; live-runtime get_app_container timeout left mapping unqualified",
+    "requiredSDKMethods": 23,
+    "requiredSDKCases": 32,
+    "requiredAcknowledgementTests": 7,
+    "sdkAndAcknowledgement": "NOT_RUN pending exact selector admission",
+    "latestEnumerationContinuationRun": "45107006017",
+    "latestEnumerationResult": "FAIL before enumeration; original Products restored but owned process quiescence and cleanup/final integrity failed",
+    "artifactID": "14788672678",
+    "artifactSHA256": "acd637db484b1272b76a80e4d26e3115c80ea1c53d55503d22ec4ce01f7246be",
+    "evidenceBoundary": "Read from latest task and committed original audit; this lane did not redownload native artifacts or independently replay XCTest."
+  },
+  "protectedOwnerWork": [
+    "enumeration selectors",
+    "owned quiescence",
+    "live runtime mapping",
+    "original Products qualification"
+  ],
+  "nativeAcceptanceForProposedSDKUpgrade": "NOT_RUN",
+  "implementation": "PROPOSAL_ONLY_PENDING_COHERENT_CANONICAL_PRODUCER_AND_OWNER_HANDOFF"
+}
