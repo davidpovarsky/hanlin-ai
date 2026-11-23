@@ -3,12 +3,13 @@ import HanlinPlatformContracts
 
 /// Dedicated discoverable tools for the complete authoring -> validation -> build -> import flow.
 struct MiniAppAuthoringTool: NativeTool {
-    enum Operation: Equatable { case sdk, validate, build, importPackage }
+    enum Operation: Equatable { case sdk, write, validate, build, importPackage }
     let operation: Operation
 
     var name: String {
         switch operation {
         case .sdk: "get_miniapp_sdk"
+        case .write: "write_miniapp"
         case .validate: "validate_miniapp"
         case .build: "build_miniapp"
         case .importPackage: "import_miniapp"
@@ -18,6 +19,7 @@ struct MiniAppAuthoringTool: NativeTool {
     private var title: String {
         switch operation {
         case .sdk: "MiniApp SDK"
+        case .write: "Write MiniApp sources"
         case .validate: "Validate MiniApp"
         case .build: "Build MiniApp"
         case .importPackage: "Import MiniApp"
@@ -37,6 +39,8 @@ struct MiniAppAuthoringTool: NativeTool {
         switch operation {
         case .sdk:
             "Read the original Expo, NativeScript and ScriptWidget APIs, types, package versions and documentation packaged with this installed host. Pass resource to read a file from the returned SDK. Use these exact types before authoring."
+        case .write:
+            "Create or edit MiniApp sources and binary assets directly. Each files item has a relative path and exactly one UTF-8 content or base64. Omit project_path for a new writable project. For an extracted archive root, edits automatically target its retained sourceRoot; unrelated files remain unchanged. Validate and rebuild after editing."
         case .validate:
             "Typecheck an entire MiniApp source project with the original TypeScript compiler and installed host SDK. Returns structured diagnostics including code, file and one-based line/column. For a source-preserving imported package, project_path may point at the extracted archive root. Does not execute the MiniApp."
         case .build:
@@ -54,6 +58,16 @@ struct MiniAppAuthoringTool: NativeTool {
         case .sdk:
             properties = ["engine": engine, "resource": NativeToolSchema.string(description: "SDK-relative documentation or declaration path from get_miniapp_sdk.")]
             required = []
+        case .write:
+            properties = [
+                "project_path": NativeToolSchema.string(description: "Optional absolute project or extracted package directory; omit to create a new dedicated project."),
+                "files": ["type": "array", "items": NativeToolSchema.object(properties: [
+                    "path": NativeToolSchema.string(description: "Relative source or resource path, for example index.tsx."),
+                    "content": NativeToolSchema.string(description: "UTF-8 file content. Supply this or base64; empty text is allowed."),
+                    "base64": NativeToolSchema.string(description: "Base64 binary asset bytes. Supply this or content.")
+                ], required: ["path"])]
+            ]
+            required = ["files"]
         case .validate, .build:
             var fields: [String: Any] = ["engine": engine,
                 "project_path": NativeToolSchema.string(description: "Absolute local directory containing script.json, package.json, tsconfig.json, source files and hanlin.authoring.json.")]
@@ -78,6 +92,7 @@ struct MiniAppAuthoringTool: NativeTool {
             let keys: Set<String>
             switch operation {
             case .sdk: keys = ["engine", "resource"]
+            case .write: keys = ["project_path", "files"]
             case .validate: keys = ["engine", "project_path"]
             case .build: keys = ["engine", "project_path", "archive_path"]
             case .importPackage: keys = ["archive_path", "transfer_id"]
@@ -88,6 +103,20 @@ struct MiniAppAuthoringTool: NativeTool {
                     engine: try NativeToolJSON.strictOptionalString(arguments, "engine"),
                     resource: try NativeToolJSON.strictOptionalString(arguments, "resource"))
                 return try result(value, succeeded: true, summary: "Installed host SDK and original declaration resources.")
+            }
+            if operation == .write {
+                guard let payload = arguments["files"] as? [[String: Any]] else {
+                    throw RuntimeCoreError.invalidRequest("files must be an array of path/content or path/base64 objects.")
+                }
+                for file in payload where !Set(file.keys).isSubset(of: ["path", "content", "base64"]) {
+                    throw RuntimeCoreError.invalidRequest("Unknown MiniApp source file field.")
+                }
+                let files = try JSONDecoder().decode([HanlinMiniAppSourceFile].self,
+                    from: JSONSerialization.data(withJSONObject: payload))
+                let project = try NativeToolJSON.strictOptionalString(arguments, "project_path").map(localURL)
+                let report = try MiniAppAuthoringService.write(project: project, files: files)
+                return try result(report, succeeded: true,
+                    summary: "Wrote \(report.writtenFiles.count) source file(s) in \(report.sourceRoot). Validate this source root next.")
             }
             if operation == .importPackage {
                 let archive = try NativeToolJSON.strictOptionalString(arguments, "archive_path")

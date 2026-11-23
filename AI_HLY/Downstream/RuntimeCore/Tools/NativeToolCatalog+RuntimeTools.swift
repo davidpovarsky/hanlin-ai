@@ -4,6 +4,7 @@ extension NativeToolCatalog {
         register(ExecuteJavaScriptTool())
         register(ExecuteTypeScriptTool())
         register(MiniAppAuthoringTool(operation: .sdk))
+        register(MiniAppAuthoringTool(operation: .write))
         register(MiniAppAuthoringTool(operation: .validate))
         register(MiniAppAuthoringTool(operation: .build))
         register(MiniAppAuthoringTool(operation: .importPackage))

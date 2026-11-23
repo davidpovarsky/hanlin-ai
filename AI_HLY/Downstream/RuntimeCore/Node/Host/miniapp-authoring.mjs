@@ -67,12 +67,12 @@ export async function readMiniAppSDK(sdkRoot, request = {}) {
     ...(request.engine ? {engine: request.engine, selectedEngine: manifest.engines[request.engine]} : {}),
     authoring: {
       config: 'hanlin.authoring.json',
-      operations: ['get_miniapp_sdk', 'validate_miniapp', 'build_miniapp', 'import_miniapp'],
+      operations: ['get_miniapp_sdk', 'write_miniapp', 'validate_miniapp', 'build_miniapp', 'import_miniapp'],
       sourceRetention: 'source/',
       template: {schemaVersion: 1, engine: request.engine ?? 'expo', entry: 'index.tsx', tsconfig: 'tsconfig.json'},
       instructions: [
         'Use the selected engine packageVersions and original declarations in toolingRoot.',
-        'Create script.json, package.json, tsconfig.json, an entry source, and hanlin.authoring.json in a project directory.',
+        'Use write_miniapp to create script.json, package.json, tsconfig.json, an entry source, and hanlin.authoring.json; it returns a writable sourceRoot.',
         'Run validate_miniapp; repair every error using the reported file and one-based line/column.',
         'Run build_miniapp, then import_miniapp with archive_path from the successful build report.',
         'A queued import is not yet installed; retain its transfer ID and inspect the receiver result.'

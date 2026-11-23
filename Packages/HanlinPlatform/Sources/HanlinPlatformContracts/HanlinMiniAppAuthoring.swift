@@ -82,3 +82,30 @@ public struct HanlinMiniAppAuthoringReport: Codable, Hashable, Sendable {
               executionID: executionID)
     }
 }
+
+/// Source payload accepted by write_miniapp. Exactly one of content or base64 is supplied.
+public struct HanlinMiniAppSourceFile: Codable, Hashable, Sendable {
+    public let path: String
+    public let content: String?
+    public let base64: String?
+    public init(path: String, content: String? = nil, base64: String? = nil) {
+        self.path = path
+        self.content = content
+        self.base64 = base64
+    }
+}
+
+public struct HanlinMiniAppSourceWriteReport: Codable, Hashable, Sendable {
+    public let schemaVersion: Int
+    public let succeeded: Bool
+    public let projectPath: String
+    public let sourceRoot: String
+    public let writtenFiles: [String]
+    public init(projectPath: String, sourceRoot: String, writtenFiles: [String]) {
+        self.schemaVersion = 1
+        self.succeeded = true
+        self.projectPath = projectPath
+        self.sourceRoot = sourceRoot
+        self.writtenFiles = writtenFiles
+    }
+}
