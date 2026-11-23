@@ -1,0 +1,8 @@
+{
+  "runId": 45238831508,
+  "head": "39a10b1cbf4645b629f556ea312e2576a4e566db",
+  "pid": 3130604,
+  "startedAt": "2026-11-23T18:28:59.295954+00:00",
+  "watch": "gh run watch --exit-status --compact --interval 60",
+  "deadlineSeconds": 3300
+}
