@@ -1,0 +1,38 @@
+{
+  "scope": "Actual Apple owner bundle/profile/group readback only",
+  "affected_files": [
+    "Scripts/ProductSplit/audit_release_resources.py",
+    "Scripts/ProductSplit/audit_cross_app_signing.py",
+    "Tests/ProductSplit/test_cross_app_signing_audit.py"
+  ],
+  "obligations": [
+    "Follow all registered bundle/profile pages",
+    "Read exact App Group grants from decoded profile entitlements",
+    "Preserve original Anytype identity",
+    "Retain no credentials, device IDs, or profile payloads",
+    "Audit no signed runtime/device claims"
+  ],
+  "dependency_graph": {
+    "audit_release_resources.main": [
+      "audit_cross_app_signing.audit_cross_app_resources",
+      "existing apple_get GET transport",
+      "security cms profile decode"
+    ]
+  },
+  "execute": [
+    "8 new cross-app audit unit tests",
+    "existing validate-app-split.yml audit_release_resources=true on xcode-27"
+  ],
+  "reuse": [
+    "11 passed bridge portable tests; no bridge changes",
+    "successful Xcode27 bridge/picker compilation; no Swift changes",
+    "existing unrelated release/profile tests; original evaluate_profile unchanged"
+  ],
+  "native_builds": "ROOT_OWNED_NOT_EXECUTED_HERE",
+  "workflow_yaml_changes": false,
+  "source_sha256": {
+    "Scripts/ProductSplit/audit_release_resources.py": "deb7a4bfa24acf4e8439578016e690ed67b8b586f0e949111bb6f3920c19b90e",
+    "Scripts/ProductSplit/audit_cross_app_signing.py": "722537803f9c056c9bb13209569a912fa741451d3675790147ef38c1067d85dd",
+    "Tests/ProductSplit/test_cross_app_signing_audit.py": "034721863e0e719b89a95d10ef0a5eb51e2a5bf607e124cd136b3d05bff4319e"
+  }
+}

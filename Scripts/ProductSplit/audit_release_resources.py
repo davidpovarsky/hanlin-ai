@@ -261,7 +261,20 @@ def device_inventory():
         result["physical_inventory_error"] = type(error).__name__
     return result
 
+def decode_portal_profile_for_audit(encoded):
+    with tempfile.TemporaryDirectory(prefix="hanlin-cross-app-profile-") as folder:
+        path = Path(folder) / "input.mobileprovision"
+        path.write_bytes(decode(encoded))
+        path.chmod(0o600)
+        result = subprocess.run(["security", "cms", "-D", "-i", str(path)],
+                                capture_output=True, timeout=20)
+        if result.returncode:
+            raise ValueError("Portal CMS profile could not be read")
+        return plistlib.loads(result.stdout)
+
+
 def main():
+    from audit_cross_app_signing import audit_cross_app_resources
     cert, digest = certificate()
     profile_results = profiles(digest)
     report = {
@@ -269,6 +282,10 @@ def main():
         "run_id": os.environ.get("GITHUB_RUN_ID"), "timestamp": datetime.now(timezone.utc).isoformat(),
         "scope": "Read-only resource metadata; no signing, installation, upload, distribution, account change or notification.",
         "certificate": cert, "profiles": profile_results, "apple": apple_resources(digest),
+        "cross_app_signing": audit_cross_app_resources(apple_get, decode_portal_profile_for_audit,
+            certificate_sha=digest, team=os.environ.get("APPLE_TEAM_ID", ""),
+            now=datetime.now(timezone.utc), missing_credentials=[name for name in
+                ("ASC_KEY_P8", "ASC_KEY_ID", "ASC_ISSUER_ID") if not os.environ.get(name)]),
         "device_inventory": device_inventory(),
         "signing_inputs_ready": cert["status"] == "READY_RESOURCE"
             and all(p["status"] == "READY_RESOURCE" for p in profile_results),

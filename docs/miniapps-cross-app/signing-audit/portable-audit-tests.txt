@@ -1,0 +1,13 @@
+test_complete_audit_retains_identity_without_raw_profile_content (test_cross_app_signing_audit.CrossAppSigningAuditTests.test_complete_audit_retains_identity_without_raw_profile_content) ... ok
+test_exact_profile_group_not_capability_establishes_assignment (test_cross_app_signing_audit.CrossAppSigningAuditTests.test_exact_profile_group_not_capability_establishes_assignment) ... ok
+test_full_pagination_and_origin_validation (test_cross_app_signing_audit.CrossAppSigningAuditTests.test_full_pagination_and_origin_validation) ... ok
+test_missing_credentials_performs_no_network_read (test_cross_app_signing_audit.CrossAppSigningAuditTests.test_missing_credentials_performs_no_network_read) ... ok
+test_profile_report_excludes_device_and_certificate_payloads (test_cross_app_signing_audit.CrossAppSigningAuditTests.test_profile_report_excludes_device_and_certificate_payloads) ... ok
+test_profile_wrong_owner_and_bundle_cannot_be_selected (test_cross_app_signing_audit.CrossAppSigningAuditTests.test_profile_wrong_owner_and_bundle_cannot_be_selected) ... ok
+test_repeated_cursor_is_reported_instead_of_hanging (test_cross_app_signing_audit.CrossAppSigningAuditTests.test_repeated_cursor_is_reported_instead_of_hanging) ... ok
+test_same_owner_legacy_app_identifier_prefix_is_valid (test_cross_app_signing_audit.CrossAppSigningAuditTests.test_same_owner_legacy_app_identifier_prefix_is_valid) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+OK
