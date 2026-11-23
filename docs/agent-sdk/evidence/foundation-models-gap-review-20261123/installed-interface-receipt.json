@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "xcode": "Xcode 27.2\nBuild version 27B52",
+  "sdkVersion": "27.2",
+  "modelExecution": "NOT_RUN",
+  "availability": "NOT_QUERIED",
+  "status": "DECLARATIONS_READ",
+  "interface": "System/Library/Frameworks/FoundationModels.framework/Modules/FoundationModels.swiftmodule/arm64-apple-ios-simulator.swiftinterface",
+  "interfaceSHA256": "7d29c5b8e1aa76f8b362f2b17f3b29e87418ff4f730822c3f725aa41989bed14",
+  "interfaceBytes": 217372,
+  "excerptSHA256": "812d8f15063b0e8fa2573568ee84eee86344d17a3c81c2383a35dd26df27938c",
+  "excerptRanges": [
+    {
+      "startLine": 100,
+      "endLine": 129
+    },
+    {
+      "startLine": 297,
+      "endLine": 327
+    },
+    {
+      "startLine": 800,
+      "endLine": 841
+    },
+    {
+      "startLine": 847,
+      "endLine": 875
+    },
+    {
+      "startLine": 878,
+      "endLine": 1047
+    },
+    {
+      "startLine": 1059,
+      "endLine": 1069
+    },
+    {
+      "startLine": 1490,
+      "endLine": 1507
+    },
+    {
+      "startLine": 1757,
+      "endLine": 1975
+    },
+    {
+      "startLine": 2122,
+      "endLine": 2263
+    },
+    {
+      "startLine": 2304,
+      "endLine": 2310
+    },
+    {
+      "startLine": 2984,
+      "endLine": 2990
+    }
+  ]
+}
