@@ -190,7 +190,8 @@ struct HanlinAtomicScriptStoreTests {
     func validRegistrySelection() async throws {
         let fixture = try Fixture()
         defer { fixture.remove() }
-        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        let clock = FixedClock()
+        let store = try HanlinAtomicScriptStore(root: fixture.storeRoot, now: { clock.date })
         _ = try await store.install(
             plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest),
             artifactDirectory: fixture.first.url, artifactManifest: fixture.first.manifest

@@ -103,7 +103,8 @@
     "new_native_parameter_cases": 4,
     "native_tests_executed": 0,
     "prior_tests_rerun": 0,
-    "ci_dispatches": 0
+    "ci_dispatches": 0,
+    "native_valid_selection_clock": "Original FixedClock reused for whole-snapshot persistence equality."
   },
   "reachability": {
     "required_stored_input": "A decoded persisted registry indexes an entry under a map key different from its validated record.installedPackageID; two keys may then yield repeated IDs.",
@@ -146,7 +147,7 @@
     "Docs/SDK/registry-identity-20261123/before/valid-backup.stdout": "b221cccd4e751db03c7ed63cf8d6f8fc8fa40f6ab075bf98075b8b7e7b418e82",
     "Docs/SDK/registry-identity-20261123/before/valid-primary.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "Docs/SDK/registry-identity-20261123/before/valid-primary.stdout": "2b73ce88e7c09136d05b46fc0c48f4a5fda91944163665a8dcd546496f5c134a",
-    "Docs/SDK/registry-identity-20261123/native-source-parse.json": "30052a373b34399af62a598747adc944c7252b87bb640311e7969d13fb3367d3"
+    "Docs/SDK/registry-identity-20261123/native-source-parse.json": "38b38abf894acbaf8e805e28d06d33695c9a8a9ebf59a24b71c1da054dbde244"
   },
   "compressed_original_crash_logs": {
     "Docs/SDK/registry-identity-20261123/before/duplicate.stderr.gz": {
@@ -159,5 +160,6 @@
       "uncompressed_bytes": 6328,
       "reason": "Lossless original crash log; preserves trailing blank lines without changing raw evidence."
     }
-  }
+  },
+  "native_test_source_sha256": "49eed09937705d2aaf19b85de1ec49ffb861d6445764806c68794a43ea7181cf"
 }
