@@ -1,0 +1,16 @@
+22:51:38.131 ChatMotionProofUITests-Runner[23127:70404] results tree:
+Application, pid: 23854, label: 'ChatMotionProof'
+  Window (Main)
+    Other
+      Other
+        Other
+          Other
+            ScrollView
+              Other
+                Other
+                  Other
+                    StaticText, identifier: 'proof-summary', label: 'A short visible reasoning summary. שלום עולם. مرحبًا بالعالم.'
+22:51:38.132 ChatMotionProofUITests-Runner[23127:70404] matches: {(
+    StaticText, identifier: 'proof-summary', label: 'A short visible reasoning summary. שלום עולם. مرحبًا بالعالم.'
+)}
+22:51:38.132 ChatMotionProofUITests-Runner[23127:70404] <XCTContext: 0x105256e90> finished activity <XCActivityRecord: 0x108396e60> 2026-11-23 22:51:38 +0000: Checking existence of `"proof-summary" StaticText` (0.0655429s)

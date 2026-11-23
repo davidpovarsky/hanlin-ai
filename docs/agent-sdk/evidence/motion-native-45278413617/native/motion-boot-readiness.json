@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "status": "READY_FROM_NATIVE_BOOTSTATUS",
+  "device": "C3BE1868-D49B-49C5-9685-4A2C2E6877D7",
+  "strategy": "fresh",
+  "run_id": "45278413617",
+  "run_attempt": "1",
+  "attempts": [
+    {
+      "name": "boot-initial",
+      "command": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "C3BE1868-D49B-49C5-9685-4A2C2E6877D7"
+      ],
+      "timeout_seconds": 15.0,
+      "return_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.311,
+      "output_file": "boot-initial.log",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bootstatus-attempt-1",
+      "command": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "C3BE1868-D49B-49C5-9685-4A2C2E6877D7",
+        "-b"
+      ],
+      "timeout_seconds": 300.0,
+      "return_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 132.747,
+      "output_file": "bootstatus-attempt-1.log",
+      "output_sha256": "a8e94ac6e7feaf4b1409cb318845a4d966f0df421f65a3731a2c8c461b8a9d7e"
+    }
+  ],
+  "recovery_count": 0,
+  "scope": "Simulator readiness only; Motion product tests NOT_RUN",
+  "ownership": {
+    "simulator": "C3BE1868-D49B-49C5-9685-4A2C2E6877D7",
+    "run_id": "45278413617",
+    "run_attempt": "1",
+    "name": "Hanlin-Phase2-Motion-45278413617",
+    "selection_sha256": "74c717ca7f5c35f23272eff895288bb10ad3eac6e976810ef8798f5b4614e17e"
+  }
+}
