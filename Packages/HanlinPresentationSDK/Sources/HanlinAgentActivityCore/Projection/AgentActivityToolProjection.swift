@@ -125,7 +125,7 @@ public enum AgentActivityToolProjection {
         }
     }
 
-    private static func isToolProjectionStep(_ step: AgentActivityStep) -> Bool {
+    public static func isToolProjectionStep(_ step: AgentActivityStep) -> Bool {
         switch step.kind {
         case .toolCall, .toolExecution, .codeExecution, .documentRead, .sourceRead, .map, .calendar, .health, .nativeApp: true
         case .reasoning, .progress, .planning, .webSearch, .result, .error, .cancellation: false

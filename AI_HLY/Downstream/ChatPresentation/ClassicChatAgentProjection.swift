@@ -151,7 +151,7 @@ struct ClassicChatAgentProjection {
         // projections separate from the live transcript so an answer token never
         // reformats every previous tool result or serializes the whole run.
         let messageChanged = projectedMessageID != assistantMessage.id
-        let toolSteps = agentRun.steps.filter(Self.isToolProjectionStep)
+        let toolSteps = agentRun.steps.filter(AgentActivityToolProjection.isToolProjectionStep)
         let toolTranscript = agentRun.transcriptItems.filter { $0.callID != nil }
         let toolsChanged = messageChanged || projectedToolSteps != toolSteps
             || projectedToolTranscript != toolTranscript
