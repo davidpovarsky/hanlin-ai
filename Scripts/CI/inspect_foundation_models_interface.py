@@ -34,7 +34,10 @@ def inspect(output):
     lines = raw.decode("utf-8").splitlines()
     needles = ("LanguageModelExecutorGenerationRequest", "LanguageModelExecutorGenerationChannel",
                "executorConfiguration", "struct Executor", "class Executor", "protocol Executor",
-               "extension FoundationModels.SystemLanguageModel.Executor")
+               "extension FoundationModels.SystemLanguageModel.Executor",
+               "DynamicProfile", "struct Profile", "class Profile", "protocol Profile",
+               "extension FoundationModels.LanguageModelSession.Profile",
+               "func onToolCall", "func historyTransform")
     ranges = []
     for i, line in enumerate(lines):
         relevant = any(x in line for x in needles)
