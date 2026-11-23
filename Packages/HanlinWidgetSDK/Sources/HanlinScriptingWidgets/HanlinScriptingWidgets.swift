@@ -136,6 +136,17 @@ public struct HanlinWidgetTimelineProvider: AppIntentTimelineProvider {
 }
 public struct HanlinScriptingWidget: Widget {
     public let kind: String
+
+    /// WidgetKit requires a zero-argument initializer. It uses only this
+    /// extension's declared host configuration; it never selects Hanlin's kind.
+    public init() {
+        do {
+            self.kind = try HanlinExtensionHostConfiguration.load().requireWidgetKind()
+        } catch {
+            preconditionFailure("HanlinScriptingWidget requires HanlinExtensionHost.WidgetKind in the extension's Info.plist.")
+        }
+    }
+
     public init(kind: String) { self.kind = kind }
     public var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: HanlinWidgetConfigurationIntent.self, provider: HanlinWidgetTimelineProvider()) { entry in
