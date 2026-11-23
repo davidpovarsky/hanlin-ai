@@ -1,5 +1,7 @@
 # Guarded Native publication and immutable installation
 
+> Latest producer result: run 45246711373 failed its SDK resource scan after the full app/test build passed. Prepared artifact 14855355631 is ineligible. The commands below remain a guarded recipe only; do not execute publication against this failed run. See [original evidence](../app-resource-scan-45246711373/README.md).
+
 These commands are prepared, **NOT_RUN**. Producer 45238831508 failed and its prepared artifact 14850817502 is permanently ineligible. Parent owns the necessary continuation 45246711373 at 36d3c51bdba93ada2c2722ed0e9b99109d84a616, its terminal result and sole artifact-acquisition assignment.
 
 ## 1. Successful producer and single acquisition

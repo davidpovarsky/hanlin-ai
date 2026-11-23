@@ -12,12 +12,16 @@
   "currentContinuation": {
     "run": 45246711373,
     "source": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
-    "status": "IN_PROGRESS_AT_PARENT_NOTIFICATION",
+    "status": "FAIL",
     "soleWatcher": "/root",
     "independentlyPolled": false,
     "selectedScopes": 32,
     "authoredExpectedInvocations": 342,
-    "executedInvocations": "NOT_RUN_OR_UNVERIFIED"
+    "executedInvocations": "NOT_RUN",
+    "nativeJob": 137945550349,
+    "failure": "Resource scanner rejects two SwiftPM AI_Hanlin bundle locations after successful app/test build and sealed current-products validation.",
+    "preparedNativeArtifact": 14855355631,
+    "preparedNativeEligible": false
   },
   "qualifiedProgress": {
     "nativeScriptHostBaselineMetadata": "PASS",
@@ -26,8 +30,11 @@
     "selectedFrameworks": 107,
     "identicalFrameworkDuplicates": 23,
     "appIntentsOriginalExports": 7,
-    "finalMainAppBuild": "NOT_QUALIFIED",
-    "tests": "NOT_RUN"
+    "finalMainAppBuild": "PASS",
+    "tests": "NOT_RUN",
+    "currentBuildForTestingUnitProducts": "PASS",
+    "runtimeCopySignature": "PASS",
+    "resourceScan": "FAIL"
   },
   "forwardSourceReview": {
     "base": "4c7c89c45587e26c76110e2d59688d38c66f3aa3",
@@ -60,5 +67,6 @@
   "hostPins": "UNCHANGED_32da9e314e22bbf22391fcf8902302acfbb281e2",
   "finalHostInstallations": "NOT_RUN",
   "nativeArtifactAcquisition": 0,
-  "recordedAt": "2026-11-23T19:21:43.916163+00:00"
+  "recordedAt": "2026-11-23T20:06:32.005381+00:00",
+  "latestEvidence": "../app-resource-scan-45246711373/README.md"
 }

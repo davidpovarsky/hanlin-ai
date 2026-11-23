@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-23T20:06:32.005381+00:00",
+  "run": 45246711373,
+  "sourceCommit": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+  "status": "BUILD_AND_CURRENT_PRODUCTS_PASS_SCAN_FAIL_TESTS_NOT_RUN",
+  "smokeAcquisitions": 1,
+  "preparedNativeArtifactsAcquired": 0,
+  "publishedAssets": 0,
+  "newTestsOrBuilds": 0,
+  "productionOrValidatorChanges": 0,
+  "files": {
+    "README.md": {
+      "bytes": 5098,
+      "sha256": "db79e30a4ff0dcfbded31c9c4c98a0b2d49123821237d3beaf4c9da079809cea"
+    },
+    "acquisition.json": {
+      "bytes": 16502,
+      "sha256": "cd0e124f60056ccdb7ce12cf54fe04bb70853bbc6e68bc9b0ef8d9459e272c51"
+    },
+    "metadata-reuse.json": {
+      "bytes": 5867,
+      "sha256": "fe58a062fb708a683c69b633caee0baacb5a3a8d5700de587bf06b787afda760"
+    },
+    "original-appintents-receipt.json": {
+      "bytes": 2836,
+      "sha256": "d12369d6c1debb1eddf69248710d6982185e09e4eae7bfa78413698d4b7d9100"
+    },
+    "original-github/artifacts.json": {
+      "bytes": 4440,
+      "sha256": "8c00ec27903df12935c57fa01abb6d1bb15df9b26d62ddba7ebc5b1d08f84d11"
+    },
+    "original-github/jobs.json": {
+      "bytes": 39678,
+      "sha256": "fc8243d1b6d585f4e5ae07afee594d59bc7980e9c7f2f8e6f558df210ad03cad"
+    },
+    "original-github/run.json": {
+      "bytes": 14565,
+      "sha256": "8b4e35105b5d1c8037f31d2321e2f190566d718e07cf5d02c45d00f3523a87f4"
+    },
+    "original-log-excerpts.json": {
+      "bytes": 2463,
+      "sha256": "d37a24a54c965f85b972f29dc3c03955062c0fb45b70b1d6c6235fd2c9a8735b"
+    },
+    "original-native-visibility.json": {
+      "bytes": 928,
+      "sha256": "07d0157bcaeedead59541b0776fc17f0e21f77bae6eff272c8f954ed4ca696de"
+    },
+    "original-scan-and-build/06-current-unit-xctestrun.json": {
+      "bytes": 4540,
+      "sha256": "d3df6fd6b9ee6b54d6cd8e29e0a3f939375ce81960c76c799a59cda61217ab74"
+    },
+    "original-scan-and-build/06-diagnostics-build-provenance.json": {
+      "bytes": 6712,
+      "sha256": "44f63e78ba5a228f888846b06d9482677caaec51bd4ea469990d1b233d6ebd40"
+    },
+    "original-scan-and-build/06-generated-unit-manifests.json": {
+      "bytes": 171,
+      "sha256": "87674549ea460a387754934aad21a5c9a9bf641128c124bf4cc65066823a60b3"
+    },
+    "original-scan-and-build/06-generated-unit.xctestrun": {
+      "bytes": 10396,
+      "sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c"
+    },
+    "original-scan-and-build/06-unit-xctestrun-seal.log": {
+      "bytes": 120,
+      "sha256": "4839a62ee6ffafd486432694f6ca5f1eae9d8f745e4b2924b14ab1af2332daaa"
+    },
+    "original-scan-and-build/07-simulator-runtime-signature.log": {
+      "bytes": 203,
+      "sha256": "a2bb1fc2e22d6b52e1cb3e4fcd48e7c0031d1d300cfc2ea505da7281016bff55"
+    },
+    "original-scan-and-build/07-simulator-sdk-bundle-resources.json": {
+      "bytes": 276,
+      "sha256": "d4f981b51bb62e0049133e4bc8612a966b85117698968939ba61bf2ac0b59fec"
+    },
+    "request.json": {
+      "bytes": 2088,
+      "sha256": "a35d7db74a12ccfffc049c126aff9a554dd641f4bdb8f4561afa03236f70d7ef"
+    },
+    "scope-verification.json": {
+      "bytes": 2729,
+      "sha256": "ca461eeedf9dd8afc7d7c516f0f5aa3f61cdf4917fedf3c2fede6876e7abe905"
+    },
+    "simulator-smoke-14856943977.zip": {
+      "bytes": 3812403,
+      "sha256": "b0e060b4472132dae4b938ad36e8abf1d23ac35d9604f1ebe1efbded0b5c9e0a"
+    }
+  }
+}
