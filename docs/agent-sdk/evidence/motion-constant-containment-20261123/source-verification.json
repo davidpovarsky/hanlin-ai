@@ -1,0 +1,155 @@
+{
+  "candidate_commit_base": "4db1f2f600d1ad0e06853018590e2f02a8c1ae11",
+  "intended_native_integration_base": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "executed_failure_source": "d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13",
+  "executed_failure_run": 45278413617,
+  "production_path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+  "before_sha256": "bb621c8312e153ac65a963da25ee845a35f46c40ccd13fe66540404f0ad626f2",
+  "after_sha256": "e29c33f038232f0a49b1d78b057bea254699c365ed24f65250282afb5e65e24e",
+  "exact_one_line_inverse_pass": true,
+  "central_component_before_equal": true,
+  "protected_files": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift",
+      "sha256": "7d4e19a8520e352ae53031da54b5c4f5a75795084402f6c3f4e4c57731e7a7bb",
+      "bytes": 4302,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift",
+      "sha256": "5fe7e40ae61e4dfeb6e36f0d519bf90f4a7ef5c1b865c3dd030bd3561d35e364",
+      "bytes": 12024,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "sha256": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+      "bytes": 3312,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "sha256": "709f948ac85ac042d15fb8c258383f1bbb06f5336c0904dc170e04b46f143791",
+      "bytes": 4392,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "sha256": "40af700d48af8c3229db379cbc9add813484f7d465889523c0acc0a70b552f6a",
+      "bytes": 4929,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinOriginalActivityControls.swift",
+      "sha256": "1a88b02132e48ba6fece0e9227943951e1c0b6a379abda5591e4537241833e71",
+      "bytes": 2927,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/App.swift",
+      "sha256": "7323a83f5ed539b25d12f944a7bd256faba63c2d5806168d0def42e829454b25",
+      "bytes": 26138,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "sha256": "ed053de2cf5013ef001fc198f4d730f7d8d7bf9d55991e784dbc454b90c46724",
+      "bytes": 24196,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/collect_motion_result.py",
+      "sha256": "861478e73cae505bae1981f9b0e063fbd7a46d77a3b6be1a41f002754ac7156b",
+      "bytes": 5332,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-d-observer-20261119/proposal-receipt.json",
+      "sha256": "8a30b8e1967bf45a1be6daa5923f455c80f987544c901cbe2dd7489ebc70df64",
+      "bytes": 2282,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-d-observer-20261119/root-verification.json",
+      "sha256": "539a6c6aad852aa1127a7d6871f6fff1573b1bc3f2cdf5e55ad9045c0ea2b64c",
+      "bytes": 912,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-reset-baseline-20261119/current-proof-inputs.json",
+      "sha256": "076a9ed897e587d5d197c2842f9d6848a18e0f0d9ed447ff27c9c18fd470b28a",
+      "bytes": 2074,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-reset-baseline-20261119/native-failure-verification.json",
+      "sha256": "01e1ac2ea9ea2ea8002aca68fe63038e44eaa8841bbc8bfc33e38548c84c915b",
+      "bytes": 2865,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-reset-baseline-20261119/original-tests.json",
+      "sha256": "100c6299d1f432d799e62f16c0e65fa3e99476539a9651c93395e183cfe111b1",
+      "bytes": 2454,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-reset-baseline-20261119/root-review.json",
+      "sha256": "54d1eb6c1ceb7c2bc2a011abbd2d85de15c493a959c0149f41a4bdb60823054f",
+      "bytes": 1294,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/prepare_motion_ui.py",
+      "sha256": "32af6c5a01fcf7130f5b54a664d20dbff186e8117cba81d5c4a9a2b52b21b77a",
+      "bytes": 4220,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/record_sdk_inputs.py",
+      "sha256": "71451c3f6b891c3443924f1ab134f4b2098b56cee1f1217113a7ddb143df8c54",
+      "bytes": 13936,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/record_ui_run.py",
+      "sha256": "955b0dd748008e86244548f648e38d6c5e6edd005093f0a99c3afb9eece740fa",
+      "bytes": 4881,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "sha256": "0c1b71a5db380c1e14e3210be62a004ff4a993ea913702a03407b6b482b643c7",
+      "bytes": 10105,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "Scripts/CI/ChatRegressionValidation/run_native.py",
+      "sha256": "86f58b55ef3f717111303bf3897945f433b66261a2870dfe2b94b4e123787e5a",
+      "bytes": 25508,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_presentation_sdk.sh",
+      "sha256": "ebf07c945174020b858e3a0f39c5c884413d406d8599fb1c1b994e89445dae94",
+      "bytes": 1769,
+      "equals_executed_d8_and_central4cfa": true
+    },
+    {
+      "path": "Scripts/CI/boot_motion_simulator.py",
+      "sha256": "35ab94e861e7e067859616e6046bdea6d2794299b6786a0274972c7fbac6175b",
+      "bytes": 10606,
+      "equals_executed_d8_and_central4cfa": true
+    }
+  ],
+  "central_selected_workflow_job_and_top_level_prefix_equal_to_executed_d8": true,
+  "central_selected_job_sha256": "f22455a8e6fefcae6e5898d49dacae986e1cebb0fb4c33cc03ed1f4dd7012eae",
+  "authoring_branch_not_native_dispatch_ready": "This older isolated authoring branch retains25min; central4cfa and executed d8 both use35min. No workflow is modified by this commit. Freeze the one-line patch on reviewed central source before dispatch.",
+  "swift_parse": {
+    "exit_code": 0,
+    "scope": "Linux syntax parser only; no SwiftUI typecheck, native build or acceptance claim"
+  },
+  "native_acceptance": "NOT_RUN",
+  "dispatch": "NOT_AUTHORIZED_PENDING_ROOT_REVIEW",
+  "next_scope": "Original B only; A+C hold; D not selected"
+}
