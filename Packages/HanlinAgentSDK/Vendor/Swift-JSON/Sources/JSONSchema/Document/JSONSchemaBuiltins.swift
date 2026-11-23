@@ -115,8 +115,14 @@ extension JSONSchemaRegistry {
             try meter.work(pathBytes + 1)
             try meter.retain(pathBytes + 128)
             defer { try? meter.release(pathBytes + 128) }
-            // SwiftPM's Apple/Swift Build and Linux resource directory spellings.
-            for name in ["HanlinAgentSDK_HanlinExactJSONSchema.bundle", "HanlinAgentSDK_HanlinExactJSONSchema.resources"] {
+            // Both public package layouts, in SwiftPM's Apple and Linux spellings.
+            // Prefer the aggregate SDK without bypassing any present corrupt bundle.
+            for name in [
+                "HanlinSDK_HanlinExactJSONSchema.bundle",
+                "HanlinSDK_HanlinExactJSONSchema.resources",
+                "HanlinAgentSDK_HanlinExactJSONSchema.bundle",
+                "HanlinAgentSDK_HanlinExactJSONSchema.resources",
+            ] {
                 try meter.work(UInt64(name.utf8.count) + 1)
                 let url = candidate.appendingPathComponent(name, isDirectory: true)
                 if let bundle = Bundle(url: url), let root = bundle.resourceURL { return root }

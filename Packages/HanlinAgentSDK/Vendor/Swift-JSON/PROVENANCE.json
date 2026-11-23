@@ -4,7 +4,7 @@
   "source_archive_sha256": "1a1b188caf90ba5a31585a35c82b87f083c79e42d204f171f08f19cc6f830f86",
   "reason": "Original app graph contains A2UI swift-json-schema JSONSchema. Xcode SwiftPM rejected moduleAliases in runs 43837236650 and 43839414468. Original validator is retained once under a unique Swift target; no replacement parser or validator.",
   "adaptations": {
-    "Sources/JSONSchema/Document/JSONSchemaBuiltins.swift": "Resource bundle lookup spelling only: Swift-JSON_JSONSchema -> HanlinAgentSDK_HanlinExactJSONSchema; required by the unique target name. No validation semantics changed."
+    "Sources/JSONSchema/Document/JSONSchemaBuiltins.swift": "Resource bundle lookup spelling only: Swift-JSON_JSONSchema -> HanlinExactJSONSchema target in standalone HanlinAgentSDK or aggregate HanlinSDK packages. The checked resolver recognizes Apple .bundle and Linux .resources layouts, preferring the aggregate name within each existing candidate. Existing byte counts, SHA-256 pins, resource bounds, cancellation checks and fail-closed selection are unchanged. The WASI command-relative standalone layout is unchanged."
   },
   "files": {
     "LICENSE": {
@@ -361,7 +361,7 @@
     },
     "Sources/JSONSchema/Document/JSONSchemaBuiltins.swift": {
       "upstream_sha256": "7bc2ceff3900942ac31a1b52554329d67eb1ffc2ca3ca3655d4557b079553112",
-      "local_sha256": "29cc427ec957a43ed0a768e7f0fa5daac4edc94fe707f7f9cf322daddc4c8492"
+      "local_sha256": "fd23708635df6a68605a8e215c170c01fc71e29b2e895ee13cea7faf5e330bfc"
     },
     "Sources/JSONSchema/Document/JSONSchemaDocument.swift": {
       "upstream_sha256": "0561cec5d6265ef3d6225f0d76944a40ddcfccfa1f8074e693c101653c2a072e",
