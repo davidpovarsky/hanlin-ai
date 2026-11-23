@@ -17,13 +17,21 @@ public actor HanlinAISDKAgentEngine {
         private var stopClosure: (@Sendable () -> Void)?
         private var isStopped = false
 
-        func setStopper(_ closure: @escaping @Sendable () -> Void) {
+        var isCancellationRequested: Bool {
             lock.lock()
             defer { lock.unlock() }
-            if isStopped {
-                closure()
-            } else {
+            return isStopped
+        }
+
+        func setStopper(_ closure: @escaping @Sendable () -> Void) {
+            lock.lock()
+            let alreadyStopped = isStopped
+            if !alreadyStopped {
                 stopClosure = closure
+            }
+            lock.unlock()
+            if alreadyStopped {
+                closure()
             }
         }
 
@@ -167,6 +175,14 @@ public actor HanlinAISDKAgentEngine {
 
         return AsyncThrowingStream { continuation in
             let stopper = StreamStopper()
+            let streamSettings: CallSettings = {
+                guard resolvedProvider.descriptor.kind == .appleOnDevice else { return settings }
+                var nativeSettings = settings
+                // Producer stop() waits for a pending provider to finish. Give the native
+                // bridge this stream's existing stop state so it can cancel that request.
+                nativeSettings.abortSignal = { stopper.isCancellationRequested }
+                return nativeSettings
+            }()
             let task = Task {
                 do {
                     continuation.yield(.runStarted)
@@ -239,7 +255,7 @@ public actor HanlinAISDKAgentEngine {
                                 )
                             },
                             stopWhen: stopConditions,
-                            settings: settings
+                            settings: streamSettings
                         )
 
                         stopper.setStopper {
