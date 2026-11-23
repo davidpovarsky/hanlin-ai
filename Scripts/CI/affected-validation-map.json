@@ -27,7 +27,8 @@
     "Docs/SDK/HanlinMessageBubblePreservation.json",
     "Docs/SDK/HanlinNavigationIntegration20261123.json",
     "Docs/SDK/HanlinMCPPublicModelVerification20261123.json",
-    "Docs/SDK/HanlinSelectedProfileIdentity20261123.json"
+    "Docs/SDK/HanlinSelectedProfileIdentity20261123.json",
+    "Docs/SDK/HanlinAnytypeNativeConsumerReadback20261123.json"
   ],
   "components": {
     "ci_router": {
