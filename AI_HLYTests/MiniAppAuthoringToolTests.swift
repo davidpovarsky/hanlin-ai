@@ -74,6 +74,42 @@ struct MiniAppAuthoringToolTests {
         #expect(!MiniAppAuthoringTool(operation: .write).catalogEntry.isSensitive)
     }
 
+
+    @Test("Original Expo Metro builds inside the embedded Node host and retains real image assets")
+    func originalExpoMetroBuildOnEmbeddedNode() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "expo-authoring-" + UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let files: [[String: String]] = [
+            ["path": "script.json", "content": #"{"name":"Expo Authoring Acceptance","version":"1.0.0","entry":"bundle.js","runInApp":true,"hanlinRuntime":"hanlin-expo"}"#],
+            ["path": "package.json", "content": #"{"name":"hanlin-expo-authoring-acceptance","version":"1.0.0","private":true}"#],
+            ["path": "tsconfig.json", "content": #"{"extends":"expo/tsconfig.base","compilerOptions":{"strict":true,"skipLibCheck":false,"lib":["ES2023"]},"include":["*.ts","*.tsx"]}"#],
+            ["path": "hanlin.authoring.json", "content": #"{"schemaVersion":1,"engine":"expo","entry":"index.tsx"}"#],
+            ["path": "assets.d.ts", "content": #"declare module "*.png" { const source: import("react-native").ImageSourcePropType; export default source; }"#],
+            ["path": "pixel.png", "base64": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR4nGP4DwQACfsD/fteaysAAAAASUVORK5CYII="],
+            ["path": "index.tsx", "content": """
+                import React from "react";
+                import {AppRegistry, Image} from "react-native";
+                import source from "./pixel.png";
+                function App() { return React.createElement(Image, {source}); }
+                AppRegistry.registerComponent("main", () => App);
+                """]
+        ]
+        let written = await execute(.write, ["project_path": root.path, "files": files])
+        try #require(written.outcome == .succeeded, Comment(rawValue: written.modelText))
+        let built = await execute(.build, ["engine": "expo", "project_path": root.path])
+        try #require(built.outcome == .succeeded, Comment(rawValue: built.modelText))
+        let report = try decode(HanlinMiniAppAuthoringReport.self, built)
+        #expect(report.typecheck?.strict == true)
+        #expect(report.typecheck?.dependencyDeclarationsChecked == true)
+        let package = URL(fileURLWithPath: try #require(report.preparedPackagePath))
+        #expect(FileManager.default.fileExists(atPath: package.appending(path: "bundle.js").path))
+        #expect(FileManager.default.fileExists(atPath: package.appending(path: "bundle.js.map").path))
+        let inventory = try JSONSerialization.jsonObject(with: Data(contentsOf: package.appending(path: "hanlin.authoring.json"))) as? [String: Any]
+        let compiled = inventory?["compiledHashes"] as? [String: String]
+        #expect(compiled?.keys.contains { $0.hasSuffix("pixel.png") } == true)
+        #expect(FileManager.default.fileExists(atPath: package.appending(path: "source/pixel.png").path))
+    }
+
     private func execute(_ operation: MiniAppAuthoringTool.Operation, _ arguments: [String: Any]) async -> NativeToolResult {
         do {
             let json = String(decoding: try JSONSerialization.data(withJSONObject: arguments), as: UTF8.self)

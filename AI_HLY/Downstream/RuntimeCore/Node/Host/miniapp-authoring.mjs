@@ -85,6 +85,8 @@ export async function readMiniAppSDK(sdkRoot, request = {}) {
     ...(request.engine ? {engine: request.engine, selectedEngine: described[request.engine]} : {}),
     authoring: {
       config: 'hanlin.authoring.json',
+      ...(files?.some(file => file.path === 'docs/miniapp-sdk/AUTHORING_WORKFLOW.md')
+        ? {documentation: 'docs/miniapp-sdk/AUTHORING_WORKFLOW.md'} : {}),
       operations: ['get_miniapp_sdk', 'write_miniapp', 'validate_miniapp', 'build_miniapp', 'import_miniapp'],
       sourceRetention: 'source/',
       template: {schemaVersion: 1, engine: request.engine ?? 'expo', entry: 'index.tsx', tsconfig: 'tsconfig.json'},
@@ -171,11 +173,24 @@ async function parseProject(ts, input, sdkRoot, sdkEngine) {
     // Base templates describe options/types. A template without root source files is expected.
     base.errors = base.errors.filter(item => item.code !== 18003);
   }
+  const toolingRoot = child(sdkRoot, sdkEngine.toolingRoot);
   const configPath = child(input.sourceRoot, input.author.tsconfig ?? 'tsconfig.json');
   const sourceConfig = ts.readConfigFile(configPath, ts.sys.readFile);
-  const config = sourceConfig.config ?? {};
+  const config = {...sourceConfig.config};
+  const resolveExtendedConfig = value => {
+    if (typeof value !== 'string' || value.startsWith('.') || path.isAbsolute(value)) return value;
+    for (const root of [input.sourceRoot, toolingRoot]) {
+      const resolve = createRequire(path.join(root, 'package.json')).resolve;
+      for (const specifier of [value, path.join(root, 'node_modules', value)]) {
+        try { return resolve(specifier); }
+        catch (error) { if (!['MODULE_NOT_FOUND', 'ERR_PACKAGE_PATH_NOT_EXPORTED'].includes(error.code)) throw error; }
+      }
+    }
+    return value; // Preserve the original compiler's missing-config diagnostic.
+  };
+  if (config.extends) config.extends = Array.isArray(config.extends)
+    ? config.extends.map(resolveExtendedConfig) : resolveExtendedConfig(config.extends);
   const parsed = ts.parseJsonConfigFileContent(config, ts.sys, path.dirname(configPath), {}, configPath);
-  const toolingRoot = child(sdkRoot, sdkEngine.toolingRoot);
   const options = {
     target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext,
     moduleResolution: ts.ModuleResolutionKind.Bundler,
@@ -268,10 +283,10 @@ async function copyResources(input, root) {
 function relativeImportTransformer(ts, parsed, input) {
   return context => {
     const rewrite = (specifier, sourceFile) => {
-      if (!ts.isStringLiteral(specifier) || !specifier.text.startsWith('.')) return specifier;
+      if (!ts.isStringLiteral(specifier)) return specifier;
       const resolved = ts.resolveModuleName(specifier.text, sourceFile.fileName, parsed.options, parsed.compilerHost).resolvedModule;
       if (!resolved || !inside(input.sourceRoot, resolved.resolvedFileName) || resolved.resolvedFileName.endsWith('.d.ts')) return specifier;
-      const relative = slash(path.relative(path.dirname(sourceFile.fileName), resolved.resolvedFileName)).replace(/\.(tsx?|jsx?|mts|cts)$/, '.js');
+      const relative = slash(path.relative(path.dirname(sourceFile.fileName), resolved.resolvedFileName)).replace(/\.mts$/, '.mjs').replace(/\.cts$/, '.cjs').replace(/\.(tsx?|jsx?)$/, '.js');
       return ts.factory.createStringLiteral(relative.startsWith('.') ? relative : './' + relative);
     };
     return sourceFile => {
@@ -287,6 +302,112 @@ function relativeImportTransformer(ts, parsed, input) {
       return ts.visitNode(sourceFile, visit);
     };
   };
+}
+
+
+function runtimePackageName(specifier) {
+  if (specifier.startsWith('.') || path.isAbsolute(specifier) || specifier.includes(':') || specifier.startsWith('#')) return null;
+  return specifier.startsWith('@') ? specifier.split('/').slice(0, 2).join('/') : specifier.split('/')[0];
+}
+function runtimeImports(ts, emittedSources) {
+  const packages = new Set();
+  for (const [file, source] of emittedSources) {
+    const ast = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+    const add = literal => {
+      if (literal && ts.isStringLiteralLike(literal)) {
+        const name = runtimePackageName(literal.text);
+        if (name) packages.add(name);
+      }
+    };
+    const visit = node => {
+      if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) add(node.moduleSpecifier);
+      if (ts.isCallExpression(node) &&
+          (node.expression.kind === ts.SyntaxKind.ImportKeyword || ts.isIdentifier(node.expression) && node.expression.text === 'require')) add(node.arguments[0]);
+      ts.forEachChild(node, visit);
+    };
+    visit(ast);
+  }
+  return packages;
+}
+async function installedPackage(name, from, fallback) {
+  for (const start of [from, fallback]) {
+    if (!start) continue;
+    let directory = start;
+    while (true) {
+      const candidate = path.join(directory, 'node_modules', name);
+      if (await optionalJSON(path.join(candidate, 'package.json'))) return fs.realpath(candidate);
+      const parent = path.dirname(directory);
+      if (parent === directory) break;
+      directory = parent;
+    }
+  }
+  return null;
+}
+async function copyNativeScriptDependencies(ts, input, parsed, app, emittedSources) {
+  // The exact shared Core and host-services modules are linked by the original host.
+  const provided = new Set(['@nativescript/core', '@hanlin/host-services']);
+  const names = new Set([...Object.keys(input.pkg.dependencies ?? {}),
+    ...Object.keys(input.pkg.hanlinNativeScript?.plugins ?? {}), ...runtimeImports(ts, emittedSources)]);
+  const locations = new Map();
+  const copied = new Set();
+  const directSources = new Map();
+  const nativePlugins = {};
+  const directVersions = {};
+  const rootModules = path.join(app, 'node_modules');
+  const copy = async (name, source, importer) => {
+    if (provided.has(name)) return;
+    let destination = path.join(rootModules, name);
+    if (importer) {
+      let directory = importer;
+      while (inside(app, directory)) {
+        const candidate = path.join(directory, 'node_modules', name);
+        if (locations.has(candidate)) {
+          if (locations.get(candidate) === source) return;
+          destination = path.join(importer, 'node_modules', name);
+          break;
+        }
+        const parent = path.dirname(directory);
+        if (parent === directory) break;
+        directory = parent;
+      }
+    }
+    if (locations.get(destination) === source && copied.has(destination)) return;
+    if (locations.has(destination) && locations.get(destination) !== source) throw new Error('Runtime dependency version collision at ' + destination);
+    locations.set(destination, source);
+    copied.add(destination);
+    const pkg = await json(path.join(source, 'package.json'));
+    if (!importer) directVersions[name] = pkg.version;
+    if (pkg.nativescript?.platforms?.ios) nativePlugins[name] = pkg.version;
+    await fs.cp(source, destination, {recursive: true, dereference: true, filter: file => {
+      if (file === source) return true;
+      const relative = path.relative(source, file);
+      return !relative.split(path.sep).some(part => ['node_modules', '.git', '.bin'].includes(part)) &&
+        !/\.(?:node|a|o|so|dylib|dll|exe|framework|xcframework)$/.test(file);
+    }});
+    const required = {...pkg.dependencies, ...pkg.peerDependencies};
+    const optional = {...pkg.optionalDependencies};
+    for (const [peer, info] of Object.entries(pkg.peerDependenciesMeta ?? {}))
+      if (info.optional) { optional[peer] = required[peer]; delete required[peer]; }
+    for (const dependency of new Set([...Object.keys(required), ...Object.keys(optional)])) {
+      if (provided.has(dependency)) continue;
+      const resolved = await installedPackage(dependency, source, parsed.toolingRoot);
+      if (!resolved) {
+        if (dependency in optional) continue;
+        throw new Error('Original runtime dependency is not installed: ' + dependency + ' (used by ' + name + ').');
+      }
+      await copy(dependency, resolved, destination);
+    }
+  };
+  // Reserve/copy direct modules first, then each actual installed dependency graph.
+  for (const name of names) {
+    if (provided.has(name)) continue;
+    const source = await installedPackage(name, input.sourceRoot, parsed.toolingRoot);
+    if (!source) throw new Error('Original runtime package is not installed in the project or host SDK: ' + name);
+    directSources.set(name, source);
+    locations.set(path.join(rootModules, name), source);
+  }
+  for (const [name, source] of directSources) await copy(name, source);
+  return {nativePlugins, directVersions};
 }
 
 async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
@@ -307,19 +428,23 @@ async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
   if (diagnostics.some(item => item.category === ts.DiagnosticCategory.Error))
     return diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot));
   const pending = [];
+  const emittedSources = [];
   const emitted = program.emit(undefined, (file, text) => {
     if (!inside(modules, path.resolve(file))) throw new Error('Compiler output leaves the prepared app.');
+    if (/\.[cm]?js$/.test(file)) emittedSources.push([file, text]);
     pending.push(fs.mkdir(path.dirname(file), {recursive: true}).then(() => fs.writeFile(file, text)));
   }, undefined, undefined, {before: [relativeImportTransformer(ts, parsed, input)]});
   await Promise.all(pending);
-  const entry = slash(input.entry).replace(/\.(tsx?|jsx?|mts|cts)$/, '.js');
+  const entry = slash(input.entry).replace(/\.mts$/, '.mjs').replace(/\.cts$/, '.cjs').replace(/\.(tsx?|jsx?)$/, '.js');
   await fs.mkdir(app, {recursive: true});
   await fs.writeFile(path.join(app, 'bundle.mjs'), 'import ' + JSON.stringify('./modules/' + entry) + ';\n');
+  const dependencies = await copyNativeScriptDependencies(ts, input, parsed, app, emittedSources);
   await writeJSON(path.join(app, 'package.json'), {
-    ...input.pkg, main: 'bundle.mjs', type: 'module', hanlinRuntime: 'hanlin-nativescript',
+    ...input.pkg, dependencies: {...input.pkg.dependencies, ...dependencies.directVersions,
+      ...(sdkEngine.packageVersions?.['@nativescript/core'] ? {'@nativescript/core': sdkEngine.packageVersions['@nativescript/core']} : {})}, main: 'bundle.mjs', type: 'module', hanlinRuntime: 'hanlin-nativescript',
     hanlinNativeScript: {...input.pkg.hanlinNativeScript,
       runtimeVersion: sdkEngine.packageVersions?.['@nativescript/ios'] ?? sdkEngine.packageVersions?.['@nativescript/core'],
-      plugins: input.pkg.hanlinNativeScript?.plugins ?? {}},
+      plugins: {...input.pkg.hanlinNativeScript?.plugins, ...dependencies.nativePlugins}},
   });
   await copyResources(input, modules);
   await writeJSON(path.join(stage, 'script.json'), {...input.script,
@@ -328,6 +453,15 @@ async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
 }
 
 async function buildExpo(input, parsed, stage, sdkEngine) {
+  if (sdkEngine.hostContract) {
+    for (const name of Object.keys(input.pkg.hanlinExpo?.plugins ?? {})) {
+      if (!(name in sdkEngine.hostContract.plugins)) throw Object.assign(new Error(
+        'The installed native host does not embed the declared plugin: ' + name), {
+        miniAppCode: 'MINIAPP_NATIVE_PLUGIN_NOT_EMBEDDED', filename: path.join(input.sourceRoot, 'package.json'),
+        remediation: 'Build the host with the original native dependency, then rebuild this project against that host SDK.'
+      });
+    }
+  }
   const requireSDK = createRequire(path.join(parsed.toolingRoot, 'package.json'));
   const metro = requireSDK('metro');
   const {getDefaultConfig, mergeConfig} = requireSDK('@react-native/metro-config');
@@ -349,6 +483,7 @@ async function buildExpo(input, parsed, stage, sdkEngine) {
   // This original Metro version uses its Node filesystem crawler with useWatchman=false.
   // maxWorkers=1 also keeps both compiler worker pools inside the existing Node process.
   config.resolver.unstable_enablePackageExports = true;
+  await fs.mkdir(config.fileMapCacheDirectory, {recursive: true});
   const result = await metro.runBuild(config, {
     entry: input.entryFile, platform: 'ios', dev: false, minify: false,
     sourceMap: true, sourceMapUrl: 'bundle.js.map', assets: true
@@ -364,7 +499,17 @@ async function buildExpo(input, parsed, stage, sdkEngine) {
   await fs.rm(path.join(stage, '.metro-cache'), {recursive: true, force: true});
   await copyResources(input, stage);
   await writeJSON(path.join(stage, 'script.json'), {...input.script, entry: 'bundle.js', runInApp: true, hanlinRuntime: 'hanlin-expo'});
-  await writeJSON(path.join(stage, 'package.json'), {...input.pkg, main: 'bundle.js', hanlinRuntime: 'hanlin-expo'});
+  const contract = sdkEngine.hostContract;
+  const dependencies = Object.fromEntries(Object.entries(input.pkg.dependencies ?? {}).map(([name, version]) =>
+    [name, sdkEngine.packageVersions?.[name] ?? version]));
+  const preparedContract = contract ? {...input.pkg.hanlinExpo,
+    runtimeVersion: contract.runtimeVersion, bridgeVersion: contract.bridgeVersion,
+    plugins: {...input.pkg.hanlinExpo?.plugins, ...contract.plugins},
+    nativeApi: {...input.pkg.hanlinExpo?.nativeApi,
+      contractVersion: contract.nativeApiContractVersion, abiIdentity: contract.nativeApiAbiIdentity}
+  } : input.pkg.hanlinExpo;
+  await writeJSON(path.join(stage, 'package.json'), {...input.pkg, dependencies,
+    main: 'bundle.js', hanlinRuntime: 'hanlin-expo', ...(preparedContract ? {hanlinExpo: preparedContract} : {})});
 }
 
 async function buildScriptWidget(input, parsed, stage) {
@@ -432,9 +577,9 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
     return report;
   } catch (error) {
     const file = error.filename ?? error.loc?.filename;
-    const diagnostic = finding('MINIAPP_AUTHORING_FAILED', error.message,
+    const diagnostic = finding(error.miniAppCode ?? 'MINIAPP_AUTHORING_FAILED', error.message,
       file && input ? slash(path.relative(input.sourceRoot, file)) : file,
-      'Read get_miniapp_sdk for this installed host, repair the source/configuration, then validate again.');
+      error.remediation ?? 'Read get_miniapp_sdk for this installed host, repair the source/configuration, then validate again.');
     const line = error.lineNumber ?? error.loc?.line;
     const column = error.column ?? error.loc?.column;
     if (Number.isInteger(line)) diagnostic.line = line;

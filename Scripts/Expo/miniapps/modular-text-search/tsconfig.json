@@ -7,45 +7,19 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noEmit": true,
-    "skipLibCheck": true,
-    "strict": false,
+    "skipLibCheck": false,
+    "strict": true,
     "target": "ES2022",
     "lib": [
-      "ES2022",
-      "DOM"
+      "ES2023"
     ],
     "types": [
       "react",
       "react-native"
-    ],
-    "paths": {
-      "@hanlin/expo-ui": [
-        "../../../../Packages/HanlinExpoUI/src/index.ts"
-      ],
-      "@hanlin/expo-ui/*": [
-        "../../../../Packages/HanlinExpoUI/src/*"
-      ],
-      "react": [
-        "../../node_modules/@types/react/index.d.ts"
-      ],
-      "react/jsx-runtime": [
-        "../../node_modules/@types/react/jsx-runtime.d.ts"
-      ],
-      "react/jsx-dev-runtime": [
-        "../../node_modules/@types/react/jsx-dev-runtime.d.ts"
-      ],
-      "react-native": [
-        "../../node_modules/react-native/types_generated/index.d.ts"
-      ],
-      "*": [
-        "../../node_modules/*"
-      ]
-    }
+    ]
   },
   "include": [
     "*.ts",
-    "*.tsx",
-    "../../../../Packages/HanlinExpoUI/src/**/*.ts",
-    "../../../../Packages/HanlinExpoUI/src/**/*.tsx"
+    "*.tsx"
   ]
 }

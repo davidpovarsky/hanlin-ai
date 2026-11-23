@@ -171,64 +171,9 @@ public final class HanlinNativeScriptSession {
     }
 
     private func linkSharedRuntimeIfNeeded() throws {
-        guard let sharedRuntime = Self.sharedRuntimeURL else {
-            return
-        }
-        let fm = FileManager.default
-        let items = try fm.contentsOfDirectory(at: sharedRuntime, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles])
-        for sourceURL in items {
-            let itemName = sourceURL.lastPathComponent
-            let targetURL = applicationRoot.appending(path: itemName, directoryHint: .isDirectory)
-            let targetPath = targetURL.path(percentEncoded: false)
-
-            if let dest = try? fm.destinationOfSymbolicLink(atPath: targetPath) {
-                if dest == sourceURL.path(percentEncoded: false) {
-                    createdSymlinks.insert(targetURL)
-                    continue
-                } else {
-                    try? fm.removeItem(at: targetURL)
-                }
-            } else if fm.fileExists(atPath: targetPath) {
-                // Already provided by applicationRoot directly (not a symlink)
-                continue
-            }
-
-            do {
-                try fm.createSymbolicLink(at: targetURL, withDestinationURL: sourceURL)
-                createdSymlinks.insert(targetURL)
-            } catch {
-                #if os(Windows)
-                try? fm.copyItem(at: sourceURL, to: targetURL)
-                createdSymlinks.insert(targetURL)
-                #else
-                throw error
-                #endif
-            }
-        }
-
-        let nodeModulesURL = applicationRoot.appending(path: "node_modules", directoryHint: .isDirectory)
-        let nodeModulesPath = nodeModulesURL.path(percentEncoded: false)
-        if let dest = try? fm.destinationOfSymbolicLink(atPath: nodeModulesPath) {
-            if dest == sharedRuntime.path(percentEncoded: false) {
-                createdSymlinks.insert(nodeModulesURL)
-            } else {
-                try? fm.removeItem(at: nodeModulesURL)
-                try? fm.createSymbolicLink(at: nodeModulesURL, withDestinationURL: sharedRuntime)
-                createdSymlinks.insert(nodeModulesURL)
-            }
-        } else if !fm.fileExists(atPath: nodeModulesPath) {
-            do {
-                try fm.createSymbolicLink(at: nodeModulesURL, withDestinationURL: sharedRuntime)
-                createdSymlinks.insert(nodeModulesURL)
-            } catch {
-                #if os(Windows)
-                try? fm.copyItem(at: sharedRuntime, to: nodeModulesURL)
-                createdSymlinks.insert(nodeModulesURL)
-                #else
-                throw error
-                #endif
-            }
-        }
+        guard let sharedRuntime = Self.sharedRuntimeURL else { return }
+        createdSymlinks.formUnion(try HanlinNativeScriptSharedModuleLinks.prepare(
+            sharedRuntime: sharedRuntime, applicationRoot: applicationRoot))
     }
 
     private func unlinkSharedRuntime() {

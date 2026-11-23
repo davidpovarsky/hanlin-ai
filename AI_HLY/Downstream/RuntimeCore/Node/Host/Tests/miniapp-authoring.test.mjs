@@ -209,3 +209,18 @@ test('compiler-used sources named build or dist survive source retention and arc
   const checked = await f.run('validate', {projectRoot: report.preparedPackagePath});
   assert.equal(checked.succeeded, true, JSON.stringify(checked));
 });
+
+
+test('NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import', async t => {
+  const f = await fixture(t);
+  await fs.writeFile(path.join(f.project, 'package.json'), JSON.stringify({name: 'original-module-test', dependencies: {typescript: ts.version}}));
+  await fs.writeFile(f.entry, 'import original from "typescript";\nexport const actualVersion: string = original.version;\n');
+  const report = await f.run('build');
+  assert.equal(report.succeeded, true, JSON.stringify(report));
+  const app = path.join(report.preparedPackagePath, 'nativescript/app');
+  const copied = await fs.readFile(path.join(app, 'node_modules/typescript/lib/typescript.js'));
+  assert.deepEqual(copied, await fs.readFile(path.join(compilerPackage, 'lib/typescript.js')));
+  const module = await import(pathToFileURL(path.join(app, 'modules/index.js')).href);
+  assert.equal(module.actualVersion, ts.version);
+  await assert.rejects(fs.stat(path.join(app, 'node_modules/@nativescript/core')), {code: 'ENOENT'});
+});
