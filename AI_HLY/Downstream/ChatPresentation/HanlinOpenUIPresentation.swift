@@ -17,8 +17,13 @@ final class HanlinAppRichPresentation {
     @ObservationIgnored private var pendingError: String?
     private(set) var error: String?
 
+    private func appID(for conversation: ChatRecords) -> String {
+        guard let container = conversation.modelContext?.container else { return "hanlin" }
+        return HanlinApplicationContextRegistry.configuration(for: container).appIdentifier
+    }
+
     func profile(for conversation: ChatRecords, conversationID: UUID) throws -> ResolvedPresentationProfile {
-        if descriptor == nil { descriptor = try OpenUICatalogs.host(appID: "hanlin", capabilities: ["original-host-actions"]) }
+        if descriptor == nil { descriptor = try OpenUICatalogs.host(appID: appID(for: conversation), capabilities: ["original-host-actions"]) }
         guard let descriptor else { throw PresentationResolutionError.profileUnavailable }
         let assignment = try conversation.presentationAssignmentData.map { try JSONDecoder().decode(ConversationPresentationAssignment.self, from: $0) }
         return try ProfileResolver.resolve(host: descriptor, conversationID: conversationID, assignment: assignment)
@@ -27,7 +32,7 @@ final class HanlinAppRichPresentation {
     func select(_ profileID: String, conversation: ChatRecords, conversationID: UUID, context: ModelContext, temporary: Bool) {
         do {
             let assignment = ConversationPresentationAssignment(conversationID: conversationID, profile: .init(profileID))
-            if descriptor == nil { descriptor = try OpenUICatalogs.host(appID: "hanlin", capabilities: ["original-host-actions"]) }
+            if descriptor == nil { descriptor = try OpenUICatalogs.host(appID: appID(for: conversation), capabilities: ["original-host-actions"]) }
             if let descriptor { _ = try ProfileResolver.resolve(host: descriptor, conversationID: conversationID, assignment: assignment) }
             conversation.presentationAssignmentData = try JSONEncoder().encode(assignment)
             if !temporary { try context.save() }
@@ -38,7 +43,7 @@ final class HanlinAppRichPresentation {
 
     func state(for message: ChatMessages, conversation: ChatRecords, conversationID: UUID,
                context: ModelContext, temporary: Bool) -> MessageOpenUIStateStore? {
-        let identity = PresentationMessageIdentity(appID: "hanlin", conversationID: conversationID, messageID: message.id)
+        let identity = PresentationMessageIdentity(appID: appID(for: conversation), conversationID: conversationID, messageID: message.id)
         if let cached = stores[identity] { return cached }
         do {
             let snapshot: MessagePresentationSnapshot

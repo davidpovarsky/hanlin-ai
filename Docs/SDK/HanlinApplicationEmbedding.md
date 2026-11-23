@@ -160,3 +160,64 @@ acceptance must be checked on the integrated package. A Linux syntax parse is
 not evidence of SwiftUI rendering, Keychain entitlement or native-runtime
 linkage. The focused embedding tests exercise actual credential lookup
 isolation and immutable native runtime/container ownership.
+
+## Use the complete original engine without mounting UI
+
+`context.conversationController(id)` returns one retained headless controller for
+that conversation. It calls the original `APIManager.sendStreamRequest` and
+`HanlinAppAgentSessionOwner`; its SwiftData projection is the **same source**
+used by the original `ChatView`.
+
+```swift
+let controller = try context.conversationController(conversationID)
+let request = HanlinConversationRequest(
+    text: "Help me plan this task",
+    modelRecordID: selectedModel.id,
+    tools: true
+)
+for try await update in try controller.send(request) {
+    switch update {
+    case .agentEvent(let event):
+        // The original correlated HanlinAgentEvent, including structured parts.
+        consumeOriginalAgentEvent(event)
+    case .message(let message):
+        renderMessageSnapshot(message)
+    case .approval(let approval):
+        showOriginalConsent(approval)
+    case .state(let state):
+        updateRunState(state)
+    }
+}
+```
+
+The example callback functions are host-owned UI functions.
+`context.models()` supplies stable model record UUIDs. Both the original chat UI
+and this controller dispatch by that selected record, so identical model names
+from different configured providers cannot silently select the wrong provider.
+
+`HanlinConversationRequest` exposes the existing image/document inputs, URLs,
+prompt cards, search, knowledge, tool use, reasoning, audio, planning,
+generation limits, system message and image-generation options. Its optional
+interaction value is still validated by the original session; constructing a
+value never grants action authority.
+
+The controller's observable `state`, `messages`, `pendingApproval`,
+`operationalState` and `operationalDescription` can drive a host layout.
+Snapshots retain the original resource/calendar/health/code/audio DTOs,
+NativeUIBlocks and AgentRun JSON, image representation and rich-presentation
+snapshot. The original canonical agent events remain available in the stream.
+Call `answerApproval(id:allowed:)` for the actual pending request or `stop()`
+to cancel. Cancellation of the consuming task also cancels its admitted run.
+Consent uses the original remembered/one-use behavior and original deadlines.
+
+Use one send owner per conversation: the original mounted ChatView or the
+headless controller. The two entry points share a per-container/conversation
+run lease and reject overlap before inserting request rows. Cancellation or a
+late cleanup from an older run cannot revoke the next run's lease. Independent
+headless-only hosts do not mount an invisible SwiftUI view.
+
+The shared stream projection preserves the original coalescing, reasoning,
+tool activity, sources, calendar and other rich results, split markers,
+completion and interruption behavior. Error projection is now saved together
+with the failed run status; previously ChatView saved immediately before
+changing the row to its visible error text.

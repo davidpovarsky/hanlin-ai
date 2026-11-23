@@ -41,6 +41,7 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var inlineToolTasks: [UUID: Task<String, Error>] = [:]
     @ObservationIgnored private var inlineToolRowID: UUID?
     @ObservationIgnored var onApprovalEvent: ((UUID?, AgentToolApproval) -> Void)?
+    @ObservationIgnored var onAgentEvent: ((HanlinAgentEvent) -> Void)?
 
     var pendingApprovalRowID: UUID? {
         consent.pending == nil ? nil : inlineToolRowID ?? activeReference?.messageID
@@ -447,6 +448,7 @@ final class HanlinAppAgentSessionOwner {
             guard part.messageID == binding.reference.messageID else { throw HanlinHostError.resultMismatch }
         }
         try presentation?.receive(event, binding: binding)
+        onAgentEvent?(event)
     }
 
     /// This is a receipt query for the event just consumed, never a current-selection

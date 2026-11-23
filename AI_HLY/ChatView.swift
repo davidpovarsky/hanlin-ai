@@ -136,6 +136,7 @@ struct ChatView: View {
     }
     #endif
     @State private var activeAgentCoordinator: AgentRunCoordinator?
+    @State private var activeTurnProjection: HanlinConversationStreamProjection?
     @State private var agentRunReadCache = HanlinAgentRunReadCache()
     @State private var activeAgentRun: AgentRun?
     @State private var activeAgentMessage: ChatMessages?
@@ -1745,6 +1746,7 @@ struct ChatView: View {
         guard !agentSessionOwner.inlineToolIsRunning else { return }
         guard modelTemp.indices.contains(selectedModelIndex) else { return }
         let requestModelName = modelTemp[selectedModelIndex].name ?? "Unknown"
+        let requestModelID = modelTemp[selectedModelIndex].id
         let requestModelCompany = modelTemp[selectedModelIndex].company
         let requestCapabilities = (
             search: modelTemp[selectedModelIndex].supportsSearch,
@@ -1764,10 +1766,14 @@ struct ChatView: View {
         nativeInteraction = richInteraction
         #endif
         if nativeInteraction != nil { isRetry = false; isObserving = false; retryMessagesOverride = nil }
+
+        let turnLease: HanlinConversationRunLease
+        do {
+            turnLease = try .acquire(container: context.container, conversationID: effectiveChatSessionID)
+        } catch { return }
         
         isFeedBack.toggle()
         var userMessage: ChatMessages?
-        var isSearch: Bool = false
         showPhotoSourceOptions = false
         operationalState = ""
         operationalDescription = ""
@@ -1819,25 +1825,9 @@ struct ChatView: View {
         autoFollowController.beginRun()
         
         // 传输数据准备
-        var maxMessage = maxMessagesNum
-        if maxMessage < 0 {
-            maxMessage = 999
-        }
         let requestHistory = retryMessagesOverride ?? chatTemps
-        let messagesToSend = requestHistory.suffix(maxMessage).map { chat in
-            RequestMessage(
-                role: chat.role ?? "system",
-                text: chat.text ?? "",
-                images: chat.imageArray.isEmpty ? nil : chat.imageArray,
-                imageText: chat.images_text ?? "",
-                document: (chat.documentURLs?.isEmpty == false) ? chat.documentURLs : nil,
-                documentText: chat.document_text ?? "",
-                htmlContent: chat.htmlContent ?? "",
-                prompt: chat.promptUse,
-                modelName: chat.modelName ?? "Unknown",
-                modelDisplayName: chat.modelDisplayName ?? "Unknown"
-            )
-        }
+        let messagesToSend = HanlinConversationStreamProjection.requestMessages(
+            from: requestHistory, limit: maxMessagesNum)
         
         let thisGroupID = UUID()
         // 创建助手消息占位符，并保存引用以便后续高效更新
@@ -1854,15 +1844,12 @@ struct ChatView: View {
             record: chatRecord
         )
         chatTemps.append(assistantPlaceholder)
-        var assistantMessage = assistantPlaceholder  // 保存引用，避免反复查找
         let groupBeginMessage = assistantPlaceholder
-        var searchMessage: ChatMessages? = nil
         let agentCoordinator = AgentRunCoordinator(
             groupID: thisGroupID,
             providerID: requestModelCompany,
             modelID: requestModelName
         )
-        var agentProjection = ClassicChatAgentProjection(runID: agentCoordinator.runID)
         groupBeginMessage.agentRun = agentCoordinator.run
                     #if HANLIN_A2UI_POC
                     a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
@@ -1891,15 +1878,13 @@ struct ChatView: View {
         _ = richPresentation.state(for: assistantPlaceholder, conversation: chatRecord, conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord)
         self.apiManager = requestAPIManager
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        
-        var reasoningStart: Date? = nil
-        var reasoningEnd: Date?   = nil
-        var reasoningTotal: Double? = nil
-        
+        let turnProjection = HanlinConversationStreamProjection(record: chatRecord, context: context,
+            messages: chatTemps, assistant: assistantPlaceholder, coordinator: agentCoordinator, lease: turnLease)
+        activeTurnProjection = turnProjection
+
         Task {
+            defer { turnLease.release() }
             do {
-                var eventAdapter = HanlinStreamEventAdapter(runID: agentCoordinator.runID)
                 let assistantToolScope = await MCPRuntimeProvider.shared.requestScope(
                     chatID: effectiveChatSessionID,
                     temporary: TemporaryRecord
@@ -1913,6 +1898,7 @@ struct ChatView: View {
                 let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await requestAPIManager.sendStreamRequest(
                     messages: messagesToSend,
                     modelName: requestModelName,
+                    modelRecordID: requestModelID,
                     groupID: thisGroupID,
                     runID: agentCoordinator.runID,
                     ifSearch: requestCapabilities.search && ifSearch,
@@ -1937,281 +1923,23 @@ struct ChatView: View {
                 )
                 
                 // 接受流式数据
-                var warningKinds = Set<String>()
                 let presentationBuffer = HanlinChatStreamBuffer { data in
-                    let rawAgentEvents = eventAdapter.events(from: data)
-                        guard !isCancelled, activeAgentCoordinator === agentCoordinator else { return }
-
-                        let agentEvents = agentProjection.deduplicateEvents(rawAgentEvents)
-                        agentCoordinator.consume(agentEvents)
-                        activeAgentRun = agentCoordinator.run
-                        #if HANLIN_A2UI_POC
-                        a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
-                        #endif
-                        
-                        var updated = false
-                        
-                        // 普通回复文本
-                        if let content = data.content {
-                            #if HANLIN_A2UI_POC
-                            if a2uiPresentation?.hasCanonicalParts(uiRunID: agentCoordinator.runID,
-                                                                  rowID: groupBeginMessage.id) == true {
-                                assistantMessage = groupBeginMessage
-                            }
-                            #endif
-                            assistantMessage.text?.append(content)
-                            if !operationalState.isEmpty { operationalState = "" }
-                            if let start = reasoningStart, let end = reasoningEnd {
-                                let seg = end.timeIntervalSince(start)
-                                reasoningTotal = (reasoningTotal ?? 0) + seg
-                            }
-                            reasoningStart = nil
-                            reasoningEnd   = nil
-                            updated = true
-                        }
-                        
-                        // 推理文本
-                        if let reasoning = data.reasoning {
-                            let now = Date()
-                            if reasoningStart == nil { reasoningStart = now }
-                            reasoningEnd = now
-
-                            // 初始化一下，防止 nil
-                            if groupBeginMessage.reasoning == nil {
-                                groupBeginMessage.reasoning = ""
-                            }
-                            let cleanedReasoning = ClassicChatAgentProjection.stripRawThinkTags(reasoning)
-                            if !cleanedReasoning.isEmpty {
-                                groupBeginMessage.reasoning! += cleanedReasoning
-                            }
-
-                            if !operationalState.isEmpty { operationalState = "" }
-                            updated = true
-                        }
-                        
-                        // 工具文本、资源、NativeUIBlocks 与 AgentRun 同步投影
-                        if agentProjection.applyStreamChunk(
-                            data,
-                            agentRun: agentCoordinator.run,
-                            to: assistantMessage,
-                            operationalState: &operationalState,
-                            operationalDescription: &operationalDescription
-                        ) {
-                            updated = true
-                        }
-                        
-                        // 搜索引擎信息
-                        if let searchEngine = data.searchEngine {
-                            assistantMessage.searchEngine = searchEngine
-                            searchMessage?.searchEngine = searchEngine
-                            updated = true
-                        }
-                        
-                        // 图像内容
-                        if let imageContent = data.image_content, !imageContent.isEmpty {
-                            assistantMessage.imageArray = imageContent
-                            if !operationalState.isEmpty { operationalState = "" }
-                            if let start = reasoningStart, let end = reasoningEnd {
-                                let seg = end.timeIntervalSince(start)
-                                reasoningTotal = (reasoningTotal ?? 0) + seg
-                            }
-                            reasoningStart = nil
-                            reasoningEnd = nil
-                            updated = true
-                        }
-                        
-                        // 图像描述文本
-                        if let imageText = data.image_text, !imageText.isEmpty {
-                            if let index = chatTemps.lastIndex(where: { !$0.imageArray.isEmpty && ($0.images_text?.isEmpty ?? true) }),
-                               index < chatTemps.count {
-                                chatTemps[index].images_text = imageText
-                                updated = true
-                            }
-                        }
-
-                        // 文件内容文本
-                        if let documentText = data.document_text, !documentText.isEmpty {
-                            if let index = chatTemps.lastIndex(where: { $0.documents != nil && ($0.document_text?.isEmpty ?? true) }),
-                               index < chatTemps.count {
-                                chatTemps[index].document_text = documentText
-                                updated = true
-                            }
-                        }
-                        
-                        // 搜索返回文本
-                        if let searchText = data.search_text, !searchText.isEmpty {
-                            let newSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-                            searchMessage = ChatTurnStateOperations.upsertSearchMessage(
-                                existing: searchMessage,
-                                text: newSearchText,
-                                searchEngine: data.searchEngine ?? assistantMessage.searchEngine,
-                                assistantMessage: assistantMessage,
-                                record: chatRecord,
-                                in: &chatTemps
-                            )
-                            isSearch = true
-                            updated = true
-                        }
-                        
-                        // 位置信息
-                        if let locationsInfo = data.locations_info, !locationsInfo.isEmpty {
-                            assistantMessage.locationsInfo = locationsInfo
-                            updated = true
-                        }
-                        
-                        // 路线信息
-                        if let routeInfo = data.route_info, !routeInfo.isEmpty {
-                            assistantMessage.routeInfos = routeInfo
-                            updated = true
-                        }
-                        
-                        // 事件信息
-                        if let eventsInfo = data.events, !eventsInfo.isEmpty {
-                            assistantMessage.events = eventsInfo
-                            updated = true
-                        }
-                        
-                        // 网页信息
-                        if let htmlContent = data.htmlContent, !htmlContent.isEmpty {
-                            assistantMessage.htmlContent = htmlContent
-                            updated = true
-                        }
-                        
-                        // 健康信息
-                        if let healthCard = data.health_info, !healthCard.isEmpty {
-                            assistantMessage.healthData = healthCard
-                            updated = true
-                        }
-                        
-                        // 代码信息
-                        if let codeBlock = data.code_info, !codeBlock.isEmpty {
-                            assistantMessage.codeBlockData = codeBlock
-                            updated = true
-                        }
-                        
-                        // 知识卡片
-                        if let knowledgeCard = data.knowledge_card, !knowledgeCard.isEmpty {
-                            assistantMessage.knowledgeCard = knowledgeCard
-                            updated = true
-                        }
-                        
-                        // 画布信息
-                        if let canvasInfo = data.canvas_info {
-                            do {
-                                // 调用保存接口，将未保存的 canvasInfo 持久化到 chatRecord
-                                _ = try CanvasServices.saveCanvas(
-                                    canvasInfo,
-                                    to: chatRecord,
-                                    in: context
-                                )
-                                assistantMessage.showCanvas = true
-                                updated = true
-                            } catch {
-                                // 保存失败时的处理
-                                print("保存画布失败：\(error)")
-                                // 可根据需要弹 alert 或者设置一个 error 状态供 UI 展示
-                            }
-                        }
-                        
-                        // 语音信息
-                        if let asset = data.audioAsset {
-                            assistantMessage.audioAssets = [asset]
-                            assistantMessage.audioExpanded = true
-                            updated = true
-                        }
-                        
-                        // 更新信息
-                        if updated {
-                            if let start = reasoningStart, let end = reasoningEnd {
-                                let closed = reasoningTotal ?? 0
-                                let openSeg = end.timeIntervalSince(start)
-                                let totalSeconds = closed + openSeg
-                                
-                                let text: String
-                                if currentLanguage.hasPrefix("zh") {
-                                    if totalSeconds < 60 {
-                                        text = String(format: "已思考%.1f秒", totalSeconds)
-                                    } else if totalSeconds < 3600 {
-                                        let minutes = Int(totalSeconds) / 60
-                                        let seconds = totalSeconds - Double(minutes * 60)
-                                        text = String(format: "已思考%d分钟%.1f秒", minutes, seconds)
-                                    } else {
-                                        // 支持小时
-                                        let hours = Int(totalSeconds) / 3600
-                                        let remainder = Int(totalSeconds) % 3600
-                                        let minutes = remainder / 60
-                                        let seconds = Double(remainder % 60)
-                                        text = String(format: "已思考%d小时%d分钟%.1f秒", hours, minutes, seconds)
-                                    }
-                                } else {
-                                    if totalSeconds < 60 {
-                                        text = String(format: "Thought for %.1f sec", totalSeconds)
-                                    } else if totalSeconds < 3600 {
-                                        let minutes = Int(totalSeconds) / 60
-                                        let seconds = totalSeconds - Double(minutes * 60)
-                                        text = String(format: "Thought for %d min %.1f sec", minutes, seconds)
-                                    } else {
-                                        // 支持小时
-                                        let hours = Int(totalSeconds) / 3600
-                                        let remainder = Int(totalSeconds) % 3600
-                                        let minutes = remainder / 60
-                                        let seconds = Double(remainder % 60)
-                                        text = String(format: "Thought for %d hr %d min %.1f sec", hours, minutes, seconds)
-                                    }
-                                }
-                                if text != groupBeginMessage.reasoningTime, !text.isEmpty {
-                                    groupBeginMessage.reasoningTime = text
-                                }
-                            }
-                        }
-                        
-                        if let split = data.splitMarkers {
-                            assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
-                            context.insert(assistantMessage)
-                            // 创建助手消息占位符，并保存引用以便后续高效更新
-                            let newPlaceholder = ChatMessages(
-                                role: "assistant",
-                                text: "",
-                                images: nil,
-                                reasoning: "",
-                                documents: nil,
-                                modelName: split.modelName,
-                                modelDisplayName: split.modelDisplayName,
-                                groupID: split.groupID,
-                                timestamp: Date(),
-                                record: chatRecord
-                            )
-                            chatTemps.append(newPlaceholder)
-                            assistantMessage = newPlaceholder
-                        }
-                        
-                        // 异常提醒
-                        if let error = data.errorInfo, !error.isEmpty, warningKinds.insert(error).inserted {
-                            if error == "length" { assistantMessage.modelFinishReason = "length" }
-                            var errorMessage = ""
-                            if error == "length" {
-                                errorMessage = String(localized: "The answer reached the configured output limit. The partial answer is saved. Choose Continue to keep going.")
-                            } else if error == "sensitive" {
-                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 包含敏感内容！" : "⚠️ Contains sensitive content!"
-                            } else {
-                                errorMessage = error
-                            }
-                            if !errorMessage.isEmpty {
-                                let infoMessage = ChatMessages(
-                                    role: "information",
-                                    text: errorMessage,
-                                    images: [],
-                                    reasoning: "",
-                                    documents: nil,
-                                    modelName: "system",
-                                    modelDisplayName: "system",
-                                    timestamp: Date(),
-                                    record: chatRecord
-                                )
-                                
-                                chatTemps.append(infoMessage)
-                            }
-                        }
+                    guard !isCancelled, activeAgentCoordinator === agentCoordinator else { return }
+                    #if HANLIN_A2UI_POC
+                    let canonical = a2uiPresentation?.hasCanonicalParts(
+                        uiRunID: agentCoordinator.runID, rowID: groupBeginMessage.id) == true
+                    #else
+                    let canonical = false
+                    #endif
+                    turnProjection.messages = chatTemps
+                    turnProjection.consume(data, hasCanonicalParts: canonical)
+                    activeAgentRun = agentCoordinator.run
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
+                    chatTemps = turnProjection.messages
+                    operationalState = turnProjection.operationalState
+                    operationalDescription = turnProjection.operationalDescription
                 }
                 // Deliver pending text before finalization or an error. A cancelled
                 // or replaced run is rejected by the callback's ownership guard.
@@ -2222,178 +1950,61 @@ struct ChatView: View {
                 }
                 presentationBuffer.flush()
 
-                let completionEvents = eventAdapter.completionEvents()
-                // 流结束后的处理必须在主线程执行
                 await MainActor.run {
                     guard activeAgentCoordinator === agentCoordinator else { return }
-                    agentCoordinator.consume(completionEvents)
-                    var completionSeenBlocks = Set<String>()
-                    ClassicChatAgentProjection.syncAgentRunProjection(
-                        agentCoordinator.run,
-                        into: assistantMessage,
-                        seenToolContentBlocks: &completionSeenBlocks
-                    )
                     isObserving = false
                     isResponding = false
                     respondIndex = 0
-                    
-                    // 最终判断：仅当助手消息既没有文本又没有图片或富卡片结果时，视为请求异常
-                    if chatTemps.firstIndex(where: { $0 === assistantMessage }) != nil {
-                        #if HANLIN_A2UI_POC
-                        let hasCanonicalParts = a2uiPresentation?.hasCanonicalParts(uiRunID: agentCoordinator.runID,
-                            rowID: groupBeginMessage.id) == true
-                        if hasCanonicalParts { assistantMessage = groupBeginMessage }
-                        #else
-                        let hasCanonicalParts = false
-                        #endif
-                        var textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                        if !hasCanonicalParts, textContent.isEmpty,
-                           let recoveredAnswer = AgentTranscriptValidation.finalAnswer(in: agentCoordinator.run.transcriptItems)?
-                               .trimmingCharacters(in: .whitespacesAndNewlines),
-                           !recoveredAnswer.isEmpty {
-                            textContent = recoveredAnswer
-                            assistantMessage.text = recoveredAnswer
-                        }
-                        let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                        #if HANLIN_A2UI_POC
-                        let hasA2UIContent = a2uiPresentation?.hasStructuredContent(uiRunID: agentCoordinator.runID,
-                            rowID: groupBeginMessage.id, text: assistantMessage.text ?? "") == true
-                        #else
-                        let hasA2UIContent = false
-                        #endif
-                        if hasCanonicalParts { textContent = assistantMessage.text ?? "" }
-                        let hasRichContent = hasA2UIContent || !assistantMessage.imageArray.isEmpty
-                            || assistantMessage.codeBlockData?.isEmpty == false
-                            || assistantMessage.knowledgeCard?.isEmpty == false
-                            || assistantMessage.htmlContent?.isEmpty == false
-                            || assistantMessage.events?.isEmpty == false
-                            || assistantMessage.healthData?.isEmpty == false
-                            || assistantMessage.locationsInfo?.isEmpty == false
-                            || assistantMessage.routeInfos?.isEmpty == false
-                            || assistantMessage.audioAssets?.isEmpty == false
-                            || assistantMessage.nativeUIBlocks.isEmpty == false
-                            || assistantMessage.showCanvas == true
-                            || agentCoordinator.run.transcriptItems.contains(where: {
-                                $0.kind == .userVisibleToolResult
-                            })
-                        if textContent.isEmpty && reasoningContent.isEmpty && !hasRichContent {
-                            agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
-                            Task { await requestAPIManager.completeAgentDiagnostics(status: "failed") }
-                            groupBeginMessage.agentRun = agentCoordinator.run
                     #if HANLIN_A2UI_POC
-                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    let canonical = a2uiPresentation?.hasCanonicalParts(
+                        uiRunID: agentCoordinator.runID, rowID: groupBeginMessage.id) == true
+                    let structured = a2uiPresentation?.hasStructuredContent(
+                        uiRunID: agentCoordinator.runID, rowID: groupBeginMessage.id,
+                        text: (canonical ? groupBeginMessage : turnProjection.assistantMessage).text ?? "") == true
+                    #else
+                    let canonical = false
+                    let structured = false
                     #endif
-                            operationalState = ""
-                            operationalDescription = ""
-                            assistantMessage.text = currentLanguage.hasPrefix("zh") ? "⚠️ 生成内容为空，请重新尝试！" : "⚠️ Generated content is empty, please try again!"
-                            assistantMessage.role = "error"
-                            assistantMessage.modelName = "system"
-                            assistantMessage.modelDisplayName = "system"
-                            context.insert(groupBeginMessage)
-                            try? context.save()
-                        } else {
-                            agentCoordinator.complete()
-                            Task { await requestAPIManager.completeAgentDiagnostics(status: "completed") }
-                            groupBeginMessage.agentRun = agentCoordinator.run
-                    #if HANLIN_A2UI_POC
-                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
-                    #endif
-                            
-                            // 一切正常，进行数据库保存操作
-                            do {
-                                if outPutFeedBackEnabled { isOutPut.toggle() }
-                                operationalState = ""
-                                operationalDescription = ""
-                                // 去除文本两端的换行符
-                                assistantMessage.text = textContent
-                                assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
-                                
-                                // 写入搜索消息（如果存在）
-                                if isSearch, let searchMessage {
-                                    searchMessage.record = chatRecord
-                                    context.insert(searchMessage)
-                                }
-                                
-                                context.insert(assistantMessage)
-                                
-                                if let outputText = assistantMessage.text?
-                                    .replacingOccurrences(of: "\n", with: " ")
-                                    .trimmingCharacters(in: .whitespacesAndNewlines),
-                                   !outputText.isEmpty {
-                                    let previewText = outputText.prefix(80)
-                                    chatRecord.infoDescription = "\(previewText)"
-                                    chatRecord.lastEdited = assistantMessage.timestamp
-                                } else if !assistantMessage.imageArray.isEmpty {
-                                    if chatTemps.count >= 2,
-                                       let previousMessage = chatTemps[safe: chatTemps.count - 2] {
-                                        let previewText = previousMessage.text?
-                                            .replacingOccurrences(of: "\n", with: " ")
-                                            .trimmingCharacters(in: .whitespacesAndNewlines)
-                                            .prefix(80) ?? ""
-                                        chatRecord.infoDescription = "[\(String(localized: "Image"))] \(previewText)"
-                                        chatRecord.lastEdited = previousMessage.timestamp
-                                    } else {
-                                        chatRecord.infoDescription = "[\(String(localized: "Image"))]"
-                                        chatRecord.lastEdited = assistantMessage.timestamp
-                                    }
-                                }
-                                
-                                try context.save()
-                                
-                            } catch {
-                                let syncErrorText: String
-                                if currentLanguage.hasPrefix("zh") {
-                                    syncErrorText = "⚠️ 数据同步失败: \(error.localizedDescription)，本轮问答不会被同步。"
-                                } else {
-                                    syncErrorText = "⚠️ Data synchronization failed: \(error.localizedDescription). This round of Q&A will not be synchronized."
-                                }
-                                let errorMessageShow = ChatMessages(
-                                    role: "information",
-                                    text: syncErrorText,
-                                    modelDisplayName: "system",
-                                    timestamp: Date(),
-                                    record: chatRecord
-                                )
-                                chatTemps.append(errorMessageShow)
-                                operationalState = ""
-                                operationalDescription = ""
-                            }
-                        }
+                    do {
+                        turnProjection.messages = chatTemps
+                        try turnProjection.finish(hasCanonicalParts: canonical, hasStructuredContent: structured)
+                        if turnProjection.completionStatus == "completed", outPutFeedBackEnabled { isOutPut.toggle() }
+                    } catch {
+                        turnProjection.appendPersistenceError(error)
                     }
+                    Task { await requestAPIManager.completeAgentDiagnostics(status: turnProjection.completionStatus) }
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
+                    chatTemps = turnProjection.messages
+                    operationalState = turnProjection.operationalState
+                    operationalDescription = turnProjection.operationalDescription
                     activeAgentRun = agentCoordinator.run
                     autoFollowController.runEnded()
                     activeAgentCoordinator = nil
                     activeAgentMessage = nil
+                    activeTurnProjection = nil
                 }
                 
             } catch {
                 // 响应异常处理
                 await MainActor.run {
                     guard activeAgentCoordinator === agentCoordinator else { return }
-                    agentCoordinator.fail(error)
+                    turnProjection.fail(error)
                     Task { await requestAPIManager.completeAgentDiagnostics(status: "failed", error: error) }
-                    groupBeginMessage.agentRun = agentCoordinator.run
                     #if HANLIN_A2UI_POC
                     a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
                     #endif
-                    context.insert(groupBeginMessage)
-                    try? context.save()
+                    chatTemps = turnProjection.messages
+                    operationalState = turnProjection.operationalState
+                    operationalDescription = turnProjection.operationalDescription
                     activeAgentRun = agentCoordinator.run
                     autoFollowController.runEnded()
                     activeAgentCoordinator = nil
                     activeAgentMessage = nil
-                    if let index = chatTemps.lastIndex(where: { $0.role == "assistant" }),
-                       index < chatTemps.count {
-                        operationalState = ""
-                        operationalDescription = ""
-                        let responseErrorText = "⚠️ " + String(
-                            format: String(localized: "Response error: %@"), error.localizedDescription)
-                        chatTemps[index].text = responseErrorText
-                        chatTemps[index].role = "error"
-                        chatTemps[index].modelDisplayName = "system"
-                        isResponding = false
-                        respondIndex = 0
-                    }
+                    activeTurnProjection = nil
+                    isResponding = false
+                    respondIndex = 0
                 }
             }
         }
@@ -2409,26 +2020,19 @@ struct ChatView: View {
         let cancelledAPIManager = apiManager
         cancelledAPIManager?.cancelCurrentRequest()
         Task { await cancelledAPIManager?.completeAgentDiagnostics(status: "cancelled") }
-        activeAgentCoordinator?.cancel()
-        if let coordinator = activeAgentCoordinator {
-            activeAgentRun = coordinator.run
-            activeAgentMessage?.agentRun = coordinator.run
+        if let projection = activeTurnProjection {
+            projection.messages = chatTemps
+            projection.cancel()
+            chatTemps = projection.messages
+            activeAgentRun = projection.agentCoordinator.run
             #if HANLIN_A2UI_POC
-            a2uiPresentation?.synchronizeTools(coordinator.run, isLive: true)
+            a2uiPresentation?.synchronizeTools(projection.agentCoordinator.run, isLive: true)
             #endif
-            if let activeAgentMessage {
-                let hasText = !(activeAgentMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
-                let hasReasoning = !(activeAgentMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
-                let hasTool = !(activeAgentMessage.toolContent?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
-                let hasImages = !activeAgentMessage.imageArray.isEmpty
-                if !hasText && !hasReasoning && !hasTool && !hasImages {
-                    chatTemps.removeAll(where: { $0 === activeAgentMessage })
-                } else {
-                    context.insert(activeAgentMessage)
-                }
-            }
-            try? context.save()
+        } else {
+            HanlinConversationStreamProjection.appendCancellation(
+                to: &chatTemps, record: chatRecord, context: context)
         }
+        activeTurnProjection = nil
         activeAgentCoordinator = nil
         autoFollowController.runEnded()
         autoFollowController.cancelPendingScroll()
@@ -2439,20 +2043,6 @@ struct ChatView: View {
         respondIndex = 0
         operationalState = ""
         operationalDescription = ""
-        let responseInterruptedText = "🛑 \(String(localized: "Response interrupted"))"
-        
-        let infoMessage = ChatMessages(
-            role: "information",
-            text: responseInterruptedText,
-            modelName: "system",
-            modelDisplayName: "system",
-            timestamp: Date(),
-            record: chatRecord
-        )
-        
-        chatTemps.append(infoMessage)
-        context.insert(infoMessage)
-        
         if isRetry {
             isRetry = false
         }

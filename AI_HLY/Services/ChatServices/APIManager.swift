@@ -3678,6 +3678,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
     // MARK: - 主流式请求入口
     func sendStreamRequest(messages: [RequestMessage],
                            modelName: String,
+                           modelRecordID: UUID? = nil,
                            groupID: UUID,
                            runID: UUID,
                            ifSearch: Bool,
@@ -3722,8 +3723,12 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         let matchingModels = try context.fetch(
             FetchDescriptor<AllModels>(predicate: #Predicate { $0.name == modelName })
         )
-        guard let modelInfo = matchingModels.first else {
+        let selectedModels = modelRecordID.map { id in matchingModels.filter { $0.id == id } } ?? matchingModels
+        guard let modelInfo = selectedModels.first else {
             throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无法获取模型信息"])
+        }
+        if modelRecordID != nil, selectedModels.count != 1 {
+            throw HanlinAISDKError.invalidConversation("The selected original model record is ambiguous.")
         }
         if modelName == HanlinAppleOnDeviceProvider.modelID {
             guard matchingModels.count == 1, HanlinAppleModelCatalogAdapter.isNative(modelInfo) else {
