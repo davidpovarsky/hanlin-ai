@@ -104,7 +104,14 @@ actor MCPChatSelectionStore {
             [MCPChatSelection].self,
             from: Data(contentsOf: fileLayout.chatSelections)
         )
-        return Dictionary(uniqueKeysWithValues: values.map { ($0.chatID, $0) })
+        var selections: [UUID: MCPChatSelection] = [:]
+        for value in values {
+            guard selections.updateValue(value, forKey: value.chatID) == nil else {
+                throw DecodingError.dataCorrupted(.init(codingPath: [],
+                    debugDescription: "The MCP selection store contains duplicate conversation identifiers."))
+            }
+        }
+        return selections
     }
 
     private func save(_ selections: [UUID: MCPChatSelection]) throws {

@@ -1,6 +1,6 @@
 import Foundation
 
-enum MCPServerRuntimeState: String, Codable, Hashable, Sendable {
+public enum MCPServerRuntimeState: String, Codable, Hashable, Sendable {
     case stopped
     case starting
     case running
@@ -8,7 +8,7 @@ enum MCPServerRuntimeState: String, Codable, Hashable, Sendable {
     case failed
 }
 
-enum MCPServerFailureKind: String, Codable, Hashable, Sendable {
+public enum MCPServerFailureKind: String, Codable, Hashable, Sendable {
     case runtimeFailure = "mcp_runtime_start_failed"
     case compatibilityFailure = "mcp_compatibility_failed"
     case missingConfiguration = "mcp_configuration_missing"
@@ -20,18 +20,18 @@ enum MCPServerFailureKind: String, Codable, Hashable, Sendable {
     case nodeHostUnavailable = "mcp_node_host_unavailable"
 }
 
-struct MCPServerFailure: Codable, Hashable, Sendable {
-    var kind: MCPServerFailureKind
-    var message: String
+public struct MCPServerFailure: Codable, Hashable, Sendable {
+    public internal(set) var kind: MCPServerFailureKind
+    public internal(set) var message: String
 }
 
-struct MCPServerStatus: Codable, Hashable, Sendable, Identifiable {
-    var id: UUID
-    var state: MCPServerRuntimeState
-    var toolCount: Int
-    var message: String?
-    var failure: MCPServerFailure? = nil
-    var generation: UInt64 = 0
-    var startedAt: Date? = nil
-    var stoppedAt: Date? = nil
+public struct MCPServerStatus: Codable, Hashable, Sendable, Identifiable {
+    public internal(set) var id: UUID
+    public internal(set) var state: MCPServerRuntimeState
+    public internal(set) var toolCount: Int
+    public internal(set) var message: String?
+    public internal(set) var failure: MCPServerFailure? = nil
+    public internal(set) var generation: UInt64 = 0
+    public internal(set) var startedAt: Date? = nil
+    public internal(set) var stoppedAt: Date? = nil
 }

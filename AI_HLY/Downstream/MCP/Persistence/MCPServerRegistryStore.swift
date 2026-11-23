@@ -88,6 +88,19 @@ actor MCPServerRegistryStore {
         return servers.sorted { $0.id.uuidString < $1.id.uuidString }
     }
 
+    /// Apply original editable fields to the actual current registry row.
+    /// Environment references and installed package identity are never accepted
+    /// from a stale UI/host settings snapshot.
+    func updateSettings(for id: UUID, settings: MCPServerSettings) throws -> [MCPServerDescriptor] {
+        var servers = try load()
+        guard let index = servers.firstIndex(where: { $0.id == id }) else {
+            throw MCPError.serverNotFound
+        }
+        try settings.apply(to: &servers[index])
+        try save(servers)
+        return servers.sorted { $0.id.uuidString < $1.id.uuidString }
+    }
+
     /// Commit only the edited environment, preserving newer descriptor metadata.
     /// The expected environment is checked without suspending this actor.
     func replaceEnvironment(
@@ -204,10 +217,18 @@ actor MCPServerRegistryStore {
             guard document.schemaVersion == MCPServerRegistryDocument.currentSchemaVersion else {
                 throw MCPServerRegistryError.unsupportedSchema(document.schemaVersion)
             }
+            try verifyUniqueServerIDs(document.servers)
             return document
         }
         let legacy = try JSONDecoder.mcp.decode([MCPServerDescriptor].self, from: data)
+        try verifyUniqueServerIDs(legacy)
         return MCPServerRegistryDocument(schemaVersion: 0, generation: 0, servers: legacy)
+    }
+
+    private func verifyUniqueServerIDs(_ servers: [MCPServerDescriptor]) throws {
+        guard Set(servers.map(\.id)).count == servers.count else {
+            throw MCPServerRegistryError.writeVerificationFailed("Duplicate MCP server identifiers.")
+        }
     }
 
     private func repairCopy(_ url: URL, candidate: Candidate, with data: Data) throws {

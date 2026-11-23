@@ -1,18 +1,18 @@
 import Foundation
 
-enum MCPNodeRuntimeState: String, Codable, Hashable, Sendable {
+public enum MCPNodeRuntimeState: String, Codable, Hashable, Sendable {
     case stopped
     case starting
     case running
     case failed
 }
 
-struct MCPRuntimeSnapshot: Codable, Hashable, Sendable {
-    var state: MCPNodeRuntimeState
-    var nodeVersion: String?
-    var protocolVersion: Int?
-    var activeWorkerCount: Int
-    var message: String?
+public struct MCPRuntimeSnapshot: Codable, Hashable, Sendable {
+    public internal(set) var state: MCPNodeRuntimeState
+    public internal(set) var nodeVersion: String?
+    public internal(set) var protocolVersion: Int?
+    public internal(set) var activeWorkerCount: Int
+    public internal(set) var message: String?
 
     static let stopped = MCPRuntimeSnapshot(
         state: .stopped,

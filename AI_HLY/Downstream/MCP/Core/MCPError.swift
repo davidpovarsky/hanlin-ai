@@ -1,6 +1,6 @@
 import Foundation
 
-enum MCPError: LocalizedError, Sendable {
+public enum MCPError: LocalizedError, Sendable {
     case featureDisabled
     case runtimeUnavailable(String)
     case invalidPackageSpec
@@ -15,6 +15,7 @@ enum MCPError: LocalizedError, Sendable {
     case archiveTooLarge
     case unsafeArchivePath
     case secretUnavailable
+    case duplicateEnvironmentName(String)
     case packageRootInvalid
     case packageDirectoryMissing
     case entryPointInvalid
@@ -22,7 +23,7 @@ enum MCPError: LocalizedError, Sendable {
     case registryMigrationFailed(String)
     case runtimeStartFailed(String)
 
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .featureDisabled: "MCP servers are disabled."
         case .runtimeUnavailable(let reason): "The embedded MCP runtime is unavailable: \(reason)"
@@ -38,6 +39,7 @@ enum MCPError: LocalizedError, Sendable {
         case .archiveTooLarge: "The package archive exceeds the allowed size."
         case .unsafeArchivePath: "The archive contains an unsafe path."
         case .secretUnavailable: "A required secret could not be read from Keychain."
+        case .duplicateEnvironmentName(let name): "The MCP environment contains more than one value for \(name)."
         case .packageRootInvalid: "The installed MCP package path is invalid."
         case .packageDirectoryMissing: "The installed MCP package directory is missing."
         case .entryPointInvalid: "The MCP server entry point is invalid."

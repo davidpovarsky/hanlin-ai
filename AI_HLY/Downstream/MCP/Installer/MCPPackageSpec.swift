@@ -1,15 +1,15 @@
 import Foundation
 
-enum MCPPackageSource: Codable, Hashable, Sendable {
+public enum MCPPackageSource: Codable, Hashable, Sendable {
     case npm(name: String, version: String?)
     case remoteArchive(URL)
     case localArchive(URL)
 }
 
-struct MCPPackageSpec: Codable, Hashable, Sendable {
-    var source: MCPPackageSource
+public struct MCPPackageSpec: Codable, Hashable, Sendable {
+    public internal(set) var source: MCPPackageSource
 
-    init(_ rawValue: String) throws {
+    public init(_ rawValue: String) throws {
         let value = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
         if let url = URL(string: value), let scheme = url.scheme?.lowercased() {
             if scheme == "file", url.pathExtension.lowercased() == "tgz" {
@@ -54,7 +54,7 @@ struct MCPPackageSpec: Codable, Hashable, Sendable {
         source = .npm(name: name, version: version)
     }
 
-    init(localArchive: URL) throws {
+    public init(localArchive: URL) throws {
         guard localArchive.pathExtension.lowercased() == "tgz" else {
             throw MCPError.invalidPackageSpec
         }

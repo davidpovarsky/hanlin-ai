@@ -360,7 +360,7 @@ actor MCPRuntimeController {
             let inheritedEnvironment = try await runtimeEnvironment.resolved(
                 scopes: [.shared, .node, .mcpServer(activeServer.id)]
             )
-            let configuration = MCPServerConfiguration.make(
+            let configuration = try MCPServerConfiguration.make(
                 descriptor: activeServer,
                 resolvedPaths: prepared.paths,
                 secrets: secretValues,

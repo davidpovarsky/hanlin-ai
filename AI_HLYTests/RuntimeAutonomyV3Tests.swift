@@ -32,7 +32,7 @@ struct RuntimeAutonomyV3Tests {
         let descriptor = MCPServerDescriptor(id: id, slug: "actual-large-mcp", displayName: "Actual MCP",
             packageName: "actual-large-mcp", resolvedVersion: "1.0.0", entryPoint: entry.path,
             packageRoot: package.path, compatibility: .pendingProbe)
-        let configuration = MCPServerConfiguration.make(descriptor: descriptor, resolvedPaths: .init(
+        let configuration = try MCPServerConfiguration.make(descriptor: descriptor, resolvedPaths: .init(
             packageRoot: package, entryPoint: entry, entryPointRelativePath: "server.mjs", requiredMigration: false))
         let host = try await AppRuntimeCore.shared.node.ensureRunning()
         let transport = EmbeddedNodeMCPTransport(server: configuration, connection: host)

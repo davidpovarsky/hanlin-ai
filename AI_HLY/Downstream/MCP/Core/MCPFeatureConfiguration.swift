@@ -1,8 +1,8 @@
 import Foundation
 
-struct MCPFeatureConfiguration: Codable, Hashable, Sendable {
-    var isEnabled: Bool
-    var debugLoggingEnabled: Bool
+public struct MCPFeatureConfiguration: Codable, Hashable, Sendable {
+    public internal(set) var isEnabled: Bool
+    public internal(set) var debugLoggingEnabled: Bool
 
     static let `default` = MCPFeatureConfiguration(
         isEnabled: false,

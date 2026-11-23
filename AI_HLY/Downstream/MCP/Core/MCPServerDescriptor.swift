@@ -1,45 +1,45 @@
 import Foundation
 
-struct MCPEnvironmentVariable: Codable, Hashable, Sendable, Identifiable {
-    var id: String { name }
-    var name: String
-    var value: String?
-    var secretReference: String?
+public struct MCPEnvironmentVariable: Codable, Hashable, Sendable, Identifiable {
+    public var id: String { name }
+    public internal(set) var name: String
+    public internal(set) var value: String?
+    public internal(set) var secretReference: String?
 
-    var isSecret: Bool { secretReference != nil }
+    public var isSecret: Bool { secretReference != nil }
 }
 
-struct MCPEntryPointOption: Codable, Hashable, Sendable, Identifiable {
-    var id: String { binName ?? entryPoint }
-    var binName: String?
-    var entryPoint: String
+public struct MCPEntryPointOption: Codable, Hashable, Sendable, Identifiable {
+    public var id: String { binName ?? entryPoint }
+    public internal(set) var binName: String?
+    public internal(set) var entryPoint: String
 }
 
-struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
-    var id: UUID
-    var slug: String
-    var displayName: String
-    var packageName: String
-    var requestedVersion: String?
-    var resolvedVersion: String
-    var entryPoint: String
-    var entryPointRelativePath: String?
-    var binName: String?
-    var entryPointOptions: [MCPEntryPointOption]?
-    var arguments: [String]
-    var environment: [MCPEnvironmentVariable]
-    var packageRoot: String
-    var integrity: String?
-    var installedAt: Date
-    var updatedAt: Date
-    var isGloballyEnabled: Bool
-    var isEnabledForNewChats: Bool
-    var autoStart: Bool
-    var compatibility: MCPCompatibilityReport
-    var installedSize: Int64
-    var cachedToolCount: Int
+public struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
+    public internal(set) var id: UUID
+    public internal(set) var slug: String
+    public internal(set) var displayName: String
+    public internal(set) var packageName: String
+    public internal(set) var requestedVersion: String?
+    public internal(set) var resolvedVersion: String
+    public internal(set) var entryPoint: String
+    public internal(set) var entryPointRelativePath: String?
+    public internal(set) var binName: String?
+    public internal(set) var entryPointOptions: [MCPEntryPointOption]?
+    public internal(set) var arguments: [String]
+    public internal(set) var environment: [MCPEnvironmentVariable]
+    public internal(set) var packageRoot: String
+    public internal(set) var integrity: String?
+    public internal(set) var installedAt: Date
+    public internal(set) var updatedAt: Date
+    public internal(set) var isGloballyEnabled: Bool
+    public internal(set) var isEnabledForNewChats: Bool
+    public internal(set) var autoStart: Bool
+    public internal(set) var compatibility: MCPCompatibilityReport
+    public internal(set) var installedSize: Int64
+    public internal(set) var cachedToolCount: Int
 
-    var preloadOnLaunch: Bool {
+    public internal(set) var preloadOnLaunch: Bool {
         get { autoStart }
         set { autoStart = newValue }
     }
@@ -117,7 +117,7 @@ struct MCPServerDescriptor: Codable, Hashable, Sendable, Identifiable {
         case cachedToolCount
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
         // These values identify installed code and must never be fabricated when

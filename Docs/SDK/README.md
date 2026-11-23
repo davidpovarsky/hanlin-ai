@@ -1,6 +1,6 @@
 # Hanlin SDK: one original implementation, selectable products
 
-The repository's root package is **HanlinSDK**. Its generated graph is derived from the original module manifests and source paths. Hanlin's own application and extension executables are thin owners of app identity, entitlements and OS entry points; the shared implementation lives in the SDK. The current complete graph exposes **44 products and 108 targets**, including **503 original application Swift source files** in the preserved `AI_Hanlin` module. The [generated inventory](../../docs/agent-sdk/unified-package-manifest.json) is the authoritative list.
+The repository's root package is **HanlinSDK**. Its generated graph is derived from the original module manifests and source paths. Hanlin's own application and extension executables are thin owners of app identity, entitlements and OS entry points; the shared implementation lives in the SDK. The current complete graph exposes **44 products and 108 targets**, including **505 original application Swift source files** in the preserved `AI_Hanlin` module. The [generated inventory](../../docs/agent-sdk/unified-package-manifest.json) is the authoritative list.
 
 ## Choose what the host needs
 
@@ -19,7 +19,7 @@ The repository's root package is **HanlinSDK**. Its generated graph is derived f
 | Original MiniApps and content packages | `HanlinParityMiniApp`, `HanlinSefariaMiniApp`, `HanlinTextStudioMiniApp`, `HanlinWikipediaMiniApp`, `TorahLibraryKit` | Existing module APIs and original host integrations |
 | Shared skill format, runtime support and product contracts | `HanlinSkillFormat`, `HanlinQuickJS` (module `CQuickJS`), `IOSSystemLite`, `HanlinProductSplit` | Original module manifests and interfaces |
 
-MCP, Skills, provider configuration, search, knowledge, calendars and the other original Hanlin tools are available through the full application engine/context. Hosts that select only the independent agent product supply their actual tool and platform services through the public host contracts. Selecting a component never grants app permissions or silently installs a host's credentials.
+MCP, Skills, provider configuration, search, knowledge, calendars and the other original Hanlin tools are available through the full application engine/context. The [public MCP administration facade](HanlinMCPAdministration20261123.md) also exposes the original catalog, installation, lifecycle, protected environment and conversation selection without mounting UI. Hosts that select only the independent agent product supply their actual tool and platform services through the public host contracts. Selecting a component never grants app permissions or silently installs a host's credentials.
 
 ## Install and update one canonical profile
 

@@ -432,3 +432,12 @@ owner. A second incompatible profile is rejected before it can redirect a live
 Share Inbox or intent. Physical App Group entitlements, OS share-sheet delivery,
 notification delivery and camera permission still require their actual signed
 host/device acceptance; the focused tests do not manufacture that evidence.
+
+## Manage original MCP services without settings UI
+
+HanlinApplicationContext.mcp exposes the original installed server catalog,
+compatibility and runtime status, package preview/install/update/repair,
+lifecycle, protected environment writer and per-conversation selection. It
+returns request-specific results and uses the same original provider as Hanlin's
+settings and chat. See [public MCP administration and selection](HanlinMCPAdministration20261123.md)
+for the actual APIs, cancellation and source/native verification boundary.

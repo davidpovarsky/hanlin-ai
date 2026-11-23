@@ -2,7 +2,7 @@ import Foundation
 import Observation
 import SwiftUI
 
-enum MCPPersistentLoadState: Equatable, Sendable {
+public enum MCPPersistentLoadState: Equatable, Sendable {
     case notLoaded
     case loading
     case loaded
@@ -39,19 +39,25 @@ final class MCPRuntimeProvider {
     private let selectionStore: MCPChatSelectionStore
     // Internal fixture seam only; nil in production, without an extra suspension.
     private let selectionIntentAdmission: (@Sendable () async -> Void)?
+    private let administrationAdmission: (@Sendable () async -> Void)?
     private let configurationStore: MCPFeatureConfigurationStore
     private let secretStore: MCPSecretStore
     private let installService: MCPPackageInstallService
     private var loadTask: Task<Void, Never>?
+    private var activeAdministrationID: UUID?
+    var isPerformingAdministration: Bool { activeAdministrationID != nil }
     private var activeInstallOperationID: UUID?
-    private var cancelledInstallOperationIDs: Set<UUID> = []
+    private var activeInstallationID: UUID?
+    private var installationCancellationRequested = false
+    @ObservationIgnored private var foregroundPreloadID: UUID?
 
     init(
         runtime: NodeRuntimeService? = nil,
         fileLayout: MCPFileLayout = .default,
         runtimeEnvironment: RuntimeEnvironmentStore? = nil,
         selectionStore: MCPChatSelectionStore? = nil,
-        selectionIntentAdmission: (@Sendable () async -> Void)? = nil
+        selectionIntentAdmission: (@Sendable () async -> Void)? = nil,
+        administrationAdmission: (@Sendable () async -> Void)? = nil
     ) {
         let runtime = runtime ?? AppRuntimeCore.shared.node
         let registry = MCPServerRegistryStore(fileLayout: fileLayout)
@@ -60,6 +66,7 @@ final class MCPRuntimeProvider {
         registryStore = registry
         self.selectionStore = selectionStore ?? MCPChatSelectionStore(fileLayout: fileLayout)
         self.selectionIntentAdmission = selectionIntentAdmission
+        self.administrationAdmission = administrationAdmission
         configurationStore = MCPFeatureConfigurationStore(fileLayout: fileLayout)
         secretStore = secrets
         controller = MCPRuntimeController(runtime: runtime, registry: registry, secrets: secrets,
@@ -110,11 +117,25 @@ final class MCPRuntimeProvider {
     }
 
     func setEnabled(_ enabled: Bool) async {
-        guard persistentLoadState == .loaded else { return }
-        configuration.isEnabled = enabled
-        do { try await configurationStore.save(configuration) } catch { lastError = error.localizedDescription }
-        if !enabled { await controller.stopAll() }
-        await refreshSnapshots()
+        do { try await setEnabledReporting(enabled) }
+        catch { lastError = error.localizedDescription }
+    }
+
+    func setEnabledReporting(_ enabled: Bool) async throws {
+        try await configureReporting(enabled: enabled)
+    }
+
+    func configureReporting(enabled: Bool? = nil, debugLogging: Bool? = nil) async throws {
+        try requirePersistentStorage()
+        try await reportOperation {
+            var updated = configuration
+            if let enabled { updated.isEnabled = enabled }
+            if let debugLogging { updated.debugLoggingEnabled = debugLogging }
+            // Publish only after the original store has actually committed.
+            try await configurationStore.save(updated)
+            configuration = updated
+            if !updated.isEnabled { await controller.stopAll() }
+        }
     }
 
     func ensureRuntime() async {
@@ -128,39 +149,109 @@ final class MCPRuntimeProvider {
     }
 
     func start(_ server: MCPServerDescriptor) async {
-        guard configuration.isEnabled, persistentLoadState == .loaded else { return }
-        do { try await controller.start(server); lastError = nil } catch { lastError = error.localizedDescription }
-        await refreshSnapshots()
+        do { try await startReporting(server) }
+        catch { lastError = error.localizedDescription }
+    }
+
+    func startReporting(_ server: MCPServerDescriptor) async throws {
+        try requirePersistentStorage()
+        try await reportOperation {
+            guard configuration.isEnabled else { throw MCPError.featureDisabled }
+            try await controller.start(server)
+        }
     }
 
     func stop(_ server: MCPServerDescriptor) async {
-        await controller.stop(serverID: server.id)
-        await refreshSnapshots()
+        do { try await stopReporting(server) }
+        catch { lastError = error.localizedDescription }
+    }
+
+    func stopReporting(_ server: MCPServerDescriptor) async throws {
+        try requirePersistentStorage()
+        try await reportOperation {
+            await controller.stop(serverID: server.id)
+        }
+        if let status = statuses[server.id], status.state == .failed {
+            throw MCPError.runtimeUnavailable(status.message ?? "The server did not stop.")
+        }
     }
 
     func restart(_ server: MCPServerDescriptor) async {
-        guard persistentLoadState == .loaded else { return }
-        do { try await controller.restart(server); lastError = nil } catch { lastError = error.localizedDescription }
-        await refreshSnapshots()
+        do { try await restartReporting(server) }
+        catch { lastError = error.localizedDescription }
+    }
+
+    func restartReporting(_ server: MCPServerDescriptor) async throws {
+        try requirePersistentStorage()
+        try await reportOperation {
+            guard configuration.isEnabled else { throw MCPError.featureDisabled }
+            try await controller.restart(server)
+        }
     }
 
     func refreshTools(_ server: MCPServerDescriptor) async {
-        guard persistentLoadState == .loaded else { return }
-        do { try await controller.refreshTools(server); lastError = nil } catch { lastError = error.localizedDescription }
-        await refreshSnapshots()
+        do { try await refreshToolsReporting(server) }
+        catch { lastError = error.localizedDescription }
+    }
+
+    func refreshToolsReporting(_ server: MCPServerDescriptor) async throws {
+        try requirePersistentStorage()
+        try await reportOperation {
+            guard configuration.isEnabled else { throw MCPError.featureDisabled }
+            try await controller.refreshTools(server)
+        }
     }
 
     func tools(for server: MCPServerDescriptor) async -> [MCPToolDescriptor] {
-        guard persistentLoadState == .loaded else { return [] }
+        do { return try await toolsReporting(for: server) }
+        catch { lastError = error.localizedDescription; return [] }
+    }
+
+    func toolsReporting(for server: MCPServerDescriptor) async throws -> [MCPToolDescriptor] {
+        try requirePersistentStorage()
+        return try await reportOperation {
+            guard configuration.isEnabled else { throw MCPError.featureDisabled }
+            return try await controller.toolDescriptors(serverIDs: [server.id])
+        }
+    }
+
+    func requirePersistentStorage() throws {
+        guard persistentLoadState == .loaded else {
+            let reason: String
+            if case .failed(let message) = persistentLoadState { reason = message }
+            else { reason = "The store has not finished loading." }
+            throw HanlinApplicationMCPError.storageUnavailable(reason)
+        }
+    }
+
+    private func admitAdministration() throws -> UUID {
+        guard activeAdministrationID == nil else {
+            throw HanlinApplicationMCPError.operationInProgress
+        }
+        let id = UUID()
+        activeAdministrationID = id
+        return id
+    }
+
+    private func finishAdministration(_ id: UUID) {
+        if activeAdministrationID == id { activeAdministrationID = nil }
+    }
+
+    private func reportOperation<Value>(
+        _ operation: @MainActor () async throws -> Value
+    ) async throws -> Value {
+        let operationID = try admitAdministration()
+        defer { finishAdministration(operationID) }
+        if let administrationAdmission { await administrationAdmission() }
         do {
-            let tools = try await controller.toolDescriptors(serverIDs: [server.id])
+            let result = try await operation()
             lastError = nil
             await refreshSnapshots()
-            return tools
+            return result
         } catch {
             lastError = error.localizedDescription
             await refreshSnapshots()
-            return []
+            throw error
         }
     }
 
@@ -233,37 +324,94 @@ final class MCPRuntimeProvider {
     }
 
     func install(spec: MCPPackageSpec, entryPointOverride: String? = nil) async {
-        await performInstall(spec: spec, existing: nil, entryPointOverride: entryPointOverride)
+        _ = await performInstall(spec: spec, existing: nil, entryPointOverride: entryPointOverride)
+    }
+
+    func installReporting(
+        spec: MCPPackageSpec, entryPointOverride: String? = nil
+    ) async throws -> MCPServerDescriptor {
+        try await performInstall(spec: spec, existing: nil, entryPointOverride: entryPointOverride).get()
     }
 
     func replacePackage(_ server: MCPServerDescriptor, latestCompatible: Bool) async {
+        _ = try? await replacePackageReporting(server, latestCompatible: latestCompatible)
+    }
+
+    func replacePackageReporting(
+        _ server: MCPServerDescriptor, latestCompatible: Bool
+    ) async throws -> MCPServerDescriptor {
+        let spec: MCPPackageSpec
         do {
-            let packageSpec = latestCompatible
-                ? server.packageName
-                : "\(server.packageName)@\(server.resolvedVersion)"
-            let spec = try MCPPackageSpec(packageSpec)
-            await performInstall(
-                spec: spec,
-                existing: server,
-                entryPointOverride: server.binName ?? relativeEntryPoint(of: server)
-            )
+            spec = try MCPPackageSpec(latestCompatible
+                ? server.packageName : "\(server.packageName)@\(server.resolvedVersion)")
         } catch {
             installState = .failed(operationID: nil, message: error.localizedDescription, rollbackMessage: nil)
             lastError = error.localizedDescription
+            throw error
         }
+        return try await performInstall(spec: spec, existing: server,
+            entryPointOverride: server.binName ?? relativeEntryPoint(of: server),
+            latestCompatible: latestCompatible).get()
     }
 
     private func performInstall(
         spec: MCPPackageSpec,
         existing: MCPServerDescriptor?,
-        entryPointOverride: String?
-    ) async {
-        guard persistentLoadState == .loaded else { return }
+        entryPointOverride: String?,
+        latestCompatible: Bool? = nil
+    ) async -> Result<MCPServerDescriptor, any Error> {
+        do { try requirePersistentStorage() }
+        catch { return .failure(error) }
+        let administrationID: UUID
+        do { administrationID = try admitAdministration() }
+        catch { return .failure(error) }
+        activeInstallationID = administrationID
+        installationCancellationRequested = false
+        defer {
+            if activeInstallationID == administrationID {
+                activeInstallationID = nil
+                installationCancellationRequested = false
+            }
+            finishAdministration(administrationID)
+        }
+        if let administrationAdmission { await administrationAdmission() }
+        guard !installationCancellationRequested, !Task.isCancelled else {
+            installState = .cancelled
+            activeInstallOperationID = nil
+            return .failure(CancellationError())
+        }
+        var existing = existing
+        var spec = spec
+        var entryPointOverride = entryPointOverride
+        if let requested = existing {
+            do {
+                // A retained original UI descriptor can predate this operation.
+                // Re-read it under the same lease before choosing version,
+                // credentials, arguments or rollback state; never resurrect an
+                // installation already removed by another completed request.
+                let installed = try await registryStore.load()
+                guard let current = installed.first(where: { $0.id == requested.id }) else {
+                    throw MCPError.serverNotFound
+                }
+                existing = current
+                if let latestCompatible {
+                    spec = try MCPPackageSpec(latestCompatible
+                        ? current.packageName : "\(current.packageName)@\(current.resolvedVersion)")
+                }
+                entryPointOverride = current.binName ?? relativeEntryPoint(of: current)
+            } catch {
+                installState = .failed(operationID: nil, message: error.localizedDescription, rollbackMessage: nil)
+                lastError = error.localizedDescription
+                return .failure(error)
+            }
+        }
         installState = .previewing
         let wasRunning = existing.map { statuses[$0.id]?.state == .running } ?? false
         if let existing { await controller.stop(serverID: existing.id) }
         var installation: MCPPackageInstallation?
         do {
+            try Task.checkCancellation()
+            if installationCancellationRequested { throw CancellationError() }
             let defaultArgs: [String]
             let isServerFilesystem: Bool = {
                 if case .npm(let pkgName, _) = spec.source {
@@ -288,6 +436,7 @@ final class MCPRuntimeProvider {
                 arguments: defaultArgs
             ) { progress in
                 await MainActor.run {
+                    guard self.activeInstallationID == administrationID else { return }
                     self.activeInstallOperationID = progress.operationID
                     if let terminalError = progress.terminalError {
                         self.installState = .failed(
@@ -303,6 +452,8 @@ final class MCPRuntimeProvider {
                         )
                     }
                 }
+                await self.cancelInstallationIfRequested(
+                    installationID: administrationID, operationID: progress.operationID)
             }
             if let existing {
                 installed.descriptor.slug = existing.slug
@@ -316,6 +467,8 @@ final class MCPRuntimeProvider {
             }
             installation = installed
             do {
+                try Task.checkCancellation()
+                if installationCancellationRequested { throw CancellationError() }
                 if installed.descriptor.compatibility.requiresConfiguration != true {
                     installState = .installing(
                         operationID: installed.operationID,
@@ -327,7 +480,13 @@ final class MCPRuntimeProvider {
                         reason: .postInstallValidation
                     )
                 }
+                try Task.checkCancellation()
+                if installationCancellationRequested { throw CancellationError() }
                 _ = try await registryStore.upsert(installed.descriptor)
+                try Task.checkCancellation()
+                if installationCancellationRequested { throw CancellationError() }
+                // After this durable commit, late cancellation cannot report that
+                // the actual installed package was rolled back.
                 try await installService.commit(installed)
                 if !wasRunning && !installed.descriptor.preloadOnLaunch {
                     await controller.stop(serverID: installed.descriptor.id)
@@ -339,15 +498,24 @@ final class MCPRuntimeProvider {
             installState = .completed(serverID: installed.descriptor.id)
             activeInstallOperationID = nil
             lastError = nil
+            return .success(installed.descriptor)
         } catch is CancellationError {
-            _ = await recoverFailedInstallation(installation, existing: existing, restart: wasRunning)
-            installState = .cancelled
+            let rollback = await recoverFailedInstallation(installation, existing: existing, restart: wasRunning)
             activeInstallOperationID = nil
+            if let rollback {
+                let message = "The MCP installation was cancelled, but rollback did not complete."
+                installState = .failed(operationID: nil, message: message, rollbackMessage: rollback)
+                lastError = [message, rollback].joined(separator: "\n")
+                return .failure(HanlinApplicationMCPError.installationFailed(
+                    message: message, rollbackMessage: rollback))
+            }
+            installState = .cancelled
+            lastError = nil
+            return .failure(CancellationError())
         } catch {
             let operationID = activeInstallOperationID
             let rollbackMessage = await recoverFailedInstallation(installation, existing: existing, restart: wasRunning)
-            if let operationID = activeInstallOperationID,
-               cancelledInstallOperationIDs.remove(operationID) != nil {
+            if installationCancellationRequested, rollbackMessage == nil {
                 installState = .cancelled
                 lastError = nil
             } else {
@@ -370,6 +538,12 @@ final class MCPRuntimeProvider {
                 }
             }
             activeInstallOperationID = nil
+            if case .cancelled = installState { return .failure(CancellationError()) }
+            if case .failed(_, let message, let rollback) = installState {
+                return .failure(HanlinApplicationMCPError.installationFailed(
+                    message: message, rollbackMessage: rollback))
+            }
+            return .failure(error)
         }
     }
 
@@ -378,24 +552,30 @@ final class MCPRuntimeProvider {
         existing: MCPServerDescriptor?,
         restart: Bool
     ) async -> String? {
-        var rollbackMessage: String?
+        var failures: [String] = []
         if let installation {
             await controller.stop(serverID: installation.descriptor.id)
-            do {
-                try await installService.rollback(installation)
-            } catch {
-                rollbackMessage = error.localizedDescription
-            }
+            do { try await installService.rollback(installation) }
+            catch { failures.append("Package rollback: " + error.localizedDescription) }
         }
         if let existing {
-            _ = try? await registryStore.upsert(existing)
-            if restart { try? await controller.start(existing) }
+            var restored = false
+            do {
+                _ = try await registryStore.upsert(existing)
+                restored = true
+            } catch { failures.append("Registry restoration: " + error.localizedDescription) }
+            if restart, restored {
+                do { try await controller.start(existing) }
+                catch { failures.append("Previous server restart: " + error.localizedDescription) }
+            }
         } else if let installation {
-            _ = try? await registryStore.remove(id: installation.descriptor.id)
+            do { _ = try await registryStore.remove(id: installation.descriptor.id) }
+            catch { failures.append("Registry removal: " + error.localizedDescription) }
         }
-        servers = (try? await registryStore.load()) ?? servers
+        do { servers = try await registryStore.load() }
+        catch { failures.append("Registry readback: " + error.localizedDescription) }
         await refreshSnapshots()
-        return rollbackMessage
+        return failures.isEmpty ? nil : failures.joined(separator: "\n")
     }
 
     private func relativeEntryPoint(of server: MCPServerDescriptor) -> String? {
@@ -410,30 +590,66 @@ final class MCPRuntimeProvider {
     }
 
     func cancelInstall() async {
+        guard let installationID = activeInstallationID else { return }
+        installationCancellationRequested = true
         guard let operationID = activeInstallOperationID else { return }
-        cancelledInstallOperationIDs.insert(operationID)
+        await cancelInstallationIfRequested(installationID: installationID, operationID: operationID)
+    }
+
+    private func cancelInstallationIfRequested(installationID: UUID, operationID: UUID) async {
+        guard activeInstallationID == installationID, installationCancellationRequested else { return }
         await installService.cancel(operationID: operationID)
+        // Completion/new work can interleave with the original cancellation RPC.
+        guard activeInstallationID == installationID else { return }
         installState = .cancelled
     }
 
     func preview(spec: MCPPackageSpec) async throws -> MCPPackageManifestPreview {
-        try await installService.preview(spec)
+        try requirePersistentStorage()
+        return try await reportOperation { try await installService.preview(spec) }
     }
 
     func update(_ server: MCPServerDescriptor) async {
-        guard persistentLoadState == .loaded else { return }
-        do { servers = try await registryStore.upsert(server) }
-        catch { lastError = error.localizedDescription }
+        do {
+            if servers.contains(where: { $0.id == server.id }) {
+                _ = try await updateSettingsReporting(.init(server: server), for: server.id)
+            } else {
+                try requirePersistentStorage()
+                try await reportOperation { servers = try await registryStore.upsert(server) }
+            }
+        } catch { lastError = error.localizedDescription }
+    }
+
+    func updateSettingsReporting(
+        _ settings: MCPServerSettings, for id: UUID
+    ) async throws -> MCPServerDescriptor {
+        try requirePersistentStorage()
+        return try await reportOperation {
+            let committed = try await registryStore.updateSettings(for: id, settings: settings)
+            servers = committed
+            guard let result = committed.first(where: { $0.id == id }) else {
+                throw MCPError.serverNotFound
+            }
+            return result
+        }
     }
 
     func updateEnvironment(_ drafts: [MCPEnvironmentDraft], for server: MCPServerDescriptor) async {
-        guard persistentLoadState == .loaded else { return }
-        do {
-            servers = try await Self.persistEnvironment(
-                drafts, for: server, registryStore: registryStore, secretStore: secretStore
-            )
-        } catch {
-            lastError = error.localizedDescription
+        _ = try? await updateEnvironmentReporting(drafts, for: server)
+    }
+
+    func updateEnvironmentReporting(
+        _ drafts: [MCPEnvironmentDraft], for server: MCPServerDescriptor
+    ) async throws -> MCPServerDescriptor {
+        try requirePersistentStorage()
+        return try await reportOperation {
+            let committed = try await Self.persistEnvironment(
+                drafts, for: server, registryStore: registryStore, secretStore: secretStore)
+            servers = committed
+            guard let result = committed.first(where: { $0.id == server.id }) else {
+                throw MCPError.serverNotFound
+            }
+            return result
         }
     }
 
@@ -445,6 +661,16 @@ final class MCPRuntimeProvider {
         registryStore: MCPServerRegistryStore,
         secretStore: MCPSecretStore
     ) async throws -> [MCPServerDescriptor] {
+        // Validate every original normalized name before staging any Keychain
+        // value. Duplicate names otherwise trap runtime Dictionary construction.
+        var names = Set<String>()
+        for draft in drafts {
+            let name = draft.name.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard name.range(of: "^[A-Za-z_][A-Za-z0-9_]*$", options: .regularExpression) != nil else { continue }
+            guard names.insert(name).inserted else {
+                throw MCPError.duplicateEnvironmentName(name)
+            }
+        }
         var values: [MCPEnvironmentVariable] = []
         var stagedReferences: Set<String> = []
         do {
@@ -488,9 +714,14 @@ final class MCPRuntimeProvider {
     }
 
     func uninstall(_ server: MCPServerDescriptor) async {
-        guard persistentLoadState == .loaded else { return }
-        await controller.forgetInstalledServer(id: server.id)
-        do {
+        do { try await uninstallReporting(server) }
+        catch { lastError = error.localizedDescription }
+    }
+
+    func uninstallReporting(_ server: MCPServerDescriptor) async throws {
+        try requirePersistentStorage()
+        try await reportOperation {
+            await controller.forgetInstalledServer(id: server.id)
             if let connection = try? await nodeRuntime.currentConnection() {
                 _ = try? await connection.data(
                     path: "/v1/servers/\(server.id.uuidString.lowercased())",
@@ -500,11 +731,7 @@ final class MCPRuntimeProvider {
             let mutation = try await selectionStore.removeServer(server.id)
             publishSelectionMutation(mutation)
             servers = try await registryStore.remove(id: server.id)
-            lastError = nil
-        } catch {
-            lastError = error.localizedDescription
         }
-        await refreshSnapshots()
     }
 
     func requestScope(chatID: UUID?, temporary: Bool = false) async -> AssistantToolRequestScope {
@@ -518,7 +745,15 @@ final class MCPRuntimeProvider {
         }
         let ids: Set<UUID>
         if let chatID {
-            ids = await selection(chatID: chatID, temporary: temporary)
+            do {
+                ids = try await readSelection(chatID: chatID, temporary: temporary)
+            } catch {
+                // A damaged selection is not an absent preference. Never admit
+                // default MCP servers after an actual persistent read failure.
+                lastError = error.localizedDescription
+                return AssistantToolRequestScope(chatID: chatID, mcpServerIDs: [],
+                    mcpGloballyEnabled: false, isTemporaryChat: temporary)
+            }
         } else {
             ids = Set(servers.filter(\.isEnabledForNewChats).map(\.id))
         }
@@ -540,9 +775,17 @@ final class MCPRuntimeProvider {
     func handleScenePhase(_ phase: ScenePhase) async {
         switch phase {
         case .active:
+            let preloadID = UUID()
+            foregroundPreloadID = preloadID
             await loadIfNeeded()
-            guard persistentLoadState == .loaded, configuration.isEnabled else { return }
+            guard foregroundPreloadID == preloadID,
+                  persistentLoadState == .loaded, configuration.isEnabled else { return }
+            let administrationID: UUID
+            do { administrationID = try admitAdministration() }
+            catch { return } // Optional preload never supersedes an admitted user operation.
+            defer { finishAdministration(administrationID) }
             for server in servers where server.preloadOnLaunch && server.isGloballyEnabled {
+                guard foregroundPreloadID == preloadID, configuration.isEnabled else { break }
                 do {
                     _ = try await controller.ensureRunning(server, reason: .preload)
                 } catch {
@@ -551,10 +794,12 @@ final class MCPRuntimeProvider {
             }
             await refreshSnapshots()
         case .background:
-            // Backgrounding the UI is not cancellation of the original user
-            // operation. Its OS continuation owns these workers until completion
-            // or expiry; stopping them here breaks in-flight MCP tool requests.
+            // Invalidate pending foreground work even when an existing user
+            // operation legitimately retains its OS background continuation.
+            foregroundPreloadID = nil
             guard !RuntimeBackgroundContinuation.shared.isKeepingUserWorkAlive else { return }
+            // Do not wait for/revoke an administration lease: original controller
+            // stop cancels the currently observed startup and remains responsive.
             await controller.stopAll()
             await refreshSnapshots()
         case .inactive: break
