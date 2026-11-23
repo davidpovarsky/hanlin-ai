@@ -96,3 +96,7 @@ inventory validation and adversarial report fixtures. These are verifier and
 selector controls only. Actual Apple compile, all 32 candidate invocations, the
 12 baseline invocations, and eligible SystemLanguageModel execution remain
 NOT_RUN. No public capability gate changed.
+
+## Actual Apple attempt 2 and current repair
+
+See [the original Apple outcomes and focused recheck plan](apple-45240721804-attempt-2/README.md). The frozen f311 candidate executed5 PASS,7 FAIL,20 NOT_RUN; baseline10 expected failures and2 cloud passes were authenticated, and iOS AgentCore built. The repaired source has not executed. This supersedes the earlier provisional argument-display grammar: actual Swift displays keep embedded quotation marks literal, so complete source-bound display matching is used. No shipping capability was enabled.

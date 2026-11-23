@@ -1,0 +1,20 @@
+[
+  {
+    "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+    "exit_code": 0,
+    "raw_file": "17-BaselineCoreTests-arguments-0.stdout.log",
+    "sha256": "8d6f871b7e974508742402d903c8591a831d59ab1557dfc226505b4390e2fd09"
+  },
+  {
+    "method": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)",
+    "exit_code": 0,
+    "raw_file": "18-BaselineCoreTests-arguments-1.stdout.log",
+    "sha256": "b695a058929fcdd404af6229ac7e8f37c27fd81498910a7e4dd1695fd4f58919"
+  },
+  {
+    "method": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance(_:)",
+    "exit_code": 0,
+    "raw_file": "19-BaselineCoreTests-arguments-2.stdout.log",
+    "sha256": "e33e45dbb07294ea8b332165589c406242d4e3ed319471e999c50da6144e5ad0"
+  }
+]

@@ -1,0 +1,29 @@
+2026-11-23 19:19:32.806 xcodebuild[16585:49648] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:3f638f16b859c9eeef78388579781e5346f89557, name:My Mac }
+{ platform:macOS, arch:x86_64, id:3f638f16b859c9eeef78388579781e5346f89557, name:My Mac }
+{ platform:macOS, arch:arm64, variant:Mac Catalyst, id:3f638f16b859c9eeef78388579781e5346f89557, name:My Mac }
+{ platform:macOS, arch:x86_64, variant:Mac Catalyst, id:3f638f16b859c9eeef78388579781e5346f89557, name:My Mac }
+{ platform:macOS, arch:arm64, variant:DriverKit, id:3f638f16b859c9eeef78388579781e5346f89557, name:My Mac }
+{ platform:macOS, arch:arm64, variant:Designed for [iPad,iPhone], id:3f638f16b859c9eeef78388579781e5346f89557, name:My Mac }
+{ platform:macOS, arch:arm64_32, variant:Designed for [iPad,iPhone], id:3f638f16b859c9eeef78388579781e5346f89557, name:My Mac }
+{ platform:macOS, arch:arm64e.x1, variant:Designed for [iPad,iPhone], id:3f638f16b859c9eeef78388579781e5346f89557, name:My Mac }
+Testing failed:
+	Attribute 'Suite' cannot be applied to this structure because it has been marked '@available(iOS 27.0, macOS 27.0, *)' (from macro 'Suite')
+	Attribute 'Test' cannot be applied to this function because it has been marked '@available(iOS 27.0, macOS 27.0, *)' (from macro 'Test')
+	Attribute 'Test' cannot be applied to this function because it has been marked '@available(iOS 27.0, macOS 27.0, *)' (from macro 'Test')
+	Attribute 'Test' cannot be applied to this function because it has been marked '@available(iOS 27.0, macOS 27.0, *)' (from macro 'Test')
+	Attribute 'Test' cannot be applied to this function because it has been marked '@available(iOS 27.0, macOS 27.0, *)' (from macro 'Test')
+	Attribute 'Test' cannot be applied to this function because it has been marked '@available(iOS 27.0, macOS 27.0, *)' (from macro 'Test')
+	Attribute 'Test' cannot be applied to this function because it has been marked '@available(iOS 27.0, macOS 27.0, *)' (from macro 'Test')
+	Attribute 'Test' cannot be applied to this function because it has been marked '@available(iOS 27.0, macOS 27.0, *)' (from macro 'Test')
+	Testing cancelled because the build failed.
+
+** TEST FAILED **
+
+
+The following build commands failed:
+	SwiftEmitModule normal arm64 Emitting\ module\ for\ HanlinAgentCoreTests (in target 'HanlinAgentCoreTests-product' from project 'HanlinAgentSDK')
+	SwiftCompile normal arm64 (in target 'HanlinAgentCoreTests-product' from project 'HanlinAgentSDK')
+	Testing workspace HanlinAgentSDK with scheme HanlinAgentSDK-Package
+(3 failures)

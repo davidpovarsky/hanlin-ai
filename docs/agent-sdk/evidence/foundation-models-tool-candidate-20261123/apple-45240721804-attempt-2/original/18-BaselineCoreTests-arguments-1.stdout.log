@@ -1,0 +1,179 @@
+{
+  "arguments" : [
+    {
+      "value" : "false"
+    },
+    {
+      "value" : "true"
+    }
+  ],
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "3f638f16b859c9eeef78388579781e5346f89557",
+      "deviceName" : "My Mac",
+      "modelName" : "Virtual Machine",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "duration" : "Average duration 0.18 seconds",
+  "durationInSeconds" : 0.17515504360198975,
+  "functionName" : "nativeInputStaysNormalized(_:)",
+  "hasMediaAttachments" : false,
+  "hasPerformanceMetrics" : false,
+  "testDescription" : "Test case with 2 runs",
+  "testIdentifier" : "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)",
+  "testIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)",
+  "testName" : "nativeInputStaysNormalized(_:)",
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ],
+  "testResult" : "Failed",
+  "testRuns" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : false",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        },
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "details" : "HanlinChatCore.HanlinAISDKToolInputProvenance",
+                      "name" : "0 : .acceptedOriginal",
+                      "nodeType" : "Test Value"
+                    }
+                  ],
+                  "details" : "Swift.Array<HanlinChatCore.HanlinAISDKToolInputProvenance>",
+                  "name" : "result.provenances : 1 element",
+                  "nodeType" : "Test Value"
+                },
+                {
+                  "children" : [
+                    {
+                      "details" : "HanlinChatCore.HanlinAISDKToolInputProvenance",
+                      "name" : "0 : .normalized",
+                      "nodeType" : "Test Value"
+                    }
+                  ],
+                  "details" : "Swift.Array<HanlinChatCore.HanlinAISDKToolInputProvenance>",
+                  "name" : "[.normalized] : 1 element",
+                  "nodeType" : "Test Value"
+                }
+              ],
+              "name" : "Results",
+              "nodeType" : "Expression"
+            },
+            {
+              "name" : "HanlinAppleToolInputBoundaryTests.nativeInputStaysNormalized(_:)",
+              "nodeType" : "Source Code Reference",
+              "sourceLocation" : {
+                "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift",
+                "lineNumber" : 17
+              }
+            }
+          ],
+          "name" : "Expectation failed: result.provenances == [.normalized]\nresult.provenances → [HanlinChatCore.HanlinAISDKToolInputProvenance.acceptedOriginal]\n[.normalized] → [HanlinChatCore.HanlinAISDKToolInputProvenance.normalized]",
+          "nodeType" : "Test Case Run",
+          "result" : "Failed",
+          "sourceLocation" : {
+            "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift",
+            "lineNumber" : 17
+          }
+        }
+      ],
+      "duration" : "0.16s",
+      "durationInSeconds" : 0.1595900058746338,
+      "name" : "false",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+      "nodeType" : "Arguments",
+      "result" : "Failed"
+    },
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : true",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        },
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "details" : "HanlinChatCore.HanlinAISDKToolInputProvenance",
+                      "name" : "0 : .acceptedOriginal",
+                      "nodeType" : "Test Value"
+                    }
+                  ],
+                  "details" : "Swift.Array<HanlinChatCore.HanlinAISDKToolInputProvenance>",
+                  "name" : "result.provenances : 1 element",
+                  "nodeType" : "Test Value"
+                },
+                {
+                  "children" : [
+                    {
+                      "details" : "HanlinChatCore.HanlinAISDKToolInputProvenance",
+                      "name" : "0 : .normalized",
+                      "nodeType" : "Test Value"
+                    }
+                  ],
+                  "details" : "Swift.Array<HanlinChatCore.HanlinAISDKToolInputProvenance>",
+                  "name" : "[.normalized] : 1 element",
+                  "nodeType" : "Test Value"
+                }
+              ],
+              "name" : "Results",
+              "nodeType" : "Expression"
+            },
+            {
+              "name" : "HanlinAppleToolInputBoundaryTests.nativeInputStaysNormalized(_:)",
+              "nodeType" : "Source Code Reference",
+              "sourceLocation" : {
+                "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift",
+                "lineNumber" : 17
+              }
+            }
+          ],
+          "name" : "Expectation failed: result.provenances == [.normalized]\nresult.provenances → [HanlinChatCore.HanlinAISDKToolInputProvenance.acceptedOriginal]\n[.normalized] → [HanlinChatCore.HanlinAISDKToolInputProvenance.normalized]",
+          "nodeType" : "Test Case Run",
+          "result" : "Failed",
+          "sourceLocation" : {
+            "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift",
+            "lineNumber" : 17
+          }
+        }
+      ],
+      "duration" : "0.19s",
+      "durationInSeconds" : 0.1907200813293457,
+      "name" : "true",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "nodeType" : "Arguments",
+      "result" : "Failed"
+    }
+  ]
+}

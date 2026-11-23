@@ -1,0 +1,37 @@
+{
+  "utc": "2026-11-23T19:37:10.569439+00:00",
+  "source": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+  "artifact_receipt": {
+    "run_id": 45240721804,
+    "run_attempt": 2,
+    "source": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+    "utc": "2026-11-23T19:28:18.107341+00:00",
+    "artifact_id": 14853499914,
+    "artifact_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14853499914",
+    "zip_bytes": 228497825,
+    "zip_sha256": "39820954debd7ed83a3b0a38e5b01673c7378f673d2ae5d75510899281ebb05e",
+    "api_digest_verified": true,
+    "api_run_source_verified": true,
+    "zip_crc": "PASS",
+    "acquisition_count": 1
+  },
+  "verified_log_files": 54,
+  "verified_manifests": {
+    "tested-source-sha256.json": 404,
+    "workflow-sha256.json": 6
+  },
+  "actual_locks_verified": 2,
+  "summary_semantic_reproduction": "PASS",
+  "summary_comparison_note": "Round-trip JSON converts Python tuples to arrays; order-insensitive comparison preserves multiplicity of every record/error. No result or field value changed.",
+  "original_process_status": {
+    "preparation_exit": 0,
+    "baseline_core_exit": 65,
+    "core_test_exit": 65,
+    "sdk_test_exit": 65,
+    "ios_build_exit": 0
+  },
+  "original_summary_status": "BLOCKED",
+  "candidate_results": "Under individual original outcome reconciliation",
+  "system_model_generation": "NOT_RUN",
+  "shipping_native_tool_capability": false
+}

@@ -1,0 +1,665 @@
+[
+  {
+    "name": "exact-json-vendor",
+    "argv": [
+      "python3",
+      "Scripts/CI/verify_exact_json_vendor.py"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:08.482771+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:12:08.575362+00:00",
+    "stdout": {
+      "file": "01-exact-json-vendor.stdout.log",
+      "sha256": "2ab9767daf4f656f82e652fcb51033d0cfbac33c380251318e9cae816bf68d2e"
+    },
+    "stderr": {
+      "file": "01-exact-json-vendor.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "baseline-source-fetch",
+    "argv": [
+      "git",
+      "fetch",
+      "--refmap=",
+      "--no-tags",
+      "--depth=1",
+      "origin",
+      "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:08.597499+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:12:09.256429+00:00",
+    "stdout": {
+      "file": "02-baseline-source-fetch.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "file": "02-baseline-source-fetch.stderr.log",
+      "sha256": "dab5015de0079821916259a5a7bf8c5043e8ada81af63224549d28bb453ff3b4"
+    }
+  },
+  {
+    "name": "extract-source",
+    "argv": [
+      "tar",
+      "-xf",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/tested-source.tar",
+      "-C",
+      "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:09.345337+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:12:09.490993+00:00",
+    "stdout": {
+      "file": "03-extract-source.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "file": "03-extract-source.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "select-xcode",
+    "argv": [
+      "python3",
+      "Scripts/CI/select_stable_xcode.py"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:18.646621+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:12:19.759009+00:00",
+    "stdout": {
+      "file": "04-select-xcode.stdout.log",
+      "sha256": "8d652b3e258a63181e163aa5c534b30b06052368fc3d2ccb2dad57211f17302d"
+    },
+    "stderr": {
+      "file": "04-select-xcode.stderr.log",
+      "sha256": "43aa03c0f021d590a4ac56edce3f8ac3754b88842aa24f8302b73e3e47625b70"
+    }
+  },
+  {
+    "name": "xcode",
+    "argv": [
+      "xcodebuild",
+      "-version"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:19.760332+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:12:24.222264+00:00",
+    "stdout": {
+      "file": "05-xcode.stdout.log",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+    },
+    "stderr": {
+      "file": "05-xcode.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "swift",
+    "argv": [
+      "xcrun",
+      "swift",
+      "--version"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:24.224310+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:12:31.119879+00:00",
+    "stdout": {
+      "file": "06-swift.stdout.log",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    "stderr": {
+      "file": "06-swift.stderr.log",
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+    }
+  },
+  {
+    "name": "macos-sdk",
+    "argv": [
+      "xcrun",
+      "--sdk",
+      "macosx",
+      "--show-sdk-version"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:31.125013+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:12:33.095806+00:00",
+    "stdout": {
+      "file": "07-macos-sdk.stdout.log",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    "stderr": {
+      "file": "07-macos-sdk.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "ios-sdk",
+    "argv": [
+      "xcrun",
+      "--sdk",
+      "iphonesimulator",
+      "--show-sdk-version"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:33.097947+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:12:38.033763+00:00",
+    "stdout": {
+      "file": "08-ios-sdk.stdout.log",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    "stderr": {
+      "file": "08-ios-sdk.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "os",
+    "argv": [
+      "sw_vers"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:38.036297+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:12:38.052811+00:00",
+    "stdout": {
+      "file": "09-os.stdout.log",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c"
+    },
+    "stderr": {
+      "file": "09-os.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "sdk-resolve",
+    "argv": [
+      "xcrun",
+      "swift",
+      "package",
+      "--package-path",
+      "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinAgentSDK",
+      "resolve"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:12:38.053478+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:13:01.505945+00:00",
+    "stdout": {
+      "file": "10-sdk-resolve.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "file": "10-sdk-resolve.stderr.log",
+      "sha256": "acf073833cb60bdd82709af200fb371f225efc57c05217c6e8284ffd8899c04a"
+    }
+  },
+  {
+    "name": "core-resolve",
+    "argv": [
+      "xcrun",
+      "swift",
+      "package",
+      "--package-path",
+      "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinPlatform",
+      "resolve"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:13:01.512115+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:13:21.699136+00:00",
+    "stdout": {
+      "file": "11-core-resolve.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "file": "11-core-resolve.stderr.log",
+      "sha256": "1bab33dd8b83f8821513f9a54e4f7169fe9f8755f98aaf8b9bd8e563117b4583"
+    }
+  },
+  {
+    "name": "producer-clean",
+    "argv": [
+      "git",
+      "diff",
+      "--exit-code",
+      "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "--",
+      "Package.swift",
+      "Sources"
+    ],
+    "cwd": "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinAgentSDK/.build/checkouts/swift-ai-sdk",
+    "started_utc": "2026-11-23T19:13:21.720845+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:13:21.745459+00:00",
+    "stdout": {
+      "file": "12-producer-clean.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "file": "12-producer-clean.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "HanlinAgentSDK-schemes",
+    "argv": [
+      "xcodebuild",
+      "-list",
+      "-json"
+    ],
+    "cwd": "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinAgentSDK",
+    "started_utc": "2026-11-23T19:13:21.892981+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:13:52.834013+00:00",
+    "stdout": {
+      "file": "13-HanlinAgentSDK-schemes.stdout.log",
+      "sha256": "cbf09fd020fdcb28960abbb0b2e6c86893770d1cbbce25599d5d4a8128f24955"
+    },
+    "stderr": {
+      "file": "13-HanlinAgentSDK-schemes.stderr.log",
+      "sha256": "ff013a74c0293e5d55298ec805f32b6b9f91860290e6a4dc8e3755c9352c2af2"
+    }
+  },
+  {
+    "name": "HanlinPlatform-schemes",
+    "argv": [
+      "xcodebuild",
+      "-list",
+      "-json"
+    ],
+    "cwd": "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinPlatform",
+    "started_utc": "2026-11-23T19:13:52.838540+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:14:07.735614+00:00",
+    "stdout": {
+      "file": "14-HanlinPlatform-schemes.stdout.log",
+      "sha256": "2db829f1cb61eaf750ba73f8369586e87e86f37f18a52d6192752ccec77f44ff"
+    },
+    "stderr": {
+      "file": "14-HanlinPlatform-schemes.stderr.log",
+      "sha256": "1e1f789aa3d893a3c8e46a62feda6a0bde7510c8c8e8e379eac31c0d3464fd15"
+    }
+  },
+  {
+    "name": "BaselineCoreTests",
+    "argv": [
+      "xcodebuild",
+      "test",
+      "-scheme",
+      "HanlinPlatform-Package",
+      "-destination",
+      "platform=macOS",
+      "-derivedDataPath",
+      "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/MacDerivedData",
+      "-resultBundlePath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/BaselineCoreTests.xcresult",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=NO",
+      "-only-testing:HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests"
+    ],
+    "cwd": "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinPlatform",
+    "started_utc": "2026-11-23T19:14:07.854895+00:00",
+    "exit_code": 65,
+    "finished_utc": "2026-11-23T19:18:26.044949+00:00",
+    "stdout": {
+      "file": "15-BaselineCoreTests.stdout.log",
+      "sha256": "f2213ae8f3a4aa8cc4c6d7567c92abd2d7161afd4031f134f020e4f614e4831d"
+    },
+    "stderr": {
+      "file": "15-BaselineCoreTests.stderr.log",
+      "sha256": "a4457bc3db3c29c29a283233b2938cef16cb3593eb740a8d3186ca6d6562be5e"
+    }
+  },
+  {
+    "name": "BaselineCoreTests-cases",
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/BaselineCoreTests.xcresult",
+      "--format",
+      "json"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:18:26.063309+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:18:33.185499+00:00",
+    "stdout": {
+      "file": "16-BaselineCoreTests-cases.stdout.log",
+      "sha256": "5a1da0ade219ac177d3e664c65939ce03a8c8f5ea817d83fd0e980c180203d84"
+    },
+    "stderr": {
+      "file": "16-BaselineCoreTests-cases.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "BaselineCoreTests-arguments-0",
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "test-details",
+      "--path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/BaselineCoreTests.xcresult",
+      "--test-id",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+      "--format",
+      "json"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:18:33.191774+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:18:33.302043+00:00",
+    "stdout": {
+      "file": "17-BaselineCoreTests-arguments-0.stdout.log",
+      "sha256": "8d6f871b7e974508742402d903c8591a831d59ab1557dfc226505b4390e2fd09"
+    },
+    "stderr": {
+      "file": "17-BaselineCoreTests-arguments-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "BaselineCoreTests-arguments-1",
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "test-details",
+      "--path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/BaselineCoreTests.xcresult",
+      "--test-id",
+      "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)",
+      "--format",
+      "json"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:18:33.304016+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:18:33.373992+00:00",
+    "stdout": {
+      "file": "18-BaselineCoreTests-arguments-1.stdout.log",
+      "sha256": "b695a058929fcdd404af6229ac7e8f37c27fd81498910a7e4dd1695fd4f58919"
+    },
+    "stderr": {
+      "file": "18-BaselineCoreTests-arguments-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "BaselineCoreTests-arguments-2",
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "test-details",
+      "--path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/BaselineCoreTests.xcresult",
+      "--test-id",
+      "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance(_:)",
+      "--format",
+      "json"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:18:33.374820+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:18:33.447880+00:00",
+    "stdout": {
+      "file": "19-BaselineCoreTests-arguments-2.stdout.log",
+      "sha256": "e33e45dbb07294ea8b332165589c406242d4e3ed319471e999c50da6144e5ad0"
+    },
+    "stderr": {
+      "file": "19-BaselineCoreTests-arguments-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "CoreTests",
+    "argv": [
+      "xcodebuild",
+      "test",
+      "-scheme",
+      "HanlinPlatform-Package",
+      "-destination",
+      "platform=macOS",
+      "-derivedDataPath",
+      "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/MacDerivedData",
+      "-resultBundlePath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/CoreTests.xcresult",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=NO",
+      "-only-testing:HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests"
+    ],
+    "cwd": "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinPlatform",
+    "started_utc": "2026-11-23T19:18:33.652699+00:00",
+    "exit_code": 65,
+    "finished_utc": "2026-11-23T19:19:24.149833+00:00",
+    "stdout": {
+      "file": "20-CoreTests.stdout.log",
+      "sha256": "4dd4e25f519059118bb0cc18d22bcf12992fd705751a0bf070973cad38daeec3"
+    },
+    "stderr": {
+      "file": "20-CoreTests.stderr.log",
+      "sha256": "051352a13fcf1e96e247feb27521dc6fefc15f6728f00f22514b820a4d5ca805"
+    }
+  },
+  {
+    "name": "CoreTests-cases",
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/CoreTests.xcresult",
+      "--format",
+      "json"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:19:24.157460+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:19:24.504809+00:00",
+    "stdout": {
+      "file": "21-CoreTests-cases.stdout.log",
+      "sha256": "e5ab426ea3a4835a5618f4868cf0daa84c012929b3df3305ecd77e14c8199245"
+    },
+    "stderr": {
+      "file": "21-CoreTests-cases.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "CoreTests-arguments-0",
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "test-details",
+      "--path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/CoreTests.xcresult",
+      "--test-id",
+      "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+      "--format",
+      "json"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:19:24.507247+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:19:24.647450+00:00",
+    "stdout": {
+      "file": "22-CoreTests-arguments-0.stdout.log",
+      "sha256": "5b0c70c7185e402f433a388bbeb089987e600dbe8bb65108c453133351a0bc4b"
+    },
+    "stderr": {
+      "file": "22-CoreTests-arguments-0.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "CoreTests-arguments-1",
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "test-details",
+      "--path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/CoreTests.xcresult",
+      "--test-id",
+      "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance(_:)",
+      "--format",
+      "json"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:19:24.649154+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:19:24.778965+00:00",
+    "stdout": {
+      "file": "23-CoreTests-arguments-1.stdout.log",
+      "sha256": "db1afb803848c5adbf980172c49ce21af55e48716f63f0b356542997778b3788"
+    },
+    "stderr": {
+      "file": "23-CoreTests-arguments-1.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "CoreTests-arguments-2",
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "test-details",
+      "--path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/CoreTests.xcresult",
+      "--test-id",
+      "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)",
+      "--format",
+      "json"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:19:24.781905+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:19:24.920343+00:00",
+    "stdout": {
+      "file": "24-CoreTests-arguments-2.stdout.log",
+      "sha256": "1f7d0f36de4a94e91f9279f3642895689049bbaf8e65bd350f2ebfb49e03e483"
+    },
+    "stderr": {
+      "file": "24-CoreTests-arguments-2.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "SDKTests",
+    "argv": [
+      "xcodebuild",
+      "test",
+      "-scheme",
+      "HanlinAgentSDK-Package",
+      "-destination",
+      "platform=macOS",
+      "-derivedDataPath",
+      "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/MacDerivedData",
+      "-resultBundlePath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/SDKTests.xcresult",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=NO",
+      "-only-testing:HanlinAgentCoreTests/HanlinAppleToolSchemaTests",
+      "-only-testing:HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests"
+    ],
+    "cwd": "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinAgentSDK",
+    "started_utc": "2026-11-23T19:19:24.921731+00:00",
+    "exit_code": 65,
+    "finished_utc": "2026-11-23T19:21:18.540244+00:00",
+    "stdout": {
+      "file": "25-SDKTests.stdout.log",
+      "sha256": "ffcc213de0f96eee4d53aea62bea7c610eb573747fa76759895632bb0bcce837"
+    },
+    "stderr": {
+      "file": "25-SDKTests.stderr.log",
+      "sha256": "18013db9a2ba1db144036d3707a7be4f4b365e46a4c74a38b95c9be4c0aeba43"
+    }
+  },
+  {
+    "name": "SDKTests-cases",
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/SDKTests.xcresult",
+      "--format",
+      "json"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "started_utc": "2026-11-23T19:21:18.561823+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:21:18.836463+00:00",
+    "stdout": {
+      "file": "26-SDKTests-cases.stdout.log",
+      "sha256": "ecf9d12146fb6fd2e91b0828b301429d6a583beeda8c6e5a58fb6bb0861ad311"
+    },
+    "stderr": {
+      "file": "26-SDKTests-cases.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "name": "IOSBuild",
+    "argv": [
+      "xcodebuild",
+      "build",
+      "-scheme",
+      "HanlinAgentCore",
+      "-destination",
+      "generic/platform=iOS Simulator",
+      "-derivedDataPath",
+      "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/IOSDerivedData",
+      "-resultBundlePath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/IOSBuild.xcresult",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=NO"
+    ],
+    "cwd": "/Users/runner/work/_temp/hanlin-native-tool-candidate.w85dhpu8/Packages/HanlinAgentSDK",
+    "started_utc": "2026-11-23T19:21:18.838516+00:00",
+    "exit_code": 0,
+    "finished_utc": "2026-11-23T19:24:46.911733+00:00",
+    "stdout": {
+      "file": "27-IOSBuild.stdout.log",
+      "sha256": "7a8b83e4370a92b601a5d4be6cdab296d94038b3d3d5b296a9fc28df5b552938"
+    },
+    "stderr": {
+      "file": "27-IOSBuild.stderr.log",
+      "sha256": "4694a2e3154a715239acab8bc5e096e9935731be1d53d62a959754ee1391e2fe"
+    }
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "gh",
+    "api",
+    "--method",
+    "POST",
+    "repos/davidpovarsky/hanlin-ai/actions/jobs/137924304553/rerun"
+  ],
+  "started_utc": "2026-11-23T19:10:44.654097+00:00",
+  "finished_utc": "2026-11-23T19:10:45.622255+00:00",
+  "exit_code": 0,
+  "stdout": "{}",
+  "stderr": "",
+  "run_id": 45240721804,
+  "prior_attempt": 1,
+  "expected_attempt": 2,
+  "source": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+  "scope": "One failed-job rerun; no new workflow dispatch"
+}
