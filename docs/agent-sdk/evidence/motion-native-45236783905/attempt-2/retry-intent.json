@@ -1,0 +1,10 @@
+{
+  "time": "2026-11-23T18:32:23.453356+00:00",
+  "run": 45236783905,
+  "original_job": 137910499834,
+  "source": "0b74c6c1df60926c09a00560598af478bafb3e75",
+  "method": "POST",
+  "endpoint": "repos/davidpovarsky/hanlin-ai/actions/jobs/137910499834/rerun",
+  "reason": "ONE unchanged failed-job continuation after original CoreSimulator readiness blockage was preserved; fresh hosted allocation requested.",
+  "owner": "/root/motion_acceptance"
+}
