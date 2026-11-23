@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -155,6 +156,87 @@ def source_inputs(root: Path) -> dict[str, str]:
 
 def source_commit(root: Path) -> str:
     return subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
+
+
+def pinned_files(root: Path, names: tuple[str, ...], revision: str | None = None) -> tuple[str, dict[str, bytes]]:
+    """Read exact Git blobs without requiring sparse inputs to be checked out."""
+    revision = revision or source_commit(root)
+    if source_commit(root) != revision:
+        raise ValueError("Native preparation input revision changed")
+    changed = subprocess.run(["git", "-C", str(root), "diff", "--quiet", "--no-ext-diff",
+                              revision, "--", *names], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if changed.returncode:
+        raise ValueError("Modified native preparation input: " + ", ".join(names))
+    tree = subprocess.check_output(["git", "-C", str(root), "ls-tree", "-r", "-z", revision, "--", *names])
+    entries = []
+    for entry in tree.split(b"\0"):
+        if not entry:
+            continue
+        metadata, name = entry.split(b"\t", 1)
+        mode, kind, oid = metadata.split()
+        name = str(relative(name.decode("utf-8")))
+        if kind != b"blob" or mode not in (b"100644", b"100755"):
+            raise ValueError("Native preparation input is not a regular Git file: " + name)
+        entries.append((name, oid))
+    raw = subprocess.check_output(["git", "-C", str(root), "cat-file", "--batch"],
+                                  input=b"".join(oid + b"\n" for _, oid in entries))
+    stream = io.BytesIO(raw)
+    files = {}
+    for name, oid in entries:
+        header = stream.readline().split()
+        if len(header) != 3 or header[:2] != [oid, b"blob"] or not header[2].isdigit():
+            raise ValueError("Invalid pinned native preparation input: " + name)
+        length = int(header[2])
+        content = stream.read(length)
+        if len(content) != length or stream.read(1) != b"\n":
+            raise ValueError("Truncated pinned native preparation input: " + name)
+        current = root / name
+        inside(root, current)
+        if current.is_symlink() or (current.exists() and
+                (not current.is_file() or current.read_bytes() != content)):
+            raise ValueError("Modified materialized native preparation input: " + name)
+        files[name] = content
+    if stream.read() or source_commit(root) != revision:
+        raise ValueError("Native preparation input revision or blob inventory changed")
+    return revision, files
+
+
+def verify_source_inputs(catalog: dict, root: Path) -> str:
+    expected = catalog.get("inputSHA256")
+    if (not isinstance(expected, dict) or set(expected) != set(INPUTS)
+            or any(not isinstance(value, str) or not re.fullmatch(r"[a-f0-9]{64}", value)
+                   for value in expected.values())):
+        raise ValueError("Native catalog preparation inputs do not match the complete declared set")
+    revision, files = pinned_files(root, INPUTS)
+    if set(files) != set(INPUTS):
+        raise ValueError("Pinned native preparation input inventory differs")
+    mismatched = [name for name in INPUTS if hashlib.sha256(files[name]).hexdigest() != expected[name]]
+    if mismatched:
+        raise ValueError("Native preparation input differs from published catalog: " + ", ".join(mismatched))
+    return revision
+
+
+def validate_node_support(root: Path, archive: Path, revision: str) -> None:
+    # Reuse the original source/archive policy, including dependency patches and
+    # exact module inventory. Only small tracked sources are materialized; no npm,
+    # native builder, frozen runtime extraction or second archive schema is used.
+    validator = "Scripts/Runtime/runtime_host_archive.py"
+    host = "AI_HLY/Downstream/RuntimeCore/Node/Host"
+    _, files = pinned_files(root, (validator, host), revision)
+    with tempfile.TemporaryDirectory(prefix="hanlin-sdk-source-") as temporary:
+        source = Path(temporary)
+        for name, content in files.items():
+            destination = source / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(content)
+        result = subprocess.run([sys.executable, "-B", str(source / validator), "validate",
+            str(archive.resolve(strict=True)), "--source-root", str(source / host)],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode:
+            raise ValueError("Node Host support differs from pinned source: " +
+                             (result.stderr.strip() or result.stdout.strip()))
+    if source_commit(root) != revision:
+        raise ValueError("Native preparation input revision changed")
 
 
 def support_paths(root: Path, selected: list[str]) -> tuple[dict[str, list[str]], dict | None]:
@@ -430,9 +512,7 @@ def download(item: dict, cache: Path) -> Path:
     return path
 
 
-def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, support: bool) -> None:
-    if catalog["state"] != "published":
-        raise ValueError("Only a published, readback-verified catalog can be installed")
+def selected_records(catalog: dict, targets: list[str] | None, support: bool) -> list[dict]:
     selected = set(targets or [item["target"] for item in catalog["artifacts"]])
     available = {item["target"] for item in catalog["artifacts"]}
     if not selected.issubset(available):
@@ -444,11 +524,33 @@ def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, s
         if not required_groups.issubset(available_groups):
             raise ValueError("Selected host support has not been published")
         records += [item for item in catalog["supportArtifacts"] if item["target"] in required_groups]
+    return records
+
+
+def verify_installed_source(catalog: dict, root: Path, targets: list[str] | None, support: bool) -> dict:
+    if catalog["state"] != "published":
+        raise ValueError("Only a published, readback-verified catalog can be checked")
+    revision = verify_source_inputs(catalog, root)
+    records = selected_records(catalog, targets, support)
+    node = any(item["target"] == "HanlinNodeHostSupport" for item in records)
+    if node:
+        validate_node_support(root, root / "AI_HLY/RuntimeHostResources.zip", revision)
+    return {"sourceCommit": revision, "declaredPreparationInputs": len(INPUTS),
+            "nodeHostSourceValidated": node}
+
+
+def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, support: bool) -> None:
+    if catalog["state"] != "published":
+        raise ValueError("Only a published, readback-verified catalog can be installed")
+    revision = verify_source_inputs(catalog, root)
+    records = selected_records(catalog, targets, support)
     receipt_path = root / ".hanlin-sdk/native-artifacts-installed.json"
     receipt = json.loads(receipt_path.read_text()) if receipt_path.exists() else {"paths": {}}
     for item in records:
         names = [item["installPath"]] if item["kind"] == "xcframework" else item["installPaths"]
         if all(receipt["paths"].get(name) == item["checksum"] and (root / name).exists() for name in names):
+            if item["target"] == "HanlinNodeHostSupport":
+                validate_node_support(root, root / "AI_HLY/RuntimeHostResources.zip", revision)
             continue
         archive = download(item, cache)
         with tempfile.TemporaryDirectory(prefix="hanlin-sdk-install-", dir=root) as temporary:
@@ -456,6 +558,8 @@ def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, s
             extract_verified(archive, item["checksum"], temp, item["root"])
             if item["kind"] == "xcframework":
                 framework_libraries(temp / item["root"], item["target"])
+            if item["target"] == "HanlinNodeHostSupport":
+                validate_node_support(root, temp / item["root"] / "AI_HLY/RuntimeHostResources.zip", revision)
             for name in names:
                 destination = root / name
                 inside(root, destination)
@@ -479,6 +583,8 @@ def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, s
                 receipt["paths"][name] = item["checksum"]
                 # Save each completed replacement so an interrupted install can resume.
                 json_write(receipt_path, receipt)
+    if source_commit(root) != revision:
+        raise ValueError("Native preparation input revision changed")
     receipt["releaseTag"] = catalog["releaseTag"]
     json_write(receipt_path, receipt)
 
@@ -588,12 +694,14 @@ def main() -> None:
         command.add_argument("--assets", type=Path, required=True)
         if name == "publish":
             command.add_argument("--allow-selected-targets", action="store_true")
-    command = commands.add_parser("install", help="Install a published catalog into one pinned local SDK checkout")
-    command.add_argument("--catalog", type=Path, default=ROOT / "docs/native-artifacts.json")
-    command.add_argument("--root", type=Path, default=ROOT)
-    command.add_argument("--cache", type=Path, required=True)
-    command.add_argument("--targets", nargs="+", choices=list(TARGETS))
-    command.add_argument("--without-host-support", action="store_true")
+    for name in ("install", "verify-source"):
+        command = commands.add_parser(name, help="Install or verify published native source in a pinned SDK checkout")
+        command.add_argument("--catalog", type=Path, default=ROOT / "docs/native-artifacts.json")
+        command.add_argument("--root", type=Path, default=ROOT)
+        if name == "install":
+            command.add_argument("--cache", type=Path, required=True)
+        command.add_argument("--targets", nargs="+", choices=list(TARGETS))
+        command.add_argument("--without-host-support", action="store_true")
     command = commands.add_parser("swift-targets", help="Print validated URL/checksum binary-target declarations")
     command.add_argument("--catalog", type=Path, default=ROOT / "docs/native-artifacts.json")
     for name in ("host-python", "host-nativescript"):
@@ -617,6 +725,9 @@ def main() -> None:
         publish(args.catalog, args.assets, args.allow_selected_targets)
     elif args.command == "install":
         install(load_catalog(args.catalog), args.root, args.cache, args.targets, not args.without_host_support)
+    elif args.command == "verify-source":
+        print(json.dumps(verify_installed_source(load_catalog(args.catalog), args.root,
+              args.targets, not args.without_host_support), sort_keys=True))
     elif args.command == "swift-targets":
         catalog = load_catalog(args.catalog)
         if catalog["state"] != "published":

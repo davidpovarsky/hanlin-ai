@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import plistlib
+import shutil
 import stat
 import tempfile
 import unittest
@@ -182,36 +183,25 @@ class NativeArtifactsTests(unittest.TestCase):
     def test_selected_install_does_not_download_unrelated_runtime_or_host_support(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            sdk = root / "sdk"
-            sdk.mkdir()
-            records = []
-            archives = {}
-            for name, member, kind in [
-                ("NodeMobile", "NodeMobile.xcframework/fixture", "xcframework"),
-                ("HanlinNodeHostSupport", "HanlinNodeHostSupport/AI_HLY/RuntimeHostResources.zip", "host-support"),
-            ]:
-                path = root / f"{name}.zip"
-                with zipfile.ZipFile(path, "w") as archive:
-                    archive.writestr(member, b"download-selection-fixture")
-                item = {"target": name, "kind": kind, "checksum": native.digest(path),
-                        "root": "NodeMobile.xcframework" if kind == "xcframework" else name}
-                if kind == "xcframework":
-                    item["installPath"] = native.TARGETS["NodeMobile"]
-                else:
-                    item["installPaths"] = ["AI_HLY/RuntimeHostResources.zip"]
-                records.append(item)
-                archives[name] = path
-            catalog = {"state": "published", "releaseTag": "fixture",
-                       "artifacts": [records[0], {"target": "Python"}],
-                       "supportArtifacts": [records[1], {"target": "HanlinExpoHeaderSupport"}]}
+            spec = importlib.util.spec_from_file_location("native_selection_fixture",
+                Path(__file__).with_name("test_native_provenance.py"))
+            fixture_module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(fixture_module)
+            fixture = fixture_module.NativeSourceFixture(root)
+            sdk = fixture.sdk
+            fixture.catalog["artifacts"].append({"target": "Python"})
+            fixture.catalog["supportArtifacts"].append({"target": "HanlinExpoHeaderSupport"})
+            shutil.rmtree(sdk / "Vendor")
+            fixture.host_archive.unlink()
+            fixture.native_receipt.unlink()
             requested = []
             def get(item, cache):
                 requested.append(item["target"])
-                return archives[item["target"]]
-            # Native slice validation is independently proved against the frozen
-            # real NodeMobile artifact. This fixture tests the actual installer IO.
+                return fixture.archives[item["target"]]
+            # Slice acceptance remains bound to the genuine frozen Node artifact.
+            # The fixture now also carries pinned sources and a valid Host ZIP.
             with patch.object(native, "download", side_effect=get), patch.object(native, "framework_libraries"):
-                native.install(catalog, sdk, root / "cache", ["NodeMobile"], True)
+                native.install(fixture.catalog, sdk, root / "cache", ["NodeMobile"], True)
             self.assertEqual(requested, ["NodeMobile", "HanlinNodeHostSupport"])
             self.assertTrue((sdk / "AI_HLY/RuntimeHostResources.zip").is_file())
             self.assertFalse((sdk / "Vendor/Python").exists())

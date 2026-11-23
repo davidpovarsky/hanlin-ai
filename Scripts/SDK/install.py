@@ -318,6 +318,9 @@ def check(host: Path, lock_path: Path, relative: str) -> dict:
         raise ValueError("SDK installation does not match the host lock and generated profile")
     # Check that managed native installation paths still exist without a download.
     if receipt.get("managedNativeTargets"):
+        run([sys.executable, str(root / "Scripts/SDK/native_artifacts.py"), "verify-source",
+             "--catalog", str(root / "docs/native-artifacts.json"), "--root", str(root),
+             "--targets", *receipt["managedNativeTargets"]], cwd=root)
         catalog = json.loads((root / "docs/native-artifacts.json").read_text())
         native_receipt = json.loads((root / ".hanlin-sdk/native-artifacts-installed.json").read_text())
         selected = set(receipt["managedNativeTargets"])
