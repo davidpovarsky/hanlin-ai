@@ -76,8 +76,19 @@ export async function refreshOriginalSources({root,cache,publications,archives})
     if(entry.repository==='everettjf/scriptwidget') {
       next=await source(raw(entry.repository,commit,entry.upstream),cache);identity={repository:entry.repository,commit,path:entry.upstream};
     } else if(entry.repository==='expo/expo') {
-      const mapping=npmMapping(entry),publication=publications.get(mapping.name),archive=archives.get(mapping.name);
+      let mapping=npmMapping(entry),publication=publications.get(mapping.name),archive=archives.get(mapping.name);
       if(!publication||!archive)throw new Error(`Original source archive missing: ${mapping.name}`);
+      if(!archive.paths.has('package/'+mapping.relative)) {
+        const candidates=[];
+        for(const name of ['@expo/ui','expo-modules-core','expo-widgets'])for(const file of archives.get(name)?.paths??[]) {
+          if(file.startsWith('package/')&&path.basename(file)===path.basename(mapping.relative))candidates.push({name,relative:file.slice('package/'.length)});
+        }
+        if(candidates.length!==1)throw new Error(`Original ${entry.upstream} moved or was removed; expected one current original counterpart, found ${candidates.length}`);
+        const previousPath=entry.upstream;mapping=candidates[0];publication=publications.get(mapping.name);archive=archives.get(mapping.name);
+        const packageDirectory=mapping.name==='@expo/ui'?'expo-ui':mapping.name;
+        entry.upstream='packages/'+packageDirectory+'/'+mapping.relative;
+        entry.relocation={previousUpstream:previousPath,currentUpstream:entry.upstream};
+      }
       next=tarMember(archive.file,mapping.relative);
       identity={package:mapping.name,version:publication.version,tarball:publication.dist.tarball,sha256:archive.sha256,path:mapping.relative};
     } else throw new Error(`Unsupported original repository ${entry.repository}`);

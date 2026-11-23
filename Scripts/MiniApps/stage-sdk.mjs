@@ -59,6 +59,7 @@ export const sdkInputs = [
  'Scripts/Expo/babel.config.cjs','Scripts/Expo/metro.config.cjs','Scripts/Expo/prepare-types.mjs',
  'Scripts/NativeScript/package.json','Scripts/NativeScript/package-lock.json','Scripts/NativeScript/dependency-lock.json',
  'Scripts/ExpoNativeAPI/dependency-lock.json','Tools/SwiftUIBridge/configuration.json',
+ 'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift',
  'docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json','docs/miniapp-sdk/source-inventory.json',
  'docs/miniapp-sdk/extension-reachability.json'
 ];
@@ -99,6 +100,11 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
   const nativeLock=await readJSON(path.join(root,'Scripts/NativeScript/dependency-lock.json'));
   const expoLock=await readJSON(path.join(root,'Scripts/Expo/dependency-lock.json'));
   const nativeAPILock=await readJSON(path.join(root,'Scripts/ExpoNativeAPI/dependency-lock.json'));
+  const bridgeConfiguration=await readJSON(path.join(root,'Tools/SwiftUIBridge/configuration.json'));
+  const nativeAPIContractSource=await readFile(path.join(root,'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift'),'utf8');
+  const nativeApiContractVersion=nativeAPIContractSource.match(/static let contractVersion\s*=\s*"([^"]+)"/)?.[1];
+  if(!nativeApiContractVersion)throw new Error('Actual native API host contract version is missing');
+
   try {
     for(const [engine,folder] of [['expo','Expo'],['nativescript','NativeScript']]) {
       if(!requestedEngines.includes(engine))continue;
@@ -139,6 +145,11 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       engines[engine]={toolingRoot:engine,tsconfigPath:engine+'/tsconfig.json',
         typescriptPath:engine+'/node_modules/typescript/lib/typescript.js',
         packageVersions:graph.versions,
+        ...(engine==='expo'?{hostContract:{runtimeVersion:expoLock.expo.uiVersion,expoSDKVersion:expoLock.expo.sdkVersion,
+          bridgeVersion:bridgeConfiguration.bridgeVersion,nativeApiContractVersion,
+          nativeApiAbiIdentity:`rn${expoLock.expo.reactNativeVersion}-hermes${expoLock.expo.hermesVersion}`,
+          plugins:{'@expo/ui':expoLock.expo.uiVersion,'@hanlin/expo-ui':bridgeConfiguration.bridgeVersion,
+            '@nativescript/react-native':nativeAPILock.nativeApi.version,'react-native-worklets':nativeAPILock.worklets.version}}}:{}),
         typeCheckingPolicy:{strictSource:true,checkOriginalDeclarationBodies:engine==='expo',
           explanation:engine==='expo'?'Original declarations and source are checked.':'Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.'},
         docs:engine==='expo'?['docs/hanlin-expo-runtime.md','docs/miniapp-sdk/README.md']:['docs/hanlin-nativescript-guide.md','docs/miniapp-sdk/README.md'],

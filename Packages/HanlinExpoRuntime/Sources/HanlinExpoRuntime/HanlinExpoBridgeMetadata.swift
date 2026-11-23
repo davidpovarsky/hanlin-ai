@@ -2,13 +2,13 @@ import Foundation
 import HanlinPlatformContracts
 
 public enum HanlinExpoBridgeMetadata {
-    public static let runtimeVersion = HanlinGeneratedBridgeMetadata.runtimeVersion
+    public static let runtimeVersion = HanlinExpoHostVersions.runtimeVersion
     public static let bridgeVersion = HanlinGeneratedBridgeMetadata.bridgeVersion
     public static let inventoryIdentity = HanlinGeneratedBridgeMetadata.inventoryIdentity
 
-    public static let nativeApiVersion = "9.1.2"
-    public static let workletsVersion = "0.13.1"
-    public static let nativeApiAbiIdentity = "rn0.88.0-hermes260318099.0.4"
+    public static let nativeApiVersion = HanlinExpoHostVersions.nativeApiVersion
+    public static let workletsVersion = HanlinExpoHostVersions.workletsVersion
+    public static let nativeApiAbiIdentity = HanlinExpoHostVersions.nativeApiAbiIdentity
     public static let nativeApiSupported = true
     public static let nativeApiMetadataIdentity = "nsmd-ios27-v1"
 

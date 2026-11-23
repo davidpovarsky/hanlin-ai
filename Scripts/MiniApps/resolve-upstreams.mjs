@@ -78,6 +78,12 @@ export function generatedHostVersions(versions) {
   if(revision&&!/^[a-f0-9]{40}$/.test(revision))throw new Error('Missing exact ScriptWidget source revision');
   return '// Generated from the exact upstream package and native dependency locks.\n// Updated together by Scripts/MiniApps/resolve-upstreams.mjs before the host build.\nenum HanlinMiniAppHostVersions {\n'+Object.entries(fields).map(([name,value])=>`    static let ${name} = ${JSON.stringify(value)}`).join('\n')+(revision?`\n    static let scriptWidgetRevision = ${JSON.stringify(revision)}`:'')+'\n}\n';
 }
+export function generatedExpoHostVersions(versions,hermesVersion) {
+  const expo=versions.expo;
+  const fields={runtimeVersion:expo['@expo/ui'],expoSDKVersion:expo.expo,expoUIVersion:expo['@expo/ui'],reactNativeVersion:expo['react-native'],hermesVersion,nativeApiVersion:expo['@nativescript/react-native'],workletsVersion:expo['react-native-worklets'],nativeApiAbiIdentity:`rn${expo['react-native']}-hermes${hermesVersion}`};
+  if(Object.values(fields).some(value=>typeof value!=='string'||!value.length))throw new Error('Incomplete actual Expo host version graph');
+  return '// Generated from the same exact original inputs used by the native framework producer.\nenum HanlinExpoHostVersions {\n'+Object.entries(fields).map(([name,value])=>`    static let ${name} = ${JSON.stringify(value)}`).join('\n')+'\n}\n';
+}
 
 export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=path.join(tmpdir(),'hanlin-miniapp-upstreams'),apply=false,report=path.join(root,'build/acceptance/miniapp-upstreams/resolution.json')}={}) {
   await mkdir(cache,{recursive:true});
@@ -155,7 +161,8 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
     ['Scripts/Expo/package.json',pretty(expoPackage)],['Scripts/Expo/dependency-lock.json',pretty(updatedExpo)],
     ['Scripts/NativeScript/package.json',pretty(nsPackage)],['Scripts/NativeScript/dependency-lock.json',pretty(updatedNS)],
     ['Scripts/ExpoNativeAPI/dependency-lock.json',pretty(updatedNative)],
-    ['Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift',generatedHostVersions(versions)]
+    ['Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift',generatedHostVersions(versions)],
+    ['Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift',generatedExpoHostVersions(versions,hermes)]
   ]);
   for(const name of ['Packages/HanlinExpoUI/package.json','Packages/HanlinExpoNativeAPIJS/package.json']) {
     const local=await json(path.join(root,name));for(const dependency of Object.keys(local.peerDependencies??{}))if(versions.expo[dependency])local.peerDependencies[dependency]=versions.expo[dependency];files.set(name,pretty(local));

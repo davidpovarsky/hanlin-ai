@@ -92,8 +92,8 @@ public final class HanlinExpoModulesProvider: ModulesProvider {
 
 @MainActor
 public final class HanlinExpoSession {
-    private static let supportedSDKVersion = "58.0.3"
-    private static let supportedUIVersion = "58.0.3"
+    private static let supportedSDKVersion = HanlinExpoHostVersions.expoSDKVersion
+    private static let supportedUIVersion = HanlinExpoHostVersions.expoUIVersion
     private static var activeSessions: [String: HanlinExpoSession] = [:]
 
     public let sessionID: String
