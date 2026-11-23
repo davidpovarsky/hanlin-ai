@@ -326,7 +326,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 ))
                 return
             }
-            guard runtimeVersion == nativeScriptRuntimeVersion else {
+            guard HanlinPreparedRuntimeVersion.supportsCompatiblePatch(runtimeVersion, installed: nativeScriptRuntimeVersion) else {
                 findings.append(.init(
                     state: .unsupported,
                     severity: .error,
@@ -437,6 +437,14 @@ public struct HanlinScriptAnalyzer: Sendable {
                         ? "Expo action exposure uses the foreground app's registered Host Services handlers."
                         : "Expo exposure '\(candidate.kind.rawValue)' is unsupported until it references the prepared foreground bundle containing the registered handlers.",
                     code: prepared ? "MINIAPP_EXPO_ACTION_READY" : "MINIAPP_EXPO_ACTION_BUNDLE_REQUIRED"))
+            case .liveActivity:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                findings.append(.init(state: prepared ? .supported : .unsupported,
+                    severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "Live Activities use the typed ActivityKit Host Services API from the prepared foreground app."
+                        : "A Live Activity exposure must reference the prepared foreground app bundle.",
+                    code: prepared ? "MINIAPP_LIVE_ACTIVITY_READY" : "MINIAPP_LIVE_ACTIVITY_BUNDLE_REQUIRED"))
             case .translationUI:
                 let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
                 let snapshot = candidate.sourcePath.hasSuffix(".json")
@@ -720,23 +728,24 @@ public struct HanlinScriptAnalyzer: Sendable {
                   case let .string(id)? = fields["id"], !id.isEmpty,
                   case let .string(rawKind)? = fields["kind"],
                   let kind = HanlinPackageEntrypointKind(rawValue: rawKind),
-                  [.appIntent, .share, .translationUI].contains(kind),
+                  [.appIntent, .share, .translationUI, .liveActivity].contains(kind),
                   case let .string(path)? = fields["sourcePath"],
                   HanlinArchivePolicy.normalizedRelativePath(path) == path, files[path] != nil,
                   identifiers.insert(id).inserted, id != "app", id != "widget" else {
                 findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
-                    message: "entrypoints[\(index)] requires a unique id, supported kind (appIntent, share, translationUI), and existing package-relative sourcePath.",
+                    message: "entrypoints[\(index)] requires a unique id, supported kind (appIntent, share, translationUI, liveActivity), and existing package-relative sourcePath.",
                     code: "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"))
                 continue
             }
             let context: HanlinExecutionContext = switch kind {
             case .appIntent: .appIntent
             case .translationUI: .translationUI
+            case .liveActivity: .liveActivity
             default: .mainApplication
             }
             let symbol: String? = if case let .string(value)? = fields["exportedSymbol"] { value } else { nil }
             declared.append(.init(id: id, kind: kind, sourcePath: path, exportedSymbol: symbol,
-                supportedContexts: [context, .mainApplication], runtimePolicyID: "prepared-foreground-action-v1",
+                supportedContexts: [context, .mainApplication], runtimePolicyID: kind == .liveActivity ? "prepared-system-surface-v1" : "prepared-foreground-action-v1",
                 runtimeProfile: runtime, compatibility: .partial))
         }
         let declaredKinds = Set(declared.map(\.kind))

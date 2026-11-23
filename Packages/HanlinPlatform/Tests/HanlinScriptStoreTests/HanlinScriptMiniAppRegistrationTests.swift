@@ -547,4 +547,27 @@ struct HanlinScriptMiniAppRegistrationTests {
         #expect(descriptor.actions.first?.capabilities.map(\.rawValue) == ["inter-app.share"])
         #expect(descriptor.actions.first?.handler == "nativescript/app/bundle.mjs")
     }
+    @Test("Prepared action handlers resolve to the installed bundle without a second source prefix")
+    func preparedActionHandlersUseInstalledEntrypointPath() throws {
+        let record = HanlinInstalledPackageRecord(schemaVersion: 1,
+            installedPackageID: try .init(validating: "installed.expo"),
+            packageID: try .init(validating: "package.expo"), version: try .init(validating: "1.0.0"),
+            sourceDigest: String(repeating: "a", count: 64), artifactDigest: String(repeating: "b", count: 64),
+            activeGeneration: 1, installedAt: .now, updatedAt: .now)
+        for declared in ["bundle.js", "source/bundle.js"] {
+            let manifest = HanlinScriptingManifest(name: "Action test", version: "1.0.0",
+                unknownFields: ["hanlinRuntime": .string("hanlin-expo"), "actions": .array([
+                    .object(["id": .string("search"), "handler": .string(declared),
+                             "capability": .string("inter-app.share")])
+                ])])
+            let snapshot = HanlinStoredPackageSnapshot(record: record, entrypoints: [
+                .init(id: "app", kind: .app, sourcePath: "source/bundle.js",
+                      supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
+                      runtimeProfile: .hanlinExpo, compatibility: .supported)
+            ], enabled: true, availableGenerations: [1], manifest: manifest)
+            #expect(try snapshot.appDescriptor().actions.first?.handler == "source/bundle.js")
+        }
+    }
+
+
 }

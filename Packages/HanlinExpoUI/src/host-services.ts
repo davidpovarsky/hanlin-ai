@@ -1,3 +1,5 @@
+import type { MiniAppLiveActivities } from "./system-surfaces";
+export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "./system-surfaces";
 import { requireNativeModule } from 'expo';
 import { fromByteArray, toByteArray } from 'base64-js';
 import { serveMiniAppActions, type MiniAppActionHandlers } from './miniapp-actions';
@@ -126,6 +128,14 @@ export const hostServices = {
   async listFiles(area: HanlinDataArea = 'data'): Promise<string[]> {
     return (await invoke<{ files: string[] }>('files.list', { area })).files;
   },
+
+  liveActivities: {
+    areEnabled: async () => (await invoke<{enabled: boolean}>('liveActivities.areEnabled', {})).enabled,
+    list: async () => (await invoke<{activityIDs: string[]}>('liveActivities.list', {})).activityIDs,
+    start: request => invoke('liveActivities.start', request),
+    update: (activityID, request) => invoke('liveActivities.update', {...request, activityID}),
+    end: (activityID, request = {}) => invoke('liveActivities.end', {...request, activityID}),
+  } satisfies MiniAppLiveActivities,
 
   publishWidget(
     entrypointID: string,

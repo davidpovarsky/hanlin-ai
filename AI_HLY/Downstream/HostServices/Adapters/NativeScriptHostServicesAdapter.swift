@@ -327,6 +327,32 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         completion: @escaping (String?, String?) -> Void
     ) {
         nonisolated(unsafe) let safeCompletion = completion
+        if targetID == "hanlin.host-services", action.hasPrefix("liveActivities.") {
+            let ctx = context
+            let requestID = UUID().uuidString.lowercased()
+            let accepted = lock.withLock {
+                guard !runtimeRequestsInvalidated else { return false }
+                runtimeRequests[requestID] = Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    defer { _ = self.lock.withLock { self.runtimeRequests.removeValue(forKey: requestID) } }
+                    do {
+                        try Task.checkCancellation()
+                        let response = try await HanlinScriptingPlatform.shared.invokeLiveActivity(
+                            operation: action, payloadJSON: payloadJSON, context: ctx)
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(response, nil)
+                    } catch {
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(nil, error.localizedDescription)
+                    }
+                }
+                return true
+            }
+            if !accepted { safeCompletion(nil, "NativeScript Host Services session is no longer active.") }
+            return
+        }
         if targetID == "hanlin.cross-app", let externalMiniAppOperation {
             let requestID = UUID().uuidString.lowercased()
             _ = lock.withLock {

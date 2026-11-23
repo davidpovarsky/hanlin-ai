@@ -131,6 +131,9 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             )
             return try Self.encode(["files": files])
 
+        case "liveActivities.areEnabled", "liveActivities.list", "liveActivities.start", "liveActivities.update", "liveActivities.end":
+            return try await HanlinScriptingPlatform.shared.invokeLiveActivity(operation: operation, payloadJSON: payloadJSON, context: context)
+
         case "widgets.publish":
             guard let installedPackageID = context.installedPackageID,
                   let appID = context.appID else {

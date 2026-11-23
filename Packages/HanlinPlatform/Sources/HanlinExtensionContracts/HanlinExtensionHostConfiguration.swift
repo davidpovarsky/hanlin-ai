@@ -42,7 +42,7 @@ public struct HanlinExtensionHostConfiguration: Hashable, Sendable {
 
     /// Both the host app and its extensions resolve the same product container.
     /// No fallback into a sibling product's installed packages or receipts.
-    public func storageContainer(in appGroupContainer: URL) throws -> URL {
+    public func storageContainer(in appGroupContainer: URL, createIfNeeded: Bool = false) throws -> URL {
         let container = appGroupContainer.resolvingSymlinksInPath().standardizedFileURL
         guard let storageNamespace else { return container }
         let parts = storageNamespace.split(separator: "/", omittingEmptySubsequences: false)
@@ -53,6 +53,9 @@ public struct HanlinExtensionHostConfiguration: Hashable, Sendable {
         let product = container.appending(path: storageNamespace, directoryHint: .isDirectory)
         guard product.resolvingSymlinksInPath().standardizedFileURL.path == product.standardizedFileURL.path else {
             throw HanlinExtensionConfigurationError.invalidConfiguration
+        }
+        if createIfNeeded {
+            try FileManager.default.createDirectory(at: product, withIntermediateDirectories: true)
         }
         return product
     }

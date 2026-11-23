@@ -171,51 +171,54 @@ public struct HanlinScriptingLiveActivityWidget: Widget {
 
     public var body: some WidgetConfiguration {
         ActivityConfiguration(for: HanlinGenericLiveActivityAttributes.self) { context in
-            HanlinLiveActivityLockScreenView(root: context.state.root)
+            HanlinLiveActivityLockScreenView(root: context.state.root, identity: context.attributes.actionIdentity)
                 .padding()
                 .activityBackgroundTint(Color.clear)
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedLeading)
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedLeading, identity: context.attributes.actionIdentity)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedTrailing)
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedTrailing, identity: context.attributes.actionIdentity)
                 }
                 DynamicIslandExpandedRegion(.center) {
-                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedCenter)
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedCenter, identity: context.attributes.actionIdentity)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedBottom)
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedBottom, identity: context.attributes.actionIdentity)
                 }
             } compactLeading: {
-                HanlinLiveActivityRegionView(root: context.state.root, region: .compactLeading)
+                HanlinLiveActivityRegionView(root: context.state.root, region: .compactLeading, identity: context.attributes.actionIdentity)
             } compactTrailing: {
-                HanlinLiveActivityRegionView(root: context.state.root, region: .compactTrailing)
+                HanlinLiveActivityRegionView(root: context.state.root, region: .compactTrailing, identity: context.attributes.actionIdentity)
             } minimal: {
-                HanlinLiveActivityRegionView(root: context.state.root, region: .minimal)
+                HanlinLiveActivityRegionView(root: context.state.root, region: .minimal, identity: context.attributes.actionIdentity)
             }
         }
     }
 }
 
 public struct HanlinLiveActivityLockScreenView: View {
-    public init(root: HanlinScriptUINode) { self.root = root }
+    public init(root: HanlinScriptUINode, identity: HanlinScriptExtensionIdentity? = nil) {
+        self.root = root; self.identity = identity
+    }
 
     public let root: HanlinScriptUINode
+    public let identity: HanlinScriptExtensionIdentity?
 
     public var body: some View {
         if let layout = try? HanlinLiveActivityUILayout(root: root) {
-            HanlinExtensionNodeView(node: layout.content)
+            HanlinExtensionNodeView(node: layout.content, identity: identity)
         } else {
-            HanlinExtensionNodeView(node: root)
+            HanlinExtensionNodeView(node: root, identity: identity)
         }
     }
 }
 
 public struct HanlinLiveActivityRegionView: View {
-    public init(root: HanlinScriptUINode, region: Region) {
-        self.root = root; self.region = region
+    public init(root: HanlinScriptUINode, region: Region, identity: HanlinScriptExtensionIdentity? = nil) {
+        self.root = root; self.region = region; self.identity = identity
     }
 
     public enum Region: Sendable, CaseIterable {
@@ -230,11 +233,12 @@ public struct HanlinLiveActivityRegionView: View {
 
     public let root: HanlinScriptUINode
     public let region: Region
+    public let identity: HanlinScriptExtensionIdentity?
 
     @ViewBuilder
     public var body: some View {
         if let layout = try? HanlinLiveActivityUILayout(root: root), let node = node(in: layout) {
-            HanlinExtensionNodeView(node: node)
+            HanlinExtensionNodeView(node: node, identity: identity)
         } else {
             EmptyView()
         }

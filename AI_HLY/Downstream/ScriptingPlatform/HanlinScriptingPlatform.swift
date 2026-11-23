@@ -1515,18 +1515,12 @@ final class HanlinScriptingPlatform {
                                 actionIDs.append((id: action, title: title))
                             }
                         }
-                        if let actionsField = package.manifest?.unknownFields["actions"],
-                           case let .array(actionsList) = actionsField {
-                            for item in actionsList {
-                                if case let .object(actObj) = item,
-                                   case let .string(actID) = actObj["id"],
-                                   !actionIDs.contains(where: { $0.id == actID }) {
-                                    let actTitle: String = {
-                                        if case let .string(t) = actObj["title"] { return t }
-                                        return actID
-                                    }()
-                                    actionIDs.append((id: actID, title: actTitle))
-                                }
+                        for action in try package.appDescriptor().actions {
+                            if let symbol = entrypoint.exportedSymbol, symbol != action.id.rawValue { continue }
+                            if entrypoint.runtimePolicyID == "prepared-foreground-action-v1",
+                               action.handler != entrypoint.sourcePath { continue }
+                            if !actionIDs.contains(where: { $0.id == action.id.rawValue }) {
+                                actionIDs.append((id: action.id.rawValue, title: action.title.resolved(locale: .current)))
                             }
                         }
                         for item in actionIDs {
@@ -1872,6 +1866,13 @@ final class HanlinScriptingPlatform {
                   let descriptor = try? package.appDescriptor(),
                   let declaredAction = descriptor.actions.first(where: { $0.id == actionID }),
                   let capability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: "inter-app.share")) else {
+                throw HanlinInvocationDispatchError(.failed, .invalidTarget)
+            }
+            if let symbol = entrypoint.exportedSymbol, symbol != actionID.rawValue {
+                throw HanlinInvocationDispatchError(.failed, .invalidTarget)
+            }
+            if entrypoint.runtimePolicyID == "prepared-foreground-action-v1",
+               declaredAction.handler != entrypoint.sourcePath {
                 throw HanlinInvocationDispatchError(.failed, .invalidTarget)
             }
             let parameters: HanlinValue
@@ -2481,6 +2482,95 @@ final class HanlinScriptingPlatform {
             isoCountryCode: value.isoCountryCode,
             country: value.country
         )
+    }
+
+    /// Shared ActivityKit adapter for active Expo and NativeScript sessions.
+    /// The native system owns scheduling and presentation; this returns its real
+    /// identifiers/results and uses the existing extension renderer.
+    func invokeLiveActivity(
+        operation: String, payloadJSON: String, context: HanlinHostCallContext
+    ) async throws -> String {
+#if os(iOS)
+        guard let installedID = context.installedPackageID, let appID = context.appID, let store,
+              let package = try await store.snapshots().first(where: {
+                  $0.record.installedPackageID == installedID && $0.appID == appID && $0.enabled
+              }) else {
+            throw HanlinHostServiceError.invalidRequest("The MiniApp session is no longer installed.")
+        }
+        func encoded(_ value: [String: Any]) throws -> String {
+            String(decoding: try JSONSerialization.data(withJSONObject: value, options: [.sortedKeys]), as: UTF8.self)
+        }
+        if operation == "liveActivities.areEnabled" {
+            return try encoded(["enabled": HanlinScriptLiveActivityController.areActivitiesEnabled])
+        }
+        if operation == "liveActivities.list" {
+            return try encoded(["activityIDs": HanlinScriptLiveActivityController.activityIDs(installedPackageID: installedID.rawValue)])
+        }
+        guard ["liveActivities.start", "liveActivities.update", "liveActivities.end"].contains(operation),
+              let payload = try JSONSerialization.jsonObject(with: Data(payloadJSON.utf8)) as? [String: Any] else {
+            throw HanlinHostServiceError.invalidRequest("Unknown Live Activity operation or invalid JSON payload.")
+        }
+        let activityID = payload["activityID"] as? String
+        let previous = activityID.flatMap {
+            HanlinScriptLiveActivityController.contentState(systemActivityID: $0, installedPackageID: installedID.rawValue)
+        }
+        if operation != "liveActivities.start", previous == nil {
+            return try encoded(["ok": false])
+        }
+        let root: HanlinScriptUINode
+        if let supplied = payload["root"] as? [String: Any] {
+            root = try ExpoHostServicesAdapter.parseUntaggedNode(supplied)
+        } else if let previous {
+            root = previous.root
+        } else {
+            throw HanlinHostServiceError.invalidRequest("Starting a Live Activity requires its native root layout.")
+        }
+        let state = try payload["state"].map(ExpoHostServicesAdapter.toHanlinValue) ?? previous?.state ?? .null
+        let title = payload["title"] as? String ?? previous?.title ?? package.manifest?.name ?? "MiniApp"
+        let content = HanlinGenericLiveActivityAttributes.ContentState(
+            revision: (previous?.revision ?? 0) + 1, title: title, state: state, root: root)
+        func finiteNumber(_ name: String) throws -> Double? {
+            guard let value = payload[name] else { return nil }
+            guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(),
+                  number.doubleValue.isFinite else {
+                throw HanlinHostServiceError.invalidRequest("\(name) must be a finite number.")
+            }
+            return number.doubleValue
+        }
+        let staleDate = try finiteNumber("staleDateEpochMilliseconds").map { Date(timeIntervalSince1970: $0 / 1_000) }
+        let relevance = try finiteNumber("relevanceScore") ?? 0
+        switch operation {
+        case "liveActivities.start":
+            let requestedEntrypoint = payload["actionEntrypointID"] as? String
+            let actionEntrypoint = package.entrypoints.first {
+                $0.kind == .appIntent && (requestedEntrypoint == nil || $0.id == requestedEntrypoint)
+            }
+            if requestedEntrypoint != nil, actionEntrypoint == nil {
+                throw HanlinHostServiceError.invalidRequest("The package does not declare that Live Activity action entrypoint.")
+            }
+            let identity = actionEntrypoint.map {
+                HanlinScriptExtensionIdentity(installedPackageID: installedID,
+                    packageID: package.record.packageID, generation: package.record.activeGeneration, entrypointID: $0.id)
+            }
+            let id = try HanlinScriptLiveActivityController.start(
+                attributes: .init(installedPackageID: installedID.rawValue, activityID: UUID().uuidString,
+                                  actionIdentity: identity),
+                state: content, staleDate: staleDate, relevanceScore: relevance)
+            return try encoded(["activityID": id])
+        case "liveActivities.update":
+            let updated = await HanlinScriptLiveActivityController.update(
+                systemActivityID: activityID!, installedPackageID: installedID.rawValue,
+                state: content, staleDate: staleDate, relevanceScore: relevance)
+            return try encoded(["ok": updated])
+        default:
+            let ended = await HanlinScriptLiveActivityController.end(
+                systemActivityID: activityID!, installedPackageID: installedID.rawValue,
+                finalState: content, dismissTimeInterval: try finiteNumber("dismissAfterSeconds"))
+            return try encoded(["ok": ended])
+        }
+#else
+        throw HanlinHostServiceError.invalidRequest("Live Activities are unavailable on this platform.")
+#endif
     }
 
     private func performLiveActivity(

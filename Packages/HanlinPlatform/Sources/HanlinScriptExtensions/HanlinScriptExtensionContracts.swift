@@ -309,10 +309,13 @@ public struct HanlinGenericLiveActivityAttributes: Codable, Hashable, Sendable {
 
     public let installedPackageID: String
     public let activityID: String
+    public let actionIdentity: HanlinScriptExtensionIdentity?
 
-    public init(installedPackageID: String, activityID: String) {
+    public init(installedPackageID: String, activityID: String,
+                actionIdentity: HanlinScriptExtensionIdentity? = nil) {
         self.installedPackageID = installedPackageID
         self.activityID = activityID
+        self.actionIdentity = actionIdentity
     }
 }
 

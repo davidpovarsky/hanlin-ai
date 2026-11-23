@@ -182,7 +182,7 @@ actor ChavrusaShareInbox {
         guard let groupID, !groupID.isEmpty, let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
         ) else { throw HanlinShareInboxError.invalidPath }
-        return try HanlinShareInboxStore(container: HanlinExtensionHostConfiguration.load().storageContainer(in: container))
+        return try HanlinShareInboxStore(container: HanlinExtensionHostConfiguration.load().storageContainer(in: container, createIfNeeded: true))
     }
 
     func pendingItems() throws -> [ChavrusaSharedItem] {
@@ -198,13 +198,13 @@ actor ChavrusaShareInbox {
         guard let groupID, !groupID.isEmpty, let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
         ) else { throw HanlinShareInboxError.invalidPath }
-        return try HanlinShareInboxStore(container: HanlinExtensionHostConfiguration.load().storageContainer(in: container)).scan()
+        return try HanlinShareInboxStore(container: HanlinExtensionHostConfiguration.load().storageContainer(in: container, createIfNeeded: true)).scan()
     }
 
     func ownedFile(batchID: UUID, itemID: UUID) throws -> URL {
         guard let groupID, !groupID.isEmpty, let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
         ) else { throw HanlinShareInboxError.invalidPath }
-        return try HanlinShareInboxStore(container: HanlinExtensionHostConfiguration.load().storageContainer(in: container)).ownedFile(batchID: batchID, itemID: itemID)
+        return try HanlinShareInboxStore(container: HanlinExtensionHostConfiguration.load().storageContainer(in: container, createIfNeeded: true)).ownedFile(batchID: batchID, itemID: itemID)
     }
 }
