@@ -109,6 +109,8 @@
     "HanlinExtensionContracts",
     "HanlinLocalization",
     "HanlinMiniAppCore",
+    "HanlinMiniAppsBridge",
+    "HanlinMiniAppsPicker",
     "HanlinMiniAppsUI",
     "HanlinNativeScriptRuntime",
     "HanlinParityMiniApp",

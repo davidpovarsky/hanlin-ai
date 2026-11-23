@@ -461,6 +461,98 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 .compactMap { $0["text"] as? String }.joined(separator: "\n")
         }
 #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+        if ProcessInfo.processInfo.environment["HANLIN_MINIAPP_AUTHORING_ACCEPTANCE"] == "1",
+           currentText.contains("[MiniApp repair "),
+           currentText.contains("MiniAppTypeError.hanlinNativeScript") {
+            func object(_ id: String) -> [String: Any]? {
+                guard let text = toolResult(id), let data = text.data(using: .utf8) else { return nil }
+                return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+            }
+            func call(_ id: String, _ name: String, _ arguments: [String: Any]) {
+                var payload = arguments
+                if name != "tool_search" {
+                    payload["progress_summary"] = "Run the requested MiniApp authoring step and inspect its actual result."
+                }
+                guard let data = try? JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys]) else {
+                    emitFinalAnswer("MINIAPP_AUTHORING_ARGUMENT_ERROR"); return
+                }
+                emitToolCall(id: id, name: name, arguments: String(decoding: data, as: UTF8.self))
+            }
+            let project = currentText.components(separatedBy: "\n")
+                .first(where: { $0.hasPrefix("Working project: ") })?
+                .replacingOccurrences(of: "Working project: ", with: "")
+            guard let project, !project.isEmpty else {
+                emitFinalAnswer("MINIAPP_AUTHORING_PROJECT_MISSING"); return
+            }
+            let ids = ["miniapp-find", "miniapp-sdk", "miniapp-invalid", "miniapp-write",
+                       "miniapp-valid", "miniapp-build", "miniapp-import", "miniapp-status"]
+            // Fail on actual tool errors. Never synthesize a compiler report,
+            // edited file, built package, or installation result in this model fixture.
+            for id in ids.dropFirst() where toolResult(id) != nil && object(id) == nil {
+                emitFinalAnswer("MINIAPP_AUTHORING_NONJSON_RESULT_" + id); return
+            }
+            if let receipt = object("miniapp-status") {
+                let installed = receipt["status"] as? String == "installed"
+                    && !(receipt["installedPackageID"] as? String ?? "").isEmpty
+                emitFinalAnswer(installed ? "MINIAPP_AUTHORING_INSTALLED_VERIFIED"
+                    : "MINIAPP_AUTHORING_INSTALL_NOT_VERIFIED_" + (receipt["status"] as? String ?? "unknown"))
+            } else if let queued = object("miniapp-import") {
+                guard let id = queued["transfer_id"] as? String else {
+                    emitFinalAnswer("MINIAPP_AUTHORING_TRANSFER_MISSING"); return
+                }
+                call("miniapp-status", "import_miniapp", ["transfer_id": id])
+            } else if let built = object("miniapp-build") {
+                guard built["succeeded"] as? Bool == true, let archive = built["archivePath"] as? String else {
+                    emitFinalAnswer("MINIAPP_AUTHORING_BUILD_FAILED"); return
+                }
+                call("miniapp-import", "import_miniapp", ["archive_path": archive])
+            } else if let valid = object("miniapp-valid") {
+                guard valid["succeeded"] as? Bool == true, let root = valid["sourceRoot"] as? String else {
+                    emitFinalAnswer("MINIAPP_AUTHORING_REVALIDATION_FAILED"); return
+                }
+                call("miniapp-build", "build_miniapp", ["engine": "nativescript", "project_path": root])
+            } else if let written = object("miniapp-write") {
+                guard let root = written["sourceRoot"] as? String else {
+                    emitFinalAnswer("MINIAPP_AUTHORING_WRITE_FAILED"); return
+                }
+                call("miniapp-valid", "validate_miniapp", ["engine": "nativescript", "project_path": root])
+            } else if let invalid = object("miniapp-invalid") {
+                guard invalid["succeeded"] as? Bool == false,
+                      let diagnostics = invalid["diagnostics"] as? [[String: Any]],
+                      diagnostics.contains(where: { $0["code"] as? String == "TS2322" }),
+                      let root = invalid["sourceRoot"] as? String else {
+                    emitFinalAnswer("MINIAPP_AUTHORING_ORIGINAL_ERROR_MISSING"); return
+                }
+                let source = """
+                export const answer: number = 42;
+                import {Application, Page, Label} from "@nativescript/core";
+                Application.run({create: () => {
+                  const page = new Page();
+                  page.title = "MiniApp Authoring Acceptance";
+                  const label = new Label();
+                  label.text = "MiniApp repair result " + answer;
+                  label.accessibilityIdentifier = "miniapp-authoring-result";
+                  page.content = label;
+                  return page;
+                }});
+
+                """
+                call("miniapp-write", "write_miniapp", ["project_path": root,
+                    "files": [["path": "index.ts", "content": source]]])
+            } else if let sdk = object("miniapp-sdk") {
+                guard sdk["selectedEngine"] != nil, sdk["manifestSHA256"] != nil else {
+                    emitFinalAnswer("MINIAPP_AUTHORING_ORIGINAL_SDK_MISSING"); return
+                }
+                call("miniapp-invalid", "validate_miniapp", ["engine": "nativescript", "project_path": project])
+            } else if toolResult("miniapp-find") != nil {
+                call("miniapp-sdk", "get_miniapp_sdk", ["engine": "nativescript"])
+            } else {
+                call("miniapp-find", "tool_search", ["query": "miniapp"])
+            }
+            return
+        }
+#endif
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
         if let marker = currentText.range(of: "SHARE_DRAFT_[0-9A-F-]{36}", options: .regularExpression) {
             let nonce = String(currentText[marker].suffix(36))
             let verified = currentText.contains("UNSENT_PREEXISTING_" + nonce)

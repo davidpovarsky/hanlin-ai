@@ -17,6 +17,13 @@ EVIDENCE = Path(os.environ["SPLIT_EVIDENCE"]) / "paired-product"
 GROUP = "group.com.itorah.chavrusachat"
 TEST_SCOPE = os.environ.get("PAIRED_TEST_SCOPE", "cross_product")
 TEST_PLANS = {
+    "miniapp_authoring": ([
+        "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+        "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+        "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+        "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+        "AI_HLYUITests/MiniAppAuthoringUITests"], 7),
     "cross_product": (["AI_HLYUITests/HanlinPairedProductUITests"], 3),
     "shared_ingress": (["AI_HLYTests/ShareInboxHostIntegrationTests", "AI_HLYUITests/HanlinShareInboxUITests"], 5),
     "product_and_share": (["AI_HLYUITests/HanlinPairedProductUITests",
@@ -65,6 +72,49 @@ def fixture_archive(sha):
     return destination
 
 
+def authoring_fixtures(documents):
+    """Create input through the original build, then introduce a real TS error."""
+    sdk_extract = EVIDENCE / "original-authoring-sdk"
+    sdk_extract.mkdir()
+    with zipfile.ZipFile(ROOT / "AI_HLY/RuntimeHostResources.zip") as packed:
+        members = [name for name in packed.namelist() if name.startswith("MiniAppSDK/")]
+        if not members:
+            raise RuntimeError("The actual shipping archive has no authoring SDK")
+        packed.extractall(sdk_extract, members=members)
+    fixture_root = EVIDENCE / "authoring-fixture"
+    command(["node", "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
+        str(sdk_extract / "MiniAppSDK"), str(fixture_root)], "authoring-fixture-build.log", timeout=300)
+    receipt = json.loads((fixture_root / "fixture.json").read_text())
+    source = Path(receipt["preparedPackagePath"])
+    destination = documents / "MiniAppTypeError.hanlinNativeScript"
+    with zipfile.ZipFile(destination, "x", zipfile.ZIP_DEFLATED) as packed:
+        for file in sorted(source.rglob("*")):
+            if file.is_file():
+                packed.write(file, file.relative_to(source).as_posix())
+    invalid = documents / "InvalidMiniApp.zip"
+    invalid.write_bytes(b"This deliberately invalid input is not a ZIP archive.")
+    receipt["archiveSHA256"] = hashlib.sha256(destination.read_bytes()).hexdigest()
+    receipt["invalidArchiveSHA256"] = hashlib.sha256(invalid.read_bytes()).hexdigest()
+    (EVIDENCE / "authoring-fixture-provenance.json").write_text(json.dumps(receipt, indent=2) + "\n")
+    # The SDK already lives in the shipping app/archive; this extraction is only
+    # the fixture producer's temporary compiler input, never an installed result.
+    shutil.rmtree(sdk_extract)
+
+
+def verify_native_result(result, prefix, selectors, expected, code):
+    _, raw = command(["xcrun", "xcresulttool", "get", "test-results", "summary",
+        "--path", str(result)], prefix + "-summary.json")
+    summary = json.loads(raw)
+    command(["xcrun", "xcresulttool", "get", "test-results", "tests",
+        "--path", str(result)], prefix + "-nodes.json")
+    command([sys.executable, "Scripts/CI/verify_selected_tests.py", "--results",
+        str(EVIDENCE / (prefix + "-nodes.json")), "--selectors", ",".join(selectors)],
+        prefix + "-selected-tests.log")
+    if code or summary.get("passedTests") != expected or summary.get("failedTests", 0) or summary.get("skippedTests", 0):
+        raise RuntimeError("Original runtime acceptance did not execute every selected case: " + prefix)
+    return summary
+
+
 def main():
     EVIDENCE.mkdir(parents=True, exist_ok=False)
     state = {"status": "INFRA_ERROR", "ui": "NOT_RUN", "build": "NOT_RUN",
@@ -79,6 +129,9 @@ def main():
         selectors, expected_tests = TEST_PLANS[TEST_SCOPE]
         state["test_scope"] = TEST_SCOPE
         state["selected_tests"] = selectors
+        if TEST_SCOPE == "miniapp_authoring":
+            state["scope"] = "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products"
+            state["model_boundary"] = "Only the HTTP model response sequence is deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts and UI are original production code."
         if TEST_SCOPE == "product_and_share":
             state["scope"] += "; original share ingress to Composer and SDK"
             state["os_share_sheet"] = "NOT_RUN; input uses original store APIs and NSItemProvider in the native host suite"
@@ -129,7 +182,8 @@ def main():
         state["status"] = "BUILD_FAILED"
         # Same bounded cold MiniApps compilation budget as standalone acceptance.
         # This does not extend first-launch, routing, cancellation or UI deadlines.
-        command(base + ["-scheme", "HanlinMiniApps", "build",
+        mini_action = "build-for-testing" if TEST_SCOPE == "miniapp_authoring" else "build"
+        command(base + ["-scheme", "HanlinMiniApps", mini_action,
             "-resultBundlePath", str(EVIDENCE / "MiniBuild.xcresult")], "mini-build.log", timeout=2400)
         state["mini_build"] = "EXECUTED_PASS"
         # The original full-app workflow uses this exact pinned upstream generator:
@@ -207,6 +261,35 @@ def main():
         if len(set(containers.values())) != 1:
             raise RuntimeError("The installed products do not share the OS-provided App Group container")
         state["app_group"] = {"status": "EXECUTED_PASS", "containers": containers}
+        if TEST_SCOPE == "miniapp_authoring":
+            _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
+                "com.itorah.hanlinminiapps", "data"], "authoring-mini-data-container.txt")
+            documents = Path(raw.strip()) / "Documents"
+            documents.mkdir(exist_ok=True)
+            authoring_fixtures(documents)
+            runtime_inputs = [
+                ROOT / "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+                ROOT / "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo"]
+            state["runtime_inputs"] = []
+            for source in runtime_inputs:
+                destination = documents / source.name
+                if destination.exists():
+                    raise RuntimeError("Owned fresh simulator has an unexpected runtime input")
+                shutil.copy2(source, destination)
+                digest = hashlib.sha256(source.read_bytes()).hexdigest()
+                if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+                    raise RuntimeError("Runtime fixture bytes changed")
+                state["runtime_inputs"].append({"source": str(source.relative_to(ROOT)), "sha256": digest})
+            runtime_selectors = [
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"]
+            runtime_result = EVIDENCE / "OriginalRuntimes.xcresult"
+            argv = base + ["-scheme", "HanlinMiniApps", "test-without-building",
+                "-resultBundlePath", str(runtime_result)]
+            argv += ["-only-testing:" + selector for selector in runtime_selectors]
+            code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
+            state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
+                runtime_selectors, 2, code)
         if TEST_SCOPE in {"cross_product", "product_and_share"}:
             archive = fixture_archive(state["sha"])
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
