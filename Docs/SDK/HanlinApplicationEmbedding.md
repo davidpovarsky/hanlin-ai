@@ -342,3 +342,58 @@ The native test
 `HanlinApplicationEmbeddingTests/hostConstructedActivitySnapshotPreservesIdentityAndOriginalPayloads`
 checks identity, encoded image bytes and opaque payload preservation, and compiles
 the original activity facade with a host-constructed snapshot.
+
+
+## Configure original system integrations for the host
+
+HanlinApplicationConfiguration.systemIntegrations selects the host's original
+Share Inbox container, notification category and camera intent route. A plain
+host configuration leaves these hooks unset; .hanlin preserves the original
+App Group, category and Vision URL.
+
+~~~swift
+let configuration = HanlinApplicationConfiguration(
+    appIdentifier: "com.example.reader",
+    systemIntegrations: .init(
+        shareAppGroupIdentifier: "group.com.example.reader",
+        notificationCategoryIdentifier: "READER_REMINDER",
+        visionURL: URL(string: "reader://assistant/camera")
+    )
+)
+~~~
+
+The host must declare its actual App Group entitlement and register its URL
+scheme in its own app target. Sharing SDK code does not grant another app's
+container access. The original extension-side HanlinShareInboxStore and
+HanlinShareInvocation products accept that same host-owned group container;
+they retain the existing batch format, content digests and invocation receipts.
+
+HanlinShareInboxView(context:useInChat:) embeds the original list, previews,
+MiniApp actions and receipts. It is also available through the .shareInbox
+panel. The optional callback receives the actual batch UUID. A host Composer can
+call context.prepareSharedDraft(batchID:availableFileSlots:) to obtain the
+same verified text/file copies used by Hanlin's Composer. The returned
+HanlinSharedDraft exposes text and files. If the user does not accept the
+prepared draft, call discardPreparedSharedDraft; do not discard copies after
+a sent message has retained their URLs. Preparation never sends a message or
+consumes the original source batch. The original full Composer already owns
+this lifecycle, so hosts using it do not need a second insertion path.
+
+Bootstrap reads the registered notification categories before adding the SDK
+category. Existing categories, actions and intent identifiers survive, including
+an existing category using the configured identifier. This uses Apple's original
+notification-center API; it does not replace the host's notification delegate or
+request permission during bootstrap.
+
+The original OpenVisionIntent opens the configured visionURL and reports a
+configuration/open failure instead of reporting success without opening a view.
+The full HanlinApplicationScene matches that route. Hosts embedding
+HanlinWorkspaceView can use configuration.systemIntegrations.isVisionURL(url)
+to select its original vision destination, or present HanlinVisionView within
+their own navigation. Intent registration is described in the installation guide.
+
+System integration settings are immutable for the installed original process
+owner. A second incompatible profile is rejected before it can redirect a live
+Share Inbox or intent. Physical App Group entitlements, OS share-sheet delivery,
+notification delivery and camera permission still require their actual signed
+host/device acceptance; the focused tests do not manufacture that evidence.

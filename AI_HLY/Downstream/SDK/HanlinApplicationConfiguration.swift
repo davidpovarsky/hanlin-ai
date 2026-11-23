@@ -95,12 +95,14 @@ public struct HanlinApplicationConfiguration {
     public let storage: Storage
     public let credentials: HanlinApplicationCredentials
     public let runtime: HanlinApplicationRuntimeConfiguration
+    public let systemIntegrations: HanlinApplicationSystemIntegrations
     public let hostServices: HanlinApplicationHostServicesFactory?
 
     public init(appIdentifier: String, accountIdentifier: String = "default",
                 workspaceIdentifier: String = "default", storage: Storage = .applicationSupport,
                 credentials: HanlinApplicationCredentials? = nil,
                 runtime: HanlinApplicationRuntimeConfiguration? = nil,
+                systemIntegrations: HanlinApplicationSystemIntegrations = .init(),
                 hostServices: HanlinApplicationHostServicesFactory? = nil) {
         self.appIdentifier = appIdentifier
         self.accountIdentifier = accountIdentifier
@@ -110,6 +112,7 @@ public struct HanlinApplicationConfiguration {
             .map { String(format: "%02x", $0) }.joined()
         self.credentials = credentials ?? .init(service: appIdentifier + ".provider-credentials." + credentialScope)
         self.runtime = runtime ?? .applicationSupport(appIdentifier: appIdentifier)
+        self.systemIntegrations = systemIntegrations
         self.hostServices = hostServices
     }
 
@@ -119,7 +122,8 @@ public struct HanlinApplicationConfiguration {
               workspaceIdentifier: "swiftdata", storage: .hanlin,
               credentials: .init(service: "com.itorah.chavrusachat.provider-credentials",
                   accessGroup: "group.com.itorah.chavrusachat", synchronizable: true),
-              runtime: .applicationSupport(appIdentifier: "com.itorah.chavrusachat"))
+              runtime: .applicationSupport(appIdentifier: "com.itorah.chavrusachat"),
+              systemIntegrations: .hanlin)
     }
 
     func namespace(conversationID: UUID, temporary: Bool) throws -> HanlinConversationNamespace {

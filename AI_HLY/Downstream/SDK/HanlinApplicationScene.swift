@@ -39,7 +39,7 @@ public struct HanlinApplicationScene: Scene {
                                     receivingWindowID: receivingWindowID, claimID: claimID)
                             }
                         }
-                    } else if url.host == "openVisionView" {
+                    } else if context.configuration.systemIntegrations.isVisionURL(url) {
                         deepLinkTarget = "vision"
                     } else if url.host == "study", let link = TorahStudyDeepLink.parse(url: url) {
                         TorahStudyNavigationRouter.shared.navigate(to: link)

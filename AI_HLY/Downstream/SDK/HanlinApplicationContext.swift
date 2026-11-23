@@ -23,7 +23,8 @@ public final class HanlinApplicationContext {
         guard requiredEntities.isSubset(of: Set(container.schema.entities.map(\.name))) else {
             throw HanlinApplicationError.incompatibleModelContainer
         }
-        try HanlinApplicationProcessRuntime.shared.install(configuration.runtime, modelContainer: container)
+        try HanlinApplicationProcessRuntime.shared.install(configuration.runtime, modelContainer: container,
+            systemIntegrations: configuration.systemIntegrations)
         self.configuration = configuration
         self.modelContainer = container
         self.dataManager = AppDataManager(modelContainer: container)

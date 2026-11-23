@@ -140,9 +140,10 @@ struct HostIntents: AppIntentsPackage {
 }
 ```
 
-Hanlin's own thin app target uses this registration. The original Vision intent
-retains its `chavrusachat://openVisionView` route; a host that chooses that intent
-must handle that route, or present `HanlinVisionView` from its own existing
+Hanlin's own thin app target uses this registration. Its explicit `.hanlin`
+configuration retains `chavrusachat://openVisionView`. Other hosts configure
+`systemIntegrations.visionURL` and register/handle their own URL scheme, or present
+`HanlinVisionView` from their own existing
 routing action. Notification and alarm intents retain the original system
 permission requests. Original intent translations now resolve from the shared
 localization bundle without copying its catalogs into every app.

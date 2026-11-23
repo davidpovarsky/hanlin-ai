@@ -6,16 +6,26 @@ import UIKit
 import UserNotifications
 
 enum ChavrusaSystemIntegrationBootstrap {
-    static func configure() {
+    static func configure() async {
+        guard let identifier = HanlinApplicationProcessRuntime.shared.systemIntegrations.notificationCategoryIdentifier,
+              !identifier.isEmpty else { return }
         let center = UNUserNotificationCenter.current()
-        center.setNotificationCategories([
-            UNNotificationCategory(
-                identifier: "CHAVRUSA_REMINDER",
-                actions: [],
-                intentIdentifiers: [],
-                options: [.customDismissAction]
-            )
-        ])
+        let existing = await center.notificationCategories()
+        let merged = categories(existing, adding: identifier)
+        // Apple's setter replaces the complete set. Retain every host category
+        // and any host-defined actions on an already registered same identifier.
+        if merged.count != existing.count { center.setNotificationCategories(merged) }
+    }
+
+    static func categories(_ existing: Set<UNNotificationCategory>, adding identifier: String)
+        -> Set<UNNotificationCategory> {
+        guard !identifier.isEmpty, !existing.contains(where: { $0.identifier == identifier }) else {
+            return existing
+        }
+        var merged = existing
+        merged.insert(UNNotificationCategory(identifier: identifier, actions: [],
+            intentIdentifiers: [], options: [.customDismissAction]))
+        return merged
     }
 }
 

@@ -23,10 +23,12 @@ public struct OpenVisionIntent: AppIntent {
     @MainActor
     public func perform() async throws -> some IntentResult {
         
-        if let url = URL(string: "chavrusachat://openVisionView") { // 自定义 URL Scheme
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        guard let url = HanlinApplicationProcessRuntime.shared.systemIntegrations.visionURL else {
+            throw HanlinApplicationSystemIntegrationError.visionRouteNotConfigured
         }
-        
+        guard await UIApplication.shared.open(url, options: [:]) else {
+            throw HanlinApplicationSystemIntegrationError.visionRouteUnavailable
+        }
         return .result()
     }
 }

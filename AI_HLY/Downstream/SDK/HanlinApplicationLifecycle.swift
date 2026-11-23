@@ -24,7 +24,7 @@ extension HanlinApplicationContext {
                 return
             }
             HanlinExpoSession.ensureAppDefinesLoaded()
-            ChavrusaSystemIntegrationBootstrap.configure()
+            await ChavrusaSystemIntegrationBootstrap.configure()
             HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
             dataManager.preloadDataIfNeeded()
             HanlinScriptingPlatform.shared.configure(modelContext: modelContainer.mainContext)

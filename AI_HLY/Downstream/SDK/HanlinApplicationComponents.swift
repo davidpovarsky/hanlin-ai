@@ -97,7 +97,7 @@ public struct HanlinLibraryView: View {
 public enum HanlinApplicationPanel: String, CaseIterable, Sendable {
     case models, providers, skills, mcp, runtimes, miniApps
     case prompts, memory, translations, knowledge, diagnostics, toolPermissions
-    case guide, costs, support
+    case guide, costs, support, shareInbox
 }
 
 @MainActor
@@ -131,6 +131,7 @@ public struct HanlinApplicationPanelView: View {
         case .guide: HanlinHelpView(topic: .guide, showsDone: false)
         case .costs: HanlinHelpView(topic: .costs, showsDone: false)
         case .support: HanlinSupportView()
+        case .shareInbox: ChavrusaShareInboxView(platform: .shared)
         }
     }
 }
@@ -151,5 +152,37 @@ public struct HanlinVisionView: View {
         VisionView(selectedTab: Binding(get: { 1 }, set: { destination in
             if destination != 1 { onClose() }
         })).hanlinApplicationContext(context)
+    }
+}
+
+
+/// The original Share Inbox, including previews, integrity checks and action receipts.
+@MainActor
+public struct HanlinShareInboxView: View {
+    private let context: HanlinApplicationContext
+    private let useInChat: ((UUID) async throws -> Void)?
+
+    public init(context: HanlinApplicationContext,
+                useInChat: ((UUID) async throws -> Void)? = nil) {
+        self.context = context
+        self.useInChat = useInChat
+    }
+
+    public var body: some View {
+        ChavrusaShareInboxView(platform: .shared, useInChat: useInChat)
+            .hanlinApplicationContext(context)
+    }
+}
+
+public extension HanlinApplicationContext {
+    /// Uses the same verified, cancellation-aware file copies as Hanlin's Composer.
+    func prepareSharedDraft(batchID: UUID, availableFileSlots: Int) async throws -> HanlinSharedDraft {
+        try await ChavrusaShareInbox.shared.prepareDraft(
+            batchID: batchID, availableFileSlots: availableFileSlots)
+    }
+
+    /// Discard only an unaccepted prepared copy; original source batches are retained.
+    func discardPreparedSharedDraft(_ draft: HanlinSharedDraft) async {
+        await ChavrusaShareInbox.shared.discardPreparedDraft(draft)
     }
 }

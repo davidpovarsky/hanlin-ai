@@ -1,5 +1,55 @@
 import Foundation
 
+/// Optional operating-system hooks belong to the embedding application.
+/// A plain host configuration does not read Hanlin's App Group or open Hanlin.
+public struct HanlinApplicationSystemIntegrations: Hashable, Sendable {
+    public let shareAppGroupIdentifier: String?
+    public let notificationCategoryIdentifier: String?
+    public let visionURL: URL?
+
+    public init(shareAppGroupIdentifier: String? = nil,
+                notificationCategoryIdentifier: String? = nil,
+                visionURL: URL? = nil) {
+        self.shareAppGroupIdentifier = shareAppGroupIdentifier
+        self.notificationCategoryIdentifier = notificationCategoryIdentifier
+        self.visionURL = visionURL
+    }
+
+    /// Retains the original app's existing extension and intent contracts.
+    public static var hanlin: Self {
+        .init(shareAppGroupIdentifier: "group.com.itorah.chavrusachat",
+              notificationCategoryIdentifier: "CHAVRUSA_REMINDER",
+              visionURL: URL(string: "chavrusachat://openVisionView"))
+    }
+
+    /// Hosts using HanlinWorkspaceView can route the configured camera URL to
+    /// its original vision destination without duplicating URL matching.
+    public func isVisionURL(_ url: URL) -> Bool {
+        guard let expected = visionURL else { return false }
+        return url.scheme?.lowercased() == expected.scheme?.lowercased()
+            && url.host?.lowercased() == expected.host?.lowercased()
+            && url.port == expected.port && url.user == expected.user
+            && url.password == expected.password && url.path == expected.path
+            && url.query == expected.query && url.fragment == expected.fragment
+    }
+
+    static var currentHost: Self {
+        Bundle.main.bundleIdentifier == "com.itorah.chavrusachat" ? .hanlin : .init()
+    }
+}
+
+public enum HanlinApplicationSystemIntegrationError: LocalizedError {
+    case visionRouteNotConfigured
+    case visionRouteUnavailable
+
+    public var errorDescription: String? {
+        switch self {
+        case .visionRouteNotConfigured: "Configure the host application's Vision URL before using this intent."
+        case .visionRouteUnavailable: "The host application could not open its configured Vision URL."
+        }
+    }
+}
+
 /// Native Node/Python/MCP engines retain their original process lifetime. Their
 /// filesystem and secret services are selected once before first use. Separate
 /// views share one original model container; standalone AgentCore sessions can
@@ -70,19 +120,31 @@ final class HanlinApplicationProcessRuntime: @unchecked Sendable {
     private let lock = NSLock()
     private var installed: HanlinApplicationRuntimeConfiguration?
     private var modelContainer: AnyObject?
+    private var installedSystemIntegrations: HanlinApplicationSystemIntegrations?
 
-    func install(_ configuration: HanlinApplicationRuntimeConfiguration, modelContainer: AnyObject) throws {
+    func install(_ configuration: HanlinApplicationRuntimeConfiguration, modelContainer: AnyObject,
+                 systemIntegrations: HanlinApplicationSystemIntegrations = .currentHost) throws {
         guard configuration.directory.isFileURL else { throw HanlinApplicationError.invalidStorageURL }
         lock.lock()
         defer { lock.unlock() }
         if let installed, installed != configuration {
             throw HanlinApplicationError.incompatibleRuntimeConfiguration
         }
+        if let installedSystemIntegrations, installedSystemIntegrations != systemIntegrations {
+            throw HanlinApplicationError.incompatibleRuntimeConfiguration
+        }
         if let current = self.modelContainer, current !== modelContainer {
             throw HanlinApplicationError.incompatibleRuntimeContainer
         }
         installed = configuration
+        installedSystemIntegrations = systemIntegrations
         self.modelContainer = modelContainer
+    }
+
+    var systemIntegrations: HanlinApplicationSystemIntegrations {
+        lock.lock()
+        defer { lock.unlock() }
+        return installedSystemIntegrations ?? .currentHost
     }
 
     var configuration: HanlinApplicationRuntimeConfiguration {
