@@ -296,6 +296,12 @@ def export(root: Path, output: Path, selected: list[str] | None, include_support
     # Validate everything before producing a publication candidate.
     validated = {name: framework_libraries(prepared_root / TARGETS[name], name) for name in selected}
     support, tool_provenance = support_paths(prepared_root, selected) if include_support else ({}, None)
+    if "HanlinNodeHostSupport" in support:
+        # Original preparation already synchronizes source-only Host changes over
+        # the verified frozen closure. Validation never invokes a builder.
+        subprocess.run([sys.executable, str(root / "Scripts/Runtime/runtime_host_archive.py"),
+                        "validate", str(prepared_root / "AI_HLY/RuntimeHostResources.zip"),
+                        "--source-root", str(root / "AI_HLY/Downstream/RuntimeCore/Node/Host")], check=True)
     output.mkdir(parents=True, exist_ok=True)
     artifacts = []
     for name in selected:

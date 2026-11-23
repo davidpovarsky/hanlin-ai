@@ -1400,6 +1400,31 @@ jobs:
           unzip -p AI_HLY/RuntimeHostResources.zip server-worker.mjs | grep -F 'registerHooks'
           unzip -p AI_HLY/RuntimeHostResources.zip package-compatibility.mjs | grep -F 'inspectArchiveSafety'
 
+      # Exactly one original Apple job retains the complete prepared SDK input.
+      # Export reuses the verified RuntimeCore and prepared Expo/NativeScript trees.
+      - name: Export original prepared Hanlin SDK native artifacts
+        if: ${{ needs.plan-affected-validation.outputs.run_simulator_job != 'true' }}
+        id: sdk-native-export
+        run: |
+          set -euo pipefail
+          python3 Scripts/SDK/native_artifacts.py export \
+            --root . --output build/hanlin-sdk-native-prepared \
+            2>&1 | tee "$LOG_DIR/sdk-native-export.log"
+          python3 Scripts/SDK/native_artifacts.py verify \
+            --catalog build/hanlin-sdk-native-prepared/native-artifacts.json \
+            --assets build/hanlin-sdk-native-prepared \
+            2>&1 | tee "$LOG_DIR/sdk-native-verify.log"
+
+      - name: Retain prepared Hanlin SDK native artifacts
+        if: ${{ needs.plan-affected-validation.outputs.run_simulator_job != 'true' }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: hanlin-sdk-native-prepared
+          path: build/hanlin-sdk-native-prepared
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+
       - name: Run RuntimeCore fast preflight
         run: |
           set -euxo pipefail
@@ -1705,9 +1730,11 @@ jobs:
             test -f "$APP_PATH/Frameworks/NodeMobile.framework/NodeMobile"
             test -f "$APP_PATH/Frameworks/Python.framework/Python"
             test -d "$APP_PATH/python/lib/python3.14"
-            test -f "$APP_PATH/RuntimeHostResources.zip"
-            test -f "$APP_PATH/RuntimeManifest.json"
-            test -f "$APP_PATH/RuntimeLinkDependencyNotices.txt"
+            python3 Scripts/SDK/verify_bundle_resources.py \
+              --repository-root . --app "$APP_PATH" \
+              --json-output "$LOG_DIR/08-sdk-bundle-resources.json"
+            python3 Scripts/CI/validate_chat_localization.py \
+              --app "$APP_PATH" --output "$LOG_DIR/08-sdk-localization.json"
             nm "$APP_PATH/$APP_NAME" | grep -E '(_ios_system$|_HanlinPythonExecute$|_HanlinNodeStart$)' | tee "$LOG_DIR/08-runtime-symbols.txt"
 
             echo
@@ -1820,6 +1847,11 @@ jobs:
           ditto -x -k "$IPA_NAME" "$packaged_root"
           PACKAGED_APP_PATH="$(find "$packaged_root/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)"
           test -n "$PACKAGED_APP_PATH"
+          python3 Scripts/SDK/verify_bundle_resources.py \
+            --repository-root . --app "$PACKAGED_APP_PATH" \
+            --json-output "$LOG_DIR/09-packaged-sdk-bundle-resources.json"
+          python3 Scripts/CI/validate_chat_localization.py \
+            --app "$PACKAGED_APP_PATH" --output "$LOG_DIR/09-packaged-sdk-localization.json"
           python3 Scripts/Runtime/validate-app-dyld-closure.py \
             --app "$PACKAGED_APP_PATH" \
             --platform iphoneos \
@@ -2194,6 +2226,29 @@ jobs:
           set -euxo pipefail
           bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
 
+      # Exactly one original Apple job retains the complete prepared SDK input.
+      # Export reuses the verified RuntimeCore and prepared Expo/NativeScript trees.
+      - name: Export original prepared Hanlin SDK native artifacts
+        id: sdk-native-export
+        run: |
+          set -euo pipefail
+          python3 Scripts/SDK/native_artifacts.py export \
+            --root . --output build/hanlin-sdk-native-prepared \
+            2>&1 | tee "$LOG_DIR/sdk-native-export.log"
+          python3 Scripts/SDK/native_artifacts.py verify \
+            --catalog build/hanlin-sdk-native-prepared/native-artifacts.json \
+            --assets build/hanlin-sdk-native-prepared \
+            2>&1 | tee "$LOG_DIR/sdk-native-verify.log"
+
+      - name: Retain prepared Hanlin SDK native artifacts
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: hanlin-sdk-native-prepared
+          path: build/hanlin-sdk-native-prepared
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+
       - name: Resolve Swift Package dependencies
         run: |
           set -euxo pipefail
@@ -2508,6 +2563,11 @@ jobs:
           set -euxo pipefail
           APP_PATH="build/SimulatorRuntimeApp/AI_Hanlin.app"
           test -d "$APP_PATH"
+          python3 Scripts/SDK/verify_bundle_resources.py \
+            --repository-root . --app "$APP_PATH" \
+            --json-output "$LOG_DIR/07-simulator-sdk-bundle-resources.json"
+          python3 Scripts/CI/validate_chat_localization.py \
+            --app "$APP_PATH" --output "$LOG_DIR/07-simulator-sdk-localization.json"
           echo "$APP_PATH" > "$LOG_DIR/app-path.txt"
           test -f "$APP_PATH/Frameworks/libssh2.framework/libssh2"
           test -f "$APP_PATH/Frameworks/openssl.framework/openssl"

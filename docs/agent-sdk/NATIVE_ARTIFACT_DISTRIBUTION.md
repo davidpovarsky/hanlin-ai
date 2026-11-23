@@ -111,3 +111,42 @@ The older PackageDescription documentation warns that unsafe flags make products
 Publishing binary URLs alone does not deliver lightweight products: the actual consumer still downloaded an unused binary. The root generator therefore must prune targets and external dependencies to the requested transitive product closure. This preserves one canonical implementation while making an AgentCore/ChatUI-only installation independent of native runtime preparation.
 
 Evidence and limits are recorded in [native-distribution-2026-11-23](evidence/native-distribution-2026-11-23/receipt.json). No new Apple runtime or physical-device success is claimed by the portable packaging and dependency tests.
+
+## Original Apple producer integration
+
+The original `.github/workflows/build-ios26-unsigned-ipa.yml` now exports the
+complete 14 XCFrameworks and four support archives after its existing Apple
+preparation steps. The simulator job owns `hanlin-sdk-native-prepared` when it
+is selected; the device job owns it otherwise. The artifact is retained for
+30 days with compression disabled because its contents are already ZIPs.
+No additional runtime compilation or CI dispatch is introduced by export.
+
+Both jobs already run the original `prepare-runtime-core.sh`. That script
+verifies the frozen native identity, copies the verified Host archive, and
+synchronizes current Host source modules against the unchanged dependency
+closure. A full-validation run is not required just to export the prepared
+SDK inputs. The exporter invokes the original archive validator with
+`check_sources=True` before creating the Node support archive, so stale
+Host modules cannot be published.
+
+The original frozen run 42926628418 was checked against this source revision.
+The dependency and patch closure matched. Exactly six Host `.mjs` modules
+needed the existing source overlay; the synchronization preserved all 3,070
+dependency/other entries byte for byte and invoked no builder. The focused
+receipt is in
+`evidence/native-producer-wiring-2026-11-23/frozen-host-source-overlay.json`.
+This is archive reuse evidence, not native execution evidence.
+
+The device, simulator and packaged-IPA scans now use
+`Scripts/SDK/verify_bundle_resources.py` for the actual `AI_Hanlin` resource
+bundle. It derives copied resources from the canonical Swift manifest and
+compares every packaged file to its source hash. Main-app leftovers cannot
+satisfy this check. Compiled localization is checked separately by the
+existing localization validator against its SDK resource bundle. The
+ios_system dictionaries and Python stdlib retain the original required host
+locations and their existing validators.
+
+The subsequent publication workflow still requires the producer run to
+complete successfully before a public catalog can be marked published.
+Exporting and retaining a prepared artifact alone does not establish Apple
+build, simulator, host integration or visual acceptance.
