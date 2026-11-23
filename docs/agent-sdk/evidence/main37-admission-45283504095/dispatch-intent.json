@@ -1,0 +1,9 @@
+{
+  "utc": "2026-11-23T22:50:46.894315+00:00",
+  "head": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "branch": "codex/hanlin-sdk-unification-20261123",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "expected_invocations": 37,
+  "single_post": true,
+  "peer_review": "release_hosts: no concrete blocker, exact request/plan/admission hashes"
+}
