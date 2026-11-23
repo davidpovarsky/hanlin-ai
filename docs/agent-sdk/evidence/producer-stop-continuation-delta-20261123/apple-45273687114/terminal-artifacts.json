@@ -1,0 +1,25 @@
+{
+  "total_count": 1,
+  "artifacts": [
+    {
+      "id": 14868011763,
+      "node_id": "MDg6QXJ0aWZhY3QxNDg2ODAxMTc2Mw==",
+      "name": "agent-sdk-apple-45273687114",
+      "size_in_bytes": 4651327,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14868011763",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14868011763/zip",
+      "expired": false,
+      "digest": "sha256:1ab4e195cfc821b59b05979a7221ce35e1cee5e679f67dcf3242f9f467b72827",
+      "created_at": "2026-11-23T22:11:34Z",
+      "updated_at": "2026-11-23T22:11:34Z",
+      "expires_at": "2026-12-23T22:11:31Z",
+      "workflow_run": {
+        "id": 45273687114,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk02-stop-continuation-20261123",
+        "head_sha": "e1a295ba60396997a6127c6c2e2c4e6e75f508b3"
+      }
+    }
+  ]
+}
