@@ -1,0 +1,8 @@
+{
+  "preparation_exit": 0,
+  "delta_test_exit": 0,
+  "ios_build_exit": 0,
+  "baseline_core_exit": null,
+  "core_test_exit": null,
+  "sdk_test_exit": null
+}

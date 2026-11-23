@@ -4,7 +4,7 @@ set -euo pipefail
 if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_STOP_SELECTOR'
 import json,sys
 inputs=json.load(open(sys.argv[1])).get('inputs',{})
-sys.exit(0 if inputs.get('exact_test_selector') == 'HanlinStopContinuationDelta' else 1)
+sys.exit(0 if inputs.get('exact_test_selector') in {'HanlinStopContinuationDelta', 'HanlinNativeToolCancellationRecheck'} else 1)
 PY_STOP_SELECTOR
 then
   exec python3 "$(git rev-parse --show-toplevel)/Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py"

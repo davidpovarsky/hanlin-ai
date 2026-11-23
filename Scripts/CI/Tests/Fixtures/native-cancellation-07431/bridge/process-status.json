@@ -1,0 +1,10 @@
+{
+  "preparation_exit": 0,
+  "baseline_core_exit": null,
+  "core_test_exit": null,
+  "sdk_test_exit": 65,
+  "ios_build_exit": 0,
+  "baseline_execution": "REUSED_VERIFIED",
+  "accepted_cases_execution": "REUSED_VERIFIED",
+  "ios_build_execution": "EXECUTED"
+}

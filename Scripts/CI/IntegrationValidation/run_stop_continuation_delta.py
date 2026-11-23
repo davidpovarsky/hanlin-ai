@@ -27,6 +27,7 @@ def main():
                     baseline_core_exit=None, core_test_exit=None, sdk_test_exit=None)
     commands = []
     scratch = None
+    cancellation_recheck = False
     environment = os.environ.copy()
 
     def run(name, argv, cwd=root, check=True, timeout=1200):
@@ -61,12 +62,29 @@ def main():
         event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
         inputs = event.get("inputs", {})
         selector = inputs.get("exact_test_selector")
-        if selector != "HanlinStopContinuationDelta" or inputs.get("target_validation_group") != "agent_sdk_exact_source_proof":
+        if selector not in {"HanlinStopContinuationDelta", "HanlinNativeToolCancellationRecheck"} or inputs.get("target_validation_group") != "agent_sdk_exact_source_proof":
             raise RuntimeError("Native candidate validation requires the exact reviewed opt-in route")
+        cancellation_recheck = selector == "HanlinNativeToolCancellationRecheck"
+        if cancellation_recheck:
+            from verify_native_tool_cancellation_recheck import (
+                REFERENCE_PATH, CORE_EXPECTED, SDK_EXPECTED, CORE_SELECTORS, SDK_SELECTORS, UNRELATED_FLAGS,
+                prepare_reuse, summarize as summarize_cancellation,
+            )
+            from verify_native_tool_candidate import read_cases
+            statuses.update(native_core_test_exit=None, native_sdk_test_exit=None,
+                            baseline_execution="HISTORICAL_REFERENCE_ONLY")
         (evidence / "selected-route.json").write_text(json.dumps(dict(
             exact_test_selector=selector, target_validation_group=inputs["target_validation_group"],
-            baseline="NOT_SELECTED",
+            baseline="HISTORICAL_REFERENCE_ONLY" if cancellation_recheck else "NOT_SELECTED",
             run_id=os.environ.get("GITHUB_RUN_ID"), run_attempt=os.environ.get("GITHUB_RUN_ATTEMPT")), indent=2))
+        if cancellation_recheck:
+            unrelated = {name: inputs.get(name, "false") for name in UNRELATED_FLAGS}
+            if any(value is not False and value != "false" for value in unrelated.values()):
+                raise RuntimeError("Native cancellation route cannot enable unrelated workflow flags")
+            route_path = evidence / "selected-route.json"
+            route = json.loads(route_path.read_text())
+            route["unrelated_flags"] = unrelated
+            route_path.write_text(json.dumps(route, indent=2))
         run("exact-json-vendor", ["python3", "Scripts/CI/verify_exact_json_vendor.py"])
         head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
         (evidence / "tested-source-commit.txt").write_text(head + "\n")
@@ -88,7 +106,11 @@ def main():
                 raise RuntimeError("Archived source differs from Git: " + relative)
             digests[relative] = sha(path)
         (evidence / "tested-source-sha256.json").write_text(json.dumps(digests, indent=2))
-        if any(digests.get(path) != digest for path, digest in COMPOSED_SOURCE.items()):
+        if cancellation_recheck:
+            expected_source = json.loads((root / REFERENCE_PATH / "current-source-sha256.json").read_text())
+            if digests != expected_source:
+                raise RuntimeError("Composed cancellation package source differs from the reviewed snapshot")
+        elif any(digests.get(path) != digest for path, digest in COMPOSED_SOURCE.items()):
             raise RuntimeError("Composed boundary/header sources do not match the reviewed candidate")
         workflow_paths = [".github/workflows/build-ios26-unsigned-ipa.yml",
                           "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
@@ -98,6 +120,9 @@ def main():
                           "Scripts/CI/verify_exact_json_vendor.py",
                           "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py",
                           "Scripts/CI/select_stable_xcode.py"]
+        if cancellation_recheck:
+            workflow_paths += ["Scripts/CI/IntegrationValidation/verify_native_tool_cancellation_recheck.py"]
+            workflow_paths += [str(path.relative_to(root)) for path in sorted((root / REFERENCE_PATH).rglob("*")) if path.is_file()]
         for relative in workflow_paths:
             if (root / relative).read_bytes() != subprocess.check_output(["git", "show", head + ":" + relative], cwd=root):
                 raise RuntimeError("Workflow source differs from Git: " + relative)
@@ -119,6 +144,23 @@ def main():
         if subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=producer, text=True).strip() != PRODUCER:
             raise RuntimeError("Resolved producer checkout is not the pinned commit")
         run("producer-clean", ["git", "diff", "--exit-code", PRODUCER, "--", "Package.swift", "Sources"], cwd=producer)
+        if cancellation_recheck:
+            checkouts = {}
+            for name, package in (("sdk", sdk), ("core", core)):
+                checkout = package / ".build/checkouts/swift-ai-sdk"
+                commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=checkout, text=True).strip()
+                if commit != PRODUCER:
+                    raise RuntimeError("Wrong actual producer checkout for " + name)
+                _, clean = run(name + "-producer-status", [
+                    "git", "status", "--porcelain", "--untracked-files=all", "--", "Package.swift", "Sources"
+                ], cwd=checkout)
+                if clean.read_text() != "":
+                    raise RuntimeError("Producer source checkout is not clean for " + name)
+                producer_paths = subprocess.check_output(["git", "ls-tree", "-r", "--name-only", PRODUCER,
+                    "--", "Package.swift", "Sources"], cwd=checkout, text=True).splitlines()
+                checkouts[name] = dict(path=str(checkout), commit=commit, status=clean.read_text(),
+                    source_sha256={relative: sha(checkout / relative) for relative in producer_paths})
+            (evidence / "producer-checkouts.json").write_text(json.dumps(checkouts, indent=2))
         with (evidence / "producer-source.tar").open("wb") as output:
             subprocess.run(["git", "archive", PRODUCER, "Package.swift", "Sources", "Tests"], cwd=producer, stdout=output, check=True)
         locks = []
@@ -140,6 +182,8 @@ def main():
             return next(name for name in candidates if name in names)
 
         core_scheme = scheme(core, ["HanlinPlatform-Package", "HanlinPlatform"])
+        if cancellation_recheck:
+            sdk_scheme = scheme(sdk, ["HanlinAgentSDK-Package", "HanlinAgentSDK"])
         common = ["-skipPackagePluginValidation", "-skipMacroValidation", "CODE_SIGNING_ALLOWED=NO"]
 
         def test(result, package, selected_scheme, selectors):
@@ -153,6 +197,23 @@ def main():
                 _, output = run(result + "-cases", ["xcrun", "xcresulttool", "get", "test-results", "tests",
                                 "--path", bundle, "--format", "json"], check=False)
                 (evidence / (result + ".json")).write_bytes(output.read_bytes())
+                if cancellation_recheck:
+                    suites = CORE_EXPECTED if result == "NativeCoreTests" else SDK_EXPECTED
+                    parameterized = {suite + "/" + name for suite, methods in suites.items()
+                                     for name, arguments in methods.items() if arguments is not None}
+                    seen, exports = set(), []
+                    for case in read_cases(evidence, result)[0]:
+                        identifier = case.get("nodeIdentifier")
+                        if not isinstance(identifier, str) or identifier.split("(", 1)[0] not in parameterized or identifier in seen:
+                            continue
+                        seen.add(identifier)
+                        detail_code, detail_output = run(result + "-arguments-" + str(len(exports)), [
+                            "xcrun", "xcresulttool", "get", "test-results", "test-details",
+                            "--path", bundle, "--test-id", identifier, "--format", "json"
+                        ], check=False, timeout=120)
+                        exports.append(dict(method=identifier, exit_code=detail_code,
+                                            raw_file=detail_output.name, sha256=sha(detail_output)))
+                    (evidence / (result + "-argument-detail-exports.json")).write_text(json.dumps(exports, indent=2))
             return code
 
         statuses["preparation_exit"] = 0
@@ -161,7 +222,14 @@ def main():
                 continue  # The actual resolved locks are retained and verified separately.
             if sha(scratch / relative) != digest:
                 raise RuntimeError("Candidate source was not fully restored before acceptance: " + relative)
-        statuses["delta_test_exit"] = test("StopContinuationTests", core, core_scheme, SELECTORS)
+        if cancellation_recheck:
+            prepare_reuse(root, evidence)
+            statuses["accepted_cases_execution"] = "REUSED_VERIFIED"
+            statuses["native_core_test_exit"] = test("NativeCoreTests", core, core_scheme, CORE_SELECTORS)
+            statuses["native_sdk_test_exit"] = test("NativeSDKTests", sdk, sdk_scheme, SDK_SELECTORS)
+            statuses["ios_build_execution"] = "EXECUTED"
+        else:
+            statuses["delta_test_exit"] = test("StopContinuationTests", core, core_scheme, SELECTORS)
         statuses["ios_build_exit"], _ = run("IOSBuild", [
             "xcodebuild", "build", "-scheme", "HanlinAgentCore", "-destination", "generic/platform=iOS Simulator",
             "-derivedDataPath", scratch / "IOSDerivedData", "-resultBundlePath", evidence / "IOSBuild.xcresult", *common
@@ -194,7 +262,7 @@ def main():
                 statuses["preparation_exit"] = 1
                 (evidence / "resolution-error.txt").write_text(str(error) + "\n")
         (evidence / "process-status.json").write_text(json.dumps(statuses, indent=2))
-        result = summarize(evidence)
+        result = summarize_cancellation(evidence) if cancellation_recheck else summarize(evidence)
         (evidence / "summary.json").write_text(json.dumps(result, indent=2))
         print(json.dumps(result, indent=2))
     return 0 if result["status"] == "PASS" else 1
