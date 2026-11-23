@@ -40,11 +40,14 @@ enum HanlinChatGPTPlanWire {
                 "tools": local
             ]]
         }
-        let localNames = Set(local.compactMap { $0["name"] as? String })
         for index in input.indices {
             if input[index]["role"] as? String == "system" { input[index]["role"] = "developer" }
-            if ["function_call", "custom_tool_call"].contains(input[index]["type"] as? String ?? ""),
-               let name = input[index]["name"] as? String, localNames.contains(name) {
+            if ["function_call", "custom_tool_call"].contains(input[index]["type"] as? String ?? "") {
+                // Historical calls still belong to this namespace after a
+                // dynamic catalog change removes their current definition.
+                if let prior = input[index]["namespace"] as? String, prior != namespace {
+                    throw HanlinChatGPTPlanWireError.invalidRequest
+                }
                 input[index]["namespace"] = namespace
             }
         }

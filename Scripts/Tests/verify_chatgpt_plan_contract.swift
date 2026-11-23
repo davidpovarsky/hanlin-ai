@@ -103,7 +103,19 @@ private final class FixtureProtocol: URLProtocol, @unchecked Sendable {
         try check(input.count == 3 && input[0]["role"] as? String == "developer" &&
             input[1]["namespace"] as? String == "hanlin" &&
             input[1]["arguments"] as? String == originalArguments, "history and exact arguments")
+        var changedCatalog = request
+        var historyOnly = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+        historyOnly["tools"] = []
+        changedCatalog.httpBody = try JSONSerialization.data(withJSONObject: historyOnly)
+        let historyRequest = try HanlinChatGPTPlanWire.prepare(changedCatalog)
+        let historyBody = try JSONSerialization.jsonObject(with: historyRequest.httpBody!) as! [String: Any]
+        let historicalInput = historyBody["input"] as! [[String: Any]]
+        try check(historicalInput[1]["namespace"] as? String == "hanlin", "removed dynamic tool history")
         count += 1
+        if CommandLine.arguments.contains("--request-only") {
+            print("PASS: production SIWC request/history namespace contract.")
+            return
+        }
 
         let completion = try event(["type": "response.completed", "response": ["status": "completed"]])
         let text = try event(["type": "response.output_text.delta", "delta": "שלום 👋"])
