@@ -1,0 +1,2552 @@
+{
+  "Anytype/Sources/Pinkha/Torah/UI/AnytypeTorahRelatedReadFailure.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c949503eb629ebc0f90134c3b0fbb24ec149754a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/AccessoryViewBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "39868be7fd1d1e27aacfd02e43c594ffcd1e7603"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/AccessoryViewStateManager.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cdd6c8b3ca8a16c92caa08d35894026243db4198"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/AccessoryViewSwitcher.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a12bacaa1677f3fafbe595cb7ad15af614f4c8b8"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Common/DismissableInputAccessoryView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5ab8b2069e9b16f57a815e0a366202afb30c0a4c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Common/FilterableItemsView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a79683b07788cf73654987605bf78afbdbe5f147"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Common/TextTriggerSymbols.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5cf3a5fe6c1cadc78680084d66b4f7e82812fe18"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/ChangeTypeAccessoryView/ChangeTypeAccessoryView+Views.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2c63bb116cebddf559f32a6b1c36654a33b38dad"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/ChangeTypeAccessoryView/ChangeTypeAccessoryView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b849a80a1de6274eb773e731b8b98a03f0bef012"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/ChangeTypeAccessoryView/ChangeTypeAccessoryViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "eb0fcad714634164b03e29b42de7baa9021f1aa9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/ChangeTypeAccessoryView/HorizonalTypeListView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "53e0a261017807c317eb82c23be4b107d20ad967"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/ChangeTypeAccessoryView/HorizonalTypeListViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0989977cb898c9401c767af654830867a95a9ded"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/CursorModeView/CursorModeAccessoryView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "281cdd2be9f535a9a0c967d01a46b7bad2f86b2b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/CursorModeView/CursorModeAccessoryViewDelegate.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5b0369eaca29ca2c412466cb6b2517a0ed854ea1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/CursorModeView/CursorModeAccessoryViewItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f3aec546346c8728ae23c9dff509984127754c45"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/CursorModeView/CursorModeAccessoryViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "81817a688eeaed6cea522d632552ce69318321aa"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/MarkupModeView/MarkupAccessoryView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0d28d8e2c3e84b788b7ec4176a5f14bab981852e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/MarkupModeView/MarkupAccessoryViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "44d1602c759f0bcd38a603871e67c1169e7235d5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/EditorAccessoryView/MarkupModeView/MarkupKind.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "525957df20c7a3ff8c5e6a5a9fa8e640b7540106"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Mention/MentionAssembly.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b7a19cf625073613c7585f7fd484e157d308e829"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Mention/MentionView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5eccfcbfc0923d1375a766c43d900da0b4ffcbdb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Mention/MentionViewController/MentionsViewController.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f492d5d1ff1e0287748a292d610a45042b57b51c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Mention/MentionViewController/MentionsViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2e3b352ff2750a430ba016f49591e5c8e645a5ad"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Mention/MentionViewController/Models/MentionDisplayData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "99d8db9749aaa0e6ae12ab2f65be223b32c72553"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Mention/MentionViewController/Models/MentionSection.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b5f738a1e83f5b655c9d8e1747e0d6ec98c73e30"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Model/AccessoryViewType.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "44d2e5ee20f9e32a91daa16d1a0deeb2182e697c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Model/TextBlockDelegateData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "11c8897aeacf48d038c67232461347622e832a93"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Search/EditorSearchCell.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "575eb8e2e0f02d624e865c874f48b3e637852abf"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Search/EditorSearchCellConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "be3b1d3697d4be86466c9b5561845b9e02c83548"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/Search/EditorSearchCellData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fde7f32b4b085f83bc6bb0d88c91f0e5866b36ca"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Builders/FilterModels/SimpleTableComparator.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7f05e7a5a6fe89204bdf0fbd4cbcd82244239a4f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Builders/FilterModels/SlashActionFilterMatch.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "503e632236d052b2b498d7ac29f792680f19bdb8"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Builders/FilterModels/SlashMenuComparator.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "74b45501bdec034e7603f3c49653800aaf298578"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Builders/FilterModels/SlashMenuItemFilterMatch.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7e69692b95c4d9fc434ebc3c05d0eb63f168618d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Builders/SlashMenuCellDataBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fec6b05edf50bf548f1a46a07a2a35046b732c87"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Builders/SlashMenuItemsBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "179b3591bdb2b0d09630a16f11a21131c71be5a5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Handler/SlashMenuActionHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d7070ab4adc6effb6323f04fa51647f99d9f3910"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/Actions/SlashActionAlignment.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "06f87504b9326aff366e3598a2ed60b91f5c273c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/Actions/SlashActionMedia.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5f93b11a79f042477e503dbccc75e0c8f78a6701"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/Actions/SlashActionObject.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "deca2a1ec456683e9dbf2892ec08ce9715897ac3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/Actions/SlashActionOther.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "87b7149334ea876babdbe6d14d61c431d85eb079"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/Actions/SlashActionProperties.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d4288cd85131435efe25740327a267aeef72e62d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/Actions/SlashActionSingle.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5e189baa0e8fe4e09650ff3d060bb2be7ba037ba"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/Actions/SlashActionStyle.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fc078c9f4f58cd403a9c568a9b279eec4ec30694"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/SlashAction.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a5475f98d3f2756c6cb90284f2a3ba9fd8055557"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/SlashMenuCellData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b2d1a414c59e301ac4bce5d8feb9ef382f49206a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/SlashMenuItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "8cb7ecd3216d936043aa6ae3171e5b6e34f2ec54"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/SlashMenuItemDisplayData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "46bf1f942b3793ee3f4cab14bcb35a9477af789d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/Models/SlashMenuItemType.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c10344e4cf018f182814f6a84d383408cb25f97b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/SlashMenuAssembly.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6afd087ca8841daaf882170b3d6466e1a5a4139e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/SlashMenuView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1478c5890874e453c5ce5b8733a6f19a15aa0ffe"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/SlashMenuViewController.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9c547b33df622f75d44b0a44331031688eaa37a2"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/SlashMenuViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c3b1da1e10ff158c6ba7744d4d7ce1c29809cbf6"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/TableView/PropertyCellView/SlashMenuPropertyContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "56a1ebebf9c4e18a1133006911af8559034309f3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/TableView/PropertyCellView/SlashMenuPropertyView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "bc9e522bef78f800cd5a39c33d7ce801c4a3b0ae"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/TableView/SlashMenuContentConfigurationFactory.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6715c8aa97643d2c1e4953ad42c08576c3e9b49d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/AccessoryView/SlashMenu/TableView/SlashMenuViewController+TableView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "20bd5c1439d40b15c168494ad1730122d3ac9686"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/AlertScreenData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cd5d8a09d6f890b46a6a7c19d8b80261a52701ea"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/BookmarkScreenData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c973dfe077d00be7999b2aa334fe18bf72464d96"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/EditorScreenData+Details.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "803d1fa469de3d8c670e2a0632adf80cf7f6deb7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/EditorScreenData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cc4f57fa88ffcf238be1e93b1dd484924c0c779c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/MediaFileScreenData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b9083265e2b67dee16b30cee2a2549a301681d39"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/Page/EditorPageModuleAssembly.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5ca6c96dc010a46e08032c33bdaf3d918e0a82a6"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/Page/EditorPageModuleOutput.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "66a4384e6c1c94b142655dd5b864bec6dc076dc5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/ScreenData+Details.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d143abff4ef3d565e5db11ac6d90c0a12ceb5c1a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/ScreenData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ed1d6a37efa0fbabdaa3a61061c1383b00bd17dd"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/Set/EditorSetModuleOutput.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f8864b030cc2755f78cc3305432cfa84896e8cc4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Assembly/SettingsScreenData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e713c02f066ea2ec7edf461cfc719cfbde6d7e4c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Base/BlockViewModelProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0fdf94dca485b540a3807cc4b8cc31ef4b21ec9c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Base/Configuration/BlockConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "137ed70fbe85df5b2739f8bedf63c87ca02b5d63"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Base/Configuration/BlockContentView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "21ecf3a4395e9b4e5d3f7f26120008161edac7fa"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Base/Configuration/CellBlockConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2c233a211ba4202089596ec68efcc9fd57b7fe54"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Base/Configuration/EditorContentView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "eb09c8762ab73bcf838e2e066d85c95dfb92bd8a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Base/CustomStateKeys.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a04c97b15d04a4d9a7bbffdc16ab514707590236"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Base/EditorSelectionView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "da978aa79f4d5b341802c598983c4b8ba7cf6670"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Base/EditorViewListCell.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "93678c2418fc43be33fba005124ae5e65e6e2968"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Bookmark/BlockBookmarkViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ce4941c233236d9d03ed3b33fa9de83c66afb852"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Bookmark/Models/BlockBookmarkState.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a76aa07f80e60e8f8bab5c39b0b6832667cfd9b9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Bookmark/View/FullData/BlockBookmarkConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "bfb37bd0f8569dd2ec1bca2399157357e4c76622"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Bookmark/View/FullData/BlockBookmarkView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d59b1ab793faaa12fee42f9c6f52a1e8f3afcead"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Bookmark/View/OnlyUrl/BlockBookmarkOnlyUrlConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "32f232acae328b3ae6930b91a3425258cd823fb5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Bookmark/View/OnlyUrl/BlockBookmarkOnlyUrlView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a6d73f56bcdbd80d90e19354c72b9d22ef779ac6"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Bookmark/View/Сomponents/BlockBookmarkImageView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ecb2a221e567456f3736c6b1255f259a14671062"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Bookmark/View/Сomponents/BlockBookmarkInfoView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f6a0b63b0e80e4e8d154cf9023f60767277ae090"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/DataView/DataViewBlockConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "14408030fe868e488b1647a93c8a2587f5fe9b0b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/DataView/DataViewBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "addf6f23749d7223bedb808aaf2bb5ceaeb835a3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/DataView/DataViewBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "48aa61d0d6686e17868c31027074019d98de5b2a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Embed/BlockLatex+Extentions.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "79f3ba80a886206846419e6d526672ebfb4eadbe"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Embed/EmbedBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2d13b0777f4f217feb99df40d91b51854c53be08"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/FeaturedRelations/FeaturedPropertiesBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a957d180ce1015dc2b294d015af0f01e115bd9d2"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/AudioBlockContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9a207c3d7624fd5f0f447a14799e179f68357ff5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/AudioBlockContentView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "39ce8bae4d02993e7f6f20efc494085c00a9f595"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/AudioBlockPlayerDelegate.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "52244e8d5c07550a576137f96f898ab617cc97a7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/AudioBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "92aa5badea25f89fd2fe0693ff3b2be6b21972de"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/Audioplayer/AnytypeAudioPlayer.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "436d31bc005643731892929fd170dc0242de5f92"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/Audioplayer/AnytypeAudioPlayerProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0bfdb773a1f25cb853717b5896fd0efe86c0a524"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/Audioplayer/AnytypeSharedAudioplayer.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ae3367ef6a3a206072201d3ce3029c45d8ec31af"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/Audioplayer/PlayerItemStateObservation.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "08c30b34b3774d2ce7bed2b4dc43434bd9bf5224"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/Views/AudioPlayerView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0035676ebe587881b0385deae6d5a53028ed6dd8"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Audio/Views/AudioProgressSlider.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "968d142f8294f4aba23105f03215efbd20de4b2f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/EmptyView/BlocksFileEmptyView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fa7a64441f143d5c79afa290b77469d9af042ca0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/EmptyView/BlocksFileEmptyViewConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "875df14e2f26c0b3a494d8b2e81b6aed3e0f752e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/File/BlockFileConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "44f5daf910513b58db1d023772ca5743cbe434da"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/File/BlockFileView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d9cbe67c40bc5154d59138ce44489d2a643f8b23"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/File/BlockFileViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ccd20b92ac0f352e909cf96d13aeba188959cfe3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/File/Utils/BlockFile+MediaData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "164ecfc1407b0181a1bc140e81edbdb8d4cf5250"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Image/BlockImageConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "180b1256c3ad22a8da9aea27a03df053ed3fcd27"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Image/BlockImageContentView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f5f2a436af111e60b571436f2ff7571eb6b36f03"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Image/BlockImageViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "250e697c45a26ef7069e3998a9ba30516f828718"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Video/VideoBlockContentView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0afa0e896aa5ee9314f5cc348550cc2d9d9491ef"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Video/VideoBlockContentViewConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "aa72f87f0ad55aabe30855ae495394d249481a3a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/File/Video/VideoBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "beb267827634d20940fd012661f527282de6d535"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Link/BlockLinkCardView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a4f6c0e82b26fade5dc7ae67052190e5ab253118"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Link/BlockLinkContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cea115a80a5861da370fbcda4757b7bdd0b66d4c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Link/BlockLinkViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fd98cc00a9f3361aaf8dad8ae3979dfe815e2462"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Link/BlockTextLinkView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e18047b2c745180e518c704fa06099b387f33b5e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Link/Support/BlockLinkState+Text.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "566713e68408affbad7d83eea1b72c1f2ce96ce9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Link/Support/BlockLinkState.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f712dda2d1ecc517b17b9462645c24549005606b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Link/View/DeletedLabel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ebec14d043130eb5e6257d11d0f8856b05816c85"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/NonExistent/NonExistentBlockContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "dd27b6e984389856f0f07a7916bee77c7edfbc64"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/NonExistent/NonExistentBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "8a58528bb1fcbb816ebf8462390afe28c0d1a6c7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/NonExistent/NonExistentBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2afe16d8f85df50371e3a32707d3b707189858e4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/OpenFile/OpenFileBlockContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ae1d5a1c3abd5cfdfe637ee2ff17ce664e9a7880"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/OpenFile/OpenFileBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4cbf30e494c50afaf69b0cd732226bde86bf2bb0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/OpenFile/OpenFileBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1ffc64a1644dc79029797650321e350b6db02e50"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Other/DividerBlockContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "deb02f45ff6b4633367b3d4cc2fe6ffda56e95d4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Other/DividerBlockContentView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c6f251d69f13d11da7f69ce2e92f7e8aa6469671"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Other/DividerBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a3a6352d1927b7ef34fc9e0cfbc15c0a60c554ef"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Other/DividerBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d6a57205ed41656006eaf995dec7d85caa85e31e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Property/PropertyBlockContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6af6f9bd594045600cccbbe70a26ae41de6403b5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Property/PropertyBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9d7ecfe9d35aefc2da79251283daf6e002c59ad3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Property/PropertyBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2571f7b53d317942939a63ea2ac4fd0e874c3cbc"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Shimmer/ShimmeringBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "75459e4ad13e06811e71026090e2b2c2a5ff9cb9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Shimmer/ShimmeringBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "52d40321f4971587496694121f982dce051c181b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/AdditionalViews/SimpleTableMenuItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7a2332c351826144e54ec154d92c83906149355d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/AdditionalViews/SimpleTableMenuView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "34f9dfd392a9c01e7a0e889d0bc31c00f6ca1cf5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/EmptyRow/EmptyRowViewViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "29b78ad63007eaa6f98ce5877a778e6db07c4a64"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/SimpleTableBlockView+UICollectionViewDelegate.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "698fa254ba922d5cc92e0d2ac74c92cbacebc48d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/SimpleTableBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9c49e6f5de68e046e804dd9ff55ec9bc6bc764b4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/SimpleTableCellsBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0e4c05b2690c63c4ae4917687075723b8093a72e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/SimpleTableSelectionOptionHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c00ce0d8e2f937028c2bb013e448fab1bdcbeb73"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/SimpleTableStateManager.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d0f5b4a9cce3cea367a79925630d1abfd92b8053"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/SimpleTableViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "edc6b1ed561780f312a2bba41ef24140b2300d14"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/Spreadsheet/SpreadsheetBlockConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cc438853aa4829bae4dde381acdad12208f86289"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/Spreadsheet/SpreadsheetBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5643c0707f65178d139c388e37cc9502900ec49c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/TextBlock/SimpleTableTextCellRestrictions.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0c64e6aa56b2d8d08b317e35bbed07181d42e2fd"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/Block/TextBlock/SimpleTablesTextBlockActionHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b85547a6b4396edc9261b4d38182e581f725f119"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/SimpleTableBlockContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "83ab453a0bd9821b633863b3a4a0bb9e0d8cd936"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/SimpleTableBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "914604eb93d89a76016d900a5f2eafa1868e3f39"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/SimpleTable/SimpleTableDependenciesBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cf6cbab8f08e81d36b2ea061f5412de7c7afb492"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Spacer/SpacerBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "40e1b980a2ea8c99d97354749e886f42c80e6812"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/TableOfContents/TableOfContentData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "056768b63829b9605003e7706eed5c4830e6052c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/TableOfContents/TableOfContentsConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "78f19a50a65d98b5ccde4116ccddf7edbd01d8ae"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/TableOfContents/TableOfContentsContentProvider.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "dd98f156108845ac782e0b0f9a9dbaf5afb600fb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/TableOfContents/TableOfContentsView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f392aea1940e3cfe5a5d5e31b25a1df4deafaccd"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/TableOfContents/TableOfContentsViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e00f83226aa649fac65958571ec36d75d2e1fa7c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/BlockText+Style.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "677f099bb287ec1f4087065e4efecea0aa04ebe4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/Stylers/TextBlockLeadingStyle.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "3b7c227ff5be0b99cd7005593f37b60f44453383"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/Stylers/TextBlockLeadingView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d0c64468638028a34f9b64bb6224f1e814465238"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/Stylers/TextBlockLeadingViewBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "8537b9b38896352e8fb55ed6d5064b64c44aca25"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/Stylers/TextBlockTextViewStyler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "78dc33544550170548c9f6fb3389ea5e3920758a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/TextBlockActionHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4d4116a5bd6b9a28f775eb1e7db3b58c5a929fd1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/TextBlockActionHandlerProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0d2827fc0bf654e46f2e18b4448bf390416e6d1f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/TextBlockContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ab3461aca8bffa1bebbd95c20b63dc1054aac679"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/TextBlockContentView+TextViewDelegate.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "3da236ac47747409114d91e96bacdec89e23ca0b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/TextBlockContentView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c950387a3dc3f56fed27b250a0b61affc3205138"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/TextBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7c7e18d3ea54eec5ba889d2f726d18e67e5eeec8"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/Views/EmptyToggleButtonBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "058f1e2edc451e4dd4e844a2db956e01119c8743"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/Views/TextBlockIconVIew.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "12334d6de523490f494dc030e5153807a34128fe"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Base/Views/TextBlockLayout.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cf15045c743463ec3b3fedef1628fe1b0a02b1a7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Code/CodeBlockContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "11bc8ade9ab1beda60d6f198d1f443eefeb2c4fa"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Code/CodeBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b2985fb47ef83401f20fce8812057d2c88149ce5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Code/CodeBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "564bb5986e87d66e3e24bec19e13be4791620afd"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/Text/Code/Support/CodeLanguage.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "31d30e65106f537bbae838adbd8b3b43410b0ecb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/UnsupportedBlockView/UnsupportedBlockContentConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2fbef7045498d3a8bd6338afb2bbdd8ccd8a5f95"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/UnsupportedBlockView/UnsupportedBlockView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "421a71ea07a0b52f74485f4b17362d793a88d214"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Blocks/UnsupportedBlockView/UnsupportedBlockViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "85ae2aba37d66200f4389df624d3258a6cfa2c77"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/BlocksOptionView/BlocksOptionItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2f7789e9cadd4d5365d53de9cef85db9aa11e756"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/BlocksOptionView/SelectionOptionsView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a3879ddc80f012ee6bc599597da1fec7d40f10e3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/BlocksOptionView/SelectionOptionsViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ae4b6085d5d602e2410ad658321da9dfd825cb54"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/BlocksViews/Common/LinkToSearchHandling.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a66db1eb5786df08aa86b824be97bd7e69048ea0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/CompositionalBlock/DynamicCollectionLayoutView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6b3d29954d1e0a144187432fa6b79812a06e1d4e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/CompositionalBlock/DynamicCollectionView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "366162ee9a7d0a900e7ef25596cd8787c5f3c157"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/CompositionalBlock/GenericCollectionViewCell.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "70a6d8b57fc995f32f06ee624ace9b77817bb9fb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/CompositionalBlock/SelectionDecorationView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "42a0cfa0eeb601a4f711fe11ae24cb27b443c90c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/CompositionalBlock/SpreadsheetDataSource.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "729b10d65a4ecfdd5ce774b866b866ccbdcf7afd"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/CompositionalBlock/SpreadsheetInvalidationContext.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "38db52d65a370ae2359e3b7a3fc9d1646b648022"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/CompositionalBlock/SpreadsheetLayout.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "afa964586fcc67a9fce39a550b48a218a6c5a1f5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/CompositionalBlock/UICollectionViewCompositionalLayout+BlockLayout.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ac922cebf2dd8b4cb16970323af0ad5100f2d4d7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorCollectionView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "08da10f1ae8757bb72043bd51cef0402d732e6e4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageBlocksStateManager.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f04ddd47117f5c76c14dabdbfeac72862d7034e8"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageController+DragNDrop.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "705b84d73cd562b5c8166bac43d26dc0d1748e0e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageController+SelectionEscalation.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2d337affc09351473b5d55c154112a7741a39e84"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageController+UICollectionViewDelegate.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "89f0625e42f6619435ad757caf9def8bd9324818"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageController.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9fec8f99396cc187f085f157a6e4d49d3eaa0edc"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7a32bf7fc6fb8c7fefcc10158abc166011c49c7d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageViewInput.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4c13380b67e44fa54ee68b80ff815c3866461a94"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageViewModel+ChangeType.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "71ff6b97ae3926635ab84c0d35c5f54367c51554"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e52ca495557489c0e71efa20d0165290cb43b212"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageViewModelConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1b8a94840a94046c4061efcc805a83c1af2f43ae"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageViewModelProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "572da6de0af976bafccbc52605f47309aa51f5f8"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorPageViewState.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7f17813707356d05d271e34adf7472273a6c2fff"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/EditorSwiftUIViewContainer.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c5c49f3f3e5a09c6adbc5d0df8e9b38a3cc224b0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/FlowLayout/EditorCollectionFlowLayout+LayoutDetails.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b3e6fb1980971827b42e7e74cb57814a4a52d967"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/FlowLayout/EditorCollectionFlowLayout.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2528f374b957d04b16afa37462fb6172c89100a6"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/FlowLayout/FlowLayoutExtensions.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "80bf0d115cb25b4dd8decad09b76099aa8a565ed"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/FlowLayout/Models/BlockIndentationStyle.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f480686a813ff7d0014c3738aa9874268495fa4e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/FlowLayout/Models/BlockLayoutDetails.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ef59fe48f78733f2646ee732888cd5b01e98b3a7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/FlowLayout/Models/CustomInvalidation.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "490e470bb6bab6a9f32a5f4ab4c4abe80c97407d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/FlowLayout/Models/LayoutConstants.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d3575732e258b2e1fd3217d98b5eb6a626979212"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/FlowLayout/Models/LayoutItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2597aaa7cdb0e3dbd89d48ec15cba961e7c3fec1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Models/BlockForkRebinder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "303c380bed337ad7769971a9099647cbc1957d4e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Models/BlockRowIdentityMap.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0a8b798750a8135458bc083a1d4d983cdc843c53"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Models/BlockViewModelActions.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1dabb70d3bb54cf524448d9882d4c95ea3a230be"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Models/BlockViewModelBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0aa1767f879863f6602485f3d43a9ee37f9962d9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Models/EditorBlockCollectionController.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2f0736f7517fa87a5d5070a0e03933c940569410"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Models/EditorItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "472c545bc37bde944a7fc0ef77a713f47b813cd3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Models/EditorSection.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b5daaeeecbfac4e814e26f6fa01ff0ef2fd2690d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Models/FocusSubjectsHolder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ea0184b840bf6843f49212d40cf64e03da24472e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/DividerCursorController.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "762577a0e30b60a9a6ac6b51cd2045f2b65de7e2"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/EditorBottomNavigationManager.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e1c6be8ff81eea3d4e4ad1c90d43a4a95afb40cb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/EditorMainItemModelsHolder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1a695081e5f642c6981f668bfefc9dbba543ffd3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/EditorNavigationBarHelper/EditorNavigationBarHelper.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c810eab7e0a6cd499e36c046704f7fb94240e65b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/EditorNavigationBarHelper/EditorNavigationBarHelperProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "efc73f69d1f04f04dcdc571888770bb213debab7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/EditorNavigationBarHelper/EditorNavigationBarView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e3649f99bb82c4157b58e71d10b118ff18b50a04"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/EditorPageTemplatesHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "14fda8b0621d41a92c11add8d9e4a158ad648ba1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/EditorСursorManager.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "59e9a241e83b80988a1694f9eb8f68636bd757ff"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/Markdown/Internal/BeginingOfTextMarkdownListener.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d8bf62dc8cdbd550b5f23f6de7d9533f2721580f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/Markdown/Internal/InlineMarkdownListener.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ff775ff40774968bb4981b91d345a0fe9c96fcbf"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/Markdown/MarkdownListener.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "53f9ef5a27af3ceaec4f05c3223e744946ed1076"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/Markdown/Model/BeginingOfTextMarkdown.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "af21555d6d7bb1b077da4a618103281b3d00e8c1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/Markdown/Model/InlineMarkdown.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7fa360f6f10a95f72dac3aeea0b653966f17092f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Utils/ResponderScrollViewHelper.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1969a1073a18c4f058c2bdc82ee704a3dda6cb93"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/BlocksSelectionOverlayView/BlocksSelectionOverlayView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "92362f2f5c7d63f6bd6c597fc58dea4b3a41f46a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/BlocksSelectionOverlayView/BlocksSelectionOverlayViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a349f0b6364ed0f35ce7aff0194c1ff83f379d9b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/BlocksSelectionOverlayView/ButtonsView/TwoStandardButtonsView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "de850e9da46cdd3d18156769816831ee4fbca1ef"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/ContextualMenu/EditorContextualMenu.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "38d17a23f77b3ca8b5f4a1998a8346b41bf040ce"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Empty/ObjectHeaderEmptyConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "66cde0154d6d6d501920a54d8c9e8e49ce5abd36"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Empty/ObjectHeaderEmptyContentView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "39ebd13008b0d647d2cd72f2910fec939ecaba5f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Entities/HeaderBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f54c0567e897bfb3c0950b9913c526c9223d8dcf"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Entities/ObjectHeader+Mutation.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "aca0a13b7b93c40444802275f2a8b360d96a5a36"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Entities/ObjectHeader.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d6620d3c2a7b998c08b2532e4af2d4668db36abc"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Entities/ObjectHeaderEmptyData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7cafebb86d6c3d8dadbad6584965084c7befffec"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Entities/ObjectHeaderExpectedLayout.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c0cb322f9a19108bbfa79fe77dfe87e539db32ae"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Entities/ObjectHeaderFilledState.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ec40fd85b8c5424e7a1d61262a555b8b5f7ea4b9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Entities/ObjectHeaderViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a368b37a2e26c9aea245ca3f9145d6072f4ff7e0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/ObjectHeaderFilledConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "53eedace39ac02eb7e1b8c2079733d7d70f787ea"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/ObjectHeaderFilledContentSwitfUIView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7a4f2f3bbf22048a790027c1429ed0d028d89259"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/ObjectHeaderFilledContentView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "116df38ad95d678f6d5290762ca9a8d7e1563f1d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/Subviews/Cover/ObjectHeaderCover.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e6e12b3462e4083dc94a731868963e706fc27ca1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/Subviews/Cover/ObjectHeaderCoverUIKitView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "503574e441ee4d8900c0d79f87c5266285a00a89"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/Subviews/Cover/ObjectHeaderCoverView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cfa94dc126794798fdaa3600db61c3777aa08788"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/Subviews/HeaderViewSizeConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "bea53f736682980c3f8b4f387c05cdbab1c1a475"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/Subviews/Icon/ObjectHeaderIcon.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2dee783fc8bb0da9d23cece11606d3cfe058f084"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/Subviews/Icon/ObjectHeaderIconView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "92260507aeb2ea8105d6934c3f28094298836363"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Header/Filled/Subviews/ObjectHeaderView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ea2afd0f93abf8f22b4aafd0bc3be2a0235bcf39"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/NavigationBar/EditorNavigationBarTitleView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "adcba8b5093b660e82804bc804fe37aefeef1806"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/NavigationBar/Settings/UIEditorBarButtonItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "dfdefcd3fa2e02e76b66c15701e4218c3a58d2ea"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/NavigationBar/SyncStatus/EditorSyncStatusItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7b5fff99f9e9f1b2c7113bd883453256f393723c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/NavigationBar/SyncStatus/EditorWebBannerItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f67b5b0ffb3b78f0e915bf0344c6408dc59bfecc"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/NavigationBar/SyncStatus/SwiftUIEditorSyncStatusItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2a2ca7bd8da8dd84eea7ffbc7e28b1d8df072650"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/NavigationBar/SyncStatus/SyncStatusData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "507c45234219b02c1a2c327c712cbcd0af6c1152"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/ObjectHeaderConstants.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "8251a9471271ffbc98c5871eaad80da8f0ca3f0d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/PlaceholderScreens/UIView+SpookyShake.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1fafbdb9cbbce5c1eb53c334f25b6d62f62bb05b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Cover/CoverColors/CoverColorsGridViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d56ad10db46228cbc00576b3890835436ed93189"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Cover/GridItemViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2c63b61ad8748b9ba2058ed1f93d3962da3f22e0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Cover/ItemPickerGridView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ef4f2654767c8fd17d32b32d342c9dae0c94f4d8"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Cover/ObjectCoverPicker.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d8ac1162645db4e6cd81804226fb0c45ce987d59"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Cover/ObjectCoverPickerViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fe611af9caa0dbfb40f8ee70d7e3af172d30b64f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Cover/Unsplash/UnsplashItemViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2a209dad8d0578ae6ae71235f21e2fdc1dbf3217"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Cover/Unsplash/UnsplashItemsViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "477644adfe5e92637c13cb24241060642af11ab9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/Coordinator/VersionHistoryCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4540c44afd06b2fb5615a1412e3d91c47b7cbe21"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/Coordinator/VersionHistoryCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "761aeeff60e1ff841da6014c89ed0cf896947199"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/IconsGroupView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "02eff4b4fb5c1c1200ce7a68072857bc1be77e4d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/Object/ObjectVersionData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "8163bffb07b8880cd6c3a2b2a3a87610ea4a2727"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/Object/ObjectVersionView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "3eb203bb8a55b91535910227a1dc52e7f04ee395"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/Object/ObjectVersionViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2acccd5200de489cfd1ca6a986cca16d85e182b0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/VersionHistoryData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "448e7e9d0cc8c1681f07545bcb00c7f6f3dc03e5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/VersionHistoryDataBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7d2ff0b81c91b865352f28e06c9f63828687e9f4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/VersionHistoryDataGroup.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "54e1db1eb043a49ae10edd8bae8d99c02c562131"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/VersionHistoryGroupContainer.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0bbc15e38ac38855eaf9257ea6b78c43d1172dcb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/VersionHistoryView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "367202d5578f80740f0e58e2f2622aefc9a2d8ce"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/History/VersionHistoryViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6c974abdc67d35776c784226313180462ed1d7a4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/CustomIcons/CustomIcon+Images.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "36a4dce8c394125c9f1d0d2d78610911c1288d76"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/CustomIcons/CustomIconColor+Color.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "08ce91263ddd1ab08ecd08573b9e669aac1bd202"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/CustomIcons/CustomIconColorOverlay.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d29045f267451f17b494075864f3c11d21b71dba"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/CustomIcons/CustomIconGridView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2ad271ad7d8e5db3fa2c510b31f160e8de97239c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/Emoji/EmojiGridView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d840dbac1f143296e91d2fd690629357d04deff4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/Emoji/EmojiProvider.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "93f698fe8b92e17b510df408f8dc200670f0b864"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/Emoji/Model/Array+Emoji.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9706337ad12a86b5d54b77e0b91d58c88c5530ec"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/Emoji/Model/EmojiData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "748d622a1041c267e9bb08ada43e2030272a657f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/Emoji/Model/EmojiGroup.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d2cb01babaafa30e783c8e7b094466d988f3f881"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/ObjectBasicIconPicker.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cfe37e65979d9171ab38a4a2bb32bf00c635a708"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/ObjectProfileIconPicker.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "dbbdd5b0a83f0c9a0eb8eca102b013d977dd70b2"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Common/ObjectTypeIconPicker.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c9a50ca1f56f1a926cddf885db266172ca85631d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/DismissHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "52c6051d93c1c96449e6bbac2fdd609744c956ab"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Local/LocalObjectIconPickerView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a7bf04e667db18b97b80b3501b1822b1c1e50431"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Local/LocalObjectIconPickerViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "be4265e24c31cc58172af79f22ff5391fd1cae22"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Object/ObjectIconPicker.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4e1efee1c7a9c17f04fe9a82ec1c2e2cd94721f6"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Object/ObjectIconPickerViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5170c8623db15399caaa806f7cd0bb267ada3c7c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Space/SpaceObjectIconPickerView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fb610e1bd508b6d2f755c118d85b8f05fa7e3e83"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Space/SpaceObjectIconPickerViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "db1cb09b0bc71ef834d29cea1cc56535318975b0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Text/TextIconPickerView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4d2f03f6e1571af7b19c07956676c7a1a8703848"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Icon/Text/TextIconPickerViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "14ad0412280160dff2f3495475a53d630d90f777"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Layout/DetailsLayout+Metadata.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2209b8f92ea653e791ba15e44ef810b93cec3f8c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Layout/ObjectLayoutPicker.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "84536ab6f9ebda87a74ec7141e4579015adf2657"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Layout/ObjectLayoutPickerViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "046be6e51dfd3cbab28421532ac8220cf6a60704"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Layout/ObjectLayoutRow.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4beaa99db298676b7e414dbf08174bc10808c8ce"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectActions/ObjectAction.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c31c1e6ee9071b5c61f8c37f4f4235f5d1c46380"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectActions/ObjectActionRow.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a2908ecd2ed4a6721b5d80f0fc5b1439f52023b7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettings/Alerts/ObjectSettingsResolveConflictAlert.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "44c83edd3c833c538222ad52af9fcbbafd312cf6"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettings/Model/ObjectSetting.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "46a5d3d6d58b396386806395b571af6ac8732a93"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettings/Model/ObjectSettingBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1fe51eca8e0e2027542dad2a3bfd220d63c4ff99"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettings/Model/ObjectSettingsPrimitivesConflictManager.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b549c1e20933d4ee5018268b95aabe938b4e344d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettings/ObjectSettingRow.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c13e6f02c8da6e881f13dc07dd56d78e3953ff69"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettings/ObjectSettingsViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b103d454304c1dd06cc2707ca3b972c06cf91d38"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettingsMenu/Models/ObjectMenuItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0489e6c9da027884c7a09042c2974cfa731fdeac"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettingsMenu/Models/ObjectMenuSection.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "79cd9c9fd58a7bee84a45af1146f78a781069bbd"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettingsMenu/Models/ObjectMenuSectionType.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f0cfdc2d12c882cb4f768689d52a17b4c1a11047"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettingsMenu/ObjectMenuBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9bd27ed101a5a81db7862ed4f8192a99e9d805b3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettingsMenu/ObjectSettingsMenuContainer.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fc016692cfa6915b0be4f0ee6723c40b9d9e30f2"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettingsMenu/ObjectSettingsMenuView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5c3f1269ef08b25123b02cadad06a39049388e4d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/ObjectSettingsMenu/ObjectSettingsMenuViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0b6e04d37278d8264a8f99b2f683d26e9587213b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Coordinator/PropertiesListCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d84330f06cdf2495331497daec6b198da0451e2e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Coordinator/PropertiesListCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f942adea735b1d5cc9413b5dbbf462e9cdc0f1e3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Coordinator/PropertiesListModuleOutput.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6bf738603fd34ee928558129437dde3ce8147a24"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Entities/PropertiesSection.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c21aaa444db99011a7c721b863e089d132498e60"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Entities/PropertiesSectionBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d69ca2d5cd4adaf9ba04c5e2928d8083e30376a4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/PropertiesListRowView/PropertiesListRowView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1c33f2fd88b8a7b7fd9bb4856cb7c92ff575c18d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/PropertiesListRowView/Subviews/PropertyValuePlaceholderView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1bf74c8a6c197b9dc647f49f5a48f8d37f53fd5b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/ObjectFieldsView/ObjectPropertiesView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "cce9e8c1378bebcbd890fab2f647098dbbbf0a18"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/ObjectFieldsView/ObjectPropertiesViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "02b2923fa1a82a2e57123f688b811722fd940d2e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/ObjectFieldsView/Views/ObjectPropertiesBottomAlert.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "062728445f8e98c00720bb37d166ba7cbb325725"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/TypePropertiesView/Model/PropertyDetails+Identifiable.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "aa74ff432d247cc647bec0e488d6bb06de6cb678"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/TypePropertiesView/Model/TypePropertiesDropDelegate.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "619baa218682243e248594874edb1777373c8021"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/TypePropertiesView/Model/TypePropertiesMoveHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e84bd4d149e128178cc9a54790c68ae003c07106"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/TypePropertiesView/Model/TypePropertiesRow.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a007a182a911d421f2d691c70f8b2850ee10d5c0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/TypePropertiesView/Model/TypePropertiesRowBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "12cbc9da524e4f5b9c4d2cb2ad9726857981cb6d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/TypePropertiesView/TypePropertiesView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9ddf67616af1c92ec6e231de04f04f74b9791e30"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/Views/Settings/Properties/Views/TypePropertiesView/TypePropertiesViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "eeb9bc9b54f833072f1c856f9b076a1e67743daa"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/EditorPage/VirtualTrailingBlock/VirtualTrailingBlockSession.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "18c34937c37bdd0af93b8d47760d3ec205a42585"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Routing/Controllers/URLInputViewController.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0b8f32d2620fe5475affd5f701b80a230c0c4f44"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Routing/Editor/EditorRouter.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d6789e13e59fd9739e0a6193ee34d43b9fea114b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Routing/Editor/EditorRouterProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "29eb28d2f25f0e0cc72bd5b856636d236dbe51b3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Creation/SetObjectCreationCoordinator.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0d9a69c609636738041c1cdf57270c1b1ac0ffba"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Creation/SetObjectCreationCoordinatorOutput.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "166726d83c011435b7135631b01a36444db895e1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Creation/SetObjectCreationHelper.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "195d759e9344be73ecc123ab34c572ffeaf326ea"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/EditorSetDI.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "8be506a4caa709e45ebd438de5b89d909e327301"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/EditorSetView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "77b5f2f08662fd788ef5df90b1986c4bad2dd3a9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/EditorSetViewModel+DragAndDropDelegate.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "690e756f416a81f8ccc05d54c6804cb54eac45f0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/EditorSetViewModel+Pagination.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2de12207865355abe4554c6083cb1c83fc0ea457"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/EditorSetViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "44109c2a78da59c34febfe594b8fd94c1908c222"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Models/Builders/SetPermissionsBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "55730b0fbfd1c69fa2b14ffb9c18f77f1479171b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Models/EditorSetPaginationHelper.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "466d104bdc9fd7ef4e44f1cb2783452112885bc5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Models/GroupObjectIds.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6952a319726d2cf79a6beae1cfbd8769e29fc1ca"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Models/Property+Set.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "8f2380411316bffea127fb4b40b3f318dcc813fd"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Models/SetConstants.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4e83d4cb522243ab7412845ac8d059ee7af4ef25"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Models/SetContentViewType.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a70b784c88dee701979b3f8dd2e61a5afae27985"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Models/SetDocument.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d09307b2dbd44a65df35f4a15d58d6556925c249"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Models/SetDocumentProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f07073f3b27c3d6ac656a3845a8ca6e3ae3d55dd"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Models/SetPermissions.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e9f0adaa35f1304efd09f04c8320fffa49974275"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Subscriptions/Group/GroupsSubscriptionData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1e23bfd9ec656ae5c2a3775d33afe514f43e158e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Subscriptions/Group/SetGroupSubscriptionDataBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0776364c00562343fc32d254b220219d34ee70ff"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Subscriptions/Set/SetSubscriptionData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "8699f11e93cfe9235311e8037a50d2761a4c10bc"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Subscriptions/Set/SetSubscriptionDataBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a7259eb797f0cc581a0d0b5517b484bdab4b90df"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Collection/Cell/SetChatPreviewView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "bc95a5e4ead5df1cef68095f5dfdc01ea92f6482"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Collection/Cell/SetGalleryViewCell.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b36f3e6bd256147299c24713d46b52bfdcf49df7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Collection/Cell/SetListChatPreviewView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "33830b62dc9039709dc5f81793f940cc96d20439"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Collection/Cell/SetListViewCell.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fbd106086ec610d1277d1600affa1369d9e46609"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Collection/SetCollectionView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "98d602e89b3b951e4447fcd751f0e0d371eeb6f2"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Empty/EditorSetEmptyView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d78ec12f004352de93a27f8fdab44ea0168bdca6"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Empty/EditorSetEmptyViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d77b49b66ca2b54295c36a6301addb5da6af58c6"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Header/SetFullHeader.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "da6eec2e160cee87b3d0f16eeaa4b5031a7a4669"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Header/SetHeaderSettingsView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1624d1e319f488da97a2126204d182ef13412c7f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Header/SetHeaderSettingsViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1be58524bce1b26a4ec594631fedc1cc53dcd1ad"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Header/SetMinimizedHeader.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "3083715255ed3bd30e7750a5195e10659351fa83"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Kanban/Board/KanbanCollapseCoordinator.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "08b5be9ff32164d4ae5737f36f6f84c2523fb155"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Kanban/Board/SetKanbanView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c656facb107d7bc14a00744adb400cf1f827d4cd"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Kanban/Column/SetKanbanColumn.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fb5008d64420998fd4ba084013d181b3f02977f5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Kanban/Column/SetKanbanColumnHeaderType.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "35db5a19f704959e28c5a78d14b9c388b779d62c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Kanban/Column/Settings/SetKanbanColumnSettingsView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1b29859708a3524a0587c2892bf012f1d48e91a5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Kanban/Column/Settings/SetKanbanColumnSettingsViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b1ba2e504ad5c9144f96fd9ce7d98286f3b5bd1b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Kanban/SetKanbanBoardState.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c62b1bf7bba0e188f9a7d3ce9f085becc9999e37"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/BlockDataview+Group.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "aa1b2c76fabb219bda6a6f68e091202d04786d0e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/DataviewFilter+Condition.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a6822745a12d9d477c95bc4b99e1a28fc9c2259e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/DataviewFilter+QuickOption.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b8e2fba55b984fee1dbe1a66258e2f0d99149a27"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/DataviewFilter+Update.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "97a51903c1958cdb65c9250f3f0388fe02c69c46"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/DataviewGroup+Filter.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "53ac4f03ce048c53b286ccdf5e8a73f4db901623"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/DataviewGroupOrder+Update.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d1378fde474f9721b8e735040b804243e0760820"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/DataviewView+View.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "aaac75c4b6d78ea46ccfed1aee0f79899e81f727"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/DataviewViewSize+Value.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "272d68ab541082fbed8ef6e6bac9b3c4724d8441"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/SetCardDropData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5867b4af4ba7346563c6a356812cdaf9e328e315"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/SetCardDropInsideDelegate.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7f17e45b21af61a6c73f7be96582fd64c827882d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/SetContentViewDataBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f2124dcd1c8ba5595810932abb8dce93a391013a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/SetFilter.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "915a69a93b1fc940112f5725620a824558891b46"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/SetKanbanCardMove.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f1431d5d0cf6558bdc1b80396fe9d8fec5d00383"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/SetKanbanReorder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "df539da106e4534b2bc5b4d83fce7e3e5866420b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/SetPrefilledFieldsBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7aef8ff8af92ab5d3b90d2f01978e3499c409369"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/SetProperty.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "2d75bba1d508af0e3b0e093fa2551e2bacf27c95"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Models/SetSort.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "3b524925be190a35e375ab75214467d28949c546"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Pagination/EditorSetPaginationData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "146a1eac3b790cdefbeb634ed8dc067b608e2d68"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Pagination/EditorSetPaginationView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "45c5326c6d4c384f97436db1613b4501d8643507"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/CreateObject/CreateObjectModuleAssembly.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d8d544db58f73b360ffd2023f713326bf1fcccf0"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/CreateObject/CreateObjectView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f7066d32fca8afb673a93cc6ac98c746fb4b06d7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/CreateObject/CreateObjectViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "579753bc29742d870140919093dfd47bc1fe864f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/CreateObject/CreateObjectViewModelProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "28d6a96eb32bdcb1c2a1dfe002a676dfcde01c92"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Checkbox/SetFiltersCheckboxValue.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ab351598c3b544597890b6655ba823bbb40c8b6d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Checkbox/SetFiltersCheckboxView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6213b8dccef3ae3063ec9b94b03cf929489c4104"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Checkbox/SetFiltersCheckboxViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "75a0bb9c8df5615b28fe16122613a3be1960291e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Date/Coordinator/SetFiltersDateCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "679f8492ea0480559b1bf44c731cef7afe864258"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Date/Coordinator/SetFiltersDateCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "25f53c9b57f74480cc93129e8ecc1709fc18f0ef"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Date/SetFiltersDate.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "996db06d871aac8c7e853c9b6451e91218628fc5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Date/SetFiltersDateRowConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ce03530f7d817f75381367ddf835c7d071510727"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Date/SetFiltersDateRowView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "be9d49e8e99b116da728b74f2d57d18ea450b90b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Date/SetFiltersDateType.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b2cad81ea426c2d30a81ffe47ab453974df1794a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Date/SetFiltersDateView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "e39f49dffe0ce2b0083bb099f18d884f414c4400"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Date/SetFiltersDateViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d6c98f3eda84ccb1fbc98834f1c3472e4bf95eed"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Date/SetTextView/SetTextView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "549866088187c536357d9f7e5bfb6d984a12a473"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/List/Coordinator/SetFiltersListCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d6f46acdd0042fab84fcd545bdb51835f73256ae"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/List/Coordinator/SetFiltersListCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ecfe41d5961c3595e0ea5edab714cadf52e7ae41"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/List/PropertyFilterBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c123709d139efe33e1bf1787cec67eb69cac49ae"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/List/SetFilterRow.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ebbbd7298c0a2037d3e08f6223b02937dfc36276"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/List/SetFilterRowConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c4a5439476612334251934e6a85e6bd8dd0fb95b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/List/SetFiltersListView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9202cec2edba13f085207718d24b5c5875c799df"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/List/SetFiltersListViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9a30b809dc71c8720ee3b624d3771ed9f9de420e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/Conditions/SetFilterConditions.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c9aeb422c07487920acaf30b8cf580179a365c99"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/Conditions/SetFilterConditionsViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7fe7635c3a46e08ce593402f8003718f865339e1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/Coordinator/SetFiltersSelectionCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6c65249c4a3836f3545cd5724b228ce6210e9fdb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/Coordinator/SetFiltersSelectionCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ba317b9b90ef26ff4e289c3f68ca0a6ef9d7a6d4"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/Header/SetFiltersSelectionHeaderConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1f6ce1d9465be919aa5fbe45c85fb19bfa6401f9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/Header/SetFiltersSelectionHeaderData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "519721f1f050b708d7a1a4d4c0c93dd85865f05e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/Header/SetFiltersSelectionHeaderView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7315ea919eece952b79aa98ff7b9eaa8ecc6e02d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/Header/SetFiltersSelectionHeaderViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "407e898abbc7aa3ee1bc13f08403ed3992a6c985"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/List/SetFiltersContentHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4a0863b5eea2295b092136776dbcf41866edc85b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/List/SetFiltersContentViewBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "324bf4850c7435633af2a7f6462b0d934c2c3b68"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/List/SetFiltersSelectionData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4e64faa1b40b7c7051250c3f80a4f77d79a19592"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/List/SetFiltersSelectionView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5dab9e39ef1207f1c257a77bfb9503c60b9843eb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/List/SetFiltersSelectionViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d1b47993f280b5018ee6551ba707dbae0ac9c6eb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Selection/List/SetFiltersSelectionViewState.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c5118957e4087c2f25da744b1c55134df922797c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Text/SetFiltersTextView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6c27655e27904ffe9e5c7b781f365efaa5f8cac1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Filters/Text/SetFiltersTextViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "50f1142cff5a8f9ad49bca04bca99f5874f8fc21"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/ObjectType/ObjectTypeTemplatePickerView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f3eeb139e31e485eafdc5d6768637690dd8e7ec9"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/ObjectType/ObjectTypeTemplatePickerViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "8bf6c09d5d5bda020fe9fcd80d4cb2d613baf05f"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/CardSize/SetViewSettingsCardSizeViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4e9417b862342ed4a1e650cea10c8ffbf68f6c4d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/Coordinator/SetPropertiesCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9edefe72075236aa9f4aba5e2e7e2f38ed73b98d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/Coordinator/SetPropertiesCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6dd4fddc5095547321890d2f9813751a1716ee8c"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/GroupBy/SetViewSettingsGroupByViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "879d20925aa85562d26889b5ff8fc81e5b01d9c2"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/ImagePreview/SetViewSettingsImagePreviewCover.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b92edb1f51fe420f463014f85b72bf92d2b3b2a7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/ImagePreview/SetViewSettingsImagePreviewRowConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "3acdc7882c2331e1133739c997e94dac015a1acc"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/ImagePreview/SetViewSettingsImagePreviewView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "838db6279fd8b7085389cbda7f1d313be0507281"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/ImagePreview/SetViewSettingsImagePreviewViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "fc1a056c8d9589aa21c520507b38fa5b1c102b10"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/RelationCreation/PropertiesSearchData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "48bef462c8a2f503fdf362d7daf409bc4be3e87a"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/RelationCreation/PropertyCreationView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "0682b7e7549fb2f5e0c34d2cbb1a599f97551b18"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/RelationCreation/PropertyCreationViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1e898ca01827f33ebae58dd5a8eae7a7ee4fd021"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/SetPropertiesView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a7b31f7dfff0e0dfb4d593930a33e03761e98e49"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/SetPropertiesViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b95a4dd2954bf64b3c5396825b93ef0fb5519c71"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/SetViewSettingsItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "924b4a988cca5101a6aa766b17be84bf60c94ed3"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/RelationsSettings/SetViewSettingsProperty.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "58eb17e1d96bba562ac11b48ebac269a5fa5c708"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SearchView/SetPropertiesDetailsLocalSearchView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5692f13f310a88b483c1c4c6b3e6974e3ed5a949"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetLayoutSettingsView/Coordinator/SetLayoutSettingsCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "da678d65157cf5e37933b382016c015ac69d9430"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetLayoutSettingsView/Coordinator/SetLayoutSettingsCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "af021fcdf5f9721c7e528bd91871bfae33920620"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetLayoutSettingsView/Coordinator/SetLayoutSettingsData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "d19c74091f130dbb6f5015dd470630faa3993834"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetLayoutSettingsView/SetLayoutSettings.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "1d9cd3cde90b61c828d43ee5834b96a27a67a5ef"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetLayoutSettingsView/SetLayoutSettingsView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ec757f54b2531c8c353513e24834f8426fafcca2"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetLayoutSettingsView/SetLayoutSettingsViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b9122d0d5dd834f89383ed06d3eac3d7d9dcbe07"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetLayoutSettingsView/SetViewTypeConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "16a5077cf9cbb4dcd75a2e6a6d9c0764561752fb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetViewSettingsCoordinatorView/SetSettingsData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "3d60200aa565cf3c729c825417feac03a92dfc31"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetViewSettingsCoordinatorView/SetViewSettingsCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f5192e20481219b1e92f0bc7c4f1c9c3d54b3a2e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetViewSettingsCoordinatorView/SetViewSettingsCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f45126b63481e817b6c8d7da9a9aaaf38500a70b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetViewSettingsList/SetViewSettings.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6d53b33a30a8e32613f19bd6f1b6d2cb41818a43"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetViewSettingsList/SetViewSettingsList.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ee7cfcb1f89833041d46475de9332149f58d5621"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetViewSettingsList/SetViewSettingsListMode.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "5e0bc1d0dec11aa4aa46b049060f0c93e1666429"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/SetViewSettings/SetViewSettingsList/SetViewSettingsListModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6fa8942fbd92daa33405fbd95eb8f0e2105e3fe1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/Coordinator/SetSortsListCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "13338c3b580e2b16ce4d3bd4f480115a7b09aa23"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/Coordinator/SetSortsListCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a92d728d8550ffa19a7ef1f5649fc87181dbb2fb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/List/SetSortRow.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "35924c05ad632a0ece8e3e210b3d0889ad99d9b5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/List/SetSortRowConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "87e1aac049623b52160dd1dfe87c22f2bd555734"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/List/SetSortsListView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b453673491f17e7f9e924df195efd580c07853b2"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/List/SetSortsListViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b576d89687c11e15e7fc60a3041ce2dacabe1226"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/Search/SetPropertiesDetailsLocalSearchInteractor.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c8ff101d596d39c80f052dff5697eccec8791b77"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/Search/SetSortsSearchViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "6abd51a74d1af050ebd7bcaf8575f2824f73c8d7"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/Types/SetSortTypeItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ae1dc288f926f9d2c02550e290d848ec210d86a6"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/Types/SetSortTypesData.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a8cbc1b4cf8179a9b33f4caa9147a18fda32293d"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/Types/SetSortTypesListView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ab95784e10a3c4477200a7c472c410eea98f1c94"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/Sorts/Types/SetSortTypesListViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7058efe18ee7da2d8b898530dc29a730c22c8658"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/ViewPicker/Coordinator/SetViewPickerCoordinatorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7d31e7c33ba088ce55a80268c6757d74bc1d8d41"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/ViewPicker/Coordinator/SetViewPickerCoordinatorViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "f1b69364649859897b00a474fd21b4fad3f47b00"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/ViewPicker/SetViewPicker.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "41ecf803b668f431ecfdf56c20434f8d5c1558db"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/ViewPicker/SetViewPickerViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "3566100eaaa63b2e97438b358e504977dd6266bf"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/ViewPicker/SetViewRow.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "032b9c8697581f33218d1204785d1f41e4f23d3e"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Popups/ViewPicker/SetViewRowConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "7fc3be78a5924bf55f27e2f123c46aed23cdad44"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/SetDragAndDropView/SetDragAndDropView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "93631dfd91f719c440d825d3ac5d36cdf9c793f1"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/SetDragAndDropView/SetItemProviderObject.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ce191c97fa0ff8fe56d02b1df08e9fbd9a3899ad"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Table/Row/SetContentViewItem.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ec630453e05f0443ec5f0b12f638f516369edff5"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Table/Row/SetContentViewItemConfiguration.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "ee246942286f79897d5e102b41239e0081f55f19"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Table/Row/SetTableViewRow.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "51e0d356783f655f0834fdce2c6461fde304ce0b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Table/SetTableView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "4f334d56ffdaf0b77201d0251bd4eec73e1511cb"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Set/Views/Table/SetTableViewHeader.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "07420f6e3537bcf11a84c2798488c953a325ff5b"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Views/Alerts/DocumentCommonOpenErrorView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b98403ffa91ae6383b396a3cc3fad0c8d2671632"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Views/Alerts/DocumentUpdateAlertView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "54c145000b0f21f5a932ec32ddbe456ddad8efcf"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Views/UndoRedo/UndoRedoView.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b34c9a25e4a9ab717ead1b1319455b8f71c35c85"
+  },
+  "Anytype/Sources/PresentationLayer/TextEditor/Views/UndoRedo/UndoRedoViewModel.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c10a81ddfcfb83ce6995d473d85bc9ba7e3d8a3d"
+  },
+  "Anytype/Sources/ServiceLayer/Block/BlockActionHandler/BlockActionHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "059f8ff55ad71d595b044e675e384bc7f362cba4"
+  },
+  "Anytype/Sources/ServiceLayer/Block/BlockActionHandler/BlockActionHandlerProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c09ce7c8cc25f00003075b72bbf4a06f4d8245f6"
+  },
+  "Anytype/Sources/ServiceLayer/Block/BlockActionHandler/BlockActionService/BlockActionService.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "3e6bb92c50b550a29a34f479098bdf7c182f5057"
+  },
+  "Anytype/Sources/ServiceLayer/Block/BlockActionHandler/BlockActionService/BlockActionServiceProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "c2d167ef6ba52e1a44cd156bef7a797e7054d3cb"
+  },
+  "Anytype/Sources/ServiceLayer/Block/BlockActionHandler/KeyboardActionHandler/BlockBuilder.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "674999b75d5403214be390bba53b6d9a43054773"
+  },
+  "Anytype/Sources/ServiceLayer/Block/BlockActionHandler/KeyboardActionHandler/KeyboardActionHandler.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "9b5a8c36d7f5b766717c436abf0a1b393b023881"
+  },
+  "Anytype/Sources/ServiceLayer/Block/BlockActionHandler/Markup/BlockMarkupChanger.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "a6747eccc0a5739ab6cb67352363819cc5f0c82c"
+  },
+  "Anytype/Sources/ServiceLayer/Block/BlockActionHandler/Markup/BlockMarkupChangerProtocol.swift": {
+    "mode": "100644",
+    "type": "blob",
+    "gitBlob": "b4f2ba6444f9945775aaa3af276d032aa8332273"
+  }
+}
