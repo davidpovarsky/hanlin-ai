@@ -1,0 +1,14 @@
+{
+  "operation": "rerun original B-only job",
+  "run_id": 45223225171,
+  "previous_native_job": 137862767156,
+  "expected_attempt": 2,
+  "source_sha": "c1c9fde5299124953d7ced72748dc09b50b72f7f",
+  "original_selector": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+  "created_at": "2026-11-23T17:25:05.557480+00:00",
+  "capacity_recovery_run": 45224582718,
+  "capacity_recovery_native_job": 137867861546,
+  "prior_failure_receipt_commit": "2fd43eec6163073c46b4054c23458d1c55c2cc0f",
+  "no_C_replay": true,
+  "no_source_assertion_timing_changes": true
+}

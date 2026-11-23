@@ -1,0 +1,56 @@
+{
+  "source_video": "motion-first120s.mp4",
+  "source_video_sha256": "08b2abc4e3b785bd0d9bbb411c21ad6325ca8e7cdb3e2f3e987387749a01aceb",
+  "review": "Video supports delayed reveal during the burst; it does not establish intermediate geometry at a later callback. Geometry acceptance remains FAIL.",
+  "contact_sheet_order": "row-major, 2 columns by 4 rows",
+  "contact_sheet_frames": [
+    {
+      "index": 115,
+      "pts_seconds": 3.55
+    },
+    {
+      "index": 117,
+      "pts_seconds": 3.601667
+    },
+    {
+      "index": 118,
+      "pts_seconds": 3.67
+    },
+    {
+      "index": 121,
+      "pts_seconds": 3.728333
+    },
+    {
+      "index": 123,
+      "pts_seconds": 3.776667
+    },
+    {
+      "index": 127,
+      "pts_seconds": 3.841667
+    },
+    {
+      "index": 133,
+      "pts_seconds": 3.945
+    },
+    {
+      "index": 138,
+      "pts_seconds": 4.083333
+    }
+  ],
+  "contact_sheet_filter": "select exact original decoded frame indices; crop=2064:700:0:390; scale=400:-1; tile=2x4:padding=2:margin=2; JPEG q:v=5",
+  "single_frames": {
+    "review-frame-3.jpg": {
+      "requested_pts_seconds": 3.0,
+      "observation": "collapsed; two warm-up actions; footer follows header"
+    },
+    "review-frame-4_5.jpg": {
+      "requested_pts_seconds": 4.5,
+      "observation": "expanded; five actions; original disclosure content visible"
+    }
+  },
+  "limits": [
+    "Video is variable-frame-rate; PTS is not asserted to align exactly with XCTest wall-clock timestamps.",
+    "Derived images do not replace original callback geometry.",
+    "No changed native source has executed yet."
+  ]
+}
