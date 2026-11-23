@@ -2078,6 +2078,19 @@ jobs:
             exit 1
           fi
 
+      - name: Read the installed FoundationModels tool continuation interface
+        if: ${{ inputs.target_validation_group == 'exact_test_selector' }}
+        run: python3 Scripts/CI/inspect_foundation_models_interface.py --output "$LOG_DIR/foundation-models-interface"
+
+      - name: Retain FoundationModels declarations before the application build
+        if: ${{ inputs.target_validation_group == 'exact_test_selector' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: hanlin-foundation-models-interface
+          path: simulator-logs/foundation-models-interface
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
 
