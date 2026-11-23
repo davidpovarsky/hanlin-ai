@@ -1,0 +1,9 @@
+test_gate_fails_when_one_source_test_not_run (Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_fails_when_one_source_test_not_run)
+When exactly one source test is NOT_RUN, --gate must exit with code 1. ... ok
+test_gate_passes_when_all_pass (Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_passes_when_all_pass)
+When all tests pass, --gate must exit with code 0. ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.213s
+
+OK

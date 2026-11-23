@@ -279,14 +279,15 @@ class TestGateEnforcement(unittest.TestCase):
         self.assertNotEqual(res.returncode, 0, "Gate must fail when tests are NOT_RUN")
         self.assertIn("GATE FAILED", res.stderr)
 
-    def test_gate_fails_on_76_pass_1_not_run(self):
-        """When 76 tests PASS and 1 is NOT_RUN, --gate must exit with code 1."""
+    def test_gate_fails_when_one_source_test_not_run(self):
+        """When exactly one source test is NOT_RUN, --gate must exit with code 1."""
         from generate_provider_conformance_summary import scan_test_definitions
         repo_root = CI_DIR.parent.parent
         tests = scan_test_definitions(repo_root)
-        self.assertEqual(len(tests), 77)
+        expected_count = len(tests)
+        self.assertGreater(expected_count, 1, "The partial fixture needs multiple source tests")
 
-        # Include 76 tests only
+        # Include every current source test except the final one.
         lines = []
         for t in tests[:-1]:
             fn = t["function"]
@@ -308,14 +309,23 @@ class TestGateEnforcement(unittest.TestCase):
         self.assertNotEqual(res.returncode, 0, "Gate must exit non-zero when 1 test is NOT_RUN")
         self.assertIn("GATE FAILED", res.stderr)
         self.assertIn("1 unexecuted tests", res.stderr)
+        data = json.loads(output_file.read_text(encoding="utf-8"))
+        self.assertEqual(data["sourceTestFunctionCount"], expected_count)
+        self.assertEqual(data["passedCount"], expected_count - 1)
+        self.assertEqual(data["notRunCount"], 1)
+        self.assertEqual(data["failedCount"], 0)
+        self.assertEqual(data["evidenceErrorCount"], 0)
+        missing = [item["testIdentifier"] for item in data["results"] if item["status"] == "NOT_RUN"]
+        self.assertEqual(missing, [f"{tests[-1]['suite']}/{tests[-1]['function']}"])
 
     def test_gate_passes_when_all_pass(self):
         """When all tests pass, --gate must exit with code 0."""
-        # We synthesize a log that has all 77 tests
+        # Synthesize evidence for every test in the current source catalog.
         from generate_provider_conformance_summary import scan_test_definitions
         repo_root = CI_DIR.parent.parent
         tests = scan_test_definitions(repo_root)
-        self.assertEqual(len(tests), 77)
+        expected_count = len(tests)
+        self.assertGreater(expected_count, 0, "The source catalog must not be empty")
 
         lines = []
         for t in tests:
@@ -335,15 +345,18 @@ class TestGateEnforcement(unittest.TestCase):
             capture_output=True,
             text=True
         )
-        self.assertEqual(res.returncode, 0, f"Gate must pass when 77/77 tests pass. Output: {res.stdout}, Stderr: {res.stderr}")
-        self.assertIn("Total: 77 | PASS: 77 | FAIL: 0 | NOT_RUN: 0", res.stdout.replace("Conformance Test Functions:", "Total:"))
+        self.assertEqual(res.returncode, 0, f"Gate must pass when all {expected_count} source tests pass. Output: {res.stdout}, Stderr: {res.stderr}")
+        self.assertIn(f"Total: {expected_count} | PASS: {expected_count} | FAIL: 0 | NOT_RUN: 0", res.stdout.replace("Conformance Test Functions:", "Total:"))
 
         # Check JSON structure
         data = json.loads(output_file.read_text(encoding="utf-8"))
-        self.assertEqual(data["sourceTestFunctionCount"], 77)
-        self.assertEqual(data["passedCount"], 77)
+        self.assertEqual(data["sourceTestFunctionCount"], expected_count)
+        self.assertEqual(data["passedCount"], expected_count)
         self.assertEqual(data["failedCount"], 0)
         self.assertEqual(data["notRunCount"], 0)
+        self.assertEqual(data["evidenceErrorCount"], 0)
+        self.assertEqual({item["testIdentifier"] for item in data["results"]},
+                         {f"{test['suite']}/{test['function']}" for test in tests})
 
     def test_gate_allows_unexecuted_when_flag_passed(self):
         """When tests are not run, --gate --allow-unexecuted must exit 0 unless there are failures."""
