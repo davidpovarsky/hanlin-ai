@@ -1,0 +1,6 @@
+test_selected_install_does_not_download_unrelated_runtime_or_host_support (Scripts.SDK.tests.test_native_artifacts.NativeArtifactsTests.test_selected_install_does_not_download_unrelated_runtime_or_host_support) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.184s
+
+OK

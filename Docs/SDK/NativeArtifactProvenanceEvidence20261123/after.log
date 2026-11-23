@@ -1,0 +1,9 @@
+test_check_rejects_old_native_source_and_old_host_after_pin_update (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_check_rejects_old_native_source_and_old_host_after_pin_update) ... ok
+test_install_rejects_stale_incomplete_or_modified_preparation_before_io (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_install_rejects_stale_incomplete_or_modified_preparation_before_io) ... ok
+test_sparse_doc_descendant_preserves_assets_and_passes_install_and_check (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_sparse_doc_descendant_preserves_assets_and_passes_install_and_check) ... ok
+test_stale_host_is_rejected_before_existing_or_new_support_is_committed (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_stale_host_is_rejected_before_existing_or_new_support_is_committed) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.212s
+
+OK

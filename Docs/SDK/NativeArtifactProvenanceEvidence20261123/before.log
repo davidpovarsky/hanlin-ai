@@ -1,0 +1,85 @@
+test_install_rejects_stale_incomplete_or_modified_preparation_before_io (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_install_rejects_stale_incomplete_or_modified_preparation_before_io) ... 
+  test_install_rejects_stale_incomplete_or_modified_preparation_before_io (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_install_rejects_stale_incomplete_or_modified_preparation_before_io) (case='pinned-input-sparse') ... FAIL
+  test_install_rejects_stale_incomplete_or_modified_preparation_before_io (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_install_rejects_stale_incomplete_or_modified_preparation_before_io) (case='dirty-input') ... FAIL
+  test_install_rejects_stale_incomplete_or_modified_preparation_before_io (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_install_rejects_stale_incomplete_or_modified_preparation_before_io) (case='missing-input') ... FAIL
+test_check_rejects_old_native_source_and_old_host_after_pin_update (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_check_rejects_old_native_source_and_old_host_after_pin_update) ... 
+  test_check_rejects_old_native_source_and_old_host_after_pin_update (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_check_rejects_old_native_source_and_old_host_after_pin_update) (case='check-pinned-input') ... FAIL
+  test_check_rejects_old_native_source_and_old_host_after_pin_update (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_check_rejects_old_native_source_and_old_host_after_pin_update) (case='check-host-module') ... FAIL
+test_stale_host_is_rejected_before_existing_or_new_support_is_committed (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_stale_host_is_rejected_before_existing_or_new_support_is_committed) ... 
+  test_stale_host_is_rejected_before_existing_or_new_support_is_committed (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_stale_host_is_rejected_before_existing_or_new_support_is_committed) (case='cached-host-source') ... FAIL
+  test_stale_host_is_rejected_before_existing_or_new_support_is_committed (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_stale_host_is_rejected_before_existing_or_new_support_is_committed) (case='staged-host-source') ... FAIL
+
+======================================================================
+FAIL: test_install_rejects_stale_incomplete_or_modified_preparation_before_io (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_install_rejects_stale_incomplete_or_modified_preparation_before_io) (case='pinned-input-sparse')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 191, in test_install_rejects_stale_incomplete_or_modified_preparation_before_io
+    self.rejection(fixture, case, lambda: native.install(fixture.catalog, fixture.sdk,
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 174, in rejection
+    self.assertIsNotNone(error, "Stale or incomplete native source was accepted")
+AssertionError: unexpectedly None : Stale or incomplete native source was accepted
+
+======================================================================
+FAIL: test_install_rejects_stale_incomplete_or_modified_preparation_before_io (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_install_rejects_stale_incomplete_or_modified_preparation_before_io) (case='dirty-input')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 191, in test_install_rejects_stale_incomplete_or_modified_preparation_before_io
+    self.rejection(fixture, case, lambda: native.install(fixture.catalog, fixture.sdk,
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 174, in rejection
+    self.assertIsNotNone(error, "Stale or incomplete native source was accepted")
+AssertionError: unexpectedly None : Stale or incomplete native source was accepted
+
+======================================================================
+FAIL: test_install_rejects_stale_incomplete_or_modified_preparation_before_io (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_install_rejects_stale_incomplete_or_modified_preparation_before_io) (case='missing-input')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 191, in test_install_rejects_stale_incomplete_or_modified_preparation_before_io
+    self.rejection(fixture, case, lambda: native.install(fixture.catalog, fixture.sdk,
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 174, in rejection
+    self.assertIsNotNone(error, "Stale or incomplete native source was accepted")
+AssertionError: unexpectedly None : Stale or incomplete native source was accepted
+
+======================================================================
+FAIL: test_check_rejects_old_native_source_and_old_host_after_pin_update (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_check_rejects_old_native_source_and_old_host_after_pin_update) (case='check-pinned-input')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 201, in test_check_rejects_old_native_source_and_old_host_after_pin_update
+    self.rejection(fixture, case, fixture.check,
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 174, in rejection
+    self.assertIsNotNone(error, "Stale or incomplete native source was accepted")
+AssertionError: unexpectedly None : Stale or incomplete native source was accepted
+
+======================================================================
+FAIL: test_check_rejects_old_native_source_and_old_host_after_pin_update (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_check_rejects_old_native_source_and_old_host_after_pin_update) (case='check-host-module')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 201, in test_check_rejects_old_native_source_and_old_host_after_pin_update
+    self.rejection(fixture, case, fixture.check,
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 174, in rejection
+    self.assertIsNotNone(error, "Stale or incomplete native source was accepted")
+AssertionError: unexpectedly None : Stale or incomplete native source was accepted
+
+======================================================================
+FAIL: test_stale_host_is_rejected_before_existing_or_new_support_is_committed (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_stale_host_is_rejected_before_existing_or_new_support_is_committed) (case='cached-host-source')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 221, in test_stale_host_is_rejected_before_existing_or_new_support_is_committed
+    self.rejection(fixture, case, lambda: native.install(fixture.catalog, fixture.sdk,
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 174, in rejection
+    self.assertIsNotNone(error, "Stale or incomplete native source was accepted")
+AssertionError: unexpectedly None : Stale or incomplete native source was accepted
+
+======================================================================
+FAIL: test_stale_host_is_rejected_before_existing_or_new_support_is_committed (Scripts.SDK.tests.test_native_provenance.NativeProvenanceTests.test_stale_host_is_rejected_before_existing_or_new_support_is_committed) (case='staged-host-source')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 221, in test_stale_host_is_rejected_before_existing_or_new_support_is_committed
+    self.rejection(fixture, case, lambda: native.install(fixture.catalog, fixture.sdk,
+  File "/mnt/development/projects/worktrees/hanlin-sdk-native-provenance-20261123/Scripts/SDK/tests/test_native_provenance.py", line 174, in rejection
+    self.assertIsNotNone(error, "Stale or incomplete native source was accepted")
+AssertionError: unexpectedly None : Stale or incomplete native source was accepted
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.432s
+
+FAILED (failures=7)
