@@ -1,0 +1,139 @@
+{
+  "utc": "2026-11-23T22:38:41.798526+00:00",
+  "scope": "read-only reuse of original owner's retained terminal evidence; no takeover",
+  "run": 45253606271,
+  "attempt": 1,
+  "runConclusion": "cancelled",
+  "consumerCI": "0123b569d489984ade291b5c065eb5fe6500dec6",
+  "applicationSource": "07845de8c335a975027fd375f287a85754da51ab",
+  "HanlinSource": "ca3c91f2233bf5c77990643b29a874aac8704639",
+  "producerSource": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "ownerEvidenceCommit": "b144ad01cbcf27af0ec191af9a712c529a64497f",
+  "artifact": {
+    "id": 14860649769,
+    "path": "/mnt/development/projects/diagnostics/otzaria-live-0123-terminal-20261123/artifact-14860649769.zip",
+    "bytes": 90449,
+    "sha256": "6cb077b05cc6cd5548f20ddbba5f232c7acacbd99a0b963f5a2bb3803715f66d",
+    "crcMembersVerified": 23,
+    "admittedFilesVerifiedAgainstOriginalArchive": 22,
+    "downloadedByThisAgent": false
+  },
+  "nativeCase": {
+    "identity": "HanlinLiveProviderAcceptanceTests/testOriginalLiveProviderUsesCanonicalCoreAndRevokesReadConsent()",
+    "PASS": 0,
+    "FAIL": 1,
+    "NOT_RUN": 0,
+    "failureLine": 727,
+    "failureAssertion": "Only the original Host result callback may create the native source receipt",
+    "verifiedCompletedProviderConversations": 0
+  },
+  "originalBuild": "PASS",
+  "firstHostToolResultSucceeded": true,
+  "firstResultRetained": true,
+  "secondStepStarted": true,
+  "completionSafeCategory": "unsupportedProviderCapability",
+  "rawHTTPStatusAndUnderlyingError": "NOT_RETAINED",
+  "exactFailureCause": "NOT_ESTABLISHED",
+  "cleanup": {
+    "controllerEnded": "2026-11-23T20:58:20.773213+00:00",
+    "ownerReportedProcessesRemaining": 0,
+    "ownedSimulator": "PASS",
+    "secret": "DELETE204_GET404_INDEPENDENT404"
+  },
+  "ownerStatus": {
+    "receiptUTC": "2026-11-23T22:11:30.337828+00:00",
+    "status": "OWNER_ACTIVE_PRODUCER_QUALIFICATION",
+    "producerCandidate": "d4286d1afa661af930f7addd6f63fff0effe4414",
+    "producerCandidateParent": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+    "ownerReportedRun": 45275019854,
+    "runStatus": "ACTIVE_AS_OF_OWNER_RECEIPT_NOT_QUERIED",
+    "nextStep": "Owner will qualify candidate before its nine-pin Host adoption and a single original live continuation; central SDK has ten operative pin locations."
+  },
+  "sourceTrace": {
+    "HanlinAgentSessionPath": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+    "catchLine": 239,
+    "testedAndCentralBlob": "2f93f21a4b49c9205ba1da60779626cebebf7512",
+    "mapping": "All non-HanlinHostError, noncancelled failures map to unsupportedProviderCapability; category alone does not diagnose HTTP or feature support.",
+    "candidateProductionFiles": [
+      {
+        "path": "Sources/AISDKProviderUtils/StreamingToolCallTracker.swift",
+        "beforeSHA256": "b39b71e883be0d462c26d5ba373741827d07fc8b4009cd5213573c9766391e7f",
+        "afterSHA256": "7e55ac4005738d15276098d8fcd0383641b5f5cee8c0c3940734d63cf402c0c4",
+        "beforeGitBlob": "d1f8bb6f40ef81d7fd76a4fe509db8e3c9254e2c",
+        "afterGitBlob": "a58c6ee021a13be15ae0798258c46a51a8dc6176"
+      },
+      {
+        "path": "Sources/OpenAICompatibleProvider/Chat/ConvertToOpenAICompatibleChatMessages.swift",
+        "beforeSHA256": "dfb38c2d203268b72be8d48474c58d8e3fc2f3913b23b1cdd40c652734690238",
+        "afterSHA256": "1bf69b208f148c9d2d9f0ea50f16ecf6fa6991d93d112aa69704a3177d6af49e",
+        "beforeGitBlob": "fb9f959ee320f6559c06c7285cfed0a97d8e20da",
+        "afterGitBlob": "538a50855f39b1a97334c6181ce5af5267ae1213"
+      },
+      {
+        "path": "Sources/OpenAICompatibleProvider/Chat/OpenAICompatibleChatLanguageModel.swift",
+        "beforeSHA256": "61cb97e667b46d454b7aaf5000679575c965587cad37aff917cdc0f47d545365",
+        "afterSHA256": "5ba14177375c491891d344ac783e7d6504588c57f8a6fd3a80597370815f7e34",
+        "beforeGitBlob": "702fc4fda2d4e662138884c35d625a27c97c9499",
+        "afterGitBlob": "e6b193bfa7fb3a0590935c7eed7f206ec828e781"
+      }
+    ],
+    "relevance": "Base V3 OpenAI-compatible provider drops received Google tool signatures; candidate retains opaque nonempty metadata and restores the nested next-request field. This is a real shared source change, not proof of this native failure's HTTP cause.",
+    "nativeProviderQualification": "Tracker has only OpenAICompatibleProvider and OpenAIProvider production callers. Native FoundationModels candidate has no direct tracker use. Current native proofs retain their actual e7/07431 producer; later pin adoption requires explicit source/behavior qualification, not identical-input relabeling."
+  },
+  "inputReceipts": [
+    {
+      "path": "/mnt/development/projects/worktrees/Maktabah-oracle-completion-20261123/docs/hq-integration/hanlin-stream-terminal-20261123/INTAKE.json",
+      "bytes": 1968,
+      "sha256": "bf060694424adc96bb7c3da6fe5d7e5ab4e36588803d53edfd0f23e6593efb8b"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/Maktabah-oracle-completion-20261123/docs/hq-integration/hanlin-stream-terminal-20261123/selected/result.json",
+      "bytes": 1025,
+      "sha256": "347b493f5a778feb38feb2d66e19fa168b3ca8cfa684a1d5dec83c1e3aae1790"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/Maktabah-oracle-completion-20261123/docs/hq-integration/hanlin-stream-terminal-20261123/selected/verified-11.tests.json",
+      "bytes": 2327,
+      "sha256": "e24274e1640614cb1c9af60b10d253754951f4493bf3d1c9b37df972552c3492"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/Maktabah-oracle-completion-20261123/docs/hq-integration/hanlin-stream-terminal-20261123/selected/connection-stages.json",
+      "bytes": 4419,
+      "sha256": "7100823a912f1260316ce574b46ec3f6bc210df1f1789ff889e65d8f4248f461"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/Maktabah-oracle-completion-20261123/docs/hq-integration/hanlin-stream-terminal-20261123/selected/admission.json",
+      "bytes": 3351,
+      "sha256": "c2b305f86ffdd21fbce76ed5b2d037a108b9ded13f72248b2961ecdddd0d63cb"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/Maktabah-oracle-completion-20261123/docs/hq-integration/hanlin-stream-terminal-20261123/windows-controller/lifecycle.json",
+      "bytes": 2327,
+      "sha256": "fd473c5fa55491d303e41fd00b2c4ef5e60b284a06a42e6a85495bb2340aad21"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/Maktabah-oracle-completion-20261123/docs/hq-integration/hanlin-stream-terminal-20261123/windows-controller/cleanup.json",
+      "bytes": 397,
+      "sha256": "0776fe19609c6cdb94f867d1cde630ef83eb4f29516c7881e6eae503ea706462"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/Maktabah-oracle-completion-20261123/docs/hq-integration/hanlin-stream-terminal-20261123/INDEPENDENT_SECRET_ABSENCE.json",
+      "bytes": 342,
+      "sha256": "cccbf7be9dd56a2abec939664e2509fc5b24bc3aa0a5e2f36ec24c4a40316c69"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/Maktabah-oracle-completion-20261123/docs/hq-integration/oracle-execution-20261123/CURRENT_EXECUTION.json",
+      "bytes": 353045,
+      "sha256": "6094b35ac771ba56e77c2596bbce8ce3e3e62227370ba2b8cc83e811f952172a"
+    }
+  ],
+  "actions": {
+    "modelRequests": 0,
+    "secretValueReads": 0,
+    "secretMutations": 0,
+    "ciDispatches": 0,
+    "artifactDownloads": 0,
+    "ownerWorktreeMutations": 0,
+    "testExecutions": 0
+  }
+}
