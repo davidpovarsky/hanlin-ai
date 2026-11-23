@@ -17,7 +17,7 @@ struct MiniAppAuthoringToolTests {
         let files: [[String: String]] = [
             ["path": "script.json", "content": #"{"name":"Authoring Native Acceptance","version":"1.0.0","entry":"nativescript/app/bundle.mjs","runInApp":true,"hanlinRuntime":"hanlin-nativescript"}"#],
             ["path": "package.json", "content": #"{"name":"hanlin-authoring-native-acceptance","version":"1.0.0","private":true,"type":"module"}"#],
-            ["path": "tsconfig.json", "content": #"{"compilerOptions":{"strict":true,"skipLibCheck":false},"include":["*.ts"]}"#],
+            ["path": "tsconfig.json", "content": #"{"compilerOptions":{"strict":true},"include":["*.ts"]}"#],
             ["path": "hanlin.authoring.json", "content": #"{"schemaVersion":1,"engine":"nativescript","entry":"index.ts","tsconfig":"tsconfig.json"}"#],
             ["path": "index.ts", "content": "export const answer: number = \"wrong\";\n"]
         ]

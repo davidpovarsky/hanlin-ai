@@ -278,9 +278,10 @@ public final class HanlinNativeScriptSession {
         guard let contract = contractValue as? [String: Any] else {
             throw HanlinNativeScriptError.unsupportedNativePlugin("hanlinNativeScript must be an object.")
         }
-        guard contract["runtimeVersion"] as? String == supportedRuntimeVersion else {
+        guard let requiredRuntime = contract["runtimeVersion"] as? String,
+              HanlinPreparedRuntimeVersion.supportsCompatiblePatch(requiredRuntime, installed: supportedRuntimeVersion) else {
             throw HanlinNativeScriptError.unsupportedNativePlugin(
-                "this build requires runtimeVersion \(supportedRuntimeVersion)."
+                "this build requires a stable runtimeVersion with the same major/minor and no newer patch than \(supportedRuntimeVersion)."
             )
         }
         guard let plugins = contract["plugins"] as? [String: Any] else {

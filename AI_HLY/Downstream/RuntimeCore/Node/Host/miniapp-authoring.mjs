@@ -6,7 +6,7 @@ import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 
 const engines = new Set(['expo', 'nativescript', 'scriptwidget']);
-const ignoredDirectories = new Set(['node_modules', '.git', 'dist', 'build', '.hanlin-build', '.hanlin-authoring']);
+const ignoredDirectories = new Set(['node_modules', '.git', '.hanlin-build', '.hanlin-authoring']);
 const slash = value => value.split(path.sep).join('/');
 const sha256 = value => createHash('sha256').update(value).digest('hex');
 const inside = (root, file) => {
@@ -62,9 +62,27 @@ export async function readMiniAppSDK(sdkRoot, request = {}) {
     return {schemaVersion: 1, resource: request.resource, content: await fs.readFile(actual, 'utf8'),
       manifestSHA256: sha256(bytes)};
   }
+  const {files, sourceInputs, ...metadata} = manifest;
+  const described = {};
+  for (const [name, descriptor] of Object.entries(manifest.engines)) {
+    if (request.engine && name !== request.engine) continue;
+    const packageResources = [];
+    for (const packageName of Object.keys(descriptor.packageVersions ?? {})) {
+      const packagePath = path.posix.join(descriptor.toolingRoot, 'node_modules', packageName, 'package.json');
+      const pkg = await optionalJSON(child(root, packagePath));
+      if (!pkg) continue;
+      const declaration = pkg.types ?? pkg.typings;
+      packageResources.push({name: packageName, packageJSON: packagePath,
+        ...(typeof declaration === 'string' ? {types: path.posix.join(path.posix.dirname(packagePath), declaration)} : {})});
+    }
+    const config = descriptor.tsconfigPath ? await optionalJSON(child(root, descriptor.tsconfigPath)) : null;
+    const declarations = (config?.files ?? []).map(file => path.posix.join(path.posix.dirname(descriptor.tsconfigPath), file));
+    described[name] = {...descriptor, packageResources, declarationEntrypoints: declarations};
+  }
   return {
-    ...manifest, sdkRoot: root, manifestSHA256: sha256(bytes),
-    ...(request.engine ? {engine: request.engine, selectedEngine: manifest.engines[request.engine]} : {}),
+    ...metadata, engines: {...manifest.engines, ...described}, sdkRoot: root, manifestSHA256: sha256(bytes),
+    inventory: {resource: 'miniapp-sdk.json', fileCount: files?.length ?? 0, sourceInputCount: sourceInputs?.length ?? 0},
+    ...(request.engine ? {engine: request.engine, selectedEngine: described[request.engine]} : {}),
     authoring: {
       config: 'hanlin.authoring.json',
       operations: ['get_miniapp_sdk', 'write_miniapp', 'validate_miniapp', 'build_miniapp', 'import_miniapp'],
@@ -169,17 +187,25 @@ async function parseProject(ts, input, sdkRoot, sdkEngine) {
     paths: {...base.options.paths, ...parsed.options.paths}
   };
   const compilerHost = ts.createCompilerHost(options);
-  const sdkOptions = {...options, baseUrl: toolingRoot,
-    paths: {...options.paths, '*': [path.join(toolingRoot, 'node_modules', '*')]}};
-  // Resolve original dependencies through the installed host's SDK when this project has no local npm tree.
+  const sdkOptions = {...options, baseUrl: undefined, paths: undefined};
+  const sdkContainingFile = path.join(toolingRoot, '__hanlin_authoring__.ts');
+  // Resolve bare names from an SDK containing file so original package.exports,
+  // conditional types and subpath exports are honored by TypeScript itself.
+  // Wildcard path aliases to node_modules would bypass those package exports.
   compilerHost.resolveModuleNames = (names, containingFile) => names.map(name =>
     ts.resolveModuleName(name, containingFile, options, compilerHost).resolvedModule
-    ?? ts.resolveModuleName(name, containingFile, sdkOptions, compilerHost).resolvedModule);
+    ?? (!name.startsWith('.') && !path.isAbsolute(name)
+      ? ts.resolveModuleName(name, sdkContainingFile, sdkOptions, compilerHost).resolvedModule : undefined));
   compilerHost.resolveTypeReferenceDirectives = (names, containingFile, redirectedReference, compilerOptions) =>
     names.map(name => {
       const requested = typeof name === 'string' ? name : name.fileName;
-      return ts.resolveTypeReferenceDirective(requested, containingFile, compilerOptions ?? options, compilerHost, redirectedReference).resolvedTypeReferenceDirective
-        ?? ts.resolveTypeReferenceDirective(path.join(toolingRoot, 'node_modules', requested), containingFile, compilerOptions ?? options, compilerHost, redirectedReference).resolvedTypeReferenceDirective;
+      const resolved = ts.resolveTypeReferenceDirective(requested, containingFile, compilerOptions ?? options, compilerHost, redirectedReference).resolvedTypeReferenceDirective
+        ?? ts.resolveTypeReferenceDirective(requested, sdkContainingFile, sdkOptions, compilerHost, redirectedReference).resolvedTypeReferenceDirective;
+      if (resolved) return resolved;
+      const module = ts.resolveModuleName(requested, sdkContainingFile, sdkOptions, compilerHost).resolvedModule;
+      return module && /\.d\.[cm]?ts$/.test(module.resolvedFileName)
+        ? {primary: false, resolvedFileName: module.resolvedFileName, packageId: module.packageId, isExternalLibraryImport: true}
+        : undefined;
     });
   const rootNames = [...new Set([...parsed.fileNames, input.entryFile,
     ...(base.fileNames ?? []).filter(file => file.endsWith('.d.ts'))])];
@@ -190,7 +216,8 @@ async function parseProject(ts, input, sdkRoot, sdkEngine) {
     diagnostics: deduplicate(diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot)))};
 }
 
-async function retainSources(input, stage) {
+async function retainSources(input, stage, parsed) {
+  const compilerFiles = parsed.program.getSourceFiles().map(file => path.resolve(file.fileName));
   const destination = path.join(stage, 'source');
   const hashes = {};
   async function walk(directory, relative = '', ancestors = new Set()) {
@@ -202,6 +229,10 @@ async function retainSources(input, stage) {
       const name = relative ? relative + '/' + entry.name : entry.name;
       const file = path.join(directory, entry.name);
       const stat = entry.isSymbolicLink() ? await fs.stat(file) : entry;
+      // Root output folders are omitted only when no actual compiler input lives there.
+      // A nested source folder such as src/build is ordinary authoring content.
+      if (!relative && stat.isDirectory() && ['dist', 'build'].includes(entry.name) &&
+          !compilerFiles.some(source => inside(file, source))) continue;
       if (stat.isDirectory()) { await walk(file, name, nextAncestors); continue; }
       if (!stat.isFile()) continue;
       const bytes = await fs.readFile(file);
@@ -287,7 +318,8 @@ async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
   await writeJSON(path.join(app, 'package.json'), {
     ...input.pkg, main: 'bundle.mjs', type: 'module', hanlinRuntime: 'hanlin-nativescript',
     hanlinNativeScript: {...input.pkg.hanlinNativeScript,
-      runtimeVersion: sdkEngine.packageVersions?.['@nativescript/ios'] ?? sdkEngine.packageVersions?.['@nativescript/core']},
+      runtimeVersion: sdkEngine.packageVersions?.['@nativescript/ios'] ?? sdkEngine.packageVersions?.['@nativescript/core'],
+      plugins: input.pkg.hanlinNativeScript?.plugins ?? {}},
   });
   await copyResources(input, modules);
   await writeJSON(path.join(stage, 'script.json'), {...input.script,
@@ -295,7 +327,7 @@ async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
   return emitted.diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot));
 }
 
-async function buildExpo(input, parsed, stage) {
+async function buildExpo(input, parsed, stage, sdkEngine) {
   const requireSDK = createRequire(path.join(parsed.toolingRoot, 'package.json'));
   const metro = requireSDK('metro');
   const {getDefaultConfig, mergeConfig} = requireSDK('@react-native/metro-config');
@@ -318,11 +350,12 @@ async function buildExpo(input, parsed, stage) {
   // maxWorkers=1 also keeps both compiler worker pools inside the existing Node process.
   config.resolver.unstable_enablePackageExports = true;
   const result = await metro.runBuild(config, {
-    entry: input.entryFile, bundleOut: path.join(stage, 'bundle.js'), platform: 'ios',
-    dev: false, minify: false, sourceMap: true, sourceMapOut: path.join(stage, 'bundle.js.map'),
-    sourceMapUrl: 'bundle.js.map', assets: true
+    entry: input.entryFile, platform: 'ios', dev: false, minify: false,
+    sourceMap: true, sourceMapUrl: 'bundle.js.map', assets: true
   });
-  if (!result?.code && !(await fs.stat(path.join(stage, 'bundle.js'))).isFile()) throw new Error('Metro produced no bundle.');
+  if (typeof result?.code !== 'string' || !result.map) throw new Error('Original Metro produced no complete bundle and source map.');
+  await fs.writeFile(path.join(stage, 'bundle.js'), result.code);
+  await fs.writeFile(path.join(stage, 'bundle.js.map'), typeof result.map === 'string' ? result.map : JSON.stringify(result.map));
   if (result.assets?.length) {
     const pluginRoot = path.dirname(requireSDK.resolve('@react-native/community-cli-plugin/package.json'));
     const saveAssets = requireSDK(path.join(pluginRoot, 'dist/commands/bundle/saveAssets.js')).default;
@@ -370,6 +403,8 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
     report.sdk = {packageVersions: descriptor.packageVersions ?? {},
       manifestSHA256: sdk.manifestSHA256, compilerVersion: ts.version};
     const parsed = await parseProject(ts, input, sdk.sdkRoot, descriptor);
+    report.typecheck = {strict: parsed.options.strict === true, skipLibCheck: parsed.options.skipLibCheck === true,
+      dependencyDeclarationsChecked: parsed.options.skipLibCheck !== true};
     report.diagnostics = [...parsed.diagnostics, ...await packageConsistency(input)];
     if (report.diagnostics.some(item => item.category === 'error')) return report;
     if (request.operation === 'validate') { report.succeeded = true; return report; }
@@ -380,10 +415,10 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
     await fs.mkdir(path.dirname(stage), {recursive: true});
     await fs.mkdir(stage, {recursive: false});
     ownsStage = true;
-    const sourceHashes = await retainSources(input, stage);
+    const sourceHashes = await retainSources(input, stage, parsed);
     if (input.engine === 'nativescript')
       report.diagnostics.push(...await buildNativeScript(ts, input, parsed, stage, descriptor));
-    else if (input.engine === 'expo') await buildExpo(input, parsed, stage);
+    else if (input.engine === 'expo') await buildExpo(input, parsed, stage, descriptor);
     else await buildScriptWidget(input, parsed, stage);
     if (report.diagnostics.some(item => item.category === 'error')) return report;
     await writeJSON(path.join(stage, 'hanlin.authoring.json'), {

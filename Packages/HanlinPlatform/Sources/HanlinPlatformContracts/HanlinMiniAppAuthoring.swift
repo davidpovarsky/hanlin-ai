@@ -45,6 +45,20 @@ public struct HanlinMiniAppAuthoringSDK: Codable, Hashable, Sendable {
     }
 }
 
+
+/// Exact effective compiler policy. Consuming original dependency declarations is
+/// distinct from rechecking the internals of those declaration packages.
+public struct HanlinMiniAppTypecheckConfiguration: Codable, Hashable, Sendable {
+    public let strict: Bool
+    public let skipLibCheck: Bool
+    public let dependencyDeclarationsChecked: Bool
+    public init(strict: Bool, skipLibCheck: Bool, dependencyDeclarationsChecked: Bool) {
+        self.strict = strict
+        self.skipLibCheck = skipLibCheck
+        self.dependencyDeclarationsChecked = dependencyDeclarationsChecked
+    }
+}
+
 /// This records a compiler/package operation, never a claim that a native UI ran or installed.
 /// The durable Node executionID permits reading full output without truncating diagnostics.
 public struct HanlinMiniAppAuthoringReport: Codable, Hashable, Sendable {
@@ -58,11 +72,13 @@ public struct HanlinMiniAppAuthoringReport: Codable, Hashable, Sendable {
     public let archivePath: String?
     public let sdk: HanlinMiniAppAuthoringSDK?
     public let executionID: String?
+    public let typecheck: HanlinMiniAppTypecheckConfiguration?
 
     public init(schemaVersion: Int = 1, engine: String, operation: String, succeeded: Bool,
                 diagnostics: [HanlinMiniAppAuthoringDiagnostic], sourceRoot: String? = nil,
                 preparedPackagePath: String? = nil, archivePath: String? = nil,
-                sdk: HanlinMiniAppAuthoringSDK? = nil, executionID: String? = nil) {
+                sdk: HanlinMiniAppAuthoringSDK? = nil, executionID: String? = nil,
+                typecheck: HanlinMiniAppTypecheckConfiguration? = nil) {
         self.schemaVersion = schemaVersion
         self.engine = engine
         self.operation = operation
@@ -73,13 +89,14 @@ public struct HanlinMiniAppAuthoringReport: Codable, Hashable, Sendable {
         self.archivePath = archivePath
         self.sdk = sdk
         self.executionID = executionID
+        self.typecheck = typecheck
     }
 
     public func withArchive(at path: String) -> Self {
         .init(schemaVersion: schemaVersion, engine: engine, operation: operation,
               succeeded: succeeded, diagnostics: diagnostics, sourceRoot: sourceRoot,
               preparedPackagePath: preparedPackagePath, archivePath: path, sdk: sdk,
-              executionID: executionID)
+              executionID: executionID, typecheck: typecheck)
     }
 }
 

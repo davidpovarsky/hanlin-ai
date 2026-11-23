@@ -87,6 +87,8 @@ test('NativeScript package emits a runnable ESM graph and retains exact editable
   const script = JSON.parse(await fs.readFile(path.join(stage, 'script.json')));
   assert.equal(script.entry, 'nativescript/app/bundle.mjs');
   assert.equal(script.entrypoints[0].id, 'share');
+  const runtimePackage = JSON.parse(await fs.readFile(path.join(stage, 'nativescript/app/package.json')));
+  assert.deepEqual(runtimePackage.hanlinNativeScript.plugins, {});
   const authoring = JSON.parse(await fs.readFile(path.join(stage, 'hanlin.authoring.json')));
   assert.equal(authoring.sourceRoot, 'source');
   assert.equal(authoring.sourceHashes['index.ts'].length, 64);
@@ -143,6 +145,9 @@ test('SDK discovery reads its real manifest and requested documentation', async 
   const manifest = await readMiniAppSDK(f.sdk, {engine: 'nativescript'});
   assert.equal(manifest.selectedEngine.packageVersions.typescript, ts.version);
   assert.equal(manifest.manifestSHA256.length, 64);
+  assert.equal(manifest.files, undefined);
+  assert.equal(manifest.inventory.resource, 'miniapp-sdk.json');
+  assert.ok(manifest.selectedEngine.packageResources.some(item => item.name === 'typescript' && item.types.endsWith('typescript.d.ts')));
   const doc = await readMiniAppSDK(f.sdk, {resource: 'guide.md'});
   assert.match(doc.content, /Original declarations/);
   await assert.rejects(readMiniAppSDK(f.sdk, {resource: '../project/index.ts'}), /leaves/);
@@ -187,4 +192,20 @@ test('the real CLI archives and revalidates retained source, diagnostics and out
   assert.equal(check.succeeded, true, JSON.stringify(check));
   const map = JSON.parse(await fs.readFile(path.join(extracted, 'nativescript/app/modules/index.js.map')));
   assert.equal(map.sourcesContent[0], await fs.readFile(f.entry, 'utf8'));
+});
+
+
+test('compiler-used sources named build or dist survive source retention and archive revalidation', async t => {
+  const f = await fixture(t);
+  await fs.mkdir(path.join(f.project, 'src/build'), {recursive: true});
+  await fs.mkdir(path.join(f.project, 'dist'), {recursive: true});
+  await fs.writeFile(path.join(f.project, 'src/build/config.ts'), 'export const left: number = 40;\n');
+  await fs.writeFile(path.join(f.project, 'dist/authored.ts'), 'export const right: number = 2;\n');
+  await fs.writeFile(f.entry, 'import {left} from "./src/build/config";\nimport {right} from "./dist/authored";\nexport const answer: number = left + right;\n');
+  const report = await f.run('build');
+  assert.equal(report.succeeded, true, JSON.stringify(report));
+  assert.match(await fs.readFile(path.join(report.preparedPackagePath, 'source/src/build/config.ts'), 'utf8'), /40/);
+  assert.match(await fs.readFile(path.join(report.preparedPackagePath, 'source/dist/authored.ts'), 'utf8'), /2/);
+  const checked = await f.run('validate', {projectRoot: report.preparedPackagePath});
+  assert.equal(checked.succeeded, true, JSON.stringify(checked));
 });
