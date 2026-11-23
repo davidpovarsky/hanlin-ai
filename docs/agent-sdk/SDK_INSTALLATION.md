@@ -25,7 +25,7 @@ python3 /path/to/hanlin-ai/Scripts/SDK/install.py \
 It performs these steps:
 
 1. Fetches the canonical Hanlin repository and verifies the full locked commit.
-2. Prepares the ignored `Vendor/HanlinSDK` sparse checkout with only canonical manifest metadata.
+2. Prepares the managed `Vendor/HanlinSDK` sparse checkout with only canonical manifest metadata.
 3. Runs `Scripts/SDK/generate_manifest.py --products ...` in that checkout.
 4. Verifies the selected products and materializes only their original target source/resource paths.
 5. Installs published native assets only if that product closure contains managed native binary targets.
@@ -45,7 +45,7 @@ dependencies: [
 .product(name: "HanlinChatUI", package: "HanlinSDK")
 ```
 
-For an Xcode application, add `Vendor/HanlinSDK` as the local package and select the same products. Commit the lock and host dependency declaration. The checkout and generated artifacts remain ignored.
+For an Xcode application, add `Vendor/HanlinSDK` as the local package and select the same products. Commit the lock and host dependency declaration. A new host normally ignores the managed checkout and generated artifacts. An existing Gitlink-based integration retains its Gitlink and commits it at the same full SHA as the lock; its original CI can verify both identities. Do not commit generated selection files as a forked SDK implementation.
 
 ## Updating and checking
 

@@ -13,7 +13,7 @@
 
 <div align="center">
 
-[![iOS](https://img.shields.io/badge/iOS-18.0+-blue.svg)](https://developer.apple.com/ios/) [![Swift](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org) [![Xcode](https://img.shields.io/badge/Xcode-15.0+-blue.svg)](https://developer.apple.com/xcode/) [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![iOS](https://img.shields.io/badge/iOS-27.0+-blue.svg)](https://developer.apple.com/ios/) [![Swift](https://img.shields.io/badge/Swift-6.2+-orange.svg)](https://swift.org) [![Xcode](https://img.shields.io/badge/Xcode-27.0+-blue.svg)](https://developer.apple.com/xcode/) [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 </div>
 
@@ -28,6 +28,12 @@
 English | [中文](README_CN.md)
 
 </div>
+
+## Shared Hanlin SDK
+
+Hanlin AI and external SwiftUI hosts consume one canonical `HanlinSDK` package graph. It exposes the original full application, headless agent engine, chat and Composer components, tool activity, rich UI, A2UI, scripting runtimes and original app extensions as selectable public products. The original implementation and resources remain in one source location.
+
+Start with the [SDK product and integration guide](Docs/SDK/README.md), then follow the [canonical installer](docs/agent-sdk/SDK_INSTALLATION.md). The full original application targets iOS/iPadOS 27; the selected manifest declares Swift tools 6.2 and the applicable Apple platforms. Native distribution and acceptance have their own explicit gates; source extraction alone is not a released SDK.
 
 ## ✨ Features
 
@@ -74,7 +80,7 @@ English | [中文](README_CN.md)
 
 ## 🛠️ Tech Stack
 
-- **Language**: Swift 5.9+
+- **Language**: Swift 6 (Swift 6.2+ toolchain)
 - **UI framework**: SwiftUI
 - **Storage**: SwiftData + CloudKit
 - **Networking**: URLSession + Async/Await
