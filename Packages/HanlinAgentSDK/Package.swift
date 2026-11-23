@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../HanlinPlatform"),
-        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "29c966696795fe1431bca7afd8cb91011c665a41")
+        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8")
     ],
     targets: [
         // Original pinned Swift-JSON sources, with a unique schema module in the A2UI app graph.
