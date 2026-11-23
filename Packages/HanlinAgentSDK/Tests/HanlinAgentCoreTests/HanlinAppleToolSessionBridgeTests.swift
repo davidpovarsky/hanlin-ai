@@ -10,9 +10,82 @@ import Testing
 /// public LanguageModelExecutor. They do not establish SystemLanguageModel eligibility
 /// or actual on-device model quality/tool selection.
 @Suite("FoundationModels handoff through the original provider and engine")
-@available(iOS 27.0, macOS 27.0, *)
 struct HanlinAppleToolSessionBridgeTests {
     @Test("Two same-name calls keep their identities and continue through the original executor")
+    @MainActor
+    func nativeFrameworkHandoffUsesCanonicalExecutorAndHistory() async throws {
+        guard #available(iOS 27.0, macOS 27.0, *) else {
+            Issue.record("Native framework acceptance requires iOS 27 or macOS 27.")
+            return
+        }
+        try await NativeToolSessionBridgeChecks().nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()
+    }
+
+    @Test("A denied native call has no effect and continues with the correlated tool denial")
+    @MainActor
+    func nativeDenialReturnsThroughCanonicalHistory() async throws {
+        guard #available(iOS 27.0, macOS 27.0, *) else {
+            Issue.record("Native framework acceptance requires iOS 27 or macOS 27.")
+            return
+        }
+        try await NativeToolSessionBridgeChecks().nativeDenialReturnsThroughCanonicalHistory()
+    }
+
+    @Test("An invalid numeric sibling blocks the complete batch before approval or effect")
+    @MainActor
+    func nativeNumericSiblingCannotPartiallyExecute() async throws {
+        guard #available(iOS 27.0, macOS 27.0, *) else {
+            Issue.record("Native framework acceptance requires iOS 27 or macOS 27.")
+            return
+        }
+        try await NativeToolSessionBridgeChecks().nativeNumericSiblingCannotPartiallyExecute()
+    }
+
+    @Test("Cancelling a waiting native request reaches its public executor and produces no host effect")
+    @MainActor
+    func nativeCancellationStopsAwaitingExecutor() async throws {
+        guard #available(iOS 27.0, macOS 27.0, *) else {
+            Issue.record("Native framework acceptance requires iOS 27 or macOS 27.")
+            return
+        }
+        try await NativeToolSessionBridgeChecks().nativeCancellationStopsAwaitingExecutor()
+    }
+
+    @Test("Nonstreaming use of the original provider preserves native handoff calls")
+    @MainActor
+    func nativeGeneratePreservesToolCalls() async throws {
+        guard #available(iOS 27.0, macOS 27.0, *) else {
+            Issue.record("Native framework acceptance requires iOS 27 or macOS 27.")
+            return
+        }
+        try await NativeToolSessionBridgeChecks().nativeGeneratePreservesToolCalls()
+    }
+
+    @Test("The admitted closed schema constructs through actual public native schema APIs")
+    @MainActor
+    func nativeSchemaConstructorsAndStructuredNumberRejection() throws {
+        guard #available(iOS 27.0, macOS 27.0, *) else {
+            Issue.record("Native framework acceptance requires iOS 27 or macOS 27.")
+            return
+        }
+        try NativeToolSessionBridgeChecks().nativeSchemaConstructorsAndStructuredNumberRejection()
+    }
+
+    @Test("History rejects duplicate calls, orphan results and incomplete continuations")
+    @MainActor
+    func invalidCanonicalHistoriesFailBeforeGeneration() throws {
+        guard #available(iOS 27.0, macOS 27.0, *) else {
+            Issue.record("Native framework acceptance requires iOS 27 or macOS 27.")
+            return
+        }
+        try NativeToolSessionBridgeChecks().invalidCanonicalHistoriesFailBeforeGeneration()
+    }
+
+}
+
+// Availability belongs to the implementation, not to Swift Testing discovery.
+@available(iOS 27.0, macOS 27.0, *)
+private struct NativeToolSessionBridgeChecks {
     @MainActor
     func nativeFrameworkHandoffUsesCanonicalExecutorAndHistory() async throws {
         let state = FixtureState(mode: .twoCalls)
@@ -34,7 +107,6 @@ struct HanlinAppleToolSessionBridgeTests {
         }
     }
 
-    @Test("A denied native call has no effect and continues with the correlated tool denial")
     @MainActor
     func nativeDenialReturnsThroughCanonicalHistory() async throws {
         let state = FixtureState(mode: .oneCall)
@@ -48,7 +120,6 @@ struct HanlinAppleToolSessionBridgeTests {
         try assertCanonicalContinuation(await state.requests, outputs: ["native_a"])
     }
 
-    @Test("An invalid numeric sibling blocks the complete batch before approval or effect")
     @MainActor
     func nativeNumericSiblingCannotPartiallyExecute() async throws {
         let state = FixtureState(mode: .numericSibling)
@@ -60,7 +131,6 @@ struct HanlinAppleToolSessionBridgeTests {
         #expect(await state.requests.count == 1)
     }
 
-    @Test("Cancelling a waiting native request reaches its public executor and produces no host effect")
     @MainActor
     func nativeCancellationStopsAwaitingExecutor() async throws {
         let state = FixtureState(mode: .awaitCancellation)
@@ -78,7 +148,6 @@ struct HanlinAppleToolSessionBridgeTests {
         #expect(await state.cancelled)
     }
 
-    @Test("Nonstreaming use of the original provider preserves native handoff calls")
     func nativeGeneratePreservesToolCalls() async throws {
         let state = FixtureState(mode: .twoCalls)
         let provider = HanlinAppleLanguageModel(toolBridgeModel: FixtureModel(state: state))
@@ -92,7 +161,6 @@ struct HanlinAppleToolSessionBridgeTests {
         #expect(await state.requests.count == 1)
     }
 
-    @Test("The admitted closed schema constructs through actual public native schema APIs")
     func nativeSchemaConstructorsAndStructuredNumberRejection() throws {
         let json = #"{"type":"object","properties":{"name":{"type":"string","enum":["a","b"]},"flags":{"type":"array","items":{"type":"boolean"},"minItems":1,"maxItems":2},"empty":{"type":"null"}},"required":["name","flags"],"additionalProperties":false}"#
         let value = try JSONDecoder().decode(JSONValue.self, from: Data(json.utf8))
@@ -105,7 +173,6 @@ struct HanlinAppleToolSessionBridgeTests {
         }
     }
 
-    @Test("History rejects duplicate calls, orphan results and incomplete continuations")
     func invalidCanonicalHistoriesFailBeforeGeneration() throws {
         let user: LanguageModelV3Message = .user(content: [.text(.init(text: "REAL_USER"))], providerOptions: nil)
         let call = LanguageModelV3ToolCallPart(toolCallId: "a", toolName: "native_echo", input: .object(["query": .string("value")]))
