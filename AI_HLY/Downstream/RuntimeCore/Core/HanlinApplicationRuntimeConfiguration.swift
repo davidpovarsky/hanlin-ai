@@ -1,4 +1,5 @@
 import Foundation
+import HanlinExtensionContracts
 
 /// Optional operating-system hooks belong to the embedding application.
 /// A plain host configuration does not read Hanlin's App Group or open Hanlin.
@@ -15,12 +16,15 @@ public struct HanlinApplicationSystemIntegrations: Hashable, Sendable {
         self.visionURL = visionURL
     }
 
-    /// Retains the original app's existing extension and intent contracts.
-    public static var hanlin: Self {
-        .init(shareAppGroupIdentifier: "group.com.itorah.chavrusachat",
-              notificationCategoryIdentifier: "CHAVRUSA_REMINDER",
-              visionURL: URL(string: "chavrusachat://openVisionView"))
+    /// Uses the same immutable host policy as the extension SDK products.
+    public init(extensionHost: HanlinExtensionHostConfiguration) {
+        self.init(shareAppGroupIdentifier: extensionHost.appGroupIdentifier,
+                  notificationCategoryIdentifier: extensionHost.notificationCategoryIdentifier,
+                  visionURL: extensionHost.visionURL)
     }
+
+    /// Retains the original app's existing extension and intent contracts.
+    public static var hanlin: Self { .init(extensionHost: .hanlin) }
 
     /// Hosts using HanlinWorkspaceView can route the configured camera URL to
     /// its original vision destination without duplicating URL matching.
@@ -34,7 +38,8 @@ public struct HanlinApplicationSystemIntegrations: Hashable, Sendable {
     }
 
     static var currentHost: Self {
-        Bundle.main.bundleIdentifier == "com.itorah.chavrusachat" ? .hanlin : .init()
+        guard let host = try? HanlinExtensionHostConfiguration.load() else { return .init() }
+        return .init(extensionHost: host)
     }
 }
 

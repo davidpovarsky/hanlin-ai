@@ -449,6 +449,7 @@
         "Scripts/Runtime/runtime_host_archive.py",
         "Scripts/Runtime/prepare-runtime-core.sh",
         "Scripts/Runtime/preflight-runtime-core.sh",
+        "Scripts/Runtime/validate_runtime_host_source_exclusion.py",
         "Scripts/Runtime/run-with-heartbeat.py",
         "Scripts/Runtime/runtime_bundle_source.py",
         "Scripts/Runtime/runtime_native_identity.py",
@@ -1713,14 +1714,16 @@
         "Package.swift",
         "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
         "AI_HLYTests/HanlinConversationControllerTests.swift",
-        "AI_HLYTests/HanlinConversationProjectionTests.swift"
+        "AI_HLYTests/HanlinConversationProjectionTests.swift",
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
       ],
       "unit_suites": [
         "AI_HLYTests/HanlinApplicationEmbeddingTests",
-        "AI_HLYTests/HanlinConversationProjectionTests"
+        "AI_HLYTests/HanlinConversationProjectionTests",
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests"
       ],
       "consumers": [
         "app_core"
@@ -1756,6 +1759,24 @@
       ],
       "consumers": [
         "app_core"
+      ]
+    },
+    "canonical_extension_sdk": {
+      "description": "Original share, notification, translation and WidgetKit implementations; real embedded extension targets are built with the host app",
+      "patterns": [
+        "Packages/HanlinAppExtensionsSDK/**",
+        "Packages/HanlinWidgetSDK/**",
+        "Scripts/Extensions/**"
+      ],
+      "direct_validation_groups": [
+        "device_build",
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests"
+      ],
+      "consumers": [
+        "project_packaging"
       ]
     }
   },

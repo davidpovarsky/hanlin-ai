@@ -92,6 +92,7 @@
     "HanlinAgentActivityCore",
     "HanlinExpoNativeAPI",
     "HanlinExpoRuntime",
+    "HanlinExtensionContracts",
     "HanlinLocalization",
     "HanlinMiniAppCore",
     "HanlinNativeScriptRuntime",

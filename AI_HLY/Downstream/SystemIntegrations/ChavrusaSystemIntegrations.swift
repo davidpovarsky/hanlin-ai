@@ -1,3 +1,4 @@
+import HanlinWidgetUI
 import HanlinLocalization
 import AlarmKit
 import AppIntents
@@ -111,4 +112,8 @@ public struct ChavrusaChatShortcuts: AppShortcutsProvider {
 
 /// Include this type from the host app's `AppIntentsPackage.includedPackages`
 /// to index the original Hanlin intent implementations after SDK extraction.
-public struct HanlinApplicationIntentsPackage: AppIntentsPackage {}
+public struct HanlinApplicationIntentsPackage: AppIntentsPackage {
+    public static var includedPackages: [any AppIntentsPackage.Type] {
+        [HanlinWidgetIntentsPackage.self]
+    }
+}

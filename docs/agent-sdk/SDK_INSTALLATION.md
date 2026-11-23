@@ -153,3 +153,18 @@ The registration follows Apple's
 and [Swift package support described at WWDC25](https://developer.apple.com/videos/play/wwdc2025/244/).
 Native compilation, metadata extraction and system invocation remain separate
 acceptance checks; a source or syntax check does not prove Siri invocation.
+
+
+## Original extensions and per-view appearance
+
+The shared SDK also exposes `HanlinExtensionContracts`, `HanlinShareExtensionUI`,
+`HanlinNotificationExtension`, `HanlinTranslationUI` and `HanlinWidgetUI`.
+Each participating executable declares its own immutable extension policy;
+selecting a chat-only profile does not initialize or add extension ownership.
+See [Original extension integration](../../Docs/SDK/HanlinExtensionSourceOwnership.md)
+for the real host targets, App Intents registration and saved type identities.
+
+For per-view colors, original activity motion presets and the original Markdown
+renderer configuration, see [Host presentation customization](../../Docs/SDK/HanlinHostPresentationCustomization.md).
+These modifiers apply to the full original conversation or individual components.
+Defaults keep the original Hanlin design, and siblings can select different settings.

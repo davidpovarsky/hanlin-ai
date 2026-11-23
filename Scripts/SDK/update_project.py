@@ -9,7 +9,24 @@ FILE=ROOT/"AI_HLY.xcodeproj/project.pbxproj"
 ROOT_PACKAGE="AC1900000000000000000001"
 PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000000000000000003",
           "HanlinLocalization":"AC1900000000000000000004",
-          "HanlinAgentActivityCore":"AC1900000000000000000005"}
+          "HanlinAgentActivityCore":"AC1900000000000000000005",
+          "HanlinExtensionContracts":"AC1900000000000000000040",
+          "HanlinShareExtensionUI":"AC1900000000000000000041",
+          "HanlinNotificationExtension":"AC1900000000000000000042",
+          "HanlinTranslationUI":"AC1900000000000000000043",
+          "HanlinWidgetUI":"AC1900000000000000000044"}
+
+# Preserve existing target/build IDs. Four slots per target remain disjoint
+# from product IDs, shared source IDs and the original localization test IDs.
+TARGET_PRODUCTS={
+    "AI_Hanlin": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
+    "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
+    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts"],
+    "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
+    "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
+    "ChavrusaChatTranslationProvider": ["HanlinTranslationUI", "HanlinExtensionContracts"],
+    "HanlinScriptingWidgets": ["HanlinWidgetUI", "HanlinExtensionContracts"],
+}
 
 class Span:
     def __init__(self,text,start,end):self.text,self.left,self.right=text,start,end
@@ -77,13 +94,19 @@ def update():
         text=insert_object(text,"XCSwiftPackageProductDependency",key,
             "\t\t\tisa = XCSwiftPackageProductDependency;\n\t\t\tpackage = "+ROOT_PACKAGE+";\n\t\t\tproductName = "+name+";\n")
     targets={v["name"]:(k,v) for k,v in objects.items() if v.get("isa")=="PBXNativeTarget"}
-    for index,name in enumerate(("AI_Hanlin","AI_HLYTests","HanlinMiniApps")):
+    for index,(name,required) in enumerate(TARGET_PRODUCTS.items()):
+        assert len(required) <= 4, "The stable target build-ID allocation has four slots"
         key,target=targets[name]
-        required=["HanlinApplication","HanlinA2UI","HanlinLocalization"] if name!="HanlinMiniApps" else ["HanlinA2UI","HanlinLocalization","HanlinAgentActivityCore"]
         products=list(target.get("packageProductDependencies",[]))
         for product in required:
             if PRODUCTS[product] not in products:products.append(PRODUCTS[product])
-        text=edit_object(text,key,lambda b:replace_list(b,"packageProductDependencies",products))
+        def set_products(block):
+            if "packageProductDependencies" not in block:
+                marker = "\t\t\tproductType = "
+                assert marker in block, name
+                block = block.replace(marker, "\t\t\tpackageProductDependencies = ();\n" + marker, 1)
+            return replace_list(block,"packageProductDependencies",products)
+        text=edit_object(text,key,set_products)
         phase=next(k for k in target["buildPhases"] if objects[k]["isa"]=="PBXFrameworksBuildPhase")
         linked=list(objects[phase]["files"])
         if name=="AI_Hanlin":
@@ -94,12 +117,18 @@ def update():
             text=insert_object(text,"PBXBuildFile",build_id,
                 "\t\t\tisa = PBXBuildFile;\n\t\t\tproductRef = "+PRODUCTS[product]+";\n")
         text=edit_object(text,phase,lambda b:replace_list(b,"files",linked))
-        if name=="AI_Hanlin":
+        host_modules={"AI_Hanlin":"HanlinApp", "HanlinScriptingWidgets":"HanlinScriptingWidgetsHost"}
+        if name in host_modules:
+            # The SDK owns the original implementation module names, preserving
+            # SwiftData and persisted AppIntent/AppEntity/ActivityAttributes identity.
             for config in objects[target["buildConfigurationList"]]["buildConfigurations"]:
                 def settings(b):
-                    if "PRODUCT_MODULE_NAME" not in b:
-                        b=re.sub(r'"?PRODUCT_NAME"? = "\$\(TARGET_NAME\)";', 'PRODUCT_NAME = "$(TARGET_NAME)";\n\t\t\t\tPRODUCT_MODULE_NAME = HanlinApp;', b)
-                    return b
+                    module=host_modules[name]
+                    if "PRODUCT_MODULE_NAME" in b:
+                        return re.sub(r'"?PRODUCT_MODULE_NAME"? = [^;]+;',
+                                      "PRODUCT_MODULE_NAME = "+module+";",b)
+                    return re.sub(r'"?PRODUCT_NAME"? = "\$\(TARGET_NAME\)";',
+                                  'PRODUCT_NAME = "$(TARGET_NAME)";\n\t\t\t\tPRODUCT_MODULE_NAME = '+module+';',b)
                 text=edit_object(text,config,settings)
     # The standalone MiniApps executable compiles the same small original
     # runtime/provider closure. Runtime configuration must not pull the chat

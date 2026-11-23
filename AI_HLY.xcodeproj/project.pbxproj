@@ -561,6 +561,50 @@
 			isa = PBXBuildFile;
 			productRef = AC1900000000000000000005;
 		};
+		AC190000000000000000000D = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC1900000000000000000011 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC1900000000000000000015 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC1900000000000000000016 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000041;
+		};
+		AC1900000000000000000017 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC190000000000000000001A = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000042;
+		};
+		AC190000000000000000001B = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC190000000000000000001E = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000043;
+		};
+		AC190000000000000000001F = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC1900000000000000000022 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000044;
+		};
+		AC1900000000000000000023 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1941,6 +1985,7 @@
 				"AC190000000000000000000A" ,
 				"AC190000000000000000000B" ,
 				"AC190000000000000000000C" ,
+				"AC190000000000000000000D" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -1965,6 +2010,7 @@
 				"AC190000000000000000000E" ,
 				"AC190000000000000000000F" ,
 				"AC1900000000000000000010" ,
+				"AC1900000000000000000011" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -1979,10 +2025,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D20000000000000000000004 /* HanlinPlatformContracts in Frameworks */,
-				D20000000000000000000003 /* HanlinScriptUI in Frameworks */,
-				D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */,
-				E3A100000000000000000001 /* HanlinExpoWidgetNative in Frameworks */,
+				"D20000000000000000000004" ,
+				"D20000000000000000000003" ,
+				"D20000000000000000000002" ,
+				"E3A100000000000000000001" ,
+				"AC1900000000000000000022" ,
+				"AC1900000000000000000023" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1990,7 +2038,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E40000000000000000000002 /* HanlinScriptStore in Share Frameworks */,
+				"E40000000000000000000002" ,
+				"AC1900000000000000000016" ,
+				"AC1900000000000000000017" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1998,9 +2048,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E50000000000000000000005 /* HanlinPlatformContracts in Frameworks */,
-				E50000000000000000000004 /* HanlinScriptUI in Frameworks */,
-				E50000000000000000000003 /* HanlinScriptExtensions in Frameworks */,
+				"E50000000000000000000005" ,
+				"E50000000000000000000004" ,
+				"E50000000000000000000003" ,
+				"AC190000000000000000001E" ,
+				"AC190000000000000000001F" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2008,6 +2060,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				"AC190000000000000000001A" ,
+				"AC190000000000000000001B" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2041,6 +2095,7 @@
 				"AC1900000000000000000012" ,
 				"AC1900000000000000000013" ,
 				"AC1900000000000000000014" ,
+				"AC1900000000000000000015" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2234,6 +2289,7 @@
 				"AC1900000000000000000002" ,
 				"AC1900000000000000000003" ,
 				"AC1900000000000000000004" ,
+				"AC1900000000000000000040" ,
 			);
 			"productName" = "AI_HLY";
 			"productReference" = "D7B6C3C12D50A55D004E3AD6";
@@ -2265,6 +2321,7 @@
 				"AC1900000000000000000002" ,
 				"AC1900000000000000000003" ,
 				"AC1900000000000000000004" ,
+				"AC1900000000000000000040" ,
 			);
 			"productName" = "AI_HLYTests";
 			"productReference" = "B10000000000000000000002";
@@ -2310,10 +2367,12 @@
 			);
 			name = HanlinScriptingWidgets;
 			packageProductDependencies = (
-				E3A100000000000000000002 /* HanlinExpoWidgetNative */,
-				C10000000000000000000021 /* HanlinScriptExtensions */,
-				C10000000000000000000022 /* HanlinScriptUI */,
-				A10000000000000000000015 /* HanlinPlatformContracts */,
+				"E3A100000000000000000002" ,
+				"C10000000000000000000021" ,
+				"C10000000000000000000022" ,
+				"A10000000000000000000015" ,
+				"AC1900000000000000000044" ,
+				"AC1900000000000000000040" ,
 			);
 			productName = HanlinScriptingWidgets;
 			productReference = D20000000000000000000020 /* HanlinScriptingWidgets.appex */;
@@ -2336,7 +2395,9 @@
 			);
 			name = ChavrusaChatShare;
 			packageProductDependencies = (
-				C10000000000000000000019 /* HanlinScriptStore */,
+				"C10000000000000000000019" ,
+				"AC1900000000000000000041" ,
+				"AC1900000000000000000040" ,
 			);
 			productName = ChavrusaChatShare;
 			productReference = E40000000000000000000020 /* ChavrusaChatShare.appex */;
@@ -2359,9 +2420,11 @@
 			);
 			name = ChavrusaChatTranslationProvider;
 			packageProductDependencies = (
-				C10000000000000000000021 /* HanlinScriptExtensions */,
-				C10000000000000000000022 /* HanlinScriptUI */,
-				A10000000000000000000015 /* HanlinPlatformContracts */,
+				"C10000000000000000000021" ,
+				"C10000000000000000000022" ,
+				"A10000000000000000000015" ,
+				"AC1900000000000000000043" ,
+				"AC1900000000000000000040" ,
 			);
 			productName = ChavrusaChatTranslationProvider;
 			productReference = E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */;
@@ -2384,6 +2447,8 @@
 			);
 			name = ChavrusaChatNotificationService;
 			packageProductDependencies = (
+				"AC1900000000000000000042" ,
+				"AC1900000000000000000040" ,
 			);
 			productName = ChavrusaChatNotificationService;
 			productReference = E60000000000000000000020 /* ChavrusaChatNotificationService.appex */;
@@ -2422,6 +2487,7 @@
 				"AC1900000000000000000003" ,
 				"AC1900000000000000000004" ,
 				"AC1900000000000000000005" ,
+				"AC1900000000000000000040" ,
 			);
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
@@ -3344,6 +3410,7 @@
 				MARKETING_VERSION = 0.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = HanlinScriptingWidgetsHost;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -3372,6 +3439,7 @@
 				MARKETING_VERSION = 0.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = HanlinScriptingWidgetsHost;
 				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat Widgets App Store";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -4062,6 +4130,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AC1900000000000000000001;
 			productName = HanlinAgentActivityCore;
+		};
+		AC1900000000000000000040 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinExtensionContracts;
+		};
+		AC1900000000000000000041 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinShareExtensionUI;
+		};
+		AC1900000000000000000042 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinNotificationExtension;
+		};
+		AC1900000000000000000043 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinTranslationUI;
+		};
+		AC1900000000000000000044 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinWidgetUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 
