@@ -626,13 +626,8 @@ struct ChatBubbleView: View {
                 }
                 
                 if !text.isEmpty {
-                    HStack {
-                        Text(text)
-                    }
-                    .padding(10)
-                    .background(temporaryRecord ? .primary : Color(.hanlinHLBlue))
-                    .foregroundColor(temporaryRecord ? Color(.systemBackground) : .white)
-                    .contextMenu {
+                    HanlinUserMessageBubble(text: text, containerWidth: effectiveContainerWidth,
+                                            temporaryRecord: temporaryRecord) {
                         Button(action: {
                             UIPasteboard.general.string = markdownToPlainText(text)
                         }) {
@@ -654,14 +649,6 @@ struct ChatBubbleView: View {
                             Label(hanlin: "删除消息", systemImage: "trash")
                         }
                     }
-                    .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: effectiveContainerWidth * 0.75, alignment: .trailing)
-                    .accessibilityElement(children: .combine)
-                    .accessibilityLabel(text)
-                    .accessibilityIdentifier("hanlin-user-bubble")
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
-                    .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: text.isEmpty)
                 }
             }
         }
@@ -672,16 +659,11 @@ struct ChatBubbleView: View {
     // MARK: - AI 助手消息
     @ViewBuilder
     private func assistantMessageView() -> some View {
-        VStack(alignment: .leading, spacing: 6) {
+        HanlinAssistantMessageBubble(isResponding: isResponding) {
             assistantHeader()
             assistantImageSection()
             assistantTextSection()
         }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-assistant-bubble")
-        .transition(.move(edge: .leading).combined(with: .opacity))
-        .animation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.4),
-                   value: isResponding)
     }
 
     // MARK: 头部：头像 + 模型名
@@ -5908,57 +5890,7 @@ struct MaxMessagesNumPicker: View {
     }
 }
 
-struct CustomCorners: Shape {
-    var topLeft: CGFloat = 0
-    var topRight: CGFloat = 0
-    var bottomLeft: CGFloat = 0
-    var bottomRight: CGFloat = 0
-
-    func path(in rect: CGRect) -> Path {
-        // 限制半径不超过宽高一半
-        let tl = min(min(topLeft, rect.width / 2), rect.height / 2)
-        let tr = min(min(topRight, rect.width / 2), rect.height / 2)
-        let bl = min(min(bottomLeft, rect.width / 2), rect.height / 2)
-        let br = min(min(bottomRight, rect.width / 2), rect.height / 2)
-
-        let minX = rect.minX
-        let maxX = rect.maxX
-        let minY = rect.minY
-        let maxY = rect.maxY
-
-        let path = CGMutablePath()
-        // 起点放在左上边，偏移 tl，使下段线、弧线自动衔接
-        path.move(to: CGPoint(x: minX + tl, y: minY))
-
-        // top edge → top-right corner
-        path.addLine(to: CGPoint(x: maxX - tr, y: minY))
-        path.addArc(tangent1End: CGPoint(x: maxX, y: minY),
-                    tangent2End: CGPoint(x: maxX, y: minY + tr),
-                    radius: tr)
-
-        // right edge → bottom-right corner
-        path.addLine(to: CGPoint(x: maxX, y: maxY - br))
-        path.addArc(tangent1End: CGPoint(x: maxX, y: maxY),
-                    tangent2End: CGPoint(x: maxX - br, y: maxY),
-                    radius: br)
-
-        // bottom edge → bottom-left corner
-        path.addLine(to: CGPoint(x: minX + bl, y: maxY))
-        path.addArc(tangent1End: CGPoint(x: minX, y: maxY),
-                    tangent2End: CGPoint(x: minX, y: maxY - bl),
-                    radius: bl)
-
-        // left edge → back to top-left corner
-        path.addLine(to: CGPoint(x: minX, y: minY + tl))
-        path.addArc(tangent1End: CGPoint(x: minX, y: minY),
-                    tangent2End: CGPoint(x: minX + tl, y: minY),
-                    radius: tl)
-
-        path.closeSubpath()
-
-        return Path(path)
-    }
-}
+typealias CustomCorners = HanlinMessageCorners
 
 struct SystemMessageSettingsView: View {
     // 绑定变量：是否使用默认系统消息、以及自定义的系统消息内容
