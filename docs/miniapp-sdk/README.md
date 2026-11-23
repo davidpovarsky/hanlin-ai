@@ -70,9 +70,13 @@ Compiled JavaScript without original TypeScript cannot reveal erased TypeScript 
 
 ## Entry points and native surfaces
 
-The current integration connects ordinary launch, declared Share actions, App Intents/Shortcuts, translation continuation, widgets and Live Activities. The standalone MiniApps target includes its own Share, Translation and Widgets extensions using its own product storage namespace.
+The current integration connects ordinary launch, declared Share actions, App Intents/Shortcuts, package-defined native snippets and translation panels, widgets and Live Activities. The standalone MiniApps target includes its own Share, Translation and Widgets extensions using its own product storage namespace.
 
-The native snippet currently displays durable invocation status and results. Translation currently continues selected input in the foreground MiniApp. These are not evidence of arbitrary package-defined custom snippet or translation-extension UI. Surface support and native runtime results must be evaluated separately. See [Current surface implementation](../miniapps/entrypoints-and-system-surfaces.md).
+Declared native presentation programs are compiled during import with the original Expo Widgets or ScriptWidget compiler, published as immutable shared artifacts, and run with separate invocation state. Native snippets use real App Intents for their controls. The translation panel keeps editable input and native results inside the extension, and calls the original Apple context for expansion and text replacement. Foreground continuation remains available for packages without a native presentation. See [Current surface implementation](../miniapps/entrypoints-and-system-surfaces.md).
+
+Original ScriptWidget Live Activities use the original component renderer for the Lock Screen and all seven `$dynamic_island` regions. From Expo or NativeScript, call `hostServices.liveActivities.start({scriptWidgetEntrypointID: "widget", state: {count: 1}})` (or the equivalent `createHostServices()` facade). The installed default instance is available without placing a widget on the Home Screen. Declared native button and toggle actions commit actual state and refresh the activity. Prepared trees are retained as immutable artifacts; ActivityKit carries their small content reference.
+
+The imported modular-search sample retains its editable original logic modules, grouped results, text expansion, version selection and pagination. Its native system snippet uses an explicit Load more action in place of the original Scripting on-appear sentinel. Native code integration and native execution evidence are separate; consult the recorded Apple acceptance run before reporting a product pass.
 
 ## Guides and evidence
 

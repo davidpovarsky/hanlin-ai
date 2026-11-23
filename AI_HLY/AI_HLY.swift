@@ -1,5 +1,6 @@
 import AI_Hanlin
 import AppIntents
+import HanlinTranslationUI
 import SwiftUI
 
 #if HANLIN_NATIVESCRIPT_POC
@@ -29,6 +30,6 @@ struct MyApp: App {
 /// Register the original SDK's system actions with this application's metadata.
 struct HanlinAppIntents: AppIntentsPackage {
     static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinApplicationIntentsPackage.self]
+        [HanlinApplicationIntentsPackage.self, HanlinNativePresentationIntentsPackage.self]
     }
 }

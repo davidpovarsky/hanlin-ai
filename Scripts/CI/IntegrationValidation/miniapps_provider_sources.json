@@ -131,7 +131,8 @@
     "IOSSystemLite",
     "SWCompression",
     "TorahLibraryKit",
-    "ZIPFoundation"
+    "ZIPFoundation",
+    "HanlinTranslationUI"
   ],
   "native_framework_refs": [
     "A10000000000000000000020",

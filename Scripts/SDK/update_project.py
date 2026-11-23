@@ -25,12 +25,15 @@ PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000
 EXTRA_PRODUCT_BUILDS = {
     ("HanlinMiniApps", "HanlinMiniAppsUI"): "AC1900000000000000000046",
     ("HanlinMiniApps", "HanlinPresentationKit"): "AC1900000000000000000047",
-    ("HanlinMiniApps", "TorahLibraryKit"): "AC1900000000000000000048"
+    ("HanlinMiniApps", "TorahLibraryKit"): "AC1900000000000000000048",
+    ("AI_Hanlin", "HanlinTranslationUI"): "AC1900000000000000000049",
+    ("HanlinMiniApps", "HanlinTranslationUI"): "AC190000000000000000004A",
+    ("AI_HLYTests", "HanlinTranslationUI"): "AC190000000000000000004B"
 }
 TARGET_PRODUCTS={
-    "AI_Hanlin": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
-    "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
-    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit"],
+    "AI_Hanlin": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts", "HanlinTranslationUI"],
+    "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts", "HanlinTranslationUI"],
+    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit", "HanlinTranslationUI"],
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
     "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
     "ChavrusaChatTranslationProvider": ["HanlinTranslationUI", "HanlinExtensionContracts"],
