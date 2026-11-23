@@ -173,10 +173,22 @@ class NativeCancellationAdmissionTests(unittest.TestCase):
         data["testNodes"] = [copy.deepcopy(original_cancel) if node["nodeIdentifier"] == original_cancel["nodeIdentifier"]
                              else node for node in data["testNodes"]]
         write(self.evidence / "NativeSDKTests.json", data)
+        statuses = json.loads((self.evidence / "process-status.json").read_text())
+        statuses["native_sdk_test_exit"] = 65
+        write(self.evidence / "process-status.json", statuses)
+        commands = json.loads((self.evidence / "commands.json").read_text())
+        next(command for command in commands if command["name"] == "NativeSDKTests")["exit_code"] = 65
+        write(self.evidence / "commands.json", commands)
         result = report.summarize(self.evidence)
         self.assertEqual(result["status"], "BLOCKED")
         self.assertEqual(sum(row["status"] == "FAIL" for row in result["cases"]), 1)
+        self.assertEqual(result["ios_agent_core_compile"], "PASS")
+        self.assertEqual(result["current_ios_build"]["mode"], "EXECUTED")
         (self.evidence / "NativeSDKTests.json").write_bytes(original)
+        statuses["native_sdk_test_exit"] = 0
+        write(self.evidence / "process-status.json", statuses)
+        next(command for command in commands if command["name"] == "NativeSDKTests")["exit_code"] = 0
+        write(self.evidence / "commands.json", commands)
         def remove_argument(data):
             target = next(node for node in data["testNodes"] if node["nodeIdentifier"].startswith(
                 report.CORE_SUITE + "/nativeNumericInput"))

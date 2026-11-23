@@ -325,8 +325,8 @@ def validate_execution(evidence, statuses):
                 command["cwd"].endswith("/Packages/" + directory), "wrong native test target")
         selected = [value.removeprefix("-only-testing:") for value in argv if value.startswith("-only-testing:")]
         require(sorted(selected) == sorted(selectors), "wrong exact method signatures/selection")
-        require(type(statuses.get(key)) is int and statuses[key] == command["exit_code"] == 0,
-                "narrowed current process did not succeed")
+        require(type(statuses.get(key)) is int and statuses[key] == command["exit_code"],
+                "narrowed current process exit differs from its original command")
     builds = [command for command in commands if command["argv"][:2] == ["xcodebuild", "build"]]
     require(len(builds) == 1 and builds[0]["name"] == "IOSBuild", "one current dependent build required")
     build = builds[0]
@@ -388,7 +388,8 @@ def summarize(evidence):
         case["execution"] = "EXECUTED" if case["status"] in ("PASS", "FAIL") else "NOT_RUN"
     passed = (not errors and len(cases) == 15 and len(methods) == 7 and
               all(case["status"] == "PASS" for case in cases) and
-              type(statuses.get("preparation_exit")) is int and statuses["preparation_exit"] == 0 and
+              all(type(statuses.get(key)) is int and statuses[key] == 0 for key in
+                  ("preparation_exit", "native_core_test_exit", "native_sdk_test_exit")) and
               reuse is not None and build is not None)
     return dict(
         scope="Fifteen affected native cancellation consumers on explicitly composed07431;21 separately source-qualified original product passes",
@@ -399,6 +400,7 @@ def summarize(evidence):
         historical_baseline_execution="HISTORICAL_REFERENCE_ONLY",
         historical_baseline_current_equivalence=False,
         ios_agent_core_compile="PASS" if build is not None else
-            "NOT_RUN" if statuses.get("ios_build_exit") is None else "FAIL",
+            "NOT_RUN" if statuses.get("ios_build_exit") is None else
+            "BLOCKED" if statuses.get("ios_build_exit") == 0 else "FAIL",
         current_ios_build=build, shipping_native_tool_capability=False, system_model_generation="NOT_RUN",
     )
