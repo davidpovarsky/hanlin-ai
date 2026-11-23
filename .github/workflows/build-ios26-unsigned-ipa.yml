@@ -1201,10 +1201,29 @@ jobs:
           echo "runner-arch=$runner_arch" >> "$GITHUB_OUTPUT"
           echo "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"
 
+      - name: Resolve current original MiniApp sources and exact build graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
+
+      - name: Preserve current original MiniApp build inputs
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: miniapp-upstream-inputs-${{ github.job }}-${{ github.run_id }}
+          path: |
+            ${{ env.LOG_DIR }}/miniapp-upstream-*
+            build/acceptance/miniapp-upstreams
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
 
-      - name: Prepare pinned NativeScript iOS dependency closure
+      - name: Prepare resolved original MiniApp native dependencies
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
@@ -1214,6 +1233,8 @@ jobs:
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
           npm ci --prefix Scripts/Expo
           node Scripts/Expo/prepare-ios-dependencies.mjs
+          node Scripts/Expo/prepare-types.mjs
+          node Scripts/Expo/build-probe.mjs
 
       - name: Prepare log folders
         run: |
@@ -2091,10 +2112,29 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Resolve current original MiniApp sources and exact build graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
+
+      - name: Preserve current original MiniApp build inputs
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: miniapp-upstream-inputs-${{ github.job }}-${{ github.run_id }}
+          path: |
+            ${{ env.LOG_DIR }}/miniapp-upstream-*
+            build/acceptance/miniapp-upstreams
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
 
-      - name: Prepare pinned NativeScript iOS dependency closure
+      - name: Prepare resolved original MiniApp native dependencies
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
@@ -2102,6 +2142,8 @@ jobs:
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           npm ci --prefix Scripts/Expo
           node Scripts/Expo/prepare-ios-dependencies.mjs
+          node Scripts/Expo/prepare-types.mjs
+          node Scripts/Expo/build-probe.mjs
           if [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [ "$RUN_SIMULATOR_NATIVESCRIPT_POC" = "true" ] || [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
             node Scripts/NativeScript/prepare-fixture.mjs
             npm run prepare:production-package --prefix Scripts/NativeScript
@@ -2226,7 +2268,6 @@ jobs:
           grep -Fq "Prepared verified RuntimeCore $(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" "$LOG_DIR/02-prepare-runtime-core.log"
 
       - name: Package current RuntimeCore host resources
-        if: ${{ needs.plan-affected-validation.outputs.run_runtimecore_host == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/03-package-runtime-host.log"
