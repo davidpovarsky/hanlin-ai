@@ -1,4 +1,5 @@
 #include "HanlinExpoNativeAPIGate.h"
+#include "HanlinExpoSessionRuntimeRegistry.h"
 #include "NativeScriptNativeApiModule.h"
 
 #import <Foundation/Foundation.h>
@@ -33,9 +34,7 @@ std::string pathForResource(NSBundle* bundle, NSString* name, NSString* type) {
 
 std::string bundledMetadataPath() {
   NSString* gatePath = [HanlinExpoNativeAPIGate bundledMetadataPath];
-  if (gatePath != nil && gatePath.length > 0) {
-    return gatePath.UTF8String;
-  }
+  if (gatePath.length > 0) return gatePath.UTF8String;
 #if TARGET_OS_SIMULATOR
 #if defined(__x86_64__)
   NSString* metadataName = @"metadata.ios-sim.x86_64";
@@ -141,24 +140,9 @@ UIImage* imageWithRenderingMode(UIImage* image, bool isTemplate) {
                                                   : UIImageRenderingModeAlwaysOriginal];
 }
 
-std::mutex& nativeScriptWorkletRuntimeMutex() {
-  static std::mutex mutex;
-  return mutex;
-}
-
-std::weak_ptr<worklets::WorkletRuntime>& nativeScriptWorkletRuntime() {
-  static std::weak_ptr<worklets::WorkletRuntime> runtime;
-  return runtime;
-}
-
-void setNativeScriptWorkletRuntime(std::shared_ptr<worklets::WorkletRuntime> runtime) {
-  std::lock_guard<std::mutex> lock(nativeScriptWorkletRuntimeMutex());
-  nativeScriptWorkletRuntime() = std::move(runtime);
-}
-
-std::shared_ptr<worklets::WorkletRuntime> getNativeScriptWorkletRuntime() {
-  std::lock_guard<std::mutex> lock(nativeScriptWorkletRuntimeMutex());
-  return nativeScriptWorkletRuntime().lock();
+HanlinExpoSessionRuntimeRegistry<worklets::WorkletRuntime>& nativeScriptWorkletRuntimes() {
+  static HanlinExpoSessionRuntimeRegistry<worklets::WorkletRuntime> runtimes;
+  return runtimes;
 }
 
 NSString* stringProperty(facebook::jsi::Runtime& runtime, facebook::jsi::Object& object,
@@ -248,14 +232,15 @@ NSDictionary<NSString*, NSString*>* handlesFromJSIValue(facebook::jsi::Runtime& 
   return handles;
 }
 
-NSDictionary<NSString*, NSString*>* runUIKitHostFunction(NSString* hostId, NSString* phase,
+NSDictionary<NSString*, NSString*>* runUIKitHostFunction(NSString* sessionID, NSString* hostId, NSString* phase,
                                                          const char* globalName,
                                                          const char* logAction) {
   if (hostId.length == 0 || ![NSThread isMainThread]) {
     return nil;
   }
 
-  auto workletRuntime = getNativeScriptWorkletRuntime();
+  if ([HanlinExpoNativeAPIGate sessionContextForSessionID:sessionID] == nil) return nil;
+  auto workletRuntime = nativeScriptWorkletRuntimes().find(sessionID.UTF8String);
   if (workletRuntime == nullptr) {
     return nil;
   }
@@ -271,6 +256,7 @@ NSDictionary<NSString*, NSString*>* runUIKitHostFunction(NSString* hostId, NSStr
     return workletRuntime->runSync(
         [hostIdString = std::move(hostIdString), phaseString = std::move(phaseString),
          globalName](facebook::jsi::Runtime& runtime) -> NSDictionary<NSString*, NSString*>* {
+          if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) return nil;
           auto global = runtime.global();
           auto functionValue = global.getProperty(runtime, globalName);
           if (!functionValue.isObject()) {
@@ -303,21 +289,27 @@ NSDictionary<NSString*, NSString*>* runUIKitHostFunction(NSString* hostId, NSStr
 }  // namespace
 
 NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHost(NSString* hostId) {
-  if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptCreateUIKitHost rejected: no active matching native runtime session.");
-    return nil;
-  }
-  return runUIKitHostFunction(hostId, nil, "__nativeScriptCreateUIKitHostFromNative", "create");
+  return NativeScriptCreateUIKitHostForSession(hostId, [HanlinExpoNativeAPIGate activeSessionContext].sessionID);
 }
 
-NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLifecycle(NSString* hostId,
-                                                                      NSString* phase) {
-  if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptRunUIKitHostLifecycle rejected: no active matching native runtime session.");
+NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLifecycle(NSString* hostId, NSString* phase) {
+  return NativeScriptRunUIKitHostLifecycleForSession(hostId, phase, [HanlinExpoNativeAPIGate activeSessionContext].sessionID);
+}
+
+NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHostForSession(NSString* hostId, NSString* sessionID) {
+  if ([HanlinExpoNativeAPIGate sessionContextForSessionID:sessionID] == nil) {
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] UIKit create has no live owning session.");
     return nil;
   }
-  return runUIKitHostFunction(hostId, phase, "__nativeScriptRunUIKitHostLifecycleFromNative",
-                              "run");
+  return runUIKitHostFunction(sessionID, hostId, nil, "__nativeScriptCreateUIKitHostFromNative", "create");
+}
+
+NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLifecycleForSession(NSString* hostId, NSString* phase, NSString* sessionID) {
+  if ([HanlinExpoNativeAPIGate sessionContextForSessionID:sessionID] == nil) {
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] UIKit lifecycle has no live owning session.");
+    return nil;
+  }
+  return runUIKitHostFunction(sessionID, hostId, phase, "__nativeScriptRunUIKitHostLifecycleFromNative", "run");
 }
 
 namespace facebook::react {
@@ -327,7 +319,7 @@ NativeScriptNativeApiModule::NativeScriptNativeApiModule(std::shared_ptr<CallInv
 
 bool NativeScriptNativeApiModule::install(jsi::Runtime& runtime, std::string metadataPath) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::install rejected: no active matching native runtime session.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] install has no live owning runtime session.");
     return false;
   }
   writeSmokeMarkerIfRequested("install:resolve-metadata");
@@ -350,7 +342,7 @@ bool NativeScriptNativeApiModule::installWorkletRuntime(jsi::Runtime& runtime,
                                                         jsi::Object runtimeHolder,
                                                         std::string metadataPath) {
   if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::installWorkletRuntime rejected: no active matching native runtime session.");
+    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] installWorkletRuntime has no live owning runtime session.");
     return false;
   }
   writeSmokeMarkerIfRequested("installWorkletRuntime:headers");
@@ -365,15 +357,21 @@ bool NativeScriptNativeApiModule::installWorkletRuntime(jsi::Runtime& runtime,
     return false;
   }
 
-  setNativeScriptWorkletRuntime(holder->runtime_);
+  HanlinExpoNativeAPISessionContext* context = [HanlinExpoNativeAPIGate sessionContextForRuntime:&runtime];
+  if (context == nil) return false;
+  std::string ownerSession = context.sessionID.UTF8String;
+  nativeScriptWorkletRuntimes().bind(ownerSession, holder->runtime_);
 
   std::string resolvedMetadataPath = metadataPath.empty() ? bundledMetadataPath() : metadataPath;
   auto jsInvoker = jsInvoker_;
   auto workletRuntimeRef = holder->runtime_;
   return holder->runtime_->runSync(
       [jsInvoker = std::move(jsInvoker), resolvedMetadataPath = std::move(resolvedMetadataPath),
-       workletRuntimeRef = std::move(workletRuntimeRef)](
+       workletRuntimeRef = std::move(workletRuntimeRef), ownerSession](
           jsi::Runtime& workletRuntime) -> bool {
+        NSString* sessionID = [NSString stringWithUTF8String:ownerSession.c_str()];
+        [HanlinExpoNativeAPIGate bindRuntime:&workletRuntime forSessionID:sessionID];
+        if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&workletRuntime]) return false;
         if (!nativeApiInstalled(workletRuntime)) {
           std::weak_ptr<worklets::WorkletRuntime> workletRuntimeWeak(workletRuntimeRef);
           const char* metadataPathArg =
@@ -394,8 +392,10 @@ bool NativeScriptNativeApiModule::installWorkletRuntime(jsi::Runtime& runtime,
                     std::make_shared<std::function<void()>>(std::move(task));
                 dispatch_semaphore_t done = dispatch_semaphore_create(0);
                 runtimeStrong->schedule(
-                    [taskBox = std::move(taskBox), done](jsi::Runtime&) mutable {
-                      (*taskBox)();
+                    [taskBox = std::move(taskBox), done](jsi::Runtime& callbackRuntime) mutable {
+                      if ([HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&callbackRuntime]) {
+                        (*taskBox)();
+                      }
                       dispatch_semaphore_signal(done);
                     });
                 dispatch_semaphore_wait(done, DISPATCH_TIME_FOREVER);
@@ -493,6 +493,10 @@ bool NativeScriptNativeApiModule::__writeTestMarker(jsi::Runtime&, std::string c
 
 }  // namespace facebook::react
 
+void HanlinExpoNativeAPIClearWorkletRuntimeForSession(NSString* sessionID) {
+  if (sessionID != nil) nativeScriptWorkletRuntimes().clear(sessionID.UTF8String);
+}
+
 void HanlinExpoNativeAPIClearWorkletRuntime(void) {
-  setNativeScriptWorkletRuntime(nullptr);
+  nativeScriptWorkletRuntimes().clearAll();
 }

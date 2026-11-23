@@ -1,0 +1,49 @@
+{
+  "task": "Concurrent Expo NativeAPI session ownership",
+  "date": "2026-11-23",
+  "base_commit": "454ec7a74d21dfdf690a2ba21ee7869b8f3b66e6",
+  "scope": [
+    "per-runtime context and root-view identity",
+    "per-session weak worklet lifetime and UIKit host routing",
+    "first/last modifier session ownership",
+    "canonical source generation parity"
+  ],
+  "preserved": [
+    "existing NativeAPI grant behavior",
+    "user JavaScript and host IDs",
+    "shared MiniApps bridge API"
+  ],
+  "checks": [
+    {
+      "name": "generation parity",
+      "reason": "Dependency preparation replaces tracked generated sources."
+    },
+    {
+      "name": "focused Apple XCTest",
+      "project": "Tests/ExpoMultiScene/HanlinExpoMultiSceneTests.xcodeproj",
+      "scheme": "HanlinExpoMultiSceneTests",
+      "cases": 12,
+      "reason": "Production Foundation/UIKit gate, weak registry and Swift modifier ownership; two contexts and scoped cleanup."
+    }
+  ],
+  "limitations": [
+    "Worklet values in unit tests are doubles; full Hermes/Expo UI integration is a separate application gate.",
+    "Standalone NativeScript engine singleton is a separate limitation."
+  ],
+  "source_sha256": {
+    "Packages/HanlinExpoNativeAPI/bridge-source/HanlinExpoNativeAPIGate.h": "5de9a8692962be0f0bd8d7f86b80d48f655af40c09b593b0ddc418a68f083274",
+    "Packages/HanlinExpoNativeAPI/bridge-source/HanlinExpoNativeAPIGate.mm": "80c57c694b80acc568c6fdfadad2a555e684bcbac2ba65f1caea3133f9f27329",
+    "Packages/HanlinExpoNativeAPI/bridge-source/HanlinExpoSessionRuntimeRegistry.h": "22b0fdf40fdb8fa705bed498f2800a50d4188e6c9f348019bad88d973ff9c166",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoModifierOwnership.swift": "c09d74d45f650b1bc4aa8348052e2594163cb6bc28b6d747a958d67db96446f2",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoModifierExtension.swift": "3c6c2cd242ef018944c8f43767de2fe766de1ed8cbf71eb8db5433e260438e32",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift": "415d4441e599f5c6b466e5469a017beef973af3c04cce719705e716ed79247de",
+    "Scripts/ExpoNativeAPI/multiscene-patch.mjs": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66"
+  },
+  "upstream": {
+    "package": "@nativescript/react-native",
+    "version": "9.1.2",
+    "tarball": "https://registry.npmjs.org/@nativescript/react-native/-/react-native-9.1.2.tgz",
+    "sha512_base64": "sqgsqg++6etbihWzLeIeSi7OxlmAsEegxz4yHerqCbYBuxyrVnTrtK4vDNnTYbNM+q6u2b0hwDNhX0aOEKTeTw=="
+  }
+}

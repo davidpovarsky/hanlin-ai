@@ -216,7 +216,7 @@ public final class HanlinExpoSession {
 
         do {
             Self.ensureAppDefinesLoaded()
-            HanlinExpoModifierRegistry.registerCustomModifiers()
+            HanlinExpoModifierRegistry.registerCustomModifiers(sessionID: sessionID)
 
             // Bind native authorization context before React / Hermes evaluation
             HanlinExpoNativeAPIManager.registerSession(
@@ -255,6 +255,7 @@ public final class HanlinExpoSession {
             )
             NSLog("%@", "HANLIN_EXPO_ROOTVIEW_CREATED")
 
+            HanlinExpoNativeAPIManager.bindView(rootView, forSessionID: sessionID)
             rootView.translatesAutoresizingMaskIntoConstraints = false
             containerController.view.addSubview(rootView)
             NSLayoutConstraint.activate([
@@ -280,7 +281,7 @@ public final class HanlinExpoSession {
         HanlinExpoNativeAPIManager.revokeSession(sessionID: sessionID)
 
         guard isActive || reactNativeFactory != nil || appContext != nil else {
-            HanlinExpoModifierRegistry.unregisterCustomModifiers()
+            HanlinExpoModifierRegistry.unregisterCustomModifiers(sessionID: sessionID)
             return
         }
 
@@ -302,7 +303,7 @@ public final class HanlinExpoSession {
         appContext = nil
         isActive = false
 
-        HanlinExpoModifierRegistry.unregisterCustomModifiers()
+        HanlinExpoModifierRegistry.unregisterCustomModifiers(sessionID: sessionID)
 
         Self.activeSessions.removeValue(forKey: sessionID)
     }

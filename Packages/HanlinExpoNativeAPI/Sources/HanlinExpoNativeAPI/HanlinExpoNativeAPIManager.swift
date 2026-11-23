@@ -51,6 +51,10 @@ public final class HanlinExpoNativeAPIManager {
         HanlinExpoNativeAPIGate.bindRuntime(runtimePointer, forSessionID: sessionID)
     }
 
+    public static func bindView(_ view: UIView, forSessionID sessionID: String) {
+        HanlinExpoNativeAPIGate.bindView(view, forSessionID: sessionID)
+    }
+
     nonisolated public static func revokeSession(sessionID: String) {
         HanlinExpoNativeAPIGate.revokeSession(sessionID)
     }
