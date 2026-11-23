@@ -185,14 +185,14 @@ jobs:
           retention-days: 14
   chat-motion-product:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'chat_motion_product' && !inputs.testflight_upload }}
-    name: ${{ inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'Original Motion visual capture (C)' || 'Original Motion interaction acceptance (B and C)' }}
+    name: ${{ inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'Original Motion visual capture (C)' || inputs.exact_test_selector == 'MotionUITests/testBRapidReversalPresetSwitchAndPersistence' && 'Original Motion reversal acceptance (B)' || 'Original Motion interaction acceptance (B and C)' }}
     runs-on: xcode-27
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Exercise the selected original Motion UI scope
         env:
-          HANLIN_MOTION_SCOPE: ${{ inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'cycles' || inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'input-diagnostic' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'visual-c' || 'affected' }}
+          HANLIN_MOTION_SCOPE: ${{ inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'cycles' || inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'input-diagnostic' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'visual-c' || inputs.exact_test_selector == 'MotionUITests/testBRapidReversalPresetSwitchAndPersistence' && 'reversal-b' || 'affected' }}
           HANLIN_MOTION_DEVICE_STRATEGY: fresh
         run: bash docs/chat-motion/run_motion_ui.sh
       - uses: actions/upload-artifact@v7.0.2

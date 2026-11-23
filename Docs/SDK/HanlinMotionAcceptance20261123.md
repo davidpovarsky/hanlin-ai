@@ -1,5 +1,15 @@
 # Motion acceptance and canonical SDK fixture — 2026-11-23
 
+## Current continuation — 23 November, 16:30 UTC
+
+C has since passed its original native assertions and full-screen landscape visual review in [45166004801](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45166004801), exact source `3a9e1681f03080412d0ee934a00b307f3d7ae59c`; its [original evidence](../../docs/agent-sdk/evidence/motion-native-45166004801/) is preserved. No Presentation/Motion input changed between that source and `5d0ea90d98b405d38b66bb735198b945225877ba`, so C is not selected again.
+
+A remains unaccepted; B still lacks its required intermediate reversal and later assertions. D run45181755996 failed at owned simulator boot/recovery before tests. One D-only continuation [45217195070](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45217195070) has acquired a runner on exact5d0ea90d; its result is pending. It retains all original six input variants × two scroll phases and never accepts B by itself.
+
+The existing native wrapper now supports `reversal-b`, selected by `MotionUITests/testBRapidReversalPresetSwitchAndPersistence`. This route runs and requires exactly the original B method. It prevents a future B repair from unnecessarily repeating C. All existing routes, result/video/source gates, simulator readiness bounds, gestures, timings and assertions are preserved. [Portable selector verification](../../docs/agent-sdk/evidence/motion-b-only-route-20261123/receipt.json) is source/harness evidence only; no new native B pass is claimed.
+
+The sections below retain the earlier observations and their source-specific limitations.
+
 ## Current acceptance remains open
 
 The current canonical SDK run **45133334293 at6772dce6 executed B and C**: B failed its intermediate-reversal assertion; C passed its XCTest assertions. The original source/resource, resolved dependency and packaged-bundle accounting all completed before those cases. Native video shows visible warm animation, but the recorded rapid burst did not reverse at an intermediate height. No product timing or algorithm change is justified by the evidence. Clean landscape visual acceptance remains open because its original screenshot is clipped. A retains its historical wait failure. D has no new executed result: attempt1 stopped in simulator preflight; its single unchanged failed-job retry could not acquire a hosted runner and executed zero steps. See [the current native receipt and reviewed frames](../../docs/agent-sdk/evidence/motion-native-45133334293/README.md).
