@@ -216,3 +216,66 @@ internal lifecycle-test hook remains `DEBUG` and requires `@testable import
 HanlinA2UI`. The Oracle portable proof passed the original eight ingress and seven
 media-admission tests through the public module. The 38 original Apple SDK/SwiftUI
 cases require the native proof route; a Linux result does not certify those cases.
+
+
+## Original translations and visual resources
+
+`HanlinLocalization` owns the original `Localizable`, `MCPLocalizable` and
+`RuntimeLocalizable` catalogs, preserving all English, Hebrew and Simplified
+Chinese values. Its public `HanlinLocalization.bundle` is shared by the original
+application module, chat UI, A2UI and OpenUI. Hosts do not need to copy Hanlin's
+translation tables or visual assets into their own bundles.
+
+The 70 original image sets and 18 original color sets live in the same resource
+target. `Color.hanlinHLBlue` and the other prefixed color accessors keep the
+original colors and dark/light variants. `Image(hanlinAsset:)` selects the shared
+bundle for original Hanlin assets and preserves host-bundle lookup for names
+owned by a hosting app. Hanlin's app-only AppIcon and AccentColor remain in its
+app catalog. Its original launch storyboard still refers to `applogo`; an asset
+catalog symlink points to the single canonical SDK image source.
+
+SwiftUI controls use narrow `hanlin:` forwarding initializers that build the same
+native control and original `Text` label, selecting the SDK bundle. Native Text
+overloads handle navigation, alerts and accessibility. Original labels still
+follow the host's SwiftUI locale; dynamic model/user content remains verbatim.
+The legacy rename field retains its original `onCommit` callback and reads the
+host locale for its localized prompt. `MCPL10n`, `RuntimeL10n` and `SkillL10n`
+retain their original dictionary/table lookup and formatting implementations in
+the shared module.
+
+The package manifest must set `defaultLocalization: "zh-Hans"`, process the
+`HanlinLocalization/Resources` directory and add `HanlinLocalization` as a
+dependency of UI consumers. Canonical resources are processed into their own
+bundle; they are not resolved through the host's `Bundle.main`. The runtime/JSON
+application bundle remains a separate concern.
+
+### Maintaining resource routing
+
+`Scripts/Localization/route_shared_resources.py` compiles its adjacent SwiftSyntax
+source using the selected Swift toolchain's own parser modules. It audits the
+original application and presentation sources, selects actual syntax nodes, and
+checks every original string segment before applying any write. Embedded scripts,
+comments, dynamic message text, unrelated bytes and callback structure are
+preserved. Reapplying the transform is idempotent.
+
+```sh
+python3 Scripts/Localization/route_shared_resources.py --root . --report /tmp/hanlin-resource-routing.json
+python3 Scripts/Localization/route_shared_resources.py --root . --report /tmp/hanlin-resource-routing.json --apply
+```
+
+The migration receipt records 115 transformed source files and 301 unchanged
+original resource files. Oracle verification covers parsing, literal/source
+provenance, original catalog integrity, idempotency and public bundle ownership.
+`HanlinLocalizationTests` contains focused Apple acceptance cases for all three
+locale tables, native control types and original UIKit assets. Native compilation,
+visual locale checks and Xcode's launch-asset symlink handling require the Apple
+gate; portable results do not certify them. The existing packaged-translation
+validator now checks the SDK bundle embedded in a built app and keeps historical
+`--git-ref` support for earlier app-bundle receipts.
+
+The forwarding API follows Apple's documented native types and initializers:
+[Text localization](https://developer.apple.com/documentation/SwiftUI/Text),
+[Picker labels](https://developer.apple.com/documentation/swiftui/picker/init(selection:content:label:)),
+[Section headers](https://developer.apple.com/documentation/SwiftUI/Section/init(content:header:)),
+[TextField labels](https://developer.apple.com/documentation/swiftui/textfield/init(text:prompt:label:)),
+and [ContentUnavailableView](https://developer.apple.com/documentation/swiftui/contentunavailableview/init(_:systemimage:description:)-4490a).

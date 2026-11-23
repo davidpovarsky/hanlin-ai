@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct AgentEvidenceSheet: View {
@@ -23,7 +24,7 @@ struct AgentEvidenceSheet: View {
                 LazyVStack(alignment: .leading, spacing: 18) {
                     if groups.isEmpty {
                         ContentUnavailableView(
-                            String(localized: "No sources available"),
+                            String(localized: "No sources available", bundle: HanlinLocalization.bundle),
                             systemImage: "doc.text.magnifyingglass"
                         )
                     } else {
@@ -46,14 +47,14 @@ struct AgentEvidenceSheet: View {
                 }
                 .padding(16)
             }
-            .navigationTitle(String(localized: "Sources and items"))
+            .navigationTitle(String(localized: "Sources and items", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         dismiss()
                     } label: {
-                        Label(String(localized: "Close"), systemImage: "xmark")
+                        Label(String(localized: "Close", bundle: HanlinLocalization.bundle), systemImage: "xmark")
                     }
                 }
             }
@@ -74,16 +75,16 @@ private struct EvidenceSection {
 
     static var all: [EvidenceSection] {
         [
-            EvidenceSection(id: "web", title: String(localized: "Web sources"), kinds: [.webPage]),
-            EvidenceSection(id: "wikipedia", title: String(localized: "Wikipedia"), kinds: [.wikipediaArticle]),
-            EvidenceSection(id: "sefaria", title: String(localized: "Sefaria"), kinds: [.sefariaSource]),
-            EvidenceSection(id: "github", title: String(localized: "GitHub"), kinds: [.githubRepository, .githubFile, .githubCommit]),
-            EvidenceSection(id: "documents", title: String(localized: "Documents"), kinds: [.document, .file]),
-            EvidenceSection(id: "reminders", title: String(localized: "Reminders used"), kinds: [.reminder]),
-            EvidenceSection(id: "calendar", title: String(localized: "Calendar items"), kinds: [.calendarEvent]),
-            EvidenceSection(id: "emails", title: String(localized: "Emails"), kinds: [.email]),
-            EvidenceSection(id: "contacts", title: String(localized: "Contacts"), kinds: [.contact]),
-            EvidenceSection(id: "other", title: String(localized: "Other items"), kinds: [.genericItem])
+            EvidenceSection(id: "web", title: String(localized: "Web sources", bundle: HanlinLocalization.bundle), kinds: [.webPage]),
+            EvidenceSection(id: "wikipedia", title: String(localized: "Wikipedia", bundle: HanlinLocalization.bundle), kinds: [.wikipediaArticle]),
+            EvidenceSection(id: "sefaria", title: String(localized: "Sefaria", bundle: HanlinLocalization.bundle), kinds: [.sefariaSource]),
+            EvidenceSection(id: "github", title: String(localized: "GitHub", bundle: HanlinLocalization.bundle), kinds: [.githubRepository, .githubFile, .githubCommit]),
+            EvidenceSection(id: "documents", title: String(localized: "Documents", bundle: HanlinLocalization.bundle), kinds: [.document, .file]),
+            EvidenceSection(id: "reminders", title: String(localized: "Reminders used", bundle: HanlinLocalization.bundle), kinds: [.reminder]),
+            EvidenceSection(id: "calendar", title: String(localized: "Calendar items", bundle: HanlinLocalization.bundle), kinds: [.calendarEvent]),
+            EvidenceSection(id: "emails", title: String(localized: "Emails", bundle: HanlinLocalization.bundle), kinds: [.email]),
+            EvidenceSection(id: "contacts", title: String(localized: "Contacts", bundle: HanlinLocalization.bundle), kinds: [.contact]),
+            EvidenceSection(id: "other", title: String(localized: "Other items", bundle: HanlinLocalization.bundle), kinds: [.genericItem])
         ]
     }
 }

@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  HanlinCompactChatWorkspace.swift
 //  AI_HLY
@@ -165,10 +166,10 @@ struct HanlinCompactChatWorkspace: View {
         .sheet(isPresented: $showsHistory) {
             NavigationStack {
                 destinationView(for: .allConversations)
-                    .navigationTitle("History")
+                    .navigationTitle(Text("History", bundle: HanlinLocalization.bundle))
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
-                            Button("Done") { showsHistory = false }
+                            Button(hanlin: "Done") { showsHistory = false }
                                 .accessibilityIdentifier("hanlin-history-done")
                         }
                     }
@@ -182,14 +183,14 @@ struct HanlinCompactChatWorkspace: View {
         NavigationStack(path: $path) {
             compactHomeScreen(availableHeight: availableHeight)
                 .compactWorkspaceGeometryProbe("home-navigation-content")
-                .navigationTitle("Hanlin")
+                .navigationTitle(Text("Hanlin", bundle: HanlinLocalization.bundle))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     HanlinWorkspaceActions(onOpenProfile: onOpenProfile,
                         onOpenMiniApps: onOpenMiniApps, onOpenVision: onOpenVision)
                     ToolbarItem(placement: .topBarLeading) {
                         Button { showsHistory = true } label: {
-                            Label("History", systemImage: "clock.arrow.circlepath")
+                            Label(hanlin: "History", systemImage: "clock.arrow.circlepath")
                         }
                         .accessibilityIdentifier("hanlin-history-open")
                     }
@@ -197,12 +198,12 @@ struct HanlinCompactChatWorkspace: View {
                         if loadHistoryMessages {
                             HStack(spacing: 4) {
                                 ProgressView().font(HanlinTypography.caption)
-                                Text("正在加载...").font(HanlinTypography.caption)
+                                Text("正在加载...", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption)
                             }
                         } else {
                             Button(action: onOpenSafariGuide) {
                                 Label {
-                                    Text("软件指南")
+                                    Text("软件指南", bundle: HanlinLocalization.bundle)
                                         .font(HanlinTypography.caption)
                                 } icon: {
                                     Image(systemName: "text.rectangle.page")
@@ -217,7 +218,7 @@ struct HanlinCompactChatWorkspace: View {
                                 path.append(.chat(id))
                             }
                         } label: {
-                            Label("New chat", systemImage: "plus.bubble")
+                            Label(hanlin: "New chat", systemImage: "plus.bubble")
                         }
                         .accessibilityIdentifier("hanlin-new-chat-button")
                     }
@@ -279,7 +280,7 @@ struct HanlinCompactChatWorkspace: View {
                 .id(id)
             } else {
                 ContentUnavailableView(
-                    String(localized: "Conversation Not Found"),
+                    String(localized: "Conversation Not Found", bundle: HanlinLocalization.bundle),
                     systemImage: "bubble.left.and.exclamationmark.bubble.right"
                 )
             }
@@ -332,12 +333,12 @@ struct HanlinCompactChatWorkspace: View {
 
     private var welcomeHeroSection: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(String(localized: "Start a conversation or continue recent work"))
+            Text(String(localized: "Start a conversation or continue recent work", bundle: HanlinLocalization.bundle))
                 .font(HanlinTypography.fixed(size: 24, weight: .semibold))
                 .foregroundStyle(.primary)
                 .fixedSize(horizontal: false, vertical: true)
 
-            Text(String(localized: "Type below to start a new chat immediately, or open the organizer dock for attachments, modes, tools, skills, and MCP."))
+            Text(String(localized: "Type below to start a new chat immediately, or open the organizer dock for attachments, modes, tools, skills, and MCP.", bundle: HanlinLocalization.bundle))
                 .font(HanlinTypography.subheadline)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)

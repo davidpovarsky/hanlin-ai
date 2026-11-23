@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(SwiftUI) && canImport(UIKit) && canImport(WebKit)
 import SwiftUI
 import HanlinPresentationKit
@@ -44,21 +45,21 @@ public struct ChatCodeFenceView: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Text(kind == "mermaid" ? String(localized: "Diagram") : String(localized: "Code comparison"))
+                Text(kind == "mermaid" ? String(localized: "Diagram", bundle: HanlinLocalization.bundle) : String(localized: "Code comparison", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.caption.weight(.semibold))
                 Spacer()
-                Toggle(String(localized: "Show code"), isOn: $showsSource).toggleStyle(.button).font(HanlinTypography.caption)
+                Toggle(String(localized: "Show code", bundle: HanlinLocalization.bundle), isOn: $showsSource).toggleStyle(.button).font(HanlinTypography.caption)
                     .accessibilityIdentifier("hanlin-code-fence-source-toggle-\(blockID)")
                 Menu {
-                    Button(String(localized: "Copy source"), systemImage: "doc.on.doc") { UIPasteboard.general.string = source }
-                    ShareLink(item: source) { Label(String(localized: "Share source"), systemImage: "square.and.arrow.up") }
-                    Button(String(localized: "Expand"), systemImage: "arrow.up.left.and.arrow.down.right") { expanded = true }
-                } label: { Image(systemName: "ellipsis.circle").accessibilityLabel(String(localized: "Code block actions")) }
+                    Button(String(localized: "Copy source", bundle: HanlinLocalization.bundle), systemImage: "doc.on.doc") { UIPasteboard.general.string = source }
+                    ShareLink(item: source) { Label(String(localized: "Share source", bundle: HanlinLocalization.bundle), systemImage: "square.and.arrow.up") }
+                    Button(String(localized: "Expand", bundle: HanlinLocalization.bundle), systemImage: "arrow.up.left.and.arrow.down.right") { expanded = true }
+                } label: { Image(systemName: "ellipsis.circle").accessibilityLabel(String(localized: "Code block actions", bundle: HanlinLocalization.bundle)) }
             }
             if kind == "diff", canSplit {
-                Picker(String(localized: "Comparison layout"), selection: $split) {
-                    Text(String(localized: "Unified")).tag(false)
-                    Text(String(localized: "Side by side")).tag(true)
+                Picker(String(localized: "Comparison layout", bundle: HanlinLocalization.bundle), selection: $split) {
+                    Text(String(localized: "Unified", bundle: HanlinLocalization.bundle)).tag(false)
+                    Text(String(localized: "Side by side", bundle: HanlinLocalization.bundle)).tag(true)
                 }.pickerStyle(.segmented)
             }
             if showsSource || failed {
@@ -68,16 +69,16 @@ public struct ChatCodeFenceView: View {
                     .frame(height: min(480, max(120, payload.height + 8)))
                     .environment(\.layoutDirection, .leftToRight)
             } else {
-                ProgressView(String(localized: "Rendering preview"))
+                ProgressView(String(localized: "Rendering preview", bundle: HanlinLocalization.bundle))
                     .frame(maxWidth: .infinity, minHeight: 96)
             }
             if failed {
                 Text(requiresRestart
-                     ? String(localized: "The preview stopped responding. Reopen the app to try again. You can still read or share the source.")
-                     : String(localized: "Preview is unavailable. The complete source remains available to copy, share or expand."))
+                     ? String(localized: "The preview stopped responding. Reopen the app to try again. You can still read or share the source.", bundle: HanlinLocalization.bundle)
+                     : String(localized: "Preview is unavailable. The complete source remains available to copy, share or expand.", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.caption).foregroundStyle(.secondary)
                 if !requiresRestart {
-                    Button(String(localized: "Retry preview")) { failed = false; retry += 1 }
+                    Button(String(localized: "Retry preview", bundle: HanlinLocalization.bundle)) { failed = false; retry += 1 }
                         .font(HanlinTypography.caption)
                 }
             }
@@ -135,11 +136,11 @@ public struct ChatCodeFenceView: View {
                     }
                 }
                 .environment(\.layoutDirection, .leftToRight)
-                .navigationTitle(kind == "mermaid" ? String(localized: "Diagram") : String(localized: "Code comparison"))
+                .navigationTitle(kind == "mermaid" ? String(localized: "Diagram", bundle: HanlinLocalization.bundle) : String(localized: "Code comparison", bundle: HanlinLocalization.bundle))
                 .toolbar {
-                    ToolbarItem(placement: .confirmationAction) { Button(String(localized: "Done")) { expanded = false } }
+                    ToolbarItem(placement: .confirmationAction) { Button(String(localized: "Done", bundle: HanlinLocalization.bundle)) { expanded = false } }
                     ToolbarItem(placement: .bottomBar) {
-                        Toggle(String(localized: "Show code"), isOn: $showsSource).toggleStyle(.button)
+                        Toggle(String(localized: "Show code", bundle: HanlinLocalization.bundle), isOn: $showsSource).toggleStyle(.button)
                     }
                 }
             }

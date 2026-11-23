@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import HanlinScriptExtensions
 import SwiftData
@@ -28,7 +29,7 @@ struct HanlinAppProviderCredentials: Sendable {
         if let error = error as? HanlinKeychainCredentialStore.Failure { return error.localizedDescription }
         if let error = error as? Failure { return error.localizedDescription }
         // Core Data / provider errors can carry object values in their descriptions.
-        return String(localized: "The key could not be saved or verified. Reopen its settings and try again.")
+        return String(localized: "The key could not be saved or verified. Reopen its settings and try again.", bundle: HanlinLocalization.bundle)
     }
 
     private let configuredKeychain: HanlinKeychainCredentialStore?

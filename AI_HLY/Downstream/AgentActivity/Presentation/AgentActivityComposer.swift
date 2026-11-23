@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 enum AgentActivityComposer {
@@ -31,7 +32,7 @@ enum AgentActivityComposer {
         let start = activity.startedAt, let end = activity.completedAt,
         end.timeIntervalSince(start) < 1
       else { return false }
-      return reasoningDisplayText(for: activity, in: run) == String(localized: "Thinking")
+      return reasoningDisplayText(for: activity, in: run) == String(localized: "Thinking", bundle: HanlinLocalization.bundle)
     }
 
     let duration = run.completedAt.map { max(0, $0.timeIntervalSince(run.startedAt)) }
@@ -92,13 +93,13 @@ enum AgentActivityComposer {
     switch kind {
     case .narrative:
       let rawNarrative = steps.compactMap(\.userFacingSummary).first ?? first.title
-      title = ProgressSummarySanitizer.sanitize(rawNarrative) ?? String(localized: "Working")
+      title = ProgressSummarySanitizer.sanitize(rawNarrative) ?? String(localized: "Working", bundle: HanlinLocalization.bundle)
     case .reasoning:
       let rawReasoning = first.title
       if ProgressSummarySanitizer.looksLikeRawChainOfThought(rawReasoning) {
-        title = String(localized: "Thinking")
+        title = String(localized: "Thinking", bundle: HanlinLocalization.bundle)
       } else {
-        title = ProgressSummarySanitizer.sanitize(rawReasoning) ?? String(localized: "Thinking")
+        title = ProgressSummarySanitizer.sanitize(rawReasoning) ?? String(localized: "Thinking", bundle: HanlinLocalization.bundle)
       }
     default:
       title = AgentActivityTitleBuilder.title(
@@ -219,18 +220,18 @@ enum AgentActivityComposer {
 
   private static func summaryTitle(for run: AgentRun, duration: TimeInterval?) -> String {
     switch run.status {
-    case .pending, .running: return String(localized: "Working…")
+    case .pending, .running: return String(localized: "Working…", bundle: HanlinLocalization.bundle)
     case .completed:
       return String(
-        format: String(localized: "Worked for %@"),
+        format: String(localized: "Worked for %@", bundle: HanlinLocalization.bundle),
         AgentActivityDurationFormatter.string(duration ?? run.elapsedTime))
     case .failed:
       return String(
-        format: String(localized: "Stopped after %@"),
+        format: String(localized: "Stopped after %@", bundle: HanlinLocalization.bundle),
         AgentActivityDurationFormatter.string(duration ?? run.elapsedTime))
     case .cancelled:
       return String(
-        format: String(localized: "Cancelled after %@"),
+        format: String(localized: "Cancelled after %@", bundle: HanlinLocalization.bundle),
         AgentActivityDurationFormatter.string(duration ?? run.elapsedTime))
     }
   }

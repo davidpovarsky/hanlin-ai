@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(UIKit)
 import A2UICore
 import HanlinPresentationKit
@@ -75,7 +76,7 @@ public struct HanlinImageGallery: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             if !requested {
-                Button("Load images", systemImage: "photo.on.rectangle") { requested = true }
+                Button(hanlin: "Load images", systemImage: "photo.on.rectangle") { requested = true }
                     .buttonStyle(.bordered)
                     .disabled(!active)
             }
@@ -89,10 +90,10 @@ public struct HanlinImageGallery: View {
                                 onOpen: { selected = $0 })
                             Text(item.title).font(HanlinTypography.subheadline).lineLimit(3)
                             Link(destination: item.source) {
-                                Label(item.source.host ?? String(localized: "Source"), systemImage: "link")
+                                Label(item.source.host ?? String(localized: "Source", bundle: HanlinLocalization.bundle), systemImage: "link")
                                     .font(HanlinTypography.caption)
                             }
-                            .accessibilityLabel("Open source: \(item.title)")
+                            .accessibilityLabel(Text("Open source: \(item.title)", bundle: HanlinLocalization.bundle))
                         }
                         .frame(width: 180, alignment: .leading)
                     }
@@ -100,7 +101,7 @@ public struct HanlinImageGallery: View {
                 .scrollTargetLayout()
             }
             .scrollTargetBehavior(.viewAligned)
-            .accessibilityLabel("Image gallery")
+            .accessibilityLabel(Text("Image gallery", bundle: HanlinLocalization.bundle))
         }
         .quickLookPreview($selected, in: orderedFiles)
         .onChange(of: active) { _, active in if !active { reset() } }
@@ -127,7 +128,7 @@ public struct HanlinSourceCard: View {
     @State private var preview: URL?
 
     private var active: Bool { isEnabled && scenePhase == .active }
-    private var title: String { metadata?.title ?? descriptor.title ?? descriptor.source.host ?? String(localized: "Source") }
+    private var title: String { metadata?.title ?? descriptor.title ?? descriptor.source.host ?? String(localized: "Source", bundle: HanlinLocalization.bundle) }
     private var summary: String { metadata?.summary ?? descriptor.summary ?? "" }
     private var thumbnail: URL? { metadata?.thumbnail ?? descriptor.thumbnail }
 
@@ -141,10 +142,10 @@ public struct HanlinSourceCard: View {
             Text(title).font(HanlinTypography.headline).textSelection(.enabled)
             if !summary.isEmpty { Text(summary).font(HanlinTypography.subheadline).lineLimit(4).textSelection(.enabled) }
             Link(destination: descriptor.source) {
-                Label(descriptor.source.host ?? String(localized: "Open source"), systemImage: "link")
+                Label(descriptor.source.host ?? String(localized: "Open source", bundle: HanlinLocalization.bundle), systemImage: "link")
                     .font(HanlinTypography.caption)
             }
-            .accessibilityLabel("Open linked source")
+            .accessibilityLabel(Text("Open linked source", bundle: HanlinLocalization.bundle))
             if attempt == 0 || failed {
                 Button(failed ? "Retry preview" : "Load link preview", systemImage: "arrow.down.doc") {
                     failed = false
@@ -153,9 +154,9 @@ public struct HanlinSourceCard: View {
                 .buttonStyle(.bordered)
                 .disabled(!active)
             } else if metadata == nil {
-                ProgressView("Loading link preview")
+                ProgressView(hanlin: "Loading link preview")
             }
-            if failed { Text("Preview unavailable. You can still open the source.").font(HanlinTypography.caption).foregroundStyle(.secondary) }
+            if failed { Text("Preview unavailable. You can still open the source.", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption).foregroundStyle(.secondary) }
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -207,15 +208,15 @@ private struct HanlinRichMediaThumbnail: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(description)
-                .accessibilityHint("Open full-size image")
+                .accessibilityHint(Text("Open full-size image", bundle: HanlinLocalization.bundle))
             } else if requested {
                 if failed {
                     VStack(spacing: 8) {
                         Image(systemName: "photo.badge.exclamationmark").foregroundStyle(.secondary)
-                        Button("Retry image") { failed = false; retry += 1 }
+                        Button(hanlin: "Retry image") { failed = false; retry += 1 }
                     }
-                    .accessibilityLabel("Image unavailable")
-                } else { ProgressView("Loading image") }
+                    .accessibilityLabel(Text("Image unavailable", bundle: HanlinLocalization.bundle))
+                } else { ProgressView(hanlin: "Loading image") }
             } else {
                 Image(systemName: "photo").font(HanlinTypography.largeTitle).foregroundStyle(.secondary)
                     .accessibilityLabel(description)

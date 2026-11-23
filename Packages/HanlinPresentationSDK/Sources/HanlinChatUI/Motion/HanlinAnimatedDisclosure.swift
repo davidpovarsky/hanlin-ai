@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 /// Finite geometry shared by disclosure measurement and placement. Layout may
@@ -116,7 +117,7 @@ public struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .accessibilityValue(configuration.isExpanded ? Text("Expanded") : Text("Collapsed"))
+            .accessibilityValue(configuration.isExpanded ? Text("Expanded", bundle: HanlinLocalization.bundle) : Text("Collapsed", bundle: HanlinLocalization.bundle))
             HanlinAnimatedDisclosure(isExpanded: configuration.isExpanded) {
                 configuration.content
             }

@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(SwiftUI)
 import SwiftUI
 import HanlinPresentationKit
@@ -239,14 +240,14 @@ public struct HanlinToolActivityHeader: View {
     }
 
     private var sourceCount: some View {
-        Text("\(sources.count)")
+        Text("\(sources.count)", bundle: HanlinLocalization.bundle)
             .font(HanlinTypography.caption.weight(.semibold).monospacedDigit())
             .foregroundStyle(active ? blue : .secondary)
             .fixedSize(horizontal: true, vertical: false)
             .layoutPriority(2)
             .contentTransition(motion.numericCounts ? .numericText(value: Double(sources.count)) : .opacity)
             .animation(motion.updateAnimation, value: sources.count)
-            .accessibilityLabel(Text("Sources: \(sources.count)"))
+            .accessibilityLabel(Text("Sources: \(sources.count)", bundle: HanlinLocalization.bundle))
     }
 
     private func sourceIcons(compact: Bool) -> some View {

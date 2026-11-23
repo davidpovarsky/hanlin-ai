@@ -26,6 +26,14 @@ def stage(root: pathlib.Path, output: pathlib.Path) -> None:
     for file in sorted((presentation / "HanlinPresentationKit").glob("*.swift")):
         shutil.copy2(file, kit / file.name)
         evidence.append({"path": file.relative_to(root).as_posix(), "sha256": hashlib.sha256(file.read_bytes()).hexdigest()})
+    localization = presentation / "HanlinLocalization"
+    for file in sorted(localization.rglob("*")):
+        if not file.is_file():
+            continue
+        target = output / "Sources/HanlinLocalization" / file.relative_to(localization)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(file, target)
+        evidence.append({"path": file.relative_to(root).as_posix(), "sha256": hashlib.sha256(file.read_bytes()).hexdigest()})
     tests = output / "Tests/HanlinCodeFenceProofTests"
     tests.mkdir(parents=True, exist_ok=True)
     shutil.copy2(root / "AI_HLYTests/ChatCodeFenceTests.swift", tests / "ChatCodeFenceTests.swift")
@@ -33,11 +41,12 @@ def stage(root: pathlib.Path, output: pathlib.Path) -> None:
         evidence.append({"path": file.relative_to(root).as_posix(), "sha256": hashlib.sha256(file.read_bytes()).hexdigest()})
     (output / "Package.swift").write_text('''// swift-tools-version: 6.0
 import PackageDescription
-let package = Package(name: "HanlinCodeFenceProof", platforms: [.iOS("27.0")],
+let package = Package(name: "HanlinCodeFenceProof", defaultLocalization: "zh-Hans", platforms: [.iOS("27.0")],
     products: [.library(name: "HanlinCodeFenceProof", targets: ["HanlinCodeFenceProof"])],
     targets: [
         .target(name: "HanlinPresentationKit"),
-        .target(name: "HanlinCodeFenceProof", dependencies: ["HanlinPresentationKit"],
+        .target(name: "HanlinLocalization", resources: [.process("Resources")]),
+        .target(name: "HanlinCodeFenceProof", dependencies: ["HanlinPresentationKit", "HanlinLocalization"],
                 resources: [.copy("Resources/HanlinCodeFenceAssets.json"),
                             .copy("Resources/HanlinCodeFenceRenderer.js"),
                             .copy("Resources/HanlinCodeFenceRenderer.css"),

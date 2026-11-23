@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ProviderEventAdapter.swift
 //  AI_HLY
@@ -71,7 +72,7 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
                 activeReasoningSegmentID = id
                 events.append(.reasoningStarted(AgentItemMetadata(
                     id: id,
-                    title: String(localized: "Thinking"),
+                    title: String(localized: "Thinking", bundle: HanlinLocalization.bundle),
                     startedAt: Date()
                 )))
             }
@@ -89,7 +90,7 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
                 activeAnswerSegmentID = id
                 events.append(.answerSegmentStarted(AgentItemMetadata(
                     id: id,
-                    title: String(localized: "Done"),
+                    title: String(localized: "Done", bundle: HanlinLocalization.bundle),
                     startedAt: Date()
                 )))
             }
@@ -130,14 +131,14 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
                 activeSearchID = id
                 events.append(.searchStarted(
                     id: id,
-                    title: String(localized: "Searching the web"),
+                    title: String(localized: "Searching the web", bundle: HanlinLocalization.bundle),
                     queries: searchQueries,
                     providerName: data.searchEngine
                 ))
             } else if let id = activeSearchID, !searchQueries.isEmpty {
                 events.append(.searchStarted(
                     id: id,
-                    title: String(localized: "Searching the web"),
+                    title: String(localized: "Searching the web", bundle: HanlinLocalization.bundle),
                     queries: searchQueries,
                     providerName: data.searchEngine
                 ))
@@ -197,25 +198,25 @@ struct HanlinStreamEventAdapter: ProviderEventAdapter {
     private func localizedOperationalState(_ state: String) -> String {
         let normalized = state.lowercased()
         if normalized.contains("tool") || state.contains("工具") {
-            return String(localized: "Using a tool")
+            return String(localized: "Using a tool", bundle: HanlinLocalization.bundle)
         }
         if normalized.contains("webpage") || normalized.contains("reading web") || state.contains("读取网页") || state.contains("阅读网页") {
-            return String(localized: "Reading a source")
+            return String(localized: "Reading a source", bundle: HanlinLocalization.bundle)
         }
         if normalized.contains("document") || state.contains("文件") {
-            return String(localized: "Reading a document")
+            return String(localized: "Reading a document", bundle: HanlinLocalization.bundle)
         }
         if normalized.contains("code") || state.contains("代码") {
-            return String(localized: "Running code")
+            return String(localized: "Running code", bundle: HanlinLocalization.bundle)
         }
         if normalized.contains("calendar") || normalized.contains("event") || state.contains("日程") || state.contains("事件") {
-            return String(localized: "Checking the calendar")
+            return String(localized: "Checking the calendar", bundle: HanlinLocalization.bundle)
         }
         if normalized.contains("location") || normalized.contains("route") || normalized.contains("weather") || state.contains("位置") || state.contains("路线") || state.contains("天气") {
-            return String(localized: "Searching locations")
+            return String(localized: "Searching locations", bundle: HanlinLocalization.bundle)
         }
         if normalized.contains("search") || state.contains("搜索") || state.contains("翻找") || state.contains("检索") {
-            return String(localized: "Searching the web")
+            return String(localized: "Searching the web", bundle: HanlinLocalization.bundle)
         }
         return state
     }

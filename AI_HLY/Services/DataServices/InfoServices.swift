@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  InfoComponets.swift
 //  AI_HLY
@@ -743,23 +744,23 @@ func getIconList() -> [String] {
 func getColorList() -> [Color] {
     return [
         // HL 系列颜色（按图中顺序）
-        .hlBlue,
-        .hlAutumn,
-        .hlAzure,
-        .hlBrown,
-        .hlCyanite,
-        .hlGray,
-        .hlGreen,
-        .hlIndigo,
-        .hlNavy,
-        .hlOrange,
-        .hlPink,
-        .hlPlum,
-        .hlPurple,
-        .hlRed,
-        .hlSpring,
-        .hlTeal,
-        .hlYellow,
+        .hanlinHLBlue,
+        .hanlinHLAutumn,
+        .hanlinHLAzure,
+        .hanlinHLBrown,
+        .hanlinHLCyanite,
+        .hanlinHLGray,
+        .hanlinHLGreen,
+        .hanlinHLIndigo,
+        .hanlinHLNavy,
+        .hanlinHLOrange,
+        .hanlinHLPink,
+        .hanlinHLPlum,
+        .hanlinHLPurple,
+        .hanlinHLRed,
+        .hanlinHLSpring,
+        .hanlinHLTeal,
+        .hanlinHLYellow,
 
         // 系统标准色
         .blue,
@@ -794,24 +795,24 @@ extension Color {
         case "teal": return .teal
         case "brown": return .brown
         case "gray": return .gray
-        case "hlautumn": return .hlAutumn
-        case "hlazure": return .hlAzure
-        case "hlblue": return .hlBlue
-        case "hlbrown": return .hlBrown
-        case "hlcyanite": return .hlCyanite
-        case "hlgray": return .hlGray
-        case "hlgreen": return .hlGreen
-        case "hlindigo": return .hlIndigo
-        case "hlnavy": return .hlNavy
-        case "hlorange": return .hlOrange
-        case "hlpink": return .hlPink
-        case "hlplum": return .hlPlum
-        case "hlpurple": return .hlPurple
-        case "hlred": return .hlRed
-        case "hlspring": return .hlSpring
-        case "hlteal": return .hlTeal
-        case "hlyellow": return .hlYellow
-        default: return .hlBlue // 默认颜色
+        case "hlautumn": return .hanlinHLAutumn
+        case "hlazure": return .hanlinHLAzure
+        case "hlblue": return .hanlinHLBlue
+        case "hlbrown": return .hanlinHLBrown
+        case "hlcyanite": return .hanlinHLCyanite
+        case "hlgray": return .hanlinHLGray
+        case "hlgreen": return .hanlinHLGreen
+        case "hlindigo": return .hanlinHLIndigo
+        case "hlnavy": return .hanlinHLNavy
+        case "hlorange": return .hanlinHLOrange
+        case "hlpink": return .hanlinHLPink
+        case "hlplum": return .hanlinHLPlum
+        case "hlpurple": return .hanlinHLPurple
+        case "hlred": return .hanlinHLRed
+        case "hlspring": return .hanlinHLSpring
+        case "hlteal": return .hanlinHLTeal
+        case "hlyellow": return .hanlinHLYellow
+        default: return .hanlinHLBlue // 默认颜色
         }
     }
 }
@@ -832,23 +833,23 @@ extension Color {
         case .teal: return "teal"
         case .brown: return "brown"
         case .gray: return "gray"
-        case .hlAutumn: return "hlAutumn"
-        case .hlAzure: return "hlAzure"
-        case .hlBlue: return "hlBlue"
-        case .hlBrown: return "hlBrown"
-        case .hlCyanite: return "hlCyanite"
-        case .hlGray: return "hlGray"
-        case .hlGreen: return "hlGreen"
-        case .hlIndigo: return "hlIndigo"
-        case .hlNavy: return "hlNavy"
-        case .hlOrange: return "hlOrange"
-        case .hlPink: return "hlPink"
-        case .hlPlum: return "hlPlum"
-        case .hlPurple: return "hlPurple"
-        case .hlRed: return "hlRed"
-        case .hlSpring: return "hlSpring"
-        case .hlTeal: return "hlTeal"
-        case .hlYellow: return "hlYellow"
+        case .hanlinHLAutumn: return "hlAutumn"
+        case .hanlinHLAzure: return "hlAzure"
+        case .hanlinHLBlue: return "hlBlue"
+        case .hanlinHLBrown: return "hlBrown"
+        case .hanlinHLCyanite: return "hlCyanite"
+        case .hanlinHLGray: return "hlGray"
+        case .hanlinHLGreen: return "hlGreen"
+        case .hanlinHLIndigo: return "hlIndigo"
+        case .hanlinHLNavy: return "hlNavy"
+        case .hanlinHLOrange: return "hlOrange"
+        case .hanlinHLPink: return "hlPink"
+        case .hanlinHLPlum: return "hlPlum"
+        case .hanlinHLPurple: return "hlPurple"
+        case .hanlinHLRed: return "hlRed"
+        case .hanlinHLSpring: return "hlSpring"
+        case .hanlinHLTeal: return "hlTeal"
+        case .hanlinHLYellow: return "hlYellow"
         default: return "hlBlue" // 默认颜色名称
         }
     }
@@ -970,7 +971,7 @@ func getCompanyIcon(for companyName: String) -> String {
 
 func getCompanyName(for companyName: String) -> String {
     let key = "company_\(companyName.uppercased())" // 生成动态 key
-    let localizedName = NSLocalizedString(key, tableName: "Localizable", bundle: .main, value: "未知", comment: "Company Name")
+    let localizedName = NSLocalizedString(key, tableName: "Localizable", bundle: HanlinLocalization.bundle, value: "未知", comment: "Company Name")
     return localizedName
 }
 
@@ -1017,7 +1018,7 @@ func gradient(for index: Int) -> LinearGradient {
     switch index % 8 {
     case 0:
         return LinearGradient(
-            gradient: Gradient(colors: [Color.hlBlue, Color.hlPurple]),
+            gradient: Gradient(colors: [Color.hanlinHLBlue, Color.hanlinHLPurple]),
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )

@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(SwiftUI)
 import SwiftUI
 import HanlinPresentationKit
@@ -59,7 +60,7 @@ public struct HanlinInlineToolApproval: View {
                         Image(systemName: systemImage)
                             .font(HanlinTypography.body.weight(.medium)).foregroundStyle(ink)
                             .frame(width: 19, height: 22).accessibilityHidden(true)
-                        Text(displayTitle ?? String(localized: "Review request details"))
+                        Text(displayTitle ?? String(localized: "Review request details", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.fixed(size: titleSize, weight: .medium))
                             .foregroundStyle(Color.primary.opacity(0.85))
                             .fixedSize(horizontal: false, vertical: true).layoutPriority(1)
@@ -68,7 +69,7 @@ public struct HanlinInlineToolApproval: View {
                         Image(systemName: "lock.shield")
                             .font(HanlinTypography.caption2.weight(.medium))
                             .foregroundStyle(ink.opacity(0.85)).accessibilityHidden(true)
-                        Text("Awaiting approval")
+                        Text("Awaiting approval", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption2.weight(.medium))
                             .foregroundStyle(ink.opacity(0.88))
                             .fixedSize(horizontal: false, vertical: true)
@@ -77,7 +78,7 @@ public struct HanlinInlineToolApproval: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityIdentifier("hanlin-tool-consent-review-toggle")
-                .accessibilityValue(detailsExpanded ? Text("Expanded") : Text("Collapsed"))
+                .accessibilityValue(detailsExpanded ? Text("Expanded", bundle: HanlinLocalization.bundle) : Text("Collapsed", bundle: HanlinLocalization.bundle))
 
                 ViewThatFits(in: .horizontal) {
                     HStack(alignment: .center, spacing: 10) {
@@ -136,7 +137,7 @@ public struct HanlinInlineToolApproval: View {
                         detailsExpanded = true
                         detailsReviewed = true
                     } label: {
-                        Text(scopeSummary ?? String(localized: "Review request details"))
+                        Text(scopeSummary ?? String(localized: "Review request details", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption.weight(.medium))
                             .foregroundStyle(ink)
                             .fixedSize(horizontal: false, vertical: true)
@@ -144,20 +145,20 @@ public struct HanlinInlineToolApproval: View {
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("hanlin-tool-consent-visible-request")
                 } else {
-                    Text(scopeSummary ?? String(localized: "Review request details"))
+                    Text(scopeSummary ?? String(localized: "Review request details", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.caption.weight(.medium))
                         .foregroundStyle(Color.primary.opacity(0.75))
                         .fixedSize(horizontal: false, vertical: true)
                         .accessibilityIdentifier("hanlin-tool-consent-visible-request")
                 }
             } else {
-                Text("Request details are unavailable.")
+                Text("Request details are unavailable.", bundle: HanlinLocalization.bundle)
                     .font(HanlinTypography.caption).foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Text(LocalizedStringKey(remembersDecision
                 ? "This permission will also apply in your other conversations."
-                : "Review this operation before allowing it once."))
+                : "Review this operation before allowing it once."), bundle: HanlinLocalization.bundle)
                 .font(HanlinTypography.caption2).foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -167,7 +168,7 @@ public struct HanlinInlineToolApproval: View {
     private var actions: some View {
         HStack(spacing: 7) {
             Button(role: .cancel) { submit(false) } label: {
-                Text("Deny").font(HanlinTypography.caption.weight(.medium))
+                Text("Deny", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption.weight(.medium))
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 9).frame(minHeight: 36)
                     .contentShape(Rectangle())
@@ -175,7 +176,7 @@ public struct HanlinInlineToolApproval: View {
             .buttonStyle(.plain)
             .accessibilityIdentifier("hanlin-tool-consent-deny")
             Button { submit(true) } label: {
-                Text(LocalizedStringKey(remembersDecision ? "Allow and remember" : "Allow once"))
+                Text(LocalizedStringKey(remembersDecision ? "Allow and remember" : "Allow once"), bundle: HanlinLocalization.bundle)
                     .font(HanlinTypography.caption.weight(.semibold))
                     .foregroundStyle(ink)
                     .padding(.horizontal, 13).frame(minHeight: 36)

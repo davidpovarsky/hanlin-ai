@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  HanlinOrganizerDock.swift
 //  AI_HLY
@@ -25,11 +26,11 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private var accentColor: Color {
-        temporaryRecord ? .primary : .hlBluefont
+        temporaryRecord ? .primary : .hanlinHLBluefont
     }
 
     private var shadowColor: Color {
-        temporaryRecord ? .primary : .hlBlue
+        temporaryRecord ? .primary : .hanlinHLBlue
     }
 
     var body: some View {
@@ -39,7 +40,7 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
                 .frame(height: dockState.panelHeight)
                 .allowsHitTesting(false)
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel(String(localized: "Organizer Dock"))
+                .accessibilityLabel(String(localized: "Organizer Dock", bundle: HanlinLocalization.bundle))
                 .accessibilityIdentifier("hanlin-organizer-dock")
 
             drawerLayer
@@ -97,8 +98,8 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
             .highPriorityGesture(drawerDragGesture)
             .accessibilityLabel(
                 dockState.isExpanded
-                ? String(localized: "Collapse organizer panel")
-                : String(localized: "Expand organizer panel")
+                ? String(localized: "Collapse organizer panel", bundle: HanlinLocalization.bundle)
+                : String(localized: "Expand organizer panel", bundle: HanlinLocalization.bundle)
             )
             .accessibilityIdentifier("hanlin-organizer-drawer-handle")
             .accessibilityAdjustableAction { direction in
@@ -177,8 +178,8 @@ struct HanlinOrganizerDock<GeneralContent: View, ToolsContent: View, ComposerCon
                 .padding(.top, 3)
                 .highPriorityGesture(composerResizeGesture)
                 .accessibilityElement()
-                .accessibilityLabel(String(localized: "Text box size handle"))
-                .accessibilityHint(String(localized: "Swipe up or down to adjust the message input height."))
+                .accessibilityLabel(String(localized: "Text box size handle", bundle: HanlinLocalization.bundle))
+                .accessibilityHint(String(localized: "Swipe up or down to adjust the message input height.", bundle: HanlinLocalization.bundle))
                 .accessibilityIdentifier("hanlin-composer-resize-handle")
                 .accessibilityAdjustableAction { direction in
                     if reduceMotion {

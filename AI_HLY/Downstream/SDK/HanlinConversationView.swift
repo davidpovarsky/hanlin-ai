@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import SwiftData
 import SwiftUI
@@ -76,7 +77,7 @@ struct HanlinResolvedConversationView: View {
                 .environment(\.chatSourceDestination, destination.source)
                 .id(destination.conversationID)
         } else {
-            ContentUnavailableView("Conversation unavailable", systemImage: "bubble.left",
+            ContentUnavailableView(hanlin: "Conversation unavailable", systemImage: "bubble.left",
                 description: Text(records.isEmpty
                     ? "This conversation is no longer available in this application context."
                     : "More than one stored conversation has this identifier."))

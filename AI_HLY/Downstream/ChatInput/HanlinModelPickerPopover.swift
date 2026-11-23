@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  HanlinModelPickerPopover.swift
 //  AI_HLY
@@ -30,7 +31,7 @@ struct HanlinModelPickerPopover: View {
     @Environment(\.scenePhase) private var scenePhase
 
     private var accentColor: Color {
-        temporaryRecord ? .primary : .hlBluefont
+        temporaryRecord ? .primary : .hanlinHLBluefont
     }
 
     // SDK owns registration and identity; this view only projects visibility.
@@ -162,7 +163,7 @@ struct HanlinModelPickerPopover: View {
     private var compactRootPage: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Label(String(localized: "Select Model"), systemImage: "cpu")
+                Label(String(localized: "Select Model", bundle: HanlinLocalization.bundle), systemImage: "cpu")
                     .font(HanlinTypography.subheadline.weight(.semibold))
                     .foregroundStyle(accentColor)
                 Spacer()
@@ -182,9 +183,9 @@ struct HanlinModelPickerPopover: View {
 
             if visibleIndices.isEmpty {
                 ContentUnavailableView(
-                    String(localized: "No models available"),
+                    String(localized: "No models available", bundle: HanlinLocalization.bundle),
                     systemImage: "sparkles",
-                    description: Text(String(localized: "Please configure models in Settings"))
+                    description: Text(String(localized: "Please configure models in Settings", bundle: HanlinLocalization.bundle))
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
@@ -216,7 +217,7 @@ struct HanlinModelPickerPopover: View {
                             .frame(width: HanlinControlMetrics.iconSize, height: HanlinControlMetrics.iconSize)
                             .background(accentColor.opacity(0.12), in: Circle())
 
-                        Text(String(format: String(localized: "All Models (%lld)"), visibleIndices.count))
+                        Text(String(format: String(localized: "All Models (%lld)", bundle: HanlinLocalization.bundle), visibleIndices.count))
                             .font(HanlinTypography.subheadline.weight(.medium))
                             .foregroundStyle(.primary)
 
@@ -254,7 +255,7 @@ struct HanlinModelPickerPopover: View {
                     HStack(spacing: 4) {
                         Image(systemName: "chevron.backward")
                             .font(HanlinTypography.subheadline.weight(.semibold))
-                        Text(String(localized: "Back"))
+                        Text(String(localized: "Back", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.subheadline.weight(.medium))
                     }
                     .foregroundStyle(accentColor)
@@ -267,7 +268,7 @@ struct HanlinModelPickerPopover: View {
 
                 Spacer()
 
-                Text(String(format: String(localized: "All Models (%lld)"), resultCount))
+                Text(String(format: String(localized: "All Models (%lld)", bundle: HanlinLocalization.bundle), resultCount))
                     .font(HanlinTypography.subheadline.weight(.semibold))
                     .foregroundStyle(.primary)
 
@@ -280,7 +281,7 @@ struct HanlinModelPickerPopover: View {
 
             HanlinSearchField(
                 text: $searchText,
-                prompt: String(localized: "Search models"),
+                prompt: String(localized: "Search models", bundle: HanlinLocalization.bundle),
                 accessibilityIdentifier: "hanlin-model-picker-search",
                 tint: accentColor
             )
@@ -368,7 +369,7 @@ struct HanlinModelPickerPopover: View {
                 .font(HanlinTypography.title3)
                 .foregroundStyle(accentColor)
         } else if model.identity == "model" {
-            Image(getCompanyIcon(for: model.company ?? "Unknown"))
+            Image(hanlinAsset: getCompanyIcon(for: model.company ?? "Unknown"))
                 .resizable()
                 .scaledToFit()
                 .frame(width: 22, height: 22)
@@ -385,27 +386,27 @@ struct HanlinModelPickerPopover: View {
     private func capabilityBadgesRow(for model: AllModels) -> some View {
         HStack(spacing: 4) {
             if model.supportsToolUse {
-                badgePill(String(localized: "Tools"), color: ifToolUse ? .hlBrown : .secondary)
+                badgePill(String(localized: "Tools", bundle: HanlinLocalization.bundle), color: ifToolUse ? .hanlinHLBrown : .secondary)
             }
             if model.supportsMultimodal {
-                badgePill(String(localized: "Vision"), color: .hlTeal)
+                badgePill(String(localized: "Vision", bundle: HanlinLocalization.bundle), color: .hanlinHLTeal)
             }
             if model.supportsReasoning {
-                badgePill(String(localized: "Thinking"), color: ifThink ? .hlPurple : .secondary)
+                badgePill(String(localized: "Thinking", bundle: HanlinLocalization.bundle), color: ifThink ? .hanlinHLPurple : .secondary)
             }
             if model.hasVerifiedImageOutput {
-                badgePill(String(localized: "Image"), color: .hlGreen)
+                badgePill(String(localized: "Image", bundle: HanlinLocalization.bundle), color: .hanlinHLGreen)
             }
             if model.supportsVoiceGen {
-                badgePill(String(localized: "Voice"), color: ifAudio ? .hlPink : .secondary)
+                badgePill(String(localized: "Voice", bundle: HanlinLocalization.bundle), color: ifAudio ? .hanlinHLPink : .secondary)
             }
             if model.company?.uppercased() == "LOCAL" {
-                badgePill(String(localized: "On-Device"), color: .hlOrange)
+                badgePill(String(localized: "On-Device", bundle: HanlinLocalization.bundle), color: .hanlinHLOrange)
             }
             if model.catalogPriceTier == 0 {
-                badgePill(String(localized: "Free"), color: .green)
+                badgePill(String(localized: "Free", bundle: HanlinLocalization.bundle), color: .green)
             } else if model.catalogPriceTier < 0 {
-                badgePill(String(localized: "Price unknown"), color: .secondary)
+                badgePill(String(localized: "Price unknown", bundle: HanlinLocalization.bundle), color: .secondary)
             }
         }
     }

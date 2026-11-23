@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 import HanlinPlatformContracts
@@ -89,9 +90,9 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
       activity: ToolActivityPresentationDescriptor(
         kind: .generic,
         systemImage: "wrench.and.screwdriver",
-        runningTitle: String(localized: "Using a tool"),
-        completedTitle: String(localized: "Used a tool"),
-        failedTitle: String(localized: "Tool failed"),
+        runningTitle: String(localized: "Using a tool", bundle: HanlinLocalization.bundle),
+        completedTitle: String(localized: "Used a tool", bundle: HanlinLocalization.bundle),
+        failedTitle: String(localized: "Tool failed", bundle: HanlinLocalization.bundle),
         visibleArgumentKeys: []
       ),
       result: nil,
@@ -116,9 +117,9 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
       activity: ToolActivityPresentationDescriptor(
         kind: kind,
         systemImage: systemImage,
-        runningTitle: String(localized: runningTitle),
-        completedTitle: String(localized: completedTitle),
-        failedTitle: String(localized: failedTitle),
+        runningTitle: String(localized: runningTitle, bundle: HanlinLocalization.bundle),
+        completedTitle: String(localized: completedTitle, bundle: HanlinLocalization.bundle),
+        failedTitle: String(localized: failedTitle, bundle: HanlinLocalization.bundle),
         visibleArgumentKeys: visibleArgumentKeys
       ),
       result: supportsCard
@@ -151,9 +152,9 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
       activity: ToolActivityPresentationDescriptor(
         kind: kind,
         systemImage: systemImage,
-        runningTitle: String(localized: "Using a tool"),
-        completedTitle: String(localized: "Used a tool"),
-        failedTitle: String(localized: "Tool failed"),
+        runningTitle: String(localized: "Using a tool", bundle: HanlinLocalization.bundle),
+        completedTitle: String(localized: "Used a tool", bundle: HanlinLocalization.bundle),
+        failedTitle: String(localized: "Tool failed", bundle: HanlinLocalization.bundle),
         visibleArgumentKeys: []
       ),
       result: supportsCard

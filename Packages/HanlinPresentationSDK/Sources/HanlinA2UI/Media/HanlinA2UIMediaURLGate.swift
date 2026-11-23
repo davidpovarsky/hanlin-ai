@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(SwiftUI)
 import A2UICore
 import A2UISwiftUI
@@ -31,8 +32,8 @@ public struct HanlinA2UIMediaURLGate: View {
                 builder(node)
             }
         } else {
-            ContentUnavailableView("Media unavailable", systemImage: "rectangle.slash",
-                description: Text("This media source could not be displayed."))
+            ContentUnavailableView(hanlin: "Media unavailable", systemImage: "rectangle.slash",
+                description: Text("This media source could not be displayed.", bundle: HanlinLocalization.bundle))
         }
     }
 
@@ -61,16 +62,16 @@ private struct HanlinRequestedA2UIPlayer: View {
             if requested && isEnabled && scenePhase == .active {
                 builder(node)
                     .accessibilityElement(children: .contain)
-                    .accessibilityLabel("Media player")
+                    .accessibilityLabel(Text("Media player", bundle: HanlinLocalization.bundle))
                     .accessibilityIdentifier("hanlin-media-player")
             } else {
-                Button("Load media player", systemImage: "play.circle") { requested = true }
+                Button(hanlin: "Load media player", systemImage: "play.circle") { requested = true }
                     .disabled(!isEnabled || scenePhase != .active)
                     .accessibilityIdentifier("hanlin-media-load-player")
             }
             if let value = node.string(for: "url"), HanlinRemoteMediaURL(value) != nil,
                let source = URL(string: value) {
-                Link("Open media source", destination: source)
+                Link(hanlin: "Open media source", destination: source)
                     .disabled(!isEnabled || scenePhase != .active)
                     .accessibilityIdentifier("hanlin-media-source")
             }

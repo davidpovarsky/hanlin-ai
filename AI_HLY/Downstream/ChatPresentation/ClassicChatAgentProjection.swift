@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ClassicChatAgentProjection.swift
 //  AI_HLY
@@ -33,11 +34,11 @@ struct ClassicProjectedToolCallEntry: Equatable, Sendable, Identifiable {
 
     var statusText: String {
         switch status {
-        case .running: return String(localized: "Running")
-        case .pending: return String(localized: "Pending")
-        case .completed: return String(localized: "Completed")
-        case .failed: return String(localized: "Failed")
-        case .cancelled: return String(localized: "Cancelled")
+        case .running: return String(localized: "Running", bundle: HanlinLocalization.bundle)
+        case .pending: return String(localized: "Pending", bundle: HanlinLocalization.bundle)
+        case .completed: return String(localized: "Completed", bundle: HanlinLocalization.bundle)
+        case .failed: return String(localized: "Failed", bundle: HanlinLocalization.bundle)
+        case .cancelled: return String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
         }
     }
 
@@ -530,7 +531,7 @@ struct ClassicChatAgentProjection {
         if entries.count == 1, let onlyTool = distinctToolNames.first {
             name = onlyTool
         } else if entries.count > 1 {
-            let format = String(localized: "Tool activity (%lld)")
+            let format = String(localized: "Tool activity (%lld)", bundle: HanlinLocalization.bundle)
             name = String(format: format, entries.count)
         } else {
             name = fallbackToolName

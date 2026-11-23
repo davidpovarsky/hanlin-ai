@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct MCPServersSettingsView: View {
@@ -36,7 +37,7 @@ struct MCPServersSettingsView: View {
                             Image(systemName: "server.rack")
                             VStack(alignment: .leading) {
                                 Text(server.displayName)
-                                Text("\(server.packageName) @ \(server.resolvedVersion)").font(HanlinTypography.caption).foregroundStyle(.secondary)
+                                Text("\(server.packageName) @ \(server.resolvedVersion)", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption).foregroundStyle(.secondary)
                                 Text(statusText(for: server))
                                     .font(HanlinTypography.caption2)
                                     .foregroundStyle(.secondary)

@@ -1,3 +1,4 @@
+import HanlinLocalization
 // Adapted from Hanlin_Composer_MorphView_Bubble_Experiment.swift, SHA-256:
 // 51bb10cdf71ee1c10cac8108f602eee4b34e78967de23dc437985aa89db9bbbb.
 // The authorized ChatViewBottom host supplies live editor, action, navigation
@@ -225,7 +226,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
                     .glassEffect(.regular.interactive(), in: Circle())
                     .glassEffectID("composer-launcher", in: glassNamespace)
                     .overlay { Circle().strokeBorder(blue.opacity(0.30), lineWidth: 0.8).allowsHitTesting(false) }
-                    .accessibilityLabel(isExpanded ? String(localized: "Close action center") : String(localized: "Open action center"))
+                    .accessibilityLabel(isExpanded ? String(localized: "Close action center", bundle: HanlinLocalization.bundle) : String(localized: "Open action center", bundle: HanlinLocalization.bundle))
                     .accessibilityIdentifier("hanlin-composer-general-menu")
 
                     // The host supplies the actual editor and send/stop controls.
@@ -332,7 +333,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(azure)
-                .accessibilityLabel(String(localized: "Back"))
+                .accessibilityLabel(String(localized: "Back", bundle: HanlinLocalization.bundle))
                 .accessibilityIdentifier(activePage.map(backIdentifier) ?? "composer-toolbar-back")
                 .id(activePage)
             } else {
@@ -354,7 +355,7 @@ public struct HanlinMorphComposer<Page: Hashable, Home: View, Detail: View, Inpu
             }
             .buttonStyle(.plain)
             .foregroundStyle(azure)
-            .accessibilityLabel(String(localized: "Close action center"))
+            .accessibilityLabel(String(localized: "Close action center", bundle: HanlinLocalization.bundle))
             .accessibilityIdentifier("composer-toolbar-close")
         }
         .padding(.horizontal, 3)

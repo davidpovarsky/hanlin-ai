@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  HanlinComposerActionBridge.swift
 //  AI_HLY
@@ -85,7 +86,7 @@ struct HanlinComposerActionBridge {
 
         init(model: AllModels?) {
             self.modelName = model?.name ?? ""
-            self.displayName = model?.presentationName ?? String(localized: "Select Model")
+            self.displayName = model?.presentationName ?? String(localized: "Select Model", bundle: HanlinLocalization.bundle)
             self.company = model?.company ?? "UNKNOWN"
             self.identity = model?.identity ?? "model"
             self.icon = model?.icon ?? "sparkles"
@@ -142,7 +143,7 @@ struct HanlinComposerActionBridge {
                 HanlinComposerActiveChip(
                     id: "search",
                     kind: .search,
-                    title: String(localized: "Online Search"),
+                    title: String(localized: "Online Search", bundle: HanlinLocalization.bundle),
                     systemImage: "globe",
                     isRemovable: true
                 )
@@ -153,7 +154,7 @@ struct HanlinComposerActionBridge {
                 HanlinComposerActiveChip(
                     id: "knowledge",
                     kind: .knowledge,
-                    title: String(localized: "Knowledge Bag"),
+                    title: String(localized: "Knowledge Bag", bundle: HanlinLocalization.bundle),
                     systemImage: "book.closed.fill",
                     isRemovable: true
                 )
@@ -162,8 +163,8 @@ struct HanlinComposerActionBridge {
         if capability.supportsReasoning && ifThink {
             let suffix = thinkingLengthShortLabel(thinkingLength)
             let label = suffix.isEmpty
-                ? String(localized: "Deep Thinking")
-                : "\(String(localized: "Deep Thinking")) · \(suffix)"
+                ? String(localized: "Deep Thinking", bundle: HanlinLocalization.bundle)
+                : "\(String(localized: "Deep Thinking", bundle: HanlinLocalization.bundle)) · \(suffix)"
             chips.append(
                 HanlinComposerActiveChip(
                     id: "thinking",
@@ -179,7 +180,7 @@ struct HanlinComposerActionBridge {
                 HanlinComposerActiveChip(
                     id: "planning",
                     kind: .planning,
-                    title: String(localized: "Planning"),
+                    title: String(localized: "Planning", bundle: HanlinLocalization.bundle),
                     systemImage: "list.bullet.clipboard.fill",
                     isRemovable: true
                 )
@@ -190,7 +191,7 @@ struct HanlinComposerActionBridge {
                 HanlinComposerActiveChip(
                     id: "audio",
                     kind: .audio,
-                    title: String(localized: "Voice Output"),
+                    title: String(localized: "Voice Output", bundle: HanlinLocalization.bundle),
                     systemImage: "waveform",
                     isRemovable: true
                 )
@@ -201,7 +202,7 @@ struct HanlinComposerActionBridge {
                 HanlinComposerActiveChip(
                     id: "tools",
                     kind: .tools,
-                    title: String(localized: "Tools"),
+                    title: String(localized: "Tools", bundle: HanlinLocalization.bundle),
                     systemImage: "hammer.fill",
                     isRemovable: true
                 )
@@ -234,7 +235,7 @@ struct HanlinComposerActionBridge {
                 HanlinComposerActiveChip(
                     id: "localModel",
                     kind: .localModel,
-                    title: String(localized: "On-Device"),
+                    title: String(localized: "On-Device", bundle: HanlinLocalization.bundle),
                     systemImage: "bolt.horizontal.icloud.fill",
                     isRemovable: false
                 )
@@ -246,10 +247,10 @@ struct HanlinComposerActionBridge {
 
     static func thinkingLengthShortLabel(_ length: Int) -> String {
         switch length {
-        case 1: return String(localized: "Short")
-        case 2: return String(localized: "Medium")
-        case 3: return String(localized: "Long")
-        default: return String(localized: "Auto")
+        case 1: return String(localized: "Short", bundle: HanlinLocalization.bundle)
+        case 2: return String(localized: "Medium", bundle: HanlinLocalization.bundle)
+        case 3: return String(localized: "Long", bundle: HanlinLocalization.bundle)
+        default: return String(localized: "Auto", bundle: HanlinLocalization.bundle)
         }
     }
 

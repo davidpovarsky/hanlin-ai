@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import HanlinPlatformContracts
 
@@ -121,7 +122,7 @@ struct SkillCenterView: View {
 
     private var filterPickerSection: some View {
         Section {
-            Picker("", selection: $filterSegment) {
+            Picker(hanlin: "", selection: $filterSegment) {
                 ForEach(SkillFilterSegment.allCases) { seg in
                     Text(seg.title).tag(seg)
                 }
@@ -171,7 +172,7 @@ struct SkillCenterView: View {
             }
             .accessibilityIdentifier("hanlin-skill-center-skill-row-\(skillID.rawValue)")
 
-            Toggle("", isOn: Binding(
+            Toggle(hanlin: "", isOn: Binding(
                 get: { isEnabled },
                 set: { newValue in
                     SkillStore.shared.setSkillEnabled(id: skillID, enabled: newValue)

@@ -1,3 +1,4 @@
+import HanlinLocalization
 import QuickLook
 @preconcurrency import PhotosUI
 import SafariServices
@@ -47,7 +48,7 @@ struct HanlinScriptingSystemUIPresentationView: View {
             if let image = UIImage(data: data) {
                 HanlinQuickLookImagePreview(image: image, completion: completion)
             } else {
-                ContentUnavailableView("Image Unavailable", systemImage: "photo.badge.exclamationmark")
+                ContentUnavailableView(hanlin: "Image Unavailable", systemImage: "photo.badge.exclamationmark")
             }
         case let .pickPhotos(limit):
             HanlinPhotoPickerController(limit: limit, completion: completion)
@@ -132,7 +133,7 @@ private struct HanlinEditorView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { completion(.success(.text(content))) }
+                    Button(hanlin: "Done") { completion(.success(.text(content))) }
                 }
             }
         }
@@ -259,7 +260,7 @@ private struct HanlinQuickLookTextPreview: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
             }
-            .navigationTitle("Preview")
+            .navigationTitle(Text("Preview", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { doneButton }
         }
@@ -267,7 +268,7 @@ private struct HanlinQuickLookTextPreview: View {
 
     private var doneButton: some ToolbarContent {
         ToolbarItem(placement: .confirmationAction) {
-            Button("Done") { completion(.success(.completed)) }
+            Button(hanlin: "Done") { completion(.success(.completed)) }
         }
     }
 }
@@ -285,11 +286,11 @@ private struct HanlinQuickLookImagePreview: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .background(.black)
-            .navigationTitle("Preview")
+            .navigationTitle(Text("Preview", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { completion(.success(.completed)) }
+                    Button(hanlin: "Done") { completion(.success(.completed)) }
                 }
             }
         }

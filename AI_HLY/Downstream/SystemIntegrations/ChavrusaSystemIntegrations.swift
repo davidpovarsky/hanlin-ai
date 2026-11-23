@@ -1,3 +1,4 @@
+import HanlinLocalization
 import AlarmKit
 import AppIntents
 import Foundation
@@ -61,7 +62,7 @@ struct ScheduleChavrusaAlarmIntent: AppIntent {
         let time = Alarm.Schedule.Relative.Time(hour: hour, minute: minute)
         let schedule: Alarm.Schedule = .relative(.init(time: time, repeats: .never))
         let enteredTitle = alarmTitle.trimmingCharacters(in: .whitespacesAndNewlines)
-        let displayTitle = enteredTitle.isEmpty ? String(localized: "Alarm") : enteredTitle
+        let displayTitle = enteredTitle.isEmpty ? String(localized: "Alarm", bundle: HanlinLocalization.bundle) : enteredTitle
         let alert = AlarmPresentation.Alert(title: "\(displayTitle)")
         let attributes = AlarmAttributes(
             presentation: AlarmPresentation(alert: alert),

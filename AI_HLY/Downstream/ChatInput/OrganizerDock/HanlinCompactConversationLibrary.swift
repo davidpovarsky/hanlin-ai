@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  HanlinCompactConversationLibrary.swift
 //  AI_HLY
@@ -35,13 +36,13 @@ struct HanlinCompactConversationLibrary: View {
             if filteredRecords.isEmpty {
                 ContentUnavailableView(
                     searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                        ? String(localized: "No Conversations")
-                        : String(localized: "No Matching Conversations"),
+                        ? String(localized: "No Conversations", bundle: HanlinLocalization.bundle)
+                        : String(localized: "No Matching Conversations", bundle: HanlinLocalization.bundle),
                     systemImage: "magnifyingglass",
                     description: Text(
                         searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-                            ? String(localized: "Start a new chat from the home screen.")
-                            : String(localized: "Try a different keyword.")
+                            ? String(localized: "Start a new chat from the home screen.", bundle: HanlinLocalization.bundle)
+                            : String(localized: "Try a different keyword.", bundle: HanlinLocalization.bundle)
                     )
                 )
                 .listRowBackground(Color.clear)
@@ -56,13 +57,13 @@ struct HanlinCompactConversationLibrary: View {
             }
         }
         .listStyle(.plain)
-        .navigationTitle(String(localized: "All Conversations"))
+        .navigationTitle(String(localized: "All Conversations", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
         .toolbarVisibility(.visible, for: .navigationBar)
         .searchable(
             text: $searchText,
             placement: .navigationBarDrawer(displayMode: .always),
-            prompt: "搜索聊天与消息内容"
+            prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle)
         )
         .refreshable {
             onRefresh()
@@ -70,13 +71,13 @@ struct HanlinCompactConversationLibrary: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button { showsSavedMessages = true } label: {
-                    Label("Saved messages", systemImage: "bookmark")
+                    Label(hanlin: "Saved messages", systemImage: "bookmark")
                 }
                 .accessibilityIdentifier("hanlin-saved-messages-open")
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: onAddNewChat) {
-                    Label("New chat", systemImage: "plus.bubble")
+                    Label(hanlin: "New chat", systemImage: "plus.bubble")
                 }
                 .accessibilityIdentifier("hanlin-new-chat-button")
             }
@@ -107,7 +108,7 @@ struct HanlinCompactConversationLibrary: View {
             Button {
                 onEditRecord(record)
             } label: {
-                Label("编辑图标", systemImage: "paintbrush")
+                Label(hanlin: "编辑图标", systemImage: "paintbrush")
             }
 
             Button {
@@ -122,7 +123,7 @@ struct HanlinCompactConversationLibrary: View {
             Button(role: .destructive) {
                 onDeleteRecord(record)
             } label: {
-                Label("删除消息", systemImage: "trash")
+                Label(hanlin: "删除消息", systemImage: "trash")
             }
         }
         .padding(.horizontal)
@@ -133,9 +134,9 @@ struct HanlinCompactConversationLibrary: View {
             Button(role: .destructive) {
                 onDeleteRecord(record)
             } label: {
-                Label("删除消息", systemImage: "trash")
+                Label(hanlin: "删除消息", systemImage: "trash")
             }
-            .tint(Color(.hlRed))
+            .tint(Color(.hanlinHLRed))
         }
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
@@ -146,14 +147,14 @@ struct HanlinCompactConversationLibrary: View {
                     systemImage: record.isPinned ? "pin.slash" : "pin"
                 )
             }
-            .tint(Color(.hlBlue))
+            .tint(Color(.hanlinHLBlue))
 
             Button {
                 onEditRecord(record)
             } label: {
-                Label("编辑图标", systemImage: "paintbrush")
+                Label(hanlin: "编辑图标", systemImage: "paintbrush")
             }
-            .tint(.hlGreen)
+            .tint(.hanlinHLGreen)
         }
         .id((record.id?.uuidString ?? "") + String(forceRefresh))
         .accessibilityIdentifier("hanlin-chat-row-\(record.name ?? "")")

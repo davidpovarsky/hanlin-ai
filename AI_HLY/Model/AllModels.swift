@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  AllModels.swift
 //  AI_HLY
@@ -101,11 +102,11 @@ extension AllModels {
     }
     var catalogPriceDescription: String? {
         guard company?.uppercased() == "OPENROUTER" else { return nil }
-        guard let metadata = catalogMetadata, metadata.isFresh else { return String(localized: "Price unknown") }
+        guard let metadata = catalogMetadata, metadata.isFresh else { return String(localized: "Price unknown", bundle: HanlinLocalization.bundle) }
         switch metadata.priceStatus {
-        case .free: return String(localized: "Free")
+        case .free: return String(localized: "Free", bundle: HanlinLocalization.bundle)
         case .paid: return metadata.rateDescription
-        case .unknown: return String(localized: "Price unknown")
+        case .unknown: return String(localized: "Price unknown", bundle: HanlinLocalization.bundle)
         }
     }
 }

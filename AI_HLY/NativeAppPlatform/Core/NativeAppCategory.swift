@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 enum NativeAppCategory: String, Codable, Hashable, CaseIterable {
@@ -11,13 +12,13 @@ enum NativeAppCategory: String, Codable, Hashable, CaseIterable {
 
     var title: String {
         switch self {
-        case .knowledge: return String(localized: "Knowledge")
-        case .productivity: return String(localized: "Productivity")
-        case .utility: return String(localized: "Utilities")
-        case .text: return String(localized: "Text")
-        case .media: return String(localized: "Media")
-        case .automation: return String(localized: "Automation")
-        case .developer: return String(localized: "Developer")
+        case .knowledge: return String(localized: "Knowledge", bundle: HanlinLocalization.bundle)
+        case .productivity: return String(localized: "Productivity", bundle: HanlinLocalization.bundle)
+        case .utility: return String(localized: "Utilities", bundle: HanlinLocalization.bundle)
+        case .text: return String(localized: "Text", bundle: HanlinLocalization.bundle)
+        case .media: return String(localized: "Media", bundle: HanlinLocalization.bundle)
+        case .automation: return String(localized: "Automation", bundle: HanlinLocalization.bundle)
+        case .developer: return String(localized: "Developer", bundle: HanlinLocalization.bundle)
         }
     }
 }

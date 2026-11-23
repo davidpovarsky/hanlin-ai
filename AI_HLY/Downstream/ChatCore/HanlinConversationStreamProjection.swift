@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import SwiftData
 
@@ -281,7 +282,7 @@ final class HanlinConversationStreamProjection {
             if error == "length" { assistantMessage.modelFinishReason = "length" }
             var errorMessage = ""
             if error == "length" {
-                errorMessage = String(localized: "The answer reached the configured output limit. The partial answer is saved. Choose Continue to keep going.")
+                errorMessage = String(localized: "The answer reached the configured output limit. The partial answer is saved. Choose Continue to keep going.", bundle: HanlinLocalization.bundle)
             } else if error == "sensitive" {
                 errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 包含敏感内容！" : "⚠️ Contains sensitive content!"
             } else {
@@ -340,7 +341,7 @@ final class HanlinConversationStreamProjection {
         operationalDescription = ""
         if textContent.isEmpty && reasoningContent.isEmpty && !hasRichContent {
             completionStatus = "failed"
-            agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！")))
+            agentCoordinator.fail(AgentSafeError(message: String(localized: "⚠️ 生成内容为空，请重新尝试！", bundle: HanlinLocalization.bundle)))
             groupBeginMessage.agentRun = agentCoordinator.run
             assistantMessage.text = currentLanguage.hasPrefix("zh")
                 ? "⚠️ 生成内容为空，请重新尝试！" : "⚠️ Generated content is empty, please try again!"
@@ -369,10 +370,10 @@ final class HanlinConversationStreamProjection {
             if messages.count >= 2, let previous = messages[safe: messages.count - 2] {
                 let preview = previous.text?.replacingOccurrences(of: "\n", with: " ")
                     .trimmingCharacters(in: .whitespacesAndNewlines).prefix(80) ?? ""
-                chatRecord.infoDescription = "[\(String(localized: "Image"))] \(preview)"
+                chatRecord.infoDescription = "[\(String(localized: "Image", bundle: HanlinLocalization.bundle))] \(preview)"
                 chatRecord.lastEdited = previous.timestamp
             } else {
-                chatRecord.infoDescription = "[\(String(localized: "Image"))]"
+                chatRecord.infoDescription = "[\(String(localized: "Image", bundle: HanlinLocalization.bundle))]"
                 chatRecord.lastEdited = assistantMessage.timestamp
             }
         }
@@ -395,7 +396,7 @@ final class HanlinConversationStreamProjection {
         agentCoordinator.fail(error)
         groupBeginMessage.agentRun = agentCoordinator.run
         if let row = messages.last(where: { $0.role == "assistant" }) {
-            row.text = "⚠️ " + String(format: String(localized: "Response error: %@"), error.localizedDescription)
+            row.text = "⚠️ " + String(format: String(localized: "Response error: %@", bundle: HanlinLocalization.bundle), error.localizedDescription)
             row.role = "error"
             row.modelDisplayName = "system"
         }
@@ -428,7 +429,7 @@ final class HanlinConversationStreamProjection {
 
     static func appendCancellation(to messages: inout [ChatMessages], record: ChatRecords, context: ModelContext) {
         let information = ChatMessages(role: "information",
-            text: "🛑 \(String(localized: "Response interrupted"))",
+            text: "🛑 \(String(localized: "Response interrupted", bundle: HanlinLocalization.bundle))",
             modelName: "system", modelDisplayName: "system", timestamp: Date(), record: record)
         messages.append(information)
         context.insert(information)

@@ -40,6 +40,7 @@ mkdir "$scratch/source"
 git archive "$source_sha" \
   Packages/HanlinPresentationSDK/Sources/HanlinA2UI \
   Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit \
+  Packages/HanlinPresentationSDK/Sources/HanlinLocalization \
   AI_HLY/Downstream/ChatPresentation/A2UI AI_HLY/Downstream/ChatPresentation/Media \
   AI_HLYTests/A2UITests.swift AI_HLYTests/A2UIFixtures \
   docs/a2ui/prepare_exact_pin_proof.py docs/a2ui/EXACT_PIN_PROOF_ROUTE.md \

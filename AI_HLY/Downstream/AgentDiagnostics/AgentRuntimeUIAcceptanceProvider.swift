@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import HanlinChatCore
 import HanlinMiniAppCore
@@ -314,10 +315,10 @@ enum AgentRuntimeUIAcceptanceProvider {
                         appID: appID,
                         rootView: AnyView(
                             VStack(spacing: 8) {
-                                Text("Acceptance Embedded Card Surface")
+                                Text("Acceptance Embedded Card Surface", bundle: HanlinLocalization.bundle)
                                     .font(HanlinTypography.headline)
                                     .accessibilityIdentifier("acceptance_embedded_surface")
-                                Text("Arbitrary Mini App Result: \(handler)")
+                                Text("Arbitrary Mini App Result: \(handler)", bundle: HanlinLocalization.bundle)
                                     .font(HanlinTypography.caption)
                                     .accessibilityIdentifier("acceptance_embedded_detail")
                             }

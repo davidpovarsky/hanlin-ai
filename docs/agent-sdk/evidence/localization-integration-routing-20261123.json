@@ -1,0 +1,727 @@
+{
+  "applied" : true,
+  "changedFiles" : [
+    {
+      "afterUTF8Bytes" : 3095,
+      "beforeUTF8Bytes" : 3026,
+      "edits" : [
+        {
+          "length" : 0,
+          "offset" : 2918,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 2777,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 0,
+          "old" : "",
+          "reason" : "explicit shared resource dependency",
+          "replacement" : "import HanlinLocalization\n"
+        }
+      ],
+      "path" : "AI_HLY\/Downstream\/SDK\/HanlinApplicationScene.swift"
+    },
+    {
+      "afterUTF8Bytes" : 3554,
+      "beforeUTF8Bytes" : 3520,
+      "edits" : [
+        {
+          "length" : 0,
+          "offset" : 3221,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 0,
+          "old" : "",
+          "reason" : "explicit shared resource dependency",
+          "replacement" : "import HanlinLocalization\n"
+        }
+      ],
+      "path" : "AI_HLY\/Downstream\/SDK\/HanlinConversationView.swift"
+    },
+    {
+      "afterUTF8Bytes" : 20358,
+      "beforeUTF8Bytes" : 20122,
+      "edits" : [
+        {
+          "length" : 0,
+          "offset" : 19200,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 17578,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 16533,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 16363,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 14678,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 11409,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 0,
+          "old" : "",
+          "reason" : "explicit shared resource dependency",
+          "replacement" : "import HanlinLocalization\n"
+        }
+      ],
+      "path" : "AI_HLY\/Downstream\/ChatCore\/HanlinConversationStreamProjection.swift"
+    },
+    {
+      "afterUTF8Bytes" : 28730,
+      "beforeUTF8Bytes" : 28241,
+      "edits" : [
+        {
+          "length" : 0,
+          "offset" : 27643,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 6,
+          "offset" : 26098,
+          "old" : "hlBlue",
+          "reason" : "shared original color asset",
+          "replacement" : "hanlinHLBlue"
+        },
+        {
+          "length" : 7,
+          "offset" : 22130,
+          "old" : "hlGreen",
+          "reason" : "shared original color asset",
+          "replacement" : "hanlinHLGreen"
+        },
+        {
+          "length" : 0,
+          "offset" : 22054,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 6,
+          "offset" : 21658,
+          "old" : "hlBlue",
+          "reason" : "shared original color asset",
+          "replacement" : "hanlinHLBlue"
+        },
+        {
+          "length" : 5,
+          "offset" : 21277,
+          "old" : "hlRed",
+          "reason" : "shared original color asset",
+          "replacement" : "hanlinHLRed"
+        },
+        {
+          "length" : 0,
+          "offset" : 21200,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 20752,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 20283,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 17900,
+          "old" : "",
+          "reason" : "native localized search prompt",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 17871,
+          "old" : "",
+          "reason" : "native localized search prompt",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 0,
+          "offset" : 17267,
+          "old" : "",
+          "reason" : "native localized search prompt",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 17238,
+          "old" : "",
+          "reason" : "native localized search prompt",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 0,
+          "offset" : 16652,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 16367,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 16014,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 15728,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 15223,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 14478,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 14387,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 14329,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 14309,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 0,
+          "offset" : 8789,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 8664,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 8602,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 8576,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 0,
+          "offset" : 5914,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 5166,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 5158,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 6,
+          "offset" : 1626,
+          "old" : "hlBlue",
+          "reason" : "shared original color asset",
+          "replacement" : "hanlinHLBlue"
+        },
+        {
+          "length" : 0,
+          "offset" : 0,
+          "old" : "",
+          "reason" : "explicit shared resource dependency",
+          "replacement" : "import HanlinLocalization\n"
+        }
+      ],
+      "path" : "AI_HLY\/ListView.swift"
+    },
+    {
+      "afterUTF8Bytes" : 112347,
+      "beforeUTF8Bytes" : 111240,
+      "edits" : [
+        {
+          "length" : 0,
+          "offset" : 82772,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 81066,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 80937,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 79677,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 7,
+          "offset" : 79249,
+          "old" : "hlGreen",
+          "reason" : "shared original color asset",
+          "replacement" : "hanlinHLGreen"
+        },
+        {
+          "length" : 0,
+          "offset" : 76746,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 75502,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 66790,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 45530,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 45250,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 45160,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 45095,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 45069,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 0,
+          "offset" : 45042,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 44926,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 44869,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 44839,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 0,
+          "offset" : 44762,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 44633,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 44534,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 44470,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 44444,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 0,
+          "offset" : 44415,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 44293,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 43351,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 42684,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 42025,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 41404,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 41318,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 41298,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 0,
+          "offset" : 40745,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 40469,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 40194,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 39643,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 39413,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 39191,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 38728,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 38300,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 37859,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 37469,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 33890,
+          "old" : "",
+          "reason" : "preserve legacy onCommit callback and environment locale",
+          "replacement" : ", bundle: HanlinLocalization.bundle, locale: hanlinLocalizationLocale)"
+        },
+        {
+          "length" : 0,
+          "offset" : 33867,
+          "old" : "",
+          "reason" : "preserve legacy onCommit callback and environment locale",
+          "replacement" : "String(localized: "
+        },
+        {
+          "length" : 0,
+          "offset" : 32612,
+          "old" : "",
+          "reason" : "original SwiftUI localized Text",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 27892,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 27084,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 24555,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 24475,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 24198,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 23963,
+          "old" : "",
+          "reason" : "native control localized label",
+          "replacement" : "hanlin: "
+        },
+        {
+          "length" : 0,
+          "offset" : 21460,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : ", bundle: HanlinLocalization.bundle)"
+        },
+        {
+          "length" : 0,
+          "offset" : 21451,
+          "old" : "",
+          "reason" : "native Text title\/accessibility overload",
+          "replacement" : "Text("
+        },
+        {
+          "length" : 0,
+          "offset" : 2007,
+          "old" : "",
+          "reason" : "Foundation localization bundle",
+          "replacement" : ", bundle: HanlinLocalization.bundle"
+        },
+        {
+          "length" : 0,
+          "offset" : 348,
+          "old" : "",
+          "reason" : "retain host locale for legacy prompt",
+          "replacement" : "\n    @Environment(\\.locale) private var hanlinLocalizationLocale\n"
+        },
+        {
+          "length" : 0,
+          "offset" : 0,
+          "old" : "",
+          "reason" : "explicit shared resource dependency",
+          "replacement" : "import HanlinLocalization\n"
+        }
+      ],
+      "path" : "AI_HLY\/ChatView.swift"
+    }
+  ],
+  "excludedFiles" : [
+
+  ],
+  "scannedFiles" : 555,
+  "sourceLiteralPreservation" : "All original Swift string segments retained in original order; callback structure and unrelated source bytes preserved. Only the recorded bundle, label-initializer and color-reference edits are applied.",
+  "unresolved" : [
+
+  ]
+}

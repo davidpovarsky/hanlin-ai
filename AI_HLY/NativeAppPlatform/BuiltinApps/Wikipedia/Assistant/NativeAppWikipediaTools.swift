@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import HanlinWikipediaMiniApp
 
@@ -8,8 +9,8 @@ struct WikipediaAssistantSearchTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Search Articles"),
-            summary: String(localized: "Search Wikipedia articles by title or topic"),
+            title: String(localized: "Search Articles", bundle: HanlinLocalization.bundle),
+            summary: String(localized: "Search Wikipedia articles by title or topic", bundle: HanlinLocalization.bundle),
             categories: ["encyclopedia", "knowledge", "wikipedia", "native app"],
             keywords: ["wikipedia", "encyclopedia", "article", "person", "place", "ויקיפדיה"],
             examples: ["Search Wikipedia for Maimonides", "Find articles about SwiftUI"],
@@ -87,8 +88,8 @@ struct WikipediaAssistantSummaryTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Get Article Summary"),
-            summary: String(localized: "Load a concise summary for a Wikipedia article"),
+            title: String(localized: "Get Article Summary", bundle: HanlinLocalization.bundle),
+            summary: String(localized: "Load a concise summary for a Wikipedia article", bundle: HanlinLocalization.bundle),
             categories: ["encyclopedia", "knowledge", "wikipedia", "native app"],
             keywords: ["summary", "article", "page", "תקציר"],
             examples: ["Get a Wikipedia summary for Jerusalem", "Summarize Ada Lovelace"],

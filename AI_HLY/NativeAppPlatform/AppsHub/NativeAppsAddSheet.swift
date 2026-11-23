@@ -1,3 +1,4 @@
+import HanlinLocalization
 import HanlinMiniAppCore
 import HanlinPlatformContracts
 import HanlinScriptStore
@@ -16,21 +17,21 @@ struct NativeAppsAddSheet: View {
         NavigationStack {
             List {
                 Section {
-                    Text("Swift apps are compiled into Hanlin. Dynamic packages (NativeScript, Expo) are importable.")
+                    Text("Swift apps are compiled into Hanlin. Dynamic packages (NativeScript, Expo) are importable.", bundle: HanlinLocalization.bundle)
                         .font(HanlinTypography.subheadline)
                         .foregroundStyle(.secondary)
 
                     NavigationLink {
                         ScriptingPackageImportView(platform: scriptingPlatform)
                     } label: {
-                        Label("Import Package", systemImage: "doc.badge.plus")
+                        Label(hanlin: "Import Package", systemImage: "doc.badge.plus")
                     }
                     .accessibilityIdentifier("hanlin-import-script-package")
                 }
 
                 let hidden = items.filter { host.isHidden($0.id) }
                 if !hidden.isEmpty {
-                    Section("Hidden Apps") {
+                    Section(hanlin: "Hidden Apps") {
                         ForEach(hidden) { item in
                             Button {
                                 host.setHidden(false, appID: item.id)
@@ -47,7 +48,7 @@ struct NativeAppsAddSheet: View {
                 let compiledSwiftAppIDs = Set(items.filter { $0.engine == .swift }.map(\.id))
                 let legacyPackages = scriptingPlatform.installedPackages.filter { !compiledSwiftAppIDs.contains($0.appID) }
                 if !legacyPackages.isEmpty {
-                    Section("Scripting Packages") {
+                    Section(hanlin: "Scripting Packages") {
                         ForEach(legacyPackages, id: \.self) { package in
                             let livePackage = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == package.record.installedPackageID }) ?? package
                             let name = livePackage.manifest?.name ?? livePackage.record.packageID.rawValue
@@ -87,11 +88,11 @@ struct NativeAppsAddSheet: View {
                                     }
                                     Spacer()
                                     if !livePackage.enabled {
-                                        Text("Disabled")
+                                        Text("Disabled", bundle: HanlinLocalization.bundle)
                                             .font(HanlinTypography.caption)
                                             .foregroundStyle(.secondary)
                                     } else if !hasLaunchableApp && hasWidget {
-                                        Text("Widget")
+                                        Text("Widget", bundle: HanlinLocalization.bundle)
                                             .font(HanlinTypography.caption2.weight(.medium))
                                             .foregroundStyle(.secondary)
                                     }
@@ -117,7 +118,7 @@ struct NativeAppsAddSheet: View {
                                             }
                                         }
                                     } label: {
-                                        Label("Open", systemImage: "play.fill")
+                                        Label(hanlin: "Open", systemImage: "play.fill")
                                     }
                                     .disabled(!livePackage.enabled)
                                 }
@@ -126,7 +127,7 @@ struct NativeAppsAddSheet: View {
                                     Button {
                                         selectedPackageID = livePackage.record.installedPackageID
                                     } label: {
-                                        Label("Configure Widget", systemImage: "square.grid.2x2")
+                                        Label(hanlin: "Configure Widget", systemImage: "square.grid.2x2")
                                     }
                                     .accessibilityIdentifier("hanlin-configure-widget-menu-item")
                                 }
@@ -134,7 +135,7 @@ struct NativeAppsAddSheet: View {
                                 Button {
                                     selectedPackageID = livePackage.record.installedPackageID
                                 } label: {
-                                    Label("Package Information", systemImage: "info.circle")
+                                    Label(hanlin: "Package Information", systemImage: "info.circle")
                                 }
                                 .accessibilityIdentifier("hanlin-package-information-menu-item")
                             }
@@ -142,7 +143,7 @@ struct NativeAppsAddSheet: View {
                     }
                 }
 
-                Section("Bundled Swift Apps") {
+                Section(hanlin: "Bundled Swift Apps") {
                     ForEach(items.filter({ $0.engine == .swift })) { item in
                         Label(
                             item.descriptor.name.preferredValue(forLocale: Locale.current.identifier),
@@ -151,10 +152,10 @@ struct NativeAppsAddSheet: View {
                     }
                 }
             }
-            .navigationTitle("Add Apps")
+            .navigationTitle(Text("Add Apps", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { dismiss() }
+                    Button(hanlin: "Done") { dismiss() }
                         .accessibilityIdentifier("hanlin-apps-add-done")
                 }
             }

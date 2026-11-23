@@ -1,3 +1,4 @@
+import HanlinLocalization
 import BackgroundTasks
 import Foundation
 import OSLog
@@ -124,7 +125,7 @@ final class RuntimeBackgroundContinuation {
         guard entry.task == nil else { return }
         logger.error("Admission handoff expired for \(operation.id.uuidString, privacy: .public)")
         if UIApplication.shared.applicationState != .active {
-            operation.interrupt(reason: String(localized: "Background continuation was not available before the system suspended the app.", table: "RuntimeLocalizable"))
+            operation.interrupt(reason: String(localized: "Background continuation was not available before the system suspended the app.", table: "RuntimeLocalizable", bundle: HanlinLocalization.bundle))
             end(operation)
         }
     }
@@ -136,7 +137,7 @@ final class RuntimeBackgroundContinuation {
             task.setTaskCompleted(success: false)
             return
         }
-        let reason = String(localized: "Background continuation ended by the system or its Cancel control.", table: "RuntimeLocalizable")
+        let reason = String(localized: "Background continuation ended by the system or its Cancel control.", table: "RuntimeLocalizable", bundle: HanlinLocalization.bundle)
         task.expirationHandler = { [weak self, weak operation] in
             // Apple uses this callback for resource expiry and native Cancel.
             // Retain that ambiguity; cancellation must never restart writes.
@@ -188,19 +189,19 @@ final class RuntimeBackgroundContinuation {
     private func subtitle(for presentation: RuntimeUserOperation.Presentation) -> String {
         switch presentation {
         case .waitingForResponse:
-            String(localized: "Waiting for a response", table: "RuntimeLocalizable")
+            String(localized: "Waiting for a response", table: "RuntimeLocalizable", bundle: HanlinLocalization.bundle)
         case .thinking:
-            String(localized: "Thinking", table: "RuntimeLocalizable")
+            String(localized: "Thinking", table: "RuntimeLocalizable", bundle: HanlinLocalization.bundle)
         case .responding:
-            String(localized: "Writing the response", table: "RuntimeLocalizable")
+            String(localized: "Writing the response", table: "RuntimeLocalizable", bundle: HanlinLocalization.bundle)
         case .awaitingApproval:
-            String(localized: "Waiting for your approval", table: "RuntimeLocalizable")
+            String(localized: "Waiting for your approval", table: "RuntimeLocalizable", bundle: HanlinLocalization.bundle)
         case .tool(let title):
             title
         case .completed:
-            String(localized: "Response complete", table: "RuntimeLocalizable")
+            String(localized: "Response complete", table: "RuntimeLocalizable", bundle: HanlinLocalization.bundle)
         case .stopped:
-            String(localized: "Response stopped", table: "RuntimeLocalizable")
+            String(localized: "Response stopped", table: "RuntimeLocalizable", bundle: HanlinLocalization.bundle)
         }
     }
 

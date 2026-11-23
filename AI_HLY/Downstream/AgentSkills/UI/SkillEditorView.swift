@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import HanlinPlatformContracts
 
@@ -177,7 +178,7 @@ struct SkillEditorView: View {
 
                 Section(header: Text(SkillL10n.string("Identifier"))) {
                     if case .create = mode {
-                        TextField("my-skill-id", text: $rawID)
+                        TextField(hanlin: "my-skill-id", text: $rawID)
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.never)
                             .accessibilityIdentifier("hanlin-skill-editor-id-input")
@@ -218,7 +219,7 @@ struct SkillEditorView: View {
                 Section(header: Text(SkillL10n.string("Preferred Canonical Tools"))) {
                     let entries = availableCanonicalTools
                     if entries.isEmpty {
-                        Text("No canonical tools registered.")
+                        Text("No canonical tools registered.", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.footnote)
                             .foregroundColor(.secondary)
                     } else {
@@ -248,10 +249,10 @@ struct SkillEditorView: View {
                     }
 
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Tool Aliases (comma-separated)")
+                        Text("Tool Aliases (comma-separated)", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption)
                             .foregroundColor(.secondary)
-                        TextField("tool_a, tool_b", text: $preferredToolsText)
+                        TextField(hanlin: "tool_a, tool_b", text: $preferredToolsText)
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.never)
                             .accessibilityIdentifier("hanlin-skill-editor-tools-input")
@@ -268,11 +269,11 @@ struct SkillEditorView: View {
                 }
 
                 Section(header: Text(SkillL10n.string("Trigger Hints (comma-separated)"))) {
-                    TextField("hint1, hint2", text: $triggerHintsText)
+                    TextField(hanlin: "hint1, hint2", text: $triggerHintsText)
                 }
 
                 Section(header: Text(SkillL10n.string("Keywords (comma-separated)"))) {
-                    TextField("keyword1, keyword2", text: $keywordsText)
+                    TextField(hanlin: "keyword1, keyword2", text: $keywordsText)
                 }
             }
             .navigationTitle(navTitle)

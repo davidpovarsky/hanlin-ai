@@ -1,3 +1,4 @@
+import HanlinLocalization
 import HanlinMiniAppCore
 import HanlinPlatformContracts
 import HanlinScriptStore
@@ -36,22 +37,22 @@ struct NativeAppsHubView: View {
                 .padding(.vertical, 18)
             }
             .background(Color(uiColor: .systemGroupedBackground))
-            .navigationTitle(String(localized: "Apps"))
-            .searchable(text: $searchText, prompt: "hanlin.apps.search")
+            .navigationTitle(String(localized: "Apps", bundle: HanlinLocalization.bundle))
+            .searchable(text: $searchText, prompt: Text("hanlin.apps.search", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showsAddSheet = true } label: {
-                        Label("Add App", systemImage: "plus")
+                        Label(hanlin: "Add App", systemImage: "plus")
                     }
                     .accessibilityIdentifier("hanlin-apps-add")
-                    .accessibilityLabel("hanlin-apps-add")
+                    .accessibilityLabel(Text("hanlin-apps-add", bundle: HanlinLocalization.bundle))
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     Button(isEditingApps ? "Done" : "Edit") { isEditingApps.toggle() }
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     Button { showsTorahCapture = true } label: {
-                        Label("לימוד מצילום", systemImage: "camera.viewfinder")
+                        Label(hanlin: "לימוד מצילום", systemImage: "camera.viewfinder")
                     }
                     .accessibilityIdentifier("hanlin-apps-torah-capture")
                 }
@@ -172,7 +173,7 @@ struct NativeAppsHubView: View {
                         .foregroundStyle(.white, .red)
                 }
                 .padding(10)
-                .accessibilityLabel("Hide \(item.descriptor.name.preferredValue(forLocale: Locale.current.identifier))")
+                .accessibilityLabel(Text("Hide \(item.descriptor.name.preferredValue(forLocale: Locale.current.identifier))", bundle: HanlinLocalization.bundle))
             } else {
                 Menu { commonActions(for: item) } label: {
                     Image(systemName: "ellipsis")
@@ -188,17 +189,17 @@ struct NativeAppsHubView: View {
 
     @ViewBuilder
     private func commonActions(for item: HanlinMiniAppCatalogItem) -> some View {
-        Button { launch(item) } label: { Label("Open", systemImage: "play.fill") }
+        Button { launch(item) } label: { Label(hanlin: "Open", systemImage: "play.fill") }
         if let pkg = scriptingPlatform.installedPackages.first(where: { $0.appID == item.id || $0.record.packageID.rawValue == item.id.rawValue }) {
             Button { scriptingPackageID = pkg.record.installedPackageID } label: {
-                Label("Package Information", systemImage: "info.circle")
+                Label(hanlin: "Package Information", systemImage: "info.circle")
             }
             .accessibilityIdentifier("hanlin-package-information-menu-item")
         }
-        Button { informationItem = item } label: { Label("App Information", systemImage: "info.circle") }
+        Button { informationItem = item } label: { Label(hanlin: "App Information", systemImage: "info.circle") }
         Divider()
         Button { miniAppHost.setHidden(true, appID: item.id) } label: {
-            Label("Hide App", systemImage: "eye.slash")
+            Label(hanlin: "Hide App", systemImage: "eye.slash")
         }
     }
 
@@ -318,11 +319,11 @@ struct NativeAppsLaunchPresentation: ViewModifier {
             )) {
                 ScriptingApplicationContainerView(platform: session.platform)
             }
-            .alert("Script App Error", isPresented: Binding(
+            .alert(Text("Script App Error", bundle: HanlinLocalization.bundle), isPresented: Binding(
                 get: { failureMessage != nil },
                 set: { if !$0 { clearFailure() } }
             )) {
-                Button("OK") { clearFailure() }
+                Button(hanlin: "OK") { clearFailure() }
             } message: {
                 Text(failureMessage ?? "The app could not be opened.")
             }
@@ -348,7 +349,7 @@ struct NativeAppsComposerPage: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: HanlinControlMetrics.sectionSpacing) {
-            HanlinSearchField(text: $searchText, prompt: String(localized: "hanlin.apps.search"),
+            HanlinSearchField(text: $searchText, prompt: String(localized: "hanlin.apps.search", bundle: HanlinLocalization.bundle),
                               accessibilityIdentifier: "hanlin-composer-mini-apps-search")
             if session.isLoading && session.host.visibleItems.isEmpty {
                 ProgressView().frame(maxWidth: .infinity)
@@ -396,25 +397,25 @@ private struct MiniAppDescriptorDetailView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("Mini App") {
-                    LabeledContent("Name", value: item.descriptor.name.preferredValue(forLocale: Locale.current.identifier))
-                    LabeledContent("ID", value: item.id.rawValue)
-                    LabeledContent("Engine", value: item.engine.displayName)
-                    LabeledContent("Version", value: item.descriptor.version.rawValue)
+                Section(hanlin: "Mini App") {
+                    LabeledContent(hanlin: "Name", value: item.descriptor.name.preferredValue(forLocale: Locale.current.identifier))
+                    LabeledContent(hanlin: "ID", value: item.id.rawValue)
+                    LabeledContent(hanlin: "Engine", value: item.engine.displayName)
+                    LabeledContent(hanlin: "Version", value: item.descriptor.version.rawValue)
                 }
-                Section("Canonical entrypoints") {
+                Section(hanlin: "Canonical entrypoints") {
                     ForEach(Array(item.descriptor.entryPoints.enumerated()), id: \.offset) { _, entrypoint in
                         LabeledContent(entrypoint.kind.rawValue, value: entrypoint.runtimeProfile?.rawValue ?? "compiled-swift")
                     }
                 }
-                Section("Capabilities") {
+                Section(hanlin: "Capabilities") {
                     ForEach(item.descriptor.capabilities, id: \.id) { capability in
                         Text(capability.id.rawValue)
                     }
                 }
             }
-            .navigationTitle("App Information")
-            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+            .navigationTitle(Text("App Information", bundle: HanlinLocalization.bundle))
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button(hanlin: "Done") { dismiss() } } }
         }
     }
 }

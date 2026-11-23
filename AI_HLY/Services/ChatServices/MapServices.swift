@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  MapServices.swift
 //  AI_Hanlin
@@ -52,7 +53,7 @@ func getCurrentLocation(
         throw HanlinAppleDeviceServiceError.noData(.location)
     }
 
-    var placeName = String(localized: "Your current location")
+    var placeName = String(localized: "Your current location", bundle: HanlinLocalization.bundle)
     do {
         let resolvedName = try await resolveName(coordinate).trimmingCharacters(in: .whitespacesAndNewlines)
         if !resolvedName.isEmpty { placeName = resolvedName }

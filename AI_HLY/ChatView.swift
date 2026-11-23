@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  Views/ChatView.swift
 //  AI_HLY
@@ -18,6 +19,8 @@ import HanlinPlatformContracts
 // 聊天界面
 @MainActor
 struct ChatView: View {
+    @Environment(\.locale) private var hanlinLocalizationLocale
+
     var chatRecord: ChatRecords
     var surface: HanlinConversationSurface = .full
     var externalComposerBottomInset: CGFloat? = nil
@@ -51,7 +54,7 @@ struct ChatView: View {
         chatRecord.id ?? sessionScopeID
     }
 
-    @State private var chatTitle = String(localized: "新群聊")                 // 群聊标题
+    @State private var chatTitle = String(localized: "新群聊", bundle: HanlinLocalization.bundle)                 // 群聊标题
     @State private var isEditingTitle = false              // 是否正在编辑群聊标题
     @State private var newChatTitle = ""                   // 编辑群聊标题时的临时变量
 
@@ -445,7 +448,7 @@ struct ChatView: View {
                 List(researchSources, id: \.link) { source in
                     if let url = URL(string: source.link) { Link(source.title, destination: url) }
                 }
-                .navigationTitle("Sources")
+                .navigationTitle(Text("Sources", bundle: HanlinLocalization.bundle))
             }
         } else { canonicalChatWorkspace }
     }
@@ -505,12 +508,12 @@ struct ChatView: View {
         .toolbar {
             ToolbarItem(placement: .secondaryAction) {
                 Menu {
-                    Button("Standard conversation") { richPresentation.select("hanlin.standard", conversation: chatRecord,
+                    Button(hanlin: "Standard conversation") { richPresentation.select("hanlin.standard", conversation: chatRecord,
                         conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord) }
-                    Button("Research conversation") { richPresentation.select("hanlin.research", conversation: chatRecord,
+                    Button(hanlin: "Research conversation") { richPresentation.select("hanlin.research", conversation: chatRecord,
                         conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord) }
-                    if resolvedChatShell.usesSourcesSidebar { Button("Sources") { showsResearchSources.toggle() } }
-                } label: { Label("Conversation presentation", systemImage: "rectangle.3.group") }
+                    if resolvedChatShell.usesSourcesSidebar { Button(hanlin: "Sources") { showsResearchSources.toggle() } }
+                } label: { Label(hanlin: "Conversation presentation", systemImage: "rectangle.3.group") }
                 .disabled(isResponding)
             }
         }
@@ -554,7 +557,7 @@ struct ChatView: View {
         }
         .safeAreaInset(edge: .top) {
             if a2uiHistoryUnavailable {
-                Label("Some rich content could not be restored.", systemImage: "exclamationmark.bubble")
+                Label(hanlin: "Some rich content could not be restored.", systemImage: "exclamationmark.bubble")
                     .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading).padding(8)
                     .accessibilityIdentifier("hanlin-a2ui-history-unavailable")
@@ -565,7 +568,7 @@ struct ChatView: View {
                   a2uiPresentation?.isCurrent(action) == true,
                   a2uiModelChoice == a2uiOriginalModelChoice else { return }
             a2uiSubmittingAction = action
-            handleMessageSending(ifObservingMode: false, continuationText: String(localized: "Form submitted"))
+            handleMessageSending(ifObservingMode: false, continuationText: String(localized: "Form submitted", bundle: HanlinLocalization.bundle))
         }
         .onChange(of: a2uiModelChoice) { _, current in
             guard let original = a2uiOriginalModelChoice, original != current else { return }
@@ -665,7 +668,7 @@ struct ChatView: View {
             ToolbarItem(placement: .principal) {
                 if TemporaryRecord {
                     HStack {
-                        Text(" 临 时 对 话 模 式 ")
+                        Text(" 临 时 对 话 模 式 ", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption)
                             .padding(6)
                     }
@@ -691,7 +694,7 @@ struct ChatView: View {
                             }
                         
                         // 编辑模式
-                        TextField("请输入群聊名称", text: $newChatTitle, onCommit: {
+                        TextField(String(localized: "请输入群聊名称", bundle: HanlinLocalization.bundle, locale: hanlinLocalizationLocale), text: $newChatTitle, onCommit: {
                             if !newChatTitle.isEmpty {
                                 if chatTitle != newChatTitle {
                                     chatTitle = newChatTitle
@@ -757,14 +760,14 @@ struct ChatView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     // ------ 调整参数 ------
-                    Menu("调整模型参数", systemImage: "slider.horizontal.3"){
+                    Menu(hanlin: "调整模型参数", systemImage: "slider.horizontal.3"){
                         Button(action: {
                             showTopPSlider = false
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider = false
                             showTemperatureSlider.toggle()
                         }) {
-                            Label("调整采样温度", systemImage: "thermometer.variable")
+                            Label(hanlin: "调整采样温度", systemImage: "thermometer.variable")
                         }
                         
                         Button(action: {
@@ -773,7 +776,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showTopPSlider.toggle()
                         }) {
-                            Label("调整累积概率", systemImage: "percent")
+                            Label(hanlin: "调整累积概率", systemImage: "percent")
                         }
                         
                         Button(action: {
@@ -782,7 +785,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showMaxTokensSlider.toggle()
                         }) {
-                            Label("最大回复长度", systemImage: "textformat.characters.arrow.left.and.right")
+                            Label(hanlin: "最大回复长度", systemImage: "textformat.characters.arrow.left.and.right")
                         }
                         
                         Button(action: {
@@ -791,16 +794,16 @@ struct ChatView: View {
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider.toggle()
                         }) {
-                            Label("消息数量上限", systemImage: "arrow.up.and.down.text.horizontal")
+                            Label(hanlin: "消息数量上限", systemImage: "arrow.up.and.down.text.horizontal")
                         }
                     }
                     
                     // ------ 聊天记录管理 ------
-                    Menu("聊天记录管理", systemImage: "bubble.left.and.bubble.right"){
+                    Menu(hanlin: "聊天记录管理", systemImage: "bubble.left.and.bubble.right"){
                         Button(action: {
                             showSystemMessageSheet = true
                         }) {
-                            Label("设置系统消息", systemImage: "paintbrush.pointed")
+                            Label(hanlin: "设置系统消息", systemImage: "paintbrush.pointed")
                         }
                         Button(action: {
                             isMultiSelectMode.toggle()
@@ -811,19 +814,19 @@ struct ChatView: View {
                         Button(action: {
                             showingExportOptions = true
                         }) {
-                            Label("导出聊天记录", systemImage: "square.and.arrow.up")
+                            Label(hanlin: "导出聊天记录", systemImage: "square.and.arrow.up")
                         }
                         
                         Button(action: {
                             showImportExplanationAlert = true
                         }) {
-                            Label("导入聊天记录", systemImage: "square.and.arrow.down")
+                            Label(hanlin: "导入聊天记录", systemImage: "square.and.arrow.down")
                         }
                         
                         Button(action: {
                             showClearChatConfirmation = true
                         }) {
-                            Label("清空聊天记录", systemImage: "eraser.line.dashed")
+                            Label(hanlin: "清空聊天记录", systemImage: "eraser.line.dashed")
                         }
                     }
                 } label: {
@@ -838,8 +841,8 @@ struct ChatView: View {
 
     var body: some View {
         navigationWorkspace
-        .confirmationDialog("选择导出格式", isPresented: $showingExportOptions, titleVisibility: .visible) {
-            Button("纯文本 (.txt)") {
+        .confirmationDialog(Text("选择导出格式", bundle: HanlinLocalization.bundle), isPresented: $showingExportOptions, titleVisibility: .visible) {
+            Button(hanlin: "纯文本 (.txt)") {
                 exportUTType = UTType.plainText
                 let exportText = generateExportText(for: .txt)
                 let fileName = "ChatExport.txt"
@@ -852,7 +855,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("JSON文件 (.json)（文本）") {
+            Button(hanlin: "JSON文件 (.json)（文本）") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: false)
                 let fileName = "ChatExport_text.json"
@@ -865,7 +868,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("JSON文件 (.json)（多模态）") {
+            Button(hanlin: "JSON文件 (.json)（多模态）") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: true)
                 let fileName = "ChatExport_multimodal.json"
@@ -878,7 +881,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("取消", role: .cancel) { }
+            Button(hanlin: "取消", role: .cancel) { }
         }
         .sheet(isPresented: $showShareSheet, onDismiss: {
             // 分享结束后清除临时文件 URL
@@ -902,31 +905,31 @@ struct ChatView: View {
             receiveChatImport(result)
         }
         .alert(isPresented: $isShowingImportErrorAlert) {
-            Alert(title: Text("导入错误"),
+            Alert(title: Text("导入错误", bundle: HanlinLocalization.bundle),
                   message: Text(importError ?? "未知错误"),
-                  dismissButton: .default(Text("确定")))
+                  dismissButton: .default(Text("确定", bundle: HanlinLocalization.bundle)))
         }
-        .alert("确认清空聊天记录", isPresented: $showClearChatConfirmation) {
-            Button("删除", role: .destructive) {
+        .alert(Text("确认清空聊天记录", bundle: HanlinLocalization.bundle), isPresented: $showClearChatConfirmation) {
+            Button(hanlin: "删除", role: .destructive) {
                 newConversation()
             }
-            Button("取消", role: .cancel) { }
+            Button(hanlin: "取消", role: .cancel) { }
         } message: {
-            Text("是否要删除所有聊天记录？删除后不可恢复。")
+            Text("是否要删除所有聊天记录？删除后不可恢复。", bundle: HanlinLocalization.bundle)
                 .multilineTextAlignment(.leading)
         }
-        .alert("Unable to clear chat history", isPresented: $showClearChatError) {
-            Button("OK", role: .cancel) { }
+        .alert(Text("Unable to clear chat history", bundle: HanlinLocalization.bundle), isPresented: $showClearChatError) {
+            Button(hanlin: "OK", role: .cancel) { }
         } message: {
-            Text("The conversation was not cleared. Please try again.")
+            Text("The conversation was not cleared. Please try again.", bundle: HanlinLocalization.bundle)
         }
-        .alert("导入聊天记录说明", isPresented: $showImportExplanationAlert) {
-            Button("继续") {
+        .alert(Text("导入聊天记录说明", bundle: HanlinLocalization.bundle), isPresented: $showImportExplanationAlert) {
+            Button(hanlin: "继续") {
                 isShowingImportPicker = true
             }
-            Button("取消", role: .cancel) { }
+            Button(hanlin: "取消", role: .cancel) { }
         } message: {
-            Text("请提供 JSON 文件，格式要求与本软件导出的 JSON 文件格式一致，本软件采用 OpenAI 的请求 JSON 格式，包括文本对话和含图片的多模态对话，图片使用 base64 数据。")
+            Text("请提供 JSON 文件，格式要求与本软件导出的 JSON 文件格式一致，本软件采用 OpenAI 的请求 JSON 格式，包括文本对话和含图片的多模态对话，图片使用 base64 数据。", bundle: HanlinLocalization.bundle)
                     .multilineTextAlignment(.leading)
         }
         .tint(TemporaryRecord ? .primary : nil)
@@ -1343,7 +1346,7 @@ struct ChatView: View {
             request = try agentSessionOwner.inlineInteraction(rowID: source.id, partID: action.partID,
                 actionID: type, arguments: arguments)
         } else { request = nil }
-        let label = event["humanFriendlyMessage"]?.string ?? String(localized: "Form submitted")
+        let label = event["humanFriendlyMessage"]?.string ?? String(localized: "Form submitted", bundle: HanlinLocalization.bundle)
         let data = String(decoding: try arguments.canonicalJSONData(), as: UTF8.self)
         handleMessageSending(ifObservingMode: false, continuationText: label + "\n" + data, richInteraction: request)
         return .object(["submitted": .bool(true)])
@@ -1517,7 +1520,7 @@ struct ChatView: View {
             onRetry: (msg.role == "assistant" || msg.role == "error") ? { retryRequest(for: msg) } : nil,
             onContinue: msg.role == "assistant" && msg.modelFinishReason == "length" ? {
                 guard !isResponding else { return }
-                handleMessageSending(ifObservingMode: false, continuationText: String(localized: "Continue from where the answer stopped. Preserve the previous answer and do not repeat completed actions or tool calls."))
+                handleMessageSending(ifObservingMode: false, continuationText: String(localized: "Continue from where the answer stopped. Preserve the previous answer and do not repeat completed actions or tool calls.", bundle: HanlinLocalization.bundle))
             } : nil,
             onDelete: {
                 // 如果是助手组消息，删除整组，否则删除单条
@@ -1542,7 +1545,7 @@ struct ChatView: View {
         .environment(\.hanlinRichMessageContext, richMessageContext(for: msg))
         .environment(\.chatExcerptSource, ChatExcerptSource(
             chatRecordID: chatRecord.id, messageID: msg.id, groupID: msg.groupID,
-            runID: activityRun?.id, title: chatRecord.name ?? String(localized: "Conversation")
+            runID: activityRun?.id, title: chatRecord.name ?? String(localized: "Conversation", bundle: HanlinLocalization.bundle)
         ))
         
         // 2. 多选模式下，只在"用户消息"或"助手中点"显示勾选框
@@ -1590,7 +1593,7 @@ struct ChatView: View {
                                     (msg.role == "assistant"
                                      ? groupIDs.contains(where: { selectedMessageIDs.contains($0) })
                                      : selectedMessageIDs.contains(msg.id))
-                                    ? .hlGreen
+                                    ? .hanlinHLGreen
                                     : .gray)
                             }
                         }
@@ -1605,7 +1608,7 @@ struct ChatView: View {
     private func openHistory() {
         // 如果输入框有草稿内容，则优先保存草稿
         if !message.isEmpty {
-            chatRecord.infoDescription = "[\(String(localized: "Draft"))] \(message)"
+            chatRecord.infoDescription = "[\(String(localized: "Draft", bundle: HanlinLocalization.bundle))] \(message)"
             chatRecord.input = message
         } else {
             chatRecord.input = ""
@@ -1625,9 +1628,9 @@ struct ChatView: View {
                 if chatTemps.count >= 2 {
                     let secondLastMessage = chatTemps[chatTemps.count - 2]
                     let previewText = secondLastMessage.text?.replacingOccurrences(of: "\n", with: " ").prefix(80)
-                    chatRecord.infoDescription = "[\(String(localized: "Image"))] \(previewText ?? "")"
+                    chatRecord.infoDescription = "[\(String(localized: "Image", bundle: HanlinLocalization.bundle))] \(previewText ?? "")"
                 } else {
-                    chatRecord.infoDescription = "[\(String(localized: "Image"))]"
+                    chatRecord.infoDescription = "[\(String(localized: "Image", bundle: HanlinLocalization.bundle))]"
                 }
                 } else {
                     chatRecord.infoDescription = ""
@@ -1668,7 +1671,7 @@ struct ChatView: View {
     /// 触发条件：chatRecord.name == "新群聊" 且 user 消息数 >= 1 且 <= 3
     private func autoGenerateTitleIfNeeded() {
         // 检查是否为新群聊
-        guard ["新群聊", "New Group Chat", String(localized: "新群聊")].contains(chatRecord.name ?? "") else { return }
+        guard ["新群聊", "New Group Chat", String(localized: "新群聊", bundle: HanlinLocalization.bundle)].contains(chatRecord.name ?? "") else { return }
         
         // 统计用户消息数量
         let userMessages = chatTemps.filter { $0.role == "user" }

@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(SwiftUI)
 import SwiftUI
 import HanlinPresentationKit
@@ -79,7 +80,7 @@ public struct HanlinActivityDisclosureStyle: DisclosureGroupStyle {
             }
             .buttonStyle(.plain)
             .padding(.vertical, isTool ? 5 : 0)
-            .accessibilityValue(configuration.isExpanded ? Text("Expanded") : Text("Collapsed"))
+            .accessibilityValue(configuration.isExpanded ? Text("Expanded", bundle: HanlinLocalization.bundle) : Text("Collapsed", bundle: HanlinLocalization.bundle))
 
             HanlinAnimatedDisclosure(isExpanded: configuration.isExpanded, spacing: 0) {
                 configuration.content

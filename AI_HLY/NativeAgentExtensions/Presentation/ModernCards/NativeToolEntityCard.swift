@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct NativeToolEntityCard: View {
@@ -46,7 +47,7 @@ struct NativeToolEntityCard: View {
         return block.actions + [
             NativeUIAction(
                 type: .openURL,
-                title: String(localized: "Open"),
+                title: String(localized: "Open", bundle: HanlinLocalization.bundle),
                 systemImage: "arrow.up.right.square",
                 url: url
             )
@@ -61,10 +62,10 @@ struct NativeToolEntityCard: View {
 
     private var defaultTitle: String {
         switch block.type {
-        case .source: String(localized: "Source")
+        case .source: String(localized: "Source", bundle: HanlinLocalization.bundle)
         case .wikipediaSummary: "Wikipedia"
-        case .calculation: String(localized: "Calculation")
-        default: String(localized: "Result card")
+        case .calculation: String(localized: "Calculation", bundle: HanlinLocalization.bundle)
+        default: String(localized: "Result card", bundle: HanlinLocalization.bundle)
         }
     }
 

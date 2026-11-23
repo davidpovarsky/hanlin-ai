@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(UIKit)
 import A2UICore
 import A2UISwiftUI
@@ -28,8 +29,8 @@ public enum HanlinMediaCatalogImplementation {
                    let video = HanlinYouTubeVideo(url: url) {
                     HanlinYouTubePlayerView(video: video)
                 } else {
-                    ContentUnavailableView("Video unavailable", systemImage: "video.slash",
-                        description: Text("This video link is not supported."))
+                    ContentUnavailableView(hanlin: "Video unavailable", systemImage: "video.slash",
+                        description: Text("This video link is not supported.", bundle: HanlinLocalization.bundle))
                 }
             }
         }
@@ -40,8 +41,8 @@ public enum HanlinMediaCatalogImplementation {
                 if !items.isEmpty {
                     HanlinImageGallery(items: items).id(items)
                 } else {
-                    ContentUnavailableView("Images unavailable", systemImage: "photo.badge.exclamationmark",
-                        description: Text("The image sources are missing or unsupported."))
+                    ContentUnavailableView(hanlin: "Images unavailable", systemImage: "photo.badge.exclamationmark",
+                        description: Text("The image sources are missing or unsupported.", bundle: HanlinLocalization.bundle))
                 }
             }
         }
@@ -50,8 +51,8 @@ public enum HanlinMediaCatalogImplementation {
                 if let descriptor = HanlinSourceCardDescriptor(node: node) {
                     HanlinSourceCard(descriptor: descriptor).id(descriptor)
                 } else {
-                    ContentUnavailableView("Link unavailable", systemImage: "link.badge.plus",
-                        description: Text("This source link is not supported."))
+                    ContentUnavailableView(hanlin: "Link unavailable", systemImage: "link.badge.plus",
+                        description: Text("This source link is not supported.", bundle: HanlinLocalization.bundle))
                 }
             }
         }

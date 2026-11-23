@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  APIManager+LegacyTools.swift
 //  AI_HLY
@@ -305,7 +306,7 @@ extension APIManager {
                                                     executionOutcome = .cancelled
                                                     executionDiagnostics.failureCategory = executionOutcome.rawValue
                                                     executionDiagnostics.wasCancelled = true
-                                                    toolResult = String(localized: "Cancelled")
+                                                    toolResult = String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
                                                     break
                                                 }
                                                 // 检查是否有激活的天气服务
@@ -364,7 +365,7 @@ extension APIManager {
                                                     if error is CancellationError || Task.isCancelled {
                                                         executionOutcome = .cancelled
                                                         executionDiagnostics.wasCancelled = true
-                                                        toolResult = String(localized: "Cancelled")
+                                                        toolResult = String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
                                                     } else {
                                                         executionOutcome = .failed
                                                         toolResult = currentLanguagePrefix
@@ -397,7 +398,7 @@ extension APIManager {
                                                     if error is CancellationError || Task.isCancelled {
                                                         executionOutcome = .cancelled
                                                         executionDiagnostics.wasCancelled = true
-                                                        toolResult = String(localized: "Cancelled")
+                                                        toolResult = String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
                                                     } else {
                                                         executionOutcome = .failed
                                                         toolResult = currentLanguagePrefix ?

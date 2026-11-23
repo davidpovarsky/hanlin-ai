@@ -52,6 +52,7 @@ SDK_SOURCES = "Packages/HanlinPresentationSDK/Sources/HanlinA2UI"
 SOURCES = SDK_SOURCES + "/A2UI"
 MEDIA_SOURCES = SDK_SOURCES + "/Media"
 DESIGN_SOURCES = "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit"
+LOCALIZATION_SOURCES = "Packages/HanlinPresentationSDK/Sources/HanlinLocalization"
 APP_ALIASES = ["AI_HLY/Downstream/ChatPresentation/A2UI",
                "AI_HLY/Downstream/ChatPresentation/Media"]
 TEST = "AI_HLYTests/A2UITests.swift"
@@ -109,11 +110,13 @@ let enabled: [SwiftSetting] = [
 ]
 let package = Package(
     name: "HanlinA2UIProof",
+    defaultLocalization: "zh-Hans",
     platforms: [.macOS("27.0")],
     dependencies: [.package(url: "{UPSTREAM}", revision: "{REVISION}")],
     targets: [
         .target(name: "HanlinPresentationKit"),
-        .target(name: "HanlinA2UI", dependencies: ["HanlinPresentationKit"] + products, swiftSettings: enabled),
+        .target(name: "HanlinLocalization", resources: [.process("Resources")]),
+        .target(name: "HanlinA2UI", dependencies: ["HanlinPresentationKit", "HanlinLocalization"] + products, swiftSettings: enabled),
         .target(name: "{CONSUMER_MODULE}", dependencies: ["HanlinA2UI"] + products + consumerProducts, swiftSettings: enabled),
         .testTarget(name: "AI_HLYTests", dependencies: ["{CONSUMER_MODULE}", "HanlinA2UI"] + products + consumerProducts,
                     resources: [.copy("A2UIFixtures")], swiftSettings: enabled),
@@ -165,6 +168,7 @@ def plan(platform: str = "macos", consumer: bool = False, app: bool = False) -> 
         raise ValueError("Missing exact affected ownership case")
     paths = sorted((REPOSITORY / SDK_SOURCES).rglob("*.swift"))
     paths += sorted((REPOSITORY / DESIGN_SOURCES).rglob("*.swift"))
+    paths += sorted(p for p in (REPOSITORY / LOCALIZATION_SOURCES).rglob("*") if p.is_file())
     for aliases in APP_ALIASES:
         paths += sorted((REPOSITORY / aliases).glob("*.swift"))
     media_cases = list(MEDIA_CASES)
@@ -224,6 +228,8 @@ def prepare(destination: Path, inputs: dict) -> None:
             raise ValueError(f"Input changed while preparing proof: {relative}")
         if relative.startswith(SDK_SOURCES + "/"):
             target = destination / "Sources/HanlinA2UI" / Path(relative).relative_to(SDK_SOURCES)
+        elif relative.startswith(LOCALIZATION_SOURCES + "/"):
+            target = destination / "Sources/HanlinLocalization" / Path(relative).relative_to(LOCALIZATION_SOURCES)
         elif relative.startswith(DESIGN_SOURCES + "/"):
             target = destination / "Sources/HanlinPresentationKit" / Path(relative).relative_to(DESIGN_SOURCES)
         elif any(relative.startswith(aliases + "/") for aliases in APP_ALIASES) or relative in [CONSUMER_SOURCE, VALIDATOR_SOURCE, APP_SOURCE, APP_CONTRACT]:

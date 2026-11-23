@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import CryptoKit
 import Darwin
@@ -25,9 +26,9 @@ enum ChavrusaShareDraftError: LocalizedError, Sendable {
     nonisolated var errorDescription: String? {
         switch self {
         case .fileLimit:
-            return String(localized: "A draft can include up to five files. Remove an attachment before adding this batch.")
+            return String(localized: "A draft can include up to five files. Remove an attachment before adding this batch.", bundle: HanlinLocalization.bundle)
         case .incompleteBatch:
-            return String(localized: "This batch contains an item that could not be shared. The original items were kept.")
+            return String(localized: "This batch contains an item that could not be shared. The original items were kept.", bundle: HanlinLocalization.bundle)
         }
     }
 }

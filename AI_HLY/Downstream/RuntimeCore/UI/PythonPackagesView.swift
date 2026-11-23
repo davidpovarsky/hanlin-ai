@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Observation
 import SwiftUI
 import UniformTypeIdentifiers
@@ -98,7 +99,7 @@ struct PythonPackagesView: View {
                         ) {
                             Text(RuntimeL10n.string("Python package installation progress"))
                         } currentValueLabel: {
-                            Text("\(progress.phase.rawValue.capitalized): \(progress.packageName)")
+                            Text("\(progress.phase.rawValue.capitalized): \(progress.packageName)", bundle: HanlinLocalization.bundle)
                         }
                     } else {
                         ProgressView(RuntimeL10n.string("Downloading and verifying wheel"))

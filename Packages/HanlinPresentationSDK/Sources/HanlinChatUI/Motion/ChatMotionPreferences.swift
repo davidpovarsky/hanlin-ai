@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(SwiftUI)
 import SwiftUI
 
@@ -61,13 +62,13 @@ public struct ChatMotionPresetPicker: View {
             get: { ChatMotionPreset.fromStoredID(storedID) },
             set: { storedID = $0.rawValue }
         )) {
-            Text("Smooth and relaxed").tag(ChatMotionPreset.relaxed)
-            Text("Height reveal").tag(ChatMotionPreset.heightReveal)
-            Text("Gentle squeeze").tag(ChatMotionPreset.gentleSqueeze)
-            Text("Quiet fade").tag(ChatMotionPreset.quietFade)
-            Text("No animations").tag(ChatMotionPreset.none)
+            Text("Smooth and relaxed", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.relaxed)
+            Text("Height reveal", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.heightReveal)
+            Text("Gentle squeeze", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.gentleSqueeze)
+            Text("Quiet fade", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.quietFade)
+            Text("No animations", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.none)
         } label: {
-            Label("Chat animations", systemImage: "sparkles")
+            Label(hanlin: "Chat animations", systemImage: "sparkles")
         }
         .pickerStyle(.menu)
         .accessibilityIdentifier("hanlin-chat-motion-preset")

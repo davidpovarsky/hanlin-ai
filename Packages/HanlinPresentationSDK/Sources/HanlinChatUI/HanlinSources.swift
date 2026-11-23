@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(SwiftUI) && canImport(UIKit)
 import SwiftUI
 import HanlinPresentationKit
@@ -15,7 +16,7 @@ public struct HanlinSourcesButton: View {
                 HStack(spacing: 6) {
                     ForEach(Array(sources.prefix(3))) { source in HanlinSourceIcon(url: source.iconURL) }
                     Text(title).font(HanlinTypography.caption.weight(.medium))
-                    Text("\(sources.count)").font(HanlinTypography.caption.monospacedDigit()).foregroundStyle(.secondary)
+                    Text("\(sources.count)", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption.monospacedDigit()).foregroundStyle(.secondary)
                 }.padding(.horizontal, 10).padding(.vertical, 7)
                     .background(.quaternary, in: Capsule())
             }.buttonStyle(.plain).accessibilityIdentifier("hanlin-all-sources")
@@ -50,7 +51,7 @@ public struct HanlinSourcesList: View {
                 .navigationTitle(title).navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("Done") { dismiss() }
+                        Button(hanlin: "Done") { dismiss() }
                             .accessibilityIdentifier("hanlin-sources-close")
                     }
                 }

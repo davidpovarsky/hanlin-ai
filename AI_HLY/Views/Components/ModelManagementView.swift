@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ModelManagementView.swift
 //  AI_HLY
@@ -118,7 +119,7 @@ struct ModelManagementView: View {
                     VStack(spacing: 20) {
                         ProgressView()
                             .scaleEffect(1.5)
-                        Text(String(localized: "正在获取模型列表..."))
+                        Text(String(localized: "正在获取模型列表...", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.headline)
                             .foregroundColor(.secondary)
                     }
@@ -129,37 +130,37 @@ struct ModelManagementView: View {
                         Image(systemName: "list.bullet.rectangle")
                             .font(HanlinTypography.fixed(size: 60))
                             .foregroundColor(.secondary)
-                        Text(String(localized: "暂无可用模型"))
+                        Text(String(localized: "暂无可用模型", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.headline)
                             .foregroundColor(.secondary)
-                        Button(String(localized: "刷新模型列表")) {
+                        Button(String(localized: "刷新模型列表", bundle: HanlinLocalization.bundle)) {
                             Task {
                                 await fetchModels()
                             }
                         }
                         .buttonStyle(.borderedProminent)
-                        .tint(.hlBlue)
+                        .tint(.hanlinHLBlue)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     // 模型列表
                     List {
-                        Section(footer: Text(String(localized: "注意：自动模型能力探测中可能有一定的API费用消耗"))) {
-                            Toggle(String(localized: "自动模型能力探测"), isOn: Binding(
+                        Section(footer: Text(String(localized: "注意：自动模型能力探测中可能有一定的API费用消耗", bundle: HanlinLocalization.bundle))) {
+                            Toggle(String(localized: "自动模型能力探测", bundle: HanlinLocalization.bundle), isOn: Binding(
                                 get: { apiKey.autoProbeCapabilities },
                                 set: { newValue in
                                     apiKey.autoProbeCapabilities = newValue
                                     saveChanges()
                                 }
                             ))
-                            .tint(.hlBlue)
+                            .tint(.hanlinHLBlue)
                         }
 
                         // 已添加的模型（支持折叠）
                         if !filteredCompanyModels.isEmpty || (!searchText.isEmpty && !companyModels.isEmpty) {
                             Section(header: 
                                 HStack {
-                                    Text("已添加的模型 (\(filteredCompanyModels.count))")
+                                    Text("已添加的模型 (\(filteredCompanyModels.count))", bundle: HanlinLocalization.bundle)
                                     Spacer()
                                     Button {
                                         withAnimation(.easeInOut(duration: 0.2)) {
@@ -195,7 +196,7 @@ struct ModelManagementView: View {
                         }
 
                         // 可添加的模型
-                        Section(header: Text("可用模型 (\(filteredAPIModels.count))")) {
+                        Section(header: Text("可用模型 (\(filteredAPIModels.count))", bundle: HanlinLocalization.bundle)) {
                             ForEach(filteredAPIModels, id: \.id) { model in
                                 let providerName = (model.owned_by?.isEmpty == false)
                                     ? model.owned_by ?? ""
@@ -205,7 +206,7 @@ struct ModelManagementView: View {
                                     : getCompanyIcon(for: apiKey.company ?? "Unknown")
 
                                 HStack(spacing: 12) {
-                                    Image(iconName)
+                                    Image(hanlinAsset: iconName)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: size_30, height: size_30)
@@ -215,7 +216,7 @@ struct ModelManagementView: View {
                                             Text(model.id)
                                                 .font(HanlinTypography.subheadline)
                                         }
-                                        Text("提供者: \(providerName)")
+                                        Text("提供者: \(providerName)", bundle: HanlinLocalization.bundle)
                                             .font(HanlinTypography.caption)
                                             .foregroundColor(.secondary)
                                     }
@@ -231,7 +232,7 @@ struct ModelManagementView: View {
                                                     removeModelByName(modelName)
                                                 }
                                             } label: {
-                                                Text(String(localized: "删除"))
+                                                Text(String(localized: "删除", bundle: HanlinLocalization.bundle))
                                                     .foregroundColor(.red)
                                                     .font(HanlinTypography.caption)
                                             }
@@ -246,12 +247,12 @@ struct ModelManagementView: View {
                                         } label: {
                                             HStack(spacing: 4) {
                                                 Image(systemName: "plus.circle")
-                                                Text(String(localized: "添加"))
+                                                Text(String(localized: "添加", bundle: HanlinLocalization.bundle))
                                             }
                                             .font(HanlinTypography.caption)
                                         }
                                         .buttonStyle(.borderedProminent)
-                                        .tint(.hlBlue)
+                                        .tint(.hanlinHLBlue)
                                     }
                                 }
                                 .padding(.vertical, 4)
@@ -261,12 +262,12 @@ struct ModelManagementView: View {
                     .listStyle(.insetGrouped)
                 }
             }
-            .searchable(text: $searchText, prompt: String(localized: "搜索模型..."))
-            .navigationTitle(String(localized: "模型管理"))
+            .searchable(text: $searchText, prompt: String(localized: "搜索模型...", bundle: HanlinLocalization.bundle))
+            .navigationTitle(String(localized: "模型管理", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button(String(localized: "关闭")) {
+                    Button(String(localized: "关闭", bundle: HanlinLocalization.bundle)) {
                         dismiss()
                     }
                 }
@@ -282,13 +283,13 @@ struct ModelManagementView: View {
                 }
             }
         }
-        .alert(String(localized: "错误"), isPresented: $showError) {
-            Button(String(localized: "确定"), role: .cancel) {}
+        .alert(String(localized: "错误", bundle: HanlinLocalization.bundle), isPresented: $showError) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
         } message: {
-            Text(errorMessage ?? String(localized: "未知错误"))
+            Text(errorMessage ?? String(localized: "未知错误", bundle: HanlinLocalization.bundle))
         }
-        .alert(String(localized: "API Key 缺失"), isPresented: $showAPIKeyError) {
-            Button(String(localized: "确定"), role: .cancel) {}
+        .alert(String(localized: "API Key 缺失", bundle: HanlinLocalization.bundle), isPresented: $showAPIKeyError) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
         } message: {
             Text(apiKeyErrorMessage)
         }
@@ -333,8 +334,8 @@ struct ModelManagementView: View {
     }
 
     private func priceText(for price: Int16) -> String {
-        if price < 0 { return String(localized: "Price unknown") }
-        if price == 4 { return String(localized: "Paid") }
+        if price < 0 { return String(localized: "Price unknown", bundle: HanlinLocalization.bundle) }
+        if price == 4 { return String(localized: "Paid", bundle: HanlinLocalization.bundle) }
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         if currentLanguage.hasPrefix("zh") {
             switch price {
@@ -488,7 +489,7 @@ struct QuickModelRefreshButton: View {
         } label: {
             HStack {
                 Image(systemName: "arrow.triangle.2.circlepath")
-                Text(String(localized: "刷新模型列表"))
+                Text(String(localized: "刷新模型列表", bundle: HanlinLocalization.bundle))
             }
         }
         .sheet(isPresented: $showModelManagement) {
@@ -510,7 +511,7 @@ struct CapabilityProbeSheet: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text(String(localized: "模型能力自动探测"))
+            Text(String(localized: "模型能力自动探测", bundle: HanlinLocalization.bundle))
                 .font(HanlinTypography.headline)
                 .padding(.top, 16)
 
@@ -535,11 +536,11 @@ struct CapabilityProbeSheet: View {
             }
             .padding(.horizontal)
 
-            Button(String(localized: "完成")) {
+            Button(String(localized: "完成", bundle: HanlinLocalization.bundle)) {
                 onClose()
             }
             .buttonStyle(.borderedProminent)
-            .tint(.hlBlue)
+            .tint(.hanlinHLBlue)
             .padding(.bottom, 12)
         }
         .presentationDetents([.medium, .large])

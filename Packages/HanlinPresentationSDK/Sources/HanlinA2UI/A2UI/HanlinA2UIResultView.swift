@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(SwiftUI)
 import A2UICore
 import A2UISwiftUI
@@ -34,9 +35,9 @@ public struct HanlinA2UIResultView: View {
 
     private var fallback: some View {
         ContentUnavailableView(
-            "Content unavailable",
+            hanlin: "Content unavailable",
             systemImage: "rectangle.slash",
-            description: Text("This content could not be displayed.")
+            description: Text("This content could not be displayed.", bundle: HanlinLocalization.bundle)
         )
         .accessibilityIdentifier("hanlin-a2ui-fallback")
     }

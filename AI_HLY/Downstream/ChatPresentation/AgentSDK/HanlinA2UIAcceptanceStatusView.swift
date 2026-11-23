@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if HANLIN_A2UI_POC && (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
 import SwiftUI
 
@@ -11,7 +12,7 @@ struct HanlinA2UIAcceptanceStatusView: View {
 
     var body: some View {
         HStack {
-            Text("\(requestCount)").accessibilityIdentifier("hanlin-native-a2ui-request-count")
+            Text("\(requestCount)", bundle: HanlinLocalization.bundle).accessibilityIdentifier("hanlin-native-a2ui-request-count")
             Text(failure).accessibilityIdentifier("hanlin-native-a2ui-request-failure")
             Text(isResponding ? "running" : "idle").accessibilityIdentifier("hanlin-native-a2ui-state")
             Text(conversationID?.uuidString ?? "unavailable").accessibilityIdentifier("hanlin-native-a2ui-chat-id")

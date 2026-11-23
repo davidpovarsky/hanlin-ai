@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 @MainActor
@@ -20,7 +21,7 @@ struct NativeAssistantToolGroupSettingsView: View {
                             Image(systemName: group.systemImage)
                                 .font(HanlinTypography.largeTitle)
                                 .fontWeight(.bold)
-                                .foregroundColor(.hlBluefont)
+                                .foregroundColor(.hanlinHLBluefont)
                                 .padding(.top)
 
                             Text(group.title)
@@ -37,18 +38,18 @@ struct NativeAssistantToolGroupSettingsView: View {
 
                     Section {
                         Toggle(
-                            String(format: String(localized: "Enable %@"), group.title),
+                            String(format: String(localized: "Enable %@", bundle: HanlinLocalization.bundle), group.title),
                             isOn: groupEnabledBinding(for: group)
                         )
                     } footer: {
                         Text(
                             isGroupEnabled
-                                ? String(localized: "This app's enabled functions are available to the model")
-                                : String(localized: "This app is disabled; function preferences are preserved")
+                                ? String(localized: "This app's enabled functions are available to the model", bundle: HanlinLocalization.bundle)
+                                : String(localized: "This app is disabled; function preferences are preserved", bundle: HanlinLocalization.bundle)
                         )
                     }
 
-                    Section(String(localized: "Functions")) {
+                    Section(String(localized: "Functions", bundle: HanlinLocalization.bundle)) {
                         ForEach(group.toolEntries) { entry in
                             Toggle(isOn: toolEnabledBinding(for: entry)) {
                                 VStack(alignment: .leading, spacing: 4) {
@@ -57,7 +58,7 @@ struct NativeAssistantToolGroupSettingsView: View {
                                         .font(HanlinTypography.caption)
                                         .foregroundStyle(.secondary)
                                     if entry.isSensitive {
-                                        Label(String(localized: "Sensitive"), systemImage: "hand.raised.fill")
+                                        Label(String(localized: "Sensitive", bundle: HanlinLocalization.bundle), systemImage: "hand.raised.fill")
                                             .font(HanlinTypography.caption2)
                                             .foregroundStyle(.orange)
                                     }
@@ -88,11 +89,11 @@ struct NativeAssistantToolGroupSettingsView: View {
                 }
             } else {
                 ContentUnavailableView(
-                    String(localized: "Assistant Tool Unavailable"),
+                    String(localized: "Assistant Tool Unavailable", bundle: HanlinLocalization.bundle),
                     systemImage: "wrench.and.screwdriver",
-                    description: Text(String(localized: "The requested assistant tool could not be found."))
+                    description: Text(String(localized: "The requested assistant tool could not be found.", bundle: HanlinLocalization.bundle))
                 )
-                .navigationTitle(String(localized: "Assistant Tool"))
+                .navigationTitle(String(localized: "Assistant Tool", bundle: HanlinLocalization.bundle))
                 .onAppear {
                     NativeToolTraceLogger.shared.log(
                         "native_assistant_tool_group_settings_missing",

@@ -1,3 +1,4 @@
+import HanlinLocalization
 import HanlinPlatformContracts
 import HanlinScriptContracts
 import HanlinScriptExtensions
@@ -29,16 +30,16 @@ struct ScriptingPackageImportView: View {
         List {
             Section {
                 NavigationLink { ChavrusaShareInboxView(platform: platform) } label: {
-                    Label("Shared Items", systemImage: "tray.and.arrow.down")
+                    Label(hanlin: "Shared Items", systemImage: "tray.and.arrow.down")
                 }
                 .accessibilityIdentifier("hanlin-share-inbox-link")
             }
             if !platform.resumeCommandRejections.isEmpty {
-                Section("Queued Actions") {
-                    Label("Some saved actions couldn’t be read.", systemImage: "exclamationmark.triangle")
+                Section(hanlin: "Queued Actions") {
+                    Label(hanlin: "Some saved actions couldn’t be read.", systemImage: "exclamationmark.triangle")
                         .foregroundStyle(.orange)
                         .accessibilityIdentifier("hanlin-pending-action-warning")
-                    Text("Other actions can still run. The unreadable items were kept for recovery.")
+                    Text("Other actions can still run. The unreadable items were kept for recovery.", bundle: HanlinLocalization.bundle)
                         .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                 }
             }
@@ -48,20 +49,20 @@ struct ScriptingPackageImportView: View {
                         .foregroundStyle(.red)
                         .accessibilityIdentifier("hanlin-import-error-message")
                 } header: {
-                    Text("Import Error")
+                    Text("Import Error", bundle: HanlinLocalization.bundle)
                         .accessibilityIdentifier("hanlin-import-error")
                 }
             }
 
             if let preview = platform.preview {
                 Section {
-                    Button("Install") { Task { await platform.installPreview() } }
+                    Button(hanlin: "Install") { Task { await platform.installPreview() } }
                         .accessibilityIdentifier("hanlin-package-install")
                         .disabled(
                             !preview.canInstall
                                 || platform.activity == .installing
                         )
-                    Button("Discard", role: .destructive) { platform.discardPreview() }
+                    Button(hanlin: "Discard", role: .destructive) { platform.discardPreview() }
                 }
                 ScriptingImportPreviewSections(preview: preview, platform: platform)
             } else {
@@ -69,16 +70,16 @@ struct ScriptingPackageImportView: View {
                     Button {
                         showsImporter = true
                     } label: {
-                        Label("Import Script Package", systemImage: "doc.badge.plus")
+                        Label(hanlin: "Import Script Package", systemImage: "doc.badge.plus")
                     }
                     .accessibilityIdentifier("hanlin-file-importer")
-                    Text("Choose a .scripting, .hanlinNativeScript, .hanlinExpo, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.")
+                    Text("Choose a .scripting, .hanlinNativeScript, .hanlinExpo, or .zip package. Hanlin copies it into private staging and performs Import Preview without executing package code.", bundle: HanlinLocalization.bundle)
                         .font(HanlinTypography.footnote)
                         .foregroundStyle(.secondary)
                 }
                 let stagedFiles = stagedDocumentPackages
                 if !stagedFiles.isEmpty {
-                    Section("Shared Packages") {
+                    Section(hanlin: "Shared Packages") {
                         ForEach(stagedFiles, id: \.self) { fileURL in
                             Button {
                                 print("HANLIN_IMPORT_PACKAGE_TAPPED url=\(fileURL.lastPathComponent)")
@@ -106,7 +107,7 @@ struct ScriptingPackageImportView: View {
         }
         .id(platform.preview == nil ? "browse" : "preview")
         .accessibilityIdentifier("hanlin-package-import-list")
-        .navigationTitle("Script Package")
+        .navigationTitle(Text("Script Package", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
         .overlay {
             if platform.activity == .importing || platform.activity == .installing {
@@ -128,7 +129,7 @@ struct ScriptingPackageImportView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
+            ToolbarItem(placement: .confirmationAction) { Button(hanlin: "Done") { dismiss() } }
         }
     }
 }
@@ -138,17 +139,17 @@ private struct ScriptingImportPreviewSections: View {
     let platform: HanlinScriptingPlatform
 
     var body: some View {
-        Section("Package") {
-            LabeledContent("Name", value: preview.manifest?.name ?? preview.source.originalFileName)
-            if let version = preview.manifest?.version { LabeledContent("Version", value: version) }
-            LabeledContent("Trust", value: preview.source.trust.rawValue)
-            LabeledContent("SHA-256", value: String(preview.source.contentSHA256.prefix(16)) + "…")
+        Section(hanlin: "Package") {
+            LabeledContent(hanlin: "Name", value: preview.manifest?.name ?? preview.source.originalFileName)
+            if let version = preview.manifest?.version { LabeledContent(hanlin: "Version", value: version) }
+            LabeledContent(hanlin: "Trust", value: preview.source.trust.rawValue)
+            LabeledContent(hanlin: "SHA-256", value: String(preview.source.contentSHA256.prefix(16)) + "…")
         }
-        Section("Entry Points") {
+        Section(hanlin: "Entry Points") {
             ForEach(preview.entrypoints, id: \.id) { entrypoint in
                 VStack(alignment: .leading, spacing: 4) {
                     LabeledContent(entrypoint.kind.rawValue, value: entrypoint.sourcePath)
-                    LabeledContent("Runtime", value: entrypoint.runtimeProfile.rawValue)
+                    LabeledContent(hanlin: "Runtime", value: entrypoint.runtimeProfile.rawValue)
                         .font(HanlinTypography.caption)
                         .foregroundStyle(.secondary)
                     Text(runtimeReason(entrypoint.runtimeProfile))
@@ -158,7 +159,7 @@ private struct ScriptingImportPreviewSections: View {
             }
         }
         if !preview.findings.isEmpty {
-            Section("Compatibility") {
+            Section(hanlin: "Compatibility") {
                 ForEach(Array(preview.findings.enumerated()), id: \.offset) { _, finding in
                     Label(
                         finding.message,
@@ -201,7 +202,7 @@ struct ScriptingInstalledPackageDetailView: View {
             if let package {
                 installedPackageList(package)
             } else {
-                ContentUnavailableView("Package Not Installed", systemImage: "shippingbox")
+                ContentUnavailableView(hanlin: "Package Not Installed", systemImage: "shippingbox")
             }
         }
         .navigationTitle(package?.manifest?.name ?? "Script Package")
@@ -226,22 +227,22 @@ struct ScriptingInstalledPackageDetailView: View {
                         widgetStatusText = [report, diagnostic].filter { !$0.isEmpty }.joined(separator: "\n\n")
                         showsWidgetStatus = true
                     } label: {
-                        Label(String(localized: "Widget status"), systemImage: "waveform.path.ecg")
+                        Label(String(localized: "Widget status", bundle: HanlinLocalization.bundle), systemImage: "waveform.path.ecg")
                     }
                     .accessibilityIdentifier("hanlin-widget-status")
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
-                Button("Done") {
+                Button(hanlin: "Done") {
                     dismiss()
                 }
                 .accessibilityIdentifier("hanlin-package-details-done")
             }
         }
-        .alert(String(localized: "Widget status"), isPresented: $showsWidgetStatus) {
-            Button(String(localized: "Copy Diagnostic")) { UIPasteboard.general.string = widgetStatusText }
+        .alert(String(localized: "Widget status", bundle: HanlinLocalization.bundle), isPresented: $showsWidgetStatus) {
+            Button(String(localized: "Copy Diagnostic", bundle: HanlinLocalization.bundle)) { UIPasteboard.general.string = widgetStatusText }
                 .accessibilityIdentifier("hanlin-widget-status-copy")
-            Button(String(localized: "Done"), role: .cancel) {}
+            Button(String(localized: "Done", bundle: HanlinLocalization.bundle), role: .cancel) {}
         } message: {
             Text(widgetStatusText)
         }
@@ -257,35 +258,35 @@ struct ScriptingInstalledPackageDetailView: View {
 
     private func installedPackageList(_ package: HanlinStoredPackageSnapshot) -> some View {
         List {
-            Section("Package") {
-                LabeledContent("Name", value: package.manifest?.name ?? package.record.packageID.rawValue)
-                LabeledContent("Version", value: package.record.version.rawValue)
-                LabeledContent("Generation", value: String(package.record.activeGeneration))
-                Toggle("Enabled", isOn: enabledBinding(for: package))
+            Section(hanlin: "Package") {
+                LabeledContent(hanlin: "Name", value: package.manifest?.name ?? package.record.packageID.rawValue)
+                LabeledContent(hanlin: "Version", value: package.record.version.rawValue)
+                LabeledContent(hanlin: "Generation", value: String(package.record.activeGeneration))
+                Toggle(hanlin: "Enabled", isOn: enabledBinding(for: package))
             }
-            Section("Entry Points") {
+            Section(hanlin: "Entry Points") {
                 ForEach(package.entrypoints, id: \.id) { entrypoint in
                     VStack(alignment: .leading) {
                         LabeledContent(entrypoint.kind.rawValue, value: entrypoint.sourcePath)
-                        LabeledContent("Runtime", value: entrypoint.runtimeProfile.rawValue)
+                        LabeledContent(hanlin: "Runtime", value: entrypoint.runtimeProfile.rawValue)
                             .font(HanlinTypography.caption)
                             .foregroundStyle(.secondary)
                     }
                 }
             }
             if package.enabled, hasNativeWidget(package) {
-                Section("Widget instances") {
+                Section(hanlin: "Widget instances") {
                     ForEach(widgetInstances, id: \.entityID) { instance in
                         LabeledContent(instance.displayName, value: instance.engine.rawValue)
                     }
-                    Picker("Copy from", selection: $sourceInstanceID) {
+                    Picker(hanlin: "Copy from", selection: $sourceInstanceID) {
                         ForEach(widgetInstances, id: \.entityID) { instance in
                             Text(instance.displayName).tag(instance.entityID)
                         }
                     }
-                    TextField("Instance name", text: $newInstanceName)
+                    TextField(hanlin: "Instance name", text: $newInstanceName)
                         .accessibilityIdentifier("hanlin-widget-instance-name")
-                    Button("Create independent instance") {
+                    Button(hanlin: "Create independent instance") {
                         do {
                             try platform.createWidgetInstance(from: sourceInstanceID, name: newInstanceName)
                             newInstanceName = ""
@@ -301,7 +302,7 @@ struct ScriptingInstalledPackageDetailView: View {
                     }
                     .disabled(sourceInstanceID.isEmpty || newInstanceName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     .accessibilityIdentifier("hanlin-widget-create-instance")
-                    Text("Choose these names in the Home Screen widget configuration. Two placements selecting the same instance share state; separate instances keep independent state.")
+                    Text("Choose these names in the Home Screen widget configuration. Two placements selecting the same instance share state; separate instances keep independent state.", bundle: HanlinLocalization.bundle)
                         .font(HanlinTypography.caption).foregroundStyle(.secondary)
 
                     if let diag = storageDiagnostic ?? platform.widgetPublicationDiagnostic(for: packageID) {
@@ -310,7 +311,7 @@ struct ScriptingInstalledPackageDetailView: View {
                                 .font(HanlinTypography.subheadline.weight(.semibold))
                                 .foregroundStyle(.red)
                                 .accessibilityIdentifier("hanlin-widget-storage-error-headline")
-                            Text("Diagnostic ID: \(diag.correlationID) • \(diag.phase.rawValue) (\(diag.decisionPoint.rawValue))")
+                            Text("Diagnostic ID: \(diag.correlationID) • \(diag.phase.rawValue) (\(diag.decisionPoint.rawValue))", bundle: HanlinLocalization.bundle)
                                 .font(HanlinTypography.caption.monospaced())
                                 .foregroundStyle(.secondary)
                                 .accessibilityIdentifier("hanlin-widget-storage-diagnostic-id")
@@ -326,7 +327,7 @@ struct ScriptingInstalledPackageDetailView: View {
                                         loadWidgetInstances()
                                     }
                                 } label: {
-                                    Label("Retry Widget Publication", systemImage: "arrow.clockwise")
+                                    Label(hanlin: "Retry Widget Publication", systemImage: "arrow.clockwise")
                                 }
                                 .buttonStyle(.borderedProminent)
                                 .controlSize(.small)
@@ -337,7 +338,7 @@ struct ScriptingInstalledPackageDetailView: View {
                                     let report = platform.storageConsistencyReport()?.redactedReportString ?? diag.redactedReportString
                                     UIPasteboard.general.string = report
                                 } label: {
-                                    Label("Copy Diagnostic", systemImage: "doc.on.doc")
+                                    Label(hanlin: "Copy Diagnostic", systemImage: "doc.on.doc")
                                 }
                                 .buttonStyle(.bordered)
                                 .controlSize(.small)
@@ -354,16 +355,16 @@ struct ScriptingInstalledPackageDetailView: View {
                 }
             }
             if package.availableGenerations.count > 1 {
-                Section("Versions") {
+                Section(hanlin: "Versions") {
                     ForEach(package.availableGenerations.reversed(), id: \.self) { generation in
                         Button {
                             Task { await platform.rollback(packageID, to: generation) }
                         } label: {
                             HStack {
-                                Text("Generation \(generation)")
+                                Text("Generation \(generation)", bundle: HanlinLocalization.bundle)
                                 Spacer()
                                 if generation == package.record.activeGeneration {
-                                    Label("Active", systemImage: "checkmark.circle.fill")
+                                    Label(hanlin: "Active", systemImage: "checkmark.circle.fill")
                                         .foregroundStyle(.secondary)
                                 }
                             }
@@ -373,7 +374,7 @@ struct ScriptingInstalledPackageDetailView: View {
                 }
             }
             Section {
-                Button("Uninstall", role: .destructive) {
+                Button(hanlin: "Uninstall", role: .destructive) {
                     Task {
                         await platform.uninstall(packageID)
                         dismiss()
@@ -429,12 +430,12 @@ struct ScriptingApplicationContainerView: View {
                 } else if let controller = platform.activeExpoController {
                     HanlinHostedViewController(controller: controller)
                 } else {
-                    ContentUnavailableView("Script App Unavailable", systemImage: "exclamationmark.triangle")
+                    ContentUnavailableView(hanlin: "Script App Unavailable", systemImage: "exclamationmark.triangle")
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Close") {
+                    Button(hanlin: "Close") {
                         platform.dismissActiveApplication()
                         dismiss()
                     }

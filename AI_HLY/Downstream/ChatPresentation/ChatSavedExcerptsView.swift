@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftData
 import SwiftUI
 
@@ -29,13 +30,13 @@ struct ChatSavedExcerptsView: View {
                     }
                     .contextMenu {
                         Button { UIPasteboard.general.string = excerpt.quote } label: {
-                            Label("Copy", systemImage: "doc.on.doc")
+                            Label(hanlin: "Copy", systemImage: "doc.on.doc")
                         }
                         Button(role: .destructive) { delete(excerpt) } label: {
-                            Label("Delete", systemImage: "trash")
+                            Label(hanlin: "Delete", systemImage: "trash")
                         }
                     }
-                    .swipeActions { Button("Delete", role: .destructive) { delete(excerpt) } }
+                    .swipeActions { Button(hanlin: "Delete", role: .destructive) { delete(excerpt) } }
                 }
             }
             .overlay {
@@ -43,11 +44,11 @@ struct ChatSavedExcerptsView: View {
                     ContentUnavailableView(query.isEmpty ? "No saved messages" : "No results", systemImage: "bookmark")
                 }
             }
-            .navigationTitle("Saved messages")
+            .navigationTitle(Text("Saved messages", bundle: HanlinLocalization.bundle))
             .searchable(text: $query)
-            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
-            .alert("Could not update saved messages", isPresented: Binding(get: { error != nil }, set: { if !$0 { error = nil } })) {
-                Button("OK", role: .cancel) { error = nil }
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button(hanlin: "Done") { dismiss() } } }
+            .alert(Text("Could not update saved messages", bundle: HanlinLocalization.bundle), isPresented: Binding(get: { error != nil }, set: { if !$0 { error = nil } })) {
+                Button(hanlin: "OK", role: .cancel) { error = nil }
             } message: { Text(error ?? "") }
         }
     }
@@ -68,18 +69,18 @@ struct ChatSavedExcerptsView: View {
                    let openSource {
                     if ChatSavedExcerpt.digest(message.text ?? "") != excerpt.sourceDigest,
                        ChatSavedExcerpt.digest(message.translatedText ?? "") != excerpt.sourceDigest {
-                        Text("The source message has changed. Your saved text is kept.")
+                        Text("The source message has changed. Your saved text is kept.", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption).foregroundStyle(.secondary)
                     }
                     Button {
                         openSource(chat, destination)
                         dismiss()
                     } label: {
-                        Label("Open in conversation", systemImage: "bubble.left.and.text.bubble.right")
+                        Label(hanlin: "Open in conversation", systemImage: "bubble.left.and.text.bubble.right")
                     }
                     .accessibilityIdentifier("hanlin-saved-open-source")
                 } else {
-                    Label("The original message is no longer available. Your saved text is kept.", systemImage: "bubble.left.and.exclamationmark.bubble.right")
+                    Label(hanlin: "The original message is no longer available. Your saved text is kept.", systemImage: "bubble.left.and.exclamationmark.bubble.right")
                         .foregroundStyle(.secondary)
                 }
             }.padding()

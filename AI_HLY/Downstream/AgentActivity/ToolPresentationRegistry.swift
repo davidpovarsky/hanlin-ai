@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ToolPresentationRegistry.swift
 //  AI_HLY
@@ -46,15 +47,15 @@ struct AgentToolApprovalSummary {
         let raw = reviewText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let arguments = try? JSONSerialization.jsonObject(with: Data(raw.utf8)) as? [String: Any] else {
             return .init(title: presentation.title, systemImage: presentation.systemImage,
-                scope: String(localized: "Review request details"), requiresDetailedReview: true)
+                scope: String(localized: "Review request details", bundle: HanlinLocalization.bundle), requiresDetailedReview: true)
         }
         // These keys are removed by ToolInvocationMetadataExtractor before the
         // actual invocation. Never let the model's summary replace real scope.
         let inputs = arguments.filter { !["progress_summary", "result_presentation"].contains($0.key) }
         if toolName.lowercased() == "get_current_location",
            inputs.count == 1, inputs["query"] as? String == "local" {
-            return .init(title: String(localized: "Use current location"), systemImage: "location",
-                scope: String(localized: "Your current location"), requiresDetailedReview: false)
+            return .init(title: String(localized: "Use current location", bundle: HanlinLocalization.bundle), systemImage: "location",
+                scope: String(localized: "Your current location", bundle: HanlinLocalization.bundle), requiresDetailedReview: false)
         }
         let fields = inputs.keys.sorted().compactMap { key -> String? in
             guard let value = inputs[key] else { return nil }
@@ -69,7 +70,7 @@ struct AgentToolApprovalSummary {
         let scope = fields.joined(separator: " · ")
         let complete = !inputs.isEmpty && inputs.count <= 3 && fields.count == inputs.count && scope.count <= 220
         return .init(title: presentation.title, systemImage: presentation.systemImage,
-            scope: complete ? scope : String(localized: "Review request details"),
+            scope: complete ? scope : String(localized: "Review request details", bundle: HanlinLocalization.bundle),
             requiresDetailedReview: !complete)
     }
 }

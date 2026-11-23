@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import HanlinPlatformContracts
 
@@ -108,9 +109,9 @@ enum LegacyToolPresentationAdapter {
         ToolActivityPresentationDescriptor(
             kind: kind,
             systemImage: image,
-            runningTitle: String(localized: running),
-            completedTitle: String(localized: completed),
-            failedTitle: String(localized: "Tool failed"),
+            runningTitle: String(localized: running, bundle: HanlinLocalization.bundle),
+            completedTitle: String(localized: completed, bundle: HanlinLocalization.bundle),
+            failedTitle: String(localized: "Tool failed", bundle: HanlinLocalization.bundle),
             visibleArgumentKeys: keys
         )
     }

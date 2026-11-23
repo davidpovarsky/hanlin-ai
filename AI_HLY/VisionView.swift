@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  VisionView.swift
 //  AI_HLY
@@ -76,7 +77,7 @@ struct VisionView: View {
         ZStack {
             
             if showSaveToast {
-                Text(String(localized: "✅ 图片已保存"))
+                Text(String(localized: "✅ 图片已保存", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.body)
                     .padding()
                     .background(Color.black.opacity(0.6))
@@ -163,12 +164,12 @@ struct VisionView: View {
                 }
             }
         )
-        .alert(String(localized: "无法使用视觉功能"), isPresented: $showNoModelAlert) {
-            Button(String(localized: "返回"), role: .cancel) {
+        .alert(String(localized: "无法使用视觉功能", bundle: HanlinLocalization.bundle), isPresented: $showNoModelAlert) {
+            Button(String(localized: "返回", bundle: HanlinLocalization.bundle), role: .cancel) {
                 selectedTab = 0
             }
         } message: {
-            Text(String(localized: "暂无启用的多模态模型，请前往“设置-模型-模型管理”添加并启用支持视觉的模型。"))
+            Text(String(localized: "暂无启用的多模态模型，请前往“设置-模型-模型管理”添加并启用支持视觉的模型。", bundle: HanlinLocalization.bundle))
         }
     }
 }
@@ -198,7 +199,7 @@ extension VisionView {
                     )
             }
             .accessibilityIdentifier("hanlin-vision-close")
-            .accessibilityLabel(String(localized: "完成"))
+            .accessibilityLabel(String(localized: "完成", bundle: HanlinLocalization.bundle))
 
             Spacer()
             
@@ -214,12 +215,12 @@ extension VisionView {
                             .scaledToFit()
                             .frame(width: 30, height: 30)
                             .padding(3)
-                            .foregroundColor(showSaveToast ? .hlGreen : Color(.systemBackground))
+                            .foregroundColor(showSaveToast ? .hanlinHLGreen : Color(.systemBackground))
                             .opacity(0.6)
                             .background(
                                 GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
-                                    .shadow(color: showSaveToast ? .hlGreen : Color(.systemBackground), radius: 1)
+                                    .shadow(color: showSaveToast ? .hanlinHLGreen : Color(.systemBackground), radius: 1)
                             )
                     }
                     .hanlinFeedback(.success, trigger: isFeedBack) // 振动反馈
@@ -234,12 +235,12 @@ extension VisionView {
                             .scaledToFit()
                             .frame(width: 30, height: 30)
                             .padding(3)
-                            .foregroundColor(.hlRed)
+                            .foregroundColor(.hanlinHLRed)
                             .opacity(0.6)
                             .background(
                                 GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
-                                    .shadow(color: .hlRed, radius: 1)
+                                    .shadow(color: .hanlinHLRed, radius: 1)
                             )
                     }
                     .hanlinFeedback(.impact, trigger: isFeedBack)
@@ -255,12 +256,12 @@ extension VisionView {
                             .scaledToFit()
                             .frame(width: 30, height: 30)
                             .padding(3)
-                            .foregroundColor(isFlashOn ? .hlOrange : Color(.systemBackground))
+                            .foregroundColor(isFlashOn ? .hanlinHLOrange : Color(.systemBackground))
                             .opacity(0.6)
                             .background(
                                 GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
-                                    .shadow(color: isFlashOn ? .hlOrange : Color(.systemBackground), radius: 1)
+                                    .shadow(color: isFlashOn ? .hanlinHLOrange : Color(.systemBackground), radius: 1)
                             )
                     }
                     .hanlinFeedback(.impact, trigger: isFeedBack)
@@ -373,7 +374,7 @@ extension VisionView {
                     withAnimation { isReasoningExpanded.toggle() }
                 }) {
                     HStack {
-                        Text(String(localized: "reasoning_chain"))
+                        Text(String(localized: "reasoning_chain", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                         Spacer()
@@ -404,7 +405,7 @@ extension VisionView {
                                     .font(HanlinTypography.fixed(size: idx == 2 ? 10 : (idx == 1 ? 9 : 8)))
                                     .lineLimit(1)
                                     .truncationMode(.head)
-                                    .foregroundColor(idx == 2 ? .hlBluefont : .gray)
+                                    .foregroundColor(idx == 2 ? .hanlinHLBluefont : .gray)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .opacity(idx == 0 ? 0.4 : idx == 1 ? 0.7 : 1.0)
                                     .blur(radius: idx == 0 ? 1 : 0)
@@ -433,18 +434,18 @@ extension VisionView {
         return VStack(alignment: .leading) {
             Text(visionErrorMessage ?? "")
                 .font(HanlinTypography.caption)
-                .foregroundColor(.hlOrange)
+                .foregroundColor(.hanlinHLOrange)
                 .multilineTextAlignment(.leading)
 
             Button(action: {
                 isFeedBack.toggle()
                 retryLastRequest()
             }) {
-                Text(String(localized: "重新请求"))
+                Text(String(localized: "重新请求", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.caption)
                     .frame(maxWidth: .infinity)
                     .padding(6)
-                    .background(.hlOrange)
+                    .background(.hanlinHLOrange)
                     .foregroundColor(.white)
                     .cornerRadius(20)
             }
@@ -452,10 +453,10 @@ extension VisionView {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.hlOrange.opacity(0.1))
+        .background(Color.hanlinHLOrange.opacity(0.1))
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.hlOrange.opacity(0.3), lineWidth: 1)
+                .stroke(Color.hanlinHLOrange.opacity(0.3), lineWidth: 1)
         )
         .cornerRadius(20)
     }
@@ -515,13 +516,13 @@ extension VisionView {
                                         }
                                     )
                             } else {
-                                Image(getCompanyIcon(for: currentModelCompany))
+                                Image(hanlinAsset: getCompanyIcon(for: currentModelCompany))
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
                             }
                             
-                            Text("\(currentModelName)")
+                            Text("\(currentModelName)", bundle: HanlinLocalization.bundle)
                                 .font(HanlinTypography.body)
                             ProgressView()
                                 .frame(width: 20, height: 20)
@@ -560,9 +561,9 @@ extension VisionView {
                             // 正在思考中，还没有正文内容
                             HStack {
                                 Image(systemName: "sparkle")
-                                    .foregroundColor(.hlBluefont)
+                                    .foregroundColor(.hanlinHLBluefont)
                                     .symbolEffect(.breathe.pulse.byLayer, options: .repeat(.continuous))
-                                Text(String(localized: "thinking"))
+                                Text(String(localized: "thinking", bundle: HanlinLocalization.bundle))
                                     .font(HanlinTypography.caption)
                                     .foregroundColor(.secondary)
                             }
@@ -588,13 +589,13 @@ extension VisionView {
                                                     )
                                             }
                                         )
-                                    Text("内容由代理“\(currentModelName)”生成")
+                                    Text("内容由代理“\(currentModelName)”生成", bundle: HanlinLocalization.bundle)
                                 } else {
-                                    Image(getCompanyIcon(for: currentModelCompany))
+                                    Image(hanlinAsset: getCompanyIcon(for: currentModelCompany))
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 20, height: 20)
-                                    Text("内容由AI模型“\(currentModelName)”生成")
+                                    Text("内容由AI模型“\(currentModelName)”生成", bundle: HanlinLocalization.bundle)
                                 }
                                 
                                 Spacer()
@@ -614,7 +615,7 @@ extension VisionView {
                                 }
                                 .buttonStyle(.plain)
                                 .sheet(isPresented: $isTextSelectionSheetPresented) {
-            TextSelectionView(text: photoAnalysis ?? String(localized: "无文本"))
+            TextSelectionView(text: photoAnalysis ?? String(localized: "无文本", bundle: HanlinLocalization.bundle))
                                 }
                                 
                                 // 复制按钮
@@ -650,7 +651,7 @@ extension VisionView {
                                         .padding(4)
                                         .background(Color(.systemGray5))
                                         .clipShape(Circle())
-                                        .foregroundColor(isInputActive ? .green : .hlBluefont)
+                                        .foregroundColor(isInputActive ? .green : .hanlinHLBluefont)
                                 }
                                 .hanlinFeedback(.selection, trigger: isSelect)
                             }
@@ -724,7 +725,7 @@ extension VisionView {
         HStack {
             if showInput {
                 HStack {
-                    TextField(String(localized: "消息"), text: $followAsk)
+                    TextField(String(localized: "消息", bundle: HanlinLocalization.bundle), text: $followAsk)
                         .padding(.leading, 12)
                         .frame(height: 44)
                         .focused($isInputActive) // 绑定焦点状态
@@ -910,7 +911,7 @@ extension VisionView {
         // 边界检查：确保有可用的多模态模型
         guard !multimodalModels.isEmpty, selectedModelIndex < multimodalModels.count else {
             print("没有可用的多模态模型")
-            photoAnalysis = String(localized: "⚠️ 没有可用的多模态模型，请先在设置中添加支持视觉的模型。")
+            photoAnalysis = String(localized: "⚠️ 没有可用的多模态模型，请先在设置中添加支持视觉的模型。", bundle: HanlinLocalization.bundle)
             return
         }
         
@@ -999,7 +1000,7 @@ extension VisionView {
                 await MainActor.run {
                     let isZh = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
                     let message = error.localizedDescription
-            visionErrorMessage = String(format: String(localized: "⚠️ 识别失败：%@"), message)
+            visionErrorMessage = String(format: String(localized: "⚠️ 识别失败：%@", bundle: HanlinLocalization.bundle), message)
                     photoAnalysis = nil
                     isProcessing = false
                 }
@@ -1046,14 +1047,14 @@ extension VisionView {
         let opacityFactor: Double = index == selectedModelIndex ? 1.0 : 0.4
         
         // 边界检查
-        let model = index < multimodalModels.count ? multimodalModels[index] : (name: String(localized: "未知"), company: "", identity: "model", icon: "circle.dotted.circle")
+        let model = index < multimodalModels.count ? multimodalModels[index] : (name: String(localized: "未知", bundle: HanlinLocalization.bundle), company: "", identity: "model", icon: "circle.dotted.circle")
         
         return VStack {
             Spacer()
             HStack {
                 Spacer()
                 if model.identity == "model" {
-                    Image(getCompanyIcon(for: model.company))
+                    Image(hanlinAsset: getCompanyIcon(for: model.company))
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25 * scaleFactor, height: 25 * scaleFactor)
@@ -1081,7 +1082,7 @@ extension VisionView {
                 }
                 Text(model.name)
                     .font(HanlinTypography.caption)
-                    .foregroundColor(index == selectedModelIndex ? .hlBluefont : Color(.systemGray))
+                    .foregroundColor(index == selectedModelIndex ? .hanlinHLBluefont : Color(.systemGray))
                     .opacity(opacityFactor)
                     .animation(.easeInOut(duration: 0.3), value: selectedModelIndex)
                 Spacer()

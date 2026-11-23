@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import HanlinSefariaMiniApp
 
@@ -8,8 +9,8 @@ struct SefariaAssistantSearchTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Search Texts"),
-            summary: String(localized: "Search topics, phrases and references"),
+            title: String(localized: "Search Texts", bundle: HanlinLocalization.bundle),
+            summary: String(localized: "Search topics, phrases and references", bundle: HanlinLocalization.bundle),
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["torah", "talmud", "tanakh", "halacha", "source", "מקור", "ספריא"],
             examples: ["Search Sefaria for hashavat aveidah", "Find a Jewish source about charity"],
@@ -85,8 +86,8 @@ struct SefariaAssistantSourceTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Get Source"),
-            summary: String(localized: "Load exact Hebrew or English source text"),
+            title: String(localized: "Get Source", bundle: HanlinLocalization.bundle),
+            summary: String(localized: "Load exact Hebrew or English source text", bundle: HanlinLocalization.bundle),
             categories: ["knowledge", "jewish texts", "sefaria", "native app"],
             keywords: ["source", "reference", "passage", "מקור", "פסוק"],
             examples: ["Open Genesis 1:1", "Get Bava Metzia 21a"],

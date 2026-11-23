@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 enum AgentActivityTitleBuilder {
@@ -32,8 +33,8 @@ enum AgentActivityTitleBuilder {
                 return "\(title) · \(query)"
             }
             let format = status == .running
-                ? String(localized: "Searching the web for %@")
-                : String(localized: "Searched the web for %@")
+                ? String(localized: "Searching the web for %@", bundle: HanlinLocalization.bundle)
+                : String(localized: "Searched the web for %@", bundle: HanlinLocalization.bundle)
             return String(format: format, query)
         }
 
@@ -49,9 +50,9 @@ enum AgentActivityTitleBuilder {
         // A permission receipt describes consent, never the result or the name
         // of the subsequent operation. Keep it in the approval state only.
         let permissionLabels = ["Allowed once", "Allowed and remembered", "Awaiting approval", "Not approved",
-            String(localized: "Allowed and remembered"),
-            String(localized: "Allowed once"), String(localized: "Awaiting approval"),
-            String(localized: "Not approved")]
+            String(localized: "Allowed and remembered", bundle: HanlinLocalization.bundle),
+            String(localized: "Allowed once", bundle: HanlinLocalization.bundle), String(localized: "Awaiting approval", bundle: HanlinLocalization.bundle),
+            String(localized: "Not approved", bundle: HanlinLocalization.bundle)]
         return ["done", "using a tool", "using tools", "loading skill", "loading skill...",
             "working through your request", "preparing your answer", "progress update", "עדכון התקדמות"].contains(normalized)
             || permissionLabels.contains { AgentActivityDeduplicator.normalized($0) == normalized }
@@ -60,6 +61,6 @@ enum AgentActivityTitleBuilder {
 
 private extension ToolPresentation {
     var completedDescriptionForTimeline: String {
-        completedDescription == String(localized: "Done") ? title : completedDescription
+        completedDescription == String(localized: "Done", bundle: HanlinLocalization.bundle) ? title : completedDescription
     }
 }

@@ -17,10 +17,10 @@ python3 "${SCRIPT_DIR}/validate_ios_system_resources.py" \
   --repository-root "${REPOSITORY_ROOT}"
 node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore" \
-  "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings"
+  "${REPOSITORY_ROOT}/Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings"
 node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/MCP" \
-  "${REPOSITORY_ROOT}/AI_HLY/Downstream/MCP/Resources/MCPLocalizable.xcstrings" \
+  "${REPOSITORY_ROOT}/Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/MCPLocalizable.xcstrings" \
   "MCPL10n"
 generated_manifest="$(mktemp)"
 trap 'rm -f "${generated_manifest}"' EXIT

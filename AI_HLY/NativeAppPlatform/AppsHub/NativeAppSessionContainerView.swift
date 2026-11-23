@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftData
 import SwiftUI
 
@@ -38,7 +39,7 @@ struct NativeAppSessionContainerView: View {
                     module.makeRootView(context: context, route: request.initialRoute)
                         .toolbar {
                             ToolbarItem(placement: .topBarTrailing) {
-                                Button("Close") {
+                                Button(hanlin: "Close") {
                                     session.close()
                                     dismiss()
                                 }
@@ -49,13 +50,13 @@ struct NativeAppSessionContainerView: View {
             } else {
                 NavigationStack {
                     ContentUnavailableView(
-                        "App Not Found",
+                        hanlin: "App Not Found",
                         systemImage: "questionmark.app",
                         description: Text(request.appID)
                     )
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
-                            Button("Close") {
+                            Button(hanlin: "Close") {
                                 session.close()
                                 dismiss()
                             }

@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(SwiftUI) && canImport(UIKit) && canImport(Charts)
 import SwiftUI
 import Charts
@@ -76,7 +77,7 @@ struct NativeOpenUINode: View {
             let items = array("items")
             let chosen = selectedTab.isEmpty ? (items.first?.object?["props"]?.object?["value"]?.string ?? "") : selectedTab
             VStack(alignment: .leading) {
-                Picker("Section", selection: Binding(get: { chosen }, set: { selectedTab = $0 })) {
+                Picker(hanlin: "Section", selection: Binding(get: { chosen }, set: { selectedTab = $0 })) {
                     ForEach(Array(items.enumerated()), id: \.offset) { _, item in
                         let p = item.object?["props"]?.object ?? [:]
                         Text(p["trigger"]?.string ?? "").tag(p["value"]?.string ?? "")
@@ -120,8 +121,8 @@ struct NativeOpenUINode: View {
         case "DatePicker":
             if text("mode") == "range" {
                 VStack(alignment: .leading) {
-                    DatePicker("Start date", selection: dateBinding(key: "from"), displayedComponents: [.date])
-                    DatePicker("End date", selection: dateBinding(key: "to"),
+                    DatePicker(hanlin: "Start date", selection: dateBinding(key: "from"), displayedComponents: [.date])
+                    DatePicker(hanlin: "End date", selection: dateBinding(key: "to"),
                         in: (date(props["currentValue"]?.object?["from"]) ?? .distantPast)..., displayedComponents: [.date])
                 }.disabled(!enabled)
             } else {
@@ -138,7 +139,7 @@ struct NativeOpenUINode: View {
                 if (props["currentValue"]?.array?.count ?? 0) > 1 {
                     Slider(value: sliderBinding(index: 1, minimum: minimum, maximum: maximum),
                         in: minimum...maximum, step: max(0.0001, number("step", fallback: 1)))
-                        .accessibilityLabel("\(text("label", fallback: text("name"))) upper value").disabled(!enabled)
+                        .accessibilityLabel(Text("\(text("label", fallback: text("name"))) upper value", bundle: HanlinLocalization.bundle)).disabled(!enabled)
                 }
             }
         case "CheckBoxGroup", "SwitchGroup":
@@ -212,7 +213,7 @@ struct NativeOpenUINode: View {
                     ForEach(0..<count, id: \.self) { row in GridRow {
                         ForEach(Array(columns.enumerated()), id: \.offset) { _, column in
                             let data = column["data"]?.array ?? []
-                            if data.indices.contains(row) { children(data[row]) } else { Text("") }
+                            if data.indices.contains(row) { children(data[row]) } else { Text("", bundle: HanlinLocalization.bundle) }
                         }
                     } }
                 }.textSelection(.enabled)
@@ -354,7 +355,7 @@ struct NativeOpenUINode: View {
         HStack(alignment: .top) {
             if text("variant") == "image", let item = props["image"]?.object {
                 image(url: item["src"]?.string ?? "", alt: item["alt"]?.string ?? "").frame(width: 44)
-            } else { Text("\(index + 1).").foregroundStyle(.secondary) }
+            } else { Text("\(index + 1).", bundle: HanlinLocalization.bundle).foregroundStyle(.secondary) }
             VStack(alignment: .leading) {
                 Text(props["title"]?.string ?? "").fontWeight(.medium)
                 children(props["subtitle"] ?? props["details"])

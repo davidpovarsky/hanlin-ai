@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct NativeAppDetailView: View {
@@ -34,7 +35,7 @@ struct NativeAppDetailView: View {
                         .foregroundStyle(.secondary)
                 }
 
-                Section("Entry Points") {
+                Section(hanlin: "Entry Points") {
                     ForEach(module.manifest.entryPoints.sorted { $0.rawValue < $1.rawValue }, id: \.self) { entry in
                         LabeledContent(entry.title, value: entry.rawValue)
                     }
@@ -42,7 +43,7 @@ struct NativeAppDetailView: View {
 
                 let capabilities = module.capabilities(context: context)
                 if !capabilities.isEmpty {
-                    Section("Capabilities") {
+                    Section(hanlin: "Capabilities") {
                         ForEach(capabilities) { request in
                             VStack(alignment: .leading, spacing: 4) {
                                 HStack {
@@ -60,10 +61,10 @@ struct NativeAppDetailView: View {
                     }
                 }
 
-                Section("Assistant Tools") {
+                Section(hanlin: "Assistant Tools") {
                     let tools = module.assistantTools(context: context)
                     if tools.isEmpty {
-                        Text("No Assistant entry points")
+                        Text("No Assistant entry points", bundle: HanlinLocalization.bundle)
                             .foregroundStyle(.secondary)
                     } else {
                         ForEach(Array(tools.enumerated()), id: \.offset) { _, tool in

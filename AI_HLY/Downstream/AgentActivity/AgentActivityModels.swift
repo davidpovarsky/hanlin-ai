@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  AgentActivityModels.swift
 //  AI_HLY
@@ -65,7 +66,7 @@ struct AgentActivitySource: Codable, Hashable, Identifiable, Sendable {
     if !trimmedTitle.isEmpty { return trimmedTitle }
     if let domain, !domain.isEmpty { return domain }
     if let reference, !reference.isEmpty { return reference }
-    return String(localized: "Source")
+    return String(localized: "Source", bundle: HanlinLocalization.bundle)
   }
 
   private enum CodingKeys: String, CodingKey {

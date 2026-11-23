@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(UIKit)
 //
 //  NativeMultilineTextEditor.swift
@@ -49,7 +50,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
     @Binding var text: String
     @Binding var textHeight: CGFloat
-    var placeholderText: String = String(localized: "Message")
+    var placeholderText: String = String(localized: "Message", bundle: HanlinLocalization.bundle)
     var minHeight: CGFloat = 38
     var maxHeight: CGFloat = 140
     var usesAutomaticLineLimits = false
@@ -73,7 +74,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
     }
 
     public init(text: Binding<String>, textHeight: Binding<CGFloat>,
-                placeholderText: String = String(localized: "Message"),
+                placeholderText: String = String(localized: "Message", bundle: HanlinLocalization.bundle),
                 minHeight: CGFloat = 38, maxHeight: CGFloat = 140,
                 usesAutomaticLineLimits: Bool = false,
                 onPasteImage: ((UIImage) -> Void)? = nil,

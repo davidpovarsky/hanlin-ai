@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftData
 import SwiftUI
 import TorahLibraryKit
@@ -57,9 +58,9 @@ public struct HanlinApplicationScene: Scene {
                     .modelContainer(context.modelContainer)
             } else {
                 ContentUnavailableView(
-                    "No App Selected",
+                    hanlin: "No App Selected",
                     systemImage: "square.grid.2x2",
-                    description: Text("Choose a mini app from Hanlin.")
+                    description: Text("Choose a mini app from Hanlin.", bundle: HanlinLocalization.bundle)
                 )
                 .modelContainer(context.modelContainer)
             }

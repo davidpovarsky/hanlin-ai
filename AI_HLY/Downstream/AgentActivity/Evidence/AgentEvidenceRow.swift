@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import UIKit
 
@@ -59,17 +60,17 @@ struct AgentEvidenceRow: View {
 
     private var openTitle: String {
         switch item.kind {
-        case .wikipediaArticle: String(localized: "Open in Wikipedia")
-        case .sefariaSource: String(localized: "Open in Sefaria")
-        case .githubRepository, .githubFile, .githubCommit: String(localized: "Open in GitHub")
-        default: String(localized: "Open")
+        case .wikipediaArticle: String(localized: "Open in Wikipedia", bundle: HanlinLocalization.bundle)
+        case .sefariaSource: String(localized: "Open in Sefaria", bundle: HanlinLocalization.bundle)
+        case .githubRepository, .githubFile, .githubCommit: String(localized: "Open in GitHub", bundle: HanlinLocalization.bundle)
+        default: String(localized: "Open", bundle: HanlinLocalization.bundle)
         }
     }
 
     private var copyTitle: String {
         item.kind == .sefariaSource
-            ? String(localized: "Copy reference")
-            : String(localized: "Copy link")
+            ? String(localized: "Copy reference", bundle: HanlinLocalization.bundle)
+            : String(localized: "Copy link", bundle: HanlinLocalization.bundle)
     }
 
     private var iconName: String {

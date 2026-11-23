@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import SwiftUI
 import TorahLibraryKit
@@ -19,11 +20,11 @@ public struct TorahSourceReaderView: View {
         NavigationStack {
             Group {
                 if isLoading {
-                    ProgressView(String(localized: "טוען מקור..."))
+                    ProgressView(String(localized: "טוען מקור...", bundle: HanlinLocalization.bundle))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else if let error = errorMessage {
                     ContentUnavailableView(
-                        String(localized: "שגיאה בטעינת המקור"),
+                        String(localized: "שגיאה בטעינת המקור", bundle: HanlinLocalization.bundle),
                         systemImage: "exclamationmark.triangle",
                         description: Text(error)
                     )
@@ -60,9 +61,9 @@ public struct TorahSourceReaderView: View {
                     }
                 } else {
                     ContentUnavailableView(
-                        String(localized: "מקור לא נמצא"),
+                        String(localized: "מקור לא נמצא", bundle: HanlinLocalization.bundle),
                         systemImage: "doc.text.magnifyingglass",
-                        description: Text(String(localized: "לא נמצא תוכן עבור המזהה המבוקש."))
+                        description: Text(String(localized: "לא נמצא תוכן עבור המזהה המבוקש.", bundle: HanlinLocalization.bundle))
                     )
                 }
             }
@@ -70,7 +71,7 @@ public struct TorahSourceReaderView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "סגור")) {
+                    Button(String(localized: "סגור", bundle: HanlinLocalization.bundle)) {
                         TorahStudyNavigationRouter.shared.closeReader()
                         dismiss()
                     }
@@ -127,7 +128,7 @@ public struct TorahSourceReaderView: View {
 
     private func linksSection(links: [TorahLinkedSource]) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(String(localized: "פירושים וקישורים"))
+            Text(String(localized: "פירושים וקישורים", bundle: HanlinLocalization.bundle))
                 .font(HanlinTypography.headline)
             ForEach(links) { link in
                 VStack(alignment: .leading, spacing: 2) {

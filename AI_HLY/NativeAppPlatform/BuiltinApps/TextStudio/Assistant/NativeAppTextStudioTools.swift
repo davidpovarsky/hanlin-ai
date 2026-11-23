@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import HanlinTextStudioMiniApp
 
@@ -8,8 +9,8 @@ struct NativeAppTextStudioAnalyzeTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Analyze Text"),
-            summary: String(localized: "Count and inspect text structure and extracted values"),
+            title: String(localized: "Analyze Text", bundle: HanlinLocalization.bundle),
+            summary: String(localized: "Count and inspect text structure and extracted values", bundle: HanlinLocalization.bundle),
             categories: ["text", "analysis", "native app"],
             keywords: ["word count", "sentences", "links", "emails", "numbers", "analyze"],
             examples: ["Analyze this text", "Count words and extract links"],
@@ -85,8 +86,8 @@ struct NativeAppTextStudioTransformTool: NativeTool {
     var catalogEntry: NativeToolCatalogEntry {
         NativeToolCatalogEntry(
             name: name,
-            title: String(localized: "Transform Text"),
-            summary: String(localized: "Apply a selected formatting transformation to text"),
+            title: String(localized: "Transform Text", bundle: HanlinLocalization.bundle),
+            summary: String(localized: "Apply a selected formatting transformation to text", bundle: HanlinLocalization.bundle),
             categories: ["text", "formatting", "native app"],
             keywords: ["uppercase", "lowercase", "title case", "trim", "sort lines"],
             examples: ["Convert this to title case", "Trim whitespace from this text"],

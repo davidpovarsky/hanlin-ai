@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(UIKit) && canImport(WebKit)
 import SwiftUI
 import WebKit
@@ -32,7 +33,7 @@ private struct HanlinRequestedYouTubePlayer: View {
                     onReady: { ready = true }, onFailure: { failed = true })
                     .aspectRatio(16 / 9, contentMode: .fit)
                     .frame(minWidth: 200, minHeight: 200)
-                    .accessibilityLabel("YouTube video")
+                    .accessibilityLabel(Text("YouTube video", bundle: HanlinLocalization.bundle))
                     .accessibilityIdentifier("hanlin-youtube-player")
                     .id(video.id)
                     .task {
@@ -45,13 +46,13 @@ private struct HanlinRequestedYouTubePlayer: View {
                     failed = HanlinYouTubeDocument.origin(bundleID: Bundle.main.bundleIdentifier) == nil
                     requested = !failed
                 } label: {
-                    Label(failed ? String(localized: "Retry YouTube player") : String(localized: "Load YouTube player"), systemImage: "play.rectangle")
+                    Label(failed ? String(localized: "Retry YouTube player", bundle: HanlinLocalization.bundle) : String(localized: "Load YouTube player", bundle: HanlinLocalization.bundle), systemImage: "play.rectangle")
                 }
                 .accessibilityIdentifier("hanlin-youtube-load")
                 .disabled(!isEnabled || scenePhase != .active)
-                if failed { Text("This video could not be played here.").foregroundStyle(.secondary) }
+                if failed { Text("This video could not be played here.", bundle: HanlinLocalization.bundle).foregroundStyle(.secondary) }
             }
-            Link("Open in YouTube", destination: video.sourceURL)
+            Link(hanlin: "Open in YouTube", destination: video.sourceURL)
                 .accessibilityIdentifier("hanlin-youtube-source")
                 .disabled(!isEnabled || scenePhase != .active)
         }

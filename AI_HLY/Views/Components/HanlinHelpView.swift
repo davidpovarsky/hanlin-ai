@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 /// Offline help for the existing Hanlin navigation and original runtimes.
@@ -34,12 +35,12 @@ struct HanlinHelpView: View {
             }
         }
         .accessibilityIdentifier(topic == .guide ? "hanlin-help-guide" : "hanlin-help-costs")
-        .navigationTitle(topic == .guide ? String(localized: "Hanlin guide") : String(localized: "Costs and services"))
+        .navigationTitle(topic == .guide ? String(localized: "Hanlin guide", bundle: HanlinLocalization.bundle) : String(localized: "Costs and services", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             if showsDone {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { dismiss() }.accessibilityIdentifier("hanlin-help-done")
+                    Button(hanlin: "Done") { dismiss() }.accessibilityIdentifier("hanlin-help-done")
                 }
             }
         }
@@ -73,30 +74,30 @@ struct HanlinSupportView: View {
 
     var body: some View {
         Form {
-            Section("Support information") {
-                Text("Share these build details and the steps that reproduce the issue with the person who supplied your Hanlin build. Review any screenshots or logs before sharing.")
+            Section(hanlin: "Support information") {
+                Text("Share these build details and the steps that reproduce the issue with the person who supplied your Hanlin build. Review any screenshots or logs before sharing.", bundle: HanlinLocalization.bundle)
                 Text(details).textSelection(.enabled)
                     .accessibilityIdentifier("hanlin-support-details")
                 Button {
                     UIPasteboard.general.string = details
                     copied = true
                 } label: {
-                    Label(copied ? String(localized: "Copied") : String(localized: "Copy build details"),
+                    Label(copied ? String(localized: "Copied", bundle: HanlinLocalization.bundle) : String(localized: "Copy build details", bundle: HanlinLocalization.bundle),
                           systemImage: copied ? "checkmark" : "doc.on.doc")
                 }
                 .accessibilityIdentifier("hanlin-support-copy")
                 ShareLink(item: details) {
-                    Label("Share build details", systemImage: "square.and.arrow.up")
+                    Label(hanlin: "Share build details", systemImage: "square.and.arrow.up")
                 }
                 .accessibilityIdentifier("hanlin-support-share")
             }
-            Section("Hanlin project") {
-                Link("Project source", destination: URL(string: "https://github.com/davidpovarsky/hanlin-ai")!)
+            Section(hanlin: "Hanlin project") {
+                Link(hanlin: "Project source", destination: URL(string: "https://github.com/davidpovarsky/hanlin-ai")!)
                     .accessibilityIdentifier("hanlin-project-source")
             }
         }
         .accessibilityIdentifier("hanlin-support")
-        .navigationTitle(String(localized: "Support information"))
+        .navigationTitle(String(localized: "Support information", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
     }
 }

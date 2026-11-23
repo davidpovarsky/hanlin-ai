@@ -1,3 +1,4 @@
+import HanlinLocalization
 import HanlinPlatformContracts
 import SwiftUI
 #if canImport(UIKit)
@@ -27,7 +28,7 @@ struct MiniAppCardView: View {
             Image(systemName: name)
                 .font(HanlinTypography.fixed(size: 27, weight: .semibold))
         case let .asset(name):
-            Image(name)
+            Image(hanlinAsset: name)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 27, height: 27)
@@ -78,7 +79,7 @@ struct MiniAppCardView: View {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(alignment: .top) {
                     if isBeta {
-                        Text("BETA")
+                        Text("BETA", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption2.weight(.bold))
                             .padding(.horizontal, 7)
                             .padding(.vertical, 4)

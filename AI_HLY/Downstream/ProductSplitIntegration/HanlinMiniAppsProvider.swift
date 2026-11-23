@@ -1,3 +1,4 @@
+import HanlinLocalization
 import HanlinMiniAppCore
 import HanlinPlatformContracts
 import HanlinProductSplit
@@ -18,9 +19,9 @@ final class HanlinMiniAppsProvider {
         var errorDescription: String? {
             switch self {
             case .unavailable(let message): message
-            case .staleSelection: String(localized: "This app changed. Refresh the library and try again.")
-            case .launchInProgress: String(localized: "Another app is still opening.")
-            case .launchDidNotProduceApplication: String(localized: "The app could not be opened.")
+            case .staleSelection: String(localized: "This app changed. Refresh the library and try again.", bundle: HanlinLocalization.bundle)
+            case .launchInProgress: String(localized: "Another app is still opening.", bundle: HanlinLocalization.bundle)
+            case .launchDidNotProduceApplication: String(localized: "The app could not be opened.", bundle: HanlinLocalization.bundle)
             }
         }
     }
@@ -104,11 +105,11 @@ private struct HanlinMiniAppsPackageManagement: View {
                 }
             }
         }
-        .navigationTitle("Packages")
+        .navigationTitle(Text("Packages", bundle: HanlinLocalization.bundle))
         .accessibilityIdentifier("hanlin-miniapps-package-management")
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button("Import package", systemImage: "square.and.arrow.down") { importing = true }
+                Button(hanlin: "Import package", systemImage: "square.and.arrow.down") { importing = true }
                     .accessibilityIdentifier("hanlin-miniapps-package-import")
             }
         }

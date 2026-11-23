@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct MCPChatServerButton: View {
@@ -15,7 +16,7 @@ struct MCPChatServerButton: View {
                 .frame(width: 32, height: 32)
                 .overlay(alignment: .topTrailing) {
                     if selectedCount > 0 {
-                        Text("\(selectedCount)")
+                        Text("\(selectedCount)", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption2.bold())
                             .foregroundStyle(.white)
                             .padding(4)

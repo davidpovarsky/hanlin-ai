@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct AgentActivityStepView: View {
@@ -41,7 +42,7 @@ struct AgentActivityStepView: View {
         .buttonStyle(.plain)
         .accessibilityLabel(activity.title)
         .accessibilityValue(statusLabel)
-        .accessibilityHint(String(localized: "Open activity"))
+        .accessibilityHint(String(localized: "Open activity", bundle: HanlinLocalization.bundle))
     }
 
     private var iconName: String {
@@ -67,10 +68,10 @@ struct AgentActivityStepView: View {
 
     private var statusLabel: String {
         switch activity.status {
-        case .pending, .running: return String(localized: "Working…")
-        case .completed: return String(localized: "Completed")
-        case .failed: return String(localized: "Failed")
-        case .cancelled: return String(localized: "Cancelled")
+        case .pending, .running: return String(localized: "Working…", bundle: HanlinLocalization.bundle)
+        case .completed: return String(localized: "Completed", bundle: HanlinLocalization.bundle)
+        case .failed: return String(localized: "Failed", bundle: HanlinLocalization.bundle)
+        case .cancelled: return String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
         }
     }
 }
