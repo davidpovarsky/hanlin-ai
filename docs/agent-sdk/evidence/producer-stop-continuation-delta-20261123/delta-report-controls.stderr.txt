@@ -1,0 +1,8 @@
+test_case_process_pin_and_composed_source_adversaries_block (test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_case_process_pin_and_composed_source_adversaries_block) ... ok
+test_exact_three_fixture_cases_do_not_claim_any_prior_reuse_or_native_model (test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_exact_three_fixture_cases_do_not_claim_any_prior_reuse_or_native_model) ... ok
+test_frozen_fixture_inventory_retains_exact_stop_labels_and_no_old_suite_selection (test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_frozen_fixture_inventory_retains_exact_stop_labels_and_no_old_suite_selection) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.043s
+
+OK

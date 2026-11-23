@@ -1,0 +1,40 @@
+{
+  "utc": "2026-11-23T21:29:51.741071+00:00",
+  "status": "APPLE_NOT_RUN_REVIEW_READY",
+  "base": "c93b966e6c378f56b98d7805b5086a72d3061803",
+  "included_header_source": "f0616cac8889e9873d8898a0d8e164739c0fce90",
+  "local_header_cherry_pick": "9d34ee2b20ce15d72b04b24cfdbf6c58c8f73e2f",
+  "producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "branch": "codex/hanlin-sdk02-stop-continuation-20261123",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "group": "agent_sdk_exact_source_proof",
+  "selector": "HanlinStopContinuationDelta",
+  "invocations": 3,
+  "baseline_replay": false,
+  "prior_28_or_5_replay": false,
+  "upstream_6_replay": false,
+  "ios_agent_core_build": true,
+  "simulator_launch": false,
+  "shipping_gates": "CLOSED",
+  "raw_lock_status": "TRACKED_PIN_INTENT_ONLY; actual SwiftPM lock bytes and checkout pin must be collected by the native runner",
+  "test_semantics": {
+    "allowed": "Authorized existing tool without another approval prompt; completed output plus .stop must reach next provider request. IDs/output/user history and provider finishes stop,stop are asserted.",
+    "denied": "Separate original outer-loop approval denial regression; no claim this control failed on olde7. No effect; exact ID/denial result/final response.",
+    "native_numeric": "Rejected before approval/effect; completed error plus .stop must stop at native boundary, providerCalls1, one emitted stop, no approved call/event."
+  },
+  "local_controls": "Three NEW Python report/control methods PASS; Swift parse syntax-only; original12 test bodies byte-identical with defaults preserved",
+  "source_sha256": {
+    "Packages/HanlinAgentSDK/Package.swift": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+    "Packages/HanlinAgentSDK/Package.resolved": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+    "Packages/HanlinPlatform/Package.swift": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665",
+    "Packages/HanlinPlatform/Package.resolved": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+    "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "e64a578132b6b113a0b1497dbdb4cba4ae6977464cdbbc79037564d3e0b6b2e5",
+    "Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py": "5e50a41525c928d5e40ba80b5decdac3872045e2867bc27b3debbf614d0cc22a",
+    "Scripts/CI/IntegrationValidation/verify_stop_continuation_delta.py": "5b56394ad82e4eb35c6943588baa8561feaedd71bec6446abbe48f95b39502cd",
+    "Scripts/CI/Tests/test_stop_continuation_delta_report.py": "f582810e3ae353e68a90d87e80f3768afad8644ce8a57b7a1af5adbcf24c7452"
+  }
+}

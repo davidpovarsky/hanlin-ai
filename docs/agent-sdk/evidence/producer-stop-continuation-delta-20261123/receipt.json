@@ -1,0 +1,73 @@
+{
+  "utc": "2026-11-23T21:28:05.068128+00:00",
+  "scope": "Only new local report/source controls and syntax; no native/old suite execution",
+  "original_three_method_twelve_invocation_bodies_byte_identical": true,
+  "default_fixture_finish_reason": "toolCalls",
+  "default_approval_decision": true,
+  "results": [
+    {
+      "name": "delta-report-controls",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_stop_continuation_delta_report.py",
+        "-v"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "test_case_process_pin_and_composed_source_adversaries_block (test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_case_process_pin_and_composed_source_adversaries_block) ... ok\ntest_exact_three_fixture_cases_do_not_claim_any_prior_reuse_or_native_model (test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_exact_three_fixture_cases_do_not_claim_any_prior_reuse_or_native_model) ... ok\ntest_frozen_fixture_inventory_retains_exact_stop_labels_and_no_old_suite_selection (test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_frozen_fixture_inventory_retains_exact_stop_labels_and_no_old_suite_selection) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.043s\n\nOK\n"
+    },
+    {
+      "name": "swift-syntax-only",
+      "argv": [
+        "/usr/local/bin/swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "shell-syntax",
+      "argv": [
+        "bash",
+        "-n",
+        "Scripts/CI/IntegrationValidation/run_agent_sdk.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "runner-syntax",
+      "argv": [
+        "python3",
+        "-B",
+        "-c",
+        "from pathlib import Path; p=Path('Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py'); compile(p.read_text(),str(p),'exec')"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}
