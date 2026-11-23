@@ -168,3 +168,38 @@ For per-view colors, original activity motion presets and the original Markdown
 renderer configuration, see [Host presentation customization](../../Docs/SDK/HanlinHostPresentationCustomization.md).
 These modifiers apply to the full original conversation or individual components.
 Defaults keep the original Hanlin design, and siblings can select different settings.
+
+## Host AppIntents localization
+
+Profiles containing the original HanlinScriptingWidgets target, including
+HanlinWidgetUI and HanlinApplication, also materialize
+Packages/HanlinWidgetSDK/HostResources. The shared installer verifies that
+the checked-in HanlinAppIntents.xcstrings table exactly matches its canonical
+localization catalog, both during installation and during --check.
+A missing or stale table fails installation; an actual host edit is preserved
+by the existing source-ownership guard.
+
+For each app or widget executable that registers these SDK intents, add the
+following **file reference** to its Xcode target resources:
+
+    Vendor/HanlinSDK/Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings
+
+Reference the file in the installed canonical checkout; do not maintain a
+second translated catalog in the host. Xcode compiles this table into that
+executable's main bundle because AppIntents metadata extraction accepts
+bundle: .main. The SDK's ordinary SwiftUI/runtime localized strings continue
+to use the original shared module bundle. Hanlin's own app and widget Xcode
+targets already include this resource through the canonical project updater.
+
+A later SDK pin update brings the same generated table from the canonical
+source. Its generator is Scripts/SDK/generate_app_intents_resources.py; new
+or changed translations belong in the original localization catalog, followed
+by regeneration. Chat/Agent-only profiles do not fetch or validate unrelated
+host resources.
+
+See [the original AppIntents bundle repair](../../Docs/SDK/HanlinAppIntentsLocalization.md).
+The focused installer proof covers real Git/sparse checkout, both selected
+public products, immutable revision updates, source-only exclusion, stale
+projection rejection and deleted-source rejection. It is not an Apple build,
+metadata extraction or translation-rendering result; those are verified by
+the original native app gate.

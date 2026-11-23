@@ -1,0 +1,44 @@
+FFEF
+======================================================================
+ERROR: test_selected_widget_and_application_table_is_installed_and_updates_from_pin (Scripts.SDK.tests.test_app_intents_install.AppIntentsHostResourceInstallTests.test_selected_widget_and_application_table_is_installed_and_updates_from_pin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-release-readiness-20261123/Scripts/SDK/tests/test_app_intents_install.py", line 94, in test_selected_widget_and_application_table_is_installed_and_updates_from_pin
+    self.assertEqual((self.sdk / self.table_path).read_bytes(),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1021, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/hanlin-sdk-install-test-fug451ao/host/Vendor/HanlinSDK/Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings'
+
+======================================================================
+FAIL: test_selected_widget_and_application_table_is_installed_and_updates_from_pin (Scripts.SDK.tests.test_app_intents_install.AppIntentsHostResourceInstallTests.test_selected_widget_and_application_table_is_installed_and_updates_from_pin) (product='HanlinWidgetUI')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-release-readiness-20261123/Scripts/SDK/tests/test_app_intents_install.py", line 81, in test_selected_widget_and_application_table_is_installed_and_updates_from_pin
+    self.assertIn(self.table_path.parent.as_posix(), receipt["sourcePaths"])
+AssertionError: 'Packages/HanlinWidgetSDK/HostResources' not found in ['Packages/HanlinPresentationSDK/Sources/HanlinLocalization', 'Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets']
+
+======================================================================
+FAIL: test_selected_widget_and_application_table_is_installed_and_updates_from_pin (Scripts.SDK.tests.test_app_intents_install.AppIntentsHostResourceInstallTests.test_selected_widget_and_application_table_is_installed_and_updates_from_pin) (product='HanlinApplication')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-release-readiness-20261123/Scripts/SDK/tests/test_app_intents_install.py", line 81, in test_selected_widget_and_application_table_is_installed_and_updates_from_pin
+    self.assertIn(self.table_path.parent.as_posix(), receipt["sourcePaths"])
+AssertionError: 'Packages/HanlinWidgetSDK/HostResources' not found in ['Packages/HanlinPresentationSDK/Sources/HanlinLocalization', 'Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets']
+
+======================================================================
+FAIL: test_unselected_table_is_absent_and_stale_selected_projection_is_rejected (Scripts.SDK.tests.test_app_intents_install.AppIntentsHostResourceInstallTests.test_unselected_table_is_absent_and_stale_selected_projection_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-release-readiness-20261123/Scripts/SDK/tests/test_app_intents_install.py", line 116, in test_unselected_table_is_absent_and_stale_selected_projection_is_rejected
+    with self.assertRaisesRegex(RuntimeError, "projection is stale"):
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.569s
+
+FAILED (failures=3, errors=1)
