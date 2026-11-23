@@ -1,0 +1,17 @@
+{
+  "artifactDownloads": 0,
+  "files": {
+    "README.md": "416fca4f2b0b8b68d52627ae0826bcd5097b596e02d58db30528b8531b4709bb",
+    "host-source-records.json": "4b4754a85c9e88d55a61db378f423f0f2b24446dc62eeb390ed5591ea31a5ea0",
+    "publication-recipe.md": "a3a393c4bcbf6c3d4c0d91edbd7d742db7a7143f869c783be94b14296b3878ef",
+    "qualification.json": "cd75377b94e072e2de50d614276bab70f136389081a887d75989cf80f1ed4c6b"
+  },
+  "newInstallerRuns": 0,
+  "newNativeTests": 0,
+  "priorEvidenceCommit": "ea3e486aeade9b4a23c3c4e08ddf4ba42a23bc4a",
+  "publishedAssets": 0,
+  "schemaVersion": 1,
+  "sourceRecordReconstruction": "Exact previously inspected candidate records reconstructed from original installed records plus the already-recorded catalog delta, with all three digests matched to the completed new comparison; no new native/test acceptance.",
+  "status": "SOURCE_READINESS_ONLY",
+  "updatedHostPins": 0
+}
