@@ -131,13 +131,14 @@ final class CrossAppInvocationTests: XCTestCase {
             }
             XCTAssertTrue(opened, "The shipping URL scheme must accept the durable invocation.")
         }
-        let scenes = NSPredicate { _, _ in
-            MainActor.assumeIsolated {
-                Set(UIApplication.shared.connectedScenes.map { $0.session.persistentIdentifier })
-                    .subtracting(before).count >= 2
-            }
+        let clock = ContinuousClock()
+        let deadline = clock.now.advanced(by: .seconds(30))
+        while clock.now < deadline {
+            let createdCount = Set(UIApplication.shared.connectedScenes.map { $0.session.persistentIdentifier })
+                .subtracting(before).count
+            if createdCount >= 2 { break }
+            try await Task.sleep(for: .milliseconds(100))
         }
-        await fulfillment(of: [XCTNSPredicateExpectation(predicate: scenes, object: nil)], timeout: 30)
         let created = UIApplication.shared.connectedScenes.filter { !before.contains($0.session.persistentIdentifier) }
         XCTAssertGreaterThanOrEqual(created.count, 2)
         for scene in created {

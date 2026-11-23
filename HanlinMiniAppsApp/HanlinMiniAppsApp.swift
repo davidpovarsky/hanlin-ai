@@ -86,7 +86,10 @@ private struct HanlinMiniAppsWindow: View {
             }
             .task(id: bootstrap.phase == .ready ? incomingURL : nil) {
                 guard bootstrap.phase == .ready, let url = incomingURL else { return }
-                if let requestID = MiniAppBridgeStore.requestID(from: url) {
+                if url.scheme?.lowercased() == "hanlinminiapps",
+                   url.host?.lowercased() == "x-callback-url",
+                   url.path == "/run",
+                   let requestID = MiniAppBridgeStore.requestID(from: url) {
                     do {
                         let mailbox = try MiniAppBridgeStore()
                         guard let request = try mailbox.request(id: requestID) else {
