@@ -1,0 +1,444 @@
+{
+  "id": 137981476734,
+  "run_id": 45256955142,
+  "workflow_name": "Build iOS 26 Unsigned IPA",
+  "head_branch": "codex/hanlin-sdk-unification-20261123",
+  "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45256955142",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOTTRem88AAAAgIFY_fg",
+  "head_sha": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/137981476734",
+  "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45256955142/job/137981476734",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2026-11-23T20:13:02Z",
+  "started_at": "2026-11-23T20:13:04Z",
+  "completed_at": "2026-11-23T20:34:33Z",
+  "name": "Launch full app on iPad Simulator",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-11-23T20:13:04Z",
+      "completed_at": "2026-11-23T20:13:06Z"
+    },
+    {
+      "name": "Live Activity Ã‚Â· refresh",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 2,
+      "started_at": "2026-11-23T20:13:06Z",
+      "completed_at": "2026-11-23T20:13:06Z"
+    },
+    {
+      "name": "Checkout repository",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-23T20:13:06Z",
+      "completed_at": "2026-11-23T20:13:13Z"
+    },
+    {
+      "name": "Set up pinned RuntimeCore host Node",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-23T20:13:13Z",
+      "completed_at": "2026-11-23T20:13:25Z"
+    },
+    {
+      "name": "Verify original OpenClaw source closure and parity",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 5,
+      "started_at": "2026-11-23T20:13:25Z",
+      "completed_at": "2026-11-23T20:13:25Z"
+    },
+    {
+      "name": "Prepare simulator logs and select stable Xcode",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6,
+      "started_at": "2026-11-23T20:13:25Z",
+      "completed_at": "2026-11-23T20:13:41Z"
+    },
+    {
+      "name": "Read the installed FoundationModels tool continuation interface",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7,
+      "started_at": "2026-11-23T20:13:41Z",
+      "completed_at": "2026-11-23T20:13:51Z"
+    },
+    {
+      "name": "Retain FoundationModels declarations before the application build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-23T20:13:51Z",
+      "completed_at": "2026-11-23T20:13:53Z"
+    },
+    {
+      "name": "Prepare declaration-only metadata tool",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-23T20:13:53Z",
+      "completed_at": "2026-11-23T20:13:54Z"
+    },
+    {
+      "name": "Prepare pinned NativeScript iOS dependency closure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10,
+      "started_at": "2026-11-23T20:13:54Z",
+      "completed_at": "2026-11-23T20:16:49Z"
+    },
+    {
+      "name": "Restore simulator cloned Swift package dependencies",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11,
+      "started_at": "2026-11-23T20:16:49Z",
+      "completed_at": "2026-11-23T20:17:48Z"
+    },
+    {
+      "name": "Restore compatible simulator compiler state",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12,
+      "started_at": "2026-11-23T20:17:48Z",
+      "completed_at": "2026-11-23T20:18:54Z"
+    },
+    {
+      "name": "Report simulator cache mode",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-11-23T20:18:54Z",
+      "completed_at": "2026-11-23T20:18:55Z"
+    },
+    {
+      "name": "Discard simulator compiler state for forced clean build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 14,
+      "started_at": "2026-11-23T20:18:55Z",
+      "completed_at": "2026-11-23T20:18:55Z"
+    },
+    {
+      "name": "Create CI Config.xcconfig",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15,
+      "started_at": "2026-11-23T20:18:55Z",
+      "completed_at": "2026-11-23T20:18:55Z"
+    },
+    {
+      "name": "Prepare verified embedded RuntimeCore",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16,
+      "started_at": "2026-11-23T20:18:55Z",
+      "completed_at": "2026-11-23T20:19:08Z"
+    },
+    {
+      "name": "Package current RuntimeCore host resources",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 17,
+      "started_at": "2026-11-23T20:19:08Z",
+      "completed_at": "2026-11-23T20:20:24Z"
+    },
+    {
+      "name": "Run RuntimeCore preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 18,
+      "started_at": "2026-11-23T20:20:24Z",
+      "completed_at": "2026-11-23T20:20:26Z"
+    },
+    {
+      "name": "Export original prepared Hanlin SDK native artifacts",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 19,
+      "started_at": "2026-11-23T20:20:26Z",
+      "completed_at": "2026-11-23T20:21:00Z"
+    },
+    {
+      "name": "Retain prepared Hanlin SDK native artifacts",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 20,
+      "started_at": "2026-11-23T20:21:00Z",
+      "completed_at": "2026-11-23T20:21:04Z"
+    },
+    {
+      "name": "Resolve Swift Package dependencies",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 21,
+      "started_at": "2026-11-23T20:21:04Z",
+      "completed_at": "2026-11-23T20:22:33Z"
+    },
+    {
+      "name": "Record resolved diagnostics build provenance",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 22,
+      "started_at": "2026-11-23T20:22:33Z",
+      "completed_at": "2026-11-23T20:22:34Z"
+    },
+    {
+      "name": "Save validated simulator Swift package dependencies",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 23,
+      "started_at": "2026-11-23T20:22:34Z",
+      "completed_at": "2026-11-23T20:22:34Z"
+    },
+    {
+      "name": "Record simulator SourcePackages save status",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 24,
+      "started_at": "2026-11-23T20:22:34Z",
+      "completed_at": "2026-11-23T20:22:34Z"
+    },
+    {
+      "name": "Restore unchanged simulator build input metadata",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 25,
+      "started_at": "2026-11-23T20:22:34Z",
+      "completed_at": "2026-11-23T20:22:54Z"
+    },
+    {
+      "name": "Capture simulator build input metadata",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 26,
+      "started_at": "2026-11-23T20:22:54Z",
+      "completed_at": "2026-11-23T20:23:06Z"
+    },
+    {
+      "name": "Stage modular headers into simulator Swift Package checkouts",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 27,
+      "started_at": "2026-11-23T20:23:06Z",
+      "completed_at": "2026-11-23T20:23:27Z"
+    },
+    {
+      "name": "Stage exact original A2UI plugin schemas for the combined app graph",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 28,
+      "started_at": "2026-11-23T20:23:27Z",
+      "completed_at": "2026-11-23T20:23:38Z"
+    },
+    {
+      "name": "Retain prior unit manifests before the current test build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 29,
+      "started_at": "2026-11-23T20:23:38Z",
+      "completed_at": "2026-11-23T20:23:39Z"
+    },
+    {
+      "name": "Build full arm64 simulator app",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 30,
+      "started_at": "2026-11-23T20:23:39Z",
+      "completed_at": "2026-11-23T20:34:06Z"
+    },
+    {
+      "name": "Measure same-run simulator no-op rebuild",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 31,
+      "started_at": "2026-11-23T20:34:06Z",
+      "completed_at": "2026-11-23T20:34:06Z"
+    },
+    {
+      "name": "Validate the current build-for-testing unit products",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 32,
+      "started_at": "2026-11-23T20:34:06Z",
+      "completed_at": "2026-11-23T20:34:08Z"
+    },
+    {
+      "name": "Save successful simulator compiler state",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 33,
+      "started_at": "2026-11-23T20:34:08Z",
+      "completed_at": "2026-11-23T20:34:08Z"
+    },
+    {
+      "name": "Record simulator DerivedData save status",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 34,
+      "started_at": "2026-11-23T20:34:08Z",
+      "completed_at": "2026-11-23T20:34:08Z"
+    },
+    {
+      "name": "Locate and scan simulator app",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 35,
+      "started_at": "2026-11-23T20:34:08Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "name": "Live Activity Ã‚Â· refresh",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 36,
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "name": "Boot iPad Simulator and stage fixtures",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 37,
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "name": "Live Activity Ã‚Â· refresh",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 38,
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "name": "Stage the existing live provider account privately",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 39,
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "name": "Run simulator test suite",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 40,
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "name": "Verify bounded live evidence and remove the owned private account",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 41,
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "name": "Upload sanitized original live-provider acceptance",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 42,
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "name": "Verify affected Motion on the prepared app simulator",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 43,
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "name": "Analyze performance benchmark results",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 44,
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:20Z"
+    },
+    {
+      "name": "Run full Runtime Tooling acceptance and collect every group",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 45,
+      "started_at": "2026-11-23T20:34:20Z",
+      "completed_at": "2026-11-23T20:34:20Z"
+    },
+    {
+      "name": "Launch full app and verify runtime acceptance",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 46,
+      "started_at": "2026-11-23T20:34:20Z",
+      "completed_at": "2026-11-23T20:34:20Z"
+    },
+    {
+      "name": "Live Activity Ã‚Â· refresh",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 47,
+      "started_at": "2026-11-23T20:34:20Z",
+      "completed_at": "2026-11-23T20:34:20Z"
+    },
+    {
+      "name": "Collect simulator diagnostics",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 48,
+      "started_at": "2026-11-23T20:34:20Z",
+      "completed_at": "2026-11-23T20:34:21Z"
+    },
+    {
+      "name": "Upload simulator smoke evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 49,
+      "started_at": "2026-11-23T20:34:21Z",
+      "completed_at": "2026-11-23T20:34:23Z"
+    },
+    {
+      "name": "Post Set up pinned RuntimeCore host Node",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 97,
+      "started_at": "2026-11-23T20:34:23Z",
+      "completed_at": "2026-11-23T20:34:23Z"
+    },
+    {
+      "name": "Post Checkout repository",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 98,
+      "started_at": "2026-11-23T20:34:23Z",
+      "completed_at": "2026-11-23T20:34:24Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 99,
+      "started_at": "2026-11-23T20:34:24Z",
+      "completed_at": "2026-11-23T20:34:30Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/137981476734",
+  "labels": [
+    "xcode-27"
+  ],
+  "runner_id": 1000024917,
+  "runner_name": "GitHub Actions 1000024917",
+  "runner_group_id": 0,
+  "runner_group_name": "GitHub Actions"
+}
