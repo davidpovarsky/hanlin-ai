@@ -386,3 +386,43 @@ public struct HanlinSwiftUICoverage: Codable, Sendable {
     public var publicSurfaceCounts: [String: Int]
     public var symbols: [HanlinSwiftUIDeclaration]
 }
+
+/// Admission for the bridge's existing symbol-only type index. Public callers can
+/// construct inventories directly, so both discovery and output validate inputs.
+internal enum HanlinSwiftUIInputAdmission {
+    static func requireUniqueModules(_ modules: [String]) throws {
+        let repeated = Dictionary(grouping: modules, by: { $0 })
+            .filter { $0.value.count > 1 }.keys.sorted()
+        guard repeated.isEmpty else {
+            throw NSError(
+                domain: "HanlinSwiftUIBridgeGenerator",
+                code: 2,
+                userInfo: [NSLocalizedDescriptionKey:
+                    "Repeated interface module identifiers: \(repeated.joined(separator: ", ")). Supply one interface per module."]
+            )
+        }
+    }
+
+    static func enumDeclarations(
+        _ declarations: [HanlinSwiftUIDeclaration]
+    ) throws -> [String: HanlinSwiftUIDeclaration] {
+        let groups = Dictionary(grouping: declarations.filter {
+            !$0.enumCases.isEmpty || !$0.optionSetCases.isEmpty
+        }, by: \.symbol)
+        let ambiguous = groups.filter { $0.value.count > 1 }.keys.sorted()
+        guard ambiguous.isEmpty else {
+            let details = ambiguous.map { symbol in
+                let modules = groups[symbol, default: []].map(\.module).sorted()
+                return "\(symbol) (modules: \(modules.joined(separator: ", ")))"
+            }.joined(separator: "; ")
+            throw NSError(
+                domain: "HanlinSwiftUIBridgeGenerator",
+                code: 2,
+                userInfo: [NSLocalizedDescriptionKey:
+                    "Ambiguous enum/OptionSet symbols in input batch: \(details). The bridge uses symbol-only type resolution; this batch is unsupported."]
+            )
+        }
+        // Every group is nonempty and has exactly one declaration after admission.
+        return groups.mapValues { $0[0] }
+    }
+}

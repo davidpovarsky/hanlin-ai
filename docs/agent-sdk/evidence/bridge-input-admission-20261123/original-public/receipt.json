@@ -1,0 +1,243 @@
+{
+  "binary_sha256": {
+    "hanlin-swiftui-bridge": "f749ea0f271009a8b5ed4913002b2073b1d143e6331c92c16e61b6c8feb688bd",
+    "libHanlinSwiftUIBridgeCore.so": "47411f3189d5cf326df8c80c6e95baab44a97dd22be981a0c6c7c47e379589af"
+  },
+  "cases": [
+    {
+      "case": "api-write-duplicate-module",
+      "command": [
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/public-client",
+        "write",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/configuration.json",
+        "SwiftUI",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/SwiftUI.swiftinterface",
+        "SwiftUI",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/SwiftUI.swiftinterface",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/api-write-duplicate-module"
+      ],
+      "exit": -5,
+      "operation": "write",
+      "output_after": {
+        "coverage.json": "5c7e8a34aa1f7dbee65f984b5d54578e471d24e660180839082229dbcfc11bb0",
+        "sentinel.txt": "bb6b793bc12525a7f69bc98c27b22fb08a85d25044c35407f1f871035b8673ed",
+        "swiftui-inventory.json": "8adced2d37e5da6b9d03b79c6f408c2b6a7e6def87aba8d8d6282abf5d4ed6d6"
+      },
+      "output_before": {
+        "coverage.json": "5c7e8a34aa1f7dbee65f984b5d54578e471d24e660180839082229dbcfc11bb0",
+        "sentinel.txt": "bb6b793bc12525a7f69bc98c27b22fb08a85d25044c35407f1f871035b8673ed",
+        "swiftui-inventory.json": "dd64d1cc64449120e5f476078bdbd48a827ca81c0a7585e4488ab14e142317da"
+      },
+      "seconds": 0.2311,
+      "stderr_sha256": "69780a87e5f53e1f48b55a61f47c529616a1b07acfc3eacc3f23ddb4e7eb7f97",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "api-write-enum",
+      "command": [
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/public-client",
+        "write",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/configuration.json",
+        "ModuleA",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/EnumA.swiftinterface",
+        "ModuleB",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/EnumB.swiftinterface",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/api-write-enum"
+      ],
+      "exit": -5,
+      "operation": "write",
+      "output_after": {
+        "coverage.json": "2546d311a17004fc01c6c6b5af4e7f5526614a7b5a2cc67635b75bb73bc78229",
+        "coverage.md": "fcad9148f95e249eebb1ff339e730d2d42b1eecb8cf68ae0b3107e50c1c4c586",
+        "sentinel.txt": "bb6b793bc12525a7f69bc98c27b22fb08a85d25044c35407f1f871035b8673ed",
+        "swiftui-inventory.json": "f4fa2b69cbf230a597242dcb89bf0111052eb0b93fa9d579cf75c22b7b4ab448"
+      },
+      "output_before": {
+        "coverage.json": "5c7e8a34aa1f7dbee65f984b5d54578e471d24e660180839082229dbcfc11bb0",
+        "sentinel.txt": "bb6b793bc12525a7f69bc98c27b22fb08a85d25044c35407f1f871035b8673ed",
+        "swiftui-inventory.json": "dd64d1cc64449120e5f476078bdbd48a827ca81c0a7585e4488ab14e142317da"
+      },
+      "seconds": 0.2296,
+      "stderr_sha256": "719c0af456e4daaee924dc1cef86c77dd10a42753570f0beef1d77b3b6f97848",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "api-write-optionset",
+      "command": [
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/public-client",
+        "write",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/configuration.json",
+        "ModuleA",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/OptionSetA.swiftinterface",
+        "ModuleB",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/OptionSetB.swiftinterface",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/api-write-optionset"
+      ],
+      "exit": -5,
+      "operation": "write",
+      "output_after": {
+        "coverage.json": "a6b5710f840326df9293d2e93a814479fd344bae61e6f726c15a961404f96ad9",
+        "coverage.md": "36af4a68bbcbf3d60e696cd04d54858e46ddf524922bfd194e23e99b20625718",
+        "sentinel.txt": "bb6b793bc12525a7f69bc98c27b22fb08a85d25044c35407f1f871035b8673ed",
+        "swiftui-inventory.json": "739343ef94c49de505d6f49acd32cfcdb75ca01dfa9752c605be32aec83980a8"
+      },
+      "output_before": {
+        "coverage.json": "5c7e8a34aa1f7dbee65f984b5d54578e471d24e660180839082229dbcfc11bb0",
+        "sentinel.txt": "bb6b793bc12525a7f69bc98c27b22fb08a85d25044c35407f1f871035b8673ed",
+        "swiftui-inventory.json": "dd64d1cc64449120e5f476078bdbd48a827ca81c0a7585e4488ab14e142317da"
+      },
+      "seconds": 0.2225,
+      "stderr_sha256": "c7307df458fd7cfde9ef0def02824a104f4503ca9e2af86dc83b3ccb8a66c6e7",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "api-classify-enum",
+      "command": [
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/public-client",
+        "classify",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/configuration.json",
+        "ModuleA",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/EnumA.swiftinterface",
+        "ModuleB",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/EnumB.swiftinterface",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/api-classify-enum"
+      ],
+      "exit": -5,
+      "operation": "classify",
+      "output_after": {},
+      "output_before": {},
+      "seconds": 0.2156,
+      "stderr_sha256": "d88aa3cd2e8cb2566ad5414b99de062305762b527a42691caaa1cb4bc0e9cac1",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "api-classify-optionset",
+      "command": [
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/public-client",
+        "classify",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/configuration.json",
+        "ModuleA",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/OptionSetA.swiftinterface",
+        "ModuleB",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/OptionSetB.swiftinterface",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/api-classify-optionset"
+      ],
+      "exit": -5,
+      "operation": "classify",
+      "output_after": {},
+      "output_before": {},
+      "seconds": 0.2181,
+      "stderr_sha256": "a8908f8c8cd1e5d5e6bcc89b892b04c2e46b4f06032bc41e86fcb68796ee770b",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "api-classify-identical-repeat",
+      "command": [
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/public-client",
+        "classify",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/configuration.json",
+        "ModuleA",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/EnumA.swiftinterface",
+        "ModuleA",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/EnumA.swiftinterface",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/api-classify-identical-repeat"
+      ],
+      "exit": -5,
+      "operation": "classify",
+      "output_after": {},
+      "output_before": {},
+      "seconds": 0.2111,
+      "stderr_sha256": "de704cce9ff16c3dae1a0f4842f0c013746852fcbc97240c10caf84a1e28c32a",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "compilations": [
+    {
+      "command": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-I",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before",
+        "-I",
+        "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/host",
+        "-L",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before",
+        "-L",
+        "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/host",
+        "-lHanlinSwiftUIBridgeCore",
+        "-Xlinker",
+        "-rpath",
+        "-Xlinker",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before",
+        "-Xlinker",
+        "-rpath",
+        "-Xlinker",
+        "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/host",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/Scripts/SDK/Fixtures/BridgeInputAdmission/PublicClient.swift",
+        "-o",
+        "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/bridge-input-admission-20261123/before-public/public-client"
+      ],
+      "exit": 0,
+      "label": "public-client-compile",
+      "seconds": 0.4893
+    }
+  ],
+  "driver_sha256": "af4ef5402fb8f5c95adf519e26231cf2da03bcb0b51b81133c627aa4fc2cf552",
+  "expectation": "original",
+  "host_library_sha256": {
+    "libSwiftBasicFormat.so": "8e36223fa89cb04805c12d9942ff5dede962c4cae1c25929988e432ffab2ed7f",
+    "libSwiftDiagnostics.so": "be41736a0ac7f7fc274f8e0d64f9d9f44d5c3965422470722a899beeb0cd6939",
+    "libSwiftParser.so": "4226a1879463228f19bbbd9e05ee6fb87b5292095be4013ba47c1d3a6a52ba77",
+    "libSwiftParserDiagnostics.so": "50db49acec3bc546b40eca9c814b403289f9a1a37be61aadad5b33af3f46b6ae",
+    "libSwiftSyntax.so": "ae8526d77fac153af18e77f30c281b22082b29ee979a9756284a60a7a4ccb1f2"
+  },
+  "input_sha256": {
+    "Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/SwiftUI.swiftinterface": "c4ea92a4b56002a891510d2095cec4373a9ac60f5e72af22bd7289dc4e5c0598",
+    "Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/SwiftUICore.swiftinterface": "1aba922c56cfa4e80890a3439c48eb89cfc61d6fa547c18b27849370a6685f0b",
+    "Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/Fixtures/configuration.json": "f9af80da851d35bc8750426c53873a9cc2ab84f83edd9959f758f1a57aa803f7",
+    "Scripts/SDK/Fixtures/BridgeInputAdmission/EnumA.swiftinterface": "78d6744da305f5d81514e448c4ce61a3e630ae85936f02848f9100fb823641ae",
+    "Scripts/SDK/Fixtures/BridgeInputAdmission/EnumB.swiftinterface": "98385095b9185078fe893fbe9b385be0587213d59ead98782495a8ec79fb3386",
+    "Scripts/SDK/Fixtures/BridgeInputAdmission/OptionSetA.swiftinterface": "97f41a9c0653f5499b9cd9572e56f7d57652f1e1359885186e7ebf718c7a12f5",
+    "Scripts/SDK/Fixtures/BridgeInputAdmission/OptionSetB.swiftinterface": "4b5d7a72535bfd5c072649ccd84494751a478292fc2919418338b7fc880e62b6",
+    "Scripts/SDK/Fixtures/BridgeInputAdmission/PublicClient.swift": "313bd469434cbbbef8e8df914abf52b6aa53fa3f2e60a824c064f8957be4f620"
+  },
+  "result": "PASS",
+  "scope": "Complete actual core plus actual CLI/public client; real installed SwiftSyntax host modules. No pinned SwiftPM/Xcode graph or generated UIKit code execution claimed.",
+  "source_ref": "2549bb1395045e1514ec6c273239fcdaf18af207",
+  "source_sha256": {
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/Classifier.swift": "db0eac61131876b3b7f6bcc7ed6cf313164bddc86b6be327807808e4a6460cbf",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/InterfaceParser.swift": "4c319a394593ce051e46991547530db09cdc9e2afd88e07d2df35c9d63fe3fe8",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/Inventory.swift": "f5cea4d1644c5724dd6a53f11e8ee1a254bf0b2d0f33d61c996ef91ca038b235",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift": "d038bc0c7c7086351c51927c34226a84184757e86247108681986b2f547b2133",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/SHA256.swift": "adf254fa5e62a43dd010a9eba664725a62aa1a358dbfceb1b9c399e0938c1c99",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeGenerator/main.swift": "998b0b2b310474c6a1e52ee5211981844146d61bde0c6c890413c47962cd4c24"
+  },
+  "target": {
+    "compilerVersion": "Swift version 6.4.3 (swift-6.4.3-RELEASE)",
+    "paths": {
+      "runtimeLibraryImportPaths": [
+        "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/linux",
+        "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/linux/aarch64"
+      ],
+      "runtimeLibraryPaths": [
+        "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/linux"
+      ],
+      "runtimeResourcePath": "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift"
+    },
+    "swiftCompilerTag": "swift-6.4.3-RELEASE",
+    "target": {
+      "arch": "aarch64",
+      "compatibilityLibraries": [],
+      "librariesRequireRPath": false,
+      "moduleTriple": "aarch64-unknown-linux-gnu",
+      "openbsdBTCFIEnabled": false,
+      "platform": "linux",
+      "pointerWidthInBits": 64,
+      "pointerWidthInBytes": 8,
+      "triple": "aarch64-unknown-linux-gnu",
+      "unversionedTriple": "aarch64-unknown-linux-gnu"
+    }
+  }
+}
