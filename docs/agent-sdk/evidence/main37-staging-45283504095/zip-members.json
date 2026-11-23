@@ -1,0 +1,653 @@
+[
+  {
+    "path": "simulator-logs/01-cache-mode.log",
+    "bytes": 254,
+    "compressedBytes": 160,
+    "mode": 33188,
+    "sha256": "5f8adf23b0eb34191d19145e2e7ed75f152f0e54dca52c64d28e23cb04c0c48a"
+  },
+  {
+    "path": "simulator-logs/01-environment.log",
+    "bytes": 963,
+    "compressedBytes": 318,
+    "mode": 33188,
+    "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+  },
+  {
+    "path": "simulator-logs/02-prepare-runtime-core.log",
+    "bytes": 1125,
+    "compressedBytes": 470,
+    "mode": 33188,
+    "sha256": "f31d19cac507c1eb38888e343bfd741b0c0ba15b305b7111f84bf247379deff0"
+  },
+  {
+    "path": "simulator-logs/03-package-runtime-host.log",
+    "bytes": 16443,
+    "compressedBytes": 6481,
+    "mode": 33188,
+    "sha256": "8ccd2e2e5431fb26930ef031818b30bef679b5272e32d082f9f6c022178ef2d3"
+  },
+  {
+    "path": "simulator-logs/04-runtime-preflight.log",
+    "bytes": 1736,
+    "compressedBytes": 767,
+    "mode": 33188,
+    "sha256": "ffe0af0206650208afb46e4f34c525e7a604df7a0f7c0dc09d211de5a918290a"
+  },
+  {
+    "path": "simulator-logs/05-cache-input-capture.log",
+    "bytes": 103,
+    "compressedBytes": 102,
+    "mode": 33188,
+    "sha256": "9adc3847028934a8ed941bd230fb191425cea2fed00579efe5da5e4627afb27f"
+  },
+  {
+    "path": "simulator-logs/05-cache-input-restore.log",
+    "bytes": 224,
+    "compressedBytes": 155,
+    "mode": 33188,
+    "sha256": "d15701903028eb8912ec737294fdedcc9b3f17e058b160b4d8a92184bf35dba0"
+  },
+  {
+    "path": "simulator-logs/05-resolve-packages.log",
+    "bytes": 3627,
+    "compressedBytes": 1278,
+    "mode": 33188,
+    "sha256": "3be7c39fd506b6825f31816099966501cce76b7ff3c4a836c9d9fc8f69326e3f"
+  },
+  {
+    "path": "simulator-logs/05-stage-modular-headers-duration-seconds.txt",
+    "bytes": 3,
+    "compressedBytes": 5,
+    "mode": 33188,
+    "sha256": "9961d158a7e0e2f990765971a9e490af826c0743b7d603020f34cc8944319fcb"
+  },
+  {
+    "path": "simulator-logs/06-app-compilation-duration-seconds.txt",
+    "bytes": 4,
+    "compressedBytes": 6,
+    "mode": 33188,
+    "sha256": "be41cde8c9abcde3699cd84c112b27b0dd5a2dffa30cef105fb3cec659c25bfa"
+  },
+  {
+    "path": "simulator-logs/06-current-unit-xctestrun.json",
+    "bytes": 3854,
+    "compressedBytes": 1650,
+    "mode": 33188,
+    "sha256": "4cc7b1ff6f53b8fd4980e5b43d1551203fc32ddea1d1d07bbc231ad428978417"
+  },
+  {
+    "path": "simulator-logs/06-diagnostics-build-provenance.json",
+    "bytes": 6712,
+    "compressedBytes": 1694,
+    "mode": 33188,
+    "sha256": "136c74e44dccbc6241bb38881dda053435f3aa9d36d10b8b6c603403b546835e"
+  },
+  {
+    "path": "simulator-logs/06-generated-unit-manifests/AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+    "bytes": 10400,
+    "compressedBytes": 1515,
+    "mode": 33188,
+    "sha256": "89ea1b243da5ce812ea8a63d069a2a2bfeb44c420addf6aa02c0b89d3b5a3fa2"
+  },
+  {
+    "path": "simulator-logs/06-generated-unit-manifests.json",
+    "bytes": 171,
+    "compressedBytes": 145,
+    "mode": 33188,
+    "sha256": "959331b9eb6806e06b0cdcba7ab68d3e336d28684113491c73255b2b8e3e7dab"
+  },
+  {
+    "path": "simulator-logs/06-generated-unit.xctestrun",
+    "bytes": 10400,
+    "compressedBytes": 1515,
+    "mode": 33188,
+    "sha256": "89ea1b243da5ce812ea8a63d069a2a2bfeb44c420addf6aa02c0b89d3b5a3fa2"
+  },
+  {
+    "path": "simulator-logs/06-unit-xctestrun-prepare.log",
+    "bytes": 122,
+    "compressedBytes": 106,
+    "mode": 33188,
+    "sha256": "d4d719ad8de6a9e90319526a80dc4793e87cb3f819190d6b1c123747d0ffc677"
+  },
+  {
+    "path": "simulator-logs/06-unit-xctestrun-seal.log",
+    "bytes": 120,
+    "compressedBytes": 105,
+    "mode": 33188,
+    "sha256": "4839a62ee6ffafd486432694f6ca5f1eae9d8f745e4b2924b14ab1af2332daaa"
+  },
+  {
+    "path": "simulator-logs/06-xcodebuild-simulator.log",
+    "bytes": 15230671,
+    "compressedBytes": 440595,
+    "mode": 33188,
+    "sha256": "158f9a0c9f4c6f72aa33fa614f097d4f1f589d088e6cd48c31fe354154691c8b"
+  },
+  {
+    "path": "simulator-logs/07-built-app-resources.txt",
+    "bytes": 197217,
+    "compressedBytes": 12477,
+    "mode": 33188,
+    "sha256": "569a1790b64992ff13821ee30589306f6b215c1eb9b98e5bbdc81a3986973320"
+  },
+  {
+    "path": "simulator-logs/07-nativescript-preflight-skipped.txt",
+    "bytes": 76,
+    "compressedBytes": 67,
+    "mode": 33188,
+    "sha256": "08cfa95fc4855d7c4dc30d0d1bf2ec430d85ca3029a17fcb7aed77f4d7f8818e"
+  },
+  {
+    "path": "simulator-logs/07-simulator-dyld-closure-skipped.txt",
+    "bytes": 86,
+    "compressedBytes": 75,
+    "mode": 33188,
+    "sha256": "cd98d6808ef97861ccdfafefe369d0c0d37b2d28f5e1e42dd1184cd9c2ea1d4a"
+  },
+  {
+    "path": "simulator-logs/07-simulator-ios-system-resources-skipped.txt",
+    "bytes": 69,
+    "compressedBytes": 68,
+    "mode": 33188,
+    "sha256": "38cb19c008903910e3547ad27a57f95ff973abe53a8704b98f0e9906c4988826"
+  },
+  {
+    "path": "simulator-logs/07-simulator-runtime-signature.log",
+    "bytes": 203,
+    "compressedBytes": 110,
+    "mode": 33188,
+    "sha256": "a2bb1fc2e22d6b52e1cb3e4fcd48e7c0031d1d300cfc2ea505da7281016bff55"
+  },
+  {
+    "path": "simulator-logs/07-simulator-sdk-localization.json",
+    "bytes": 1025,
+    "compressedBytes": 289,
+    "mode": 33188,
+    "sha256": "cd0846f26d9d6147f912ea06bb8d7a0f5dd84b63065294c8a52320b5dfc8f88d"
+  },
+  {
+    "path": "simulator-logs/07-simulator-sdk-bundle-resources.json",
+    "bytes": 10518,
+    "compressedBytes": 2647,
+    "mode": 33188,
+    "sha256": "4f2173d64077235b0c79e8dfd3e70a7649a0f98b506e64baef096cc105f36da0"
+  },
+  {
+    "path": "simulator-logs/08-bootstatus.log",
+    "bytes": 1064,
+    "compressedBytes": 325,
+    "mode": 33188,
+    "sha256": "09716cc8b9dcc37bfcd35b3c1b3a202c12e7b1c1d35768064054c20212af8875"
+  },
+  {
+    "path": "simulator-logs/08-calendar-native-staging.json",
+    "bytes": 996,
+    "compressedBytes": 463,
+    "mode": 33188,
+    "sha256": "61fa365e344bff712e1aaac4947469485a050b5c3db0ad409b177079ea866a1d"
+  },
+  {
+    "path": "simulator-logs/08-current-unit-xctestrun-admission.json",
+    "bytes": 4006,
+    "compressedBytes": 1731,
+    "mode": 33188,
+    "sha256": "b381a4a10c738474336b7825cd53d2e4446eb28a6e5afe0f50c3ee83b3328602"
+  },
+  {
+    "path": "simulator-logs/08-nativescript-files-staging-skipped.txt",
+    "bytes": 66,
+    "compressedBytes": 58,
+    "mode": 33188,
+    "sha256": "43d4c4e4577fad4c00a5b13c1707f59587669744fe63ba87ca542efee4dd9d08"
+  },
+  {
+    "path": "simulator-logs/08-owned-simulator-boot.json",
+    "bytes": 465,
+    "compressedBytes": 286,
+    "mode": 33188,
+    "sha256": "f3396e4de8ab0559d09de443f610c394ea67057af080c1cd8dd81a5d46323a40"
+  },
+  {
+    "path": "simulator-logs/08-scriptui-files-staging-skipped.txt",
+    "bytes": 58,
+    "compressedBytes": 54,
+    "mode": 33188,
+    "sha256": "b8524eb1d6823878662fcf2680222b4ea8b80a17b90b8c134a4ecf93d4a2b194"
+  },
+  {
+    "path": "simulator-logs/08-simulator-staging-duration-seconds.txt",
+    "bytes": 3,
+    "compressedBytes": 5,
+    "mode": 33188,
+    "sha256": "6950980e3aca96f4dc400eb2e47cc5c343e0d3f483a4e70adcae1d7e6bb22d9c"
+  },
+  {
+    "path": "simulator-logs/09-host-resources.log",
+    "bytes": 103214,
+    "compressedBytes": 12124,
+    "mode": 33188,
+    "sha256": "2a5c805eba590033ecde21d7037877baa87675f84a72b17f8df913ec70e9aa53"
+  },
+  {
+    "path": "simulator-logs/09-simulator-system.log",
+    "bytes": 23,
+    "compressedBytes": 25,
+    "mode": 33188,
+    "sha256": "7cc696892ead085e269b266d5259c63eb9277f5623eb75d2a12dcb5e0032f4cc"
+  },
+  {
+    "path": "simulator-logs/Resolved-Package.resolved",
+    "bytes": 10180,
+    "compressedBytes": 2119,
+    "mode": 33188,
+    "sha256": "91e4db47a139f8e9161df685bd51ee2d92ab680c227acc8489be71d1d2350352"
+  },
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~B6laysL8vFU8Pfb6S8ToAEBUaJiORmbw7mtDNUhHA1vc4iu0eg44B-EJfcZ0myVc1DlrU38nrXAAfCY_kJE9fA==",
+    "bytes": 294,
+    "compressedBytes": 299,
+    "mode": 33188,
+    "sha256": "ed86424a6a6730435166073f056f75674d8a2f7ba931bf1bfb998daeac540040"
+  },
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~105JmPAT6r4TwBr71i-Tt0UNZ_SCiizjm0SHdC-HQXLTMj-Osi99ZDmU-qiVlDno0IWsfRdG2U_AZi3X3JOv2g==",
+    "bytes": 1022177,
+    "compressedBytes": 1022477,
+    "mode": 33188,
+    "sha256": "b556f91ec37c52866a95caad2b2318dc7fc8e018cec4268d503a67635f6c864b"
+  },
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~DTY1qLxODuRCje8wGkG0X-Iohlx8s6TSmuCBm5Y_Ku21ros7iYT20jlvJ_86alJcySTpv8XswplDzhnZ3KCvag==",
+    "bytes": 29360,
+    "compressedBytes": 29370,
+    "mode": 33188,
+    "sha256": "2b649e05cd774b091541c03943008d40eb88543a166c7d642d8fc37107ee3fbc"
+  },
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~105JmPAT6r4TwBr71i-Tt0UNZ_SCiizjm0SHdC-HQXLTMj-Osi99ZDmU-qiVlDno0IWsfRdG2U_AZi3X3JOv2g==",
+    "bytes": 1,
+    "compressedBytes": 3,
+    "mode": 33188,
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+  },
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~DTY1qLxODuRCje8wGkG0X-Iohlx8s6TSmuCBm5Y_Ku21ros7iYT20jlvJ_86alJcySTpv8XswplDzhnZ3KCvag==",
+    "bytes": 133,
+    "compressedBytes": 138,
+    "mode": 33188,
+    "sha256": "0d946f54ecf079f848fe38bc58115c0667c8a1fe1f46f21c517a850208b60e64"
+  },
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Info.plist",
+    "bytes": 776,
+    "compressedBytes": 428,
+    "mode": 33188,
+    "sha256": "9da051ae486f5b3ed0c25f1ecdfd8239d1eef1348e5087e9eece3c31fa4e4b87"
+  },
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~B6laysL8vFU8Pfb6S8ToAEBUaJiORmbw7mtDNUhHA1vc4iu0eg44B-EJfcZ0myVc1DlrU38nrXAAfCY_kJE9fA==",
+    "bytes": 1,
+    "compressedBytes": 3,
+    "mode": 33188,
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+  },
+  {
+    "path": "simulator-logs/a2ui-generation/compiler.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "mode": 33188,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "simulator-logs/a2ui-generation/result.json",
+    "bytes": 2634,
+    "compressedBytes": 1175,
+    "mode": 33188,
+    "sha256": "3e8942d5b09f1938f7e2565505cfdca9491aab7c2d3a5f9e4533ce1dee3f6ba8"
+  },
+  {
+    "path": "simulator-logs/app-executable.txt",
+    "bytes": 10,
+    "compressedBytes": 12,
+    "mode": 33188,
+    "sha256": "0aadda1cb8a292e1e5e08d32e3d79694a777b60244661e1f8f9a7eac00646952"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingAppIntents.swiftconstvalues",
+    "bytes": 2,
+    "compressedBytes": 4,
+    "mode": 33188,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftConstValuesFileList",
+    "bytes": 677,
+    "compressedBytes": 188,
+    "mode": 33188,
+    "sha256": "ca7ce2c62c4892c776d8c1e4107e2e4f091402b8abe0031db2eba37162793baf"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftFileList",
+    "bytes": 404,
+    "compressedBytes": 171,
+    "mode": 33188,
+    "sha256": "2cebfd9fa8f56b8e9e02d70187f8d04156256d30395828a5a330481fec49aff6"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftconstvalues",
+    "bytes": 1578,
+    "compressedBytes": 437,
+    "mode": 33188,
+    "sha256": "6df886727079702747670b4546bb5f2ba06be18103a45dfe6bbffcf42ff950e9"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/ChavrusaSystemIntegrations.swiftconstvalues",
+    "bytes": 48021,
+    "compressedBytes": 2701,
+    "mode": 33188,
+    "sha256": "6b11b3b4230fd3a1a0046d2282d105f9f286461378b28a75b46e55a8ba1d1ed2"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/VisionIntent.swiftconstvalues",
+    "bytes": 6853,
+    "compressedBytes": 1055,
+    "mode": 33188,
+    "sha256": "65e21925abdc1ecac37d5fff5a066de5a309848b206207e57b4ab10b46c859f7"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftConstValuesFileList",
+    "bytes": 679,
+    "compressedBytes": 174,
+    "mode": 33188,
+    "sha256": "d8256773ac6bb66ba76328a18bc38f49a6e04dac2ff44fe3a7bf2e447a3da63f"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingAppIntents.swiftconstvalues",
+    "bytes": 34872,
+    "compressedBytes": 2252,
+    "mode": 33188,
+    "sha256": "eda0ac185be7fd354f90142b5a9aa12ca5e28804fbfd028dd2f3480bf1cb8a3b"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftFileList",
+    "bytes": 379,
+    "compressedBytes": 107,
+    "mode": 33188,
+    "sha256": "58288dec228d9aa0e4a813b4b24f592a5f7bb007630f0cc4e6ceed1ed952cf24"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftconstvalues",
+    "bytes": 25429,
+    "compressedBytes": 1957,
+    "mode": 33188,
+    "sha256": "88ac098af2184b6c0756bdebed5d56eaf99112f0a1d74b9d4e22a80be69d0916"
+  },
+  {
+    "path": "simulator-logs/app-intents-metadata/receipt.json",
+    "bytes": 2836,
+    "compressedBytes": 857,
+    "mode": 33188,
+    "sha256": "d12369d6c1debb1eddf69248710d6982185e09e4eae7bfa78413698d4b7d9100"
+  },
+  {
+    "path": "simulator-logs/app-path.txt",
+    "bytes": 40,
+    "compressedBytes": 42,
+    "mode": 33188,
+    "sha256": "a3b4a5197338b3663fa72b98194a1ea3f5bd5fe8266af768aa9a4cd871b71cab"
+  },
+  {
+    "path": "simulator-logs/bundle-id.txt",
+    "bytes": 24,
+    "compressedBytes": 26,
+    "mode": 33188,
+    "sha256": "2b647e2df6c537e477d32eca4a643686109691751c74438b3a1a80a0cce32b15"
+  },
+  {
+    "path": "simulator-logs/commandDictionary.plist",
+    "bytes": 3560,
+    "compressedBytes": 758,
+    "mode": 33188,
+    "sha256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b"
+  },
+  {
+    "path": "simulator-logs/extraCommandsDictionary.plist",
+    "bytes": 181,
+    "compressedBytes": 151,
+    "mode": 33188,
+    "sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/availability.swift",
+    "bytes": 1438,
+    "compressedBytes": 541,
+    "mode": 33188,
+    "sha256": "27b70911b258ba1eaa53502eef3e61f9efe594a6cdf87341fb8d104c70cdaba6"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/compile.stderr.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "mode": 33188,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/compile.stdout.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "mode": 33188,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/compiler-version.stderr.log",
+    "bytes": 30,
+    "compressedBytes": 32,
+    "mode": 33188,
+    "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/compiler-version.stdout.log",
+    "bytes": 98,
+    "compressedBytes": 89,
+    "mode": 33188,
+    "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/query.stderr.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "mode": 33188,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/query.stdout.log",
+    "bytes": 222,
+    "compressedBytes": 163,
+    "mode": 33188,
+    "sha256": "a18ec252484933aa75f0d0e08a41a44aa5d78a3f107a54f574dedd888f463bbc"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/receipt.json",
+    "bytes": 5362,
+    "compressedBytes": 1336,
+    "mode": 33188,
+    "sha256": "73b79eee86004e44a126bbd96de65cd0172eabca7d9c794e34aa99ff2341ffa0"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/sdk-path.stderr.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "mode": 33188,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/sdk-path.stdout.log",
+    "bytes": 104,
+    "compressedBytes": 83,
+    "mode": 33188,
+    "sha256": "ef0267694b48b092db5b5d7800411bba8eaad357d65f739b69b5c8b262c50409"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/sdk-version.stderr.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "mode": 33188,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/sdk-version.stdout.log",
+    "bytes": 5,
+    "compressedBytes": 7,
+    "mode": 33188,
+    "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/xcode-version.stderr.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "mode": 33188,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/availability-query/xcode-version.stdout.log",
+    "bytes": 31,
+    "compressedBytes": 33,
+    "mode": 33188,
+    "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/declarations.txt",
+    "bytes": 193265,
+    "compressedBytes": 24386,
+    "mode": 33188,
+    "sha256": "d1d50574ae65c19a319d7f8427944cc36a0373affcd8db3fba3fd6a3d531e2e0"
+  },
+  {
+    "path": "simulator-logs/foundation-models-interface/receipt.json",
+    "bytes": 1862,
+    "compressedBytes": 622,
+    "mode": 33188,
+    "sha256": "6368aa6eb68421cdec99845d567b0ded98ae5c631ecca64f96b8dff726eab695"
+  },
+  {
+    "path": "simulator-logs/performance-summary.json",
+    "bytes": 107,
+    "compressedBytes": 78,
+    "mode": 33188,
+    "sha256": "c9dbceeea60dc1d2ebb3fe380f7501e2bca63527717f50bfc6f70a34f3108162"
+  },
+  {
+    "path": "simulator-logs/performance-summary.md",
+    "bytes": 3472,
+    "compressedBytes": 1675,
+    "mode": 33188,
+    "sha256": "bf90988f2e273b943b60e5a13de1384051a8fb3d99732936c2089dd6a6d5953a"
+  },
+  {
+    "path": "simulator-logs/prior-unit-xctestrun/AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+    "bytes": 10396,
+    "compressedBytes": 1517,
+    "mode": 33188,
+    "sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c"
+  },
+  {
+    "path": "simulator-logs/sdk-native-export.log",
+    "bytes": 1439,
+    "compressedBytes": 698,
+    "mode": 33188,
+    "sha256": "518406a572273abfb6f702a098d4e061564666a766195ce67ab64f2b0a004040"
+  },
+  {
+    "path": "simulator-logs/sdk-native-verify.log",
+    "bytes": 65,
+    "compressedBytes": 64,
+    "mode": 33188,
+    "sha256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86"
+  },
+  {
+    "path": "simulator-logs/simulator-model.txt",
+    "bytes": 22,
+    "compressedBytes": 24,
+    "mode": 33188,
+    "sha256": "5b5963979dab2480b8d5eacdea46edd918c341cf4c8596e9788a01d8f7a99223"
+  },
+  {
+    "path": "simulator-logs/simulator-runtime.txt",
+    "bytes": 44,
+    "compressedBytes": 46,
+    "mode": 33188,
+    "sha256": "3ad5e8007ef0cc43625f89fd088fbfccdb3c7b806cbc391706faddb54c682410"
+  },
+  {
+    "path": "simulator-logs/simulator-udid.txt",
+    "bytes": 37,
+    "compressedBytes": 39,
+    "mode": 33188,
+    "sha256": "a08b69bda5461733349060d92a6b50940852046e589097a1a0a62311eb492c52"
+  },
+  {
+    "path": "simulator-logs/verified-simulator-environment.json",
+    "bytes": 81353,
+    "compressedBytes": 3636,
+    "mode": 33188,
+    "sha256": "06a7523cad366ce20b8ac30c3d6a4eda559efd1793de5a0aaa9dbf3b06961786"
+  },
+  {
+    "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/FrameworkSearchView.inventory.json",
+    "bytes": 1536373,
+    "compressedBytes": 551513,
+    "mode": 33188,
+    "sha256": "3c77a1a7e99cfcaf86cb09d2fb2352685e50f1000401ed8ce5c5d578c36cb05f"
+  },
+  {
+    "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/HanlinMetadataInput.h",
+    "bytes": 2316,
+    "compressedBytes": 392,
+    "mode": 33188,
+    "sha256": "5c1251646d4c8de07f3ff64f833033848fb9c11c5493b082076f9ab56419767a"
+  },
+  {
+    "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/HanlinMetadataInput.inventory.json",
+    "bytes": 98811,
+    "compressedBytes": 40886,
+    "mode": 33188,
+    "sha256": "161a43708d1ec1bdc7ed301df322b29f76767b25bef8144bd83349eb862913b8"
+  },
+  {
+    "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/metadata-arm64.bin",
+    "bytes": 3210621,
+    "compressedBytes": 1071463,
+    "mode": 33188,
+    "sha256": "0a914fed8d321c372585c8afb13663a06c6476c04d02823e0e88294b8296d1a7"
+  },
+  {
+    "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/metadata-generation-stderr-arm64.txt",
+    "bytes": 2089425,
+    "compressedBytes": 184506,
+    "mode": 33188,
+    "sha256": "beade004615d68a6d334c1effe7540e9d790e6b1cc2066b128bfe5bb1a59268f"
+  },
+  {
+    "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/provenance.json",
+    "bytes": 933,
+    "compressedBytes": 556,
+    "mode": 33188,
+    "sha256": "b763edf9f1081f2c29c5982981c7a8ed22acd2345e437aca85d11ada4784949c"
+  },
+  {
+    "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/visibility.json",
+    "bytes": 928,
+    "compressedBytes": 521,
+    "mode": 33188,
+    "sha256": "90ea7b7c2c1ce782f58f2ddf55bd56349af2723f5e9a4835bf39ce4e8d372bff"
+  },
+  {
+    "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/umbrella-arm64.h",
+    "bytes": 2316,
+    "compressedBytes": 392,
+    "mode": 33188,
+    "sha256": "5c1251646d4c8de07f3ff64f833033848fb9c11c5493b082076f9ab56419767a"
+  }
+]
