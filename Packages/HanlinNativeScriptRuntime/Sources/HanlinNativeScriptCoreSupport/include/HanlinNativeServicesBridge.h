@@ -89,6 +89,9 @@ typedef void (^HanlinBridgeRequestHandlerBlock)(NSString *caller, NSString *payl
 
 // Legacy single-session fallback. Modern sessions use the bound bridge above.
 + (void)registerProvider:(nullable id<HanlinNativeServicesProvider>)provider;
+/// Clear only the caller's legacy provider; a different active window is unaffected.
++ (void)clearLegacyProviderIfMatches:(id<HanlinNativeServicesProvider>)provider
+    NS_SWIFT_NAME(clearLegacyProvider(ifMatches:));
 + (nullable id<HanlinNativeServicesProvider>)legacyProvider;
 + (nullable id<HanlinNativeServicesProvider>)currentProvider;
 

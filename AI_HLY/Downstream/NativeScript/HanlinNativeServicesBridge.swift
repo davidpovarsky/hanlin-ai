@@ -69,13 +69,15 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         stateDir: String,
         docsDir: String,
         cacheDir: String,
-        grantedCapabilities: [String] = []
+        grantedCapabilities: [String] = [],
+        sessionID: String? = nil
     ) {
+        let ownerSessionID = sessionID ?? appID
         let validAppID = (try? HanlinAppID(validating: appID)) ?? (try! HanlinAppID(validating: "unknown-miniapp"))
         let adapter = NativeScriptHostServicesAdapter(
             appID: validAppID,
             grantedCapabilities: Set(grantedCapabilities),
-            sessionID: appID
+            sessionID: ownerSessionID
         )
 
         shared.lock.lock()
@@ -83,26 +85,40 @@ public final class HanlinNativeServicesHostProvider: NSObject, @unchecked Sendab
         shared.overrideDirs = (dataRoot, stateDir, docsDir, cacheDir)
         shared.lock.unlock()
 
-        HanlinNativeServicesBridge.register(adapter, forSessionID: appID)
+        HanlinNativeServicesBridge.register(adapter, forSessionID: ownerSessionID)
         HanlinNativeServicesBridge.register(adapter)
-        if let token = HanlinNativeServicesPrepareSessionBootstrap(appID),
+        if let token = HanlinNativeServicesPrepareSessionBootstrap(ownerSessionID),
            let bridge = HanlinNativeServicesBridge.claimSessionBridge(withToken: token) {
-            HanlinNativeServicesBridge.setActiveSession(bridge, forSessionID: appID)
+            HanlinNativeServicesBridge.setActiveSession(bridge, forSessionID: ownerSessionID)
         }
     }
 
+    /// Legacy explicit teardown. Scene-owned callers use the session-scoped overload.
     public static func clearActiveContainer() {
+        _ = clearActiveContainer(expectedSessionID: nil)
+    }
+
+    /// An unrelated scene or a late close callback must not revoke another window.
+    @discardableResult
+    public static func clearActiveContainer(forSessionID sessionID: String) -> Bool {
+        clearActiveContainer(expectedSessionID: sessionID)
+    }
+
+    private static func clearActiveContainer(expectedSessionID: String?) -> Bool {
         shared.lock.lock()
-        let oldAppID = shared.activeAdapter?.sessionID
+        guard let owner = shared.activeAdapter,
+              expectedSessionID == nil || owner.sessionID == expectedSessionID else {
+            shared.lock.unlock()
+            return false
+        }
         shared.activeAdapter = nil
         shared.overrideDirs = nil
         shared.lock.unlock()
 
-        if let oldAppID {
-            HanlinNativeServicesBridge.clearActiveSessionBridge(forSessionID: oldAppID)
-            HanlinNativeServicesBridge.unregisterProvider(forSessionID: oldAppID)
-        }
-        HanlinNativeServicesBridge.register(nil)
+        HanlinNativeServicesBridge.clearActiveSessionBridge(forSessionID: owner.sessionID)
+        HanlinNativeServicesBridge.unregisterProvider(forSessionID: owner.sessionID)
+        HanlinNativeServicesBridge.clearLegacyProvider(ifMatches: owner)
+        return true
     }
 
     private func resolvedProvider() -> (any HanlinNativeServicesProvider)? {

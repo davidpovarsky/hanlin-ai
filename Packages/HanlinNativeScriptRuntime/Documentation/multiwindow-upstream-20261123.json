@@ -1,0 +1,39 @@
+{
+  "status": "BLOCKED_UPSTREAM_SINGLETON",
+  "upstreamRepository": "https://github.com/NativeScript/ios",
+  "tag": "v9.1.0",
+  "commit": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+  "spmVersion": "9.1.0",
+  "spmCommit": "a8e26efad02d792a62d2d015f0f7a632e336b2d1",
+  "binarySHA256": "7fe4225faf085c61cef93d7faaa6c70fa3c97bf0631d53f4c868eea2d819c209",
+  "sourceSHA256": {
+    "NativeScript/JSIRuntime.h": "b41d6060019f0b949a5976cc3faa147645f77d5a91b288885b95b80f99e5873e",
+    "NativeScript/JSIRuntime.m": "b78be789062cda686c36861d10ed0a5d57612b63d53ca15a6babedb51117363f",
+    "NativeScript/NapiRuntime.h": "2428ae59c32c2adc7fcff3e2381425fb7694187a7b6b4650e5c82bb704ef000e",
+    "NativeScript/NapiRuntime.mm": "f6103f9373586166d5b8efc025d0334b40dd341636625321ea3574dea80df1ec",
+    "NativeScript/NativeScript.h": "fbc2af062b87b1c0655afe9cc9604075861d3c2e298d37e724bc2cf0ab41259b",
+    "NativeScript/NativeScript.mm": "068db528498031b3d7cc264727a89e7494d93b716f27ed85bd3651242d4638bc",
+    "NativeScript/runtime/IsolateWrapper.cpp": "678e8a30b0d311c28e79d82a1403af76cd713ced567ca7b11776b8a05594e5c0",
+    "NativeScript/runtime/Runtime.h": "fe37acd8a685d9e1469623176f8ee688f5c002eca0670c694f3fc29d0946fdb0",
+    "NativeScript/runtime/Runtime.mm": "b35f6ad826508946b920cfdfddc06c2e94426186b87d0c716521f0e272f3a9ec",
+    "NativeScript/runtime/RuntimeConfig.cpp": "9986bb251de299ffb1808b6ee5666cbd412d5ebbf11c0696d0f8186e53cf53b2",
+    "NativeScript/runtime/RuntimeConfig.h": "ffed17dfd7a62b36487b2b231a8098baf9ef06935feeeb1c5c5b47ebd3d3e991",
+    "NativeScript/runtime/Tasks.cpp": "faa04f0b0b74d7d69d475cb30aa18f870c090d5e95e0bc0375b9ff1e0ac31f89",
+    "NativeScript/runtime/Tasks.h": "2e2801608bb7c283edb1dda08dcd527248f507bae7a071e0bbfb3c32549ca47e",
+    "NativeScript/v8runtime/V8RuntimeFactory.cpp": "a7c8e1a3a256e90f41a8a0878f4313d4ceaccf2c9b6f6c26339a2e087c976073"
+  },
+  "assertions": {
+    "mainRuntimeIsProcessGlobal": true,
+    "secondInitDestroysPriorRuntime": true,
+    "shutdownClearsGlobalTasks": true,
+    "runtimeConfigurationIsProcessGlobal": true,
+    "singleApplicationCanAuthorMultipleScenes": true,
+    "independentMainApplicationVMsSupportedByPinnedWrapper": false
+  },
+  "verification": {
+    "SwiftSyntax": "PASSED",
+    "AppleNativeTest": "NOT_RUN",
+    "ConcurrentNativeScriptUI": "BLOCKED_UPSTREAM"
+  },
+  "newTest": "HanlinUnifiedHostServicesE2ETests/unrelatedAndLateWindowCleanupPreservesNativeScriptOwner()"
+}
