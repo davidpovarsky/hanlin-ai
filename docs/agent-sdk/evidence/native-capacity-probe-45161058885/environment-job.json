@@ -1,0 +1,76 @@
+{
+  "id": 137646342126,
+  "run_id": 45161058885,
+  "workflow_name": "Build iOS 26 Unsigned IPA",
+  "head_branch": "codex/hanlin-sdk-unification-20261123",
+  "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45161058885",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOTTRem88AAAAgDFx_7g",
+  "head_sha": "624f36e07209f4639252c48ec06397fb7a4f79a4",
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/137646342126",
+  "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45161058885/job/137646342126",
+  "status": "completed",
+  "conclusion": "success",
+  "created_at": "2026-11-23T10:59:39Z",
+  "started_at": "2026-11-23T11:04:59Z",
+  "completed_at": "2026-11-23T11:05:33Z",
+  "name": "Read installed stable simulator environment only",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1,
+      "started_at": "2026-11-23T11:05:00Z",
+      "completed_at": "2026-11-23T11:05:01Z"
+    },
+    {
+      "name": "Run actions/checkout@v7.0.1",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2,
+      "started_at": "2026-11-23T11:05:01Z",
+      "completed_at": "2026-11-23T11:05:09Z"
+    },
+    {
+      "name": "Inspect original runtime registrations and on-disk image state",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3,
+      "started_at": "2026-11-23T11:05:09Z",
+      "completed_at": "2026-11-23T11:05:26Z"
+    },
+    {
+      "name": "Run actions/upload-artifact@v7.0.2",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4,
+      "started_at": "2026-11-23T11:05:26Z",
+      "completed_at": "2026-11-23T11:05:28Z"
+    },
+    {
+      "name": "Post Run actions/checkout@v7.0.1",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8,
+      "started_at": "2026-11-23T11:05:28Z",
+      "completed_at": "2026-11-23T11:05:30Z"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9,
+      "started_at": "2026-11-23T11:05:30Z",
+      "completed_at": "2026-11-23T11:05:31Z"
+    }
+  ],
+  "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/137646342126",
+  "labels": [
+    "xcode-27"
+  ],
+  "runner_id": 1000024605,
+  "runner_name": "GitHub Actions 1000024605",
+  "runner_group_id": 0,
+  "runner_group_name": "GitHub Actions"
+}

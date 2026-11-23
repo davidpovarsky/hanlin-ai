@@ -2,7 +2,29 @@
 
 This is a source/evidence reconciliation of Asana SDK-02, SDK-03, SDK-05, SDK-06, SDK-07 and SDK-08, not a new test execution or blanket completion claim. All six tasks were incomplete when read on 23 November. Current user authorization supersedes historical owner-pause instructions; those entries remain historical records and do not impose a new pause. No former external worker was resumed.
 
-## Current execution checkpoint — 23 November, 10:36 UTC
+## Current execution checkpoint — 23 November, 11:20 UTC
+
+Unified production source `32da9e314e22bbf22391fcf8902302acfbb281e2` is published on the SDK integration branch. The canonical graph remains44 products/108targets/507 original application Swift files. No native acceptance, release or task closure is inferred from source or portable checks.
+
+| Gate | Exact current result and continuation |
+| --- | --- |
+| Root26 [45156789463](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45156789463) / original C45157020895 | Both native jobs ended without a hosted runner:runner_id0, zero steps, original acquisition-failure annotation. No compile, export, test or new screenshot ran. [Root original receipt](../../docs/agent-sdk/evidence/native-runner-admission-45156789463/README.md); [C receipt](../../docs/agent-sdk/evidence/motion-native-45157020895/README.md). |
+| Actual capacity [45161058885](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45161058885) | PASS on actual runner1000024605; Xcode27.2(27B52), standard iOS27.2 runtime24B8117 Ready/available with original paths present. This was read-only, with no simulator boot or app execution. Original9,496-byte artifact, digest, CRC and11 original files are [retained](../../docs/agent-sdk/evidence/native-capacity-probe-45161058885/README.md). |
+| Root continuation [45163990486](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45163990486) at32da9e31 | Dispatched once11:18:25UTC. Same26 unexecuted app selectors and required Host/resource gate; full/device/IPA false. Existing focused package route additionally selects only three new atomic-store methods/four cases. Actual output must confirm all matches; success alone is insufficient. Sole finite watcher `job_01f891d92343`. Outcomes pending. |
+| Anytype [45163976036](https://github.com/davidpovarsky/anytype-swift/actions/runs/45163976036) at aefb9740 | Dispatched once11:18:19UTC after approved actual SpringBoard/scene-observer correction. Same original native1/UI1, SDKd49 and proven runtime source. Sole finite watcher `job_8d68461294be`. Earlier actual app/native1 PASS and Home-admission UI failure remain historical; later authority/logout acceptance is pending. |
+| Lorvex / Maktabah | Their actual-app UI passes and exact-source limits below remain accepted without replay. Final consumer upgrade qualification is being extended for the newly changed shared ScriptUI source; historical pins are not relabeled. |
+| Motion / MiniApps | C-only recapture may resume after verified capacity; no speculative animation fix. D awaits actual simulator readiness. Three original paired MiniApps UI methods await successful full-app compilation. Older B failure and shipping-app/53 foreground passes remain unchanged. |
+| Distribution / remaining capability gaps | Native catalog remains UNPUBLISHED until an eligible successful producer, all18 original assets, anonymous checksums and full selected-profile installation. Safe native FoundationModels tool-round semantics, protected live Otzaria credentials, signed cloud/storage and physical acceptance are still unproven. |
+
+Three additional original crash paths were reproduced and repaired in the canonical source:
+
+- `b8ad08f0` indexes repeated legacy grant records deterministically, preserving separate revocations and the original authorization path. Before:two real Swift SIGTRAPs. After:public probes,5 focused test methods and6 actual state checks pass. [Evidence and policy](HanlinLegacyGrantNormalization20261123.md).
+- `abbc5e1f` rejects persisted registry key/record identity mismatch through the existing corrupt-registry error before duplicate snapshots reach the app. Two original Swift trap fixtures and six repaired load cases are preserved; files are never silently repaired. New original native tests are pending the focused Apple route. `32da9e31` only gives their new valid-registry fixture the existing deterministic clock. [Receipt](HanlinScriptRegistryBoundary20261123.md).
+- `25271f5c` rejects duplicate/missing ScriptUI reorder keys before constructing the existing dictionary; `b65ea0e4` reports the actual repeated key consistently. Original encoded poisoning trapped before;6 focused cases then5 new diagnostic/affected cases pass, with earlier evidence preserved. Valid reorder and patch bodies remain original. [Initial proof](../../docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/README.md); [diagnostic follow-up](../../docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/README.md).
+
+The legacy grant/store files are absent from all three source-only host profiles. The repaired ScriptUI reconciler is included by Maktabah and Anytype, but excluded by Lorvex. The earlier one-factory-only extension must therefore not be reused for those two final upgrades without the new exact delta qualification. PR17 remains draft.
+
+## Prior checkpoint — 23 November, 10:36 UTC
 
 The original complete app remains under native acceptance. Current run [45156789463](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45156789463) binds `646b22918b1c56e5a6a16addcb1d3ebd982d3846` and the same 26 unexecuted selectors. The actual planner passed with exactly app units, targeted simulator UI and the required Host/resource gate; full validation, device export and IPA packaging are false. One finite watcher, `job_2aa7f4d5791c`, owns this result. No passed consumer test is replayed.
 
