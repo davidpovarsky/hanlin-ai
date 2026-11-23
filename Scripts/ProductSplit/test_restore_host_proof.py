@@ -6,6 +6,8 @@ import importlib.util
 import io
 import json
 import os
+import subprocess
+import sys
 import tempfile
 import unittest
 import warnings
@@ -194,6 +196,71 @@ class ForegroundProofTests(unittest.TestCase):
             restore.assert_not_called()
             self.assertIn('foreground_reused=false',outputs.read_text().splitlines())
             self.assertEqual(json.loads((evidence/'foreground-reuse.json').read_text())['status'],'NOT_REQUESTED')
+
+
+class RequestedPairReuseTests(unittest.TestCase):
+    def test_invalid_required_pair_exits_before_next_command_and_retains_both_receipts(self):
+        # Exercise the real process exit boundary, not a swallowed exception:
+        # the following command represents downstream work in a success-only step.
+        script = """
+from pathlib import Path
+import importlib.util, os, sys
+from unittest.mock import patch
+out = Path(sys.argv[1])
+os.environ.update(SPLIT_EVIDENCE=str(out), GITHUB_OUTPUT=str(out/'outputs'),
+                  HOST_PROOF_RUN_ID='44351078724', FOREGROUND_PROOF_RUN_ID='45133337462',
+                  PAIRED_PROOF_REUSE_REQUIRED='true')
+spec = importlib.util.spec_from_file_location('guard', sys.argv[2])
+guard = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(guard)
+def admitted(_): return {'status': 'REUSED_VERIFIED_PASS'}
+def rejected(_): raise ValueError('exact input mismatch retained')
+with patch.object(guard, 'restore', rejected if sys.argv[3] == 'host' else admitted), \
+     patch.object(guard, 'restore_foreground', rejected if sys.argv[3] == 'foreground' else admitted):
+    guard.main()
+(out/'baseline-executed').write_text('unexpected fallback')
+"""
+        for failed in ('host', 'foreground'):
+            with self.subTest(failed=failed), tempfile.TemporaryDirectory() as temporary:
+                out = Path(temporary)
+                result = subprocess.run([sys.executable, '-c', script, temporary,
+                                         str(Path(__file__).with_name('restore_host_proof.py')), failed],
+                                        capture_output=True, text=True, timeout=10)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn('Inspect the mismatch', result.stderr)
+                self.assertFalse((out/'baseline-executed').exists())
+                receipts = {name:json.loads((out/(name+'-reuse.json')).read_text())
+                            for name in ('host','foreground')}
+                self.assertEqual(receipts[failed]['status'], 'INVALIDATED')
+                self.assertEqual(receipts[failed]['reason'], 'exact input mismatch retained')
+                self.assertEqual(receipts['foreground' if failed == 'host' else 'host']['status'],
+                                 'REUSED_VERIFIED_PASS')
+                self.assertIn(('reused' if failed == 'host' else 'foreground_reused')+'=false',
+                              (out/'outputs').read_text().splitlines())
+
+    def test_required_pair_proceeds_only_with_both_admitted_proofs(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            evidence = Path(temporary)
+            outputs = evidence/'outputs'
+            with patch.object(guard,'EVIDENCE',evidence), patch.dict(os.environ,{
+                    'HOST_PROOF_RUN_ID':'44351078724','FOREGROUND_PROOF_RUN_ID':'45133337462',
+                    'PAIRED_PROOF_REUSE_REQUIRED':'true','GITHUB_OUTPUT':str(outputs)}), patch.object(
+                    guard,'restore',return_value={'status':'REUSED_VERIFIED_PASS'}), patch.object(
+                    guard,'restore_foreground',return_value={'status':'REUSED_VERIFIED_PASS'}):
+                guard.main()
+            self.assertEqual(outputs.read_text().splitlines(), ['reused=true','foreground_reused=true'])
+
+    def test_optional_pair_keeps_existing_invalidation_behavior(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            evidence = Path(temporary)
+            outputs = evidence/'outputs'
+            with patch.object(guard,'EVIDENCE',evidence), patch.dict(os.environ,{
+                    'HOST_PROOF_RUN_ID':'44351078724','FOREGROUND_PROOF_RUN_ID':'45133337462',
+                    'PAIRED_PROOF_REUSE_REQUIRED':'false','GITHUB_OUTPUT':str(outputs)}), patch.object(
+                    guard,'restore',side_effect=ValueError('changed Host')), patch.object(
+                    guard,'restore_foreground',side_effect=ValueError('changed foreground')):
+                guard.main()
+            self.assertEqual(outputs.read_text().splitlines(), ['reused=false','foreground_reused=false'])
 
 
 if __name__ == '__main__':
