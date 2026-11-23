@@ -460,6 +460,44 @@ struct HanlinScriptAnalyzerTests {
         })
     }
 
+    @Test("Prepared Expo exposures retain independent intent, share and translation identities")
+    func explicitPreparedEntrypointsPreserveAllIDs() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        let fixture = try package(files: [
+            "script.json": #"{"name":"Entry points","version":"1.0.0","entry":"bundle.js","hanlinRuntime":"hanlin-expo","entrypoints":[{"id":"appIntents","kind":"appIntent","sourcePath":"bundle.js"},{"id":"intent","kind":"appIntent","sourcePath":"bundle.js"},{"id":"share","kind":"share","sourcePath":"bundle.js"},{"id":"translation","kind":"translationUI","sourcePath":"bundle.js","exportedSymbol":"search"}]}"#,
+            "bundle.js": "console.log('prepared')",
+            "package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo"}"#
+        ])
+        defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+        let preview = try analyzer.analyze(fixture)
+        #expect(preview.canInstall)
+        #expect(Set(preview.entrypoints.map(\.id)) == ["app", "appIntents", "intent", "share", "translation"])
+        #expect(preview.entrypoints.filter { $0.kind == .appIntent }.count == 2)
+        #expect(preview.entrypoints.first { $0.kind == .translationUI }?.exportedSymbol == "search")
+    }
+
+    @Test("Malformed and duplicate prepared entrypoints are visible import failures")
+    func malformedPreparedEntrypointsFailWithStableDiagnostic() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        for declarations in [
+            #"[{"id":"share","kind":"share","sourcePath":"../bundle.js"}]"#,
+            #"[{"id":"share","kind":"share","sourcePath":"missing.js"}]"#,
+            #"[{"id":"same","kind":"share","sourcePath":"bundle.js"},{"id":"same","kind":"appIntent","sourcePath":"bundle.js"}]"#,
+            #"[{"id":"home","kind":"customHome","sourcePath":"bundle.js"}]"#,
+            #"{"id":"share"}"#
+        ] {
+            let fixture = try package(files: [
+                "script.json": "{\"name\":\"Invalid exposures\",\"version\":\"1.0.0\",\"entry\":\"bundle.js\",\"hanlinRuntime\":\"hanlin-expo\",\"entrypoints\":\(declarations)}",
+                "bundle.js": "console.log('prepared')",
+                "package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo"}"#
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(!preview.canInstall)
+            #expect(preview.findings.contains { $0.code == "MINIAPP_ENTRYPOINT_DECLARATION_INVALID" })
+        }
+    }
+
     private func package(files: [String: String]) throws -> HanlinStagedPackage {
         let root = FileManager.default.temporaryDirectory.appending(
             path: "hanlin-analyzer-tests-\(UUID().uuidString.lowercased())",

@@ -75,13 +75,15 @@ public struct HanlinScriptAnalyzer: Sendable {
             || package.manifest.unknownFields["hanlinRuntime"] == .string(HanlinRuntimeProfile.hanlinExpo.rawValue)
             || package.manifest.declaredWidgetEngine == .expo
         let scriptWidgetDeclared = package.manifest.declaredWidgetEngine == .scriptwidget
-        let entrypoints = discoverEntrypoints(
+        let discoveredEntrypoints = discoverEntrypoints(
             manifest: package.manifest,
             sourcePaths: sourcePaths
         )
         var edges: [HanlinPackageDependencyEdge] = []
         var unresolved: Set<String> = []
         var findings: [HanlinCompatibilityFinding] = []
+        let entrypoints = Self.preparedEntrypoints(manifest: package.manifest, files: files,
+            discovered: discoveredEntrypoints, findings: &findings)
         var importedSymbols: Set<String> = []
         let conventionalWidgets = ["widget.jsx", "widget.tsx", "widget.ts", "widget.js", "widget.json"].filter { files[$0] != nil }
         if !package.manifest.isWidgetOnlyPackage, conventionalWidgets.count > 1 {
@@ -427,6 +429,23 @@ public struct HanlinScriptAnalyzer: Sendable {
                     sourcePath: candidate.sourcePath,
                     message: "Expo widget exposure '\(candidate.sourcePath)' is supported via host services bridge."
                 ))
+            case .appIntent, .share:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                findings.append(.init(state: prepared ? .supported : .unsupported,
+                    severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "Expo action exposure uses the foreground app's registered Host Services handlers."
+                        : "Expo exposure '\(candidate.kind.rawValue)' is unsupported until it references the prepared foreground bundle containing the registered handlers.",
+                    code: prepared ? "MINIAPP_EXPO_ACTION_READY" : "MINIAPP_EXPO_ACTION_BUNDLE_REQUIRED"))
+            case .translationUI:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                let snapshot = candidate.sourcePath.hasSuffix(".json")
+                findings.append(.init(state: prepared || snapshot ? .supported : .unsupported,
+                    severity: prepared || snapshot ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "Translation opens the registered action in the foreground Expo app with the selected text."
+                        : "Translation UI requires a JSON snapshot or the prepared foreground bundle.",
+                    code: prepared || snapshot ? "MINIAPP_TRANSLATION_READY" : "MINIAPP_TRANSLATION_BUNDLE_REQUIRED"))
             default:
                 findings.append(.init(
                     state: .unsupported,
@@ -674,6 +693,55 @@ public struct HanlinScriptAnalyzer: Sendable {
             result[path] = try Data(contentsOf: url)
         }
         return result
+    }
+
+    /// Prepared runtimes declare exposures explicitly because source modules
+    /// such as intent.tsx and app_intents.tsx are bundled into the same program.
+    /// Distinct IDs survive even when their kind and prepared source are equal.
+    private static func preparedEntrypoints(
+        manifest: HanlinScriptingManifest,
+        files: [String: Data],
+        discovered: [HanlinPackageEntrypointDescriptor],
+        findings: inout [HanlinCompatibilityFinding]
+    ) -> [HanlinPackageEntrypointDescriptor] {
+        guard let field = manifest.unknownFields["entrypoints"] else { return discovered }
+        let runtime = manifest.hanlinRuntime.flatMap(HanlinRuntimeProfile.init(rawValue:))
+        guard let runtime, [.hanlinExpo, .hanlinNativeScript].contains(runtime),
+              case let .array(items) = field else {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                message: "entrypoints must be an array of explicit Expo or NativeScript exposures.",
+                code: "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"))
+            return discovered
+        }
+        var declared: [HanlinPackageEntrypointDescriptor] = []
+        var identifiers = Set<String>()
+        for (index, item) in items.enumerated() {
+            guard case let .object(fields) = item,
+                  case let .string(id)? = fields["id"], !id.isEmpty,
+                  case let .string(rawKind)? = fields["kind"],
+                  let kind = HanlinPackageEntrypointKind(rawValue: rawKind),
+                  [.appIntent, .share, .translationUI].contains(kind),
+                  case let .string(path)? = fields["sourcePath"],
+                  HanlinArchivePolicy.normalizedRelativePath(path) == path, files[path] != nil,
+                  identifiers.insert(id).inserted, id != "app", id != "widget" else {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "entrypoints[\(index)] requires a unique id, supported kind (appIntent, share, translationUI), and existing package-relative sourcePath.",
+                    code: "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"))
+                continue
+            }
+            let context: HanlinExecutionContext = switch kind {
+            case .appIntent: .appIntent
+            case .translationUI: .translationUI
+            default: .mainApplication
+            }
+            let symbol: String? = if case let .string(value)? = fields["exportedSymbol"] { value } else { nil }
+            declared.append(.init(id: id, kind: kind, sourcePath: path, exportedSymbol: symbol,
+                supportedContexts: [context, .mainApplication], runtimePolicyID: "prepared-foreground-action-v1",
+                runtimeProfile: runtime, compatibility: .partial))
+        }
+        let declaredKinds = Set(declared.map(\.kind))
+        let retained = discovered.filter { !declaredKinds.contains($0.kind) }
+        return (retained + declared).sorted { ($0.kind.rawValue, $0.id) < ($1.kind.rawValue, $1.id) }
     }
 
     private func discoverEntrypoints(

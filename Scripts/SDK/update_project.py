@@ -227,6 +227,9 @@ def update():
     children=list(objects[group]["children"])
     if intents_file not in children: children.append(intents_file)
     text=edit_object(text,group,lambda b:replace_list(b,"children",children))
+    sys.path.insert(0, str(ROOT / "Scripts/ProductSplit"))
+    from miniapps_extensions import wire_miniapps_extensions
+    text = wire_miniapps_extensions(text, edit_object, replace_list, insert_object)
     parse_project(text)
     return text
 

@@ -95,7 +95,11 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public init(hostConfiguration: HanlinExtensionHostConfiguration) throws {
-        try self.init(appGroupIdentifier: hostConfiguration.requireAppGroupIdentifier())
+        guard let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: try hostConfiguration.requireAppGroupIdentifier()
+        ) else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
+        let product = try hostConfiguration.storageContainer(in: container)
+        self.init(root: product.appending(path: "ScriptingExtensions", directoryHint: .isDirectory))
     }
 
     public init(appGroupIdentifier: String) throws {

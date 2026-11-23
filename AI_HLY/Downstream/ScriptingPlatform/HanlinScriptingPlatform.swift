@@ -141,6 +141,7 @@ final class HanlinScriptingPlatform {
     private var nativeScriptSession: HanlinNativeScriptSession?
     private var nativeScriptHostServices: NativeScriptHostServicesAdapter?
     private var expoSession: HanlinExpoSession?
+    private var expoHostServices: ExpoHostServicesAdapter?
     private(set) var isTransferringProductData = false
     private var activeStoreOperations = 0
     private var scriptingStorageCheckpoint: UUID?
@@ -920,6 +921,7 @@ final class HanlinScriptingPlatform {
                     sessionID: sessionID,
                     externalMiniAppOperation: externalMiniAppOperation
                 )
+                expoHostServices = adapter
                 HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
                 let isNativeAPIGranted = true // Native API access follows the active runtime, not legacy grants.
                 needsFreshProcessForTransfer = true
@@ -1057,6 +1059,8 @@ final class HanlinScriptingPlatform {
             HanlinExpoHostServicesBridge.unregister(sessionID: session.sessionID)
         }
         expoSession = nil
+        if let adapter = expoHostServices { Task { await adapter.actionChannel.close() } }
+        expoHostServices = nil
         activeApplicationID = nil
         activeApplicationModel = nil
         activeNativeScriptController = nil
@@ -1091,6 +1095,20 @@ final class HanlinScriptingPlatform {
               declaredAction.capabilities.contains(capability),
               let handlerPath = declaredAction.handler else {
             throw HanlinMiniAppRequestError.routeNotFound
+        }
+
+        if let appEntry = package.entrypoints.first(where: { $0.kind == .app && $0.runtimeProfile == .hanlinExpo }) {
+            guard handlerPath == appEntry.sourcePath else { throw HanlinMiniAppRequestError.routeNotFound }
+            if activeApplicationID != package.record.installedPackageID {
+                guard !isLaunching else { throw HanlinInvocationNotStarted() }
+                await launch(package.record.installedPackageID)
+            }
+            guard activeApplicationID == package.record.installedPackageID,
+                  expoSession != nil, let adapter = expoHostServices else {
+                throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost)
+            }
+            return try await adapter.actionChannel.invoke(id: invocationID ?? UUID(), action: action.rawValue,
+                caller: caller.rawValue, parameters: payload)
         }
 
         if nativeScriptSession != nil, activeApplicationID == package.record.installedPackageID {
@@ -1324,10 +1342,29 @@ final class HanlinScriptingPlatform {
                 let translationEntrypoints = package.entrypoints.filter { $0.kind == .translationUI }
                 for entrypoint in translationEntrypoints {
                     let fileURL = artifactRoot.appending(path: entrypoint.sourcePath)
-                    guard entrypoint.sourcePath.hasSuffix(".json"),
-                          let data = try? Data(contentsOf: fileURL),
-                          let rootNode = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) else {
-                        Self.logger.info("translation-ui entrypoint \(entrypoint.sourcePath) is non-JSON or unparseable; skipping generic fallback")
+                    let rootNode: HanlinScriptUINode
+                    if entrypoint.sourcePath.hasSuffix(".json"),
+                       let data = try? Data(contentsOf: fileURL),
+                       let snapshot = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {
+                        rootNode = snapshot
+                    } else if [.hanlinNativeScript, .hanlinExpo].contains(entrypoint.runtimeProfile),
+                              let action = try package.appDescriptor().actions.first(where: {
+                                  $0.handler == entrypoint.sourcePath &&
+                                      (entrypoint.exportedSymbol == nil || $0.id.rawValue == entrypoint.exportedSymbol)
+                              }) {
+                        // This native extension carries the selected text to the
+                        // prepared app. It never pretends to run React Native or
+                        // a NativeScript VM inside a declarative snapshot.
+                        rootNode = .init(kind: .vStack, children: [
+                            .init(kind: .text, properties: ["text": .string("{{selectedText}}")]),
+                            .init(kind: .button, properties: ["intent": .object([
+                                "__hanlinAppIntent": .bool(true), "name": .string(action.id.rawValue),
+                                "parameters": .object(["query": .string("{{selectedText}}"),
+                                    "source": .string("translationUI")])
+                            ])], children: [.init(kind: .text, properties: ["text": .string(action.title.resolved(locale: .current))])])
+                        ])
+                    } else {
+                        Self.logger.info("Translation entrypoint has no executable action or valid snapshot")
                         continue
                     }
                     let identity = HanlinScriptExtensionIdentity(
@@ -1452,7 +1489,7 @@ final class HanlinScriptingPlatform {
                         continue
                     }
 
-                    if entrypoint.runtimeProfile == .hanlinNativeScript {
+                    if entrypoint.runtimeProfile == .hanlinNativeScript || entrypoint.runtimeProfile == .hanlinExpo {
                         var actionIDs: [(id: String, title: String)] = []
                         let intentURL = artifactRoot.appending(path: entrypoint.sourcePath)
                         if entrypoint.sourcePath.hasSuffix(".json"),
@@ -1807,12 +1844,12 @@ final class HanlinScriptingPlatform {
         guard command.invocation.delivery == nil || command.invocation.delivery?.appID == package.appID,
               let entrypoint = package.entrypoints.first(where: {
                   $0.id == identity.entrypointID && (command.invocation.delivery?.source == .share
-                      ? ($0.kind == .app || $0.kind == .share) : $0.kind == .appIntent)
+                      ? ($0.kind == .app || $0.kind == .share) : ($0.kind == .appIntent || $0.kind == .translationUI))
               }),
               let actionName = command.invocation.entityID else {
             throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
         }
-        if entrypoint.runtimeProfile == .hanlinNativeScript {
+        if entrypoint.runtimeProfile == .hanlinNativeScript || entrypoint.runtimeProfile == .hanlinExpo {
             let cleanActionName = actionName.components(separatedBy: "::").last ?? actionName
             guard let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
                     ?? (try? HanlinAppID(validating: identity.packageID.rawValue)),
@@ -1837,12 +1874,14 @@ final class HanlinScriptingPlatform {
             }
             // Preserve the one-isolate invariant. Queue policy must not start a
             // second NativeScript VM while another package owns the first.
-            guard nativeScriptSession == nil || activeApplicationID == identity.installedPackageID,
-                  !isExecutingHeadlessNativeScriptAction else {
-                throw HanlinInvocationNotStarted()
-            }
-            if command.invocation.delivery?.source == .share, nativeScriptSession != nil {
-                throw HanlinInvocationNotStarted()
+            if entrypoint.runtimeProfile == .hanlinNativeScript {
+                guard nativeScriptSession == nil || activeApplicationID == identity.installedPackageID,
+                      !isExecutingHeadlessNativeScriptAction else {
+                    throw HanlinInvocationNotStarted()
+                }
+                if command.invocation.delivery?.source == .share, nativeScriptSession != nil {
+                    throw HanlinInvocationNotStarted()
+                }
             }
             await HanlinMiniAppHost.shared.refresh(installedPackages: installedPackages)
             queuedNativeScriptAdmissions.insert(command.id)
@@ -1852,9 +1891,6 @@ final class HanlinScriptingPlatform {
                 action: actionID, capability: requestCapability, payload: parameters))
             WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
             return response.value
-        }
-        guard entrypoint.runtimeProfile != .hanlinExpo else {
-            throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
         }
         let artifactRoot = try await store.activeArtifactURL(for: identity.installedPackageID)
         let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)

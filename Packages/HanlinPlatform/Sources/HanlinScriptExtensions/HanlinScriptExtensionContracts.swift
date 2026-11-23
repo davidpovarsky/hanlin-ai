@@ -462,16 +462,27 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
 
 extension HanlinScriptUINode {
     public func substituting(context: [String: String]) -> HanlinScriptUINode {
-        var updatedProps = properties
-        for (k, v) in properties {
-            if case let .string(s) = v {
-                var substituted = s
-                for (placeholder, replacement) in context {
-                    substituted = substituted.replacingOccurrences(of: "{{\(placeholder)}}", with: replacement)
+        func substitute(_ value: HanlinValue) -> HanlinValue {
+            switch value {
+            case let .string(template):
+                // Substitute the original template once. Selected text containing
+                // another placeholder remains verbatim user text.
+                guard let expression = try? NSRegularExpression(pattern: #"\{\{([A-Za-z][A-Za-z0-9]*)\}\}"#) else { return value }
+                let range = NSRange(template.startIndex..., in: template)
+                var output = template
+                for match in expression.matches(in: template, range: range).reversed() {
+                    guard let keyRange = Range(match.range(at: 1), in: template),
+                          let replacement = context[String(template[keyRange])],
+                          let outputRange = Range(match.range, in: output) else { continue }
+                    output.replaceSubrange(outputRange, with: replacement)
                 }
-                updatedProps[k] = .string(substituted)
+                return .string(output)
+            case let .array(values): return .array(values.map(substitute))
+            case let .object(values): return .object(values.mapValues(substitute))
+            default: return value
             }
         }
+        let updatedProps = properties.mapValues(substitute)
         let updatedChildren = children.map { $0.substituting(context: context) }
         return HanlinScriptUINode(
             kind: kind,

@@ -90,6 +90,8 @@
 	</array>
 	<key>HanlinExtensionHost</key>
 	<dict>
+		<key>StorageNamespace</key>
+		<string>HanlinMiniApps/v1</string>
 		<key>AppGroupIdentifier</key>
 		<string>group.com.itorah.chavrusachat</string>
 		<key>WidgetKind</key>

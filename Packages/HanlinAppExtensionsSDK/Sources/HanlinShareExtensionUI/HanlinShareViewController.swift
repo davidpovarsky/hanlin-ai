@@ -69,7 +69,7 @@ open class HanlinShareViewController: UIViewController {
             guard let container = FileManager.default.containerURL(
                 forSecurityApplicationGroupIdentifier: try hostConfiguration.requireAppGroupIdentifier()
             ) else { throw HanlinShareInboxError.invalidPath }
-            let store = try HanlinShareInboxStore(container: container)
+            let store = try HanlinShareInboxStore(container: hostConfiguration.storageContainer(in: container))
             let batchID = try store.begin()
             staging = (store, batchID)
             let providers = extensionContext?.inputItems

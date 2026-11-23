@@ -1,7 +1,7 @@
 {
   "name": "חיפוש טקסטים מודולרי — Expo",
-  "version": "1.2.0",
-  "description": "Native iOS Searchable + SwiftUI List via the fixed Hanlin Expo bridge; Sefaria via URLSession.",
+  "version": "1.3.0",
+  "description": "Native SwiftUI text search with Expo, Share, Shortcuts and Translation continuation.",
   "entry": "bundle.js",
   "runInApp": true,
   "hanlinRuntime": "hanlin-expo",
@@ -12,6 +12,39 @@
   "color": "#007AFF",
   "capabilities": [
     "ios-native-api",
-    "network"
+    "network",
+    "inter-app.share"
+  ],
+  "entrypoints": [
+    {
+      "id": "appIntents",
+      "kind": "appIntent",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "search"
+    },
+    {
+      "id": "share",
+      "kind": "share",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "search"
+    },
+    {
+      "id": "translation",
+      "kind": "translationUI",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "search"
+    }
+  ],
+  "actions": [
+    {
+      "id": "search",
+      "title": "חיפוש טקסטים",
+      "handler": "bundle.js",
+      "capability": "inter-app.share"
+    }
+  ],
+  "intentInputTypes": [
+    "Text",
+    "URLs"
   ]
 }

@@ -20,7 +20,7 @@ extension HanlinScriptingPlatform {
             return descriptor.actions.compactMap { action in
                 guard action.capabilities.contains(where: { $0.rawValue == "inter-app.share" }),
                       let entry = package.entrypoints.first(where: {
-                          ($0.kind == .app || $0.kind == .share) && $0.runtimeProfile == .hanlinNativeScript
+                          ($0.kind == .app || $0.kind == .share) && [.hanlinNativeScript, .hanlinExpo].contains($0.runtimeProfile)
                               && $0.sourcePath == action.handler
                       }) else { return nil }
                 return .init(identity: .init(installedPackageID: package.record.installedPackageID,

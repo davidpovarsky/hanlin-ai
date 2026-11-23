@@ -1,5 +1,7 @@
 import { requireNativeModule } from 'expo';
 import { fromByteArray, toByteArray } from 'base64-js';
+import { serveMiniAppActions, type MiniAppActionHandlers } from './miniapp-actions';
+export type { MiniAppActionInvocation, MiniAppActionHandler, MiniAppActionHandlers, MiniAppJSONValue } from './miniapp-actions';
 
 interface NativeHostServicesModule {
   invoke(operation: string, payloadJSON: string): Promise<string>;
@@ -72,6 +74,10 @@ async function invoke<T>(operation: string, payload: unknown): Promise<T> {
 }
 
 export const hostServices = {
+  actions: {
+    /** Call once after loading the complete action table. Runs until session teardown. */
+    register: (handlers: MiniAppActionHandlers): Promise<void> => serveMiniAppActions(invoke, handlers),
+  },
   miniapps: {
     getContext: () => invoke<MiniAppSharedContext>('miniapps.context', {}),
     complete: async (output: string | MiniAppOutput) => {

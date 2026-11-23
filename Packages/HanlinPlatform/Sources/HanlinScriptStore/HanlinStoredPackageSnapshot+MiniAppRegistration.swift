@@ -251,9 +251,15 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
                     let capID = (try? HanlinCapabilityID(validating: capIDStr))
                         ?? (try! HanlinCapabilityID(validating: "inter-app.share"))
                     let handler: String? = {
-                        if case let .string(value) = actionObj["handler"] { return value }
-                        if case let .string(value) = actionObj["entrypoint"] { return value }
-                        return nil
+                        let declared: String?
+                        if case let .string(value) = actionObj["handler"] { declared = value }
+                        else if case let .string(value) = actionObj["entrypoint"] { declared = value }
+                        else { declared = nil }
+                        guard let declared else { return nil }
+                        if entrypoints.contains(where: { $0.sourcePath == declared }) { return declared }
+                        let installedPath = "source/" + declared
+                        if entrypoints.contains(where: { $0.sourcePath == installedPath }) { return installedPath }
+                        return declared
                     }()
                     let titleVal = (try? LocalizedValue(["en": titleStr]))
                         ?? (try! LocalizedValue(["en": actionIDStr]))

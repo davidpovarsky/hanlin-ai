@@ -71,6 +71,42 @@ class ProjectGraphTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             validate_graph(self.project, self.manifest)
 
+    def test_miniapps_extensions_do_not_alias_ai_targets(self):
+        dependency = self.objects[self.mini["dependencies"][0]]
+        dependency["target"] = next(key for key, value in self.objects.items()
+                                    if value.get("name") == "HanlinScriptingWidgets"
+                                    and value.get("isa") == "PBXNativeTarget")
+        with self.assertRaisesRegex(AssertionError, "only on its own"):
+            validate_graph(self.project, self.manifest)
+
+    def test_miniapps_extensions_are_actually_embedded(self):
+        phase = next(self.objects[key] for key in self.mini["buildPhases"]
+                     if self.objects[key].get("name") == "Embed MiniApps App Extensions")
+        phase["files"].pop()
+        with self.assertRaisesRegex(AssertionError, "embed each own extension"):
+            validate_graph(self.project, self.manifest)
+
+    def test_miniapps_extensions_link_original_shared_sdk(self):
+        target = next(value for value in self.objects.values()
+                      if value.get("name") == "HanlinMiniAppsWidgets" and value.get("isa") == "PBXNativeTarget")
+        phase = next(self.objects[key] for key in target["buildPhases"]
+                     if self.objects[key]["isa"] == "PBXFrameworksBuildPhase")
+        phase["files"].pop()
+        with self.assertRaisesRegex(AssertionError, "original SDK closure"):
+            validate_graph(self.project, self.manifest)
+
+    def test_native_surfaces_share_only_miniapps_namespace(self):
+        import plistlib
+        for info in [ROOT / "HanlinMiniAppsApp/Info.plist",
+                     *sorted((ROOT / "HanlinMiniAppsExtensions").glob("*/Info.plist"))]:
+            config = plistlib.loads(info.read_bytes())["HanlinExtensionHost"]
+            self.assertEqual(config["AppGroupIdentifier"], "group.com.itorah.chavrusachat")
+            self.assertEqual(config["StorageNamespace"], "HanlinMiniApps/v1")
+        self.assertEqual(len(list((ROOT / "HanlinMiniAppsExtensions").glob("*/Info.plist"))), 3)
+        for entitlements in (ROOT / "HanlinMiniAppsExtensions").glob("*/*.entitlements"):
+            self.assertIn("group.com.itorah.chavrusachat",
+                          plistlib.loads(entitlements.read_bytes())["com.apple.security.application-groups"])
+
     def test_reject_whole_app_source_membership(self):
         self.mini["fileSystemSynchronizedGroups"].append("D7B6C3C32D50A55D004E3AD6")
         with self.assertRaises(AssertionError):

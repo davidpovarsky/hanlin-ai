@@ -1,3 +1,4 @@
+import HanlinExtensionContracts
 import HanlinLocalization
 import Foundation
 import CryptoKit
@@ -181,7 +182,7 @@ actor ChavrusaShareInbox {
         guard let groupID, !groupID.isEmpty, let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
         ) else { throw HanlinShareInboxError.invalidPath }
-        return try HanlinShareInboxStore(container: container)
+        return try HanlinShareInboxStore(container: HanlinExtensionHostConfiguration.load().storageContainer(in: container))
     }
 
     func pendingItems() throws -> [ChavrusaSharedItem] {
@@ -197,13 +198,13 @@ actor ChavrusaShareInbox {
         guard let groupID, !groupID.isEmpty, let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
         ) else { throw HanlinShareInboxError.invalidPath }
-        return try HanlinShareInboxStore(container: container).scan()
+        return try HanlinShareInboxStore(container: HanlinExtensionHostConfiguration.load().storageContainer(in: container)).scan()
     }
 
     func ownedFile(batchID: UUID, itemID: UUID) throws -> URL {
         guard let groupID, !groupID.isEmpty, let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
         ) else { throw HanlinShareInboxError.invalidPath }
-        return try HanlinShareInboxStore(container: container).ownedFile(batchID: batchID, itemID: itemID)
+        return try HanlinShareInboxStore(container: HanlinExtensionHostConfiguration.load().storageContainer(in: container)).ownedFile(batchID: batchID, itemID: itemID)
     }
 }

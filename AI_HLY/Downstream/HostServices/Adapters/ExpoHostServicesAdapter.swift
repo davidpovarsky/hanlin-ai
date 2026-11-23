@@ -10,6 +10,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     public let sessionID: String
     public let context: HanlinHostCallContext
     private let externalMiniAppOperation: HanlinMiniAppExternalOperation?
+    let actionChannel = HanlinMiniAppActionChannel()
 
     public init(
         appID: HanlinAppID,
@@ -62,6 +63,28 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
         }
         let payloadData = Data(payloadJSON.utf8)
         switch operation {
+        case "actions.register":
+            let request = try JSONDecoder().decode(ActionRegistration.self, from: payloadData)
+            try await actionChannel.register(actions: Set(request.names))
+            return "{\"ok\":true}"
+
+        case "actions.next":
+            let request = try await actionChannel.next()
+            return String(decoding: try request.jsonData(), as: UTF8.self)
+
+        case "actions.complete":
+            guard case let .object(object) = try HanlinJSONValue.decodeCanonicalJSON(payloadData),
+                  case let .string(rawID)? = object["id"], let id = UUID(uuidString: rawID) else {
+                throw HanlinHostServiceError.invalidRequest("Action completion requires a valid invocation id")
+            }
+            if case let .string(message)? = object["error"] {
+                try await actionChannel.complete(id: id, result: .failure(.executionFailed(message)))
+            } else {
+                let value = try HanlinValue(jsonValue: object["value"] ?? .null)
+                try await actionChannel.complete(id: id, result: .success(value))
+            }
+            return "{\"ok\":true}"
+
         case "capabilities.has":
             let request = try JSONDecoder().decode(CapabilityRequest.self, from: payloadData)
             return try Self.encode(["value": hasCapability(request.capability)])
@@ -424,4 +447,8 @@ extension ExpoHostServicesAdapter {
         var counter = 0
         return try parseUntaggedNodeInternal(dict, depth: depth, nodeCounter: &counter)
     }
+}
+
+private struct ActionRegistration: Decodable {
+    let names: [String]
 }
