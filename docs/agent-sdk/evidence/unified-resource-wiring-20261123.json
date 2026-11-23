@@ -1,0 +1,7 @@
+{
+  "check": "Unified-package SDK bundle prefix accepted; duplicate canonical bundles rejected",
+  "sourceSHA256": "eb6541a07c159f89639724058c3ef0a7557bb881bedb62d4d26d58d44946a673",
+  "syntheticBundlePASS": 177,
+  "duplicateBundleRejected": true,
+  "AppleCompilation": "NOT_RUN"
+}

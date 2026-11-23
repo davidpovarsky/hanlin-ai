@@ -115,7 +115,7 @@ actor AgentDiagnosticsRecorder {
             efficiency: AgentEfficiencyReport()
         )
         self.directoryURL = directoryURL
-        if let url = bundle.url(forResource: "HanlinDiagnosticsBuildProvenance", withExtension: "json"),
+        if let url = HanlinApplicationResources.bundle.url(forResource: "HanlinDiagnosticsBuildProvenance", withExtension: "json"),
            let data = try? Data(contentsOf: url), let object = try? JSONSerialization.jsonObject(with: data) {
             session.buildProvenanceJSON = AgentDiagnosticsRedactor.sanitizedJSONString(from: object)
         }

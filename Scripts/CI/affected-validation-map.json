@@ -1736,6 +1736,25 @@
         "AI_HLYTests/CalendarToolTests"
       ],
       "consumers": []
+    },
+    "hanlin_localization_sdk": {
+      "description": "Original shared language tables, images, colors and exact native-control resource routing",
+      "patterns": [
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/**",
+        "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/**",
+        "Scripts/Localization/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinLocalizationTests",
+        "AI_HLYTests/HanlinLocalizedControlTests",
+        "AI_HLYTests/HanlinOriginalAssetTests"
+      ],
+      "consumers": [
+        "app_core"
+      ]
     }
   },
   "validation_groups": {

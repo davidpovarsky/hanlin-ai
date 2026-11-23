@@ -37,7 +37,7 @@ LEGACY_CATALOGS = {
     "Localizable": "AI_HLY/Resource/Localizable.xcstrings",
     "RuntimeLocalizable": "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
 }
-SHARED_BUNDLE = "HanlinPresentationSDK_HanlinLocalization.bundle"
+SHARED_BUNDLES = ("HanlinSDK_HanlinLocalization.bundle", "HanlinPresentationSDK_HanlinLocalization.bundle")
 
 def catalog_bytes(root, revision, table, relative):
     if not revision:
@@ -85,7 +85,8 @@ def validate(root, revision=None, app=None):
     errors = []
     checked_values = 0
     checked_packaged_values = 0
-    bundles = ([app] if app and app.name == SHARED_BUNDLE else sorted(app.rglob(SHARED_BUNDLE)) if app else [])
+    bundles = ([app] if app and app.name in SHARED_BUNDLES else
+               sorted({bundle for name in SHARED_BUNDLES for bundle in app.rglob(name)}) if app else [])
     for table, (relative, required_keys) in CATALOGS.items():
         raw, shared = catalog_bytes(root, revision, table, relative)
         data = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_object)

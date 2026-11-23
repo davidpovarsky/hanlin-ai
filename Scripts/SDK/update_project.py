@@ -7,7 +7,8 @@ sys.path.insert(0,str(ROOT/"Scripts/CI/IntegrationValidation"))
 from project_graph import parse_project
 FILE=ROOT/"AI_HLY.xcodeproj/project.pbxproj"
 ROOT_PACKAGE="AC1900000000000000000001"
-PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000000000000000003"}
+PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000000000000000003",
+          "HanlinLocalization":"AC1900000000000000000004"}
 
 class Span:
     def __init__(self,text,start,end):self.text,self.left,self.right=text,start,end
@@ -77,7 +78,7 @@ def update():
     targets={v["name"]:(k,v) for k,v in objects.items() if v.get("isa")=="PBXNativeTarget"}
     for index,name in enumerate(("AI_Hanlin","AI_HLYTests","HanlinMiniApps")):
         key,target=targets[name]
-        required=["HanlinApplication","HanlinA2UI"] if name!="HanlinMiniApps" else ["HanlinA2UI"]
+        required=["HanlinApplication","HanlinA2UI","HanlinLocalization"] if name!="HanlinMiniApps" else ["HanlinA2UI","HanlinLocalization"]
         products=list(target.get("packageProductDependencies",[]))
         for product in required:
             if PRODUCTS[product] not in products:products.append(PRODUCTS[product])
@@ -99,6 +100,46 @@ def update():
                         b=re.sub(r'"?PRODUCT_NAME"? = "\$\(TARGET_NAME\)";', 'PRODUCT_NAME = "$(TARGET_NAME)";\n\t\t\t\tPRODUCT_MODULE_NAME = HanlinApp;', b)
                     return b
                 text=edit_object(text,config,settings)
+    # The standalone MiniApps executable compiles the same small original
+    # runtime/provider closure. Runtime configuration must not pull the chat
+    # model or AgentCore into this product.
+    mini=targets["HanlinMiniApps"][1]
+    source_phase=next(k for k in mini["buildPhases"] if objects[k]["isa"]=="PBXSourcesBuildPhase")
+    source_files=list(objects[source_phase]["files"])
+    shared=["AI_HLY/Downstream/SDK/HanlinApplicationResources.swift",
+            "AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift"]
+    shared_group="F9F4C452EBF2FA6B1274B4D7"
+    shared_children=list(objects[shared_group]["children"])
+    for index,path in enumerate(shared):
+        file_id="AC19"+f"{256+index*2:020X}"
+        build_id="AC19"+f"{257+index*2:020X}"
+        text=insert_object(text,"PBXFileReference",file_id,
+            "\t\t\tisa = PBXFileReference;\n\t\t\tlastKnownFileType = sourcecode.swift;\n\t\t\tpath = "+json.dumps(path)+";\n\t\t\tsourceTree = SOURCE_ROOT;\n")
+        text=insert_object(text,"PBXBuildFile",build_id,
+            "\t\t\tisa = PBXBuildFile;\n\t\t\tfileRef = "+file_id+";\n")
+        if build_id not in source_files:source_files.append(build_id)
+        if file_id not in shared_children:shared_children.append(file_id)
+    text=edit_object(text,source_phase,lambda b:replace_list(b,"files",source_files))
+    text=edit_object(text,shared_group,lambda b:replace_list(b,"children",shared_children))
+    resource_phase=next(k for k in mini["buildPhases"] if objects[k]["isa"]=="PBXResourcesBuildPhase")
+    # Original shared translations now belong to HanlinLocalization. The
+    # executable keeps its original AppIcon, AccentColor and launch logo only.
+    resource_files=[k for k in objects[resource_phase]["files"]
+                    if objects[objects[k]["fileRef"]]["path"] != "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings"]
+    text=edit_object(text,resource_phase,lambda b:replace_list(b,"files",resource_files))
+    # Run the canonical public-bundle tests in the actual application scheme as
+    # well as the package scheme, without maintaining another test source.
+    unit=targets["AI_HLYTests"][1]
+    unit_phase=next(k for k in unit["buildPhases"] if objects[k]["isa"]=="PBXSourcesBuildPhase")
+    unit_files=list(objects[unit_phase]["files"])
+    test_file="AC1900000000000000000120"
+    test_build="AC1900000000000000000121"
+    text=insert_object(text,"PBXFileReference",test_file,
+        "\t\t\tisa = PBXFileReference;\n\t\t\tlastKnownFileType = sourcecode.swift;\n\t\t\tpath = \"Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift\";\n\t\t\tsourceTree = SOURCE_ROOT;\n")
+    text=insert_object(text,"PBXBuildFile",test_build,
+        "\t\t\tisa = PBXBuildFile;\n\t\t\tfileRef = "+test_file+";\n")
+    if test_build not in unit_files:unit_files.append(test_build)
+    text=edit_object(text,unit_phase,lambda b:replace_list(b,"files",unit_files))
     # Native binary targets are linked/embedded by the SDK graph. Retain the
     # standalone MiniApps target's original independent framework phases.
     text=edit_object(text,"D79AD5752DB545F9000646D4",lambda b:replace_list(b,"files",[]))

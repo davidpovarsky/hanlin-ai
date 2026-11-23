@@ -3,8 +3,10 @@ import PackageDescription
 
 let package = Package(
     name: "HanlinPresentationSDK",
+    defaultLocalization: "zh-Hans",
     platforms: [.iOS("27.0"), .macOS(.v26)],
     products: [
+        .library(name: "HanlinLocalization", targets: ["HanlinLocalization"]),
         .library(name: "HanlinPresentationKit", targets: ["HanlinPresentationKit"]),
         .library(name: "HanlinRichUI", targets: ["HanlinRichUI"]),
         .library(name: "HanlinChatUI", targets: ["HanlinChatUI"]),
@@ -19,10 +21,11 @@ let package = Package(
                  revision: "bba848db50462894e7fc0891d018dfecad4ef11e")
     ],
     targets: [
+        .target(name: "HanlinLocalization", resources: [.process("Resources")]),
         .target(name: "HanlinPresentationKit"),
-        .target(name: "HanlinRichUI", dependencies: ["HanlinPresentationKit"],
+        .target(name: "HanlinRichUI", dependencies: ["HanlinPresentationKit", "HanlinLocalization"],
                 resources: [.copy("Resources/OpenUI")]),
-        .target(name: "HanlinChatUI", dependencies: ["HanlinPresentationKit", "HanlinRichUI",
+        .target(name: "HanlinChatUI", dependencies: ["HanlinPresentationKit", "HanlinRichUI", "HanlinLocalization",
                 .product(name: "SwiftStreamingMarkdown", package: "hanlin-streaming-markdown",
                          condition: .when(platforms: [.iOS]))],
                 resources: [
@@ -33,13 +36,14 @@ let package = Package(
                     .copy("CodeFences/Resources/HanlinCodeFenceThirdPartyLicenses.txt")
                 ]),
         .target(name: "HanlinA2UI", dependencies: [
-            "HanlinPresentationKit",
+            "HanlinPresentationKit", "HanlinLocalization",
             .product(name: "A2UISwiftCore", package: "a2ui"),
             .product(name: "A2UISwiftUI", package: "a2ui"),
             .product(name: "BasicCatalog", package: "a2ui"),
             .product(name: "BasicCatalogSwiftUI", package: "a2ui"),
             .product(name: "SwiftSoup", package: "SwiftSoup")
         ]),
+        .testTarget(name: "HanlinLocalizationTests", dependencies: ["HanlinLocalization"]),
         .testTarget(name: "HanlinChatUITests", dependencies: ["HanlinChatUI"]),
         .testTarget(name: "HanlinPresentationKitTests", dependencies: ["HanlinPresentationKit"])
     ],

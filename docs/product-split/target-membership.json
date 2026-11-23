@@ -27,6 +27,7 @@
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/AppRuntimeCore.swift",
+    "AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/RuntimeExecutionInputArtifact.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/RuntimeFileLayout.swift",
@@ -55,6 +56,7 @@
     "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
     "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeDiagnostics.swift",
     "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeService.swift",
+    "AI_HLY/Downstream/SDK/HanlinApplicationResources.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift",
@@ -91,10 +93,12 @@
     "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/resolvelib-1.2.1-py3-none-any.whl",
     "AI_HLY/Downstream/RuntimeCore/Python/Resources/hanlin_native-1.0.0-py3-none-any.whl",
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt",
-    "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json",
     "AI_HLY/RuntimeHostResources.zip",
     "AI_HLY/Assets.xcassets"
   ],
-  "integration_base": "16934250"
+  "integration_base": "16934250",
+  "sdk_resources": {
+    "HanlinLocalization": "Original three language catalogs and shared image/color assets"
+  }
 }
