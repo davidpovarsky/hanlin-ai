@@ -17,7 +17,10 @@ enum HanlinAppleToolSessionBridge {
               options.frequencyPenalty == nil, options.seed == nil, options.stopSequences?.isEmpty != false,
               options.responseFormat == nil || options.responseFormat == .text,
               options.providerOptions?.isEmpty != false, options.includeRawChunks != true,
-              options.headers?.isEmpty != false else { throw HanlinAppleProviderError.unsupportedSettings }
+              // The original producer adds User-Agent transport metadata. It is never
+              // forwarded to native instructions/history; other headers remain unsupported.
+              options.headers?.keys.allSatisfy({ $0.lowercased() == "user-agent" }) != false
+              else { throw HanlinAppleProviderError.unsupportedSettings }
         let history = try HanlinAppleToolHistory(options.prompt)
         var names: Set<String> = []
         var tools: [HandoffTool] = []
