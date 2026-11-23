@@ -82,8 +82,15 @@ struct MiniAppImportDiagnosticsView: View {
                             .accessibilityIdentifier("hanlin-import-diagnostic-\(index)")
                     }
                 } header: {
-                    Text(file.isEmpty ? String(localized: "Package", bundle: HanlinLocalization.bundle) : file)
-                        .textCase(nil)
+                    if file.isEmpty {
+                        Text("Package", bundle: HanlinLocalization.bundle).textCase(nil)
+                    } else {
+                        Text(verbatim: file)
+                            .font(HanlinTypography.caption.monospaced())
+                            .environment(\.layoutDirection, .leftToRight)
+                            .textSelection(.enabled)
+                            .textCase(nil)
+                    }
                 }
             }
         }
