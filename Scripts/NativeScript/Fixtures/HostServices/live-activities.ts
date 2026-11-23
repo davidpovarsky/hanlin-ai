@@ -19,3 +19,15 @@ void host.liveActivities.start({title: 'Missing layout'});
 void host.liveActivities.start({root: {kind: 'button', properties: {intent: () => {}}}});
 // @ts-expect-error System timestamps are numeric milliseconds.
 void host.liveActivities.update('native-id', {staleDateEpochMilliseconds: 'tomorrow'});
+
+// The original ScriptWidget layout is chosen by its installed entrypoint;
+// the complete native island tree is rendered by that original engine.
+void host.liveActivities.start({
+  scriptWidgetEntrypointID: 'scriptWidget',
+  family: 'systemMedium',
+  state: { count: 3, label: 'מקורי' }
+});
+// @ts-expect-error A Live Activity must select a declared program or supply a native root.
+void host.liveActivities.start({title: 'Missing source'});
+// @ts-expect-error ScriptWidget state is a JSON object, not an arbitrary scalar.
+void host.liveActivities.start({scriptWidgetEntrypointID: 'scriptWidget', state: 3});

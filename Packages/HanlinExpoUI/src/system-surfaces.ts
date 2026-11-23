@@ -48,7 +48,7 @@ export interface NativeSurfaceNode {
   children?: NativeSurfaceNode[];
 }
 
-export interface LiveActivityStart {
+export interface NativeSurfaceLiveActivityStart {
   title?: string;
   root: NativeSurfaceNode;
   state?: NativeSurfaceJSON;
@@ -56,6 +56,20 @@ export interface LiveActivityStart {
   staleDateEpochMilliseconds?: number;
   relevanceScore?: number;
 }
+
+/** Runs this installed original ScriptWidget program for the Lock Screen and
+ * every $dynamic_island region. The package's automatic default instance is
+ * used when widgetInstanceID is omitted; no system widget placement is needed. */
+export interface ScriptWidgetLiveActivityStart {
+  scriptWidgetEntrypointID: string;
+  widgetInstanceID?: string;
+  family?: 'systemSmall' | 'systemMedium' | 'systemLarge' | 'systemExtraLarge';
+  title?: string;
+  state?: Record<string, NativeSurfaceJSON>;
+  staleDateEpochMilliseconds?: number;
+  relevanceScore?: number;
+}
+export type LiveActivityStart = NativeSurfaceLiveActivityStart | ScriptWidgetLiveActivityStart;
 
 export interface LiveActivityUpdate {
   title?: string;

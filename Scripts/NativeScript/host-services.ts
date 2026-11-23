@@ -1,5 +1,5 @@
 import type { MiniAppLiveActivities } from "../../Packages/HanlinExpoUI/src/system-surfaces";
-export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "../../Packages/HanlinExpoUI/src/system-surfaces";
+export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, NativeSurfaceLiveActivityStart, ScriptWidgetLiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "../../Packages/HanlinExpoUI/src/system-surfaces";
 /** Typed facade over the existing Objective-C metadata bridge. No extra runtime. */
 export type HanlinRuntimeKind = 'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell';
 export type RuntimeJSONValue = null | boolean | number | string | RuntimeJSONValue[] | { [key: string]: RuntimeJSONValue };

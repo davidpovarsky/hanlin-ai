@@ -2515,13 +2515,69 @@ final class HanlinScriptingPlatform {
             return try encoded(["enabled": HanlinScriptLiveActivityController.areActivitiesEnabled])
         }
         if operation == "liveActivities.list" {
-            return try encoded(["activityIDs": HanlinScriptLiveActivityController.activityIDs(installedPackageID: installedID.rawValue)])
+            return try encoded(["activityIDs": HanlinScriptLiveActivityController.activityIDs(installedPackageID: installedID.rawValue) + HanlinScriptWidgetLiveActivityController.activityIDs(installedPackageID: installedID.rawValue)])
         }
         guard ["liveActivities.start", "liveActivities.update", "liveActivities.end"].contains(operation),
               let payload = try JSONSerialization.jsonObject(with: Data(payloadJSON.utf8)) as? [String: Any] else {
             throw HanlinHostServiceError.invalidRequest("Unknown Live Activity operation or invalid JSON payload.")
         }
+        func finiteNumber(_ name: String) throws -> Double? {
+            guard let value = payload[name] else { return nil }
+            guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(),
+                  number.doubleValue.isFinite else {
+                throw HanlinHostServiceError.invalidRequest("\(name) must be a finite number.")
+            }
+            return number.doubleValue
+        }
         let activityID = payload["activityID"] as? String
+        let startsOriginal = operation == "liveActivities.start" &&
+            (payload["scriptWidgetEntrypointID"] != nil || payload["widgetInstanceID"] != nil)
+        let updatesOriginal = activityID.map {
+            HanlinScriptWidgetLiveActivityController.contains(systemActivityID: $0, installedPackageID: installedID.rawValue)
+        } ?? false
+        if startsOriginal || updatesOriginal {
+            guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
+            var values: [String: HanlinValue] = [:]
+            if let supplied = payload["state"] {
+                guard let dictionary = supplied as? [String: Any] else {
+                    throw HanlinHostServiceError.invalidRequest("A ScriptWidget Live Activity state must be a JSON object.")
+                }
+                values = try dictionary.mapValues(ExpoHostServicesAdapter.toHanlinValue)
+            }
+            let staleDate = try finiteNumber("staleDateEpochMilliseconds").map { Date(timeIntervalSince1970: $0 / 1_000) }
+            let relevance = try finiteNumber("relevanceScore") ?? 0
+            if startsOriginal {
+                let requestedEntrypoint = payload["scriptWidgetEntrypointID"] as? String
+                let requestedInstance = payload["widgetInstanceID"] as? String
+                guard let snapshot = try extensionStore.load(),
+                      let instance = snapshot.widgetInstances.first(where: { instance in
+                          instance.identity.installedPackageID == installedID && instance.engine == .scriptwidget &&
+                          instance.identity.generation == package.record.activeGeneration &&
+                          (requestedEntrypoint == nil || instance.identity.entrypointID == requestedEntrypoint) &&
+                          (requestedInstance.map { $0 == instance.entityID } ?? instance.isDefault)
+                      }) else {
+                    throw HanlinHostServiceError.invalidRequest("The package does not have that installed ScriptWidget entrypoint or instance.")
+                }
+                let family = payload["family"] as? String ?? snapshot.widgets.first {
+                    $0.identity == instance.identity && $0.engine == .scriptwidget
+                }?.family ?? "systemMedium"
+                let id = try HanlinScriptWidgetLiveActivityController.start(
+                    store: extensionStore, entityID: instance.entityID, family: family,
+                    title: payload["title"] as? String ?? package.manifest?.name ?? "MiniApp",
+                    values: values, staleDate: staleDate, relevanceScore: relevance)
+                return try encoded(["activityID": id])
+            }
+            if operation == "liveActivities.update" {
+                let updated = try await HanlinScriptWidgetLiveActivityController.update(
+                    store: extensionStore, systemActivityID: activityID!, installedPackageID: installedID.rawValue,
+                    title: payload["title"] as? String, values: values, staleDate: staleDate, relevanceScore: relevance)
+                return try encoded(["ok": updated])
+            }
+            let ended = try await HanlinScriptWidgetLiveActivityController.end(
+                store: extensionStore, systemActivityID: activityID!, installedPackageID: installedID.rawValue,
+                title: payload["title"] as? String, values: values, dismissAfterSeconds: try finiteNumber("dismissAfterSeconds"))
+            return try encoded(["ok": ended])
+        }
         let previous = activityID.flatMap {
             HanlinScriptLiveActivityController.contentState(systemActivityID: $0, installedPackageID: installedID.rawValue)
         }
@@ -2540,14 +2596,6 @@ final class HanlinScriptingPlatform {
         let title = payload["title"] as? String ?? previous?.title ?? package.manifest?.name ?? "MiniApp"
         let content = HanlinGenericLiveActivityAttributes.ContentState(
             revision: (previous?.revision ?? 0) + 1, title: title, state: state, root: root)
-        func finiteNumber(_ name: String) throws -> Double? {
-            guard let value = payload[name] else { return nil }
-            guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(),
-                  number.doubleValue.isFinite else {
-                throw HanlinHostServiceError.invalidRequest("\(name) must be a finite number.")
-            }
-            return number.doubleValue
-        }
         let staleDate = try finiteNumber("staleDateEpochMilliseconds").map { Date(timeIntervalSince1970: $0 / 1_000) }
         let relevance = try finiteNumber("relevanceScore") ?? 0
         switch operation {

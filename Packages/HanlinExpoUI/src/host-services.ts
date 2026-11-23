@@ -1,5 +1,5 @@
 import type { MiniAppLiveActivities } from "./system-surfaces";
-export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "./system-surfaces";
+export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, NativeSurfaceLiveActivityStart, ScriptWidgetLiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "./system-surfaces";
 import { requireNativeModule } from 'expo';
 import { fromByteArray, toByteArray } from 'base64-js';
 import { serveMiniAppActions, type MiniAppActionHandlers } from './miniapp-actions';

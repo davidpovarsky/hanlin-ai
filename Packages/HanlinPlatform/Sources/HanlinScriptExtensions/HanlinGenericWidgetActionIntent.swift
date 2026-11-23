@@ -19,6 +19,11 @@ public struct HanlinGenericWidgetActionIntent: AppIntent {
         let kind = try host.requireWidgetKind()
         let store = try HanlinScriptExtensionStore(hostConfiguration: host)
         _ = try HanlinWidgetActionExecutor.perform(command, store: store)
+#if os(iOS)
+        if command.context.engine == .scriptwidget {
+            try await HanlinScriptWidgetLiveActivityController.refresh(store: store, identity: command.context.identity)
+        }
+#endif
         WidgetCenter.shared.reloadTimelines(ofKind: kind)
         return .result()
     }
@@ -45,7 +50,16 @@ public struct HanlinSetWidgetValueIntent: SetValueIntent {
         let kind = try host.requireWidgetKind()
         let store = try HanlinScriptExtensionStore(hostConfiguration: host)
         _ = try HanlinWidgetActionExecutor.perform(command, store: store)
+#if os(iOS)
+        if command.context.engine == .scriptwidget {
+            try await HanlinScriptWidgetLiveActivityController.refresh(store: store, identity: command.context.identity)
+        }
+#endif
         WidgetCenter.shared.reloadTimelines(ofKind: kind)
         return .result()
     }
 }
+#if os(iOS)
+extension HanlinGenericWidgetActionIntent: LiveActivityIntent {}
+extension HanlinSetWidgetValueIntent: LiveActivityIntent {}
+#endif

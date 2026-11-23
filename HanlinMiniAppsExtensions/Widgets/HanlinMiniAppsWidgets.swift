@@ -9,6 +9,7 @@ struct HanlinMiniAppsWidgetBundle: WidgetBundle {
     var body: some Widget {
         HanlinScriptingWidget(kind: HanlinExtensionHostConfiguration.hanlinWidgetKind)
         HanlinScriptingLiveActivityWidget()
+        HanlinOriginalScriptWidgetLiveActivityWidget()
     }
 }
 

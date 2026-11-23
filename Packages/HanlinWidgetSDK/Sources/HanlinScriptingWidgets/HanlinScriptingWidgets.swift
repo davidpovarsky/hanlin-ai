@@ -292,3 +292,74 @@ public struct HanlinPreparedExpoNativeView: View {
         } else { Text("Invalid prepared Expo widget", bundle: HanlinLocalization.bundle) }
     }
 }
+
+public struct HanlinOriginalScriptWidgetLiveActivityWidget: Widget {
+    public init() {}
+    public var body: some WidgetConfiguration {
+        ActivityConfiguration(for: HanlinScriptWidgetLiveActivityAttributes.self) { context in
+            HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state)
+                .padding().activityBackgroundTint(Color.clear)
+        } dynamicIsland: { context in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .expandedLeading)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .expandedTrailing)
+                }
+                DynamicIslandExpandedRegion(.center) {
+                    HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .expandedCenter)
+                }
+                DynamicIslandExpandedRegion(.bottom) {
+                    HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .expandedBottom)
+                }
+            } compactLeading: {
+                HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .compactLeading)
+            } compactTrailing: {
+                HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .compactTrailing)
+            } minimal: {
+                HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .minimal)
+            }
+        }
+    }
+}
+
+/// Uses the actual original ScriptWidget renderer for every island region.
+public struct HanlinOriginalScriptWidgetActivityView: View {
+    public enum Region: CaseIterable, Sendable {
+        case expandedLeading, expandedTrailing, expandedCenter, expandedBottom
+        case compactLeading, compactTrailing, minimal
+    }
+    public let attributes: HanlinScriptWidgetLiveActivityAttributes
+    public let state: HanlinScriptWidgetLiveActivityAttributes.ContentState
+    public let region: Region?
+    public init(attributes: HanlinScriptWidgetLiveActivityAttributes,
+                state: HanlinScriptWidgetLiveActivityAttributes.ContentState, region: Region? = nil) {
+        self.attributes = attributes
+        self.state = state
+        self.region = region
+    }
+    @ViewBuilder public var body: some View {
+        if let store = try? HanlinScriptExtensionStore(),
+           let prepared = try? HanlinScriptWidgetLiveActivityPreparation.load(
+                store: store, attributes: attributes, state: state),
+           let node = node(in: prepared) {
+            HanlinScriptWidgetElementView(node: node, context: prepared.context)
+        } else if region == nil {
+            Text(state.title)
+        }
+    }
+    public func node(in prepared: HanlinScriptWidgetLiveActivitySnapshot) -> HanlinScriptWidgetPreparedNode? {
+        guard let region else { return prepared.node }
+        guard let island = prepared.dynamicIsland else { return nil }
+        switch region {
+        case .expandedLeading: return island.expandedLeading
+        case .expandedTrailing: return island.expandedTrailing
+        case .expandedCenter: return island.expandedCenter
+        case .expandedBottom: return island.expandedBottom
+        case .compactLeading: return island.compactLeading
+        case .compactTrailing: return island.compactTrailing
+        case .minimal: return island.minimal
+        }
+    }
+}
