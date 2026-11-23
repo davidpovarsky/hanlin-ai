@@ -1,0 +1,60 @@
+{
+  "source": "https://developer.apple.com/sample-code/app-store-connect/app-store-connect-openapi-specification.zip",
+  "download_sha256": "528ebf253c4fea45d619f8576bca14a418a1a878080e4bcdef833e932a7abcef",
+  "spec_sha256": "ba2ab338aa3ecb68948aefa5514d56d22df933422b9d8b5b25f17569e0d3e259",
+  "version": "4.6.1",
+  "group_resource_paths": [],
+  "profile_create_path_present": true,
+  "profile_create_relationships": [
+    "bundleId",
+    "devices",
+    "certificates"
+  ],
+  "profile_create_required_relationships": [
+    "certificates",
+    "bundleId"
+  ],
+  "capability_setting_keys": [
+    "ICLOUD_VERSION",
+    "DATA_PROTECTION_PERMISSION_LEVEL",
+    "APPLE_ID_AUTH_APP_CONSENT"
+  ],
+  "capability_option_keys": [
+    "XCODE_5",
+    "XCODE_6",
+    "COMPLETE_PROTECTION",
+    "PROTECTED_UNLESS_OPEN",
+    "PROTECTED_UNTIL_FIRST_USER_AUTH",
+    "PRIMARY_APP_CONSENT"
+  ],
+  "documented_routes": {
+    "registered_bundles": "GET /v1/bundleIds",
+    "bundle_capabilities": "GET /v1/bundleIds/{id}/bundleIdCapabilities",
+    "bundle_profiles": "GET /v1/bundleIds/{id}/profiles",
+    "profile_content": "GET /v1/profiles/{id}",
+    "create_profile": "POST /v1/profiles",
+    "enable_capability": "POST /v1/bundleIdCapabilities"
+  },
+  "official_assignment_instructions": "https://developer.apple.com/help/account/identifiers/enable-app-capabilities/#enable-app-groups",
+  "interpretation": "The public specification exposes the APP_GROUPS capability toggle but no API resource or setting to attach a named App Group. Apple documents exact group assignment in Certificates, Identifiers & Profiles or Xcode. Existing profile entitlements can prove issued group grants.",
+  "supported_xcode_automatic_signing": {
+    "verified_on": "2026-11-23",
+    "arguments": [
+      "-allowProvisioningUpdates",
+      "-authenticationKeyPath",
+      "-authenticationKeyID",
+      "-authenticationKeyIssuerID"
+    ],
+    "build_settings": [
+      "CODE_SIGN_STYLE=Automatic",
+      "DEVELOPMENT_TEAM=NA6HPWARQ2",
+      "REGISTER_APP_GROUPS=YES"
+    ],
+    "source_urls": [
+      "https://developer.apple.com/documentation/xcode-release-notes/xcode-13-release-notes",
+      "https://developer.apple.com/documentation/xcode/build-settings-reference",
+      "https://developer.apple.com/documentation/xcode/configuring-app-groups"
+    ],
+    "claim": "Official headless automatic signing supports ASC keys; exact group grants require actual profile readback."
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "source_commit": "454ec7a74d21dfdf690a2ba21ee7869b8f3b66e6",
+  "run_id": "45270634812",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45270634812",
+  "timestamp": "2026-11-23T22:07:09.690255+00:00",
+  "full_sanitized_artifact_sha256": "d58934333536847f7dadf7155e632c20cb18de2e60230a15039094eba73ea172",
+  "expected_owner_team": "NA6HPWARQ2",
+  "team_secret_matches_expected_owner": true,
+  "complete_registered_bundle_count": 129,
+  "relevant_registered_identities": [
+    {
+      "resource_id": "4Y4ZRZD6LF",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+      "name": "Anytype AnytypeWidget",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "6999ZXH355",
+      "bundle_id": "com.gloiiire.anytype.torahtrial.NA6HPWARQ2.AnytypeShareExtension",
+      "name": "Pinkha Torah Trial AnytypeShareExtension",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "7F445975JM",
+      "bundle_id": "com.davidpovarsky.chavrusatext",
+      "name": "ChavrusaText",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "A2J8UYZ658",
+      "bundle_id": "com.gloiiire.anytype.torahtrial.NA6HPWARQ2.homewidget",
+      "name": "Pinkha Torah Trial AnytypeWidget",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "F234VTD7KH",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+      "name": "Anytype AnytypeNotificationServiceExtension",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "GS8LDYP7UR",
+      "bundle_id": "com.gloiiire.anytype.torahtrial.NA6HPWARQ2",
+      "name": "Anytype Torah Trial",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "GXYTFMZNYB",
+      "bundle_id": "com.gloiiire.anytype.torahtrial.NA6HPWARQ2.AnytypeNotificationExtension",
+      "name": "Pinkha Torah Trial AnytypeNotificationServiceExtension",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "KL7FJZ2ZW8",
+      "bundle_id": "com.gloiiire.pinkha.NA6HPWARQ2",
+      "name": "Pinkha",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "KTRM7V4TCD",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2",
+      "name": "Anytype",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "RYQP688K9B",
+      "bundle_id": "com.Drn.maktabah.NA6HPWARQ2",
+      "name": "Maktabah",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "SQCVS5F3BA",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+      "name": "Anytype AnytypeShareExtension",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    },
+    {
+      "resource_id": "ZMP944AT2R",
+      "bundle_id": "com.itorah.hanlinminiapps",
+      "name": "Hanlin MiniApps",
+      "platform": "UNIVERSAL",
+      "profiles": [],
+      "status": "PRODUCT_READ_FAILED",
+      "error": {
+        "kind": "AppleReadFailure"
+      }
+    }
+  ],
+  "miniapps_original_audit": [
+    {
+      "role": "miniapps",
+      "bundle_id": "com.itorah.hanlinminiapps",
+      "visible_app_store_record_count": 1,
+      "recent_builds": [
+        {
+          "version": "8301",
+          "expired": false,
+          "processingState": "VALID"
+        },
+        {
+          "version": "6601",
+          "expired": false,
+          "processingState": "VALID"
+        }
+      ],
+      "visible_registered_bundle_count": 1,
+      "identifier_filter_candidate_count": 1,
+      "bundle_list_complete": true,
+      "capability_types": [
+        "APP_GROUPS",
+        "EXTENDED_VIRTUAL_ADDRESSING",
+        "HEALTHKIT",
+        "IN_APP_PURCHASE",
+        "USERNOTIFICATIONS_TIMESENSITIVE",
+        "WEATHERKIT"
+      ],
+      "capability_list_complete": true,
+      "app_store_profiles": [
+        {
+          "profileState": "ACTIVE",
+          "profileType": "IOS_APP_STORE",
+          "expirationDate": "2027-09-07T07:25:00.000+00:00"
+        }
+      ],
+      "profile_list_complete": true,
+      "portal_profile_compatibility": {
+        "checked_profiles": [
+          {
+            "status": "READY_RESOURCE",
+            "checks": {
+              "team_matches": true,
+              "bundle_matches": true,
+              "not_expired": true,
+              "distribution_profile": true,
+              "certificate_matches": true,
+              "required_entitlements_covered": true
+            },
+            "expiration": "2027-09-07T07:25:00+00:00",
+            "missing_or_mismatched_entitlement_keys": [],
+            "profile_sha256": "916485700ffc735d7f10ef60790d18334e4a98ca0f3185fe28550cee4ff89282"
+          }
+        ],
+        "compatible_profile_count": 1,
+        "complete": true
+      }
+    }
+  ],
+  "scope": "Registered identities verified. Candidate profile hydration failed due unsupported capability query; consumer group grants not yet established. Unrelated account inventory omitted."
+}

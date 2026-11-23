@@ -80,6 +80,7 @@ class CrossAppSigningAuditTests(unittest.TestCase):
                 return {"data": [{"id": "bundle", "attributes": {"identifier": "com.itorah.hanlinminiapps",
                     "name": "Hanlin MiniApps", "platform": "IOS"}}]}
             if path.endswith("/bundleIdCapabilities"):
+                self.assertEqual(parameters, {})
                 return {"data": [{"attributes": {"capabilityType": "APP_GROUPS"}}]}
             if path.endswith("/profiles"):
                 return {"data": [{"id": "profile", "attributes": {"name": "Owner MiniApps",
@@ -92,6 +93,23 @@ class CrossAppSigningAuditTests(unittest.TestCase):
         self.assertEqual(report["candidate_products"][0]["usable_shared_group_profile_count"], 1)
         self.assertNotIn("private-cms-never-report", json.dumps(report))
         self.assertEqual(len(calls), 4)
+
+    def test_capability_failure_still_reads_profile_grants(self):
+        def get(path, parameters):
+            if path == "/v1/bundleIds":
+                return {"data": [{"id": "bundle", "attributes": {"identifier": "com.itorah.hanlinminiapps", "name": "Hanlin MiniApps", "platform": "IOS"}}]}
+            if path.endswith("/bundleIdCapabilities"):
+                raise RuntimeError("HTTP_403")
+            if path.endswith("/profiles"):
+                return {"data": [{"id": "profile", "attributes": {"profileState": "ACTIVE", "profileType": "IOS_APP_STORE"}}]}
+            return {"data": {"attributes": {"profileContent": "private-cms-never-report"}}}
+        report = audit.audit_cross_app_resources(get, lambda _: self.profile,
+            certificate_sha=self.certificate_sha, team="NA6HPWARQ2", now=self.now)
+        self.assertEqual(report["status"], "PARTIAL_READBACK")
+        product = report["candidate_products"][0]
+        self.assertEqual(product["capability_read_error"]["code"], "HTTP_403")
+        self.assertEqual(product["usable_shared_group_profile_count"], 1)
+        self.assertEqual(audit.error_fact(RuntimeError("do-not-retain-secret")), {"kind": "RuntimeError"})
 
     def test_missing_credentials_performs_no_network_read(self):
         def unexpected(*_):

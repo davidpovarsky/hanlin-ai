@@ -1,0 +1,7 @@
+Scope: changed capability query and independent profile lookup only; other eight-check baseline not repeated.
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+exit=0

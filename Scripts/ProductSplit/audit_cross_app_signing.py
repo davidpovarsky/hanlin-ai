@@ -6,13 +6,14 @@ An APP_GROUPS capability is not evidence of a particular group assignment.
 """
 from datetime import datetime, timezone
 import hashlib
+import re
 import urllib.parse
 
 SHARED_GROUP = "group.com.itorah.shared"
 EXPECTED_OWNER_TEAM = "NA6HPWARQ2"
 IDENTITY_TERMS = (
-    "hanlin", "itorah", "chavrusatext", "maktabah", "otzaria", "pinkha",
-    "anytype", "povarsky", "אוצריא", "פנכה", "פינכה",
+    "hanlinminiapps", "chavrusatext", "maktabah", "otzaria", "pinkha",
+    "anytype", "אוצריא", "פנכה", "פינכה",
 )
 
 
@@ -76,7 +77,10 @@ def profile_fact(profile, *, bundle, team, certificate_sha, now):
 
 def error_fact(error):
     # Never forward arbitrary exception text that might contain raw responses.
-    return {"kind": type(error).__name__}
+    fact = {"kind": type(error).__name__}
+    if re.fullmatch(r"HTTP_[0-9]{3}|RESPONSE_TOO_LARGE", str(error)):
+        fact["code"] = str(error)
+    return fact
 
 
 def audit_cross_app_resources(get, decode_profile, *, certificate_sha, team, now, missing_credentials=()):
@@ -112,11 +116,17 @@ def audit_cross_app_resources(get, decode_profile, *, certificate_sha, team, now
             product["profiles"] = []
             try:
                 prefix = "/v1/bundleIds/" + identity["resource_id"]
-                capabilities = all_records(get, prefix + "/bundleIdCapabilities", {"limit": 200})
-                product["capability_types"] = sorted(set(
-                    row.get("attributes", {}).get("capabilityType") for row in capabilities
-                    if row.get("attributes", {}).get("capabilityType")))
-                product["capability_inventory_complete"] = True
+                try:
+                    # This relationship does not accept the list endpoint's limit parameter.
+                    capabilities = all_records(get, prefix + "/bundleIdCapabilities")
+                    product["capability_types"] = sorted(set(
+                        row.get("attributes", {}).get("capabilityType") for row in capabilities
+                        if row.get("attributes", {}).get("capabilityType")))
+                    product["capability_inventory_complete"] = True
+                except Exception as error:
+                    # Profile grants remain independently useful if capability lookup fails.
+                    product["capability_inventory_complete"] = False
+                    product["capability_read_error"] = error_fact(error)
                 profiles = all_records(get, prefix + "/profiles",
                     {"fields[profiles]": "name,profileState,profileType,expirationDate", "limit": 200})
                 product["profile_inventory_complete"] = True
@@ -142,7 +152,7 @@ def audit_cross_app_resources(get, decode_profile, *, certificate_sha, team, now
                 product.update(status="PRODUCT_READ_FAILED", error=error_fact(error))
             report["candidate_products"].append(product)
         report["status"] = "OWNER_RESOURCES_READ_BACK"
-        if any(product.get("status") == "PRODUCT_READ_FAILED"
+        if any(product.get("capability_read_error") or product.get("status") == "PRODUCT_READ_FAILED"
                or any(profile.get("status") == "PROFILE_READ_FAILED" for profile in product["profiles"])
                for product in report["candidate_products"]):
             report["status"] = "PARTIAL_READBACK"
