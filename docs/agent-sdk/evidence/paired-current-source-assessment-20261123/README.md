@@ -1,0 +1,33 @@
+# Paired acceptance: bounded source assessment after producer and Motion changes
+
+This is a source review, not a new native result. The active original run [45260265662](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45260265662) is frozen at `e59256e8325bcdb71c0e683f6b19e7641642aad8`. This review compares its selected paths with central `9c1428a3361ab5f12a0809110b454f72584b9da1`. No simulator, build, test or workflow dispatch was performed for this assessment.
+
+## Exact three original cases
+
+| Case | Model and Host path | Disclosure path | Boundary of reuse |
+| --- | --- | --- | --- |
+| Return actual private value | Original native Composer sends PAIRED_OPEN plus a fresh nonce. The HTTP-only fixture emits one client open_mini_app call. The real Host, permission, App Group, companion process, private save and original-chat return produce the tool result. Fixture checks the actual PAIRED_VALUE in that result before emitting PAIRED_RETURN_VERIFIED. | User opens the actual inline approval details once, then Allow once. Removing pending approval may collapse the enclosing activity hierarchy automatically; no explicit hierarchy/reversal gesture is in this test. | Producer finish-label change does not introduce a different branch for these fixture events. Retained root-display lifetime is a changed input and must be qualified separately; this review does not relabel old native execution as current execution. |
+| Cancel without changing private state | Original PAIRED_CANCEL prompt emits the same client tool shape. The actual receiver cancellation yields confirmed-no-effect Host feedback. Fixture checks that feedback and emits PAIRED_CANCEL_RETURN. Test reopens the companion and checks the private value is unchanged. | Same single review/allow path; cancellation occurs in the actual companion. | Same producer equivalence. Display lifecycle is reached or potentially reached at approval removal; no source path from retained children to Host cancellation or persistence was found. |
+| Package/state transfer and rollback | No chat prompt or model response is requested by this method. It uses the original ScriptUI import/runtime and shipping Profile transfer flow, imports into the companion, checks saved state, rolls back, and verifies the original copy. | The method never opens chat activity/approval details; no production HanlinAnimatedDisclosure call site is in its selected transfer interaction path. | Transfer fixture, importer/transfer selectors and original runner are unchanged. This is a source dependency assessment; eventual native result remains e592-scoped. |
+
+## Producer boundary
+
+The original fixture uses the custom `ACCEPTANCE` account and `agent.acceptance` URL, which the unchanged factory resolves to OpenAICompatibleProvider. The exact emitToolCall helper sends `finish_reason: tool_calls`; emitFinalAnswer sends only text with `finish_reason: stop`. The unchanged provider mapper maps these to `.toolCalls` and `.stop`.
+
+The only production change from swift-ai-sdk `e7bf34111e603ca977becd007dd4e5bb109af857` to `07431abccbfb151ca2dab67bca6cf86fcb2bd3b8` is the private StreamTextActor continuation eligibility guard. A completed ordinary client tool followed by a `.toolCalls` finish has the same next-step decision in both versions, with the same stop conditions. Both successful Host content and the cancellation's sanctioned error feedback count as completed client output. The terminal text step has no new tool call/output; this fixture supplies no provider-executed deferred tool, so it does not enter the new `.stop` plus pending/completed tool-work behavior.
+
+This review does not substitute the fixture for live-provider continuation evidence. The upstream source comparison and production diff are retained centrally under `release-readiness-45256955142/swiftai-07431`.
+
+## Approval removal and retained lifetime
+
+The original test calls the actual review toggle, waits for nonempty original request text, then Allow once. HanlinInlineToolApproval.submit guards against a repeated answer and invokes the Host answer closure; it does not close its own details. HanlinAppToolConsent.answer clears `pending` before resuming its continuation. ChatView derives toolApproval from that pending value. HanlinAgentActivityView uses `if let pending { approvalView } else { normal activity }`; approval identity is explicitly keyed to requestID. Thus the complete old approval subtree is removed even if the enclosing disclosure retains mounted content.
+
+The activity root is expanded when `isExpanded || toolApproval != nil`. New message reasoningExpanded defaults false. Approval removal can therefore produce a real animated root collapse without a test tap. Whether that animation renders before the OS foreground handoff is a runtime/timing fact, not established by this source review. The new component may retain the already-mounted root descendants after zero-height collapse; the old component removed them at completion.
+
+No child in the reviewed retained path owns Host dispatch, result continuation, App Group writes, private state, or navigation. The inline approval has no task-driven execution. Its request identity/if-let removal still controls permission lifetime. The replacement per-tool details remain unopened/lazy because these cases do not expand activity IDs. The header's existing tasks load declared icons or change local live-display state; branch visibility still pauses live animation. Its callbacks do not execute a tool. Arbitrary public host-supplied child tasks are outside this specific paired-fixture path and remain a documented general lifetime consideration.
+
+The two return tests assert the expected actual-result marker within60seconds, original chat UUID, absence of a result-unavailable alert and absence of pending Allow once. Cancellation additionally checks the reopened private value. These are unchanged. Retained display state can affect transient layout/accessibility timing, so source reasoning alone is not native current-source UI acceptance. Current-source Motion B and the parent's original chat/A2UI UI checks are separate pending evidence; no additional native rerun is admitted by this assessment.
+
+## Verification and limits
+
+The receipt records full file hashes from both exact Git revisions, the changed original component separately, and the unchanged provider mapping at both upstream revisions. It includes the precise source points supporting this assessment. No broader engine, live-provider, physical-device or full-product visual claim is made. Native statuses are not inferred from source hashes.
