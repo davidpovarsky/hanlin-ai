@@ -1,0 +1,100 @@
+Swift/NativeDictionary.swift:823: Fatal error: Duplicate values for key: 'grant.shared'
+swift-runtime: failed to suspend thread 2696290 retrying...
+swift-runtime: failed to suspend thread 2696291 retrying...
+swift-runtime: failed to suspend thread 2696290 retrying...
+swift-runtime: failed to suspend thread 2696291 retrying...
+
+*** Signal 5: Backtracing from 0xea0b091ad7e4... done ***
+
+*** Program crashed: System trap at 0x0000ea0b091ad7e4 ***
+
+Platform: arm64 Linux (Ubuntu 24.04.4 LTS)
+
+Thread 1 "DispatchWorker" crashed:
+
+0                  0x0000ea0b091ad7e4 _assertionFailure(_:_:file:line:flags:) + 208 in libswiftCore.so
+1 [ra]             0x0000ea0b0916b1e0 specialized _NativeDictionary.merge<A>(trappingOnDuplicates:) + 1207 in libswiftCore.so
+2 [ra] [thunk]     0x0000ea0b091ebb40 Dictionary.init<A>(uniqueKeysWithValues:) + 271 in libswiftCore.so
+3 [ra]             0x0000b7192968019c HanlinScriptPermissionAuthority.replace(grants:revokedGrantIDs:) + 267 in OriginalBoundaryProbe at /mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/permission-authority-duplicates-20261123/package/Sources/HanlinScriptServices/HanlinScriptPermissionAuthority.swift:20:23
+4 [ra]             0x0000b7192941a64c static OriginalBoundaryProbe.main() + 63 in OriginalBoundaryProbe at /mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/permission-authority-duplicates-20261123/package/Sources/OriginalBoundaryProbe/main.swift:27:29
+5 [async] [system] 0x0000b7192941b3c0 static OriginalBoundaryProbe.$main() in OriginalBoundaryProbe at //<compiler-generated>
+6 [async] [system] 0x0000b7192941b574 async_MainTQ0_ in OriginalBoundaryProbe at //<compiler-generated>
+7 [async] [thunk]  0x0000b7192941b63c thunk for @escaping @convention(thin) @async () -> () in OriginalBoundaryProbe at //<compiler-generated>
+8 [async] [thunk]  0x0000b7192941b748 partial apply for thunk for @escaping @convention(thin) @async () -> () in OriginalBoundaryProbe at //<compiler-generated>
+9 [async] [system] 0x0000ea0b08e60548 completeTaskWithClosure(swift::AsyncContext*, swift::SwiftError*) in libswift_Concurrency.so
+
+Thread 0 "OriginalBoundar":
+
+0      0x0000ea0b07a3ce4c <unknown> in libc.so.6
+1 [ra] 0x0000ea0b08b659f8 _dispatch_sigsuspend + 27 in libdispatch.so
+2 [ra] 0x0000ea0b08b62ec8 _dispatch_sig_thread + 11 in libdispatch.so
+3 [ra] 0x0000ea0b07a82404 <unknown> in libc.so.6
+4 [ra] 0x0000ea0b07a284cc <unknown> in libc.so.6
+5 [ra] 0x0000ea0b07a28598 <unknown> in libc.so.6
+
+Thread 2 "DispatchWorker":
+
+0      0x0000ea0b07aebe74 <unknown> in libc.so.6
+1 [ra] 0x0000ea0b08b6c87c _dispatch_event_loop_drain + 63 in libdispatch.so
+2 [ra] 0x0000ea0b08b62084 _dispatch_mgr_invoke + 123 in libdispatch.so
+3 [ra] 0x0000ea0b08b61ff8 _dispatch_mgr_thread + 131 in libdispatch.so
+4 [ra] 0x0000ea0b08b65448 _dispatch_worker_thread + 643 in libdispatch.so
+5 [ra] 0x0000ea0b07a8580c <unknown> in libc.so.6
+
+Thread 3 "DispatchWorker":
+
+0      0x0000ea0b07a81d50 <unknown> in libc.so.6
+1 [ra] 0x0000ea0b07a8ded8 <unknown> in libc.so.6
+2 [ra] 0x0000ea0b08b6cf9c _dispatch_sema4_timedwait + 83 in libdispatch.so
+3 [ra] 0x0000ea0b08b65db0 _dispatch_semaphore_wait_slow + 35 in libdispatch.so
+4 [ra] 0x0000ea0b08b6559c _dispatch_worker_thread + 983 in libdispatch.so
+5 [ra] 0x0000ea0b07a8580c <unknown> in libc.so.6
+
+
+Registers:
+
+ x0 0x0000000200000003  8589934595
+ x1 0x0000000000000003  3
+ x2 0x0000ea0b00002e18  03 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00  ········@·······
+ x3 0x0000ea0b000008e0  02 00 01 00 01 00 01 00 01 00 01 00 00 00 00 00  ················
+ x4 0x0000000000000004  4
+ x5 0x0000ea0b00002f60  02 00 b0 a0 0e 00 00 00 9b 48 81 61 a1 ff f0 d2  ··° ·····H·a¡ÿðÒ
+ x6 0xd2f0ffa16181489b  15199929810966104219
+ x7 0x707544203a726f72  8103458009733295986
+ x8 0x0000000000000000  0
+ x9 0x0000000000000000  0
+x10 0x0000000000000020  32
+x11 0x0000000000000000  0
+x12 0x0000ea0b0962dd40  00 00 ee 08 0b ea 00 00 e0 dc 62 09 0b ea 00 00  ··î··ê··àÜb··ê··
+x13 0x000000000000002d  45
+x14 0x0000000000000001  1
+x15 0x0000b7192947ec4c  ff 03 01 d1 fd 7b 03 a9 fd c3 00 91 e0 0f 00 f9  ÿ··Ñý{·©ýÃ··à··ù
+x16 0x0000000000000001  1
+x17 0x0000ea0b07a96d70  a0 08 00 b4 fd 7b bc a9 fd 03 00 91 f5 5b 02 a9   ··´ý{¼©ý···õ[·©
+x18 0x0000000000000016  22
+x19 0xf000000000000028  17293822569102704680
+x20 0x0000ea0b00002e10  f8 62 47 09 0b ea 00 00 03 00 00 00 00 00 00 00  øbG··ê··········
+x21 0x0000ea0b00002e10  f8 62 47 09 0b ea 00 00 03 00 00 00 00 00 00 00  øbG··ê··········
+x22 0x8000ea0b0948d6a0  53 77 69 66 74 2f 44 69 63 74 69 6f 6e 61 72 79  Swift/Dictionary
+x23 0x0000000000000001  1
+x24 0x0000b71929753e68  00 02 00 00 00 00 00 00 30 79 77 29 19 b7 00 00  ········0yw)····
+x25 0x0000ea0b0948d6a0  53 77 69 66 74 2f 44 69 63 74 69 6f 6e 61 72 79  Swift/Dictionary
+x26 0x0000000000000000  0
+x27 0x0000ea0b0513e230  67 72 61 6e 74 2e 73 68 61 72 65 64 00 00 00 ec  grant.shared···ì
+x28 0x0000ea0b09581958  74 39 77 29 19 b7 00 00 80 19 58 09 0b ea 00 00  t9w)······X··ê··
+ fp 0x0000ea0b0513e160  30 e3 13 05 0b ea 00 00 e0 b1 16 09 0b ea 00 00  0ã···ê··à±···ê··
+ lr 0x0000ea0b091ad7e4  20 00 20 d4 28 00 80 52 89 12 80 52 00 17 00 90   · Ô(··R···R····
+ sp 0x0000ea0b0513e140  01 00 00 00 00 00 00 00 a0 d6 48 09 0b ea 00 00  ········ ÖH··ê··
+ pc 0x0000ea0b091ad7e4  20 00 20 d4 28 00 80 52 89 12 80 52 00 17 00 90   · Ô(··R···R····
+
+
+Images (17 omitted):
+
+0x0000b71929360000–0x0000b71929731b00 dca70070258f68dcb7dd88478668e12377109132 OriginalBoundaryProbe   /mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/permission-authority-duplicates-20261123/package/.build/out/Products/Debug-linux-aarch64/OriginalBoundaryProbe
+0x0000ea0b07a00000–0x0000ea0b07b99f91 345abad84f89835d724f49349b1a6b92c6ad4ba3 libc.so.6               /usr/lib/aarch64-linux-gnu/libc.so.6
+0x0000ea0b08b30000–0x0000ea0b08b7ac00 3c99e94e1aedd1e7ada81fae3380d37cb8a1b9be libdispatch.so          /mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/linux/libdispatch.so
+0x0000ea0b08df0000–0x0000ea0b08e7bdc8 3e129d59f180f871dc171ec36504020ae8cfc011 libswift_Concurrency.so /mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/linux/libswift_Concurrency.so
+0x0000ea0b08ee0000–0x0000ea0b09441278 c8eb38b987655b2f302b3bb0c137deae316b4e0b libswiftCore.so         /mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/linux/libswiftCore.so
+
+Backtrace took 0.25s
+
