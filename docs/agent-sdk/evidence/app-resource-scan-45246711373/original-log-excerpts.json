@@ -1,0 +1,37 @@
+{
+  "rawLog": {
+    "bytes": 18670980,
+    "sha256": "36ec059cdadb68070c67db73ddc2bf935c3a475bddef228204aa16cf538f735b",
+    "reusedFromParent": true,
+    "downloadedAgain": false
+  },
+  "resourceBundleCopyCommands": [
+    {
+      "line": 78061,
+      "text": "2026-11-23T19:45:29.0043400Z CpResource /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/HanlinSDK_AI_Hanlin.bundle (in target 'HanlinApplicationdynamic-product' from project 'HanlinSDK')"
+    },
+    {
+      "line": 78195,
+      "text": "2026-11-23T19:45:54.9862660Z Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/HanlinSDK_AI_Hanlin.bundle (in target 'AI_Hanlin' from project 'AI_HLY')"
+    },
+    {
+      "line": 123559,
+      "text": "2026-11-23T19:49:35.5783440Z Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/HanlinSDK_AI_Hanlin.bundle (in target 'AI_HLYTests' from project 'AI_HLY')"
+    }
+  ],
+  "applicationMilestones": [
+    {
+      "line": 124740,
+      "text": "2026-11-23T19:49:39.6338430Z CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app (in target 'AI_Hanlin' from project 'AI_HLY')"
+    },
+    {
+      "line": 124767,
+      "text": "2026-11-23T19:49:54.6611490Z Validate /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app (in target 'AI_Hanlin' from project 'AI_HLY')"
+    },
+    {
+      "line": 125070,
+      "text": "2026-11-23T19:49:58.7479390Z ** TEST BUILD SUCCEEDED **"
+    }
+  ],
+  "interpretation": "Xcode copied one named build-product bundle into the dynamic framework, app root and test plug-in. Paths prove common copy source; full bundle contents are absent from this artifact, so no independent byte-equality assertion is made."
+}
