@@ -24,6 +24,7 @@ type Presentation = {
   parameters: Parameters; allowsReplacement: boolean;
 };
 type ActionEvent = { parameters: { id?: string; version?: string }; value?: boolean };
+type SearchRequest = { query: string; locale: string; size: number; engineId: string };
 
 const key = 'modular-search-presentation-v1';
 
@@ -60,10 +61,11 @@ async function initialState(): Promise<State> {
   const parameters = input.parameters || {};
   const query = String(input.inputText || parameters.query || '').trim();
   const locale = normalizeLocale(parameters.locale || (/[\u0590-\u05ff]/.test(query) ? 'he' : 'en'));
-  const model = await buildSnippetSearchModel({
+  const request: SearchRequest = {
     query, locale, size: parameters.size || (input.kind === 'translationUI' ? 5 : SNIPPET_RESULT_LIMIT),
     engineId: parameters.engineId || 'sefaria'
-  }) as Model;
+  };
+  const model = await buildSnippetSearchModel(request) as Model;
   return { model, expandedVersions: {}, expandedTexts: {} };
 }
 
@@ -101,9 +103,10 @@ export async function loadMore(): Promise<void> {
   if (!state || !state.model.hasMore) return;
   try {
     const nextSize = nextSnippetSize(state.model.resultSize);
-    const next = await buildSnippetSearchModel({
+    const request: SearchRequest = {
       query: state.model.query, locale: state.model.locale, size: nextSize, engineId: state.model.engineId
-    }) as Model;
+    };
+    const next = await buildSnippetSearchModel(request) as Model;
     if (next.error && !next.groups.length) state.loadMoreError = next.error;
     else { state.model = next; delete state.loadMoreError; }
   } catch (error) {

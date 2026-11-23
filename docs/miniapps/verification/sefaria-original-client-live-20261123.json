@@ -1,0 +1,39 @@
+{
+  "verifiedAt": "2026-11-23T23:53:49.664Z",
+  "execution": "Retained original modular engine/client using actual public HTTPS with Node transport; not an Apple device test.",
+  "query": "בראשית",
+  "resultCount": 2,
+  "total": 10000,
+  "reference": "Genesis 1:1",
+  "textReference": "Genesis 1:1",
+  "versions": [
+    {
+      "language": "he",
+      "title": "Miqra according to the Masorah",
+      "characterCount": 65
+    },
+    {
+      "language": "en",
+      "title": "THE JPS TANAKH: Gender-Sensitive Edition",
+      "characterCount": 42
+    }
+  ],
+  "requests": [
+    {
+      "method": "POST",
+      "url": "https://www.sefaria.org/api/search-wrapper",
+      "status": 200,
+      "milliseconds": 1328,
+      "bytes": 229353,
+      "sha256": "fd08735bfdda2ed0bcd8d4d164d373d1c38e3dd37a683e50867cd363a53f959b"
+    },
+    {
+      "method": "GET",
+      "url": "https://www.sefaria.org/api/v3/texts/Genesis%201%3A1?version=source&version=translation&return_format=text_only&fill_in_missing_segments=1",
+      "status": 200,
+      "milliseconds": 252,
+      "bytes": 51332,
+      "sha256": "9a95fb53823fd593328b25538ba9c07e2196006cc7306bf420eaf390ffd62a0f"
+    }
+  ]
+}

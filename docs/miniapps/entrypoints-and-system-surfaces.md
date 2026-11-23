@@ -265,3 +265,15 @@ The host also captures original `$dynamic_island` seven-region values as
 `HanlinScriptWidgetDynamicIsland`. Function JSX components resolve before native
 rendering. `$component` retains upstream's registration diagnostic behavior; it
 does not invent a separate component registry.
+
+### Live public source verification
+
+On 2026-11-23 the retained native Sefaria client made a real public search for
+בראשית and fetched the selected Genesis 1:1 source and translation versions.
+Both original endpoints returned HTTP 200. Search returned two requested results
+and a reported total of 10,000; the full-text response normalized non-empty Hebrew
+and English versions. Evidence (timestamps, response sizes and SHA-256 only) is
+in `verification/sefaria-original-client-live-20261123.json`. Reproduce with
+`node Scripts/MiniApps/verify-sefaria-live.mjs`. This check used Node HTTPS as
+the adapter for the original ScriptWidget HTTP contract; it is distinct from
+native JavaScriptCore/provider and device UI acceptance evidence.
