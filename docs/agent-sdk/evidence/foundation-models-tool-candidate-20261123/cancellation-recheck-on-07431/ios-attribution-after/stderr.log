@@ -1,0 +1,6 @@
+test_original_cancellation_failure_and_missing_parameter_remain_failures (Scripts.CI.Tests.test_native_tool_cancellation_recheck_report.NativeCancellationAdmissionTests.test_original_cancellation_failure_and_missing_parameter_remain_failures) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.111s
+
+OK

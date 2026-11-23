@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "utc": "2026-11-23T23:41:32.909900+00:00",
+  "utc": "2026-11-23T23:47:57.539473+00:00",
   "status": "FROZEN_PREPARATION_ONLY_NOT_DISPATCHED",
   "source_input_commit": "2381719e4a6ed2a2c5520d017980123121fba058",
   "source_cherry_picks": {
     "ab06b4129e23c8f9ce9c1a4229e72a3d99bbf5d4": "52b13b3df2d09bbe4b70d32c9d962c70ec057c1c",
     "1b3c4cf0e27683b0af106a8e97b1c7c453062d08": "2381719e4a6ed2a2c5520d017980123121fba058"
   },
-  "reviewed_ci_commit": "34f4ef563985d90d0fe7ba86fb6fa9d729c25ddf",
+  "reviewed_ci_commit": "d623d52911adb0eb1aefe1b7bfab0c74bbbd931b",
   "producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
   "source_sha256": {
     "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8",
@@ -25,12 +25,12 @@
     "Packages/HanlinPlatform/Package.resolved": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
     "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "3e418cc3d9dd57a16f709ebe52cb48e46646ffa4380a48c3332b86aa92f4edea",
     "Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py": "928388954c0ff0c673c82bd80647c5e81149756e3c9a0f67871588256a114d87",
-    "Scripts/CI/IntegrationValidation/verify_native_tool_cancellation_recheck.py": "40d2db50d9ed58d1bafea8f3cf7fcbe3c1e749cbe8ce69296e580c300fa13f44",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_cancellation_recheck.py": "b791865d45bd09fa01c974080486fd6131df3410bc213f3c9a9c506a172a886c",
     "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py": "3543dcc8bb30ac050e8203aa4d05cfdc39f7d175308c336a66794482a25c81da",
     "Scripts/CI/IntegrationValidation/verify_stop_continuation_delta.py": "74f5f2e4beb3b96bb11de1842be661586cffa51e04f9730919d3014535f52f75",
     "Scripts/CI/IntegrationValidation/reuse_native_tool_baseline.py": "bfd5c3fda502efcca6e562fc999c6fea86eebf5f6612c6f3bcc22239ad0a86db",
     "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py": "41720f0fa414875f05a3b96e9364e6659c230f96a4d5cbb708fad801eb3b3afb",
-    "Scripts/CI/Tests/test_native_tool_cancellation_recheck_report.py": "8bed4ac93f79b667faccaeb74faca9db0d18b23974b894309fc1732f79c45c3e",
+    "Scripts/CI/Tests/test_native_tool_cancellation_recheck_report.py": "147045e00a39da6f40f2e3df104a403ecb9f6aafa92561edc14cfaf41cce6320",
     "Scripts/CI/select_stable_xcode.py": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f",
     ".github/workflows/build-ios26-unsigned-ipa.yml": "afeed29d2451d17f835230166cb2da894d574aa4474ca296b770ebb68e1f3d8c",
     "Scripts/CI/Tests/Fixtures/native-cancellation-07431/reference.json": "676dbcdb376fa334925385bf6ce0b17e777cb2b24b74168a3edcd7d5a250c6c0",
@@ -156,11 +156,19 @@
     "new_report_control_methods": 4,
     "status": "PASS",
     "apple_execution": false,
-    "unchanged_old_controls_rerun": 0
+    "unchanged_old_controls_rerun": 0,
+    "ios_attribution_correction": {
+      "affected_control_methods": 1,
+      "before": "FAIL",
+      "after": "PASS",
+      "unchanged_other_control_methods_reexecuted": 0,
+      "scope": "Native test65 keeps overall acceptance blocked while independently valid current iOS0 retains PASS."
+    }
   },
   "native_current_status": "NOT_RUN",
   "ios_current_status": "NOT_RUN",
   "shipping_gates": "ALL_FOUR_CLOSED",
   "SystemLanguageModel": "NOT_RUN",
-  "watcher_and_acquisition": "Only after root source/route review: one POST, exact immutable source/attempt readback, one finite watcher, one terminal acquisition; original ZIP kept once, selective small-original extraction."
+  "watcher_and_acquisition": "Only after root source/route review: one POST, exact immutable source/attempt readback, one finite watcher, one terminal acquisition; original ZIP kept once, selective small-original extraction.",
+  "supersedes_preparation_commit": "88aa5128bb7b890a802dd17fbd1d73ecf9d750fc"
 }

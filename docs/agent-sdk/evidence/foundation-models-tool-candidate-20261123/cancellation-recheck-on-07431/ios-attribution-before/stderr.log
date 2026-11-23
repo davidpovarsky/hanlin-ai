@@ -1,0 +1,17 @@
+test_original_cancellation_failure_and_missing_parameter_remain_failures (Scripts.CI.Tests.test_native_tool_cancellation_recheck_report.NativeCancellationAdmissionTests.test_original_cancellation_failure_and_missing_parameter_remain_failures) ... FAIL
+
+======================================================================
+FAIL: test_original_cancellation_failure_and_missing_parameter_remain_failures (Scripts.CI.Tests.test_native_tool_cancellation_recheck_report.NativeCancellationAdmissionTests.test_original_cancellation_failure_and_missing_parameter_remain_failures)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk02-stop-continuation-20261123/Scripts/CI/Tests/test_native_tool_cancellation_recheck_report.py", line 185, in test_original_cancellation_failure_and_missing_parameter_remain_failures
+    self.assertEqual(result["ios_agent_core_compile"], "PASS")
+AssertionError: 'FAIL' != 'PASS'
+- FAIL
++ PASS
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.160s
+
+FAILED (failures=1)

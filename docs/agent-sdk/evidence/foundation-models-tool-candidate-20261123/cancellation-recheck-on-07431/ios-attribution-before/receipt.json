@@ -1,0 +1,18 @@
+{
+  "kind": "LOCAL_REPORT_CONTROL_NOT_NATIVE",
+  "phase": "ios-attribution-before",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_native_tool_cancellation_recheck_report.NativeCancellationAdmissionTests.test_original_cancellation_failure_and_missing_parameter_remain_failures",
+    "-v"
+  ],
+  "exit_code": 1,
+  "started_utc": "2026-11-23T23:47:21.273081+00:00",
+  "finished_utc": "2026-11-23T23:47:21.526300+00:00",
+  "helper_sha256": "40d2db50d9ed58d1bafea8f3cf7fcbe3c1e749cbe8ce69296e580c300fa13f44",
+  "test_sha256": "147045e00a39da6f40f2e3df104a403ecb9f6aafa92561edc14cfaf41cce6320",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "b49d39e059857c20ecdf1385e2ac3c985c402474c8c137ec9c4a5e52d0179ec4"
+}
