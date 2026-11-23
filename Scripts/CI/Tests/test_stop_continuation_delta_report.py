@@ -2,6 +2,7 @@
 import copy
 import hashlib
 import json
+import re
 from pathlib import Path
 import sys
 import tempfile
@@ -90,6 +91,30 @@ class StopContinuationDeltaReportTests(unittest.TestCase):
                 path.write_bytes(original)
         pin = self.evidence / "producer-commit.txt"
         pin.write_text("e7bf34111e603ca977becd007dd4e5bb109af857\n")
+        self.assertEqual(report.summarize(self.evidence)["status"], "BLOCKED")
+
+    def test_function_selectors_preserve_declared_singleton_identifiers(self):
+        source = (ROOT / "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift").read_text()
+        suite = source.split("struct HanlinProducerStopContinuationTests {", 1)[1]
+        # These three cases have not run yet. Bind to their actual @Test
+        # declarations, using the same complete singleton signature preserved
+        # in authenticated Swift Testing result identifiers.
+        signatures = re.findall(
+            r"@Test\([^\n]*\)\s+@MainActor\s+func\s+([A-Za-z]\w*\(\))\s+async\s+throws",
+            suite,
+        )
+        self.assertEqual(len(signatures), 3)
+        self.assertEqual(len(set(signatures)), 3)
+        expected = ["HanlinChatCoreTests/HanlinProducerStopContinuationTests/" + signature
+                    for signature in signatures]
+        self.assertCountEqual(report.SELECTORS, expected)
+        commands = json.loads((self.evidence / "commands.json").read_text())
+        selected = next(command for command in commands if command["name"] == "StopContinuationTests")
+        selected["argv"] = [
+            argument[:-2] if argument.startswith("-only-testing:") and argument.endswith("()")
+            else argument for argument in selected["argv"]
+        ]
+        write(self.evidence / "commands.json", commands)
         self.assertEqual(report.summarize(self.evidence)["status"], "BLOCKED")
 
     def test_frozen_fixture_inventory_retains_exact_stop_labels_and_no_old_suite_selection(self):

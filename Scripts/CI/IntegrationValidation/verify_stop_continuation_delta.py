@@ -12,7 +12,7 @@ METHODS = [
     "nativeNumericStopToolCannotContinueOrReachHost",
 ]
 EXPECTED = {SUITE: {method: None for method in METHODS}}
-SELECTORS = ["HanlinChatCoreTests/" + SUITE + "/" + method for method in METHODS]
+SELECTORS = ["HanlinChatCoreTests/" + SUITE + "/" + method + "()" for method in METHODS]
 COMPOSED_SOURCE = {
     "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift":
         "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
