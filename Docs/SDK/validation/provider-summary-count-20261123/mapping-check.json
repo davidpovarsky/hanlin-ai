@@ -1,0 +1,15 @@
+{
+  "status": "PASS_FOCUSED_MAPPING_READBACK",
+  "before_unmapped_paths": [
+    "Docs/SDK/validation/provider-summary-count-20261123/focused-controls.log",
+    "Docs/SDK/validation/provider-summary-count-20261123/original-failure.log",
+    "Docs/SDK/validation/provider-summary-count-20261123/result.json",
+    "Docs/SDK/validation/provider-summary-count-20261123/selection-plan.json"
+  ],
+  "added_no_impact_pattern": "Docs/SDK/validation/provider-summary-count-20261123/**",
+  "all_components_groups_selectors_unchanged": true,
+  "executable_control_path_plan_unchanged": true,
+  "production_provider_tests_executed": 0,
+  "apple_tests_executed": 0,
+  "new_pattern_scope": "Only inert retained controller evidence in this named directory"
+}
