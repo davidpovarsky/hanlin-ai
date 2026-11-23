@@ -2080,7 +2080,7 @@ jobs:
 
       - name: Read the installed FoundationModels tool continuation interface
         if: ${{ inputs.target_validation_group == 'exact_test_selector' }}
-        run: python3 Scripts/CI/inspect_foundation_models_interface.py --output "$LOG_DIR/foundation-models-interface"
+        run: python3 Scripts/CI/inspect_foundation_models_interface.py --output "$LOG_DIR/foundation-models-interface" --query-availability
 
       - name: Retain FoundationModels declarations before the application build
         if: ${{ inputs.target_validation_group == 'exact_test_selector' }}
@@ -3370,6 +3370,7 @@ jobs:
             vm_stat
             ps -axo pid,ppid,%cpu,%mem,etime,comm
           } > "$LOG_DIR/09-host-resources.log" 2>&1
+          python3 Scripts/CI/retain_app_intents_metadata.py --derived-data build/SimulatorDerivedData --output "$LOG_DIR/app-intents-metadata"
           if [ -f "$LOG_DIR/simulator-udid.txt" ]; then
             SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
             python3 - "$SIMULATOR_UDID" <<'PY'
