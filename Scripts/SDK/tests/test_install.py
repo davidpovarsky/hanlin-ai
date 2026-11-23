@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+from unittest import mock
 
 SCRIPT = Path(__file__).resolve().parents[1] / "install.py"
 spec = importlib.util.spec_from_file_location("sdk_install", SCRIPT)
@@ -117,6 +118,68 @@ class SDKInstallTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "edited outside the installer"):
             self.install()
         self.assertEqual(manifest.read_text(), "// host deliberately changed its profile\n")
+
+    def interrupt_selected_source_materialization(self):
+        original_sparse_checkout = installer.sparse_checkout
+
+        def fail_selected_sources(root, patterns, *, materialize):
+            if materialize and "/Sources/CanonicalCore/" in patterns:
+                # The real pinned generator and SwiftPM manifest evaluation have
+                # completed. Inject only the subsequent source-fetch failure.
+                self.assertIn("CanonicalCore", (root / "Package.swift").read_text())
+                self.assertEqual(
+                    json.loads((root / "docs/agent-sdk/unified-package-manifest.json").read_text())["products"],
+                    json.loads(self.lock.read_text())["products"])
+                raise RuntimeError("Selected source fetch interrupted")
+            return original_sparse_checkout(root, patterns, materialize=materialize)
+
+        with mock.patch.object(installer, "sparse_checkout", side_effect=fail_selected_sources):
+            with self.assertRaisesRegex(RuntimeError, "Selected source fetch interrupted"):
+                self.install()
+        return self.host / "Vendor/HanlinSDK"
+
+    def test_interrupted_selected_source_update_is_retryable(self):
+        self.install()
+        source = self.repository / "Sources/CanonicalCore/Value.swift"
+        source.write_text("public func canonicalValue() -> Int { 43 }\n")
+        self.git("add", str(source))
+        self.git("commit", "-m", "New canonical revision before interrupted update")
+        revision = self.git("rev-parse", "HEAD")
+        self.lock_products(["HanlinAgentCore"], revision)
+
+        sdk = self.interrupt_selected_source_materialization()
+        self.assertEqual(installer.git(sdk, "rev-parse", "HEAD"), revision)
+        with self.assertRaises(ValueError):
+            installer.check(self.host, self.lock, "Vendor/HanlinSDK")
+
+        receipt = self.install()
+        self.assertEqual(receipt["state"], "installed")
+        self.assertEqual(receipt["revision"], revision)
+        self.assertEqual((sdk / "Sources/CanonicalCore/Value.swift").read_bytes(), source.read_bytes())
+        self.assertEqual(installer.check(self.host, self.lock, "Vendor/HanlinSDK")["state"], "installed")
+        self.assertFalse((sdk / ".hanlin-sdk/native-attempted").exists())
+
+    def test_interrupted_install_preserves_external_generated_and_source_edits(self):
+        sdk = self.interrupt_selected_source_materialization()
+        cases = [
+            ("Package.swift", "edited outside the installer"),
+            ("docs/agent-sdk/unified-package-manifest.json", "edited outside the installer"),
+            ("Scripts/SDK/generate_manifest.py", "actual source edit"),
+        ]
+        for relative, error in cases:
+            with self.subTest(path=relative):
+                path = sdk / relative
+                original = path.read_bytes()
+                edited = original + b"\n# deliberate external edit must survive\n"
+                path.write_bytes(edited)
+                try:
+                    with self.assertRaisesRegex(ValueError, error):
+                        self.install()
+                    self.assertEqual(path.read_bytes(), edited)
+                finally:
+                    # Restore this test's own edit before checking the next
+                    # independently rejected edit against the same interruption.
+                    path.write_bytes(original)
 
     def test_selected_native_product_requires_published_assets(self):
         self.lock_products(["HanlinRuntimeCore"])

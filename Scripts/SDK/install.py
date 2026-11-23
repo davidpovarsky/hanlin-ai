@@ -265,6 +265,12 @@ def install(host: Path, lock_path: Path, destination: str, cache: Path,
                "generatedSHA256": generated_hashes(root)}
     write_json(root / RECEIPT, receipt)
     description = generate_profile(root, lock["products"])
+    # Generation already changed the two managed outputs. Persist their exact
+    # ownership before path validation or sparse source fetching can fail, so an
+    # interrupted installation remains retryable without admitting manual edits.
+    receipt["generatedSHA256"] = generated_hashes(root)
+    receipt["state"] = "profile-generated"
+    write_json(root / RECEIPT, receipt)
     paths = selected_source_paths(root, description)
     patterns = source_patterns(paths)
     sparse_checkout(root, patterns, materialize=True)
