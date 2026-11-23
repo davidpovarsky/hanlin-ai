@@ -1272,14 +1272,17 @@ class ModelRefreshService {
     }
 
     // MARK: 添加模型到数据库
+    @discardableResult
     static func addModelToDatabase(
         modelId: String,
         displayName: String,
         company: String,
         context: ModelContext,
         capabilities: ModelCapabilities? = nil,
-        catalogMetadata: ProviderModelCatalogMetadata? = nil
-    ) throws {
+        catalogMetadata: ProviderModelCatalogMetadata? = nil,
+        isHidden: Bool = false,
+        supportsSearch: Bool = false
+    ) throws -> AllModels {
         // 检查是否已存在
         let targetName = modelId + "_repeat_" + company
         let fetchDescriptor = FetchDescriptor<AllModels>(
@@ -1316,8 +1319,8 @@ class ModelRefreshService {
             position: nextPosition,
             company: company,
             price: -1, // Unknown until an authoritative catalog or explicit override supplies a price.
-            isHidden: false,
-            supportsSearch: false,
+            isHidden: isHidden,
+            supportsSearch: supportsSearch,
             supportsTextGen: resolvedCapabilities.supportsTextGen,
             supportsMultimodal: resolvedCapabilities.supportsMultimodal,
             supportsReasoning: resolvedCapabilities.supportsReasoning,
@@ -1328,9 +1331,11 @@ class ModelRefreshService {
             systemProvision: false // 用户添加的模型
         )
 
+        if context.hasChanges { try context.save() }
         context.insert(newModel)
         if let catalogMetadata { applyCatalogMetadata(catalogMetadata, to: newModel) }
-        try context.save()
+        do { try context.save() } catch { context.rollback(); throw error }
+        return newModel
     }
 
     static func applyCatalogMetadata(_ metadata: ProviderModelCatalogMetadata, to model: AllModels) {
@@ -1350,6 +1355,16 @@ class ModelRefreshService {
             model.supportsReasoning = parameters.contains("reasoning") || parameters.contains("include_reasoning")
             model.supportReasoningChange = parameters.contains("reasoning")
         }
+    }
+
+    /// UUID-based callers remove exactly their original row, preserving the
+    /// existing system-model rule without deleting another equal-name model.
+    static func removeModelFromDatabase(model: AllModels, context: ModelContext) throws {
+        guard model.modelContext === context, !model.isDeleted else { throw ModelFetchError.invalidResponse }
+        guard !model.systemProvision else { throw ModelFetchError.systemModelCannotBeDeleted }
+        if context.hasChanges { try context.save() }
+        context.delete(model)
+        do { try context.save() } catch { context.rollback(); throw error }
     }
 
     // MARK: 从数据库删除模型

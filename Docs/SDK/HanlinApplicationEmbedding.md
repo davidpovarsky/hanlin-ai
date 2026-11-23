@@ -86,8 +86,8 @@ Missing or duplicate identifiers display an unavailable state; they never select
 a record from another context. The public summary API does not expose mutable
 SwiftData rows.
 
-Use `HanlinSettingsView` or the providers/models panels to configure a ready
-model. `context.createConversation(title:)` uses the same creation implementation
+Use `HanlinSettingsView`, the providers/models panels, or the programmatic
+provider/model API below to configure a ready model. `context.createConversation(title:)` uses the same creation implementation
 as Hanlin's workspace: original model selection, the original welcome row and the
 existing persistence writer. It throws `noChatModelReady` when the original
 policy cannot choose a model. Use `context.conversations()` and
@@ -259,3 +259,74 @@ the matching live approval for that message. Stale actions fail closed.
 These adapters preserve the original implementation. Native compilation and
 visual acceptance must be bound to the integrating source commit; syntax
 parsing alone does not establish those results.
+
+## Configure the original engine from host settings
+
+Hosts can configure the original engine without mounting Hanlin settings. The
+public context methods write the original `APIKeys` and `AllModels` records; the
+original protected credential writer uses this context's scoped Keychain service.
+Provider listings contain metadata and storage representation, never secrets.
+
+```swift
+let provider = try context.createProvider(.init(
+    identifier: "MY_PROVIDER",
+    displayName: "My provider",
+    endpoint: URL(string: "https://provider.example/v1/chat/completions")!,
+    api: .openAI
+), credential: hostCredential)
+let model = try context.createModel(
+    modelID: "provider-model-id", displayName: "My model", provider: provider.id,
+    capabilities: .init(tools: true, reasoning: true)
+)
+let conversationID = try context.createConversation(title: "Host assistant")
+let controller = try context.conversationController(conversationID)
+let updates = try controller.send(.init(text: "Hello", modelRecordID: model.id))
+```
+
+The endpoint is the original full request URL, not an inferred server base URL.
+The provider identifier is the original stable routing identity. Use
+`providers()` and `models()` for existing definitions; retain the model's record
+`id` for requests. `modelID` is its original stored routing name, while
+`baseModelID` uses the same suffix-removal helper as the provider engine.
+`capabilities`, `identity`, `position` and `isBuiltIn` expose existing model
+metadata; setting a capability does not fabricate catalog verification.
+
+`updateProvider`, `updateModel`, `deleteProvider` and `deleteModel` mutate those
+same records. Provider metadata updates preserve the exact existing credential
+reference. Deletion targets the actual selected model UUID rather than every
+row with an equal name. Built-in definitions remain available and can be hidden;
+custom provider deletion retains model definitions and historical credential
+recovery generations. `setProviderCredential`, `clearProviderCredential` and
+explicit `providerCredential` access use the original versioned credential
+writer/resolver. Clearing selects an empty current credential; it does not claim
+to erase previously retained recovery generations or historical backups.
+
+The focused native test
+`HanlinApplicationEmbeddingTests/programmaticProviderAndModelUseOriginalRowsAndProtectedWriter`
+checks provider metadata, protected credential rotation/clear, stable model
+UUIDs, original provider-suffixed model naming, capability preservation and
+exact-row deletion in the real SwiftData/Keychain implementations.
+
+## Construct activity input from host-owned state
+
+`HanlinConversationMessageSnapshot` has a public initializer so a host using
+`HanlinAgentCore` or its own persistence can compose the original activity view
+without instantiating the full runtime or a hidden conversation view:
+
+```swift
+let message = HanlinConversationMessageSnapshot(
+    id: actualMessageID, text: observedAnswer, reasoning: observedReasoning,
+    toolContent: observedToolResult, toolName: observedToolName
+)
+HanlinToolActivityView(message: message, isActive: isActualRunActive)
+```
+
+Keep the actual message UUID stable across updates. Every original rich DTO and
+opaque serialized presentation field is accepted with empty defaults. This
+initializer is presentation input only: it does not create a tool receipt, admit
+a run, or authorize an action. For original full-runtime consent, pass the live
+conversation controller; its matching pending approval remains authoritative.
+The native test
+`HanlinApplicationEmbeddingTests/hostConstructedActivitySnapshotPreservesIdentityAndOriginalPayloads`
+checks identity, encoded image bytes and opaque payload preservation, and compiles
+the original activity facade with a host-constructed snapshot.

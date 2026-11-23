@@ -1,4 +1,5 @@
 import Foundation
+import HanlinChatCore
 
 /// Immutable projection of an original SwiftData message. Rich payloads keep
 /// their original types and serialized forms; no alternate renderer schema is
@@ -35,6 +36,39 @@ public struct HanlinConversationMessageSnapshot: Identifiable, Sendable {
     public let groupID: UUID
     public let timestamp: Date
     public let finishReason: String?
+
+    /// Creates a presentation snapshot from host-owned state without creating
+    /// a conversation, starting a run or granting tool/consent authority. Retain
+    /// the actual message identity across streaming updates. Opaque rich fields
+    /// keep their original Hanlin encodings; this initializer does not invent an
+    /// alternate AgentRun or native-UI schema.
+    public init(
+        id: UUID, role: String = "assistant", text: String = "",
+        reasoning: String = "", reasoningTime: String? = nil,
+        toolContent: String? = nil, toolName: String? = nil,
+        resources: [Resource] = [], searchEngine: String? = nil,
+        imageData: Data? = nil, documents: [URL] = [], documentText: String? = nil,
+        prompts: [PromptCard] = [], locations: [Location] = [], routes: [RouteInfo] = [],
+        events: [EventItem] = [], html: String? = nil, health: [HealthData] = [],
+        code: [CodeBlock] = [], knowledge: [KnowledgeCard] = [], audio: [AudioAsset] = [],
+        canvas: CanvasData? = nil, nativeUIBlocksJSON: String? = nil,
+        agentRunJSON: String? = nil, presentationSnapshot: Data? = nil,
+        modelName: String? = nil, modelDisplayName: String? = nil,
+        groupID: UUID? = nil, timestamp: Date = Date(), finishReason: String? = nil
+    ) {
+        self.id = id; self.role = role; self.text = text
+        self.reasoning = reasoning; self.reasoningTime = reasoningTime
+        self.toolContent = toolContent; self.toolName = toolName
+        self.resources = resources; self.searchEngine = searchEngine
+        self.imageData = imageData; self.documents = documents; self.documentText = documentText
+        self.prompts = prompts; self.locations = locations; self.routes = routes
+        self.events = events; self.html = html; self.health = health
+        self.code = code; self.knowledge = knowledge; self.audio = audio
+        self.canvas = canvas; self.nativeUIBlocksJSON = nativeUIBlocksJSON
+        self.agentRunJSON = agentRunJSON; self.presentationSnapshot = presentationSnapshot
+        self.modelName = modelName; self.modelDisplayName = modelDisplayName
+        self.groupID = groupID ?? id; self.timestamp = timestamp; self.finishReason = finishReason
+    }
 
     @MainActor
     init(_ row: ChatMessages) {
@@ -77,7 +111,14 @@ public struct HanlinConversationMessageSnapshot: Identifiable, Sendable {
 
 public struct HanlinApplicationModel: Identifiable, Sendable {
     public let id: UUID
+    /// Original stored routing name, including its provider/agent suffix.
     public let modelID: String
+    /// Provider wire identifier resolved by the same helper as the engine.
+    public var baseModelID: String { restoreBaseModelName(from: modelID) }
+    public let identity: String
+    public let position: Int?
+    public let isBuiltIn: Bool
+    public let capabilities: HanlinApplicationModelCapabilities
     public let displayName: String
     public let provider: String
     public let isHidden: Bool
@@ -93,6 +134,10 @@ public struct HanlinApplicationModel: Identifiable, Sendable {
     init(_ model: AllModels) {
         id = model.id
         modelID = model.name ?? ""
+        identity = model.identity ?? "model"
+        position = model.position
+        isBuiltIn = model.systemProvision
+        capabilities = .init(model)
         displayName = model.presentationName
         provider = model.company ?? ""
         isHidden = model.isHidden
