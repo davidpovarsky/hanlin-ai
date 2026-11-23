@@ -609,9 +609,9 @@ final class HanlinScriptingPlatform {
                 let compiled = if preview.entrypoints.contains(where: { $0.runtimeProfile == .hanlinNativeScript }) {
                     try Self.nativeScriptSourceBundle(preview: preview)
                 } else if preview.entrypoints.contains(where: { $0.runtimeProfile == .hanlinExpo }) {
-                    try Self.preparedSourceBundle(preview: preview, compilerVersion: "Expo-58.0.3-prepared")
+                    try Self.preparedSourceBundle(preview: preview, compilerVersion: "Expo-\(HanlinExpoBridgeMetadata.runtimeVersion)-prepared")
                 } else if preview.entrypoints.contains(where: { $0.widgetEngine == .scriptwidget }) && bundles.isEmpty {
-                    try Self.preparedSourceBundle(preview: preview, compilerVersion: "ScriptWidget-68f04194-prepared")
+                    try Self.preparedSourceBundle(preview: preview, compilerVersion: "ScriptWidget-\(HanlinMiniAppHostVersions.scriptWidgetRevision)-prepared")
                 } else if bundles.isEmpty && preview.entrypoints.allSatisfy({ $0.kind == .widget && $0.widgetEngine == .legacy && URL(filePath: $0.sourcePath).pathExtension.lowercased() == "json" }) {
                     try Self.preparedSourceBundle(preview: preview, compilerVersion: "Hanlin-widget-json-v1")
                 } else if bundles.isEmpty {
