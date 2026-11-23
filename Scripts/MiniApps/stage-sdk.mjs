@@ -60,6 +60,7 @@ export const sdkInputs = [
  'Scripts/NativeScript/package.json','Scripts/NativeScript/package-lock.json','Scripts/NativeScript/dependency-lock.json',
  'Scripts/ExpoNativeAPI/dependency-lock.json','Tools/SwiftUIBridge/configuration.json',
  'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift',
+ 'Packages/HanlinPlatform/Package.swift',
  'docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json','docs/miniapp-sdk/source-inventory.json',
  'docs/miniapp-sdk/extension-reachability.json'
 ];
@@ -72,6 +73,8 @@ export async function inputReceipt(root=repositoryRoot) {
   }
   for(const relative of ['Scripts/MiniApps','Packages/HanlinExpoUI','Packages/HanlinExpoNativeAPIJS',
     'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services',
+    'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal',
+    'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift',
     'docs/miniapp-sdk','docs/hanlin-nativescript-guide.md','docs/hanlin-expo-runtime.md']) {
     async function walk(src,prefix) {
       const info=await stat(src);
@@ -174,11 +177,17 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
     const widgetCommits=[...new Set(widgetManifest.files.filter(x=>x.repository==='everettjf/scriptwidget').map(x=>x.commit))];
     await mkdir(path.join(staging,'scriptwidget'),{recursive:true});
     await cp(path.join(root,'Scripts/MiniApps/scriptwidget'),path.join(staging,'scriptwidget'),{recursive:true});
+    // Generate against this build's real original native registrations. A new
+    // unsupported signature fails staging instead of publishing invented types.
+    const {generateScriptWidgetServiceTypes}=await import(pathToFileURL(path.join(root,'Scripts/MiniApps/generate-scriptwidget-service-types.mjs')).href);
+    const serviceTypes=await generateScriptWidgetServiceTypes({root,output:path.join(staging,'scriptwidget')});
     if(!engines.expo)await copyAuthoringTree(path.join(root,'Scripts/Expo/node_modules/typescript'),path.join(staging,'scriptwidget/typescript'),files,'scriptwidget/typescript');
     engines.scriptwidget={toolingRoot:'scriptwidget',tsconfigPath:'scriptwidget/tsconfig.json',
       typescriptPath:engines.expo?.typescriptPath??'scriptwidget/typescript/lib/typescript.js',packageVersions:{'everettjf/scriptwidget':widgetCommits.join(',')},
-      docs:['docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md'],capabilities:['prepared-widgets'],
-      upstreamTypingStatus:'Original completion catalog plus explicit Hanlin host declarations; not a claim that the full upstream application services are embedded.'};
+      docs:['docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md'],capabilities:['prepared-widgets','original-native-services'],
+      nativeAPIManifestPath:'scriptwidget/native-api.json',
+      nativeAPISummary:{globals:serviceTypes.globals,objects:serviceTypes.nativeObjects,methods:serviceTypes.nativeMethods},
+      upstreamTypingStatus:'Original component catalog and declarations generated from the original native JSExport APIs and explicit Hanlin host additions embedded in this exact build.'};
     }
     // Include generated configs, original catalogs, host declarations and documentation too.
     const recorded=new Set(files.map(x=>x.path));
