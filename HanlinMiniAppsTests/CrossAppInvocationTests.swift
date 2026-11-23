@@ -31,7 +31,7 @@ final class CrossAppInvocationTests: XCTestCase {
             return true
         }
         try session.restoreRequest()
-        _ = try await session.perform("miniapps.complete", payload: #""חדש 🚀""#)
+        try await session.complete(.string("חדש 🚀"))
         XCTAssertEqual(calls, 1)
         let cold = HanlinExternalMiniAppSession(requestID: original.id,
             store: try MiniAppBridgeStore(containerURL: root), openSource: { _ in true })

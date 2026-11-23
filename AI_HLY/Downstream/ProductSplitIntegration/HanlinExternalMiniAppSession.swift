@@ -20,6 +20,7 @@ final class HanlinExternalMiniAppSession {
     var error: String?
     private var platform: HanlinScriptingPlatform?
     private var provider: HanlinMiniAppsProvider?
+    private var loadGeneration = UUID()
 
     private let storeOverride: MiniAppBridgeStore?
     private let openSource: @MainActor (URL) async -> Bool
@@ -55,13 +56,17 @@ final class HanlinExternalMiniAppSession {
     func load() async {
         guard request == nil, !loading else { return }
         loading = true
-        defer { loading = false }
+        let generation = UUID()
+        loadGeneration = generation
+        var ownedPlatform: HanlinScriptingPlatform?
+        defer { if loadGeneration == generation { loading = false } }
         do {
             let request = try restoreRequest()
             if result != nil { return }
             // Each scene owns its foreground model/controllers. The installed
             // package registry and canonical discovery remain shared.
             let platform = HanlinScriptingPlatform()
+            ownedPlatform = platform
             platform.externalMiniAppOperation = { [weak self] operation, payload in
                 guard let self else { throw CancellationError() }
                 return try await self.perform(operation, payload: payload)
@@ -70,16 +75,29 @@ final class HanlinExternalMiniAppSession {
             let provider = HanlinMiniAppsProvider(platform: platform)
             self.provider = provider
             try await provider.refreshCatalog()
+            try Task.checkCancellation()
+            guard loadGeneration == generation else { throw CancellationError() }
             guard let item = HanlinMiniAppHost.shared.items.first(where: { $0.id.rawValue == request.appID }) else {
                 throw failure("This MiniApp is no longer installed.")
             }
             let input = Self.inputValue(request)
-            view = try await provider.launch(item, includesDismissControl: false,
+            let launchedView = try await provider.launch(item, includesDismissControl: false,
                 sharedInput: input, completeSharedRequest: { [weak self] value in
                     guard let self else { throw CancellationError() }
                     try await self.complete(value)
                 })
+            try Task.checkCancellation()
+            guard loadGeneration == generation else { throw CancellationError() }
+            view = launchedView
         } catch {
+            ownedPlatform?.dismissActiveApplication()
+            guard loadGeneration == generation else { return }
+            if error is CancellationError {
+                request = nil
+                provider = nil
+                platform = nil
+                return
+            }
             self.error = error.localizedDescription
             // A launch failure is an actual error result, not successful output.
             if let request, let mailbox = try? mailbox() {
@@ -131,6 +149,9 @@ final class HanlinExternalMiniAppSession {
     }
 
     func close() {
+        loadGeneration = UUID()
+        loading = false
+        request = nil
         platform?.dismissActiveApplication()
         platform?.externalMiniAppOperation = nil
         view = nil
@@ -161,8 +182,8 @@ final class HanlinExternalMiniAppSession {
         }
     }
 
-    private func complete(_ value: HanlinValue) async throws {
-        try await completeJSON(value.canonicalJSONData())
+    func complete(_ value: HanlinValue) async throws {
+        try await completeJSON(value.jsonValue().canonicalJSONData())
     }
 
     private func completeJSON(_ data: Data) async throws {
