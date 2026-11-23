@@ -1,0 +1,26 @@
+{
+  "run_id": 45146657017,
+  "run_attempt": 2,
+  "source": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "accepted_at": "2026-11-23T09:39:49.312536+00:00",
+  "confirmed_dispatch": {
+    "id": 45146657017,
+    "run_attempt": 2,
+    "head_sha": "6772dce6304fc6761a2200314f7d2020dc782e47",
+    "head_branch": "codex/hanlin-motion-d-20261123",
+    "status": "queued",
+    "conclusion": null,
+    "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45146657017",
+    "created_at": "2026-11-23T09:23:57Z",
+    "updated_at": "2026-11-23T09:39:51Z",
+    "confirmed_at": "2026-11-23T09:39:59.180018+00:00"
+  },
+  "selector": "MotionUITests/testDRapidInputDiagnosticOnly",
+  "prior_watcher_ended": true,
+  "orphan_watchers": [],
+  "sole_new_watcher": "job_f7f64966d305",
+  "finite_watch_seconds": 3300,
+  "original_timeouts_assertions_dependencies_unchanged": true,
+  "native_test_result": "PENDING_AT_DISPATCH; this is not a test result",
+  "A_B_C": "NOT_SELECTED"
+}

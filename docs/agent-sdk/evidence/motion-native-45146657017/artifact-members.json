@@ -1,0 +1,78 @@
+[
+  {
+    "name": "boot-initial.log",
+    "bytes": 0
+  },
+  {
+    "name": "bootstatus.log",
+    "bytes": 261
+  },
+  {
+    "name": "bootstatus-attempt-1.log",
+    "bytes": 0
+  },
+  {
+    "name": "ci-performance-report.json",
+    "bytes": 2035
+  },
+  {
+    "name": "core-simulator-log.timeout",
+    "bytes": 24
+  },
+  {
+    "name": "device-strategy.txt",
+    "bytes": 6
+  },
+  {
+    "name": "devices-after.timeout",
+    "bytes": 24
+  },
+  {
+    "name": "devices.json",
+    "bytes": 22084
+  },
+  {
+    "name": "motion-boot-readiness.json",
+    "bytes": 1960
+  },
+  {
+    "name": "owned-simulator-cleanup.log",
+    "bytes": 1683
+  },
+  {
+    "name": "preflight-duration-seconds.txt",
+    "bytes": 4
+  },
+  {
+    "name": "preflight.txt",
+    "bytes": 962
+  },
+  {
+    "name": "process-status.txt",
+    "bytes": 28
+  },
+  {
+    "name": "requested-scope.txt",
+    "bytes": 17
+  },
+  {
+    "name": "runtimes.json",
+    "bytes": 60604
+  },
+  {
+    "name": "shutdown-recovery.log",
+    "bytes": 0
+  },
+  {
+    "name": "source-sha.txt",
+    "bytes": 41
+  },
+  {
+    "name": "verified-environment.json",
+    "bytes": 81347
+  },
+  {
+    "name": "xcodegen-install.log",
+    "bytes": 327
+  }
+]

@@ -1,0 +1,104 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2096,
+      "sha256": "4d8f28e289d42085107ca8b78688333233ea55cfd624120fc47311452d67670a"
+    },
+    {
+      "path": "artifact-members.json",
+      "bytes": 1179,
+      "sha256": "6d866bf9525e2ca2b8b89afa752efd251183a9670f4c9da96ef3a76c1efacfc9"
+    },
+    {
+      "path": "artifact-retrieval.json",
+      "bytes": 304,
+      "sha256": "9effd0a8f0d0895cb24d37ed759fed8242e5f37b2f5bf711b05bf3a89b53ade6"
+    },
+    {
+      "path": "attempt-1-result-receipt.json",
+      "bytes": 2996,
+      "sha256": "f30a23ec2bd5c06f6efb8e80cf65d3cf91df01da072599c31dfc0b0f79cdec1e"
+    },
+    {
+      "path": "attempt-2-dispatch-receipt.json",
+      "bytes": 975,
+      "sha256": "aea7961c776b8d60192e0c66ded95906c8cd0d2393d8c27943616be1d1fcc417"
+    },
+    {
+      "path": "bootstatus.log",
+      "bytes": 261,
+      "sha256": "80325298ffe4e4b6caa16c90e3e3a98ebd4b2218fd20fc47c050d44119b32fd6"
+    },
+    {
+      "path": "branch-receipt.json",
+      "bytes": 832,
+      "sha256": "9cf79d3965276a17187d9a821c8b52e3d28311a3be676326693246961f3e25ad"
+    },
+    {
+      "path": "core-simulator-log.timeout",
+      "bytes": 24,
+      "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb"
+    },
+    {
+      "path": "devices-after.timeout",
+      "bytes": 24,
+      "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb"
+    },
+    {
+      "path": "dispatch-intent.json",
+      "bytes": 961,
+      "sha256": "f47ded63675af4a54bb96585a48a568af7e5029db0f61ef1521ccbc68165e91e"
+    },
+    {
+      "path": "environment-summary.json",
+      "bytes": 816,
+      "sha256": "6bebd6306f416bf779831b13225ba3ade87e5a0e73cd14a8fd3217144cb6b6be"
+    },
+    {
+      "path": "motion-boot-readiness.json",
+      "bytes": 1960,
+      "sha256": "1c63369b0aa50b56b7b3b53f22a8c546e5334fd9214dfc965d736ecd459f8f77"
+    },
+    {
+      "path": "owned-simulator-cleanup.log",
+      "bytes": 1683,
+      "sha256": "e197300cebbe6a3e72cd72c572e58912e83bc2f75f322e804c70600a33c3ac87"
+    },
+    {
+      "path": "preflight-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "565b6c5dfda1c10331dff54981307263d2de6444cd54226a8964a58b1d1e5b0e"
+    },
+    {
+      "path": "preflight.txt",
+      "bytes": 962,
+      "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+    },
+    {
+      "path": "process-status.txt",
+      "bytes": 28,
+      "sha256": "5fecb30c9edeef67794fce1856d1b70fc392c560e8e3459bc2662c377e2f0b3d"
+    },
+    {
+      "path": "requested-scope.txt",
+      "bytes": 17,
+      "sha256": "6ad2ebf1c8ea86183a5c729a7c063461f65b152e056155a2515424821719badf"
+    },
+    {
+      "path": "run-receipt.json",
+      "bytes": 404,
+      "sha256": "c1063cb4b628f4f92f4d5357478c569a2343aabd29cec02a0035c0cd7e329e56"
+    },
+    {
+      "path": "source-sha.txt",
+      "bytes": 41,
+      "sha256": "c764ff6c0e255e5815a66e05a0b0bb6a6b528420eaaa5399b1a30c0d6479ab14"
+    },
+    {
+      "path": "watch-ended.json",
+      "bytes": 151,
+      "sha256": "701b58dabca884a35924a76b3b18ac5f356461098d6ee4c1ce0dab1141943c20"
+    }
+  ]
+}
