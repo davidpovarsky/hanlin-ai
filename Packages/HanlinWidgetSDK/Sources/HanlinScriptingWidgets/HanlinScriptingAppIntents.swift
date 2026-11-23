@@ -11,7 +11,7 @@ public struct HanlinScriptActionEntity: AppEntity {
         self.subtitle = subtitle; self.identity = identity
     }
 
-    public static let typeDisplayRepresentation = TypeDisplayRepresentation(name: LocalizedStringResource("Script Action", table: "HanlinAppIntents", bundle: .main))
+    public static let typeDisplayRepresentation = TypeDisplayRepresentation(name: LocalizedStringResource("Script Action", table: "HanlinAppIntents"))
     public static let defaultQuery = HanlinScriptActionEntityQuery()
 
     public let id: String
@@ -72,14 +72,14 @@ public struct HanlinRunScriptActionIntent: AppIntent {
 
     public init() {}
 
-    public static let title = LocalizedStringResource("Run Script Action", table: "HanlinAppIntents", bundle: .main)
-    public static let description = IntentDescription(LocalizedStringResource("Runs an action from an installed Hanlin Script package.", table: "HanlinAppIntents", bundle: .main))
+    public static let title = LocalizedStringResource("Run Script Action", table: "HanlinAppIntents")
+    public static let description = IntentDescription(LocalizedStringResource("Runs an action from an installed Hanlin Script package.", table: "HanlinAppIntents"))
     public static let openAppWhenRun = true
 
-    @Parameter(title: LocalizedStringResource("Action", table: "HanlinAppIntents", bundle: .main))
+    @Parameter(title: LocalizedStringResource("Action", table: "HanlinAppIntents"))
     public var action: HanlinScriptActionEntity
 
-    @Parameter(title: LocalizedStringResource("Input", table: "HanlinAppIntents", bundle: .main), default: "")
+    @Parameter(title: LocalizedStringResource("Input", table: "HanlinAppIntents"), default: "")
     public var input: String
 
     public static var parameterSummary: some ParameterSummary {

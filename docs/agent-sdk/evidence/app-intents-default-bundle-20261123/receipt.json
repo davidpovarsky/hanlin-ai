@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-23T17:40:36.464869+00:00",
+  "failedRun": 45224582718,
+  "failedJob": 137867861546,
+  "testedSource": "8429dbb6cb66e266504b8d055586829ba7aa61f7",
+  "originalJobLog": {
+    "bytes": 13020471,
+    "sha256": "04d5be6c44cb0bf512516540ed10ed1efd4a69008cd2cc8537b03fa93d4f2e4b"
+  },
+  "exactExcerpt": {
+    "path": "original-compiler-excerpt.log",
+    "bytes": 4490,
+    "sha256": "5e69f679e593d703ae88c27bffffda3afb1a5ba8c5caedcda24625b1ff759a29"
+  },
+  "runtimePreflight": "PASS",
+  "nativeExport": "PASS",
+  "swiftPMResolution": "PASS",
+  "appIntentsMetadata": "FAIL",
+  "applicationScopes": {
+    "status": "NOT_RUN",
+    "selectedScopes": 32
+  },
+  "sourceCorrection": {
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift": {
+      "declarations": 5,
+      "sha256": "dda644f6f7db09e970194eac34a6e0ed1b37969e44c56ce90fa55d9a4c0446b0"
+    },
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift": {
+      "declarations": 4,
+      "sha256": "2123b6ca433b521459be27a3f131b147c23badc93e3f9bca2a14dcafe9dafe4d"
+    },
+    "AI_HLY/VisionIntent.swift": {
+      "declarations": 2,
+      "sha256": "dbb248ef6c5a82085190b0cb6665cd622d3f719416dc43ba998f20f3e201331f"
+    },
+    "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift": {
+      "declarations": 9,
+      "sha256": "29793c75803318c10d9abcd2b02945b16852f32ec3cebeabe1742a9a4746b702"
+    }
+  },
+  "appleValidation": "NOT_RUN",
+  "note": "Recompiled original package source still failed with explicit .main. Omit explicit bundle to select the documented default-capable initializer; native metadata export and localization must still pass."
+}
