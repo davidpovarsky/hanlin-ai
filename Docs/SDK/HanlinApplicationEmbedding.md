@@ -221,3 +221,41 @@ tool activity, sources, calendar and other rich results, split markers,
 completion and interruption behavior. Error projection is now saved together
 with the failed run status; previously ChatView saved immediately before
 changing the row to its visible error text.
+
+## Original Composer and activity in a host layout
+
+The application product also exports the original component owners, without a
+second draft store, engine, renderer or consent controller. To place the input
+separately, retain one `HanlinConversationPresentation` and mount exactly one
+`HanlinConversationTranscriptView(presentation:)` with
+`HanlinConversationComposerView(presentation:)`. The existing generation-checked
+composer session bridge connects the two to the original `ChatView` state.
+
+```swift
+let presentation = try HanlinConversationPresentation(
+    context: application, conversationID: conversationID)
+
+// In the host's view hierarchy:
+VStack(spacing: 0) {
+    HanlinConversationTranscriptView(presentation: presentation)
+    HanlinConversationComposerView(presentation: presentation)
+}
+```
+
+For an overlay, set `presentation.transcriptBottomInset` to the host's chosen
+obstruction height; for a separate layout region its default is zero. The host
+can pass `availableWorkspaceSize` for the original Composer's expanded panels,
+apply normal SwiftUI modifiers and read `composerHeight`, `draft`, `isRunning`
+and `isReady`. `send()` and `stop()` use the same original guarded callbacks.
+`HanlinConversationComposerView(context:conversationID:)` mounts the original
+conversation owner with its Composer alone when no transcript is needed.
+
+For a headless conversation, render `HanlinToolActivityView(message:controller:)`
+from the controller's original message snapshots. It uses the exact existing
+activity subtree: thinking, rounds, calls, outputs, expansion and animation
+ownership. Consent buttons are present only when the supplied controller has
+the matching live approval for that message. Stale actions fail closed.
+
+These adapters preserve the original implementation. Native compilation and
+visual acceptance must be bound to the integrating source commit; syntax
+parsing alone does not establish those results.

@@ -19,6 +19,9 @@ import HanlinPlatformContracts
 @MainActor
 struct ChatView: View {
     var chatRecord: ChatRecords
+    var surface: HanlinConversationSurface = .full
+    var externalComposerBottomInset: CGFloat? = nil
+    var availableComposerWorkspaceSize: CGSize? = nil
     @Environment(\.scenePhase) private var chatScenePhase
     // 输入与会话状态相关
     @State private var composerDraft = HanlinComposerDraft()
@@ -307,6 +310,7 @@ struct ChatView: View {
     }
 
     private func dynamicBottomPadding() -> CGFloat {
+        if let inset = externalComposerBottomInset, inset.isFinite { return max(0, inset) }
         if isExternalCompactComposerHost {
             let height = externalDockHeight + 24
             return height.isFinite ? max(225, height) : 225
@@ -451,68 +455,32 @@ struct ChatView: View {
         return chatTemps.flatMap { $0.resources ?? [] }.filter { seen.insert($0.link).inserted }
     }
 
+    @ViewBuilder
+    private var canonicalComposer: some View {
+        if !isExternalCompactComposerHost {
+            HanlinMountedComposerContent(endpoint: makeExternalComposerEndpoint(),
+                isInputActive: $isInputActive,
+                availableWorkspaceSize: availableComposerWorkspaceSize ?? measuredWorkspaceSize)
+        }
+    }
+
     private var canonicalChatWorkspace: some View {
-        HanlinChatView(shell: resolvedChatShell) {
-            ScrollViewReader { scrollViewProxy in
-                buildScrollContent(scrollViewProxy).padding(.bottom, 6)
-            }
-            // A reader may retain a pending scroll context until its native
-            // scroll view attaches. Never carry that context to another chat.
-            // Keyboard, split-view resizing and activity updates keep this ID.
-            .id(effectiveChatSessionID)
-        } composer: {
-                if !isExternalCompactComposerHost {
-                    ChatViewBottom(
-                        chatRecord: chatRecord,
-                        modelTemp: modelTemp,
-                        TemporaryRecord: TemporaryRecord,
-                        respondIndex: respondIndex,
-                        onSelectModel: selectModel,
-                        onSendUser: { handleMessageSending(ifObservingMode: false) },
-                        onSendObserve: { handleMessageSending(ifObservingMode: true) },
-                        onCancel: handleCancellation,
-                        selectedModelIndex: $selectedModelIndex,
-                        showScrollToBottomButton: $showScrollToBottomButton,
-                        needScrollToBottomButton: $needScrollToBottomButton,
-                        isMultiSelectMode: $isMultiSelectMode,
-                        selectedMessageIDs: $selectedMessageIDs,
-                        chatTemps: $chatTemps,
-                        showTemperatureSlider: $showTemperatureSlider,
-                        temperature: $temperature,
-                        showTopPSlider: $showTopPSlider,
-                        topP: $topP,
-                        showMaxTokensSlider: $showMaxTokensSlider,
-                        maxTokens: $maxTokens,
-                        showMaxMessagesNumSlider: $showMaxMessagesNumSlider,
-                        maxMessagesNum: $maxMessagesNum,
-                        message: messageBinding,
-                        selectedImages: $selectedImages,
-                        selectedDocumentURLs: $selectedDocumentURLs,
-                        selectedURLs: $selectedURLs,
-                        selectedPrompts: $selectedPrompts,
-                        showPhotoSourceOptions: $showPhotoSourceOptions,
-                        showModelSuggestions: $showModelSuggestions,
-                        filteredModels: $filteredModels,
-                        isResponding: agentBusyBinding,
-                        isFeedBack: $isFeedBack,
-                        ifKnowledge: $ifKnowledge,
-                        ifSearch: $ifSearch,
-                        ifToolUse: $ifToolUse,
-                        ifThink: $ifThink,
-                        ifAudio: $ifAudio,
-                        ifPlanning: $ifPlanning,
-                        thinkingLength: $thinkingLength,
-                        showKnowledgeAlert: $showKnowledgeAlert,
-                        knowledgeAlertMessage: $KnowledgeAlertMessgae,
-                        showSearchAlert: $showSearchAlert,
-                        selectedImageSize: $selectedImageSize,
-                        imageReversePrompt: $imageReversePrompt,
-                        isInputActive: $isInputActive,
-                        dockContextKey: effectiveChatSessionID.uuidString,
-                        availableWorkspaceSize: measuredWorkspaceSize,
-                        readCurrentMessageState: { [composerDraft] in composerDraft.snapshot }
-                    )
+        Group {
+            if surface == .composer {
+                canonicalComposer
+            } else {
+                HanlinChatView(shell: resolvedChatShell) {
+                    ScrollViewReader { scrollViewProxy in
+                        buildScrollContent(scrollViewProxy).padding(.bottom, 6)
+                    }
+                    // A reader may retain a pending scroll context until its native
+                    // scroll view attaches. Never carry that context to another chat.
+                    // Keyboard, split-view resizing and activity updates keep this ID.
+                    .id(effectiveChatSessionID)
+                } composer: {
+                    canonicalComposer
                 }
+            }
         }
             .onGeometryChange(for: CGSize.self) { proxy in
                 proxy.size
@@ -1491,16 +1459,9 @@ struct ChatView: View {
                   let pendingRowID = agentSessionOwner.pendingApprovalRowID,
                   groupIDs.contains(pendingRowID),
                   let request = agentSessionOwner.consent.pending else { return nil }
-            return ChatToolApprovalPresentation(
-                requestID: request.id.uuidString,
-                callID: request.providerCallID,
-                toolName: request.tool,
-                reviewText: AgentDiagnosticsRedactor.sanitize(request.originalArgumentsJSON.map {
-                    String(decoding: $0, as: UTF8.self)
-                } ?? "{}"),
-                remembersDecision: request.remembersDecision,
-                answer: { allowed in agentSessionOwner.consent.answer(id: request.id, allowed: allowed) }
-            )
+            return ChatToolApprovalPresentation.original(request) { allowed in
+                agentSessionOwner.consent.answer(id: request.id, allowed: allowed)
+            }
         }()
 
         // 1. 构造基础气泡

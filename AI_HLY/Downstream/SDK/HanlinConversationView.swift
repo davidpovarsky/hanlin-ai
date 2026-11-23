@@ -52,19 +52,27 @@ public struct HanlinConversationView: View {
 }
 
 @MainActor
-private struct HanlinResolvedConversationView: View {
+struct HanlinResolvedConversationView: View {
     let destination: HanlinConversationDestination
+    let surface: HanlinConversationSurface
+    let externalComposerBottomInset: CGFloat?
+    let availableComposerWorkspaceSize: CGSize?
     @Query private var records: [ChatRecords]
 
-    init(destination: HanlinConversationDestination) {
+    init(destination: HanlinConversationDestination, surface: HanlinConversationSurface = .full,
+         externalComposerBottomInset: CGFloat? = nil, availableComposerWorkspaceSize: CGSize? = nil) {
         self.destination = destination
+        self.surface = surface
+        self.externalComposerBottomInset = externalComposerBottomInset
+        self.availableComposerWorkspaceSize = availableComposerWorkspaceSize
         let identifier: UUID? = destination.conversationID
         _records = Query(filter: #Predicate<ChatRecords> { $0.id == identifier })
     }
 
     var body: some View {
         if records.count == 1, let record = records.first {
-            ChatView(chatRecord: record, matchedMessageID: destination.messageID)
+            ChatView(chatRecord: record, surface: surface, externalComposerBottomInset: externalComposerBottomInset,
+                availableComposerWorkspaceSize: availableComposerWorkspaceSize, matchedMessageID: destination.messageID)
                 .environment(\.chatSourceDestination, destination.source)
                 .id(destination.conversationID)
         } else {

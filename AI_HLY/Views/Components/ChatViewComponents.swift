@@ -162,6 +162,16 @@ struct ChatToolApprovalPresentation {
     let reviewText: String
     var remembersDecision: Bool = false
     let answer: (Bool) -> Void
+
+    @MainActor
+    static func original(_ request: HanlinAppToolConsent.Request,
+                         answer: @escaping (Bool) -> Void) -> Self {
+        .init(requestID: request.id.uuidString, callID: request.providerCallID,
+            toolName: request.tool,
+            reviewText: AgentDiagnosticsRedactor.sanitize(request.originalArgumentsJSON.map {
+                String(decoding: $0, as: UTF8.self)
+            } ?? "{}"), remembersDecision: request.remembersDecision, answer: answer)
+    }
 }
 
 // MARK: - 组件化对话气泡
@@ -2156,11 +2166,7 @@ struct ChatBubbleView: View {
     /// The activity subtree has its own invalidation boundary. Assistant answer
     /// deltas never rebuild the already completed hierarchy or its tool output.
     private func activityContent() -> some View {
-        var presentationRun = agentRun
-        presentationRun?.transcriptItems.removeAll {
-            $0.kind == .assistantText
-        }
-        presentationRun?.finalAnswer = nil
+        let presentationRun = AgentActivityContentView.presentationRun(agentRun)
         return AgentActivityContentView(run: presentationRun, reasoning: reasoning,
             reasoningTime: reasoningTime, legacyToolContent: toolContent,
             disclosureExpanded: isReasoningExpanded, isExpanded: $isReasoningExpanded,
@@ -2169,7 +2175,14 @@ struct ChatBubbleView: View {
             .equatable()
     }
 
-    private struct AgentActivityContentView: View, Equatable {
+    struct AgentActivityContentView: View, Equatable {
+        static func presentationRun(_ original: AgentRun?) -> AgentRun? {
+            var run = original
+            run?.transcriptItems.removeAll { $0.kind == .assistantText }
+            run?.finalAnswer = nil
+            return run
+        }
+
         let run: AgentRun?
         let reasoning: String
         let reasoningTime: String?

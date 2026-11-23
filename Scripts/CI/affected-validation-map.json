@@ -1710,13 +1710,15 @@
         "AI_HLY/Downstream/SDK/**",
         "Package.swift",
         "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
-        "AI_HLYTests/HanlinConversationControllerTests.swift"
+        "AI_HLYTests/HanlinConversationControllerTests.swift",
+        "AI_HLYTests/HanlinConversationProjectionTests.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
       ],
       "unit_suites": [
-        "AI_HLYTests/HanlinApplicationEmbeddingTests"
+        "AI_HLYTests/HanlinApplicationEmbeddingTests",
+        "AI_HLYTests/HanlinConversationProjectionTests"
       ],
       "consumers": [
         "app_core"

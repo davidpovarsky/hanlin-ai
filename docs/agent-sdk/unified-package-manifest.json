@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "sourceOwnership": "one original source path per target",
   "applicationModule": "AI_Hanlin",
-  "applicationSourceCount": 491,
+  "applicationSourceCount": 498,
+  "selectedProducts": null,
   "products": [
     "HanlinHostContracts",
     "HanlinAgentCore",
