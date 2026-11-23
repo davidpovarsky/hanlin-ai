@@ -1,0 +1,13 @@
+{
+  "scope": "AFFECTED_HISTORICAL_HEADER_SOURCE_BINDING_ONLY_NO_NATIVE_EXECUTION",
+  "utc": "2026-11-23T22:32:45.703070+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_frozen_header_source_preserves_seven_helpers_and_exact_selector",
+    "-v"
+  ],
+  "exit_code": 0,
+  "changed_control_sha256": "f53a37602bb2e4e07163aefa05ee9546ada0d08468f1b46d609335cd478f98ae"
+}

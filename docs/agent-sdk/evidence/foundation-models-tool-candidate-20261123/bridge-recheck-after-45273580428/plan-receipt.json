@@ -1,0 +1,109 @@
+{
+  "utc": "2026-11-23T22:34:49.015672+00:00",
+  "status": "SOURCE_READY_NATIVE_NOT_RUN",
+  "source_fix_commit": "ab06b4129e23c8f9ce9c1a4229e72a3d99bbf5d4",
+  "route_commit": "7e55146ccf9eea9b607a6e5270606ea0a142e0f5",
+  "branch": "codex/hanlin-sdk02-native-tool-adapter-20261123",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "dispatch_rule": "One dispatch only after parent review on the final immutable plan commit; exact source/readback and sole finite watcher/collector.",
+  "request": {
+    "ref": "codex/hanlin-sdk02-native-tool-adapter-20261123",
+    "inputs": {
+      "composer_validation_only": "false",
+      "nativescript_metadata_validation_only": "false",
+      "runtime_job_foundation_only": "false",
+      "markdown_renderer_validation_only": "false",
+      "code_fence_webkit_validation_only": "false",
+      "diagnostics_capture_validation_only": "false",
+      "testflight_upload": "false",
+      "runtime_bundle_only": "false",
+      "runtime_publish_release": "false",
+      "phase1_validation_only": "false",
+      "fast_validation_only": "false",
+      "nativescript_poc_only": "false",
+      "force_clean_build": "false",
+      "measure_warm_rebuild": "false",
+      "simulator_e2e_only": "false",
+      "full_validation": "false",
+      "target_validation_group": "agent_sdk_exact_source_proof",
+      "exact_test_selector": "HanlinNativeToolBridgeRecheck"
+    }
+  },
+  "source_sha256": {
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57",
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "afeed29d2451d17f835230166cb2da894d574aa4474ca296b770ebb68e1f3d8c",
+    "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "4ba6b5bd6b920b84bf76ed8879a2ca69e980e3f31528fcf9987eb7e81d0a7676",
+    "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py": "239402454e16c438f799243116151cac4a6b7fa83223ccfa46fc81e4bc9651d2",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_bridge_recheck.py": "4eee9e418bfc4498f6d06628671d854053fad38374f184b0b2d582db45833d9b",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py": "3543dcc8bb30ac050e8203aa4d05cfdc39f7d175308c336a66794482a25c81da",
+    "Scripts/CI/IntegrationValidation/reuse_native_tool_baseline.py": "bfd5c3fda502efcca6e562fc999c6fea86eebf5f6612c6f3bcc22239ad0a86db",
+    "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py": "41720f0fa414875f05a3b96e9364e6659c230f96a4d5cbb708fad801eb3b3afb",
+    "Scripts/CI/select_stable_xcode.py": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f",
+    "Scripts/CI/Tests/test_native_tool_bridge_recheck_report.py": "d1663043ee0c24d04d71ac1e9a79c78d06228135be25dfa8a25f33a46433e3bb",
+    "Scripts/CI/Tests/test_native_tool_header_recheck_report.py": "f53a37602bb2e4e07163aefa05ee9546ada0d08468f1b46d609335cd478f98ae",
+    "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/reference.json": "785bf2b27c4c9ec5b4c107135a52bc9568f1c12f4e07cea67c469b12c3310ddd",
+    "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/reference.json": "3f62752b77b154d3e028c5bef517488a97336c768dd6e53fce097e3e2b025615",
+    "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/reference.json": "ba8a05d787ab250ad4400c85cea842e5b7ec23e5a8af4d3f6ec1c70c94a5afb2"
+  },
+  "producer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "expected_current_invocations": 5,
+  "expected_selectors": [
+    "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+    "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+    "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+    "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()",
+    "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls()"
+  ],
+  "current_ios_compile": "REQUIRED_EXECUTED_HanlinAgentCore_generic_iOS_Simulator_BUILD_ONLY",
+  "omitted_current_processes": {
+    "CoreTests": null,
+    "BaselineCoreTests": null
+  },
+  "reused_candidate_passes": [
+    {
+      "run_id": 45259715158,
+      "source": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "count": 27,
+      "scope": "Core12, Schema13, pure schema/history2; exclude previously passing doGenerate because profile/run changed"
+    },
+    {
+      "run_id": 45273580428,
+      "source": "2c41a1b7ed6b191be7529550ae1ca4501632ce8d",
+      "count": 1,
+      "scope": "Authorization early rejection, exact guard/helper/immutable fixture unchanged"
+    }
+  ],
+  "baseline_reuse": {
+    "run_id": 45240721804,
+    "attempt": 2,
+    "count": 12,
+    "expected_native_FAIL": 10,
+    "expected_cloud_PASS": 2,
+    "current_process_exit": null
+  },
+  "source_qualification": [
+    "Exactly402 unchanged package files plus reviewed2 hash substitutions, checked against each own evidence source.",
+    "Complete Platform238 unchanged; Schema13 only invokes the unchanged schema implementation.",
+    "Pure2 helper bodies and discovery wrappers unchanged; neither enters provider/session/profile.",
+    "Authorization1 executes identical early settings guard before history/session setup; identical helper and immutable fixture tail.",
+    "All5 profile/runtime paths execute again; no current iOS reuse after changed production source.",
+    "Original source/artifact identities, exact leaves, raw locks before/after, e7 cleanliness and current toolchain/OS fingerprints required."
+  ],
+  "local_controls": {
+    "new_report_methods": 3,
+    "status": "PASS",
+    "historical_header_binding_methods": 1,
+    "historical_status": "PASS",
+    "scope": "LOCAL_PYTHON_REPORT_FIXTURES_ONLY"
+  },
+  "system_model_generation": "NOT_RUN",
+  "shipping_native_tool_capability": false,
+  "excluded_actions": [
+    "No old Core12/Schema13/pure2/Authorization1 replay",
+    "No baseline12 or producer6 replay",
+    "No simulator launch",
+    "No release/public capability activation",
+    "No relabeling delta07431 proof as currente7 execution"
+  ]
+}

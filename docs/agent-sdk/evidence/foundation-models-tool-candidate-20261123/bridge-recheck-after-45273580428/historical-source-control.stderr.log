@@ -1,0 +1,6 @@
+test_frozen_header_source_preserves_seven_helpers_and_exact_selector (Scripts.CI.Tests.test_native_tool_header_recheck_report.HeaderRecheckReportTests.test_frozen_header_source_preserves_seven_helpers_and_exact_selector) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.170s
+
+OK

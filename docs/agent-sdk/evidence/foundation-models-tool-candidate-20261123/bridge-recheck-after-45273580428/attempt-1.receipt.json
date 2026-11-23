@@ -1,0 +1,22 @@
+{
+  "utc": "2026-11-23T22:31:55.113952+00:00",
+  "scope": "LOCAL_REPORT_FIXTURES_ONLY_NO_SWIFT_OR_NATIVE_EXECUTION",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_native_tool_bridge_recheck_report.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "source_sha256": {
+    "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "4ba6b5bd6b920b84bf76ed8879a2ca69e980e3f31528fcf9987eb7e81d0a7676",
+    "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py": "239402454e16c438f799243116151cac4a6b7fa83223ccfa46fc81e4bc9651d2",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_bridge_recheck.py": "4eee9e418bfc4498f6d06628671d854053fad38374f184b0b2d582db45833d9b",
+    "Scripts/CI/Tests/test_native_tool_bridge_recheck_report.py": "d1663043ee0c24d04d71ac1e9a79c78d06228135be25dfa8a25f33a46433e3bb"
+  }
+}

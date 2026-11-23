@@ -1,0 +1,8 @@
+test_changed_independent_inputs_and_pretended_reuse_or_execution_are_blocked (test_native_tool_bridge_recheck_report.BridgeRecheckReportTests.test_changed_independent_inputs_and_pretended_reuse_or_execution_are_blocked) ... ok
+test_five_affected_methods_are_separate_from_27_plus_one_and_baseline12 (test_native_tool_bridge_recheck_report.BridgeRecheckReportTests.test_five_affected_methods_are_separate_from_27_plus_one_and_baseline12) ... ok
+test_selector_audit_uses_authentic_ids_and_rejects_previous_header_scope (test_native_tool_bridge_recheck_report.BridgeRecheckReportTests.test_selector_audit_uses_authentic_ids_and_rejects_previous_header_scope) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.480s
+
+OK
