@@ -224,6 +224,7 @@ private struct MiniAppPickerEditor: View {
                 ForEach(favorites) { item in
                     if let onLaunch {
                         Button { onLaunch(item) } label: { row(item) }.buttonStyle(.plain)
+                            .accessibilityIdentifier("miniapps-launch-\(item.id)")
                     } else { row(item) }
                 }
                 .onDelete { offsets in
@@ -252,6 +253,7 @@ private struct MiniAppPickerEditor: View {
                         }
                         if let onLaunch {
                             Button { onLaunch(item) } label: { row(item) }.buttonStyle(.plain)
+                            .accessibilityIdentifier("miniapps-launch-\(item.id)")
                         } else { row(item) }
                         if isEditing {
                             Toggle(MiniAppPickerText.string("Show") + " " + item.title(locale: locale),

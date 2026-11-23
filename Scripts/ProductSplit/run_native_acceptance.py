@@ -17,6 +17,8 @@ EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
 
 TEST_SCOPE = os.environ.get('SPLIT_NATIVE_TEST_SCOPE', 'baseline')
 UI_PLANS = {
+    'cross_app': (['HanlinMiniAppsTests/CrossAppInvocationTests',
+                  'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests'], 7),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
     'production_runtimes': ([
@@ -85,7 +87,7 @@ def main():
                        and r['identifier'].endswith('iOS-'+sdk.replace('.', '-')))
         types = json.loads(command(['xcrun', 'simctl', 'list', 'devicetypes', '-j'], 'devicetypes.json'))['devicetypes']
         supported = {t['identifier'] for t in runtime['supportedDeviceTypes']}
-        family = 'iPad' if TEST_SCOPE == 'production_runtimes' else 'iPhone'
+        family = 'iPad' if TEST_SCOPE in {'production_runtimes', 'cross_app'} else 'iPhone'
         device = next(t for t in types if t.get('productFamily') == family and t['identifier'] in supported)
         simulator = command(['xcrun', 'simctl', 'create', 'HanlinSplit-'+os.environ.get('GITHUB_RUN_ID','local'),
                              device['identifier'], runtime['identifier']], 'created-simulator.txt').strip()
@@ -235,7 +237,7 @@ def main():
                 'com.itorah.hanlinminiapps', 'data'], 'runtime-data-container.txt').strip())
             documents = container/'Documents'
             documents.mkdir(exist_ok=True)
-            fixtures = [
+            fixtures = [] if TEST_SCOPE == 'cross_app' else [
                 ROOT/'DemoMiniApps/hanlin-script-parity.hanlinNativeScript',
                 ROOT/'AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo',
             ]

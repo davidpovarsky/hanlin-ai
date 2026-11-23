@@ -2,16 +2,29 @@ import AppIntents
 import HanlinScriptExtensions
 import SwiftUI
 import HanlinProductSplit
+import HanlinMiniAppsBridge
 
 /// Independent composition of the existing Host in this process. No AI data
 /// model or assistant credential adapter is configured in the MiniApps target.
 @main
 struct HanlinMiniAppsApplication: App {
-    var body: some Scene { WindowGroup { HanlinMiniAppsWindow() } }
+    var body: some Scene {
+        WindowGroup { HanlinMiniAppsWindow() }
+        WindowGroup("MiniApp", id: "miniapp-invocation", for: UUID.self) { $requestID in
+            HanlinMiniAppsWindow(requestID: requestID)
+        }
+    }
 }
 
 private struct HanlinMiniAppsWindow: View {
     @Environment(\.openURL) private var openURL
+    @Environment(\.openWindow) private var openWindow
+    @Environment(\.supportsMultipleWindows) private var supportsMultipleWindows
+    @State private var externalRequestID: UUID?
+
+    init(requestID: UUID? = nil) {
+        _externalRequestID = State(initialValue: requestID)
+    }
     @State private var foreground = MiniAppsForegroundBridge()
     @State private var incomingURL: URL?
     @State private var showsImport = false
@@ -56,7 +69,12 @@ private struct HanlinMiniAppsWindow: View {
                     }
                     .accessibilityIdentifier("hanlin-miniapps-bootstrap-failure")
                 case .ready:
-                    HanlinMiniAppsReadyRoot()
+                    if let externalRequestID {
+                        HanlinExternalMiniAppView(requestID: externalRequestID, onClose: { self.externalRequestID = nil })
+                            .id(externalRequestID)
+                    } else {
+                        HanlinMiniAppsReadyRoot()
+                    }
                 }
             }
             .task {
@@ -65,7 +83,22 @@ private struct HanlinMiniAppsWindow: View {
             .onOpenURL { incomingURL = $0 }
             .task(id: bootstrap.phase == .ready ? incomingURL : nil) {
                 guard bootstrap.phase == .ready, let url = incomingURL else { return }
-                if SplitCompanionCatalogRoute.matches(url) {
+                if let requestID = MiniAppBridgeStore.requestID(from: url) {
+                    do {
+                        let mailbox = try MiniAppBridgeStore()
+                        guard let request = try mailbox.request(id: requestID) else {
+                            throw NSError(domain: "HanlinMiniApps.CrossApp", code: 1,
+                                          userInfo: [NSLocalizedDescriptionKey: "Shared request not found."])
+                        }
+                        if externalRequestID != requestID, request.opensInNewWindow, supportsMultipleWindows {
+                            openWindow(id: "miniapp-invocation", value: requestID)
+                        } else {
+                            externalRequestID = requestID
+                        }
+                    } catch {
+                        foreground.error = error.localizedDescription
+                    }
+                } else if SplitCompanionCatalogRoute.matches(url) {
                     // The existing root is already the catalog. Never execute an
                     // action or discard an in-flight operation on a catalog wake.
                 } else if url.isFileURL {
@@ -124,7 +157,7 @@ private struct HanlinMiniAppsWindow: View {
 
 /// Constructed only after the real storage preparation succeeded.
 private struct HanlinMiniAppsReadyRoot: View {
-    @State private var provider = HanlinMiniAppsProvider()
+    @State private var provider = HanlinMiniAppsProvider(platform: HanlinScriptingPlatform())
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {

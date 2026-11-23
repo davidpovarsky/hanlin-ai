@@ -50,7 +50,8 @@ public enum HanlinScriptingSDK {
         "node.d.ts",
         "safari-ext.d.ts",
         "scripting.d.ts",
-        "web-fetch.d.ts"
+        "web-fetch.d.ts",
+        "miniapps.d.ts"
     ]
 
     public static func declarations() throws -> Data {

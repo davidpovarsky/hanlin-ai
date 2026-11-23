@@ -173,7 +173,7 @@ def generate(selected_products=None):
             identity=package["repositoryURL"].rstrip("/").removesuffix(".git").split("/")[-1]
             app_deps.append(".product(name: "+quoted(name)+", package: "+quoted(identity)+")")
     app_deps.extend([quoted("HanlinNodeBridge"),quoted("HanlinPythonBridge"),quoted("HanlinA2UI"),quoted("HanlinLocalization"),
-                     quoted("HanlinAgentActivityCore"),quoted("HanlinAgentActivityUI"),quoted("HanlinExtensionContracts"),quoted("HanlinWidgetUI"),quoted("HanlinMiniAppsUI")])
+                     quoted("HanlinAgentActivityCore"),quoted("HanlinAgentActivityUI"),quoted("HanlinExtensionContracts"),quoted("HanlinWidgetUI"),quoted("HanlinMiniAppsUI"),quoted("HanlinMiniAppsBridge"),quoted("HanlinMiniAppsPicker")])
     # Every original application Swift file remains a single authoritative
     # implementation. The executable only owns its tiny @main declaration.
     app_sources=sorted(p.relative_to(ROOT/"AI_HLY").as_posix()

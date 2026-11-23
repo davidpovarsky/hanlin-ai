@@ -114,8 +114,20 @@ public struct TextStudioMiniAppProvider: HanlinCompiledMiniAppProvider, Sendable
     #if canImport(SwiftUI)
     @MainActor
     public func makeRootView(context: HanlinMiniAppHostContext) -> AnyView {
-        AnyView(NavigationStack {
-            NativeAppTextStudioRootView()
+        let initialText: String?
+        if case let .object(input) = context.sharedInput, case let .string(text) = input["text"] {
+            initialText = text
+        } else {
+            initialText = nil
+        }
+        let onReturn: (@MainActor @Sendable (String) async throws -> Void)?
+        if let complete = context.completeSharedRequest {
+            onReturn = { text in try await complete(.string(text)) }
+        } else {
+            onReturn = nil
+        }
+        return AnyView(NavigationStack {
+            NativeAppTextStudioRootView(initialText: initialText, onReturn: onReturn)
                 .hanlinMiniAppDismissControl()
         })
     }
