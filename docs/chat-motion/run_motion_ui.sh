@@ -54,8 +54,12 @@ python3 "$root/Scripts/CI/boot_motion_simulator.py" \
 echo "$device" > "$evidence/selected-device.txt"
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-motion-ui.XXXXXXXX")"
 python3 docs/chat-motion/prepare_motion_ui.py --output "$scratch/proof" > "$evidence/preparation.json"
-cp "$scratch/proof/project.json" "$scratch/proof/proof-inputs.json" "$evidence/"
-tar -czf "$evidence/owned-sources.tar.gz" -C "$scratch/proof" Production App UITests project.json
+cp "$scratch/proof/project.json" "$scratch/proof/proof-inputs.json" "$scratch/proof/HanlinSDK.lock.json" "$evidence/"
+cp "$scratch/proof/Vendor/HanlinSDK/Package.swift" "$evidence/selected-sdk-Package.swift"
+cp "$scratch/proof/Vendor/HanlinSDK/.hanlin-sdk/installation.json" "$evidence/sdk-installation.json"
+cp "$scratch/proof/Vendor/HanlinSDK/docs/agent-sdk/unified-package-manifest.json" "$evidence/selected-sdk-manifest.json"
+tar --exclude=.git --exclude=.build -czf "$evidence/owned-sources.tar.gz" -C "$scratch/proof" \
+  App UITests project.json HanlinSDK.lock.json Vendor/HanlinSDK
 cd "$scratch/proof";xcodegen generate --spec project.json > "$evidence/xcodegen.log"
 cp ChatMotionProof.xcodeproj/project.pbxproj "$evidence/generated-project.pbxproj"
 python3 - "$evidence" <<'PY'
@@ -73,6 +77,8 @@ xcodebuild build-for-testing -project ChatMotionProof.xcodeproj -scheme ChatMoti
   -destination "platform=iOS Simulator,id=$device" -destination-timeout 90 \
   -derivedDataPath "$scratch/DerivedData" CODE_SIGNING_ALLOWED=NO \
   2>&1 | tee "$evidence/build.log"
+python3 "$root/docs/chat-motion/record_sdk_inputs.py" --proof "$scratch/proof" \
+  --derived-data "$scratch/DerivedData" --evidence "$evidence" > "$evidence/sdk-input-verification.json"
 finish_phase test
 motion_scope="${HANLIN_MOTION_SCOPE:-affected}"
 if [[ "$motion_scope" == cycles ]]; then

@@ -1,0 +1,153 @@
+{
+  "scope": "Existing Motion acceptance diagnosis and canonical SDK fixture repair; no native run dispatched",
+  "asana": {
+    "task": "1220546846740594",
+    "url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220546846740594",
+    "readAt": "2026-11-23",
+    "comments": [
+      {
+        "gid": "1220683674667219",
+        "created_at": "2026-11-18T19:51:15.001Z",
+        "text": "[ChatGPT | DEV/QA] תוצאות Motion מאומתות והמשך אבחון — 18.11.2026.\n\nריצה44358121911 על a9085987 כן הגיעה לשני המבחנים המקוריים. testCReadableLongContentRTLTypeOrientationAndCompletion עבר בפועל (39.352 שניות): תוכן ארוך, RTL, גודל נגישות, סיבוב והשלמת collapse. testBRapidReversalPresetSwitchAndPersistence נכשל בדרישה לשלוש פעולות: ביומן וב־xcresult התקבלה פעולה אחת, ולאחריה הגאומטריה הגיעה ל-expanded. סרטון המקור מאשר שכותרת הלחיצה לא זזה; אין הוכחה לכשל סיום אנימציה.\n\nSHA256 של Motion.xcresult.tar.gz: 0f2c34377c0fa02d5d96594d5cb810036ab0713353d9213154462adbb1011b05.\n\nב־282b6d7cd8525aac7cf54859f31c13af434c27c0 פורסם ניסוי קלט נפרד: כפתורי SwiftUI מקוריים מחוץ/בתוך ScrollView, plain, הרכיב המקורי ללא/עם אנימציה, והקשות coordinate נפרדות עם מדידת זמני הפעולות והגאומטריה. A/B/C ודרישת שלוש הפעולות לא שונו. ריצת האבחון44384450378 נשלחה; הצלחתה תסווג DIAGNOSTIC_CAPTURED בלבד, ללא סגירת קבלת Motion.\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44358121911\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44384450378\n\nהאישור הנוכחי לפרסום ולהרצות בתוקף; לא קיימת עוד חסימת אישור פרסום. המשימה נשארת פתוחה עד השלמת תנאי הקבלה."
+      },
+      {
+        "gid": "1220707593736827",
+        "created_at": "2026-11-19T14:18:25.928Z",
+        "text": "[תיקון אבחון 19.11.2026] 44465711797 @8e2f8924: testDRapidInputDiagnosticOnly XCUITest PASSED, 1 test/0 failures ב-135.070 שניות. workflow נכשל מאוחר יותר ב-Python AssertionError line 18 אחרי יצירת ארכיון xcresult. אין לתאר זאת כ-Motion D XCTest failure. הבאה: לבדוק post-test trace assertion וקריטריון הקבלה בלי לרכך test; לסיים B rapid reversal, כל 5 presets × 20 cycles ונגישות. task OPEN. https://github.com/davidpovarsky/hanlin-ai/blob/f3bcb19d068473a8bdc6297f16b149e9cf7b8483/docs/continuation-20261117/acceptance/HANLIN_NATIVE_CI_TRIAGE_20261119.md"
+      },
+      {
+        "gid": "1220728546279038",
+        "created_at": "2026-11-20T02:23:49.568Z",
+        "text": "[Codex | INT] עדכון אימות native, 20.11.2026\ndavidpovarsky/hanlin-ai · codex/hanlin-validation-staged-20261119 · HEAD c456b7240d7b43f52de6b1090bfd82d41ec27eb7\n\nCHATUX-MOTION · IN_PROGRESS\nהמסלול שבו Xcode מאתחל סימולטור iPad A16 ייעודי ב־iPadOS 27.2 הגיע ל־XCTest. גרסת מפעיל הבדיקות a8a9cbbfdbb711d301a04e7f2b93df0792349e27 אימתה את ה־HEAD המשולב כמקור המוצר.\nA נכשל בהמתנה למצב מכווץ אחרי 190 פעולות מתוך 200. במידע שנקרא בזמן הכשל המצב כבר היה מכווץ. https://github.com/davidpovarsky/hanlin-ai/actions/runs/44648588449\nB קיבל את שלוש הלחיצות. פער של 5.2 מילישניות בין השתיים הראשונות הותיר את הגאומטריה ללא מצב ביניים שנמדד. C עבר, כולל RTL, טקסט גדול, סיבוב והתכנסות. https://github.com/davidpovarsky/hanlin-ai/actions/runs/44648241434\nD הגיע ל־XCTest ונכשל בהמתנה לאיפוס. המידע שנקרא בזמן הכשל הציג את שני המצבים כמכווצים. https://github.com/davidpovarsky/hanlin-ai/actions/runs/44648453626\nהמשך ממוקד בבדיקת מנגנון התצפית ב־A/D ובהכנה של הכפתור באמצעות לחיצות native ב־B תוך שמירה על דרישת ההיפוך בזמן אנימציה."
+      }
+    ]
+  },
+  "latest_product_source": "c456b7240d7b43f52de6b1090bfd82d41ec27eb7",
+  "latest_launcher_source": "a8a9cbbfdbb711d301a04e7f2b93df0792349e27",
+  "latest_runs": [
+    {
+      "run": 44648588449,
+      "case": "testAAllFivePresetsTwentyCompleteCyclesEach",
+      "result": "FAILED_WAIT",
+      "observation": "Collapse wait failed after190 actions; subsequently read state was collapsed",
+      "cause_limit": "Available record does not establish a stuck product animation; post-failure state alone does not prove completion before deadline"
+    },
+    {
+      "run": 44648241434,
+      "case": "testBRapidReversalPresetSwitchAndPersistence",
+      "result": "FAILED_EXERCISE_OF_REQUIRED_INTERMEDIATE_GEOMETRY",
+      "observation": "All3 actions delivered; first two separated by5.2ms; no intermediate rendered height measured",
+      "remaining": "Current later836a native prewarm is unaccepted; must still prove exact3-action delta, sub0.5s gaps and overlap with intermediate geometry"
+    },
+    {
+      "run": 44648241434,
+      "case": "testCReadableLongContentRTLTypeOrientationAndCompletion",
+      "result": "HISTORICAL_PASS",
+      "observation": "RTL, long content, large type, orientation and settling passed on recorded source"
+    },
+    {
+      "run": 44648453626,
+      "case": "testDRapidInputDiagnosticOnly",
+      "result": "FAILED_RESET_WAIT",
+      "observation": "Reset waiter failed; subsequently read static and animated states both collapsed",
+      "scope": "Input diagnostic, never animation acceptance"
+    }
+  ],
+  "older_D_correction": {
+    "run": 44465711797,
+    "source": "8e2f89241c2cf471624d21a018f780e28bb71d92",
+    "xcuitest": "1 PASS,0 failures,135.070s",
+    "post_test_failure": "Python line18 in exact pinned run_motion_ui.sh validates video-status exit_code and recording size>1024, not geometry. Which video predicate failed is not established by current retained excerpt.",
+    "recording_repair_already_present": "30637bf6d0d852b36058e9acfa9ad6f939489475"
+  },
+  "later_source_already_present": [
+    {
+      "source": "836a8a4a6ce41995945a4250e9e6a0db410d8cc1",
+      "change": "Isolate/bound AX telemetry, preserve full disk timeline, native prewarm and unchanged strict rapid-reversal acceptance"
+    },
+    {
+      "source": "c94e6fcf5167464383d23e5bcf8048081f4254db",
+      "change": "Disclosure disappearance revision invalidation and typography"
+    },
+    {
+      "source": "72bf6f2b29e64585fc1ec85762dbe0f120f772a1",
+      "change": "Original V17 letter shimmer, branch/VoiceOver lifecycle and1.95s relaxed shimmer"
+    },
+    {
+      "source": "20e6bd518c15b8b9746f298506e4d5d13e96955a",
+      "change": "Finite geometry and full natural-height child placement"
+    },
+    {
+      "source": "8250e4ceb0c707fe3df2bbfbbe622145fb4ffe4f",
+      "change": "Scoped appearance/preset overrides; nil/default original behavior retained"
+    }
+  ],
+  "fixture_breaks_found": [
+    "Removed AI_HLY/Assets.xcassets/HLBluefont.colorset/Contents.json",
+    "Removed AI_HLY/Resource/Localizable.xcstrings",
+    "Old broad snippet extraction also captured app-only ChatToolApprovalPresentation consent shim",
+    "Copied Motion files now require canonical localization, typography and appearance module dependencies"
+  ],
+  "fixture_repair": "Actual selected HanlinChatUI installer profile; no production snippets or copied asset/catalog; unchanged original836a App bodies and A/B/C/D assertions",
+  "portable_preparation": {
+    "status": "PREPARATION_PASS",
+    "sourceRevision": "0a59a7364c34ba1cf46d03122f69c184f16e486e",
+    "selectedProducts": [
+      "HanlinChatUI"
+    ],
+    "sourcePaths": [
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+      "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+      "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+    ],
+    "sourceResourceFiles": 363,
+    "sourceResourceBytes": 24800545,
+    "sourceResourceSHA256": "cc2f9cdd3a4918a4aed1c1c109bfd5a76a345381a142b6f41a209a25ad593db0",
+    "fixtureMatchesRecordedRevision": false,
+    "generatedSHA256": {
+      "Package.swift": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+      "docs/agent-sdk/unified-package-manifest.json": "79299b46d9ee9213dbcd158a9a764094ce2e3eef5cef784c4ae4c1afec852688"
+    },
+    "runtimeBinaryTargets": [],
+    "nativeExecution": "NOT_RUN",
+    "note": "Fixture source edits are intentionally uncommitted during this portable preparation. Native gate rejects any such mismatch; product profile is exact committed0a59a736."
+  },
+  "focused_source_checks": [
+    {
+      "path": "docs/chat-motion/prepare_motion_ui.py",
+      "syntax": "PASS"
+    },
+    {
+      "path": "docs/chat-motion/record_sdk_inputs.py",
+      "syntax": "PASS"
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "syntax": "PASS"
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/App.swift",
+      "syntax": "PASS"
+    },
+    {
+      "scope": "App fixture bodies/telemetry vs836a8a4a",
+      "result": "BYTE_IDENTICAL after removing only SDK import/typealias"
+    },
+    {
+      "scope": "All original A/B/C/D XCTest assertions/gestures/thresholds vs836a8a4a",
+      "result": "BYTE_IDENTICAL",
+      "sha256": "6423119354bf568cd80194126a4d29ff48388ab276152dc151cc3981f1ce775b"
+    }
+  ],
+  "next_native_scope": [
+    "B/C (affected) after current-profile source/resource accounting",
+    "A original5presets*20cycles once on corrected current closure",
+    "D only if B/input or reset observation remains unresolved"
+  ],
+  "limits": [
+    "Latest44648 case results are task observations; raw artifacts were not downloaded again",
+    "C historical pass does not prove later layout/shimmer or SDK resource integration",
+    "No simulator, original-app visual, physical-device or eligible-device acceptance claimed"
+  ]
+}

@@ -1,6 +1,10 @@
+import HanlinChatUI
 import Observation
 import SwiftUI
 import UIKit
+
+// Same canonical activity control used by the original chat.
+private typealias ToggleButton = HanlinActivityToggleButton
 
 @main
 struct MotionProofApp: App {
