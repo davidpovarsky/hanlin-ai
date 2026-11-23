@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T09:30:47.233315+00:00",
+  "run_id": 45133337462,
+  "job_id": 137553675193,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45133337462",
+  "source": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "workflow_status": "FAILED",
+  "paired_acceptance": "OPEN",
+  "shipping_miniapps_build": {
+    "status": "EXECUTED_PASS",
+    "scheme": "HanlinMiniApps",
+    "sdk": "iOS Simulator27.2",
+    "device": "iPhone18Pro",
+    "configuration": "Debug arm64, original ad-hoc simulator entitlements",
+    "duration_seconds": 1975.6453942920002,
+    "log_sha256": "27c309fd9737bc18b6e9381be7c4c61073a4fbaade76ce62a975fabc14f3d712",
+    "raw_result": "MiniBuild.xcresult in verified original artifact"
+  },
+  "full_ai_test_build": {
+    "status": "EXECUTED_FAIL",
+    "duration_seconds": 862.15075325,
+    "log_sha256": "95f8b1c5e999f8af43a91f0a7b1d03ab9a1ddce2f6e89e6e3f23a369b90b2347",
+    "raw_result": "AIBuild.xcresult in verified original artifact",
+    "cause": "Thin HanlinScriptingWidgets/HanlinScriptingWidgets.swift omitted original import SwiftUI; Widget/WidgetBundle and derived @main entry were unresolved",
+    "already_fixed_at": "9e4fbcbdeed05aa8dea0ab3c55997a73383f92b4",
+    "exact_fix": "One original import SwiftUI restored; no independent duplicate fix"
+  },
+  "native_foreground_cases": {
+    "status": "EXECUTED_PASS",
+    "count": 53,
+    "platform": "Native arm64 Apple Swift6.4.2 on macOS27.0 target; not an iOS UI test",
+    "raw_results": "foreground-results.json",
+    "raw_stdout": "raw-005-tests-foreground.stdout.log",
+    "binary_and_source_provenance": "foreground-origin/ and original artifact"
+  },
+  "host_prerequisite": {
+    "status": "REUSED_VERIFIED_PASS",
+    "origin_run": "44351078724",
+    "origin_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+    "focused": {
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "skipped": 0
+    },
+    "host": {
+      "tests": 153,
+      "pass": 152,
+      "fail": 0,
+      "skipped": 1
+    },
+    "native_reuse_guard_executed_successfully": true,
+    "raw_receipt": "host-reuse.json"
+  },
+  "ui_tests": [
+    {
+      "selector": "AI_HLYUITests/HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat",
+      "status": "NOT_RUN"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState",
+      "status": "NOT_RUN"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback",
+      "status": "NOT_RUN"
+    }
+  ],
+  "visual_acceptance": "NOT_RUN: builds failed before original app installation and XCTest execution; the retained environment failure screenshot is not app UI evidence",
+  "physical_device": "NOT_RUN",
+  "distribution": "NOT_RUN",
+  "artifact": {
+    "id": 14803354012,
+    "name": "app-split-45133337462",
+    "bytes": 18239253,
+    "sha256": "83ecd7184113a12e058b5211637105ef10ec151abd0e9058686af90df567ca50",
+    "verified_against_api_size_and_digest": true
+  },
+  "current_source_changes": {
+    "production": false,
+    "workflow": false,
+    "tests": false
+  },
+  "retry_preparation": "Existing compiler-cache restore is supported under unchanged toolchain/graph prefix through source0dae98f7; unchanged files restore timestamps only after hash and size verification. Normal MiniApps xcodebuild remains mandatory; no standalone app artifact skip is supported. See compiler-cache-reuse-review.json.",
+  "remaining": "Await existing root producer compile qualification after its already-published import repair; then one paired cross_product failed-scope retry. No standalone20+7 run or duplicate passed assertions planned."
+}

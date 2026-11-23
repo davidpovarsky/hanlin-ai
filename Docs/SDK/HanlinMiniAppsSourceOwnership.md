@@ -79,6 +79,12 @@ The public entry exposes the original observable presentation, error and privacy
 
 The executable retains its `@main`, bundle identity, entitlements, storage preparation and OS URL delivery. Existing saved request and receipt schemas and the original accessibility IDs are unchanged.
 
+## Actual native shipping-target result
+
+Run[45133337462](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45133337462) at`6772dce6` compiled the actual `HanlinMiniApps` shipping target successfully on iPhone18Pro/iOSSimulator27.2. The native Mac route/ledger suite passed53/53. The original workflow authenticated reuse of Host7/7 focused and152/153 broad cases, with one original skipped case; those reused cases were not reexecuted.
+
+The following full Hanlin test build failed only because the thin Widget entry omitted its original `import SwiftUI`. Root source`9e4fbcb` already restores that import. All three paired request/return, cancellation and transfer/rollback UI cases are **NOT_RUN**. Neither original catalog visual parity nor paired UI behavior is accepted from a successful build. The [native receipt](../../docs/agent-sdk/evidence/miniapps-native-45133337462/README.md) retains command/source hashes, exact diagnostics, original result provenance and the existing compatible incremental-cache path for a corrected retry. No new compiler-reuse system or duplicate standalone baseline run is introduced.
+
 ## Verification and impact
 
 The later catalog replay preserves **51/51 original function/computed-property bodies** from `bcb1a295` across the catalog, Hub, photo capture, provider and companion composition. Normalization is limited to canonical localization routing and the public type name. Public constructors, retained provider storage and immutable identity isolation are separate integration seams. All 17 affected Swift files parsed; the existing 15 graph controls and both manifest/project idempotence checks passed. The production target validator now checks 75 shared source files and the original independent MiniApps target.

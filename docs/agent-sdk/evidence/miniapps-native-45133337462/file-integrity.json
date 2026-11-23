@@ -1,0 +1,94 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4086,
+      "sha256": "85c2802ea29f0a3a696c84a947a8b38a339d69a9edd904fe5f1b38dc9765b270"
+    },
+    {
+      "path": "acceptance.json",
+      "bytes": 1056,
+      "sha256": "4d0513b9830d1db8e11cfe7c908a7925b63996d91f8d5d44114f44f19dfc0aa1"
+    },
+    {
+      "path": "ai-build-diagnostics.txt",
+      "bytes": 2274,
+      "sha256": "bc0c90b8f426f936a6f69f872e45c87bdb8146c5660a79a3622df1b893b343d3"
+    },
+    {
+      "path": "artifact-members.json",
+      "bytes": 10524,
+      "sha256": "dd0299ef386ca3d44180aaba7e875caa3a9122e4548334bea651eb88e33e8eee"
+    },
+    {
+      "path": "artifact-retrieval.json",
+      "bytes": 307,
+      "sha256": "8ff731643334c7f4f21263794b0ceb152167b73056b19442213cdf666e9ad2ae"
+    },
+    {
+      "path": "commands.jsonl",
+      "bytes": 5697,
+      "sha256": "a62e734ccb15d1877084c948c022065ccb0cf221d8b0cd490a0bcab5c5bebf23"
+    },
+    {
+      "path": "compiler-cache-reuse-review.json",
+      "bytes": 1398,
+      "sha256": "2786da42a110a2e29905a299316a49f0513c0c5865c7138ccd16f0da3fb3557e"
+    },
+    {
+      "path": "foreground-origin/contracts-provenance.json",
+      "bytes": 15132,
+      "sha256": "7034dbcf07aac125efb00c6baafdfb82dc0239c6cb9bb512b1b925fbcae0b1ea"
+    },
+    {
+      "path": "foreground-origin/core-provenance.json",
+      "bytes": 6349,
+      "sha256": "7c1bf090886954cd6e1f43f41d6847b8f0c0a7aa9e24079a2181e266a9e8ee91"
+    },
+    {
+      "path": "foreground-origin/foreground-binary-provenance.json",
+      "bytes": 8216,
+      "sha256": "f71b7237afc6c5f987b7e33043dc08984f2d7f45e9fa6c09611904619d85d2bc"
+    },
+    {
+      "path": "foreground-origin/manifest.json",
+      "bytes": 5116,
+      "sha256": "dc7bb7f838f69f33f804d6280aacd7407debf87cf392e3619b538cf463f37dde"
+    },
+    {
+      "path": "foreground-results.json",
+      "bytes": 21538,
+      "sha256": "355abaca4c377a4c60db492d87ba4a775b19831a4e718c736d210d0410dc8f9f"
+    },
+    {
+      "path": "host-reuse.json",
+      "bytes": 903,
+      "sha256": "5ab5133e9ee2099ef9fdce656923c29684082b0bcb249308c001a25d93716ee2"
+    },
+    {
+      "path": "mini-build-success.txt",
+      "bytes": 1443,
+      "sha256": "9d602af3f5a63676511c36046104a6a0d989b00c6db09a9642cfc306df822dd5"
+    },
+    {
+      "path": "raw-005-tests-foreground.stdout.log",
+      "bytes": 2090,
+      "sha256": "c617624f4096a37fa8807b3c145449ce20cff0eeae45d1d760bfda13b3bae810"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 3757,
+      "sha256": "84f82f3e290a0bede622faa10f47829f96e0b5a483909d4b75f768f0f42c54e8"
+    },
+    {
+      "path": "sdk.txt",
+      "bytes": 5,
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    {
+      "path": "source-sha.txt",
+      "bytes": 41,
+      "sha256": "c764ff6c0e255e5815a66e05a0b0bb6a6b528420eaaa5399b1a30c0d6479ab14"
+    }
+  ]
+}

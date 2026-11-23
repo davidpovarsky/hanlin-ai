@@ -1,0 +1,367 @@
+[
+  {
+    "name": "app-split-evidence/acceptance.json",
+    "bytes": 1056,
+    "compressed_bytes": 614
+  },
+  {
+    "name": "app-split-evidence/ci-performance-report.json",
+    "bytes": 2133,
+    "compressed_bytes": 739
+  },
+  {
+    "name": "app-split-evidence/foreground/foreground-results.json",
+    "bytes": 21538,
+    "compressed_bytes": 4567
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/commands.jsonl",
+    "bytes": 18533,
+    "compressed_bytes": 1896
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/contracts-provenance.json",
+    "bytes": 15132,
+    "compressed_bytes": 2308
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/core-provenance.json",
+    "bytes": 6349,
+    "compressed_bytes": 1377
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/foreground-binary-provenance.json",
+    "bytes": 8216,
+    "compressed_bytes": 1869
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/manifest.json",
+    "bytes": 5116,
+    "compressed_bytes": 907
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stderr.log",
+    "bytes": 30,
+    "compressed_bytes": 32
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stdout.log",
+    "bytes": 98,
+    "compressed_bytes": 89
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stderr.log",
+    "bytes": 98,
+    "compressed_bytes": 89
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stdout.log",
+    "bytes": 99181,
+    "compressed_bytes": 1953
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stderr.log",
+    "bytes": 98,
+    "compressed_bytes": 89
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stdout.log",
+    "bytes": 7585,
+    "compressed_bytes": 864
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stderr.log",
+    "bytes": 98,
+    "compressed_bytes": 89
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stdout.log",
+    "bytes": 41317,
+    "compressed_bytes": 1242
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stderr.log",
+    "bytes": 0,
+    "compressed_bytes": 2
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stdout.log",
+    "bytes": 2090,
+    "compressed_bytes": 534
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stderr.log",
+    "bytes": 0,
+    "compressed_bytes": 2
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stdout.log",
+    "bytes": 41,
+    "compressed_bytes": 41
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stderr.log",
+    "bytes": 0,
+    "compressed_bytes": 2
+  },
+  {
+    "name": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stdout.log",
+    "bytes": 130,
+    "compressed_bytes": 105
+  },
+  {
+    "name": "app-split-evidence/foreground.log",
+    "bytes": 200,
+    "compressed_bytes": 134
+  },
+  {
+    "name": "app-split-evidence/host-reuse.json",
+    "bytes": 903,
+    "compressed_bytes": 523
+  },
+  {
+    "name": "app-split-evidence/native-dependencies-duration-seconds.txt",
+    "bytes": 4,
+    "compressed_bytes": 6
+  },
+  {
+    "name": "app-split-evidence/native-dependencies.log",
+    "bytes": 164504,
+    "compressed_bytes": 8616
+  },
+  {
+    "name": "app-split-evidence/paired-product/AIBuild.xcresult/Data/data.0~1zAFmxLliExnxB0UAFmcxYZUExs-7fKJNJNUinPVisSoQ8K-50bHUySSf5WsaPYtywC4M9-s0wuMmm1SzeNL_Q==",
+    "bytes": 33429,
+    "compressed_bytes": 33444
+  },
+  {
+    "name": "app-split-evidence/paired-product/AIBuild.xcresult/Data/data.0~4wmp1ncQF5XZOKbLbMWPPNmbOGlVcTx-auRd6XZZJybq5rLAxwYcaPSLtF8VsKhcJ9zxLiJHzV8X9jMqEB1OMA==",
+    "bytes": 292,
+    "compressed_bytes": 297
+  },
+  {
+    "name": "app-split-evidence/paired-product/AIBuild.xcresult/Data/data.0~_-W6m0YsJ7riTvj0fZy-OaQu_Q3t0sXm49Neg_Drt8mSHvaitBFoc1qdZ-Iin_SX8mZ3aIbhNp9fa6z4KpJ5Tg==",
+    "bytes": 572205,
+    "compressed_bytes": 572349
+  },
+  {
+    "name": "app-split-evidence/paired-product/AIBuild.xcresult/Data/refs.0~1zAFmxLliExnxB0UAFmcxYZUExs-7fKJNJNUinPVisSoQ8K-50bHUySSf5WsaPYtywC4M9-s0wuMmm1SzeNL_Q==",
+    "bytes": 133,
+    "compressed_bytes": 138
+  },
+  {
+    "name": "app-split-evidence/paired-product/AIBuild.xcresult/Data/refs.0~4wmp1ncQF5XZOKbLbMWPPNmbOGlVcTx-auRd6XZZJybq5rLAxwYcaPSLtF8VsKhcJ9zxLiJHzV8X9jMqEB1OMA==",
+    "bytes": 1,
+    "compressed_bytes": 3
+  },
+  {
+    "name": "app-split-evidence/paired-product/AIBuild.xcresult/Data/refs.0~_-W6m0YsJ7riTvj0fZy-OaQu_Q3t0sXm49Neg_Drt8mSHvaitBFoc1qdZ-Iin_SX8mZ3aIbhNp9fa6z4KpJ5Tg==",
+    "bytes": 1,
+    "compressed_bytes": 3
+  },
+  {
+    "name": "app-split-evidence/paired-product/AIBuild.xcresult/Info.plist",
+    "bytes": 776,
+    "compressed_bytes": 428
+  },
+  {
+    "name": "app-split-evidence/paired-product/MiniBuild.xcresult/Data/data.0~CyIC6iBS4rg-roaMAtIu31AOdzq0hUGAWgv9DuqtXkwima9nAryz9G9AhcqLqBwn2DOUuF0tSuUFwgEhyCMg7A==",
+    "bytes": 653130,
+    "compressed_bytes": 653267
+  },
+  {
+    "name": "app-split-evidence/paired-product/MiniBuild.xcresult/Data/data.0~YcwqN4Hn2gJEY3U4IosxqKAeGwHMXcwsJFYH0wkw4m9cXx_R-yTlPaPvCe1qPp5cuzOJrSoPA8G9bzy3P3mgJA==",
+    "bytes": 297,
+    "compressed_bytes": 302
+  },
+  {
+    "name": "app-split-evidence/paired-product/MiniBuild.xcresult/Data/data.0~r1yONxhpkjJzOAQTlPpaueH8oAXEGvE0Gwwn25TrHbJi-BE2dR1HRZcPskp6EZ9wxGCIvHNgQfSSoXJ79gz2Lg==",
+    "bytes": 28973,
+    "compressed_bytes": 28983
+  },
+  {
+    "name": "app-split-evidence/paired-product/MiniBuild.xcresult/Data/refs.0~CyIC6iBS4rg-roaMAtIu31AOdzq0hUGAWgv9DuqtXkwima9nAryz9G9AhcqLqBwn2DOUuF0tSuUFwgEhyCMg7A==",
+    "bytes": 1,
+    "compressed_bytes": 3
+  },
+  {
+    "name": "app-split-evidence/paired-product/MiniBuild.xcresult/Data/refs.0~YcwqN4Hn2gJEY3U4IosxqKAeGwHMXcwsJFYH0wkw4m9cXx_R-yTlPaPvCe1qPp5cuzOJrSoPA8G9bzy3P3mgJA==",
+    "bytes": 1,
+    "compressed_bytes": 3
+  },
+  {
+    "name": "app-split-evidence/paired-product/MiniBuild.xcresult/Data/refs.0~r1yONxhpkjJzOAQTlPpaueH8oAXEGvE0Gwwn25TrHbJi-BE2dR1HRZcPskp6EZ9wxGCIvHNgQfSSoXJ79gz2Lg==",
+    "bytes": 133,
+    "compressed_bytes": 138
+  },
+  {
+    "name": "app-split-evidence/paired-product/MiniBuild.xcresult/Info.plist",
+    "bytes": 776,
+    "compressed_bytes": 428
+  },
+  {
+    "name": "app-split-evidence/paired-product/acceptance.json",
+    "bytes": 1056,
+    "compressed_bytes": 614
+  },
+  {
+    "name": "app-split-evidence/paired-product/ai-build.log",
+    "bytes": 7253351,
+    "compressed_bytes": 270789
+  },
+  {
+    "name": "app-split-evidence/paired-product/before-boot-host-resources.txt",
+    "bytes": 34,
+    "compressed_bytes": 36
+  },
+  {
+    "name": "app-split-evidence/paired-product/before-boot-memory.txt",
+    "bytes": 1247,
+    "compressed_bytes": 366
+  },
+  {
+    "name": "app-split-evidence/paired-product/before-boot-processes.txt",
+    "bytes": 81440,
+    "compressed_bytes": 12904
+  },
+  {
+    "name": "app-split-evidence/paired-product/boot.log",
+    "bytes": 0,
+    "compressed_bytes": 2
+  },
+  {
+    "name": "app-split-evidence/paired-product/bootstatus.log",
+    "bytes": 131,
+    "compressed_bytes": 121
+  },
+  {
+    "name": "app-split-evidence/paired-product/commands.jsonl",
+    "bytes": 5697,
+    "compressed_bytes": 1998
+  },
+  {
+    "name": "app-split-evidence/paired-product/container-command-help.txt",
+    "bytes": 386,
+    "compressed_bytes": 196
+  },
+  {
+    "name": "app-split-evidence/paired-product/created-simulator.txt",
+    "bytes": 37,
+    "compressed_bytes": 39
+  },
+  {
+    "name": "app-split-evidence/paired-product/device-types.json",
+    "bytes": 66366,
+    "compressed_bytes": 3254
+  },
+  {
+    "name": "app-split-evidence/paired-product/failure-device-state.json",
+    "bytes": 22746,
+    "compressed_bytes": 2221
+  },
+  {
+    "name": "app-split-evidence/paired-product/failure-installed-apps.plist",
+    "bytes": 55101,
+    "compressed_bytes": 4416
+  },
+  {
+    "name": "app-split-evidence/paired-product/failure-memory.txt",
+    "bytes": 1247,
+    "compressed_bytes": 373
+  },
+  {
+    "name": "app-split-evidence/paired-product/failure-processes.txt",
+    "bytes": 151318,
+    "compressed_bytes": 17611
+  },
+  {
+    "name": "app-split-evidence/paired-product/failure.png",
+    "bytes": 3577319,
+    "compressed_bytes": 3575589
+  },
+  {
+    "name": "app-split-evidence/paired-product/mini-build.log",
+    "bytes": 8439488,
+    "compressed_bytes": 310587
+  },
+  {
+    "name": "app-split-evidence/paired-product/original-a2ui-generator.log",
+    "bytes": 2633,
+    "compressed_bytes": 1176
+  },
+  {
+    "name": "app-split-evidence/paired-product/original-a2ui-schemas/compiler.log",
+    "bytes": 0,
+    "compressed_bytes": 2
+  },
+  {
+    "name": "app-split-evidence/paired-product/original-a2ui-schemas/result.json",
+    "bytes": 2632,
+    "compressed_bytes": 1174
+  },
+  {
+    "name": "app-split-evidence/paired-product/runtimes.json",
+    "bytes": 60640,
+    "compressed_bytes": 2365
+  },
+  {
+    "name": "app-split-evidence/paired-product/screenshot.log",
+    "bytes": 264,
+    "compressed_bytes": 207
+  },
+  {
+    "name": "app-split-evidence/paired-product/sdk.txt",
+    "bytes": 5,
+    "compressed_bytes": 7
+  },
+  {
+    "name": "app-split-evidence/paired-product/source-sha.txt",
+    "bytes": 41,
+    "compressed_bytes": 41
+  },
+  {
+    "name": "app-split-evidence/preflight-duration-seconds.txt",
+    "bytes": 3,
+    "compressed_bytes": 5
+  },
+  {
+    "name": "app-split-evidence/preflight.log",
+    "bytes": 128111,
+    "compressed_bytes": 5935
+  },
+  {
+    "name": "app-split-evidence/reused-host-origin/44351078724/native-dependencies.log",
+    "bytes": 180867,
+    "compressed_bytes": 15125
+  },
+  {
+    "name": "app-split-evidence/reused-host-origin/44351078724/package-lifecycle.log",
+    "bytes": 1412,
+    "compressed_bytes": 726
+  },
+  {
+    "name": "app-split-evidence/reused-host-origin/44351078724/preflight.log",
+    "bytes": 128111,
+    "compressed_bytes": 5936
+  },
+  {
+    "name": "app-split-evidence/skill-health.txt",
+    "bytes": 84,
+    "compressed_bytes": 85
+  },
+  {
+    "name": "runtime-host/RuntimeHostResources.zip",
+    "bytes": 13084832,
+    "compressed_bytes": 12669234
+  },
+  {
+    "name": "runtime-host/host-metadata.json",
+    "bytes": 358,
+    "compressed_bytes": 254
+  },
+  {
+    "name": "runtime-host/runtime-host.sha256",
+    "bytes": 91,
+    "compressed_bytes": 84
+  }
+]

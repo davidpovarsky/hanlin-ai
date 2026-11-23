@@ -1,0 +1,22 @@
+{
+  "origin_run": 45133337462,
+  "origin_sha": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "candidate_sha": "0dae98f7b44b3cb4ee4d8dacd1913f2ed317a965",
+  "original_workflow": "validate-app-split.yml",
+  "compiled_product_published_separately": false,
+  "original_runner_always_calls_miniapps_build": true,
+  "original_compiler_cache_saved_bytes": 1110940442,
+  "original_cache_key": "split-derived-v2-macOS-arm64-27B52-27.2-8c0af907d16fd369d2adeca245f7699289a6fad79772f91273eef60215168b80-2d15b65cff7a2ab01cd69aeeb144b1c197403a01407ff0c37e4f890690b0d3f9",
+  "cache_prefix_input_changes": [],
+  "cache_source_suffix_changes": [
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerDraft.swift"
+  ],
+  "existing_reuse": "Compatible DerivedData/ModuleCache/SDKStatCaches restored under exact toolchain+graph prefix, with per-file hash/size-verified input timestamp restoration before normal xcodebuild",
+  "limitations": [
+    "Cache restoration and incremental duration are not guaranteed before next runner executes.",
+    "No supported standalone shipping app artifact reuse/skip-build option in original paired runner.",
+    "Retain xcodebuild and its original identity/entitlement checks; do not infer UI acceptance from build/cache."
+  ],
+  "new_reuse_infrastructure_added": false
+}
