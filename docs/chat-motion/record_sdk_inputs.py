@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
@@ -56,6 +57,8 @@ def record_profile(proof, source):
     harness_paths = ["docs/chat-motion/" + name for name in [
         "MotionUI/App.swift", "MotionUI/MotionUITests.swift", "prepare_motion_ui.py",
         "record_sdk_inputs.py", "run_motion_ui.sh", "record_ui_run.py", "collect_motion_result.py"]]
+    harness_paths += ["Scripts/CI/ChatRegressionValidation/run_native.py",
+                      "Scripts/CI/IntegrationValidation/run_presentation_sdk.sh", ".github/workflows/testflight.yml"]
     harness = [file_record(source, path) for path in harness_paths]
     for item in harness:
         original = subprocess.run(["git", "-C", str(source), "show", lock["revision"] + ":" + item["path"]],
@@ -77,6 +80,56 @@ def record_profile(proof, source):
         "nativeExecution": "NOT_RUN_BY_PREPARATION"}
 
 
+
+def admit_macro_input(proof, derived_data, evidence):
+    """Freeze the reviewed original macro input before any admitted compilation."""
+    original = json.loads((evidence / "proof-inputs.json").read_text())
+    if not original["fixtureMatchesRecordedRevision"]:
+        raise ValueError("Macro admission requires the exact committed fixture")
+    source = Path(__file__).resolve().parents[2]
+    for item in original["fixtureInputs"]:
+        if file_record(source, item["path"])["sha256"] != item["sha256"]:
+            raise ValueError("A recorded fixture input changed before macro admission: " + item["path"])
+    lock_path = "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+    original_lock = proof / "Vendor/HanlinSDK" / lock_path
+    recorded = [item for item in original["sdkGraphInputs"] if item["path"] == lock_path]
+    if len(recorded) != 1 or digest(original_lock.read_bytes()) != recorded[0]["sha256"]:
+        raise ValueError("Original app dependency lock differs from the selected source")
+    expected = [pin for pin in json.loads(original_lock.read_text())["pins"]
+                if pin["identity"].casefold() == "equatable"]
+    if len(expected) != 1:
+        raise ValueError("The original app must provide one reviewed Equatable pin")
+    expected = expected[0]
+    helper_path = source / "Scripts/CI/ChatRegressionValidation/run_native.py"
+    spec = importlib.util.spec_from_file_location("hanlin_original_macro_admission", helper_path)
+    helper = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(helper)
+    if expected["state"].get("revision") != helper.EQUATABLE_REVISION:
+        raise ValueError("Original app lock and existing reviewed macro policy disagree")
+    locks = list((proof / "ChatMotionProof.xcodeproj").rglob("Package.resolved"))
+    if len(locks) != 1:
+        raise ValueError("Expected one actual resolved lock before macro admission")
+    lock_data = locks[0].read_bytes()
+    actual = [pin for pin in json.loads(lock_data)["pins"] if pin["identity"].casefold() == "equatable"]
+    if len(actual) != 1 or actual[0]["state"] != expected["state"] or actual[0]["location"] != expected["location"]:
+        raise ValueError("Resolved Equatable differs from the reviewed original app pin")
+    checkout = derived_data / "SourcePackages/checkouts/equatable"
+    if run(["git", "-C", str(checkout), "status", "--porcelain"]):
+        raise ValueError("Reviewed macro checkout contains local source or untracked changes")
+    # Reuse the original exact-HEAD check and its established-route receipt.
+    helper.record_macro_configuration(derived_data, evidence)
+    (evidence / "resolved-before-macro.json").write_bytes(lock_data)
+    receipt = {"schemaVersion": 1, "status": "EXACT_ORIGINAL_MACRO_INPUT_ADMITTED",
+               "sourceRevision": original["sourceRevision"], "expectedPin": expected,
+               "originalAppLockSHA256": recorded[0]["sha256"], "resolvedLockSHA256": digest(lock_data),
+               "originalAdmissionHelperSHA256": digest(helper_path.read_bytes()),
+               "macroSourceReceiptSHA256": digest((evidence / "macro-source.json").read_bytes()),
+               "automaticPackageResolutionDuringBuildAndTest": False,
+               "nativeAcceptance": "NOT_CLAIMED_BY_MACRO_INPUT_ADMISSION"}
+    (evidence / "macro-input-admission.json").write_text(json.dumps(receipt, indent=2) + "\n")
+    return receipt
+
+
 def record_resolved(proof, derived_data, evidence):
     original = json.loads((evidence / "proof-inputs.json").read_text())
     if not original["fixtureMatchesRecordedRevision"]:
@@ -92,6 +145,9 @@ def record_resolved(proof, derived_data, evidence):
     if len(locks) != 1:
         raise ValueError("Expected one actual Xcode-resolved dependency lock")
     lock_data = locks[0].read_bytes()
+    admitted = json.loads((evidence / "macro-input-admission.json").read_text())
+    if digest(lock_data) != admitted["resolvedLockSHA256"]:
+        raise ValueError("Dependency resolution changed after exact macro admission")
     (evidence / "motion-Package.resolved").write_bytes(lock_data)
     pins = json.loads(lock_data)["pins"]
     dependencies = []
@@ -140,8 +196,10 @@ def main():
     parser.add_argument("--proof", type=Path, required=True)
     parser.add_argument("--derived-data", type=Path, required=True)
     parser.add_argument("--evidence", type=Path, required=True)
+    parser.add_argument("--admit-macro", action="store_true", help="Verify the existing exact macro before compilation")
     args = parser.parse_args()
-    print(json.dumps(record_resolved(args.proof, args.derived_data, args.evidence), indent=2))
+    operation = admit_macro_input if args.admit_macro else record_resolved
+    print(json.dumps(operation(args.proof, args.derived_data, args.evidence), indent=2))
 
 
 if __name__ == "__main__":

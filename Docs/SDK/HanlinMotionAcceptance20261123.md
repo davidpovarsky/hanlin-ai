@@ -56,3 +56,11 @@ Xcode stopped at `ComputeTargetDependencyGraph`: the existing EquatableMacros pa
 The bounded repair reuses the original project's command-scoped `-skipMacroValidation` option in the two Motion xcodebuild commands. The original lock and native log identify Equatable1.4.1; the original pinned revision is `597c2bb34af0c51331eb3b5e705f942d8ee20daa`. Global preferences, product animation code, dependency declarations, UI cases and measurement semantics remain unchanged. A follow-up B/C execution is required before considering the original A cycles or diagnostic D.
 
 See the [native receipt and actual build log](../../docs/agent-sdk/evidence/motion-native-45122303559/README.md). Native attempt: https://github.com/davidpovarsky/hanlin-ai/actions/runs/45122303559.
+
+### Exact macro admission before compilation
+
+The retry first performs normal Xcode package resolution, without macro admission. A new prebuild checkpoint reads the original selected SDK's app `Package.resolved`, validates its recorded hash, and compares the actual resolved Equatable identity/version/revision/location to that original pin. It reuses `Scripts/CI/ChatRegressionValidation/run_native.py::record_macro_configuration` for the existing reviewed exact checkout-HEAD policy. Any untracked or modified macro source is rejected before compilation.
+
+Only after that checkpoint succeeds do build/test use the established command-scoped macro option. Both invocations disable automatic package re-resolution, and the postbuild source-accounting checkpoint rejects any resolved-lock byte change. The original admission helper and its precedent files are included in the fixture input hash inventory. No macro, plugin, fixture UI or native test was executed by the portable verification.
+
+Six focused controls passed against the actual reviewed Equatable Git checkout and a synthetic test envelope: the exact input is admitted; unknown resolved revision, untracked macro source, changed original lock, uncommitted fixture and unreviewed checkout HEAD are rejected. See [the bounded control receipt](../../docs/agent-sdk/evidence/motion-macro-admission-controls-20261123.json). This adds input enforcement; it is not a dependency upgrade or a current Motion pass.

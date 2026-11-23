@@ -72,10 +72,18 @@ configs=[objects[key] for key in objects[target['buildConfigurationList']]['buil
 assert all(x['buildSettings'].get('ASSETCATALOG_COMPILER_APPICON_NAME')=='' for x in configs),'Target app icon preset must be overridden, project-only override is insufficient'
 (e/'generated-target-settings.json').write_text(json.dumps(configs,indent=2))
 PY
+finish_phase resolve
+# Resolve normally, then admit only the original reviewed macro revision. This
+# stage does not compile or execute the macro; the admitted build cannot resolve again.
+xcodebuild -resolvePackageDependencies -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
+  -derivedDataPath "$scratch/DerivedData" 2>&1 | tee "$evidence/resolve.log"
+python3 "$root/docs/chat-motion/record_sdk_inputs.py" --proof "$scratch/proof" \
+  --derived-data "$scratch/DerivedData" --evidence "$evidence" --admit-macro \
+  > "$evidence/macro-input-verification.json"
 finish_phase build
 xcodebuild build-for-testing -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
   -destination "platform=iOS Simulator,id=$device" -destination-timeout 90 \
-  -derivedDataPath "$scratch/DerivedData" -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
+  -derivedDataPath "$scratch/DerivedData" -disableAutomaticPackageResolution -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
   2>&1 | tee "$evidence/build.log"
 python3 "$root/docs/chat-motion/record_sdk_inputs.py" --proof "$scratch/proof" \
   --derived-data "$scratch/DerivedData" --evidence "$evidence" > "$evidence/sdk-input-verification.json"
@@ -95,7 +103,7 @@ set +e
 python3 "$root/docs/chat-motion/record_ui_run.py" --device "$device" --evidence "$evidence" -- \
   xcodebuild test-without-building -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
   -destination "platform=iOS Simulator,id=$device" -destination-timeout 60 \
-  -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$scratch/Motion.xcresult" -skipMacroValidation \
+  -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$scratch/Motion.xcresult" -disableAutomaticPackageResolution -skipMacroValidation \
   -parallel-testing-enabled NO -test-timeouts-enabled YES \
   -default-test-execution-time-allowance 600 -maximum-test-execution-time-allowance 720 \
   CODE_SIGNING_ALLOWED=NO "${selected_tests[@]}" 2>&1 | tee "$evidence/test.log"

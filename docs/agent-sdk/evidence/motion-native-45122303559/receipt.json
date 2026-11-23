@@ -35,7 +35,7 @@
     "authority": "Original app Package.resolved; native resolver log reports the same version"
   },
   "resolved_checkout_and_packaged_bundle_accounting": "NOT_REACHED_BECAUSE_BUILD_STOPPED",
-  "repair": "Reuse existing command-scoped -skipMacroValidation on the two Motion xcodebuild invocations; no global Xcode preference change",
+  "repair": "Normal resolve-only step; verify original app lock and actual exact reviewed macro checkout before using existing command-scoped -skipMacroValidation; disable automatic resolution during build/test; reject subsequent lock changes. No global preference change.",
   "original_mechanism": [
     ".github/workflows/build-ios26-unsigned-ipa.yml",
     "Scripts/CI/ChatRegressionValidation/run_native.py",

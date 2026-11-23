@@ -1,0 +1,45 @@
+{
+  "scope": "Portable prebuild admission controls with actual reviewed Git checkout and a synthetic JSON envelope; no macro compilation/execution or native UI test",
+  "expected_macro": {
+    "identity": "equatable",
+    "kind": "remoteSourceControl",
+    "location": "https://github.com/ordo-one/equatable",
+    "state": {
+      "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+      "version": "1.4.1"
+    }
+  },
+  "checks": [
+    {
+      "case": "exact_reviewed_checkout_and_original_lock",
+      "passed": true
+    },
+    {
+      "case": "unknown_resolved_macro_revision",
+      "passed": true,
+      "diagnostic": "Resolved Equatable differs from the reviewed original app pin"
+    },
+    {
+      "case": "untracked_macro_source",
+      "passed": true,
+      "diagnostic": "Reviewed macro checkout contains local source or untracked changes"
+    },
+    {
+      "case": "changed_original_pin_file",
+      "passed": true,
+      "diagnostic": "Original app dependency lock differs from the selected source"
+    },
+    {
+      "case": "uncommitted_fixture",
+      "passed": true,
+      "diagnostic": "Macro admission requires the exact committed fixture"
+    },
+    {
+      "case": "unreviewed_checkout_head",
+      "passed": true,
+      "diagnostic": "Equatable macro source differs from the reviewed exact app dependency"
+    }
+  ],
+  "total": 6,
+  "passed": 6
+}
