@@ -1,0 +1,355 @@
+{
+  "base_commit": "73bd472a5e861e49ca02989272d60560127a33b5",
+  "summary": {
+    "core_source_files": 26,
+    "ui_source_files": 3,
+    "original_source_preservation_checks": 29,
+    "syntax_checked_files": 55,
+    "existing_activity_motion_assertions": 202
+  },
+  "targets": {
+    "HanlinAgentActivityCore": [
+      "HanlinPlatformContracts",
+      "HanlinPresentationKit",
+      "HanlinLocalization"
+    ],
+    "HanlinAgentActivityUI": [
+      "HanlinAgentActivityCore",
+      "HanlinChatUI",
+      "HanlinPresentationKit",
+      "HanlinLocalization"
+    ]
+  },
+  "core_source_files": [
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Diagnostics/AgentDiagnosticsRedactor.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Evidence/AgentEvidenceItem.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/HanlinAgentActivitySnapshot.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/AgentActivityModels.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/AgentToolApproval.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/ToolPresentationRegistry.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppAction.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppPresentation.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppRoute.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeUIBlock.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityComposer.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityCompositionPolicy.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityDeduplicator.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityDetailPolicy.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityHeaderPhase.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityVisibilityPolicy.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentDisplayActivity.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentDisplayRound.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Progress/ProgressSummarySanitizer.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Projection/AgentActivityToolProjection.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Projection/ClassicProjectedToolCallEntry.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/ToolPresentation/LegacyToolPresentationAdapter.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/ToolPresentation/ToolPresentationProfile.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Transcript/AgentTranscriptItem.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Transcript/AgentTranscriptValidation.swift"
+  ],
+  "ui_source_files": [
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/AgentActivityStepView.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/ChatToolApprovalPresentation.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/HanlinAgentActivityView.swift"
+  ],
+  "original_app_compatibility_paths": [
+    "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift",
+    "AI_HLY/Downstream/AgentActivity/AgentActivityStepView.swift",
+    "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+    "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDeduplicator.swift",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDetailPolicy.swift",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityTitleBuilder.swift",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift",
+    "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayRound.swift",
+    "AI_HLY/Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+    "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+    "AI_HLY/Downstream/AgentActivity/ToolPresentationRegistry.swift",
+    "AI_HLY/Downstream/AgentActivity/ToolSchemaDecorator.swift",
+    "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptItem.swift",
+    "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptValidation.swift",
+    "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+    "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+    "AI_HLY/NativeAgentExtensions/UI/NativeUIBlock.swift",
+    "AI_HLY/NativeAppPlatform/Actions/NativeAppAction.swift",
+    "AI_HLY/NativeAppPlatform/Core/NativeAppPresentation.swift",
+    "AI_HLY/NativeAppPlatform/Routing/NativeAppRoute.swift",
+    "AI_HLY/Views/Components/ChatViewComponents.swift"
+  ],
+  "proofs": [
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/AgentActivityModels.swift",
+      "original_sha256": "3a44577945b4247ad4e88f672597e24304450d9f3a14462725cf233b48ec02e5",
+      "canonical_sha256": "472beef1922e3bfd24b65378d8e00105bb52a314bf6190063ec5ee7ae66aba8d",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentDisplayActivity.swift",
+      "original_sha256": "7b2c8c7c83fcb2d47fb48b89a609537d4d97a194ce64d851b733c8e8501b3092",
+      "canonical_sha256": "19be8c05af3746be27616f5978431419be7c9920a764a9b5d132a8c636dab959",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayRound.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentDisplayRound.swift",
+      "original_sha256": "eb9c9814b386eabc23e495fde5a28448c9db88224977ecffc81702ff3f7243b0",
+      "canonical_sha256": "9b6d9c887732a73fa5f4de83e207fffe3c78f313490626dba69a33dfa4338a8a",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityComposer.swift",
+      "original_sha256": "6ea2e10091edc65235e2d7e760577b59f9af2c422c3101ee7e4f97d13dcc670d",
+      "canonical_sha256": "b0f4572edd3e2db44af09acd6553e12fdf0c342cb224f15e943221c0c60da0fa",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityCompositionPolicy.swift",
+      "original_sha256": "03dad015693059f1e4b6e4beff0842dee2c313272585bdec8f49c587375d6e16",
+      "canonical_sha256": "fa90e0684d06e52ca4490370aa17d616294176e9e60325d8a1339e5401ac7e18",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDetailPolicy.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityDetailPolicy.swift",
+      "original_sha256": "795fc6de2e04214d9c4f1294c7850a0046667de89542c6f41088b05a2d095d85",
+      "canonical_sha256": "02eaedb720500bff49e573df0c5dc63d68bfd8be10bb92b59df691c6a4460e32",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDeduplicator.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityDeduplicator.swift",
+      "original_sha256": "b0f4c871e983331166643c52c9b57e5c918abe33ce82779dc850564341734d6a",
+      "canonical_sha256": "d4c6be6a6ff544919d5267fc433e60b047a4fddc24a05446d07bb5bb146d300a",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityHeaderPhase.swift",
+      "original_sha256": "ca6abc68b36d5b26b55ff04c629b64b8d86d17ab9d89d3cddc02036bf6992de4",
+      "canonical_sha256": "8fa1c4aad3415f27418efb53687a20a0eb9a6cb3ab0754474922c288e581ad0f",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityTitleBuilder.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+      "original_sha256": "8c679d2aca392039cacd59de601190fe7535489e57e41943b678179b712a8292",
+      "canonical_sha256": "eaa6333472b5a0685d6955ad683c9211bcdf258802c272c83010f98c647831b4",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityVisibilityPolicy.swift",
+      "original_sha256": "f322c371d400269cbb994a85b480d85494871baf24f2bc2beb5bab81f53f593d",
+      "canonical_sha256": "a6f740e5b4f513eae994ef0e95f8f3c1ea4fa5c4c315a7817bac08eac50c31d6",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/ToolPresentation/ToolPresentationProfile.swift",
+      "original_sha256": "bec314fecb8199736c15e36f99ccd6f65abeac284f187b316f5f2b9af5480505",
+      "canonical_sha256": "9ccc10ea2bfb1e5359d46b6dfe1d90505aa4cffdc85751c1d6d743698ecb6415",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/ToolPresentation/LegacyToolPresentationAdapter.swift",
+      "original_sha256": "057bfc70fe8ca8ae8192e41993cff17a3e0ddfb527f621ebc28c3876b89af351",
+      "canonical_sha256": "51d379152dbde96cbc3a7bd11c1d4b71958cbbb1f4a65cb14433288626f2b478",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/ToolPresentationRegistry.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/ToolPresentationRegistry.swift",
+      "original_sha256": "4b2ce81c17905429634527d5ae948b9f8245b31cc34534597b0590814cc79167",
+      "canonical_sha256": "e5f2943035b4e24e036e73cc2ca6fb9fcae8a96140f36ef6aeedd8b8a9ccdd02",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptItem.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Transcript/AgentTranscriptItem.swift",
+      "original_sha256": "a41be2a7c56379139a36190f461d152cdf49685bba47d8048a96bc23060dbc8e",
+      "canonical_sha256": "2c68218636b6bb430884884fd0497698336fb3da2192852d37056bacaed56f52",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptValidation.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Transcript/AgentTranscriptValidation.swift",
+      "original_sha256": "4ae1bf381d81f83bddf51da3d64b1dc4cb1aeeb43e50517277fbbbf25f6e7e33",
+      "canonical_sha256": "f112f9dcd24d920fb65eb20e21fdaf8d0cf4fe8720ea3be2a2789b4d9039a0e4",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Evidence/AgentEvidenceItem.swift",
+      "original_sha256": "824b305734a25d0affb96caa760b71e255171a473924a9a167154d7a452d2324",
+      "canonical_sha256": "fcb80d8f4f89f306a41a117bde580b63a53dde8234625892debd696c37e410db",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/NativeAppPlatform/Actions/NativeAppAction.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppAction.swift",
+      "original_sha256": "434786b7c6ec6653a46a9e9ad9f6f6cba305fada02226966367311e821d3492f",
+      "canonical_sha256": "df182e14a192564560624e663fedba95f913dc12fa4ebca99b133dbcf26710c7",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/NativeAppPlatform/Core/NativeAppPresentation.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppPresentation.swift",
+      "original_sha256": "057c580227964b80c49fcc3fba53390a49145c99c1b5f36397cbcc92d946ad2d",
+      "canonical_sha256": "1713b8f2f15b1c7cb1e534b3549735ff291e4056ff0b18486b146a653960b272",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Diagnostics/AgentDiagnosticsRedactor.swift",
+      "original_sha256": "884f1634fe3de8a5d68d9971c56453420b6c3b38c2a8954b5635eb8042fcb416",
+      "canonical_sha256": "75f6d979a43af6b641d31685c353df0568816ba97bea8a98851c7c0e848c1dc3",
+      "proof": "whole original source bytes preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/NativeAppPlatform/Routing/NativeAppRoute.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppRoute.swift",
+      "original_sha256": "d75a1b7eb87d225f6642e8e1246e6c980412377ef430554150040a29e732e612",
+      "canonical_sha256": "d117cd4b5747a86004cfd2cc170143ed8582c9e5fcabe1f90f5fb4ad1cb15d66",
+      "proof": "exact original declarations/method bodies preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/NativeAgentExtensions/UI/NativeUIBlock.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeUIBlock.swift",
+      "original_sha256": "c415ec7d4c6675092c309061d8af6e13e318d87eeef133dc24a7e44813abafed",
+      "canonical_sha256": "7ca5306bc479ba83e5bb2820133daeba9ced3a5c671b919ca7c754bd2bfbcabd",
+      "proof": "exact original declarations/method bodies preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/ToolSchemaDecorator.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Progress/ProgressSummarySanitizer.swift",
+      "original_sha256": "e82563df026b24acc90b2fc8765b65d8c62915ef1eef065527ee155503b3f1d7",
+      "canonical_sha256": "8f3ba7186b80c48814fd36e480dc7b3f752f6567a6c916e37ed7f1d29f172dba",
+      "proof": "exact original declarations/method bodies preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/AgentToolApproval.swift",
+      "original_sha256": "51b5726348fbfae550006a7af80c75fa82103ab50aae7f75803209657b5958b5",
+      "canonical_sha256": "9740b4dfff1a81d2923d7b53d98b78e7e90a39a79314caa12086e7866c1c72da",
+      "proof": "exact original declarations/method bodies preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Projection/ClassicProjectedToolCallEntry.swift",
+      "original_sha256": "aca4478e10bd47768d5911af63193d97b540c46cc7e1a295afe3f0a0bd43016d",
+      "canonical_sha256": "163d8718dfe66fce21fe365ec53f8180c142dc982a991b2da6b7194c8cd5cd87",
+      "proof": "exact original declarations/method bodies preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Projection/AgentActivityToolProjection.swift",
+      "original_sha256": "aca4478e10bd47768d5911af63193d97b540c46cc7e1a295afe3f0a0bd43016d",
+      "canonical_sha256": "30759dfa50fb6b454ec94347046a6edbf2945bcc0732ecd1d68490a909e7269b",
+      "proof": "exact original declarations/method bodies preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Downstream/AgentActivity/AgentActivityStepView.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/AgentActivityStepView.swift",
+      "original_sha256": "9ab17f751cd60b927f0d7edd74366433bd603fb163c2acf614cbb997151aa123",
+      "canonical_sha256": "8238415d6e629fa0a927f35fefd4aa3f797541f4aaef3c65a51c58e65a2e405e",
+      "proof": "exact original declarations/method bodies preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/ChatToolApprovalPresentation.swift",
+      "original_sha256": "0684f00d30db4e2d942b141d68fa0410dd804b67e1ad2ce61f3d3ca33bcef38e",
+      "canonical_sha256": "7f93962a90cff48118f74357a82996d11a77fce7abda8dee7755bd6cb07b4930",
+      "proof": "exact original declarations/method bodies preserved, except access and public constructors",
+      "status": "PASS"
+    },
+    {
+      "source": "AI_HLY/Views/Components/ChatViewComponents.swift::AgentActivityContentView",
+      "destination": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/HanlinAgentActivityView.swift",
+      "original_subtree_lines": 433,
+      "proof": "All original Swift tokens preserved after explicit module/state/projection/actor seams; original iOS technical-text body retained; no layout, strings, motion, interaction or equality predicate rewrite",
+      "status": "PASS"
+    },
+    {
+      "source": "Original AgentActivityContentView.presentationRun",
+      "destination": "HanlinAgentActivitySnapshot.presentationRun",
+      "proof": "Exact original filter tokens, no assistant answer retained in activity invalidation snapshot",
+      "status": "PASS"
+    }
+  ],
+  "syntax": {
+    "status": "PASS",
+    "compiler": "Oracle Swift 6.4.3 RELEASE (parse only; no SwiftUI type checking)"
+  },
+  "focused_existing_check": {
+    "command": [
+      "swiftc",
+      "-I",
+      "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/Localization/PortableBundleProof/.build/out/Intermediates.noindex/HanlinLocalizationPortableProof.build/Debug-linux-aarch64/HanlinLocalization-t.build/Objects-normal/aarch64/Modules",
+      "-swift-version",
+      "6",
+      "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityHeaderPhase.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityVisibilityPolicy.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "Scripts/CI/AgentActivityHeaderChecks.swift",
+      "-o",
+      "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/AgentActivity/agent_activity_header_checks"
+    ],
+    "compile_exit": 0,
+    "compile_stderr": "",
+    "localization_import": "Reused existing PortableBundleProof compiled module for unused import; header/motion source files unchanged and compiled directly.",
+    "run_exit": 0,
+    "stdout": "PASS: 202 production activity lifetime and motion-policy checks\n",
+    "stderr": ""
+  },
+  "isolation_fix": {
+    "compiler_failure": "45102843357: original AgentActivityContentView MainActor equality cannot satisfy nonisolated Equatable witness",
+    "solution": "Explicit nonisolated view value; body, initialization and UI helper execution remain MainActor. Exact equality operands preserved. No unsafe/preconcurrency conformance or unchecked Sendable added.",
+    "language_probes": "Swift 6.4.3 -swift-version 5 and 6 PASS for same immutable non-Sendable input/equality boundary",
+    "authority": [
+      "https://developer.apple.com/documentation/swiftui/view/equatable().md",
+      "https://developer.apple.com/documentation/swiftui/equatableview.md"
+    ]
+  },
+  "schema_preservation": "No SwiftData model moved; Codable types, field names/defaults, enum raw values, CodingKeys and custom decoders are original. App-only NativeUI trace codecs and native-route factories retain original implementations in app extensions.",
+  "remaining_gate": "Parent-owned actual Apple compilation and relevant original acceptance selectors; source/portable evidence is not native UI proof.",
+  "metadata_integration_owner": "root",
+  "resources": "No new resources; uses HanlinLocalization canonical catalogs/assets and original ChatUI resources.",
+  "selected_Lorvex_closure": "No new dependency from any existing lightweight product to either optional activity product."
+}

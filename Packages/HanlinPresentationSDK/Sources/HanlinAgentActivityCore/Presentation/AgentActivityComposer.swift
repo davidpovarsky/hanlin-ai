@@ -1,0 +1,248 @@
+import HanlinLocalization
+import Foundation
+
+public enum AgentActivityComposer {
+  public static func compose(_ run: AgentRun) -> AgentDisplayTimeline {
+    let meaningful = run.steps
+      .sorted { $0.sequence < $1.sequence }
+      .filter(AgentActivityCompositionPolicy.isVisibleActivity)
+
+    var groups: [[AgentActivityStep]] = []
+    var groupIndexByCallID: [String: Int] = [:]
+    for step in meaningful {
+      if let callID = step.toolCallID, let index = groupIndexByCallID[callID] {
+        groups[index].append(step)
+      } else {
+        if let callID = step.toolCallID { groupIndexByCallID[callID] = groups.count }
+        groups.append([step])
+      }
+    }
+
+    let approvals = Dictionary(run.approvals.map { ($0.callID, $0) },
+      uniquingKeysWith: { _, latest in latest })
+    var activities = groups.compactMap { steps in
+      makeActivity(steps, approval: steps.first?.toolCallID.flatMap { approvals[$0] })
+    }
+    activities = removeNarrativeDuplicates(activities)
+    activities.removeAll { activity in
+      // An empty, sub-second provider reasoning fragment is a transport
+      // boundary, not useful history. Keep real summaries and longer work;
+      // preserve the original steps/transcript unchanged for diagnostics.
+      guard activity.kind == .reasoning, activity.status == .completed,
+        let start = activity.startedAt, let end = activity.completedAt,
+        end.timeIntervalSince(start) < 1
+      else { return false }
+      return reasoningDisplayText(for: activity, in: run) == String(localized: "Thinking", bundle: HanlinLocalization.bundle)
+    }
+
+    let duration = run.completedAt.map { max(0, $0.timeIntervalSince(run.startedAt)) }
+    return AgentDisplayTimeline(
+      summaryTitle: summaryTitle(for: run, duration: duration),
+      activities: activities,
+      totalDuration: duration,
+      status: run.status
+    )
+  }
+
+  /// Expanded reasoning uses the same approved-summary boundary as its header.
+  /// Raw provider transcript storage is never a separate display permission.
+  public static func reasoningDisplayText(for activity: AgentDisplayActivity, in run: AgentRun) -> String {
+    let stepIDs = Set(activity.sourceStepIDs)
+    let reasoning = run.transcriptItems.filter {
+      $0.kind == .reasoning && $0.activityStepID.map(stepIDs.contains) == true
+    }.compactMap(\.text).joined(separator: "\n")
+    let candidate = reasoning.isEmpty ? activity.outputPreview : reasoning
+    return ProgressSummarySanitizer.sanitizeProviderReasoningSummary(candidate) ?? activity.title
+  }
+
+  private static func lifecycleKey(_ step: AgentActivityStep) -> String {
+    step.toolCallID ?? step.externalID ?? step.id.uuidString
+  }
+
+  private static func normalizedInput(_ step: AgentActivityStep) -> String? {
+    AgentActivityDeduplicator.normalized(step.input)
+  }
+
+  private static func makeActivity(_ steps: [AgentActivityStep], approval: AgentToolApproval?) -> AgentDisplayActivity? {
+    guard let first = steps.first else { return nil }
+    let kind: AgentDisplayActivityKind
+    if let presentationKind = first.presentationProfile?.activity.kind {
+      kind = presentationKind.displayActivityKind
+    } else if let fallbackKind = AgentActivityCompositionPolicy.displayKind(for: first.kind) {
+      kind = fallbackKind
+    } else {
+      return nil
+    }
+    var status = combinedStatus(steps)
+    if !steps.contains(where: \.isExecutionLifecycleStep), let approval {
+      // A parsed call or an approval receipt is not a successful execution.
+      // Once execution exists, its real lifecycle determines the outcome.
+      switch approval.disposition {
+      case .awaiting, .providerRequired, .allowedOnce, .allowedAlways: status = .pending
+      case .notApproved: status = .cancelled
+      }
+    }
+    let queries = AgentActivityDeduplicator.uniqueStrings(
+      steps.flatMap(\.queryItems) + steps.compactMap { query(from: $0.input) }
+    )
+    let sources = AgentActivityDeduplicator.uniqueSources(steps.flatMap(\.sourceItems))
+    let input = friendlyInput(steps.compactMap(\.input).first(where: { !$0.isEmpty }))
+    let output = friendlyOutput(steps.compactMap(\.output).last(where: { !$0.isEmpty }))
+    let error = steps.compactMap(\.errorDescription).last.map(AgentDiagnosticsRedactor.sanitize)
+    let title: String
+    switch kind {
+    case .narrative:
+      let rawNarrative = steps.compactMap(\.userFacingSummary).first ?? first.title
+      title = ProgressSummarySanitizer.sanitize(rawNarrative) ?? String(localized: "Working", bundle: HanlinLocalization.bundle)
+    case .reasoning:
+      let rawReasoning = first.title
+      if ProgressSummarySanitizer.looksLikeRawChainOfThought(rawReasoning) {
+        title = String(localized: "Thinking", bundle: HanlinLocalization.bundle)
+      } else {
+        title = ProgressSummarySanitizer.sanitize(rawReasoning) ?? String(localized: "Thinking", bundle: HanlinLocalization.bundle)
+      }
+    default:
+      title = AgentActivityTitleBuilder.title(
+        for: steps, kind: kind, queries: queries, status: status)
+    }
+    guard ProgressSummarySanitizer.sanitize(title) != nil || kind != .narrative else { return nil }
+
+    let executionPresentation =
+      steps.compactMap(\.canonicalExecutionPresentation).first
+      ?? steps.compactMap(\.presentationProfile?.canonicalExecutionPresentation).first
+      ?? steps.compactMap(\.presentationProfile).first?.resolvedExecutionPresentation
+    let embeddedPresentation =
+      steps.compactMap(\.canonicalEmbeddedPresentation).first
+      ?? steps.compactMap(\.presentationProfile?.canonicalEmbeddedPresentation).first
+
+    return AgentDisplayActivity(
+      id: lifecycleKey(first),
+      kind: kind,
+      systemImage: steps.compactMap(\.presentationProfile).first?.activity.systemImage,
+      title: title,
+      subtitle: nil,
+      narrativeText: kind == .narrative ? title : nil,
+      status: status,
+      startedAt: steps.map(\.startedAt).min(),
+      completedAt: steps.compactMap(\.completedAt).max(),
+      queries: queries,
+      searchProviderName: steps.compactMap(\.searchProviderName).first,
+      sources: sources,
+      inputPreview: input,
+      outputPreview: output,
+      errorDescription: error,
+      isExpandable: AgentActivityDetailPolicy.isExpandable(
+        queries: queries, sources: sources, input: input, output: output,
+        error: error
+      ),
+      sourceStepIDs: steps.map(\.id),
+      executionPresentation: executionPresentation,
+      embeddedPresentation: embeddedPresentation,
+      icons: steps.compactMap(\.presentationProfile?.activity.icons).first
+    )
+  }
+
+  private static func query(from input: String?) -> String? {
+    guard let input else { return nil }
+    for line in input.components(separatedBy: .newlines) {
+      let parts = line.split(separator: ":", maxSplits: 1).map(String.init)
+      if parts.count == 2, ["query", "q", "search_query"].contains(parts[0].lowercased()) {
+        return parts[1].trimmingCharacters(in: .whitespacesAndNewlines)
+      }
+    }
+    return nil
+  }
+
+  private static func friendlyInput(_ value: String?) -> String? {
+    guard let value else { return nil }
+    let lines = value.components(separatedBy: .newlines).filter {
+      let key = $0.split(separator: ":", maxSplits: 1).first?.lowercased() ?? ""
+      return !["query", "q", "search_query"].contains(String(key))
+    }
+    let result = safePreview(lines.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines))
+    return result.isEmpty ? nil : result
+  }
+
+  private static func friendlyOutput(_ value: String?) -> String? {
+    guard let value else { return nil }
+    let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !(trimmed.hasPrefix("{") && trimmed.hasSuffix("}")),
+      !(trimmed.hasPrefix("[") && trimmed.hasSuffix("]"))
+    else { return nil }
+    guard !ProgressSummarySanitizer.looksLikeRawChainOfThought(trimmed), !trimmed.contains("### Instructions") else { return nil }
+    return trimmed.isEmpty ? nil : safePreview(trimmed)
+  }
+
+  private static func safePreview(_ text: String) -> String {
+    if let value = try? JSONSerialization.jsonObject(with: Data(text.utf8)) {
+      return AgentDiagnosticsRedactor.sanitizedJSONString(from: value, pretty: true)
+    }
+    return AgentDiagnosticsRedactor.sanitize(text)
+  }
+
+  private static func combinedStatus(_ steps: [AgentActivityStep]) -> AgentActivityStatus {
+    if steps.contains(where: { $0.status == .failed }) { return .failed }
+    if let execution = steps.last(where: { $0.isExecutionLifecycleStep }),
+      [.completed, .cancelled].contains(execution.status) { return execution.status }
+    if steps.contains(where: { $0.status == .running }) { return .running }
+    if steps.contains(where: { $0.status == .pending }) { return .pending }
+    if steps.allSatisfy({ $0.status == .cancelled }) { return .cancelled }
+    return .completed
+  }
+
+  private static func removeNarrativeDuplicates(_ activities: [AgentDisplayActivity])
+    -> [AgentDisplayActivity]
+  {
+    var result: [AgentDisplayActivity] = []
+    var seenNarratives = Set<String>()
+    // Find the next real activity once, rather than scanning the remaining
+    // transcript separately for every progress update.
+    var nextToolTitles = Array<String?>(repeating: nil, count: activities.count)
+    var nextToolTitle: String?
+    for index in activities.indices.reversed() {
+      nextToolTitles[index] = nextToolTitle
+      if activities[index].kind != .narrative {
+        nextToolTitle = AgentActivityDeduplicator.normalized(activities[index].title)
+      }
+    }
+    for (index, activity) in activities.enumerated() {
+      if activity.kind == .narrative {
+        guard let key = AgentActivityDeduplicator.normalized(activity.narrativeText),
+          !seenNarratives.contains(key)
+        else { continue }
+        if key == nextToolTitles[index] { continue }
+        seenNarratives.insert(key)
+      }
+      result.append(activity)
+    }
+    return result
+  }
+
+  private static func summaryTitle(for run: AgentRun, duration: TimeInterval?) -> String {
+    switch run.status {
+    case .pending, .running: return String(localized: "Working…", bundle: HanlinLocalization.bundle)
+    case .completed:
+      return String(
+        format: String(localized: "Worked for %@", bundle: HanlinLocalization.bundle),
+        AgentActivityDurationFormatter.string(duration ?? run.elapsedTime))
+    case .failed:
+      return String(
+        format: String(localized: "Stopped after %@", bundle: HanlinLocalization.bundle),
+        AgentActivityDurationFormatter.string(duration ?? run.elapsedTime))
+    case .cancelled:
+      return String(
+        format: String(localized: "Cancelled after %@", bundle: HanlinLocalization.bundle),
+        AgentActivityDurationFormatter.string(duration ?? run.elapsedTime))
+    }
+  }
+}
+
+public enum AgentActivityDurationFormatter {
+  public static func string(_ interval: TimeInterval) -> String {
+    let formatter = DateComponentsFormatter()
+    formatter.allowedUnits = interval < 60 ? [.second] : [.minute, .second]
+    formatter.unitsStyle = .abbreviated
+    formatter.maximumUnitCount = 2
+    return formatter.string(from: max(0, interval)) ?? "0s"
+  }
+}

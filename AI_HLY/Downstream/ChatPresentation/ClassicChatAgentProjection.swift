@@ -1,3 +1,4 @@
+import HanlinAgentActivityCore
 import HanlinLocalization
 //
 //  ClassicChatAgentProjection.swift
@@ -16,82 +17,8 @@ import HanlinPlatformContracts
 
 typealias ClassicToolDisplayItem = ClassicProjectedToolCallEntry
 
-/// Represents one discrete, chronologically ordered tool invocation and its user-facing output
-/// within a single `AgentRun`, preventing output conflation or mislabeling across tools.
-struct ClassicProjectedToolCallEntry: Equatable, Sendable, Identifiable {
-    let id: String
-    let runID: UUID
-    let callID: String
-    let toolName: String
-    var sequence: Int = 0
-    var startedAt: Date = Date()
-    var status: AgentActivityStatus = .completed
-    var summary: String?
-    var output: String
-    var errorDescription: String?
-    var embeddedResultPayload: HanlinEmbeddedResultPayload?
-    var isMetaSkillOrDiscoveryTool: Bool
+typealias ClassicProjectedToolCallEntry = HanlinAgentActivityCore.ClassicProjectedToolCallEntry
 
-    var statusText: String {
-        switch status {
-        case .running: return String(localized: "Running", bundle: HanlinLocalization.bundle)
-        case .pending: return String(localized: "Pending", bundle: HanlinLocalization.bundle)
-        case .completed: return String(localized: "Completed", bundle: HanlinLocalization.bundle)
-        case .failed: return String(localized: "Failed", bundle: HanlinLocalization.bundle)
-        case .cancelled: return String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
-        }
-    }
-
-    static let metaToolNames = AgentActivityVisibilityPolicy.internalToolNames
-
-    static func isMetaTool(_ name: String) -> Bool {
-        AgentActivityVisibilityPolicy.isInternalTool(name)
-    }
-
-    /// Formats a single entry for `ChatBubbleView.toolContentView()`, always keeping its own tool label
-    /// when multiple tools execute in the same run.
-    func formattedBlock(includeHeader: Bool) -> String {
-        let cleanName = toolName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let cleanOutput = Self.sanitizeUserFacingToolOutput(output, isMetaSkillOrDiscoveryTool: isMetaSkillOrDiscoveryTool)
-        let cleanSummary = summary?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-
-        var lines: [String] = []
-        if includeHeader, !cleanName.isEmpty {
-            lines.append("[\(cleanName)]")
-        }
-        if !cleanSummary.isEmpty,
-           cleanSummary != cleanName,
-           cleanSummary != cleanOutput,
-           !ProgressSummarySanitizer.looksLikeRawChainOfThought(cleanSummary) {
-            lines.append(cleanSummary)
-        }
-        if !cleanOutput.isEmpty {
-            lines.append(cleanOutput)
-        }
-        return lines.joined(separator: "\n")
-    }
-
-    /// Strips any accidental raw `### Instructions` skill body from user-facing tool output for meta skill/discovery tools.
-    /// Preserves legitimate user-facing markdown headings for domain tools.
-    static func sanitizeUserFacingToolOutput(_ raw: String, isMetaSkillOrDiscoveryTool: Bool = false) -> String {
-        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return "" }
-        if isMetaSkillOrDiscoveryTool {
-            if let range = trimmed.range(of: "### Instructions") {
-                let prefix = String(trimmed[..<range.lowerBound]).trimmingCharacters(in: .whitespacesAndNewlines)
-                if !prefix.isEmpty {
-                    return prefix
-                }
-                return "Skill loaded."
-            }
-        }
-        return trimmed
-    }
-
-    static func sanitizeUserFacingToolOutput(_ raw: String, toolName: String) -> String {
-        sanitizeUserFacingToolOutput(raw, isMetaSkillOrDiscoveryTool: isMetaTool(toolName))
-    }
-}
 
 @MainActor
 struct ClassicChatAgentProjection {
@@ -373,25 +300,7 @@ struct ClassicChatAgentProjection {
 
     /// Convenience projection to derive view-oriented structured tool items from an `AgentRun`.
     static func projectToolEntries(from agentRun: AgentRun?, callID: String? = nil) -> [ClassicProjectedToolCallEntry] {
-        guard var agentRun else { return [] }
-        if let callID {
-            // A mounted disclosure projects only its own call. Its payload does
-            // not change when a parent begins collapsing, and collapsed calls
-            // never pay the sanitization cost for unrelated tool outputs.
-            agentRun.steps.removeAll {
-                ($0.toolCallID ?? $0.externalID ?? $0.id.uuidString) != callID
-            }
-            agentRun.transcriptItems.removeAll { $0.callID != callID }
-        }
-        var entries: [ClassicProjectedToolCallEntry] = []
-        var seenKeys: Set<String> = []
-        syncStructuredToolEntries(
-            from: agentRun,
-            runID: agentRun.id,
-            orderedToolEntries: &entries,
-            seenToolCallKeys: &seenKeys
-        )
-        return entries
+        AgentActivityToolProjection.projectToolEntries(from: agentRun, callID: callID)
     }
 
     /// Builds deterministic per-call entries from `AgentRun.steps` and `AgentRun.transcriptItems`.
@@ -402,94 +311,8 @@ struct ClassicChatAgentProjection {
         orderedToolEntries: inout [ClassicProjectedToolCallEntry],
         seenToolCallKeys: inout Set<String>
     ) {
-        let toolSteps = agentRun.steps.filter(isToolProjectionStep)
-        var entryIndexByCallID: [String: Int] = [:]
-        for index in orderedToolEntries.indices {
-            entryIndexByCallID[orderedToolEntries[index].callID] = index
-        }
-
-        // Map callID -> canonical toolName and status from transcriptItems when available
-        var toolNameByCallID: [String: String] = [:]
-        var statusByCallID: [String: AgentActivityStatus] = [:]
-        var payloadByCallID: [String: HanlinEmbeddedResultPayload] = [:]
-        for item in agentRun.transcriptItems {
-            if let callID = item.callID, !callID.isEmpty {
-                if let tName = item.toolName, !tName.isEmpty {
-                    toolNameByCallID[callID] = tName
-                }
-                if item.kind == .toolActivity { statusByCallID[callID] = item.status }
-                if let payload = item.embeddedResultPayload {
-                    payloadByCallID[callID] = payload
-                }
-            }
-        }
-
-        for step in toolSteps {
-            guard step.status == .completed || step.status == .failed || step.status == .running || step.status == .cancelled else { continue }
-            let rawCallID = step.toolCallID ?? step.externalID ?? step.id.uuidString
-            let stepTitle = step.title.trimmingCharacters(in: .whitespacesAndNewlines)
-            let canonicalToolName = toolNameByCallID[rawCallID]
-                ?? step.subtitle
-                ?? (stepTitle.isEmpty ? "tool" : stepTitle)
-            let isMeta = ClassicProjectedToolCallEntry.isMetaTool(canonicalToolName)
-
-            let rawOutput: String = {
-                if let out = step.output?.trimmingCharacters(in: .whitespacesAndNewlines), !out.isEmpty {
-                    return out
-                }
-                if let err = step.errorDescription?.trimmingCharacters(in: .whitespacesAndNewlines), !err.isEmpty {
-                    return "⚠️ \(err)"
-                }
-                return ""
-            }()
-            let sanitizedOutput = ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(rawOutput, isMetaSkillOrDiscoveryTool: isMeta)
-            let summary = step.userFacingSummary?.trimmingCharacters(in: .whitespacesAndNewlines)
-
-            guard !sanitizedOutput.isEmpty || (summary?.isEmpty == false) || step.status == .running || step.status == .cancelled else { continue }
-
-            let effectiveOutput = sanitizedOutput.isEmpty ? (summary ?? "") : sanitizedOutput
-            let stepStatus: AgentActivityStatus = step.status == .failed ? .failed : statusByCallID[rawCallID] ?? step.status
-            let callKey = "\(runID.uuidString):call:\(rawCallID)"
-
-            // Identity and deduplication is strictly by callID, NEVER by toolName::output
-            if let existingIdx = entryIndexByCallID[rawCallID] {
-                if let summary, !summary.isEmpty {
-                    orderedToolEntries[existingIdx].summary = summary
-                }
-                if !effectiveOutput.isEmpty {
-                    orderedToolEntries[existingIdx].output = effectiveOutput
-                }
-                orderedToolEntries[existingIdx].status = stepStatus
-                if let err = step.errorDescription, !err.isEmpty {
-                    orderedToolEntries[existingIdx].errorDescription = err
-                }
-                if let payload = payloadByCallID[rawCallID] {
-                    orderedToolEntries[existingIdx].embeddedResultPayload = payload
-                }
-                seenToolCallKeys.insert(callKey)
-                continue
-            }
-
-            guard seenToolCallKeys.insert(callKey).inserted else { continue }
-
-            entryIndexByCallID[rawCallID] = orderedToolEntries.count
-            orderedToolEntries.append(
-                ClassicProjectedToolCallEntry(
-                    id: callKey,
-                    runID: runID,
-                    callID: rawCallID,
-                    toolName: canonicalToolName,
-                    sequence: step.sequence,
-                    startedAt: step.startedAt,
-                    status: stepStatus,
-                    summary: summary,
-                    output: effectiveOutput,
-                    errorDescription: step.errorDescription,
-                    embeddedResultPayload: payloadByCallID[rawCallID],
-                    isMetaSkillOrDiscoveryTool: isMeta
-                )
-            )
-        }
+        AgentActivityToolProjection.syncStructuredToolEntries(from: agentRun, runID: runID,
+            orderedToolEntries: &orderedToolEntries, seenToolCallKeys: &seenToolCallKeys)
     }
 
     /// Formats `orderedToolEntries` into `assistantMessage.toolContent` and `assistantMessage.toolName`
@@ -568,13 +391,6 @@ struct ClassicChatAgentProjection {
         if !evidenceResources.isEmpty {
             let combined = (assistantMessage.resources ?? []) + evidenceResources
             _ = assignResourcesIfChanged(LegacyResourcesEvidenceAdapter.deduplicatedResources(combined), to: assistantMessage)
-        }
-    }
-
-    private static func isToolProjectionStep(_ step: AgentActivityStep) -> Bool {
-        switch step.kind {
-        case .toolCall, .toolExecution, .codeExecution, .documentRead, .sourceRead, .map, .calendar, .health, .nativeApp: true
-        case .reasoning, .progress, .planning, .webSearch, .result, .error, .cancellation: false
         }
     }
 
