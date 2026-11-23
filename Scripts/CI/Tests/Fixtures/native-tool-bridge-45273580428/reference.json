@@ -1,0 +1,47 @@
+{
+  "run_id": 45273580428,
+  "run_attempt": 1,
+  "source_commit": "2c41a1b7ed6b191be7529550ae1ca4501632ce8d",
+  "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "artifact_id": 14867146247,
+  "zip_sha256": "068f4711ff9b32dc053ccba34933dd6cd57667c08d02bdfae9cceaa95dcecf48",
+  "eligible_case_ids": [
+    "HanlinAppleToolHeaderAdmissionTests/rejectsUnsupportedTransportHeader"
+  ],
+  "reviewed_current_source_commit": "ab06b4129e23c8f9ce9c1a4229e72a3d99bbf5d4",
+  "reviewed_current_source_sha256": {
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57"
+  },
+  "files_sha256": {
+    "04-select-xcode.stderr.log": "43aa03c0f021d590a4ac56edce3f8ac3754b88842aa24f8302b73e3e47625b70",
+    "04-select-xcode.stdout.log": "8d652b3e258a63181e163aa5c534b30b06052368fc3d2ccb2dad57211f17302d",
+    "05-xcode.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "05-xcode.stdout.log": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+    "06-swift.stderr.log": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+    "06-swift.stdout.log": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "07-macos-sdk.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "07-macos-sdk.stdout.log": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "08-ios-sdk.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "08-ios-sdk.stdout.log": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+    "09-os.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "09-os.stdout.log": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+    "12-producer-clean.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "12-producer-clean.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "SDKTests.json": "d9986e1a415164c27b33ce804e486a2a946695d28d4d230beaa5a654d93dbfc7",
+    "artifact-receipt.json": "f1a025878859a8f6e464bbea1db9b0cf0bbf8c665c8e06eab3a6b27d7fad1cc0",
+    "commands.json": "53efd4500462ecf62619b00649cd9b1fd38bab6df5542169df5e77f9031eaad5",
+    "core-Package.resolved": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+    "post-build-resolution.json": "61efd25acfad5a796d7cd8d465a3ee2e68da2714f8ee9b885268a19a6f92235f",
+    "process-status.json": "7ca8b5692781ec6ff99a20c8e390b600ffef6a407495c608fec3a82522cd53c1",
+    "producer-commit.txt": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+    "sdk-Package.resolved": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+    "selected-route.json": "129ad05c9e0ca56c3686150b4b7212d8635e9a6a1664d7ae751f2e0f42a1a3f6",
+    "source-before-0.swift": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+    "source-before-1.swift": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+    "terminal-audit.json": "b645c44e9826d29df6da4fb7d89a4e1c93798d1df987a35815b400c83078037a",
+    "terminal-run.json": "c6926cd0bc7dccde909c3f49b67255e42881d8490196497bfc2901a1526485df",
+    "tested-source-sha256.json": "8b6f7e6a8c6075317f002c55aa43011f8eed0fda5d8126092febc20d96e973d0",
+    "workflow-sha256.json": "e174a3b65d9b41737e504b378d23e4a2f0b1aab5c98f190fda49ecf4129b9e74"
+  }
+}

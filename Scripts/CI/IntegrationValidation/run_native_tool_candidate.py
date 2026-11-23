@@ -33,6 +33,7 @@ def main():
     commands = []
     scratch = None
     header_recheck = False
+    bridge_recheck = False
     environment = os.environ.copy()
 
     def run(name, argv, cwd=root, check=True, timeout=1200):
@@ -67,10 +68,11 @@ def main():
         event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
         inputs = event.get("inputs", {})
         selector = inputs.get("exact_test_selector")
-        if selector not in {"HanlinNativeToolCandidate", "HanlinNativeToolCandidateRecheck", "HanlinNativeToolHeaderRecheck"} or inputs.get("target_validation_group") != "agent_sdk_exact_source_proof":
+        if selector not in {"HanlinNativeToolCandidate", "HanlinNativeToolCandidateRecheck", "HanlinNativeToolHeaderRecheck", "HanlinNativeToolBridgeRecheck"} or inputs.get("target_validation_group") != "agent_sdk_exact_source_proof":
             raise RuntimeError("Native candidate validation requires the exact reviewed opt-in route")
         header_recheck = selector == "HanlinNativeToolHeaderRecheck"
-        reuse_baseline = selector in {"HanlinNativeToolCandidateRecheck", "HanlinNativeToolHeaderRecheck"}
+        bridge_recheck = selector == "HanlinNativeToolBridgeRecheck"
+        reuse_baseline = selector in {"HanlinNativeToolCandidateRecheck", "HanlinNativeToolHeaderRecheck", "HanlinNativeToolBridgeRecheck"}
         if header_recheck:
             from verify_native_tool_header_recheck import (
                 HEADER_EXPECTED, HEADER_SELECTORS, REFERENCE_PATH as HEADER_REFERENCE_PATH,
@@ -78,6 +80,13 @@ def main():
             )
             from reuse_native_header_ios_build import (
                 REFERENCE_PATH as HEADER_IOS_REFERENCE_PATH, prepare_reuse as prepare_header_ios_reuse,
+            )
+        if bridge_recheck:
+            from verify_native_tool_bridge_recheck import (
+                BRIDGE_EXPECTED, BRIDGE_SELECTORS, PERMITTED_SOURCE,
+                REFERENCE_PATH as BRIDGE_REFERENCE_PATH,
+                NEGATIVE_REFERENCE_PATH as BRIDGE_NEGATIVE_REFERENCE_PATH,
+                prepare_bridge_reuse, summarize_bridge_recheck,
             )
         (evidence / "selected-route.json").write_text(json.dumps(dict(
             exact_test_selector=selector, target_validation_group=inputs["target_validation_group"],
@@ -105,6 +114,9 @@ def main():
                 raise RuntimeError("Archived source differs from Git: " + relative)
             digests[relative] = sha(path)
         (evidence / "tested-source-sha256.json").write_text(json.dumps(digests, indent=2))
+        if bridge_recheck:
+            for index, relative in enumerate(PERMITTED_SOURCE):
+                (evidence / f"source-current-{index}.swift").write_bytes((scratch / relative).read_bytes())
         workflow_paths = [".github/workflows/build-ios26-unsigned-ipa.yml",
                           "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
                           "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py",
@@ -119,6 +131,10 @@ def main():
             workflow_paths += [str(path.relative_to(root)) for path in sorted((root / HEADER_REFERENCE_PATH).iterdir()) if path.is_file()]
             workflow_paths += ["Scripts/CI/IntegrationValidation/reuse_native_header_ios_build.py"]
             workflow_paths += [str(path.relative_to(root)) for path in sorted((root / HEADER_IOS_REFERENCE_PATH).rglob("*")) if path.is_file()]
+        if bridge_recheck:
+            workflow_paths += ["Scripts/CI/IntegrationValidation/verify_native_tool_bridge_recheck.py"]
+            for fixture in (BRIDGE_REFERENCE_PATH, BRIDGE_NEGATIVE_REFERENCE_PATH):
+                workflow_paths += [str(path.relative_to(root)) for path in sorted((root / fixture).iterdir()) if path.is_file()]
         for relative in workflow_paths:
             if (root / relative).read_bytes() != subprocess.check_output(["git", "show", head + ":" + relative], cwd=root):
                 raise RuntimeError("Workflow source differs from Git: " + relative)
@@ -178,7 +194,8 @@ def main():
                 # Retain richer per-method exports from this same execution. If
                 # a new Xcode shape cannot be interpreted, the verifier blocks
                 # and these originals permit review without rerunning tests.
-                suites = (HEADER_EXPECTED if header_recheck and result == "SDKTests" else
+                suites = (BRIDGE_EXPECTED if bridge_recheck and result == "SDKTests" else
+                          HEADER_EXPECTED if header_recheck and result == "SDKTests" else
                           EXPECTED["SDKTests" if result == "SDKTests" else "CoreTests"])
                 parameterized = {suite + "/" + method for suite, methods in suites.items()
                                  for method, arguments in methods.items() if arguments is not None}
@@ -219,6 +236,9 @@ def main():
                 statuses["accepted_cases_execution"] = "REUSED_VERIFIED"
                 prepare_header_ios_reuse(root, evidence)
                 statuses["ios_build_execution"] = "REUSED_VERIFIED"
+            if bridge_recheck:
+                prepare_bridge_reuse(root, evidence)
+                statuses["accepted_cases_execution"] = "REUSED_VERIFIED"
             # No baseline subprocess ran. Its original exit belongs to the
             # separate authenticated reference, never to current process status.
         else:
@@ -235,13 +255,15 @@ def main():
             if sha(scratch / relative) != digest:
                 raise RuntimeError("Candidate source was not fully restored before acceptance: " + relative)
         if not header_recheck:
-            statuses["core_test_exit"] = test("CoreTests", core, core_scheme, boundary)
-        sdk_selectors = HEADER_SELECTORS if header_recheck else [
+            statuses["core_test_exit"] = None if bridge_recheck else test("CoreTests", core, core_scheme, boundary)
+        sdk_selectors = HEADER_SELECTORS if header_recheck else (BRIDGE_SELECTORS if bridge_recheck else [
             "HanlinAgentCoreTests/HanlinAppleToolSchemaTests",
             "HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests",
-        ]
+        ])
         statuses["sdk_test_exit"] = test("SDKTests", sdk, sdk_scheme, sdk_selectors)
         if not header_recheck:
+            if bridge_recheck:
+                statuses["ios_build_execution"] = "EXECUTED"
             statuses["ios_build_exit"], _ = run("IOSBuild", [
                 "xcodebuild", "build", "-scheme", "HanlinAgentCore", "-destination", "generic/platform=iOS Simulator",
                 "-derivedDataPath", scratch / "IOSDerivedData", "-resultBundlePath", evidence / "IOSBuild.xcresult", *common
@@ -274,7 +296,8 @@ def main():
                 statuses["preparation_exit"] = 1
                 (evidence / "resolution-error.txt").write_text(str(error) + "\n")
         (evidence / "process-status.json").write_text(json.dumps(statuses, indent=2))
-        result = summarize_header_recheck(evidence) if header_recheck else summarize(evidence)
+        result = (summarize_bridge_recheck(evidence) if bridge_recheck else
+                  summarize_header_recheck(evidence) if header_recheck else summarize(evidence))
         (evidence / "summary.json").write_text(json.dumps(result, indent=2))
         print(json.dumps(result, indent=2))
     return 0 if result["status"] == "PASS" else 1

@@ -238,9 +238,14 @@ class HeaderRecheckReportTests(unittest.TestCase):
         write(self.evidence / "commands.json", commands)
         self.assertEqual(header.summarize_header_recheck(self.evidence)["status"], "BLOCKED")
 
-    def test_source_preserves_all_original_seven_helpers_and_exact_header_selector(self):
+    def test_frozen_header_source_preserves_seven_helpers_and_exact_selector(self):
         old = (self.reference / "source-before-1.swift").read_text()
-        new = (ROOT / list(header.PERMITTED_SOURCE)[1]).read_text()
+        # This control describes the already accepted header-only source. The
+        # later profile/cancellation repair has its own affected-case contract.
+        accepted = ROOT / "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/source-before-1.swift"
+        self.assertEqual(hashlib.sha256(accepted.read_bytes()).hexdigest(),
+                         header.PERMITTED_SOURCE[list(header.PERMITTED_SOURCE)[1]])
+        new = accepted.read_text()
         old_helper = old.split("private struct NativeToolSessionBridgeChecks {", 1)[1]
         old_before = old_helper.split("    func nativeGeneratePreservesToolCalls()", 1)[0]
         new_helper = new.split("private struct NativeToolSessionBridgeChecks {", 1)[1]
