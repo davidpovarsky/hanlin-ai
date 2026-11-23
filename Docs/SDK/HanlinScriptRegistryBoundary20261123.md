@@ -1,5 +1,12 @@
 # Persisted scripting registry identity boundary — 23 November 2026
 
+## Native acceptance update — 23 November, 11:23 UTC
+
+The three original new methods/four cases now **PASS** on the actual Apple package route at `32da9e314e22bbf22391fcf8902302acfbb281e2`: run45163990486/job137656161482, Xcode27.2/Swift6.4.2, original package build164.63s and selected tests0.096s. The raw log explicitly contains both duplicate-identity arguments, selected-backup rejection and valid primary/backup preservation. [Exact native receipt and original log](../../docs/agent-sdk/evidence/native-registry-45163990486/README.md).
+
+The earlier portable/source receipt below remains unchanged as historical evidence. Its then-NOT_RUN native status is superseded only for these three methods/four cases. This does not claim iOS app, WidgetKit, live calendar or physical-device acceptance.
+
+
 The original shared store accepted a decoded catalog whose dictionary key differed from the entry's installed package identity. Two distinct, valid map keys could therefore produce two original snapshots with the same installed ID. The repair rejects that selected registry through the existing corruptRegistry error before snapshots are exposed.
 
 ## Reproduction and scope

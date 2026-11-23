@@ -1,0 +1,15 @@
+◇ Test run started.
+2026-11-23T11:23:18.8602260Z ↳ Testing Library Version: 2403
+2026-11-23T11:23:18.8604110Z ↳ Target Platform: arm64e-apple-macos14.0
+2026-11-23T11:23:18.8604770Z ◇ Suite "Atomic Scripting installation store" started.
+2026-11-23T11:23:18.8605590Z ◇ Test "Valid primary precedence and valid backup recovery retain their original data" started.
+2026-11-23T11:23:18.8627020Z ◇ Test "The selected backup must also have matching installed identities" started.
+2026-11-23T11:23:18.8628340Z ◇ Test "Malformed stored identity rejects cold load and restore without changing registry bytes" started.
+2026-11-23T11:23:18.8629690Z ◇ Test case passing 1 argument duplicatingEntry → false to "Malformed stored identity rejects cold load and restore without changing registry bytes" started.
+2026-11-23T11:23:18.8630930Z ◇ Test case passing 1 argument duplicatingEntry → true to "Malformed stored identity rejects cold load and restore without changing registry bytes" started.
+2026-11-23T11:23:18.8634040Z ✔ Test "The selected backup must also have matching installed identities" passed after 0.083 seconds.
+2026-11-23T11:23:18.8635610Z ✔ Test "Valid primary precedence and valid backup recovery retain their original data" passed after 0.083 seconds.
+2026-11-23T11:23:18.8638210Z ✔ Test "Malformed stored identity rejects cold load and restore without changing registry bytes" with 2 test cases passed after 0.095 seconds.
+2026-11-23T11:23:18.8640700Z ✔ Suite "Atomic Scripting installation store" passed after 0.096 seconds.
+2026-11-23T11:23:18.8642380Z ✔ Test run with 3 tests in 1 suite passed after 0.096 seconds.
+2026-11-23T11:23:18.9018480Z 
