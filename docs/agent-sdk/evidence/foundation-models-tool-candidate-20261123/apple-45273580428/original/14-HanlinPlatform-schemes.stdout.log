@@ -1,0 +1,22 @@
+{
+  "workspace" : {
+    "name" : "HanlinPlatform",
+    "schemes" : [
+      "HanlinChatCore",
+      "HanlinExtensionContracts",
+      "HanlinMiniAppCore",
+      "HanlinPlatform-Package",
+      "HanlinPlatformContracts",
+      "HanlinScriptCompiler",
+      "HanlinScriptContracts",
+      "HanlinScriptDeviceServices",
+      "HanlinScriptExtensions",
+      "HanlinScriptingApplicationRuntime",
+      "HanlinScriptingSDK",
+      "HanlinScriptRuntime",
+      "HanlinScriptServices",
+      "HanlinScriptStore",
+      "HanlinScriptUI"
+    ]
+  }
+}
