@@ -45,6 +45,8 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
                 VStack(alignment: .leading, spacing: 6, content: content)
+                    .accessibilityElement(children: isExpanded ? .contain : .ignore)
+                    .accessibilityHidden(!isExpanded)
                     .transition(.identity)
             }
         }
