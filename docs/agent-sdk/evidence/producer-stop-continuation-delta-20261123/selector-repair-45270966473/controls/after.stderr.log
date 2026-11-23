@@ -1,0 +1,6 @@
+test_function_selectors_preserve_declared_singleton_identifiers (Scripts.CI.Tests.test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_function_selectors_preserve_declared_singleton_identifiers) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK

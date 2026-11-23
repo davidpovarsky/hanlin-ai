@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-23T21:38:18.604622+00:00",
+  "scope": "ONE new local selector control; no old control or native execution",
+  "before_exit": 1,
+  "after_exit": 0,
+  "original_run": 45270966473,
+  "original_result": "CANCELLED_BEFORE_RUNNER: 0 executed / 3 NOT_RUN",
+  "source_binding": "Actual three @Test singleton declaration signatures, not an invented executed-case outcome",
+  "packages": "BYTE_IDENTICAL_TO4f018c",
+  "logs": {
+    "after.stderr.log": "2c82e12fd982f299919d5727190c5fd104bef1944c9b9cac3fc8b1fae3c1718c",
+    "before.stderr.log": "a9837b9efdfe709819a40a6bf86aa2000f70f981a40c550a04a45d3982ebed79",
+    "before.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "after.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

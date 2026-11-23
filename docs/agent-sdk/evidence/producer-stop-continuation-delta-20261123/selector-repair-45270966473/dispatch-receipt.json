@@ -1,0 +1,45 @@
+{
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "sha": "4f018c1845deee2962eafc8a3788886f1c05acf8",
+  "remote_sha": "4f018c1845deee2962eafc8a3788886f1c05acf8",
+  "utc": "2026-11-23T21:33:59.063936+00:00",
+  "request": {
+    "ref": "codex/hanlin-sdk02-stop-continuation-20261123",
+    "inputs": {
+      "composer_validation_only": "false",
+      "nativescript_metadata_validation_only": "false",
+      "runtime_job_foundation_only": "false",
+      "markdown_renderer_validation_only": "false",
+      "code_fence_webkit_validation_only": "false",
+      "diagnostics_capture_validation_only": "false",
+      "testflight_upload": "false",
+      "runtime_bundle_only": "false",
+      "runtime_publish_release": "false",
+      "phase1_validation_only": "false",
+      "fast_validation_only": "false",
+      "nativescript_poc_only": "false",
+      "force_clean_build": "false",
+      "measure_warm_rebuild": "false",
+      "simulator_e2e_only": "false",
+      "full_validation": "false",
+      "target_validation_group": "agent_sdk_exact_source_proof",
+      "exact_test_selector": "HanlinStopContinuationDelta"
+    }
+  },
+  "prior_run_ids": [],
+  "scope": {
+    "current_core_invocations": 3,
+    "current_sdk_test_invocations": 0,
+    "baseline_processes": 0,
+    "prior_cases_replayed": 0,
+    "producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+    "ios_agent_core_build": true,
+    "simulator_launch": false,
+    "shipping_gates": "CLOSED"
+  },
+  "review": "Root source review and release_hosts exact route/admission review accepted; conditional ONE dispatch authorization satisfied",
+  "finished_utc": "2026-11-23T21:34:00.619737+00:00",
+  "exit": 0,
+  "stdout": "",
+  "stderr": ""
+}

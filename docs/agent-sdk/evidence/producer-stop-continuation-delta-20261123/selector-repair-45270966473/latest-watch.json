@@ -1,0 +1,38 @@
+{
+  "utc": "2026-11-23T21:36:32.790758+00:00",
+  "run_id": 45270966473,
+  "run_attempt": 1,
+  "head_sha": "4f018c1845deee2962eafc8a3788886f1c05acf8",
+  "status": "completed",
+  "conclusion": "cancelled",
+  "selected_jobs": [
+    {
+      "id": 138030346163,
+      "run_id": 45270966473,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-sdk02-stop-continuation-20261123",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45270966473",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgIz_vsw",
+      "head_sha": "4f018c1845deee2962eafc8a3788886f1c05acf8",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/138030346163",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45270966473/job/138030346163",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "created_at": "2026-11-23T21:34:02Z",
+      "started_at": "2026-11-23T21:34:02Z",
+      "completed_at": "2026-11-23T21:36:10Z",
+      "name": "Exact-source Agent SDK Apple tests",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/138030346163",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": 0,
+      "runner_name": "",
+      "runner_group_id": 0,
+      "runner_group_name": ""
+    }
+  ],
+  "other_non_skipped": []
+}

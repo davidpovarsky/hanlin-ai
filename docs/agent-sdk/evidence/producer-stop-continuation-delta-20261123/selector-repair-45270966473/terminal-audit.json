@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-23T21:38:18.418725+00:00",
+  "run_id": 45270966473,
+  "source": "4f018c1845deee2962eafc8a3788886f1c05acf8",
+  "attempt": 1,
+  "status": "CANCELLED_BEFORE_RUNNER",
+  "test_counts": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NOT_RUN": 3
+  },
+  "ios_agent_core_compile": "NOT_RUN",
+  "job_id": 138030346163,
+  "job_step_count": 0,
+  "runner_id": 0,
+  "artifact_count": 0,
+  "acquisitions": 0,
+  "reason": "Known exact-function selector defect; one authorized cancellation while queued, no retry or source change during active run",
+  "shipping_gates": "CLOSED"
+}

@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-23T21:36:09.569751+00:00",
+  "run_id": 45270966473,
+  "head_sha": "4f018c1845deee2962eafc8a3788886f1c05acf8",
+  "run_attempt": 1,
+  "observed_status": "queued",
+  "authorization": "Root explicitly authorized ONE cancellation after exact active readback",
+  "reason": "Same missing literal parentheses as authenticated header zero-test selection; avoid continuing known-risk execution",
+  "test_outcomes": "NOT_INFERRED_FROM_ACTIVE_METADATA",
+  "exit": 0,
+  "stdout": "{}",
+  "stderr": "",
+  "finished_utc": "2026-11-23T21:36:10.244103+00:00"
+}

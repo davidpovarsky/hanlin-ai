@@ -1,0 +1,16 @@
+test_function_selectors_preserve_declared_singleton_identifiers (Scripts.CI.Tests.test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_function_selectors_preserve_declared_singleton_identifiers) ... FAIL
+
+======================================================================
+FAIL: test_function_selectors_preserve_declared_singleton_identifiers (Scripts.CI.Tests.test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_function_selectors_preserve_declared_singleton_identifiers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk02-stop-continuation-20261123/Scripts/CI/Tests/test_stop_continuation_delta_report.py", line 110, in test_function_selectors_preserve_declared_singleton_identifiers
+    self.assertCountEqual(report.SELECTORS, expected)
+AssertionError: Element counts were not equal:
+
+Diff is 795 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
