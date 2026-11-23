@@ -1,0 +1,80 @@
+{
+  "build_receipt_sha256": "4cc7b1ff6f53b8fd4980e5b43d1551203fc32ddea1d1d07bbc231ad428978417",
+  "context": {
+    "configuration": "Debug",
+    "developer_directory": "/Applications/Xcode_27.2.app/Contents/Developer",
+    "diagnostics_provenance_sha256": "136c74e44dccbc6241bb38881dda053435f3aa9d36d10b8b6c603403b546835e",
+    "diagnostics_tracked_workspace_modified": true,
+    "products_root": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products",
+    "run_attempt": "1",
+    "run_id": "45283504095",
+    "selectors": [
+      "AI_HLYTests/CalendarToolTests",
+      "AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()",
+      "AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority()",
+      "AI_HLYTests/HanlinMCPEmbeddingTests",
+      "AI_HLYTests/ShareInboxHostIntegrationTests",
+      "AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore()",
+      "AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)"
+    ],
+    "source_sha": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+    "tracked_diff_sha256": "33b4a828b41c08469e6f157cf5e69e7cf89dab46512de67a2cdeb9f1012a1ce4",
+    "tracked_workspace_modified": true,
+    "xcode_identity": {
+      "developer_dir_override": "",
+      "executable_path": "/Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild",
+      "executable_sha256": "0b012a2917e0b5b5eb613c22823c0a785c27e23ff6fe1aa3fd118d7903eacb24",
+      "info_plist_sha256": "f2d3a11a2d6efcd6c5da80214b33fc2d2ce38aa72d4281867f5157a3dbe5cfc6",
+      "launcher_path": "/usr/bin/xcodebuild",
+      "launcher_sha256": "7d9561a7f8e3c5d70a571422a4522de986c003879dab3bf7562963b6cdc3e658",
+      "method": "selected_bundle_files_v1",
+      "toolchains_override": "",
+      "version_plist_sha256": "93b253c224fee82d869beb7a0462f2e90138cad83bcdc64784c614eee6f8ba2d"
+    },
+    "xcode_version": "Xcode 27.2\nBuild version 27B52"
+  },
+  "ownership": {
+    "boot_receipt_sha256": "f3396e4de8ab0559d09de443f610c394ea67057af080c1cd8dd81a5d46323a40",
+    "run_attempt": "1",
+    "run_id": "45283504095",
+    "selection_sha256": "06a7523cad366ce20b8ac30c3d6a4eda559efd1793de5a0aaa9dbf3b06961786",
+    "simulator": "D98F2D6F-B139-404F-9031-0DBE1019F4F5"
+  },
+  "products": {
+    "files": [
+      {
+        "bytes": 40416,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+        "sha256": "99ac7e33a3d03757b66b1b2d8ff7ed5bd926e5cdda39283d7e0eafbdb91b2495"
+      },
+      {
+        "bytes": 28882336,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+        "sha256": "403372fd0efafbe0408b28c3cd0c388e5dcf1759d5e89af969e6ade23507ea08"
+      },
+      {
+        "bytes": 4742,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/Info.plist",
+        "sha256": "5145ec0c6f61985b2672483de5959d3a4f02bfe4727ffdc3f6f9faedbd19f60c"
+      },
+      {
+        "bytes": 42191952,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests",
+        "sha256": "b36a768ec688a750c1396dd5dd183d55e3fa1a6b8c86c96eb93caf4ee1beb429"
+      },
+      {
+        "bytes": 710,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Info.plist",
+        "sha256": "f154be9926cb2c2f1db21635eba55ee7d9147a942ba37f74476cfbcb4174b895"
+      }
+    ],
+    "format_version": 1,
+    "host_path": "Debug-iphonesimulator/AI_Hanlin.app",
+    "manifest": "AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+    "manifest_sha256": "89ea1b243da5ce812ea8a63d069a2a2bfeb44c420addf6aa02c0b89d3b5a3fa2",
+    "test_bundle_path": "Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest"
+  },
+  "qualification": "Current build-for-testing may reuse validated compiler products; no fresh-compilation claim.",
+  "schema_version": 1,
+  "status": "ADMITTED_NOT_EXECUTED"
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "status": "BOOTED",
+  "simulator": "D98F2D6F-B139-404F-9031-0DBE1019F4F5",
+  "run_id": "45283504095",
+  "run_attempt": "1",
+  "selection_sha256": "06a7523cad366ce20b8ac30c3d6a4eda559efd1793de5a0aaa9dbf3b06961786",
+  "command": [
+    "xcrun",
+    "simctl",
+    "bootstatus",
+    "D98F2D6F-B139-404F-9031-0DBE1019F4F5",
+    "-b"
+  ],
+  "exit_code": 0,
+  "output_sha256": "09716cc8b9dcc37bfcd35b3c1b3a202c12e7b1c1d35768064054c20212af8875"
+}

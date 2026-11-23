@@ -1,0 +1,38 @@
+{
+  "status": "FAIL",
+  "owned_simulator": {
+    "simulator": "D98F2D6F-B139-404F-9031-0DBE1019F4F5",
+    "run_id": "45283504095",
+    "run_attempt": "1",
+    "selection_sha256": "06a7523cad366ce20b8ac30c3d6a4eda559efd1793de5a0aaa9dbf3b06961786",
+    "boot_receipt_sha256": "f3396e4de8ab0559d09de443f610c394ea67057af080c1cd8dd81a5d46323a40"
+  },
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "install",
+        "D98F2D6F-B139-404F-9031-0DBE1019F4F5",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "privacy",
+        "D98F2D6F-B139-404F-9031-0DBE1019F4F5",
+        "grant",
+        "calendar",
+        "com.itorah.chavrusachat"
+      ],
+      "exit_code": 124,
+      "stdout": "",
+      "stderr": "\nTimed out after 20s"
+    }
+  ]
+}
