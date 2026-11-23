@@ -1,0 +1,30 @@
+{
+  "routes": [
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
+      "oldPinOccurrences": 2,
+      "beforeSHA256": "61f054077913e06d3a6a4c912457b4ab2c319807f75a45721f91a925ed89395f",
+      "afterSHA256": "ee37607c24716d2669d527d5d4ef5a2dde50563d38b75d55a7aa388293d53d62",
+      "shellSyntax": "PASS",
+      "nativeExecution": "NOT_RUN"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_host_schema.sh",
+      "oldPinOccurrences": 1,
+      "beforeSHA256": "4be6edf470772da7ae392c643de8e0e025fe37a0c39086519ef6f57da6858727",
+      "afterSHA256": "d160995c38b0fdcc7a566255587bedc15b0ab453f5abe4c2a7f2f46e76043174",
+      "shellSyntax": "PASS",
+      "nativeExecution": "NOT_RUN"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh",
+      "oldPinOccurrences": 2,
+      "beforeSHA256": "8de84e18c35990297262a767225b2a63020bef4f6d76be3caae49d5ceb9cfce2",
+      "afterSHA256": "8f48bad0aae3de434bcc1e1b8db9721f59edda1791529ae6be1750208fc40073",
+      "shellSyntax": "PASS",
+      "nativeExecution": "NOT_RUN"
+    }
+  ],
+  "exactFetch": "producer_sha explicitly fetched by immutable SHA after shallow no-checkout clone",
+  "frozenFixtureKept": "tool-policy JSONValue source identical at e7 and07431; no effective source change"
+}

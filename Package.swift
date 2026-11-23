@@ -62,7 +62,7 @@ let package = Package(
         .package(url: "https://github.com/gonzalezreal/MarkdownUI.git", revision: "5f613358148239d0292c0cef674a3c2314737f9e"),
         .package(url: "https://github.com/danielsaidi/RichTextKit.git", revision: "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b"),
         .package(url: "https://github.com/tsolomko/SWCompression.git", revision: "c729f0baa49e91bafef3921fea663db2b75acc46"),
-        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "e7bf34111e603ca977becd007dd4e5bb109af857"),
+        .package(url: "https://github.com/davidpovarsky/swift-ai-sdk.git", revision: "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8"),
         .package(url: "https://github.com/apple/swift-log.git", revision: "96a2f8a0fa41e9e09af4585e2724c4e825410b91"),
         .package(url: "https://github.com/modelcontextprotocol/swift-sdk.git", revision: "a0ae212ebf6eab5f754c3129608bc5557637e605"),
         .package(url: "https://github.com/tree-sitter/swift-tree-sitter", revision: "08ef81eb8620617b55b08868126707ad72bf754f"),

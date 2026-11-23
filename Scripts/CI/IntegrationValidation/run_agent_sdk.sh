@@ -4,7 +4,7 @@ python3 "$(git rev-parse --show-toplevel)/Scripts/CI/verify_exact_json_vendor.py
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
 source_sha="$(git rev-parse HEAD)"
-producer_sha=e7bf34111e603ca977becd007dd4e5bb109af857
+producer_sha=07431abccbfb151ca2dab67bca6cf86fcb2bd3b8
 evidence="$root/build/agent-sdk-validation-evidence"
 mkdir -p "$evidence"
 if [[ "${HANLIN_SDK_CORE_AND_SESSION:-0}" == 1 ]]; then
@@ -23,8 +23,9 @@ scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-agent-sdk.XXXXXXXX")"
 git archive "$source_sha" Packages/HanlinAgentSDK Packages/HanlinPlatform docs/agent-sdk > "$evidence/tested-source.tar"
 tar -xf "$evidence/tested-source.tar" -C "$scratch"
 producer="$scratch/Producer"
-git clone --no-checkout --filter=blob:none --single-branch --branch codex/hanlin-raw-tool-input-20261115 \
+git clone --no-checkout --filter=blob:none --depth=1 \
   https://github.com/davidpovarsky/swift-ai-sdk.git "$producer" > "$evidence/producer-clone.log" 2>&1
+git -C "$producer" fetch --no-tags --depth=1 origin "$producer_sha" >> "$evidence/producer-clone.log" 2>&1
 git -C "$producer" checkout --detach "$producer_sha" >> "$evidence/producer-clone.log" 2>&1
 test "$(git -C "$producer" rev-parse HEAD)" = "$producer_sha"
 printf '%s\n' "$producer_sha" > "$evidence/producer-commit.txt"
@@ -71,7 +72,7 @@ for p in root.rglob('Package.resolved'):
     if any(s in ['checkouts','.build','DerivedData'] for s in p.relative_to(root).parts):continue
     b=p.read_bytes();data=json.loads(b);pins=[x for x in data['pins'] if x['identity']=='swift-ai-sdk']
     if not p.is_relative_to(root/'Producer'):
-        assert len(pins)==1 and pins[0]['state']['revision']=='e7bf34111e603ca977becd007dd4e5bb109af857',str(p)
+        assert len(pins)==1 and pins[0]['state']['revision']=='07431abccbfb151ca2dab67bca6cf86fcb2bd3b8',str(p)
     dest=folder/f'{len(records):02d}-Package.resolved';dest.write_bytes(b)
     records.append({'source_path':str(p),'raw_file':str(dest.relative_to(evidence)),'sha256':hashlib.sha256(b).hexdigest(),'resolved':data})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))
