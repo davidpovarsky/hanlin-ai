@@ -1,0 +1,1 @@
+{"exit_code": 0, "status": "CAPTURE_ATTEMPTED", "maximum_recording_seconds": 120, "scope": "first120s from an actual XCTest case event, not every preset or original app", "stop_reason": "timer_120s", "elapsed_seconds": 120.471, "sigint_sent": true, "timed_out_finalizing": false, "output_bytes": 5933827}

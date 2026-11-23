@@ -1,0 +1,40 @@
+Xcode 27.2
+Build version 27B52
+Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+Target: arm64-apple-macosx27.0.0
+DriverKit SDKs:
+	DriverKit 27.2                	-sdk driverkit27.2
+
+iOS SDKs:
+	iOS 27.2                      	-sdk iphoneos27.2
+
+iOS Simulator SDKs:
+	Simulator - iOS 27.2          	-sdk iphonesimulator27.2
+
+macOS SDKs:
+	macOS 27.2                    	-sdk macosx27.2
+	macOS 27.2                    	-sdk macosx27.2
+
+tvOS SDKs:
+	tvOS 27.2                     	-sdk appletvos27.2
+
+tvOS Simulator SDKs:
+	Simulator - tvOS 27.2         	-sdk appletvsimulator27.2
+
+visionOS SDKs:
+	visionOS 27.2                 	-sdk xros27.2
+
+visionOS Simulator SDKs:
+	Simulator - visionOS 27.2     	-sdk xrsimulator27.2
+
+watchOS SDKs:
+	watchOS 27.2                  	-sdk watchos27.2
+
+watchOS Simulator SDKs:
+	Simulator - watchOS 27.2      	-sdk watchsimulator27.2
+
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
+arm64
+Version: 2.46.0
