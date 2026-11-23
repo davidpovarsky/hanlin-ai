@@ -86,6 +86,14 @@ final class HanlinScriptingPlatform {
     private var invocationExecutor: HanlinInvocationExecutor?
     /// Supplied by the owning MiniApps scene; never a process-global current request.
     var externalMiniAppOperation: HanlinMiniAppExternalOperation?
+    var externalMiniAppCanLaunch: (@MainActor @Sendable () -> Bool)?
+
+    func requireLaunchAdmission() throws {
+        try Task.checkCancellation()
+        if let externalMiniAppCanLaunch, !externalMiniAppCanLaunch() {
+            throw CancellationError()
+        }
+    }
     private var applicationSession: HanlinScriptingApplicationSession?
     private var nativeScriptSession: HanlinNativeScriptSession?
     private var nativeScriptHostServices: NativeScriptHostServicesAdapter?
@@ -744,11 +752,12 @@ final class HanlinScriptingPlatform {
             do {
                 let artifactRoot = try await store.activeArtifactURL(for: id)
                 let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
-                dismissActiveApplication()
 
                 let appID = package.appID
                 let dataStore = HanlinMiniAppHost.shared.dataStore
                 let container = try await dataStore.container(for: appID)
+                try requireLaunchAdmission()
+                dismissActiveApplication()
                 let dataRootStr = container.root.path(percentEncoded: false)
                 let stateDirStr = container.state.path(percentEncoded: false)
                 let docsDirStr = container.documents.path(percentEncoded: false)
@@ -812,6 +821,7 @@ final class HanlinScriptingPlatform {
             do {
                 let artifactRoot = try await store.activeArtifactURL(for: id)
                 let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
+                try requireLaunchAdmission()
                 dismissActiveApplication()
                 let sessionID = UUID().uuidString.lowercased()
                 let adapter = ExpoHostServicesAdapter(
@@ -857,6 +867,7 @@ final class HanlinScriptingPlatform {
                 throw HanlinScriptingPlatformError.compiledEntrypointTooLarge
             }
             let program = try String(contentsOf: compiledURL, encoding: .utf8)
+            try requireLaunchAdmission()
             dismissActiveApplication()
 
 

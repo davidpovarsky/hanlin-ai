@@ -77,7 +77,8 @@
     "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
     "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
     "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
-    "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift"
+    "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift"
   ],
   "excludes": [
     "AI_HLY/AI_HLY.swift",
@@ -112,6 +113,8 @@
     "HanlinLocalization": "Original three language catalogs and shared image/color assets"
   },
   "shared_sdk_products": {
-    "HanlinAgentActivityCore": "Original shared redaction and native-result DTO implementations; no ChatUI or AgentCore dependency"
+    "HanlinAgentActivityCore": "Original shared redaction and native-result DTO implementations; no ChatUI or AgentCore dependency",
+    "HanlinMiniAppsBridge": "Shared Foundation request, result, catalog and attachment mailbox; engines remain in MiniApps.",
+    "HanlinMiniAppsPicker": "Native SwiftUI app chooser and shared favorites, visibility and window preferences."
   }
 }
