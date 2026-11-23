@@ -58,3 +58,51 @@ The original helper correction changes:
 Both paths are outside every selected source closure. The C-only workflow and Motion capture changes are also outside those installed product inputs. They introduce no additional consumer implementation, manifest, resource, dependency or native-artifact delta. The exact provider-factory modification and optional original draft addition remain the complete host-selected changes described above.
 
 The next Apple compile is pending. This extension does not claim the failed ab469 run passed any of its 26 test selectors, and it does not relabel prior host acceptance as a new 2ff execution. The three host locks remain unchanged.
+
+## Appended coherent source qualification — 37c03e9d and native candidate 32da9e31
+
+The earlier observations remain historical records. This extension compares the completed scripting fixes at **37c03e9d798c88c7621aef8dc1eca9d6d3e6fca4**, then independently checks native candidate **32da9e314e22bbf22391fcf8902302acfbb281e2**. It reuses the original generator outputs: all **22** immutable generator/parser/project/lock/child-manifest objects and their SHA-256 values are unchanged. No generator, resolver, installer, test or CI was executed by this qualification, and no host lock changed.
+
+The actual installed locks, installation receipts, manifests and selected-source-scoped Git status were read again. All remain at their earlier SDK revisions without a selected source edit. The complete original installed-byte proof is reused at those unchanged revisions; the new comparison uses complete immutable Git path/mode/blob streams.
+
+| Host and observed source | Installed SDK | Installed → candidate entries | Exact selected changes through 32da |
+| --- | --- | ---: | --- |
+| Maktabah, `be28510e5cbb5dd241e79e9d60501bdacdcadea4` | d49 | 544 → 545 | Provider factory and ScriptUI reconciler modified; original draft added; 542 original entries unchanged |
+| Lorvex, `a51b048d33e8e377ea589692d9fe9f87489c7b83` | 0dae | 535 → 535 | Provider factory modified; 534 entries unchanged |
+| Anytype, `aefb9740c0ac8d52aa2dbd89d389930851396104` | d49 | 546 → 547 | Provider factory and ScriptUI reconciler modified; original draft added; 544 original entries unchanged |
+
+The only additional selected implementation change since 2ff is **Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift**, selected by Maktabah and Anytype. Its blob changes from `8b5315e1c73811c27edc3818c52529935d9b4e78` to `ccff0e4069a47c599045ee23fbd890b2124b54f7`, mode 100644 unchanged. Final SHA-256 is `e4def17533c90877b481dba6da9ab09dbf55a54f4a6979376637cc39cda1fbc6`. The original keyed reorder now rejects missing or duplicate keys before dictionary construction; the shared private uniqueness validator reports the actual repeated key at all four original diff/reorder boundaries. Valid output construction, the public error type and transaction behavior are preserved.
+
+The legacy **HanlinScriptPermissionAuthority.swift** and **HanlinAtomicScriptStore.swift** are outside all three actual selected source graphs. Their fixes and the store's new native methods introduce no selected consumer change. Lorvex does not select HanlinScriptUI, so the reconciler fix is also outside its graph. There are no added resource paths, changed file modes, external dependency declarations or native artifact inputs. Each generated manifest remains byte-identical to its actual installed manifest listed above; all selections still have zero binary targets.
+
+| Host | Selected path/mode/blob SHA-256 at both 37c and 32da |
+| --- | --- |
+| Maktabah | `513cf2331375e9270716c091d6fc6868a9935026b7a82ddeb8514ed8a40f2316` |
+| Lorvex | `162b5bf52c15afa65e1f4f582e791f5947a5ba1651228430bbecf7aad3991ab8` |
+| Anytype | `8db523e721b3183513a51e005f528912b4535d8097c724f6746baa833273b90b` |
+
+The 37c→32da changes are only the original AtomicScriptStore test fixture and two associated evidence files. All 22 inputs and all three complete selected byte streams are identical across that extension. Candidate 32da is the proposed coherent repin source; this observation does not claim that its Apple gate has passed.
+
+### Existing focused evidence and remaining gate
+
+The final reconciler's [five-case diagnostics receipt](../../docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/receipt.json) is reused after matching **all 26 compiled input hashes** to both immutable candidates. Four cases check the non-first duplicate at the four boundaries; one checks preserved valid reorder/property/empty behavior. All five passed on Swift 6.4.3 arm64 Linux. This compiled complete canonical PlatformContracts and whole Foundation-only ScriptUI contract/reconciler files; it did not execute SwiftUI or an Apple UI. The original six-case receipt and SIGTRAP remain attributed to their original source, without a fictitious final-source replay.
+
+The provider-factory bytes still match the two exact original focused cases qualified above. The original draft addition is exactly the class compiled and accepted in Lorvex at 0dae. Neither proof needs repetition.
+
+Parent reports native run **45163990486** at **32da9e31** started at 11:18:25 UTC with the original 26 application selectors plus three AtomicScriptStore methods/four cases in the focused package route. Outcomes are **not inferred or consumed by this qualification**. A successful common candidate Apple compile can supply the remaining shared-module compile observation. This audit establishes no new host binary, live provider call, signed distribution or physical-device behavior.
+
+### Minimum owner-coordinated repin plans
+
+These are read-only plans at this observation point. Canonical install/check and new source binding are separate actions to perform once each owner can safely update its exact inputs.
+
+| Host | Required source and policy updates | Verification and retained acceptance |
+| --- | --- | --- |
+| Maktabah | Change `HanlinSDK.lock.json` and the tracked mode-160000 `Vendor/HanlinSDK` Gitlink together to 32da. Before a future focused/live invocation, bind `hq-stage2-focused-apple.inputs.json` application source, Vendor tree and `hanlin_gitlink` to the concrete reviewed candidate commit; update the corresponding `SOURCE` / `REVIEWED_SOURCE` in the two focused/live drivers. Preserve all four tree comparisons and binary/resource/fixture/secret/cleanup guards. | Run its existing `prepare-hanlin-sdk.py --sha …` and `--verify-only` with the new canonical installer. Keep the previous 48 component + 1 UI result at its actual source. The selected changes alone do not justify repeating those cases or the device build. |
+| Lorvex | Change the lock and append an exact upgrade qualification. `Vendor/HanlinSDK` is an ignored checkout, not a Gitlink. Preserve the accepted draft-repair receipt and its original UI-only guard; that historical path intentionally accepts 0dae and must not be relabeled as 32da. | Run `apps/apple/script/install_hanlin_sdk.py` then `--check`. No workflow change or UI rerun is needed for a lock/install/check-only upgrade: selected Composer/editor/UI/resource inputs are unchanged. The 1/1 UI/four frames remain 2e6a/0dae; Agent, presentation and device evidence retains its own older identities. |
+| Anytype | Change the lock and its exact blob in `SOURCE_REFACTOR_MAP.json`'s existing `Tools/Hanlin/source.json` shared-source mapping. Its bootstrap reads the revision dynamically; no copied installer or static source revision needs editing. Append current source-retention/qualification evidence, preserving the baseline and admission checks. | Run `Tools/Hanlin/prepare_sdk.py --source …` then `--check`; this regenerates `.pinkha-source.json` from the actual checkout. Its 29 retained Python-controller inputs exclude SDK code and the lock, so the 68 retained + 1 requalified control proof needs no replay for this lock-only update. This is not native product acceptance. Coordinate with its owner before changing held or running source. |
+
+Maktabah's normal build already derives the revision from the lock in its three preparation blocks. All three actual bootstraps load **Scripts/SDK/install.py from the requested immutable revision**, then check original sources/profile. An SDK upgrade requires no new per-host copy of that implementation. Actual canonical installation/check remains future verification, not an action claimed by this read-only audit.
+
+Anytype's published aef/f206 source still uses d49 and includes its separately reviewed background/observer harness repair. The earlier fa078 app build/native preparation passed while its UI failed; later authority/logout did not run. Its owner's corrected native/UI qualification remains separate. Neither this source comparison nor retained Python controls erase that failure or create an overall Anytype PASS.
+
+Exact current host policy file blobs/SHA-256 values, complete selected deltas, all 22 generator inputs, all 26 reused reconciler proof inputs and the final 32da identity extension are appended to the [machine receipt](../../docs/agent-sdk/evidence/consumer-upgrade-20261123/qualification.json). Historical receipts are unchanged.

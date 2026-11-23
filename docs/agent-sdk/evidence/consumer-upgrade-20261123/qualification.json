@@ -459,6 +459,757 @@
       "testsExecuted": 0,
       "hostPinsChanged": false,
       "nativeGateStatus": "Root reports ab469 native gate failed in retained application ClassicChatAgentProjection before all26 test selectors. The projection helper fix is in002fe5bb and the candidate2ff contains its workflow update. Next Apple compile remains pending; no successful native outcome inferred."
+    },
+    {
+      "observedAtUTC": "2026-11-23T11:23:06.634218+00:00",
+      "baseQualifiedCandidate": "2ff3d6bcc724b424e22078fc537e17ff4a914bd2",
+      "candidateSDKCommit": "37c03e9d798c88c7621aef8dc1eca9d6d3e6fca4",
+      "rootCheckoutCommitAtObservation": "e073195d9a5b8871c9a8dc94cb76a207e43b6705",
+      "method": "Reused the previously evaluated ab469 generator outputs and original installed-byte proofs. Compared all22 retained generator/parser/project/lock/child-manifest immutable Git objects and SHA256 values, complete selected git ls-tree -r -z path/mode/blob streams, actual current host locks/installation receipts/installed manifests and selected-source-scoped Git status. No generator, package resolution, installer, test or native execution.",
+      "generatorInputsUnchanged": {
+        "Scripts/SDK/generate_manifest.py": {
+          "gitObject": "95a00985ed085e7fbd12108e03ddfdd09680b82a",
+          "sha256": "10e6ce09e056e13f9ed22d2f5946d851239c1d1cfca6e331c566fc178bd25c7f"
+        },
+        "Scripts/CI/IntegrationValidation/project_graph.py": {
+          "gitObject": "a88a958a7faf5a3382d9c464e0fc16841c9197c3",
+          "sha256": "cc05971fb8ad2348ffbf7f159b32da4f87ceb48a81e7cb739d1e33a20dfee15d"
+        },
+        "AI_HLY.xcodeproj/project.pbxproj": {
+          "gitObject": "874dbcf3f2c6a59f856f840b54a5d88115104a63",
+          "sha256": "2b689644c3fb9ac84137021ed400e94abcd473f3c69711c93e970a00d4ed206b"
+        },
+        "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": {
+          "gitObject": "55649fbf15e7bdeef2df41134ee587ca254963f9",
+          "sha256": "28fb383e35bd875dd91b124ad02ca4210da7771c53daf4c6c6d28c1e2a55e529"
+        },
+        "Packages/HanlinAgentSDK/Package.swift": {
+          "gitObject": "1af275c3f3097eb361251e4ed2a6d12e5271a174",
+          "sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b"
+        },
+        "Packages/HanlinAppExtensionsSDK/Package.swift": {
+          "gitObject": "d78ff3c9b41705d4148af45c534edbd20f635cc3",
+          "sha256": "9cfaec8b4158dc6b099765b800bcc35834d1ad2283717d82882b60b1d97a27b1"
+        },
+        "Packages/HanlinExpoNativeAPI/Package.swift": {
+          "gitObject": "561fae4a8abf9380084658e629bff5349bab1dac",
+          "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d"
+        },
+        "Packages/HanlinExpoRuntime/Package.swift": {
+          "gitObject": "9d6d0f71c4126cd93521895e7118dd8ade3051e5",
+          "sha256": "3c63a7cc0751b86e445e4048413c61553269e0d0fd087d01544c24dccb8f379c"
+        },
+        "Packages/HanlinExpoWidgetSubset/Package.swift": {
+          "gitObject": "05204c9073a8055af74e591fc1ecfa59f3e822af",
+          "sha256": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41"
+        },
+        "Packages/HanlinNativeScriptRuntime/Package.swift": {
+          "gitObject": "22e6767c76512f79f6bf8c5f8bb4bb9535975744",
+          "sha256": "f2798b093e8df72923abc135e4999f2614c32e8de1d495c480e6fd8fd4db9b34"
+        },
+        "Packages/HanlinParityMiniApp/Package.swift": {
+          "gitObject": "f386bbb65ce30d87148590515b3f089b9b72480c",
+          "sha256": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b"
+        },
+        "Packages/HanlinPlatform/Package.swift": {
+          "gitObject": "4639439e843b7101387a578ecac097b110151d40",
+          "sha256": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41"
+        },
+        "Packages/HanlinPresentationSDK/Package.swift": {
+          "gitObject": "ced8131b2d0bed8623b0494acc332bdaa6434d34",
+          "sha256": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4"
+        },
+        "Packages/HanlinProductSplit/Package.swift": {
+          "gitObject": "7370c6ac9985a9d742f3480ba625e1bc357114a1",
+          "sha256": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a"
+        },
+        "Packages/HanlinQuickJS/Package.swift": {
+          "gitObject": "6a990d95667d48623345b71c2d264ce134cb565f",
+          "sha256": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e"
+        },
+        "Packages/HanlinSefariaMiniApp/Package.swift": {
+          "gitObject": "a5f480efe99f6391169adc2143d37d15d02ae3ee",
+          "sha256": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c"
+        },
+        "Packages/HanlinSkillFormat/Package.swift": {
+          "gitObject": "3d27a293e5864b3f13cb9b4d21503433a19bf5d7",
+          "sha256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741"
+        },
+        "Packages/HanlinTextStudioMiniApp/Package.swift": {
+          "gitObject": "daea340da811a55e1562077f0da7be130a09b231",
+          "sha256": "d2049eb9401b85c9ab1734a369b818f930db964aee7ce7bb7bf865ec21af291d"
+        },
+        "Packages/HanlinWidgetSDK/Package.swift": {
+          "gitObject": "0a626400384d7cdfc59ef504dc00711a450d831e",
+          "sha256": "7621588d8da3037defe51a66839b0b703ae5464e90446c13ebc00e853daf523d"
+        },
+        "Packages/HanlinWikipediaMiniApp/Package.swift": {
+          "gitObject": "4fccbd0f6bc6bd8b799f9753eaf9338246c68fe1",
+          "sha256": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e"
+        },
+        "Packages/IOSSystemLite/Package.swift": {
+          "gitObject": "892476c3903394cc69a26d7c2e088cd5757a8125",
+          "sha256": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab"
+        },
+        "Packages/TorahLibraryKit/Package.swift": {
+          "gitObject": "87c22b244c378b1ad2583875f1e86a9ba7ad2412",
+          "sha256": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6"
+        }
+      },
+      "rootChangedPathsSincePriorCandidate": [
+        "Docs/SDK/AcceptanceReconciliation20261123.md",
+        "Docs/SDK/HanlinConsumerUpgradeQualification20261123.md",
+        "Docs/SDK/HanlinFoundationModelsInvocationBridgeReview20261123.md",
+        "Docs/SDK/HanlinLegacyGrantNormalization20261123.md",
+        "Docs/SDK/HanlinMotionAcceptance20261123.md",
+        "Docs/SDK/HanlinScriptRegistryBoundary20261123.json",
+        "Docs/SDK/HanlinScriptRegistryBoundary20261123.md",
+        "Docs/SDK/registry-identity-20261123/after/backup-invalid.stderr",
+        "Docs/SDK/registry-identity-20261123/after/backup-invalid.stdout",
+        "Docs/SDK/registry-identity-20261123/after/build.log",
+        "Docs/SDK/registry-identity-20261123/after/duplicate.stderr",
+        "Docs/SDK/registry-identity-20261123/after/duplicate.stdout",
+        "Docs/SDK/registry-identity-20261123/after/mismatch.stderr",
+        "Docs/SDK/registry-identity-20261123/after/mismatch.stdout",
+        "Docs/SDK/registry-identity-20261123/after/production-provenance.json",
+        "Docs/SDK/registry-identity-20261123/after/result.json",
+        "Docs/SDK/registry-identity-20261123/after/unsupported.stderr",
+        "Docs/SDK/registry-identity-20261123/after/unsupported.stdout",
+        "Docs/SDK/registry-identity-20261123/after/valid-backup.stderr",
+        "Docs/SDK/registry-identity-20261123/after/valid-backup.stdout",
+        "Docs/SDK/registry-identity-20261123/after/valid-primary.stderr",
+        "Docs/SDK/registry-identity-20261123/after/valid-primary.stdout",
+        "Docs/SDK/registry-identity-20261123/before/backup-invalid.stderr.gz",
+        "Docs/SDK/registry-identity-20261123/before/backup-invalid.stdout",
+        "Docs/SDK/registry-identity-20261123/before/build.log",
+        "Docs/SDK/registry-identity-20261123/before/duplicate.stderr.gz",
+        "Docs/SDK/registry-identity-20261123/before/duplicate.stdout",
+        "Docs/SDK/registry-identity-20261123/before/mismatch.stderr",
+        "Docs/SDK/registry-identity-20261123/before/mismatch.stdout",
+        "Docs/SDK/registry-identity-20261123/before/production-provenance.json",
+        "Docs/SDK/registry-identity-20261123/before/result.json",
+        "Docs/SDK/registry-identity-20261123/before/unsupported.stderr",
+        "Docs/SDK/registry-identity-20261123/before/unsupported.stdout",
+        "Docs/SDK/registry-identity-20261123/before/valid-backup.stderr",
+        "Docs/SDK/registry-identity-20261123/before/valid-backup.stdout",
+        "Docs/SDK/registry-identity-20261123/before/valid-primary.stderr",
+        "Docs/SDK/registry-identity-20261123/before/valid-primary.stdout",
+        "Docs/SDK/registry-identity-20261123/native-source-parse.json",
+        "Packages/HanlinPlatform/Sources/HanlinScriptServices/HanlinScriptPermissionAuthority.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptPermissionAuthorityTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReorderAdmissionTests.swift",
+        "Scripts/CI/affected-validation-map.json",
+        "Scripts/SDK/check_registry_identity_boundary.py",
+        "docs/agent-sdk/evidence/consumer-upgrade-20261123/qualification.json",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/after-init-identical.log",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/after-replace-conflicting.log",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/baseline-init-identical.log",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/baseline-replace-conflicting.log",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/focused-tests.log",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/original-boundary-probe.swift",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/original-probe-Package.swift",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/production-inputs.json",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/receipt.json",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/snapshot-extension.swift",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/state-probe.log",
+        "docs/agent-sdk/evidence/legacy-grant-normalization-20261123/state-probe.swift",
+        "docs/agent-sdk/evidence/motion-native-45157020895/README.md",
+        "docs/agent-sdk/evidence/motion-native-45157020895/dispatch-intent.json",
+        "docs/agent-sdk/evidence/motion-native-45157020895/dispatch-receipt.json",
+        "docs/agent-sdk/evidence/motion-native-45157020895/native-job.json",
+        "docs/agent-sdk/evidence/motion-native-45157020895/receipt.json",
+        "docs/agent-sdk/evidence/motion-native-45157020895/terminal-artifacts.json",
+        "docs/agent-sdk/evidence/motion-native-45157020895/terminal-check-annotations.json",
+        "docs/agent-sdk/evidence/motion-native-45157020895/watch-ended.json",
+        "docs/agent-sdk/evidence/native-runner-admission-45156789463/README.md",
+        "docs/agent-sdk/evidence/native-runner-admission-45156789463/artifact-index.json",
+        "docs/agent-sdk/evidence/native-runner-admission-45156789463/native-check-annotations.json",
+        "docs/agent-sdk/evidence/native-runner-admission-45156789463/native-job.json",
+        "docs/agent-sdk/evidence/native-runner-admission-45156789463/receipt.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/README.md",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/RESULT.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/baseline-build.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/baseline-build.log",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/baseline-child-stderr.txt",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/baseline-reproduction.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/fixed-inputs.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/plan.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/product.patch",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/proof-Package.swift",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/receipt.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/reproduce.swift",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/swift-test.log",
+        "docs/agent-sdk/evidence/script-ui-reorder-admission-20261123/tests-swift-testing.xml",
+        "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/README.md",
+        "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/RESULT.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/plan.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/proof-Package.swift",
+        "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/receipt.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/source-and-tests.patch",
+        "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/source-preservation.json",
+        "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/swift-test.log",
+        "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/tests-swift-testing.xml"
+      ],
+      "profiles": [
+        {
+          "host": "Maktabah",
+          "hostCommit": "be28510e5cbb5dd241e79e9d60501bdacdcadea4",
+          "lock": {
+            "revision": "d49a4fd4115b8335105d2991bf74ab4d7f6aad2d",
+            "products": [
+              "HanlinHostContracts",
+              "HanlinAgentCore",
+              "HanlinChatCore",
+              "HanlinScriptUI",
+              "HanlinChatUI",
+              "HanlinPresentationKit",
+              "HanlinRichUI",
+              "HanlinPlatformContracts"
+            ]
+          },
+          "hostLockSHA256": "fcdb75284c9de198e368efb10600b76c70b453d45c76ec4970b38f33bf6123b9",
+          "installedSDKCommit": "d49a4fd4115b8335105d2991bf74ab4d7f6aad2d",
+          "installationReceiptSHA256": "a44abe068d583d39fe98339275a86019f800ccc08693f29d42365c10ce177384",
+          "installationState": "installed",
+          "sourcePaths": [
+            "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+            "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+            "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+            "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+            "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+            "Packages/HanlinPlatform/Sources/HanlinChatCore",
+            "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+            "Packages/HanlinPlatform/Sources/HanlinScriptContracts",
+            "Packages/HanlinPlatform/Sources/HanlinScriptUI",
+            "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+            "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+            "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+            "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+          ],
+          "baseEntries": 544,
+          "priorCandidateEntries": 545,
+          "candidateEntries": 545,
+          "unchangedFromInstalled": 542,
+          "baseRecordsSHA256": "a0899a5bf2040e7df4303654cd4d4370196fb1d51b1b82098bcee787179cd56f",
+          "priorCandidateRecordsSHA256": "1c21f980669603f3fea67e75e52e826c6085f482452989d316f8900231d3e340",
+          "candidateRecordsSHA256": "513cf2331375e9270716c091d6fc6868a9935026b7a82ddeb8514ed8a40f2316",
+          "finalCandidateRecordsSHA256": "513cf2331375e9270716c091d6fc6868a9935026b7a82ddeb8514ed8a40f2316",
+          "manifestSHA256": "2d5cf939b5c8f43f30ee2be1e382e5f52e13a3f4cd9fc66709cb4ee96c2f23e4",
+          "binaryTargets": [],
+          "installedSourceScopedGitStatus": "",
+          "trackedGitlink": "160000 d49a4fd4115b8335105d2991bf74ab4d7f6aad2d 0\tVendor/HanlinSDK",
+          "deltaFromInstalled": {
+            "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift": {
+              "before": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "08d6e5c8a5bcf4143e9ad5f29298a353034924dd"
+              },
+              "after": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "61be72ea58eddc736b843cf5a84228f16c719ce7"
+              },
+              "beforeContentSHA256": "37040bbbf933960cb47046fbedaeaad953b59371607b0ec3062cbbefb1ee1c1a",
+              "afterContentSHA256": "48fb93718f2eb30a0b947aceabb37f2b2b4f0ffaa79bb75c77cafa400401fcc9"
+            },
+            "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift": {
+              "before": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "8b5315e1c73811c27edc3818c52529935d9b4e78"
+              },
+              "after": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "ccff0e4069a47c599045ee23fbd890b2124b54f7"
+              },
+              "beforeContentSHA256": "e5dd531864456a4ce3915b92ba1ae52c9191afc45c72e2c4dc7aea66458a32c0",
+              "afterContentSHA256": "e4def17533c90877b481dba6da9ab09dbf55a54f4a6979376637cc39cda1fbc6"
+            },
+            "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerDraft.swift": {
+              "before": null,
+              "after": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "23002e64c4491cd3278f4cb5e7ab630cdd4492f3"
+              },
+              "afterContentSHA256": "122318843d15df87f7b719750b1703f4f830044daa62a0ef9030c20b788276ca"
+            }
+          },
+          "deltaSincePriorCandidate": {
+            "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift": {
+              "before": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "8b5315e1c73811c27edc3818c52529935d9b4e78"
+              },
+              "after": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "ccff0e4069a47c599045ee23fbd890b2124b54f7"
+              },
+              "beforeContentSHA256": "e5dd531864456a4ce3915b92ba1ae52c9191afc45c72e2c4dc7aea66458a32c0",
+              "afterContentSHA256": "e4def17533c90877b481dba6da9ab09dbf55a54f4a6979376637cc39cda1fbc6"
+            }
+          }
+        },
+        {
+          "host": "Lorvex",
+          "hostCommit": "a51b048d33e8e377ea589692d9fe9f87489c7b83",
+          "lock": {
+            "revision": "0dae98f7b44b3cb4ee4d8dacd1913f2ed317a965",
+            "products": [
+              "HanlinAgentCore",
+              "HanlinHostContracts",
+              "HanlinPersistenceAdapters",
+              "HanlinPlatformContracts",
+              "HanlinChatCore",
+              "HanlinChatUI",
+              "HanlinPresentationKit"
+            ]
+          },
+          "hostLockSHA256": "8f11e284eefed4207806eb423c4b0ba0b19cc8db8f78313f0fb3537e7cd47f8c",
+          "installedSDKCommit": "0dae98f7b44b3cb4ee4d8dacd1913f2ed317a965",
+          "installationReceiptSHA256": "f69f2647f05f1d9bb3657944a572c93bd615523f9ba6131fc1b611abe3b74155",
+          "installationState": "installed",
+          "sourcePaths": [
+            "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+            "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+            "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters",
+            "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+            "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+            "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+            "Packages/HanlinPlatform/Sources/HanlinChatCore",
+            "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+            "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+            "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+            "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+            "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+          ],
+          "baseEntries": 535,
+          "priorCandidateEntries": 535,
+          "candidateEntries": 535,
+          "unchangedFromInstalled": 534,
+          "baseRecordsSHA256": "aca117cd44b8237ea1690911a222f14511a3fd8f36c247f7ae046877f24f331e",
+          "priorCandidateRecordsSHA256": "162b5bf52c15afa65e1f4f582e791f5947a5ba1651228430bbecf7aad3991ab8",
+          "candidateRecordsSHA256": "162b5bf52c15afa65e1f4f582e791f5947a5ba1651228430bbecf7aad3991ab8",
+          "finalCandidateRecordsSHA256": "162b5bf52c15afa65e1f4f582e791f5947a5ba1651228430bbecf7aad3991ab8",
+          "manifestSHA256": "29c126b9305e88bbcaed57512374e986f7225a0c87d332950f6ba3deda9bca26",
+          "binaryTargets": [],
+          "installedSourceScopedGitStatus": "",
+          "trackedGitlink": "",
+          "deltaFromInstalled": {
+            "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift": {
+              "before": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "08d6e5c8a5bcf4143e9ad5f29298a353034924dd"
+              },
+              "after": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "61be72ea58eddc736b843cf5a84228f16c719ce7"
+              },
+              "beforeContentSHA256": "37040bbbf933960cb47046fbedaeaad953b59371607b0ec3062cbbefb1ee1c1a",
+              "afterContentSHA256": "48fb93718f2eb30a0b947aceabb37f2b2b4f0ffaa79bb75c77cafa400401fcc9"
+            }
+          },
+          "deltaSincePriorCandidate": {}
+        },
+        {
+          "host": "Anytype",
+          "hostCommit": "aefb9740c0ac8d52aa2dbd89d389930851396104",
+          "lock": {
+            "revision": "d49a4fd4115b8335105d2991bf74ab4d7f6aad2d",
+            "products": [
+              "HanlinHostContracts",
+              "HanlinPlatformContracts",
+              "HanlinAgentCore",
+              "HanlinPersistenceAdapters",
+              "HanlinChatCore",
+              "HanlinScriptUI",
+              "HanlinChatUI",
+              "HanlinPresentationKit"
+            ]
+          },
+          "hostLockSHA256": "3ea789ff6e457b50fe1155aa69d9214fffc2efe90dfa449f9aec64d71855a924",
+          "installedSDKCommit": "d49a4fd4115b8335105d2991bf74ab4d7f6aad2d",
+          "installationReceiptSHA256": "2c4c12d867c5c86e13fb4a9e0a85e32d6e73834dcc015806fa55bc5b0d965a77",
+          "installationState": "installed",
+          "sourcePaths": [
+            "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+            "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+            "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters",
+            "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+            "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+            "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+            "Packages/HanlinPlatform/Sources/HanlinChatCore",
+            "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+            "Packages/HanlinPlatform/Sources/HanlinScriptContracts",
+            "Packages/HanlinPlatform/Sources/HanlinScriptUI",
+            "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+            "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+            "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+            "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+          ],
+          "baseEntries": 546,
+          "priorCandidateEntries": 547,
+          "candidateEntries": 547,
+          "unchangedFromInstalled": 544,
+          "baseRecordsSHA256": "24bf8999b780d403e44d5514dbdcc1556e0da099f164a3f9a2602cac99cecf52",
+          "priorCandidateRecordsSHA256": "b3f3d02e799a1febdbd8d18fdc4cce5d51adaf3c865083ef74c9cdb01b392c6e",
+          "candidateRecordsSHA256": "8db523e721b3183513a51e005f528912b4535d8097c724f6746baa833273b90b",
+          "finalCandidateRecordsSHA256": "8db523e721b3183513a51e005f528912b4535d8097c724f6746baa833273b90b",
+          "manifestSHA256": "518f91d40d3433a88ab6255c252bc2c81fa1e2199dad0322b4136bb7f2d6f20c",
+          "binaryTargets": [],
+          "installedSourceScopedGitStatus": "",
+          "trackedGitlink": "",
+          "deltaFromInstalled": {
+            "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift": {
+              "before": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "08d6e5c8a5bcf4143e9ad5f29298a353034924dd"
+              },
+              "after": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "61be72ea58eddc736b843cf5a84228f16c719ce7"
+              },
+              "beforeContentSHA256": "37040bbbf933960cb47046fbedaeaad953b59371607b0ec3062cbbefb1ee1c1a",
+              "afterContentSHA256": "48fb93718f2eb30a0b947aceabb37f2b2b4f0ffaa79bb75c77cafa400401fcc9"
+            },
+            "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift": {
+              "before": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "8b5315e1c73811c27edc3818c52529935d9b4e78"
+              },
+              "after": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "ccff0e4069a47c599045ee23fbd890b2124b54f7"
+              },
+              "beforeContentSHA256": "e5dd531864456a4ce3915b92ba1ae52c9191afc45c72e2c4dc7aea66458a32c0",
+              "afterContentSHA256": "e4def17533c90877b481dba6da9ab09dbf55a54f4a6979376637cc39cda1fbc6"
+            },
+            "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerDraft.swift": {
+              "before": null,
+              "after": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "23002e64c4491cd3278f4cb5e7ab630cdd4492f3"
+              },
+              "afterContentSHA256": "122318843d15df87f7b719750b1703f4f830044daa62a0ef9030c20b788276ca"
+            }
+          },
+          "deltaSincePriorCandidate": {
+            "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift": {
+              "before": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "8b5315e1c73811c27edc3818c52529935d9b4e78"
+              },
+              "after": {
+                "mode": "100644",
+                "type": "blob",
+                "object": "ccff0e4069a47c599045ee23fbd890b2124b54f7"
+              },
+              "beforeContentSHA256": "e5dd531864456a4ce3915b92ba1ae52c9191afc45c72e2c4dc7aea66458a32c0",
+              "afterContentSHA256": "e4def17533c90877b481dba6da9ab09dbf55a54f4a6979376637cc39cda1fbc6"
+            }
+          }
+        }
+      ],
+      "scriptingFixMembership": {
+        "Packages/HanlinPlatform/Sources/HanlinScriptServices/HanlinScriptPermissionAuthority.swift": {
+          "Maktabah": false,
+          "Lorvex": false,
+          "Anytype": false
+        },
+        "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift": {
+          "Maktabah": true,
+          "Lorvex": false,
+          "Anytype": true
+        },
+        "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift": {
+          "Maktabah": false,
+          "Lorvex": false,
+          "Anytype": false
+        }
+      },
+      "manifestMembershipResourceAndModeChangesSincePriorCandidate": [],
+      "declaredExternalDependenciesChanged": false,
+      "sdkNativeArtifactInputsChanged": false,
+      "canonicalInstaller": {
+        "path": "Scripts/SDK/install.py",
+        "gitObject": "c12b6a78e04657e11bb6f695591d9af5f0697036",
+        "sha256": "12c414e91f33df22f7cdb1660108a0a11684551219fee1c71724bb2057e62dd3",
+        "executedNow": false,
+        "installationBoundary": "All three actual bootstraps load this implementation from the requested new immutable lock revision. Future install/check is still required; no copied host installer update is needed."
+      },
+      "scriptUIEvidenceReuse": {
+        "receiptPath": "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/receipt.json",
+        "receiptSHA256": "36af9b55490db55dad3307e906c801d6ae7fce542438bec4d380aed663930691",
+        "planPath": "docs/agent-sdk/evidence/script-ui-reorder-diagnostics-20261123/plan.json",
+        "planSHA256": "903c1839fe25f08635c9aa9d00bd7473be54b67134195bf1ef9ed63cf7bbcabb",
+        "completeCompiledInputCount": 26,
+        "completeCompiledInputsByteIdentical": {
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift": "48fe15520f4758ad6d856c2deb40b2e5437392131c16717088f32edc3d163b64",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift": "e7a39ee73d27678fd8a5405a6a176b31c68eab76c1828fbe02fa02f63c7decea",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestSchema.swift": "c1dd837d01913bc58b72d62cf47a9a21ef4bf1f23a1b3ccdaf93858e987c4d23",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift": "122b1d09c68e28907fdbce19986824d9bd6596d36bd6f08074c670a386f2f19c",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift": "8284d64b8d9f0fc9212d6178860db6ce75dd15b212fb9214fea33fe1e51b9750",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7",
+          "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+          "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIContracts.swift": "0d1f1692bf0eefacbe6ec2a55aaed952effffc1e3ff9fdd3b2cbce01604143aa",
+          "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift": "e4def17533c90877b481dba6da9ab09dbf55a54f4a6979376637cc39cda1fbc6",
+          "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReorderAdmissionTests.swift": "dfbe577980027d639d47db513c299c8e1db05c5aca0911eff59b4f4206554157"
+        },
+        "originalOutcome": "Five selected actual Swift Testing cases PASS under Swift6.4.3 arm64 Linux: four non-first-duplicate boundary cases and one directly affected valid-output control.",
+        "earlierSixCaseBoundary": "Original six-case receipt and SIGTRAP reproduction remain historically bound to dcc017c0; they are not relabeled as a fresh final-source execution.",
+        "limitation": "Complete canonical PlatformContracts plus whole Foundation-only ScriptUI contract/reconciler files compiled. No full Apple SwiftUI module or native UI execution in that portable proof.",
+        "testsExecutedNow": 0
+      },
+      "providerFixEvidenceReuse": "The factory bytes exactly retain the original046c253d production-declaration fix already hash-bound in the initial observation; its two existing focused PASS cases are reused, not repeated.",
+      "hostPolicyInputs": {
+        "Maktabah": {
+          "hostCommit": "be28510e5cbb5dd241e79e9d60501bdacdcadea4",
+          "files": {
+            "HanlinSDK.lock.json": {
+              "gitObject": "ba2567589eccacffa0173a00dc1f2e1e27d74211",
+              "sha256": "fcdb75284c9de198e368efb10600b76c70b453d45c76ec4970b38f33bf6123b9"
+            },
+            "Scripts/CI/prepare-hanlin-sdk.py": {
+              "gitObject": "8511ade95ad5bb981acf7b5ddf90d1e9a32e20dd",
+              "sha256": "e398f5722d8193fd849b047579a30dac2b7fb2f331c64938f1a359bf2964c576"
+            },
+            "Scripts/CI/hq-stage2-focused-apple.inputs.json": {
+              "gitObject": "b254eea001bb0e930460764c3041deb6e01269be",
+              "sha256": "dbc4cd4a19bb75854625d1f51ea0e3a5165de29b143c50ec06b50b70a6a47464"
+            },
+            "Scripts/CI/completion-focused-native.py": {
+              "gitObject": "d899178c90ffac0733db29f0752d688959d8b05a",
+              "sha256": "d3aa52e88520b30c5bbd2c1a0070f1e367e77550484ad4f0b01455d3bd8ec5a0"
+            },
+            "Scripts/CI/runtime27-hanlin-live.py": {
+              "gitObject": "48f839a4f4bcdf191e9affaaa10c3927890f693e",
+              "sha256": "3d2b56d314e3ea05efedf64e8c25c67e7e448c37e48355633d23b153fb4b11eb"
+            },
+            ".github/workflows/ios-build.yml": {
+              "gitObject": "40dcded9536f6c7c2e1e2f038715e5f8ef46bc00",
+              "sha256": "f8b3a2d68015d02bc3a89813cbcacde2973feffc722994354458061dc06cac80"
+            }
+          }
+        },
+        "Lorvex": {
+          "hostCommit": "a51b048d33e8e377ea589692d9fe9f87489c7b83",
+          "files": {
+            "HanlinSDK.lock.json": {
+              "gitObject": "9c115140a59dbb67a4866fb1acf4a66daf85f31c",
+              "sha256": "8f11e284eefed4207806eb423c4b0ba0b19cc8db8f78313f0fb3537e7cd47f8c"
+            },
+            "apps/apple/script/install_hanlin_sdk.py": {
+              "gitObject": "aa8005fbd16105ea9b6c14d3866ec76affd12ebf",
+              "sha256": "e2b263d69aaffd1f954dc024bca1801a9df405ff4aae395b7aa02abfa9a24216"
+            },
+            ".github/workflows/lorvex-hanlin-ipad-ipa.yml": {
+              "gitObject": "e8e9f3b89a58ad7a4a3ae289b59a610741b49dc4",
+              "sha256": "9b74b9f05274288ed6a373b4766496dd783d0df23cb821e75ae47112d6cafe8b"
+            },
+            "apps/apple/docs/development/HANLIN_DRAFT_UI_REPAIR_20261123.json": {
+              "gitObject": "11a5d47e87f9accda4a1d56a72fc753c4c57b0d2",
+              "sha256": "6b24c91da4efa98892ca27bb20e032b57353f68358a18379461c9e0a5c1e30e8"
+            },
+            "apps/apple/docs/development/HANLIN_UI_ACCEPTANCE_20261123.json": {
+              "gitObject": "21cee778b16e3ace7acc520e9a5e68e49aac4ac8",
+              "sha256": "823302f5879847a533f1a516e06539dfe0140e535cc58c2b92fb1af11eb2c1e1"
+            },
+            "apps/apple/docs/development/HANLIN_NATIVE_ACCEPTANCE_20261123.json": {
+              "gitObject": "4eefea488185f3b795f0c8361515fc2a650a6dd6",
+              "sha256": "3ec453604fcdbe159b07bba2cd5d9f77335d0a1e9ee01112babbb201e04d9632"
+            }
+          }
+        },
+        "Anytype": {
+          "hostCommit": "aefb9740c0ac8d52aa2dbd89d389930851396104",
+          "files": {
+            "HanlinSDK.lock.json": {
+              "gitObject": "982b7e038f0c45697e3e69ee142f3f7d9f0556a6",
+              "sha256": "3ea789ff6e457b50fe1155aa69d9214fffc2efe90dfa449f9aec64d71855a924"
+            },
+            "Tools/Hanlin/source.json": {
+              "gitObject": "0229fcf31942ffb3e56d5d8bdc25872dd5c1070f",
+              "sha256": "c07a1fb68e904e2c03f5b5251001863a06e8cb89b664eea66da685e4bdad968d"
+            },
+            "Tools/Hanlin/prepare_sdk.py": {
+              "gitObject": "8fb9ee965948c1a2d5cfbc7914a36b391371d4a8",
+              "sha256": "a5ec500c9b59102ae502507467bff86f76d030bcd8470aa91590afb298311f5e"
+            },
+            "Tools/Hanlin/retain_canonical_native_controls.py": {
+              "gitObject": "d76b75b0854aa78b86d52fe733321e1189ded4ea",
+              "sha256": "a157b5f96ef862b00138ed0e24d999be0a50d0aba29ea590cef106b70b275f76"
+            },
+            "Tools/Hanlin/canonical-native-control-reuse.json": {
+              "gitObject": "b3cdfede2ae8cbda61048abbb58d8ad267b25021",
+              "sha256": "54c85e4d911c5a48d7221c54938a8a67bb322ae6b1035b5dbd119e700e40bfff"
+            },
+            "docs/any-engine-port/SOURCE_REFACTOR_MAP.json": {
+              "gitObject": "958f9f7e10ad688e617540f5e86bed6dcc73cf4f",
+              "sha256": "2ad7088ded9365d36a2bb1b3ab674f000b244631e5cf42a899b8392afbda9b53"
+            },
+            ".github/workflows/pinkha-simulator-ui27.yml": {
+              "gitObject": "5e9ad5717541def438036dfdf21ced3c319b3027",
+              "sha256": "f0c47c6b932ab28109e96e3c56d709c4ad9e05b156edebce8095924c040680ab"
+            },
+            "docs/validation/20261123-canonical-background-observer/source-bound-candidate.json": {
+              "gitObject": "1198f7b48b2821ab03feedea06f57e29c49e0526",
+              "sha256": "b7d36464702d43d244f8dc794f886f051a8446e8e4940e14a55446a33e48733e"
+            }
+          }
+        }
+      },
+      "readOnlyRepinPlans": {
+        "Maktabah": {
+          "targetSDKRevision": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+          "destination": "Vendor/HanlinSDK",
+          "productsChanged": false,
+          "requiredTrackedUpdates": [
+            "HanlinSDK.lock.json revision",
+            "Vendor/HanlinSDK mode160000 Gitlink at the same revision"
+          ],
+          "bootstrap": "Scripts/CI/prepare-hanlin-sdk.py --sha <new full SHA> --output <new receipt> [--source-cache <canonical cache>], then --verify-only; the host verifies the indexed gitlink equals the lock before installation.",
+          "futureFocusedOrLiveSourceBinding": "Bind Scripts/CI/hq-stage2-focused-apple.inputs.json application_source_sha/application_trees.Vendor/hanlin_gitlink to the concrete reviewed candidate code commit. Before invoking completion-focused-native.py or runtime27-hanlin-live.py on that changed Vendor tree, update their immutable SOURCE/REVIEWED_SOURCE to that same reviewed commit, preserving all four source/test tree comparisons, expected checkout identity and existing binary/resource/fixture/secret/cleanup checks.",
+          "retainedOutcome": "48 component plus1 original UI PASS retains its previous source and SDKd49 attribution; no new32da binary or native result is claimed.",
+          "newExecutionRequiredBySelectedDeltaAlone": "Canonical install/check and exact new graph/source receipt after a successful common candidate Apple compile. Reuse the exact provider and ScriptUI focused proofs; no duplicate48/UI/device replay is justified solely by these selected changes."
+        },
+        "Lorvex": {
+          "targetSDKRevision": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+          "destination": "Vendor/HanlinSDK",
+          "productsChanged": false,
+          "requiredTrackedUpdates": [
+            "HanlinSDK.lock.json revision",
+            "Additive source-bound upgrade qualification referencing the existing exact UI/Agent/device receipts"
+          ],
+          "bootstrap": "apps/apple/script/install_hanlin_sdk.py [--source-cache <canonical cache>], then --check. The bootstrap fetches Scripts/SDK/install.py from the new locked revision; destination is an ignored canonical checkout, not a tracked gitlink.",
+          "uiContinuationPolicy": "The existing ui validation scope deliberately requires0dae and the historical draft-only profile. Preserve HANLIN_DRAFT_UI_REPAIR_20261123.json and existing assertions; do not relabel that receipt, bypass the guard, or dispatch the old UI continuation against32da. No workflow change or new UI run is needed for a lock/install/check-only repin; any future changed-scope execution needs its own exact source-bound continuation.",
+          "retainedOutcome": "Original1/1 UI plus four reviewed frames remains2e6a5e20/0dae; six Agent and older device results retain09307/d49, and five presentation results retain their original source.",
+          "newExecutionRequiredBySelectedDeltaAlone": "Canonical install/check and new source receipt after common candidate Apple compile; no selected composer/editor/resource/ScriptUI change. Reuse exact provider fix cases, with no duplicate host UI/Agent/device run."
+        },
+        "Anytype": {
+          "targetSDKRevision": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+          "destination": "Dependencies/Hanlin",
+          "productsChanged": false,
+          "requiredTrackedUpdates": [
+            "HanlinSDK.lock.json revision",
+            "The exact HanlinSDK.lock.json sharedSources Git blob under the Tools/Hanlin/source.json mapping in docs/any-engine-port/SOURCE_REFACTOR_MAP.json",
+            "Additive qualification/source-retention receipt for the concrete reviewed candidate"
+          ],
+          "bootstrap": "Tools/Hanlin/prepare_sdk.py --source <canonical cache>, then --check; generates the actual .pinkha-source.json from the new selected original sources and shared installer. No static revision edit in Tools/Hanlin/source.json is needed.",
+          "retainedControlPolicy": "All29 retained Python-controller source inputs are outside the SDK source and lock. A lock-only repin does not alter those inputs or require replaying68 retained plus1 already-requalified original control. Preserve the existing admission manifest/hash, branch/clean-source guards and source-retention baseline; append current candidate binding. This is controller evidence only, never app acceptance.",
+          "ownerBoundary": "Observed publishedaefb9740/f2066214 remains SDKd49. The oldfa078 app build/native-preparation1PASS and UI1FAIL persist. The owner has a separate corrected native/UI candidate; do not mutate its running or held source. Coordinate the repin only after its owner can bind the new source.",
+          "newExecutionRequiredBySelectedDeltaAlone": "Canonical install/check and exact source-map/receipt binding after common candidate Apple compile; reuse portable exact provider/ScriptUI proofs. Existing failed or pending original native1/UI1/background/authority/logout qualification remains separate and cannot be erased or relabeled by the SDK comparison."
+        }
+      },
+      "nativeExecutions": 0,
+      "testsExecuted": 0,
+      "generatorsExecuted": 0,
+      "hostPinsChanged": false
+    },
+    {
+      "observedAtUTC": "2026-11-23T11:30:19.178745+00:00",
+      "baseQualifiedCandidate": "37c03e9d798c88c7621aef8dc1eca9d6d3e6fca4",
+      "candidateSDKCommit": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+      "method": "Exact immutable-input and complete selected-stream comparison only. All22 generator inputs and all three selected path/mode/blob byte streams are unchanged from37c; no generator, package, installer, test or native execution.",
+      "generatorInputObjectsUnchanged": {
+        "Scripts/SDK/generate_manifest.py": "95a00985ed085e7fbd12108e03ddfdd09680b82a",
+        "Scripts/CI/IntegrationValidation/project_graph.py": "a88a958a7faf5a3382d9c464e0fc16841c9197c3",
+        "AI_HLY.xcodeproj/project.pbxproj": "874dbcf3f2c6a59f856f840b54a5d88115104a63",
+        "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "55649fbf15e7bdeef2df41134ee587ca254963f9",
+        "Packages/HanlinAgentSDK/Package.swift": "1af275c3f3097eb361251e4ed2a6d12e5271a174",
+        "Packages/HanlinAppExtensionsSDK/Package.swift": "d78ff3c9b41705d4148af45c534edbd20f635cc3",
+        "Packages/HanlinExpoNativeAPI/Package.swift": "561fae4a8abf9380084658e629bff5349bab1dac",
+        "Packages/HanlinExpoRuntime/Package.swift": "9d6d0f71c4126cd93521895e7118dd8ade3051e5",
+        "Packages/HanlinExpoWidgetSubset/Package.swift": "05204c9073a8055af74e591fc1ecfa59f3e822af",
+        "Packages/HanlinNativeScriptRuntime/Package.swift": "22e6767c76512f79f6bf8c5f8bb4bb9535975744",
+        "Packages/HanlinParityMiniApp/Package.swift": "f386bbb65ce30d87148590515b3f089b9b72480c",
+        "Packages/HanlinPlatform/Package.swift": "4639439e843b7101387a578ecac097b110151d40",
+        "Packages/HanlinPresentationSDK/Package.swift": "ced8131b2d0bed8623b0494acc332bdaa6434d34",
+        "Packages/HanlinProductSplit/Package.swift": "7370c6ac9985a9d742f3480ba625e1bc357114a1",
+        "Packages/HanlinQuickJS/Package.swift": "6a990d95667d48623345b71c2d264ce134cb565f",
+        "Packages/HanlinSefariaMiniApp/Package.swift": "a5f480efe99f6391169adc2143d37d15d02ae3ee",
+        "Packages/HanlinSkillFormat/Package.swift": "3d27a293e5864b3f13cb9b4d21503433a19bf5d7",
+        "Packages/HanlinTextStudioMiniApp/Package.swift": "daea340da811a55e1562077f0da7be130a09b231",
+        "Packages/HanlinWidgetSDK/Package.swift": "0a626400384d7cdfc59ef504dc00711a450d831e",
+        "Packages/HanlinWikipediaMiniApp/Package.swift": "4fccbd0f6bc6bd8b799f9753eaf9338246c68fe1",
+        "Packages/IOSSystemLite/Package.swift": "892476c3903394cc69a26d7c2e088cd5757a8125",
+        "Packages/TorahLibraryKit/Package.swift": "87c22b244c378b1ad2583875f1e86a9ba7ad2412"
+      },
+      "changedPaths": [
+        "Docs/SDK/HanlinScriptRegistryBoundary20261123.json",
+        "Docs/SDK/registry-identity-20261123/native-source-parse.json",
+        "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift"
+      ],
+      "profiles": [
+        {
+          "host": "Maktabah",
+          "selectedEntries": 545,
+          "selectedPathModeBlobByteIdentity": true,
+          "selectedSourceTreeRecordsSHA256": "513cf2331375e9270716c091d6fc6868a9935026b7a82ddeb8514ed8a40f2316",
+          "selectedManifestSHA256": "2d5cf939b5c8f43f30ee2be1e382e5f52e13a3f4cd9fc66709cb4ee96c2f23e4",
+          "changedSelectedPaths": [],
+          "binaryTargets": []
+        },
+        {
+          "host": "Lorvex",
+          "selectedEntries": 535,
+          "selectedPathModeBlobByteIdentity": true,
+          "selectedSourceTreeRecordsSHA256": "162b5bf52c15afa65e1f4f582e791f5947a5ba1651228430bbecf7aad3991ab8",
+          "selectedManifestSHA256": "29c126b9305e88bbcaed57512374e986f7225a0c87d332950f6ba3deda9bca26",
+          "changedSelectedPaths": [],
+          "binaryTargets": []
+        },
+        {
+          "host": "Anytype",
+          "selectedEntries": 547,
+          "selectedPathModeBlobByteIdentity": true,
+          "selectedSourceTreeRecordsSHA256": "8db523e721b3183513a51e005f528912b4535d8097c724f6746baa833273b90b",
+          "selectedManifestSHA256": "518f91d40d3433a88ab6255c252bc2c81fa1e2199dad0322b4136bb7f2d6f20c",
+          "changedSelectedPaths": [],
+          "binaryTargets": []
+        }
+      ],
+      "nativeGate": {
+        "runID": "45163990486",
+        "source": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+        "status": "Parent reports dispatched11:18:25 UTC; outcome not consumed or inferred by this qualification.",
+        "scope": "Original26 application selectors plus exact3 AtomicScriptStore methods/4 parameter cases in the focused package route. Store implementation/tests are outside every selected consumer profile."
+      },
+      "nextActionBoundary": "This is the proposed final source for owner-coordinated lock/profile/policy updates and canonical install/check. Relevant native gate outcomes remain separate. No host was repinned by this qualification.",
+      "nativeExecutions": 0,
+      "testsExecuted": 0,
+      "generatorsExecuted": 0,
+      "hostPinsChanged": false
     }
   ]
 }
