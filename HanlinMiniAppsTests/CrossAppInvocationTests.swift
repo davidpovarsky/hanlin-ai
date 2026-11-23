@@ -1,6 +1,7 @@
 import Foundation
 import XCTest
 import UIKit
+import SwiftUI
 import HanlinTextStudioMiniApp
 import HanlinMiniAppsBridge
 @testable import HanlinMiniApps
@@ -117,6 +118,20 @@ final class CrossAppInvocationTests: XCTestCase {
         XCTAssertNil(defaults.string(forKey: "draft"), "Shared invocations must preserve ordinary TextStudio draft.")
         a.setPersistentString("", forKey: "draft")
         XCTAssertEqual(coldA.persistentString(forKey: "draft"), "", "An intentionally empty restored draft is still a draft.")
+    }
+
+    func testReusingValueWindowKeepsItsInvocationBindingCurrent() {
+        let first = UUID(), second = UUID()
+        var sceneIdentity: UUID? = first
+        let binding = Binding<UUID?>(get: { sceneIdentity }, set: { sceneIdentity = $0 })
+        let window = HanlinMiniAppsWindow(requestID: binding)
+        XCTAssertEqual(window.externalRequestID, first)
+        window.externalRequestID = second
+        XCTAssertEqual(sceneIdentity, second,
+            "Reusing a window must update the WindowGroup value used for focus and restoration.")
+        XCTAssertEqual(window.externalRequestID, second)
+        window.externalRequestID = nil
+        XCTAssertNil(sceneIdentity, "Closing the invocation must clear the same scene identity.")
     }
 
     func testActualIncomingRequestsCreateDistinctIPadScenes() async throws {

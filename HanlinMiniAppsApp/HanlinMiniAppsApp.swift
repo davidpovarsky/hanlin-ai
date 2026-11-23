@@ -11,19 +11,32 @@ struct HanlinMiniAppsApplication: App {
     var body: some Scene {
         WindowGroup { HanlinMiniAppsWindow() }
         WindowGroup("MiniApp", id: "miniapp-invocation", for: UUID.self) { $requestID in
-            HanlinMiniAppsWindow(requestID: requestID)
+            HanlinMiniAppsWindow(requestID: $requestID)
         }
     }
 }
 
-private struct HanlinMiniAppsWindow: View {
+struct HanlinMiniAppsWindow: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.openWindow) private var openWindow
     @Environment(\.supportsMultipleWindows) private var supportsMultipleWindows
-    @State private var externalRequestID: UUID?
+    @Binding private var sceneRequestID: UUID?
+    @SceneStorage("hanlin.miniapps.inlineRequestID") private var inlineRequestID = ""
+    private let hasSceneIdentity: Bool
 
-    init(requestID: UUID? = nil) {
-        _externalRequestID = State(initialValue: requestID)
+    // WindowGroup uses this binding for both focus matching and restoration.
+    // Reusing a value window must update its identity along with its content.
+    var externalRequestID: UUID? {
+        get { hasSceneIdentity ? sceneRequestID : UUID(uuidString: inlineRequestID) }
+        nonmutating set {
+            if hasSceneIdentity { sceneRequestID = newValue }
+            else { inlineRequestID = newValue?.uuidString ?? "" }
+        }
+    }
+
+    init(requestID: Binding<UUID?>? = nil) {
+        _sceneRequestID = requestID ?? .constant(nil)
+        hasSceneIdentity = requestID != nil
     }
     @State private var foreground = MiniAppsForegroundBridge()
     @State private var incomingURLs: [URL] = []

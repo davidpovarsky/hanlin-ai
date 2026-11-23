@@ -18,16 +18,16 @@ EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
 TEST_SCOPE = os.environ.get('SPLIT_NATIVE_TEST_SCOPE', 'baseline')
 UI_PLANS = {
     'cross_app': (['HanlinMiniAppsTests/CrossAppInvocationTests',
-                  'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests'], 9),
+                  'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests'], 10),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
     # Cross-app adapters and teardown changed: recheck these two runtime cases
-    # and nine new producer/UI cases. Do not repeat unchanged storage tests.
+    # and ten new producer/UI cases. Do not repeat unchanged storage tests.
     'production_runtimes': ([
         'HanlinMiniAppsTests/CrossAppInvocationTests',
         'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
-        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 11),
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 12),
 }
 
 
@@ -96,13 +96,20 @@ def main():
         simulator = command(['xcrun', 'simctl', 'create', 'HanlinSplit-'+os.environ.get('GITHUB_RUN_ID','local'),
                              device['identifier'], runtime['identifier']], 'created-simulator.txt').strip()
         state.update(simulator=simulator, runtime=runtime, device=device)
-        destinations = command(['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
-                                '-showdestinations', *package_arguments], 'destinations.log', timeout=120)
-        destination = next(line for line in destinations.splitlines() if simulator.lower() in line.lower())
-        state['architecture'] = re.search(r'arch:\s*(\w+)', destination).group(1)
-        if state['architecture'] not in runtime['supportedArchitectures']:
-            raise RuntimeError('Xcode destination architecture is unsupported by selected runtime')
-        state['architecture_evidence'] = destination.strip()
+        # -showdestinations unexpectedly resolves the entire package graph.
+        # Run 45279691350 timed out while fetching packages before any app build.
+        # Select the native host architecture from actual runtime metadata, let
+        # the real build validate this explicit destination, and verify its
+        # Mach-O output below instead of launching a second dependency resolver.
+        architecture = command(['uname', '-m'], 'host-architecture.txt').strip()
+        if architecture not in runtime['supportedArchitectures']:
+            raise RuntimeError('Native host architecture is unsupported by the selected simulator runtime')
+        state['architecture'] = architecture
+        state['architecture_evidence'] = {
+            'status': 'NATIVE_HOST_AND_RUNTIME_CONFIRMED_BUILD_PENDING',
+            'host': architecture,
+            'runtime_supported': runtime['supportedArchitectures'],
+        }
         # Run 44248480774 compiled successfully, but its immediate cold-boot install,
         # screenshot and simulator log all timed out before either selected UI case.
         # Start only this owned device before compilation so its first-boot services
@@ -114,7 +121,8 @@ def main():
         command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=300)
         derived = Path(os.environ['SPLIT_DERIVED_DATA'])
         base = ['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
-                '-destination', 'platform=iOS Simulator,id='+simulator, '-parallel-testing-enabled', 'NO',
+                '-destination', 'platform=iOS Simulator,id='+simulator+',arch='+architecture,
+                '-parallel-testing-enabled', 'NO',
                 '-derivedDataPath', str(derived), *package_arguments,
                 # Preserve the original target's simulator entitlements. An
                 # unsigned build cannot exercise widget/package publication.
@@ -141,6 +149,16 @@ def main():
         executable_name = info['CFBundleExecutable']
         if Path(executable_name).name != executable_name:
             raise RuntimeError('Built executable must remain inside its original app bundle')
+        binary_architectures = command(
+            ['xcrun', 'lipo', '-archs', str(app_product/executable_name)],
+            'simulator-executable-architectures.txt').strip().split()
+        if architecture not in binary_architectures:
+            raise RuntimeError('Actual built executable omits the selected native simulator architecture')
+        state['architecture_evidence'].update(
+            status='BUILT_MACH_O_ARCHITECTURE_VERIFIED',
+            built=binary_architectures,
+            executable=executable_name,
+        )
         command(['codesign', '--verify', '--deep', '--strict', str(app_product)], 'simulator-signature.log')
         entitlement_source = ROOT/'HanlinMiniAppsApp/HanlinMiniApps.entitlements'
         required_groups = plistlib.loads(entitlement_source.read_bytes())['com.apple.security.application-groups']

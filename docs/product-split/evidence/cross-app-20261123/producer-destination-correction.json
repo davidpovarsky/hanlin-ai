@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-11-23T23:02:51.722947+00:00",
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45279691350",
+  "source_sha": "c2791d54aba1a82ea8125a8dc26e22f2cf82bb7f",
+  "status": "INFRA_ERROR_BEFORE_APP_BUILD",
+  "ui": "NOT_RUN",
+  "artifact": {
+    "id": 14870466847,
+    "bytes": 12960775,
+    "sha256": "6e868a8754f91992230a227442cedd3b58f0153c013c875ba5bf5b854b67a610"
+  },
+  "failure": "xcodebuild -showdestinations activated full Swift package resolution and timed out after 120s while fetching packages",
+  "retained_raw_logs": [
+    "failed-45279691350-destinations.log",
+    "failed-45279691350-commands.jsonl"
+  ],
+  "correction": "Use live host/runtime architecture with explicit owned simulator destination; the original build-for-testing validates the destination and a post-build lipo check verifies the actual Mach-O architecture. Existing build, signing, resource and XCTest gates remain.",
+  "additional_product_change": "Value-based WindowGroup uses its original Binding so reusing a window updates OS focus/restoration identity. The ordinary window stores invocation identity in SceneStorage.",
+  "affected_native_selection": {
+    "cross_app": 10,
+    "production_runtimes": 12,
+    "new_binding_regression": 1
+  },
+  "prior_execution_reuse": "Unchanged shared bridge and Expo isolation evidence remain valid; this failed producer run executed no selected native case.",
+  "workflow_change": false
+}
