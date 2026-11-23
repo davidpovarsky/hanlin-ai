@@ -106,6 +106,9 @@ public actor HanlinChatGPTPlanClient {
     private var refreshes: [String: Task<HanlinChatGPTPlanCredentials, Error>] = [:]
     private var refreshed: [String: HanlinChatGPTPlanCredentials] = [:]
     private var revokedRefreshes = Set<String>()
+    private var revocationTargets: [String: HanlinChatGPTPlanCredentials] = [:]
+    private var completedRevocations = Set<String>()
+    private var staleRevocationSources = Set<String>()
 
     private let session: URLSession
 
@@ -355,22 +358,58 @@ public actor HanlinChatGPTPlanClient {
     /// and disclose that remote revocation could not be confirmed.
     public func revoke(_ supplied: HanlinChatGPTPlanCredentials) async throws {
         let key = Self.refreshKey(supplied)
+        if completedRevocations.contains(key) { return }
         revokedRefreshes.insert(key)
         var account = supplied
-        // A refresh may have rotated the token while the host was signing out.
-        // Revoke the replacement rather than reporting success on the old token.
-        if let latest = refreshed[key] { account = latest }
-        else if let pending = refreshes[key], let latest = try? await pending.value { account = latest }
-        revokedRefreshes.insert(Self.refreshKey(account))
-        refreshed = refreshed.filter { $0.value.clientID != account.clientID }
-        for pendingKey in Array(refreshes.keys) where pendingKey.hasPrefix(account.clientID + ":" + account.subject + ":") {
-            revokedRefreshes.insert(pendingKey)
-            refreshes.removeValue(forKey: pendingKey)?.cancel()
+        if let pending = revocationTargets[key] { account = pending }
+        else {
+            // Once a rotated source failed to revoke, never claim success by
+            // sending its obsolete token after the replacement was discarded.
+            guard !staleRevocationSources.contains(key) else {
+                throw HanlinChatGPTPlanError.invalidAuthorization
+            }
+            if let latest = refreshed[key] { account = latest }
+            else if let pending = refreshes[key], let latest = try? await pending.value { account = latest }
         }
+        let targetKey = Self.refreshKey(account)
+        if targetKey != key { staleRevocationSources.insert(key) }
+        let sessionKeys: Set<String> = [key, targetKey]
+        revocationTargets[key] = account
+        revocationTargets[targetKey] = account
+        defer {
+            revocationTargets[key] = nil
+            revocationTargets[targetKey] = nil
+        }
+        revokedRefreshes.formUnion(sessionKeys)
+        refreshed = refreshed.filter {
+            !sessionKeys.contains($0.key) && !sessionKeys.contains(Self.refreshKey($0.value))
+        }
+        for pendingKey in sessionKeys { refreshes.removeValue(forKey: pendingKey)?.cancel() }
+        for attempt in 0..<2 {
+            do {
+                try await revokeRequest(account)
+                completedRevocations.formUnion(sessionKeys)
+                return
+            } catch {
+                let retryable: Bool
+                if case HanlinChatGPTPlanError.server(let code) = error {
+                    retryable = (500..<600).contains(code)
+                } else if let network = error as? URLError {
+                    retryable = network.code != .cancelled
+                } else { retryable = false }
+                guard attempt == 0 && retryable else { throw error }
+                try await Task<Never, Never>.sleep(for: .seconds(1))
+            }
+        }
+    }
+
+    private func revokeRequest(_ account: HanlinChatGPTPlanCredentials) async throws {
         let discoveryURL = URL(string: Self.issuer + "/.well-known/openid-configuration")!
         let (data, response) = try await session.data(from: discoveryURL)
-        guard (response as? HTTPURLResponse)?.statusCode == 200,
-              let object = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
+            throw HanlinChatGPTPlanError.server((response as? HTTPURLResponse)?.statusCode ?? 0)
+        }
+        guard let object = try JSONSerialization.jsonObject(with: data) as? [String: Any],
               let endpoint = object["revocation_endpoint"] as? String,
               let url = URL(string: endpoint), url.scheme == "https", url.host == "auth.openai.com",
               url.user == nil, url.password == nil else {

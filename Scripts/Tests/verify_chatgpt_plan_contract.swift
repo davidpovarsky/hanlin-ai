@@ -39,9 +39,18 @@ private final class Replies: @unchecked Sendable {
     private var data: [String: Data] = [:]
     private var refreshes = 0
     private var exchanges = 0
+    private var revocationFailures = 0
+    private var revocationRequests: [String] = []
     func set(_ key: String, _ body: Data) { lock.lock(); defer { lock.unlock() }; data[key] = body }
     func counts() -> (Int, Int) { lock.lock(); defer { lock.unlock() }; return (exchanges, refreshes) }
-    func response(_ request: URLRequest) -> Data {
+    func configureRevocationFailures(_ count: Int) {
+        lock.lock(); defer { lock.unlock() }
+        revocationFailures = count; revocationRequests = []
+    }
+    func revocationForms() -> [String] {
+        lock.lock(); defer { lock.unlock() }; return revocationRequests
+    }
+    func response(_ request: URLRequest) -> (Data, Int) {
         var body = request.httpBody ?? Data()
         if body.isEmpty, let stream = request.httpBodyStream {
             stream.open()
@@ -56,10 +65,14 @@ private final class Replies: @unchecked Sendable {
         let form = String(decoding: body, as: UTF8.self)
         lock.lock(); defer { lock.unlock() }
         if request.url?.path == "/api/accounts/oauth/token" {
-            if form.contains("grant_type=refresh_token") { refreshes += 1; return data["refresh"] ?? Data() }
-            exchanges += 1; return data["exchange"] ?? Data()
+            if form.contains("grant_type=refresh_token") { refreshes += 1; return (data["refresh"] ?? Data(), 200) }
+            exchanges += 1; return (data["exchange"] ?? Data(), 200)
         }
-        return data[request.url?.path ?? ""] ?? Data()
+        if request.url?.path == "/oauth/revoke" {
+            revocationRequests.append(form)
+            if revocationFailures > 0 { revocationFailures -= 1; return (Data(), 503) }
+        }
+        return (data[request.url?.path ?? ""] ?? Data(), 200)
     }
 }
 private final class FixtureProtocol: URLProtocol, @unchecked Sendable {
@@ -67,8 +80,8 @@ private final class FixtureProtocol: URLProtocol, @unchecked Sendable {
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
     override func startLoading() {
-        let data = Self.replies.response(request)
-        let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1",
+        let (data, status) = Self.replies.response(request)
+        let response = HTTPURLResponse(url: request.url!, statusCode: status, httpVersion: "HTTP/1.1",
             headerFields: ["Content-Type": "application/json"])!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
         client?.urlProtocol(self, didLoad: data)
@@ -238,6 +251,42 @@ private final class FixtureProtocol: URLProtocol, @unchecked Sendable {
             _ = try await client.exchange(callback: mismatchCallback, attempt: mismatchAttempt)
             throw CheckFailure.failed("returning registration accepted another subject")
         } catch HanlinChatGPTPlanError.invalidIdentity {}
+        count += 1
+        let retryClient = HanlinChatGPTPlanClient(session: session)
+        FixtureProtocol.replies.set("refresh", try JSONSerialization.data(withJSONObject: [
+            "access_token": "fixture-access-3", "refresh_token": "fixture-refresh-3",
+            "expires_in": 3600, "token_type": "Bearer", "scope": "openid"
+        ]))
+        let rotated = try await retryClient.refresh(account)
+        FixtureProtocol.replies.configureRevocationFailures(1)
+        try await retryClient.revoke(account)
+        let retriedForms = FixtureProtocol.replies.revocationForms()
+        try check(retriedForms.count == 2 && retriedForms.allSatisfy {
+            $0.contains("token=" + rotated.refreshToken) && $0.contains("client_id=" + account.clientID)
+        }, "revocation retry keeps the resolved rotated token")
+        count += 1
+
+        let exhaustedClient = HanlinChatGPTPlanClient(session: session)
+        FixtureProtocol.replies.set("refresh", try JSONSerialization.data(withJSONObject: [
+            "access_token": "fixture-access-4", "refresh_token": "fixture-refresh-4",
+            "expires_in": 3600, "token_type": "Bearer", "scope": "openid"
+        ]))
+        _ = try await exhaustedClient.refresh(account)
+        FixtureProtocol.replies.configureRevocationFailures(2)
+        do {
+            try await exhaustedClient.revoke(account)
+            throw CheckFailure.failed("exhausted revocation incorrectly succeeded")
+        } catch HanlinChatGPTPlanError.server(503) {}
+        let failedForms = FixtureProtocol.replies.revocationForms()
+        try check(failedForms.count == 2 && failedForms.allSatisfy {
+            $0.contains("token=fixture-refresh-4")
+        }, "failed revocation attempts use the replacement token")
+        do {
+            try await exhaustedClient.revoke(account)
+            throw CheckFailure.failed("stale revocation source incorrectly succeeded")
+        } catch HanlinChatGPTPlanError.invalidAuthorization {}
+        try check(FixtureProtocol.replies.revocationForms().count == 2,
+                  "stale retry never posts an obsolete token")
         count += 1
         print("PASS: \(count) production SIWC OAuth/wire checks (macOS CryptoKit/Security fixtures, no live account).")
 #else
