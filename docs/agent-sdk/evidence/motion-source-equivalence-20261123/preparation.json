@@ -1,0 +1,15 @@
+{
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "python3",
+    "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/docs/chat-motion/prepare_motion_ui.py",
+    "--output",
+    "/tmp/hanlin-motion-central-4cfa-z7zuhp77/proof"
+  ],
+  "exit": 0,
+  "profile_path": "/tmp/hanlin-motion-central-4cfa-z7zuhp77/proof",
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "scope": "Portable selected-product profile preparation only; no native build/test"
+}
