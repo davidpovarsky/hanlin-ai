@@ -7,8 +7,12 @@ import argparse
 import hashlib
 import json
 import plistlib
+import sys
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "CI" / "IntegrationValidation"))
+from project_graph import parse_project
 
 
 EXPECTED_ENTRIES: dict[str, list[str]] = {
@@ -87,6 +91,43 @@ def validate_empty_extra_dictionary(path: Path) -> bytes:
     return raw
 
 
+def validate_project_resources(project_text: str) -> None:
+    """Follow the actual app's resource references; PBX comments have no build meaning."""
+    try:
+        project = parse_project(project_text)
+        objects = project["objects"]
+        root = objects[project["rootObject"]]
+        targets = [objects[key] for key in root["targets"]
+                   if objects[key].get("isa") == "PBXNativeTarget"
+                   and objects[key].get("name") == "AI_Hanlin"
+                   and objects[key].get("productType") == "com.apple.product-type.application"]
+        if len(targets) != 1:
+            raise ResourceValidationError("RuntimeCore requires exactly one original AI_Hanlin app target")
+        references = []
+        for phase_id in targets[0].get("buildPhases", []):
+            phase = objects[phase_id]
+            if phase.get("isa") != "PBXResourcesBuildPhase":
+                continue
+            for build_id in phase.get("files", []):
+                build = objects[build_id]
+                if build.get("isa") == "PBXBuildFile":
+                    reference = objects[build["fileRef"]]
+                    if reference.get("isa") == "PBXFileReference":
+                        references.append(reference)
+        for path in (COMMAND_DICTIONARY, EXTRA_DICTIONARY):
+            copies = [reference for reference in references if reference.get("path") == path.as_posix()]
+            if len(copies) != 1:
+                raise ResourceValidationError(
+                    f"Xcode Copy Bundle Resources must contain exactly one {path.name} in AI_Hanlin"
+                )
+            if copies[0].get("sourceTree") != "SOURCE_ROOT" or copies[0].get("explicitFileType") != "text":
+                raise ResourceValidationError(
+                    f"Xcode must copy {path.name} as raw text from its canonical source-root path"
+                )
+    except (KeyError, TypeError, ValueError, IndexError) as error:
+        raise ResourceValidationError(f"Malformed Xcode resource graph: {error}") from error
+
+
 def validate_source_resources(repository_root: Path) -> dict[str, Any]:
     command_path = repository_root / COMMAND_DICTIONARY
     extra_path = repository_root / EXTRA_DICTIONARY
@@ -98,19 +139,7 @@ def validate_source_resources(repository_root: Path) -> dict[str, Any]:
         raise ResourceValidationError("IOSSystemLite must process its canonical Resources directory")
 
     project_text = (repository_root / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8")
-    for relative_path in (COMMAND_DICTIONARY, EXTRA_DICTIONARY):
-        normalized = relative_path.as_posix()
-        if normalized not in project_text:
-            raise ResourceValidationError(f"Xcode project does not reference canonical resource: {normalized}")
-    for resource_name in ("commandDictionary.plist in Resources", "extraCommandsDictionary.plist in Resources"):
-        if project_text.count(resource_name) < 2:
-            raise ResourceValidationError(f"Xcode Copy Bundle Resources entry is missing: {resource_name}")
-    for resource_name in ("commandDictionary.plist", "extraCommandsDictionary.plist"):
-        raw_copy_reference = f"explicitFileType = text; name = {resource_name};"
-        if raw_copy_reference not in project_text:
-            raise ResourceValidationError(
-                f"Xcode must copy {resource_name} as raw text so its canonical bytes are preserved"
-            )
+    validate_project_resources(project_text)
 
     if (repository_root / RESOURCE_DIRECTORY / "RuntimeCommands.plist").exists():
         raise ResourceValidationError("Legacy RuntimeCommands.plist must not coexist with the canonical dictionary")

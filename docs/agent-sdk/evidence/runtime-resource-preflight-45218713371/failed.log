@@ -1,0 +1,90 @@
+Launch full app on iPad Simulator	Run RuntimeCore preflight	﻿2026-11-23T16:52:06.7047210Z ##[group]Run set -euxo pipefail
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.7052040Z ^[[36;1mset -euxo pipefail^[[0m
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.7052730Z ^[[36;1mbash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"^[[0m
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8795640Z shell: /bin/bash -e {0}
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8795970Z env:
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8796240Z   PROJECT_PATH: AI_HLY.xcodeproj
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8796620Z   SCHEME_NAME: AI_HLY
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8796890Z   CONFIGURATION: Debug
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8797200Z   DERIVED_DATA_PATH: build/SimulatorDerivedData
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8797600Z   CLONED_PACKAGES_PATH: build/SourcePackages
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8797890Z   LOG_DIR: simulator-logs
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8798170Z   IOS_DEPLOYMENT_TARGET: 27.0
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8798470Z   FAST_VALIDATION_ONLY: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8798800Z   NATIVESCRIPT_POC_ONLY: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8799090Z   SIMULATOR_E2E_ONLY: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8799400Z   RUN_FULL_VALIDATION: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8799670Z   RUN_NATIVESCRIPT_DEPENDENCIES: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8800830Z   RUN_RUNTIME_HOST: true
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8801140Z   RUN_SIMULATOR_UNIT: true
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8805260Z   SIMULATOR_UNIT_FILTER: AI_HLYTests/CalendarToolTests,AI_HLYTests/HanlinApplicationEmbeddingTests,AI_HLYTests/HanlinConversationProjectionTests,AI_HLYTests/HanlinAppAgentSessionOwnerTests,AI_HLYTests/AgentActivityHeaderPhaseTests,AI_HLYTests/AgentRoundPresentationTests,AI_HLYTests/ChatPresentationTests,AI_HLYTests/NativeComposerLineSizingTests,AI_HLYTests/PendingFirstTurnTests,AI_HLYTests/HanlinLocalizationTests,AI_HLYTests/HanlinLocalizedControlTests,AI_HLYTests/HanlinOriginalAssetTests,AI_HLYTests/ChatCodeFenceTests,AI_HLYTests/VoiceRecordingLifecycleTests,AI_HLYTests/HanlinRemoteMediaURLTests,AI_HLYTests/A2UISDKTests,AI_HLYTests/A2UIIngressTests,AI_HLYTests/HanlinNativeWidgetRendererTests,AI_HLYTests/ChatScrollViewHandleTests,AI_HLYTests/ChatAutoFollowTests,AI_HLYTests/HanlinApplicationSystemIntegrationTests,AI_HLYTests/ShareInboxHostIntegrationTests,AI_HLYTests/HanlinMCPEmbeddingTests,AI_HLYTests/HanlinCapabilityObservationTests,AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore,AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationConfigurationPreservesOriginalSettings(),AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine()
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8809430Z   RUN_SIMULATOR_SCRIPTING_ACCEPTANCE: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8809770Z   RUN_SIMULATOR_TARGETED_UI: true
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8810120Z   SIMULATOR_UI_FILTER: AI_HLYUITests/HanlinNativeA2UIChatUITests
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8810500Z   STAGE_SCRIPTUI_FIXTURES: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8815770Z   SIMULATOR_BUILD_FOR_TESTING_ARGS: -only-testing:AI_HLYTests/CalendarToolTests -only-testing:AI_HLYTests/HanlinApplicationEmbeddingTests -only-testing:AI_HLYTests/HanlinConversationProjectionTests -only-testing:AI_HLYTests/HanlinAppAgentSessionOwnerTests -only-testing:AI_HLYTests/AgentActivityHeaderPhaseTests -only-testing:AI_HLYTests/AgentRoundPresentationTests -only-testing:AI_HLYTests/ChatPresentationTests -only-testing:AI_HLYTests/NativeComposerLineSizingTests -only-testing:AI_HLYTests/PendingFirstTurnTests -only-testing:AI_HLYTests/HanlinLocalizationTests -only-testing:AI_HLYTests/HanlinLocalizedControlTests -only-testing:AI_HLYTests/HanlinOriginalAssetTests -only-testing:AI_HLYTests/ChatCodeFenceTests -only-testing:AI_HLYTests/VoiceRecordingLifecycleTests -only-testing:AI_HLYTests/HanlinRemoteMediaURLTests -only-testing:AI_HLYTests/A2UISDKTests -only-testing:AI_HLYTests/A2UIIngressTests -only-testing:AI_HLYTests/HanlinNativeWidgetRendererTests -only-testing:AI_HLYTests/ChatScrollViewHandleTests -only-testing:AI_HLYTests/ChatAutoFollowTests -only-testing:AI_HLYTests/HanlinApplicationSystemIntegrationTests -only-testing:AI_HLYTests/ShareInboxHostIntegrationTests -only-testing:AI_HLYUITests/HanlinNativeA2UIChatUITests -only-testing:AI_HLYTests/HanlinMCPEmbeddingTests -only-testing:AI_HLYTests/HanlinCapabilityObservationTests -only-testing:AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore -only-testing:AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationConfigurationPreservesOriginalSettings() -only-testing:AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine()
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8822160Z   RUN_SIMULATOR_SHELL_ACCEPTANCE: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8822560Z   RUN_SIMULATOR_MCP_ACCEPTANCE: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8822900Z   RUN_SIMULATOR_SMOKE_LAUNCH: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8823220Z   RUN_SIMULATOR_NATIVESCRIPT_POC: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8823640Z   RUN_RUNTIME_TOOLING_FULL_ACCEPTANCE: false
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:06.8823960Z ##[endgroup]
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.0277590Z + bash Scripts/Runtime/preflight-runtime-core.sh
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.0379420Z + tee simulator-logs/04-runtime-preflight.log
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.1291620Z Validated /Users/runner/work/hanlin-ai/hanlin-ai/RuntimeDependencies.lock.json.
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.1804290Z Validated 8 IOSSystemLite binary targets and complete curl_ios link closure.
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3220560Z Traceback (most recent call last):
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3223110Z   File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/validate_ios_system_resources.py", line 169, in <module>
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3223820Z     raise SystemExit(main())
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3224240Z                      ~~~~^^
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3224930Z   File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/validate_ios_system_resources.py", line 153, in main
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3225600Z     result = validate_source_resources(root)
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3226480Z   File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/validate_ios_system_resources.py", line 107, in validate_source_resources
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3227320Z     raise ResourceValidationError(f"Xcode Copy Bundle Resources entry is missing: {resource_name}")
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3228310Z ResourceValidationError: Xcode Copy Bundle Resources entry is missing: commandDictionary.plist in Resources
+Launch full app on iPad Simulator	Run RuntimeCore preflight	2026-11-23T16:52:07.3390770Z ##[error]Process completed with exit code 1.
+Verify provider conformance test summary	Generate provider conformance summary	﻿2026-11-23T16:52:30.3883126Z ##[group]Run set -euo pipefail
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3883508Z ^[[36;1mset -euo pipefail^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3883968Z ^[[36;1mpython3 -m unittest Scripts/CI/test_generate_provider_conformance_summary.py^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3884429Z ^[[36;1mgate_flags="--gate"^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3884751Z ^[[36;1mif [ "false" = "true" ] || [ "false" != "true" ]; then^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3885130Z ^[[36;1m  gate_flags="--gate --allow-unexecuted"^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3885462Z ^[[36;1mfi^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3885780Z ^[[36;1mpython3 Scripts/CI/generate_provider_conformance_summary.py \^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3886218Z ^[[36;1m  --log-dir logs/phase1-validation-logs \^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3886573Z ^[[36;1m  --log-dir logs/simulator-smoke-logs \^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3886946Z ^[[36;1m  --output provider-conformance-summary.json \^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3887280Z ^[[36;1m  $gate_flags^[[0m
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3936801Z shell: /usr/bin/bash -e {0}
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3937098Z env:
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3937390Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3937899Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3938355Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3938763Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3939165Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3939576Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.3939925Z ##[endgroup]
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6912355Z ........F.F
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6912901Z ======================================================================
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6914230Z FAIL: test_gate_fails_on_76_pass_1_not_run (Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_fails_on_76_pass_1_not_run)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6915683Z When 76 tests PASS and 1 is NOT_RUN, --gate must exit with code 1.
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6916443Z ----------------------------------------------------------------------
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6917129Z Traceback (most recent call last):
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6923464Z   File "/home/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/test_generate_provider_conformance_summary.py", line 287, in test_gate_fails_on_76_pass_1_not_run
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6924278Z     self.assertEqual(len(tests), 77)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6924609Z AssertionError: 78 != 77
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6924770Z 
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6924904Z ======================================================================
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6925622Z FAIL: test_gate_passes_when_all_pass (Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_passes_when_all_pass)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6926342Z When all tests pass, --gate must exit with code 0.
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6926731Z ----------------------------------------------------------------------
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6927360Z Traceback (most recent call last):
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6928132Z   File "/home/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/test_generate_provider_conformance_summary.py", line 318, in test_gate_passes_when_all_pass
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6928876Z     self.assertEqual(len(tests), 77)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6929175Z AssertionError: 78 != 77
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6929339Z 
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6929493Z ----------------------------------------------------------------------
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6929849Z Ran 11 tests in 0.125s
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6930003Z 
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6930102Z FAILED (failures=2)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.7026868Z ##[error]Process completed with exit code 1.
