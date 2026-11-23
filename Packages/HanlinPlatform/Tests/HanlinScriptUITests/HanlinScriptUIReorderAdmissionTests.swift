@@ -99,6 +99,46 @@ struct HanlinScriptUIReorderAdmissionTests {
         #expect(published.children[0].children == Array(original.children[0].children.reversed()))
     }
 
+    @Test("A non-first duplicate in requested reorder keys is identified accurately")
+    func nonFirstDuplicateRequestedReorderKeyIsReported() {
+        #expect(throws: HanlinScriptUIError.duplicateKey("b")) {
+            try HanlinScriptUIReconciler.apply([
+                .reorder(parent: .init(), keys: ["a", "b", "b"])
+            ], to: tree())
+        }
+    }
+
+    @Test("A non-first duplicate in current reorder children is identified accurately")
+    func nonFirstDuplicateCurrentReorderKeyIsReported() {
+        #expect(throws: HanlinScriptUIError.duplicateKey("b")) {
+            try HanlinScriptUIReconciler.apply([
+                .reorder(parent: .init(), keys: ["a", "b"])
+            ], to: treeWithNonFirstDuplicate())
+        }
+    }
+
+    @Test("A non-first duplicate in the old diff tree is identified accurately")
+    func nonFirstDuplicateOldDiffKeyIsReported() {
+        #expect(throws: HanlinScriptUIError.duplicateKey("b")) {
+            try HanlinScriptUIReconciler.diff(from: treeWithNonFirstDuplicate(), to: tree())
+        }
+    }
+
+    @Test("A non-first duplicate in the new diff tree is identified accurately")
+    func nonFirstDuplicateNewDiffKeyIsReported() {
+        #expect(throws: HanlinScriptUIError.duplicateKey("b")) {
+            try HanlinScriptUIReconciler.diff(from: tree(), to: treeWithNonFirstDuplicate())
+        }
+    }
+
+    private func treeWithNonFirstDuplicate() -> HanlinScriptUINode {
+        let original = tree()
+        return .init(
+            kind: original.kind, key: original.key, properties: original.properties,
+            children: original.children + [original.children[1]]
+        )
+    }
+
     private func tree() -> HanlinScriptUINode {
         .init(kind: .vStack, key: "root", properties: ["spacing": .integer(8)], children: [
             .init(kind: .text, key: "a", properties: ["text": .string("alpha")]),

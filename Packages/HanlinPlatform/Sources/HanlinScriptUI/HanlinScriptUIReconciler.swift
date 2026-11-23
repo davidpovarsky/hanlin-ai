@@ -39,8 +39,8 @@ public enum HanlinScriptUIReconciler {
         let newKeys = new.children.compactMap(\.key)
         let fullyKeyed = oldKeys.count == old.children.count && newKeys.count == new.children.count
         if fullyKeyed, !old.children.isEmpty || !new.children.isEmpty {
-            guard Set(oldKeys).count == oldKeys.count else { throw HanlinScriptUIError.duplicateKey(oldKeys.first ?? "") }
-            guard Set(newKeys).count == newKeys.count else { throw HanlinScriptUIError.duplicateKey(newKeys.first ?? "") }
+            try validateUniqueKeys(oldKeys)
+            try validateUniqueKeys(newKeys)
             guard Set(oldKeys) == Set(newKeys) else {
                 patches.append(.replace(path: path, node: new))
                 return
@@ -67,6 +67,13 @@ public enum HanlinScriptUIReconciler {
             }
         }
         guard patches.count <= maximum else { throw HanlinScriptUIError.patchLimit }
+    }
+
+    private static func validateUniqueKeys(_ keys: [String]) throws {
+        var seen = Set<String>()
+        for key in keys {
+            guard seen.insert(key).inserted else { throw HanlinScriptUIError.duplicateKey(key) }
+        }
     }
 
     private static func applying(
@@ -98,8 +105,8 @@ public enum HanlinScriptUIReconciler {
             return try updating(root, at: parent.indices) { current in
                 let currentKeys = current.children.compactMap(\.key)
                 guard currentKeys.count == current.children.count else { throw HanlinScriptUIError.keySetMismatch }
-                guard Set(currentKeys).count == currentKeys.count else { throw HanlinScriptUIError.duplicateKey(currentKeys.first ?? "") }
-                guard Set(keys).count == keys.count else { throw HanlinScriptUIError.duplicateKey(keys.first ?? "") }
+                try validateUniqueKeys(currentKeys)
+                try validateUniqueKeys(keys)
                 let keyed = Dictionary(uniqueKeysWithValues: current.children.compactMap { node in node.key.map { ($0, node) } })
                 guard keyed.count == current.children.count, Set(keyed.keys) == Set(keys) else { throw HanlinScriptUIError.keySetMismatch }
                 return .init(kind: current.kind, key: current.key, properties: current.properties, children: try keys.map {

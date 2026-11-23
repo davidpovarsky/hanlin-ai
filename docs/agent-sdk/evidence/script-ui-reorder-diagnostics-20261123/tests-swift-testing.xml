@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="5" failures="0" skipped="0" time="0.004811068">
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="nonFirstDuplicateCurrentReorderKeyIsReported()" time="0.003972103" />
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="nonFirstDuplicateNewDiffKeyIsReported()" time="0.003931863" />
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="nonFirstDuplicateOldDiffKeyIsReported()" time="0.004017663" />
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="validReorderPreservesNodesAndPropertyPatches()" time="0.003934063" />
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="nonFirstDuplicateRequestedReorderKeyIsReported()" time="0.003955863" />
+  </testsuite>
+</testsuites>
