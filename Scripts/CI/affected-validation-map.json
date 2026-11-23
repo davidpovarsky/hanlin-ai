@@ -32,7 +32,8 @@
     "Docs/SDK/HanlinScriptRegistryBoundary20261123.json",
     "Docs/SDK/registry-identity-20261123/**",
     "Docs/SDK/HanlinNativeArtifactProvenance20261123.json",
-    "Docs/SDK/NativeArtifactProvenanceEvidence20261123/**"
+    "Docs/SDK/NativeArtifactProvenanceEvidence20261123/**",
+    "Docs/SDK/AppIntentsInstallationEvidence20261123/**"
   ],
   "components": {
     "ci_router": {
