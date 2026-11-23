@@ -17,6 +17,7 @@ struct ScriptingPackageImportView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showsImporter = false
     @State private var diagnosticsSelection: MiniAppImportDiagnosticsSelection?
+    @State private var importPresentationID = UUID()
     private var stagedDocumentPackages: [URL] {
         guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
               let contents = try? FileManager.default.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil) else {
@@ -113,12 +114,16 @@ struct ScriptingPackageImportView: View {
             }
         }
         .onAppear {
+            platform.setImportPresentation(importPresentationID, visible: true)
             if platform.activity == .idle && platform.preview != nil {
                 platform.discardPreview()
             }
         }
+        .onDisappear { platform.setImportPresentation(importPresentationID, visible: false) }
+        .onChange(of: platform.importAttemptID) { diagnosticsSelection = nil }
         .onChange(of: platform.activity, initial: true) {
-            if platform.activity != .importing && platform.activity != .installing,
+            if platform.activity == .idle { diagnosticsSelection = nil }
+            else if platform.activity != .importing && platform.activity != .installing,
                platform.importDiagnostics.contains(where: { $0.category == "error" }) {
                 diagnosticsSelection = .init(id: platform.importAttemptID)
             }

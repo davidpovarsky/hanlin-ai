@@ -67,6 +67,14 @@ final class HanlinScriptingPlatform {
     private var importOperationID: UUID?
     private var retainedImportArchive: URL?
     private var repairWakeURL: URL?
+    private var importPresentations: Set<UUID> = []
+
+    var hasImportPresentation: Bool { !importPresentations.isEmpty }
+
+    func setImportPresentation(_ id: UUID, visible: Bool) {
+        if visible { importPresentations.insert(id) }
+        else { importPresentations.remove(id) }
+    }
 
     var canInstallPreview: Bool {
         preview?.canInstall == true && (authoringReport?.succeeded ?? true)

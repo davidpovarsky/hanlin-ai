@@ -96,7 +96,9 @@ private struct HanlinMiniAppsWindow: View {
                                 message: error.localizedDescription))
                         }
                     }
-                    showsImport = true
+                    if !HanlinScriptingPlatform.shared.hasImportPresentation {
+                        showsImport = true
+                    }
                 } else if let requestID = MiniAppBridgeStore.requestID(from: url) {
                     do {
                         let mailbox = try MiniAppBridgeStore()
@@ -178,6 +180,12 @@ private struct HanlinMiniAppsReadyRoot: View {
         MiniAppsLibrary(provider: provider)
                 .task {
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
+                }
+                .fullScreenCover(isPresented: Binding(
+                    get: { provider.platform.presentsForegroundAction },
+                    set: { if !$0 { provider.platform.dismissActiveApplication() } }
+                )) {
+                    ScriptingApplicationContainerView(platform: provider.platform)
                 }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active {

@@ -158,7 +158,10 @@ def update():
             "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift",
             "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
             "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
-            "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift"]
+            "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
+            "AI_HLY/Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift",
+            "AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift",
+            "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift"]
     shared_group="F9F4C452EBF2FA6B1274B4D7"
     shared_children=list(objects[shared_group]["children"])
     for index,path in enumerate(shared):

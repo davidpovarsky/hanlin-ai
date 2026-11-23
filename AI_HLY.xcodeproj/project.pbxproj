@@ -758,6 +758,18 @@
 				);
 			};
 		};
+		AC1900000000000000000119 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000118;
+		};
+		AC190000000000000000011B = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000011A;
+		};
+		AC190000000000000000011D = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000011C;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1518,6 +1530,24 @@
 			"path" = "HanlinMiniAppsTranslationProvider.appex";
 			"sourceTree" = "BUILT_PRODUCTS_DIR";
 		};
+		AC1900000000000000000118 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000011A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000011C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift";
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1819,8 +1849,10 @@
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift" ,
+				"Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift" ,
 				"Downstream/RuntimeCore/Core/AppRuntimeCore.swift" ,
 				"Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift" ,
+				"Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift" ,
 				"Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift" ,
 				"Downstream/RuntimeCore/Core/RuntimeCapabilityContract.swift" ,
 				"Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift" ,
@@ -1962,6 +1994,7 @@
 				"Downstream/RuntimeCore/Tools/ListToolsTool.swift" ,
 				"Downstream/RuntimeCore/Tools/ManageMCPServersTool.swift" ,
 				"Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift" ,
+				"Downstream/RuntimeCore/Tools/MiniAppAuthoringTool.swift" ,
 				"Downstream/RuntimeCore/Tools/NativeToolCatalog+RuntimeTools.swift" ,
 				"Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift" ,
 				"Downstream/RuntimeCore/UI/NodePackagesView.swift" ,
@@ -1987,6 +2020,7 @@
 				"Downstream/SDK/HanlinConversationView.swift" ,
 				"Downstream/SDK/HanlinMountedComposerContent.swift" ,
 				"Downstream/SDK/HanlinToolActivityView.swift" ,
+				"Downstream/SDK/MiniAppRepairCoordinator.swift" ,
 				"Downstream/Scripting/HanlinJavaScriptCoreSession.swift" ,
 				"Downstream/Scripting/HanlinQuickJSSession.swift" ,
 				"Downstream/Scripting/HanlinScriptCanonicalAdapter.swift" ,
@@ -2004,6 +2038,7 @@
 				"Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift" ,
 				"Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift" ,
 				"Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift" ,
+				"Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift" ,
 				"Downstream/ScriptingPlatform/ScriptingPackageCardView.swift" ,
 				"Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift" ,
 				"Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift" ,
@@ -2656,6 +2691,9 @@
 				"AC1900000000000000000112" ,
 				"AC1900000000000000000114" ,
 				"AC1900000000000000000116" ,
+				"AC1900000000000000000118" ,
+				"AC190000000000000000011A" ,
+				"AC190000000000000000011C" ,
 			);
 			"name" = "MiniApps Shared Implementation";
 			"sourceTree" = "<group>";
@@ -3503,6 +3541,9 @@
 				"AC1900000000000000000113" ,
 				"AC1900000000000000000115" ,
 				"AC1900000000000000000117" ,
+				"AC1900000000000000000119" ,
+				"AC190000000000000000011B" ,
+				"AC190000000000000000011D" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
