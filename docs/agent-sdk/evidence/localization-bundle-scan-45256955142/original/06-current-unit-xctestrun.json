@@ -1,0 +1,99 @@
+{
+  "build_log_sha256": "188ead31f2a4e974cbf1fc9db3379a603f5f625d07db47d9ca8896c54b523203",
+  "context": {
+    "configuration": "Debug",
+    "developer_directory": "/Applications/Xcode_27.2.app/Contents/Developer",
+    "diagnostics_provenance_sha256": "5c1fac99a19304fab4a16c2200e2826207f677274eaf8b5ead2d3a3fb6427c42",
+    "diagnostics_tracked_workspace_modified": true,
+    "products_root": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products",
+    "run_attempt": "1",
+    "run_id": "45256955142",
+    "selectors": [
+      "AI_HLYTests/CalendarToolTests",
+      "AI_HLYTests/HanlinApplicationEmbeddingTests",
+      "AI_HLYTests/HanlinConversationProjectionTests",
+      "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+      "AI_HLYTests/AgentActivityHeaderPhaseTests",
+      "AI_HLYTests/AgentRoundPresentationTests",
+      "AI_HLYTests/ChatPresentationTests",
+      "AI_HLYTests/NativeComposerLineSizingTests",
+      "AI_HLYTests/PendingFirstTurnTests",
+      "AI_HLYTests/HanlinLocalizationTests",
+      "AI_HLYTests/HanlinLocalizedControlTests",
+      "AI_HLYTests/HanlinOriginalAssetTests",
+      "AI_HLYTests/ChatCodeFenceTests",
+      "AI_HLYTests/VoiceRecordingLifecycleTests",
+      "AI_HLYTests/HanlinRemoteMediaURLTests",
+      "AI_HLYTests/A2UISDKTests",
+      "AI_HLYTests/A2UIIngressTests",
+      "AI_HLYTests/HanlinNativeWidgetRendererTests",
+      "AI_HLYTests/ChatScrollViewHandleTests",
+      "AI_HLYTests/ChatAutoFollowTests",
+      "AI_HLYTests/HanlinApplicationSystemIntegrationTests",
+      "AI_HLYTests/ShareInboxHostIntegrationTests",
+      "AI_HLYTests/HanlinMCPEmbeddingTests",
+      "AI_HLYTests/HanlinCapabilityObservationTests",
+      "AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore",
+      "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationConfigurationPreservesOriginalSettings()",
+      "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine()"
+    ],
+    "source_sha": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+    "tracked_diff_sha256": "f163e2256bd5e50bcd91f4767e899dd2807299e8bfb1a57bab9793143fbc1c04",
+    "tracked_workspace_modified": true,
+    "xcode_identity": {
+      "developer_dir_override": "",
+      "executable_path": "/Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild",
+      "executable_sha256": "0b012a2917e0b5b5eb613c22823c0a785c27e23ff6fe1aa3fd118d7903eacb24",
+      "info_plist_sha256": "f2d3a11a2d6efcd6c5da80214b33fc2d2ce38aa72d4281867f5157a3dbe5cfc6",
+      "launcher_path": "/usr/bin/xcodebuild",
+      "launcher_sha256": "7d9561a7f8e3c5d70a571422a4522de986c003879dab3bf7562963b6cdc3e658",
+      "method": "selected_bundle_files_v1",
+      "toolchains_override": "",
+      "version_plist_sha256": "93b253c224fee82d869beb7a0462f2e90138cad83bcdc64784c614eee6f8ba2d"
+    },
+    "xcode_version": "Xcode 27.2\nBuild version 27B52"
+  },
+  "prior_descriptors": [
+    {
+      "name": "AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+      "sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c"
+    }
+  ],
+  "products": {
+    "files": [
+      {
+        "bytes": 40416,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+        "sha256": "260ff5b339f242c9693d1963bf6bd70f57933b993e39dcf8b7b36bbc0d2719a8"
+      },
+      {
+        "bytes": 28890144,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+        "sha256": "e5da257c03d2de04de7d816948c814101f661aa8992cd744382f3acca3f8db76"
+      },
+      {
+        "bytes": 4742,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/Info.plist",
+        "sha256": "5145ec0c6f61985b2672483de5959d3a4f02bfe4727ffdc3f6f9faedbd19f60c"
+      },
+      {
+        "bytes": 42191520,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests",
+        "sha256": "d3855a49a80c584a8bf1651b170d0d0c671d6a3ed8922ee39e3cdf0767a3ca6c"
+      },
+      {
+        "bytes": 710,
+        "path": "Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Info.plist",
+        "sha256": "f154be9926cb2c2f1db21635eba55ee7d9147a942ba37f74476cfbcb4174b895"
+      }
+    ],
+    "format_version": 1,
+    "host_path": "Debug-iphonesimulator/AI_Hanlin.app",
+    "manifest": "AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+    "manifest_sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c",
+    "test_bundle_path": "Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest"
+  },
+  "qualification": "Current build-for-testing may reuse validated compiler products; no fresh-compilation claim.",
+  "schema_version": 1,
+  "status": "SEALED"
+}
