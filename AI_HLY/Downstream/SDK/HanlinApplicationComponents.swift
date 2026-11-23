@@ -96,6 +96,8 @@ public struct HanlinLibraryView: View {
 /// remain under host control; surfaces that already own one retain it.
 public enum HanlinApplicationPanel: String, CaseIterable, Sendable {
     case models, providers, skills, mcp, runtimes, miniApps
+    case prompts, memory, translations, knowledge, diagnostics, toolPermissions
+    case guide, costs, support
 }
 
 @MainActor
@@ -120,6 +122,34 @@ public struct HanlinApplicationPanelView: View {
         case .mcp: MCPServersSettingsView()
         case .runtimes: RuntimeCenterView()
         case .miniApps: NativeAppsHubView()
+        case .prompts: PromptRepoView()
+        case .memory: MemoryArchiveView()
+        case .translations: TranslationDicView()
+        case .knowledge: KnowledgeListView()
+        case .diagnostics: AgentDiagnosticsView()
+        case .toolPermissions: HanlinToolPermissionsView()
+        case .guide: HanlinHelpView(topic: .guide, showsDone: false)
+        case .costs: HanlinHelpView(topic: .costs, showsDone: false)
+        case .support: HanlinSupportView()
         }
+    }
+}
+
+/// The original camera and visual analysis workspace. The host controls where
+/// it is presented and handles the original workspace's return action.
+@MainActor
+public struct HanlinVisionView: View {
+    private let context: HanlinApplicationContext
+    private let onClose: () -> Void
+
+    public init(context: HanlinApplicationContext, onClose: @escaping () -> Void) {
+        self.context = context
+        self.onClose = onClose
+    }
+
+    public var body: some View {
+        VisionView(selectedTab: Binding(get: { 1 }, set: { destination in
+            if destination != 1 { onClose() }
+        })).hanlinApplicationContext(context)
     }
 }

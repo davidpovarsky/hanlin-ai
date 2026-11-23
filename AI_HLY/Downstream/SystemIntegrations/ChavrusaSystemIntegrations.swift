@@ -19,19 +19,21 @@ enum ChavrusaSystemIntegrationBootstrap {
     }
 }
 
-struct EnableChavrusaNotificationsIntent: AppIntent {
-    static let title: LocalizedStringResource = "Enable Hanlin Notifications"
-    static let description = IntentDescription("Enables notifications for Hanlin after you grant system permission.")
-    static let openAppWhenRun = true
+public struct EnableChavrusaNotificationsIntent: AppIntent {
+    public static let title = LocalizedStringResource("Enable Hanlin Notifications", bundle: .atURL(HanlinLocalization.bundle.bundleURL))
+    public static let description = IntentDescription(LocalizedStringResource("Enables notifications for Hanlin after you grant system permission.", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    public static let openAppWhenRun = true
 
-    func perform() async throws -> some IntentResult & ProvidesDialog {
+    public init() {}
+
+    public func perform() async throws -> some IntentResult & ProvidesDialog {
         let center = UNUserNotificationCenter.current()
         let granted = try await center.requestAuthorization(options: [.alert, .badge, .sound, .timeSensitive])
         if granted {
             await MainActor.run { UIApplication.shared.registerForRemoteNotifications() }
-            return .result(dialog: "Notifications are enabled.")
+            return .result(dialog: IntentDialog(LocalizedStringResource("Notifications are enabled.", bundle: .atURL(HanlinLocalization.bundle.bundleURL))))
         }
-        return .result(dialog: "Notification permission wasn’t granted. You can enable it in Settings.")
+        return .result(dialog: IntentDialog(LocalizedStringResource("Notification permission wasn’t granted. You can enable it in Settings.", bundle: .atURL(HanlinLocalization.bundle.bundleURL))))
     }
 }
 
@@ -39,24 +41,26 @@ struct ChavrusaAlarmMetadata: AlarmMetadata {
     let note: String
 }
 
-struct ScheduleChavrusaAlarmIntent: AppIntent {
-    static let title: LocalizedStringResource = "Schedule an Alarm with Hanlin"
-    static let description = IntentDescription("Schedules a system alarm at the time you choose.")
-    static let openAppWhenRun = false
+public struct ScheduleChavrusaAlarmIntent: AppIntent {
+    public static let title = LocalizedStringResource("Schedule an Alarm with Hanlin", bundle: .atURL(HanlinLocalization.bundle.bundleURL))
+    public static let description = IntentDescription(LocalizedStringResource("Schedules a system alarm at the time you choose.", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    public static let openAppWhenRun = false
 
-    @Parameter(title: "Hour", inclusiveRange: (0, 23))
-    var hour: Int
+    @Parameter(title: LocalizedStringResource("Hour", bundle: .atURL(HanlinLocalization.bundle.bundleURL)), inclusiveRange: (0, 23))
+    public var hour: Int
 
-    @Parameter(title: "Minute", inclusiveRange: (0, 59))
-    var minute: Int
+    @Parameter(title: LocalizedStringResource("Minute", bundle: .atURL(HanlinLocalization.bundle.bundleURL)), inclusiveRange: (0, 59))
+    public var minute: Int
 
-    @Parameter(title: "Title")
-    var alarmTitle: String
+    @Parameter(title: LocalizedStringResource("Title", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    public var alarmTitle: String
 
-    func perform() async throws -> some IntentResult & ProvidesDialog {
+    public init() {}
+
+    public func perform() async throws -> some IntentResult & ProvidesDialog {
         let authorization = try await AlarmManager.shared.requestAuthorization()
         guard authorization == .authorized else {
-            return .result(dialog: "Alarm access wasn’t granted.")
+            return .result(dialog: IntentDialog(LocalizedStringResource("Alarm access wasn’t granted.", bundle: .atURL(HanlinLocalization.bundle.bundleURL))))
         }
 
         let time = Alarm.Schedule.Relative.Time(hour: hour, minute: minute)
@@ -74,23 +78,27 @@ struct ScheduleChavrusaAlarmIntent: AppIntent {
             attributes: attributes
         )
         try await AlarmManager.shared.schedule(id: UUID(), configuration: configuration)
-        return .result(dialog: "The alarm was scheduled.")
+        return .result(dialog: IntentDialog(LocalizedStringResource("The alarm was scheduled.", bundle: .atURL(HanlinLocalization.bundle.bundleURL))))
     }
 }
 
-struct ChavrusaChatShortcuts: AppShortcutsProvider {
-    static var appShortcuts: [AppShortcut] {
+public struct ChavrusaChatShortcuts: AppShortcutsProvider {
+    public static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: ScheduleChavrusaAlarmIntent(),
             phrases: ["Schedule an alarm in \(.applicationName)"],
-            shortTitle: "Schedule Alarm",
+            shortTitle: LocalizedStringResource("Schedule Alarm", bundle: .atURL(HanlinLocalization.bundle.bundleURL)),
             systemImageName: "alarm"
         )
         AppShortcut(
             intent: EnableChavrusaNotificationsIntent(),
             phrases: ["Enable notifications in \(.applicationName)"],
-            shortTitle: "Enable Notifications",
+            shortTitle: LocalizedStringResource("Enable Notifications", bundle: .atURL(HanlinLocalization.bundle.bundleURL)),
             systemImageName: "bell.badge"
         )
     }
 }
+
+/// Include this type from the host app's `AppIntentsPackage.includedPackages`
+/// to index the original Hanlin intent implementations after SDK extraction.
+public struct HanlinApplicationIntentsPackage: AppIntentsPackage {}

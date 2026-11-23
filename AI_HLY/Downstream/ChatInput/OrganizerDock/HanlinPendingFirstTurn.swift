@@ -26,7 +26,7 @@ struct HanlinPendingFirstTurn: Identifiable, Sendable {
         case failed(reason: String)
     }
 
-    let submissionID: UUID
+    nonisolated let submissionID: UUID
     let text: String
     let images: [UIImage]
     let documentURLs: [URL]
@@ -50,7 +50,7 @@ struct HanlinPendingFirstTurn: Identifiable, Sendable {
     var status: Status
     var acceptedUserMessageID: UUID? = nil
 
-    var id: UUID { submissionID }
+    nonisolated var id: UUID { submissionID }
 
     var targetChatID: UUID? {
         switch status {

@@ -111,3 +111,44 @@ rerun for this changed checkout path. See
 `evidence/consumer-installation-2026-11-23/sparse-bootstrap-regression.txt` and
 `sparse-installer-regressions.txt`. These checks verify installation mechanics;
 the original host's acceptance remains separately recorded.
+
+
+## Original auxiliary surfaces and system actions
+
+`HanlinApplicationPanelView(context:panel:)` exposes the original provider,
+model, MCP, Skills, runtime and MiniApps screens, plus `.prompts`, `.memory`,
+`.translations`, `.knowledge`, `.diagnostics`, `.toolPermissions`, `.guide`,
+`.costs` and `.support`. These are adapters around the existing screens, with
+the same model container and lifecycle. They do not create separate view or
+storage implementations. The host supplies the containing navigation and
+placement; screens that already own a navigation stack keep that behavior.
+
+`HanlinVisionView(context:onClose:)` embeds the original camera and visual
+analysis screen. Its close callback is the same original workspace return
+binding, routed to the host. Camera/photo privacy declarations and permissions
+belong to the host application as usual.
+
+The original `OpenVisionIntent`, `EnableChavrusaNotificationsIntent` and
+`ScheduleChavrusaAlarmIntent` are public. Import `AppIntents` and `AI_Hanlin` in
+the host application and register the package where the host indexes intents:
+
+```swift
+struct HostIntents: AppIntentsPackage {
+    static var includedPackages: [any AppIntentsPackage.Type] {
+        [HanlinApplicationIntentsPackage.self]
+    }
+}
+```
+
+Hanlin's own thin app target uses this registration. The original Vision intent
+retains its `chavrusachat://openVisionView` route; a host that chooses that intent
+must handle that route, or present `HanlinVisionView` from its own existing
+routing action. Notification and alarm intents retain the original system
+permission requests. Original intent translations now resolve from the shared
+localization bundle without copying its catalogs into every app.
+
+The registration follows Apple's
+[AppIntentsPackage contract](https://developer.apple.com/documentation/appintents/appintentspackage)
+and [Swift package support described at WWDC25](https://developer.apple.com/videos/play/wwdc2025/244/).
+Native compilation, metadata extraction and system invocation remain separate
+acceptance checks; a source or syntax check does not prove Siri invocation.

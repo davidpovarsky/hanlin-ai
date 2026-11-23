@@ -48,9 +48,9 @@ struct HanlinHelpView: View {
 
     private func helpSection(_ title: LocalizedStringKey, _ body: LocalizedStringKey) -> some View {
         Section {
-            Text(body).textSelection(.enabled)
+            Text(body, bundle: HanlinLocalization.bundle).textSelection(.enabled)
         } header: {
-            Text(title)
+            Text(title, bundle: HanlinLocalization.bundle)
         }
     }
 }

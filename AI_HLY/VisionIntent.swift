@@ -6,19 +6,22 @@
 //
 
 import AppIntents
+import HanlinLocalization
 import SwiftUI
 
 
-struct OpenVisionIntent: AppIntent {
-    static let openAppWhenRun: Bool = true
-    static let title: LocalizedStringResource = "Open Hanlin Camera"
-    static let description = IntentDescription("Opens Hanlin’s camera and visual analysis.")
-    static let supportsWidget: Bool = true
-    static let supportsForegroundExecution: Bool = true
-    static let suggestedInvocationPhrase: String? = "Open Hanlin Camera"
+public struct OpenVisionIntent: AppIntent {
+    public static let openAppWhenRun: Bool = true
+    public static let title = LocalizedStringResource("Open Hanlin Camera", bundle: .atURL(HanlinLocalization.bundle.bundleURL))
+    public static let description = IntentDescription(LocalizedStringResource("Opens Hanlin’s camera and visual analysis.", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    public static let supportsWidget: Bool = true
+    public static let supportsForegroundExecution: Bool = true
+    public static let suggestedInvocationPhrase: String? = "Open Hanlin Camera"
     
+    public init() {}
+
     @MainActor
-    func perform() async throws -> some IntentResult {
+    public func perform() async throws -> some IntentResult {
         
         if let url = URL(string: "chavrusachat://openVisionView") { // 自定义 URL Scheme
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
