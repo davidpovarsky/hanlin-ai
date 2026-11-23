@@ -729,6 +729,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         let sourceSheet = app.descendants(matching: .any)["hanlin-scoped-sources"].firstMatch
         XCTAssertTrue(sourceSheet.waitForExistence(timeout: 10), "Tapping the inline chip must open its scoped sources")
+        XCTAssertLessThan(sourceSheet.frame.height, app.frame.height * 0.42,
+                          "A one-source sheet must be compact instead of leaving a large empty iPad panel")
         let sourceRows = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'hanlin-source-'"))
         XCTAssertEqual(sourceRows.count, 1, "This sentence cites one canonical returned source")
         XCTAssertTrue(sourceRows.firstMatch.label.contains("Hanlin Reference Source"))

@@ -31,6 +31,11 @@ public struct HanlinSourcesList: View {
     public init(sources: [HanlinSourceReference], title: String, open: @escaping @MainActor (HanlinSourceReference) -> Void) {
         self.sources = sources; self.title = title; self.open = open
     }
+    // Adapt the source sheet to its actual content instead of leaving large empty space.
+    private var listHeight: CGFloat {
+        min(max(CGFloat(sources.count) * 62 + 36, 140), 500)
+    }
+
     public var body: some View {
         NavigationStack {
             List(sources) { source in
@@ -41,14 +46,16 @@ public struct HanlinSourcesList: View {
                     }.padding(.vertical, 4)
                 }.buttonStyle(.plain)
                     .accessibilityIdentifier("hanlin-source-\(source.id)")
-            }.navigationTitle(title).navigationBarTitleDisplayMode(.inline)
+            }.frame(height: listHeight)
+                .navigationTitle(title).navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
                         Button("Done") { dismiss() }
                             .accessibilityIdentifier("hanlin-sources-close")
                     }
                 }
-        }.accessibilityIdentifier("hanlin-scoped-sources")
+        }.presentationSizing(.fitted)
+            .accessibilityIdentifier("hanlin-scoped-sources")
     }
 }
 
