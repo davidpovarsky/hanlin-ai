@@ -71,7 +71,7 @@ Already executed:
 
 Native gates:
 - Isolated shared products Apple compilation: apple-devtools run45268107140, source3d0c6d1d35d4c04a79036eb9caceedd8fa303364, Xcode27 generic iOS Simulator, BUILD SUCCEEDED.
-- Root cross_app scope selects5 new producer tests and2 new preference UI tests, reusing unrelated prior accepted baselines.
+- The existing production_runtimes workflow selects5 new producer tests and2 new preference UI tests plus the2 affected NativeScript/Expo regressions. The twenty unchanged storage tests are not repeated.
 - The exact successful producer app build is exported with source/executable/archive hashes for true consumer→TextStudio→consumer UI journeys.
 - Every native test must report EXECUTED_PASS, TEST_FAILED, BUILD_FAILED or NOT_RUN accurately.
 - Signed physical-device App Group provisioning is separate from simulator entitlements.
@@ -82,7 +82,7 @@ Otzaria uses com.davidpovarsky.chavrusatext and the same owner team; original gr
 Anytype's original source still declares upstream J3NXTX3T5S and io.anytype.app(.dev).
 An App Group cannot be shared across independent signing teams.
 The integration must use an actually registered owner fork identity and profiles, preserving existing installed user data.
-The cross_app workflow reads existing owner Apple bundle metadata before any identity decision.
+The existing release-resource audit workflow reads owner Apple bundle metadata before any identity decision.
 No signed/physical-sharing success is inferred from a capability flag or an unsigned build.
 
 ## Apple UI references

@@ -21,9 +21,13 @@ UI_PLANS = {
                   'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests'], 7),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
+    # Cross-app adapters and teardown changed: recheck these two runtime cases
+    # and seven new producer/UI cases. Do not repeat unchanged storage tests.
     'production_runtimes': ([
+        'HanlinMiniAppsTests/CrossAppInvocationTests',
+        'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
-        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 2),
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 9),
 }
 
 
@@ -335,7 +339,7 @@ def main():
         state['duration_seconds'] = time.time()-state['started_at']
         (EVIDENCE/'native-acceptance-duration-seconds.txt').write_text(str(int(state['duration_seconds']))+'\n')
         (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
-        if TEST_SCOPE == 'cross_app' and state.get('build') == 'EXECUTED_PASS':
+        if TEST_SCOPE in {'cross_app', 'production_runtimes'} and state.get('build') == 'EXECUTED_PASS':
             exported = subprocess.run([sys.executable, 'Scripts/ProductSplit/export_cross_app_simulator.py'],
                                       cwd=ROOT, capture_output=True, text=True)
             (EVIDENCE/'producer-export.log').write_text(exported.stdout + exported.stderr)
