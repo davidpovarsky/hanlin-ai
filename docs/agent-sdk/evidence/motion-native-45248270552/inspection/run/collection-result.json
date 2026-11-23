@@ -1,0 +1,169 @@
+{
+  "run": 45258652803,
+  "attempt": 1,
+  "source": "9575dd15e816009e11d84ab7f4e21b45cb67c5e8",
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45258652803",
+  "workflow_conclusion": "success",
+  "native_job": 137987121751,
+  "native_conclusion": "success",
+  "runner": "GitHub Actions 1000024922",
+  "tests": [
+    {
+      "children": [
+        {
+          "name": "XCTAssertTrue failed - Rapid reversal must observe at least one later burst action at intermediate geometry: Optional(\"actions=5;expanded=true;natural=100.0;visible=0.0;gaps=2.1668,2.4256,0.0652,0.0220;intermediate=false,false,false,false;scrollY=0.0;orientation=portrait;actionVisible=0.0,106.0,0.0,0.0,0.0\")",
+          "nodeType": "Failure Message",
+          "sourceLocation": {
+            "filePath": "/Users/runner/work/_temp/hanlin-motion-ui.MU4dRMrp/proof/UITests/MotionUITests.swift",
+            "lineNumber": 160
+          }
+        },
+        {
+          "name": "Update the Info.plist: Support for all orientations will soon be required.",
+          "nodeType": "Runtime Warning"
+        }
+      ],
+      "duration": "35s",
+      "durationInSeconds": 35.08790397644043,
+      "name": "testBRapidReversalPresetSwitchAndPersistence()",
+      "nodeIdentifier": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+      "nodeIdentifierURL": "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+      "nodeType": "Test Case",
+      "result": "Failed"
+    },
+    {
+      "children": [
+        {
+          "name": "Update the Info.plist: Support for all orientations will soon be required.",
+          "nodeType": "Runtime Warning"
+        }
+      ],
+      "duration": "40s",
+      "durationInSeconds": 40.88393807411194,
+      "name": "testCReadableLongContentRTLTypeOrientationAndCompletion()",
+      "nodeIdentifier": "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()",
+      "nodeIdentifierURL": "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    }
+  ],
+  "artifact": {
+    "run": 45258652803,
+    "attempt": 1,
+    "artifact_id": 14859038574,
+    "artifact_bytes": 11943872,
+    "artifact_sha256": "d96488e2437a1cc08916e15ae5026dc131c148a2b528f19903f6fc5c5f5e588e",
+    "api_digest_and_size_match": true,
+    "zip_crc": "PASS",
+    "member_count": 19
+  },
+  "collected_at": "2026-11-23T20:23:19.705855+00:00",
+  "raw-result-status.json": null,
+  "result-validation.json": null,
+  "sdk-input-verification.json": null,
+  "macro-input-verification.json": null,
+  "motion-boot-readiness.json": null,
+  "source_run_receipt": {
+    "run": "45248270552",
+    "head": "9575dd15e816009e11d84ab7f4e21b45cb67c5e8",
+    "conclusion": "failure"
+  },
+  "inspection_scope": "Original xcresult attachment export only; no build/simulator/test execution",
+  "original_member_hashes": [
+    {
+      "path": "case-0/3A849424-9B90-44DB-9EB9-DEF9F0326958",
+      "bytes": 1891,
+      "sha256": "919fba3c9f9d07f5399f5e1b14ab310e825b74653667cec2f9fbdb3041dbd841"
+    },
+    {
+      "path": "case-0/68041D95-22D3-48AE-8120-87934B79E1ED.mp4",
+      "bytes": 11070671,
+      "sha256": "03e4de5ca7c1755936d25609061d077e5e6eb11b57527ff234b616406a887ae2"
+    },
+    {
+      "path": "case-0/7AF459B9-43C3-4C21-B8E2-C695E51A7C9B",
+      "bytes": 3359,
+      "sha256": "6e0c996374a600a610fda4ce03bc2d7affdd7c4f54a56b2f6436c62ce7d818ce"
+    },
+    {
+      "path": "case-0/8F699224-73C7-4571-BE6B-29AD84FC9AE1.txt",
+      "bytes": 242,
+      "sha256": "804b231d1d8a2a265b97e30cd83ccb669e59c525a249dfe65df4771f0224b9a5"
+    },
+    {
+      "path": "case-0/AF6E23AB-E15C-4478-877D-758B3ED4CD28",
+      "bytes": 1891,
+      "sha256": "919fba3c9f9d07f5399f5e1b14ab310e825b74653667cec2f9fbdb3041dbd841"
+    },
+    {
+      "path": "case-0/B30F2D2F-C099-4CF2-8892-55620EBADFFB.txt",
+      "bytes": 309,
+      "sha256": "aa4ba5cc6c3706f958a30e876c7175023f0303f3af53b0f07751673cebce071a"
+    },
+    {
+      "path": "case-0/BA2BCD60-F322-4541-81AB-DB2098919D43.txt",
+      "bytes": 191,
+      "sha256": "a6af5ed7407bbf9969c4b1d050dff2a97cf32810dbcee067c805c7da1fdd43a8"
+    },
+    {
+      "path": "case-0/manifest.json",
+      "bytes": 3285,
+      "sha256": "aac068d0e545ebe3cac365fb9d0b366cbac31109dbf27cccfdc98d0e6c68e631"
+    },
+    {
+      "path": "case-0-activities.json",
+      "bytes": 22112,
+      "sha256": "6ab3edf56a651298d89041635721a5184fca615b182015ab39687f83eb4d24a9"
+    },
+    {
+      "path": "case-1/6AD458A1-A5B1-4048-BDF8-0E171DBEF10B.png",
+      "bytes": 158696,
+      "sha256": "ffe9c0d7463548d6c795539e9314c46ec38a69ef7ca7f674b79bb229b21b32ef"
+    },
+    {
+      "path": "case-1/6D65CE60-9522-4163-BEDB-EC546F19BC63.png",
+      "bytes": 210245,
+      "sha256": "50108ba5e0fc05506a71208df242e86303751059e851acbb349c4290c52489c0"
+    },
+    {
+      "path": "case-1/CFEA7A96-2182-421F-8213-59AD02572787.png",
+      "bytes": 546310,
+      "sha256": "ca6dcd2e4bb7f865a6e8af77c2f2304e6a5c2a535bbb810f085b3dffcadd3572"
+    },
+    {
+      "path": "case-1/D8A914AE-4367-44B0-856F-0D27A27DA28B.png",
+      "bytes": 272194,
+      "sha256": "6cf0f3d5637775863572d6e222af42f5c5cbbfdaed3085523afb6f859c75bd9d"
+    },
+    {
+      "path": "case-1/manifest.json",
+      "bytes": 2156,
+      "sha256": "a58f975c8a7c03afaed56b78ce67199a1765f200a9a48a72dd6da7f1f797dbff"
+    },
+    {
+      "path": "case-1-activities.json",
+      "bytes": 28412,
+      "sha256": "73e719be1216b63a63c43bc029045e0fcdccfdcc4e56e585cc90f396767a19c4"
+    },
+    {
+      "path": "selected-test-origins.json",
+      "bytes": 341,
+      "sha256": "f6d66c6e2dd5d47d7e0557525be0a0fca8c4ebd90600584ba49ae9d59b8199cb"
+    },
+    {
+      "path": "selected-tests.json",
+      "bytes": 145,
+      "sha256": "bbec1b4e4f7f5e4c208fb77a3dde758bb08fb0657e3ab5705167956584a38e6b"
+    },
+    {
+      "path": "source-run.json",
+      "bytes": 107,
+      "sha256": "97cecd9b95c4a117824b3ecc986a06a2b34e72adb526ff72a8461c4690a08202"
+    },
+    {
+      "path": "tests.json",
+      "bytes": 3535,
+      "sha256": "75779b8c3b32d15954ae7352ef8ab9c9651244c3b2dd81350f9a387fdbc175c5"
+    }
+  ]
+}

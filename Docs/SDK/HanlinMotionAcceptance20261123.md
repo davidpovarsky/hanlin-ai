@@ -131,3 +131,10 @@ The proof groups its unchanged Thinking header and original `HanlinAnimatedDiscl
 ## 2026-11-23 — Bounded startup repair prepared after four-run comparison
 
 The native bootstatus startup budget is now300s, informed by observed successful cold starts160.355/169.871s under the prior180s boundary. This changes only simulator admission waiting. Original Motion assertions, animation/test deadlines, device criteria, owned-recovery rules and actual native-success requirement are unchanged. Timed-out diagnostic observations retain partial output; selected developer/tool paths and filtered current-user simulator process state are now recorded. [Sixteen focused portable controls pass](../../docs/agent-sdk/evidence/motion-startup-readiness-20261123/README.md). Apple readiness and original A/B/C on this helper are **NOT_RUN**; the previous blocked attempts remain preserved and no new run is claimed.
+
+
+## 2026-11-23 — Readiness executes; original B fails, C native and visual pass
+
+[Run45248270552](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45248270552) at9575dd15 passed native bootstatus after279.588s, the selected SDK build and original source/macro gates. Original B **FAILed** after35.087904s at unchanged line160 despite all3 callbacks arriving65.2/22.0ms apart; the captured pre-action heights remained0/0/0. The grouped proof row alone is insufficient, and every later B scenario remains **NOT_RUN**.
+
+Original C **PASSed** in40.883938s. All4 original screenshots were exported through one read-only xcresult inspection and reviewed: the full-screen landscape original resolves the app-boundary capture artifact, and native+visual C acceptance is now established on the changed row within the component proof scope. A remains pending; D remains historical diagnostic evidence. [The complete source-bound receipts, original attachments and reviewed B frames](../../docs/agent-sdk/evidence/motion-native-45248270552/README.md) retain exact status and limits. No extra B/C run or assertion/timing change followed this result.
