@@ -114,7 +114,13 @@ final class Router: SyntaxVisitor {
     override func visit(_ node: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
         guard let name = callName(node), let first = node.arguments.first else { return .visitChildren }
         if name == "String", first.label?.text == "localized" {
-            bundle(node, reason: "Foundation localization bundle")
+            // A LocalizedStringResource carries its own bundle/table/locale.
+            // Its String initializer has no separate bundle argument. Only
+            // literal / explicit LocalizationValue overloads accept one.
+            if first.expression.is(StringLiteralExprSyntax.self)
+                || first.expression.as(FunctionCallExprSyntax.self).map({ callName($0) == "LocalizationValue" }) == true {
+                bundle(node, reason: "Foundation localization bundle")
+            }
         } else if name == "NSLocalizedString" {
             bundle(node, reason: "named localization table bundle")
         } else if name == "Text", first.label == nil, isLocalized(first.expression) {

@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if HANLIN_A2UI_POC
 import Foundation
 import HanlinPlatformContracts
@@ -13,7 +14,7 @@ struct PresentA2UITool: NativeTool {
             systemImage: "rectangle.and.hand.point.up.left",
             presentationProfile: .modernNative(toolName: name, kind: .generic,
                 systemImage: "rectangle.and.hand.point.up.left",
-                runningTitle: "Preparing interactive content", completedTitle: "Interactive content",
+                runningTitle: HanlinLocalization.resource("Preparing interactive content"), completedTitle: HanlinLocalization.resource("Interactive content"),
                 visibleArgumentKeys: []))
     }
 

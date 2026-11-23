@@ -1,0 +1,89 @@
+{
+  "source_head": "7ad4273669363cb3c8aad4c939c6b41247efde16",
+  "files": [
+    "AI_HLY/Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+    "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+    "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationValidation.swift",
+    "AI_HLY/Downstream/ChatPresentation/AgentSDK/PresentA2UITool.swift",
+    "AI_HLY/NativeAgentExtensions/Tools/QuickCalculateTool.swift",
+    "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/Assistant/NativeAppSefariaTools.swift",
+    "AI_HLY/NativeAppPlatform/BuiltinApps/TextStudio/Assistant/NativeAppTextStudioTools.swift",
+    "AI_HLY/NativeAppPlatform/BuiltinApps/Wikipedia/Assistant/NativeAppWikipediaTools.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinLocalization.swift",
+    "Scripts/Localization/route_shared_resources.swift",
+    "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift"
+  ],
+  "ast_call_edits": 53,
+  "invalid_typed_calls_corrected": 5,
+  "original_modern_native_call_sites": 9,
+  "resource_conversions_preserve_supplied_key_defaultValue_table_locale": true,
+  "apple_authority": [
+    "https://developer.apple.com/documentation/swift/string/init(localized:).md",
+    "https://developer.apple.com/documentation/foundation/localizedstringresource/bundle.md",
+    "https://developer.apple.com/documentation/foundation/localizedstringresource/init(_:table:locale:bundle:comment:)-69k32.md"
+  ],
+  "apple_validation": "pending parent-owned combined native gate; no Apple claim",
+  "syntax_checks": [
+    {
+      "file": "AI_HLY/Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationValidation.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/ChatPresentation/AgentSDK/PresentA2UITool.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "AI_HLY/NativeAgentExtensions/Tools/QuickCalculateTool.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/Assistant/NativeAppSefariaTools.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "AI_HLY/NativeAppPlatform/BuiltinApps/TextStudio/Assistant/NativeAppTextStudioTools.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "AI_HLY/NativeAppPlatform/BuiltinApps/Wikipedia/Assistant/NativeAppWikipediaTools.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinLocalization.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "Scripts/Localization/route_shared_resources.swift",
+      "exit": 0,
+      "errors": ""
+    },
+    {
+      "file": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "exit": 0,
+      "errors": ""
+    }
+  ],
+  "router_audit": {
+    "exit": 0,
+    "scannedFiles": 556,
+    "changedFiles": 0,
+    "unresolved": []
+  }
+}

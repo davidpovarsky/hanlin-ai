@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  QuickCalculateTool.swift
 //  AI_HLY
@@ -21,8 +22,8 @@ struct QuickCalculateTool: NativeTool {
                 toolName: name,
                 kind: .calculate,
                 systemImage: "function",
-                runningTitle: "Calculating",
-                completedTitle: "Calculated",
+                runningTitle: HanlinLocalization.resource("Calculating"),
+                completedTitle: HanlinLocalization.resource("Calculated"),
                 visibleArgumentKeys: ["expression"]
             )
         )

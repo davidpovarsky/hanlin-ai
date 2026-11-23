@@ -60,43 +60,43 @@ enum LegacyToolPresentationAdapter {
         // A nearby-place or calendar search is not a web-search operation.
         switch name {
         case "get_current_location":
-            return descriptor(.navigate, "location", "Checking your location", "Checked your location", [])
+            return descriptor(.navigate, "location", HanlinLocalization.resource("Checking your location"), HanlinLocalization.resource("Checked your location"), [])
         case "query_location":
-            return descriptor(.navigate, "map", "Searching locations", "Searched locations", ["keyword"])
+            return descriptor(.navigate, "map", HanlinLocalization.resource("Searching locations"), HanlinLocalization.resource("Searched locations"), ["keyword"])
         case "search_nearby_locations":
-            return descriptor(.navigate, "map", "Searching nearby places", "Searched nearby places", ["keyword", "coordinate"])
+            return descriptor(.navigate, "map", HanlinLocalization.resource("Searching nearby places"), HanlinLocalization.resource("Searched nearby places"), ["keyword", "coordinate"])
         case "get_route":
-            return descriptor(.navigate, "map", "Planning a route", "Planned a route", ["start", "end", "mode"])
+            return descriptor(.navigate, "map", HanlinLocalization.resource("Planning a route"), HanlinLocalization.resource("Planned a route"), ["start", "end", "mode"])
         case "query_weather":
-            return descriptor(.inspect, "cloud.sun", "Checking the weather", "Checked the weather", ["latitude", "longitude", "timeRange"])
+            return descriptor(.inspect, "cloud.sun", HanlinLocalization.resource("Checking the weather"), HanlinLocalization.resource("Checked the weather"), ["latitude", "longitude", "timeRange"])
         case "search_calendar_and_reminders":
-            return descriptor(.inspect, "calendar", "Searching the calendar", "Searched the calendar", ["keyword", "start_date", "end_date"])
+            return descriptor(.inspect, "calendar", HanlinLocalization.resource("Searching the calendar"), HanlinLocalization.resource("Searched the calendar"), ["keyword", "start_date", "end_date"])
         case "write_system_event":
-            return descriptor(.write, "calendar", "Updating the calendar", "Updated the calendar", ["title", "start_date", "end_date"])
+            return descriptor(.write, "calendar", HanlinLocalization.resource("Updating the calendar"), HanlinLocalization.resource("Updated the calendar"), ["title", "start_date", "end_date"])
         default: break
         }
         if name.contains("search") {
-            return descriptor(.search, "magnifyingglass", "Searching the web", "Searched the web", ["query", "keyword"])
+            return descriptor(.search, "magnifyingglass", HanlinLocalization.resource("Searching the web"), HanlinLocalization.resource("Searched the web"), ["query", "keyword"])
         }
         if name.contains("read") || name.contains("extract") || name.contains("retrieve") {
-            return descriptor(.read, "doc.text", "Reading a source", "Read a source", ["url", "keyword"])
+            return descriptor(.read, "doc.text", HanlinLocalization.resource("Reading a source"), HanlinLocalization.resource("Read a source"), ["url", "keyword"])
         }
         if name.contains("code") || name.contains("python") {
-            return descriptor(.execute, "terminal", "Running code", "Ran code", ["code"])
+            return descriptor(.execute, "terminal", HanlinLocalization.resource("Running code"), HanlinLocalization.resource("Ran code"), ["code"])
         }
         if name.contains("route") || name.contains("location") || name.contains("weather") {
-            return descriptor(.navigate, "map", "Searching locations", "Searched locations", ["keyword", "query"])
+            return descriptor(.navigate, "map", HanlinLocalization.resource("Searching locations"), HanlinLocalization.resource("Searched locations"), ["keyword", "query"])
         }
         if name.contains("calendar") || name.contains("event") {
-            return descriptor(.inspect, "calendar", "Checking the calendar", "Checked the calendar", ["title", "start_date", "end_date"])
+            return descriptor(.inspect, "calendar", HanlinLocalization.resource("Checking the calendar"), HanlinLocalization.resource("Checked the calendar"), ["title", "start_date", "end_date"])
         }
         if name.contains("calculate") {
-            return descriptor(.calculate, "function", "Calculating", "Calculated", ["expression"])
+            return descriptor(.calculate, "function", HanlinLocalization.resource("Calculating"), HanlinLocalization.resource("Calculated"), ["expression"])
         }
         if name.contains("save") || name.contains("write") || name.contains("create") || name.contains("edit") || name.contains("update") || name.contains("make") {
-            return descriptor(.write, "square.and.pencil", "Working…", "Done", ["title"])
+            return descriptor(.write, "square.and.pencil", HanlinLocalization.resource("Working…"), HanlinLocalization.resource("Done"), ["title"])
         }
-        return descriptor(.generic, "sparkles", "Using a tool", "Used a tool", [])
+        return descriptor(.generic, "sparkles", HanlinLocalization.resource("Using a tool"), HanlinLocalization.resource("Used a tool"), [])
     }
 
     private static func descriptor(
@@ -109,8 +109,8 @@ enum LegacyToolPresentationAdapter {
         ToolActivityPresentationDescriptor(
             kind: kind,
             systemImage: image,
-            runningTitle: String(localized: running, bundle: HanlinLocalization.bundle),
-            completedTitle: String(localized: completed, bundle: HanlinLocalization.bundle),
+            runningTitle: String(localized: running),
+            completedTitle: String(localized: completed),
             failedTitle: String(localized: "Tool failed", bundle: HanlinLocalization.bundle),
             visibleArgumentKeys: keys
         )

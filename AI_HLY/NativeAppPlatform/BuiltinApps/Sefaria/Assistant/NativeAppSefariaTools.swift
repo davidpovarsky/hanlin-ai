@@ -18,8 +18,8 @@ struct SefariaAssistantSearchTool: NativeTool {
                 toolName: name,
                 kind: .search,
                 systemImage: "book.closed",
-                runningTitle: "Searching Sefaria",
-                completedTitle: "Searched Sefaria",
+                runningTitle: HanlinLocalization.resource("Searching Sefaria"),
+                completedTitle: HanlinLocalization.resource("Searched Sefaria"),
                 visibleArgumentKeys: ["query"]
             )
         )
@@ -95,8 +95,8 @@ struct SefariaAssistantSourceTool: NativeTool {
                 toolName: name,
                 kind: .read,
                 systemImage: "book.closed",
-                runningTitle: "Reading a source",
-                completedTitle: "Read a source",
+                runningTitle: HanlinLocalization.resource("Reading a source"),
+                completedTitle: HanlinLocalization.resource("Read a source"),
                 visibleArgumentKeys: ["reference"]
             )
         )

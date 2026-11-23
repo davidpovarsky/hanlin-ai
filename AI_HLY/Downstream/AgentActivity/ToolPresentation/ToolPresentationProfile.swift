@@ -106,7 +106,7 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
     systemImage: String,
     runningTitle: LocalizedStringResource,
     completedTitle: LocalizedStringResource,
-    failedTitle: LocalizedStringResource = "Tool failed",
+    failedTitle: LocalizedStringResource = HanlinLocalization.resource("Tool failed"),
     visibleArgumentKeys: [String],
     supportsCard: Bool = true,
     canonicalExecutionPresentation: HanlinToolExecutionPresentationDescriptor? = nil,
@@ -117,9 +117,9 @@ struct ToolPresentationProfile: Codable, Hashable, Sendable {
       activity: ToolActivityPresentationDescriptor(
         kind: kind,
         systemImage: systemImage,
-        runningTitle: String(localized: runningTitle, bundle: HanlinLocalization.bundle),
-        completedTitle: String(localized: completedTitle, bundle: HanlinLocalization.bundle),
-        failedTitle: String(localized: failedTitle, bundle: HanlinLocalization.bundle),
+        runningTitle: String(localized: runningTitle),
+        completedTitle: String(localized: completedTitle),
+        failedTitle: String(localized: failedTitle),
         visibleArgumentKeys: visibleArgumentKeys
       ),
       result: supportsCard

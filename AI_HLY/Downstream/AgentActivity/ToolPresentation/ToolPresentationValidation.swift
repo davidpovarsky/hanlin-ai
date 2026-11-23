@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 enum ToolPresentationValidation {
@@ -26,8 +27,8 @@ enum ToolPresentationValidation {
             toolName: "validation_tool",
             kind: .generic,
             systemImage: "sparkles",
-            runningTitle: "Working…",
-            completedTitle: "Done",
+            runningTitle: HanlinLocalization.resource("Working…"),
+            completedTitle: HanlinLocalization.resource("Done"),
             visibleArgumentKeys: []
         )
         let call = AgentToolCall.parse(

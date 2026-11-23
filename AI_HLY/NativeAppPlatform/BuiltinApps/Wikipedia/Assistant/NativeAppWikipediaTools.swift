@@ -18,8 +18,8 @@ struct WikipediaAssistantSearchTool: NativeTool {
                 toolName: name,
                 kind: .search,
                 systemImage: "globe",
-                runningTitle: "Searching Wikipedia",
-                completedTitle: "Searched Wikipedia",
+                runningTitle: HanlinLocalization.resource("Searching Wikipedia"),
+                completedTitle: HanlinLocalization.resource("Searched Wikipedia"),
                 visibleArgumentKeys: ["query"]
             )
         )
@@ -97,8 +97,8 @@ struct WikipediaAssistantSummaryTool: NativeTool {
                 toolName: name,
                 kind: .read,
                 systemImage: "globe",
-                runningTitle: "Reading Wikipedia",
-                completedTitle: "Read Wikipedia",
+                runningTitle: HanlinLocalization.resource("Reading Wikipedia"),
+                completedTitle: HanlinLocalization.resource("Read Wikipedia"),
                 visibleArgumentKeys: ["title"]
             )
         )

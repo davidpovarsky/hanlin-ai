@@ -18,8 +18,8 @@ struct NativeAppTextStudioAnalyzeTool: NativeTool {
                 toolName: name,
                 kind: .inspect,
                 systemImage: "text.magnifyingglass",
-                runningTitle: "Analyzing text",
-                completedTitle: "Analyzed text",
+                runningTitle: HanlinLocalization.resource("Analyzing text"),
+                completedTitle: HanlinLocalization.resource("Analyzed text"),
                 visibleArgumentKeys: []
             )
         )
@@ -95,8 +95,8 @@ struct NativeAppTextStudioTransformTool: NativeTool {
                 toolName: name,
                 kind: .write,
                 systemImage: "textformat",
-                runningTitle: "Transforming text",
-                completedTitle: "Transformed text",
+                runningTitle: HanlinLocalization.resource("Transforming text"),
+                completedTitle: HanlinLocalization.resource("Transformed text"),
                 visibleArgumentKeys: ["transform"]
             )
         )

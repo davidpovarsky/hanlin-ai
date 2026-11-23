@@ -10,6 +10,16 @@ struct HanlinLocalizationTests {
     }
 
     #if canImport(Darwin)
+    @Test func deferredOriginalTitleKeepsItsTableLocaleAndBundle() {
+        let locale = Locale(identifier: "he")
+        let resource = HanlinLocalization.resource("Response stopped",
+            table: "RuntimeLocalizable", locale: locale)
+        #expect(resource.key == "Response stopped")
+        #expect(resource.table == "RuntimeLocalizable")
+        #expect(resource.locale == locale)
+        #expect(String(localized: resource) == "התגובה נעצרה")
+    }
+
     @Test(arguments: ["en", "he", "zh-Hans"])
     func originalTranslationTablesRemainAvailable(locale: String) throws {
         let languageURL = try #require(HanlinLocalization.bundle.url(forResource: locale, withExtension: "lproj"))
