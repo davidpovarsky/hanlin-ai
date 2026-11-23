@@ -6,3 +6,9 @@ FOUNDATION_EXPORT NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLi
     NSString* hostId, NSString* phase);
 
 FOUNDATION_EXPORT BOOL NativeScriptRefreshUIKitHostView(NSString* viewHandle);
+
+// Host IDs are only unique within one JavaScript VM.
+FOUNDATION_EXPORT NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHostForSession(
+    NSString* hostId, NSString* sessionID);
+FOUNDATION_EXPORT NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLifecycleForSession(
+    NSString* hostId, NSString* phase, NSString* sessionID);
