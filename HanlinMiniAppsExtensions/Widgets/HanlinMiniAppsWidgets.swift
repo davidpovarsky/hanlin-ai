@@ -7,7 +7,7 @@ import WidgetKit
 @main
 struct HanlinMiniAppsWidgetBundle: WidgetBundle {
     var body: some Widget {
-        HanlinScriptingWidget(kind: HanlinExtensionHostConfiguration.miniapps.widgetKind)
+        HanlinScriptingWidget(kind: HanlinExtensionHostConfiguration.hanlinWidgetKind)
         HanlinScriptingLiveActivityWidget()
     }
 }

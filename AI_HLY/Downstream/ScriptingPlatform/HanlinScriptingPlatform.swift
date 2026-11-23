@@ -131,6 +131,8 @@ final class HanlinScriptingPlatform {
     private(set) var activeApplicationModel: HanlinScriptUIModel?
     private(set) var activeNativeScriptController: UIViewController?
     private(set) var activeExpoController: UIViewController?
+    /// Presented by the owning foreground scene when an external action opens a runtime.
+    private(set) var presentsForegroundAction = false
     private(set) var systemUIPresentation: HanlinScriptingSystemUIPresentation?
     private(set) var installedRoot: URL?
     private(set) var widgetPublicationDiagnostics: [HanlinInstalledPackageID: HanlinWidgetStorageDiagnostic] = [:]
@@ -1073,6 +1075,7 @@ final class HanlinScriptingPlatform {
         activeApplicationModel = nil
         activeNativeScriptController = nil
         activeExpoController = nil
+        presentsForegroundAction = false
         Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
     }
 
@@ -1110,6 +1113,9 @@ final class HanlinScriptingPlatform {
             if activeApplicationID != package.record.installedPackageID {
                 guard !isLaunching else { throw HanlinInvocationNotStarted() }
                 await launch(package.record.installedPackageID)
+                if activeApplicationID == package.record.installedPackageID, activeExpoController != nil {
+                    presentsForegroundAction = true
+                }
             }
             guard activeApplicationID == package.record.installedPackageID,
                   expoSession != nil, let adapter = expoHostServices else {
@@ -1799,7 +1805,7 @@ final class HanlinScriptingPlatform {
                    }), package.entrypoints.contains(where: {
                        $0.id == command.invocation.identity.entrypointID && $0.runtimeProfile == .hanlinNativeScript
                    }), isExecutingHeadlessNativeScriptAction || (nativeScriptSession != nil
-                       && (command.invocation.delivery?.source == .share || activeApplicationID != package.record.installedPackageID)) {
+                       && activeApplicationID != package.record.installedPackageID) {
                     continue
                 }
                 do {
@@ -1808,6 +1814,7 @@ final class HanlinScriptingPlatform {
                         return try await self.dispatchResumeCommand(command)
                     }
                     if receipt?.status.isTerminal == true {
+                        HanlinInvocationSnippetIntent.reload()
                         pendingResumeCommands.removeAll { $0.id == command.id }
                     }
                 } catch {
@@ -1887,8 +1894,17 @@ final class HanlinScriptingPlatform {
                       !isExecutingHeadlessNativeScriptAction else {
                     throw HanlinInvocationNotStarted()
                 }
-                if command.invocation.delivery?.source == .share, nativeScriptSession != nil {
-                    throw HanlinInvocationNotStarted()
+                if command.invocation.continueInForeground, nativeScriptSession == nil,
+                   let appEntry = package.entrypoints.first(where: {
+                       $0.kind == .app && $0.runtimeProfile == .hanlinNativeScript
+                   }), declaredAction.handler == appEntry.sourcePath {
+                    guard !isLaunching else { throw HanlinInvocationNotStarted() }
+                    await launch(identity.installedPackageID)
+                    guard activeApplicationID == identity.installedPackageID,
+                          activeNativeScriptController != nil else {
+                        throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost)
+                    }
+                    presentsForegroundAction = true
                 }
             }
             await HanlinMiniAppHost.shared.refresh(installedPackages: installedPackages)

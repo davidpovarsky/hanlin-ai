@@ -48,7 +48,7 @@ public struct HanlinInvokeScriptActionIntent: AppIntent {
         self.parametersJSON = parametersJSON
     }
 
-    public func perform() async throws -> some IntentResult {
+    public func perform() async throws -> some IntentResult & ReturnsValue<String> & ShowsSnippetIntent {
         guard generation >= 0, parametersJSON.utf8.count <= 256 * 1_024,
               let data = parametersJSON.data(using: .utf8) else {
             throw HanlinScriptAppIntentBridgeError.invalidParameters
@@ -61,13 +61,14 @@ public struct HanlinInvokeScriptActionIntent: AppIntent {
             generation: UInt64(generation),
             entrypointID: entrypointID
         )
-        try HanlinScriptExtensionStore().enqueue(.init(invocation: .init(
+        let command = HanlinScriptResumeCommand(invocation: .init(
             identity: identity,
             entityID: actionName,
             parameters: parameters,
             continueInForeground: true
-        )))
-        return .result()
+        ))
+        try HanlinScriptExtensionStore().enqueue(command)
+        return .result(value: command.id.uuidString, snippetIntent: HanlinInvocationSnippetIntent(invocationID: command.id))
     }
 
     private static func value(_ object: Any, depth: Int) throws -> HanlinValue {

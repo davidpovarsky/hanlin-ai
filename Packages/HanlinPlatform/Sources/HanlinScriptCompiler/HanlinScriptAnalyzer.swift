@@ -46,12 +46,12 @@ public struct HanlinCompatibilityInventory: Codable, Hashable, Sendable {
 }
 
 public struct HanlinScriptAnalyzer: Sendable {
-    private static let nativeScriptRuntimeVersion = "9.1.0"
-    private static let nativeScriptSwiftUIVersion = "4.0.2"
-    private static let expoSDKVersion = "58.0.3"
-    private static let expoUIVersion = "58.0.3"
+    private static let nativeScriptRuntimeVersion = HanlinMiniAppHostVersions.nativeScriptRuntimeVersion
+    private static let nativeScriptSwiftUIVersion = HanlinMiniAppHostVersions.nativeScriptSwiftUIVersion
+    private static let expoSDKVersion = HanlinMiniAppHostVersions.expoSDKVersion
+    private static let expoUIVersion = HanlinMiniAppHostVersions.expoUIVersion
     private static let expoUIBridgeVersion = "3.0.0"
-    private static let reactNativeVersion = "0.88.0-rc.0"
+    private static let reactNativeVersion = HanlinMiniAppHostVersions.reactNativeVersion
     private let inventory: HanlinCompatibilityInventory
     private let symbols: [String: HanlinAPISymbolRecord]
     private var fileManager: FileManager { .default }
@@ -513,7 +513,7 @@ public struct HanlinScriptAnalyzer: Sendable {
             if widgetEntrypoints.contains(where: { $0.widgetEngine == .expo }),
                runtimeVersion != expoSDKVersion || plugins["@expo/ui"] as? String != expoUIVersion {
                 findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
-                    message: "Native Expo widgets require the exact embedded runtime 58.0.3 and @expo/ui plugin 58.0.3."))
+                    message: "Native Expo widgets require the exact embedded runtime \(expoSDKVersion) and @expo/ui plugin \(expoUIVersion)."))
             }
             if let requiredBridge = contract["bridgeVersion"] {
                 guard let requiredBridgeVersion = requiredBridge as? String else {
