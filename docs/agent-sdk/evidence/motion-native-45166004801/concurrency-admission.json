@@ -1,0 +1,31 @@
+{
+  "recorded_at": "2026-11-23T11:31:37.263935+00:00",
+  "expected_head": "3a9e1681f03080412d0ee934a00b307f3d7ae59c",
+  "published_ref": "3a9e1681f03080412d0ee934a00b307f3d7ae59c\trefs/heads/codex/hanlin-sdk-unification-20261123",
+  "active_same_branch_runs": [
+    {
+      "run_id": 45163990486,
+      "status": "in_progress",
+      "sha": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+      "motion_jobs": [
+        {
+          "id": 137656163136,
+          "name": "inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'Original Motion visual capture (C)' || 'Original Motion interaction acceptance (B and C)'",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ]
+    }
+  ],
+  "motion_owner_lock": "ACQUIRED",
+  "prior_owned_watchers": [],
+  "concurrency_group": "Build iOS 26 Unsigned IPA-refs/heads/codex/hanlin-sdk-unification-20261123-chat_motion_product",
+  "distinct_root26_group": true,
+  "capacity_evidence": {
+    "run_id": 45161058885,
+    "artifact_id": 14812490420,
+    "sha256": "8ee248816d71591a8f020bfe0c7bd18ed9c36a5bcf520746d29b771301342ab0",
+    "authority": "Root verified original artifact; actual Xcode27.2 and iOS27.2 runtime available; not a boot test"
+  },
+  "production_workflow_tests_identical_to": "32da9e314e22bbf22391fcf8902302acfbb281e2"
+}

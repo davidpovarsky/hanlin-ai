@@ -1,0 +1,138 @@
+Command line invocation:
+    /Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project ChatMotionProof.xcodeproj -scheme ChatMotionProof -destination "platform=iOS Simulator,id=0A35FCA1-4EA8-4DEA-BCB0-B975F45DC449" -destination-timeout 60 -derivedDataPath /Users/runner/work/_temp/hanlin-motion-ui.HKFG9Js0/DerivedData -resultBundlePath /Users/runner/work/_temp/hanlin-motion-ui.HKFG9Js0/Motion.xcresult -disableAutomaticPackageResolution -skipMacroValidation -parallel-testing-enabled NO -test-timeouts-enabled YES -default-test-execution-time-allowance 600 -maximum-test-execution-time-allowance 720 CODE_SIGNING_ALLOWED=NO "-only-testing:ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  cmark-gfm: https://github.com/swiftlang/swift-cmark.git @ 0.9.0
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  HanlinSDK: /Users/runner/work/_temp/hanlin-motion-ui.HKFG9Js0/proof/Vendor/HanlinSDK
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+
+Writing result bundle at path:
+	/Users/runner/work/_temp/hanlin-motion-ui.HKFG9Js0/Motion.xcresult
+
+2026-11-23 11:49:09.845328+0000 ChatMotionProofUITests-Runner[23229:70702] [Default] Running tests...
+2026-11-23 11:49:10.285392+0000 ChatMotionProofUITests-Runner[23229:70702] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-23 11:49:24.751.
+Test Suite 'ChatMotionProofUITests.xctest' started at 2026-11-23 11:49:24.753.
+Test Suite 'MotionUITests' started at 2026-11-23 11:49:24.753.
+Test Case '-[ChatMotionProofUITests.MotionUITests testCReadableLongContentRTLTypeOrientationAndCompletion]' started.
+    t =     0.04s Start Test at 2026-11-23 11:49:24.790
+objc[23229]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.o61H5Z/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x101a18310) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.o61H5Z/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x101a4c398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     1.16s Set Up
+    t =     1.18s     Open ai.hanlin.motion-proof
+    t =     1.18s         Launch ai.hanlin.motion-proof
+2026-11-23 11:49:27.225 xcodebuild[21377:65739] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 11:49:27.225 xcodebuild[21377:65739] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     6.56s             Setting up automation session
+    t =    13.57s             Wait for ai.hanlin.motion-proof to idle
+    t =    18.34s     Waiting 10.0s for "proof-thinking" Button to exist
+    t =    19.37s         Checking `Expect predicate `existsNoRetry == 1` for object "proof-thinking" Button`
+    t =    19.37s             Checking existence of `"proof-thinking" Button`
+<unknown>:0: warning: -[ChatMotionProofUITests.MotionUITests testCReadableLongContentRTLTypeOrientationAndCompletion] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    19.97s Tap "proof-long" Button
+    t =    19.97s     Wait for ai.hanlin.motion-proof to idle
+    t =    19.98s     Find the "proof-long" Button
+    t =    20.75s     Check for interrupting elements affecting "proof-long" Button
+    t =    21.03s         Wait for com.apple.springboard to idle
+    t =    21.31s     Synthesize event
+    t =    21.88s     Wait for ai.hanlin.motion-proof to idle
+    t =    21.89s Tap "proof-rtl" Button
+    t =    21.89s     Wait for ai.hanlin.motion-proof to idle
+    t =    21.90s     Find the "proof-rtl" Button
+    t =    22.78s     Check for interrupting elements affecting "proof-rtl" Button
+    t =    22.95s         Wait for com.apple.springboard to idle
+    t =    23.00s     Synthesize event
+    t =    23.41s     Wait for ai.hanlin.motion-proof to idle
+    t =    23.42s Tap "proof-type" Button
+    t =    23.42s     Wait for ai.hanlin.motion-proof to idle
+    t =    23.43s     Find the "proof-type" Button
+    t =    23.67s     Check for interrupting elements affecting "proof-type" Button
+    t =    23.78s         Wait for com.apple.springboard to idle
+    t =    23.82s     Synthesize event
+    t =    24.18s     Wait for ai.hanlin.motion-proof to idle
+    t =    24.18s Tap "proof-thinking" Button
+    t =    24.18s     Wait for ai.hanlin.motion-proof to idle
+    t =    24.20s     Find the "proof-thinking" Button
+    t =    24.31s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    24.36s         Wait for com.apple.springboard to idle
+    t =    24.41s     Synthesize event
+    t =    24.77s     Wait for ai.hanlin.motion-proof to idle
+    t =    25.90s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    25.91s     Find the "proof-geometry-state" StaticText
+    t =    26.03s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    26.57s Added attachment named 'long-rtl-accessibility-type-portrait'
+    t =    26.58s Setting device orientation to Landscape Left
+    t =    26.59s     Device orientation changed to Landscape Left
+    t =    26.99s     Interface orientation changed to Landscape Right
+    t =    27.08s     Wait for ai.hanlin.motion-proof to idle
+    t =    27.09s     Wait for com.apple.springboard to idle
+    t =    28.15s Checking `Expect predicate `value CONTAINS "orientation=landscape"` for object "proof-geometry-state" StaticText`
+    t =    28.15s     Find the "proof-geometry-state" StaticText
+    t =    29.77s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    29.77s     Find the "proof-geometry-state" StaticText
+    t =    30.44s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    30.83s Added attachment named 'long-rtl-accessibility-type-landscape'
+    t =    31.10s Added attachment named 'long-rtl-accessibility-type-landscape-full-screen'
+    t =    31.10s Tap "proof-finish" Button
+    t =    31.10s     Wait for ai.hanlin.motion-proof to idle
+    t =    31.11s     Find the "proof-finish" Button
+    t =    31.23s     Check for interrupting elements affecting "proof-finish" Button
+    t =    31.41s         Wait for com.apple.springboard to idle
+    t =    31.46s     Synthesize event
+    t =    31.89s     Wait for ai.hanlin.motion-proof to idle
+    t =    31.89s Find the "proof-effective-motion" StaticText
+    t =    32.04s Setting device orientation to Portrait
+    t =    32.05s     Device orientation changed to Portrait
+    t =    32.52s     Interface orientation changed to Portrait
+    t =    32.53s     Wait for ai.hanlin.motion-proof to idle
+    t =    32.91s     Wait for com.apple.springboard to idle
+    t =    34.01s Checking `Expect predicate `value CONTAINS "orientation=portrait"` for object "proof-geometry-state" StaticText`
+    t =    34.01s     Find the "proof-geometry-state" StaticText
+    t =    35.20s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    35.20s     Find the "proof-geometry-state" StaticText
+    t =    35.40s Find the "proof-thinking" Button
+    t =    35.63s Tap "proof-thinking" Button
+    t =    35.63s     Wait for ai.hanlin.motion-proof to idle
+    t =    35.63s     Find the "proof-thinking" Button
+    t =    35.67s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    35.75s         Wait for com.apple.springboard to idle
+    t =    35.77s     Synthesize event
+    t =    36.16s     Wait for ai.hanlin.motion-proof to idle
+    t =    38.33s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    38.33s     Find the "proof-geometry-state" StaticText
+    t =    38.42s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    38.71s Added attachment named 'completed-closed-portrait'
+    t =    38.71s Tear Down
+    t =    38.71s     Setting device orientation to Portrait
+    t =    38.72s         Wait for ai.hanlin.motion-proof to idle
+    t =    38.72s         Wait for com.apple.springboard to idle
+    t =    38.72s     Terminate ai.hanlin.motion-proof:23939
+Test Case '-[ChatMotionProofUITests.MotionUITests testCReadableLongContentRTLTypeOrientationAndCompletion]' passed (40.222 seconds).
+Test Suite 'MotionUITests' passed at 2026-11-23 11:50:05.011.
+	 Executed 1 test, with 0 failures (0 unexpected) in 40.222 (40.258) seconds
+Test Suite 'ChatMotionProofUITests.xctest' passed at 2026-11-23 11:50:05.011.
+	 Executed 1 test, with 0 failures (0 unexpected) in 40.222 (40.258) seconds
+Test Suite 'Selected tests' passed at 2026-11-23 11:50:05.012.
+	 Executed 1 test, with 0 failures (0 unexpected) in 40.222 (40.260) seconds
+2026-11-23 11:51:08.249 xcodebuild[21377:65739] [MT] IDETestOperationsObserverDebug: 142.799 elapsed -- Testing started completed.
+2026-11-23 11:51:08.249 xcodebuild[21377:65739] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-23 11:51:08.249 xcodebuild[21377:65739] [MT] IDETestOperationsObserverDebug: 142.799 sec, +142.799 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/_temp/hanlin-motion-ui.HKFG9Js0/Motion.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
