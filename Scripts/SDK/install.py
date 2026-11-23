@@ -1,0 +1,274 @@
+#!/usr/bin/env python3
+"""Install a pinned selected-product Hanlin SDK checkout for an original host."""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path, PurePosixPath
+import platform
+import re
+import subprocess
+import sys
+import tempfile
+
+REPOSITORY_URL = "https://github.com/davidpovarsky/hanlin-ai.git"
+GENERATED = ("Package.swift", "docs/agent-sdk/unified-package-manifest.json")
+RECEIPT = ".hanlin-sdk/installation.json"
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def write_json(path: Path, value: object) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(".json.tmp")
+    temporary.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
+    temporary.replace(path)
+
+
+def run(arguments: list[str], *, cwd: Path | None = None) -> str:
+    result = subprocess.run(arguments, cwd=cwd, text=True, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, check=False)
+    if result.returncode:
+        raise RuntimeError(result.stderr.strip() or result.stdout.strip() or
+                           f"{arguments[0]} failed with exit {result.returncode}")
+    return result.stdout.rstrip("\n")
+
+
+def git(root: Path, *arguments: str) -> str:
+    return run(["git", "-C", str(root), *arguments])
+
+
+def read_lock(path: Path) -> dict:
+    value = json.loads(path.read_text())
+    if not isinstance(value, dict):
+        raise ValueError("HanlinSDK.lock.json must be an object")
+    revision = value.get("revision", "")
+    products = value.get("products")
+    if not isinstance(revision, str) or not re.fullmatch(r"[a-f0-9]{40}", revision):
+        raise ValueError("HanlinSDK.lock.json requires a full immutable 40-character commit revision")
+    if not isinstance(products, list) or not products:
+        raise ValueError("HanlinSDK.lock.json requires a nonempty products array")
+    if not all(isinstance(name, str) and re.fullmatch(r"[A-Za-z][A-Za-z0-9_]*", name) for name in products):
+        raise ValueError("SDK products must be exact public product names")
+    if len(set(products)) != len(products):
+        raise ValueError("SDK product selection contains duplicate names")
+    return {"revision": revision, "products": products}
+
+
+def destination_path(host: Path, relative: str) -> Path:
+    path = PurePosixPath(relative)
+    if path.is_absolute() or "\\" in relative or any(part in ("", ".", "..") for part in relative.split("/")):
+        raise ValueError("The SDK destination must be a directory inside the host")
+    destination = host / path
+    if not destination.resolve().is_relative_to(host.resolve()):
+        raise ValueError("The SDK destination escapes the host")
+    return destination
+
+
+def default_cache() -> Path:
+    if platform.system() == "Darwin":
+        return Path.home() / "Library/Caches/HanlinSDK/native"
+    return Path(os.environ.get("XDG_CACHE_HOME", str(Path.home() / ".cache"))) / "hanlin-sdk/native"
+
+
+def generated_hashes(root: Path) -> dict[str, str]:
+    return {name: sha256(root / name) for name in GENERATED if (root / name).is_file()}
+
+
+def verify_owned_changes(root: Path, receipt: dict | None) -> None:
+    """Only unchanged installer-generated output may be reset during an upgrade."""
+    records = git(root, "status", "--porcelain=v1", "-z", "--untracked-files=normal").split("\0")
+    for record in records:
+        if not record:
+            continue
+        status, path = record[:2], record[3:]
+        if "R" in status or "C" in status or path not in GENERATED:
+            raise ValueError(f"SDK checkout has an actual source edit; preserve it before installing: {path}")
+        expected = (receipt or {}).get("generatedSHA256", {}).get(path)
+        if not expected or not (root / path).is_file() or sha256(root / path) != expected:
+            raise ValueError(f"Generated SDK file was edited outside the installer: {path}")
+
+
+def reset_generated(root: Path) -> None:
+    for name in GENERATED:
+        tracked = subprocess.run(["git", "-C", str(root), "ls-files", "--error-unmatch", "--", name],
+                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+        if tracked:
+            git(root, "restore", "--source=HEAD", "--staged", "--worktree", "--", name)
+        elif (root / name).is_file():
+            (root / name).unlink()
+
+
+def ignore_checkout(host: Path, destination: Path) -> None:
+    relative = destination.relative_to(host).as_posix()
+    ignored = subprocess.run(["git", "-C", str(host), "check-ignore", "--quiet", "--", relative + "/"],
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+    if not ignored:
+        ignore = host / ".gitignore"
+        text = ignore.read_text() if ignore.exists() else ""
+        line = f"/{relative}/"
+        if line not in text.splitlines():
+            ignore.write_text(text + ("" if not text or text.endswith("\n") else "\n") + line + "\n")
+    # Receipts describe generated installation state, never a fork of SDK sources.
+    exclude = Path(git(destination, "rev-parse", "--git-path", "info/exclude"))
+    if not exclude.is_absolute():
+        exclude = destination / exclude
+    exclude.parent.mkdir(parents=True, exist_ok=True)
+    text = exclude.read_text() if exclude.exists() else ""
+    if "/.hanlin-sdk/" not in text.splitlines():
+        exclude.write_text(text + ("" if not text or text.endswith("\n") else "\n") + "/.hanlin-sdk/\n")
+
+
+def repository_identity(value: str) -> str:
+    if value.startswith("git@github.com:"):
+        value = "https://github.com/" + value.removeprefix("git@github.com:")
+    return value.rstrip("/").removesuffix(".git")
+
+
+def has_commit(root: Path, revision: str) -> bool:
+    return subprocess.run(["git", "-C", str(root), "cat-file", "-e", revision + "^{commit}"],
+                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+
+
+def prepare_checkout(host: Path, lock: dict, relative: str, repository: str = REPOSITORY_URL,
+                     source_cache: Path | None = None) -> tuple[Path, dict | None]:
+    destination = destination_path(host, relative)
+    if source_cache:
+        source_cache = source_cache.resolve(strict=True)
+        if repository_identity(git(source_cache, "remote", "get-url", "origin")) != repository_identity(repository):
+            raise ValueError("The shared Git cache must belong to the canonical Hanlin repository")
+    receipt = None
+    if destination.exists():
+        if not (destination / ".git").exists():
+            raise ValueError(f"SDK destination contains unmanaged files: {destination}")
+        if repository_identity(git(destination, "remote", "get-url", "origin")) != repository_identity(repository):
+            raise ValueError("SDK destination is not the canonical Hanlin repository")
+        receipt_path = destination / RECEIPT
+        receipt = json.loads(receipt_path.read_text()) if receipt_path.exists() else None
+        verify_owned_changes(destination, receipt)
+        reset_generated(destination)
+        if git(destination, "rev-parse", "HEAD") != lock["revision"]:
+            if not has_commit(destination, lock["revision"]):
+                git(destination, "fetch", "--no-tags", "--depth=1", "origin", lock["revision"])
+            git(destination, "checkout", "--detach", lock["revision"])
+    else:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix=".hanlin-sdk-clone-", dir=destination.parent) as temporary:
+            checkout = Path(temporary) / "checkout"
+            if source_cache:
+                run(["git", "clone", "--shared", "--no-checkout", str(source_cache), str(checkout)])
+                git(checkout, "remote", "set-url", "origin", repository)
+            else:
+                run(["git", "clone", "--filter=blob:none", "--no-checkout", repository, str(checkout)])
+            if not has_commit(checkout, lock["revision"]):
+                git(checkout, "fetch", "--no-tags", "--depth=1", "origin", lock["revision"])
+            git(checkout, "checkout", "--detach", lock["revision"])
+            if git(checkout, "rev-parse", "HEAD") != lock["revision"]:
+                raise ValueError("Fetched SDK revision does not match the host lock")
+            checkout.rename(destination)
+    if git(destination, "rev-parse", "HEAD") != lock["revision"]:
+        raise ValueError("Installed SDK revision does not match the host lock")
+    ignore_checkout(host, destination)
+    return destination, receipt
+
+
+def generate_profile(root: Path, products: list[str]) -> dict:
+    generator = root / "Scripts/SDK/generate_manifest.py"
+    if not generator.is_file():
+        raise ValueError("Pinned source does not contain the shared SDK manifest generator")
+    try:
+        run([sys.executable, str(generator), "--products", *products], cwd=root)
+        description = json.loads(run(["swift", "package", "--package-path", str(root), "dump-package"]))
+        declared = {item["name"] for item in description["products"]}
+        if declared != set(products):
+            raise ValueError(f"Generated product closure differs from the host lock: {sorted(declared)}")
+        return description
+    except Exception:
+        # These two files were verified as installer-owned before generation.
+        reset_generated(root)
+        raise
+
+
+def install(host: Path, lock_path: Path, destination: str, cache: Path,
+            *, repository: str = REPOSITORY_URL, source_cache: Path | None = None) -> dict:
+    host = host.resolve(strict=True)
+    lock = read_lock(lock_path)
+    root, _ = prepare_checkout(host, lock, destination, repository, source_cache)
+    receipt = {"schemaVersion": 1, "repository": repository, "revision": lock["revision"],
+               "products": lock["products"], "state": "source-ready",
+               "generatedSHA256": generated_hashes(root)}
+    write_json(root / RECEIPT, receipt)
+    description = generate_profile(root, lock["products"])
+    receipt["generatedSHA256"] = generated_hashes(root)
+    receipt["state"] = "profile-ready"
+    binary_targets = [item for item in description["targets"] if item["type"] == "binary"]
+    receipt["binaryTargets"] = [item["name"] for item in binary_targets]
+    write_json(root / RECEIPT, receipt)
+    managed_targets = []
+    if binary_targets:
+        catalog_path = root / "docs/native-artifacts.json"
+        catalog = json.loads(catalog_path.read_text())
+        managed = set(catalog["requiredTargets"])
+        managed_targets = [item["name"] for item in binary_targets if item["name"] in managed]
+        for item in binary_targets:
+            if item["name"] not in managed and not item.get("url"):
+                raise ValueError(f"Selected native target has no published artifact handler: {item['name']}")
+        if managed_targets:
+            run([sys.executable, str(root / "Scripts/SDK/native_artifacts.py"), "install",
+                 "--catalog", str(catalog_path), "--root", str(root), "--cache", str(cache),
+                 "--targets", *managed_targets], cwd=root)
+    receipt["managedNativeTargets"] = managed_targets
+    receipt["state"] = "installed"
+    receipt["packageName"] = description["name"]
+    receipt["hostRelativePath"] = destination
+    write_json(root / RECEIPT, receipt)
+    return receipt
+
+
+def check(host: Path, lock_path: Path, relative: str) -> dict:
+    lock = read_lock(lock_path)
+    root = destination_path(host.resolve(strict=True), relative)
+    receipt = json.loads((root / RECEIPT).read_text())
+    verify_owned_changes(root, receipt)
+    if (receipt["state"] != "installed" or receipt["revision"] != lock["revision"]
+            or receipt["products"] != lock["products"] or git(root, "rev-parse", "HEAD") != lock["revision"]
+            or generated_hashes(root) != receipt["generatedSHA256"]):
+        raise ValueError("SDK installation does not match the host lock and generated profile")
+    # Check that managed native installation paths still exist without a download.
+    if receipt.get("managedNativeTargets"):
+        catalog = json.loads((root / "docs/native-artifacts.json").read_text())
+        native_receipt = json.loads((root / ".hanlin-sdk/native-artifacts-installed.json").read_text())
+        selected = set(receipt["managedNativeTargets"])
+        records = [item for item in catalog["artifacts"] if item["target"] in selected]
+        records += [item for item in catalog["supportArtifacts"] if selected.intersection(item["requiredBy"])]
+        for item in records:
+            paths = [item["installPath"]] if item["kind"] == "xcframework" else item["installPaths"]
+            if any(native_receipt["paths"].get(path) != item["checksum"] or not (root / path).exists() for path in paths):
+                raise ValueError("Managed native installation is incomplete; run the installer again")
+    return receipt
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--host-root", type=Path, required=True)
+    parser.add_argument("--lock", type=Path, help="Default: HOST/HanlinSDK.lock.json")
+    parser.add_argument("--destination", default="Vendor/HanlinSDK")
+    parser.add_argument("--cache", type=Path, default=default_cache())
+    parser.add_argument("--source-cache", type=Path, help="Borrow objects from an existing canonical Git checkout/mirror; keep it available")
+    parser.add_argument("--check", action="store_true", help="Read-only installation/lock/profile check; no builds or downloads")
+    args = parser.parse_args()
+    lock_path = args.lock or args.host_root / "HanlinSDK.lock.json"
+    result = (check(args.host_root, lock_path, args.destination) if args.check else
+              install(args.host_root, lock_path, args.destination, args.cache, source_cache=args.source_cache))
+    print(json.dumps(result, indent=2, sort_keys=True))
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (ValueError, KeyError, OSError, RuntimeError) as error:
+        raise SystemExit(f"Hanlin SDK installation: {error}") from error
