@@ -29,7 +29,8 @@ import Testing
                        "parameters": ["type": "object", "properties": [:]]]]
         ])
         let prepared = try HanlinChatGPTPlanWire.prepare(request)
-        let body = try #require(JSONSerialization.jsonObject(with: #require(prepared.httpBody)) as? [String: Any])
+        let payload = try #require(prepared.httpBody)
+        let body = try #require(JSONSerialization.jsonObject(with: payload) as? [String: Any])
         #expect(body["store"] as? Bool == false && body["stream"] as? Bool == true)
         #expect(body["max_output_tokens"] == nil && body["temperature"] == nil && body["previous_response_id"] == nil)
         let tools = try #require(body["tools"] as? [[String: Any]])
@@ -95,7 +96,8 @@ import Testing
         let calls = Calls()
         let fetch: FetchFunction = { request in
             let index = await calls.request()
-            let body = try #require(JSONSerialization.jsonObject(with: #require(request.httpBody)) as? [String: Any])
+            let payload = try #require(request.httpBody)
+            let body = try #require(JSONSerialization.jsonObject(with: payload) as? [String: Any])
             #expect(body["store"] as? Bool == false && body["stream"] as? Bool == true)
             let tools = try #require(body["tools"] as? [[String: Any]])
             #expect(tools.first?["type"] as? String == "namespace")
