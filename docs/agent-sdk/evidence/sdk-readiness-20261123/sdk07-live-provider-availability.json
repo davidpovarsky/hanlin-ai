@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-23T16:54:26.948189+00:00",
+  "status": "BLOCKED",
+  "repository": "davidpovarsky/Maktabah",
+  "check": "Read-only GitHub Actions repository secret-name metadata",
+  "expectedSecretName": "OTZARIA_LIVE_GEMINI_API_KEY",
+  "namePresent": false,
+  "matchingMetadata": [],
+  "totalSecretCount": 10,
+  "secretValueRead": false,
+  "observedOriginalRun": 45121359772,
+  "nativeNoSendRunRetained": 45125110974,
+  "action": "No credential substitution and no duplicate live dispatch."
+}
