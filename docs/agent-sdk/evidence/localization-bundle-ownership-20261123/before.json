@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_chat_localization_bundles.PackagedLocalizationOwnershipTests.test_same_original_bundle_in_app_framework_and_extensions_is_accepted",
+    "-v"
+  ],
+  "exit": 1,
+  "validatorSHA256": "eb6541a07c159f89639724058c3ef0a7557bb881bedb62d4d26d58d44946a673"
+}

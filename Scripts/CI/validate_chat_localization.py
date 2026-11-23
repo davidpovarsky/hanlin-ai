@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Reject damaged UI translations and verify the values actually packaged in an app."""
 import argparse
+import hashlib
+import importlib.util
 import json
 import plistlib
 import re
@@ -47,6 +49,27 @@ def catalog_bytes(root, revision, table, relative):
     path = relative if available else LEGACY_CATALOGS[table]
     return subprocess.check_output(["git", "show", revision + ":" + path], cwd=root), available
 
+def shared_bundle(app, copies):
+    """Resolve one SDK identity after checking every embedded copy in full."""
+    verifier_path = Path(__file__).resolve().parents[1] / "SDK/verify_bundle_resources.py"
+    spec = importlib.util.spec_from_file_location("sdk_bundle_resources", verifier_path)
+    verifier = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(verifier)
+    if app.name in SHARED_BUNDLES:
+        if not app.is_dir():
+            raise ValueError("Canonical localization bundle is not a directory")
+        inventory = verifier.bundle_inventory(app)
+        encoded = json.dumps(inventory, sort_keys=True, separators=(",", ":")).encode()
+        copies.append({"path": ".", "inventorySHA256": hashlib.sha256(encoded).hexdigest(),
+                       "entries": len(inventory),
+                       "files": sum(row["kind"] == "file" for row in inventory.values())})
+        return app
+    bundle = verifier.module_bundle(app, "HanlinLocalization", copies=copies)
+    if bundle.name not in SHARED_BUNDLES:
+        raise ValueError("Unexpected canonical localization bundle identity: " + bundle.name)
+    return bundle
+
+
 def packaged_table(app, locale, table, shared, bundles):
     if not shared:
         return app / (locale + ".lproj") / (table + ".strings")
@@ -85,10 +108,16 @@ def validate(root, revision=None, app=None):
     errors = []
     checked_values = 0
     checked_packaged_values = 0
-    bundles = ([app] if app and app.name in SHARED_BUNDLES else
-               sorted({bundle for name in SHARED_BUNDLES for bundle in app.rglob(name)}) if app else [])
+    bundles = None
+    bundle_copies = []
     for table, (relative, required_keys) in CATALOGS.items():
         raw, shared = catalog_bytes(root, revision, table, relative)
+        if app and shared and bundles is None:
+            try:
+                bundles = [shared_bundle(app, bundle_copies)]
+            except (OSError, RuntimeError, ValueError) as error:
+                bundles = []
+                errors.append({"table": table, "reason": str(error)})
         data = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_object)
         for key, entry in data["strings"].items():
             for locale, localization in entry.get("localizations", {}).items():
@@ -118,7 +147,8 @@ def validate(root, revision=None, app=None):
                     if packaged.get(key) != value:
                         errors.append({"table": table, "key": key, "locale": locale, "reason": "packaged value differs from source"})
     result = {"status": "PASS" if not errors else "FAIL", "catalog_values": checked_values,
-              "packaged_values": checked_packaged_values, "errors": errors}
+              "packaged_values": checked_packaged_values, "errors": errors,
+              "bundleCopies": bundle_copies}
     return result
 
 def main():

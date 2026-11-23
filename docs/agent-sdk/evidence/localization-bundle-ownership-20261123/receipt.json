@@ -1,0 +1,26 @@
+{
+  "sourceBuildRun": 45246711373,
+  "sourceBuildSHA": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+  "originalLogSHA256": "36ec059cdadb68070c67db73ddc2bf935c3a475bddef228204aa16cf538f735b",
+  "originalLineNumbers": [
+    71472,
+    71474,
+    77834,
+    77836,
+    77897,
+    77899,
+    78179,
+    78181,
+    123543,
+    123545
+  ],
+  "originalCommandSHA256": "5bb3bbed135de1fff45ed2330a544d0a91902510720e44355adde608e8809fc5",
+  "before": "FAIL: valid duplicate-copy fixture",
+  "after": "PASS:6 affected controls",
+  "nativeCopyEquality": "NOT_RUN",
+  "nativeLocaleTests": "NOT_RUN",
+  "actualNativeFailureClaim": false,
+  "independentReview": "PASS: release_hosts, read-only, no control replay",
+  "validatorSHA256": "315c436ea9024ccf5dee53429e3d050ef1f0260f8c992df0b854b5323bb2b6a4",
+  "sharedVerifierSHA256": "321fd8cf770b4461de8514394c1a1397539c483b893a96890a25f9a0c6f5bb5d"
+}
