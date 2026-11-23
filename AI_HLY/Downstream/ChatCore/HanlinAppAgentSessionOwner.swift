@@ -138,7 +138,7 @@ final class HanlinAppAgentSessionOwner {
                         temporary: Bool, modelContext: ModelContext) async throws {
         try Task.checkCancellation()
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.staleContext }
-        let namespace = try Self.namespace(conversationID: conversationID, temporary: temporary)
+        let namespace = try Self.namespace(conversationID: conversationID, temporary: temporary, modelContext: modelContext)
         if let session {
             guard session.identity.conversationID == conversationID,
                   session.identity.context.namespace == namespace,
@@ -170,9 +170,10 @@ final class HanlinAppAgentSessionOwner {
         bindings = restored
     }
 
-    private static func namespace(conversationID: UUID, temporary: Bool) throws -> HanlinConversationNamespace {
-        try HanlinConversationNamespace(app: "hanlin", account: "local-personal-library",
-            workspace: temporary ? "temporary" : "swiftdata", space: conversationID.uuidString)
+    private static func namespace(conversationID: UUID, temporary: Bool,
+                                  modelContext: ModelContext) throws -> HanlinConversationNamespace {
+        try HanlinApplicationContextRegistry.configuration(for: modelContext.container)
+            .namespace(conversationID: conversationID, temporary: temporary)
     }
 
     /// Called with the already-created original response row, real conversation and scene.
@@ -204,7 +205,7 @@ final class HanlinAppAgentSessionOwner {
     func prepareDataAccess(request: Request, modelContext: ModelContext) throws -> DataAccess {
         try Task.checkCancellation()
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
-        let namespace = try Self.namespace(conversationID: request.conversationID, temporary: request.temporary)
+        let namespace = try Self.namespace(conversationID: request.conversationID, temporary: request.temporary, modelContext: modelContext)
         if let session {
             guard contextGeneration == session.identity.context.generation,
                   session.identity.conversationID == request.conversationID,
@@ -225,7 +226,7 @@ final class HanlinAppAgentSessionOwner {
               binding.request.conversationID == request.conversationID,
               binding.request.sceneID == request.sceneID, binding.request.rowID == request.rowID,
               binding.request.uiRunID == request.uiRunID, binding.request.temporary == request.temporary,
-              access.namespace == (try Self.namespace(conversationID: request.conversationID, temporary: request.temporary)) else {
+              access.namespace == (try Self.namespace(conversationID: request.conversationID, temporary: request.temporary, modelContext: modelContext)) else {
             throw HanlinHostError.staleContext
         }
         _ = try withExtendedLifetime(binding.storageOwner) {
@@ -298,7 +299,7 @@ final class HanlinAppAgentSessionOwner {
         historyGeneration = nil
         starting = true
         defer { starting = false }
-        let namespace = try Self.namespace(conversationID: request.conversationID, temporary: request.temporary)
+        let namespace = try Self.namespace(conversationID: request.conversationID, temporary: request.temporary, modelContext: modelContext)
         let matches = session?.identity.conversationID == request.conversationID
             && session?.identity.context.namespace == namespace && session?.identity.context.sceneID == request.sceneID
             && Self.sameEngineConfiguration(modelConfiguration, configuration)
@@ -329,8 +330,14 @@ final class HanlinAppAgentSessionOwner {
                 guard let self, self.contextGeneration == generation else { return false }
                 return await self.consent.request(invocation, approvalScope: approvalScope)
             }
-            let originalSession = HanlinAgentSession(identity: identity, host: originalHost, engine: originalEngine,
-                store: originalStore, capabilities: originalHost, interactions: originalHost)
+            originalHost.toolAdapter = toolAdapter
+            let originalServices = HanlinApplicationHostServices(host: originalHost,
+                capabilities: originalHost, interactions: originalHost)
+            let applicationConfiguration = HanlinApplicationContextRegistry.configuration(for: modelContext.container)
+            let services = try await applicationConfiguration.hostServices?(identity, originalServices) ?? originalServices
+            guard contextGeneration == generation else { throw HanlinHostError.staleContext }
+            let originalSession = HanlinAgentSession(identity: identity, host: services.host, engine: originalEngine,
+                store: originalStore, capabilities: services.capabilities, interactions: services.interactions)
             try splitCoordinator.register(session: originalSession, modelContext: modelContext)
             store = originalStore; host = originalHost; session = originalSession; engine = originalEngine; modelConfiguration = configuration
             originalHost.splitCoordinator = splitCoordinator
@@ -351,21 +358,25 @@ final class HanlinAppAgentSessionOwner {
                 priorCompletion?(value)
                 if self?.session?.identity == value.session { self?.completion = value }
                 self?.presentation?.completed(value)
+                services.onRunCompletion?(value)
             }
             let priorInvalidation = originalSession.onSessionInvalidated
             originalSession.onSessionInvalidated = { [weak self] value in
                 priorInvalidation?(value)
                 self?.presentation?.invalidated(value)
+                services.onSessionInvalidated?(value)
             }
             let priorResult = originalSession.onHostResult
             originalSession.onHostResult = { [weak self] value in
                 priorResult?(value)
                 self?.splitCoordinator.receiptCommitted(value)
                 self?.presentation?.hostResult(value)
+                services.onHostResult?(value)
             }
             let priorProgress = originalSession.onHostProgress
             originalSession.onHostProgress = { [weak self] value in
                 priorProgress?(value); self?.presentation?.hostProgress(value)
+                services.onHostProgress?(value)
             }
             presentation?.installed(session: originalSession)
             if let record = try await originalStore.load(request.conversationID, namespace: namespace) {
@@ -464,7 +475,7 @@ final class HanlinAppAgentSessionOwner {
     /// still have to pass the store's CAS after the empty replacement revision is saved.
     func clearHistory(conversation: ChatRecords, conversationID: UUID, modelContext: ModelContext,
                       temporary: Bool, replacementText: String) throws -> ChatMessages {
-        let namespace = try Self.namespace(conversationID: conversationID, temporary: temporary)
+        let namespace = try Self.namespace(conversationID: conversationID, temporary: temporary, modelContext: modelContext)
         let originalStore: HanlinAppConversationStore
         if let store, store.namespace == namespace,
            store.belongsTo(context: modelContext, conversation: conversation, temporary: temporary) {

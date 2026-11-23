@@ -661,32 +661,12 @@ struct ListView: View {
     @discardableResult
     private func createAuthorizedNewChatRecord() -> ChatRecords? {
         do {
-            // Use the SAME original catalog order as ChatView's saved useModel index.
-            // A ready native provider needs no remote API key; downloaded LOCAL models
-            // still require their original provider to be enabled.
-            let models = try modelContext.fetch(FetchDescriptor<AllModels>(
-                sortBy: [SortDescriptor(\AllModels.position, order: .forward)]))
-            guard let selectedIndex = HanlinDefaultChatPolicy.creationModelIndex(
-                in: models, providers: apiKeys) else {
-                validationAlertMessage = String(localized: "No chat model is ready. Enable a provider or make an on-device model available in Settings.")
-                validationSettingType = .apiKeys
-                showValidationAlert = true
-                return nil
-            }
-
-            // Optimization remains optional; its own actions validate their model.
-            let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-            let chatName = currentLanguage.hasPrefix("zh") ? "新群聊" : "New Group Chat"
-            let welcomeText = currentLanguage.hasPrefix("zh")
-                ? "欢迎加入新群聊👏" : "Welcome to the new group chat! 👏"
-            let newChat = ChatRecords(name: chatName, type: "chat", lastEdited: Date(),
-                                      useModel: selectedIndex)
-            let welcomeMessage = ChatMessages(role: "information", text: welcomeText,
-                reasoning: "", modelDisplayName: "System", timestamp: Date(), record: newChat)
-            modelContext.insert(newChat)
-            modelContext.insert(welcomeMessage)
-            try modelContext.save()
-            return newChat
+            return try HanlinConversationCreation.create(in: modelContext)
+        } catch HanlinApplicationError.noChatModelReady {
+            validationAlertMessage = String(localized: "No chat model is ready. Enable a provider or make an on-device model available in Settings.")
+            validationSettingType = .apiKeys
+            showValidationAlert = true
+            return nil
         } catch {
             print("Error saving new chat: \(error.localizedDescription)")
             return nil
