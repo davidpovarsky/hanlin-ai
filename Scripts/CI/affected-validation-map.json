@@ -28,7 +28,9 @@
     "Docs/SDK/HanlinNavigationIntegration20261123.json",
     "Docs/SDK/HanlinMCPPublicModelVerification20261123.json",
     "Docs/SDK/HanlinSelectedProfileIdentity20261123.json",
-    "Docs/SDK/HanlinAnytypeNativeConsumerReadback20261123.json"
+    "Docs/SDK/HanlinAnytypeNativeConsumerReadback20261123.json",
+    "Docs/SDK/HanlinScriptRegistryBoundary20261123.json",
+    "Docs/SDK/registry-identity-20261123/**"
   ],
   "components": {
     "ci_router": {
