@@ -28,27 +28,162 @@ public final class HanlinAppleCalendarService {
     public init(store: EKEventStore = .init()) { self.store = store }
 
     public func requestCalendarAuthorization() async throws -> Bool {
-        try await store.requestFullAccessToEvents()
+        try await HanlinCalendarCallbackOperation<Bool>().value { completion in
+            store.requestFullAccessToEvents { @Sendable granted, error in
+                completion(error.map { .failure($0) } ?? .success(granted))
+            }
+            return nil
+        }
     }
 
     public func requestReminderAuthorization() async throws -> Bool {
-        try await store.requestFullAccessToReminders()
+        try await HanlinCalendarCallbackOperation<Bool>().value { completion in
+            store.requestFullAccessToReminders { @Sendable granted, error in
+                completion(error.map { .failure($0) } ?? .success(granted))
+            }
+            return nil
+        }
+    }
+
+    /// The original chat calendar/reminder implementation, now shared by SDK hosts.
+    public func search(_ request: HanlinCalendarSearchRequest) async throws -> [HanlinSystemEvent] {
+        try Task.checkCancellation()
+        guard request.hasCriteria else { return [] }
+        let calendarGranted = request.searchesCalendar ? try await requestCalendarAuthorization() : false
+        let remindersGranted = request.searchesReminders ? try await requestReminderAuthorization() : false
+        try Task.checkCancellation()
+        guard calendarGranted || remindersGranted else {
+            throw HanlinAppleDeviceServiceError.denied(request.searchesCalendar ? .calendar : .reminders)
+        }
+        var result: [HanlinSystemEvent] = []
+        if calendarGranted {
+            let interval = try request.calendarInterval()
+            for event in try calendarEvents(from: interval.start, to: interval.end) {
+                let title = event.title ?? ""
+                let notes = event.notes ?? ""
+                let keywordMatches = request.keyword.map {
+                    title.localizedCaseInsensitiveContains($0) || notes.localizedCaseInsensitiveContains($0)
+                } ?? true
+                let locationMatches = request.location.map {
+                    (event.location ?? "").localizedCaseInsensitiveContains($0)
+                } ?? true
+                let dateMatches = event.startDate.map(interval.contains)
+                    ?? (request.startDate == nil && request.endDate == nil)
+                if keywordMatches && locationMatches && dateMatches {
+                    result.append(.init(type: "calendar", title: title, startDate: event.startDate,
+                        endDate: event.endDate, location: event.location, notes: event.notes,
+                        identifier: event.calendarItemIdentifier))
+                }
+            }
+        }
+        if remindersGranted {
+            let reminders: [HanlinSystemEvent] = try await fetchReminders(
+                matching: store.predicateForReminders(in: nil)
+            ) { reminders in
+                reminders.map { reminder in
+                    .init(type: "reminder", title: reminder.title ?? "",
+                        dueDate: reminder.dueDateComponents?.date, notes: reminder.notes,
+                        priority: reminder.priority == 0 ? nil : reminder.priority,
+                        completed: reminder.isCompleted, identifier: reminder.calendarItemIdentifier)
+                }
+            }
+            result += reminders.filter { reminder in
+                let notes = reminder.notes ?? ""
+                let keywordMatches = request.keyword.map {
+                    reminder.title.localizedCaseInsensitiveContains($0) || notes.localizedCaseInsensitiveContains($0)
+                } ?? true
+                let locationMatches = request.location.map {
+                    reminder.title.localizedCaseInsensitiveContains($0) || notes.localizedCaseInsensitiveContains($0)
+                } ?? true
+                let dateMatches: Bool
+                if let due = reminder.dueDate {
+                    dateMatches = (request.startDate.map { due >= $0 } ?? true)
+                        && (request.endDate.map { due <= $0 } ?? true)
+                } else {
+                    dateMatches = request.startDate == nil && request.endDate == nil
+                }
+                return keywordMatches && locationMatches && dateMatches
+            }
+        }
+        try Task.checkCancellation()
+        return result
+    }
+
+    public func write(_ request: HanlinCalendarWriteRequest) async throws -> HanlinSystemEvent {
+        try Task.checkCancellation()
+        if request.type == "calendar" {
+            guard try await requestCalendarAuthorization() else {
+                throw HanlinAppleDeviceServiceError.denied(.calendar)
+            }
+            try Task.checkCancellation()
+            guard let calendar = store.defaultCalendarForNewEvents,
+                  calendar.allowedEntityTypes.contains(.event), calendar.allowsContentModifications else {
+                throw HanlinAppleDeviceServiceError.unavailable(.calendar)
+            }
+            let event = EKEvent(eventStore: store)
+            event.title = request.title; event.startDate = request.startDate; event.endDate = request.endDate
+            event.location = request.location; event.notes = request.notes; event.calendar = calendar
+            try store.save(event, span: .thisEvent)
+            return .init(type: request.type, title: request.title, startDate: request.startDate,
+                endDate: request.endDate, location: request.location, notes: request.notes,
+                identifier: event.calendarItemIdentifier)
+        }
+        let due = request.dueDate.map {
+            Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone], from: $0)
+        }
+        let values = due.map { components in
+            ["year": components.year, "month": components.month, "day": components.day,
+             "hour": components.hour, "minute": components.minute, "second": components.second].compactMapValues { $0 }
+        }
+        let identifier = try await saveReminder(identifier: nil, calendarIdentifier: nil, title: request.title,
+            notes: request.notes, priority: request.priority ?? 0, isCompleted: false, completionDate: nil,
+            dueDateComponentValues: values, timeZoneIdentifier: due?.timeZone?.identifier,
+            alarmRelativeOffset: request.reminderOffset, alarmAbsoluteDate: request.reminderAbsoluteDate)
+        return .init(type: request.type, title: request.title, dueDate: request.dueDate, notes: request.notes,
+            priority: request.priority, completed: false, identifier: identifier)
+    }
+
+    /// EventKit shortens a single predicate to four years. Partition the original
+    /// five-years-each-way search so current and future events are not silently lost.
+    private func calendarEvents(from startDate: Date, to endDate: Date) throws -> [EKEvent] {
+        let intervals = try HanlinCalendarDateParser.eventIntervals(start: startDate, end: endDate)
+        let deadline = ContinuousClock.now.advanced(by: .seconds(30))
+        var result: [EKEvent] = []
+        var seen: Set<String> = []
+        for interval in intervals {
+            try Task.checkCancellation()
+            guard ContinuousClock.now < deadline else { throw HanlinCalendarRequestError.timedOut }
+            let predicate = store.predicateForEvents(withStart: interval.start, end: interval.end, calendars: nil)
+            for event in store.events(matching: predicate) {
+                // Recurring occurrences share an identifier but have different dates.
+                let key = event.calendarItemIdentifier + "/" + String(event.startDate?.timeIntervalSinceReferenceDate ?? 0)
+                if seen.insert(key).inserted { result.append(event) }
+            }
+        }
+        return result
+    }
+
+    private func fetchReminders<Value: Sendable>(
+        matching predicate: NSPredicate,
+        transform: @escaping @Sendable ([EKReminder]) throws -> Value
+    ) async throws -> Value {
+        try await HanlinCalendarCallbackOperation<Value>().value { completion in
+            let token = store.fetchReminders(matching: predicate) { @Sendable reminders in
+                guard let reminders else {
+                    completion(.failure(HanlinAppleDeviceServiceError.unavailable(.reminders)))
+                    return
+                }
+                completion(Result { try transform(reminders) })
+            }
+            return { self.store.cancelFetchRequest(token) }
+        }
     }
 
     public func events(from startDate: Date, to endDate: Date) throws -> [HanlinScriptCalendarItem] {
-        guard startDate <= endDate else { throw HanlinAppleDeviceServiceError.invalidRequest("calendar_date_range") }
-        return store.events(matching: store.predicateForEvents(
-            withStart: startDate,
-            end: endDate,
-            calendars: nil
-        )).map {
-            .init(
-                id: $0.eventIdentifier ?? "",
-                title: $0.title ?? "",
-                startDate: $0.startDate,
-                endDate: $0.endDate,
-                isAllDay: $0.isAllDay
-            )
+        try calendarEvents(from: startDate, to: endDate).compactMap { event in
+            guard let start = event.startDate, let end = event.endDate else { return nil }
+            return .init(id: event.eventIdentifier ?? "", title: event.title ?? "",
+                         startDate: start, endDate: end, isAllDay: event.isAllDay)
         }
     }
 
@@ -61,16 +196,24 @@ public final class HanlinAppleCalendarService {
         isCompleted: Bool,
         completionDate: Date?,
         dueDateComponentValues: [String: Int]?,
-        timeZoneIdentifier: String?
+        timeZoneIdentifier: String?,
+        alarmRelativeOffset: TimeInterval? = nil,
+        alarmAbsoluteDate: Date? = nil
     ) async throws -> String {
         guard !title.isEmpty, title.utf8.count <= 4_096,
               notes?.utf8.count ?? 0 <= 65_536,
               (0 ... 9).contains(priority) else {
             throw HanlinAppleDeviceServiceError.invalidRequest("reminder_payload")
         }
+        guard alarmRelativeOffset?.isFinite ?? true,
+              alarmAbsoluteDate.map(HanlinCalendarDateParser.isSupported) ?? true,
+              alarmRelativeOffset == nil || alarmAbsoluteDate == nil else {
+            throw HanlinCalendarRequestError.invalidReminderOffset
+        }
         guard try await requestReminderAuthorization() else {
             throw HanlinAppleDeviceServiceError.denied(.reminders)
         }
+        try Task.checkCancellation()
         let existing = identifier.flatMap { store.calendarItem(withIdentifier: $0) as? EKReminder }
         if identifier != nil, existing == nil {
             throw HanlinAppleDeviceServiceError.invalidRequest("reminder_identifier")
@@ -96,6 +239,9 @@ public final class HanlinAppleCalendarService {
                 timeZoneIdentifier: timeZoneIdentifier
             )
         } else { reminder.dueDateComponents = nil }
+        if let offset = alarmRelativeOffset { reminder.addAlarm(EKAlarm(relativeOffset: offset)) }
+        if let date = alarmAbsoluteDate { reminder.addAlarm(EKAlarm(absoluteDate: date)) }
+        try Task.checkCancellation()
         try store.save(reminder, commit: true)
         return reminder.calendarItemIdentifier
     }
@@ -131,6 +277,7 @@ public final class HanlinAppleCalendarService {
         endDate: Date?,
         calendarIdentifiers: [String]
     ) async throws -> [HanlinScriptReminderItem] {
+        try HanlinCalendarDateParser.validateRange(start: startDate, end: endDate)
         try await authorizeReminders()
         let calendars = try calendarIdentifiers.map { identifier in
             guard let calendar = store.calendar(withIdentifier: identifier),
@@ -152,28 +299,19 @@ public final class HanlinAppleCalendarService {
         case .none:
             store.predicateForReminders(in: selectedCalendars)
         }
-        let result: Result<[HanlinScriptReminderItem], HanlinAppleDeviceServiceError> = await withCheckedContinuation { continuation in
-            store.fetchReminders(matching: predicate) { reminders in
-                guard let reminders, reminders.count <= 2_000 else {
-                    continuation.resume(returning: .failure(.unavailable(.reminders)))
-                    return
-                }
-                do {
-                    continuation.resume(returning: .success(try reminders.map(Self.reminderValue)))
-                } catch let error as HanlinAppleDeviceServiceError {
-                    continuation.resume(returning: .failure(error))
-                } catch {
-                    continuation.resume(returning: .failure(.invalidRequest("reminder_result")))
-                }
+        return try await fetchReminders(matching: predicate) { reminders in
+            guard reminders.count <= 2_000 else {
+                throw HanlinAppleDeviceServiceError.unavailable(.reminders)
             }
+            return try reminders.map(Self.reminderValue)
         }
-        return try result.get()
     }
 
     private func authorizeReminders() async throws {
         guard try await requestReminderAuthorization() else {
             throw HanlinAppleDeviceServiceError.denied(.reminders)
         }
+        try Task.checkCancellation()
     }
 
     nonisolated private static func calendarValue(_ calendar: EKCalendar) throws -> HanlinScriptReminderCalendar {
@@ -187,7 +325,8 @@ public final class HanlinAppleCalendarService {
     }
 
     nonisolated private static func reminderValue(_ reminder: EKReminder) throws -> HanlinScriptReminderItem {
-        guard !reminder.calendarItemIdentifier.isEmpty,
+        guard let calendar = reminder.calendar,
+              !reminder.calendarItemIdentifier.isEmpty,
               reminder.calendarItemIdentifier.utf8.count <= 512,
               reminder.title?.utf8.count ?? 0 <= 4_096,
               reminder.notes?.utf8.count ?? 0 <= 65_536 else {
@@ -207,7 +346,7 @@ public final class HanlinAppleCalendarService {
         }
         return try .init(
             identifier: reminder.calendarItemIdentifier,
-            calendar: calendarValue(reminder.calendar),
+            calendar: calendarValue(calendar),
             title: reminder.title ?? "", notes: reminder.notes, priority: reminder.priority,
             isCompleted: reminder.isCompleted, completionDate: reminder.completionDate,
             dueDateComponentValues: values, timeZoneIdentifier: due?.timeZone?.identifier
