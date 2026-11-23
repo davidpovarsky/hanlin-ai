@@ -1,3 +1,4 @@
+import HanlinExtensionContracts
 import CryptoKit
 import Foundation
 import HanlinPlatformContracts
@@ -49,7 +50,7 @@ private final class HanlinWidgetDiagnosticBuffer: @unchecked Sendable {
 }
 
 public struct HanlinScriptExtensionStore: Sendable {
-    public static let appGroupIdentifier = "group.com.itorah.chavrusachat"
+    public static let appGroupIdentifier = HanlinExtensionHostConfiguration.hanlinAppGroupIdentifier
     public static let maximumSnapshotBytes = 4 * 1_024 * 1_024
     public static let maximumArtifactBytes = 3 * 1_024 * 1_024
     private static let logger = Logger(subsystem: "com.hanlin.ai", category: "WidgetStorage")
@@ -88,7 +89,16 @@ public struct HanlinScriptExtensionStore: Sendable {
         self.root = Self.canonicalManagedRoot(for: root)
     }
 
-    public init(appGroupIdentifier: String = Self.appGroupIdentifier) throws {
+    /// Resolve the current executable's explicitly declared shared container.
+    public init() throws {
+        try self.init(hostConfiguration: .load())
+    }
+
+    public init(hostConfiguration: HanlinExtensionHostConfiguration) throws {
+        try self.init(appGroupIdentifier: hostConfiguration.requireAppGroupIdentifier())
+    }
+
+    public init(appGroupIdentifier: String) throws {
         guard let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: appGroupIdentifier
         ) else {

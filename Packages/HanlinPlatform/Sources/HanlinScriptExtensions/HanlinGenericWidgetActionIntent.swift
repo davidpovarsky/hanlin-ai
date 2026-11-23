@@ -1,3 +1,4 @@
+import HanlinExtensionContracts
 import AppIntents
 import Foundation
 import WidgetKit
@@ -14,8 +15,11 @@ public struct HanlinGenericWidgetActionIntent: AppIntent {
     public func perform() async throws -> some IntentResult {
         guard commandJSON.utf8.count <= 256 * 1_024 else { throw HanlinWidgetActionError.invalidIdentity }
         let command = try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(commandJSON.utf8))
-        _ = try HanlinWidgetActionExecutor.perform(command, store: HanlinScriptExtensionStore())
-        WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
+        let host = try HanlinExtensionHostConfiguration.load()
+        let kind = try host.requireWidgetKind()
+        let store = try HanlinScriptExtensionStore(hostConfiguration: host)
+        _ = try HanlinWidgetActionExecutor.perform(command, store: store)
+        WidgetCenter.shared.reloadTimelines(ofKind: kind)
         return .result()
     }
 }
@@ -37,8 +41,11 @@ public struct HanlinSetWidgetValueIntent: SetValueIntent {
         guard commandJSON.utf8.count <= 256 * 1_024 else { throw HanlinWidgetActionError.invalidIdentity }
         var command = try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(commandJSON.utf8))
         command.desiredValue = value
-        _ = try HanlinWidgetActionExecutor.perform(command, store: HanlinScriptExtensionStore())
-        WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
+        let host = try HanlinExtensionHostConfiguration.load()
+        let kind = try host.requireWidgetKind()
+        let store = try HanlinScriptExtensionStore(hostConfiguration: host)
+        _ = try HanlinWidgetActionExecutor.perform(command, store: store)
+        WidgetCenter.shared.reloadTimelines(ofKind: kind)
         return .result()
     }
 }

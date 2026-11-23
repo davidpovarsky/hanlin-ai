@@ -9,6 +9,7 @@ let package = Package(
         .iOS("27.0")
     ],
     products: [
+        .library(name: "HanlinExtensionContracts", targets: ["HanlinExtensionContracts"]),
         .library(
             name: "HanlinPlatformContracts",
             targets: ["HanlinPlatformContracts"]
@@ -74,6 +75,7 @@ let package = Package(
         )
     ],
     targets: [
+        .target(name: "HanlinExtensionContracts"),
         .target(
             name: "HanlinPlatformContracts",
             resources: [
@@ -223,6 +225,7 @@ let package = Package(
         .target(
             name: "HanlinScriptExtensions",
             dependencies: [
+                "HanlinExtensionContracts",
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",

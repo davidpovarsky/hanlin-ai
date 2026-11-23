@@ -27,5 +27,14 @@
 	</dict>
 	<key>ExpoWidgetsAppGroupIdentifier</key>
 	<string>group.com.itorah.chavrusachat</string>
+	<key>HanlinExtensionHost</key>
+	<dict>
+		<key>AppGroupIdentifier</key>
+		<string>group.com.itorah.chavrusachat</string>
+		<key>WidgetKind</key>
+		<string>com.hanlin.scripting.widget</string>
+		<key>NotificationCategoryIdentifier</key>
+		<string>CHAVRUSA_REMINDER</string>
+	</dict>
 </dict>
 </plist>

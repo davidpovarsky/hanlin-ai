@@ -1,3 +1,4 @@
+import HanlinExtensionContracts
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptContracts
@@ -40,7 +41,7 @@ public struct HanlinWidgetActionReceipt: Sendable {
 }
 
 public enum HanlinWidgetActionExecutor {
-    public static let widgetKind = "com.hanlin.scripting.widget"
+    public static let widgetKind = HanlinExtensionHostConfiguration.hanlinWidgetKind
 
     public static func perform(_ command: HanlinWidgetActionCommand, store: HanlinScriptExtensionStore) throws -> HanlinWidgetActionReceipt {
         let context = command.context

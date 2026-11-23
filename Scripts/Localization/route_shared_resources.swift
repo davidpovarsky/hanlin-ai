@@ -172,6 +172,7 @@ arguments.removeAll(where: { $0 == "--apply" })
 var root = URL(fileURLWithPath: FileManager.default.currentDirectoryPath, isDirectory: true)
 var reportURL: URL?
 var excluded: Set<String> = []
+var sourceRoots: [String] = []
 while !arguments.isEmpty {
     let flag = arguments.removeFirst()
     guard !arguments.isEmpty else { throw Failure.invalid("Missing value for " + flag) }
@@ -180,6 +181,7 @@ while !arguments.isEmpty {
     case "--root": root = URL(fileURLWithPath: value, isDirectory: true).standardizedFileURL
     case "--report": reportURL = URL(fileURLWithPath: value)
     case "--exclude": excluded.insert(value)
+    case "--source-root": sourceRoots.append(value)
     default: throw Failure.invalid("Unknown argument " + flag)
     }
 }
@@ -193,7 +195,11 @@ let colors = Dictionary(uniqueKeysWithValues: assetDirectories.filter { $0.pathE
 var prepared: [(URL, String, FileResult)] = []
 var unresolved: [String] = []
 var scanned = 0
-for component in ["AI_HLY", "Packages/HanlinPresentationSDK/Sources"] {
+if sourceRoots.isEmpty {
+    sourceRoots = ["AI_HLY", "Packages/HanlinPresentationSDK/Sources",
+                   "Packages/HanlinAppExtensionsSDK/Sources", "Packages/HanlinWidgetSDK/Sources"]
+}
+for component in sourceRoots {
     let directory = root.appendingPathComponent(component)
     let files = FileManager.default.enumerator(at: directory, includingPropertiesForKeys: nil)!
     for case let url as URL in files where url.pathExtension == "swift" {
