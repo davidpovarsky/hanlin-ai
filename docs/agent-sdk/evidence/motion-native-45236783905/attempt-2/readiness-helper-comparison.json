@@ -1,0 +1,57 @@
+{
+  "sources": {
+    "D": "5d0ea90d98b405d38b66bb735198b945225877ba",
+    "B": "c1c9fde5299124953d7ced72748dc09b50b72f7f",
+    "row": "0b74c6c1df60926c09a00560598af478bafb3e75"
+  },
+  "fingerprints": [
+    {
+      "path": "Scripts/CI/select_stable_xcode.py",
+      "sha256": {
+        "D": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f",
+        "B": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f",
+        "row": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f"
+      },
+      "all_identical": true
+    },
+    {
+      "path": "Scripts/CI/select_installed_simulator.py",
+      "sha256": {
+        "D": "869a0d4922337cdd4fed651b904868cb78c60388f86e07171f247feb56885da8",
+        "B": "869a0d4922337cdd4fed651b904868cb78c60388f86e07171f247feb56885da8",
+        "row": "869a0d4922337cdd4fed651b904868cb78c60388f86e07171f247feb56885da8"
+      },
+      "all_identical": true
+    },
+    {
+      "path": "Scripts/CI/owned_simulator_receipts.py",
+      "sha256": {
+        "D": "878dba3d6890b6c701cebe8183efdeb4265f86e19818054d6e305eb8a84ebf6a",
+        "B": "878dba3d6890b6c701cebe8183efdeb4265f86e19818054d6e305eb8a84ebf6a",
+        "row": "878dba3d6890b6c701cebe8183efdeb4265f86e19818054d6e305eb8a84ebf6a"
+      },
+      "all_identical": true
+    },
+    {
+      "path": "Scripts/CI/boot_motion_simulator.py",
+      "sha256": {
+        "D": "471f23901d011988a743c29e3eeb49b040bff4a0f19c1080dab893bc7a5a1d73",
+        "B": "471f23901d011988a743c29e3eeb49b040bff4a0f19c1080dab893bc7a5a1d73",
+        "row": "471f23901d011988a743c29e3eeb49b040bff4a0f19c1080dab893bc7a5a1d73"
+      },
+      "all_identical": true
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "portion": "All preflight and exit-cleanup code before scratch creation",
+      "sha256": {
+        "D": "61ddac86aab0ac24dfdd18b1120708cb3d43b6843d5613253c05c884efc5648a",
+        "B": "61ddac86aab0ac24dfdd18b1120708cb3d43b6843d5613253c05c884efc5648a",
+        "row": "61ddac86aab0ac24dfdd18b1120708cb3d43b6843d5613253c05c884efc5648a"
+      },
+      "all_identical": true
+    }
+  ],
+  "scope": "No product code or SwiftPM fixture is read before these unchanged preflight inputs complete.",
+  "native_retests": "NOT_DISPATCHED"
+}

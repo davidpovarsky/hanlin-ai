@@ -1,0 +1,10 @@
+{
+  "time": "2026-11-23T18:32:45.035655+00:00",
+  "run": 45236783905,
+  "attempt": 2,
+  "source": "0b74c6c1df60926c09a00560598af478bafb3e75",
+  "owner": "/root/motion_acceptance",
+  "watch_bound_seconds": 2700,
+  "interval_seconds": 30,
+  "collector": "Runs sequentially after this sole watcher; no extra polling process"
+}
