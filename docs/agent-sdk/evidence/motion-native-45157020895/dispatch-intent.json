@@ -1,0 +1,24 @@
+{
+  "recorded_at": "2026-11-23T10:32:23.865100+00:00",
+  "status": "PREPARED_FOR_SINGLE_POST",
+  "repo": "davidpovarsky/hanlin-ai",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "branch": "codex/hanlin-sdk-unification-20261123",
+  "expected_sha": "646b22918b1c56e5a6a16addcb1d3ebd982d3846",
+  "inputs": {
+    "target_validation_group": "chat_motion_product",
+    "exact_test_selector": "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion",
+    "testflight_upload": "false",
+    "runtime_bundle_only": "false",
+    "runtime_publish_release": "false",
+    "full_validation": "false"
+  },
+  "native_scope": "visual-c",
+  "selected_tests": [
+    "ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+  ],
+  "original_app_screenshot_retained": true,
+  "extra_full_screen_attachment": "long-rtl-accessibility-type-landscape-full-screen",
+  "A_B_D": "NOT_SELECTED",
+  "guards": "fresh owned simulator, original timings/assertions, exact macro/source/dependency/resource admission, raw xcresult and video checks"
+}
