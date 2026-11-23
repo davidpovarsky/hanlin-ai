@@ -1,0 +1,77 @@
+name: Lorvex Apple API Account Preflight
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Verify Apple Developer REST API access using existing Hanlin credentials
+        shell: bash
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          set -euo pipefail
+          python3 -m pip install -q 'PyJWT[crypto]==2.10.1'
+          python3 - <<'PY'
+          import os,base64,time,json,urllib.request,urllib.error,urllib.parse
+          import jwt
+          key=base64.b64decode(os.environ["ASC_KEY_P8"]).decode("utf-8")
+          keyid=os.environ["ASC_KEY_ID"].strip()
+          issuer=os.environ["ASC_ISSUER_ID"].strip()
+          team=os.environ["APPLE_TEAM_ID"].strip()
+          now=int(time.time())
+          token=jwt.encode({"iss":issuer,"iat":now-15,"exp":now+600,"aud":"appstoreconnect-v1"},key,algorithm="ES256",headers={"kid":keyid,"typ":"JWT"})
+          print("TEAM_ID",team)
+          def fetch(resource,qs=None):
+           u="https://api.appstoreconnect.apple.com/v1/"+resource
+           if qs:u+="?"+urllib.parse.urlencode(qs)
+           request=urllib.request.Request(u,headers={"Authorization":"Bearer "+token,"Accept":"application/json"})
+           try:
+            with urllib.request.urlopen(request,timeout=30) as response:
+             data=json.load(response)
+             print("APPLE_API_GET",resource,"STATUS",response.status,"RECORDS",len(data.get("data",[])))
+             return data.get("data",[])
+           except urllib.error.HTTPError as e:
+            payload=e.read(4096)
+            try:
+             errs=json.loads(payload).get("errors",[])
+             clean=[{"status":x.get("status"),"code":x.get("code"),"title":x.get("title"),"detail":(x.get("detail") or "")[:130]} for x in errs]
+            except:clean=[]
+            print("APPLE_API_GET",resource,"STATUS",e.code,"ERRORS",clean)
+            return None
+          apps=fetch("apps",{"limit":"200"})
+          if apps is not None:
+           for app in apps:
+            a=app.get("attributes",{})
+            if any(t in (a.get("name","")+" "+a.get("bundleId","")).lower() for t in ("hanlin","lorvex","itorah")):
+             print("EXISTING_APP",a.get("name"),a.get("bundleId"),"ID",app.get("id"))
+          bundles=fetch("bundleIds",{"limit":"200"})
+          if bundles is not None:
+           for entry in bundles:
+            a=entry.get("attributes",{})
+            if any(t in a.get("identifier","").lower() for t in ("itorah","lorvex")):
+             print("BUNDLE",a.get("identifier"),"PLATFORM",a.get("platform"),"ID",entry.get("id"))
+          certs=fetch("certificates",{"limit":"200"})
+          if certs is not None:
+           for c in certs:
+            a=c.get("attributes",{})
+            if "DISTRIBUTION" in (a.get("certificateType") or ""):
+             print("CERT",c.get("id"),a.get("certificateType"),"EXPIRES",a.get("expirationDate"),"SERIAL",a.get("serialNumber"))
+          profiles=fetch("profiles",{"limit":"200"})
+          if profiles is not None:
+           for profile in profiles:
+            a=profile.get("attributes",{})
+            if "itorah" in a.get("name","").lower() or "lorvex" in a.get("name","").lower():
+             print("PROFILE",profile.get("id"),a.get("name"),a.get("profileType"),a.get("profileState"))
+          if apps is None or bundles is None or certs is None:
+           raise SystemExit("APPLE_PREFLIGHT_MISSING_REQUIRED_API_ACCESS")
+          PY
