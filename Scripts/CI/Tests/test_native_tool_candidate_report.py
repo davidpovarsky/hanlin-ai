@@ -31,7 +31,7 @@ class NativeToolCandidateReportTests(unittest.TestCase):
                     if arguments is not None:
                         case["children"] = []
                         for values in arguments:
-                            display = ", ".join(json.dumps(value, ensure_ascii=False) for value in values)
+                            display = subject.argument_display(values)
                             # Synthetic fixture IDs are not claimed to reproduce Apple's hash algorithm.
                             digest = hashlib.sha256(subject.argument_key(values).encode()).hexdigest()
                             case["children"].append(dict(
@@ -111,8 +111,8 @@ class NativeToolCandidateReportTests(unittest.TestCase):
                 children = data["testNodes"][0]["children"]
                 if mutation == "duplicate": children[1]["name"] = children[0]["name"]
                 if mutation == "reordered_json":
-                    original = json.loads(children[0]["name"])
-                    children[0]["name"] = json.dumps(json.dumps(json.loads(original), sort_keys=True))
+                    original = children[0]["name"][1:-1]
+                    children[0]["name"] = '"' + json.dumps(json.loads(original), sort_keys=True) + '"'
                 if mutation == "truncated": children[0]["name"] = children[0]["name"][:40]
                 if mutation == "boolean_instead_of_string": children[0]["name"] = "false"
                 path.write_text(json.dumps(data))
@@ -151,15 +151,36 @@ class NativeToolCandidateReportTests(unittest.TestCase):
                     data[key] = value; path.write_text(json.dumps(data))
                 self.assertEqual(subject.summarize(root)["status"], "BLOCKED")
 
-    def test_tuple_values_are_exact_with_parenthesized_display(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory); self.fixture(root)
-            for name in ["CoreTests", "BaselineCoreTests"]:
-                path = root / (name + ".json"); data = json.loads(path.read_text())
-                for child in data["testNodes"][1]["children"]:
+    def test_unobserved_parenthesized_or_reescaped_displays_are_blocked(self):
+        for variant in ["parenthesized", "reescaped"]:
+            with self.subTest(variant=variant), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory); self.fixture(root)
+                path = root / "CoreTests.json"; data = json.loads(path.read_text())
+                child = data["testNodes"][1]["children"][0]
+                if variant == "parenthesized":
                     child["name"] = "(" + child["name"] + ")"
+                else:
+                    child["name"] = ", ".join(json.dumps(value) for value in (subject.NUMERIC_INPUTS[0], False))
                 path.write_text(json.dumps(data))
-            self.assertEqual(subject.summarize(root)["status"], "PASS")
+                self.assertEqual(subject.summarize(root)["status"], "BLOCKED")
+
+    def test_authentic_apple_exports_preserve_the_executed_outcomes(self):
+        fixtures = Path(__file__).parent / "Fixtures/native-tool-candidate-45240721804"
+        digests = {"BaselineCoreTests": "5a1da0ade219ac177d3e664c65939ce03a8c8f5ea817d83fd0e980c180203d84",
+                   "CoreTests": "e5ab426ea3a4835a5618f4868cf0daa84c012929b3df3305ecd77e14c8199245"}
+        for name, digest in digests.items():
+            self.assertEqual(hashlib.sha256((fixtures / (name + ".json")).read_bytes()).hexdigest(), digest)
+        rows, methods, errors = subject.inspect_result(fixtures, "BaselineCoreTests", subject.EXPECTED["CoreTests"], baseline=True)
+        self.assertEqual(errors, [])
+        self.assertEqual(len(rows), 12)
+        self.assertEqual(sum(row["status"] == "FAIL" for row in rows), 10)
+        self.assertEqual(sum(row["status"] == "PASS" for row in rows), 2)
+        rows, methods, errors = subject.inspect_result(fixtures, "CoreTests", subject.EXPECTED["CoreTests"])
+        self.assertEqual(len(rows), 12)
+        self.assertEqual(sum(row["status"] == "FAIL" for row in rows), 7)
+        self.assertEqual(sum(row["status"] == "PASS" for row in rows), 5)
+        self.assertTrue(errors)
+        self.assertFalse(any("missing arguments" in error or "unknown" in error for error in errors))
 
     def test_inventory_is_bound_to_authored_swift_arguments_and_methods(self):
         core = (REPOSITORY / "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift").read_text()
@@ -182,6 +203,93 @@ class NativeToolCandidateReportTests(unittest.TestCase):
             self.assertEqual(len(authored), len(subject.EXPECTED[result][suite]))
 
 
+
+class NativeToolBaselineReuseTests(unittest.TestCase):
+    """Exercise reuse guards with synthetic current-run metadata and original baseline bytes."""
+    def fixture(self, root):
+        import shutil
+        import reuse_native_tool_baseline as reuse
+        NativeToolCandidateReportTests.fixture(self, root)
+        reference = REPOSITORY / reuse.REFERENCE_PATH
+        for name in ["tested-source-sha256.json", "baseline-variant.json", "core-Package.resolved", "producer-commit.txt"]:
+            shutil.copyfile(reference / name, root / name)
+        current_source = "f" * 40  # Explicit report fixture, never a claimed Git/native execution.
+        (root / "tested-source-commit.txt").write_text(current_source + "\n")
+        (root / "workflow-commit.txt").write_text(current_source + "\n")
+        manifest = json.loads((root / "tested-source-sha256.json").read_text())
+        variant = json.loads((root / "baseline-variant.json").read_text())
+        engine = next(path for path in reuse.VARIANT_FILES if path.endswith("HanlinAISDKAgentEngine.swift"))
+        manifest[engine] = "e" * 64
+        variant["files"][engine]["candidate_sha256"] = manifest[engine]
+        (root / "tested-source-sha256.json").write_text(json.dumps(manifest))
+        (root / "baseline-variant.json").write_text(json.dumps(variant))
+        commands = [command for command in json.loads((reference / "commands.json").read_text())
+                    if command["name"] in set(reuse.TOOLCHAIN) | {"producer-clean"}]
+        for command in commands:
+            for stream in ("stdout", "stderr"):
+                record = command[stream]
+                if (reference / record["file"]).exists():
+                    shutil.copyfile(reference / record["file"], root / record["file"])
+                elif record["sha256"] == hashlib.sha256(b"").hexdigest():
+                    (root / record["file"]).write_bytes(b"")
+                # The original query stderr is not part of output equivalence.
+        (root / "commands.json").write_text(json.dumps(commands))
+        reuse.prepare_reuse(REPOSITORY, root)
+        statuses = json.loads((root / "process-status.json").read_text())
+        statuses.update(baseline_core_exit=None, baseline_execution="REUSED_VERIFIED")
+        (root / "process-status.json").write_text(json.dumps(statuses))
+
+    def test_verified_baseline_is_separate_from_current_process_status(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory); self.fixture(root)
+            result = subject.summarize(root)
+            self.assertEqual(result["status"], "PASS", result["errors"])
+            self.assertIsNone(result["process_status"]["baseline_core_exit"])
+            self.assertEqual(result["baseline_execution"], "REUSED_VERIFIED")
+            self.assertEqual(result["baseline_reuse"]["baseline_scope_files"], 238)
+            self.assertEqual(result["baseline_reuse"]["original_baseline_exit"], 65)
+            self.assertEqual(len(result["cases"]), 32)
+            self.assertEqual(len(result["baseline_cases"]), 12)
+            self.assertTrue(all(row["execution"] == "REUSED_VERIFIED" for row in result["baseline_cases"]))
+
+    def test_changed_reuse_inputs_or_fabricated_current_exit_block_acceptance(self):
+        import reuse_native_tool_baseline as reuse
+        for mutation in ["test_source", "overlay", "raw_lock", "toolchain", "original_export",
+                         "duplicate_execution", "receipt", "current_exit", "producer", "missing_proof"]:
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory); self.fixture(root)
+                if mutation == "test_source":
+                    path = root / "tested-source-sha256.json"; data = json.loads(path.read_text())
+                    key = "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift"
+                    data[key] = "0" * 64; path.write_text(json.dumps(data))
+                elif mutation == "overlay":
+                    path = root / "baseline-variant.json"; data = json.loads(path.read_text())
+                    data["files"][next(iter(reuse.VARIANT_FILES))]["baseline_sha256"] = "0" * 64
+                    path.write_text(json.dumps(data))
+                elif mutation == "raw_lock":
+                    with (root / "core-Package.resolved").open("a") as out: out.write("\n")
+                elif mutation == "toolchain":
+                    with (root / "06-swift.stdout.log").open("a") as out: out.write("\n")
+                elif mutation == "original_export":
+                    with (root / "baseline-reuse-original/BaselineCoreTests.json").open("a") as out: out.write("\n")
+                elif mutation == "duplicate_execution":
+                    path = root / "commands.json"; data = json.loads(path.read_text())
+                    data.append(dict(name="BaselineCoreTests", exit_code=65)); path.write_text(json.dumps(data))
+                elif mutation == "receipt":
+                    path = root / "baseline-reuse.json"; data = json.loads(path.read_text())
+                    data["baseline_scope_files"] = 1; path.write_text(json.dumps(data))
+                elif mutation == "current_exit":
+                    path = root / "process-status.json"; data = json.loads(path.read_text())
+                    data["baseline_core_exit"] = 65; path.write_text(json.dumps(data))
+                elif mutation == "producer":
+                    (root / "producer-commit.txt").write_text("0" * 40)
+                elif mutation == "missing_proof":
+                    (root / "baseline-reuse-original/reference.json").unlink()
+                result = subject.summarize(root)
+                self.assertEqual(result["status"], "BLOCKED")
+                self.assertEqual(result["baseline_negative_control"], "BLOCKED")
+
+
 class NativeToolCandidateSelectorTests(unittest.TestCase):
     def test_only_exact_opt_in_changes_the_existing_route(self):
         import os
@@ -202,7 +310,7 @@ else:
 """
             for name in ["python3", "git"]:
                 path = folder / name; path.write_text(wrapper); path.chmod(0o755)
-            for selector in [None, "HanlinChatCoreTests", "HanlinNativeToolCandidates", "HanlinNativeToolCandidate"]:
+            for selector in [None, "HanlinChatCoreTests", "HanlinNativeToolCandidates", "HanlinNativeToolCandidate", "HanlinNativeToolCandidateRecheck"]:
                 with self.subTest(selector=selector):
                     env = os.environ.copy()
                     env["PATH"] = str(folder) + os.pathsep + env["PATH"]
@@ -216,7 +324,7 @@ else:
                                                text=True, capture_output=True, env=env)
                     self.assertEqual(completed.returncode, 0, completed.stderr)
                     self.assertEqual(completed.stdout.strip(),
-                                     "candidate" if selector == "HanlinNativeToolCandidate" else "legacy")
+                                     "candidate" if selector in {"HanlinNativeToolCandidate", "HanlinNativeToolCandidateRecheck"} else "legacy")
 
 
 if __name__ == "__main__":

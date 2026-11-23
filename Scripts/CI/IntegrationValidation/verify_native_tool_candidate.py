@@ -1,9 +1,10 @@
 """Verify exact Apple invocations, including each argument tuple and the old-engine control.
 
-Only original xcresult exports are accepted by the runner. The argument display
-grammar is deliberately narrow: JSON strings/booleans, or a comma-separated tuple
-of those values (optionally parenthesized). Unknown or truncated displays block;
-aggregate Test Case results never stand in for parameterized executions.
+Only original xcresult exports are accepted by the runner. Argument displays are
+matched to complete source-bound tuples using the observed Swift Testing format:
+quoted strings (embedded quotes remain literal), comma-space-separated values,
+and lowercase booleans. Unknown or truncated displays block. Aggregate Test Case
+results never stand in for parameterized executions.
 """
 import json
 from pathlib import Path
@@ -59,7 +60,8 @@ EXPECTED = {
     },
 }
 STATUS = {"Passed": "PASS", "Failed": "FAIL"}
-DIAGNOSTIC_TYPES = {"Test Failure", "Runtime Warning"}
+DIAGNOSTIC_TYPES = {"Test Failure", "Runtime Warning", "Failure Message"}
+FAILURE_TYPES = {"Test Failure", "Failure Message"}
 
 
 def read_cases(root, name):
@@ -77,19 +79,14 @@ def argument_key(arguments):
     return json.dumps(arguments, ensure_ascii=False, separators=(",", ":"))
 
 
-def parse_arguments(display, arity):
-    if not isinstance(display, str):
-        raise ValueError("missing argument display")
-    if arity == 1:
-        values = (json.loads(display),)
-    else:
-        body = display
-        if body.startswith("(") and body.endswith(")"):
-            body = body[1:-1]
-        values = tuple(json.loads("[" + body + "]"))
-    if len(values) != arity or any(type(value) not in (str, bool) for value in values):
-        raise ValueError("unknown argument display shape or value type")
-    return values
+def argument_display(arguments):
+    # xcresult's Arguments.name is a Swift Testing display, not JSON. In the
+    # authenticated SDK27 export, quotes inside String values are not escaped.
+    # Only this finite, collision-checked expected inventory is admitted.
+    if any(type(value) not in (str, bool) for value in arguments):
+        raise ValueError("unsupported source argument type")
+    return ", ".join(('"' + value + '"') if isinstance(value, str)
+                     else ("true" if value else "false") for value in arguments)
 
 
 def signature(identity, arguments):
@@ -156,6 +153,9 @@ def inspect_result(root, name, suites, baseline=False):
                                    expected_status=STATUS[required_status]))
         if case.get("result") != required_status:
             errors.append(name + ": unexpected aggregate status for " + identity)
+        if case.get("result") == "Passed" and any(
+                node.get("nodeType") in FAILURE_TYPES for node in nodes(case)):
+            errors.append(name + ": passed aggregate contains failure diagnostics " + identity)
         children = case.get("children", [])
         if not isinstance(children, list) or any(not isinstance(child, dict) for child in children):
             errors.append(name + ": unknown children shape for " + identity)
@@ -170,6 +170,9 @@ def inspect_result(root, name, suites, baseline=False):
             continue
 
         expected_arguments = {argument_key(values): values for values in arguments}
+        expected_displays = {argument_display(values): values for values in arguments}
+        if len(expected_displays) != len(expected_arguments):
+            errors.append(name + ": source argument displays collide for " + identity)
         seen_arguments = set()
         for child in argument_nodes:
             seen_argument_nodes.add(id(child))
@@ -182,12 +185,12 @@ def inspect_result(root, name, suites, baseline=False):
                 errors.append(name + ": missing, duplicate or mismatched argument URL " + identity)
             if isinstance(child_url, str):
                 seen_argument_urls.add(child_url)
-            try:
-                values = parse_arguments(child.get("name"), len(arguments[0]))
-                key = argument_key(values)
-            except (ValueError, TypeError):
+            display = child.get("name")
+            values = expected_displays.get(display) if isinstance(display, str) else None
+            if values is None:
                 errors.append(name + ": unknown or truncated argument display " + identity)
                 continue
+            key = argument_key(values)
             if key not in expected_arguments or key in seen_arguments:
                 errors.append(name + ": unexpected or duplicate arguments " + identity + " " + key)
                 continue
@@ -209,7 +212,9 @@ def inspect_result(root, name, suites, baseline=False):
     if any(node.get("result") == "Skipped" or
            (not baseline and node.get("result") == "Failed") for node in all_nodes):
         errors.append(name + ": failed or skipped execution")
-    return records, method_records, errors
+    return (sorted(records, key=lambda row: (row["result"], row["id"])),
+            sorted(method_records, key=lambda row: (row["result"], row["id"])),
+            sorted(errors))
 
 
 def summarize(root):
@@ -226,9 +231,25 @@ def summarize(root):
     baseline, baseline_methods, baseline_errors = inspect_result(
         root, "BaselineCoreTests", EXPECTED["CoreTests"], baseline=True)
     baseline_exit = statuses.get("baseline_core_exit")
-    baseline_ok = (not baseline_errors and len(baseline) == 12 and
-                   type(baseline_exit) is int and baseline_exit == 65 and
+    baseline_reuse = None
+    baseline_execution = "EXECUTED" if baseline_exit is not None else "NOT_RUN"
+    if statuses.get("baseline_execution") == "REUSED_VERIFIED":
+        baseline_execution = "REUSE_INVALID"
+        try:
+            from reuse_native_tool_baseline import validate_reuse
+            baseline_reuse = validate_reuse(root)
+            if baseline_exit is not None:
+                raise ValueError("Reused baseline cannot claim a current baseline process exit")
+            baseline_execution = "REUSED_VERIFIED"
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            baseline_errors.append(str(error))
+    baseline_process_ok = ((type(baseline_exit) is int and baseline_exit == 65)
+                           if baseline_execution == "EXECUTED"
+                           else baseline_execution == "REUSED_VERIFIED")
+    baseline_ok = (not baseline_errors and len(baseline) == 12 and baseline_process_ok and
                    all(case["status"] == case["expected_status"] for case in baseline))
+    for case in baseline:
+        case["execution"] = baseline_execution
     if not baseline_ok:
         errors.append("Baseline did not reproduce all 10 native failures and both passing cloud invocations.")
     errors += baseline_errors
@@ -241,9 +262,10 @@ def summarize(root):
         "status": "PASS" if passed else "BLOCKED",
         "expected_invocations": 32, "expected_method_groups": 12,
         "baseline_negative_control": "PASS" if baseline_ok else "BLOCKED",
+        "baseline_execution": baseline_execution, "baseline_reuse": baseline_reuse,
         "baseline_expected_invocations": {"FAIL": 10, "PASS": 2},
         "baseline_cases": baseline, "baseline_methods": baseline_methods,
-        "cases": records, "methods": methods, "errors": errors, "process_status": statuses,
+        "cases": records, "methods": methods, "errors": sorted(errors), "process_status": statuses,
         "ios_agent_core_compile": "PASS" if statuses.get("ios_build_exit") == 0 else "NOT_RUN" if statuses.get("ios_build_exit") is None else "FAIL",
         "shipping_native_tool_capability": False,
         "system_model_generation": "NOT_RUN",

@@ -10,6 +10,7 @@ import sys
 import tempfile
 
 from verify_native_tool_candidate import EXPECTED, read_cases, summarize
+from reuse_native_tool_baseline import REFERENCE_PATH, prepare_reuse
 
 BASE = "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d"
 PRODUCER = "e7bf34111e603ca977becd007dd4e5bb109af857"
@@ -62,6 +63,16 @@ def main():
         return code, stdout
 
     try:
+        event = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
+        inputs = event.get("inputs", {})
+        selector = inputs.get("exact_test_selector")
+        if selector not in {"HanlinNativeToolCandidate", "HanlinNativeToolCandidateRecheck"} or inputs.get("target_validation_group") != "agent_sdk_exact_source_proof":
+            raise RuntimeError("Native candidate validation requires the exact reviewed opt-in route")
+        reuse_baseline = selector == "HanlinNativeToolCandidateRecheck"
+        (evidence / "selected-route.json").write_text(json.dumps(dict(
+            exact_test_selector=selector, target_validation_group=inputs["target_validation_group"],
+            baseline="REUSE_REQUESTED" if reuse_baseline else "FRESH_REQUESTED",
+            run_id=os.environ.get("GITHUB_RUN_ID"), run_attempt=os.environ.get("GITHUB_RUN_ATTEMPT")), indent=2))
         run("exact-json-vendor", ["python3", "Scripts/CI/verify_exact_json_vendor.py"])
         head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
         (evidence / "tested-source-commit.txt").write_text(head + "\n")
@@ -88,8 +99,11 @@ def main():
                           "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
                           "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py",
                           "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py",
+                          "Scripts/CI/IntegrationValidation/reuse_native_tool_baseline.py",
                           "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py",
                           "Scripts/CI/select_stable_xcode.py"]
+        if reuse_baseline:
+            workflow_paths += [str(path.relative_to(root)) for path in sorted((root / REFERENCE_PATH).iterdir()) if path.is_file()]
         for relative in workflow_paths:
             if (root / relative).read_bytes() != subprocess.check_output(["git", "show", head + ":" + relative], cwd=root):
                 raise RuntimeError("Workflow source differs from Git: " + relative)
@@ -181,13 +195,19 @@ def main():
                           "candidate_sha256": hashlib.sha256(candidate_bytes[p]).hexdigest()} for p in VARIANT_FILES}
         }, indent=2))
         statuses["preparation_exit"] = 0
-        try:
-            for relative, data in baseline_bytes.items():
-                (scratch / relative).write_bytes(data)
-            statuses["baseline_core_exit"] = test("BaselineCoreTests", core, core_scheme, boundary)
-        finally:
-            for relative, data in candidate_bytes.items():
-                (scratch / relative).write_bytes(data)
+        if reuse_baseline:
+            prepare_reuse(root, evidence)
+            statuses["baseline_execution"] = "REUSED_VERIFIED"
+            # No baseline subprocess ran. Its original exit belongs to the
+            # separate authenticated reference, never to current process status.
+        else:
+            try:
+                for relative, data in baseline_bytes.items():
+                    (scratch / relative).write_bytes(data)
+                statuses["baseline_core_exit"] = test("BaselineCoreTests", core, core_scheme, boundary)
+            finally:
+                for relative, data in candidate_bytes.items():
+                    (scratch / relative).write_bytes(data)
         for relative, digest in digests.items():
             if Path(relative).name == "Package.resolved":
                 continue  # The actual resolved locks are retained and verified separately.

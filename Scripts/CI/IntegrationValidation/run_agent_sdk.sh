@@ -3,7 +3,7 @@ set -euo pipefail
 # Only this explicit isolated-candidate selector changes the legacy selection.
 if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_SELECTOR'
 import json,sys
-sys.exit(0 if json.load(open(sys.argv[1])).get('inputs',{}).get('exact_test_selector') == 'HanlinNativeToolCandidate' else 1)
+sys.exit(0 if json.load(open(sys.argv[1])).get('inputs',{}).get('exact_test_selector') in {'HanlinNativeToolCandidate', 'HanlinNativeToolCandidateRecheck'} else 1)
 PY_SELECTOR
 then
   exec python3 "$(git rev-parse --show-toplevel)/Scripts/CI/IntegrationValidation/run_native_tool_candidate.py"
