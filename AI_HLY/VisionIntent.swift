@@ -12,8 +12,8 @@ import SwiftUI
 
 public struct OpenVisionIntent: AppIntent {
     public static let openAppWhenRun: Bool = true
-    public static let title = LocalizedStringResource("Open Hanlin Camera", bundle: .atURL(HanlinLocalization.bundle.bundleURL))
-    public static let description = IntentDescription(LocalizedStringResource("Opens Hanlin’s camera and visual analysis.", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    public static let title = LocalizedStringResource("Open Hanlin Camera", table: "HanlinAppIntents", bundle: .main)
+    public static let description = IntentDescription(LocalizedStringResource("Opens Hanlin’s camera and visual analysis.", table: "HanlinAppIntents", bundle: .main))
     public static let supportsWidget: Bool = true
     public static let supportsForegroundExecution: Bool = true
     public static let suggestedInvocationPhrase: String? = "Open Hanlin Camera"

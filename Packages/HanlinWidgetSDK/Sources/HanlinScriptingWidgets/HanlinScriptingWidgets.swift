@@ -10,7 +10,7 @@ import SwiftUI
 import WidgetKit
 
 public struct HanlinScriptPackageEntity: AppEntity {
-    public static let typeDisplayRepresentation = TypeDisplayRepresentation(name: LocalizedStringResource("Widget instance", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    public static let typeDisplayRepresentation = TypeDisplayRepresentation(name: LocalizedStringResource("Widget instance", table: "HanlinAppIntents", bundle: .main))
     public static let defaultQuery = HanlinScriptPackageEntityQuery()
     public let id: String
     public let displayName: String
@@ -79,10 +79,10 @@ public struct HanlinScriptPackageEntityQuery: EnumerableEntityQuery, EntityStrin
 }
 
 public struct HanlinWidgetConfigurationIntent: WidgetConfigurationIntent {
-    public static let title = LocalizedStringResource("Widget instance", bundle: .atURL(HanlinLocalization.bundle.bundleURL))
-    public static let description = IntentDescription(LocalizedStringResource("Choose an installed instance. Placements using the same instance share state.", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    public static let title = LocalizedStringResource("Widget instance", table: "HanlinAppIntents", bundle: .main)
+    public static let description = IntentDescription(LocalizedStringResource("Choose an installed instance. Placements using the same instance share state.", table: "HanlinAppIntents", bundle: .main))
 
-    @Parameter(title: LocalizedStringResource("Widget instance", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    @Parameter(title: LocalizedStringResource("Widget instance", table: "HanlinAppIntents", bundle: .main))
     public var package: HanlinScriptPackageEntity?
 
     public init() {}

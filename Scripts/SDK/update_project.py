@@ -203,6 +203,30 @@ def update():
     # host InfoPlist localizations remain executable-owned.
     excluded.update(["Downstream","Resource","RuntimeHostResources.zip"])
     text=edit_object(text,exception,lambda b:replace_list(b,"membershipExceptions",sorted(excluded)))
+    # AppIntents' compiler accepts .main for statically linked package metadata.
+    # Project the single SDK catalog into a namespaced table in each executable;
+    # never copy translations into host source or change general SDK localization.
+    from generate_app_intents_resources import OUTPUT, render
+    if not OUTPUT.exists() or OUTPUT.read_text() != render():
+        raise ValueError("Run Scripts/SDK/generate_app_intents_resources.py first")
+    intents_file = "AC1900000000000000000130"
+    text=insert_object(text,"PBXFileReference",intents_file,
+        "\t\t\tisa = PBXFileReference;\n\t\t\tlastKnownFileType = text.json.xcstrings;\n"
+        "\t\t\tpath = \"Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings\";\n"
+        "\t\t\tsourceTree = SOURCE_ROOT;\n")
+    for name, build in [("AI_Hanlin", "AC1900000000000000000131"),
+                        ("HanlinScriptingWidgets", "AC1900000000000000000132")]:
+        target=targets[name][1]
+        phase=next(k for k in target["buildPhases"] if objects[k]["isa"]=="PBXResourcesBuildPhase")
+        files=list(objects[phase]["files"])
+        text=insert_object(text,"PBXBuildFile",build,
+            "\t\t\tisa = PBXBuildFile;\n\t\t\tfileRef = "+intents_file+";\n")
+        if build not in files: files.append(build)
+        text=edit_object(text,phase,lambda b:replace_list(b,"files",files))
+    group=root["mainGroup"]
+    children=list(objects[group]["children"])
+    if intents_file not in children: children.append(intents_file)
+    text=edit_object(text,group,lambda b:replace_list(b,"children",children))
     parse_project(text)
     return text
 

@@ -657,6 +657,14 @@
 			isa = PBXBuildFile;
 			fileRef = AC1900000000000000000116;
 		};
+		AC1900000000000000000131 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000130;
+		};
+		AC1900000000000000000132 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000130;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1344,6 +1352,12 @@
 			path = "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift";
 			sourceTree = SOURCE_ROOT;
 		};
+		AC1900000000000000000130 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.json.xcstrings;
+			path = "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings";
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1589,6 +1603,7 @@
 				"Downstream/MCP/Core/MCPServerConfiguration.swift" ,
 				"Downstream/MCP/Core/MCPServerDescriptor.swift" ,
 				"Downstream/MCP/Core/MCPServerRuntimeState.swift" ,
+				"Downstream/MCP/Core/MCPServerSettings.swift" ,
 				"Downstream/MCP/Diagnostics/MCPLogRedactor.swift" ,
 				"Downstream/MCP/Diagnostics/MCPTraceLogger.swift" ,
 				"Downstream/MCP/Installer/MCPInstallProgress.swift" ,
@@ -1801,6 +1816,7 @@
 				"Downstream/SDK/HanlinApplicationConversationManagement.swift" ,
 				"Downstream/SDK/HanlinApplicationData.swift" ,
 				"Downstream/SDK/HanlinApplicationLifecycle.swift" ,
+				"Downstream/SDK/HanlinApplicationMCP.swift" ,
 				"Downstream/SDK/HanlinApplicationModelConfiguration.swift" ,
 				"Downstream/SDK/HanlinApplicationResources.swift" ,
 				"Downstream/SDK/HanlinApplicationScene.swift" ,
@@ -2253,7 +2269,30 @@
 		};
 		D7B6C3B82D50A55D004E3AD6 = {
 			"isa" = "PBXGroup";
-			"children" = ("F80000000000000000000003", "D7B6C3C32D50A55D004E3AD6", "B10000000000000000000003", "E30000000000000000000002", "D20000000000000000000030", "E40000000000000000000030", "E50000000000000000000030", "E60000000000000000000030", "A10000000000000000000064", "D73E23062D817B1300ACC644", "D7B6C3C22D50A55D004E3AD6", "D7C6558C2E6C731A0041F1C7", "F9F4C452EBF2FA6B1274B4D7", "F9B7E7C84FC34223BA56BFA6", "FA8159CB799005F585B0200D", "FAF7E5E7F0B960B85183BF07", "C1D9E69575D3B7BC691961CD", "ACCCFD5137817301A7EC3EC5", "ACA8D477BCA603356FFD1FB6", "AC5329707A767DC9898843A8", "ACD98DDA0CD38EB99694E203", );
+			children = (
+				"F80000000000000000000003" ,
+				"D7B6C3C32D50A55D004E3AD6" ,
+				"B10000000000000000000003" ,
+				"E30000000000000000000002" ,
+				"D20000000000000000000030" ,
+				"E40000000000000000000030" ,
+				"E50000000000000000000030" ,
+				"E60000000000000000000030" ,
+				"A10000000000000000000064" ,
+				"D73E23062D817B1300ACC644" ,
+				"D7B6C3C22D50A55D004E3AD6" ,
+				"D7C6558C2E6C731A0041F1C7" ,
+				"F9F4C452EBF2FA6B1274B4D7" ,
+				"F9B7E7C84FC34223BA56BFA6" ,
+				"FA8159CB799005F585B0200D" ,
+				"FAF7E5E7F0B960B85183BF07" ,
+				"C1D9E69575D3B7BC691961CD" ,
+				"ACCCFD5137817301A7EC3EC5" ,
+				"ACA8D477BCA603356FFD1FB6" ,
+				"AC5329707A767DC9898843A8" ,
+				"ACD98DDA0CD38EB99694E203" ,
+				"AC1900000000000000000130" ,
+			);
 			"sourceTree" = "<group>";
 		};
 		D7B6C3C22D50A55D004E3AD6 = {
@@ -2724,8 +2763,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000000000000000000060 /* commandDictionary.plist in Resources */,
-				A10000000000000000000061 /* extraCommandsDictionary.plist in Resources */,
+				"A10000000000000000000060" ,
+				"A10000000000000000000061" ,
+				"AC1900000000000000000131" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2747,6 +2787,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				"AC1900000000000000000132" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
