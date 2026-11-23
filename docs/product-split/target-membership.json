@@ -25,6 +25,7 @@
     "AI_HLY/Downstream/ProductSplit/HanlinSplitLiveTarget.swift",
     "AI_HLY/Downstream/ProductSplit/HanlinSplitMailbox.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/AppRuntimeCore.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift",

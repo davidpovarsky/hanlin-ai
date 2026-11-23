@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T06:58:02.448385+00:00",
+  "source_base": "705f1bd81587d7133aec4d1cd7f9a2b802e7ded6",
+  "change": "Record newly canonical original foreground source in the existing production membership receipt; no product or test implementation change.",
+  "missing_before": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift",
+  "validation": {
+    "status": "SOURCE_VALIDATED",
+    "shared_source_count": 66,
+    "graph": {
+      "miniapps_products": [
+        "HanlinA2UI",
+        "HanlinAgentActivityCore",
+        "HanlinExpoNativeAPI",
+        "HanlinExpoRuntime",
+        "HanlinExtensionContracts",
+        "HanlinLocalization",
+        "HanlinMiniAppCore",
+        "HanlinMiniAppsUI",
+        "HanlinNativeScriptRuntime",
+        "HanlinParityMiniApp",
+        "HanlinPlatformContracts",
+        "HanlinProductSplit",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptExtensions",
+        "HanlinScriptStore",
+        "HanlinScriptUI",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptingSDK",
+        "HanlinSefariaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinWikipediaMiniApp",
+        "IOSSystemLite",
+        "SWCompression",
+        "ZIPFoundation"
+      ],
+      "miniapps_source_groups": [
+        "HanlinMiniAppsApp"
+      ],
+      "deployment_target": "27.0",
+      "signed_or_install_proof": false
+    },
+    "sdk": {
+      "ai_products": [
+        "HanlinAgentCore",
+        "HanlinApplication",
+        "HanlinHostContracts",
+        "HanlinPersistenceAdapters"
+      ],
+      "unit_test_products": [
+        "HanlinAgentCore",
+        "HanlinApplication"
+      ],
+      "miniapps_agent_products": [],
+      "sdk_application_sources": 503,
+      "host_sources": [
+        "AI_HLY.swift"
+      ],
+      "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+      "apple_compilation": "NOT_RUN"
+    },
+    "ios_build": "NOT_RUN",
+    "ios_ui": "NOT_RUN",
+    "signed_group": "NOT_RUN"
+  },
+  "native_status": "NOT_RUN",
+  "route": {
+    "workflow": "validate-app-split.yml",
+    "inputs": {
+      "paired_product_acceptance": true,
+      "paired_test_scope": "cross_product",
+      "prepare_miniapps_registration": false,
+      "signed_release_archives": false,
+      "audit_release_resources": false,
+      "signing_preflight_only": false
+    },
+    "entry": "Scripts/ProductSplit/run_paired_acceptance.py",
+    "stale_provider_fixture_validator_called": false,
+    "selected_original_tests": [
+      "AI_HLYUITests/HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat",
+      "AI_HLYUITests/HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState",
+      "AI_HLYUITests/HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback"
+    ],
+    "coverage": "Actual original catalog, package launch, receive/rollback transfer view, canonical foreground request/return/cancel, shared App Group, both shipping targets. The standalone 20 storage + 7 UI baseline is not dispatched by this route.",
+    "prerequisites": "Existing workflow verifies toolchain, current target graph, Host inputs, pinned runtime payload, actual entitlements and common OS container. Optional Host proof reuse is limited to authenticated unchanged prerequisites and never counts prior UI as fresh acceptance.",
+    "coverage_limits": [
+      "No physical-device or distribution-signing claim",
+      "The three cases do not replace every standalone catalog search/detail/provider test",
+      "Existing historical UI evidence is not relabeled as current SDK native acceptance"
+    ]
+  },
+  "source_sha256": {
+    ".github/workflows/validate-app-split.yml": "a70b11b43d8dffc588b120f1abf510516595e9b6c6a88c45a6bd100945654d2a",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "eeaa19fda98439d33ca452503729d991f1ad3c81257a20c803c632fbcb8bcbb3",
+    "Scripts/ProductSplit/verify_targets.py": "4fc6fea6d03d9ea66ba8dbb672fb7b6f096c6fa88ccda1e5f130f6a8a3483a50",
+    "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json": "50da4c1ae4fa972dc9a8ce8e68c9fdc353f00a69aebddf49377b607d6883ad04",
+    "docs/product-split/target-membership.json": "005bc91d2dd037aaf8b4dc449b8d0dfc6be01d323a5cd22c1826026b72593acc",
+    "AI_HLYUITests/HanlinPairedProductUITests.swift": "441318bb85528248687088083c2ffb560bd73d7d2f6b1c84e84dfc02d191df9b"
+  }
+}
