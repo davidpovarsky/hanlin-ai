@@ -10,6 +10,7 @@ public enum HanlinChatGPTPlanError: Error, LocalizedError, Sendable {
     case invalidRedirect
     case denied
     case server(Int)
+    case oauth(status: Int, code: String?, requestID: String?)
     case invalidToken
     case invalidIdentity
     case invalidAuthorization
@@ -20,6 +21,8 @@ public enum HanlinChatGPTPlanError: Error, LocalizedError, Sendable {
         case .invalidRedirect: "The OpenAI sign-in callback is invalid."
         case .denied: "ChatGPT sign-in was declined."
         case .server(let status): "OpenAI authentication returned HTTP " + String(status)
+        case .oauth(let status, let code, let requestID):
+            "OpenAI request failed (HTTP \(status), code: \(code ?? "unknown"), request: \(requestID ?? "unavailable"))."
         case .invalidToken: "OpenAI returned a token that could not be verified."
         case .invalidIdentity: "OpenAI identity could not be verified."
         case .invalidAuthorization: "OpenAI authorization is incomplete or expired."
@@ -57,6 +60,22 @@ public struct HanlinChatGPTPlanCredentials: Codable, Sendable {
     public let refreshToken: String
     public let scopes: [String]
     public let expiresAt: Date
+    public let earliestRefreshAt: Date?
+
+    public init(clientID: String, hostID: String, subject: String, email: String?,
+                idToken: String, accessToken: String, refreshToken: String,
+                scopes: [String], expiresAt: Date, earliestRefreshAt: Date? = nil) {
+        self.clientID = clientID
+        self.hostID = hostID
+        self.subject = subject
+        self.email = email
+        self.idToken = idToken
+        self.accessToken = accessToken
+        self.refreshToken = refreshToken
+        self.scopes = scopes
+        self.expiresAt = expiresAt
+        self.earliestRefreshAt = earliestRefreshAt
+    }
 
     public var canUsePlan: Bool {
         scopes.contains("chatgpt.tokens.use.direct") &&
@@ -86,7 +105,13 @@ public actor HanlinChatGPTPlanClient {
     private static let jwksURL = URL(string: "https://auth.openai.com/.well-known/jwks.json")!
     private static let resource = "https://api.openai.com/v1"
 
-    public init() {}
+    private let session: URLSession
+    private let now: @Sendable () -> Date
+
+    public init(session: URLSession = .shared, now: @escaping @Sendable () -> Date = { Date() }) {
+        self.session = session
+        self.now = now
+    }
 
     public static func makeHostID() -> String {
         "urn:uuid:" + UUID().uuidString.lowercased()
@@ -101,47 +126,63 @@ public actor HanlinChatGPTPlanClient {
     }
 
     public static func makeAttempt(
-        hostID: String, loopbackPort: UInt16, previous: HanlinChatGPTPlanCredentials? = nil
+        hostID: String, loopbackPort: UInt16,
+        previous: HanlinChatGPTPlanCredentials? = nil,
+        appName: String = "Lorvex AI",
+        clientID: String? = nil, idTokenHint: String? = nil, emailHint: String? = nil,
+        requestPlanConsent: Bool = false
     ) throws -> HanlinChatGPTAuthorizationAttempt {
-        guard hostID.hasPrefix("urn:uuid:"),loopbackPort>0 else {
+        let client = previous?.clientID ?? clientID ?? "dynamic_agent_client"
+        guard hostID.hasPrefix("urn:uuid:"),
+              UUID(uuidString: String(hostID.dropFirst(9))) != nil,
+              loopbackPort > 0, !client.isEmpty,
+              !appName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw HanlinChatGPTPlanError.invalidAuthorization
         }
-        let verifier=try random()+random()
-        let nonce=try random()
-        let state=try random()
-        let client=previous?.clientID ?? "dynamic_agent_client"
-        let redirect=URL(string:
-            "http://127.0.0.1:" + String(loopbackPort) + "/auth/callback")!
-        var components=URLComponents(string:
-            "https://auth.openai.com/api/accounts/authorize")!
-        var params=[
-            URLQueryItem(name:"client_id",value:client),
-            URLQueryItem(name:"ext_agent_host_id",value:hostID),
-            URLQueryItem(name:"redirect_uri",value:redirect.absoluteString),
-            URLQueryItem(name:"response_type",value:"code"),
-            URLQueryItem(name:"scope",value:
-                "openid profile email offline_access resource.invoke chatgpt.tokens.use.direct"),
-            URLQueryItem(name:"resource",value:resource),
-            URLQueryItem(name:"state",value:state),
-            URLQueryItem(name:"nonce",value:nonce),
-            URLQueryItem(name:"code_challenge_method",value:"S256"),
-            URLQueryItem(name:"code_challenge",value:
-                Data(SHA256.hash(data:Data(verifier.utf8))).base64URLEncodedString())
-        ]
-        if previous==nil {
-            params.append(URLQueryItem(name:"agent_name_hint",value:"Lorvex AI"))
-        } else {
-            params.append(URLQueryItem(name:"id_token_hint",value:previous!.idToken))
-            if let email=previous?.email {
-                params.append(URLQueryItem(name:"login_hint",value:email))
+        if let previous {
+            guard previous.hostID == hostID,
+                  clientID == nil || clientID == previous.clientID else {
+                throw HanlinChatGPTPlanError.invalidIdentity
             }
         }
-        components.queryItems=params
-        guard let url=components.url else {
+        let verifier = try random() + random()
+        let nonce = try random()
+        let state = try random()
+        let redirect = URL(string: "http://127.0.0.1:\(loopbackPort)/auth/callback")!
+        var components = URLComponents(string: "https://auth.openai.com/api/accounts/authorize")!
+        var params = [
+            URLQueryItem(name: "client_id", value: client),
+            URLQueryItem(name: "ext_agent_host_id", value: hostID),
+            URLQueryItem(name: "redirect_uri", value: redirect.absoluteString),
+            URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value:
+                "openid profile email offline_access resource.invoke chatgpt.tokens.use.direct"),
+            URLQueryItem(name: "resource", value: resource),
+            URLQueryItem(name: "state", value: state),
+            URLQueryItem(name: "nonce", value: nonce),
+            URLQueryItem(name: "code_challenge_method", value: "S256"),
+            URLQueryItem(name: "code_challenge", value:
+                Data(SHA256.hash(data: Data(verifier.utf8))).base64URLEncodedString())
+        ]
+        if client == "dynamic_agent_client" {
+            params.append(URLQueryItem(name: "agent_name_hint", value: appName))
+        } else {
+            if let hint = previous?.idToken ?? idTokenHint, !hint.isEmpty {
+                params.append(URLQueryItem(name: "id_token_hint", value: hint))
+            }
+            if let hint = previous?.email ?? emailHint, !hint.isEmpty {
+                params.append(URLQueryItem(name: "login_hint", value: hint))
+            }
+        }
+        if requestPlanConsent {
+            params.append(URLQueryItem(name: "prompt", value: "consent"))
+        }
+        components.queryItems = params
+        guard let url = components.url else {
             throw HanlinChatGPTPlanError.invalidAuthorization
         }
-        return .init(url:url,redirectURI:redirect,clientID:client,
-                     state:state,nonce:nonce,verifier:verifier)
+        return .init(url: url, redirectURI: redirect, clientID: client,
+                     state: state, nonce: nonce, verifier: verifier)
     }
 
     private struct TokenResponse: Decodable {
@@ -150,6 +191,25 @@ public actor HanlinChatGPTPlanClient {
         var id_token: String?
         var expires_in: Int
         var scope: String?
+        var earliest_refresh_at: TokenDate?
+    }
+    private struct TokenDate: Decodable {
+        let value: Date
+        init(from decoder: any Decoder) throws {
+            let box = try decoder.singleValueContainer()
+            if let seconds = try? box.decode(Double.self) {
+                value = Date(timeIntervalSince1970: seconds)
+                return
+            }
+            let raw = try box.decode(String.self)
+            if let seconds = Double(raw) {
+                value = Date(timeIntervalSince1970: seconds)
+            } else if let date = ISO8601DateFormatter().date(from: raw) {
+                value = date
+            } else {
+                throw DecodingError.dataCorruptedError(in: box, debugDescription: "Invalid token timestamp")
+            }
+        }
     }
     private struct JWKS: Decodable {
         struct Key: Decodable {
@@ -165,21 +225,21 @@ public actor HanlinChatGPTPlanClient {
         let keys: [Key]
     }
 
-    private static func tokenRequest(_ params:[String:String]) async throws -> TokenResponse {
-        var request=URLRequest(url:tokenURL)
+    private func tokenRequest(_ params:[String:String]) async throws -> TokenResponse {
+        var request=URLRequest(url:Self.tokenURL)
         request.httpMethod="POST"
         request.timeoutInterval=25
         request.setValue("application/x-www-form-urlencoded",
                          forHTTPHeaderField:"Content-Type")
         var form=URLComponents()
         form.queryItems=params.map { URLQueryItem(name:$0.key,value:$0.value) }
-        request.httpBody=Data((form.percentEncodedQuery ?? "").utf8)
-        let (bytes,response)=try await URLSession.shared.data(for:request)
+        request.httpBody=Data((form.percentEncodedQuery ?? "").replacingOccurrences(of: "+", with: "%2B").utf8)
+        let (bytes,response)=try await session.data(for:request)
         guard let response=response as? HTTPURLResponse else {
             throw HanlinChatGPTPlanError.invalidToken
         }
         guard response.statusCode==200 else {
-            throw HanlinChatGPTPlanError.server(response.statusCode)
+            throw Self.serviceError(bytes, response: response)
         }
         let result=try JSONDecoder().decode(TokenResponse.self,from:bytes)
         guard !result.access_token.isEmpty,result.expires_in>0 else {
@@ -194,28 +254,40 @@ public actor HanlinChatGPTPlanClient {
     ) async throws -> HanlinChatGPTPlanCredentials {
         guard callback.scheme=="http",callback.host=="127.0.0.1",
               callback.port==attempt.redirectURI.port,
-              callback.path=="/auth/callback" else {
+              callback.path=="/auth/callback", callback.user == nil,
+              callback.password == nil, callback.fragment == nil else {
             throw HanlinChatGPTPlanError.invalidRedirect
         }
         let q=URLComponents(url:callback,resolvingAgainstBaseURL:false)?.queryItems ?? []
-        let params=Dictionary(q.compactMap { item -> (String,String)? in
-            item.value.map { (item.name,$0) }
-        },uniquingKeysWith:{old,_ in old})
+        var params: [String: String] = [:]
+        for item in q {
+            guard params[item.name] == nil, let value = item.value else {
+                throw HanlinChatGPTPlanError.invalidAuthorization
+            }
+            params[item.name] = value
+        }
         guard params["state"]==attempt.state else {
             throw HanlinChatGPTPlanError.invalidAuthorization
         }
-        if params["error"] != nil { throw HanlinChatGPTPlanError.denied }
+        if let code = params["error"] {
+            if code == "access_denied" { throw HanlinChatGPTPlanError.denied }
+            throw HanlinChatGPTPlanError.oauth(status: 0, code: code, requestID: nil)
+        }
         guard let code=params["code"],!code.isEmpty else {
             throw HanlinChatGPTPlanError.invalidAuthorization
         }
-        let issuedID=params["client_id"] ?? (priorAccount?.clientID ?? "")
+        let issuedID=params["client_id"] ??
+            (attempt.clientID == "dynamic_agent_client" ? "" : attempt.clientID)
         guard !issuedID.isEmpty,issuedID != "dynamic_agent_client" else {
             throw HanlinChatGPTPlanError.invalidAuthorization
+        }
+        if attempt.clientID != "dynamic_agent_client", issuedID != attempt.clientID {
+            throw HanlinChatGPTPlanError.invalidIdentity
         }
         if let priorAccount,issuedID != priorAccount.clientID {
             throw HanlinChatGPTPlanError.invalidIdentity
         }
-        let response=try await Self.tokenRequest([
+        let response=try await tokenRequest([
             "grant_type":"authorization_code",
             "client_id":issuedID,
             "code":code,
@@ -223,10 +295,11 @@ public actor HanlinChatGPTPlanClient {
             "redirect_uri":attempt.redirectURI.absoluteString,
             "resource":Self.resource
         ])
-        guard let idToken=response.id_token,let refresh=response.refresh_token else {
+        guard let idToken=response.id_token, !idToken.isEmpty,
+              let refresh=response.refresh_token, !refresh.isEmpty else {
             throw HanlinChatGPTPlanError.invalidToken
         }
-        let claims=try await Self.verifyIdentity(idToken,
+        let claims=try await verifyIdentity(idToken,
             clientID:issuedID,nonce:attempt.nonce,accessToken:response.access_token)
         if let priorAccount,claims.subject != priorAccount.subject {
             throw HanlinChatGPTPlanError.invalidIdentity
@@ -238,32 +311,103 @@ public actor HanlinChatGPTPlanClient {
             subject:claims.subject,email:claims.email,idToken:idToken,
             accessToken:response.access_token,refreshToken:refresh,
             scopes:(response.scope ?? "").split(separator:" ").map(String.init),
-            expiresAt:Date().addingTimeInterval(TimeInterval(response.expires_in)))
+            expiresAt:now().addingTimeInterval(TimeInterval(response.expires_in)),
+            earliestRefreshAt:response.earliest_refresh_at?.value)
     }
 
-    public func refresh(_ account:HanlinChatGPTPlanCredentials) async throws
+    public func refresh(_ account: HanlinChatGPTPlanCredentials) async throws
       -> HanlinChatGPTPlanCredentials {
-        let result=try await Self.tokenRequest([
-            "grant_type":"refresh_token","client_id":account.clientID,
-            "refresh_token":account.refreshToken,"resource":Self.resource
+        guard !account.clientID.isEmpty, account.clientID != "dynamic_agent_client",
+              !account.refreshToken.isEmpty else {
+            throw HanlinChatGPTPlanError.invalidAuthorization
+        }
+        let result = try await tokenRequest([
+            "grant_type": "refresh_token", "client_id": account.clientID,
+            "refresh_token": account.refreshToken, "resource": Self.resource
         ])
-        return .init(clientID:account.clientID,hostID:account.hostID,
-                     subject:account.subject,email:account.email,
-                     idToken:result.id_token ?? account.idToken,
-                     accessToken:result.access_token,
-                     refreshToken:result.refresh_token ?? account.refreshToken,
-                     scopes:result.scope.map{$0.split(separator:" ").map(String.init)} ??
-                         account.scopes,
-                     expiresAt:Date().addingTimeInterval(TimeInterval(result.expires_in)))
+        guard let replacement = result.refresh_token, !replacement.isEmpty else {
+            throw HanlinChatGPTPlanError.invalidToken
+        }
+        var email = account.email
+        if let idToken = result.id_token {
+            let identity = try await verifyIdentity(idToken, clientID: account.clientID,
+                                                    nonce: nil, accessToken: result.access_token)
+            guard identity.subject == account.subject else {
+                throw HanlinChatGPTPlanError.invalidIdentity
+            }
+            email = identity.email
+        }
+        return .init(clientID: account.clientID, hostID: account.hostID,
+                     subject: account.subject, email: email,
+                     idToken: result.id_token ?? account.idToken,
+                     accessToken: result.access_token, refreshToken: replacement,
+                     scopes: result.scope.map { $0.split(separator: " ").map(String.init) } ?? account.scopes,
+                     expiresAt: now().addingTimeInterval(TimeInterval(result.expires_in)),
+                     earliestRefreshAt: result.earliest_refresh_at?.value)
+    }
+
+    /// Ends the renewable session; callers still own clearing protected local credentials.
+    public func revoke(_ account: HanlinChatGPTPlanCredentials) async throws {
+        guard !account.clientID.isEmpty, account.clientID != "dynamic_agent_client",
+              !account.refreshToken.isEmpty else {
+            throw HanlinChatGPTPlanError.invalidAuthorization
+        }
+        var discovery = URLRequest(url: URL(string: Self.issuer + "/.well-known/openid-configuration")!)
+        discovery.timeoutInterval = 25
+        let (bytes, response) = try await session.data(for: discovery)
+        guard let http = response as? HTTPURLResponse else {
+            throw HanlinChatGPTPlanError.invalidAuthorization
+        }
+        guard http.statusCode == 200 else { throw Self.serviceError(bytes, response: http) }
+        struct Metadata: Decodable {
+            let issuer: String
+            let revocation_endpoint: URL
+        }
+        let metadata = try JSONDecoder().decode(Metadata.self, from: bytes)
+        let endpoint = metadata.revocation_endpoint
+        guard metadata.issuer == Self.issuer,
+              endpoint.scheme == "https", endpoint.host == "auth.openai.com",
+              endpoint.port == nil || endpoint.port == 443,
+              endpoint.user == nil, endpoint.password == nil,
+              endpoint.query == nil, endpoint.fragment == nil else {
+            throw HanlinChatGPTPlanError.invalidAuthorization
+        }
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.timeoutInterval = 25
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        var form = URLComponents()
+        form.queryItems = [
+            .init(name: "token", value: account.refreshToken),
+            .init(name: "token_type_hint", value: "refresh_token"),
+            .init(name: "client_id", value: account.clientID)
+        ]
+        request.httpBody = Data((form.percentEncodedQuery ?? "").replacingOccurrences(of: "+", with: "%2B").utf8)
+        let (data, result) = try await session.data(for: request)
+        guard let http = result as? HTTPURLResponse else {
+            throw HanlinChatGPTPlanError.invalidAuthorization
+        }
+        guard http.statusCode == 200 else { throw Self.serviceError(data, response: http) }
+    }
+
+    private static func serviceError(_ data: Data, response: HTTPURLResponse) -> HanlinChatGPTPlanError {
+        let value = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+        let code = value?["error"] as? String ??
+            (value?["error"] as? [String: Any])?["code"] as? String
+        return .oauth(status: response.statusCode, code: code,
+                      requestID: response.value(forHTTPHeaderField: "x-request-id"))
     }
 
     public func listModels(accessToken:String) async throws -> [HanlinChatGPTPlanModel] {
         var request=URLRequest(url:URL(string:"https://api.openai.com/v1/models")!)
         request.setValue("Bearer "+accessToken,forHTTPHeaderField:"Authorization")
         request.timeoutInterval=25
-        let (data,response)=try await URLSession.shared.data(for:request)
-        guard let response=response as? HTTPURLResponse,response.statusCode==200 else {
+        let (data,response)=try await session.data(for:request)
+        guard let response=response as? HTTPURLResponse else {
             throw HanlinChatGPTPlanError.unavailable
+        }
+        guard response.statusCode == 200 else {
+            throw Self.serviceError(data, response: response)
         }
         struct Catalog: Decodable { let models:[HanlinChatGPTPlanModel] }
         return try JSONDecoder().decode(Catalog.self,from:data).models
@@ -271,8 +415,8 @@ public actor HanlinChatGPTPlanClient {
     }
 
     private struct Identity {let subject:String;let email:String?}
-    private static func verifyIdentity(_ jwt:String,clientID:String,
-        nonce:String,accessToken:String) async throws -> Identity {
+    private func verifyIdentity(_ jwt:String,clientID:String,
+        nonce:String?,accessToken:String) async throws -> Identity {
         let parts=jwt.split(separator:".")
         guard parts.count==3,
               let headerBytes=Data(base64URLString:String(parts[0])),
@@ -286,17 +430,18 @@ public actor HanlinChatGPTPlanClient {
               let alg=header["alg"] as? String,
               ["RS256","ES256"].contains(alg)
         else { throw HanlinChatGPTPlanError.invalidToken }
-        let (jwksBytes,jwksResponse)=try await URLSession.shared.data(from:jwksURL)
+        let (jwksBytes,jwksResponse)=try await session.data(from:Self.jwksURL)
         guard (jwksResponse as? HTTPURLResponse)?.statusCode==200,
               let keys=try? JSONDecoder().decode(JWKS.self,from:jwksBytes),
-              let jwk=keys.keys.first(where:{$0.kid==kid}) else {
+              let jwk=keys.keys.first(where:{$0.kid==kid}),
+              jwk.alg == nil || jwk.alg == alg else {
             throw HanlinChatGPTPlanError.invalidToken
         }
         let signing=Data((String(parts[0])+"."+String(parts[1])).utf8)
         let verified:Bool
         if alg=="RS256",jwk.kty=="RSA",let n=jwk.n,let e=jwk.e,
            let modulus=Data(base64URLString:n),let exponent=Data(base64URLString:e){
-            let pkcs1=asn1(tag:0x30,asn1Integer(modulus)+asn1Integer(exponent))
+            let pkcs1=Self.asn1(tag:0x30,Self.asn1Integer(modulus)+Self.asn1Integer(exponent))
             let key=SecKeyCreateWithData(pkcs1 as CFData,[
                 kSecAttrKeyType:kSecAttrKeyTypeRSA,
                 kSecAttrKeyClass:kSecAttrKeyClassPublic,
@@ -315,16 +460,25 @@ public actor HanlinChatGPTPlanClient {
             verified=key.isValidSignature(sig,for:signing)
         } else { verified=false }
         guard verified,
-              payload["iss"] as? String == issuer,
+              payload["iss"] as? String == Self.issuer,
               let subject=payload["sub"] as? String,!subject.isEmpty,
-              payload["nonce"] as? String == nonce,
               let exp=payload["exp"] as? TimeInterval,
-              exp > Date().timeIntervalSince1970-60
+              exp > now().timeIntervalSince1970-60
         else {throw HanlinChatGPTPlanError.invalidIdentity}
+        if let nonce, payload["nonce"] as? String != nonce {
+            throw HanlinChatGPTPlanError.invalidIdentity
+        }
+        if let authorizedParty = payload["azp"] as? String, authorizedParty != clientID {
+            throw HanlinChatGPTPlanError.invalidIdentity
+        }
+        if let notBefore = payload["nbf"] as? TimeInterval, notBefore > now().timeIntervalSince1970 + 60 {
+            throw HanlinChatGPTPlanError.invalidIdentity
+        }
         if let aud=payload["aud"] as? String {
             guard aud==clientID else{throw HanlinChatGPTPlanError.invalidIdentity}
         } else if let aud=payload["aud"] as? [String] {
-            guard aud.contains(clientID) else {
+            guard aud.contains(clientID),
+                  aud.count == 1 || payload["azp"] as? String == clientID else {
                 throw HanlinChatGPTPlanError.invalidIdentity
             }
         } else { throw HanlinChatGPTPlanError.invalidIdentity }
