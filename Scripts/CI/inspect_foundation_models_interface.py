@@ -38,7 +38,13 @@ def inspect(output):
                "DynamicProfile", "struct Profile", "class Profile", "protocol Profile",
                "extension FoundationModels.LanguageModelSession.Profile",
                "func onToolCall", "func historyTransform",
-               "struct Transcript", "extension FoundationModels.Transcript")
+               "struct Transcript", "extension FoundationModels.Transcript",
+               # SDK 27 interfaces also qualify names with ::. Match public type
+               # identities so complete extensions and tool continuations survive.
+               "GenerationOptions", "ToolCallingMode", "GenerationSchema", "GeneratedContent",
+               "protocol Tool", "struct Tool", "ToolDefinition", "ToolCall", "ToolOutput",
+               "Transcript", "LanguageModelSession", "SystemLanguageModel",
+               "LanguageModelCapabilities", "ContextOptions")
     ranges = []
     for i, line in enumerate(lines):
         relevant = any(x in line for x in needles)
