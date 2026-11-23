@@ -1,0 +1,246 @@
+{
+  "bundle": "HanlinSDK_AI_Hanlin.bundle",
+  "bundleCopies": [
+    {
+      "entries": 49,
+      "files": 45,
+      "inventorySHA256": "03384783a1d9d4b8a21a8479eaef5c868ff567b2f7d9523dbaf05d6c8e3509ef",
+      "path": "HanlinSDK_AI_Hanlin.bundle"
+    },
+    {
+      "entries": 49,
+      "files": 45,
+      "inventorySHA256": "03384783a1d9d4b8a21a8479eaef5c868ff567b2f7d9523dbaf05d6c8e3509ef",
+      "path": "Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle"
+    }
+  ],
+  "checked": [
+    {
+      "bytes": 13084832,
+      "resource": "RuntimeHostResources.zip",
+      "sha256": "141b002d2800cf29645041357f35a7884e7b8338e9059e67a3861847cc964867",
+      "source": "AI_HLY/RuntimeHostResources.zip"
+    },
+    {
+      "bytes": 6712,
+      "resource": "HanlinDiagnosticsBuildProvenance.json",
+      "sha256": "e9ed1c3132a3566cbfb40ef868ff282b416643d1502562894ab079e0553957ce",
+      "source": "AI_HLY/Downstream/AgentDiagnostics/HanlinDiagnosticsBuildProvenance.json"
+    },
+    {
+      "bytes": 1145,
+      "resource": "LICENSE.OpenClaw.JSON5.txt",
+      "sha256": "53e59feb13058722d977c699eb0407c7bce2f93c949b681bbd2ff31698535927",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/LICENSE.OpenClaw.JSON5.txt"
+    },
+    {
+      "bytes": 765,
+      "resource": "LICENSE.OpenClaw.Semver.txt",
+      "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/LICENSE.OpenClaw.Semver.txt"
+    },
+    {
+      "bytes": 1076,
+      "resource": "LICENSE.OpenClaw.txt",
+      "sha256": "9efd316ecf1c4c60f6fd5d26433142fff2b6794d7d328e9bc6179b29bf9c82a4",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/LICENSE.OpenClaw.txt"
+    },
+    {
+      "bytes": 6297,
+      "resource": "hanlin_openclaw_native_contract.mjs",
+      "sha256": "4e05599b68432e3f410b85718bee335218cd1891d34367d341cc51d4c7bb25a6",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_native_contract.mjs"
+    },
+    {
+      "bytes": 2892,
+      "resource": "hanlin_openclaw_native_probe.mjs",
+      "sha256": "14be08ae07d9bc74178e2d7665c791abad42fee3fea06bf5ac2f09d5d9513c12",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_native_probe.mjs"
+    },
+    {
+      "bytes": 136257,
+      "resource": "hanlin_openclaw_policy.mjs",
+      "sha256": "d6cc833943108245a2a68fc85ff4d67bf50719ade36e52fc63c784afedf9d565",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy.mjs"
+    },
+    {
+      "bytes": 8347,
+      "resource": "hanlin_openclaw_policy_native_contract.mjs",
+      "sha256": "b9da6ef964550eeb68b432eda195448707b9bc945558aadcd986246a0bafdb19",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_native_contract.mjs"
+    },
+    {
+      "bytes": 8027,
+      "resource": "hanlin_openclaw_policy_native_probe.mjs",
+      "sha256": "8097f6302ed346434d5404d929c6fec4a10e50cc8e32bb8616f07d2594048f59",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_native_probe.mjs"
+    },
+    {
+      "bytes": 5230,
+      "resource": "hanlin_openclaw_policy_probe.mjs",
+      "sha256": "b1f021007db883226b65d3d5b70f83e009f00a259fc715e464ca2c7c8dfc73ec",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_probe.mjs"
+    },
+    {
+      "bytes": 9653,
+      "resource": "hanlin_openclaw_policy_provenance.json",
+      "sha256": "f4c6176d00e4e0a6a2c86cd66039e56e135f60d09a14e5a31344fbc872c6c2cb",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_provenance.json"
+    },
+    {
+      "bytes": 10787,
+      "resource": "hanlin_openclaw_policy_test_selection.json",
+      "sha256": "9db023cdfc6236621f80aaf5db559a52833c38500516cfdac424dca3c07add79",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_test_selection.json"
+    },
+    {
+      "bytes": 1544,
+      "resource": "hanlin_openclaw_policy_upstream_shim.mjs",
+      "sha256": "f3b9a74f2f4ff61e6e64235d3b089b74d986718d5c9d0a4dce7fee89f202339d",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_upstream_shim.mjs"
+    },
+    {
+      "bytes": 14966,
+      "resource": "hanlin_openclaw_policy_upstream_tests.mjs",
+      "sha256": "a38f3b14d6d759606404ac480aeb32e2a10bc5de23eb6e3fffb2633b8c708814",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_upstream_tests.mjs"
+    },
+    {
+      "bytes": 1589,
+      "resource": "hanlin_openclaw_provenance.json",
+      "sha256": "67fb35c9d983951eea74668ca207bee50fc0059a2efa78fcf3cc62f109bcc98d",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_provenance.json"
+    },
+    {
+      "bytes": 1520,
+      "resource": "hanlin_openclaw_requirements.js",
+      "sha256": "e492e2d611bb42e15b26411ab055afce87add4eea317789521c6fe36cc28970c",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_requirements.js"
+    },
+    {
+      "bytes": 2653,
+      "resource": "hanlin_openclaw_upstream_requirements_tests.js",
+      "sha256": "17dfb120ed410096ec5f3ea13bb256eaf5787aaaf2ff91098cbd13b39d0a205c",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_upstream_requirements_tests.js"
+    },
+    {
+      "bytes": 20704,
+      "resource": "hanlin_python_ast.py",
+      "sha256": "d28e35f4dcd498e333eb8af5309120bfc39f85bb0b7def06758c813dfbb83a58",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_python_ast.py"
+    },
+    {
+      "bytes": 8503,
+      "resource": "hanlin_python_manifest.py",
+      "sha256": "b8e543128d6a7df233124b1ff6a9ddd6fe3b5e47ffcf76ebc182037783b11b6b",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_python_manifest.py"
+    },
+    {
+      "bytes": 13557,
+      "resource": "hanlin_typescript_ast.mjs",
+      "sha256": "b76c90dae0454bab5de1f729b2dce3086e084ba7d86e60348aabf2761b02cc99",
+      "source": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_typescript_ast.mjs"
+    },
+    {
+      "bytes": 989,
+      "resource": "HanlinPythonCACertificates.LICENSE.txt",
+      "sha256": "e93716da6b9c0d5a4a1df60fe695b370f0695603d21f6f83f053e42cfc10caf7",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.LICENSE.txt"
+    },
+    {
+      "bytes": 625,
+      "resource": "HanlinPythonCACertificates.json",
+      "sha256": "c6ab25fd5b4132898b7b3588ea840ce16822b457f99a1340fb7caaadd043c790",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.json"
+    },
+    {
+      "bytes": 235863,
+      "resource": "HanlinPythonCACertificates.pem",
+      "sha256": "2ef52ad56b4803e264045c915e55c236cbfa045b84b81efefc218a19eb44bd2b",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.pem"
+    },
+    {
+      "bytes": 9340,
+      "resource": "HanlinPythonExecution.py",
+      "sha256": "08b3334d41016909b0df44f0a365bb6217cb223168f0e3efb6f58ccec7b7c51e",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonExecution.py"
+    },
+    {
+      "bytes": 438,
+      "resource": "HanlinPythonNativeExtensions.json",
+      "sha256": "0b96d1958fb82fc0c42b537b1094892d994ee395c9aee94741fc97c46d38885b",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonNativeExtensions.json"
+    },
+    {
+      "bytes": 1610,
+      "resource": "HanlinPythonPackaging.lock.json",
+      "sha256": "710f53fb19c8e79b27de7a3dc7f9b73e13d9033e81b42ab4d3eb642a27c30b6c",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.lock.json"
+    },
+    {
+      "bytes": 19911,
+      "resource": "HanlinPythonPackaging.py",
+      "sha256": "b8d56aae2fbab9992f05d597ee24ba5a35960adc72a37edf9963f71b527e0d56",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.py"
+    },
+    {
+      "bytes": 464466,
+      "resource": "installer-1.1.0-py3-none-any.whl",
+      "sha256": "f55f5728ff61d3dd54dbc5a397cf3f7307cb64b180c20b72afbebf01c9e2c8a0",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/installer-1.1.0-py3-none-any.whl"
+    },
+    {
+      "bytes": 129956,
+      "resource": "packaging-26.3-py3-none-any.whl",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/packaging-26.3-py3-none-any.whl"
+    },
+    {
+      "bytes": 10724,
+      "resource": "pyproject_hooks-1.3.3-py3-none-any.whl",
+      "sha256": "5fc53fdac9f7bd63fbcdc868fb5f90b4784d78a53a3d3388cd738b807441a20b",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/pyproject_hooks-1.3.3-py3-none-any.whl"
+    },
+    {
+      "bytes": 18737,
+      "resource": "resolvelib-1.2.1-py3-none-any.whl",
+      "sha256": "fb06b66c8da04172d9e72a21d7d06186d8919e32ae5ab5cdf5b9d920be805ac2",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/resolvelib-1.2.1-py3-none-any.whl"
+    },
+    {
+      "bytes": 1072,
+      "resource": "hanlin_native-1.0.0-py3-none-any.whl",
+      "sha256": "68409abd5b784732c6edf856aff2c63df6a5f96373ccd21fa0170b32cddc98b5",
+      "source": "AI_HLY/Downstream/RuntimeCore/Python/Resources/hanlin_native-1.0.0-py3-none-any.whl"
+    },
+    {
+      "bytes": 8892,
+      "resource": "RuntimeLinkDependencyNotices.txt",
+      "sha256": "fcf71d475fffa4750cf43badedb62a258c2eb52e8613ffc3bce45bd0e2a80e8b",
+      "source": "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt"
+    },
+    {
+      "bytes": 3763,
+      "resource": "RuntimeManifest.json",
+      "sha256": "bb6db1a327039e1beaffd8d11fa870a8ae6d545f2500cfd592bc6416f5fbc89d",
+      "source": "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json"
+    },
+    {
+      "bytes": 11888,
+      "resource": "Refinement.json",
+      "sha256": "386b6ea3ce179560e0a9f5b3d929066e0bd27761fbd13f5c9b4300ebbc68a53f",
+      "source": "AI_HLY/Resource/Refinement.json"
+    },
+    {
+      "bytes": 56681,
+      "resource": "UpdateNotes.json",
+      "sha256": "eece0079dd82302df1cf0575f0f800315828496ee755ca359d04826bea1c1531",
+      "source": "AI_HLY/Resource/UpdateNotes.json"
+    }
+  ],
+  "copiedResourceFiles": 37,
+  "errors": [],
+  "module": "AI_Hanlin",
+  "processedResources": [],
+  "status": "PASS"
+}

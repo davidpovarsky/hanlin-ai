@@ -1,0 +1,35 @@
+{
+  "utc": "2026-11-23T21:58:16.385656+00:00",
+  "run": 45265065184,
+  "attempt": 1,
+  "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "artifact": {
+    "id": 14864733741,
+    "node_id": "MDg6QXJ0aWZhY3QxNDg2NDczMzc0MQ==",
+    "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "size_in_bytes": 66998891,
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14864733741",
+    "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14864733741/zip",
+    "expired": false,
+    "digest": "sha256:62dab969033c2f5db51bf9b9e31640521eec6f3848e08b8c20e2ee1a359679e9",
+    "created_at": "2026-11-23T21:51:28Z",
+    "updated_at": "2026-11-23T21:51:28Z",
+    "expires_at": "2026-12-07T21:51:16Z",
+    "workflow_run": {
+      "id": 45265065184,
+      "repository_id": 1295277723,
+      "head_repository_id": 1295277723,
+      "head_branch": "codex/hanlin-sdk-unification-20261123",
+      "head_sha": "ade2f626e37102abde83050c94d524d19e0726bb"
+    }
+  },
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "gh",
+    "api",
+    "repos/davidpovarsky/hanlin-ai/actions/artifacts/14864733741/zip"
+  ],
+  "acquisition_count": 1
+}

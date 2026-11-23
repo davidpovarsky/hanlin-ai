@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Wire the original Hanlin executable to its single shared SDK implementation."""
 from pathlib import Path
+import subprocess
 import argparse,json,re,sys
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"Scripts/CI/IntegrationValidation"))
@@ -86,7 +87,57 @@ def insert_object(text,section,key,body):
     rendered="\t\t"+key+" = {\n"+body+"\t\t};\n"
     return text.replace(marker,rendered+marker,1)
 
-def update():
+# Keep the original declarations available to the SDK manifest generator and
+# compiler. Only the original Application image owns their linked implementation
+# in these two processes; other executables retain their independent products.
+HOST_LINK_OWNERS = {"AI_Hanlin": "HanlinApplication", "AI_HLYTests": "HanlinApplication"}
+
+
+def application_product_closure(manifest):
+    targets = {target["name"]: target for target in manifest["targets"]}
+    products = {product["name"]: product["targets"] for product in manifest["products"]}
+    reachable, remote = set(), set()
+
+    def include(name):
+        if name in reachable:
+            return
+        if name not in targets:
+            raise ValueError("Missing canonical application target: " + name)
+        reachable.add(name)
+        for dependency in targets[name].get("dependencies", []):
+            if "product" in dependency:
+                product, package, *_ = dependency["product"]
+                if not package:
+                    raise ValueError("Application dependency requires an explicit package: " + product)
+                remote.add((product, package.lower()))
+            elif "target" in dependency:
+                include(dependency["target"][0])
+            elif "byName" in dependency:
+                include(dependency["byName"][0])
+            else:
+                raise ValueError("Unsupported application dependency: " + repr(dependency))
+
+    for name in products["HanlinApplication"]:
+        include(name)
+    local = {name for name, members in products.items() if set(members) <= reachable}
+    return local, remote
+
+
+def product_is_covered(product, objects, closure):
+    package = objects.get(product.get("package"), {})
+    if package.get("isa") == "XCLocalSwiftPackageReference":
+        return product["productName"] in closure[0]
+    if package.get("isa") == "XCRemoteSwiftPackageReference":
+        identity = package["repositoryURL"].rstrip("/").removesuffix(".git").rsplit("/", 1)[-1].lower()
+        return (product["productName"], identity) in closure[1]
+    return False
+
+
+def update(package=None):
+    if package is None:
+        package = json.loads(subprocess.check_output(
+            ["swift", "package", "--package-path", str(ROOT), "dump-package"], text=True, timeout=120))
+    closure = application_product_closure(package)
     text=FILE.read_text();project=parse_project(text);objects=project["objects"]
     root=objects[project["rootObject"]]
     old=[key for key in root["packageReferences"] if objects[key]["isa"]=="XCLocalSwiftPackageReference" and key!=ROOT_PACKAGE]
@@ -117,9 +168,20 @@ def update():
         text=edit_object(text,key,set_products)
         phase=next(k for k in target["buildPhases"] if objects[k]["isa"]=="PBXFrameworksBuildPhase")
         linked=list(objects[phase]["files"])
+        owner = HOST_LINK_OWNERS.get(name)
+        if owner:
+            # Removing a declaration here would also remove its original SDK
+            # implementation on the next manifest generation. Drop only the
+            # redundant linker input, and retain independent/unknown products.
+            linked = [key for key in linked
+                      if "productRef" not in objects[key]
+                      or objects[objects[key]["productRef"]]["productName"] == owner
+                      or not product_is_covered(objects[objects[key]["productRef"]], objects, closure)]
         if name=="AI_Hanlin":
             linked=[k for k in linked if objects[k].get("fileRef") not in {"A10000000000000000000020","A10000000000000000000021"}]
         for offset,product in enumerate(required):
+            if owner and product != owner and product in closure[0]:
+                continue
             build_id=EXTRA_PRODUCT_BUILDS.get((name,product))
             if build_id is None:
                 assert offset < 4, "Allocate an explicit free ID for an additional target product"
