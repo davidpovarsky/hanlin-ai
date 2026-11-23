@@ -1,11 +1,41 @@
 import Foundation
 import Testing
 import UserNotifications
+import HanlinWidgetUI
 @testable import AI_Hanlin
 
 @MainActor
 @Suite("Original system integration host ownership")
 struct HanlinApplicationSystemIntegrationTests {
+    @Test(arguments: ["en", "he", "zh-Hans"])
+    func widgetIntentMetadataLoadsTheOriginalHostTranslations(language: String) throws {
+        let expected: [String: [String]] = [
+            "en": ["Run Script Action", "Widget instance", "Action", "Input"],
+            "he": ["הפעלת פעולת סקריפט", "מופע וידג׳ט", "פעולה", "קלט"],
+            "zh-Hans": ["运行脚本操作", "小组件实例", "操作", "输入"]
+        ]
+        let values = try #require(expected[language])
+        var action = HanlinRunScriptActionIntent.title
+        var widget = HanlinWidgetConfigurationIntent.title
+        action.locale = Locale(identifier: language)
+        widget.locale = Locale(identifier: language)
+        #expect(action.table == "HanlinAppIntents")
+        #expect(widget.table == "HanlinAppIntents")
+        #expect(String(localized: action) == values[0])
+        #expect(String(localized: widget) == values[1])
+
+        // Both actual executables must carry the same generated host table.
+        let plugins = try #require(Bundle.main.builtInPlugInsURL)
+        let widgetBundle = try #require(Bundle(url: plugins.appending(path: "HanlinScriptingWidgets.appex")))
+        for bundle in [Bundle.main, widgetBundle] {
+            let url = try #require(bundle.url(forResource: language, withExtension: "lproj"))
+            let localized = try #require(Bundle(url: url))
+            for (key, value) in zip(["Run Script Action", "Widget instance", "Action", "Input"], values) {
+                #expect(localized.localizedString(forKey: key, value: nil, table: "HanlinAppIntents") == value)
+            }
+        }
+    }
+
     @Test
     func notificationBootstrapPreservesHostActionsAndCategories() throws {
         let action = UNNotificationAction(identifier: "HOST_REPLY", title: "Reply", options: [])

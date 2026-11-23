@@ -31,8 +31,8 @@ enum ChavrusaSystemIntegrationBootstrap {
 }
 
 public struct EnableChavrusaNotificationsIntent: AppIntent {
-    public static let title = LocalizedStringResource("Enable Hanlin Notifications", bundle: .atURL(HanlinLocalization.bundle.bundleURL))
-    public static let description = IntentDescription(LocalizedStringResource("Enables notifications for Hanlin after you grant system permission.", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    public static let title = LocalizedStringResource("Enable Hanlin Notifications", table: "HanlinAppIntents", bundle: .main)
+    public static let description = IntentDescription(LocalizedStringResource("Enables notifications for Hanlin after you grant system permission.", table: "HanlinAppIntents", bundle: .main))
     public static let openAppWhenRun = true
 
     public init() {}
@@ -53,17 +53,17 @@ struct ChavrusaAlarmMetadata: AlarmMetadata {
 }
 
 public struct ScheduleChavrusaAlarmIntent: AppIntent {
-    public static let title = LocalizedStringResource("Schedule an Alarm with Hanlin", bundle: .atURL(HanlinLocalization.bundle.bundleURL))
-    public static let description = IntentDescription(LocalizedStringResource("Schedules a system alarm at the time you choose.", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    public static let title = LocalizedStringResource("Schedule an Alarm with Hanlin", table: "HanlinAppIntents", bundle: .main)
+    public static let description = IntentDescription(LocalizedStringResource("Schedules a system alarm at the time you choose.", table: "HanlinAppIntents", bundle: .main))
     public static let openAppWhenRun = false
 
-    @Parameter(title: LocalizedStringResource("Hour", bundle: .atURL(HanlinLocalization.bundle.bundleURL)), inclusiveRange: (0, 23))
+    @Parameter(title: LocalizedStringResource("Hour", table: "HanlinAppIntents", bundle: .main), inclusiveRange: (0, 23))
     public var hour: Int
 
-    @Parameter(title: LocalizedStringResource("Minute", bundle: .atURL(HanlinLocalization.bundle.bundleURL)), inclusiveRange: (0, 59))
+    @Parameter(title: LocalizedStringResource("Minute", table: "HanlinAppIntents", bundle: .main), inclusiveRange: (0, 59))
     public var minute: Int
 
-    @Parameter(title: LocalizedStringResource("Title", bundle: .atURL(HanlinLocalization.bundle.bundleURL)))
+    @Parameter(title: LocalizedStringResource("Title", table: "HanlinAppIntents", bundle: .main))
     public var alarmTitle: String
 
     public init() {}
@@ -98,13 +98,13 @@ public struct ChavrusaChatShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: ScheduleChavrusaAlarmIntent(),
             phrases: ["Schedule an alarm in \(.applicationName)"],
-            shortTitle: LocalizedStringResource("Schedule Alarm", bundle: .atURL(HanlinLocalization.bundle.bundleURL)),
+            shortTitle: LocalizedStringResource("Schedule Alarm", table: "HanlinAppIntents", bundle: .main),
             systemImageName: "alarm"
         )
         AppShortcut(
             intent: EnableChavrusaNotificationsIntent(),
             phrases: ["Enable notifications in \(.applicationName)"],
-            shortTitle: LocalizedStringResource("Enable Notifications", bundle: .atURL(HanlinLocalization.bundle.bundleURL)),
+            shortTitle: LocalizedStringResource("Enable Notifications", table: "HanlinAppIntents", bundle: .main),
             systemImageName: "bell.badge"
         )
     }

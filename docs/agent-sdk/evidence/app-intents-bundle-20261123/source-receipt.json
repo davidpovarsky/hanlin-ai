@@ -1,0 +1,51 @@
+{
+  "base_commit": "5d0ea90d98b405d38b66bb735198b945225877ba",
+  "failed_run": 45177292887,
+  "failed_job": 137701956293,
+  "status": "SOURCE_READY_APPLE_NOT_RUN",
+  "metadata_replacements": 20,
+  "unchanged_original_translation_entries": 1118,
+  "new_canonical_entries": [
+    "Choose an installed instance. Placements using the same instance share state.",
+    "Continuing in Hanlin",
+    "Enable Notifications",
+    "Hour",
+    "Minute",
+    "Run Script Action",
+    "Runs an action from an installed Hanlin Script package.",
+    "Script Action",
+    "Widget instance"
+  ],
+  "projected_languages": [
+    "en",
+    "he",
+    "zh-Hans"
+  ],
+  "original_dialog_resource": "SDK bundle unchanged",
+  "tests": {
+    "project_generator": "PASS",
+    "host_projection": "PASS",
+    "apple_compilation": "NOT_RUN",
+    "native_localization": "NOT_RUN",
+    "previous_28_selections": "NOT_RUN",
+    "actual_resource_references": "PASS"
+  },
+  "known_failed_metadata_replacements": 9,
+  "same_pattern_preempted": 11,
+  "projected_keys": 18,
+  "source_parse": "PASS",
+  "source_hashes": {
+    "AI_HLY.xcodeproj/project.pbxproj": "d1113ad4826f9f4f7e610914a914dcd9d368985f50cc73073a2cfd8934aa726c",
+    "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift": "3882d18e73827f5491b0ec0e4dac2957c3e55562c60a5a3083ee2963ca453d1a",
+    "AI_HLY/VisionIntent.swift": "78e1246b7fbecad4921175bc394267342e2794772b3b292a88ee4602b92cc358",
+    "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802",
+    "Docs/SDK/README.md": "fa5671cce220a0a7b0fa5be32f38449773ae056adc8c913ed453aad8c2e7c1e1",
+    "Docs/SDK/HanlinAppIntentsLocalization.md": "9430aff1f0dc00d1bd7a8170bdbfea55bf3098b62ad7c1246369ce4c83bc5ab8",
+    "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings": "41fcd3b1add45990fa556f505534bc382d318dc69a3290f08ec0f29db8999e96",
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift": "287928fc80351a2d1f6219333bb668790560f2e67013666bed54ba9cf2c415a8",
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift": "073807ac316fecb215e310e85137f073887b941c1beafff8fcd52d2e6e7ab84a",
+    "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings": "fa3c2ab48fdf7a4af6c4865c0502128a59b6415eb65a8506a59a6c281ca9a4ee",
+    "Scripts/SDK/update_project.py": "119c68b4cd187d3c4e53db788ad3da4062e4644a22ff5402d98b85e10fff1636",
+    "Scripts/SDK/generate_app_intents_resources.py": "8a540888de190dcec5d9e80a7127eccf48322473213cd78a157a6574a72dfd9f"
+  }
+}
