@@ -557,6 +557,10 @@
 			isa = PBXBuildFile;
 			fileRef = AC1900000000000000000120;
 		};
+		AC1900000000000000000014 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000005;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1637,6 +1641,7 @@
 				"Downstream/SDK/HanlinApplicationContext.swift" ,
 				"Downstream/SDK/HanlinApplicationData.swift" ,
 				"Downstream/SDK/HanlinApplicationLifecycle.swift" ,
+				"Downstream/SDK/HanlinApplicationModelConfiguration.swift" ,
 				"Downstream/SDK/HanlinApplicationResources.swift" ,
 				"Downstream/SDK/HanlinApplicationScene.swift" ,
 				"Downstream/SDK/HanlinConversationComposerView.swift" ,
@@ -2033,6 +2038,7 @@
 				"F9C1C5A10B68BC2E49F340AC" ,
 				"AC1900000000000000000012" ,
 				"AC1900000000000000000013" ,
+				"AC1900000000000000000014" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2413,6 +2419,7 @@
 				"D7D5EE472DD58D7F00B89AAD" ,
 				"AC1900000000000000000003" ,
 				"AC1900000000000000000004" ,
+				"AC1900000000000000000005" ,
 			);
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
@@ -4048,6 +4055,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AC1900000000000000000001;
 			productName = HanlinLocalization;
+		};
+		AC1900000000000000000005 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinAgentActivityCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 

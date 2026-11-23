@@ -100,5 +100,8 @@
   "integration_base": "16934250",
   "sdk_resources": {
     "HanlinLocalization": "Original three language catalogs and shared image/color assets"
+  },
+  "shared_sdk_products": {
+    "HanlinAgentActivityCore": "Original shared redaction and native-result DTO implementations; no ChatUI or AgentCore dependency"
   }
 }

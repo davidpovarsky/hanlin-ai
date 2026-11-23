@@ -89,6 +89,7 @@
   ],
   "products": [
     "HanlinA2UI",
+    "HanlinAgentActivityCore",
     "HanlinExpoNativeAPI",
     "HanlinExpoRuntime",
     "HanlinLocalization",

@@ -8,7 +8,8 @@ from project_graph import parse_project
 FILE=ROOT/"AI_HLY.xcodeproj/project.pbxproj"
 ROOT_PACKAGE="AC1900000000000000000001"
 PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000000000000000003",
-          "HanlinLocalization":"AC1900000000000000000004"}
+          "HanlinLocalization":"AC1900000000000000000004",
+          "HanlinAgentActivityCore":"AC1900000000000000000005"}
 
 class Span:
     def __init__(self,text,start,end):self.text,self.left,self.right=text,start,end
@@ -78,7 +79,7 @@ def update():
     targets={v["name"]:(k,v) for k,v in objects.items() if v.get("isa")=="PBXNativeTarget"}
     for index,name in enumerate(("AI_Hanlin","AI_HLYTests","HanlinMiniApps")):
         key,target=targets[name]
-        required=["HanlinApplication","HanlinA2UI","HanlinLocalization"] if name!="HanlinMiniApps" else ["HanlinA2UI","HanlinLocalization"]
+        required=["HanlinApplication","HanlinA2UI","HanlinLocalization"] if name!="HanlinMiniApps" else ["HanlinA2UI","HanlinLocalization","HanlinAgentActivityCore"]
         products=list(target.get("packageProductDependencies",[]))
         for product in required:
             if PRODUCTS[product] not in products:products.append(PRODUCTS[product])

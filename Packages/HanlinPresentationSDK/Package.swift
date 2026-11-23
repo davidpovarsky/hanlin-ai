@@ -7,12 +7,15 @@ let package = Package(
     platforms: [.iOS("27.0"), .macOS(.v26)],
     products: [
         .library(name: "HanlinLocalization", targets: ["HanlinLocalization"]),
+        .library(name: "HanlinAgentActivityCore", targets: ["HanlinAgentActivityCore"]),
+        .library(name: "HanlinAgentActivityUI", targets: ["HanlinAgentActivityUI"]),
         .library(name: "HanlinPresentationKit", targets: ["HanlinPresentationKit"]),
         .library(name: "HanlinRichUI", targets: ["HanlinRichUI"]),
         .library(name: "HanlinChatUI", targets: ["HanlinChatUI"]),
         .library(name: "HanlinA2UI", targets: ["HanlinA2UI"])
     ],
     dependencies: [
+        .package(path: "../HanlinPlatform"),
         .package(url: "https://github.com/davidpovarsky/hanlin-streaming-markdown",
                  revision: "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8"),
         .package(url: "https://github.com/a2ui-project/a2ui",
@@ -23,6 +26,13 @@ let package = Package(
     targets: [
         .target(name: "HanlinLocalization", resources: [.process("Resources")]),
         .target(name: "HanlinPresentationKit"),
+        .target(name: "HanlinAgentActivityCore", dependencies: [
+            "HanlinPresentationKit", "HanlinLocalization",
+            .product(name: "HanlinPlatformContracts", package: "HanlinPlatform")
+        ]),
+        .target(name: "HanlinAgentActivityUI", dependencies: [
+            "HanlinAgentActivityCore", "HanlinChatUI", "HanlinPresentationKit", "HanlinLocalization"
+        ]),
         .target(name: "HanlinRichUI", dependencies: ["HanlinPresentationKit", "HanlinLocalization"],
                 resources: [.copy("Resources/OpenUI")]),
         .target(name: "HanlinChatUI", dependencies: ["HanlinPresentationKit", "HanlinRichUI", "HanlinLocalization",
