@@ -1,0 +1,34 @@
+{
+  "actionTimeGaps" : [
+    0.11749279166656379
+  ],
+  "control" : "rapid-native-plain",
+  "delivery" : "multi-tap",
+  "diagnosticOnly" : true,
+  "expectedActions" : 3,
+  "laterActionsAtIntermediateGeometry" : [
+    false
+  ],
+  "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+  "observedActions" : 2,
+  "phase" : "native-default",
+  "receiptLabel" : "2",
+  "receiptObservedThree" : false,
+  "samples" : [
+    {
+      "control" : "rapid-native-plain",
+      "uptime" : 1215.0012702916667
+    },
+    {
+      "control" : "rapid-native-plain",
+      "uptime" : 1215.1187630833333
+    }
+  ],
+  "scrollConfiguration" : {
+    "canCancelContentTouches" : true,
+    "delaysContentTouches" : true,
+    "isScrollEnabled" : true,
+    "originalDelaysContentTouches" : true,
+    "phase" : "native-default"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "test_exit_code": 0,
+  "archive": "ARCHIVED",
+  "readability": "READABLE",
+  "diagnostics": [],
+  "archive_sha256": "149db602844e4260d319b26eae6328d9c72e6ef39975054ee99e12db96c1a516",
+  "diagnostic_attachments": {
+    "status": "EXPORTED",
+    "exit_code": 0
+  },
+  "status": "FINALIZED_READABLE_ARCHIVED"
+}
