@@ -75,7 +75,7 @@ PY
 finish_phase build
 xcodebuild build-for-testing -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
   -destination "platform=iOS Simulator,id=$device" -destination-timeout 90 \
-  -derivedDataPath "$scratch/DerivedData" CODE_SIGNING_ALLOWED=NO \
+  -derivedDataPath "$scratch/DerivedData" -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
   2>&1 | tee "$evidence/build.log"
 python3 "$root/docs/chat-motion/record_sdk_inputs.py" --proof "$scratch/proof" \
   --derived-data "$scratch/DerivedData" --evidence "$evidence" > "$evidence/sdk-input-verification.json"
@@ -95,7 +95,7 @@ set +e
 python3 "$root/docs/chat-motion/record_ui_run.py" --device "$device" --evidence "$evidence" -- \
   xcodebuild test-without-building -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
   -destination "platform=iOS Simulator,id=$device" -destination-timeout 60 \
-  -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$scratch/Motion.xcresult" \
+  -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$scratch/Motion.xcresult" -skipMacroValidation \
   -parallel-testing-enabled NO -test-timeouts-enabled YES \
   -default-test-execution-time-allowance 600 -maximum-test-execution-time-allowance 720 \
   CODE_SIGNING_ALLOWED=NO "${selected_tests[@]}" 2>&1 | tee "$evidence/test.log"

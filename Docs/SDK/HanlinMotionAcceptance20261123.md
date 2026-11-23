@@ -46,3 +46,13 @@ Use the existing root-owned native scheduling mechanism after the source/profile
 If a wait fails, retain the measured timeline, exact AX receipt and phase timestamps before diagnosing a product defect. Do not increase thresholds, remove the intermediate-geometry requirement, or modify the production animation to satisfy an observer that did not exercise the intended transition.
 
 The component fixture remains distinct from original full-chat, streaming Markdown, paused-user scroll, compact multitasking and physical-device acceptance. Root’s original host/UI gates own those scopes. This lane dispatched no CI and made no animation algorithm or timing changes.
+
+## Actual canonical native attempt: 45122303559
+
+The focused `affected` dispatch at `65fdc2ed9cd1ed563b86d98cee2dab7f665f714c` ran on Xcode27.2 / Swift6.4.2. Its fresh simulator reached native boot readiness. The fixture and selected SDK profile matched the recorded source, with363 canonical source/resource files and manifest SHA256 `67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4`.
+
+Xcode stopped at `ComputeTargetDependencyGraph`: the existing EquatableMacros package was not enabled for this standalone headless command. Build exited65 before Swift compilation, resolved-input/bundle accounting and test execution. B/C are **NOT_RUN**; A/D were not dispatched. The artifact ZIP is15,318,937bytes and its API-verified SHA256 is `28e31d77849b03c564245f39017c1c4ec4c5d4c8c05d5cf9f1284fdd5b9984a6`.
+
+The bounded repair reuses the original project's command-scoped `-skipMacroValidation` option in the two Motion xcodebuild commands. The original lock and native log identify Equatable1.4.1; the original pinned revision is `597c2bb34af0c51331eb3b5e705f942d8ee20daa`. Global preferences, product animation code, dependency declarations, UI cases and measurement semantics remain unchanged. A follow-up B/C execution is required before considering the original A cycles or diagnostic D.
+
+See the [native receipt and actual build log](../../docs/agent-sdk/evidence/motion-native-45122303559/README.md). Native attempt: https://github.com/davidpovarsky/hanlin-ai/actions/runs/45122303559.
