@@ -1,0 +1,14 @@
+[
+  {
+    "index": 0,
+    "target": "MotionUITests",
+    "test": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+    "bundle": "Motion.xcresult"
+  },
+  {
+    "index": 1,
+    "target": "MotionUITests",
+    "test": "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()",
+    "bundle": "Motion.xcresult"
+  }
+]

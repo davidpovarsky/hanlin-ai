@@ -1,0 +1,10 @@
+{
+  "time": "2026-11-23T19:23:00.597748+00:00",
+  "run": 45248270552,
+  "attempt": 1,
+  "source": "9575dd15e816009e11d84ab7f4e21b45cb67c5e8",
+  "owner": "/root/motion_acceptance",
+  "watch_bound_seconds": 2700,
+  "interval_seconds": 30,
+  "collector": "Single sequential terminal acquisition after this sole watcher"
+}

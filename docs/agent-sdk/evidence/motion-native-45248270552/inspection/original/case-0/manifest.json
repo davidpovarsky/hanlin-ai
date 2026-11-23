@@ -1,0 +1,70 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "8F699224-73C7-4571-BE6B-29AD84FC9AE1.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-toggle-rapid-action-receipt_0_B486A475-EEA7-481C-8CF8-4CCBCFB13078.txt",
+        "timestamp" : 1795463247.81
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "7AF459B9-43C3-4C21-B8E2-C695E51A7C9B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-23 at 07.47.27 PM",
+        "timestamp" : 1795463247.372
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "BA2BCD60-F322-4541-81AB-DB2098919D43.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-toggle-prewarm-baseline-receipt_0_341D6378-CF8D-4B05-9277-A75D29EC7D3B.txt",
+        "timestamp" : 1795463246.316
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "AF6E23AB-E15C-4478-877D-758B3ED4CD28",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-23 at 07.47.24 PM",
+        "timestamp" : 1795463244.856
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "3A849424-9B90-44DB-9EB9-DEF9F0326958",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-23 at 07.47.22 PM",
+        "timestamp" : 1795463242.648
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "68041D95-22D3-48AE-8120-87934B79E1ED.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-23 at 07.46.57 PM.mp4",
+        "timestamp" : 1795463217.096
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "B30F2D2F-C099-4CF2-8892-55620EBADFFB.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+    "testIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence"
+  }
+]
