@@ -1,0 +1,30 @@
+
+    /usr/bin/codesign --force --sign - --entitlements /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniApps.build/HanlinMiniApps.app.xcent --timestamp\=none --generate-entitlement-der --strip-disallowed-xattrs /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app
+
+RegisterExecutionPolicyException /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app (in target 'HanlinMiniApps' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    builtin-RegisterExecutionPolicyException /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app
+
+Validate /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app (in target 'HanlinMiniApps' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    builtin-validationUtility /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app -validate-for-store -shallow-bundle -infoplist-subpath Info.plist
+
+Touch /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app (in target 'HanlinMiniApps' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    /usr/bin/touch -c /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app
+
+PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+note: Run script build phase 'Generate NativeScript metadata' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'HanlinMiniApps' from project 'AI_HLY')
+note: Run script build phase 'Process Python libraries' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'HanlinMiniApps' from project 'AI_HLY')
+
+Result bundle written to path:
+	/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult
+
+** BUILD SUCCEEDED **
+
+Resolve Package Graph
