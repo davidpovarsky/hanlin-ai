@@ -38,7 +38,10 @@ PY
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-a2ui-proof.XXXXXXXX")"
 mkdir "$scratch/source"
 git archive "$source_sha" \
-  AI_HLY/Downstream/ChatPresentation/A2UI AI_HLYTests/A2UITests.swift AI_HLYTests/A2UIFixtures \
+  Packages/HanlinPresentationSDK/Sources/HanlinA2UI \
+  Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit \
+  AI_HLY/Downstream/ChatPresentation/A2UI AI_HLY/Downstream/ChatPresentation/Media \
+  AI_HLYTests/A2UITests.swift AI_HLYTests/A2UIFixtures \
   docs/a2ui/prepare_exact_pin_proof.py docs/a2ui/EXACT_PIN_PROOF_ROUTE.md \
   > "$evidence/tested-source.tar"
 tar -xf "$evidence/tested-source.tar" -C "$scratch/source"

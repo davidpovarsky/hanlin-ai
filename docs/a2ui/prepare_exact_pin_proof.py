@@ -1,7 +1,8 @@
 """Prepare, but never dispatch or run, the isolated official-SDK proof.
 
 Default/--plan and --self-test are read-only and portable. --output creates a
-fresh temporary harness only on an authorized macOS host, outside the checkout.
+fresh temporary harness outside the checkout; staging itself is portable and never
+executes Swift or Xcode. Native execution still requires the recorded Apple toolchain.
 No app project, dependency manifest/lock, source or build setting is modified.
 """
 from __future__ import annotations
@@ -47,8 +48,12 @@ OWNERSHIP_CASES = [
     "retiredSurfaceCannotReanimateQueuedEventsInSameResult",
 ]
 CASE_COUNT = PORTABLE_CASE_COUNT + SDK_CASE_COUNT
-SOURCES = "AI_HLY/Downstream/ChatPresentation/A2UI"
-MEDIA_SOURCES = "AI_HLY/Downstream/ChatPresentation/Media"
+SDK_SOURCES = "Packages/HanlinPresentationSDK/Sources/HanlinA2UI"
+SOURCES = SDK_SOURCES + "/A2UI"
+MEDIA_SOURCES = SDK_SOURCES + "/Media"
+DESIGN_SOURCES = "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit"
+APP_ALIASES = ["AI_HLY/Downstream/ChatPresentation/A2UI",
+               "AI_HLY/Downstream/ChatPresentation/Media"]
 TEST = "AI_HLYTests/A2UITests.swift"
 MEDIA_POLICY_TEST = "AI_HLYTests/HanlinRemoteMediaURLTests.swift"
 FIXTURES = "AI_HLYTests/A2UIFixtures"
@@ -88,7 +93,7 @@ CONSUMER_CASES = [
 PROJECTION_CASES = ["modelPartUsesMessageIdentityWithoutToolCall",
     "orderedModelProjectionPreservesTextAndRegisteredSurface",
     "modelProjectionRejectsForeignIdentityAndAmbiguousParts", "modelProjectionNeverFollowsReplacedGeneration"]
-PACKAGE = f'''// swift-tools-version: 6.1
+PACKAGE = f'''// swift-tools-version: 6.2
 import PackageDescription
 
 let products: [Target.Dependency] = [
@@ -97,6 +102,7 @@ let products: [Target.Dependency] = [
     .product(name: "BasicCatalog", package: "a2ui"),
     .product(name: "BasicCatalogSwiftUI", package: "a2ui"),
 ]
+let consumerProducts: [Target.Dependency] = []
 let enabled: [SwiftSetting] = [
     .define("HANLIN_A2UI_POC", .when(configuration: .debug)),
     .define("DEBUG", .when(configuration: .debug)),
@@ -106,8 +112,10 @@ let package = Package(
     platforms: [.macOS("27.0")],
     dependencies: [.package(url: "{UPSTREAM}", revision: "{REVISION}")],
     targets: [
-        .target(name: "{CONSUMER_MODULE}", dependencies: products, swiftSettings: enabled),
-        .testTarget(name: "AI_HLYTests", dependencies: ["{CONSUMER_MODULE}"] + products,
+        .target(name: "HanlinPresentationKit"),
+        .target(name: "HanlinA2UI", dependencies: ["HanlinPresentationKit"] + products, swiftSettings: enabled),
+        .target(name: "{CONSUMER_MODULE}", dependencies: ["HanlinA2UI"] + products + consumerProducts, swiftSettings: enabled),
+        .testTarget(name: "AI_HLYTests", dependencies: ["{CONSUMER_MODULE}", "HanlinA2UI"] + products + consumerProducts,
                     resources: [.copy("A2UIFixtures")], swiftSettings: enabled),
     ],
     swiftLanguageModes: [.v6]
@@ -127,14 +135,14 @@ def package_text(platform: str, consumer: bool = False) -> str:
         text = text.replace('dependencies: [', '''dependencies: [
         .package(url: "https://github.com/scinfu/SwiftSoup.git", revision: "bba848db50462894e7fc0891d018dfecad4ef11e"),''', 1)
     if consumer:
-        text = text.replace('swift-tools-version: 6.1', 'swift-tools-version: 6.2')
-        text = text.replace('let products: [Target.Dependency] = [', '''let products: [Target.Dependency] = [
+        text = text.replace('let consumerProducts: [Target.Dependency] = []', '''let consumerProducts: [Target.Dependency] = [
     .product(name: "HanlinAgentCore", package: "HanlinAgentSDK"),
     .product(name: "HanlinHostContracts", package: "HanlinAgentSDK"),
     .product(name: "HanlinPersistenceAdapters", package: "HanlinAgentSDK"),
     .product(name: "HanlinPlatformContracts", package: "HanlinPlatform"),
     .product(name: "HanlinChatCore", package: "HanlinPlatform"),
-    .product(name: "AISDKProvider", package: "swift-ai-sdk"),''')
+    .product(name: "AISDKProvider", package: "swift-ai-sdk"),
+]''')
         text = text.replace('dependencies: [', f'''dependencies: [
         .package(path: "../Packages/HanlinAgentSDK"),
         .package(path: "../Packages/HanlinPlatform"),
@@ -145,8 +153,8 @@ def package_text(platform: str, consumer: bool = False) -> str:
 def plan(platform: str = "macos", consumer: bool = False, app: bool = False) -> dict:
     sdk_source = APP_SDK_SHA if app else SDK_SHA
     source = (REPOSITORY / TEST).read_text(encoding="utf-8")
-    if re.findall(r"^@testable import (\w+)$", source, re.MULTILINE) != [CONSUMER_MODULE]:
-        raise ValueError("Test import must match the actual AI_Hanlin consumer; do not add a module alias")
+    if re.findall(r"^@testable import (\w+)$", source, re.MULTILINE) != [CONSUMER_MODULE, "HanlinA2UI"]:
+        raise ValueError("Tests must retain the actual app consumer and access the SDK lifecycle hook only through @testable")
     ingress, sdk = source.split("struct A2UISDKTests", 1)
     cases = lambda text: re.findall(r"^\s+@Test func (\w+)\(", text, re.MULTILINE)
     portable, native = cases(ingress), cases(sdk)
@@ -155,10 +163,12 @@ def plan(platform: str = "macos", consumer: bool = False, app: bool = False) -> 
         raise ValueError(f"Expected exactly {PORTABLE_CASE_COUNT} portable and {SDK_CASE_COUNT} enabled SDK cases; update the proof contract")
     if not set(OWNERSHIP_CASES + MEDIA_CASES).issubset(native):
         raise ValueError("Missing exact affected ownership case")
-    paths = sorted((REPOSITORY / SOURCES).glob("*.swift"))
+    paths = sorted((REPOSITORY / SDK_SOURCES).rglob("*.swift"))
+    paths += sorted((REPOSITORY / DESIGN_SOURCES).rglob("*.swift"))
+    for aliases in APP_ALIASES:
+        paths += sorted((REPOSITORY / aliases).glob("*.swift"))
     media_cases = list(MEDIA_CASES)
     if platform == "ios":
-        paths += sorted((REPOSITORY / MEDIA_SOURCES).glob("*.swift"))
         paths += [REPOSITORY / MEDIA_POLICY_TEST]
         policy_cases = re.findall(r"@Test func (\w+)\(", (REPOSITORY / MEDIA_POLICY_TEST).read_text(encoding="utf-8"))
         if len(set(policy_cases)) != 7:
@@ -186,7 +196,7 @@ def plan(platform: str = "macos", consumer: bool = False, app: bool = False) -> 
         original = subprocess.check_output(["git", "show", sdk_source + ":" + APP_CONTRACT], cwd=REPOSITORY)
         files.append({"path": APP_CONTRACT, "sha256": sha(original), "source_git_sha": sdk_source})
     result = {"status": "PREPARED_NOT_EXECUTED", "upstream": UPSTREAM, "revision": REVISION,
-            "consumer_module": CONSUMER_MODULE, "test_module": "AI_HLYTests",
+            "consumer_module": CONSUMER_MODULE, "sdk_module": "HanlinA2UI", "test_module": "AI_HLYTests",
             "portable_cases": portable, "sdk_cases": native, "ownership_cases": OWNERSHIP_CASES,
             "media_cases": media_cases, "files": files, "target_platform": platform,
             "harness_manifest_sha256": sha(package_text(platform, consumer).encode()),
@@ -202,8 +212,6 @@ def plan(platform: str = "macos", consumer: bool = False, app: bool = False) -> 
 
 
 def prepare(destination: Path, inputs: dict) -> None:
-    if sys.platform != "darwin":
-        raise ValueError("Harness creation requires the separately authorized macOS execution host")
     destination = destination.resolve()
     if destination.is_relative_to(REPOSITORY) or destination.exists():
         raise ValueError("Use a fresh temporary directory outside the product checkout")
@@ -214,7 +222,11 @@ def prepare(destination: Path, inputs: dict) -> None:
                 if "source_git_sha" in entry else (REPOSITORY / relative).read_bytes())
         if sha(data) != entry["sha256"]:
             raise ValueError(f"Input changed while preparing proof: {relative}")
-        if relative.startswith(SOURCES + "/") or relative.startswith(MEDIA_SOURCES + "/") or relative in [CONSUMER_SOURCE, VALIDATOR_SOURCE, APP_SOURCE, APP_CONTRACT]:
+        if relative.startswith(SDK_SOURCES + "/"):
+            target = destination / "Sources/HanlinA2UI" / Path(relative).relative_to(SDK_SOURCES)
+        elif relative.startswith(DESIGN_SOURCES + "/"):
+            target = destination / "Sources/HanlinPresentationKit" / Path(relative).relative_to(DESIGN_SOURCES)
+        elif any(relative.startswith(aliases + "/") for aliases in APP_ALIASES) or relative in [CONSUMER_SOURCE, VALIDATOR_SOURCE, APP_SOURCE, APP_CONTRACT]:
             target = destination / "Sources" / CONSUMER_MODULE / Path(relative).name
         elif relative in [TEST, MEDIA_POLICY_TEST, CONSUMER_TEST, VALIDATOR_TEST, APP_TEST]:
             target = destination / "Tests/AI_HLYTests" / Path(relative).name

@@ -167,3 +167,52 @@ existing sink on the main actor. The SDK does not open an application log file.
 Hanlin injects its existing logger; importing apps can provide their own sink.
 The app's former source paths are aliases, and the asset builder writes directly
 to the shared package so upgrades cannot recreate an app-only renderer.
+
+
+## Original A2UI and rich media
+
+`import HanlinA2UI` provides the original Hanlin A2UI implementation as a separately
+selectable module. The app's former A2UI and media files now contain aliases to this
+module; the original schemas, renderer, owner lifecycle, interactions and visual
+implementation have one owner. The module enables its Apple UI implementation
+without requiring the host to define `HANLIN_A2UI_POC`.
+
+- `HanlinA2UIResultStore`, `HanlinA2UIResultKey` and `HanlinA2UIResultEventSink`
+  preserve the existing run/result identity, ordered input and generation lifetime.
+- `HanlinA2UIResultProjection`, `HanlinA2UIResultProjectionSource`,
+  `HanlinChatContentProjection` and `HanlinChatContentProjectionSource` provide the
+  original read-only tool and model content projections.
+- `HanlinA2UIProjectedResultView` and `HanlinA2UIResultView` render the same official
+  surfaces that Hanlin uses. The caller chooses placement, sizing and inherited
+  SwiftUI locale, layout direction, accessibility and enablement.
+- `HanlinYouTubePlayerView`, `HanlinImageGallery`, `HanlinSourceCard` and their data
+  types expose the original iOS media components separately. The original request
+  buttons, background/disappearance cleanup, source links and preview interactions
+  are preserved. `HanlinRichMediaStore.shared` retains its bounded on-demand cache.
+- `HanlinA2UIIngress`, `HanlinMediaCatalog`, `HanlinRemoteMediaURL`,
+  `HanlinMediaAddressPolicy`, `HanlinYouTubeVideo` and `HanlinYouTubeDocument` expose
+  the shared admission, catalog and normalized-media contracts.
+
+Register a result outside `View.body` using the host's existing run/result/call
+identity, retain the event sink, and feed complete ordered messages through
+`store.receive(_:sequence:for:)`. Render its projection with
+`HanlinA2UIProjectedResultView(projection:)` wherever the host needs it. Successful
+producer EOF calls `finishRun` and keeps original controls alive under their
+existing owner. Cancellation/failure calls `sealRun`; chat teardown calls
+`discardAll`. An inline or expanded view does not own teardown and cannot revive a
+replaced generation. `HanlinA2UISession` is also public for standalone original
+surfaces and complete-graph validation.
+
+The upstream A2UI revision remains
+`3ed9601862ecc78027e20ac80ad8b1b98a5d9079`; SwiftSoup retains the app's revision
+`bba848db50462894e7fc0891d018dfecad4ef11e` (2.8.7). Media typography comes from
+`HanlinPresentationKit`. There are no copied A2UI resource assets. YouTube's
+`Bundle.main.bundleIdentifier` deliberately remains the installed host identity,
+not a package bundle identifier.
+
+`docs/a2ui/prepare_exact_pin_proof.py` stages the canonical SDK module and actual
+app aliases as separate targets. Existing test assertions are retained; the
+internal lifecycle-test hook remains `DEBUG` and requires `@testable import
+HanlinA2UI`. The Oracle portable proof passed the original eight ingress and seven
+media-admission tests through the public module. The 38 original Apple SDK/SwiftUI
+cases require the native proof route; a Linux result does not certify those cases.

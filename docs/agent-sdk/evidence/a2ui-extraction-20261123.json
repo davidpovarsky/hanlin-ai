@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "work": "Original A2UI and rich-media extraction",
+  "date_utc": "2026-11-23",
+  "source_commit_before_extraction": "081d3cc5517334d14f371e90ac12ff6b73cca61f",
+  "module": "HanlinA2UI",
+  "files": [
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinA2UIContentLimits.swift",
+      "original_sha256": "6a78f5bf5c3c829c608854bce16eac714397a248c94a67bedc21efcc260848e0",
+      "sdk_sha256": "edb2bea244c8b95f676b98f44fbd492087269bb829f496b6a8d538a1cc686f72",
+      "public_types": [
+        "HanlinA2UIContentLimits"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinA2UIFrameLifetime.swift",
+      "original_sha256": "bc0b200e4db97cd200ac571253e878277a7df4d5132018dfb627d0cabb87bca8",
+      "sdk_sha256": "4f57a5bc8c4315fa05c7159fbf32a6742b24c6b1c69925cded4eaab548843f28",
+      "public_types": [
+        "HanlinA2UIFrameLifetime"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinA2UIIngress.swift",
+      "original_sha256": "0033c2f4522ac2fcee212becdaff3a2285d6a47349a2101457511116bda2cb1c",
+      "sdk_sha256": "192d3a3a5e61332349027ea4446ea2876fd756dd8665564572cb821c529e181a",
+      "public_types": [
+        "HanlinA2UIIngress"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UILocalMedia.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinA2UILocalMedia.swift",
+      "original_sha256": "ae58cf03a5da2f3a019a697279e40bb0911d0cc8254a7c7c65e725d6984dd107",
+      "sdk_sha256": "492acbf8635e3049df17cdcbc737ade616d64e16a94225c7b7d8d906346884da",
+      "public_types": [
+        "HanlinA2UILocalMedia"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinA2UIResultOwner.swift",
+      "original_sha256": "7067198f91a7fa2216e7e5dd244b4575d184823884b8eaf3ea1d6bdc7016d5ab",
+      "sdk_sha256": "1ca14828fed25447ebac073e32f9c56d8691a060a82feea17d93b4f7cc9bd4c9",
+      "public_types": [
+        "HanlinA2UIResultKey",
+        "HanlinA2UIResultEventSink",
+        "HanlinA2UIResultAdmissionError",
+        "HanlinA2UIResultProjection",
+        "HanlinA2UIProjectedResultView",
+        "HanlinA2UIResultStore"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinA2UIResultProjectionSource.swift",
+      "original_sha256": "4420dd5bcd3d8cd3c65018a4a994f2cd65eb5e4f8162b7e318514f5004607f4a",
+      "sdk_sha256": "8b6da50e32d8e7ba2e15eafc3b77b51fa0eb98541592a361329c20e7eecdd3ab",
+      "public_types": [
+        "HanlinA2UIResultProjectionSource"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinA2UIResultView.swift",
+      "original_sha256": "afb27c3c95235bfac4d6ff6f0ea0c22ed47f89b03e501d4f4c0de198d0628df1",
+      "sdk_sha256": "b1b5b71e0441b4c7823c4e19863c41fbeae403ab0137cc90b8c24271121de404",
+      "public_types": [
+        "HanlinA2UIResultView"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinA2UISession.swift",
+      "original_sha256": "60b64b4f2720df1d4e99e5222a1e606e425e2e71d4dfe1fd21da24fdcf40e5b3",
+      "sdk_sha256": "31af4128675ea8a5d19a25b8feaa58a03ec3c7000143e5360c6682c78a9b8570",
+      "public_types": [
+        "HanlinA2UISession"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinChatContentProjection.swift",
+      "original_sha256": "6523fe65987113da98d161379aad075a550d98fd86aa3cafef3ccfa136d3615f",
+      "sdk_sha256": "0bae6b919c4c5748f624944e637b02a1a8980af338b8ecb78fa94053f0638142",
+      "public_types": [
+        "HanlinChatContentProjection",
+        "HanlinChatContentProjectionSource"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinMediaCatalog.swift",
+      "original_sha256": "5548e35e2947ff387a5c2824ad66bd5fb92dbffe35c05e368e2d5a18895f3a98",
+      "sdk_sha256": "6108621d78de614803ec9fb77f9effd4d89de5d71b4c51810047f47b4c116276",
+      "public_types": [
+        "HanlinMediaCatalog"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinA2UIMediaURLGate.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinA2UIMediaURLGate.swift",
+      "original_sha256": "715e1cd64005dcee282201eda284c884f9a04dff94b2b82d99d32b6eba557a48",
+      "sdk_sha256": "20fd9a0274075e6ff331133c47fa5357dd6fcb10d6cd150d4488fab945e490cb",
+      "public_types": [
+        "HanlinA2UIMediaURLGate"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinMediaAddressPolicy.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinMediaAddressPolicy.swift",
+      "original_sha256": "4f6101ffd5b10be8e66c589d680592f24d5015f1333b247f1fc18246c22fb5db",
+      "sdk_sha256": "007ae1313773d4232d763e7eae50cf459f2e5b01fb37fa46b10de85f53f102d1",
+      "public_types": [
+        "HanlinMediaAddressPolicy"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinMediaCatalogImplementation.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinMediaCatalogImplementation.swift",
+      "original_sha256": "ffba959c7499cef37a8ccd0dfe00a09a2a36d30934102323232dbc9c2ea91e02",
+      "sdk_sha256": "408f272531a68a0685b7d1af348d10d6eff017ae5ba8b8ddd4e68ab9763f643e",
+      "public_types": [
+        "HanlinMediaCatalogImplementation"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRemoteMediaURL.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinRemoteMediaURL.swift",
+      "original_sha256": "691a095aca71d0ffcdd7fa3af56480bc470d35e4d8f049042948f1bb949d9caa",
+      "sdk_sha256": "abc23af86944d126939de9cbe97df5414d2cb733186ef631699cd7e1bb7ab3bc",
+      "public_types": [
+        "HanlinRemoteMediaURL"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRichMediaStore.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinRichMediaStore.swift",
+      "original_sha256": "6e657d6f4d3f9816a3292f25b93bccffdea59e325a32f9500ebe077850048ddf",
+      "sdk_sha256": "41b320df32fcb4e723e83e282c49144facfb31284640e0ae5861e00db3c5e4ed",
+      "public_types": [
+        "HanlinRichMediaStore"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRichMediaViews.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinRichMediaViews.swift",
+      "original_sha256": "c2838aabdbc462b9696dfe506ce344b7cb2b361543ffa91effd6452f7d7b8f9e",
+      "sdk_sha256": "f5838932ebc6154229339861552d4edc3c24dfdce85e8be7020e57b303cf3ee7",
+      "public_types": [
+        "HanlinGalleryImage",
+        "HanlinSourceCardDescriptor",
+        "HanlinImageGallery",
+        "HanlinSourceCard"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeDocument.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinYouTubeDocument.swift",
+      "original_sha256": "c7dbf50affd9ff18288b425617e583ca92fee44149a9d305f386ff42e8f44e90",
+      "sdk_sha256": "87f70ec15cce329a397f1b81d13a6edb49d6d58ad9624dab9874aef497f951d3",
+      "public_types": [
+        "HanlinYouTubeDocument"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubePlayerView.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinYouTubePlayerView.swift",
+      "original_sha256": "0197b08ff2d8510f7a7b44d437dc450df883faa6d9e52a0bce60f15060bb5a5e",
+      "sdk_sha256": "39874c906920f3cbaca9bad9d63c9a486fa965ccbb4698511ed912101cff29d6",
+      "public_types": [
+        "HanlinYouTubePlayerView"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    },
+    {
+      "original_path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeVideo.swift",
+      "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinYouTubeVideo.swift",
+      "original_sha256": "5791cfa1ca552332628ce4b4c9fc1145e3cbcaf1bdec05188bd74e4e340020c8",
+      "sdk_sha256": "f05d9be18fa8e8ae670748690a1848da265a51a8e02d214fc065c791418c4e44",
+      "public_types": [
+        "HanlinYouTubeVideo"
+      ],
+      "preservation": "All original executable lines, styles, schemas and interactions preserved; normalized only access modifiers, declared initializer additions, import, comments and compilation guards."
+    }
+  ],
+  "dependencies": {
+    "A2UI": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+    "SwiftSoup": "bba848db50462894e7fc0891d018dfecad4ef11e",
+    "HanlinPresentationKit": "same package, original typography"
+  },
+  "resources": [],
+  "portable_verification": {
+    "toolchain": "Swift 6.4.3 RELEASE / Swift 6 / aarch64 Linux",
+    "tests_passed": 15,
+    "suites": [
+      "A2UI portable ingress: 8",
+      "Media source lexical admission: 7"
+    ],
+    "external_consumer_import": "import HanlinA2UI",
+    "test_changes": "Temporary harness import adaptation only; original assertions unchanged",
+    "log_sha256": "1183aeb53ca1f2751292110a88ce0413313aea8e861f7ed4ac6d6382582327c2",
+    "input_receipt_sha256": "fb69137eaace0ab5b769f068ff03e8a24b205c0ab156ac0e180a5fcda0abd94c"
+  },
+  "native_staging": [
+    {
+      "platform": "macos",
+      "verified_staged_files": 53,
+      "original_native_cases": 38,
+      "original_ingress_cases": 8,
+      "targets": [
+        "HanlinPresentationKit",
+        "HanlinA2UI",
+        "AI_Hanlin",
+        "AI_HLYTests"
+      ],
+      "self_checks": 7,
+      "native_execution": "NOT_RUN"
+    },
+    {
+      "platform": "ios",
+      "verified_staged_files": 54,
+      "original_native_cases": 38,
+      "original_ingress_cases": 8,
+      "targets": [
+        "HanlinPresentationKit",
+        "HanlinA2UI",
+        "AI_Hanlin",
+        "AI_HLYTests"
+      ],
+      "self_checks": 7,
+      "native_execution": "NOT_RUN"
+    }
+  ],
+  "native_execution": "NOT_RUN; root owner must validate changed Apple module boundary",
+  "remaining_integration": [
+    "Root manifest: HanlinA2UI product and target, official A2UI four products, SwiftSoup and HanlinPresentationKit dependencies",
+    "Root Xcode/app SDK: depend on HanlinA2UI; original app aliases remain source compatible",
+    "Native SDK/SwiftUI and visual acceptance remain with root owner"
+  ],
+  "evidence_directory": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123",
+  "app_alias_compilation": {
+    "status": "PASS",
+    "command": "swift build --build-tests --jobs 2",
+    "scope": "Original app alias module and original portable test imports compile together; no repeated test execution; UIKit and SwiftUI unavailable",
+    "log_sha256": "820033311494f61eb15f96b5dadde25cbd105d6959bcc190cda094460944f9f3"
+  }
+}

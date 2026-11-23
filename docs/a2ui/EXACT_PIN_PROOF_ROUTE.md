@@ -141,3 +141,25 @@ job/process, source hashes, compiler identity and returned artifacts separately.
 independent acceptance. Compile failure or missing/skipped/duplicate/zero cases
 cannot pass. No fallback to a stub, rewritten test body or moving root branch
 is provided.
+
+
+## SDK ownership update — 2026-11-23
+
+The canonical sources now live in
+`Packages/HanlinPresentationSDK/Sources/HanlinA2UI/{A2UI,Media}`. The corresponding
+`AI_HLY/Downstream/ChatPresentation` files are app aliases, not implementation
+copies. The proof recipe stages both into separate `HanlinA2UI` and `AI_Hanlin`
+modules, together with the original `HanlinPresentationKit` dependency, so a build
+checks the actual public module boundary. The official A2UI and SwiftSoup pins
+remain unchanged. Test method bodies and assertions remain unchanged; the original
+lifecycle disposal test imports the new module with `@testable` to reach its
+existing internal `DEBUG` hook.
+
+Staging (`--output`) is now portable because it only verifies and copies recorded
+inputs and writes a temporary manifest. It does not resolve, build, test or dispatch
+anything. The native commands in this document still require the recorded Apple
+toolchain. Current base SDK coverage is eight ingress cases and 38 SDK cases;
+`--platform ios` additionally retains the seven original media admission cases.
+The source archive in `run_a2ui.sh` follows the canonical SDK, typography and alias
+files. Historical receipts retain their original input hashes and source SHAs;
+they do not certify this new module/resource boundary.

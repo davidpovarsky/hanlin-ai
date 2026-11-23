@@ -3,6 +3,7 @@ import Foundation
 #if !HANLIN_A2UI_PORTABLE_RUNNER
 import Testing
 @testable import AI_Hanlin
+@testable import HanlinA2UI
 #endif
 
 private struct A2UICheckFailure: Error, CustomStringConvertible {
