@@ -176,6 +176,10 @@ def wire_widget_cxx_imports(text, package):
         def settings(block):
             replacements = {
                 "SWIFT_OBJC_INTEROP_MODE": "objcxx",
+                # Match the original SwiftPM producer's explicit dependency scan.
+                # Implicit .swiftinterface loading drops the producer's -Xcc
+                # header/framework paths when importing ExpoModulesCore.
+                "SWIFT_ENABLE_EXPLICIT_MODULES": "YES",
                 "OTHER_SWIFT_FLAGS": "(" + ", ".join(json.dumps(value) for value in values) + ",)",
             }
             for name, value in replacements.items():
