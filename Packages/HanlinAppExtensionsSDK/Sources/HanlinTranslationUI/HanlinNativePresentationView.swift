@@ -10,10 +10,10 @@ import SwiftUI
 /// extension. It consumes prepared values; SwiftUI never evaluates JavaScript.
 public struct HanlinNativePresentationView: View {
     public let prepared: HanlinPreparedWidget
-    public let actionBuilder: (HanlinWidgetActionCommand, AnyView) -> AnyView
+    public let actionBuilder: (HanlinWidgetActionCommand, ButtonRole?, AnyView) -> AnyView
 
     public init(prepared: HanlinPreparedWidget,
-                actionBuilder: @escaping (HanlinWidgetActionCommand, AnyView) -> AnyView) {
+                actionBuilder: @escaping (HanlinWidgetActionCommand, ButtonRole?, AnyView) -> AnyView) {
         self.prepared = prepared
         self.actionBuilder = actionBuilder
     }
@@ -21,14 +21,16 @@ public struct HanlinNativePresentationView: View {
     @ViewBuilder public var body: some View {
         switch prepared {
         case let .scriptwidget(node, context):
-            HanlinScriptWidgetElementView(node: node, context: context, nativeActionBuilder: actionBuilder)
+            HanlinScriptWidgetElementView(node: node, context: context) { command, label in
+                actionBuilder(command, nil, label)
+            }
         case let .expo(node, context):
             if let object = node.toAny() as? [String: Any] {
-                let child = HanlinExpoWidgetNative.render(node: object, resources: context.resources) { target, _, label in
+                let child = HanlinExpoWidgetNative.render(node: object, resources: context.resources) { target, role, label in
                     guard context.actions.contains(where: { $0.id == target && $0.kind == .expoCallback }) else {
                         return AnyView(label.disabled(true))
                     }
-                    return actionBuilder(.init(context: context, actionID: target, nonce: UUID().uuidString), label)
+                    return actionBuilder(.init(context: context, actionID: target, nonce: UUID().uuidString), role, label)
                 }
                 AnyView(child)
             } else {
@@ -71,7 +73,7 @@ public struct HanlinNativePresentationContentView: View {
                     .disabled(isLoading)
             }
             if let prepared {
-                HanlinNativePresentationView(prepared: prepared) { command, label in
+                HanlinNativePresentationView(prepared: prepared) { command, role, label in
                     if let desired = command.desiredValue {
                         return AnyView(Toggle(isOn: Binding(get: { !desired }, set: { value in
                             var update = command
@@ -81,7 +83,7 @@ public struct HanlinNativePresentationContentView: View {
                         .disabled(isLoading)
                         .accessibilityIdentifier("hanlin.nativePresentation.action." + command.actionID))
                     }
-                    return AnyView(Button {
+                    return AnyView(Button(role: role) {
                         Task { await execute(command) }
                     } label: { label }
                     .disabled(isLoading)
@@ -129,7 +131,7 @@ public struct HanlinNativePresentationContentView: View {
         } catch is CancellationError {
             return
         } catch {
-            guard executionID == currentExecution else { return }
+            guard !Task.isCancelled, executionID == currentExecution else { return }
             self.error = error.localizedDescription
         }
     }
@@ -213,7 +215,7 @@ public struct HanlinNativePresentationSnippetIntent: SnippetIntent {
             try HanlinNativePresentationExecutor.prepare(request, store: .init())
         }.value
         return .result(view: ScrollView {
-            HanlinNativePresentationView(prepared: result.prepared) { command, label in
+            HanlinNativePresentationView(prepared: result.prepared) { command, role, label in
                 if let desired = command.desiredValue,
                    let intent = try? HanlinNativePresentationToggleIntent(command: command, value: desired) {
                     return AnyView(Toggle(isOn: !desired, intent: intent) { label }
@@ -221,7 +223,7 @@ public struct HanlinNativePresentationSnippetIntent: SnippetIntent {
                 }
                 if command.desiredValue == nil,
                    let intent = try? HanlinNativePresentationActionIntent(command: command) {
-                    return AnyView(Button(intent: intent) { label }
+                    return AnyView(Button(role: role, intent: intent) { label }
                         .accessibilityIdentifier("hanlin.nativePresentation.action." + command.actionID))
                 }
                 return AnyView(label.disabled(true))
