@@ -10,10 +10,10 @@ import HanlinPlatformContracts
 
 @MainActor
 enum NativeToolBridge {
-    static func canonicalSourcesForRequest(explicitToolNames: Set<String> = []) throws -> [
+    static func canonicalSourcesForRequest(explicitToolNames: Set<String> = [],
+                                           catalog: NativeToolCatalog = .shared) throws -> [
         HanlinCanonicalToolAuthority.NativeSource
     ] {
-        let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
         var schemas = catalog.schemasForEnabledTools()
         let alreadyIncluded = Set(schemas.compactMap { ToolSchemaDecorator.toolName(in: $0) })
@@ -45,9 +45,9 @@ enum NativeToolBridge {
         toolName: String,
         argumentsJSON: String,
         context: NativeToolExecutionContext,
-        explicitlySelected: Bool = false
+        explicitlySelected: Bool = false,
+        catalog: NativeToolCatalog = .shared
     ) async -> NativeToolResult {
-        let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
 
         NativeToolTraceLogger.shared.log(
