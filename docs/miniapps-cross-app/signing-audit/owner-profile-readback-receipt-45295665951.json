@@ -1,0 +1,525 @@
+{
+  "source_sha": "9a2bf78f4b82413ad8e4420701e7314e9902c986",
+  "run_id": "45295665951",
+  "timestamp": "2026-11-24T00:15:34.971946+00:00",
+  "status": "CROSS_APP_PROFILE_READBACK_COMPLETE",
+  "scope": "EXPLICIT_CURRENT_OWNER_PROFILE_AND_DEVICE_API_READBACK",
+  "signing_ready": false,
+  "release_decision": "NO_GO",
+  "native_builds": "NOT_REQUESTED",
+  "original_bundle_registration": "NOT_REQUESTED",
+  "certificate_creation_or_revocation": "NOT_REQUESTED",
+  "private_key_inspection": "NOT_REQUESTED",
+  "existing_distribution_certificate": {
+    "resource_id": "B8HSX5CPJ4",
+    "certificate_type": "DISTRIBUTION",
+    "public_certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+    "owner_team_matches": true,
+    "currently_valid": true,
+    "expiration": "2027-09-07T07:25:00+00:00",
+    "private_identity_validated_run": 45286408333,
+    "private_identity_validation_artifact_sha256": "e4865da596a66022b0d594c7a159d2012caff17b01e7a3ba4db4ec2c2dc29529",
+    "this_run_read_or_imported_private_distribution_key": false
+  },
+  "cross_app_owner_readback": {
+    "status": "CURRENT_PROFILE_GRANTS_READ_BACK",
+    "scope": "FRESH_PROFILE_READBACK_WITH_EXISTING_DISTRIBUTION_CERTIFICATE",
+    "plan_sha256": "5fe88c474b516b68d1e63e20583f4d846eebd4fc6d1f8cdf8e0cfad0ecf35980",
+    "owner_team": "NA6HPWARQ2",
+    "shared_group": "group.com.itorah.shared",
+    "previous_provisioning_run": 45286408333,
+    "products": [
+      {
+        "role": "otzaria",
+        "bundle_id": "com.davidpovarsky.chavrusatext",
+        "registered_identity": {
+          "resource_id": "7F445975JM",
+          "bundle_id": "com.davidpovarsky.chavrusatext",
+          "name": "ChavrusaText",
+          "platform": "UNIVERSAL"
+        },
+        "current_capabilities": [
+          "APP_GROUPS",
+          "ICLOUD",
+          "ICLOUD_EXTENDED_SHARE_ACCESS",
+          "IN_APP_PURCHASE",
+          "PUSH_NOTIFICATIONS"
+        ],
+        "fresh_profile": {
+          "name": "MiniApps owner readback otzaria 45295665951",
+          "uuid": "a47879e6-55e8-4faf-bc2f-c80b58907219",
+          "team_ids": [
+            "NA6HPWARQ2"
+          ],
+          "app_identifier_prefixes": [
+            "NA6HPWARQ2"
+          ],
+          "application_identifier": "NA6HPWARQ2.com.davidpovarsky.chavrusatext",
+          "app_groups": [
+            "group.com.davidpovarsky.chavrusatext",
+            "group.com.davidpovarsky.itorah"
+          ],
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "checks": {
+            "owner_team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "shared_group_granted": false,
+            "existing_distribution_certificate_matches": true
+          },
+          "signed_profile_supports_shared_group": false,
+          "compatible_with_existing_certificate": false,
+          "distribution": true,
+          "resource_id": "KG432S77Y2",
+          "source": "CREATED_FRESH_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION",
+          "profile_sha256": "9d972c97effff11f05f0b74150772011705eef9e798d9bf497bf72c0e785a913",
+          "creation": "2026-11-24T00:15:37"
+        },
+        "required_entitlements": {
+          "aps-environment": "production",
+          "com.apple.developer.icloud-container-identifiers": [
+            "iCloud.com.davidpovarsky.chavrusatext"
+          ],
+          "com.apple.developer.icloud-services": [
+            "CloudDocuments",
+            "CloudKit"
+          ],
+          "com.apple.developer.ubiquity-container-identifiers": [
+            "iCloud.com.davidpovarsky.chavrusatext"
+          ],
+          "com.apple.developer.ubiquity-kvstore-identifier": "NA6HPWARQ2.com.davidpovarsky.chavrusatext",
+          "com.apple.security.application-groups": [
+            "group.com.davidpovarsky.chavrusatext",
+            "group.com.davidpovarsky.itorah",
+            "group.com.itorah.shared"
+          ]
+        },
+        "actual_required_key_grants": {
+          "aps-environment": "production",
+          "com.apple.developer.icloud-container-identifiers": [
+            "iCloud.com.davidpovarsky.chavrusatext"
+          ],
+          "com.apple.developer.icloud-services": "*",
+          "com.apple.developer.ubiquity-container-identifiers": [
+            "iCloud.com.davidpovarsky.chavrusatext"
+          ],
+          "com.apple.developer.ubiquity-kvstore-identifier": "NA6HPWARQ2.*",
+          "com.apple.security.application-groups": [
+            "group.com.davidpovarsky.itorah",
+            "group.com.davidpovarsky.chavrusatext"
+          ]
+        },
+        "missing_or_mismatched_entitlement_keys": [
+          "com.apple.security.application-groups"
+        ],
+        "status": "PROFILE_GRANTS_INCOMPLETE"
+      },
+      {
+        "role": "anytype",
+        "bundle_id": "io.anytype.app.NA6HPWARQ2",
+        "registered_identity": {
+          "resource_id": "KTRM7V4TCD",
+          "bundle_id": "io.anytype.app.NA6HPWARQ2",
+          "name": "Anytype",
+          "platform": "UNIVERSAL"
+        },
+        "current_capabilities": [
+          "APP_GROUPS",
+          "IN_APP_PURCHASE"
+        ],
+        "fresh_profile": {
+          "name": "MiniApps owner readback anytype 45295665951",
+          "uuid": "31b9acd8-8ed9-4f86-a8e9-6187cc34c1b6",
+          "team_ids": [
+            "NA6HPWARQ2"
+          ],
+          "app_identifier_prefixes": [
+            "NA6HPWARQ2"
+          ],
+          "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2",
+          "app_groups": [],
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "checks": {
+            "owner_team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "shared_group_granted": false,
+            "existing_distribution_certificate_matches": true
+          },
+          "signed_profile_supports_shared_group": false,
+          "compatible_with_existing_certificate": false,
+          "distribution": true,
+          "resource_id": "24R4G26ZR3",
+          "source": "CREATED_FRESH_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION",
+          "profile_sha256": "dc1fc5a2b42832646155bdd69d1ba88441aa63074f71fdfdec9b97bda8ee4523",
+          "creation": "2026-11-24T00:15:39"
+        },
+        "native_storage_group": {
+          "group": "group.io.anytype.app.NA6HPWARQ2",
+          "source": "NEW_OWNER_PRIVATE_GROUP_REQUESTED",
+          "observed_groups": []
+        },
+        "required_entitlements": {
+          "aps-environment": "production",
+          "com.apple.developer.associated-domains": [
+            "applinks:invite-stage.any.coop",
+            "applinks:invite.any.coop"
+          ],
+          "com.apple.developer.networking.multicast": true,
+          "com.apple.developer.usernotifications.communication": true,
+          "com.apple.security.application-groups": [
+            "group.com.itorah.shared",
+            "group.io.anytype.app.NA6HPWARQ2"
+          ]
+        },
+        "actual_required_key_grants": {
+          "aps-environment": null,
+          "com.apple.developer.associated-domains": null,
+          "com.apple.developer.networking.multicast": null,
+          "com.apple.developer.usernotifications.communication": null,
+          "com.apple.security.application-groups": []
+        },
+        "missing_or_mismatched_entitlement_keys": [
+          "aps-environment",
+          "com.apple.developer.associated-domains",
+          "com.apple.developer.networking.multicast",
+          "com.apple.developer.usernotifications.communication",
+          "com.apple.security.application-groups"
+        ],
+        "status": "PROFILE_GRANTS_INCOMPLETE"
+      },
+      {
+        "role": "anytype_share",
+        "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+        "registered_identity": {
+          "resource_id": "SQCVS5F3BA",
+          "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+          "name": "Anytype AnytypeShareExtension",
+          "platform": "UNIVERSAL"
+        },
+        "current_capabilities": [
+          "APP_GROUPS",
+          "IN_APP_PURCHASE"
+        ],
+        "fresh_profile": {
+          "name": "MiniApps owner readback anytype_share 45295665951",
+          "uuid": "da80063b-288a-47c0-8b47-d447ce44b38a",
+          "team_ids": [
+            "NA6HPWARQ2"
+          ],
+          "app_identifier_prefixes": [
+            "NA6HPWARQ2"
+          ],
+          "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+          "app_groups": [],
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "checks": {
+            "owner_team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "shared_group_granted": false,
+            "existing_distribution_certificate_matches": true
+          },
+          "signed_profile_supports_shared_group": false,
+          "compatible_with_existing_certificate": false,
+          "distribution": true,
+          "resource_id": "RFK7WRV3RQ",
+          "source": "CREATED_FRESH_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION",
+          "profile_sha256": "143ab34b9f7e2c50cea52ac168bc583c3e25b2b4f2d1358150d021763fa9d4f5",
+          "creation": "2026-11-24T00:15:41"
+        },
+        "native_storage_group": {
+          "group": "group.io.anytype.app.NA6HPWARQ2",
+          "source": "NEW_OWNER_PRIVATE_GROUP_REQUESTED",
+          "observed_groups": []
+        },
+        "required_entitlements": {
+          "com.apple.security.application-groups": [
+            "group.com.itorah.shared",
+            "group.io.anytype.app.NA6HPWARQ2"
+          ]
+        },
+        "actual_required_key_grants": {
+          "com.apple.security.application-groups": []
+        },
+        "missing_or_mismatched_entitlement_keys": [
+          "com.apple.security.application-groups"
+        ],
+        "status": "PROFILE_GRANTS_INCOMPLETE"
+      },
+      {
+        "role": "anytype_notification",
+        "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+        "registered_identity": {
+          "resource_id": "F234VTD7KH",
+          "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+          "name": "Anytype AnytypeNotificationServiceExtension",
+          "platform": "UNIVERSAL"
+        },
+        "current_capabilities": [
+          "APP_GROUPS",
+          "IN_APP_PURCHASE"
+        ],
+        "fresh_profile": {
+          "name": "MiniApps owner readback anytype_notification 45295665951",
+          "uuid": "6df45c08-9e6b-4fb3-a96a-b2d8c21132da",
+          "team_ids": [
+            "NA6HPWARQ2"
+          ],
+          "app_identifier_prefixes": [
+            "NA6HPWARQ2"
+          ],
+          "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+          "app_groups": [],
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "checks": {
+            "owner_team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "shared_group_granted": false,
+            "existing_distribution_certificate_matches": true
+          },
+          "signed_profile_supports_shared_group": false,
+          "compatible_with_existing_certificate": false,
+          "distribution": true,
+          "resource_id": "H85SGAR3F6",
+          "source": "CREATED_FRESH_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION",
+          "profile_sha256": "792e41254ed506a3e6f55da284c6578155f89a831e82a7080d9e717d7d77d1c0",
+          "creation": "2026-11-24T00:15:42"
+        },
+        "native_storage_group": {
+          "group": "group.io.anytype.app.NA6HPWARQ2",
+          "source": "NEW_OWNER_PRIVATE_GROUP_REQUESTED",
+          "observed_groups": []
+        },
+        "required_entitlements": {
+          "com.apple.security.application-groups": [
+            "group.com.itorah.shared",
+            "group.io.anytype.app.NA6HPWARQ2"
+          ]
+        },
+        "actual_required_key_grants": {
+          "com.apple.security.application-groups": []
+        },
+        "missing_or_mismatched_entitlement_keys": [
+          "com.apple.security.application-groups"
+        ],
+        "status": "PROFILE_GRANTS_INCOMPLETE"
+      },
+      {
+        "role": "anytype_widget",
+        "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+        "registered_identity": {
+          "resource_id": "4Y4ZRZD6LF",
+          "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+          "name": "Anytype AnytypeWidget",
+          "platform": "UNIVERSAL"
+        },
+        "current_capabilities": [
+          "APP_GROUPS",
+          "IN_APP_PURCHASE"
+        ],
+        "fresh_profile": {
+          "name": "MiniApps owner readback anytype_widget 45295665951",
+          "uuid": "db8b8459-7ea4-45e6-a089-e367660735c3",
+          "team_ids": [
+            "NA6HPWARQ2"
+          ],
+          "app_identifier_prefixes": [
+            "NA6HPWARQ2"
+          ],
+          "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2.homewidget",
+          "app_groups": [],
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "checks": {
+            "owner_team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "shared_group_granted": false,
+            "existing_distribution_certificate_matches": true
+          },
+          "signed_profile_supports_shared_group": false,
+          "compatible_with_existing_certificate": false,
+          "distribution": true,
+          "resource_id": "538N8YPQN8",
+          "source": "CREATED_FRESH_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION",
+          "profile_sha256": "b5522b359ea39a07113b986759540bf8cbd08b2cb213ae1bf81c98ece31d94a6",
+          "creation": "2026-11-24T00:15:44"
+        },
+        "native_storage_group": {
+          "group": "group.io.anytype.app.NA6HPWARQ2",
+          "source": "NEW_OWNER_PRIVATE_GROUP_REQUESTED",
+          "observed_groups": []
+        },
+        "required_entitlements": {
+          "com.apple.security.application-groups": [
+            "group.com.itorah.shared",
+            "group.io.anytype.app.NA6HPWARQ2"
+          ]
+        },
+        "actual_required_key_grants": {
+          "com.apple.security.application-groups": []
+        },
+        "missing_or_mismatched_entitlement_keys": [
+          "com.apple.security.application-groups"
+        ],
+        "status": "PROFILE_GRANTS_INCOMPLETE"
+      }
+    ],
+    "native_builds": "NOT_REQUESTED",
+    "app_id_or_group_changes": "NOT_REQUESTED",
+    "certificate_creation": "NOT_REQUESTED",
+    "certificate_revocation": "NOT_REQUESTED",
+    "uploads": "NOT_REQUESTED",
+    "installs": "NOT_REQUESTED",
+    "registered_devices": {
+      "source": "APP_STORE_CONNECT_REGISTERED_DEVICES_API",
+      "inventory_complete": true,
+      "registered_device_count": 1,
+      "status_counts": {
+        "ENABLED": 1
+      },
+      "platform_counts": {
+        "IOS": 1
+      },
+      "enabled_platform_counts": {
+        "IOS": 1
+      },
+      "device_names_and_identifiers_retained": false,
+      "registration": "NOT_REQUESTED"
+    },
+    "development_identity_availability": {
+      "source": "APPLE_PUBLIC_CERTIFICATES",
+      "local_keychain_inspection": "NOT_INSPECTED_ON_LINUX",
+      "inventory_complete": true,
+      "registered_development_certificate_count": 12,
+      "reusable_valid_owner_development_identity_count": null,
+      "certificates": [
+        {
+          "resource_id": "4463XN2M8B",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "3e7965f80c4e907046189554f3ed209c497c713fcd8b2a400d3c2790a8663fc7",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-08T21:29:47+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "5GW6H43S3X",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "c139626dbe0e16f8c245a6fb1d930760ad05267eb16a7172e076ab508246637e",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-09T06:38:17+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "5KB3B562BF",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "ca671ee835acca659f607c300de15a3c1837ada88a3ea9ef462c4c291cb42e9b",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-09T07:03:22+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "5NN7H8WKW4",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "3f18aff94d022bc2f438e6755453b5cc8992c563f470ceba0cb6f9029ff26e00",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-09T18:54:46+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "677T64NRZW",
+          "certificate_type": "IOS_DEVELOPMENT",
+          "public_certificate_sha256": "3dc11f713a66e83816078190387b32064e9a74a94a2c04011b817f38217a49b1",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-06-09T14:31:07+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "H7R943HC42",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "89f0f1b93e22dbf0678233afad39a454d94b313ce2b08bf80192e5b3cf6d4df6",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-08T21:21:38+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "K8SLGSH78Z",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "e5e276874d4fcebdcaf0a7c28cefcd6197560c2e6cef1bcf53d7519b6131c25a",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-09T06:51:45+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "SU3BZ54R4A",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "d3b34ce4c437b28f5d8abb701f7aec48fda411e03eb4a887b6b4b04971ad34c6",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-09T08:59:40+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "UX9K878SMM",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "0e5c2964cbde0ecfa0e5d66435ec9d01b2f9bb4038a699b9a65cbc9a49f65d2f",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-10T23:10:34+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "VK5UM266KA",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "0eb90ae04d3f64074d55f3429f449877e1b949e3fb5eb54c91c4359ae6141319",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-09T17:51:24+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "VML26TFJR2",
+          "certificate_type": "IOS_DEVELOPMENT",
+          "public_certificate_sha256": "0194ac99ca3b059855cbb500089f986b0815ebc0d63f7d889915992bb39679ff",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-07-06T16:03:02+00:00",
+          "private_identity_available_in_existing_search_list": null
+        },
+        {
+          "resource_id": "YUKY93WZX6",
+          "certificate_type": "DEVELOPMENT",
+          "public_certificate_sha256": "ebd17f7f4727ea4bba4394b25df9ad6260f0b734d9c0c63164fcf253768fa822",
+          "owner_team_matches": true,
+          "valid_dates": true,
+          "expiration": "2027-09-11T12:34:34+00:00",
+          "private_identity_available_in_existing_search_list": null
+        }
+      ],
+      "creation": "NOT_REQUESTED",
+      "revocation": "NOT_REQUESTED"
+    },
+    "resolved_native_storage_families": {
+      "anytype_owner": {
+        "group": "group.io.anytype.app.NA6HPWARQ2",
+        "source": "NEW_OWNER_PRIVATE_GROUP_REQUESTED",
+        "observed_groups": []
+      }
+    },
+    "all_requested_profile_grants_present": false,
+    "limitation": "Profile grants and identity metadata only; no native archive, installed app, or device journey was executed."
+  },
+  "artifact": {
+    "id": 14876083199,
+    "sha256": "f5ce9b67d31948859b4206a1967f821cb1577ee85f99dabd508d847c3a4b2954"
+  },
+  "followup_scope_note": "This readback used the earlier probe requirements for extension/shared groups; actual grants are authoritative. The next probe matches current source: main shared+private, Share/Notification private only, Widget no groups."
+}

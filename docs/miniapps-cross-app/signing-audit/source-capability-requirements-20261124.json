@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "source_plan_revision": "Anytype d17eb950935d1aaafda55ff9a2f5bd870a4ff7fe",
+  "apple_openapi": {
+    "version": "4.6.1",
+    "url": "https://developer.apple.com/sample-code/app-store-connect/app-store-connect-openapi-specification.zip",
+    "zip_sha256": "528ebf253c4fea45d619f8576bca14a418a1a878080e4bcdef833e932a7abcef",
+    "documented_required_public_types": [
+      "PUSH_NOTIFICATIONS",
+      "ASSOCIATED_DOMAINS"
+    ],
+    "source_entitlements_not_present_in_public_capability_type_enum": [
+      "com.apple.developer.networking.multicast",
+      "com.apple.developer.usernotifications.communication"
+    ]
+  },
+  "managed_capability_documentation": "https://developer.apple.com/help/account/reference/provisioning-with-managed-capabilities/",
+  "multicast_approval_documentation": "https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.developer.networking.multicast",
+  "source_scope": {
+    "otzaria": "two original native groups + MiniApps shared group; all original APS/iCloud/ubiquity requirements",
+    "anytype_main": "owner native + MiniApps shared; original push, associated domains, multicast and communication notifications",
+    "anytype_share_and_notification": "owner native storage only",
+    "anytype_widget": "identity/profile only; no source App Group entitlement"
+  },
+  "acceptance": "Every actual required source entitlement must be covered by signed binary and issued distribution profile. A group match alone is insufficient. No upstream capability is removed."
+}

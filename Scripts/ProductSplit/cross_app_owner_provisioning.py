@@ -26,7 +26,10 @@ from signing_profile_preflight import _write_probe_project
 
 
 def _private_output(argv):
-    completed = subprocess.run([str(value) for value in argv], capture_output=True, timeout=45)
+    try:
+        completed = subprocess.run([str(value) for value in argv], capture_output=True, timeout=45)
+    except (subprocess.TimeoutExpired, OSError):
+        raise RuntimeError("Native signing operation failed: " + Path(str(argv[0])).name) from None
     if completed.returncode:
         raise RuntimeError("Native signing readback failed: " + Path(str(argv[0])).name)
     return completed.stdout
@@ -222,19 +225,53 @@ def _read_signed_probe(app, expected, team, certificate_sha, certificate_prefix)
     missing_profile = sorted(key for key, value in required.items()
                              if not entitlement_allows(payload.get("Entitlements", {}).get(key), value))
     groups = entitlements.get("com.apple.security.application-groups", [])
+    shared_required = SHARED_GROUP in required.get("com.apple.security.application-groups", [])
+    identity_checks = ("owner_team_matches", "bundle_matches", "not_expired", "existing_distribution_certificate_matches")
     checks = {
         "binary_bundle_matches": bundle.get("CFBundleIdentifier") == expected["bundle_id"],
         "binary_uses_existing_distribution_certificate": actual_certificate_sha == certificate_sha,
-        "profile_owner_bundle_certificate_and_shared_group_match": profile["compatible_with_existing_certificate"],
+        "profile_owner_bundle_and_certificate_match": all(profile["checks"][name] for name in identity_checks),
         "signed_entitlements_cover_plan": not missing_signed,
         "profile_entitlements_cover_plan": not missing_profile,
-        "shared_group_in_signed_binary": isinstance(groups, list) and SHARED_GROUP in groups,
+        "source_shared_group_requirement_satisfied": not shared_required or (isinstance(groups, list) and SHARED_GROUP in groups),
         "native_codesign_verify_passed": True,
     }
     return {"checks": checks, "profile": profile, "signed_app_groups": groups,
+            "shared_group_required_by_source": shared_required,
             "missing_signed_entitlement_keys": missing_signed,
             "missing_profile_entitlement_keys": missing_profile,
             "status": "SIGNED_GROUP_PROBE_PASS" if all(checks.values()) else "SIGNED_GROUP_PROBE_FAILED"}
+
+
+def _prepare_required_public_capabilities(product, required):
+    """Enable only required public enum values; retain every existing capability."""
+    from register_miniapps_bundle import request, AppleFailure
+    mapping = {"aps-environment": "PUSH_NOTIFICATIONS",
+               "com.apple.developer.associated-domains": "ASSOCIATED_DOMAINS"}
+    wanted = {capability for key, capability in mapping.items() if required.get(key)}
+    before = set(_capabilities(product["apple_bundle_resource_id"]))
+    operations = []
+    for capability in sorted(wanted - before):
+        outcome = {"capability": capability}
+        try:
+            request("/v1/bundleIdCapabilities", "POST", body={"data": {
+                "type": "bundleIdCapabilities", "attributes": {"capabilityType": capability},
+                "relationships": {"bundleId": {"data": {
+                    "type": "bundleIds", "id": product["apple_bundle_resource_id"]}}}}})
+            outcome["status"] = "API_ACCEPTED"
+        except Exception as error:
+            outcome["status"] = error.status if isinstance(error, AppleFailure) else "OUTCOME_UNKNOWN"
+            outcome["codes"] = error.codes if isinstance(error, AppleFailure) else []
+        # A single write is reconciled below, never repeated after uncertainty.
+        operations.append(outcome)
+    after = set(_capabilities(product["apple_bundle_resource_id"])) if operations else before
+    return {"required_public_capabilities": sorted(wanted), "operations": operations,
+            "observed_capabilities": sorted(after), "missing_public_capabilities": sorted(wanted - after),
+            "existing_capabilities_preserved": before.issubset(after),
+            "managed_entitlements": [key for key in (
+                "com.apple.developer.networking.multicast",
+                "com.apple.developer.usernotifications.communication") if required.get(key)],
+            "managed_entitlement_status": "REQUIRES_ACTUAL_XCODE_AND_PROFILE_GRANT_READBACK"}
 
 
 def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certificate_sha, keychain,
@@ -253,8 +290,8 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
         if not re.fullmatch(r"[a-z0-9_-]+", product["role"]):
             raise ValueError("A product role must be a filename-safe plan key")
         groups = product.get("entitlements", {}).get("com.apple.security.application-groups", [])
-        if SHARED_GROUP not in groups:
-            raise ValueError("Every requested bridge participant must declare the shared group")
+        if product.get("miniapps_bridge_participant") and SHARED_GROUP not in groups:
+            raise ValueError("A source MiniApps bridge participant must declare the shared group")
     receipt.update(status="RUNNING", scope="ACCOUNT_GROUP_PROVISIONING_AND_SIGNED_PROBES_ONLY",
                    plan_sha256=hashlib.sha256(plan_bytes).hexdigest(), owner_team=team,
                    shared_group=SHARED_GROUP, identity_audit=plan.get("identity_audit"),
@@ -332,12 +369,13 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
         for (product, snapshot), entry in zip(snapshots, receipt["products"]):
             try:
                 required = dict(product["entitlements"])
-                groups = set(required["com.apple.security.application-groups"]) | set(snapshot["app_groups"])
+                groups = set(required.get("com.apple.security.application-groups", [])) | set(snapshot["app_groups"])
                 family = product.get("native_storage_family")
                 if family:
                     groups.add(families[family]["group"])
                     entry["native_storage_group"] = families[family]
-                required["com.apple.security.application-groups"] = sorted(groups)
+                if groups or "com.apple.security.application-groups" in required:
+                    required["com.apple.security.application-groups"] = sorted(groups)
                 # Resolve the existing source build variables for this distribution probe.
                 def expand(value):
                     if isinstance(value, str):
@@ -359,6 +397,7 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
                 entry["requested_app_groups"] = sorted(groups)
                 entry["required_distribution_entitlement_keys"] = sorted(required)
                 entry["requested_entitlements_sha256"] = hashlib.sha256(plistlib.dumps(required)).hexdigest()
+                entry["source_capability_preparation"] = _prepare_required_public_capabilities(product, required)
                 archive = work / (product["role"] + ".xcarchive")
                 code, _ = run(
                     ["xcodebuild", "-project", project, "-scheme", "ProfileDiscovery",

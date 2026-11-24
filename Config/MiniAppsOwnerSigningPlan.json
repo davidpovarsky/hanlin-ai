@@ -45,7 +45,8 @@
         "revision": "fb369f911d38ce7e7f10be6c2e4a68df1c875067",
         "path": "Source/ChavrusaText-iOS.entitlements",
         "sha256": "bc3644771d2b7181653126c9cb29bfbade51ec152d22825e45b1659a9692f4cc"
-      }
+      },
+      "miniapps_bridge_participant": true
     },
     {
       "role": "anytype",
@@ -65,11 +66,12 @@
         ]
       },
       "source_entitlements": {
-        "revision": "e65cefbfa52608e6ebd5f7ab9ab076b00937b059",
-        "path": "Anytype/Anytype.entitlements",
-        "sha256": "ca47074b2f6ad2cf22ad484c8e6dc5ffc32be9d0258c595391962cbaf8ed6605"
+        "revision": "d17eb950935d1aaafda55ff9a2f5bd870a4ff7fe",
+        "path": "Config/Signing/AnytypeOwner.entitlements",
+        "sha256": "4a0e75a96f6766ed4a7fc0a52a5ad956fd279b09027938633901caca40e47b68"
       },
-      "owner_mapping": "Upstream native group is replaced only for the owner overlay by the group resolved from Apple profile readback; original source/defaults are unchanged."
+      "owner_mapping": "Upstream native group is replaced only for the owner overlay by the group resolved from Apple profile readback; original source/defaults are unchanged.",
+      "miniapps_bridge_participant": true
     },
     {
       "role": "anytype_share",
@@ -77,16 +79,15 @@
       "apple_bundle_resource_id": "SQCVS5F3BA",
       "native_storage_family": "anytype_owner",
       "entitlements": {
-        "com.apple.security.application-groups": [
-          "group.com.itorah.shared"
-        ]
+        "com.apple.security.application-groups": []
       },
       "source_entitlements": {
-        "revision": "e65cefbfa52608e6ebd5f7ab9ab076b00937b059",
-        "path": "AnytypeShareExtension/AnytypeShareExtension.entitlements",
-        "sha256": "e5b405ffdff588db48bc8ca8d56dde1ba9546b2dd4309b9c2612cb39cfddaa37"
+        "revision": "d17eb950935d1aaafda55ff9a2f5bd870a4ff7fe",
+        "path": "Config/Signing/AnytypeShareOwner.entitlements",
+        "sha256": "f5a6f397b053dc4dc1b11e9b7792dfbd1c06295018226dd84d66289a7f48999e"
       },
-      "owner_mapping": "Upstream native group is replaced only for the owner overlay by the group resolved from Apple profile readback; original source/defaults are unchanged."
+      "owner_mapping": "Resolve the source PINKHA_NATIVE_APP_GROUP variable from the verified owner family; this extension does not request the MiniApps shared group.",
+      "miniapps_bridge_participant": false
     },
     {
       "role": "anytype_notification",
@@ -94,33 +95,27 @@
       "apple_bundle_resource_id": "F234VTD7KH",
       "native_storage_family": "anytype_owner",
       "entitlements": {
-        "com.apple.security.application-groups": [
-          "group.com.itorah.shared"
-        ]
+        "com.apple.security.application-groups": []
       },
       "source_entitlements": {
-        "revision": "e65cefbfa52608e6ebd5f7ab9ab076b00937b059",
-        "path": "AnytypeNotificationServiceExtension/AnytypeNotificationServiceExtension.entitlements",
-        "sha256": "e5b405ffdff588db48bc8ca8d56dde1ba9546b2dd4309b9c2612cb39cfddaa37"
+        "revision": "d17eb950935d1aaafda55ff9a2f5bd870a4ff7fe",
+        "path": "Config/Signing/AnytypeNotificationOwner.entitlements",
+        "sha256": "f5a6f397b053dc4dc1b11e9b7792dfbd1c06295018226dd84d66289a7f48999e"
       },
-      "owner_mapping": "Upstream native group is replaced only for the owner overlay by the group resolved from Apple profile readback; original source/defaults are unchanged."
+      "owner_mapping": "Resolve the source PINKHA_NATIVE_APP_GROUP variable from the verified owner family; this extension does not request the MiniApps shared group.",
+      "miniapps_bridge_participant": false
     },
     {
       "role": "anytype_widget",
       "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
       "apple_bundle_resource_id": "4Y4ZRZD6LF",
-      "native_storage_family": "anytype_owner",
-      "entitlements": {
-        "com.apple.security.application-groups": [
-          "group.com.itorah.shared"
-        ]
-      },
+      "entitlements": {},
       "source_entitlements": {
-        "revision": "e65cefbfa52608e6ebd5f7ab9ab076b00937b059",
+        "revision": "d17eb950935d1aaafda55ff9a2f5bd870a4ff7fe",
         "path": null,
-        "note": "The owner widget target needs the same native storage group as its containing app."
+        "note": "The actual owner widget target has no CODE_SIGN_ENTITLEMENTS and does not use native App Group storage. Only its original identity/profile is verified."
       },
-      "owner_mapping": "Upstream native group is replaced only for the owner overlay by the group resolved from Apple profile readback; original source/defaults are unchanged."
+      "miniapps_bridge_participant": false
     }
   ],
   "producer_existing_profile": {
@@ -182,17 +177,25 @@
   "scope_notes": [
     "All product bundle identities below are already registered in the owner account.",
     "Current group assignments are read from existing or newly issued profiles before Xcode changes App IDs.",
-    "Every existing granted group is preserved; an owner private group is requested only when no family profile has a private group.",
     "The existing producer profile is reused as account evidence; no duplicate producer provisioning probe is run.",
-    "This optional plan activates only the existing signing-preflight workflow in this isolated branch."
+    "This optional plan activates only the existing signing-preflight workflow in this isolated branch.",
+    "Source main apps require the shared group. Owner Share/Notification require only their native storage group. The widget has no source App Group entitlement.",
+    "Every already granted group is preserved. Required source capabilities are checked independently of group matches."
   ],
-  "operation": "refresh-profile-readback",
+  "operation": "provision",
   "previous_provisioning_run": 45286408333,
-  "readback_executor": "documented-api-linux",
   "existing_distribution_identity_pin": {
     "owner_team": "NA6HPWARQ2",
     "public_certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
     "private_identity_validated_run": 45286408333,
     "artifact_sha256": "e4865da596a66022b0d594c7a159d2012caff17b01e7a3ba4db4ec2c2dc29529"
+  },
+  "development_identity_mode": "documented-api-task-owned",
+  "latest_fresh_profile_readback": {
+    "run_id": 45295665951,
+    "source_sha": "9a2bf78f4b82413ad8e4420701e7314e9902c986",
+    "artifact_id": 14876083199,
+    "artifact_sha256": "f5ce9b67d31948859b4206a1967f821cb1577ee85f99dabd508d847c3a4b2954",
+    "registered_enabled_ios_device_count": 1
   }
 }

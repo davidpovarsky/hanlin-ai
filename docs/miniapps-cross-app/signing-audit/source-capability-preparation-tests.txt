@@ -1,0 +1,8 @@
+test_only_supported_missing_public_capabilities_are_enabled (__main__.OwnerCapabilityPreparationTests.test_only_supported_missing_public_capabilities_are_enabled) ... ok
+test_private_signing_timeout_does_not_render_command_arguments (__main__.OwnerCapabilityPreparationTests.test_private_signing_timeout_does_not_render_command_arguments) ... ok
+test_uncertain_write_is_reconciled_without_a_duplicate_mutation (__main__.OwnerCapabilityPreparationTests.test_uncertain_write_is_reconciled_without_a_duplicate_mutation) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.007s
+
+OK
