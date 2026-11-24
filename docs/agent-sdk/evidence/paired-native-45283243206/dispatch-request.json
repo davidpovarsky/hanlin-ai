@@ -1,0 +1,14 @@
+{
+  "ref": "codex/hanlin-sdk-paired3-corrections-20261123",
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "cross_product",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "host_proof_run_id": "44351078724",
+    "foreground_proof_run_id": "45133337462",
+    "prepare_miniapps_registration": "false",
+    "signed_release_archives": "false",
+    "signing_preflight_only": "false",
+    "audit_release_resources": "false"
+  }
+}

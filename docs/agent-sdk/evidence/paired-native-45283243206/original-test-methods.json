@@ -1,0 +1,26 @@
+{
+  "source_database_sha256": "5f4022a1c338046b5ba11957772b9642b3e11af0f566bce8617e5e36e71839d7",
+  "tests": [
+    {
+      "rowid": 1,
+      "name": "testCompanionCancellationReturnsWithoutChangingPrivateState()",
+      "identifier": "HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState()",
+      "duration": 122.73392403125763,
+      "result": "Failure"
+    },
+    {
+      "rowid": 2,
+      "name": "testCompanionReturnsActualPrivateValueToOriginalChat()",
+      "identifier": "HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat()",
+      "duration": 118.08572399616241,
+      "result": "Failure"
+    },
+    {
+      "rowid": 3,
+      "name": "testOriginalPackageAndSavedStateTransferThenRollback()",
+      "identifier": "HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback()",
+      "duration": 278.8713849782944,
+      "result": "Success"
+    }
+  ]
+}
