@@ -78,19 +78,24 @@ export async function buildOriginalExpoSource({root=path.resolve(here,'../..')}=
   for(const [sdk,destination,architectures] of [['iphoneos','generic/platform=iOS','arm64'],['iphonesimulator','generic/platform=iOS Simulator','arm64 x86_64']]) {
     const products=path.join(staging,'products',sdk),derived=path.join(staging,'derived',sdk);
     run('xcodebuild',['build','-project',project,'-scheme','ExpoUI','-configuration','Release','-sdk',sdk,'-destination',destination,'-derivedDataPath',derived,
-      'CONFIGURATION_BUILD_DIR='+products,'BUILD_LIBRARY_FOR_DISTRIBUTION=YES','SKIP_INSTALL=NO','ONLY_ACTIVE_ARCH=NO','ARCHS='+architectures,
+      'CONFIGURATION_BUILD_DIR='+products,'BUILD_LIBRARY_FOR_DISTRIBUTION=NO','SKIP_INSTALL=NO','ONLY_ACTIVE_ARCH=NO','ARCHS='+architectures,
       'CODE_SIGNING_ALLOWED=NO','CODE_SIGNING_REQUIRED=NO','CODE_SIGN_IDENTITY=','IPHONEOS_DEPLOYMENT_TARGET=27.0'],{cwd:staging,env});
     const framework=await firstFramework(products,'ExpoUI');
     if(!framework)throw new Error(`Original ExpoUI did not emit an ${sdk} framework at ${products}`);
     outputs.push(framework);
   }
   const output=path.join(staging,'ExpoUI.xcframework');
-  run('xcodebuild',['-create-xcframework',...outputs.flatMap(file=>['-framework',file]),'-output',output],{env});
+  // Expo's original precompiled_modules.rb deliberately disables textual Swift
+  // interfaces for prebuilt React compatibility. These frameworks are private
+  // build inputs consumed with the exact Xcode identity included in `input`,
+  // never independently distributed as a compiler-stable binary SDK.
+  // Preserve the original compiled Swift modules when packaging both slices.
+  run('xcodebuild',['-create-xcframework','-allow-internal-distribution',...outputs.flatMap(file=>['-framework',file]),'-output',output],{env});
   const plist=JSON.parse(execFileSync('plutil',['-convert','json','-o','-',path.join(output,'Info.plist')],{encoding:'utf8'}));
   const slices=plist.AvailableLibraries??[];
   for(const simulator of [false,true])if(!slices.some(slice=>slice.SupportedPlatform==='ios'&&(slice.SupportedPlatformVariant==='simulator')===simulator&&slice.SupportedArchitectures?.includes('arm64')))throw new Error('Original ExpoUI output is missing a required iOS device/simulator slice');
   await rm(target,{recursive:true,force:true});await mkdir(path.dirname(target),{recursive:true});await cp(output,target,{recursive:true,verbatimSymlinks:true});
-  const receipt={schemaVersion:1,inputSHA256:input,xcode,cocoaPods:cocoaPods.version,podLockSHA256:sha(await readFile(path.join(ios,'Podfile.lock'))),originalPackage:{name:selected[0].package,version:selected[0].version,sha256:selected[0].sha256,integrity:selected[0].sourceBuild.packageIntegrity},nativeBuild:'original Expo CLI prebuild + original CocoaPods podspec + Xcode device/simulator frameworks',slices};
+  const receipt={schemaVersion:1,inputSHA256:input,xcode,cocoaPods:cocoaPods.version,podLockSHA256:sha(await readFile(path.join(ios,'Podfile.lock'))),originalPackage:{name:selected[0].package,version:selected[0].version,sha256:selected[0].sha256,integrity:selected[0].sourceBuild.packageIntegrity},nativeBuild:'original Expo CLI prebuild + original CocoaPods podspec + Xcode device/simulator frameworks',swiftModuleDistribution:'same-Xcode internal build input; exact compiler identity is part of inputSHA256',slices};
   await writeFile(receiptPath,JSON.stringify(receipt,null,2)+'\n');
   await writeFile(path.join(target,'.artifact-manifest.json'),JSON.stringify({name:'ExpoUI',version:selected[0].version,sha256:selected[0].sha256,sourceBuildInputSHA256:input},null,2)+'\n');
   console.log('[HanlinExpo] Built original current ExpoUI for device and simulator: '+input);
