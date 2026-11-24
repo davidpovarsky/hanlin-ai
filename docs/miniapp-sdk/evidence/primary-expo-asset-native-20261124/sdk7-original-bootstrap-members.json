@@ -1,0 +1,38 @@
+[
+  {
+    "archiveMember": "MiniAppSDK/expo/node_modules/expo/src/Expo.fx.tsx",
+    "bytes": 1454,
+    "sha256": "826a406576b7d9ae76a9a17477abebf78e1e0aa1472c4a939e40cf79954acab7",
+    "retainedPath": "raw/sdk7/expo/src/Expo.fx.tsx"
+  },
+  {
+    "archiveMember": "MiniAppSDK/expo/node_modules/expo/src/launch/registerRootComponent.tsx",
+    "bytes": 2718,
+    "sha256": "6ab6910db2fbaba08a9b6dc2843b8b1e0f6da729cb57cd8ce5c5b1a37af2bb76",
+    "retainedPath": "raw/sdk7/expo/src/launch/registerRootComponent.tsx"
+  },
+  {
+    "archiveMember": "MiniAppSDK/expo/node_modules/expo-asset/src/ExpoAsset.ts",
+    "bytes": 759,
+    "sha256": "aa6242252197244d06e3da57df3fedcf99fb5f191e0d1ae55f822e27fe0465bb",
+    "retainedPath": "raw/sdk7/expo-asset/src/ExpoAsset.ts"
+  },
+  {
+    "archiveMember": "MiniAppSDK/expo/node_modules/expo-modules-autolinking/src/platforms/apple/apple.ts",
+    "bytes": 19425,
+    "sha256": "ec83bc4060126d837acb71071ebb5d63331c54e7319dce6c738b6e8bbe73cf1a",
+    "retainedPath": "raw/sdk7/expo-modules-autolinking/src/platforms/apple/apple.ts"
+  },
+  {
+    "archiveMember": "MiniAppSDK/expo/node_modules/expo-asset/LICENSE",
+    "bytes": 1106,
+    "sha256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4",
+    "retainedPath": "raw/sdk7/expo-asset/LICENSE"
+  },
+  {
+    "archiveMember": "MiniAppSDK/expo/node_modules/expo/LICENSE",
+    "bytes": 1106,
+    "sha256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4",
+    "retainedPath": "raw/sdk7/expo/LICENSE"
+  }
+]
