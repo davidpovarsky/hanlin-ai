@@ -1,0 +1,274 @@
+{
+  "conclusion": "success",
+  "createdAt": "2026-11-24T09:23:38Z",
+  "databaseId": 45364761765,
+  "headSha": "71d176315dea14e4db524f9da642bfdca5a46618",
+  "jobs": [
+    {
+      "completedAt": "2026-11-24T09:23:41Z",
+      "conclusion": "skipped",
+      "databaseId": 138343531155,
+      "name": "Verify MiniApp import contracts",
+      "startedAt": "2026-11-24T09:23:42Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765/job/138343531155"
+    },
+    {
+      "completedAt": "2026-11-24T09:23:41Z",
+      "conclusion": "skipped",
+      "databaseId": 138343531376,
+      "name": "miniapps",
+      "startedAt": "2026-11-24T09:23:42Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765/job/138343531376"
+    },
+    {
+      "completedAt": "2026-11-24T09:27:42Z",
+      "conclusion": "success",
+      "databaseId": 138343532787,
+      "name": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime",
+      "startedAt": "2026-11-24T09:23:44Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-24T09:23:46Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-24T09:23:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:23:48Z",
+          "conclusion": "success",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 2,
+          "startedAt": "2026-11-24T09:23:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:23:54Z",
+          "conclusion": "success",
+          "name": "Select newest stable Xcode 27",
+          "number": 3,
+          "startedAt": "2026-11-24T09:23:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:23:55Z",
+          "conclusion": "success",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 4,
+          "startedAt": "2026-11-24T09:23:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:06Z",
+          "conclusion": "success",
+          "name": "Check out exact validation commit",
+          "number": 5,
+          "startedAt": "2026-11-24T09:23:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:07Z",
+          "conclusion": "success",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 6,
+          "startedAt": "2026-11-24T09:24:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:17Z",
+          "conclusion": "success",
+          "name": "Set up pinned Node",
+          "number": 7,
+          "startedAt": "2026-11-24T09:24:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:18Z",
+          "conclusion": "success",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 8,
+          "startedAt": "2026-11-24T09:24:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:18Z",
+          "conclusion": "success",
+          "name": "Hash isolated runtime inputs",
+          "number": 9,
+          "startedAt": "2026-11-24T09:24:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:18Z",
+          "conclusion": "skipped",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 10,
+          "startedAt": "2026-11-24T09:24:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:18Z",
+          "conclusion": "skipped",
+          "name": "Restore isolated SwiftPM compiler cache",
+          "number": 11,
+          "startedAt": "2026-11-24T09:24:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:19Z",
+          "conclusion": "success",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 12,
+          "startedAt": "2026-11-24T09:24:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:19Z",
+          "conclusion": "skipped",
+          "name": "Verify generated runtime metadata",
+          "number": 13,
+          "startedAt": "2026-11-24T09:24:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:20Z",
+          "conclusion": "success",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 14,
+          "startedAt": "2026-11-24T09:24:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:20Z",
+          "conclusion": "skipped",
+          "name": "Test JavaScriptCore bootstrap semantics",
+          "number": 15,
+          "startedAt": "2026-11-24T09:24:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:22Z",
+          "conclusion": "success",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 16,
+          "startedAt": "2026-11-24T09:24:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:40Z",
+          "conclusion": "success",
+          "name": "Resolve isolated package dependencies",
+          "number": 17,
+          "startedAt": "2026-11-24T09:24:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:41Z",
+          "conclusion": "success",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 18,
+          "startedAt": "2026-11-24T09:24:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:41Z",
+          "conclusion": "skipped",
+          "name": "Compile runtime and extension renderers only",
+          "number": 19,
+          "startedAt": "2026-11-24T09:24:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:24:42Z",
+          "conclusion": "success",
+          "name": "Live Activity \u00b7 refresh",
+          "number": 20,
+          "startedAt": "2026-11-24T09:24:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:27:38Z",
+          "conclusion": "success",
+          "name": "Execute isolated runtime tests",
+          "number": 21,
+          "startedAt": "2026-11-24T09:24:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:27:38Z",
+          "conclusion": "success",
+          "name": "Post Set up pinned Node",
+          "number": 41,
+          "startedAt": "2026-11-24T09:27:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:27:39Z",
+          "conclusion": "success",
+          "name": "Post Check out exact validation commit",
+          "number": 42,
+          "startedAt": "2026-11-24T09:27:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-24T09:27:40Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 43,
+          "startedAt": "2026-11-24T09:27:39Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765/job/138343532787"
+    },
+    {
+      "completedAt": "2026-11-24T09:23:42Z",
+      "conclusion": "skipped",
+      "databaseId": 138343534517,
+      "name": "Verify original ScriptWidget adapter semantics / Verify Runtime jobs, background and Python SDK contracts",
+      "startedAt": "2026-11-24T09:23:42Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765/job/138343534517"
+    },
+    {
+      "completedAt": "2026-11-24T09:23:41Z",
+      "conclusion": "skipped",
+      "databaseId": 138343591684,
+      "name": "register-original-product",
+      "startedAt": "2026-11-24T09:23:49Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765/job/138343591684"
+    },
+    {
+      "completedAt": "2026-11-24T09:23:41Z",
+      "conclusion": "skipped",
+      "databaseId": 138343604538,
+      "name": "release-resource-audit",
+      "startedAt": "2026-11-24T09:23:50Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765/job/138343604538"
+    },
+    {
+      "completedAt": "2026-11-24T09:23:41Z",
+      "conclusion": "skipped",
+      "databaseId": 138343611477,
+      "name": "Verify MiniApp store lifecycle",
+      "startedAt": "2026-11-24T09:23:51Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765/job/138343611477"
+    }
+  ],
+  "status": "completed",
+  "updatedAt": "2026-11-24T09:27:43Z",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765"
+}
