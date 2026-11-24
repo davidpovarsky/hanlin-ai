@@ -1,0 +1,11 @@
+{
+  "path": "Scripts/Runtime/prepare-runtime-core.sh",
+  "beforeSHA256": "8765967fdba85cc77dcbf3c02936993c39bf186d7327560a3d84590222710a10",
+  "afterSHA256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+  "bashSyntaxExitCode": 0,
+  "commonVerificationAndInstallationBodyByteIdentical": true,
+  "entryNativeIdentityLockChecksByteIdentical": true,
+  "defaultNetworkArgumentsUnchanged": true,
+  "localInput": "RUNTIME_CORE_BUNDLE_ARCHIVE",
+  "expectedSHAAuthority": "RuntimeDependencies.lock.json only; no new expected-hash override"
+}
