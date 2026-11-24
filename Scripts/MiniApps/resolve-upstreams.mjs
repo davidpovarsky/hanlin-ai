@@ -122,6 +122,20 @@ export function generatedNativeAPIHostVersions(versions) {
     Object.entries(fields).map(([name,value])=>`    static let ${name} = ${JSON.stringify(value)}`).join('\n')+'\n}\n';
 }
 
+// Keep the public metadata in the same write/rollback set as its peer packages
+// and native consumers. All upstream callable exports remain byte-for-byte intact.
+export function updatedNativeAPIFacadeVersions(source, versions) {
+  const fields={UPSTREAM_VERSION:versions.expo['@nativescript/react-native'],
+    WORKLETS_VERSION:versions.expo['react-native-worklets']};
+  for(const [name,value] of Object.entries(fields)) {
+    if(!/^\d+\.\d+\.\d+(?:[-+][\w.-]+)?$/.test(value??''))throw new Error('Missing exact Native API facade version: '+name);
+    const pattern=new RegExp('^(export const '+name+' = )"[^"\\r\\n]*"(;)$','gm');
+    if([...source.matchAll(pattern)].length!==1)throw new Error('Expected one exported Native API facade version: '+name);
+    source=source.replace(pattern,(_,prefix,suffix)=>prefix+JSON.stringify(value)+suffix);
+  }
+  return source;
+}
+
 export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=path.join(tmpdir(),'hanlin-miniapp-upstreams'),apply=false,report=path.join(root,'build/acceptance/miniapp-upstreams/resolution.json')}={}) {
   await mkdir(cache,{recursive:true});
   const expoPackage=await json(path.join(root,'Scripts/Expo/package.json'));
@@ -204,7 +218,8 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
     ['Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift',generatedHostVersions(versions)],
     ['Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift',generatedNativeScriptHostVersions(versions)],
     ['Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift',generatedExpoHostVersions(versions,hermes)],
-    ['Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',generatedNativeAPIHostVersions(versions)]
+    ['Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',generatedNativeAPIHostVersions(versions)],
+    ['Packages/HanlinExpoNativeAPIJS/src/index.ts',updatedNativeAPIFacadeVersions(await readFile(path.join(root,'Packages/HanlinExpoNativeAPIJS/src/index.ts'),'utf8'),versions)]
   ]);
   for(const name of ['Packages/HanlinExpoUI/package.json','Packages/HanlinExpoNativeAPIJS/package.json']) {
     const local=await json(path.join(root,name));for(const dependency of Object.keys(local.peerDependencies??{}))if(versions.expo[dependency])local.peerDependencies[dependency]=versions.expo[dependency];files.set(name,pretty(local));

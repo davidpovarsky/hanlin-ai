@@ -7,30 +7,108 @@ const swiftSources = {
   HanlinNativeScriptHostVersions: 'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift',
   HanlinExpoSession: 'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift',
   HanlinExpoHostVersions: 'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift',
+  HanlinExpoNativeAPIHostVersions: 'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',
+  HanlinExpoNativeAPIMetadata: 'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift',
   HanlinExpoBridgeMetadata: 'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift',
   HanlinGeneratedBridgeMetadata: 'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift',
 };
+
+function resolveSwiftVersion(records, namespace, name, ancestry = []) {
+  const identity = `${namespace}.${name}`, record = records[namespace];
+  if (!record || ancestry.includes(identity) || !/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) {
+    throw new Error(`Unresolved or cyclic prepared version binding: ${identity}`);
+  }
+  const pattern = new RegExp(`^\\s*(?:(?:public|private|internal|fileprivate|package)\\s+)?static\\s+let\\s+${name}(?:\\s*:\\s*String)?\\s*=\\s*([^\\r\\n]+)`, 'gm');
+  const matches = [...record.text.matchAll(pattern)];
+  if (matches.length !== 1) throw new Error(`Prepared version declaration changed: ${identity} in ${record.path}`);
+  const expression = matches[0][1].trim();
+  const literal = expression.match(/^"(\d+\.\d+\.\d+(?:[-+][\w.-]+)?)"(?:\s*\/\/.*)?$/);
+  if (literal) return literal[1];
+  const reference = expression.match(/^([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)(?:\s*\/\/.*)?$/);
+  if (reference) return resolveSwiftVersion(records, reference[1], reference[2], [...ancestry, identity]);
+  throw new Error(`Unreviewed prepared version expression: ${identity} = ${expression}`);
+}
+
+function requireAgreement(component, values) {
+  if (Object.values(values).some(value => typeof value !== 'string' || !value.length) || new Set(Object.values(values)).size !== 1) {
+    throw new Error(`Importer, direct session and pinned/generated runtime versions disagree for ${component}: ${JSON.stringify(values)}`);
+  }
+}
+
+// Shared by the current source audit and the active native preflight. The
+// checked constants identify the original resolved graph, not a separate pin.
+export async function auditNativeAPIVersionContract({source, json, version}) {
+  if (!version) {
+    const names = ['HanlinMiniAppHostVersions', 'HanlinExpoHostVersions',
+      'HanlinExpoNativeAPIHostVersions', 'HanlinExpoNativeAPIMetadata'];
+    const records = Object.fromEntries(await Promise.all(names.map(async name => [name, await source(swiftSources[name])])));
+    version = (...args) => resolveSwiftVersion(records, ...args);
+  }
+  const nativeLock = await json('Scripts/ExpoNativeAPI/dependency-lock.json');
+  const expoLock = await json('Scripts/Expo/dependency-lock.json');
+  const tooling = await json('Scripts/Expo/package.json');
+  const lock = await json('Scripts/Expo/package-lock.json');
+  const facade = await json('Packages/HanlinExpoNativeAPIJS/package.json');
+  const facadeSource = await source('Packages/HanlinExpoNativeAPIJS/src/index.ts');
+  function exportedVersion(name) {
+    const declarations = [...facadeSource.text.matchAll(new RegExp('^export const '+name+' = "(\\d+\\.\\d+\\.\\d+(?:[-+][\\w.-]+)?)";$', 'gm'))];
+    if (declarations.length !== 1) throw new Error('Unreviewed Native API facade version: '+name+' in '+facadeSource.path);
+    return declarations[0][1];
+  }
+  const result = {
+    nativeApiVersion: exportedVersion('UPSTREAM_VERSION'),
+    workletsVersion: exportedVersion('WORKLETS_VERSION'),
+    reactNativeVersion: expoLock.expo.reactNativeVersion,
+    reactVersion: expoLock.expo.reactVersion,
+    expoSDKVersion: expoLock.expo.sdkVersion,
+    hermesVersion: expoLock.expo.hermesVersion,
+  };
+  for (const [component, packageName, key, field, importerField, exported] of [
+    ['Expo Native API', '@nativescript/react-native', 'nativeApi', 'nativeApiVersion', 'nativeApiVersion', result.nativeApiVersion],
+    ['Expo Worklets', 'react-native-worklets', 'worklets', 'workletsVersion', 'reactNativeWorkletsVersion', result.workletsVersion],
+  ]) {
+    if (nativeLock[key]?.package !== packageName) throw new Error('Native API dependency identity changed: '+key);
+    requireAgreement(component, {
+      facade: exported, facadePeer: facade.peerDependencies?.[packageName],
+      nativeLock: nativeLock[key]?.version, tooling: tooling.dependencies?.[packageName],
+      packageLock: lock.packages?.['node_modules/' + packageName]?.version,
+      importerGenerated: version('HanlinMiniAppHostVersions', importerField),
+      expoHost: version('HanlinExpoHostVersions', field),
+      nativeHost: version('HanlinExpoNativeAPIHostVersions', field),
+      publicNativeMetadata: version('HanlinExpoNativeAPIMetadata', field),
+    });
+  }
+  requireAgreement('Expo React Native', {
+    nativeLock: nativeLock.runtimeClosure?.reactNativeVersion, expoLock: result.reactNativeVersion,
+    tooling: tooling.dependencies?.['react-native'], packageLock: lock.packages?.['node_modules/react-native']?.version,
+    facadePeer: facade.peerDependencies?.['react-native'],
+    importerGenerated: version('HanlinMiniAppHostVersions', 'reactNativeVersion'),
+    expoHost: version('HanlinExpoHostVersions', 'reactNativeVersion'),
+    nativeHost: version('HanlinExpoNativeAPIHostVersions', 'reactNativeVersion'),
+    publicNativeMetadata: version('HanlinExpoNativeAPIMetadata', 'reactNativeVersion'),
+  });
+  requireAgreement('Expo React', {
+    nativeLock: nativeLock.runtimeClosure?.reactVersion, expoLock: result.reactVersion,
+    tooling: tooling.dependencies?.react, packageLock: lock.packages?.['node_modules/react']?.version,
+    facadePeer: facade.peerDependencies?.react,
+  });
+  requireAgreement('Native API Expo SDK', {
+    nativeLock: nativeLock.runtimeClosure?.expoSdkVersion, expoLock: result.expoSDKVersion,
+    tooling: tooling.dependencies?.expo, packageLock: lock.packages?.['node_modules/expo']?.version,
+  });
+  requireAgreement('Expo Hermes', {
+    nativeLock: nativeLock.runtimeClosure?.hermesVersion, expoLock: result.hermesVersion,
+    expoHost: version('HanlinExpoHostVersions', 'hermesVersion'),
+  });
+  return result;
+}
 
 export async function auditPreparedRuntimeContract({source, json, nsLock, nsPackage, tooling, lock, bridge}) {
   const records = Object.fromEntries(await Promise.all(Object.entries(swiftSources)
     .map(async ([name, file]) => [name, await source(file)])));
   await source('Scripts/MiniApps/resolve-upstreams.mjs');
   const expoLock = await json('Scripts/Expo/dependency-lock.json');
-  function version(namespace, name, ancestry = []) {
-    const identity = `${namespace}.${name}`, record = records[namespace];
-    if (!record || ancestry.includes(identity) || !/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) {
-      throw new Error(`Unresolved or cyclic prepared version binding: ${identity}`);
-    }
-    const pattern = new RegExp(`^\\s*(?:(?:public|private|internal|fileprivate|package)\\s+)?static\\s+let\\s+${name}(?:\\s*:\\s*String)?\\s*=\\s*([^\\r\\n]+)`, 'gm');
-    const matches = [...record.text.matchAll(pattern)];
-    if (matches.length !== 1) throw new Error(`Prepared version declaration changed: ${identity} in ${record.path}`);
-    const expression = matches[0][1].trim();
-    const literal = expression.match(/^"(\d+\.\d+\.\d+(?:[-+][\w.-]+)?)"(?:\s*\/\/.*)?$/);
-    if (literal) return literal[1];
-    const reference = expression.match(/^([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)(?:\s*\/\/.*)?$/);
-    if (reference) return version(reference[1], reference[2], [...ancestry, identity]);
-    throw new Error(`Unreviewed prepared version expression: ${identity} = ${expression}`);
-  }
+  const version = (...args) => resolveSwiftVersion(records, ...args);
   function requirePolicy(namespace, pattern, label) {
     if (!pattern.test(records[namespace].text)) throw new Error(`Prepared runtime version policy changed: ${label}; audit the installed contract.`);
   }
@@ -53,11 +131,6 @@ export async function auditPreparedRuntimeContract({source, json, nsLock, nsPack
     runtimeVersion: version('HanlinExpoBridgeMetadata', 'runtimeVersion'),
     bridgeVersion: version('HanlinExpoBridgeMetadata', 'bridgeVersion'),
   };
-  function requireAgreement(component, values) {
-    if (Object.values(values).some(value => typeof value !== 'string' || !value.length) || new Set(Object.values(values)).size !== 1) {
-      throw new Error(`Importer, direct session and pinned/generated runtime versions disagree for ${component}: ${JSON.stringify(values)}`);
-    }
-  }
   requireAgreement('NativeScript iOS runtime', {
     importer: versions.nativeScriptRuntimeVersion, session: nativeSession.runtimeVersion,
     importerGenerated: version('HanlinMiniAppHostVersions', 'nativeScriptRuntimeVersion'),
@@ -107,5 +180,6 @@ export async function auditPreparedRuntimeContract({source, json, nsLock, nsPack
   requireAgreement('Expo bridge generation baseline', {
     configuration: bridgeGenerationBaseline.runtimeVersion, generated: bridgeGenerationBaseline.generatedRuntimeVersion,
   });
-  return {versions, nativeSession, expoSession, bridgeGenerationBaseline, versionSources: swiftSources};
+  const nativeAPI = await auditNativeAPIVersionContract({source, json, version});
+  return {versions, nativeSession, expoSession, nativeAPI, bridgeGenerationBaseline, versionSources: swiftSources};
 }

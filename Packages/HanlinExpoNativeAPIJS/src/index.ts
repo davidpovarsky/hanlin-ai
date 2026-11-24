@@ -9,7 +9,7 @@
 export const FACADE_VERSION = "1.0.0";
 export const CONTRACT_VERSION = "1.0.0";
 export const UPSTREAM_VERSION = "9.1.2";
-export const WORKLETS_VERSION = "0.13.1";
+export const WORKLETS_VERSION = "0.13.0";
 
 export {
   // Core JSI lifecycle

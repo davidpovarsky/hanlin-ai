@@ -4,6 +4,8 @@ import {readFile} from 'node:fs/promises';
 import path from 'node:path';
 import {auditPreparedRuntimeContract} from '../miniapp-runtime-contract.mjs';
 import {generatedHostVersions, generatedNativeScriptHostVersions} from '../../MiniApps/resolve-upstreams.mjs';
+import * as upstreamResolver from '../../MiniApps/resolve-upstreams.mjs';
+import * as nativeAPIPreflight from '../../ExpoNativeAPI/preflight.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const paths = {
@@ -78,4 +80,38 @@ test('original dependency drift and bridge baseline drift remain rejected separa
   const expo = await fixture();
   expo.tooling.dependencies['@expo/ui'] = '99.0.0';
   await assert.rejects(auditPreparedRuntimeContract(expo), /versions disagree for Expo UI/);
+});
+
+
+test('Native API facade versions follow the resolved graph and reject an actual exported mismatch', async () => {
+  const input = await fixture();
+  const facadePath = 'Packages/HanlinExpoNativeAPIJS/src/index.ts';
+  const facade = (await input.source(facadePath)).text;
+  const nativeLock = await input.json('Scripts/ExpoNativeAPI/dependency-lock.json');
+  const literal = (source, name) => source.match(new RegExp(`^export const ${name} = "([^"\\r\\n]+)";$`, 'm'))?.[1];
+  assert.equal(literal(facade, 'WORKLETS_VERSION'), nativeLock.worklets.version,
+    'public WORKLETS_VERSION must identify the actual native Worklets input');
+  assert.equal(literal(facade, 'UPSTREAM_VERSION'), nativeLock.nativeApi.version);
+  const result = await auditPreparedRuntimeContract(input);
+  assert.equal(result.nativeAPI.workletsVersion, nativeLock.worklets.version);
+  assert.equal(result.nativeAPI.nativeApiVersion, nativeLock.nativeApi.version);
+  assert.deepEqual(await nativeAPIPreflight.checkVersionContract(), result.nativeAPI,
+    'the active preflight must use the same version contract as the source audit');
+
+  const stale = facade.replace(/^export const WORKLETS_VERSION = .*;$/m,
+    'export const WORKLETS_VERSION = "999.0.0";');
+  const mismatch = await fixture(new Map([[facadePath, stale]]));
+  await assert.rejects(auditPreparedRuntimeContract(mismatch), /versions disagree for Expo Worklets/);
+
+  // Controlled future inputs exercise the production resolver, not a claim that
+  // these package versions have been published or compiled into a native host.
+  const future = {expo: {'@nativescript/react-native': '9.2.3', 'react-native-worklets': '0.14.2'}};
+  const updated = upstreamResolver.updatedNativeAPIFacadeVersions(facade, future);
+  assert.equal(literal(updated, 'UPSTREAM_VERSION'), '9.2.3');
+  assert.equal(literal(updated, 'WORKLETS_VERSION'), '0.14.2');
+  const withoutVersions = source => source.replace(/^export const (UPSTREAM_VERSION|WORKLETS_VERSION) = .*;\n/gm, '');
+  assert.equal(withoutVersions(updated), withoutVersions(facade), 'all original API forwarding bytes are preserved');
+  assert.equal(upstreamResolver.updatedNativeAPIFacadeVersions(updated, future), updated);
+  assert.throws(() => upstreamResolver.updatedNativeAPIFacadeVersions(facade, {expo: {}}), /Missing exact Native API facade version/);
+  assert.throws(() => upstreamResolver.updatedNativeAPIFacadeVersions(facade + '\nexport const WORKLETS_VERSION = "0.13.0";\n', future), /Expected one exported Native API facade version/);
 });

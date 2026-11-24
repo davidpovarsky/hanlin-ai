@@ -1,0 +1,28 @@
+✖ Native API facade versions follow the resolved graph and reject an actual exported mismatch (11.569428ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 104.489697
+
+✖ failing tests:
+
+test at Scripts/Audit/Tests/runtime-version-contract.test.mjs:86:1
+✖ Native API facade versions follow the resolved graph and reject an actual exported mismatch (11.569428ms)
+  AssertionError [ERR_ASSERTION]: public WORKLETS_VERSION must identify the actual native Worklets input
+  
+  '0.13.1' !== '0.13.0'
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-sdk04-nativeapi-versions-20261124/Scripts/Audit/Tests/runtime-version-contract.test.mjs:92:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '0.13.1',
+    expected: '0.13.0',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
