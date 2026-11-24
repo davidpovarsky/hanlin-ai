@@ -515,6 +515,138 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         closeExpoApp()
     }
 
+    func testStandaloneModularSearchLoadsActualSefariaText() throws {
+        openApps()
+        importAndInstall(archive: "ModularTextSearch")
+        launchInstalledPackage(named: "חיפוש טקסטים מודולרי — Expo")
+
+        // The canonical package starts in Hebrew independently of the host locale.
+        let english = app.buttons["English"].firstMatch
+        XCTAssertTrue(english.waitForExistence(timeout: 30), "The canonical search package did not render")
+        english.tap()
+        XCTAssertTrue(app.buttons["Search now"].firstMatch.waitForExistence(timeout: 10))
+
+        // Submit through the shipped native Searchable, using the real Sefaria engine.
+        for _ in 0..<3 {
+            if app.searchFields.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
+            app.swipeDown()
+        }
+        let searchField = try XCTUnwrap(
+            app.searchFields.allElementsBoundByIndex.first(where: { $0.isHittable }),
+            "The package's native search field must be available")
+        searchField.tap()
+        searchField.typeText("In the beginning God created\n")
+        XCTAssertTrue(app.staticTexts["Native search submitted."].firstMatch.waitForExistence(timeout: 15),
+            "The native submit event did not reach the package")
+        let resultSummary = app.staticTexts.matching(NSPredicate(
+            format: "label ==[c] %@", "Results summary")).firstMatch
+        XCTAssertTrue(resultSummary.waitForExistence(timeout: 60),
+            "The actual Sefaria request must return a result summary")
+
+        // Result references and ranking belong to the live service. Select a real
+        // result row by its shipped reference + snippet label, not a fixed edition.
+        let resultRows = app.buttons.matching(NSPredicate(
+            format: "label CONTAINS %@ AND NOT (identifier BEGINSWITH %@)", "\n", "hanlin-"))
+        for _ in 0..<5 {
+            if resultRows.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
+            app.swipeUp()
+        }
+        let result = try XCTUnwrap(
+            resultRows.allElementsBoundByIndex.first(where: { $0.isHittable }),
+            "The live search must produce a navigable reference and snippet")
+        let selectedReference = String(result.label.split(separator: "\n").first ?? "")
+        XCTAssertFalse(selectedReference.isEmpty)
+        capture(name: "modular-search-live-sefaria-results")
+        result.tap()
+
+        let sourceLink = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label == %@", "Open in Sefaria")).firstMatch
+        XCTAssertTrue(sourceLink.waitForExistence(timeout: 15),
+            "Opening the result must show its real source detail")
+        let detailList = try XCTUnwrap(
+            app.collectionViews.allElementsBoundByIndex.first(where: { $0.isHittable }) ??
+                app.tables.allElementsBoundByIndex.first(where: { $0.isHittable }),
+            "The result must render its native list")
+        let versionButtons = detailList.buttons.matching(NSPredicate(
+            format: "label != %@ AND NOT (identifier BEGINSWITH %@)", "Open in Sefaria", "hanlin-"))
+        for _ in 0..<5 {
+            if versionButtons.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
+            detailList.swipeUp()
+        }
+        let sourceVersion = try XCTUnwrap(
+            versionButtons.allElementsBoundByIndex.first(where: { $0.isHittable }),
+            "The result must expose an original version disclosure")
+        sourceVersion.tap()
+
+        let loadText = detailList.buttons["Full text"].firstMatch
+        XCTAssertTrue(loadText.waitForExistence(timeout: 10))
+        if !loadText.isHittable { detailList.swipeUp() }
+        XCTAssertTrue(loadText.isHittable)
+        let buttonsBeforeLoad = Dictionary(
+            grouping: detailList.buttons.allElementsBoundByIndex.map { $0.label }, by: { $0 })
+            .mapValues { $0.count }
+        loadText.tap()
+
+        // The second disclosure is created only from /api/v3/texts response
+        // versions. Count labels so identical search/text edition names still work.
+        func returnedVersion() -> XCUIElement? {
+            let buttons = detailList.buttons.allElementsBoundByIndex
+            let counts = Dictionary(grouping: buttons.map { $0.label }, by: { $0 }).mapValues { $0.count }
+            guard let loadIndex = buttons.firstIndex(where: { $0.label == "Full text" }) else { return nil }
+            return buttons.dropFirst(loadIndex + 1).first {
+                counts[$0.label, default: 0] > buttonsBeforeLoad[$0.label, default: 0]
+            }
+        }
+        let noVersions = detailList.staticTexts["No text versions were returned for this source."].firstMatch
+        XCTAssertTrue(waitUntil(timeout: 60) { returnedVersion() != nil || noVersions.exists },
+            "The actual full-text request did not render any returned version")
+        XCTAssertFalse(noVersions.exists, "The live source returned no full-text versions")
+        for _ in 0..<4 {
+            if returnedVersion()?.isHittable == true { break }
+            detailList.swipeUp()
+        }
+        let textVersion = try XCTUnwrap(returnedVersion(), "A returned full-text version is required")
+        XCTAssertTrue(textVersion.isHittable)
+        let textsBeforeExpansion = Dictionary(
+            grouping: detailList.staticTexts.allElementsBoundByIndex.map { $0.label }, by: { $0 })
+            .mapValues { $0.count }
+        textVersion.tap()
+
+        let language = detailList.staticTexts.matching(NSPredicate(
+            format: "label == %@ OR label BEGINSWITH %@", "Language", "Language,")).firstMatch
+        XCTAssertTrue(language.waitForExistence(timeout: 15),
+            "The returned version must expose its original language metadata")
+        let noText = "No text is available for this version."
+        XCTAssertFalse(detailList.staticTexts[noText].firstMatch.exists)
+
+        func visibleFullText() -> XCUIElement? {
+            let texts = detailList.staticTexts.allElementsBoundByIndex
+            let counts = Dictionary(grouping: texts.map { $0.label }, by: { $0 }).mapValues { $0.count }
+            let headings = Set(detailList.buttons.allElementsBoundByIndex.map { $0.label })
+            return texts.first {
+                let label = $0.label.trimmingCharacters(in: .whitespacesAndNewlines)
+                return $0.isHittable && label.count >= 40 &&
+                    label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
+                    label != noText && !label.hasPrefix("Language,") && !label.hasPrefix("License,") &&
+                    !headings.contains(label) &&
+                    counts[$0.label, default: 0] > textsBeforeExpansion[$0.label, default: 0]
+            }
+        }
+        for _ in 0..<5 {
+            if visibleFullText() != nil { break }
+            detailList.swipeUp()
+        }
+        let fullText = try XCTUnwrap(visibleFullText(),
+            "Expanding the API response must render a nonempty full text, not only the search snippet or metadata")
+        XCTAssertFalse(fullText.label.isEmpty)
+        let evidence = XCTAttachment(string: "Reference: \(selectedReference)\nFull text: \(fullText.label)")
+        evidence.name = "modular-search-actual-sefaria-text"
+        evidence.lifetime = .keepAlways
+        add(evidence)
+        capture(name: "modular-search-live-sefaria-full-text")
+        closeExpoApp()
+    }
+
     private func openApps() {
         let manage = app.buttons["hanlin-apps-add"].firstMatch
         XCTAssertTrue(manage.waitForExistence(timeout: 30),
