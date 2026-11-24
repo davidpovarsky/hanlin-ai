@@ -198,21 +198,37 @@ public struct HanlinPackageCenter: Sendable {
     private static func centralDirectoryEntryCount(in data: Data) throws -> Int {
         let signature: [UInt8] = [0x50, 0x4b, 0x05, 0x06]
         guard data.count >= 22 else { throw HanlinPackageCenterError.unreadableArchive }
+        // EOCD's comment length is a UInt16 in the ZIP format.
         let earliest = max(0, data.count - 65_557)
         var offset = data.count - 22
         while offset >= earliest {
             if data[offset ..< offset + 4].elementsEqual(signature) {
-                let diskNumber = littleEndianUInt16(data, offset + 4)
-                let centralDisk = littleEndianUInt16(data, offset + 6)
-                let entries = littleEndianUInt16(data, offset + 10)
                 let commentLength = Int(littleEndianUInt16(data, offset + 20))
-                guard diskNumber == 0, centralDisk == 0,
-                      entries != UInt16.max,
-                      offset + 22 + commentLength == data.count
-                else {
-                    throw HanlinPackageCenterError.unreadableArchive
+                // Signature bytes inside a valid archive comment are not EOCD.
+                if offset + 22 + commentLength == data.count {
+                    let diskNumber = littleEndianUInt16(data, offset + 4)
+                    let centralDisk = littleEndianUInt16(data, offset + 6)
+                    let diskEntries = littleEndianUInt16(data, offset + 8)
+                    let entries = littleEndianUInt16(data, offset + 10)
+                    guard diskNumber == 0, centralDisk == 0 else {
+                        throw HanlinPackageCenterError.unreadableArchive
+                    }
+                    let locator = offset - 20
+                    if locator >= 0, littleEndianUInt32(data, locator) == 0x07064b50 {
+                        let count = try zip64DirectoryEntryCount(in: data, locator: locator)
+                        guard (diskEntries == UInt16.max || Int(diskEntries) == count),
+                              (entries == UInt16.max || Int(entries) == count) else {
+                            throw HanlinPackageCenterError.unreadableArchive
+                        }
+                        return count
+                    }
+                    // Classic ZIP can represent exactly 65,535 entries without a
+                    // ZIP64 locator. Enumeration still must match this count.
+                    guard diskEntries == entries else {
+                        throw HanlinPackageCenterError.unreadableArchive
+                    }
+                    return Int(entries)
                 }
-                return Int(entries)
             }
             if offset == 0 { break }
             offset -= 1
@@ -220,7 +236,36 @@ public struct HanlinPackageCenter: Sendable {
         throw HanlinPackageCenterError.unreadableArchive
     }
 
+    /// PKWARE APPNOTE 4.3.14–4.3.16:
+    /// https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT
+    private static func zip64DirectoryEntryCount(in data: Data, locator: Int) throws -> Int {
+        guard littleEndianUInt32(data, locator + 4) == 0,
+              littleEndianUInt32(data, locator + 16) == 1,
+              let record = Int(exactly: littleEndianUInt64(data, locator + 8)),
+              record >= 0, record <= locator - 56,
+              littleEndianUInt32(data, record) == 0x06064b50 else {
+            throw HanlinPackageCenterError.unreadableArchive
+        }
+        let recordBytes = littleEndianUInt64(data, record + 4)
+        guard recordBytes >= 44, recordBytes == UInt64(locator - record - 12),
+              littleEndianUInt32(data, record + 16) == 0,
+              littleEndianUInt32(data, record + 20) == 0,
+              littleEndianUInt64(data, record + 24) == littleEndianUInt64(data, record + 32),
+              let entries = Int(exactly: littleEndianUInt64(data, record + 32)) else {
+            throw HanlinPackageCenterError.unreadableArchive
+        }
+        return entries
+    }
+
     private static func littleEndianUInt16(_ data: Data, _ offset: Int) -> UInt16 {
         UInt16(data[offset]) | (UInt16(data[offset + 1]) << 8)
+    }
+
+    private static func littleEndianUInt32(_ data: Data, _ offset: Int) -> UInt32 {
+        (0..<4).reduce(0) { $0 | (UInt32(data[offset + $1]) << ($1 * 8)) }
+    }
+
+    private static func littleEndianUInt64(_ data: Data, _ offset: Int) -> UInt64 {
+        (0..<8).reduce(0) { $0 | (UInt64(data[offset + $1]) << ($1 * 8)) }
     }
 }
