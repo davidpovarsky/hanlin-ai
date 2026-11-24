@@ -20,7 +20,7 @@
     "sourceCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
     "jobID": 138346476075,
     "scope": "miniapp_authoring",
-    "status": "IN_PROGRESS",
+    "status": "COMPLETED_FAILURE",
     "selectedCases": 42,
     "aiCases": 25,
     "miniAppsCases": 17,
@@ -28,10 +28,22 @@
       "path": "docs/miniapp-sdk/evidence/eleventh-native-gate-dispatch-20261124.json",
       "sha256": "a8ce4e857f0d3ef7697b2ed8e82ed34317928a5311094c103d35342c2e534549"
     },
-    "lastObservationRecordedAtUTC": "2026-11-24T10:00:12.531176+00:00",
+    "lastObservationRecordedAtUTC": "2026-11-24T10:18:44.476260+00:00",
     "observedPhase": "Actual paired product build/test step active after successful original native dependencies and shipping SDK preparation/export.",
-    "caseStatus": "NO_COMPLETED_APP_CASE_RECEIPT_YET",
-    "boundary": "No native/UI PASS inferred from source preparation. New public-runtime metadata and followup adapter/HostServices changes after this source require their own focused execution."
+    "caseStatus": "NOT_RUN",
+    "boundary": "Fresh preparation/export passed; full first MiniApps build failed, AI and all42app cases NOT_RUN. New52-case combined scope will follow actual source correction.",
+    "result": "failure",
+    "executedAppCases": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "failureStage": "First MiniApps build-for-testing exited65 after1411.22278seconds",
+    "confirmedCause": "HanlinScriptingWidgets imports original ExpoWidgets compiled with C++ interoperability, but this consumer in the unified HanlinSDK manifest has no C++ interoperability setting.",
+    "failureEvidence": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/receipt.json",
+      "bytes": 4657,
+      "sha256": "e31bbeec10d9f5572ed550f7cb1c87b6ccef975b22b37ce358b9dc441155e942"
+    }
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -941,6 +953,15 @@
       "bridgeABI": "3.0.0",
       "reviewedCoverageInput": "58.0.3",
       "boundary": "Atomic original graph update and source contract; actual public/native getter UI pending focused followup."
+    },
+    "native_gate_11_widget_interop": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/receipt.json",
+        "bytes": 4657,
+        "sha256": "e31bbeec10d9f5572ed550f7cb1c87b6ccef975b22b37ce358b9dc441155e942"
+      },
+      "result": "BUILD_FAILED",
+      "scope": "Actual first MiniApps native build; one compiler diagnostic header, not an app-case result."
     }
   },
   "criteria": [
@@ -1190,7 +1211,7 @@
     }
   ],
   "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T10:00:12.531176+00:00",
+  "updatedAtUTC": "2026-11-24T10:18:44.476260+00:00",
   "currentIntegrationBase": "fcf88190ca930130a035ef9150947543713616d1",
   "gateHistory": [
     {
