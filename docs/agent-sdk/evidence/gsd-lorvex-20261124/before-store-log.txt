@@ -1,0 +1,78 @@
+Building for debugging...
+[Pre-planning 1 / 153]
+[Planning deferred tasks]
+[53 / 93]
+[54 / 94] HanlinPlatformContracts
+[59 / 139]
+[64 / 139]
+[69 / 139]
+[72 / 139]
+[73 / 139]
+[77 / 139]
+[79 / 139]
+[82 / 139]
+[85 / 139]
+[87 / 139]
+[88 / 139]
+[91 / 139] HanlinPlatformContracts
+[99 / 139] HanlinPlatformContracts
+[101 / 139] HanlinPlatformContracts
+[102 / 139] HanlinPlatformContracts
+[104 / 139] HanlinPlatformContracts
+[105 / 139] HanlinPlatformContracts
+[105 / 139] HanlinHostContracts
+[106 / 140]
+[108 / 147] HanlinHostContracts
+[109 / 147] HanlinHostContracts
+[111 / 147] HanlinHostContracts
+[117 / 147] HanlinPersistenceAdapters
+[120 / 147] HanlinHostContracts
+[121 / 147]
+[122 / 148]
+[124 / 148]
+[124 / 148] HanlinPersistenceAdapters
+[127 / 151] HanlinPersistenceAdapters
+[128 / 151] HanlinPersistenceAdapters
+[137 / 151] HanlinPersistenceAdapters
+[141 / 152] HanlinPersistenceAdaptersTests-product
+[142 / 158]
+[143 / 158]
+[146 / 158] HanlinPersistenceAdaptersTests-product
+[147 / 158] HanlinPersistenceAdaptersTests-product
+[149 / 158] HanlinPersistenceAdaptersTests-product
+[152 / 158] HanlinPersistenceAdaptersTests-product
+[154 / 158] HanlinPersistenceAdaptersTests-product
+[156 / 158] HanlinPersistenceAdaptersTests-product
+Build complete! (16,63 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite StoreSystemPathTests started.
+◇ Suite StoreTests started.
+◇ Test systemAliasReadsExistingVersionOneWithoutRewriting() started.
+◇ Test privateSymlinksRemainRejected(position:) started.
+◇ Test systemAliasCreatesReloadsUpdatesAndDeletesSameConversation() started.
+◇ Test versionOneCheckpointCanBeRestoredWithoutDestructiveMigration() started.
+◇ Test case passing 1 argument position → "root" to privateSymlinksRemainRejected(position:) started.
+◇ Test case passing 1 argument position → "ancestor" to privateSymlinksRemainRejected(position:) started.
+◇ Test case passing 1 argument position → "namespace" to privateSymlinksRemainRejected(position:) started.
+◇ Test case passing 1 argument position → "record" to privateSymlinksRemainRejected(position:) started.
+◇ Test case passing 1 argument position → "dangling-root" to privateSymlinksRemainRejected(position:) started.
+CHECKPOINT_FILE_STANDARDIZATION_CHANGED_ROOT=false
+CHECKPOINT_STAGE=save_v1
+✘ Test systemAliasCreatesReloadsUpdatesAndDeletesSameConversation() recorded an issue at StoreSystemPathTests.swift:20:6: Caught error: .invalidRecord
+✘ Test systemAliasCreatesReloadsUpdatesAndDeletesSameConversation() failed after 0.010 seconds with 1 issue.
+CHECKPOINT_STAGE=checkpoint
+✘ Test systemAliasReadsExistingVersionOneWithoutRewriting() recorded an issue at StoreSystemPathTests.swift:45:6: Caught error: .invalidRecord
+✘ Test systemAliasReadsExistingVersionOneWithoutRewriting() failed after 0.026 seconds with 1 issue.
+CHECKPOINT_STAGE=save_v2
+✔ Test privateSymlinksRemainRejected(position:) with 5 test cases passed after 0.031 seconds.
+✘ Suite StoreSystemPathTests failed after 0.031 seconds with 2 issues.
+CHECKPOINT_STAGE=restore
+CHECKPOINT_STAGE=load_restored
+CHECKPOINT_STAGE=reject_symlink
+✔ Test versionOneCheckpointCanBeRestoredWithoutDestructiveMigration() passed after 0.042 seconds.
+✔ Suite StoreTests passed after 0.042 seconds.
+✘ Test run with 4 tests in 2 suites failed after 0.043 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - HanlinPersistenceAdaptersTests (Swift Testing)

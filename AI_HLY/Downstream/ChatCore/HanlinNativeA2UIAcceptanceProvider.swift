@@ -16,6 +16,14 @@ enum HanlinNativeA2UIAcceptanceProvider {
 #endif
     }
 
+    /// Explicit UUID-owned simulator storage for the real process-relaunch case.
+    /// Other native fixtures keep their original in-memory containers.
+    static var persistentStoreID: UUID? {
+        guard isEnabled,
+              let value = ProcessInfo.processInfo.environment["HANLIN_NATIVE_A2UI_STORE_ID"] else { return nil }
+        return UUID(uuidString: value)
+    }
+
     enum BootstrapError: Error { case incompatibleClassicAcceptance }
     struct Plan: Codable, Sendable { let steps: [Step] }
     struct Step: Codable, Sendable {
@@ -33,8 +41,9 @@ enum HanlinNativeA2UIAcceptanceProvider {
     @MainActor static func configureIfRequested(context: ModelContext) throws {
         guard isEnabled else { return }
         guard !AgentRuntimeUIAcceptanceProvider.isEnabled else { throw BootstrapError.incompatibleClassicAcceptance }
-        // Called only on the new in-memory container. Reopen in this process preserves history;
-        // no rows, preferences, user keys or external stores are reset by this fixture.
+        // Seed only a fresh isolated fixture container. An optional UUID-owned
+        // disk container keeps its original rows across process relaunch;
+        // no rows, preferences, user keys or external stores are reset.
         guard try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty else { return }
         let optimizer = ProcessInfo.processInfo.environment["HANLIN_NATIVE_A2UI_NO_OPTIMIZER"] == "1"
             ? "" : HanlinNativeStructuredResponse.modelID

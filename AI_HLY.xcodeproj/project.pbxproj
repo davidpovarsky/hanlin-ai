@@ -1759,6 +1759,7 @@
 				"Downstream/ChatInput/OrganizerDock/HanlinOrganizerDock.swift" ,
 				"Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift" ,
 				"Downstream/ChatInput/OrganizerDock/HanlinPendingFirstTurn.swift" ,
+				"Downstream/ChatInput/OrganizerDock/HanlinSidebarReveal.swift" ,
 				"Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift" ,
 				"Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift" ,
 				"Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift" ,
