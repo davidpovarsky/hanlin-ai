@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceOwnership": "one original source path per target",
   "applicationModule": "AI_Hanlin",
-  "applicationSourceCount": 514,
+  "applicationSourceCount": 519,
   "selectedProducts": null,
   "products": [
     "HanlinHostContracts",
@@ -65,7 +65,7 @@
     "Packages/HanlinNativeScriptRuntime/Package.swift": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120",
     "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
     "Packages/HanlinPlatform/Package.swift": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981",
-    "Packages/HanlinPresentationSDK/Package.swift": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4",
+    "Packages/HanlinPresentationSDK/Package.swift": "72d91889acd4745dbd5532c223ae1147387114517c4a16c434504666387c6f04",
     "Packages/HanlinProductSplit/Package.swift": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
     "Packages/HanlinQuickJS/Package.swift": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",
     "Packages/HanlinSefariaMiniApp/Package.swift": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c",
