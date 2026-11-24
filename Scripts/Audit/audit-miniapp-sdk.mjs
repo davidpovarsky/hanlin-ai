@@ -190,7 +190,8 @@ const inventory = {
   expo: {
     declaredAndLocked: Object.fromEntries(wanted.map(name => [name, {declared: tooling.dependencies[name], locked: lock.packages?.['node_modules/' + name]?.version ?? null}])),
     hanlinUI: {packageVersion: uiPackage.version, dependencies: uiPackage.dependencies, peerDependencies: uiPackage.peerDependencies, generatedBridgeVersion: bridge.bridgeVersion,
-      generatedRuntimeContract: bridge.runtimeVersion, expoUIVersion: bridge.expoUIVersion,
+      generatedRuntimeContract: bridge.runtimeVersion, expoUIVersion: tooling.dependencies['@expo/ui'],
+      reviewedCoverageExpoUIVersion: bridge.expoUIVersion,
       upstreamViewCount: bridge.expoViews.length, upstreamModifierCount: bridge.expoModifiers.length,
       reviewedViews: reviewed.views, reviewedModifiers: reviewed.modifiers,
        generatedViewProducer: {source: generatedViewProducer.path, sha256: generatedViewProducer.sha256}},

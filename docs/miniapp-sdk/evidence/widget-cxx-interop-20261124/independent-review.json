@@ -1,0 +1,11 @@
+{
+  "createdAtUTC": "2026-11-24T10:28:21.428094+00:00",
+  "reviewer": "/root/sdk_only_author",
+  "result": "NO_CONCRETE_BLOCKER",
+  "reviewedCommit": "44fa8e885225a80a538c181dcd4500e6bbecc2f8",
+  "rootCommit": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
+  "sourceHashes": "source-hashes.json",
+  "scope": "Direct ExpoWidgets consumer, exported HanlinWidgetUI closure, source/unified package Swift6+Cxx settings, original widget-host producer and real clone with original flag parity.",
+  "testsOrEditsByReviewer": false,
+  "AppleExecution": "NOT_RUN"
+}

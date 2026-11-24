@@ -43,6 +43,14 @@
       "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/receipt.json",
       "bytes": 4657,
       "sha256": "e31bbeec10d9f5572ed550f7cb1c87b6ccef975b22b37ce358b9dc441155e942"
+    },
+    "sourceFix": {
+      "rootCommit": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/widget-cxx-interop-20261124/receipt.json",
+        "sha256": "6eef50d8f7bbc30af1cdf13d5a5353b5ba560354de199966f37453320684f251"
+      },
+      "actualAppleExecution": "NOT_RUN"
     }
   },
   "userScope": {
@@ -962,6 +970,70 @@
       },
       "result": "BUILD_FAILED",
       "scope": "Actual first MiniApps native build; one compiler diagnostic header, not an app-case result."
+    },
+    "complete_sdk_reconciliation_93": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/receipt.json",
+        "sha256": "9e12a944532c54eeaf79c437b3966a2784bd30612f584383f3476fe0c17e8105"
+      },
+      "result": "PASS",
+      "scope": "Current93sources/176local exports/334manifest fields/80source cells; native/E2E not inferred."
+    },
+    "generated_views_public_build": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/generated-views-probe-20261124/receipt.json",
+        "sha256": "4df7f98860b4e4ef453f49fc48aa0a5876fbce2ef188f00af2dd59245706465f"
+      },
+      "result": "EXECUTED_PASS",
+      "scope": "Current original compiler6.0.3 strict/full-declaration0diagnostic+Metro proof; native cases pending."
+    },
+    "generated_modifier_source_conformance": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/generated-modifier-conformance-20261124/receipt.json",
+        "sha256": "42d3163e2f8850425257c1a12e8c2e0f11087b3375e91c4df633496408c9665b"
+      },
+      "result": "SOURCE_PASS",
+      "scope": "83effective local modifier calls bound to actual records/registration/forwarding; native context and per-effect acceptance not inferred."
+    },
+    "prepared_expo_widget_publication": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/host-services-publication-20261124/receipt.json",
+        "sha256": "47fa9ba32ee0a35c73640945c3397eedf5e277470afbd6d16831c80d5254ed24"
+      },
+      "result": "PORTABLE_PASS",
+      "scope": "Real facade transport/source route correction; installed JS/native/store/consumer cases pending."
+    },
+    "groupbox_children_correction": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/groupbox-children-fallback-20261124/receipt.json",
+        "sha256": "a5808098c0bc19d7c88b1a01e2c4ac259351853174245bce8c50eb76c5128ca5"
+      },
+      "result": "EXECUTED_PASS",
+      "scope": "Actual wrapper red1/green1 and production generator IR replay parity; actual native content case pending."
+    },
+    "external_return_ack_correction": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/external-return-ack-20261124/receipt.json",
+        "sha256": "c7415a3987f6fd1aee1925e951a80059833c04039ef84cfc42b5833d24e49799"
+      },
+      "result": "PORTABLE_PASS",
+      "scope": "Same actual method/body/store extraction red1/green1; UIKit/native callback case pending."
+    },
+    "widget_cxx_consumer_correction": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/widget-cxx-interop-20261124/receipt.json",
+        "sha256": "6eef50d8f7bbc30af1cdf13d5a5353b5ba560354de199966f37453320684f251"
+      },
+      "result": "PORTABLE_PASS",
+      "scope": "Real evaluated manifest/project generator red1/green1, all direct/reexport/widget-host config closure; actual Apple correction pending."
+    },
+    "sdk04_bounded_coverage": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/sdk04-coverage-reconciliation-20261124/receipt.json",
+        "sha256": "ae36c8d9c7ed0f7bfe2b58ccc8476ffba1db23783e9d37ccb3fa5aa6008befec"
+      },
+      "result": "RECONCILED_SOURCE_SCOPE",
+      "scope": "Historical42/10 snapshot preserved; current main11failure/next52plan supersede native status."
     }
   },
   "criteria": [
@@ -982,7 +1054,8 @@
         "apple_modern_contracts",
         "complete_source_reconciliation_87",
         "current_host_authoring_13",
-        "complete_manifest_field_inventory"
+        "complete_manifest_field_inventory",
+        "complete_sdk_reconciliation_93"
       ],
       "establishedScope": [
         "Ambiguous manifests, collisions, escaping paths and archive integrity policy",
@@ -1014,7 +1087,8 @@
         "integrated_source_reconciliation",
         "complete_source_reconciliation_87",
         "current_host_authoring_13",
-        "complete_source_examples"
+        "complete_source_examples",
+        "complete_sdk_reconciliation_93"
       ],
       "establishedScope": [
         "Historical original Core/UIKit typechecking and SwiftUI JS closure",
@@ -1024,7 +1098,7 @@
         "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
       ],
       "remainingRequirements": [
-        "Actual selected Core/direct-runtime application behavior from next corrected42-case app run (gate10failed before all42), with case results.",
+        "Actual selected Core/direct-runtime application behavior from next corrected52-case combined app run (gate11failed before all42), with case results.",
         "Do not claim complete original declaration-body checking: original NativeScript consumer policy is strict source with skipLibCheck=true."
       ],
       "closure": "CONDITIONAL; optional full Apple SDK generator work is explicitly deferred, not an extra gate."
@@ -1046,19 +1120,30 @@
         "manual13_ui_candidate",
         "complete_source_reconciliation_87",
         "current_host_authoring_13",
-        "complete_source_examples"
+        "complete_source_examples",
+        "complete_sdk_reconciliation_93",
+        "generated_views_public_build",
+        "generated_modifier_source_conformance",
+        "prepared_expo_widget_publication",
+        "groupbox_children_correction",
+        "external_return_ack_correction",
+        "widget_cxx_consumer_correction",
+        "sdk04_bounded_coverage"
       ],
       "establishedScope": [
         "Current-source strict Expo UI and Widgets valid/negative consumer checks on Mac",
         "Real original Metro build, current graph artifact and source/resource identity",
         "Bounded historical NativeAPI and same-source ownership component evidence",
         "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current.",
-        "Exact current NativeAPI version authority reconciled; two manual-adapter UI methods integrated with strict original exported-SDK build proof, native execution pending."
+        "Exact current NativeAPI version authority reconciled; two manual-adapter UI methods integrated with strict original exported-SDK build proof, native execution pending.",
+        "Current repeated metadata/native mirror identity, source-authoritative modifier mappings and original SDK compiler/Metro fixture build passed within recorded boundaries.",
+        "Concrete generated GroupBox children loss, orphan modern widget publication and false private return acknowledgement are corrected with narrowly executed regression evidence."
       ],
       "remainingRequirements": [
         "All-public-exported-adapter native coverage is NOT_ESTABLISHED by the inspected receipts.",
-        "Current selected UIKit/Worklets/Widgets application results remain subject to next corrected42-case app run (gate10failed before all42).",
-        "Historical native API declaration receipt has changed inputs and cannot become a whole current-source PASS."
+        "Current selected UIKit/Worklets/Widgets application results remain subject to next corrected52-case combined app run (gate11failed before all42).",
+        "Historical native API declaration receipt has changed inputs and cannot become a whole current-source PASS.",
+        "Actual corrected52case run must execute installed metadata, GroupBox content/native events, selected modifier behavior, hosted action/publication and existing return callback case. DefaultDocumentGroupLaunchActions requires a genuine document container; no all83per-effect semantic proof is inferred."
       ],
       "closure": "CONDITIONAL; no all-adapter false PASS from a probe, declarations, bundle or selected suite."
     },
@@ -1081,7 +1166,8 @@
         "surface_test_compilation_fix",
         "apple_modern_contracts",
         "complete_source_reconciliation_87",
-        "current_host_authoring_13"
+        "current_host_authoring_13",
+        "complete_sdk_reconciliation_93"
       ],
       "establishedScope": [
         "TS2353 and TS7006 intentional consumer failures already have real recorded proof",
@@ -1121,7 +1207,8 @@
         "manual13_ui_candidate",
         "apple_store_lifecycle",
         "complete_source_reconciliation_87",
-        "current_host_authoring_13"
+        "current_host_authoring_13",
+        "complete_sdk_reconciliation_93"
       ],
       "establishedScope": [
         "Golden and negative compiler/archive/CLI component evidence",
@@ -1131,7 +1218,7 @@
         "Actual Apple existing lifecycle method passed on current store/test bytes in45354891567."
       ],
       "remainingRequirements": [
-        "Actual next corrected42-case app run (gate10failed before all42) rows/screenshots/installation receipt for its selected application scope.",
+        "Actual next corrected52-case combined app run (gate11failed before all42) rows/screenshots/installation receipt for its selected application scope.",
         "Existing applicable receipts from another established owner may be linked without new testing after exact source/toolchain/input verification.",
         "Selected42-case application proof is not the complete80-cell extension/runtime E2E proof.",
         "OS permission revocation is not established by the successful storage lifecycle receipt."
@@ -1211,8 +1298,8 @@
     }
   ],
   "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T10:18:44.476260+00:00",
-  "currentIntegrationBase": "fcf88190ca930130a035ef9150947543713616d1",
+  "updatedAtUTC": "2026-11-24T10:28:21.428094+00:00",
+  "currentIntegrationBase": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1325,7 +1412,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Main11 has42 selected app/native cases still active at its exact source. Original ScriptWidget2, modern8 and store1 already have actual Apple PASS receipts. Followup generated view/modifier behavior and modern HostServices publication expose further source/behavior gaps; they are tracked separately and not inferred from declaration counts.",
+  "currentScopeNote": "Current original library/type/source graph reconciled after concrete public-runtime metadata, GroupBox children, modern widget publication, return-acknowledgement and native widget C++ consumer corrections. First main11 MiniApps build failed; AI and42casesNOT_RUN. Next combined52 plan is prepared; no native/UI/device PASS inferred.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1457,5 +1544,18 @@
       },
       "sourceFixEvidenceID": "scriptwidget_host_validation_fix"
     }
-  ]
+  ],
+  "candidateGate": {
+    "scope": "miniapp_complete",
+    "status": "READY_TO_DISPATCH_AFTER_PUSH",
+    "selectedCases": 52,
+    "MiniApps": 25,
+    "AI": 27,
+    "selection": {
+      "path": "docs/miniapp-sdk/evidence/sdk04-focused-scope-20261124/complete-selection.json",
+      "sha256": "1a142468795f59db1d4e7fd410a2dbf6b73d3d5c1d1eb3cfe335c768c3498542"
+    },
+    "reason": "Previous main11 first MiniApps build failed before all42 app cases; one combined current gate includes previous42 plus new11 minus1overlap.",
+    "actualExecution": "NOT_RUN"
+  }
 }
