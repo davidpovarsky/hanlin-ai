@@ -1,0 +1,74 @@
+{
+  "recordedUTC": "2026-11-24T00:59:54.547698+00:00",
+  "base": "c33ab645b7a436b0fbc39977b1177f5b4ffb762e",
+  "originalRun": 45283243206,
+  "originalAttempt": 1,
+  "originalSource": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "originalObservedFailure": "Review-toggle not hittable before approval; no wrong approval tap occurred. Later allow-once lookup is a source-proven latent mismatch.",
+  "source": "AI_HLYUITests/HanlinPairedProductUITests.swift",
+  "beforeSHA256": "eb8e4648b6459bd1832fa1e21603dc394c3474f9b8f7fcc0494a26779b0bde58",
+  "afterSHA256": "4c578e22ccd2b7e6ade0346ac91b20e9a4b92c28d3f42d0bbdc0fd1881636832",
+  "methodQualification": [
+    {
+      "method": "testCompanionReturnsActualPrivateValueToOriginalChat()",
+      "beforeSHA256": "cad5e1ee92fe0a9a1a7620d9bb51f7a05089b8d688f4e310d7fbf788436b5627",
+      "afterSHA256": "808c94c246a6f22721aec43f5fce7fce2e1052cecdcc62d7152b007de3737d91",
+      "originalBodyUnchangedAfterRemovingOnlyAddedPendingAbsenceAssertion": true
+    },
+    {
+      "method": "testCompanionCancellationReturnsWithoutChangingPrivateState()",
+      "beforeSHA256": "440c4c153a55202ec8b456f082a05add0f885602bb57d6f8d446a90b72402917",
+      "afterSHA256": "16e614381a232eda2f381d0ef6d3171d10713dc3f8556e3f1ca653aeb4b52935",
+      "originalBodyUnchangedAfterRemovingOnlyAddedPendingAbsenceAssertion": true
+    },
+    {
+      "method": "testOriginalPackageAndSavedStateTransferThenRollback()",
+      "beforeSHA256": "8d4f97d216aa518d10d9262a539ef109a3d1fe3a1db0bf2185dd3524201815d4",
+      "afterSHA256": "8d4f97d216aa518d10d9262a539ef109a3d1fe3a1db0bf2185dd3524201815d4",
+      "originalBodyUnchangedAfterRemovingOnlyAddedPendingAbsenceAssertion": true
+    }
+  ],
+  "unchangedNativeTypingAndResultWaitBodies": true,
+  "unchangedCaseTimeouts": true,
+  "approvalPolicy": "UNCHANGED_ORIGINAL_SCOPED_HOST_GRANT",
+  "fixtureIsolation": "Original Settings per-tool Revoke permission for open_mini_app; fail ambiguous multiple matches; no UserDefaults write or broad revoke",
+  "review": "Exact target/action/null payload; disabled-before-review; exact allow-remember",
+  "completion": "Both approval IDs absent after original verified result",
+  "transcriptFallbacksAdded": false,
+  "sourceChangesOutsideUITest": false,
+  "existingOriginalEvidence": [
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/paired-return-consent-20261124/attachment-index.json",
+      "bytes": 26556,
+      "sha256": "360e2649931ce5e6d80106c636863855cbbf679f0b67f56912685c37fc320752"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/paired-return-consent-20261124/return-attachment-22.txt",
+      "bytes": 18709,
+      "sha256": "d63b78291ed643902cf77d9c249d1bfcb759c1962c7f28d871987669870a0549"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/paired-return-consent-20261124/return-attachment-24.txt",
+      "bytes": 18709,
+      "sha256": "aa3d6193aef65ae3bfbd43af9dc1562032fef71ee25df7b34e7c87c334fa442f"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/paired-return-consent-20261124/return-attachment-26.txt",
+      "bytes": 18709,
+      "sha256": "2fc43a3cfe50d6c7a4bff6f44531a2307f13459bfec0c0962ef2bd83b1fe1dcb"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/paired-return-consent-20261124/return-attachment-28.txt",
+      "bytes": 21695,
+      "sha256": "f0c2bc0dbfd1018efafeab82211bdf68d402a84a2fc7f872c037277d1a9bf5e3"
+    }
+  ],
+  "actualUIExecution": "NOT_RUN",
+  "nativeDispatch": "NOT_RUN",
+  "transferCase": "BYTE_IDENTICAL_NOT_REPLAYED",
+  "preReviewReadinessSeconds": 45,
+  "preReviewReadinessContract": "Same45-second bound as original tap readiness; no stricter15-second precondition",
+  "profileNavigation": "Existing Tool permissions Back, Settings Done dismissal, then original Home tab",
+  "reviewJSONContract": "Original fixture exact3 fields survive original sanitizer; compare parsed keys/values, not ordering",
+  "localSyntaxParseAttempts": 2
+}
