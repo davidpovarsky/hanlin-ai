@@ -133,11 +133,18 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
 
     @objc(invalidateRuntimeRequests)
     public func invalidateRuntimeRequests() {
-        let tasks = lock.withLock {
+        let retired = lock.withLock {
             runtimeRequestsInvalidated = true
-            return Array(runtimeRequests.values)
+            let handlers = registeredActionHandlers
+            registeredActionHandlers.removeAll()
+            registeredActionIDs.removeAll()
+            return (tasks: Array(runtimeRequests.values), handlers: handlers)
         }
-        for task in tasks { task.cancel() }
+        for task in retired.tasks { task.cancel() }
+        // Release JS-owned handler blocks outside the lock, before the caller
+        // tears down its VM. Runtime tasks retain their existing cancellation
+        // and completion behavior; the installed Host router remains untouched.
+        withExtendedLifetime(retired.handlers) {}
     }
 
     public func executeJavaScript(
@@ -441,6 +448,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         // the lock ensures no concurrent access to registeredActionHandlers.
         nonisolated(unsafe) let safeHandler = handler
         lock.withLock {
+            guard !runtimeRequestsInvalidated else { return }
             registeredActionIDs.insert(actionID)
             registeredActionHandlers[actionID] = RegisteredActionHandler(
                 capability: capabilityID,
@@ -461,42 +469,49 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         lock.withLock { registeredActionIDs }
     }
 
+    @MainActor
     public func invokeRegisteredAction(
         _ action: HanlinActionID,
         capability: HanlinCapabilityID,
         caller: HanlinAppID,
         payload: HanlinValue
     ) async throws -> HanlinValue {
-        // Extract handler synchronously before any suspension — NSLock requires no await while held
-        let invokeHandler: RegisteredActionHandler.InvokeFn = try lock.withLock {
-            guard let registration = registeredActionHandlers[action] else {
-                throw HanlinMiniAppRequestError.routeNotFound
-            }
-            guard registration.capability == capability else {
-                throw HanlinMiniAppRequestError.capabilityMismatch
-            }
-            return registration.invoke
-        }
-
         let payloadJSON = try Self.serializeUntaggedJSON(payload)
         return try await withCheckedThrowingContinuation { continuation in
-            invokeHandler(caller.rawValue, payloadJSON) { responseJSON, errorString in
-                if let errorString {
-                    continuation.resume(throwing: NSError(
-                        domain: "HanlinMiniAppRequest",
-                        code: 1,
-                        userInfo: [NSLocalizedDescriptionKey: errorString]
-                    ))
-                } else if let responseJSON {
-                    do {
-                        let value = try Self.decodeJSONPayload(responseJSON)
-                        continuation.resume(returning: value)
-                    } catch {
+            do {
+                // NativeScript handlers and VM teardown use the main actor.
+                // Resolve immediately before invocation, and keep the JS block
+                // inside this synchronous closure rather than across the await.
+                let invokeHandler: RegisteredActionHandler.InvokeFn = try lock.withLock {
+                    guard !runtimeRequestsInvalidated,
+                          let registration = registeredActionHandlers[action] else {
+                        throw HanlinMiniAppRequestError.routeNotFound
+                    }
+                    guard registration.capability == capability else {
+                        throw HanlinMiniAppRequestError.capabilityMismatch
+                    }
+                    return registration.invoke
+                }
+                invokeHandler(caller.rawValue, payloadJSON) { responseJSON, errorString in
+                    if let errorString {
+                        continuation.resume(throwing: NSError(
+                            domain: "HanlinMiniAppRequest",
+                            code: 1,
+                            userInfo: [NSLocalizedDescriptionKey: errorString]
+                        ))
+                    } else if let responseJSON {
+                        do {
+                            let value = try Self.decodeJSONPayload(responseJSON)
+                            continuation.resume(returning: value)
+                        } catch {
+                            continuation.resume(returning: .null)
+                        }
+                    } else {
                         continuation.resume(returning: .null)
                     }
-                } else {
-                    continuation.resume(returning: .null)
                 }
+            } catch {
+                continuation.resume(throwing: error)
             }
         }
     }

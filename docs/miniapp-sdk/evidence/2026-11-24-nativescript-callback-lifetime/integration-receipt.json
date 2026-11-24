@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T05:00:57.548767+00:00",
+  "baseCommit": "3a67bd43ed273a6948207e4db4e3ff446d2fa351",
+  "publishedOwnerSnapshot": "60afd124d8efad5856be489401326a8c385e020d",
+  "scope": "Only the two published NativeScript callback-lifetime fixes; existing package modes and Live Activities preserved.",
+  "selectedPatches": [
+    {
+      "commit": "6a1c05d2025914ab80f821733c9cf6cdc7e0ca25",
+      "selectedPaths": [
+        "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift"
+      ],
+      "patchSHA256": "3013af0090aa2e369dcd1a75ab38f981e24e97936f018e42c8fd799a3b935ea7"
+    },
+    {
+      "commit": "91811b6887076422408c458c850843b4dac98ded",
+      "selectedPaths": [
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift"
+      ],
+      "patchSHA256": "5b8fce96d39286bd3b1a6b6e915f7eb4b51f00fc1b802386f896dab2f033ff63"
+    }
+  ],
+  "productionPaths": [
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m"
+  ],
+  "existingOwnerTestPath": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+  "checks": {
+    "exactChangedSourceScope": true,
+    "bridgeAndTestByteIdenticalToPublishedSnapshot": true,
+    "adapterEqualsThreeWayMerge": true,
+    "liveActivitiesBlockByteIdenticalToBase": true,
+    "liveActivitiesBlockSHA256": "cac22a9db4290cfcdb785e74ad0b877c6d4218e9449b9215e6df6635627c4ce4",
+    "gitDiffCheck": {
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "swiftSyntaxOnly": {
+      "compiler": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+      "argv": [
+        "/usr/local/bin/swiftc",
+        "-frontend",
+        "-parse",
+        "-swift-version",
+        "6",
+        "/dev/shm/hanlin-miniapps-callback-lifetime-20261124/AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+        "/dev/shm/hanlin-miniapps-callback-lifetime-20261124/HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "notTypeChecking": true
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "sha256": "fcc91fd9bee2ac5b84988e2c7ee5d20cb244a212226de607f78cd32214d49fa8"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "sha256": "7817e45687bd69ba1a93f9aa8d48d66ddf1a63e32109807d949c1bfb3e0bd160"
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+      "sha256": "fac1a7336a3b233a18015f56df18fe615c04f56064029af2d292a7f8ea9d4386"
+    }
+  ],
+  "nativeValidation": {
+    "objectiveCAppleCompilation": "NOT_RUN",
+    "XCTestExecution": "NOT_RUN",
+    "reason": "Linux syntax and source-preservation checks do not execute Apple SDK or NativeScript VM."
+  },
+  "existingSelectors": [
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation"
+  ],
+  "dependencyNotes": [
+    "Existing public provider and bound-bridge APIs at the integrated 58c7 snapshot suffice; no window-factory precursor is required.",
+    "Existing HanlinNativeScriptCoreSupport.mm shutdown invalidates its bound bridge before shutdownRuntime.",
+    "The test file is in the existing synchronized HanlinMiniAppsTests source group.",
+    "No public header, JS facade/type, lock, version, upstream patch, workflow, selector or project change is included.",
+    "Root owns regeneration of source-inventory and extension-reachability fingerprints after integration."
+  ],
+  "omittedPublishedPaths": [
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+    "docs/miniapps-cross-app/nativescript-windows/validation-plan.json"
+  ]
+}
