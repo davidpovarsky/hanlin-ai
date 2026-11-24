@@ -33,6 +33,9 @@ public enum HanlinAtomicScriptStoreError: Error, Equatable, Sendable {
     case unsupportedRegistryVersion(UInt32)
     case corruptRegistry
     case invalidGeneration(UInt64)
+    /// The old artifact remains intact; reimport its retained package source to
+    /// regenerate metadata when no historical registry snapshot survives.
+    case generationMetadataUnavailable(UInt64)
 }
 
 public struct HanlinScriptCatalogEntry: Codable, Hashable, Sendable {
@@ -141,6 +144,15 @@ public actor HanlinAtomicScriptStore {
         let version: HanlinPackageVersion
         let sourceDigest: String
         let artifactDigest: String
+        // Optional for generations written before complete catalog snapshots.
+        // A present entrypoint array also records an intentionally nil manifest.
+        let entrypoints: [HanlinPackageEntrypointDescriptor]?
+        let manifest: HanlinScriptingManifest?
+
+        func matches(_ record: HanlinInstalledPackageRecord) -> Bool {
+            packageID == record.packageID && version == record.version
+                && sourceDigest == record.sourceDigest && artifactDigest == record.artifactDigest
+        }
     }
 
     private enum TransactionKind: String, Codable, Sendable { case install, update, uninstall }
@@ -284,10 +296,21 @@ public actor HanlinAtomicScriptStore {
                 throw HanlinAtomicScriptStoreError.notInstalled(id)
             }
             _ = try loadAndVerifyManifest(at: generationURL(id, generation: generation))
-            let metadata = try decoder.decode(
-                GenerationMetadata.self,
-                from: Data(contentsOf: generationURL(id, generation: generation).appending(path: "generation.json"))
-            )
+            let metadataURL = generationURL(id, generation: generation).appending(path: "generation.json")
+            let metadata = try decoder.decode(GenerationMetadata.self, from: Data(contentsOf: metadataURL))
+            let historical = try completeGenerationMetadata(
+                metadata, for: id, generation: generation, current: entry)
+            guard let entrypoints = historical.entrypoints else {
+                throw HanlinAtomicScriptStoreError.generationMetadataUnavailable(generation)
+            }
+            // Resolve the requested history before changing either registry.
+            // Preserve the departing generation so a later redo remains exact.
+            if entry.record.activeGeneration != generation {
+                try preserveGenerationMetadata(for: entry)
+            }
+            if metadata.entrypoints == nil {
+                try encoder.encode(historical).write(to: metadataURL, options: .atomic)
+            }
             let timestamp = now()
             entry.record = .init(
                 installedPackageID: entry.record.installedPackageID,
@@ -299,6 +322,8 @@ public actor HanlinAtomicScriptStore {
                 installedAt: entry.record.installedAt,
                 updatedAt: timestamp
             )
+            entry.entrypoints = entrypoints
+            entry.manifest = historical.manifest
             registry.packages[id.rawValue] = entry
             registry.revision &+= 1
             try persistRegistry()
@@ -567,11 +592,16 @@ public actor HanlinAtomicScriptStore {
         try faults.check(.journalPersisted)
         try fileManager.copyItem(at: artifactDirectory, to: staged)
         _ = try loadAndVerifyManifest(at: staged, expected: artifactManifest)
+        if let current = registry.packages[plan.installedPackageID.rawValue] {
+            try preserveGenerationMetadata(for: current)
+        }
         try encoder.encode(GenerationMetadata(
             packageID: plan.packageID,
             version: plan.version,
             sourceDigest: plan.sourceDigest,
-            artifactDigest: artifactManifest.cacheFingerprint
+            artifactDigest: artifactManifest.cacheFingerprint,
+            entrypoints: plan.entrypoints,
+            manifest: plan.manifest
         )).write(to: staged.appending(path: "generation.json"), options: .atomic)
         try faults.check(.artifactStaged)
         let destination = generationURL(plan.installedPackageID, generation: nextGeneration)
@@ -606,6 +636,49 @@ public actor HanlinAtomicScriptStore {
         try faults.check(.registryCommitted)
         try? fileManager.removeItem(at: journalURL(transactionID))
         return record
+    }
+
+    private func generationMetadata(for entry: RegistryEntry) -> GenerationMetadata {
+        .init(packageID: entry.record.packageID, version: entry.record.version,
+              sourceDigest: entry.record.sourceDigest, artifactDigest: entry.record.artifactDigest,
+              entrypoints: entry.entrypoints, manifest: entry.manifest)
+    }
+
+    /// Enrich only a decodable, matching old active generation. An unavailable
+    /// old artifact does not prevent replacing it with a valid new installation.
+    private func preserveGenerationMetadata(for entry: RegistryEntry) throws {
+        let url = generationURL(entry.record.installedPackageID,
+            generation: entry.record.activeGeneration).appending(path: "generation.json")
+        guard let data = try? Data(contentsOf: url),
+              let metadata = try? decoder.decode(GenerationMetadata.self, from: data),
+              metadata.entrypoints == nil, metadata.matches(entry.record) else { return }
+        try encoder.encode(generationMetadata(for: entry)).write(to: url, options: .atomic)
+    }
+
+    private func completeGenerationMetadata(
+        _ metadata: GenerationMetadata,
+        for id: HanlinInstalledPackageID,
+        generation: UInt64,
+        current: RegistryEntry
+    ) throws -> GenerationMetadata {
+        if metadata.entrypoints != nil { return metadata }
+        if current.record.activeGeneration == generation, metadata.matches(current.record) {
+            return generationMetadata(for: current)
+        }
+        // Pre-snapshot generations may still have their exact previous catalog
+        // entry in the atomic registry backup. Match every stored identity field.
+        if let data = try? Data(contentsOf: backupRegistryURL),
+           let backup = try? decoder.decode(Registry.self, from: data),
+           backup.schemaVersion == 1,
+           backup.packages.allSatisfy({ $0.value.isIndexed(by: $0.key) }),
+           let historical = backup.packages[id.rawValue],
+           historical.record.activeGeneration == generation,
+           metadata.matches(historical.record) {
+            return generationMetadata(for: historical)
+        }
+        // source/script.json retains the author manifest, not the analyzer's
+        // installed descriptors. Never substitute current-generation descriptors.
+        throw HanlinAtomicScriptStoreError.generationMetadataUnavailable(generation)
     }
 
     private func recoverTransactions() throws {

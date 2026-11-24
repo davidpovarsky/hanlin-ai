@@ -1,0 +1,6 @@
+{
+  "originalRunnerSHA256": "98bb409b012fcc4f7ef7a60dfe9712d41314eded0e121579756c46f7ed936ab4",
+  "currentRunnerSHA256": "569134ccfe40a3a7cfb860a689b2662174a031775350afb768090ab0dca0acad",
+  "change": "Only scope wording changed: complete atomic-store test file, not every repository test. Projection, command and assertions unchanged.",
+  "reexecutionRequired": false
+}
