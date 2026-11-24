@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T13:20:24.935097+00:00",
+  "reviewer": "entrypoints",
+  "baseBranch": "codex/hanlin-sdk-unification-20261123",
+  "baseCommit": "5c6aefa2670560447355dcb80799e40003282d70",
+  "reviewedCommit": "0750685acf35ffe60f5b62717b9d2beb9ccad007",
+  "scope": "Read-only whitespace-aware explicit HanlinValue.object(...) calls in changed Swift files; no inferred enum-case search or broad compiler audit.",
+  "changedSwiftFiles": 299,
+  "changedSwiftOutsideDocs": 271,
+  "explicitCalls": [
+    {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+      "line": 26,
+      "argument": "Previously reviewed corrected HanlinObject(uniqueMembers:Array(props))"
+    },
+    {
+      "file": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/probe-inputs/Probe.swift",
+      "line": 5,
+      "argument": "Same fixed expression in retained probe"
+    },
+    {
+      "file": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/probe-inputs/Probe.swift",
+      "line": 21,
+      "argument": "object explicitly initialized as HanlinObject at line15"
+    }
+  ],
+  "result": "No additional explicit dictionary-to-HanlinObject mismatch in the bounded changed-file scope",
+  "newTests": 0,
+  "newBuilds": 0,
+  "ciOperations": 0,
+  "nativeAcceptanceClaimed": false
+}
