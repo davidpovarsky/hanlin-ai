@@ -95,7 +95,7 @@ function gitTagRevision(repository,version) {
 }
 export function generatedHostVersions(versions) {
   const expo=versions.expo,ns=versions.nativescript;
-  const fields={nativeScriptRuntimeVersion:ns['@nativescript/ios'],nativeScriptCoreVersion:ns['@nativescript/core'],nativeScriptSwiftUIVersion:ns['@nativescript/swift-ui'],expoSDKVersion:expo.expo,expoUIVersion:expo['@expo/ui'],expoWidgetsVersion:expo['expo-widgets'],reactNativeVersion:expo['react-native'],nativeApiVersion:expo['@nativescript/react-native'],reactNativeWorkletsVersion:expo['react-native-worklets']};
+  const fields={nativeScriptRuntimeVersion:ns['@nativescript/ios'],nativeScriptCoreVersion:ns['@nativescript/core'],nativeScriptSwiftUIVersion:ns['@nativescript/swift-ui'],expoSDKVersion:expo.expo,expoUIVersion:expo['@expo/ui'],expoAssetVersion:expo['expo-asset'],expoWidgetsVersion:expo['expo-widgets'],reactNativeVersion:expo['react-native'],nativeApiVersion:expo['@nativescript/react-native'],reactNativeWorkletsVersion:expo['react-native-worklets']};
   for(const [name,value] of Object.entries(fields))if(!/^\d+\.\d+\.\d+(?:[-+][\w.-]+)?$/.test(value??''))throw new Error(`Missing exact host version: ${name}`);
   const revision=versions.scriptwidget?.revision;
   if(revision&&!/^[a-f0-9]{40}$/.test(revision))throw new Error('Missing exact ScriptWidget source revision');

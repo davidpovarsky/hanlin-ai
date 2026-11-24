@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "expo": "58.0.26",
+    "@expo/ui": "58.0.29",
+    "expo-brownfield": "58.0.20",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-worklets": "0.13.0",
+    "expo-modules-core": "58.1.0",
+    "expo-modules-jsi": "58.0.23",
+    "expo-widgets": "58.0.29",
+    "@nativescript/react-native": "9.1.2",
+    "@types/react": "19.3.0",
+    "@react-native/codegen": "0.88.1",
+    "@react-native/metro-config": "0.88.1",
+    "babel-preset-expo": "58.0.26",
+    "expo-asset": "58.0.21"
+  },
+  "nativescript": {
+    "@nativescript/core": "9.1.4",
+    "@nativescript/ios": "9.1.1",
+    "@nativescript/swift-ui": "4.0.2",
+    "@nativescript/types": "9.1.4",
+    "@nativescript/vite": "8.0.24"
+  },
+  "scriptwidget": {
+    "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+  }
+}
