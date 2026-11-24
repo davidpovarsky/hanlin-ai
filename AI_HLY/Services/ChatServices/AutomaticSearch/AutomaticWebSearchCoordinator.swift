@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import LRUCache
 
 /// Coordinates automatic three-tier web search fallback across keyless providers:
 /// 1. You.com Keyless -> 2. Tavily Keyless -> 3. Keenable Public.
@@ -62,19 +63,53 @@ actor AutomaticWebSearchCoordinator {
         let timestamp: Date
 
         func isValid(ttl: TimeInterval, now: Date) -> Bool {
-            return now.timeIntervalSince(timestamp) < ttl
+            let age = now.timeIntervalSince(timestamp)
+            return age >= 0 && age < ttl
         }
+    }
+
+    /// Counters contain no queries, result content, credentials, or user identifiers.
+    struct CacheStatistics: Sendable, Equatable {
+        var hits = 0
+        var misses = 0
+        var coalescedRequests = 0
+        var bypasses = 0
+        var expirations = 0
+        var invalidations = 0
+        var capacityEvictions = 0
+        var entries = 0
+        var costBytes = 0
+        var inFlightRequests = 0
+        var waitingCallers = 0
+    }
+
+    private struct FlightKey: Hashable, Sendable {
+        let queryKey: String
+        let generation: UUID
+    }
+
+    private struct SearchOutput: Sendable {
+        let results: [WebSearchResult]
+        let backend: String
+    }
+
+    private struct InFlightSearch {
+        let id: UUID
+        let task: Task<Void, Never>
+        var waiters: [UUID: CheckedContinuation<SearchOutput, any Error>]
     }
 
     // MARK: - State
 
     private let providers: [WebSearchProvider]
     private var healthTable: [String: ProviderHealth] = [:]
-    private var queryCache: [String: CacheEntry] = [:]
+    private let queryCache: LRUCache<String, CacheEntry>
+    private var inFlight: [FlightKey: InFlightSearch] = [:]
+    private var cacheGeneration = UUID()
+    private var cacheCounters = CacheStatistics()
     private let clock: @Sendable () -> Date
 
-    private let cacheTTL: TimeInterval = 300 // 5 minutes
-    private let maxCacheEntries: Int = 50
+    private let cacheTTL: TimeInterval
     private let defaultCooldownDuration: TimeInterval = 60 // 60 seconds
     private let overallSearchDeadline: TimeInterval
     private let perProviderTimeout: TimeInterval
@@ -85,8 +120,16 @@ actor AutomaticWebSearchCoordinator {
         providers: [WebSearchProvider]? = nil,
         clock: @escaping @Sendable () -> Date = { Date() },
         overallSearchDeadline: TimeInterval = 10.0,
-        perProviderTimeout: TimeInterval = 4.0
+        perProviderTimeout: TimeInterval = 4.0,
+        cacheTTL: TimeInterval = 300,
+        maxCacheEntries: Int = 50,
+        maxCacheBytes: Int = 4 * 1024 * 1024
     ) {
+        self.cacheTTL = cacheTTL.isFinite ? max(0, cacheTTL) : 0
+        self.queryCache = LRUCache(
+            totalCostLimit: max(0, maxCacheBytes),
+            countLimit: max(0, maxCacheEntries)
+        )
         self.clock = clock
         self.overallSearchDeadline = overallSearchDeadline
         self.perProviderTimeout = perProviderTimeout
@@ -118,33 +161,126 @@ actor AutomaticWebSearchCoordinator {
             throw AutomaticSearchError.invalidQuery
         }
 
-        let now = clock()
+        try Task.checkCancellation()
         let cacheKey = canonicalCacheKey(query: trimmedQuery, count: count)
+        let generation = cacheGeneration
 
-        // 1. Check local cache (unless bypassed)
-        if !bypassCache, let entry = queryCache[cacheKey], entry.isValid(ttl: cacheTTL, now: now) {
-            let parsed = WebSearchResult.toParsedSearchResult(entry.results)
-            return (parsed, "Automatic (\(entry.backend) - cached)")
+        if !bypassCache, let entry = queryCache.value(forKey: cacheKey) {
+            if entry.isValid(ttl: cacheTTL, now: clock()) {
+                cacheCounters.hits += 1
+                return (WebSearchResult.toParsedSearchResult(entry.results), "Automatic (\(entry.backend) - cached)")
+            }
+            queryCache.removeValue(forKey: cacheKey)
+            cacheCounters.expirations += 1
         }
 
-        // 2. Execute bounded search across providers with structured hard deadline race
-        let (rawResults, backendName) = try await executeWithStructuredDeadline(
-            query: trimmedQuery,
-            count: count,
-            deadlineSeconds: overallSearchDeadline
+        let output: SearchOutput
+        if bypassCache {
+            // A diagnostic/refresh must perform its own request, even while an
+            // equivalent ordinary search is in flight.
+            cacheCounters.bypasses += 1
+            output = try await freshSearch(query: trimmedQuery, count: count)
+            try Task.checkCancellation()
+            if generation == cacheGeneration {
+                updateCache(key: cacheKey, output: output)
+            }
+        } else {
+            cacheCounters.misses += 1
+            let key = FlightKey(queryKey: cacheKey, generation: generation)
+            let waiterID = UUID()
+            output = try await withTaskCancellationHandler {
+                try await withCheckedThrowingContinuation { continuation in
+                    joinSearch(key: key, waiterID: waiterID, query: trimmedQuery, count: count, continuation: continuation)
+                }
+            } onCancel: {
+                // Cancellation belongs to this caller. Other callers keep the
+                // shared provider request until the final waiter leaves.
+                Task { await self.cancelWaiter(key: key, waiterID: waiterID) }
+            }
+            try Task.checkCancellation()
+        }
+
+        return (WebSearchResult.toParsedSearchResult(output.results), "Automatic (\(output.backend))")
+    }
+
+    /// Removes reproducible results. Already-running callers can finish, but
+    /// their old generation cannot populate this cache or serve new callers.
+    func invalidateCache() {
+        cacheGeneration = UUID()
+        queryCache.removeAll()
+        cacheCounters.invalidations += 1
+    }
+
+    func cacheStatistics() -> CacheStatistics {
+        var statistics = cacheCounters
+        statistics.entries = queryCache.count
+        statistics.costBytes = queryCache.totalCost
+        statistics.inFlightRequests = inFlight.count
+        statistics.waitingCallers = inFlight.values.reduce(0) { $0 + $1.waiters.count }
+        return statistics
+    }
+
+    private func joinSearch(
+        key: FlightKey,
+        waiterID: UUID,
+        query: String,
+        count: Int,
+        continuation: CheckedContinuation<SearchOutput, any Error>
+    ) {
+        if var existing = inFlight[key] {
+            existing.waiters[waiterID] = continuation
+            inFlight[key] = existing
+            cacheCounters.coalescedRequests += 1
+            return
+        }
+        let flightID = UUID()
+        let worker = Task {
+            let result: Result<SearchOutput, any Error>
+            do {
+                let output = try await self.freshSearch(query: query, count: count)
+                try Task.checkCancellation()
+                result = .success(output)
+            } catch {
+                result = .failure(error)
+            }
+            self.finishSearch(key: key, flightID: flightID, result: result)
+        }
+        inFlight[key] = InFlightSearch(id: flightID, task: worker, waiters: [waiterID: continuation])
+    }
+
+    private func cancelWaiter(key: FlightKey, waiterID: UUID) {
+        guard var flight = inFlight[key],
+              let waiter = flight.waiters.removeValue(forKey: waiterID) else { return }
+        if flight.waiters.isEmpty {
+            inFlight.removeValue(forKey: key)
+            flight.task.cancel()
+        } else {
+            inFlight[key] = flight
+        }
+        waiter.resume(throwing: CancellationError())
+    }
+
+    private func finishSearch(key: FlightKey, flightID: UUID, result: Result<SearchOutput, any Error>) {
+        // A cancelled worker must not remove a replacement flight with the
+        // same query or write a late result after invalidation.
+        guard let flight = inFlight[key], flight.id == flightID else { return }
+        inFlight.removeValue(forKey: key)
+        if case .success(let output) = result, key.generation == cacheGeneration {
+            updateCache(key: key.queryKey, output: output)
+        }
+        for continuation in flight.waiters.values {
+            continuation.resume(with: result)
+        }
+    }
+
+    private func freshSearch(query: String, count: Int) async throws -> SearchOutput {
+        let (rawResults, backend) = try await executeWithStructuredDeadline(
+            query: query, count: count, deadlineSeconds: overallSearchDeadline
         )
-
-        // 3. Deduplicate and filter results
-        let deduplicated = deduplicateResults(rawResults)
-        guard !deduplicated.isEmpty else {
-            throw AutomaticSearchError.emptyResults
-        }
-
-        // 4. Update local cache
-        updateCache(key: cacheKey, results: deduplicated, backend: backendName, timestamp: now)
-
-        let parsed = WebSearchResult.toParsedSearchResult(deduplicated)
-        return (parsed, "Automatic (\(backendName))")
+        try Task.checkCancellation()
+        let results = deduplicateResults(rawResults)
+        guard !results.isEmpty else { throw AutomaticSearchError.emptyResults }
+        return SearchOutput(results: results, backend: backend)
     }
 
     /// Runs a real diagnostic probe against the coordinator with cache bypass
@@ -348,13 +484,32 @@ actor AutomaticWebSearchCoordinator {
         return "\(canonical)_\(count)"
     }
 
-    private func updateCache(key: String, results: [WebSearchResult], backend: String, timestamp: Date) {
-        if queryCache.count >= maxCacheEntries {
-            queryCache = queryCache.filter { timestamp.timeIntervalSince($0.value.timestamp) < cacheTTL }
-            if queryCache.count >= maxCacheEntries, let oldestKey = queryCache.min(by: { $0.value.timestamp < $1.value.timestamp })?.key {
-                queryCache.removeValue(forKey: oldestKey)
+    private func updateCache(key: String, output: SearchOutput) {
+        // Freshness starts when the successful search completes, not when a
+        // slow provider request starts. Failed/cancelled searches never arrive.
+        let now = clock()
+        // Walk in LRU order so inspecting expiry preserves the existing recency order.
+        for existingKey in queryCache.orderedKeys {
+            if let entry = queryCache.value(forKey: existingKey),
+               !entry.isValid(ttl: cacheTTL, now: now) {
+                queryCache.removeValue(forKey: existingKey)
+                cacheCounters.expirations += 1
             }
         }
-        queryCache[key] = CacheEntry(results: results, backend: backend, timestamp: timestamp)
+        guard cacheTTL > 0 else { return }
+        let cost = output.results.reduce(key.utf8.count + output.backend.utf8.count) { total, result in
+            total + result.title.utf8.count + result.url.utf8.count + result.snippet.utf8.count
+                + result.icon.utf8.count + result.sourceBackend.utf8.count + (result.publishedDate?.utf8.count ?? 0)
+        }
+        // Keep existing useful entries when a single result exceeds the budget.
+        // The caller still receives the complete fresh result.
+        guard cost <= queryCache.totalCostLimit, queryCache.countLimit > 0 else { return }
+        let previousCount = queryCache.count
+        let replacesExisting = queryCache.hasValue(forKey: key)
+        queryCache.setValue(
+            CacheEntry(results: output.results, backend: output.backend, timestamp: now),
+            forKey: key, cost: cost
+        )
+        cacheCounters.capacityEvictions += max(0, previousCount + (replacesExisting ? 0 : 1) - queryCache.count)
     }
 }
