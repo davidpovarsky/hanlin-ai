@@ -1,0 +1,3 @@
+b0f2b6589626528021b249d852761b49b1d3dbe7:AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift:1328:    struct ExpoWidgetPersistedExposure: Codable, Sendable {
+b0f2b6589626528021b249d852761b49b1d3dbe7:AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift:1376:        let exposure = ExpoWidgetPersistedExposure(validUntil: validUntil, root: root)
+b0f2b6589626528021b249d852761b49b1d3dbe7:AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift:1384:        let relativePath = "widget-exposures/gen_\(package.record.activeGeneration)_\(entrypointID)_\(family).json"

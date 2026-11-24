@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "b0f2b6589626528021b249d852761b49b1d3dbe7",
+  "dateUTC": "2026-11-24T10:05:24.850882+00:00",
+  "scope": "Existing Expo Host Services facade; prepared original Expo widget props publication and authentic installed action acknowledgement",
+  "production": {
+    "modernRequest": {
+      "engine": "expo",
+      "entrypointID": "declared widget id",
+      "props": "complete JSON props object shared by instance families",
+      "variantID": "existing instance; defaults to default"
+    },
+    "owner": "Actual creating HanlinScriptingPlatform injects a weak-owner callback bound to its installed package, active generation and session ID; no global current-session fallback",
+    "consumer": "HanlinWidgetPreparation.prepare -> HanlinExpoWidgetsRuntime.render(layout: original installed program, props: current instance state)",
+    "transaction": "HanlinScriptExtensionStore.update authenticates exact active identity and program, replaces only instance props, increments revision, retains committed callback nonces",
+    "receipt": "Actual installed/package/generation/entity/variant/program hash/revision/families; stateCommitted/catalogVisible/reloadRequested true; osRendered null",
+    "legacy": "Positional wire, stored data and validation remain unchanged; receipt retains ok and now explicitly says published false with remediation; no translator/new engine/grant gate"
+  },
+  "executedChecks": [
+    {
+      "name": "Actual public facade JSON transport and legacy compatibility",
+      "before": "facade-before.log",
+      "beforeExit": 1,
+      "after": "facade-after.log",
+      "afterExit": 0,
+      "counts": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "boundary": "Native transport is a codec-only test double; not Apple/native publication proof"
+    },
+    {
+      "name": "Existing Expo operation source-contract cases",
+      "before": "operation-audit-before.log",
+      "beforeExit": 1,
+      "after": "operation-audit-after.log",
+      "afterExit": 0,
+      "counts": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "boundary": "Exact source linkage including owning callback/generation and missing-operation negatives; not runtime acceptance"
+    },
+    {
+      "name": "Swift syntax only",
+      "result": "PASS",
+      "logs": [
+        "swift-parse.log",
+        "hosted-test-final-parse.log"
+      ],
+      "boundary": "Linux parse; does not typecheck Apple modules or run the hosted tests"
+    },
+    {
+      "name": "Existing builder JavaScript syntax",
+      "result": "PASS",
+      "log": "builder-parse.log"
+    }
+  ],
+  "nativeSelectors": {
+    "status": "NEEDS_APPLE_EXECUTION",
+    "scheme": "AI_HLY",
+    "target": "AI_HLYTests",
+    "selectors": [
+      "HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+    ],
+    "actualInputs": "Only the real freshly compiled ExpoSwiftUIProbeA.hanlinExpo from existing Scripts/Expo/build-probe.mjs; copy staged into synchronized AI_HLYTests/Fixtures/HostServicesProbe.bundle",
+    "assertions": [
+      "Production importer derives actual enabled installation/generation/Expo entrypoints and bundle handlers",
+      "Actual Expo/Hermes handler receives native UUID/caller/payload, awaits real file roundtrip, returns computed result; native acknowledgement awaited",
+      "Actual JS rejection remains ChannelError.executionFailed; subsequent independent invocation succeeds",
+      "Actual JS handler calls typed publication facade; cold store state/hash/revision and existing original layout consumer are independently asserted",
+      "Wrong generation rejected without mutating committed state"
+    ],
+    "notClaimed": [
+      "Widget placement/SpringBoard render",
+      "All devices or original upstream APIs",
+      "Native success before Mac execution"
+    ]
+  },
+  "publicDocumentation": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md#publishing-props-for-an-installed-expo-widget",
+  "remainingEvidenceBoundaries": [
+    "hostServices.miniapps context/complete/cancel/attachments have native mailbox/session tests but no new Expo JS external-invocation acceptance in this patch",
+    "hostServices.liveActivities start/update/end are unchanged and not certified by the new enable/list reads; original expo-widgets lifecycle is a separate API",
+    "The new fixture uses the canonical JavaScriptCore runtime broker only as one executeRuntime facade probe, not a new legacy Scripting feature",
+    "Full current original-SDK semantic validation and Metro compilation are coordinated once by entrypoints/root; not run again in this lane"
+  ],
+  "sourceHashes": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift": "73267f6b7110ffd25adeb210eddca58f39a76b513dbde981b391e3c83cfdccf5",
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift": "d5da33a324659acd3952e5f4225c264992551ab713036dad169cdb2215708d19",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift": "44dfc39f53d8b39f6e54675ea02a9e4682578ed36985d5939948c2006335ae6f",
+    "Packages/HanlinExpoUI/src/host-services.ts": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7",
+    "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs": "84a995d298fd75a7959a63083fb6bdd0c3db65c16850d1571c456c32309ffb1e",
+    "Fixtures/ExpoSwiftUIProbe/HostServicesProbe.tsx": "108eac3bf0d3b908089b37ad2175de8eb3be2cf1a81d601a649b02fe48a39801",
+    "Fixtures/ExpoSwiftUIProbe/script.json": "12d5c8abf129dbe22ea6a4a2e8746de2c2224261ec11cf386943626674a63fbf",
+    "Fixtures/ExpoSwiftUIProbe/widget.tsx": "aa7271e38789ccecff5e284f1a3846f17af1da56dc4152c7a3bc174989a86119",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift": "206953a80ed6258043315e18e18e3a2be2bd44d0afffe93581a51b604093cfd3",
+    "AI_HLYTests/Fixtures/HostServicesProbe.bundle/README.txt": "f8f3ac6577959ffb7e847e94227bc53129ef5d33409824249fb733cb0853a4d8",
+    "Scripts/Expo/build-probe.mjs": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c",
+    "Scripts/Audit/miniapp-expo-operations.mjs": "3d5cf558193e92f1e30884c4c4edd4405827414988d0ac79228212c3ac6fb84d",
+    "Scripts/Audit/Tests/expo-operation-contract.test.mjs": "c687cf2e5b2fa6664d649b1b8c2bbacbbc0708fed697c90d24ce86f72f7fe71e",
+    "docs/miniapp-sdk/AUTHORING_WORKFLOW.md": "cbf07d75821695da68bddfdfc75fe7b98943ee89b67479afb717cd739383804f"
+  },
+  "independentReview": {
+    "reviewer": "/root/sdk_only_author",
+    "result": "NO_CONCRETE_BLOCKER",
+    "boundaries": "Four stable production files plus exact audit/test correction; owner/session/generation across suspension, storage lock/program authentication/catalog/state consumer, legacy compatibility and no OS-render claim; no tests rerun"
+  },
+  "toolchain": {
+    "node": "v24.22.0",
+    "swift": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu"
+  },
+  "rawLogs": [
+    {
+      "path": "baseline-orphan-writer-search.log",
+      "bytes": 599,
+      "sha256": "e9ac5a48ca3a8859ad86e25114e2b4abfcc15ad5af72cac403b7b65c4c84300f"
+    },
+    {
+      "path": "builder-parse.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "facade-after.log",
+      "bytes": 796,
+      "sha256": "934f92ab6d0a757b7ac88116065ff8dd2b7691d72c226ebd89648cd73be39a4b"
+    },
+    {
+      "path": "facade-before.log",
+      "bytes": 2495,
+      "sha256": "10485e47ed921c377d64891d2e70a0d1c2876d160311aac2cd31ea4e2930a01b"
+    },
+    {
+      "path": "hosted-test-final-parse.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "operation-audit-after.log",
+      "bytes": 318,
+      "sha256": "2fef60243ba473f3ac63454841d581ccd0ab3155855023fed1093ba216fb1436"
+    },
+    {
+      "path": "operation-audit-before.log",
+      "bytes": 2793,
+      "sha256": "b07c6f87b956731a2df9aef2026f9f567886e9491eac17d8ae0a33f78306e102"
+    },
+    {
+      "path": "swift-parse.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

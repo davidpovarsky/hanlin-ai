@@ -135,3 +135,29 @@ excerpts and the original widget.json semantic validator. Shell instructions,
 internal Swift host implementation, diagrams and directory layouts are listed
 as unexecuted context. Static checks do not run network/device APIs, launch a
 MiniApp, or substitute for native import and UI acceptance.
+
+
+## Publishing props for an installed Expo widget
+
+The original `expo-widgets` `createWidget` API remains the direct API for dynamic
+Expo layouts and timelines. A package that already declares a prepared
+`widgetEngine: "expo"` program can also call
+`hostServices.publishWidget({engine: 'expo', entrypointID: 'widget', props})`.
+The typed `ExpoWidgetPublicationRequest` accepts JSON props and an optional
+`variantID`; omission selects the installation's existing default instance.
+This replaces that instance's complete props object, shared by all its supported
+families. The existing original Expo layout renders those props. The operation
+does not translate a ScriptUI tree or create another widget engine.
+
+The native host binds publication to the calling Expo session's actual package,
+installation and active generation. `ExpoWidgetPublicationReceipt` identifies
+the committed entity, program hash, revision and supported families. Its
+`stateCommitted`, `catalogVisible` and `reloadRequested` fields describe the
+completed host operations. `osRendered` is `null`: a reload request is not an
+observation that WidgetKit has placed or rendered a widget on a device.
+
+The positional `publishWidget(entrypointID, family, root, validUntil)` overload
+retains its existing legacy data format. Its `LegacyWidgetStorageReceipt` now
+explicitly returns `published: false` and remediation because that stored root
+has no modern publication consumer. Use the tagged prepared-program overload
+or original `createWidget` for current Expo publication.

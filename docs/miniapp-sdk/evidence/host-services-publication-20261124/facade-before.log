@@ -1,0 +1,63 @@
+(node:3516284) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Packages/HanlinExpoUI/src/host-services.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Packages/HanlinExpoUI/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ modern publication uses typed prepared props and preserves the distinct legacy transport (3.511301ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 220.027268
+
+✖ failing tests:
+
+test at Packages/HanlinExpoUI/tests/host-services-publication.test.mjs:40:1
+✖ modern publication uses typed prepared props and preserves the distinct legacy transport (3.511301ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   operation: 'widgets.publish',
+  -   operation: 'widgets.publishPrepared',
+      request: {
+  +     entrypointID: {
+  +       engine: 'expo',
+  +       entrypointID: 'widget',
+  +       props: {
+  +         count: 19,
+  +         flags: [
+  +           true,
+  +           false
+  +         ],
+  +         nullable: null,
+  +         title: 'שלום'
+  +       },
+  +       variantID: 'configured-instance'
+  -     engine: 'expo',
+  -     entrypointID: 'widget',
+  -     props: {
+  -       count: 19,
+  -       flags: [
+  -         true,
+  -         false
+  -       ],
+  -       nullable: null,
+  -       title: 'שלום'
+        },
+  -     variantID: 'configured-instance'
+      }
+    }
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Packages/HanlinExpoUI/tests/host-services-publication.test.mjs:45:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { operation: 'widgets.publish', request: { entrypointID: [Object] } },
+    expected: { operation: 'widgets.publishPrepared', request: { engine: 'expo', entrypointID: 'widget', variantID: 'configured-instance', props: [Object] } },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

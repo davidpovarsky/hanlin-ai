@@ -978,7 +978,14 @@ final class HanlinScriptingPlatform {
                     installedPackageID: package.record.installedPackageID,
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                     sessionID: sessionID,
-                    externalMiniAppOperation: externalMiniAppOperation
+                    externalMiniAppOperation: externalMiniAppOperation,
+                    preparedWidgetPublisher: { [weak self] entrypointID, variantID, props in
+                        guard let self else { throw HanlinWidgetActionError.inactiveInstance }
+                        return try await self.publishPreparedExpoWidget(
+                            installedPackageID: package.record.installedPackageID,
+                            appID: package.appID, expectedGeneration: package.record.activeGeneration,
+                            sessionID: sessionID, entrypointID: entrypointID, variantID: variantID, props: props)
+                    }
                 )
                 expoHostServices = adapter
                 HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
@@ -1323,6 +1330,52 @@ final class HanlinScriptingPlatform {
         } onCancel: { [weak self] in
             Task { @MainActor in self?.cancelSystemUI() }
         }
+    }
+
+    /// Commit props to the existing prepared Expo program. The receipt states
+    /// persistence/catalog/reload facts; WidgetKit rendering is not observed here.
+    private func publishPreparedExpoWidget(
+        installedPackageID: HanlinInstalledPackageID, appID: HanlinAppID,
+        expectedGeneration: UInt64, sessionID: String,
+        entrypointID: String, variantID: String, props: [String: HanlinValue]
+    ) async throws -> String {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
+        guard let store, let extensionStore,
+              let session = expoSession, session.isActive, session.sessionID == sessionID,
+              session.installedPackageID == installedPackageID.rawValue,
+              session.packageGeneration == expectedGeneration else {
+            throw HanlinWidgetActionError.inactiveInstance
+        }
+        guard let package = try await store.snapshots().first(where: {
+            $0.record.installedPackageID == installedPackageID && $0.appID == appID
+        }), package.enabled, package.record.activeGeneration == expectedGeneration,
+           package.entrypoints.contains(where: {
+               $0.id == entrypointID && $0.kind == .widget && $0.widgetEngine == .expo
+                   && $0.runtimeProfile == .hanlinExpo
+           }) else {
+            throw HanlinHostServiceError.invalidRequest("Prepared widget publication requires this session's current installed generation and an explicitly declared Expo widget entrypoint")
+        }
+        // A suspension above must not admit an already-replaced owning session.
+        guard expoSession === session, session.isActive else { throw HanlinWidgetActionError.inactiveInstance }
+        let identity = HanlinScriptExtensionIdentity(installedPackageID: installedPackageID,
+            packageID: package.record.packageID, generation: expectedGeneration,
+            entrypointID: entrypointID, variantID: variantID)
+        let receipt = try extensionStore.publishExpoWidgetProps(identity: identity, props: props)
+        WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
+        guard var response = try JSONSerialization.jsonObject(with: JSONEncoder().encode(receipt)) as? [String: Any] else {
+            throw HanlinWidgetActionError.invalidState
+        }
+        response["ok"] = true
+        response["published"] = true
+        response["publication"] = "prepared-expo-state"
+        response["engine"] = "expo"
+        response["stateCommitted"] = true
+        response["catalogVisible"] = true
+        response["reloadRequested"] = true
+        response["osRendered"] = NSNull()
+        return String(decoding: try JSONSerialization.data(withJSONObject: response, options: [.sortedKeys]), as: UTF8.self)
     }
 
     struct ExpoWidgetPersistedExposure: Codable, Sendable {

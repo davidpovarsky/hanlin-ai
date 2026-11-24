@@ -1,0 +1,44 @@
+✖ actual Expo grouped cases and explicitly connected external cases cover the typed facade (10.621141ms)
+✖ a delegated prefix cannot hide a missing operation or a disconnected callback (8.540969ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 107.400859
+
+✖ failing tests:
+
+test at Scripts/Audit/Tests/expo-operation-contract.test.mjs:19:1
+✖ actual Expo grouped cases and explicitly connected external cases cover the typed facade (10.621141ms)
+  Error: Expo external-operation callback linkage changed; delegated source cases are not sufficient.
+      at auditExpoOperationRoutes (file:///mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/Audit/miniapp-expo-operations.mjs:17:66)
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/Audit/Tests/expo-operation-contract.test.mjs:20:43)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at Scripts/Audit/Tests/expo-operation-contract.test.mjs:27:1
+✖ a delegated prefix cannot hide a missing operation or a disconnected callback (8.540969ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /explicit handlers/. Input:
+  
+  'Error: Expo external-operation callback linkage changed; delegated source cases are not sufficient.'
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/Audit/Tests/expo-operation-contract.test.mjs:29:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Expo external-operation callback linkage changed; delegated source cases are not sufficient.
+        at auditExpoOperationRoutes (file:///mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/Audit/miniapp-expo-operations.mjs:17:66)
+        at file:///mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/Audit/Tests/expo-operation-contract.test.mjs:29:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/Audit/Tests/expo-operation-contract.test.mjs:29:10)
+        at async Test.run (node:internal/test_runner/test:1409:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:974:7),
+    expected: /explicit handlers/,
+    operator: 'throws',
+    diff: 'simple'
+  }

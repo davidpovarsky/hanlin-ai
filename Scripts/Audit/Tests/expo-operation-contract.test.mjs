@@ -20,6 +20,7 @@ test('actual Expo grouped cases and explicitly connected external cases cover th
   const input = await fixture(), result = auditExpoOperationRoutes(input);
   for (const name of ['liveActivities.areEnabled', 'liveActivities.list', 'liveActivities.start', 'liveActivities.update', 'liveActivities.end']) assert.ok(result.routes[0].operations.includes(name));
   for (const name of ['miniapps.context', 'miniapps.readAttachment', 'miniapps.writeAttachment', 'miniapps.complete', 'miniapps.cancel', 'miniapps.return']) assert.ok(result.routes[1].operations.includes(name));
+  assert.ok(result.routes[0].operations.includes('widgets.publishPrepared'));
   assert.match(result.routes[1].condition, /active external MiniApp invocation/);
   assert.ok(input.facadeOperations.every(name => result.operations.includes(name)));
 });
@@ -29,5 +30,7 @@ test('a delegated prefix cannot hide a missing operation or a disconnected callb
   assert.throws(() => auditExpoOperationRoutes({...input, facadeOperations: [...input.facadeOperations, 'miniapps.notAnImplementedOperation']}), /explicit handlers/);
   assert.throws(() => auditExpoOperationRoutes({...input, adapter: {...input.adapter, text: input.adapter.text.replace('"liveActivities.start", ', '')}}), /explicit handlers/);
   assert.throws(() => auditExpoOperationRoutes({...input, platform: {...input.platform, text: input.platform.text.replaceAll('externalMiniAppOperation: externalMiniAppOperation', 'externalMiniAppOperation: nil')}}), /callback linkage changed/);
+  assert.throws(() => auditExpoOperationRoutes({...input, platform: {...input.platform, text: input.platform.text.replace('self.publishPreparedExpoWidget(', 'HanlinScriptingPlatform.shared.publishPreparedExpoWidget(')}}), /callback linkage changed/);
+  assert.throws(() => auditExpoOperationRoutes({...input, platform: {...input.platform, text: input.platform.text.replace('expectedGeneration: package.record.activeGeneration', 'expectedGeneration: 0')}}), /callback linkage changed/);
   assert.throws(() => auditExpoOperationRoutes({...input, nativeNames: input.nativeNames.filter(name => name !== 'invoke')}), /missing invoke/);
 });

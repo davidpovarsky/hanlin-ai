@@ -1,0 +1,13 @@
+{
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift"
+  ],
+  "exitCode": 0,
+  "classification": "syntax only; Apple modules unavailable on this Linux host"
+}

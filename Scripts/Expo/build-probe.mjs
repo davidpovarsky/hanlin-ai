@@ -62,6 +62,13 @@ async function buildVariant(variant) {
   await rm(targetZip, { force: true });
 
   await writeArchive(buildDir, targetZip);
+  if (variant === 'A') {
+    // The hosted acceptance imports these same freshly built bytes; no second
+    // bundler, precompiled test program or simulated native provider is used.
+    const hostedFixtures = resolve(repositoryRoot, 'AI_HLYTests/Fixtures/HostServicesProbe.bundle');
+    await mkdir(hostedFixtures, {recursive: true});
+    await cp(targetZip, resolve(hostedFixtures, 'ExpoSwiftUIProbeA.hanlinExpo'));
+  }
 
   console.log(`[HanlinExpo] Created probe package: ${targetZip}`);
   return targetZip;
