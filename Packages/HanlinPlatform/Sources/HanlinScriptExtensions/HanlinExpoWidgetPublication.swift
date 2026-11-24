@@ -23,7 +23,7 @@ extension HanlinScriptExtensionStore {
         props: [String: HanlinValue]
     ) throws -> HanlinExpoWidgetStateReceipt {
         // Validate actual JSON before entering the transaction; no host size budget.
-        _ = try HanlinValue.object(props).canonicalJSONData(limits: .unbounded)
+        _ = try HanlinValue.object(HanlinObject(uniqueMembers: Array(props))).canonicalJSONData(limits: .unbounded)
         var receipt: HanlinExpoWidgetStateReceipt?
         try update { current in
             guard let current,

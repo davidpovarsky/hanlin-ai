@@ -1,0 +1,70 @@
+{
+  "cwd": "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+  "moduleCache": "/Users/m1/caches/DerivedData/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+  "results": [
+    {
+      "name": "contracts",
+      "argv": [
+        "xcrun",
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-emit-module",
+        "-emit-library",
+        "-module-name",
+        "HanlinPlatformContracts",
+        "-module-cache-path",
+        "/Users/m1/caches/DerivedData/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+        "HanlinValue.swift",
+        "HanlinContractError.swift",
+        "HanlinManifestIssue.swift",
+        "-o",
+        "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124/libHanlinPlatformContracts.dylib"
+      ],
+      "startedAt": "2026-11-24T12:54:33.876199+00:00",
+      "elapsedSeconds": 3.206040625,
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "probe",
+      "argv": [
+        "xcrun",
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-module-cache-path",
+        "/Users/m1/caches/DerivedData/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+        "-I",
+        "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+        "-L",
+        "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+        "-lHanlinPlatformContracts",
+        "-Xlinker",
+        "-rpath",
+        "-Xlinker",
+        "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+        "Probe.swift",
+        "-o",
+        "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124/Probe"
+      ],
+      "startedAt": "2026-11-24T12:54:37.082513+00:00",
+      "elapsedSeconds": 0.3078046670000001,
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "run",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124/Probe"
+      ],
+      "startedAt": "2026-11-24T12:54:37.390509+00:00",
+      "elapsedSeconds": 0.31065945799999994,
+      "exit": 0,
+      "stdout": "REAL_PUBLICATION_CONSTRUCTION_PASS\nCANONICAL_ROUNDTRIP_PASS bytes=298\n{\"type\":\"object\",\"value\":{\"count\":{\"type\":\"integer\",\"value\":\"9223372036854775807\"},\"e\u0301\":{\"type\":\"string\",\"value\":\"exact UTF-8 key\"},\"nested\":{\"type\":\"object\",\"value\":{\"enabled\":{\"type\":\"bool\",\"value\":true},\"items\":{\"type\":\"array\",\"value\":[{\"type\":\"null\"},{\"type\":\"string\",\"value\":\"\u05e9\u05dc\u05d5\u05dd\"}]}}}}}\nNONFINITE_VALIDATION_PRESERVED\n",
+      "stderr": ""
+    }
+  ]
+}
