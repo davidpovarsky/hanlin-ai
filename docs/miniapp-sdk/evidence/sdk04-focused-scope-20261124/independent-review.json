@@ -1,0 +1,19 @@
+{
+  "atUTC": "2026-11-24T10:03:33.951505+00:00",
+  "sourceCommit": "22eaa6c1c93970b1ce916bc8b19c3022d9b6258f",
+  "reviewer": "/root/entrypoints",
+  "result": "NO_ADDITIONAL_FIXTURE_DEPENDENCY_FOUND",
+  "review": "All eight selected MiniApps methods use the same original ExpoSwiftUIProbeA importer/launch helper. None opens the ManualAdapter AsyncImage panel or makes its loopback PNG requests. Generated example.invalid Link is configured but not activated; selected search completion is local. Host services use real local files/runtime/ActivityKit reads/prepared widget state.",
+  "testsOrEditsByReviewer": false,
+  "nativeExecution": "NOT_RUN",
+  "sources": [
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "bd1991f657e42bf7f3224ad5c504e972ccf7b97d397be9235038631f8ff3b870"
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "dee16f5485c208a48ec2bfb931001ce55d388ff5cd7be4904456458a7e6e6f6b"
+    }
+  ]
+}
