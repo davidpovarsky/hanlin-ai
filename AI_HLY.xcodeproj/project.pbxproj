@@ -3560,6 +3560,8 @@
 		B10000000000000000000008 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -3586,6 +3588,8 @@
 		B10000000000000000000009 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -3744,6 +3748,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
 			buildSettings = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				APS_ENVIRONMENT = development;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3986,6 +3992,7 @@
 		D20000000000000000000070 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -4016,6 +4023,7 @@
 		D20000000000000000000071 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				APPLICATION_EXTENSION_API_ONLY = YES;
@@ -4049,6 +4057,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
 			buildSettings = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				APS_ENVIRONMENT = production;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4149,6 +4159,8 @@
 		F80000000000000000000015 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				APS_ENVIRONMENT = "development";
 				"CODE_SIGNING_ALLOWED" = "YES";
 				"CODE_SIGNING_REQUIRED" = "YES";
@@ -4177,7 +4189,7 @@
 				"LD" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
 				"PYTHONDONTWRITEBYTECODE" = "1";
 				"INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription" = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
@@ -4204,6 +4216,8 @@
 		F80000000000000000000016 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				APS_ENVIRONMENT = "production";
 				"CODE_SIGNING_ALLOWED" = "YES";
 				"CODE_SIGNING_REQUIRED" = "YES";
@@ -4232,7 +4246,7 @@
 				"LD" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
 				"PYTHONDONTWRITEBYTECODE" = "1";
 				"INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription" = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
@@ -4327,64 +4341,9 @@
 		AC1A1AAAEF4F0104C4B10D76 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
-				"OTHER_SWIFT_FLAGS" = (
-					"$(inherited)",
-					"-Xcc",
-					"-std=gnu++20",
-					"-Xcc",
-					"-DREACT_NATIVE_PRODUCTION=1",
-					"-Xcc",
-					"-DRN_DEBUG_STRING_CONVERTIBLE=0",
-					"-Xcc",
-					"-Wno-quoted-include-in-framework-header",
-					"-Xcc",
-					"-Wno-non-modular-include-in-framework-module",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge",
-					"-Xcc",
-					"-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
-					"-Xcc",
-					"-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
-					"-Xcc",
-					"-FArtifacts/ModularFrameworks",
-					"-Xcc",
-					"-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
-					"-Xcc",
-					"-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
-					"-Xcc",
-					"-IArtifacts/ReactModularHeaders",
-					"-Xcc",
-					"-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
-					"-Xcc",
-					"-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
-					"-Xcc",
-					"-IArtifacts/ModularFrameworks/react.framework/Headers",
-					"-Xcc",
-					"-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
-					"-Xcc",
-					"-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
-					"-Xcc",
-					"-IArtifacts/ModularFrameworks/react.framework/Headers/react",
-					"-Xcc",
-					"-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
-					"-Xcc",
-					"-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
-					"-Xcc",
-					"-IArtifacts/ReactNativeDependencies.xcframework/Headers",
-					"-Xcc",
-					"-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
-				);
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"APPLICATION_EXTENSION_API_ONLY" = "YES";
 				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements";
 				"CODE_SIGN_STYLE" = "Automatic";
@@ -4413,64 +4372,9 @@
 		AC1A2ADEBAFA5244E61C45C2 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
-				"OTHER_SWIFT_FLAGS" = (
-					"$(inherited)",
-					"-Xcc",
-					"-std=gnu++20",
-					"-Xcc",
-					"-DREACT_NATIVE_PRODUCTION=1",
-					"-Xcc",
-					"-DRN_DEBUG_STRING_CONVERTIBLE=0",
-					"-Xcc",
-					"-Wno-quoted-include-in-framework-header",
-					"-Xcc",
-					"-Wno-non-modular-include-in-framework-module",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge",
-					"-Xcc",
-					"-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
-					"-Xcc",
-					"-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
-					"-Xcc",
-					"-FArtifacts/ModularFrameworks",
-					"-Xcc",
-					"-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
-					"-Xcc",
-					"-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
-					"-Xcc",
-					"-IArtifacts/ReactModularHeaders",
-					"-Xcc",
-					"-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
-					"-Xcc",
-					"-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
-					"-Xcc",
-					"-IArtifacts/ModularFrameworks/react.framework/Headers",
-					"-Xcc",
-					"-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
-					"-Xcc",
-					"-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
-					"-Xcc",
-					"-IArtifacts/ModularFrameworks/react.framework/Headers/react",
-					"-Xcc",
-					"-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
-					"-Xcc",
-					"-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
-					"-Xcc",
-					"-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
-					"-Xcc",
-					"-IArtifacts/ReactNativeDependencies.xcframework/Headers",
-					"-Xcc",
-					"-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
-				);
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"APPLICATION_EXTENSION_API_ONLY" = "YES";
 				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements";
 				"CODE_SIGN_STYLE" = "Automatic";
@@ -5103,6 +5007,8 @@
 		3A86CB87F13B3976AB038CFD = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				"BUNDLE_LOADER" = "$(TEST_HOST)";
 				"GENERATE_INFOPLIST_FILE" = "YES";
 				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
@@ -5112,7 +5018,7 @@
 				"PRODUCT_NAME" = "$(TARGET_NAME)";
 				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
 				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"CLANG_CXX_LANGUAGE_STANDARD" = "gnu++20";
 				"SWIFT_VERSION" = "6.0";
 				"TARGETED_DEVICE_FAMILY" = "1,2";
@@ -5146,6 +5052,8 @@
 		8D99F33AE4F678BB2DE29E45 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				"BUNDLE_LOADER" = "$(TEST_HOST)";
 				"GENERATE_INFOPLIST_FILE" = "YES";
 				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
@@ -5155,7 +5063,7 @@
 				"PRODUCT_NAME" = "$(TARGET_NAME)";
 				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
 				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"CLANG_CXX_LANGUAGE_STANDARD" = "gnu++20";
 				"SWIFT_VERSION" = "6.0";
 				"TARGETED_DEVICE_FAMILY" = "1,2";
