@@ -4387,7 +4387,7 @@
 					"-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
 				);
 				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
-				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				"SWIFT_ENABLE_EXPLICIT_MODULES" = "YES";
 				"APPLICATION_EXTENSION_API_ONLY" = "YES";
 				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements";
 				"CODE_SIGN_STYLE" = "Automatic";
@@ -4474,7 +4474,7 @@
 					"-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
 				);
 				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
-				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				"SWIFT_ENABLE_EXPLICIT_MODULES" = "YES";
 				"APPLICATION_EXTENSION_API_ONLY" = "YES";
 				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements";
 				"CODE_SIGN_STYLE" = "Automatic";
