@@ -570,6 +570,8 @@ jobs:
           app=$(find "$verify_dir/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)
           test -d "$app"
           python3 Scripts/CI/validate_chat_localization.py --app "$app" --output "$BUILD_DIR/logs/chat-localization-packaged.json"
+          python3 Scripts/SDK/verify_bundle_resources.py --app "$app" --module AI_Hanlin \
+            --json-output "$BUILD_DIR/logs/sdk-bundle-resources.json"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")" = "$APP_BUNDLE_ID"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")" = "Hanlin AI"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Info.plist")" = "$BUILD_NUMBER"
@@ -663,8 +665,12 @@ jobs:
           python3 - "$app" <<'PY'
           import hashlib, json, os, sys
           from pathlib import Path
+          sys.path.insert(0, str(Path("Scripts/SDK").resolve()))
+          from verify_bundle_resources import module_bundle
+          app = Path(sys.argv[1])
+          resources = module_bundle(app, "AI_Hanlin")
           expected = json.loads(Path("AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json").read_text())
-          packaged = json.loads((Path(sys.argv[1]) / "RuntimeManifest.json").read_text())
+          packaged = json.loads((resources / "RuntimeManifest.json").read_text())
           if packaged != expected:
               raise SystemExit("Packaged Runtime manifest does not match the verified build input")
           def sha256(path):
@@ -674,7 +680,7 @@ jobs:
                       checksum.update(chunk)
               return checksum.hexdigest()
           host_hash = sha256(Path("AI_HLY/RuntimeHostResources.zip"))
-          if sha256(Path(sys.argv[1]) / "RuntimeHostResources.zip") != host_hash:
+          if sha256(resources / "RuntimeHostResources.zip") != host_hash:
               raise SystemExit("Packaged Runtime Host archive does not match the verified build input")
           lock = json.loads(Path("RuntimeDependencies.lock.json").read_text())
           logs = Path(os.environ["BUILD_DIR"]) / "logs"
@@ -685,6 +691,7 @@ jobs:
               "nodeXCFrameworkSha256": lock["node"]["xcframeworkSha256"],
               "nodeImageUUIDs": (logs / "node-packaged-uuid.txt").read_text().splitlines(),
               "runtimeHostArchiveSha256": host_hash,
+              "resourceBundle": str(resources.relative_to(app)),
               "packagedManifestMatches": True,
           }
           (logs / "runtime-distribution.json").write_text(json.dumps(evidence, indent=2) + "\n")
