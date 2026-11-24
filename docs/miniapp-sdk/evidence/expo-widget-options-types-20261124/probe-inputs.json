@@ -1,0 +1,24 @@
+{
+  "baseCommit": "dc518aa35d123b611c02b10ad75e11477a7eb131",
+  "optionsSource": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift",
+  "optionsSHA256": "6ca742d0e0413a2f219723ec65caab7df5a485257ba75277603ec132a7a6deac",
+  "widgetDeclarationsSource": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift",
+  "widgetDeclarationsSHA256": "4441e44e3db7276f7726bf15ae3b71c9056392514287c657688652aebd2416b9",
+  "adapterSource": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+  "adapterSHA256": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c",
+  "exactSections": [
+    "Widget entity, entity query and WidgetConfigurationIntent declarations",
+    "Option entity, dependent query, error type and complete values method",
+    "PreparedWidgetPublisher typealias and conversion/callback statement block"
+  ],
+  "excludedDependencies": [
+    "Only options(widgetID:includeInactive:) body replaced with explicit fixture lookup; source method retained below for precise projection diff.",
+    "HanlinExpoWidgetsIntegration registry is fixture-only; bundle points at Bundle.main. Original Expo storage/options helper and localization resources are not tested.",
+    "No SDK declarations are recreated: AppIntents, CryptoKit and Foundation are actual installed frameworks.",
+    "Adapter parser/session/ownership guards and surrounding class are outside this expression probe; their source stays unchanged."
+  ],
+  "excludedOriginalOptionsLookup": "    public static func options(widgetID: String, includeInactive: Bool = false) -> [HanlinOriginalExpoWidgetOptionEntity] {\n        guard HanlinExpoWidgetsIntegration.registeredWidgets(includeInactive: includeInactive).contains(where: { $0.id == widgetID }),\n              let group = WidgetsStorage.appGroupIdentifier, let defaults = UserDefaults(suiteName: group) else { return [] }\n        let prefix = \"__expo_widgets_\\(widgetID)_configuration_options_\"\n        let parameters = defaults.dictionaryRepresentation().keys.compactMap { key in\n            key.hasPrefix(prefix) ? String(key.dropFirst(prefix.count)) : nil\n        }.sorted()\n        var seen = Set<String>()\n        return parameters.flatMap { parameter in\n            widgetConfigurationOptions(name: widgetID, parameter: parameter, fallback: []).compactMap { option in\n                let entity = HanlinOriginalExpoWidgetOptionEntity(widgetID: widgetID, parameter: parameter,\n                    name: option.name, value: option.value, subtitle: option.subtitle)\n                return seen.insert(entity.id).inserted ? entity : nil\n            }\n        }\n    }\n\n",
+  "projectionSHA256": "498c4bf01fb71438c8823649ca1917c62491237dee790bc3e5af7fe2d1ad5b99",
+  "probeSHA256": "655200641e3429f99a5e81065991449812225b42552188231cb7cc2438ce37d4",
+  "preservedOrdering": "The complete original HanlinObject option mutation/validation loop remains before the checked Dictionary conversion."
+}

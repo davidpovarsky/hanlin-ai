@@ -42,7 +42,7 @@ public struct HanlinOriginalExpoWidgetOptionQuery: EnumerableEntityQuery, Entity
     public init() {}
 
     public func allEntities() async throws -> [HanlinOriginalExpoWidgetOptionEntity] {
-        guard let widgetID = configuration?.widget?.id else { return [] }
+        guard let widgetID = configuration?.widget.id else { return [] }
         return HanlinOriginalExpoWidgetOptions.options(widgetID: widgetID)
     }
 
@@ -126,6 +126,14 @@ public enum HanlinOriginalExpoWidgetOptions {
             selections[current.parameter] = current.value
             values[current.parameter] = .string(current.value)
         }
-        return values
+        // Preserve byte-exact option overrides until the public dictionary boundary.
+        // Swift keys can alias distinct UTF-8 keys; reject that without losing data.
+        var result: [String: HanlinValue] = [:]
+        for (key, value) in values {
+            guard result.updateValue(value, forKey: key) == nil else {
+                throw HanlinContractError.duplicateObjectKey(key: key, path: "")
+            }
+        }
+        return result
     }
 }

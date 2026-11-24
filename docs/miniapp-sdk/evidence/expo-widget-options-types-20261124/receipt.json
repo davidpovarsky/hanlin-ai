@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-24T14:16:55.420417+00:00",
+  "owner": "/root/control_authoring",
+  "baseCommit": "dc518aa35d123b611c02b10ad75e11477a7eb131",
+  "sourceHashes": "source-hashes.json",
+  "originalFailure": {
+    "runID": 45398772829,
+    "source": "cf9c18903c03264265557efb446207efa7226912",
+    "status": "EXECUTED_FAIL",
+    "logSHA256": "052c16cb8d1ba5ba804f11eba671f997b9a7760a668c28e9b83df9d6d39c4a3e",
+    "compilerHeaderLines": [
+      94392,
+      94400
+    ],
+    "rootReceipt": "docs/miniapp-sdk/evidence/native-gate-14-widget-options-20261124/receipt.json",
+    "rootReceiptSHA256": "ec1c1d798649a7fa66f74f4a1f040ad5902495929f7079cf0395ceea79fa0574"
+  },
+  "sameCauseAdapterFinding": "Source-confirmed HanlinObject.mapValues result was passed to PreparedWidgetPublisher requiring [String:HanlinValue]; no claim of a separate prior Apple diagnostic for this adapter.",
+  "changes": [
+    "Remove only the extra optional chain on the already-unwrapped AppIntents dependency widget. The dependency itself stays optional.",
+    "Keep the original HanlinObject validation/selection/mutation loop exactly; checked Dictionary conversion occurs only at the public return boundary.",
+    "Convert actual adapter JSON properties to the declared Dictionary before the unchanged publisher callback.",
+    "Use the existing duplicateObjectKey error for unrepresentable canonical-key collisions instead of trapping or losing a value. No quota or grant policy added."
+  ],
+  "verification": {
+    "status": "EXECUTED_PASS",
+    "kind": "One focused actual Swift6/C++-enabled Apple compiler and executable probe",
+    "result": "mac-probe.json",
+    "elapsedSeconds": 7.543925709,
+    "assertions": [
+      "Real option value types and explicit enum override",
+      "Canonical-equivalent JSON keys rejected",
+      "Canonical alias introduced by selected parameter rejected",
+      "Original option-conflict error preserved",
+      "Other-widget selection rejected",
+      "Non-object JSON rejected",
+      "Actual typed adapter conversion and callback response",
+      "Adapter collision rejected before callback; callback count remains one"
+    ],
+    "inputAuthority": "probe-inputs.json",
+    "sdkAuthority": "mac-sdk-read.json",
+    "reuse": "contract-module-reuse.json and contract-module-remaining-input.json; exact previous real value/error source closure reused on the same observed toolchain",
+    "boundaries": "Actual AppIntents/CryptoKit/Foundation are imported. Original entity, query, configuration, complete values method and adapter conversion/callback statements are compiled from source. Original Expo option lookup/registry and localization bundle are explicit project fixtures; they are not tested. This is not the complete app/target, original Expo engine, simulator or native52 acceptance."
+  },
+  "independentReview": "independent-review.json",
+  "route": {
+    "primary": "Scaleway Mac",
+    "toolchain": "Xcode27.0 (27A266a), Swift6.4.0.34.1, iOS simulator SDK27.0",
+    "freshPreflight": "mac-sdk-read.json",
+    "observedActiveBuildProcesses": [],
+    "fullGate": "Required27.2 remains unavailable in this primary-Mac observation; root owns fallback/dispatch."
+  },
+  "nativeAcceptance": "MAIN14 remains FAILED; AI and52 actual acceptance cases were not executed. This correction does not promote them to PASS."
+}

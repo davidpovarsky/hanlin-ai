@@ -157,8 +157,13 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             guard let preparedWidgetPublisher else {
                 throw HanlinHostServiceError.invalidRequest("Prepared widget publication has no active installed Expo session")
             }
-            return try await preparedWidgetPublisher(entrypointID, variantID,
-                rawProps.mapValues { try HanlinValue(jsonValue: $0) })
+            var props: [String: HanlinValue] = [:]
+            for (key, value) in rawProps {
+                guard props.updateValue(try HanlinValue(jsonValue: value), forKey: key) == nil else {
+                    throw HanlinContractError.duplicateObjectKey(key: key, path: "/props")
+                }
+            }
+            return try await preparedWidgetPublisher(entrypointID, variantID, props)
 
         case "widgets.publish":
             guard let installedPackageID = context.installedPackageID,
