@@ -250,7 +250,8 @@ public actor HanlinCompactAgentClient {
 
     public func stream(
         messages: [HanlinCompactChatMessage],
-        systemContext: String? = nil
+        systemContext: String? = nil,
+        cacheScope: HanlinPromptCacheScope? = nil
     ) throws -> AsyncThrowingStream<String, Error> {
         let activeConfig: HanlinCompactAgentConfiguration
         if let config = suppliedConfiguration {
@@ -275,7 +276,8 @@ public actor HanlinCompactAgentClient {
                     messages: messages,
                     configuration: chatConfig,
                     systemContext: systemContext,
-                    tools: nil
+                    tools: nil,
+                    cacheScope: cacheScope
                 )
                 for try await event in stream {
                     if let content = event.content, !content.isEmpty {
