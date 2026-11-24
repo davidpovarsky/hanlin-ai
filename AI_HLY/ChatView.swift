@@ -1317,7 +1317,8 @@ struct ChatView: View {
 
     @MainActor
     private func performRichAction(_ action: PresentationAction) async throws -> PresentationValue {
-        guard action.identity.appID == "hanlin", action.identity.conversationID == effectiveChatSessionID,
+        let appID = HanlinApplicationContextRegistry.configuration(for: context.container).appIdentifier
+        guard action.identity.appID == appID, action.identity.conversationID == effectiveChatSessionID,
               let source = chatTemps.first(where: { $0.id == action.identity.messageID && $0.role == "assistant" }),
               !isResponding else { throw HanlinHostError.staleContext }
         if action.name == "tool" {
