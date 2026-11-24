@@ -1061,6 +1061,18 @@
     "main13_prior_widget_consumer_compilation_scope": {
       "path": "docs/miniapp-sdk/evidence/native-gate-13-publication-type-20261124/prior-widget-consumer-compilation-scope.json",
       "sha256": "75527c9f973085906c42e443f54d45d8d788b5afbcd5391921fc8f695cbe79bd"
+    },
+    "expo_widget_property_value_fix": {
+      "path": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/receipt.json",
+      "sha256": "2f925f07fba0dfa9ba01192499684e21dc8b3418a8c1759092fddc4249eb220a"
+    },
+    "publication_value_source_refresh": {
+      "path": "docs/miniapp-sdk/evidence/publication-value-source-refresh-20261124/receipt.json",
+      "sha256": "31119656c2f196b6d2e3dbe9cf6acc8ee79adb405216458b23bbc88a0f6d1f97"
+    },
+    "sdk05_main13_exact_reuse": {
+      "path": "docs/miniapp-sdk/evidence/sdk05-shipping-reuse-main13-20261124/receipt.json",
+      "sha256": "309252f29fe6ffccb8aef3d783233ce80894efa7089316cd2ee825203297cb7e"
     }
   },
   "criteria": [
@@ -1377,8 +1389,8 @@
     }
   ],
   "recordingOutcome": "Four scoped tasks completed with readback; next current52 native gate ready to dispatch. No main merge, release, app/device PASS or broader80E2E claim.",
-  "updatedAtUTC": "2026-11-24T12:48:44.799017+00:00",
-  "currentIntegrationBase": "df07b8da7933e66180df8bfa8838a8617b6be00d",
+  "updatedAtUTC": "2026-11-24T12:58:20.727742+00:00",
+  "currentIntegrationBase": "23502f5430d0f57876f10d26c239b533fb181cf1",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1573,7 +1585,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Main13 prepared current original SDK but failed first app build at a single Swift publication value type conversion. Focused fix and independent review in progress. Four scoped tasks remain complete; no app/device success.",
+  "currentScopeNote": "Main13firstbuildEXECUTED_FAIL at one value-container type conversion; fixed and independently reviewed. Tiny original-source Mac6.4compile/JSONproof passed. Four existing provenance-generation/check commands passed. Next exact52 candidate ready. Current full native/device acceptance pending; future SDK identity must include three changed provenance outputs.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1707,26 +1719,36 @@
     }
   ],
   "candidateGate": {
+    "sequence": 14,
     "scope": "miniapp_complete",
-    "status": "CORRECTION_IN_PROGRESS_BEFORE_NEXT_DISPATCH",
+    "status": "READY_FOR_PUBLISH_AND_DISPATCH",
     "selectedCases": 52,
     "MiniApps": 25,
     "AI": 27,
-    "sourceCommit": "2cb851067c4339125ab6fb515522796bceb80c35",
+    "sourceCommit": "23502f5430d0f57876f10d26c239b533fb181cf1",
     "firstMiniAppsBuildSeconds": 3600,
     "pairedJobMinutes": 210,
-    "selection": "Unchanged exact52 from prior complete selection review",
-    "independentReview": {
-      "path": "docs/miniapp-sdk/evidence/paired-cold-build-budget-20261124/independent-review.json",
-      "sha256": "37d07e339cd0302f759a44ff7283e448267045dd2ac2d34432a0270b30d2c2f8"
+    "selection": "Exact prior52 unchanged",
+    "productionDelta": "One expression uses public HanlinObject(uniqueMembers:Array(props)) before unchanged canonicalJSONData(.unbounded)",
+    "sourceProof": {
+      "path": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/receipt.json",
+      "sha256": "2f925f07fba0dfa9ba01192499684e21dc8b3418a8c1759092fddc4249eb220a"
     },
-    "actualExecution": "Main13firstbuildFAILED; AI/all52NOT_RUN",
-    "runnerRouting": {
-      "path": "docs/miniapp-sdk/evidence/native-gate-13-runner-routing-20261124/receipt.json",
-      "sha256": "48c55dc24ba83bb920132e4265ad571b06a2334c981de2c5d9b80a0ee38c53f9"
+    "sourceAuthorityRefresh": {
+      "path": "docs/miniapp-sdk/evidence/publication-value-source-refresh-20261124/receipt.json",
+      "sha256": "31119656c2f196b6d2e3dbe9cf6acc8ee79adb405216458b23bbc88a0f6d1f97"
     },
-    "runID": 45389020875,
-    "reason": "Actual production value-container type conversion; no selection/deadline change required"
+    "actualExecution": "NOT_RUN",
+    "routing": {
+      "decision": "Existing GitHub Xcode27.2 lane; primary Mac lacks required27.2toolchain",
+      "freshObservation": {
+        "path": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/mac-preflight.json",
+        "sha256": "41eeddbc0c6949c2e5200f01e7b2cbdfbe67bb7ba140b7f4e423537f5be82448"
+      },
+      "observedAtUTC": "2026-11-24T12:53:18Z",
+      "primary": "Xcode27.0/27A266a, Swift6.4.0, SDK27.0 only",
+      "tinyProbeBoundary": "3.82second real value-source/JSON proof; no full app/SPM/simulator build and no interference with existing xcodebuild processes"
+    }
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
