@@ -19,7 +19,18 @@ export function extractGuideBlocks(source, document) {
   const blocks = [];
   for (let index = 0; index < lines.length; index++) {
     const fence = lines[index].match(/^( {0,3})(\x60{3,}|~{3,})(\S*)\s*$/);
-    if (!fence) continue;
+    if (!fence) {
+      // Only ordinary fences are extracted. Detect other Markdown fence forms
+      // outside a recognized block so quote/list containers or indentation cannot
+      // hide a new example from the inventory. Do not reinterpret their code.
+      let candidate = lines[index].trimStart();
+      const container = /^(?:>[ \t]*|(?:[-+*]|\d+[.)])[ \t]+)/;
+      for (let prefix; (prefix = candidate.match(container));)
+        candidate = candidate.slice(prefix[0].length).trimStart();
+      requireValue(!/^(?:\x60{3,}|~{3,})/.test(candidate),
+        document + ':' + (index + 1) + ': unsupported Markdown fence form (container, indentation or info string)');
+      continue;
+    }
     const label = lines[index - 1]?.trim().match(/^<!-- miniapp-snippet: ([\w.-]+) -->$/);
     requireValue(label, document + ':' + (index + 1) + ': unclassified fenced block');
     const startLine = index + 2;

@@ -47,7 +47,7 @@
   // ב-ObjC: [[UINavigationController alloc] initWithRootViewController:vc]
   const nav = UINavigationController.alloc().initWithRootViewController(vc);
 
-  // ב-ObjC: [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyle.Medium]
+  // ב-ObjC: [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium]
   const impact = UIImpactFeedbackGenerator.alloc().initWithStyle(UIImpactFeedbackStyle.Medium);
   ```
 * **פונקציות Factory (שיטות סטטיות של מחלקה):**
@@ -60,7 +60,7 @@
 
 ### ב. המרת שמות פונקציות (Selectors to camelCase)
 ב-Objective-C שמות פונקציות מורכבים מחלקים המופרדים בנקודתיים. ב-NativeScript כל החלקים מתחברים לשם פונקציה אחד בסגנון **camelCase**:
-* ב-ObjC: `[button setTitle:@"שלום" forState:UIControlState.Normal];`
+* ב-ObjC: `[button setTitle:@"שלום" forState:UIControlStateNormal];`
 * ב-JS/TS: `button.setTitleForState("שלום", UIControlState.Normal);`
 * ב-ObjC: `[stackView addArrangedSubview:myView];`
 * ב-JS/TS: `stackView.addArrangedSubview(myView);`

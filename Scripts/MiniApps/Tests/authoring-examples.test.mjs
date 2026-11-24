@@ -65,15 +65,31 @@ test('new or removed guide blocks and stale staged documentation fail closed', a
   const fence = String.fromCharCode(96).repeat(3);
   await assert.rejects(readGuideExamples(root, new Map([[name, original + '\n' + fence + 'ts\nconst added = 1;\n' + fence + '\n']])),
     /unclassified fenced block/);
+  const unsupportedPrefixes = ['> ', '> > ', '- ', '1. ', '> 1. ', '    ', '\t'];
+  for (const prefix of unsupportedPrefixes) {
+    const hidden = prefix + fence + 'ts\n' + prefix + 'const example: string = 1;\n' + prefix + fence + '\n';
+    await assert.rejects(readGuideExamples(root, new Map([[name, original + '\n' + hidden]])),
+      /unsupported Markdown fence form/, 'A container/indented fence must not disappear from coverage: ' + JSON.stringify(prefix));
+  }
+  await assert.rejects(readGuideExamples(root, new Map([[name, original + '\n' + fence + 'ts title=example\nconst example = 1;\n' + fence + '\n']])),
+    /unsupported Markdown fence form/);
   await assert.rejects(readGuideExamples(root, new Map([[name, original.replace('miniapp-snippet: readme.descriptor', 'miniapp-snippet: unreviewed.descriptor')]])),
     /unclassified snippet/);
   const removed = original.replace(/<!-- miniapp-snippet: readme.descriptor -->[\s\S]*?\x60{3}json[\s\S]*?\x60{3}/, '');
   await assert.rejects(readGuideExamples(root, new Map([[name, removed]])), /inventory changed/);
   // A changed checked document must not silently validate the older bytes in a staged SDK.
+  let observedDocumentationMismatch;
   await assert.rejects(checkAuthoringExamples({sdkRoot, root, requireSDKDocs: true,
-    documentOverrides: new Map([[name, original + '\n<!-- deliberate documentation drift -->\n']])}), /staged SDK guide differs/);
+    documentOverrides: new Map([[name, original + '\n<!-- deliberate documentation drift -->\n']])}), error => {
+      observedDocumentationMismatch = error.message;
+      return /staged SDK guide differs/.test(error.message);
+    });
   await record('coverage-and-shipping-guards', {unclassifiedBlock: 'REJECTED', unreviewedLabel: 'REJECTED',
-    removedBlock: 'REJECTED', stagedDocumentationDrift: 'REJECTED', sdkInputSHA256: sdk.inputSHA256});
+    removedBlock: 'REJECTED', unsupportedPrefixes, unsupportedFenceInfo: 'REJECTED',
+    stagedDocumentationDrift: {status: 'REJECTED', observedError: observedDocumentationMismatch,
+      isolatedChangedDocument: observedDocumentationMismatch.startsWith(name + ':'),
+      wholeSDKDocumentationPositive: 'NOT_RUN'},
+    sdkInputSHA256: sdk.inputSHA256});
 });
 
 test('an invalid property in the actual Markdown source produces an original NativeScript diagnostic', async () => {

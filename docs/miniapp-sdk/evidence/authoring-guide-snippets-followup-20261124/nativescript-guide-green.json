@@ -1,0 +1,139 @@
+{
+  "project": {
+    "name": "nativescript-guide",
+    "engine": "nativescript",
+    "root": "/tmp/hanlin-guide-regression-DbxnKp/nativescript-guide",
+    "snippets": [
+      {
+        "id": "ns.construction",
+        "file": "src/construction.js",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 39,
+        "sha256": "2421b9aaa684489afc086ba102b8b85907da396846ed90b0fb02ad4cec7241a1",
+        "mode": "original-source-typecheck"
+      },
+      {
+        "id": "ns.initializers",
+        "file": "src/initializers.js",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 46,
+        "sha256": "9cc3dcc8d5159e4a6266b2c3746b9986570f264545c2e42ebbb0e28d024528b9",
+        "mode": "original-source-typecheck"
+      },
+      {
+        "id": "ns.factories",
+        "file": "src/factories.js",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 56,
+        "sha256": "73efbd1bb8469c592691c0fd66238fce227bad3a0ba07bad8abe5cd4df7185c6",
+        "mode": "original-source-typecheck"
+      },
+      {
+        "id": "ns.properties",
+        "file": "src/properties.js",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 74,
+        "sha256": "9ea0c859676e27711d0e9cc5abb63f28a6093cd62705f30c210891fa6936eda7",
+        "mode": "original-source-typecheck"
+      },
+      {
+        "id": "ns.callbacks",
+        "file": "src/callbacks.js",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 106,
+        "sha256": "40706b43e6d36edb509b426d9bec5a6c75c674af624bbb448d21ca710e497eda",
+        "mode": "original-source-typecheck"
+      },
+      {
+        "id": "ns.presentation",
+        "file": "src/presentation.js",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 130,
+        "sha256": "0ae4a2cea196f8ce13bff4682ad87634c166720c8719d9b4d53219dcb1018d86",
+        "mode": "original-source-typecheck"
+      },
+      {
+        "id": "ns.tabs",
+        "file": "src/tabs.js",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 143,
+        "sha256": "029092aa30d48dc2ca16f807360cdf837967ed6d79b747ffec143664366b0bbd",
+        "mode": "original-source-typecheck"
+      },
+      {
+        "id": "ns.swiftui-provider",
+        "file": "src/swiftui-provider.ts",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 191,
+        "sha256": "b71070542714fe867962b5353eb595303850520b0bb992b929a039064987740c",
+        "mode": "original-source-typecheck"
+      },
+      {
+        "id": "ns.tsconfig",
+        "file": "tsconfig.json",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 225,
+        "sha256": "5788d12bec24da68a5004aff662b30875cb1bea66d89fe6ef706f1f8f20bcf82",
+        "mode": "original-compiler-config"
+      },
+      {
+        "id": "ns.script",
+        "file": "script.json",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 259,
+        "sha256": "f922b1ec55a91350e4eaad6fc11705d4fc426650d3c57992e002506aa43db954",
+        "mode": "public-authoring-loader-fields"
+      },
+      {
+        "id": "ns.package",
+        "file": "package.json",
+        "document": "docs/hanlin-nativescript-guide.md",
+        "line": 274,
+        "sha256": "5bebf3f266f640465e887d9aec6609d2e0d57274541aa8df39d665ab4128b902",
+        "mode": "public-authoring-loader-fields"
+      },
+      {
+        "id": "readme.descriptor",
+        "file": "hanlin.authoring.json",
+        "document": "docs/miniapp-sdk/README.md",
+        "line": 50,
+        "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+        "mode": "public-authoring-project-config"
+      }
+    ],
+    "context": [
+      {
+        "path": "index.ts",
+        "sha256": "0fe9428604dc0b000770acf7c6d6d851551752e1d016687a2eadc06a41709f0d"
+      }
+    ]
+  },
+  "report": {
+    "schemaVersion": 1,
+    "engine": "nativescript",
+    "operation": "validate",
+    "succeeded": true,
+    "diagnostics": [],
+    "sourceRoot": "/tmp/hanlin-guide-regression-DbxnKp/nativescript-guide",
+    "sdk": {
+      "packageVersions": {
+        "@nativescript/core": "9.1.4",
+        "@nativescript/swift-ui": "4.0.2",
+        "@nativescript/ios": "9.1.1",
+        "@nativescript/types": "9.1.4",
+        "@nativescript/vite": "8.0.24",
+        "typescript": "5.9.3",
+        "vite": "8.0.0",
+        "@hanlin/host-services": "1.0.0"
+      },
+      "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+      "compilerVersion": "5.9.3"
+    },
+    "typecheck": {
+      "strict": true,
+      "checkJs": true,
+      "skipLibCheck": true,
+      "dependencyDeclarationsChecked": false
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "unclassifiedBlock": "REJECTED",
+  "unreviewedLabel": "REJECTED",
+  "removedBlock": "REJECTED",
+  "unsupportedPrefixes": [
+    "> ",
+    "> > ",
+    "- ",
+    "1. ",
+    "> 1. ",
+    "    ",
+    "\t"
+  ],
+  "unsupportedFenceInfo": "REJECTED",
+  "stagedDocumentationDrift": {
+    "status": "REJECTED",
+    "observedError": "docs/hanlin-expo-runtime.md: staged SDK guide differs from the checked repository guide",
+    "isolatedChangedDocument": false,
+    "wholeSDKDocumentationPositive": "NOT_RUN"
+  },
+  "sdkInputSHA256": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795"
+}
