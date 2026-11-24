@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T12:46:13.930681+00:00",
+  "runID": 45389020875,
+  "jobID": 138427487852,
+  "sourceCommit": "2cb851067c4339125ab6fb515522796bceb80c35",
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45389020875",
+  "result": "FIRST_MINIAPPS_BUILD_FAILED",
+  "nativePreparation": "EXECUTED_PASS",
+  "export": "EXECUTED_PASS",
+  "miniBuild": {
+    "status": "EXECUTED_FAIL",
+    "exit": 65,
+    "seconds": 1260.912584583,
+    "logBytes": 7968816,
+    "logSHA256": "29c01baf62168b4ebcfbcaa79e33c7e0e0e998f52ab67707e29960eeb16d16c6",
+    "timeoutSeconds": 3600,
+    "hitTimeout": false
+  },
+  "aiBuild": "NOT_RUN",
+  "selectedCases": 52,
+  "executedApplicationCases": 0,
+  "applicationStatus": "NOT_RUN",
+  "compilerHeaders": [
+    {
+      "line": 92452,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift:26:36: error: cannot convert value of type '[String : HanlinValue]' to expected argument type 'HanlinObject<HanlinValue>'"
+    }
+  ],
+  "cause": "Production Expo widget publication passed [String:HanlinValue] to HanlinValue.object, whose associated value is HanlinObject<HanlinValue>. Focused source correction is assigned; no Apple success inferred.",
+  "priorCxxFix": "No old diagnostic in this full log. Separate reviewer is checking actual consumer compilation evidence; absence alone is not its validation.",
+  "artifact": {
+    "id": 14921026306,
+    "bytes": 334177257,
+    "sha256": "7e228d0676a5addfcdd1e00767769d746b566824b3c201293d370cb9630b7dce",
+    "authenticatedAgainstGitHubDigest": true,
+    "retainedArchive": "/tmp/hanlin-native-gate-evidence-45389020875/app-split-45389020875.zip"
+  },
+  "jobLogSHA256": "04399deb59b5507d9b9b402ba71b660c743ad279fdf03cc405df9cbb6267a793",
+  "boundary": "No current app UI/physical-device/release PASS; failure.png is not product acceptance proof. Original exact52 selection preserved. No new test executed to record this evidence.",
+  "files": [
+    {
+      "path": "acceptance.json",
+      "bytes": 2623,
+      "sha256": "8444c947b647b4b54e7b7ba7a4370d7cea5c63ab80196004736efce5a8cfc743"
+    },
+    {
+      "path": "active-command.json",
+      "bytes": 514,
+      "sha256": "8b12230102a39ca46edf146910c3d3030070b67f8ccad5cde3eaad5ca6896e49"
+    },
+    {
+      "path": "artifact-download-receipt.json",
+      "bytes": 10581,
+      "sha256": "6f1e96c39c2b8911de647e7bdd0e87d1a4c2874ebe898616274fafedfbfc91ef"
+    },
+    {
+      "path": "artifacts-api.json",
+      "bytes": 771,
+      "sha256": "fa16c332d19b1c9421ea70847b4143a816744c9210afd087024ec07bd70c80f5"
+    },
+    {
+      "path": "command-events.jsonl",
+      "bytes": 58045,
+      "sha256": "e983bda6f88fe079473a3da79fe072348c35e26b647ff6c35830e4e25cb2a771"
+    },
+    {
+      "path": "commands.jsonl",
+      "bytes": 4367,
+      "sha256": "8cb46e4f3e56bd03a2e3edeff043ce83a58bedf0ee3cbd5581d312108810ca54"
+    },
+    {
+      "path": "diagnostic-context.json",
+      "bytes": 18617,
+      "sha256": "fb1efbf391cabacfcdc00a89c5895a54beafb6f86601d977c55a7ade68f67dbd"
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 1182,
+      "sha256": "5db81c1a069603d28722e719253bdab05cec97c9310cdd87619a6f7cfb2cae9b"
+    },
+    {
+      "path": "documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "cb8c6c97cbae270b65d0dc4aacf364a628da07982ccc6f75ca3f56b9f7e245be"
+    },
+    {
+      "path": "failure-memory.txt",
+      "bytes": 1247,
+      "sha256": "7123438f9aab503ccd35c48ae6cb2780c62cd716406af548c3a04c4e0ee4dc24"
+    },
+    {
+      "path": "failure-processes.txt.gz",
+      "bytes": 16110,
+      "sha256": "cef82f000a7e8b1d21dd90ae41b332402a49c5d6e1409ab7a2fb7f5ceb6e198f"
+    },
+    {
+      "path": "job.log.gz",
+      "bytes": 476699,
+      "sha256": "ae4688742e7c4dac4ad1f1cded65dcb10fc71060259ac45ca9bdf28d9b3d1ae1"
+    },
+    {
+      "path": "mini-build.log.gz",
+      "bytes": 265470,
+      "sha256": "d8bbddfaee74b453e63f565549748f94451fe9ba2f45a5e6b4e233b68408a27d"
+    },
+    {
+      "path": "performance.json",
+      "bytes": 2238,
+      "sha256": "3f927cd668b0b6d098a812f98817c41ae2d0023426d9a7300b272065caf378cb"
+    },
+    {
+      "path": "run-api.json",
+      "bytes": 7226,
+      "sha256": "8933cf29ffae62ce5da5f15122aaac70c3acca4966c74ba9f055bc0842c5d2cb"
+    }
+  ]
+}
