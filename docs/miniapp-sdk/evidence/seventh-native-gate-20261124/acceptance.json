@@ -1,0 +1,23 @@
+{
+  "status": "CANCELLED",
+  "ui": "NOT_VERIFIED",
+  "report_source": "workflow_fallback",
+  "xcresult": "NOT_FOUND_IN_EVIDENCE",
+  "result_bundles": [],
+  "step_outcomes": {
+    "platform": "success",
+    "upstreams": "success",
+    "host_proof": "success",
+    "foreground": "success",
+    "host_lifecycle": "success",
+    "metadata": "success",
+    "native_preparation": "success",
+    "native_artifacts": "success",
+    "standalone_acceptance": "skipped",
+    "paired_acceptance": "cancelled",
+    "signing_dependencies": "skipped",
+    "signed_archives": "skipped"
+  },
+  "sha": "c31c9c5f3bb7172598bc579c33de95ee06ca79b9",
+  "reason": "Workflow cancelled before a final native acceptance report was retained."
+}
