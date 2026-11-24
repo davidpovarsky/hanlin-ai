@@ -3,13 +3,23 @@
   "files": [
     {
       "path": "README.md",
-      "bytes": 4765,
-      "sha256": "53e6c6a416a35178d50926597afa0e1c9a1bb9f275ed037b6407ecb6ec4f8889"
+      "bytes": 6806,
+      "sha256": "a9c37fa9acb9c2a89370fe53a76cd4eeee7721f5be4c3c0903c59fc4204a8c97"
+    },
+    {
+      "path": "analyzer-test-syntax.json",
+      "bytes": 434,
+      "sha256": "ba6423f6421230ec8c529b7391df5e331d68dbbffedf59683a20e74a8f255668"
+    },
+    {
+      "path": "analyzer-test-syntax.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "path": "archive-reuse.json",
-      "bytes": 2655,
-      "sha256": "4f150cd473d98dc91410f370aafbac089adcd1d43b8e81393ef764b353d82f22"
+      "bytes": 5679,
+      "sha256": "bf9aec87229f4fa371fb23d0499354b4bffe99564b7d03518a7aded6eb0091c9"
     },
     {
       "path": "expected-version-bindings.diff",
@@ -23,8 +33,53 @@
     },
     {
       "path": "gap-map.json",
-      "bytes": 9679,
-      "sha256": "b1a3379ff4e72fd47cda765d6bf3e6ecae422c7588481ba1214cfd709057a298"
+      "bytes": 10906,
+      "sha256": "af6148285ad4e1599e9c689ed9fad6e44a9a6955e4e2e86f7e2cc4fbf2b459cc"
+    },
+    {
+      "path": "missing-manifest/archive-import-policy.json",
+      "bytes": 2303,
+      "sha256": "7a0d4d028da5082b53b0ac5031e097f7bf81f57614f42bd864da21660e8f2bb0"
+    },
+    {
+      "path": "missing-manifest/archive-import-policy.txt",
+      "bytes": 1212,
+      "sha256": "627e93dc9c5e41efddbf7461320f4e16d97fa36d8fe3fc9dacfbf31aa798566d"
+    },
+    {
+      "path": "missing-manifest/missing-manifest.json",
+      "bytes": 195,
+      "sha256": "d30b3936a2394695b30e8be1354b347cf286a7bd42c077ec50d6d30540ea901b"
+    },
+    {
+      "path": "missing-manifest/missing-manifest.zip",
+      "bytes": 337,
+      "sha256": "c36267efcae685fb9be96e340cf292bb7ac101ae0678b266102ee1f289dbabc6"
+    },
+    {
+      "path": "missing-manifest-driver.txt",
+      "bytes": 3516,
+      "sha256": "c81ec2deb2b0b601243816f741143b9887003ecd78150841a2174a82c29b84b6"
+    },
+    {
+      "path": "missing-manifest-result.json",
+      "bytes": 996,
+      "sha256": "ebcd7b0eb4669725c4ce56af12a698cb3b46f38d29df76d431db5dddca9a367a"
+    },
+    {
+      "path": "new-negative-cases-plan.json",
+      "bytes": 2133,
+      "sha256": "6e54bc679231443bb9c0112799801ceece10111ac533ba81a90f62aa02293b8f"
+    },
+    {
+      "path": "new-negative-cases.diff",
+      "bytes": 8881,
+      "sha256": "09d5aa6b03ae4142470d5da5d53308b888f088c184e021ed0c6ccc8685e517c2"
+    },
+    {
+      "path": "new-negative-cases.json",
+      "bytes": 3419,
+      "sha256": "3da9f072d8ac19e4c6d1d17c9b40619716eb628cf1bf3a2f5c4ae43f59eeadbe"
     },
     {
       "path": "original-permission-contract.json",

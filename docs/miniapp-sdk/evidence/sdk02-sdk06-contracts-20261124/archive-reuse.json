@@ -44,5 +44,51 @@
   ],
   "originalExecutedMethods": 12,
   "newExecutedMethods": 0,
-  "boundary": "Portable actual ArchivePolicy/parser only; absence of script.json was not an asserted case and is not inferred from the multi-manifest result."
+  "boundary": "Portable actual ArchivePolicy/parser only; absence of script.json was not an asserted case and is not inferred from the multi-manifest result.",
+  "applicabilityAfterFocusedTestAddition": {
+    "scope": "The all-six whole-file comparison above was recorded at base4ea before the additive focused harness change. Five inputs remain byte-identical; the harness whole-file hash has changed and is not represented as identical.",
+    "currentInputs": [
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
+        "originalSHA256": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac",
+        "currentSHA256": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac",
+        "sameWholeFile": true
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift",
+        "originalSHA256": "57b142d4770a8f8916d3d651f1a727a0ae55254cc05a082db12e1c5d22f30ba2",
+        "currentSHA256": "57b142d4770a8f8916d3d651f1a727a0ae55254cc05a082db12e1c5d22f30ba2",
+        "sameWholeFile": true
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+        "originalSHA256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76",
+        "currentSHA256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76",
+        "sameWholeFile": true
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinPackageCenter.swift",
+        "originalSHA256": "cd98b6ffb24ec4c0463d021a30204b68bcb96f1bd8dc3e2749ca5862f21dac2b",
+        "currentSHA256": "cd98b6ffb24ec4c0463d021a30204b68bcb96f1bd8dc3e2749ca5862f21dac2b",
+        "sameWholeFile": true
+      },
+      {
+        "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+        "originalSHA256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+        "currentSHA256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+        "sameWholeFile": true
+      },
+      {
+        "path": "Scripts/MiniApps/Tests/test_archive_import_policy.py",
+        "originalSHA256": "296b96b3a70d2fa6b9657cebb0e4b9f98a29d78b43343f66e5ff1e1450fc62f8",
+        "currentSHA256": "fd9a842d4ec979d35c6572b8b1d6968e93cd701ee5ade12dda70973242ec5a77",
+        "sameWholeFile": false
+      }
+    ],
+    "unchangedTestBodies": "The original three generated Swift Directory methods are byte-identical after removing only the new method; SHA256 f0c4281b9b0edbbfed458a2b6e186a8988e287e571b9355381ce88d9a93e9cda. The separate ArchivePolicy test file remains byte-identical.",
+    "harnessDelta": "New fixture has independent filenames; old fixture generation is unchanged. --filter is optional, and original default swift test flags are unchanged.",
+    "newExecution": "Only realArchiveWithoutPackageManifestIsRejected ran; missing-manifest-result.json reports one actual pass. The prior twelve are reused, not rerun.",
+    "proof": "new-negative-cases-plan.json and new-negative-cases.diff",
+    "noNewOriginalCasePassClaim": true
+  }
 }

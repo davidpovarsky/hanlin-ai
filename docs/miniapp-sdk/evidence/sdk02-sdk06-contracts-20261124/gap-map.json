@@ -3,7 +3,6 @@
   "baseSourceSHA": "4ea670e120a3217423bc73db68dab514c78079de",
   "scope": "Only the remaining SDK02/SDK06 manifest/plugin/exposure/foreground-entry/original-permission proof seams.",
   "noProductionChanges": true,
-  "testOnlyChange": "Three diagnostic expected-version bindings in HanlinScriptAnalyzerTests.swift; expected-version-bindings.json records the exact unchanged assertions and fixtures.",
   "gaps": [
     {
       "criterion": "SDK02 ambiguous manifest",
@@ -13,11 +12,21 @@
     },
     {
       "criterion": "SDK02 missing package manifest",
-      "status": "TEST_CASE_MISSING",
+      "status": "EXECUTED_PASS",
       "source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift:224-235",
-      "existingBehavior": "Zero manifests produces error finding ambiguousManifest with Archive does not contain script.json.",
-      "currentTestGap": "Existing ambiguousManifest test supplies two wrapper manifests. PackageCenter malformedManifest supplies invalid JSON with script.json present. AtomicStore missingArtifactManifest is a different installed-artifact contract.",
-      "smallestNextExecution": "Add one focused actual ArchivePolicy case with a nonempty archive entry list lacking script.json, assert noninstallable and the existing missing-manifest message/code. Execute only that new case, not the existing twelve. A real PackageCenter ZIP case can additionally prove extraction/import integration."
+      "method": "HanlinArchiveDirectoryTests/realArchiveWithoutPackageManifestIsRejected",
+      "evidence": "missing-manifest-result.json",
+      "rawLog": "missing-manifest/archive-import-policy.txt",
+      "fixture": "missing-manifest/missing-manifest.zip",
+      "assertedResult": {
+        "isInstallable": false,
+        "manifestPath": null,
+        "code": "ambiguousManifest",
+        "severity": "error",
+        "entry": null,
+        "message": "Archive does not contain script.json."
+      },
+      "scope": "Actual ZIP central-directory count plus production ArchivePolicy over metadata of a real two-entry Expo-shaped ZIP lacking script.json. ZIPFoundation extraction, native install, and Apple execution are not claimed."
     },
     {
       "criterion": "SDK02/SDK06 incompatible declared plugin and current/backward handling",
@@ -33,11 +42,27 @@
     },
     {
       "criterion": "SDK02 missing/uninstalled native plugin",
-      "status": "TEST_CASE_MISSING",
-      "source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift:618-629",
-      "existingBehavior": "Unknown names in declared Expo native plugin metadata enter the existing unsupported/default branch.",
-      "currentTestGap": "The existing plugin tests cover incompatible versions of known plugins, not an unavailable plugin name. Arbitrary legacy bare-module tests are not substituted for modern native-plugin availability.",
-      "smallestNextExecution": "Add an unavailable-native-plugin fixture to the existing modern analyzer test, assert canInstall=false and an error naming that requested plugin. No runtime acceptance rule or permission gate needs to change."
+      "status": "NEEDS_APPLE_EXECUTION",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "testSource": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+      "target": "HanlinScriptCompilerTests",
+      "methods": [
+        "unavailableModernNativePluginsFailBeforeImport"
+      ],
+      "engines": [
+        "hanlin-expo",
+        "hanlin-nativescript"
+      ],
+      "fixtureContract": "For each engine, the existing package helper stages real source files and decodes script.json. Current generated runtime version and an empty plugin map must be installable; changing only the plugin map to @hanlin-test/unavailable-native-plugin 1.0.0 must be rejected.",
+      "assertedNegativeFields": [
+        "canInstall=false",
+        "finding.state=unsupported",
+        "finding.severity=error",
+        "finding.sourcePath=engine package.json",
+        "finding.message contains requires @hanlin-test/unavailable-native-plugin 1.0.0"
+      ],
+      "diagnosticBoundary": "The actual Analyzer plugin finding supplies state, severity, sourcePath and message, but no stable code. No code is invented. This fixture does not create/extract a ZIP.",
+      "localCheck": "analyzer-test-syntax.json is syntax-only; it does not establish Apple typechecking or test execution."
     },
     {
       "criterion": "SDK02 unsupported/invalid exposure declaration",
@@ -75,9 +100,9 @@
     "inputs": {
       "runtime_job_foundation_only": false,
       "force_clean_build": true,
-      "test_filter": "HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic)"
+      "test_filter": "HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)"
     },
-    "expectedSelectedMethods": 7,
+    "expectedSelectedMethods": 8,
     "module": "HanlinScriptCompilerTests",
     "suite": "HanlinScriptAnalyzerTests",
     "selectors": [
@@ -87,7 +112,8 @@
       "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/nativeScriptCoreContract",
       "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/expoSwiftUIContract",
       "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/expoMultiExposureMatrix",
-      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/malformedPreparedEntrypointsFailWithStableDiagnostic"
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/malformedPreparedEntrypointsFailWithStableDiagnostic",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/unavailableModernNativePluginsFailBeforeImport"
     ],
     "actualCommand": [
       "swift",
@@ -95,7 +121,7 @@
       "--package-path",
       "Packages/HanlinPlatform",
       "--filter",
-      "HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic)"
+      "HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)"
     ],
     "host": "xcode-27 Mac runner; workflow selects newest installed Xcode27; package declares macOS26. This is Mac SwiftPM component execution, not iOS application UI acceptance.",
     "timeoutMinutes": 20,
@@ -109,7 +135,7 @@
       "Checks out the intended exact ref, selects Xcode, sets Node22.17.0 and resolves the isolated package dependencies.",
       "Compiler Babel and original ScriptWidget support resources are tracked in this source.",
       "The legacy metadata checks, JavaScriptCore bootstrap tests and explicit ScriptingApplicationRuntime build steps only run for test_filter exactly HanlinScriptingApplicationRuntimeTests; they do not run for this modern filter.",
-      "SwiftPM may build other package targets for discovery, but the selected execution is only the seven analyzer methods.",
+      "SwiftPM may build other package targets for discovery, but the selected execution is only the eight analyzer methods (seven existing plus one new).",
       "force_clean_build=true bypasses .build restoration for this first source-correct proof; it does not change product or runtime behavior."
     ],
     "concurrency": {
@@ -119,7 +145,7 @@
     },
     "receiptRequirements": [
       "Do not treat swift test exit0 or the XCTest wrapper reporting0tests as sufficient.",
-      "Require the seven exact Swift Testing method/display-name pass rows, total7, failures0, cancellations0 and skips0.",
+      "Require the eight exact Swift Testing method/display-name pass rows, total8, failures0, cancellations0 and skips0.",
       "This normal workflow branch has no upload-artifact step; retain the exact completed job raw log and source SHA as the receipt.",
       "No selected execution result exists yet."
     ]
@@ -142,5 +168,10 @@
     "13 Host authoring component cases",
     "React/SwiftUI missing-modifier case outside this bounded follow-up"
   ],
-  "currentMainGateBoundary": "The current app gate38 does not include HanlinScriptCompilerTests. Additional SDK-only UI methods planned by root do not automatically execute this separate package test target."
+  "currentMainGateBoundary": "The current app gate38 does not include HanlinScriptCompilerTests. Additional SDK-only UI methods planned by root do not automatically execute this separate package test target.",
+  "testOnlyChanges": [
+    "Three diagnostic expected-version bindings in HanlinScriptAnalyzerTests.swift at bbf5eeb71d62412242ddc54cf62c410cf3c7221d; all original assertions and fixtures otherwise unchanged.",
+    "One new modern Analyzer method tests unavailable native plugins in both Expo and NativeScript using current generated runtime versions and valid baseline fixtures.",
+    "One new real missing-manifest ZIP case plus optional --filter in the existing portable archive harness; the original twelve methods are not rerun."
+  ]
 }

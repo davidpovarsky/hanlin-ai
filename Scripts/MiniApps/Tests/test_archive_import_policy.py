@@ -19,6 +19,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[3]
 parser = argparse.ArgumentParser()
 parser.add_argument("--output", type=Path, required=True)
+parser.add_argument("--filter", help="Execute only matching existing/new Swift Testing methods.")
 args = parser.parse_args()
 args.output.mkdir(parents=True, exist_ok=True)
 compiler_root = ROOT / "Packages/HanlinPlatform/Sources/HanlinScriptCompiler"
@@ -80,6 +81,17 @@ let package = Package(name: "ArchiveImportPolicyProbe", targets: [
                      "compressedBytes": item.compress_size, "uncompressedBytes": item.file_size}
                     for item in archive.infolist()]
     (fixtures / "ordinary.json").write_text(json.dumps(metadata))
+
+    with zipfile.ZipFile(fixtures / "missing-manifest.zip", "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("expo/app/bundle.js", "console.log('prepared');")
+        archive.writestr("expo/app/package.json", '{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo"}')
+    with zipfile.ZipFile(fixtures / "missing-manifest.zip") as archive:
+        missing_metadata = [{"path": item.filename, "kind": "file",
+                             "compressedBytes": item.compress_size, "uncompressedBytes": item.file_size}
+                            for item in archive.infolist()]
+    (fixtures / "missing-manifest.json").write_text(json.dumps(missing_metadata))
+    (args.output / "missing-manifest.zip").write_bytes((fixtures / "missing-manifest.zip").read_bytes())
+    (args.output / "missing-manifest.json").write_bytes((fixtures / "missing-manifest.json").read_bytes())
     valid = (fixtures / "zip64.zip").read_bytes()
     eocd = valid.rfind(b"PK\x05\x06")
     locator = eocd - 20
@@ -127,6 +139,23 @@ struct HanlinArchiveDirectoryTests {
         #expect(result.manifestPath == "script.json")
     }
 
+    @Test func realArchiveWithoutPackageManifestIsRejected() throws {
+        let data = try bytes("missing-manifest.zip")
+        let count = try DirectoryParser.count(data)
+        let metadata = try JSONDecoder().decode([HanlinArchiveEntryMetadata].self, from: bytes("missing-manifest.json"))
+        #expect(count == 2)
+        #expect(count == metadata.count)
+        #expect(!metadata.contains { $0.path.hasSuffix("script.json") })
+        let result = HanlinArchivePolicy().inspect(entries: metadata,
+            centralDirectoryEntryCount: count, archiveBytes: Int64(data.count))
+        #expect(!result.isInstallable)
+        #expect(result.manifestPath == nil)
+        let finding = try #require(result.findings.first { $0.code == .ambiguousManifest })
+        #expect(finding.severity == .error)
+        #expect(finding.entry == nil)
+        #expect(finding.message == "Archive does not contain script.json.")
+    }
+
     @Test func realZip64ArchiveKeepsTheEntireDirectoryCount() throws {
         #expect(try DirectoryParser.count(bytes("zip64.zip")) == 65_536)
         #expect(try DirectoryParser.count(bytes("classic-count-sentinel.zip")) == 65_535)
@@ -149,9 +178,11 @@ struct HanlinArchiveDirectoryTests {
     if not swift:
         raise SystemExit("Swift is required to execute the actual production archive policy.")
     toolchain = subprocess.run([swift, "--version"], capture_output=True, text=True, check=True).stdout.strip()
-    completed = subprocess.run([swift, "test", "--package-path", str(package),
-                                "--scratch-path", str(package / ".build")],
-                               capture_output=True, text=True, timeout=180)
+    command = [swift, "test", "--package-path", str(package),
+               "--scratch-path", str(package / ".build")]
+    if args.filter:
+        command += ["--filter", args.filter]
+    completed = subprocess.run(command, capture_output=True, text=True, timeout=180)
     output = completed.stdout + completed.stderr
     (args.output / "archive-import-policy.txt").write_text(output)
     receipt = {
@@ -159,12 +190,16 @@ struct HanlinArchiveDirectoryTests {
         "status": "EXECUTED_PASS" if completed.returncode == 0 else "FAILED",
         "toolchain": toolchain,
         "command": "swift test (isolated portable package; production policy and private parser verbatim)",
+        "argv": command,
+        "selectedFilter": args.filter,
         "inputs": [{"path": str(file.relative_to(ROOT)), "sha256": hashlib.sha256(file.read_bytes()).hexdigest()}
                    for file in [contracts_file, policy_file, path_file, center_file, tests_file, Path(__file__)]],
         "parserBodySHA256": hashlib.sha256(parser_body.encode()).hexdigest(),
         "rawLog": "archive-import-policy.txt",
         "fixtures": {"ordinaryZIPEntries": len(metadata), "ZIP64Entries": 65_536, "classicZIPEntries": 65_535,
-                     "malformedZIP64Cases": len(corruptions)},
+                     "malformedZIP64Cases": len(corruptions),
+                     "missingManifestEntries": len(missing_metadata),
+                     "missingManifestArchiveSHA256": hashlib.sha256((fixtures / "missing-manifest.zip").read_bytes()).hexdigest()},
         "notRun": ["ZIPFoundation extraction", "Darwin shared store", "Apple SDK compilation"],
     }
     (args.output / "archive-import-policy.json").write_text(json.dumps(receipt, indent=2) + "\n")

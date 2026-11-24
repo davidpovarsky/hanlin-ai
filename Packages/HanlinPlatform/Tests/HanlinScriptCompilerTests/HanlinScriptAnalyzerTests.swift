@@ -319,6 +319,49 @@ struct HanlinScriptAnalyzerTests {
         })
     }
 
+    @Test("Unavailable native plugins fail before Expo and NativeScript import")
+    func unavailableModernNativePluginsFailBeforeImport() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        let missingPlugin = "@hanlin-test/unavailable-native-plugin"
+        let engines: [(runtime: String, directory: String, bundle: String, contract: String, version: String)] = [
+            ("hanlin-expo", "expo/app", "bundle.js", "hanlinExpo", HanlinMiniAppHostVersions.expoUIVersion),
+            ("hanlin-nativescript", "nativescript/app", "bundle.mjs", "hanlinNativeScript", HanlinMiniAppHostVersions.nativeScriptRuntimeVersion)
+        ]
+        for engine in engines {
+            let entry = "\(engine.directory)/\(engine.bundle)"
+            let packagePath = "\(engine.directory)/package.json"
+            let manifest = try JSONSerialization.data(withJSONObject: [
+                "name": "Native plugin fixture", "version": "1.0.0",
+                "entry": entry, "hanlinRuntime": engine.runtime
+            ])
+            let pluginDeclarations: [[String: String]] = [[:], [missingPlugin: "1.0.0"]]
+            for plugins in pluginDeclarations {
+                let prepared = try JSONSerialization.data(withJSONObject: [
+                    "name": "fixture", "main": engine.bundle, "hanlinRuntime": engine.runtime,
+                    engine.contract: ["runtimeVersion": engine.version, "plugins": plugins]
+                ] as [String: Any])
+                let fixture = try package(files: [
+                    "script.json": String(decoding: manifest, as: UTF8.self),
+                    entry: "console.log('prepared');",
+                    packagePath: String(decoding: prepared, as: UTF8.self)
+                ])
+                defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+                let preview = try analyzer.analyze(fixture)
+                if plugins.isEmpty {
+                    #expect(preview.canInstall)
+                } else {
+                    #expect(!preview.canInstall)
+                    let finding = try #require(preview.findings.first { $0.message.contains(missingPlugin) })
+                    #expect(finding.state == .unsupported)
+                    #expect(finding.severity == .error)
+                    #expect(finding.sourcePath == packagePath)
+                    #expect(finding.message.contains("requires \(missingPlugin) 1.0.0"))
+                }
+            }
+        }
+    }
+
     @Test("Detects capability-bearing ambient Scripting globals")
     func ambientGlobals() throws {
         let fixture = try package(files: [
