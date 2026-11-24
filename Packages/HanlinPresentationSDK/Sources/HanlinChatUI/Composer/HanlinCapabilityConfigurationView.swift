@@ -7,6 +7,7 @@ import HanlinPlatformContracts
 public struct HanlinCapabilityConfigurationView<CustomPanel: View>: View {
     public let capability: HanlinComposerCapabilityDescriptor
     @Binding private var attachment: HanlinCapabilityAttachment
+    @Environment(\.hanlinCapabilityCustomPanelProvider) private var environmentPanelProvider
     private let customPanel: (String, Binding<HanlinJSONValue>) -> CustomPanel
     private let supportsCustomPanel: (String) -> Bool
     private let onDone: () -> Void
@@ -36,8 +37,24 @@ public struct HanlinCapabilityConfigurationView<CustomPanel: View>: View {
     }
     private var hasUnsupportedPanel: Bool {
         panels.contains { panel in
-            if let id = panel.customViewID { return !supportsCustomPanel(id) }
+            if let id = panel.customViewID {
+                return !supportsCustomPanel(id)
+                    && environmentPanelProvider?.supports(id, for: capability.reference) != true
+            }
             return false
+        }
+    }
+
+    @ViewBuilder
+    private func customPanelContent(for panelID: String) -> some View {
+        if supportsCustomPanel(panelID) {
+            customPanel(panelID, $attachment.configuration)
+        } else if let panel = environmentPanelProvider?.panel(
+            for: panelID, reference: capability.reference, configuration: $attachment.configuration
+        ) {
+            panel
+        } else {
+            Text("hanlin.composer.capabilities.customUnavailable", bundle: HanlinLocalization.bundle)
         }
     }
 
@@ -57,6 +74,7 @@ public struct HanlinCapabilityConfigurationView<CustomPanel: View>: View {
                     }
                 }
                 .pickerStyle(.menu)
+                .frame(minHeight: 44)
                 .accessibilityIdentifier("hanlin-capability-action")
             }
             if panels.count > 1 {
@@ -65,12 +83,13 @@ public struct HanlinCapabilityConfigurationView<CustomPanel: View>: View {
                     ForEach(panels) { panel in Text(panel.title).tag(panel.id) }
                 }
                 .pickerStyle(.menu)
+                .frame(minHeight: 44)
                 .accessibilityIdentifier("hanlin-capability-panel")
             }
             if let panel = selectedPanel {
                 if panels.count == 1 { Text(panel.title).font(.subheadline.weight(.semibold)) }
                 if let customViewID = panel.customViewID {
-                    customPanel(customViewID, $attachment.configuration)
+                    customPanelContent(for: customViewID)
                         .accessibilityIdentifier("hanlin-capability-custom-panel")
                 }
                 ForEach(panel.fields) { field in
@@ -87,7 +106,7 @@ public struct HanlinCapabilityConfigurationView<CustomPanel: View>: View {
             }
             Button(action: onDone) {
                 Text("hanlin.composer.capabilities.done", bundle: HanlinLocalization.bundle)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: .infinity, minHeight: 44)
             }
             .buttonStyle(.borderedProminent)
             .disabled(!issues.isEmpty || hasUnsupportedPanel)
@@ -194,6 +213,8 @@ private struct HanlinCapabilityFieldView: View {
             }
         ))
         .toggleStyle(.switch)
+        .frame(minHeight: 44)
+        .contentShape(Rectangle())
         .accessibilityIdentifier("hanlin-capability-option-\(field.key)-\(option.id)")
     }
 }
@@ -233,6 +254,7 @@ struct HanlinCapabilityNumberField: View {
             TextField(title, text: text)
                 .textFieldStyle(.roundedBorder)
                 .multilineTextAlignment(.trailing)
+                .frame(minWidth: 80, minHeight: 44)
                 .accessibilityIdentifier(accessibilityID)
                 #if canImport(UIKit)
                 .keyboardType(.numbersAndPunctuation)

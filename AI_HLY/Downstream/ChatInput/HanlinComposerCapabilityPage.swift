@@ -14,6 +14,8 @@ struct HanlinComposerCapabilityPage: View {
         if let draft, let id = editingAttachmentID,
            let attachment = draft.capabilityAttachments.first(where: { $0.id == id }) {
             if let descriptor = capabilities.first(where: { $0.id == attachment.reference.id }) {
+                // Inherits hanlinCapabilityCustomPanelProvider from the chat
+                // host, so registered native panels use this same Morph page.
                 HanlinCapabilityConfigurationView(
                     capability: descriptor,
                     attachment: Binding(

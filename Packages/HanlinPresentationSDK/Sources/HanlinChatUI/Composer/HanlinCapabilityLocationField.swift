@@ -79,6 +79,7 @@ struct HanlinCapabilityLocationField: View {
                 } label: {
                     Label(String(localized: "hanlin.composer.capabilities.useMapCenter",
                                  bundle: HanlinLocalization.bundle), systemImage: "mappin.circle")
+                        .frame(maxWidth: .infinity, minHeight: 44)
                 }
                 .buttonStyle(.bordered)
                 .disabled(visibleCenter == nil)

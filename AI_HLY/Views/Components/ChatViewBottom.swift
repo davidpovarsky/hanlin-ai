@@ -289,6 +289,7 @@ struct ChatViewBottom: View {
 
     @Environment(\.modelContext) private var context
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.hanlinCapabilityCustomPanelProvider) private var capabilityCustomPanels
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
@@ -1005,6 +1006,7 @@ struct ChatViewBottom: View {
             morphHomeOnly: morphHomeOnly,
             enabledCapabilities: detachedCapabilities
         )
+        .environment(\.hanlinCapabilityCustomPanelProvider, capabilityCustomPanels)
     }
 
     private var toolsDrawerView: some View {
@@ -1021,6 +1023,7 @@ struct ChatViewBottom: View {
             composerCapabilities: composerCapabilities,
             onAttachCapability: { attachCapability($0, actionID: $1) }
         )
+        .environment(\.hanlinCapabilityCustomPanelProvider, capabilityCustomPanels)
     }
 
     // Keep live attachment, prompt, suggestion and mode views together so a
@@ -1878,7 +1881,11 @@ struct ChatViewBottom: View {
                   descriptor.reference.revision == attachment.reference.revision else { return false }
             if let actionID = attachment.actionID,
                !descriptor.actions.contains(where: { $0.id == actionID }) { return false }
-            return descriptor.configuration?.validationIssues(for: attachment.configuration).isEmpty ?? true
+            guard descriptor.validationIssues(for: attachment).isEmpty else { return false }
+            return descriptor.configuration?.panels.allSatisfy { panel in
+                guard let panelID = panel.customViewID else { return true }
+                return capabilityCustomPanels?.supports(panelID, for: descriptor.reference) == true
+            } ?? true
         }
     }
 

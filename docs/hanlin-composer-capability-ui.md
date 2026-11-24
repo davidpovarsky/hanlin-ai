@@ -30,7 +30,27 @@ The declaration can contain multiple panels. The view renders a native panel men
 
 The map supports tapping a pin, selecting its visible center and editing coordinates with native text controls. It does not request the current location or run a places search. The field's minimum and maximum apply to `radiusMeters`. Unknown/invalid values remain subject to the configuration schema; invalid intermediate number text cannot silently send a previously valid value.
 
-For a host-specific native component, use the generic initializer:
+For a host-specific native component, register the provider above the real chat/composer root. The existing app page and the SDK configuration view inherit the same environment value:
+
+~~~swift
+ChatWorkspace()
+    .hanlinCapabilityCustomPanels(
+        supports: { reference, panelID in
+            reference.kind == .miniApp
+                && reference.sourceID == "my.library"
+                && reference.capabilityID == "search"
+                && panelID == "my.catalog"
+        }
+    ) { reference, panelID, configuration in
+        MyCatalogPicker(configuration: configuration)
+    }
+~~~
+
+The provider receives the full capability reference, manifest `customViewID` and a binding to the draft configuration. Register only known native components, and match the capability identity as well as the panel ID. This hook does not load arbitrary Swift, invoke a script or add a tool executor. A host that already owns a provider value can install it through `EnvironmentValues.hanlinCapabilityCustomPanelProvider`; registration can be scoped to one chat subtree.
+
+The default configuration initializer resolves registered panels from this environment. An unknown panel shows an unavailable message and disables Done. The actual chat composer also blocks sending while an attached custom panel lacks a registered component. It never launches an ordinary MiniApp as a substitute.
+
+A host rendering a configuration view directly can instead use the generic initializer; its explicitly supported panels take priority over environment fallback:
 
 ```swift
 HanlinCapabilityConfigurationView(
@@ -43,7 +63,7 @@ HanlinCapabilityConfigurationView(
 }
 ```
 
-The host resolves `customViewID` to a component it actually provides. The default initializer shows an unavailable message and disables Done for a custom panel it cannot render. It never launches an ordinary MiniApp as a substitute. The host validates custom component output against the declared action/input contract before dispatch.
+Both registration routes edit the same attachment binding. The host validates custom component output against the declared action/input contract before dispatch. Catalog rows, panel/action menus, coordinate/radius inputs and the map-center action retain at least 44-point targets inside the existing bubble's scroll viewport.
 
 ## @ and / queries
 
@@ -58,6 +78,10 @@ Focused tests are in `HanlinComposerCapabilityTests.swift`:
 - UTF-16 / RTL / emoji token replacement and caret positioning;
 - slash query replacement, stale query and marked-text rejection;
 - email/URL rejection and preserved model-mention representation;
-- independent drafts, immutable sent snapshots and repeated selection.
+- independent drafts, immutable sent snapshots, repeated selection and action-change collision handling.
+
+`HanlinCapabilityCustomPanelProviderTests.swift` checks capability-scoped routing, unavailable routes, registration without rendering, and forwarding the live draft binding.
+
+`AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift` uses the existing acceptance launch infrastructure to exercise MiniApp attachment without foreground launch, attachment-only send availability, Hebrew text and the real caret with `@` and `/`, and catalog/map edit preservation. The catalog/map fixture contains metadata only; these tests do not claim a model response or tool execution.
 
 The draft tests require UIKit and therefore an iOS test destination. Native compilation, simulator interaction and application integration must be recorded separately; source tests and documentation are not build receipts.
