@@ -1,0 +1,259 @@
+{
+  "arguments" : [
+    {
+      "value" : "true"
+    },
+    {
+      "value" : "false"
+    },
+    {
+      "value" : "\"{\"number\":9007199254740993}\""
+    },
+    {
+      "value" : "\"{\"nested\":[{\"number\":1.25}]}\""
+    },
+    {
+      "value" : "\"{\"nested\":{\"number\":1e100}}\""
+    },
+    {
+      "value" : "\"{\"number\":0}\""
+    }
+  ],
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "a0306c5f0b9158049f3b4729bc0353ba3785ebdd",
+      "deviceName" : "My Mac",
+      "modelName" : "Virtual Machine",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "duration" : "Average duration 0.11 seconds",
+  "durationInSeconds" : 0.10836982727050781,
+  "functionName" : "nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+  "hasMediaAttachments" : false,
+  "hasPerformanceMetrics" : false,
+  "testDescription" : "Test case with 8 runs",
+  "testIdentifier" : "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+  "testIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+  "testName" : "nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ],
+  "testResult" : "Passed",
+  "testRuns" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.String",
+              "name" : "input : \"{\"number\":0}\"",
+              "nodeType" : "Test Value"
+            },
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : true",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        }
+      ],
+      "duration" : "0.13s",
+      "durationInSeconds" : 0.1255810260772705,
+      "name" : "\"{\"number\":0}\", true",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=9ab1f6b37af7f435558fa4ed84df9b7155ba6a15e868d831fbd7a75214175d77",
+      "nodeType" : "Arguments",
+      "result" : "Passed"
+    },
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.String",
+              "name" : "input : \"{\"nested\":[{\"number\":1.25}]}\"",
+              "nodeType" : "Test Value"
+            },
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : false",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        }
+      ],
+      "duration" : "0.13s",
+      "durationInSeconds" : 0.1252739429473877,
+      "name" : "\"{\"nested\":[{\"number\":1.25}]}\", false",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=f7b65bb213ae4e0ea464b93db40be9148dcd4d37cb135bbfa4c1c5ae5aa9f6b6",
+      "nodeType" : "Arguments",
+      "result" : "Passed"
+    },
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.String",
+              "name" : "input : \"{\"nested\":[{\"number\":1.25}]}\"",
+              "nodeType" : "Test Value"
+            },
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : true",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        }
+      ],
+      "duration" : "0.13s",
+      "durationInSeconds" : 0.12506699562072754,
+      "name" : "\"{\"nested\":[{\"number\":1.25}]}\", true",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=07f68592f370c5ab1698e1b97b1c352252e3e5af8f63706979348f74af2cca75",
+      "nodeType" : "Arguments",
+      "result" : "Passed"
+    },
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.String",
+              "name" : "input : \"{\"number\":0}\"",
+              "nodeType" : "Test Value"
+            },
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : false",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        }
+      ],
+      "duration" : "0.13s",
+      "durationInSeconds" : 0.12565088272094727,
+      "name" : "\"{\"number\":0}\", false",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=f824e3ee72e4040a38d8803538e0bba40157d50ca4764117cc654f11577a752e",
+      "nodeType" : "Arguments",
+      "result" : "Passed"
+    },
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.String",
+              "name" : "input : \"{\"number\":9007199254740993}\"",
+              "nodeType" : "Test Value"
+            },
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : false",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        }
+      ],
+      "duration" : "0.12s",
+      "durationInSeconds" : 0.1249380111694336,
+      "name" : "\"{\"number\":9007199254740993}\", false",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=a0bea0f782f2f8b5d7eb7476d822f00e6880f865e87d679b5ad63414864323dd",
+      "nodeType" : "Arguments",
+      "result" : "Passed"
+    },
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.String",
+              "name" : "input : \"{\"nested\":{\"number\":1e100}}\"",
+              "nodeType" : "Test Value"
+            },
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : false",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        }
+      ],
+      "duration" : "0.08s",
+      "durationInSeconds" : 0.08018279075622559,
+      "name" : "\"{\"nested\":{\"number\":1e100}}\", false",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=155e5bad54ad19af15eef8b1d70ce636b620baf27b67f98b6294de78344bbe98",
+      "nodeType" : "Arguments",
+      "result" : "Passed"
+    },
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.String",
+              "name" : "input : \"{\"nested\":{\"number\":1e100}}\"",
+              "nodeType" : "Test Value"
+            },
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : true",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        }
+      ],
+      "duration" : "0.08s",
+      "durationInSeconds" : 0.07999491691589355,
+      "name" : "\"{\"nested\":{\"number\":1e100}}\", true",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=38622c62d752bdd318b66425e9ba3e0f16f52c924d2f5125c789e6f2981e6d8a",
+      "nodeType" : "Arguments",
+      "result" : "Passed"
+    },
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "details" : "Swift.String",
+              "name" : "input : \"{\"number\":9007199254740993}\"",
+              "nodeType" : "Test Value"
+            },
+            {
+              "details" : "Swift.Bool",
+              "name" : "requiresApproval : true",
+              "nodeType" : "Test Value"
+            }
+          ],
+          "name" : "Arguments",
+          "nodeType" : "Arguments"
+        }
+      ],
+      "duration" : "0.08s",
+      "durationInSeconds" : 0.08027005195617676,
+      "name" : "\"{\"number\":9007199254740993}\", true",
+      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=ebd7a63804c1e8cab55684a66ef1c4d8faaecc94c464e47c30f7ca0e92f63986",
+      "nodeType" : "Arguments",
+      "result" : "Passed"
+    }
+  ]
+}

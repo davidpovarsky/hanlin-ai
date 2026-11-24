@@ -1,0 +1,14 @@
+[
+  {
+    "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+    "exit_code": 0,
+    "raw_file": "18-NativeCoreTests-arguments-0.stdout.log",
+    "sha256": "2bdefa28427616ee6dc4444c1f2169851097ceac0dc4570d9da561cdd03f0089"
+  },
+  {
+    "method": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)",
+    "exit_code": 0,
+    "raw_file": "19-NativeCoreTests-arguments-1.stdout.log",
+    "sha256": "e1652762138fc22633ebd72ed1deb03885a20cecbc7c7efe13117126648a5118"
+  }
+]
