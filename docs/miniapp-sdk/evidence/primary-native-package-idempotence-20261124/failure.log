@@ -1,0 +1,35 @@
+{"status":"reused","toolingRoot":"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript","files":5966,"packages":140}
+
+> hanlin-nativescript-tooling@1.0.0 prepare:ios-dependencies
+> node prepare-ios-dependencies.mjs
+
+file:///Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript/build-host-services.mjs:44
+  for (const [name, bytes] of files) if (await readFile(path.join(output, name), 'utf8') !== bytes) throw new Error(`Generated NativeScript Host Services drift: ${name}`);
+                                                                                                          ^
+
+Error: Generated NativeScript Host Services drift: package.json
+    at file:///Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript/build-host-services.mjs:44:107
+
+Node.js v24.5.0
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript/build-host-services.mjs --check
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:924:11)
+    at execFileSync (node:child_process:960:15)
+    at file:///Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript/prepare-ios-dependencies.mjs:11:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:371:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:669:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 97250,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v24.5.0

@@ -1,0 +1,37 @@
+{
+  "status": "ORIGINAL_HELPER_VERIFIED",
+  "startedAt": "2026-11-24T19:36:17.396897+00:00",
+  "repository": "davidpovarsky/hanlin-ai",
+  "runID": "42926628418",
+  "dependencyHash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+  "expectedInnerSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+  "destination": "/mnt/development/projects/transfers/hanlin-runtimecore-42926628418-20261124",
+  "credentialTransfer": false,
+  "exitCode": 0,
+  "elapsedSeconds": 26.481353607028723,
+  "completedAt": "2026-11-24T19:36:44.830122+00:00",
+  "helperSHA256": "059f37520387b3cf49d7d08fd22c81e5c9bd4050ca90cd76f2b5989aafcb7038",
+  "argv": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "python3",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/Runtime/runtime_bundle_source.py",
+    "davidpovarsky/hanlin-ai",
+    "42926628418",
+    "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "/mnt/development/projects/transfers/hanlin-runtimecore-42926628418-20261124"
+  ],
+  "artifact": {
+    "id": 13813704965,
+    "name": "hanlin-runtime-bundle-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "sizeInBytes": 86367710,
+    "authenticatedOuterDigest": "sha256:f329036ba1ed870b9afb43ed164418f987505361d2a3276bfef1a89826cab850",
+    "expiresAt": "2026-11-25T00:02:19Z"
+  },
+  "outerDigestBoundary": "Authenticated API metadata retained; original gh run download extracts the artifact, so no second raw outer download was made or claimed locally hashed.",
+  "archive": "/mnt/development/projects/transfers/hanlin-runtimecore-42926628418-20261124/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+  "archiveBytes": 86253335,
+  "archiveSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f"
+}
