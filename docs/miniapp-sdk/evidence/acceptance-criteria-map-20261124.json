@@ -45,7 +45,7 @@
     },
     "priorCorrectionCompilationScope": {
       "path": "docs/miniapp-sdk/evidence/native-gate-14-widget-options-20261124/prior-corrections-compilation-scope.json",
-      "sha256": "3871d6a18120a9de4c05c6945f533ee8a0ccd7723ac017bd2f524acd3698d5da"
+      "sha256": "ebb6d00e5c20cf213b2d8452b550d0a5836122eb707c7ec95910f26bd9112a48"
     }
   },
   "userScope": {
@@ -1387,9 +1387,9 @@
       }
     }
   ],
-  "recordingOutcome": "Four scoped tasks completed with readback; actual main14 failure retained and correction in progress. No main merge, release, application/device PASS or blanket80E2E claim.",
-  "updatedAtUTC": "2026-11-24T14:14:12.632682+00:00",
-  "currentIntegrationBase": "2a8dc394d279c40997319d2b2b692e1c14e0f34e",
+  "recordingOutcome": "Four scoped tasks complete; corrected unchanged52 candidate ready for one dispatch after native14 failure. No main merge, release, app/device PASS or blanket80E2E claim.",
+  "updatedAtUTC": "2026-11-24T14:19:49.391049+00:00",
+  "currentIntegrationBase": "88fdce7e632a065c1d2f4c2e4eaab28402952c44",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1649,7 +1649,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Main14 native preparation/export PASS; first application build exit65 with two actual WidgetOptions diagnostics, all52 app cases NOT_RUN. Focused correction/source review and actual new shipping SDK identity reconciliation proceed in parallel. Four scoped tasks remain complete; device acceptance open.",
+  "currentScopeNote": "Main14 failure retained; two production files corrected and independently reviewed with final object-mutation ordering preserved. One primary-Mac focused source-closure/API probe passed eight assertions; required four provenance commands passed. Exact unchanged52 candidate ready. Current native/app/device acceptance remains missing.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1783,37 +1783,63 @@
     }
   ],
   "candidateGate": {
-    "sequence": 14,
+    "schemaVersion": 1,
+    "sequence": 15,
+    "atUTC": "2026-11-24T14:19:49.391049+00:00",
+    "status": "READY_FOR_SINGLE_DISPATCH",
+    "implementationSource": "88fdce7e632a065c1d2f4c2e4eaab28402952c44",
     "scope": "miniapp_complete",
-    "status": "COMPLETED_FAILURE",
     "selectedCases": 52,
     "MiniApps": 25,
     "AI": 27,
-    "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
-    "firstMiniAppsBuildSeconds": 3600,
-    "pairedJobMinutes": 210,
-    "selection": "Exact prior52 unchanged",
-    "productionDelta": "One expression uses public HanlinObject(uniqueMembers:Array(props)) before unchanged canonicalJSONData(.unbounded)",
+    "priorRun": 45398772829,
+    "priorApplicationStatus": "ALL52_NOT_RUN",
+    "completeNonDocumentationDeltaFromPriorRun": [
+      "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift"
+    ],
+    "selectionAndHarness": "Unchanged: complete non-documentation Git delta contains only the two production correction files",
+    "whyExecute": "Both application builds and every selected case are missing after main14 stopped at the first build. Correct actual widget compiler errors and same-cause adapter mismatch, then execute the same selected current integration obligations.",
+    "reusedEvidence": "Previously authenticated unchanged scoped component proofs retain their original run/source attribution; no blanket reuse of application tests. No new tests or universal OS gate added.",
+    "productionFixCommit": "b8d3caee19485c4ef4448be9e68dfeb2449d38da",
     "sourceProof": {
-      "path": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/receipt.json",
-      "sha256": "2f925f07fba0dfa9ba01192499684e21dc8b3418a8c1759092fddc4249eb220a"
+      "path": "docs/miniapp-sdk/evidence/expo-widget-options-types-20261124/receipt.json",
+      "sha256": "2418fed0f0ef6e89a1565ea4125957d8582c8943e578d53853ae549c69050257",
+      "scope": "One real Swift6/Cxx AppIntents/source-closure compile and executable probe, eight assertions; explicit Expo registry/options fixtures; not full app/native52 proof"
     },
+    "independentReview": "entrypoints; final exact source hashes in integrated independent-review.json, including corrected post-selection dictionary conversion ordering",
     "sourceAuthorityRefresh": {
-      "path": "docs/miniapp-sdk/evidence/publication-value-source-refresh-20261124/receipt.json",
-      "sha256": "31119656c2f196b6d2e3dbe9cf6acc8ee79adb405216458b23bbc88a0f6d1f97"
+      "path": "docs/miniapp-sdk/evidence/widget-options-source-refresh-20261124/receipt.json",
+      "sha256": "808b32d2f198e6832a1ebaa4507d0e5384bcd4eac37cfcf8e649d553170d9d85",
+      "commands": 4,
+      "result": "ALL_EXIT0",
+      "shippedProvenanceDocumentsChanged": 3,
+      "manifestReference": "UNCHANGED"
     },
-    "actualExecution": "FIRST_MINIAPPS_BUILD_EXIT65; AI_AND_ALL52_NOT_RUN",
     "routing": {
-      "decision": "Existing GitHub Xcode27.2 lane; primary Mac lacks required27.2toolchain",
-      "freshObservation": {
-        "path": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/mac-preflight.json",
-        "sha256": "41eeddbc0c6949c2e5200f01e7b2cbdfbe67bb7ba140b7f4e423537f5be82448"
+      "primary": "Scaleway M2Pro",
+      "observation": {
+        "path": "docs/miniapp-sdk/evidence/expo-widget-options-types-20261124/mac-sdk-read.json",
+        "sha256": "57d13ded21655b34222b6f03da21a39b083d2d1518b3253381bdd6c9a90ed90d"
       },
-      "observedAtUTC": "2026-11-24T12:53:18Z",
-      "primary": "Xcode27.0/27A266a, Swift6.4.0, SDK27.0 only",
-      "tinyProbeBoundary": "3.82second real value-source/JSON proof; no full app/SPM/simulator build and no interference with existing xcodebuild processes"
+      "observedAtUTC": "2026-11-24T14:07Z",
+      "available": "Xcode27.0/27A266a,Swift6.4,SDK27.0 only; no active build processes at observation",
+      "required": "Existing configured full gate Xcode27.2/27B52 and iOS27.2",
+      "decision": "Use existing GitHub lane because primary Mac lacks the required installed SDK/toolchain; no downgrade or duplicate heavy build"
     },
-    "runID": 45398772829
+    "workflowSHA256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982",
+    "budgets": {
+      "firstMiniAppsBuildSeconds": 3600,
+      "aiBuildSeconds": 1800,
+      "runtimeSeconds": 1200,
+      "pairedTestsSeconds": 2100,
+      "pairedJobMinutes": 210
+    },
+    "boundary": "No current application/device PASS, no merge/release. No existing source-contract or library capability was weakened.",
+    "candidateReceipt": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-15-candidate-20261124.json",
+      "sha256": "2933a4961af04afc95fb4ed0f053b8dadebf6f97fcdc3de16464e890ea3b3f2a"
+    }
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
@@ -1842,7 +1868,7 @@
     "boundary": "No physical app/device acceptance or absence-of-devices-elsewhere claim."
   },
   "nextCorrection": {
-    "status": "IN_PROGRESS",
+    "status": "INTEGRATED_AND_FOCUSED_PROOF_PASS",
     "source": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift",
     "scope": "Use actual IntentParameterDependency unwrapped widget and convert canonical HanlinObject to required dictionary without changing option semantics",
     "author": "control_authoring",
@@ -1859,7 +1885,9 @@
       "reviewScope": "233 changed production Swift files;39 object-pattern files traced",
       "status": "AUTHOR_CORRECTING_WITH_INDEPENDENT_REVIEW",
       "compilerExecution": "NOT_EXECUTED_FOR_THIS_FINDING"
-    }
+    },
+    "integrationCommit": "b8d3caee19485c4ef4448be9e68dfeb2449d38da",
+    "sourceRefreshCommit": "88fdce7e632a065c1d2f4c2e4eaab28402952c44"
   },
   "main14ShippingSDK": {
     "status": "PASS_EXPECTED_PROVENANCE_DELTA",
