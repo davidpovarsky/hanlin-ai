@@ -61,7 +61,7 @@ export interface MiniAppSharing {
   writeAttachment(file: {base64: string; name?: string; typeIdentifier?: string}): Promise<MiniAppContent>;
 }
 
-interface NativeRuntimeBridge {
+export interface NativeRuntimeBridge {
   sendRequestActionCapabilityPayloadJSONCompletion(target: string, action: string, capability: string, payloadJSON: string, completion: (result: string | null, error: string | null) => void): void;
   executeRuntimeCompletion(payloadJSON: string, completion: (result: string | null, error: string | null) => void): string | null;
   cancelRuntime(requestID: string): boolean;
@@ -76,6 +76,11 @@ export function createHostServices() {
   if (typeof HanlinNativeServicesBridge === 'undefined') throw new Error('Hanlin Host Services metadata is unavailable.');
   const bridge = HanlinNativeServicesBridge.activeSessionBridge();
   if (!bridge) throw new Error('No active Hanlin NativeScript session.');
+  return createHostServicesForBridge(bridge);
+}
+
+/** The Host supplies this opaque provider-bound bridge to one cooperating window. */
+export function createHostServicesForBridge(bridge: NativeRuntimeBridge) {
   const boundBridge = bridge;
   function startRuntime(kind: HanlinRuntimeKind, source: string, options: RuntimeExecutionOptions = {}): RuntimeRequestHandle {
     let requestID: string | null = null;

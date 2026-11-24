@@ -83,6 +83,9 @@ for (const fix of controllerFixtures) {
   } catch {}
 }
 
+await import('./build-window-factory-fixture.mjs');
+await cp(resolve(scriptRoot, 'Fixtures/window-factory.hanlinNativeScript'), resolve(e2eRoot, 'window-factory.hanlinNativeScript'));
+
 const parityFixturePath = resolve(repositoryRoot, 'DemoMiniApps', 'hanlin-script-parity.hanlinNativeScript');
 try {
   await cp(parityFixturePath, resolve(e2eRoot, 'hanlin-script-parity.hanlinNativeScript'));

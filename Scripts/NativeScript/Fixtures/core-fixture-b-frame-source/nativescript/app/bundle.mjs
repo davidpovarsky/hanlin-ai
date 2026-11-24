@@ -1,3 +1,4 @@
+import { registerWindowFactory } from "@hanlin/window-factory";
 import {
   Application,
   Frame,
@@ -77,6 +78,4 @@ export function createRoot() {
   return frame;
 }
 
-Application.run({
-  create: () => createRoot()
-});
+registerWindowFactory(() => createRoot());

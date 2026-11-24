@@ -1,3 +1,4 @@
+import { registerWindowFactory } from "@hanlin/window-factory";
 import {
   Application,
   TabView,
@@ -63,6 +64,4 @@ export function createRoot() {
   return tabView;
 }
 
-Application.run({
-  create: () => createRoot()
-});
+registerWindowFactory(() => createRoot());
