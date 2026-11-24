@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T15:17:47.438256+00:00",
+  "runID": 45412939674,
+  "jobID": 138511347250,
+  "sourceCommit": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45412939674",
+  "result": "FIRST_MINIAPPS_BUILD_FAILED",
+  "nativePreparation": "EXECUTED_PASS",
+  "export": "EXECUTED_PASS",
+  "miniBuild": {
+    "status": "EXECUTED_FAIL",
+    "exit": 65,
+    "seconds": 1263.778639042,
+    "logBytes": 887343,
+    "logLines": 4783,
+    "logSHA256": "2547babc01695d8a058d54d57661020aa398dae17176cdb8cd49217bd1d49971",
+    "timeoutSeconds": 3600,
+    "hitTimeout": false
+  },
+  "aiBuild": "NOT_RUN",
+  "selectedCases": 52,
+  "executedApplicationCases": 0,
+  "applicationStatus": "NOT_RUN",
+  "failedTarget": "HanlinMiniAppsWidgets",
+  "distinctMissingOriginalHeaders": [
+    "RCTDeprecation/RCTDeprecation.h",
+    "ReactCommon/CallInvoker.h",
+    "yoga/YGConfig.h",
+    "yoga/Yoga.h"
+  ],
+  "diagnosticHeaderCount": 32,
+  "diagnosticContext": "diagnostic-context.json",
+  "causeStatus": "Original React headers fail to resolve when the extension imports ExpoModulesCore/Worklets. Original Cxx include flags are present; producer/header layout and implicit module import diagnosis are in progress. No independently proven compiler-version incompatibility claimed.",
+  "priorCompilationProgress": "prior-corrections-compilation-scope.json",
+  "artifact": {
+    "id": 14933389929,
+    "bytes": 333459051,
+    "sha256": "1c7b453087a1bb7d2e1a07fa2ec94898afc0e0b2dbee6f3ac2dc5d691c80d574",
+    "authenticatedAgainstGitHubDigest": true,
+    "retainedArchive": "/tmp/hanlin-native-gate-evidence-45412939674/app-split-45412939674.zip"
+  },
+  "jobLogSHA256": "65e802c26586c8df59fbc631e86e9aed45a3c6d587298bf95e599d1844f6f26e",
+  "independentPostDispatchTestCorrection": {
+    "commit": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
+    "source": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+    "status": "SOURCE_FIXED_AND_REVIEWED_NOT_PART_OF_THIS_RUN",
+    "receipt": "docs/miniapp-sdk/evidence/host-widget-assertion-type-20261124/receipt.json"
+  },
+  "boundary": "No application UI/physical-device/release PASS. Failure screenshot is not product acceptance. Exact52 selection preserved. Four previously completed scoped tasks retain their separate proof. No test executed by this evidence-recording action.",
+  "files": [
+    {
+      "path": "acceptance.json",
+      "bytes": 2621,
+      "sha256": "dfe438a266b40a02bef408951bbab671bed2705b17db9bace35552248e69c926"
+    },
+    {
+      "path": "active-command.json",
+      "bytes": 515,
+      "sha256": "ab7b577a4544d3ab963fd9c351288d91a584bb976bc585e8d8654fffc22cf9a0"
+    },
+    {
+      "path": "artifact-download-receipt.json",
+      "bytes": 10580,
+      "sha256": "95f5ed7a57bd726b528b4ba06a95bc9fcccc62d99dfed915253983af78bb7009"
+    },
+    {
+      "path": "artifacts-api.json",
+      "bytes": 771,
+      "sha256": "8d5ba22388c70be4d616a117e3acf75e658d24c805e36edaff9bcf75716d8233"
+    },
+    {
+      "path": "command-events.jsonl",
+      "bytes": 57992,
+      "sha256": "4ca1d715ffe69771b18ee532455daefce7807fd2c1972fa3269195c9e14a91f9"
+    },
+    {
+      "path": "commands.jsonl",
+      "bytes": 4358,
+      "sha256": "0c44e9268b991ae6d7612411e94566c127864a6cfc5a0306bf7ae12792e54d00"
+    },
+    {
+      "path": "diagnostic-context.json",
+      "bytes": 26678,
+      "sha256": "efe3d36dbdec6800dcfeb7e7a536797853abf4be2c5d4550f83d638dbaf3f4a7"
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 1177,
+      "sha256": "c82a33ca4e9e17f44b5536cabcc8a46c754b829b6a67faaabecd3919b4af4c69"
+    },
+    {
+      "path": "documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "595f1e77aa5b5c52417f238e185233ec0af477d78187325239502fa5b51d83bb"
+    },
+    {
+      "path": "failure-memory.txt",
+      "bytes": 1247,
+      "sha256": "6c19529ff9058dbbfdd8381e8342647bc0f78dd1b3ddcb01581709a1cd39adc1"
+    },
+    {
+      "path": "failure-processes.txt.gz",
+      "bytes": 14454,
+      "sha256": "9c75646903af30aa33b66fb87d7557bdc28a07cce1dbdf34c86ca57dd98dddfb"
+    },
+    {
+      "path": "job.log.gz",
+      "bytes": 480356,
+      "sha256": "4135105047a32a9ec2feecc837928ed587b2aa40b0be62cde155756f84b81e0b"
+    },
+    {
+      "path": "mini-build.log.gz",
+      "bytes": 57465,
+      "sha256": "c5e9873f77a77248ce9aade616bc98e7ae11fa083a2cf243a38e44d0a5661f53"
+    },
+    {
+      "path": "performance.json",
+      "bytes": 2241,
+      "sha256": "5a02ac8518924af09cac6a8f0200dccecf10306de2b15483b9d538615aae9759"
+    },
+    {
+      "path": "prior-corrections-compilation-scope.json",
+      "bytes": 5279,
+      "sha256": "3caacc825e2e2d789846fa7894f3e975d4eec6e614eb86747ea07cf6d95ff63a"
+    },
+    {
+      "path": "run-api.json",
+      "bytes": 7226,
+      "sha256": "b6d9892a975b84b4b793f8bf1771f2194ce5b16693414468b5cf109b2eaad161"
+    },
+    {
+      "path": "watcher-completion.json",
+      "bytes": 1489,
+      "sha256": "ea29aa21d57421a56385f59cb68da67e20839daf39a0cdf87138c72098d3fb01"
+    }
+  ]
+}

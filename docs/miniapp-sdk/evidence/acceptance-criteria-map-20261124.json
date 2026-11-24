@@ -19,11 +19,11 @@
     "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45412939674",
     "sourceCommit": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
     "scope": "miniapp_complete",
-    "status": "IN_PROGRESS",
+    "status": "COMPLETED",
     "selectedCases": 52,
     "miniAppsCases": 25,
     "aiCases": 27,
-    "caseStatus": "NOT_RUN_AT_DISPATCH",
+    "caseStatus": "ALL52_NOT_RUN",
     "dispatchReceipt": {
       "path": "docs/miniapp-sdk/evidence/fifteenth-native-gate-dispatch-20261124.json",
       "sha256": "c82a33ca4e9e17f44b5536cabcc8a46c754b829b6a67faaabecd3919b4af4c69"
@@ -35,7 +35,16 @@
       "Actual diagnostic-sheet and repaired-native-app attachments",
       "Exact original archive/report handoff and nonempty installedPackageID receipt"
     ],
-    "boundary": "Actual current build/case outcomes pending. Eight focused source-closure assertions and source checks are not complete app/UI proof."
+    "boundary": "Actual preparation/export passed; first MiniApps build failed to import original React/Expo headers in widget extension. All52 app cases NOT_RUN.",
+    "result": "FIRST_MINIAPPS_BUILD_FAILED",
+    "firstMiniAppsBuild": "EXECUTED_FAIL_EXIT65",
+    "aiBuild": "NOT_RUN",
+    "miniBuildSeconds": 1263.778639042,
+    "failedTarget": "HanlinMiniAppsWidgets",
+    "failureReceipt": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-15-original-headers-20261124/receipt.json",
+      "sha256": "eaf062a0cbeed95d5b275628eaa5550ee1fb9c343aca64aff4c16d7ab5cd3cea"
+    }
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1638,7 +1647,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Main15 exact unchanged52 dispatched on reviewed two-file correction with original option mutation order and checked dictionaries. Existing four provenance commands passed; current normal preparation must supply the new SDK identity. Main14 failure and bounded publication compilation progress remain correctly attributed. Four scoped tasks complete; native/device results pending.",
+  "currentScopeNote": "MAIN15 has authentic first-build failure in HanlinMiniAppsWidgets original React/Expo header imports. Previous Options and WidgetUI body/module compilation advanced; no final link/app pass. Three-way agent work: exact header integration diagnosis, independent review, actual shipping SDK comparison. Four scoped tasks complete, all52 app cases and physical acceptance remain missing.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1775,7 +1784,7 @@
     "schemaVersion": 1,
     "sequence": 15,
     "atUTC": "2026-11-24T14:19:49.391049+00:00",
-    "status": "DISPATCHED",
+    "status": "COMPLETED",
     "implementationSource": "88fdce7e632a065c1d2f4c2e4eaab28402952c44",
     "scope": "miniapp_complete",
     "selectedCases": 52,
@@ -1831,7 +1840,7 @@
     },
     "sourceCommit": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
     "runID": 45412939674,
-    "actualExecution": "PENDING_CURRENT_BUILD_AND_CASE_RESULTS"
+    "actualExecution": "FIRST_MINIAPPS_BUILD_FAILED_ALL52_NOT_RUN"
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
@@ -1859,28 +1868,6 @@
     "observed": "Two CoreSimulator devices explicitly simulated; xctrace11simulators and one unclassified opaque Devices entry",
     "boundary": "No physical app/device acceptance or absence-of-devices-elsewhere claim."
   },
-  "nextCorrection": {
-    "status": "INTEGRATED_AND_FOCUSED_PROOF_PASS",
-    "source": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift",
-    "scope": "Use actual IntentParameterDependency unwrapped widget and convert canonical HanlinObject to required dictionary without changing option semantics",
-    "author": "control_authoring",
-    "independentReviewer": "entrypoints",
-    "shippingSDKReviewer": "sdk_only_author",
-    "newCIStarted": true,
-    "additionalStaticFinding": {
-      "source": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "lines": [
-        160,
-        161
-      ],
-      "cause": "HanlinObject.mapValues result passed to dictionary-typed PreparedWidgetPublisher",
-      "reviewScope": "233 changed production Swift files;39 object-pattern files traced",
-      "status": "AUTHOR_CORRECTING_WITH_INDEPENDENT_REVIEW",
-      "compilerExecution": "NOT_EXECUTED_FOR_THIS_FINDING"
-    },
-    "integrationCommit": "b8d3caee19485c4ef4448be9e68dfeb2449d38da",
-    "sourceRefreshCommit": "88fdce7e632a065c1d2f4c2e4eaab28402952c44"
-  },
   "main14ShippingSDK": {
     "status": "PASS_EXPECTED_PROVENANCE_DELTA",
     "receipt": {
@@ -1905,5 +1892,56 @@
     "nativeSourceFixturesAndAssertionsChanged": false,
     "futureSDKIdentityChanges": true,
     "scope": "Current paragraph distinguishes42 authoring subset from52 complete selection; no pass claims or new test selection"
+  },
+  "correctionHistory": [
+    {
+      "status": "INTEGRATED_AND_FOCUSED_PROOF_PASS",
+      "source": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift",
+      "scope": "Use actual IntentParameterDependency unwrapped widget and convert canonical HanlinObject to required dictionary without changing option semantics",
+      "author": "control_authoring",
+      "independentReviewer": "entrypoints",
+      "shippingSDKReviewer": "sdk_only_author",
+      "newCIStarted": true,
+      "additionalStaticFinding": {
+        "source": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+        "lines": [
+          160,
+          161
+        ],
+        "cause": "HanlinObject.mapValues result passed to dictionary-typed PreparedWidgetPublisher",
+        "reviewScope": "233 changed production Swift files;39 object-pattern files traced",
+        "status": "AUTHOR_CORRECTING_WITH_INDEPENDENT_REVIEW",
+        "compilerExecution": "NOT_EXECUTED_FOR_THIS_FINDING"
+      },
+      "integrationCommit": "b8d3caee19485c4ef4448be9e68dfeb2449d38da",
+      "sourceRefreshCommit": "88fdce7e632a065c1d2f4c2e4eaab28402952c44"
+    }
+  ],
+  "nextCorrection": {
+    "status": "ORIGINAL_HEADER_IMPORT_DIAGNOSIS_IN_PROGRESS",
+    "author": "control_authoring",
+    "independentReviewer": "entrypoints",
+    "shippingSDKReviewer": "sdk_only_author",
+    "actualFailureRun": 45412939674,
+    "failedTarget": "HanlinMiniAppsWidgets",
+    "originalHeaders": [
+      "RCTDeprecation/RCTDeprecation.h",
+      "ReactCommon/CallInvoker.h",
+      "yoga/YGConfig.h",
+      "yoga/Yoga.h"
+    ],
+    "boundary": "Original flags already present; verify actual header/module closure. No stubs, API weakening or blanket Swift-version diagnosis."
+  },
+  "postDispatchTestCorrection": {
+    "commit": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
+    "path": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+    "sha256": "0e7e2a2c38ed4449869ea61e5e9757cd4dc67e66258ae340958ebe617c93a829",
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/host-widget-assertion-type-20261124/receipt.json",
+      "sha256": "3a97d2e45669796c39f534e6c5d51aed5f1cf37cf906445bba24fda13200fa12"
+    },
+    "assertionsPreserved": 39,
+    "provenanceRefreshRequired": false,
+    "nativeExecution": "NOT_RUN; not part of e222 MAIN15"
   }
 }
