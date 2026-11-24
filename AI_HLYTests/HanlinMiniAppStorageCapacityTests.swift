@@ -30,7 +30,7 @@ struct HanlinMiniAppStorageCapacityTests {
         }
 
         let document = String(repeating: "x", count: 4 * 1_024 * 1_024 + 1_024)
-        let snapshot = HanlinScriptExtensionSnapshot(schemaVersion: 2, generatedAt: .now,
+        let snapshot = HanlinScriptExtensionSnapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 1_700_000_000),
             widgetInstances: [.init(identity: identity, engine: .expo, displayName: "Capacity")],
             widgetStates: [.init(identity: identity, engine: .expo, artifactSHA256: artifact.sha256,
                 revision: 1, values: ["document": .string(document)])])

@@ -28,8 +28,9 @@ TEST_PLANS = {
         "AI_HLYTests/HanlinNativePresentationTests",
         "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
         "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+        "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
         "AI_HLYTests/HanlinOriginalExpoWidgetTests",
-        "AI_HLYUITests/MiniAppAuthoringUITests"], 24),
+        "AI_HLYUITests/MiniAppAuthoringUITests"], 25),
     "cross_product": (["AI_HLYUITests/HanlinPairedProductUITests"], 3),
     "shared_ingress": (["AI_HLYTests/ShareInboxHostIntegrationTests", "AI_HLYUITests/HanlinShareInboxUITests"], 5),
     "product_and_share": (["AI_HLYUITests/HanlinPairedProductUITests",
@@ -375,6 +376,23 @@ def main():
                 except Exception as capture:
                     state["diagnostic_errors"].append(str(capture))
     finally:
+        # Retain the actual test attachments for visual inspection of the sheet
+        # and repaired app; a final simulator screenshot is not a substitute.
+        if TEST_SCOPE == "miniapp_authoring":
+            state["attachment_exports"] = []
+            for name in ["OriginalRuntimes", "Paired"]:
+                bundle = EVIDENCE / (name + ".xcresult")
+                if not bundle.exists():
+                    continue
+                destination = EVIDENCE / (name.lower() + "-attachments")
+                try:
+                    code, _ = command(["xcrun", "xcresulttool", "export", "attachments",
+                        "--path", str(bundle), "--output-path", str(destination)],
+                        name.lower() + "-attachments-export.log", timeout=60, allow_failure=True)
+                    state["attachment_exports"].append({"result": bundle.name,
+                        "path": destination.name, "exit_code": code})
+                except Exception as error:
+                    state["attachment_exports"].append({"result": bundle.name, "error": str(error)})
         state["result_bundles"] = [p.name for p in EVIDENCE.glob("*.xcresult")]
         state["duration_seconds"] = time.time() - state["started_at"]
         (EVIDENCE / "acceptance.json").write_text(json.dumps(state, indent=2) + "\n")

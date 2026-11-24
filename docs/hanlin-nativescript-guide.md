@@ -7,14 +7,14 @@
 
 ## 1. מבוא ומודל עבודה (Mental Model)
 
-באפליקציית Hanlin AI מוטמע **NativeScript iOS Runtime 9.1.0**, עם גשר metadata למחלקות Objective-C הזמינות בבנייה. מפת המקורות, הגרסאות וגבולות החיבור להרחבות נמצאת ב[מיפוי ה-SDK הקיים](miniapp-sdk/README.md). המיפוי מפריד בין הצהרת API, חיבור בקוד והוכחת הרצה במכשיר.
+באפליקציות Hanlin מוטמע **מנוע NativeScript iOS המקורי**, עם גשר metadata למחלקות Objective-C הזמינות בבנייה. גרסאות ה־runtime, Core וחבילות הטיפוסים נקבעות יחד בזמן הכנת ה־host; קוראים את הגרסאות המדויקות מתוך `get_miniapp_sdk` עבור `nativescript`, ולא מתוך מספר גרסה ישן במדריך. מפת המקורות, הגרסאות וגבולות החיבור להרחבות נמצאת ב[מיפוי ה-SDK הקיים](miniapp-sdk/README.md). המיפוי מפריד בין הצהרת API, חיבור בקוד והוכחת הרצה במכשיר.
 
 קיימות שתי דרכי כתיבה שניתן לשלב, בהתאם לממשקים שה-Host כולל:
 
 בחבילה מוכנה, קובץ הכניסה הוא `nativescript/app/bundle.mjs`, ולצדו
 `package.json` עם `"main":"bundle.mjs"` ו־`"hanlinRuntime":"hanlin-nativescript"`.
-שמות כניסה חלופיים נדחים במפורש בייבוא ובהפעלת סשן. מנוע 9.1.0 שומר מטמון
-תהליכי של הגדרות החבילה; אין כאן הבטחת החלפה חופשית של `main` או של כלל
+שמות כניסה חלופיים נדחים במפורש בייבוא ובהפעלת סשן. ה־host משתמש בכניסה יציבה מול מטמון
+הגדרות החבילה של ה־runtime; אין כאן הבטחת החלפה חופשית של `main` או של כלל
 הגדרות NativeScript בין חבילות. [ממצא המקור והבדיקות](miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md).
 
 1. **גישה ישירה מול גשר ה-iOS של ה-Runtime (Direct Native Metadata Bridge):**
@@ -22,7 +22,7 @@
    * ללא צורך בספריות נוספות, ביצועי Native מלאים ואינטגרציה ישירה עם פקדי מערכת ההפעלה.
 2. **מעטפת `@nativescript/core` (Cross-Platform / NativeScript Core APIs):**
    * שימוש במחלקות הרשמיות של `@nativescript/core` כגון `Application`, `Page`, `Frame`, `StackLayout`, `Button`, `Label`, `Http` וכו'.
-   * גרסה `9.1.0` מוטמעת מראש כחלק מ-Runtime של Hanlin (NativeScriptSharedRuntime); יישומונים מצהירים על `"@nativescript/core": "9.1.0"` ב-`package.json` ויכולים לייבא את המודולים כרגיל ללא צורך בהתקנת npm מקומית או bundling ידני.
+   * Core המקורי מוטמע כחלק מ־NativeScriptSharedRuntime. ב־`package.json` מצהירים על גרסת `@nativescript/core` המדויקת שב־`selectedEngine.packageVersions` של ה־SDK המותקן. אפשר לייבא את המודולים המקוריים; `build_miniapp` מכין את גרף המקור והחבילה התואמים ל־host.
    * שני המודלים מתקיימים יחד: יישומון המשתמש ב-`@nativescript/core` יכול לגשת במקביל ישירות לכל פקד או API של iOS באמצעות הגשר הישיר (לדוגמה `UIDevice`, `UIColor` וכו').
 
 ---
@@ -193,7 +193,7 @@ NSNotificationCenter.defaultCenter.addObserverForNameObjectQueueUsingBlock(
 
 ## 5. תמיכה ב-TypeScript ומערכת טיפוסים (Type Declarations)
 
-כדי לקבל השלמה אוטומטית (IntelliSense) ובדיקת שגיאות סטטית של כל מחלקות ה-SDK של אפל ב-TypeScript, משתמשים בחבילת הטיפוסים הרשמית:
+כדי לקבל השלמה אוטומטית (IntelliSense) ובדיקת שגיאות סטטית של ממשקי iOS ש־NativeScript מפרסם, משתמשים בחבילת הטיפוסים המקורית הכלולה ב־SDK המותקן. הצהרה אינה מוסיפה מימוש native ל־host, ואין כאן הרחבה של מחולל Apple SDK עצמאי:
 * חבילת NPM: **`@nativescript/types-ios`**
 
 ### הגדרת `tsconfig.json`:
@@ -205,7 +205,7 @@ NSNotificationCenter.defaultCenter.addObserverForNameObjectQueueUsingBlock(
     "moduleResolution": "Bundler",
     "lib": ["ESNext"],
     "types": ["@nativescript/types-ios"],
-    "strict": false,
+    "strict": true,
     "skipLibCheck": true
   },
   "include": ["src/**/*"]
@@ -215,6 +215,8 @@ NSNotificationCenter.defaultCenter.addObserverForNameObjectQueueUsingBlock(
 ---
 
 ## 6. מבנה החבילה והקבצים (Package Directory Structure)
+
+לכתיבה ותיקון משתמשים ב־[תהליך ה־authoring המשותף](miniapp-sdk/AUTHORING_WORKFLOW.md): המקור ו־`hanlin.authoring.json` נבדקים עם הקומפיילר המקורי, ו־`build_miniapp` מפיק את המבנה המוכן להלן יחד עם `source/` לעריכה חוזרת. אין צורך לייצר ידנית את המטא־דאטה של חבילה מוכנה.
 
 חבילת יישומון מוכנה לייבוא ב-Hanlin AI צריכה להכיל את הקבצים הבאים:
 
@@ -264,7 +266,7 @@ my-miniapp/
 2. **[Objective-C Method Calling Conventions in NativeScript](https://docs.nativescript.org/plugins/ios-runtime/how-to/ObjC-Subclassing)**
    הכללים המדויקים להמרת סלקטורים (Selectors) של אפל לפונקציות camelCase ב-JavaScript.
 3. **[Types for iOS on NPM (`@nativescript/types-ios`)](https://www.npmjs.com/package/@nativescript/types-ios)**
-   חבילת הגדרות הטיפוסים של כל ה-SDK של iOS עבור TypeScript.
+   חבילת הטיפוסים המקורית של NativeScript לממשקי iOS; הגרסה והקבצים בפועל נמסרים ב־SDK של ה־host.
 4. **[NativeScript iOS Runtime GitHub Repository](https://github.com/NativeScript/ios-runtime)**
    קוד המקור של מנוע ה-Runtime של NativeScript ל-iOS.
 

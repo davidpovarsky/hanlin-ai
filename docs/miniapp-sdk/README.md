@@ -12,7 +12,7 @@ Call `get_miniapp_sdk` with the desired engine before creating or changing a pac
 
 The SDK is prepared from the same inputs as the native host. It includes original npm declarations and tooling, native types already supplied by those libraries, Hanlin's actual bridge declarations, and the installed ScriptWidget component/API declarations. A declaration is not proof that an arbitrary new native module is present in a shipped app. Consult the host contract returned for that engine.
 
-Versions written in an older guide or historical audit are not the authority for a newly built host. Read the exact installed manifest. In particular, npm package versions, a bridge's public contract version and the native ABI identity are distinct values.
+Versions written in an older guide or historical audit are not the authority for a newly built host. Read the exact installed manifest. In particular, npm package versions, a bridge's public contract version and the native ABI identity are distinct values. The manifest also records the compiler package name/version separately from the compiler's own reported version: an original npm alias can have a different wrapper-package version. A ScriptWidget-only SDK includes the original compiler dependency closure as well as that loader.
 
 ## Original-library updates during the app build
 
@@ -103,7 +103,7 @@ The imported modular-search sample retains its editable original logic modules, 
 - [Portable authoring evidence](evidence/2026-11-23-authoring-portable.json)
 - [Executed portable transfer tests](evidence/authoring-repair-20261123/transfer-tests.json)
 
-Native acceptance is defined by the `miniapp_authoring` scope of `validate-app-split.yml`. It builds both actual products and exercises original NativeScript/Expo controls, embedded authoring tools, a malformed archive, real source diagnostics, the sheet and repair/import handoff on one iPad Simulator. The current gate selects 24 AI app cases and five standalone runtime cases, including the two original Expo Widgets packages, actual ActivityKit calls, and import/search/full-text loading of the original modular-search sample through its actual Sefaria transport. Its recorded run and xcresult determine PASS/FAIL; source wiring, portable tests and syntax parsing do not establish native success.
+Native acceptance is defined by the `miniapp_authoring` scope of `validate-app-split.yml`. It builds both actual products and exercises original NativeScript/Expo controls, embedded authoring tools, a malformed archive, real source diagnostics, the sheet and repair/import handoff on one iPad Simulator. The current gate selects 25 AI app cases and five standalone runtime cases, including the two original Expo Widgets packages, actual ActivityKit calls, and import/search/full-text loading of the original modular-search sample through its actual Sefaria transport. Its recorded run and xcresult determine PASS/FAIL; source wiring, portable tests and syntax parsing do not establish native success.
 
 Older [source inventory](source-inventory.json), [reachability audit](extension-reachability.md), and dated handoffs remain historical snapshots. Their old version numbers and disconnected-surface findings must not override the installed SDK manifest or current source/evidence.
 

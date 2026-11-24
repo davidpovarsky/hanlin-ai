@@ -61,6 +61,10 @@ final class MiniAppAuthoringUITests: XCTestCase {
             format: "label CONTAINS %@ AND label CONTAINS %@", "TS2322", "Line 1")).firstMatch
         reveal(typeError, in: item(mini, "hanlin-import-diagnostics-sheet"))
         XCTAssertTrue(typeError.exists, "The real compiler must report the original source position.")
+        let diagnosticImage = XCTAttachment(screenshot: mini.screenshot())
+        diagnosticImage.name = "MiniApp original TypeScript diagnostics"
+        diagnosticImage.lifetime = .keepAlways
+        add(diagnosticImage)
         let sheet = item(mini, "hanlin-import-diagnostics-sheet")
         let fix = mini.buttons["hanlin-import-repair-agent"].firstMatch
         for _ in 0..<8 {
@@ -95,6 +99,10 @@ final class MiniAppAuthoringUITests: XCTestCase {
         tap(card)
         XCTAssertTrue(mini.staticTexts["miniapp-authoring-result"].waitForExistence(timeout: 45))
         XCTAssertEqual(mini.staticTexts["miniapp-authoring-result"].label, "MiniApp repair result 42")
+        let repairedImage = XCTAttachment(screenshot: mini.screenshot())
+        repairedImage.name = "MiniApp repaired native result"
+        repairedImage.lifetime = .keepAlways
+        add(repairedImage)
 
         ai.activate()
         let completed = ai.staticTexts.matching(NSPredicate(

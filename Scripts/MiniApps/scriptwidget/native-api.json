@@ -1681,7 +1681,7 @@
   "sources": [
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
-      "sha256": "ac4239ea986e45555ee17caeee1d692e55ae0016f0939f130a6bdbf628b7f291"
+      "sha256": "425396c929e63ec2dd766189bf77bf8a057e6e42fbaf02f45c7736b30cd1c4c4"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSON.swift",

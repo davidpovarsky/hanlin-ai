@@ -174,7 +174,12 @@ test('modified compiled output is rejected even when retained TypeScript is stil
 
 test('the real CLI archives and revalidates retained source, diagnostics and output identity', async t => {
   const f = await fixture(t);
-  const cli = fileURLToPath(new URL('../../../../../../Scripts/MiniApps/miniapp.mjs', import.meta.url));
+  // Runtime host preparation executes this same test from a temporary copy.
+  // Its CLI still belongs to the actual repository that prepared the host.
+  const repository = process.env.HANLIN_MINIAPP_REPOSITORY_ROOT
+    ?? fileURLToPath(new URL('../../../../../../', import.meta.url));
+  const cli = path.join(repository, 'Scripts/MiniApps/miniapp.mjs');
+  assert.ok((await fs.stat(cli)).isFile(), 'The real repository CLI must exist.');
   const archive = path.join(f.root, 'MiniApp.hanlinNativeScript');
   const reportPath = path.join(f.root, 'report.json');
   const build = spawnSync(process.execPath, [cli, 'build', '--engine', 'nativescript', '--sdk', f.sdk,

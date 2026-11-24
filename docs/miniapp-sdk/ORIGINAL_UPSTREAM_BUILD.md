@@ -40,11 +40,15 @@ For the original host build inputs:
 
 ```sh
 node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache=/tmp/hanlin-miniapp-upstreams
-npm ci --ignore-scripts --prefix Scripts/NativeScript
+node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
 npm run prepare:ios-dependencies --prefix Scripts/NativeScript
-npm ci --ignore-scripts --prefix Scripts/Expo
+node Scripts/MiniApps/install-tooling.mjs --engine=expo --ignore-scripts
 node Scripts/Expo/prepare-ios-dependencies.mjs
 bash Scripts/Runtime/prepare-runtime-host.sh
 ```
+
+Run this preparation before opening the generated projects or invoking `xcodebuild`. Direct Xcode incremental builds and generic `apple-build` use the prepared dependency graph; they do not refresh upstream sources through a late target build phase. The automatic full-build entrypoints run resolution before native preparation: `testflight.yml`, both app-producing jobs in `build-ios26-unsigned-ipa.yml`, `validate-app-split.yml` (except signing-only inspection), `validate-expo-runtime-spike.yml`, and `validate-performance-regression.yml`.
+
+`install-tooling.mjs` invokes the original `npm ci`. Its reusable receipt binds package/lock inputs, the installed transitive graph, retained original JavaScript/declaration bytes, and the current local Hanlin package sources. A missing declaration, changed transitive file or stale local copy requires preparation again even when the version number is unchanged. Authenticated upstream declaration corrections can reseal only their explicitly checked files. SDK staging verifies that same installation before exporting it.
 
 The first command is the automatic release-build path. The checked-in exact graph remains a reproducible baseline for isolated tooling tests. Neither path expands the optional full Apple SDK generator, introduces a custom home entrypoint, or resumes the frozen legacy Scripting engine.
