@@ -1345,7 +1345,7 @@
     }
   ],
   "recordingOutcome": "Task-scoped evidence reconciliation:SDK01/02/06 completed in Asana with readback. No new native application/device result, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T10:48:31.750488+00:00",
+  "updatedAtUTC": "2026-11-24T10:56:37.965036+00:00",
   "currentIntegrationBase": "999599c242c064564c40866a1979c463f1d0e95f",
   "gateHistory": [
     {
@@ -1654,5 +1654,17 @@
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
     "sha256": "7b279ee8af9f7ed5d9ab5de03a8301628676ca6be2e473f6d78fc3e5d1ba3335"
+  },
+  "physicalDeviceRouteFollowup": {
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/windows-physical-device-route-20261124.json",
+      "sha256": "dbfbe51c07d12d0c87000d0298e5f0dd8ffccd80ee6bdf69a04ed6ec1105223e",
+      "bytes": 14901
+    },
+    "observedAtUTC": "2026-11-24T10:52:30.6190477Z",
+    "status": "BLOCKED_EXTERNAL",
+    "observed": "0 present Apple USB VID_05AC devices; no matching Apple Mobile Device/usbmux service; named iOS-device tools absent from queried PATH. Existing apple-test-focused dispatches GitHub CI and was not executed.",
+    "unknown": "Python-module availability not established after launcher/shell timeouts. No inference that the user owns no iPad or no alternative route exists.",
+    "boundary": "Read-only current Windows observation; no pairing/install/software/device/service/signing/CI mutation."
   }
 }
