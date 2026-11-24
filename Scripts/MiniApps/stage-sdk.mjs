@@ -57,6 +57,7 @@ export async function verifyInstalledGraph(toolingRoot) {
 export const sdkInputs = [
  'Scripts/Expo/package.json','Scripts/Expo/package-lock.json','Scripts/Expo/dependency-lock.json',
  'Scripts/Expo/babel.config.cjs','Scripts/Expo/metro.config.cjs','Scripts/Expo/prepare-types.mjs',
+ 'Scripts/Expo/build-original-widget-runtime.mjs','Scripts/Expo/sync-original-ui-exports.mjs',
  'Scripts/NativeScript/package.json','Scripts/NativeScript/package-lock.json','Scripts/NativeScript/dependency-lock.json',
  'Scripts/ExpoNativeAPI/dependency-lock.json','Tools/SwiftUIBridge/configuration.json',
  'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift',
@@ -74,6 +75,7 @@ export async function inputReceipt(root=repositoryRoot) {
   for(const relative of ['Scripts/MiniApps','Packages/HanlinExpoUI','Packages/HanlinExpoNativeAPIJS',
     'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services',
     'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal',
+    'Packages/HanlinExpoRuntime/Sources/ExpoWidgets',
     'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift',
     'docs/miniapp-sdk','docs/hanlin-nativescript-guide.md','docs/hanlin-expo-runtime.md']) {
     async function walk(src,prefix) {
@@ -151,16 +153,16 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
         ...(engine==='expo'?{hostContract:{runtimeVersion:expoLock.expo.uiVersion,expoSDKVersion:expoLock.expo.sdkVersion,
           bridgeVersion:bridgeConfiguration.bridgeVersion,nativeApiContractVersion,
           nativeApiAbiIdentity:`rn${expoLock.expo.reactNativeVersion}-hermes${expoLock.expo.hermesVersion}`,
-          plugins:{'@expo/ui':expoLock.expo.uiVersion,'@hanlin/expo-ui':bridgeConfiguration.bridgeVersion,
+          plugins:{'@expo/ui':expoLock.expo.uiVersion,'expo-widgets':expoLock.expo.widgetsVersion,'@hanlin/expo-ui':bridgeConfiguration.bridgeVersion,
             '@nativescript/react-native':nativeAPILock.nativeApi.version,'react-native-worklets':nativeAPILock.worklets.version}}}:{}),
         typeCheckingPolicy:{strictSource:true,checkOriginalDeclarationBodies:engine==='expo',
           explanation:engine==='expo'?'Original declarations and source are checked.':'Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.'},
-        docs:engine==='expo'?['docs/hanlin-expo-runtime.md','docs/miniapp-sdk/README.md']:['docs/hanlin-nativescript-guide.md','docs/miniapp-sdk/README.md'],
-        capabilities:engine==='expo'?['foreground','native-ui','host-services','prepared-widgets']:['foreground','native-ui','host-services','esm-package'],
+        docs:engine==='expo'?['docs/hanlin-expo-runtime.md','docs/miniapp-sdk/README.md','docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md']:['docs/hanlin-nativescript-guide.md','docs/miniapp-sdk/README.md'],
+        capabilities:engine==='expo'?['foreground','native-ui','host-services','prepared-widgets','original-widget-api','original-live-activity-api']:['foreground','native-ui','host-services','esm-package'],
         build:{nativeHostRebuildRequiredForNativeDependencyChanges:true}};
     }
     const expected={
-      expo:{expo:expoLock.expo.sdkVersion,'@expo/ui':expoLock.expo.uiVersion,'react-native':expoLock.expo.reactNativeVersion,'react':expoLock.expo.reactVersion,
+      expo:{expo:expoLock.expo.sdkVersion,'@expo/ui':expoLock.expo.uiVersion,'expo-widgets':expoLock.expo.widgetsVersion,'react-native':expoLock.expo.reactNativeVersion,'react':expoLock.expo.reactVersion,
         '@nativescript/react-native':nativeAPILock.nativeApi.version,'react-native-worklets':nativeAPILock.worklets.version},
       nativescript:{'@nativescript/core':nativeLock.nativeScript.coreVersion,'@nativescript/ios':nativeLock.nativeScript.iosRuntimeVersion,
         '@nativescript/swift-ui':nativeLock.swiftUI.version}

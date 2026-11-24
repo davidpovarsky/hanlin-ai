@@ -27,6 +27,14 @@ async function writeArchive(directory, destination) {
   await writeFile(destination, deterministicZip(files));
 }
 
+function bundleWithOriginalMetro(entryFile, bundleOut) {
+  const metroConfig = resolve(scriptRoot, 'metro.config.cjs');
+  execFileSync(process.execPath, [resolve(scriptRoot, 'node_modules/@react-native-community/cli/build/bin.js'),
+    'bundle', '--entry-file', entryFile, '--platform', 'ios', '--dev', 'false', '--bundle-output', bundleOut,
+    '--sourcemap-output', bundleOut + '.map', '--config', metroConfig, '--max-workers', '2'],
+    {cwd: scriptRoot, stdio: 'inherit'});
+}
+
 async function buildVariant(variant) {
   console.log(`[HanlinExpo] Building Expo SwiftUI Probe Variant ${variant} with Metro...`);
   const buildDir = resolve(scriptRoot, '.build-probe', `variant-${variant}`);
@@ -36,11 +44,7 @@ async function buildVariant(variant) {
   const bundleOut = resolve(buildDir, 'bundle.js');
   const metroConfig = resolve(scriptRoot, 'metro.config.cjs');
 
-  // Bundle with Metro into complete, self-contained CommonJS React Native bundle
-  execFileSync(process.execPath, [resolve(scriptRoot, 'node_modules/@react-native-community/cli/build/bin.js'),
-    'bundle', '--entry-file', entryFile, '--platform', 'ios', '--dev', 'false', '--bundle-output', bundleOut,
-    '--sourcemap-output', bundleOut + '.map', '--config', metroConfig, '--max-workers', '2'],
-    {cwd: scriptRoot, stdio: 'inherit'});
+  bundleWithOriginalMetro(entryFile, bundleOut);
 
   // Copy manifest and package.json
   const packageJSON = JSON.parse(await readFile(resolve(probeSrcRoot, 'package.json'), 'utf8'));
@@ -86,9 +90,31 @@ async function buildMalformed() {
   console.log(`[HanlinExpo] Staged malformed probe package: ${targetZip}`);
 }
 
+async function buildOriginalWidgetsProbe(variant) {
+  const source = resolve(repositoryRoot, 'Fixtures/ExpoWidgetsProbe');
+  const buildDir = resolve(ownedBuildRoot, 'original-widgets-' + variant);
+  await resetBuildDirectory(buildDir);
+  bundleWithOriginalMetro(resolve(source, variant === 'A' ? 'variant-a.ts' : 'variant-b.ts'), resolve(buildDir, 'bundle.js'));
+  const packageJSON = JSON.parse(await readFile(resolve(source, 'package.json'), 'utf8'));
+  const scriptJSON = JSON.parse(await readFile(resolve(source, 'script.json'), 'utf8'));
+  packageJSON.name = 'expo-widgets-probe-' + variant.toLowerCase();
+  scriptJSON.name = 'Original Expo Widgets Probe ' + variant;
+  await writeFile(resolve(buildDir, 'package.json'), JSON.stringify(packageJSON, null, 2) + '\n');
+  await writeFile(resolve(buildDir, 'script.json'), JSON.stringify(scriptJSON, null, 2) + '\n');
+  const target = resolve(source, 'ExpoWidgetsProbe' + variant + '.hanlinExpo');
+  await writeArchive(buildDir, target);
+  await mkdir(uiTestFixturesRoot, {recursive:true});
+  await cp(target, resolve(uiTestFixturesRoot, 'ExpoWidgetsProbe' + variant + '.hanlinExpo'));
+  console.log('[HanlinExpo] Original public Widgets API probe staged: ' + target);
+}
+
 async function main() {
   console.log('[HanlinExpo] Running semantic TypeScript project check before Metro...');
-  execFileSync(process.execPath, [resolve(scriptRoot, 'check-ui-type-contract.mjs')], {cwd: scriptRoot, stdio: 'inherit'});
+  if (!process.argv.includes('--widgets-only')) execFileSync(process.execPath, [resolve(scriptRoot, 'check-ui-type-contract.mjs')], {cwd: scriptRoot, stdio: 'inherit'});
+  execFileSync(process.execPath, [resolve(scriptRoot, 'check-ui-type-contract.mjs'), '--widgets'], {cwd: scriptRoot, stdio: 'inherit'});
+  await buildOriginalWidgetsProbe('A');
+  await buildOriginalWidgetsProbe('B');
+  if (process.argv.includes('--widgets-only')) return;
   const zipA = await buildVariant('A');
   const zipB = await buildVariant('B');
   await buildMalformed();

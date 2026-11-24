@@ -7,8 +7,8 @@
   "private": true,
   "peerDependencies": {
     "@nativescript/react-native": "9.1.2",
-    "react": "*",
-    "react-native": ">=0.88.0",
-    "react-native-worklets": "0.13.1"
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-worklets": "0.13.0"
   }
 }

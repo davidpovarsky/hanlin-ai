@@ -25,8 +25,8 @@ test('native source identity changes for native versions, installed graph, Xcode
   assert.notEqual(identity,sourceBuildIdentity({...lock,expo:{uiVersion:'58.0.30'}},'graph','Xcode27','original producer'));
 });
 test('generated runtime metadata uses exact native and original ScriptWidget identities',()=>{
-  const text=generatedHostVersions({expo:{expo:'58.0.26','@expo/ui':'58.0.29','expo-widgets':'58.0.20','react-native':'0.88.1'},nativescript:{'@nativescript/ios':'9.1.1','@nativescript/core':'9.1.4','@nativescript/swift-ui':'4.0.2'},scriptwidget:{revision:'4da256d58247bbafb9a5cd443a285250b97b3c4b'}});
-  assert.match(text,/expoSDKVersion = "58\.0\.26"/);assert.match(text,/nativeScriptCoreVersion = "9\.1\.4"/);assert.match(text,/scriptWidgetRevision = "4da256/);
+  const text=generatedHostVersions({expo:{expo:'58.0.26','@expo/ui':'58.0.29','expo-widgets':'58.0.29','react-native':'0.88.1','@nativescript/react-native':'9.1.2','react-native-worklets':'0.13.0'},nativescript:{'@nativescript/ios':'9.1.1','@nativescript/core':'9.1.4','@nativescript/swift-ui':'4.0.2'},scriptwidget:{revision:'4da256d58247bbafb9a5cd443a285250b97b3c4b'}});
+  assert.match(text,/expoSDKVersion = "58\.0\.26"/);assert.match(text,/reactNativeWorkletsVersion = "0\.13\.0"/);assert.match(text,/nativeApiVersion = "9\.1\.2"/);assert.match(text,/nativeScriptCoreVersion = "9\.1\.4"/);assert.match(text,/scriptWidgetRevision = "4da256/);
 });
 test('three-way native refresh preserves host adaptations and applies upstream changes',async()=>{
   const cache=await mkdtemp(path.join(tmpdir(),'hanlin-original-merge-'));

@@ -3,6 +3,7 @@
 import {readFile, writeFile, mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
+import {syncOriginalUIExports} from './sync-original-ui-exports.mjs';
 
 const root = path.resolve(import.meta.dirname, '../..');
 const rn = path.join(import.meta.dirname, 'node_modules/react-native');
@@ -78,8 +79,9 @@ for (const patch of patches) {
   provenance.push({package: patch.package ?? 'react-native', file: patch.file, originalSHA256: patch.originalSHA256, correctedSHA256: sha(corrected),
     source: patch.source, sourceSHA256, reason: patch.reason});
 }
+const originalUIExports = await syncOriginalUIExports({root, check:process.argv.includes('--check')});
 const output = path.join(root, 'build/acceptance/expo-type-declarations');
 await mkdir(output, {recursive: true});
 await writeFile(path.join(output, 'corrections.json'), JSON.stringify({schemaVersion: 1, reactNative: rnVersion, nativeAPI: nativeAPIVersion,
-  boundary: 'Declaration-only corrections; strict checking and native/Metro execution are separate mandatory gates.', patches: provenance}, null, 2) + '\n');
+  boundary: 'Declaration-only corrections; strict checking and native/Metro execution are separate mandatory gates.', patches: provenance, originalUIExports}, null, 2) + '\n');
 console.log('PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.');

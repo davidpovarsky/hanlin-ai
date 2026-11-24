@@ -20,7 +20,7 @@ export const scriptWidgetAPI = {
     "font": { "type": "enum", "values": ["largeTitle", "title", "title2", "title3", "headline", "subheadline", "body", "callout", "footnote", "caption", "caption2"], "documentation": "Semantic text style." },
     "fontWeight": { "type": "enum", "values": ["ultraLight", "thin", "light", "regular", "medium", "semibold", "bold", "heavy", "black"], "documentation": "Font weight." },
     "fontDesign": { "type": "enum", "values": ["default", "rounded", "serif", "monospaced"], "documentation": "Font design." },
-    "frame": { "type": "number|string", "documentation": "Square size (64 or \"64\"), width,height (\"64,48\"), or flexible frame (\"max\", \"max,48\")." },
+    "frame": { "type": "number|string", "documentation": "Square size (64 or \"64\"), width,height (\"64,48\"), fill both directions (\"max\"), full width with a fixed height (\"max,48\") or full height with a fixed width (\"64,max\"). An alignment may follow: \"max,leading\", \"64,48,topLeading\", \"max,48,leading\", \"64,max,top\"; one of center, leading, trailing, top, bottom, topLeading, topTrailing, bottomLeading, bottomTrailing. No spaces; a value in another form is ignored, and an unknown alignment is read as center. There is no form for full width with the content's own height: put a <spacer/> in an <hstack>." },
     "padding": { "type": "number|string", "documentation": "Padding amount or edge description." },
     "corner": { "type": "number", "documentation": "Corner radius." },
     "opacity": { "type": "number", "documentation": "Opacity from 0 through 1." },
@@ -29,7 +29,7 @@ export const scriptWidgetAPI = {
     "rotation": { "type": "number", "documentation": "Rotation in degrees." },
     "rotation3d": { "type": "string", "documentation": "Static degree,x,y,z rotation with four finite numbers and a nonzero axis. Invalid values are ignored; axis magnitude is normalized. Reduce Motion removes the tilt. This does not read device motion or provide parallax." },
     "shadow": { "type": "string", "documentation": "Shadow color, radius, and offset description." },
-    "animation": { "type": "string", "documentation": "iOS public SwiftUI scheduled clock/swing effect. Mac renders static standard-clock poses; other effects remain at rest. Signed clockCustom intervals specify a half-turn (full cycle = 2 * abs(interval)), minimum magnitude 0.25 seconds. App previews can animate; WidgetKit decides cadence and may freeze. Reduced motion/luminance freezes standard clock poses and keeps custom/swing effects at rest. Dynamic scripts are not rerun on animation ticks." },
+    "animation": { "type": "string", "documentation": "Clock hands, custom intervals and swings. iPhone, iPad and Mac widgets move with WidgetKit's clock-hand effect; the iOS app's previews animate, and the Mac app's previews show standard clock poses with other effects at rest. Signed clockCustom intervals specify a half-turn (full cycle = 2 * abs(interval)), minimum magnitude 0.25 seconds. Reduced motion/luminance freezes standard clock poses and keeps custom/swing effects at rest. Dynamic scripts are not rerun on animation ticks." },
     "widgetAccentable": { "type": "boolean", "documentation": "Group this view into the accent layer in tinted and vibrant widget appearances." },
     "linkurl": { "type": "url", "documentation": "Widget deep link URL." }
   },

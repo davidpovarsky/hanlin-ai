@@ -38,6 +38,10 @@ SUPPORT_GROUPS = {
         "paths": ("Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
                   "Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"),
     },
+    "HanlinExpoWidgetRuntimeSupport": {
+        "targets": ("ExpoUI", "ExpoModulesCore"),
+        "paths": ("Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle",),
+    },
     "HanlinNativeScriptHostSupport": {
         "targets": ("TNSWidgets", "NSCWinterTC"),
         "paths": ("Packages/HanlinNativeScriptRuntime/Artifacts/native-api-usage.json",
@@ -55,6 +59,10 @@ SUPPORT_GROUPS = {
 INPUTS = (
     "RuntimeDependencies.lock.json", "Scripts/Expo/dependency-lock.json",
     "Scripts/Expo/prepare-ios-dependencies.mjs",
+    "Scripts/Expo/build-original-expo-source.mjs",
+    "Scripts/Expo/build-original-widget-runtime.mjs",
+    "Scripts/Expo/package-lock.json", "Scripts/Expo/babel.config.cjs",
+
     "Scripts/ExpoNativeAPI/dependency-lock.json",
     "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
     "Scripts/NativeScript/dependency-lock.json", "Scripts/NativeScript/package-lock.json",

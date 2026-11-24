@@ -264,6 +264,26 @@ export async function refreshOriginalSources({root,cache,publications,archives})
       changes.push({path:local,originalAfterSHA256:sha(original),added:true});
     }
   }
+  // Keep the complete original foreground module, including newly published files.
+  const fullWidgetsRoot='Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/';
+  if(manifest.files.some(entry=>entry.local.startsWith(fullWidgetsRoot))) {
+    const name='expo-widgets',archive=archives.get(name),publication=publications.get(name);
+    const knownFiles=new Set(manifest.files.map(entry=>entry.local));
+    for(const item of [...archive.paths].sort()) {
+      if(!item.startsWith('package/ios/')||!item.endsWith('.swift'))continue;
+      const relative=item.slice('package/'.length),local=fullWidgetsRoot+relative.slice('ios/'.length);
+      if(knownFiles.has(local))continue;
+      if(existsSync(path.join(root,local)))throw new Error('New original Expo Widgets source collides with host source: '+local);
+      const original=tarMember(archive.file,relative);
+      const adapted=original.toString().includes('import Foundation')?original:Buffer.from('import Foundation\n'+original);
+      files.set(local,adapted);
+      manifest.files.push({repository:'expo/expo',upstream:'packages/expo-widgets/'+relative,
+        upstreamBlob:blob(original),local,localSHA256:sha(adapted),byteIdentical:Buffer.compare(original,adapted)===0,
+        upstreamPublication:{package:name,version:publication.version,tarball:publication.dist.tarball,sha256:archive.sha256,path:relative},
+        adaptation:'Complete original ExpoWidgets source; explicit Foundation import replaces CocoaPods umbrella scope.'});
+      changes.push({path:local,originalAfterSHA256:sha(original),added:true});
+    }
+  }
   await closeOriginalWidgetTypes({root,cache,files,manifest,changes,publications,archives});
   const widgetModifier='Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/WidgetModifiers.swift';
   const hasOriginalWidgetInstaller=files.get(widgetModifier)?.toString().includes('public func registerWidgetModifiers()');

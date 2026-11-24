@@ -72,7 +72,7 @@ function gitTagRevision(repository,version) {
 }
 export function generatedHostVersions(versions) {
   const expo=versions.expo,ns=versions.nativescript;
-  const fields={nativeScriptRuntimeVersion:ns['@nativescript/ios'],nativeScriptCoreVersion:ns['@nativescript/core'],nativeScriptSwiftUIVersion:ns['@nativescript/swift-ui'],expoSDKVersion:expo.expo,expoUIVersion:expo['@expo/ui'],expoWidgetsVersion:expo['expo-widgets'],reactNativeVersion:expo['react-native']};
+  const fields={nativeScriptRuntimeVersion:ns['@nativescript/ios'],nativeScriptCoreVersion:ns['@nativescript/core'],nativeScriptSwiftUIVersion:ns['@nativescript/swift-ui'],expoSDKVersion:expo.expo,expoUIVersion:expo['@expo/ui'],expoWidgetsVersion:expo['expo-widgets'],reactNativeVersion:expo['react-native'],nativeApiVersion:expo['@nativescript/react-native'],reactNativeWorkletsVersion:expo['react-native-worklets']};
   for(const [name,value] of Object.entries(fields))if(!/^\d+\.\d+\.\d+(?:[-+][\w.-]+)?$/.test(value??''))throw new Error(`Missing exact host version: ${name}`);
   const revision=versions.scriptwidget?.revision;
   if(revision&&!/^[a-f0-9]{40}$/.test(revision))throw new Error('Missing exact ScriptWidget source revision');
@@ -116,7 +116,7 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
   const originals={};
   for(const name of ['expo','@expo/ui','expo-brownfield','expo-modules-core','expo-modules-jsi','expo-widgets','react-native','react-native-worklets','@nativescript/react-native','@nativescript/swift-ui'])originals[name]=sourceRecord(publications.get(name),await archive(name));
   const updatedExpo=structuredClone(expoLock);
-  updatedExpo.expo={sdkVersion:expo.version,uiVersion:versions.expo['@expo/ui'],brownfieldVersion:versions.expo['expo-brownfield'],modulesCoreVersion:versions.expo['expo-modules-core'],reactNativeVersion:rn.version,reactVersion:versions.expo.react,hermesVersion:hermes};
+  updatedExpo.expo={sdkVersion:expo.version,uiVersion:versions.expo['@expo/ui'],widgetsVersion:versions.expo['expo-widgets'],brownfieldVersion:versions.expo['expo-brownfield'],modulesCoreVersion:versions.expo['expo-modules-core'],reactNativeVersion:rn.version,reactVersion:versions.expo.react,hermesVersion:hermes};
   for(const item of updatedExpo.artifacts) {
     if(item.package) {
       const publication=publications.get(item.package),input=await archive(item.package);
@@ -167,11 +167,14 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
   for(const name of ['Packages/HanlinExpoUI/package.json','Packages/HanlinExpoNativeAPIJS/package.json']) {
     const local=await json(path.join(root,name));for(const dependency of Object.keys(local.peerDependencies??{}))if(versions.expo[dependency])local.peerDependencies[dependency]=versions.expo[dependency];files.set(name,pretty(local));
   }
-  for(const name of ['Fixtures/ExpoSwiftUIProbe/package.json','Fixtures/ExpoNativeAPIProbe/package.json']) {
+  for(const name of ['Fixtures/ExpoSwiftUIProbe/package.json','Fixtures/ExpoNativeAPIProbe/package.json','Fixtures/ExpoWidgetsProbe/package.json']) {
     let fixture;
     if(existsSync(path.join(root,name)))fixture=await json(path.join(root,name));
     else {try {fixture=JSON.parse(run('git',['-C',root,'show','HEAD:'+name]));}catch {continue;}}
     for(const dependency of Object.keys(fixture.dependencies??{}))if(versions.expo[dependency])fixture.dependencies[dependency]=versions.expo[dependency];
+    for(const [dependency,localPath] of [['@hanlin/expo-ui','Packages/HanlinExpoUI/package.json'],['@hanlin/expo-native-api','Packages/HanlinExpoNativeAPIJS/package.json']]) {
+      if(fixture.dependencies?.[dependency])fixture.dependencies[dependency]=JSON.parse(files.get(localPath)).version;
+    }
     if(fixture.hanlinExpo) {
       fixture.hanlinExpo.runtimeVersion=versions.expo['@expo/ui'];
       for(const dependency of Object.keys(fixture.hanlinExpo.plugins??{}))if(versions.expo[dependency])fixture.hanlinExpo.plugins[dependency]=versions.expo[dependency];

@@ -5,7 +5,7 @@ public enum HanlinExpoWidgetOriginalBootstrap {
     public static func install() {
         guard !installed else { return }
         installed = true
-        // This original baseline registers its widget modifiers in the registry.
         _ = ViewModifierRegistry.shared
+        registerWidgetModifiers()
     }
 }

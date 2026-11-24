@@ -1,0 +1,193 @@
+// Copyright 2022-present 650 Industries. All rights reserved.
+
+import ExpoModulesJSI
+
+/**
+ Represents a JavaScript class.
+ */
+public final class ClassDefinition: ObjectDefinition {
+  public override var _definitionClassification: DefinitionClassification {
+    return DefinitionClassification(kind: .klass(self))
+  }
+
+  /**
+   Name of the class.
+   */
+  let name: String
+
+  /**
+   A synchronous function that gets called when the object of this class is initializing.
+   */
+  let constructor: AnySyncFunctionDefinition?
+
+  /**
+   A dynamic type for the associated object class.
+   */
+  let associatedType: AnyDynamicType?
+
+  /**
+   Whether the associatedType inherits from `SharedRef`.
+   */
+  let isSharedRef: Bool
+
+  private init(_ name: String, associatedType: AnyDynamicType, isSharedRef: Bool, elements: [AnyClassDefinitionElement] = []) {
+    self.name = name
+    self.associatedType = associatedType
+    self.isSharedRef = isSharedRef
+
+    // Constructors can't be passed down to the object definition
+    // as we shouldn't override the default `<Class>.prototype.constructor`.
+    self.constructor = elements.lazy.compactMap(constructorDefinition).first
+    let elementsWithoutConstructors = elements.filter { constructorDefinition($0) == nil }
+
+    super.init(definitions: elementsWithoutConstructors)
+  }
+
+  convenience init<AssociatedObject: ClassAssociatedObject>(name: String, associatedType: AssociatedObject.Type, elements: [AnyClassDefinitionElement] = []) {
+    self.init(name, associatedType: ~AssociatedObject.self, isSharedRef: AssociatedObject.self is AnySharedRef.Type, elements: elements)
+  }
+
+  convenience init(name: String, elements: [AnyClassDefinitionElement] = []) {
+    self.init(name, associatedType: DynamicJavaScriptType.shared, isSharedRef: false, elements: elements)
+  }
+
+  // MARK: - JavaScriptObjectBuilder
+
+  @JavaScriptActor
+  public override func build(appContext: AppContext) throws -> JavaScriptObject {
+    // The concrete `SharedObject` subclass backing this class, used to dispatch to the
+    // `@SharedObject` macro's `_constructSharedObject` / `_decorateSharedObject` overrides.
+    let sharedObjectType = ((associatedType as? DynamicSharedObjectType)?.innerType) as? SharedObject.Type
+
+    let constructorClosure: JavaScriptRuntime.SyncFunctionClosure = { [weak self, weak appContext] this, arguments in
+      guard let self, let appContext else {
+        throw Exceptions.AppContextLost()
+      }
+      // Build the native instance and pair it with `this` (returning a different object would drop
+      // the prototype chain `new` set up). Prefer the macro-synthesized `_constructSharedObject`,
+      // falling back to the DSL `Constructor` body.
+      if let sharedObject = try sharedObjectType?._constructSharedObject(this: this, arguments: arguments, in: appContext.runtime) {
+        appContext.sharedObjectRegistry.add(native: sharedObject, javaScript: this.getObject(), inheritsBaseClass: true)
+      } else if let constructor {
+        let result = try constructor.runBody(appContext, in: appContext.runtime, this: this, arguments: arguments)
+
+        if let sharedObject = result as? SharedObject {
+          appContext.sharedObjectRegistry.add(native: sharedObject, javaScript: this.getObject(), inheritsBaseClass: true)
+        }
+      } else if sharedObjectType != nil {
+        // Nothing built a native instance, so the object would reach JavaScript with no backing
+        // state and fail at its first member access. Classes whose inputs only the native side can
+        // supply land here: they need a `@JS init` or a DSL `Constructor` to be constructible.
+        throw Exceptions.ConstructorUnavailable(name)
+      }
+      return this
+    }
+
+    let klass = try createClass(appContext: appContext, name: name, constructorClosure).asObject()
+
+    try decorate(object: klass, appContext: appContext)
+
+    let prototype = klass.getProperty("prototype").getObject()
+
+    // Bind the macro's `@JS` members: instance members onto the prototype, static members onto the constructor.
+    if let sharedObjectType {
+      try sharedObjectType._decorateSharedObject(prototype: prototype, in: appContext.runtime)
+      try sharedObjectType._decorateSharedObject(constructor: klass, in: appContext.runtime)
+    }
+
+    // Register the prototype of the JS class for its associated native type.
+    if let sharedObjectType = associatedType as? DynamicSharedObjectType {
+      appContext.classRegistry.register(nativeClassId: sharedObjectType.typeIdentifier, prototype: prototype)
+    }
+
+    return klass
+  }
+
+  @JavaScriptActor
+  public override func decorate(object: borrowing JavaScriptObject, appContext: AppContext) throws {
+    try decorateWithStaticFunctions(object: object, appContext: appContext)
+
+    // Here we actually don't decorate the input object (constructor) but its prototype.
+    // Properties are intentionally skipped here — they have to decorate an instance instead of the prototype.
+    let prototype = object.getProperty("prototype").getObject()
+
+    try decorateWithConstants(object: prototype, appContext: appContext)
+    try decorateWithFunctions(object: prototype, appContext: appContext)
+    try decorateWithClasses(object: prototype, appContext: appContext)
+    try decorateWithProperties(object: prototype, appContext: appContext)
+  }
+
+  @JavaScriptActor
+  private func createClass(appContext: AppContext, name: String, _ constructor: @escaping JavaScriptRuntime.SyncFunctionClosure) throws -> JavaScriptFunction {
+    if isSharedRef {
+      return try appContext.runtime.createSharedRefClass(name, constructor)
+    }
+    return try appContext.runtime.createSharedObjectClass(name, constructor)
+  }
+
+  /**
+   Builds a prototype object for this class in the given runtime, inheriting from the provided base prototype.
+   Installs property getter/setters that route to the same native SharedObjects via the shared registry.
+   Used to make SharedObject properties accessible in alternate runtimes (e.g. the worklet runtime).
+   */
+  @JavaScriptActor
+  func buildPrototype(in runtime: JavaScriptRuntime, appContext: AppContext, basePrototype: consuming JavaScriptObject) throws -> JavaScriptObject {
+    let proto = runtime.createObject(prototype: basePrototype)
+    for property in properties.values {
+      let descriptor = try property.buildDescriptor(appContext: appContext, in: runtime)
+      proto.defineProperty(property.name, descriptor: descriptor)
+    }
+    for fn in functions.values {
+      if let syncFn = fn as? AnySyncFunctionDefinition {
+        proto.setProperty(fn.name, value: try syncFn.build(appContext: appContext, in: runtime))
+      }
+    }
+    // Bind the macro's `@JS` members, which aren't in the DSL `properties`/`functions` dictionaries.
+    if let sharedObjectType = (associatedType as? DynamicSharedObjectType)?.innerType as? SharedObject.Type {
+      try sharedObjectType._decorateSharedObject(prototype: proto, in: runtime)
+    }
+    return proto
+  }
+}
+
+// MARK: - ClassAssociatedObject
+
+/**
+ A protocol for types that can be used as an associated type of the ``ClassDefinition``.
+ */
+internal protocol ClassAssociatedObject: ~Copyable {}
+
+// Basically we only need these two
+extension JavaScriptObject: ClassAssociatedObject, AnyArgument {
+  public static func getDynamicType() -> any AnyDynamicType {
+    return DynamicJavaScriptType.shared
+  }
+
+  public static func convert(from value: borrowing JavaScriptValue, appContext: AppContext) throws -> Self {
+    guard value.kind == .object else {
+      throw Conversions.UnexpectedValueType((received: value.kind, expected: .object))
+    }
+    return value.getObject()
+  }
+}
+extension SharedObject: ClassAssociatedObject {}
+
+// MARK: - Privates
+
+/**
+ Returns the definition item as a constructor, a synchronous function whose name is "constructor", or `nil`.
+
+ We do it that way for the following two reasons:
+ - It's easier to reuse existing `SyncFunctionDefinition`.
+ - Redefining prototype's `constructor` is a bad idea so a function with this name
+   needs to be filtered out when decorating the prototype.
+ */
+private func constructorDefinition(_ item: AnyDefinition) -> AnySyncFunctionDefinition? {
+  switch item._definitionClassification.kind {
+  case .function(let function), .staticFunction(let function):
+    // Only the element named "constructor" pays for the protocol cast.
+    return function.name == "constructor" ? function as? AnySyncFunctionDefinition : nil
+  default:
+    return nil
+  }
+}

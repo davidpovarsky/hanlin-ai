@@ -7,6 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import https from 'node:https';
 import http from 'node:http';
 import { buildOriginalExpoSource } from './build-original-expo-source.mjs';
+import { buildOriginalWidgetRuntime } from './build-original-widget-runtime.mjs';
 
 const scriptRoot = resolve(import.meta.dirname);
 const repositoryRoot = resolve(scriptRoot, '..', '..');
@@ -1303,6 +1304,8 @@ template <typename CharTransformT = fnv1a_identity>
         `[HanlinExpo] Normalized${process.platform === 'darwin' ? ', signed,' : ''} and verified ${basename(xcfPath)}`
       );
     }
+
+    await buildOriginalWidgetRuntime({root: repositoryRoot});
 
     const configXcconfigPath = resolve(repositoryRoot, 'Config.xcconfig');
     if (existsSync(configXcconfigPath)) {

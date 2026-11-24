@@ -538,9 +538,9 @@ public struct HanlinScriptAnalyzer: Sendable {
                 return
             }
             if widgetEntrypoints.contains(where: { $0.widgetEngine == .expo }),
-               runtimeVersion != expoSDKVersion || plugins["@expo/ui"] as? String != expoUIVersion {
+               runtimeVersion != expoUIVersion || plugins["@expo/ui"] as? String != expoUIVersion {
                 findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
-                    message: "Native Expo widgets require the exact embedded runtime \(expoSDKVersion) and @expo/ui plugin \(expoUIVersion)."))
+                    message: "Native Expo widgets require the exact embedded runtime \(expoUIVersion) and @expo/ui plugin \(expoUIVersion)."))
             }
             if let requiredBridge = contract["bridgeVersion"] {
                 guard let requiredBridgeVersion = requiredBridge as? String else {
@@ -569,43 +569,44 @@ public struct HanlinScriptAnalyzer: Sendable {
                     continue
                 }
                 if name == "@nativescript/react-native" {
-                    if version != "9.1.2" {
+                    if version != HanlinMiniAppHostVersions.nativeApiVersion {
                         findings.append(.init(
                             state: .unsupported,
                             severity: .error,
                             sourcePath: packageJSONPath,
-                            message: "This Hanlin build supports @nativescript/react-native 9.1.2, but the package requires \(version)."
+                            message: "This Hanlin build supports @nativescript/react-native \(HanlinMiniAppHostVersions.nativeApiVersion), but the package requires \(version)."
                         ))
                     } else {
                         findings.append(.init(
                             state: .supported,
                             severity: .information,
                             sourcePath: packageJSONPath,
-                            message: "Expo plugin @nativescript/react-native 9.1.2 has embedded native JSI & Fabric support."
+                            message: "Expo plugin @nativescript/react-native \(HanlinMiniAppHostVersions.nativeApiVersion) has embedded native JSI & Fabric support."
                         ))
                     }
                     continue
                 }
                 if name == "react-native-worklets" {
-                    if version != "0.13.1" {
+                    if version != HanlinMiniAppHostVersions.reactNativeWorkletsVersion {
                         findings.append(.init(
                             state: .unsupported,
                             severity: .error,
                             sourcePath: packageJSONPath,
-                            message: "This Hanlin build supports react-native-worklets 0.13.1, but the package requires \(version)."
+                            message: "This Hanlin build supports react-native-worklets \(HanlinMiniAppHostVersions.reactNativeWorkletsVersion), but the package requires \(version)."
                         ))
                     } else {
                         findings.append(.init(
                             state: .supported,
                             severity: .information,
                             sourcePath: packageJSONPath,
-                            message: "Expo plugin react-native-worklets 0.13.1 is supported as a build-embedded runtime dependency."
+                            message: "Expo plugin react-native-worklets \(HanlinMiniAppHostVersions.reactNativeWorkletsVersion) is supported as a build-embedded runtime dependency."
                         ))
                     }
                     continue
                 }
                 let supported = switch name {
                 case "@expo/ui": isExpoVersionCompatible(version)
+                case "expo-widgets": HanlinPreparedRuntimeVersion.supportsMinimum(version, installed: HanlinMiniAppHostVersions.expoWidgetsVersion)
                 case "@hanlin/expo-ui": isVersion(version, atMost: expoUIBridgeVersion)
                 default: false
                 }
@@ -614,7 +615,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                         state: .unsupported,
                         severity: .error,
                         sourcePath: packageJSONPath,
-                        message: "This Hanlin build supports @expo/ui \(expoUIVersion) and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
+                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), expo-widgets \(HanlinMiniAppHostVersions.expoWidgetsVersion), and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
                     ))
                 } else {
                     findings.append(.init(
@@ -659,7 +660,7 @@ public struct HanlinScriptAnalyzer: Sendable {
     }
 
     private static func isExpoVersionCompatible(_ versionString: String) -> Bool {
-        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: expoSDKVersion)
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: expoUIVersion)
     }
 
     private static func isVersion(_ required: String, atMost installed: String) -> Bool {
