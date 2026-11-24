@@ -138,3 +138,16 @@ test('ported attachment executes grouped search, version expansion, full text, p
   await execution(program, 'replaceText', { id: group.primary.id, version: version.id }, {}, globals);
   assert.equal(replacement, 'בראשית ברא אלוהים');
 });
+
+test('original action-only source and exported control handlers do not require a rendered root', async () => {
+  for (const [source, actionOnly] of [
+    ['function press() { $storage.set("pressed", true); }', true],
+    ['export function press() { $storage.set("pressed", true); }', true]
+  ]) {
+    const program = compile({engine: 'scriptwidget', format: 'jsx', entry: 'main.jsx',
+      files: {'main.jsx': source}, actions: [{id: '__scriptwidget_control_press', kind: 'function', handler: 'press'}]});
+    const result = await execution(program, '__scriptwidget_control_press', null, {}, {__hanlinActionOnly: actionOnly});
+    assert.equal(result.values.pressed, true);
+    assert.equal(result.rendered, undefined);
+  }
+});

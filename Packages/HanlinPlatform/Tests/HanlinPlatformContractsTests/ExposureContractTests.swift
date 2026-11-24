@@ -53,7 +53,7 @@ struct ExposureContractTests {
         #expect(control != nil)
         #expect(control?.requiresDedicatedExtensionTarget == true)
         #expect(control?.eligibility == .hybrid)
-        #expect(control?.implementationState == .reserved)
+        #expect(control?.implementationState == .genericHosted)
 
         // 7. App Intents
         let appIntent = HanlinExposureCatalog.classification(for: .appIntent)

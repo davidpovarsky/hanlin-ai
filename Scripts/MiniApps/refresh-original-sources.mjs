@@ -351,6 +351,24 @@ export async function refreshOriginalSources({root,cache,publications,archives})
       changes.push({path:local,originalAfterSHA256:sha(bytes),added:true});
     }
   }
+  // Original native controls share the existing Hanlin WidgetKit target.
+  // The old standalone demo intent is not referenced by either original control.
+  const controlSourceRoot='iOS/ScriptWidgetWidget/ControlWidget/';
+  const controlTargetRoot='Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/';
+  if(manifest.files.some(entry=>entry.local.startsWith(controlTargetRoot))) {
+    const knownControls=new Set(manifest.files.map(entry=>entry.local));
+    for(const item of tree.tree??[]) {
+      if(item.type!=='blob'||!item.path.startsWith(controlSourceRoot)||!item.path.endsWith('.swift'))continue;
+      const relative=item.path.slice(controlSourceRoot.length);
+      if(relative==='ScriptWidgetControlAppIntent.swift')continue;
+      const local=controlTargetRoot+relative;if(knownControls.has(local))continue;
+      if(existsSync(path.join(root,local)))throw new Error('New original control source collides with a host file: '+local);
+      const bytes=await source(raw('everettjf/scriptwidget',commit,item.path),cache);files.set(local,bytes);
+      manifest.files.push({repository:'everettjf/scriptwidget',commit,upstream:item.path,upstreamBlob:blob(bytes),local,
+        localSHA256:sha(bytes),byteIdentical:true,adaptation:'New original Control Widget dependency; host module/public API/native compilation required.'});
+      changes.push({path:local,originalAfterSHA256:sha(bytes),added:true});
+    }
+  }
   // Multiple source records can contribute to one host adapter. Its final local
   // digest must be shared by all records after every successful merge.
   for(const entry of manifest.files)if(files.has(entry.local))entry.localSHA256=sha(files.get(entry.local));

@@ -2,6 +2,7 @@ import HanlinExtensionContracts
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptContracts
+@preconcurrency import HanlinScriptWidgetOriginal
 
 public struct HanlinWidgetActionCommand: Codable, Hashable, Sendable {
     public let context: HanlinWidgetActionContext
@@ -10,15 +11,18 @@ public struct HanlinWidgetActionCommand: Codable, Hashable, Sendable {
     public let nonce: String
     public var desiredValue: Bool?
     public var parameters: HanlinValue?
+    public var controlID: String?
 
     public init(context: HanlinWidgetActionContext, actionID: String, target: String? = nil,
-                nonce: String = "", desiredValue: Bool? = nil, parameters: HanlinValue? = nil) {
+                nonce: String = "", desiredValue: Bool? = nil, parameters: HanlinValue? = nil,
+                controlID: String? = nil) {
         self.context = context
         self.actionID = actionID
         self.target = target ?? actionID
         self.nonce = nonce
         self.desiredValue = desiredValue
         self.parameters = parameters
+        self.controlID = controlID
     }
 }
 
@@ -69,6 +73,22 @@ public enum HanlinWidgetActionExecutor {
             let (program, digest) = try store.loadProgram(for: widget)
             guard digest == context.artifactSHA256 else { throw HanlinWidgetActionError.staleArtifact }
             guard let action = program.actions.first(where: { $0.id == command.actionID }) else { throw HanlinWidgetActionError.undeclaredAction }
+            let originalControl: HanlinOriginalScriptWidgetControls.Control?
+            if let controlID = command.controlID {
+                guard context.engine == .scriptwidget, let data = program.resources["widget.json"],
+                      let control = try HanlinOriginalScriptWidgetControls.read(data).controls.first(where: { $0.id == controlID }),
+                      action == HanlinWidgetActionDeclaration(id: control.preparedActionID,
+                          kind: control.kind == .toggle ? .setValue : .function,
+                          handler: control.handler, stateKey: control.stateKey),
+                      command.target == control.preparedActionID,
+                      (control.kind == .toggle) == (command.desiredValue != nil) else {
+                    throw HanlinWidgetActionError.undeclaredAction
+                }
+                originalControl = control
+            } else {
+                guard !action.id.hasPrefix("__scriptwidget_control_") else { throw HanlinWidgetActionError.undeclaredAction }
+                originalControl = nil
+            }
             let old = current.widgetStates.first { $0.identity == identity && $0.engine == context.engine }
             guard old == nil || old?.artifactSHA256 == digest else { throw HanlinWidgetActionError.staleArtifact }
             var state = old ?? .init(identity: identity, engine: context.engine, artifactSHA256: digest, values: {
@@ -91,6 +111,17 @@ public enum HanlinWidgetActionExecutor {
                 environment["presentation"] = nil
                 environment["liveActivity"] = .bool(true)
             }
+            if let control = originalControl {
+                environment["presentation"] = nil
+                environment["liveActivity"] = nil
+                environment["widget-size"] = .string("action")
+                environment["widget-param"] = .string("")
+                environment["action-id"] = .string(control.actionID)
+                environment["action-source"] = .string("control")
+                environment["control-id"] = .string(control.id)
+                environment["action-value"] = command.desiredValue.map { .string($0 ? "true" : "false") }
+                environment["control-value"] = command.desiredValue.map { .string($0 ? "true" : "false") }
+            }
             environment["timestamp"] = .number(Date.now.timeIntervalSince1970 * 1_000)
             if action.kind != .reload {
                 switch context.engine {
@@ -105,13 +136,23 @@ public enum HanlinWidgetActionExecutor {
                     guard action.kind == .function || action.kind == .setValue else { throw HanlinWidgetActionError.undeclaredAction }
                     if action.kind == .setValue {
                         guard let key = action.stateKey, let value = command.desiredValue else { throw HanlinWidgetActionError.missingValue }
-                        state.values[key] = .bool(value)
+                        // The original Control executor writes strings. Preserve
+                        // that wire shape for original $storage.getString users.
+                        state.values[key] = originalControl == nil ? .bool(value) : .string(value ? "true" : "false")
                     }
-                    let execution = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state.values,
-                        environment: environment, actionID: action.handler == nil ? nil : action.id, actionValue: command.desiredValue,
-                        nativeRoot: store.root.appendingPathComponent("ScriptWidgetOriginal/v1", isDirectory: true),
-                        nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(identity, artifactSHA256: digest))
-                    state.values = execution.values
+                    let nativeRoot = store.root.appendingPathComponent("ScriptWidgetOriginal/v1", isDirectory: true)
+                    let nativeIdentity = try HanlinScriptWidgetRuntime.nativeIdentity(identity, artifactSHA256: digest)
+                    if originalControl != nil {
+                        state.values = try HanlinScriptWidgetRuntime.shared.performAction(
+                            program: program, values: state.values, environment: environment,
+                            actionID: action.id, actionValue: command.desiredValue,
+                            nativeRoot: nativeRoot, nativeIdentity: nativeIdentity)
+                    } else {
+                        let execution = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state.values,
+                            environment: environment, actionID: action.handler == nil ? nil : action.id,
+                            actionValue: command.desiredValue, nativeRoot: nativeRoot, nativeIdentity: nativeIdentity)
+                        state.values = execution.values
+                    }
                 case .legacy: throw HanlinWidgetActionError.invalidIdentity
                 }
             }

@@ -22,6 +22,8 @@ public struct HanlinGenericWidgetActionIntent: AppIntent {
 #if os(iOS)
         if command.context.engine == .scriptwidget {
             try await HanlinScriptWidgetLiveActivityController.refresh(store: store, identity: command.context.identity)
+            ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.buttonKind)
+            ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)
         }
 #endif
         WidgetCenter.shared.reloadTimelines(ofKind: kind)
@@ -53,6 +55,8 @@ public struct HanlinSetWidgetValueIntent: SetValueIntent {
 #if os(iOS)
         if command.context.engine == .scriptwidget {
             try await HanlinScriptWidgetLiveActivityController.refresh(store: store, identity: command.context.identity)
+            ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.buttonKind)
+            ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)
         }
 #endif
         WidgetCenter.shared.reloadTimelines(ofKind: kind)

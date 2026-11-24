@@ -85,7 +85,9 @@ public struct HanlinScriptAnalyzer: Sendable {
         let entrypoints = Self.preparedEntrypoints(manifest: package.manifest, files: files,
             discovered: discoveredEntrypoints, findings: &findings)
         var importedSymbols: Set<String> = []
-        let conventionalWidgets = ["widget.jsx", "widget.tsx", "widget.ts", "widget.js", "widget.json"].filter { files[$0] != nil }
+        let conventionalWidgets = ["widget.jsx", "widget.tsx", "widget.ts", "widget.js", "widget.json"].filter {
+            files[$0] != nil && !($0 == "widget.json" && scriptWidgetDeclared)
+        }
         if !package.manifest.isWidgetOnlyPackage, conventionalWidgets.count > 1 {
             findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
                 message: "Ambiguous widget entrypoints: \(conventionalWidgets.joined(separator: ", ")). Supply one widget entrypoint; source order never selects an engine or program."))
@@ -832,7 +834,9 @@ public struct HanlinScriptAnalyzer: Sendable {
         ]
         var kinds = Set(candidates.map { $0.1 })
         for (path, kind, context, policy, defaultEngine) in conventions
-            where available.contains(path) && kinds.insert(kind).inserted
+            where available.contains(path)
+                && !(path == "widget.json" && manifest.declaredWidgetEngine == .scriptwidget)
+                && kinds.insert(kind).inserted
         {
             let engine = (kind == .widget) ? (manifest.declaredWidgetEngine ?? defaultEngine) : nil
             candidates.append((path, kind, [context], policy, engine))

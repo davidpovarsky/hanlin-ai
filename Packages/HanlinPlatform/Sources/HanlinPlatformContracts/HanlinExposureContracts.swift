@@ -250,8 +250,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .reserved,
-            notes: "ControlWidget templates hosted in widget extension invoking AppIntents; reserved until dedicated Control target/type is compiled."
+            implementationState: .genericHosted,
+            notes: "Original ScriptWidget Button and Toggle ControlWidget providers live in the existing widget extension. Original widget.json controls/actions select current installed package instances and execute through their original native session and shared transactional storage."
         ),
         // 7. App Intents
         HanlinExposureClassification(

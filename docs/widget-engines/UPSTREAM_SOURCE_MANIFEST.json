@@ -709,9 +709,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
-      "localSHA256": "fd95fbae7ecd7f917c6ef0be9d002d84010d8f25210759ac214d29538da15a15",
+      "localSHA256": "ac4239ea986e45555ee17caeee1d692e55ae0016f0939f130a6bdbf628b7f291",
       "byteIdentical": false,
-      "adaptation": "Source-derived original JSExport/util/custom-component lifecycle; Hanlin one-shot VM owner, verified files, typed transactional storage, bounded HTTP and prepared Sendable tree. Aggregate preparation charges scalar children/UTF-8 keys/canonical values, enforces 1000 nodes/64 depth/256-KiB materials/1-MiB encoded DTO and cooperative five-second deadline. Not a byte-identical copy or hard VM-memory/preemption guarantee. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs.",
+      "adaptation": "Source-derived original JSExport/util/custom-component lifecycle; Hanlin one-shot VM owner, verified files, typed transactional storage, bounded HTTP and prepared Sendable tree. Aggregate preparation charges scalar children/UTF-8 keys/canonical values, enforces 1000 nodes/64 depth/256-KiB materials/1-MiB encoded DTO and cooperative five-second deadline. Not a byte-identical copy or hard VM-memory/preemption guarantee. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs. Original Control actions can complete with storage values and no rendered root; rendered widget/presentation paths retain their native tree contract.",
       "sourceRole": "host-adapter",
       "latestUpstreamContract": {
         "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
@@ -723,7 +723,7 @@
         },
         "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
         "changed": true,
-        "hostSHA256": "fd95fbae7ecd7f917c6ef0be9d002d84010d8f25210759ac214d29538da15a15",
+        "hostSHA256": "ac4239ea986e45555ee17caeee1d692e55ae0016f0939f130a6bdbf628b7f291",
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       }
     },
@@ -733,9 +733,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
-      "localSHA256": "5f42f6db1e4beaad0679babfa0ac0ba47bf637a65b3aa4fa28a3bc96da59711b",
+      "localSHA256": "83afb97d6fea555751a21ba814f18712c4f3f60c33c4c6b89a3f9af4db0007aa",
       "byteIdentical": false,
-      "adaptation": "ScriptWidgetCompiler guard visitor and async $main wrapper adapted; Expo module compiler adapter is Hanlin-owned. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs.",
+      "adaptation": "ScriptWidgetCompiler guard visitor and async $main wrapper adapted; Expo module compiler adapter is Hanlin-owned. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs. Original Control actions can complete with storage values and no rendered root; rendered widget/presentation paths retain their native tree contract.",
       "sourceRole": "host-adapter",
       "latestUpstreamContract": {
         "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
@@ -747,7 +747,7 @@
         },
         "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
         "changed": true,
-        "hostSHA256": "5f42f6db1e4beaad0679babfa0ac0ba47bf637a65b3aa4fa28a3bc96da59711b",
+        "hostSHA256": "83afb97d6fea555751a21ba814f18712c4f3f60c33c4c6b89a3f9af4db0007aa",
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       }
     },
@@ -3141,6 +3141,26 @@
         "path": "ios/Modifiers/SectionIndexLabelModifier.swift"
       },
       "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+      "upstream": "iOS/ScriptWidgetWidget/ControlWidget/ScriptWidgetControlWidget.swift",
+      "upstreamBlob": "a064024ebe89e3232eeae9f8dcde9bd568a46801",
+      "local": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift",
+      "localSHA256": "0cf17fed98938322880810c3c36080c73bd628791335ecaf3564928c312930dc",
+      "byteIdentical": false,
+      "adaptation": "Original native ControlWidget Button/Toggle, AppEntity, configuration, and AppIntentControlValueProvider source. Public Swift module access; catalog and function/state execution bind to current Hanlin product/installation/generation/artifact and original native ScriptWidget transaction. Control execution remains in the WidgetKit extension."
+    },
+    {
+      "repository": "everettjf/scriptwidget",
+      "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+      "upstream": "iOS/ScriptWidgetWidget/ControlWidget/ScriptWidgetSelectTimerIntent.swift",
+      "upstreamBlob": "87edd5f96d25ddc078fd858c6a4e458c3b9eb218",
+      "local": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetSelectTimerIntent.swift",
+      "localSHA256": "f632bd5007e5036432815eb72641027934284ff52bf457817336076eca63cb8d",
+      "byteIdentical": false,
+      "adaptation": "Original native ControlWidget Button/Toggle, AppEntity, configuration, and AppIntentControlValueProvider source. Public Swift module access; catalog and function/state execution bind to current Hanlin product/installation/generation/artifact and original native ScriptWidget transaction. Control execution remains in the WidgetKit extension."
     }
   ],
   "schemaVersion": 2

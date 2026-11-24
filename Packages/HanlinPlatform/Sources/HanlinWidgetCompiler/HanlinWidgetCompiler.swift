@@ -2,6 +2,7 @@ import CryptoKit
 import Foundation
 import HanlinPlatformContracts
 import HanlinScriptContracts
+@preconcurrency import HanlinScriptWidgetOriginal
 #if canImport(JavaScriptCore)
 import JavaScriptCore
 #endif
@@ -29,7 +30,8 @@ public enum HanlinWidgetCompiler {
         guard let engine = manifest.declaredWidgetEngine, engine != .legacy,
               let field = manifest.unknownFields["hanlinWidget"] else { throw HanlinWidgetProgramError.invalidProgram }
         let metadata = try JSONDecoder().decode(HanlinWidgetPackageMetadata.self, from: field.canonicalJSONData())
-        return try prepare(engine: engine, metadata: metadata, entryPath: entryPath, files: files)
+        return try prepare(engine: engine, metadata: metadata, entryPath: entryPath, files: files,
+                           includesOriginalWidgetManifest: true)
     }
 
     public static func preparePresentation(_ declaration: HanlinNativePresentationMetadata,
@@ -49,7 +51,11 @@ public enum HanlinWidgetCompiler {
     }
 
     private static func prepare(engine: HanlinWidgetEngine, metadata: HanlinWidgetPackageMetadata,
-                                entryPath: String, files: [String: Data]) throws -> HanlinWidgetProgram {
+                                entryPath: String, files: [String: Data],
+                                includesOriginalWidgetManifest: Bool = false) throws -> HanlinWidgetProgram {
+        let metadata = try includesOriginalWidgetManifest
+            ? originalScriptWidgetActions(engine: engine, metadata: metadata, entryPath: entryPath, files: files)
+            : metadata
         guard metadata.abiVersion == HanlinWidgetProgram.abiVersion,
               let source = files[entryPath], source.count <= 512 * 1_024,
               let entrySource = String(data: source, encoding: .utf8) else { throw HanlinWidgetProgramError.invalidSource }
@@ -108,6 +114,30 @@ public enum HanlinWidgetCompiler {
 #else
         throw HanlinWidgetProgramError.missingCompiler
 #endif
+    }
+
+    private static func originalScriptWidgetActions(engine: HanlinWidgetEngine,
+        metadata: HanlinWidgetPackageMetadata, entryPath: String, files: [String: Data]) throws -> HanlinWidgetPackageMetadata {
+        guard engine == .scriptwidget, let data = files["widget.json"] else { return metadata }
+        let original = try HanlinOriginalScriptWidgetControls.read(data, entryPath: entryPath)
+        var actions = metadata.actions
+        func append(_ action: HanlinWidgetActionDeclaration) throws {
+            if let existing = actions.first(where: { $0.id == action.id }) {
+                guard existing == action else {
+                    throw HanlinWidgetProgramError.compilationFailed(
+                        "The original widget.json action conflicts with hanlinWidget.actions: " + action.id)
+                }
+            } else { actions.append(action) }
+        }
+        for action in original.actions {
+            try append(.init(id: action.id, kind: .function, handler: action.handler))
+        }
+        for control in original.controls {
+            try append(.init(id: control.preparedActionID, kind: control.kind == .toggle ? .setValue : .function,
+                             handler: control.handler, stateKey: control.stateKey))
+        }
+        return .init(abiVersion: metadata.abiVersion, sourceFormat: metadata.sourceFormat,
+                     actions: actions, families: metadata.families)
     }
 
     private static func digest(_ data: Data) -> String {

@@ -42,6 +42,32 @@ public struct HanlinScriptWidgetRuntime: Sendable {
                     environment: [String: HanlinValue], actionID: String? = nil,
                     actionValue: Bool? = nil, actionParameters: HanlinValue = .null, nativeRoot: URL? = nil,
                     nativeIdentity: String? = nil) throws -> HanlinScriptWidgetExecution {
+        let result = try evaluate(program: program, values: values, environment: environment,
+            actionID: actionID, actionValue: actionValue, actionParameters: actionParameters,
+            nativeRoot: nativeRoot, nativeIdentity: nativeIdentity, requiresRender: true)
+        guard let node = result.node else {
+            throw HanlinScriptWidgetError("The script did not call $render or $dynamic_island")
+        }
+        return .init(node: node, values: result.values,
+            presentationEffect: result.presentationEffect, dynamicIsland: result.dynamicIsland)
+    }
+
+    /// Original Control Widget actions may execute a function without rendering
+    /// a widget. The same original native session commits its storage values.
+    public func performAction(program: HanlinWidgetProgram, values: [String: HanlinValue],
+                              environment: [String: HanlinValue], actionID: String,
+                              actionValue: Bool? = nil, nativeRoot: URL,
+                              nativeIdentity: String) throws -> [String: HanlinValue] {
+        try evaluate(program: program, values: values, environment: environment,
+            actionID: actionID, actionValue: actionValue, actionParameters: .null,
+            nativeRoot: nativeRoot, nativeIdentity: nativeIdentity, requiresRender: false).values
+    }
+
+    private func evaluate(program: HanlinWidgetProgram, values: [String: HanlinValue],
+                          environment: [String: HanlinValue], actionID: String?,
+                          actionValue: Bool?, actionParameters: HanlinValue,
+                          nativeRoot: URL?, nativeIdentity: String?,
+                          requiresRender: Bool) throws -> HanlinScriptWidgetEvaluation {
         try program.validate(engine: .scriptwidget)
         guard let context = JSContext(), let util = Self.resource("util.js") else {
             throw HanlinScriptWidgetError("Missing ScriptWidget runtime resource")
@@ -134,6 +160,7 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             context.setObject(getenv, forKeyedSubscript: "$getenv" as NSString)
             context.setObject(environment.mapValues { $0.toAny() }, forKeyedSubscript: "$widget" as NSString)
             context.setObject(actionID ?? "", forKeyedSubscript: "__hanlinAction" as NSString)
+            context.setObject(!requiresRender, forKeyedSubscript: "__hanlinActionOnly" as NSString)
             var event: [String: Any] = ["parameters": actionParameters.toAny()]
             if let actionValue { event["value"] = actionValue }
             context.setObject(event, forKeyedSubscript: "__hanlinEvent" as NSString)
@@ -173,21 +200,26 @@ public struct HanlinScriptWidgetRuntime: Sendable {
                 let expanded = ["expandedLeading", "expandedCenter", "expandedTrailing", "expandedBottom"]
                     .compactMap { dynamicRegions[$0] }
                 let fallback = expanded.isEmpty ? ["compactLeading", "compactTrailing", "minimal"].compactMap { dynamicRegions[$0] } : expanded
-                guard let rendered = rendered ?? (fallback.isEmpty ? nil :
-                    ScriptWidgetRuntimeElement(tagString: "vstack", props: [:], children: fallback)) else {
+                let root = rendered ?? (fallback.isEmpty ? nil :
+                    ScriptWidgetRuntimeElement(tagString: "vstack", props: [:], children: fallback))
+                if requiresRender && root == nil {
                     completion.finish(.failure(HanlinScriptWidgetError("The script did not call $render or $dynamic_island")))
                     return
                 }
                 do {
                     var budget = FreezeBudget(deadline: deadline)
                     var active: Set<ObjectIdentifier> = []
-                    let frozen = try freeze(rendered, depth: 1, budget: &budget, active: &active, context: current)
-                    guard try JSONEncoder().encode(frozen).count <= 1_024 * 1_024 else {
+                    let frozen = try requiresRender ? root.map {
+                        try freeze($0, depth: 1, budget: &budget, active: &active, context: current)
+                    } : nil
+                    if let frozen, try JSONEncoder().encode(frozen).count > 1_024 * 1_024 {
                         throw HanlinScriptWidgetError("Widget prepared payload budget exceeded")
                     }
                     var regions: [String: HanlinScriptWidgetPreparedNode] = [:]
-                    for (key, element) in dynamicRegions {
-                        regions[key] = try freeze(element, depth: 1, budget: &budget, active: &active, context: current)
+                    if requiresRender {
+                        for (key, element) in dynamicRegions {
+                            regions[key] = try freeze(element, depth: 1, budget: &budget, active: &active, context: current)
+                        }
                     }
                     let island: HanlinScriptWidgetDynamicIsland? = regions.isEmpty ? nil : .init(
                         expandedLeading: regions["expandedLeading"], expandedTrailing: regions["expandedTrailing"],
@@ -301,19 +333,26 @@ public struct HanlinScriptWidgetRuntime: Sendable {
 }
 
 
+private struct HanlinScriptWidgetEvaluation: Sendable {
+    let node: HanlinScriptWidgetPreparedNode?
+    let values: [String: HanlinValue]
+    let presentationEffect: HanlinNativePresentationEffect
+    let dynamicIsland: HanlinScriptWidgetDynamicIsland?
+}
+
 /// Only immutable native values cross the JavaScript queue/caller boundary.
 private final class HanlinScriptWidgetCompletion: @unchecked Sendable {
     private let lock = NSLock()
     private let signal = DispatchSemaphore(value: 0)
-    private var result: Result<HanlinScriptWidgetExecution, Error>?
-    func finish(_ result: Result<HanlinScriptWidgetExecution, Error>) {
+    private var result: Result<HanlinScriptWidgetEvaluation, Error>?
+    func finish(_ result: Result<HanlinScriptWidgetEvaluation, Error>) {
         lock.lock()
         guard self.result == nil else { lock.unlock(); return }
         self.result = result
         lock.unlock()
         signal.signal()
     }
-    func wait(until deadline: ContinuousClock.Instant) -> Result<HanlinScriptWidgetExecution, Error> {
+    func wait(until deadline: ContinuousClock.Instant) -> Result<HanlinScriptWidgetEvaluation, Error> {
         while ContinuousClock.now < deadline {
             lock.lock(); let current = result; lock.unlock()
             if let current { return current }

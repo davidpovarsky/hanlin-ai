@@ -90,8 +90,8 @@ function __hanlinCompileWidget(input) {
       'const entry=load(' + JSON.stringify(input.entry) + ');\n' +
       'if(__hanlinAction) { switch(__hanlinAction) {\n' + calls +
       '\ndefault: throw new Error("Undeclared native presentation action"); } }\n' +
-      'if(typeof entry.default!=="function")throw new Error("ScriptWidget module must export a default render function");\n' +
-      'await entry.default();\n} catch(e) { $error(String(e)); } }';
+      'if(typeof __hanlinActionOnly==="undefined" || !__hanlinActionOnly) { if(typeof entry.default!=="function")throw new Error("ScriptWidget module must export a default render function");\n' +
+      'await entry.default(); }\n} catch(e) { $error(String(e)); } }';
   }
   globalThis.__hanlinWidgetUsesModules = false;
   if (input.engine === 'scriptwidget-import') {
