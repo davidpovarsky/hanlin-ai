@@ -11,7 +11,7 @@
     "test:integration": "node --test Tests/cablate-google-map.integration.mjs && node --test Tests/lifecycle.integration.mjs && node --test Tests/server-everything.integration.mjs && node --test Tests/mcp-server-regression.integration.mjs"
   },
   "dependencies": {
-    "@npmcli/arborist": "9.9.3",
+    "@npmcli/arborist": "9.9.4",
     "@types/node": "24.5.2",
     "@yarnpkg/fslib": "3.1.5",
     "@yarnpkg/parsers": "3.1.0",
