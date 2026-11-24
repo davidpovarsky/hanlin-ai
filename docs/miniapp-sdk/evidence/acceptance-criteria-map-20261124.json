@@ -20,7 +20,7 @@
     "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
     "jobID": 138380242016,
     "scope": "miniapp_complete",
-    "status": "IN_PROGRESS",
+    "status": "COMPLETED_FAILURE",
     "selectedCases": 52,
     "miniAppsCases": 25,
     "aiCases": 27,
@@ -35,10 +35,8 @@
       "bytes": 9850,
       "sha256": "5f30ac1326812ce44639cdcfce871a9a6fa3a0ab0689f95477900ead650e65fe"
     },
-    "lastObservationRecordedAtUTC": "2026-11-24T10:37:26.948070+00:00",
-    "observedPhase": [
-      "Prepare existing native dependencies and Runtime host"
-    ],
+    "lastObservationRecordedAtUTC": "2026-11-24T11:47:14.820860+00:00",
+    "observedPhase": "Completed; first MiniApps build timed out. AI build and all52 application cases never started.",
     "acceptanceRequires": [
       "Fresh original library/native and shipping SDK/document identity preparation",
       "Both product builds",
@@ -46,7 +44,18 @@
       "Actual diagnostic-sheet and repaired-native-app attachments",
       "Exact original archive/report handoff and nonempty installedPackageID receipt"
     ],
-    "boundary": "Current preparation has progressed to original native dependencies/RuntimeHost. No current application case PASS is established by dispatch or source review."
+    "boundary": "Preparation andshippingSDK validation passed; full app build and all52 cases notproven. No recurrence of oldCxxdiagnostic is not its Applevalidation because those consumers had notcompiledyet.",
+    "result": "failure",
+    "executedAppCases": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "failureStage": "First MiniApps build-for-testing TIMED_OUT at2402.810748959seconds",
+    "confirmedCause": "Existing2400second build command deadline stopped the child with observed returncode-9 while build output still grew. No source/tool compiler error headers found.",
+    "failureEvidence": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-12-build-timeout-20261124/receipt.json",
+      "sha256": "ecbea3b7daf408173e3f44f4fe31afda287ac99d5906028685ea641c03f8e4e4"
+    }
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1345,7 +1354,7 @@
     }
   ],
   "recordingOutcome": "Task-scoped evidence reconciliation:SDK01/02/06 completed in Asana with readback. No new native application/device result, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T10:56:37.965036+00:00",
+  "updatedAtUTC": "2026-11-24T11:47:14.820860+00:00",
   "currentIntegrationBase": "999599c242c064564c40866a1979c463f1d0e95f",
   "gateHistory": [
     {
@@ -1498,7 +1507,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Current source999599c2 is published and actual complete52 main12 is in progress after original source resolution. Source audit93/176/334/80 and public original compiler/Metro build passed; current native/application/device outcomes remain separately recorded. Main11 failure and source fix remain in gateHistory.",
+  "currentScopeNote": "Main12/source999599c2 preparedcurrentoriginalnativeSDK but firstappbuildhit2400seconddeadline; AI/all52NOT_RUN. Narrowbuildbudgetcorrection andactual27.2runnerfallbackqualification underway. Three scoped source/contract/validator taskscompleted independently.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1633,7 +1642,7 @@
   ],
   "candidateGate": {
     "scope": "miniapp_complete",
-    "status": "DISPATCHED",
+    "status": "NEXT_GATE_REQUIRES_SCOPED_BUILD_BUDGET_CORRECTION",
     "selectedCases": 52,
     "MiniApps": 25,
     "AI": 27,
@@ -1642,7 +1651,7 @@
       "sha256": "1a142468795f59db1d4e7fd410a2dbf6b73d3d5c1d1eb3cfe335c768c3498542"
     },
     "reason": "Previous main11 first MiniApps build failed before all42 app cases; one combined current gate includes previous42 plus new11 minus1overlap.",
-    "actualExecution": "PREPARATION_IN_PROGRESS; APP_CASES_NOT_RUN",
+    "actualExecution": "MAIN12_FIRST_BUILD_TIMED_OUT; ALL52_APP_CASES_NOT_RUN",
     "runID": 45375410965,
     "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
     "independentReview": {
