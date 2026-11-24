@@ -1,0 +1,82 @@
+{
+  "sourceLog": "mini-build.log",
+  "sha256": "df41b19a856863c4dbf4e82ed960bf907f4727052ebc9f4c4e4be782fe490228",
+  "points": [
+    {
+      "line": 100140,
+      "meaning": "HanlinScriptingWidgets object link",
+      "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinScriptingWidgets.o normal (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+    },
+    {
+      "line": 100201,
+      "meaning": "HanlinWidgetUI object link",
+      "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinWidgetUI.o normal (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 100588,
+      "meaning": "MiniApps widgets debug dylib link",
+      "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets.debug.dylib normal (in target 'HanlinMiniAppsWidgets' from project 'AI_HLY')"
+    },
+    {
+      "line": 100611,
+      "meaning": "MiniApps widgets executable link",
+      "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets normal (in target 'HanlinMiniAppsWidgets' from project 'AI_HLY')"
+    },
+    {
+      "line": 100698,
+      "meaning": "MiniApps widgets signing",
+      "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsWidgets.appex (in target 'HanlinMiniAppsWidgets' from project 'AI_HLY')"
+    },
+    {
+      "line": 144553,
+      "meaning": "MiniApps debug dylib link",
+      "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib normal (in target 'HanlinMiniApps' from project 'AI_HLY')"
+    },
+    {
+      "line": 144563,
+      "meaning": "MiniApps executable link",
+      "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps normal (in target 'HanlinMiniApps' from project 'AI_HLY')"
+    },
+    {
+      "line": 145635,
+      "meaning": "Hosted test executable link",
+      "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsTests.xctest/HanlinMiniAppsTests normal (in target 'HanlinMiniAppsTests' from project 'AI_HLY')"
+    },
+    {
+      "line": 145766,
+      "meaning": "Hosted test signing",
+      "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsTests.xctest (in target 'HanlinMiniAppsTests' from project 'AI_HLY')"
+    },
+    {
+      "line": 145795,
+      "meaning": "MiniApps app signing",
+      "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app (in target 'HanlinMiniApps' from project 'AI_HLY')"
+    },
+    {
+      "line": 145818,
+      "meaning": "MiniApps app validation",
+      "text": "Validate /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app (in target 'HanlinMiniApps' from project 'AI_HLY')"
+    },
+    {
+      "line": 145830,
+      "meaning": "UI test executable link",
+      "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests normal (in target 'HanlinMiniAppsUITests' from project 'AI_HLY')"
+    },
+    {
+      "line": 145867,
+      "meaning": "UI test executable signing",
+      "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest (in target 'HanlinMiniAppsUITests' from project 'AI_HLY')"
+    },
+    {
+      "line": 145874,
+      "meaning": "UI test runner signing",
+      "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app (in target 'HanlinMiniAppsUITests' from project 'AI_HLY')"
+    },
+    {
+      "line": 145902,
+      "meaning": "TEST BUILD SUCCEEDED",
+      "text": "** TEST BUILD SUCCEEDED **"
+    }
+  ],
+  "scope": "Actual full build-for-testing and links/signing, not test execution"
+}
