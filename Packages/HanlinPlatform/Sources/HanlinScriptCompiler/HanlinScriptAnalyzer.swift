@@ -617,6 +617,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 }
                 let supported = switch name {
                 case "@expo/ui": isExpoVersionCompatible(version)
+                case "expo-asset": version == HanlinMiniAppHostVersions.expoAssetVersion
                 case "expo-widgets": HanlinPreparedRuntimeVersion.supportsMinimum(version, installed: HanlinMiniAppHostVersions.expoWidgetsVersion)
                 case "@hanlin/expo-ui": isVersion(version, atMost: expoUIBridgeVersion)
                 default: false
@@ -626,14 +627,16 @@ public struct HanlinScriptAnalyzer: Sendable {
                         state: .unsupported,
                         severity: .error,
                         sourcePath: packageJSONPath,
-                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), expo-widgets \(HanlinMiniAppHostVersions.expoWidgetsVersion), and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
+                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), expo-asset \(HanlinMiniAppHostVersions.expoAssetVersion), expo-widgets \(HanlinMiniAppHostVersions.expoWidgetsVersion), and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
                     ))
                 } else {
                     findings.append(.init(
                         state: .supported,
                         severity: .information,
                         sourcePath: packageJSONPath,
-                        message: "Expo plugin \(name) \(version) has embedded native SwiftUI support."
+                        message: name == "expo-asset"
+                            ? "Expo plugin \(name) \(version) has embedded original native asset support."
+                            : "Expo plugin \(name) \(version) has embedded native SwiftUI support."
                     ))
                 }
             }
