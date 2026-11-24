@@ -51,8 +51,11 @@ public enum HanlinWidgetCompiler {
     private static func prepare(engine: HanlinWidgetEngine, metadata: HanlinWidgetPackageMetadata,
                                 entryPath: String, files: [String: Data]) throws -> HanlinWidgetProgram {
         guard metadata.abiVersion == HanlinWidgetProgram.abiVersion,
-              let source = files[entryPath], source.count <= 512 * 1_024 else { throw HanlinWidgetProgramError.invalidSource }
-        var sources: [String: String] = [:]
+              let source = files[entryPath], source.count <= 512 * 1_024,
+              let entrySource = String(data: source, encoding: .utf8) else { throw HanlinWidgetProgramError.invalidSource }
+        // The declared format, not the filename extension, identifies the entry.
+        // Expo-layout expressions commonly use .json or another asset suffix.
+        var sources: [String: String] = [entryPath: entrySource]
         for (path, data) in files where ["js", "jsx", "ts", "tsx"].contains(URL(filePath: path).pathExtension) {
             // The compiler follows only the widget's module closure. A large
             // unrelated foreground Expo bundle is not a widget source module.

@@ -64,6 +64,16 @@ test('module closure does not resolve framework imports into the frozen Scriptin
   }), /Unsupported ScriptWidget import: scripting/);
 });
 
+test('original Expo layout compiler uses a declared JSON-suffixed entry expression', () => {
+  const program = compile({
+    engine: 'expo', format: 'expo-layout', entry: 'native/layout.json',
+    files: {'native/layout.json': 'props => ({type: "TextView", props: {text: props.label}})'}, actions: []
+  });
+  const context = vm.createContext({__scriptWidgetCheckExecution() {}});
+  const layout = vm.runInContext(program, context);
+  assert.equal(layout({label: 'מקור מקורי'}).props.text, 'מקור מקורי');
+});
+
 test('ordinary original ScriptWidget top-level async source remains executable', async () => {
   const program = compile({
     engine: 'scriptwidget', format: 'jsx', entry: 'widget.jsx',

@@ -318,7 +318,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagToggle.swift",
       "upstreamBlob": "0c33188263deb182ba10c58a2187ca8eff8a318d",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagToggle.swift",
-      "localSHA256": "26c72b45362356ec2b01673c3d3426867f935b2aca0fcabe542c0818e5618626",
+      "localSHA256": "3917c9cc44009b788c8ecbfe7096e3b49e9483d9fb8ad1b61778e2cc45f29027",
       "byteIdentical": false,
       "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs."
     },

@@ -299,3 +299,19 @@ actual original `AppContext`, `WidgetObject`, records, timeline parser, public
 provider and picker. It checks the embedded original runtime resource,
 product/installation identity and native timeline values. Syntax validation
 does not execute this case; acceptance requires its Apple test result.
+
+### Native presentation follow-up validation
+
+The compiler always includes the declared entry as UTF-8 source, including
+`expo-layout` expressions in `.json` files. Source format remains explicit; a
+filename does not silently select a different runtime. The original ScriptWidget
+toggle label/modifiers now connect to a real SwiftUI Toggle in both surfaces:
+a Binding inside the translation provider, and SetValueIntent in an interactive
+snippet. A replacement presentation request supersedes the old loading token,
+and an older result cannot overwrite the new request or emit its finish effect.
+
+The focused compiler suite has five Node cases. The additional Apple compiler
+case, `testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension`,
+executes the actual compiler output in JavaScriptCore; the existing durable
+snippet case also checks native toggle state. These Apple cases remain pending
+until the native gate executes them.

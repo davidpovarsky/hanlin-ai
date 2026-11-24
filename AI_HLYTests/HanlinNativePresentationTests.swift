@@ -1,4 +1,6 @@
 import Foundation
+import JavaScriptCore
+import HanlinTranslationUI
 import HanlinPlatformContracts
 import HanlinScriptContracts
 import HanlinScriptExtensions
@@ -12,7 +14,8 @@ final class HanlinNativePresentationTests: XCTestCase {
             let identity = try makeIdentity()
             let declaration = HanlinNativePresentationMetadata(engine: .scriptwidget,
                 sourcePath: "native/panel.tsx", sourceFormat: "tsx",
-                actions: [.init(id: "choose", kind: .function, handler: "choose")])
+                actions: [.init(id: "choose", kind: .function, handler: "choose"),
+                    .init(id: "enabled", kind: .setValue, stateKey: "enabled")])
             let source = """
                 export function choose(event: {parameters: {id: string}}) {
                   $storage.set("selected", event.parameters.id);
@@ -20,7 +23,7 @@ final class HanlinNativePresentationTests: XCTestCase {
                 }
                 export default function render() {
                   const input = $getenv("presentation");
-                  $render(<vstack><text>{input.inputText}</text><text>{$storage.get("selected") || "none"}</text><text>{String($storage.get("count") || 0)}</text></vstack>);
+                  $render(<vstack><text>{input.inputText}</text><text>{$storage.get("selected") || "none"}</text><toggle actionID="enabled" stateKey="enabled" on={Boolean($storage.get("enabled"))}><text>Enabled</text></toggle><text>{String($storage.get("count") || 0)}</text></vstack>);
                 }
                 """
             let program = try HanlinWidgetCompiler.preparePresentation(declaration,
@@ -36,6 +39,16 @@ final class HanlinNativePresentationTests: XCTestCase {
                 parameters: .object(["id": .string("Genesis 1:1")]))
             _ = try HanlinNativePresentationExecutor.prepare(first, store: store, action: command)
             _ = try HanlinNativePresentationExecutor.prepare(first, store: store, action: command)
+            let toggle = HanlinWidgetActionCommand(context: context, actionID: "enabled", nonce: "toggle-on", desiredValue: true)
+            let nativeToggle = try HanlinNativePresentationToggleIntent(command: toggle, value: true)
+            XCTAssertTrue(nativeToggle.value)
+            let toggled = try HanlinNativePresentationExecutor.prepare(first, store: store, action: toggle)
+            guard case let .scriptwidget(toggledNode, _) = toggled.prepared else { return XCTFail("Expected native toggle state") }
+            let toggleNode = toggledNode.children.compactMap { child -> HanlinScriptWidgetPreparedNode? in
+                if case let .element(node) = child, node.tag == "toggle" { return node }
+                return nil
+            }.first
+            XCTAssertEqual(toggleNode?.props["on"], .bool(true))
             let reopened = HanlinScriptExtensionStore(root: store.root)
             let result = try HanlinNativePresentationExecutor.prepare(first, store: reopened)
             XCTAssertTrue(text(in: result.prepared).contains("Genesis 1:1"))
@@ -108,6 +121,25 @@ final class HanlinNativePresentationTests: XCTestCase {
             try store.save(.init(schemaVersion: 2, generatedAt: .now))
             XCTAssertThrowsError(try HanlinNativePresentationExecutor.prepare(request, store: store))
         }
+    }
+
+    func testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension() throws {
+        let declaration = HanlinNativePresentationMetadata(engine: .expo,
+            sourcePath: "native/layout.json", sourceFormat: "expo-layout")
+        let source = #"props => ({ type: "TextView", props: { text: props.label } })"#
+        let program = try HanlinWidgetCompiler.preparePresentation(declaration,
+            files: ["native/layout.json": Data(source.utf8), "bundle.js": Data("unrelated invalid source".utf8)])
+        let context = try XCTUnwrap(JSContext())
+        let check: @convention(block) () -> Void = {}
+        context.setObject(check, forKeyedSubscript: "__scriptWidgetCheckExecution" as NSString)
+        let layout = try XCTUnwrap(context.evaluateScript(program.javaScript))
+        XCTAssertNil(context.exception)
+        let rendered = try XCTUnwrap(layout.call(withArguments: [["label": "מקור מקורי"]])?.toDictionary())
+        XCTAssertNil(context.exception)
+        let properties = try XCTUnwrap(rendered["props"] as? [String: Any])
+        XCTAssertEqual(properties["text"] as? String, "מקור מקורי")
+        XCTAssertThrowsError(try HanlinWidgetCompiler.preparePresentation(declaration,
+            files: ["native/layout.json": Data([0xff])]))
     }
 
     private func publish(_ program: HanlinWidgetProgram, identity: HanlinScriptExtensionIdentity,

@@ -48,6 +48,8 @@ public struct HanlinNativePresentationContentView: View {
     public let onEffect: (HanlinNativePresentationEffect) -> Void
     @State private var prepared: HanlinPreparedWidget?
     @State private var isLoading = false
+    @State private var executingRequest: HanlinNativePresentationRequest?
+    @State private var executionID: UUID?
     @State private var error: String?
 
     public init(request: HanlinNativePresentationRequest, store: HanlinScriptExtensionStore,
@@ -70,7 +72,16 @@ public struct HanlinNativePresentationContentView: View {
             }
             if let prepared {
                 HanlinNativePresentationView(prepared: prepared) { command, label in
-                    AnyView(Button {
+                    if let desired = command.desiredValue {
+                        return AnyView(Toggle(isOn: Binding(get: { !desired }, set: { value in
+                            var update = command
+                            update.desiredValue = value
+                            Task { await execute(update) }
+                        })) { label }
+                        .disabled(isLoading)
+                        .accessibilityIdentifier("hanlin.nativePresentation.action." + command.actionID))
+                    }
+                    return AnyView(Button {
                         Task { await execute(command) }
                     } label: { label }
                     .disabled(isLoading)
@@ -83,22 +94,42 @@ public struct HanlinNativePresentationContentView: View {
     }
 
     @MainActor private func execute(_ command: HanlinWidgetActionCommand? = nil) async {
-        guard !isLoading else { return }
+        let currentRequest = request
+        // A new .task(id:) must replace an in-flight older request. Blocking it
+        // on a shared loading flag otherwise drops the user's new input.
+        guard !isLoading || executingRequest != currentRequest else { return }
+        let currentExecution = UUID()
+        executionID = currentExecution
+        executingRequest = currentRequest
         isLoading = true
         error = nil
-        defer { isLoading = false }
-        do {
-            let currentRequest = request
-            let currentStore = store
-            let result = try await Task.detached(priority: .userInitiated) {
-                try HanlinNativePresentationExecutor.prepare(currentRequest, store: currentStore, action: command)
-            }.value
+        if command == nil { prepared = nil }
+        defer {
+            if executionID == currentExecution {
+                executionID = nil
+                executingRequest = nil
+                isLoading = false
+            }
+        }
+        let currentStore = store
+        let worker = Task.detached(priority: .userInitiated) {
             try Task.checkCancellation()
+            return try HanlinNativePresentationExecutor.prepare(currentRequest, store: currentStore, action: command)
+        }
+        do {
+            let result = try await withTaskCancellationHandler {
+                try await worker.value
+            } onCancel: {
+                worker.cancel()
+            }
+            try Task.checkCancellation()
+            guard executionID == currentExecution else { return }
             prepared = result.prepared
             onEffect(result.effect)
         } catch is CancellationError {
             return
         } catch {
+            guard executionID == currentExecution else { return }
             self.error = error.localizedDescription
         }
     }
@@ -183,7 +214,13 @@ public struct HanlinNativePresentationSnippetIntent: SnippetIntent {
         }.value
         return .result(view: ScrollView {
             HanlinNativePresentationView(prepared: result.prepared) { command, label in
-                if let intent = try? HanlinNativePresentationActionIntent(command: command) {
+                if let desired = command.desiredValue,
+                   let intent = try? HanlinNativePresentationToggleIntent(command: command, value: desired) {
+                    return AnyView(Toggle(isOn: !desired, intent: intent) { label }
+                        .accessibilityIdentifier("hanlin.nativePresentation.action." + command.actionID))
+                }
+                if command.desiredValue == nil,
+                   let intent = try? HanlinNativePresentationActionIntent(command: command) {
                     return AnyView(Button(intent: intent) { label }
                         .accessibilityIdentifier("hanlin.nativePresentation.action." + command.actionID))
                 }
@@ -210,6 +247,31 @@ public struct HanlinNativePresentationActionIntent: AppIntent {
         guard let request = command.context.presentation, request.kind == .snippet else {
             throw HanlinNativePresentationError.invalidRequest
         }
+        _ = try HanlinNativePresentationExecutor.prepare(request, store: .init(), action: command)
+        return .result(snippetIntent: try HanlinNativePresentationSnippetIntent(request: request))
+    }
+}
+
+/// System toggles provide their intended Boolean through SetValueIntent. The
+/// same declared native action executes, then the same snippet renders anew.
+public struct HanlinNativePresentationToggleIntent: SetValueIntent {
+    public static let title: LocalizedStringResource = "Set MiniApp Snippet Value"
+    public static let isDiscoverable = false
+    public static let openAppWhenRun = false
+    @Parameter(title: "Native action") public var commandJSON: String
+    @Parameter(title: "Value") public var value: Bool
+    public init() { commandJSON = "{}"; value = false }
+    public init(command: HanlinWidgetActionCommand, value: Bool) throws {
+        commandJSON = String(decoding: try JSONEncoder().encode(command), as: UTF8.self)
+        self.value = value
+    }
+
+    public func perform() async throws -> some IntentResult & ShowsSnippetIntent {
+        var command = try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(commandJSON.utf8))
+        guard let request = command.context.presentation, request.kind == .snippet else {
+            throw HanlinNativePresentationError.invalidRequest
+        }
+        command.desiredValue = value
         _ = try HanlinNativePresentationExecutor.prepare(request, store: .init(), action: command)
         return .result(snippetIntent: try HanlinNativePresentationSnippetIntent(request: request))
     }

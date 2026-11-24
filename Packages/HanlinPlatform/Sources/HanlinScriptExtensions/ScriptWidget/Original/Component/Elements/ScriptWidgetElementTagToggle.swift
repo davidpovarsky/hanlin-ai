@@ -25,11 +25,9 @@ class ScriptWidgetElementTagToggle {
            (element.getPropString("stateKey") == declaration.stateKey || declaration.kind == .function) {
             let command = context.command(for: element, declaration: declaration, desiredValue: !on)
             if let builder = context.nativeActionBuilder {
-                builder(command, AnyView(HStack {
-                    Image(systemName: on ? "checkmark.circle.fill" : "circle")
-                    toggleLabel(element: element, context: context)
-                }))
-                .accessibilityValue(on ? "On" : "Off")
+                // The host supplies a real native Toggle appropriate to its
+                // surface; keep the original label and attribute modifiers.
+                builder(command, AnyView(toggleLabel(element: element, context: context)))
                 .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
             } else if let intent = try? HanlinSetWidgetValueIntent(command: command, value: !on) {
                 Toggle(isOn: on, intent: intent) { toggleLabel(element: element, context: context) }
