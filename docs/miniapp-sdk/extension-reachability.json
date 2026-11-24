@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "00d86e42ab09e99831d042c617c23e17bc91f894",
+  "sourceCommit": "f4cd9d4b14bcfb4927015ec99c35de43e32a84a1",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -797,7 +797,7 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
       "line": 127,
       "anchor": "HanlinOriginalScriptWidgetControls.read(data, entryPath: entryPath)",
-      "sha256": "5b6c50d8d8bbaca0b80b14fb1b35c64cf64b7d20bfa3170dc920f61ba7640fa5"
+      "sha256": "3864dc8b4e4de02d55e2227643451ec74befed4b5eb9ca65cada5c6fc4fc392b"
     },
     "controlUpstream": {
       "file": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
