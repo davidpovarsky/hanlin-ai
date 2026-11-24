@@ -1,0 +1,88 @@
+{
+  "run": {
+    "id": 45290086669,
+    "run_attempt": 1,
+    "head_sha": "51f56b49fe7add4eafa1d8b2443f1adf3b82157f",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-11-23T23:35:09Z",
+    "updated_at": "2026-11-24T00:37:09Z",
+    "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45290086669"
+  },
+  "job": {
+    "id": 138096309442,
+    "run_id": 45290086669,
+    "workflow_name": "Build iOS 26 Unsigned IPA",
+    "head_branch": "codex/hanlin-sdk-motion-b-containment-20261123",
+    "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45290086669",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOTTRem88AAAAgJy50wg",
+    "head_sha": "51f56b49fe7add4eafa1d8b2443f1adf3b82157f",
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/138096309442",
+    "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45290086669/job/138096309442",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-11-23T23:35:11Z",
+    "started_at": "2026-11-24T00:28:53Z",
+    "completed_at": "2026-11-24T00:37:08Z",
+    "name": "Original Motion reversal acceptance (B)",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-11-24T00:28:54Z",
+        "completed_at": "2026-11-24T00:28:55Z"
+      },
+      {
+        "name": "Run actions/checkout@v7.0.1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-11-24T00:28:55Z",
+        "completed_at": "2026-11-24T00:29:06Z"
+      },
+      {
+        "name": "Exercise the selected original Motion UI scope",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 3,
+        "started_at": "2026-11-24T00:29:06Z",
+        "completed_at": "2026-11-24T00:36:43Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@v7.0.2",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-11-24T00:36:43Z",
+        "completed_at": "2026-11-24T00:37:02Z"
+      },
+      {
+        "name": "Post Run actions/checkout@v7.0.1",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-11-24T00:37:02Z",
+        "completed_at": "2026-11-24T00:37:03Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-11-24T00:37:03Z",
+        "completed_at": "2026-11-24T00:37:06Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/138096309442",
+    "labels": [
+      "xcode-27"
+    ],
+    "runner_id": 1000025371,
+    "runner_name": "GitHub Actions 1000025371",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  }
+}
