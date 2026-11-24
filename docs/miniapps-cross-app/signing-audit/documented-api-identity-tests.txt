@@ -1,0 +1,13 @@
+test_another_jobs_new_certificate_is_rejected (__main__.OwnerDevelopmentIdentityTests.test_another_jobs_new_certificate_is_rejected) ... /mnt/development/projects/worktrees/hanlin-miniapps-bridge-core-20261123/Tests/ProductSplit/test_owner_development_identity.py:29: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  now = datetime.utcnow()
+ok
+test_api_failure_keeps_only_public_error_codes (__main__.OwnerDevelopmentIdentityTests.test_api_failure_keeps_only_public_error_codes) ... ok
+test_distribution_or_legacy_types_are_not_created_or_selected (__main__.OwnerDevelopmentIdentityTests.test_distribution_or_legacy_types_are_not_created_or_selected) ... ok
+test_existing_identity_is_never_eligible_even_if_the_key_matches (__main__.OwnerDevelopmentIdentityTests.test_existing_identity_is_never_eligible_even_if_the_key_matches) ... ok
+test_foreign_team_is_rejected (__main__.OwnerDevelopmentIdentityTests.test_foreign_team_is_rejected) ... ok
+test_new_current_development_resource_is_bound_to_the_generated_private_key (__main__.OwnerDevelopmentIdentityTests.test_new_current_development_resource_is_bound_to_the_generated_private_key) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.991s
+
+OK

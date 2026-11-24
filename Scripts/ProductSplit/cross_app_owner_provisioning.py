@@ -238,7 +238,7 @@ def _read_signed_probe(app, expected, team, certificate_sha, certificate_prefix)
 
 
 def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certificate_sha, keychain,
-                                   installed_profiles, run, receipt):
+                                   installed_profiles, run, receipt, keychain_password=None):
     from resolve_signing_profiles import original_certificate_id, install_profile
     plan_bytes = Path(plan_path).read_bytes()
     plan = json.loads(plan_bytes)
@@ -291,10 +291,44 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
     auth = ["-allowProvisioningUpdates", "-authenticationKeyPath", key,
             "-authenticationKeyID", os.environ["ASC_KEY_ID"],
             "-authenticationKeyIssuerID", os.environ["ASC_ISSUER_ID"]]
-    development_before_ids = {value["id"] for value in _development_certificates()}
+    development_records_before = _development_certificates()
+    development_before_ids = {value["id"] for value in development_records_before}
     receipt["development_identities_before_count"] = len(development_before_ids)
     receipt["signing_flow"] = "AUTOMATIC_DEVELOPMENT_ARCHIVE_THEN_EXISTING_DISTRIBUTION_EXPORT"
+    development_identity = "Apple Development"
+    owned_identity = {}
     try:
+        identity_mode = plan.get("development_identity_mode", "xcode-managed")
+        if identity_mode == "documented-api-task-owned":
+            from owner_development_identity import create_task_development_identity
+            from owner_profile_readback import _existing_development_identity_availability, _registered_devices
+            devices = _registered_devices()
+            receipt["registered_devices"] = devices
+            if not devices["enabled_platform_counts"].get("IOS", 0):
+                receipt["status"] = "NO_EXISTING_REGISTERED_IOS_DEVELOPMENT_DEVICE"
+                raise RuntimeError("Apple development provisioning requires an actual registered iOS device; none is enabled")
+            availability = _existing_development_identity_availability(team)
+            receipt["existing_development_identity_availability"] = availability
+            reusable = [value for value in availability["certificates"]
+                        if value["owner_team_matches"] and value["valid_dates"]
+                        and value["private_identity_available_in_existing_search_list"]]
+            if reusable:
+                chosen = next(value for value in development_records_before if value["id"] == reusable[0]["resource_id"])
+                development_identity = hashlib.sha1(decode(chosen["attributes"]["certificateContent"])).hexdigest().upper()
+                receipt["selected_existing_development_identity"] = reusable[0]
+            else:
+                if not keychain_password:
+                    raise ValueError("The existing owned temporary keychain is required")
+                receipt["documented_api_development_identity"] = owned_identity
+                try:
+                    development_identity = create_task_development_identity(
+                        work, keychain=keychain, keychain_password=keychain_password,
+                        team=team, before_ids=development_before_ids, receipt=owned_identity)
+                except Exception:
+                    receipt["status"] = "DEVELOPMENT_IDENTITY_API_UNAVAILABLE"
+                    raise
+        elif identity_mode != "xcode-managed":
+            raise ValueError("Unexpected development identity mode")
         for (product, snapshot), entry in zip(snapshots, receipt["products"]):
             try:
                 required = dict(product["entitlements"])
@@ -332,12 +366,25 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
                      "-derivedDataPath", work / "DerivedData", "-archivePath", archive, *auth, "archive",
                      "PRODUCT_BUNDLE_IDENTIFIER=" + product["bundle_id"],
                      "CODE_SIGN_STYLE=Automatic", "DEVELOPMENT_TEAM=" + team,
-                     "CODE_SIGN_IDENTITY=Apple Development", "PROVISIONING_PROFILE_SPECIFIER=", "PROVISIONING_PROFILE=",
+                     "CODE_SIGN_IDENTITY=" + development_identity, "PROVISIONING_PROFILE_SPECIFIER=", "PROVISIONING_PROFILE=",
                      "CODE_SIGN_ENTITLEMENTS=" + str(entitlements_path), "REGISTER_APP_GROUPS=YES"],
                     "owner-groups-" + product["role"] + "-archive", timeout=300, required=False)
                 entry["xcode_archive_exit"] = code
                 if code:
                     entry["status"] = "XCODE_AUTOMATIC_PROVISIONING_FAILED"
+                    # Automatic signing may update capabilities before a later
+                    # failure. Read a new profile now instead of asserting that
+                    # the before-probe grants still describe the account.
+                    from owner_profile_readback import _fresh_profile
+                    failed_profile, failed_fact = _fresh_profile(
+                        product, work, team, certificate_sha, certificate_id, os.environ["GITHUB_RUN_ID"])
+                    entry["fresh_profile_after_failed_archive"] = failed_fact
+                    actual = failed_profile.get("Entitlements", {})
+                    entry["actual_required_key_grants_after_failed_archive"] = {
+                        name: actual.get(name) for name in required}
+                    entry["missing_required_entitlement_keys_after_failed_archive"] = sorted(
+                        name for name, value in required.items() if not entitlement_allows(actual.get(name), value))
+                    entry["capabilities_after_failed_archive"] = _capabilities(product["apple_bundle_resource_id"])
                     continue
                 applications = list((archive / "Products/Applications").glob("*.app"))
                 if len(applications) != 1:
@@ -387,11 +434,21 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
             except Exception as error:
                 entry.update(status="PROVISIONING_OR_READBACK_FAILED", error_kind=type(error).__name__)
     finally:
+        explicit_cleanup_passed = True
+        try:
+            if owned_identity:
+                from owner_development_identity import cleanup_task_development_identity
+                cleanup_task_development_identity(owned_identity, development_before_ids)
+        except Exception as error:
+            explicit_cleanup_passed = False
+            receipt["task_owned_development_identity_cleanup_error"] = str(error)
         try:
             _cleanup_temporary_development_certificates(keychain, development_before_ids, receipt)
         except Exception as error:
             receipt["temporary_development_identity_cleanup"] = "FAILED"
             receipt["temporary_development_identity_cleanup_error"] = str(error)
+        if not explicit_cleanup_passed:
+            receipt["temporary_development_identity_cleanup"] = "FAILED"
         key.unlink(missing_ok=True)
     passed = (all(entry["status"] == "SIGNED_GROUP_PROBE_PASS" for entry in receipt["products"])
               and receipt["temporary_development_identity_cleanup"] == "PASS")

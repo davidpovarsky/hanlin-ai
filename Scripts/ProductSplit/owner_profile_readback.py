@@ -63,6 +63,8 @@ def _registered_devices():
             "registered_device_count": len(rows),
             "status_counts": dict(Counter(row.get("attributes", {}).get("status", "UNKNOWN") for row in rows)),
             "platform_counts": dict(Counter(row.get("attributes", {}).get("platform", "UNKNOWN") for row in rows)),
+            "enabled_platform_counts": dict(Counter(row.get("attributes", {}).get("platform", "UNKNOWN")
+                for row in rows if row.get("attributes", {}).get("status") == "ENABLED")),
             "device_names_and_identifiers_retained": False, "registration": "NOT_REQUESTED"}
 
 

@@ -166,7 +166,7 @@ def main():
                         folder, owner_plan, team=os.environ["APPLE_TEAM_ID"],
                         identity=distribution_identity, certificate_sha=cert_sha, keychain=keychain,
                         installed_profiles=installed_profiles, run=run,
-                        receipt=state["cross_app_owner_provisioning"])
+                        receipt=state["cross_app_owner_provisioning"], keychain_password=password)
                     state["status"] = "CROSS_APP_PROVISIONING_PASS"
                 else:
                     raise ValueError("Unknown explicit cross-app owner signing operation")
