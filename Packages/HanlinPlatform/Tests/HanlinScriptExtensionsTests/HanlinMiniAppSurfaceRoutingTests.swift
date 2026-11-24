@@ -3,6 +3,7 @@ import HanlinExtensionContracts
 import HanlinPlatformContracts
 import HanlinScriptExtensions
 import HanlinScriptStore
+import HanlinScriptUI
 import Testing
 
 @Suite("MiniApps native surface routing")
@@ -25,7 +26,7 @@ struct HanlinMiniAppSurfaceRoutingTests {
         for (store, text) in [(ai, "AI"), (mini, "MiniApps")] {
             try store.enqueue(.init(id: id, invocation: .init(identity: identity,
                 entityID: "search", parameters: .string(text), continueInForeground: true)))
-            let claim = try #require(store.claim(id))
+            let claim = try #require(try store.claim(id))
             try store.complete(claim, status: .succeeded, value: .string(text))
         }
         #expect(try ai.receipt(for: id)?.value == .string("AI"))
