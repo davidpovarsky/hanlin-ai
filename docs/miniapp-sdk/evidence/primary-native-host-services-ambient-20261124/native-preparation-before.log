@@ -1,0 +1,861 @@
+[MiniApps] Preparing original npm inputs: No verified original npm installation receipt. Run Scripts/MiniApps/install-tooling.mjs for /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript
+npm warn deprecated source-map-resolve@0.6.0: See https://github.com/lydell/source-map-resolve#deprecated
+
+added 202 packages in 1s
+{"status":"installed","toolingRoot":"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript","files":5966,"packages":140}
+
+> hanlin-nativescript-tooling@1.0.0 prepare:ios-dependencies
+> node prepare-ios-dependencies.mjs
+
+file:///Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript/build-host-services.mjs:18
+if (diagnostics.length) throw new Error(ts.formatDiagnosticsWithColorAndContext(diagnostics, {
+                              ^
+
+Error: [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m23[0m:[93m1[0m - [91merror[0m[90m TS6200: [0mDefinitions of the following identifiers conflict with those in another file: EndingType, BlobPart, BufferSource, FormData, RequestInfo, XMLHttpRequestResponseType, AbortSignal, AbortController
+
+[7m23[0m interface AddEventListenerOptions extends EventListenerOptions {
+[7m  [0m [91m~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m10[0m:[93m1[0m
+    [7m10[0m import type {ErrorUtils} from '../../Libraries/vendor/core/ErrorUtils';
+    [7m  [0m [96m~~~~~~[0m
+    Conflicts are in this file.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2717[0m:[93m11[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'AbortController'.
+
+[7m2717[0m interface AbortController {
+[7m    [0m [91m          ~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m506[0m:[93m15[0m
+    [7m506[0m declare class AbortController {
+    [7m   [0m [96m              ~~~~~~~~~~~~~~~[0m
+    'AbortController' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2732[0m:[93m13[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'AbortController'.
+
+[7m2732[0m declare var AbortController: {
+[7m    [0m [91m            ~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m506[0m:[93m15[0m
+    [7m506[0m declare class AbortController {
+    [7m   [0m [96m              ~~~~~~~~~~~~~~~[0m
+    'AbortController' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2746[0m:[93m11[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'AbortSignal'.
+
+[7m2746[0m interface AbortSignal extends EventTarget {
+[7m    [0m [91m          ~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m471[0m:[93m15[0m
+    [7m471[0m declare class AbortSignal implements EventTarget {
+    [7m   [0m [96m              ~~~~~~~~~~~[0m
+    'AbortSignal' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2773[0m:[93m13[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'AbortSignal'.
+
+[7m2773[0m declare var AbortSignal: {
+[7m    [0m [91m            ~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m471[0m:[93m15[0m
+    [7m471[0m declare class AbortSignal implements EventTarget {
+    [7m   [0m [96m              ~~~~~~~~~~~[0m
+    'AbortSignal' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m12219[0m:[93m11[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'FormData'.
+
+[7m12219[0m interface FormData {
+[7m     [0m [91m          ~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m90[0m:[93m15[0m
+    [7m90[0m declare class FormData {
+    [7m  [0m [96m              ~~~~~~~~[0m
+    'FormData' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m12263[0m:[93m13[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'FormData'.
+
+[7m12263[0m declare var FormData: {
+[7m     [0m [91m            ~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m90[0m:[93m15[0m
+    [7m90[0m declare class FormData {
+    [7m  [0m [96m              ~~~~~~~~[0m
+    'FormData' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m32640[0m:[93m11[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'URL'.
+
+[7m32640[0m interface URL {
+[7m     [0m [91m          ~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m355[0m:[93m15[0m
+    [7m355[0m declare class URL {
+    [7m   [0m [96m              ~~~[0m
+    'URL' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m32722[0m:[93m13[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'URL'.
+
+[7m32722[0m declare var URL: {
+[7m     [0m [91m            ~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m355[0m:[93m15[0m
+    [7m355[0m declare class URL {
+    [7m   [0m [96m              ~~~[0m
+    'URL' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m32759[0m:[93m11[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'URLSearchParams'.
+
+[7m32759[0m interface URLSearchParams {
+[7m     [0m [91m          ~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m380[0m:[93m15[0m
+    [7m380[0m declare class URLSearchParams {
+    [7m   [0m [96m              ~~~~~~~~~~~~~~~[0m
+    'URLSearchParams' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m32812[0m:[93m13[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'URLSearchParams'.
+
+[7m32812[0m declare var URLSearchParams: {
+[7m     [0m [91m            ~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m380[0m:[93m15[0m
+    [7m380[0m declare class URLSearchParams {
+    [7m   [0m [96m              ~~~~~~~~~~~~~~~[0m
+    'URLSearchParams' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m39228[0m:[93m6[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'RequestInfo'.
+
+[7m39228[0m type RequestInfo = Request | string;
+[7m     [0m [91m     ~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m175[0m:[93m14[0m
+    [7m175[0m declare type RequestInfo = Request | string;
+    [7m   [0m [96m             ~~~~~~~~~~~[0m
+    'RequestInfo' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m39429[0m:[93m6[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'XMLHttpRequestResponseType'.
+
+[7m39429[0m type XMLHttpRequestResponseType = "" | "arraybuffer" | "blob" | "document" | "json" | "text";
+[7m     [0m [91m     ~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m342[0m:[93m14[0m
+    [7m342[0m declare type XMLHttpRequestResponseType =
+    [7m   [0m [96m             ~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    'XMLHttpRequestResponseType' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.iterable.d.ts[0m:[93m153[0m:[93m11[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'FormData'.
+
+[7m153[0m interface FormData {
+[7m   [0m [91m          ~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m90[0m:[93m15[0m
+    [7m90[0m declare class FormData {
+    [7m  [0m [96m              ~~~~~~~~[0m
+    'FormData' was also declared here.
+[96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.iterable.d.ts[0m:[93m418[0m:[93m11[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'URLSearchParams'.
+
+[7m418[0m interface URLSearchParams {
+[7m   [0m [91m          ~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m380[0m:[93m15[0m
+    [7m380[0m declare class URLSearchParams {
+    [7m   [0m [96m              ~~~~~~~~~~~~~~~[0m
+    'URLSearchParams' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/ramda/index.d.ts[0m:[93m789[0m:[93m102[0m - [91merror[0m[90m TS2589: [0mType instantiation is excessively deep and possibly infinite.
+
+[7m789[0m export function flip<F extends (...args: any) => any, P extends _.F.Parameters<F>>(fn: F): _.F.Curry<(...args: _.T.Merge<[P[1], P[0]], P>) => _.F.Return<F>>;
+[7m   [0m [91m                                                                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m110[0m:[93m9[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'require' must be of type 'Require', but here has type 'NodeRequire'.
+
+[7m110[0m     var require: NodeRequire;
+[7m   [0m [91m        ~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/node/module.d.ts[0m:[93m854[0m:[93m13[0m
+    [7m854[0m         var require: NodeJS.Require;
+    [7m   [0m [96m            ~~~~~~~[0m
+    'require' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m143[0m:[93m11[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable 'originalXMLHttpRequest'.
+
+[7m143[0m     const originalXMLHttpRequest: any;
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m46[0m:[93m9[0m
+    [7m46[0m   const originalXMLHttpRequest: any;
+    [7m  [0m [96m        ~~~~~~~~~~~~~~~~~~~~~~[0m
+    'originalXMLHttpRequest' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m145[0m:[93m11[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable '__BUNDLE_START_TIME__'.
+
+[7m145[0m     const __BUNDLE_START_TIME__: number;
+[7m   [0m [91m          ~~~~~~~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m48[0m:[93m9[0m
+    [7m48[0m   const __BUNDLE_START_TIME__: number;
+    [7m  [0m [96m        ~~~~~~~~~~~~~~~~~~~~~[0m
+    '__BUNDLE_START_TIME__' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m146[0m:[93m11[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable 'ErrorUtils'.
+
+[7m146[0m     const ErrorUtils: ErrorUtils;
+[7m   [0m [91m          ~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m49[0m:[93m9[0m
+    [7m49[0m   const ErrorUtils: ErrorUtils;
+    [7m  [0m [96m        ~~~~~~~~~~[0m
+    'ErrorUtils' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m153[0m:[93m11[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable '__DEV__'.
+
+[7m153[0m     const __DEV__: boolean;
+[7m   [0m [91m          ~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m56[0m:[93m9[0m
+    [7m56[0m   const __DEV__: boolean;
+    [7m  [0m [96m        ~~~~~~~[0m
+    '__DEV__' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m155[0m:[93m11[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable 'HermesInternal'.
+
+[7m155[0m     const HermesInternal: null | {};
+[7m   [0m [91m          ~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m58[0m:[93m9[0m
+    [7m58[0m   const HermesInternal: null | {};
+    [7m  [0m [96m        ~~~~~~~~~~~~~~[0m
+    'HermesInternal' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/Libraries/Lists/SectionList.d.ts[0m:[93m47[0m:[93m18[0m - [91merror[0m[90m TS2430: [0mInterface 'SectionListProps<ItemT, SectionT>' incorrectly extends interface 'VirtualizedListWithoutRenderItemProps<ItemT>'.
+  Types of property 'renderScrollComponent' are incompatible.
+    Type '((props: import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/Libraries/Components/ScrollView/ScrollView").ScrollViewProps) => React.ReactElement<...>) | undefined' is not assignable to type '((props: import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/Libraries/Components/ScrollView/ScrollView").ScrollViewProps) => React.ReactElement<...>) | undefined'.
+      Type '(props: import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/Libraries/Components/ScrollView/ScrollView").ScrollViewProps) => React.ReactElement<...>' is not assignable to type '(props: import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/Libraries/Components/ScrollView/ScrollView").ScrollViewProps) => React.ReactElement<...>'.
+        Types of parameters 'props' and 'props' are incompatible.
+          Type 'import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/Libraries/Components/ScrollView/ScrollView").ScrollViewProps' is not assignable to type 'import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/Libraries/Components/ScrollView/ScrollView").ScrollViewProps'.
+            Types of property 'contentContainerStyle' are incompatible.
+              Type 'import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/Libraries/StyleSheet/StyleSheet").StyleProp<import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/Libraries/StyleSheet/StyleSheetTypes").View...' is not assignable to type 'import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/Libraries/StyleSheet/StyleSheet").StyleProp<import("/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/Libraries/StyleSheet/StyleShe...'.
+                Type '""' is not assignable to type 'StyleProp<ViewStyle>'.
+
+[7m47[0m export interface SectionListProps<ItemT, SectionT = DefaultSectionT>
+[7m  [0m [91m                 ~~~~~~~~~~~~~~~~[0m
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/BatchedBridge.d.ts[0m:[93m8[0m:[93m15[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'MessageQueue'.
+
+[7m8[0m declare class MessageQueue {
+[7m [0m [91m              ~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/types/modules/BatchedBridge.d.ts[0m:[93m17[0m:[93m15[0m
+    [7m17[0m declare class MessageQueue {
+    [7m  [0m [96m              ~~~~~~~~~~~~[0m
+    'MessageQueue' was also declared here.
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/types/modules/BatchedBridge.d.ts[0m:[93m31[0m:[93m18[0m
+    [7m31[0m   export default MessageQueue;
+    [7m  [0m [96m                 ~~~~~~~~~~~~[0m
+    and here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/BatchedBridge.d.ts[0m:[93m18[0m:[93m20[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'BatchedBridge'.
+
+[7m18[0m     export default BatchedBridge;
+[7m  [0m [91m                   ~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/types/modules/BatchedBridge.d.ts[0m:[93m27[0m:[93m18[0m
+    [7m27[0m   export default BatchedBridge;
+    [7m  [0m [96m                 ~~~~~~~~~~~~~[0m
+    'BatchedBridge' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/BatchedBridge.d.ts[0m:[93m22[0m:[93m20[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'MessageQueue'.
+
+[7m22[0m     export default MessageQueue;
+[7m  [0m [91m                   ~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/types/modules/BatchedBridge.d.ts[0m:[93m17[0m:[93m15[0m
+    [7m17[0m declare class MessageQueue {
+    [7m  [0m [96m              ~~~~~~~~~~~~[0m
+    'MessageQueue' was also declared here.
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/types/modules/BatchedBridge.d.ts[0m:[93m31[0m:[93m18[0m
+    [7m31[0m   export default MessageQueue;
+    [7m  [0m [96m                 ~~~~~~~~~~~~[0m
+    and here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/Codegen.d.ts[0m:[93m1[0m:[93m1[0m - [91merror[0m[90m TS6200: [0mDefinitions of the following identifiers conflict with those in another file: codegenNativeCommands, NativeComponentType, codegenNativeComponent, BubblingEventHandler, DirectEventHandler, Double, Float, Int32, UnsafeObject, DefaultTypes, WithDefault
+
+[7m1[0m declare module "react-native/Libraries/Utilities/codegenNativeCommands" {
+[7m [0m [91m~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/types/modules/Codegen.d.ts[0m:[93m10[0m:[93m1[0m
+    [7m10[0m declare module 'react-native/Libraries/Utilities/codegenNativeCommands' {
+    [7m  [0m [96m~~~~~~~[0m
+    Conflicts are in this file.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/Devtools.d.ts[0m:[93m2[0m:[93m17[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'StackFrame'.
+
+[7m2[0m     export type StackFrame = {
+[7m [0m [91m                ~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/types/modules/Devtools.d.ts[0m:[93m11[0m:[93m15[0m
+    [7m11[0m   export type StackFrame = {
+    [7m  [0m [96m              ~~~~~~~~~~[0m
+    'StackFrame' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m10[0m:[93m1[0m - [91merror[0m[90m TS6200: [0mDefinitions of the following identifiers conflict with those in another file: FormDataValue, FormDataPart, BodyInit_, HeadersInit_, RequestCredentials_, RequestMode_, ResponseType_, WebsocketMessageEventListener, WebsocketErrorEventListener, WebsocketOpenEventListener, WebsocketCloseEventListener, WebsocketEventListener
+
+[7m10[0m declare function clearInterval(handle: number): void;
+[7m  [0m [91m~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m10[0m:[93m1[0m
+    [7m10[0m import type {ErrorUtils} from '../../Libraries/vendor/core/ErrorUtils';
+    [7m  [0m [96m~~~~~~[0m
+    Conflicts are in this file.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m69[0m:[93m13[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'Blob' must be of type '{ new (blobParts?: BlobPart[] | undefined, options?: BlobPropertyBag | undefined): Blob; prototype: Blob; }', but here has type '{ new (blobParts?: (string | Blob)[] | undefined, options?: BlobOptions | undefined): Blob; prototype: Blob; }'.
+
+[7m69[0m declare var Blob: {
+[7m  [0m [91m            ~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m4436[0m:[93m13[0m
+    [7m4436[0m declare var Blob: {
+    [7m    [0m [96m            ~~~~[0m
+    'Blob' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m90[0m:[93m15[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'FormData'.
+
+[7m90[0m declare class FormData {
+[7m  [0m [91m              ~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m12219[0m:[93m11[0m
+    [7m12219[0m interface FormData {
+    [7m     [0m [96m          ~~~~~~~~[0m
+    'FormData' was also declared here.
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m12263[0m:[93m13[0m
+    [7m12263[0m declare var FormData: {
+    [7m     [0m [96m            ~~~~~~~~[0m
+    and here.
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.iterable.d.ts[0m:[93m153[0m:[93m11[0m
+    [7m153[0m interface FormData {
+    [7m   [0m [96m          ~~~~~~~~[0m
+    and here.
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts[0m:[93m156[0m:[93m11[0m
+    [7m156[0m interface FormData {}
+    [7m   [0m [96m          ~~~~~~~~[0m
+    and here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m114[0m:[93m13[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'Headers' must be of type '{ new (init?: HeadersInit | undefined): Headers; prototype: Headers; }', but here has type '{ new (init?: HeadersInit_ | undefined): Headers; prototype: Headers; }'.
+
+[7m114[0m declare var Headers: {
+[7m   [0m [91m            ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m17801[0m:[93m13[0m
+    [7m17801[0m declare var Headers: {
+    [7m     [0m [96m            ~~~~~~~[0m
+    'Headers' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m126[0m:[93m5[0m - [91merror[0m[90m TS2374: [0mDuplicate index signature for type 'string'.
+
+[7m126[0m     [key: string]: any;
+[7m   [0m [91m    ~~~~~~~~~~~~~~~~~~~[0m
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m148[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'body' must be of type 'BodyInit | null | undefined', but here has type 'BodyInit_ | undefined'.
+
+[7m148[0m     body?: BodyInit_ | undefined;
+[7m   [0m [91m    ~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2041[0m:[93m5[0m
+    [7m2041[0m     body?: BodyInit | null;
+    [7m    [0m [96m    ~~~~[0m
+    'body' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m150[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'headers' must be of type 'HeadersInit | undefined', but here has type 'HeadersInit_ | undefined'.
+
+[7m150[0m     headers?: HeadersInit_ | undefined;
+[7m   [0m [91m    ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2047[0m:[93m5[0m
+    [7m2047[0m     headers?: HeadersInit;
+    [7m    [0m [96m    ~~~~~~~[0m
+    'headers' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m156[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'window' must be of type 'null | undefined', but here has type 'any'.
+
+[7m156[0m     window?: any;
+[7m   [0m [91m    ~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2066[0m:[93m5[0m
+    [7m2066[0m     window?: null;
+    [7m    [0m [96m    ~~~~~~[0m
+    'window' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m157[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'signal' must be of type 'AbortSignal | null | undefined', but here has type 'AbortSignal | undefined'.
+
+[7m157[0m     signal?: AbortSignal | undefined;
+[7m   [0m [91m    ~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2064[0m:[93m5[0m
+    [7m2064[0m     signal?: AbortSignal | null;
+    [7m    [0m [96m    ~~~~~~[0m
+    'signal' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m170[0m:[93m13[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'Request' must be of type '{ new (input: RequestInfo | URL, init?: RequestInit | undefined): Request; prototype: Request; }', but here has type '{ new (input: string | Request, init?: RequestInit | undefined): Request; prototype: Request; }'.
+
+[7m170[0m declare var Request: {
+[7m   [0m [91m            ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m26207[0m:[93m13[0m
+    [7m26207[0m declare var Request: {
+    [7m     [0m [96m            ~~~~~~~[0m
+    'Request' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m175[0m:[93m14[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'RequestInfo'.
+
+[7m175[0m declare type RequestInfo = Request | string;
+[7m   [0m [91m             ~~~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m39228[0m:[93m6[0m
+    [7m39228[0m type RequestInfo = Request | string;
+    [7m     [0m [96m     ~~~~~~~~~~~[0m
+    'RequestInfo' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m178[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'headers' must be of type 'HeadersInit | undefined', but here has type 'HeadersInit_ | undefined'.
+
+[7m178[0m     headers?: HeadersInit_ | undefined;
+[7m   [0m [91m    ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2074[0m:[93m5[0m
+    [7m2074[0m     headers?: HeadersInit;
+    [7m    [0m [96m    ~~~~~~~[0m
+    'headers' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m194[0m:[93m13[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'Response' must be of type '{ new (body?: BodyInit | null | undefined, init?: ResponseInit | undefined): Response; prototype: Response; error(): Response; json(data: any, init?: ResponseInit | undefined): Response; redirect(url: string | URL, status?: number | undefined): Response; }', but here has type '{ new (body?: BodyInit_ | undefined, init?: ResponseInit | undefined): Response; prototype: Response; error: () => Response; redirect: (url: string, status?: number | undefined) => Response; }'.
+
+[7m194[0m declare var Response: {
+[7m   [0m [91m            ~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m26367[0m:[93m13[0m
+    [7m26367[0m declare var Response: {
+    [7m     [0m [96m            ~~~~~~~~[0m
+    'Response' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m283[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'abort' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m283[0m     abort: ProgressEvent;
+[7m   [0m [91m    ~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37265[0m:[93m5[0m
+    [7m37265[0m     "abort": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~[0m
+    'abort' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m284[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'error' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m284[0m     error: ProgressEvent;
+[7m   [0m [91m    ~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37266[0m:[93m5[0m
+    [7m37266[0m     "error": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~[0m
+    'error' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m285[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'load' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m285[0m     load: ProgressEvent;
+[7m   [0m [91m    ~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37267[0m:[93m5[0m
+    [7m37267[0m     "load": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~[0m
+    'load' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m286[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'loadend' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m286[0m     loadend: ProgressEvent;
+[7m   [0m [91m    ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37268[0m:[93m5[0m
+    [7m37268[0m     "loadend": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~~~[0m
+    'loadend' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m287[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'loadstart' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m287[0m     loadstart: ProgressEvent;
+[7m   [0m [91m    ~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37269[0m:[93m5[0m
+    [7m37269[0m     "loadstart": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~~~~~[0m
+    'loadstart' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m288[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'progress' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m288[0m     progress: ProgressEvent;
+[7m   [0m [91m    ~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37270[0m:[93m5[0m
+    [7m37270[0m     "progress": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~~~~[0m
+    'progress' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m289[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'timeout' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m289[0m     timeout: ProgressEvent;
+[7m   [0m [91m    ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37271[0m:[93m5[0m
+    [7m37271[0m     "timeout": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~~~[0m
+    'timeout' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m342[0m:[93m14[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'XMLHttpRequestResponseType'.
+
+[7m342[0m declare type XMLHttpRequestResponseType =
+[7m   [0m [91m             ~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m39429[0m:[93m6[0m
+    [7m39429[0m type XMLHttpRequestResponseType = "" | "arraybuffer" | "blob" | "document" | "json" | "text";
+    [7m     [0m [96m     ~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    'XMLHttpRequestResponseType' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m355[0m:[93m15[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'URL'.
+
+[7m355[0m declare class URL {
+[7m   [0m [91m              ~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m32640[0m:[93m11[0m
+    [7m32640[0m interface URL {
+    [7m     [0m [96m          ~~~[0m
+    'URL' was also declared here.
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m32722[0m:[93m13[0m
+    [7m32722[0m declare var URL: {
+    [7m     [0m [96m            ~~~[0m
+    and here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m380[0m:[93m15[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'URLSearchParams'.
+
+[7m380[0m declare class URLSearchParams {
+[7m   [0m [91m              ~~~~~~~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m32759[0m:[93m11[0m
+    [7m32759[0m interface URLSearchParams {
+    [7m     [0m [96m          ~~~~~~~~~~~~~~~[0m
+    'URLSearchParams' was also declared here.
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m32812[0m:[93m13[0m
+    [7m32812[0m declare var URLSearchParams: {
+    [7m     [0m [96m            ~~~~~~~~~~~~~~~[0m
+    and here.
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.iterable.d.ts[0m:[93m418[0m:[93m11[0m
+    [7m418[0m interface URLSearchParams {
+    [7m   [0m [96m          ~~~~~~~~~~~~~~~[0m
+    and here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m439[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'onopen' must be of type '((this: WebSocket, ev: Event) => any) | null', but here has type '(() => void) | null'.
+
+[7m439[0m     onopen: (() => void) | null;
+[7m   [0m [91m    ~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m36084[0m:[93m5[0m
+    [7m36084[0m     onopen: ((this: WebSocket, ev: Event) => any) | null;
+    [7m     [0m [96m    ~~~~~~[0m
+    'onopen' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m440[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'onmessage' must be of type '((this: WebSocket, ev: MessageEvent<any>) => any) | null', but here has type '((event: WebSocketMessageEvent) => void) | null'.
+
+[7m440[0m     onmessage: ((event: WebSocketMessageEvent) => void) | null;
+[7m   [0m [91m    ~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m36082[0m:[93m5[0m
+    [7m36082[0m     onmessage: ((this: WebSocket, ev: MessageEvent) => any) | null;
+    [7m     [0m [96m    ~~~~~~~~~[0m
+    'onmessage' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m441[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'onerror' must be of type '((this: WebSocket, ev: Event) => any) | null', but here has type '((event: WebSocketErrorEvent) => void) | null'.
+
+[7m441[0m     onerror: ((event: WebSocketErrorEvent) => void) | null;
+[7m   [0m [91m    ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m36080[0m:[93m5[0m
+    [7m36080[0m     onerror: ((this: WebSocket, ev: Event) => any) | null;
+    [7m     [0m [96m    ~~~~~~~[0m
+    'onerror' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m442[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'onclose' must be of type '((this: WebSocket, ev: CloseEvent) => any) | null', but here has type '((event: WebSocketCloseEvent) => void) | null'.
+
+[7m442[0m     onclose: ((event: WebSocketCloseEvent) => void) | null;
+[7m   [0m [91m    ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m36078[0m:[93m5[0m
+    [7m36078[0m     onclose: ((this: WebSocket, ev: CloseEvent) => any) | null;
+    [7m     [0m [96m    ~~~~~~~[0m
+    'onclose' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m443[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'addEventListener' must be of type '{ <K extends keyof WebSocketEventMap>(type: K, listener: (this: WebSocket, ev: WebSocketEventMap[K]) => any, options?: boolean | AddEventListenerOptions | undefined): void; (type: string, listener: EventListenerOrEventListenerObject, options?: boolean | ... 1 more ... | undefined): void; }', but here has type 'WebsocketEventListener'.
+
+[7m443[0m     addEventListener: WebsocketEventListener;
+[7m   [0m [91m    ~~~~~~~~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m36119[0m:[93m5[0m
+    [7m36119[0m     addEventListener<K extends keyof WebSocketEventMap>(type: K, listener: (this: WebSocket, ev: WebSocketEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+    [7m     [0m [96m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    'addEventListener' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m444[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'removeEventListener' must be of type '{ <K extends keyof WebSocketEventMap>(type: K, listener: (this: WebSocket, ev: WebSocketEventMap[K]) => any, options?: boolean | EventListenerOptions | undefined): void; (type: string, listener: EventListenerOrEventListenerObject, options?: boolean | ... 1 more ... | undefined): void; }', but here has type 'WebsocketEventListener'.
+
+[7m444[0m     removeEventListener: WebsocketEventListener;
+[7m   [0m [91m    ~~~~~~~~~~~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m36121[0m:[93m5[0m
+    [7m36121[0m     removeEventListener<K extends keyof WebSocketEventMap>(type: K, listener: (this: WebSocket, ev: WebSocketEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+    [7m     [0m [96m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    'removeEventListener' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m447[0m:[93m13[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'WebSocket' must be of type '{ new (url: string | URL, protocols?: string | string[] | undefined): WebSocket; prototype: WebSocket; readonly CONNECTING: 0; readonly OPEN: 1; readonly CLOSING: 2; readonly CLOSED: 3; }', but here has type '{ new (uri: string, protocols?: string | string[] | null | undefined, options?: { [optionName: string]: any; headers: { [headerName: string]: string; }; } | null | undefined): WebSocket; ... 4 more ...; readonly OPEN: number; }'.
+
+[7m447[0m declare var WebSocket: {
+[7m   [0m [91m            ~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m36125[0m:[93m13[0m
+    [7m36125[0m declare var WebSocket: {
+    [7m     [0m [96m            ~~~~~~~~~[0m
+    'WebSocket' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m471[0m:[93m15[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'AbortSignal'.
+
+[7m471[0m declare class AbortSignal implements EventTarget {
+[7m   [0m [91m              ~~~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2746[0m:[93m11[0m
+    [7m2746[0m interface AbortSignal extends EventTarget {
+    [7m    [0m [96m          ~~~~~~~~~~~[0m
+    'AbortSignal' was also declared here.
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2773[0m:[93m13[0m
+    [7m2773[0m declare var AbortSignal: {
+    [7m    [0m [96m            ~~~~~~~~~~~[0m
+    and here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m471[0m:[93m15[0m - [91merror[0m[90m TS2420: [0mClass 'AbortSignal' incorrectly implements interface 'EventTarget'.
+  Property 'dispatchEvent' is missing in type 'AbortSignal' but required in type 'EventTarget'.
+
+[7m471[0m declare class AbortSignal implements EventTarget {
+[7m   [0m [91m              ~~~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m11575[0m:[93m5[0m
+    [7m11575[0m     dispatchEvent(event: Event): boolean;
+    [7m     [0m [96m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    'dispatchEvent' is declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m506[0m:[93m15[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'AbortController'.
+
+[7m506[0m declare class AbortController {
+[7m   [0m [91m              ~~~~~~~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2717[0m:[93m11[0m
+    [7m2717[0m interface AbortController {
+    [7m    [0m [96m          ~~~~~~~~~~~~~~~[0m
+    'AbortController' was also declared here.
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2732[0m:[93m13[0m
+    [7m2732[0m declare var AbortController: {
+    [7m    [0m [96m            ~~~~~~~~~~~~~~~[0m
+    and here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m531[0m:[93m14[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'error' must be of type 'DOMException | null', but here has type 'Error | null'.
+
+[7m531[0m     readonly error: Error | null;
+[7m   [0m [91m             ~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m11680[0m:[93m14[0m
+    [7m11680[0m     readonly error: DOMException | null;
+    [7m     [0m [96m             ~~~~~[0m
+    'error' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m540[0m:[93m14[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'readyState' must be of type '0 | 2 | 1', but here has type 'number'.
+
+[7m540[0m     readonly readyState: number;
+[7m   [0m [91m             ~~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m11698[0m:[93m14[0m
+    [7m11698[0m     readonly readyState: typeof FileReader.EMPTY | typeof FileReader.LOADING | typeof FileReader.DONE;
+    [7m     [0m [96m             ~~~~~~~~~~[0m
+    'readyState' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m541[0m:[93m14[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'result' must be of type 'string | ArrayBuffer | null', but here has type 'string | ArrayBuffer'.
+
+[7m541[0m     readonly result: string | ArrayBuffer;
+[7m   [0m [91m             ~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m11704[0m:[93m14[0m
+    [7m11704[0m     readonly result: string | ArrayBuffer | null;
+    [7m     [0m [96m             ~~~~~~[0m
+    'result' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts[0m:[93m156[0m:[93m11[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'FormData'.
+
+[7m156[0m interface FormData {}
+[7m   [0m [91m          ~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m90[0m:[93m15[0m
+    [7m90[0m declare class FormData {
+    [7m  [0m [96m              ~~~~~~~~[0m
+    'FormData' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m10[0m:[93m1[0m - [91merror[0m[90m TS6200: [0mDefinitions of the following identifiers conflict with those in another file: EndingType, BlobPart, BufferSource, FormData, RequestInfo, XMLHttpRequestResponseType, AbortSignal, AbortController
+
+[7m10[0m import type {ErrorUtils} from '../../Libraries/vendor/core/ErrorUtils';
+[7m  [0m [91m~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m23[0m:[93m1[0m
+    [7m23[0m interface AddEventListenerOptions extends EventListenerOptions {
+    [7m  [0m [96m~~~~~~~~~[0m
+    Conflicts are in this file.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m10[0m:[93m1[0m - [91merror[0m[90m TS6200: [0mDefinitions of the following identifiers conflict with those in another file: FormDataValue, FormDataPart, BodyInit_, HeadersInit_, RequestCredentials_, RequestMode_, ResponseType_, WebsocketMessageEventListener, WebsocketErrorEventListener, WebsocketOpenEventListener, WebsocketCloseEventListener, WebsocketEventListener
+
+[7m10[0m import type {ErrorUtils} from '../../Libraries/vendor/core/ErrorUtils';
+[7m  [0m [91m~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/modules/globals.d.ts[0m:[93m10[0m:[93m1[0m
+    [7m10[0m declare function clearInterval(handle: number): void;
+    [7m  [0m [96m~~~~~~~[0m
+    Conflicts are in this file.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m17[0m:[93m7[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'require' must be of type 'Require', but here has type 'NodeRequire'.
+
+[7m17[0m   var require: NodeRequire;
+[7m  [0m [91m      ~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/node/module.d.ts[0m:[93m854[0m:[93m13[0m
+    [7m854[0m         var require: NodeJS.Require;
+    [7m   [0m [96m            ~~~~~~~[0m
+    'require' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m46[0m:[93m9[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable 'originalXMLHttpRequest'.
+
+[7m46[0m   const originalXMLHttpRequest: any;
+[7m  [0m [91m        ~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m143[0m:[93m11[0m
+    [7m143[0m     const originalXMLHttpRequest: any;
+    [7m   [0m [96m          ~~~~~~~~~~~~~~~~~~~~~~[0m
+    'originalXMLHttpRequest' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m48[0m:[93m9[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable '__BUNDLE_START_TIME__'.
+
+[7m48[0m   const __BUNDLE_START_TIME__: number;
+[7m  [0m [91m        ~~~~~~~~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m145[0m:[93m11[0m
+    [7m145[0m     const __BUNDLE_START_TIME__: number;
+    [7m   [0m [96m          ~~~~~~~~~~~~~~~~~~~~~[0m
+    '__BUNDLE_START_TIME__' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m49[0m:[93m9[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable 'ErrorUtils'.
+
+[7m49[0m   const ErrorUtils: ErrorUtils;
+[7m  [0m [91m        ~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m146[0m:[93m11[0m
+    [7m146[0m     const ErrorUtils: ErrorUtils;
+    [7m   [0m [96m          ~~~~~~~~~~[0m
+    'ErrorUtils' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m56[0m:[93m9[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable '__DEV__'.
+
+[7m56[0m   const __DEV__: boolean;
+[7m  [0m [91m        ~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m153[0m:[93m11[0m
+    [7m153[0m     const __DEV__: boolean;
+    [7m   [0m [96m          ~~~~~~~[0m
+    '__DEV__' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m58[0m:[93m9[0m - [91merror[0m[90m TS2451: [0mCannot redeclare block-scoped variable 'HermesInternal'.
+
+[7m58[0m   const HermesInternal: null | {};
+[7m  [0m [91m        ~~~~~~~~~~~~~~[0m
+
+  [96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react-native/index.d.ts[0m:[93m155[0m:[93m11[0m
+    [7m155[0m     const HermesInternal: null | {};
+    [7m   [0m [96m          ~~~~~~~~~~~~~~[0m
+    'HermesInternal' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m166[0m:[93m7[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'Blob' must be of type '{ new (blobParts?: BlobPart[] | undefined, options?: BlobPropertyBag | undefined): Blob; prototype: Blob; }', but here has type '{ new (blobParts?: (string | Blob)[] | undefined, options?: BlobOptions | undefined): Blob; prototype: Blob; }'.
+
+[7m166[0m   var Blob: {
+[7m   [0m [91m      ~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m4436[0m:[93m13[0m
+    [7m4436[0m declare var Blob: {
+    [7m    [0m [96m            ~~~~[0m
+    'Blob' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m180[0m:[93m7[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'File' must be of type '{ new (fileBits: BlobPart[], fileName: string, options?: FilePropertyBag | undefined): File; prototype: File; }', but here has type '{ new (fileParts: BlobPart[], name: string, options?: FilePropertyBag | undefined): File; prototype: File; }'.
+
+[7m180[0m   var File: {
+[7m   [0m [91m      ~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m11629[0m:[93m13[0m
+    [7m11629[0m declare var File: {
+    [7m     [0m [96m            ~~~~[0m
+    'File' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m266[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'body' must be of type 'BodyInit | null | undefined', but here has type 'BodyInit_ | undefined'.
+
+[7m266[0m     body?: BodyInit_ | null | undefined;
+[7m   [0m [91m    ~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2041[0m:[93m5[0m
+    [7m2041[0m     body?: BodyInit | null;
+    [7m    [0m [96m    ~~~~[0m
+    'body' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m275[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'signal' must be of type 'AbortSignal | null | undefined', but here has type 'AbortSignal | undefined'.
+
+[7m275[0m     signal?: AbortSignal | undefined;
+[7m   [0m [91m    ~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m2064[0m:[93m5[0m
+    [7m2064[0m     signal?: AbortSignal | null;
+    [7m    [0m [96m    ~~~~~~[0m
+    'signal' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m285[0m:[93m14[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'signal' must be of type 'AbortSignal', but here has type 'AbortSignal'.
+
+[7m285[0m     readonly signal: AbortSignal;
+[7m   [0m [91m             ~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m26192[0m:[93m14[0m
+    [7m26192[0m     readonly signal: AbortSignal;
+    [7m     [0m [96m             ~~~~~~[0m
+    'signal' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m289[0m:[93m7[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'Request' must be of type '{ new (input: RequestInfo | URL, init?: RequestInit | undefined): Request; prototype: Request; }', but here has type '{ new (input: string | Request, init?: RequestInit | undefined): Request; prototype: Request; }'.
+
+[7m289[0m   var Request: {
+[7m   [0m [91m      ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m26207[0m:[93m13[0m
+    [7m26207[0m declare var Request: {
+    [7m     [0m [96m            ~~~~~~~[0m
+    'Request' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m313[0m:[93m7[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'Response' must be of type '{ new (body?: BodyInit | null | undefined, init?: ResponseInit | undefined): Response; prototype: Response; error(): Response; json(data: any, init?: ResponseInit | undefined): Response; redirect(url: string | URL, status?: number | undefined): Response; }', but here has type '{ new (body?: BodyInit_ | undefined, init?: ResponseInit | undefined): Response; prototype: Response; error(): Response; json(data: any, init?: ResponseInit | undefined): Response; redirect: (url: string | URL, status?: number | undefined) => Response; }'.
+
+[7m313[0m   var Response: {
+[7m   [0m [91m      ~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m26367[0m:[93m13[0m
+    [7m26367[0m declare var Response: {
+    [7m     [0m [96m            ~~~~~~~~[0m
+    'Response' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m398[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'abort' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m398[0m     abort: ProgressEvent;
+[7m   [0m [91m    ~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37265[0m:[93m5[0m
+    [7m37265[0m     "abort": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~[0m
+    'abort' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m399[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'error' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m399[0m     error: ProgressEvent;
+[7m   [0m [91m    ~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37266[0m:[93m5[0m
+    [7m37266[0m     "error": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~[0m
+    'error' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m400[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'load' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m400[0m     load: ProgressEvent;
+[7m   [0m [91m    ~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37267[0m:[93m5[0m
+    [7m37267[0m     "load": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~[0m
+    'load' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m401[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'loadend' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m401[0m     loadend: ProgressEvent;
+[7m   [0m [91m    ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37268[0m:[93m5[0m
+    [7m37268[0m     "loadend": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~~~[0m
+    'loadend' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m402[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'loadstart' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m402[0m     loadstart: ProgressEvent;
+[7m   [0m [91m    ~~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37269[0m:[93m5[0m
+    [7m37269[0m     "loadstart": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~~~~~[0m
+    'loadstart' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m403[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'progress' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m403[0m     progress: ProgressEvent;
+[7m   [0m [91m    ~~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37270[0m:[93m5[0m
+    [7m37270[0m     "progress": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~~~~[0m
+    'progress' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m404[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'timeout' must be of type 'ProgressEvent<XMLHttpRequestEventTarget>', but here has type 'ProgressEvent<EventTarget>'.
+
+[7m404[0m     timeout: ProgressEvent;
+[7m   [0m [91m    ~~~~~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m37271[0m:[93m5[0m
+    [7m37271[0m     "timeout": ProgressEvent<XMLHttpRequestEventTarget>;
+    [7m     [0m [96m    ~~~~~~~~~[0m
+    'timeout' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m471[0m:[93m7[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'URL' must be of type '{ new (url: string | URL, base?: string | URL | undefined): URL; prototype: URL; canParse(url: string | URL, base?: string | URL | undefined): boolean; createObjectURL(obj: Blob | MediaSource): string; parse(url: string | URL, base?: string | ... 1 more ... | undefined): URL | null; revokeObjectURL(url: string): voi...', but here has type '{ new (url: string | URL, base?: string | URL | undefined): URL; prototype: URL; createObjectURL(obj: Blob): string; revokeObjectURL(url: string): void; }'.
+
+[7m471[0m   var URL: {
+[7m   [0m [91m      ~~~[0m
+
+  [96mScripts/NativeScript/node_modules/typescript/lib/lib.dom.d.ts[0m:[93m32722[0m:[93m13[0m
+    [7m32722[0m declare var URL: {
+    [7m     [0m [96m            ~~~[0m
+    'URL' was also declared here.
+[96m../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts[0m:[93m534[0m:[93m5[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property 'onopen' must be of type '((this: WebSocket, ev: Event) => any) | null', but here has type '(() => void) node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript/build-host-services.mjs --check
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:924:11)
+    at execFileSync (node:child_process:960:15)
+    at file:///Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript/prepare-ios-dependencies.mjs:11:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:371:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:669:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: 1,
+  signal: null,
+  output: [ null, null, null ],
+  pid: 55598,
+  stdout: null,
+  stderr: null
+}
+
+Node.js v24.5.0

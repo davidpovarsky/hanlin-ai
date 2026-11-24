@@ -11,7 +11,8 @@ const ts = (await import(pathToFileURL(compiler).href)).default;
 const input = path.join(import.meta.dirname, 'host-services.ts');
 const output = path.join(root, 'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services');
 const files = new Map();
-const options = {strict: true, skipLibCheck: false, noEmitOnError: true, declaration: true,
+// This standalone facade needs no implicit @types packages from ancestor workspaces.
+const options = {strict: true, skipLibCheck: false, types: [], noEmitOnError: true, declaration: true,
   target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ES2022, moduleResolution: ts.ModuleResolutionKind.Bundler};
 const program = ts.createProgram([input], options);
 const diagnostics = ts.getPreEmitDiagnostics(program);
