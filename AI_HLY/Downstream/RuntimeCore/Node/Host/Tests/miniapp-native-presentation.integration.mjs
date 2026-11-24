@@ -79,3 +79,51 @@ test('actual compiler-discovered native presentation modules survive prepared ou
     assert.equal(again.succeeded, true, JSON.stringify(again.diagnostics));
   } finally { await rm(root, {recursive: true, force: true}); }
 });
+
+
+test('declared original Expo layout expressions survive packaging without a redundant resource declaration', async () => {
+  const root = await project('nativescript');
+  try {
+    const definitions = {
+      'native/layout.json': JSON.stringify({type: 'TextView', props: {text: 'Original native layout'}}),
+      'native/layout.js': "(props) => ({type: 'TextView', props: {text: props.label}})"
+    };
+    for (const [file, content] of Object.entries(definitions)) await writeFile(path.join(root, file), content);
+    const script = JSON.parse(await readFile(path.join(root, 'script.json'), 'utf8'));
+    script.nativePresentations = {
+      appIntents: {engine: 'expo', sourcePath: 'native/layout.json', sourceFormat: 'expo-layout'},
+      translation: {engine: 'expo', sourcePath: 'native/layout.js', sourceFormat: 'expo-layout'}
+    };
+    await json(path.join(root, 'script.json'), script);
+    const author = JSON.parse(await readFile(path.join(root, 'hanlin.authoring.json'), 'utf8'));
+    author.resources = [];
+    await json(path.join(root, 'hanlin.authoring.json'), author);
+    const report = await runMiniAppOperation({operation: 'build', engine: 'nativescript', projectRoot: root}, {sdkRoot});
+    assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+    for (const [file, content] of Object.entries(definitions)) {
+      assert.equal(await readFile(path.join(report.preparedPackagePath, file), 'utf8'), content);
+      assert.equal(await readFile(path.join(report.preparedPackagePath, 'source', file), 'utf8'), content);
+    }
+  } finally { await rm(root, {recursive: true, force: true}); }
+});
+
+test('native layout syntax, missing source and unsupported renderer fail with actionable original paths', async () => {
+  const root = await project('expo');
+  try {
+    await writeFile(path.join(root, 'native/broken.json'), '{"type":');
+    const script = JSON.parse(await readFile(path.join(root, 'script.json'), 'utf8'));
+    script.nativePresentations = {
+      missing: {engine: 'expo', sourcePath: 'native/missing.json', sourceFormat: 'expo-layout'},
+      invalid: {engine: 'expo', sourcePath: 'native/broken.json', sourceFormat: 'expo-layout'},
+      wrongRenderer: {engine: 'nativescript', sourcePath: 'native/view.tsx', sourceFormat: 'tsx'},
+      wrongFormat: {engine: 'scriptwidget', sourcePath: 'native/broken.json', sourceFormat: 'expo-layout'}
+    };
+    await json(path.join(root, 'script.json'), script);
+    const report = await runMiniAppOperation({operation: 'validate', engine: 'expo', projectRoot: root}, {sdkRoot});
+    assert.equal(report.succeeded, false);
+    assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_PRESENTATION_SOURCE_MISSING' && d.file === 'native/missing.json'));
+    assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_PRESENTATION_LAYOUT_INVALID' && d.file === 'native/broken.json' && d.line === 1 && d.column > 0));
+    assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_NATIVE_PRESENTATION_INVALID' && d.file === 'script.json' && d.message.includes('wrongRenderer')));
+    assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_NATIVE_PRESENTATION_INVALID' && d.message.includes('wrongFormat')));
+  } finally { await rm(root, {recursive: true, force: true}); }
+});

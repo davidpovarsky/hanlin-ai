@@ -235,21 +235,23 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
 
 async function validateNativePresentations(input, sdk, compiler) {
   const declarations = input.script.nativePresentations;
-  if (!declarations) return {programs: [], diagnostics: []};
+  if (!declarations) return {programs: [], sourceFiles: [], diagnostics: []};
   if (typeof declarations !== 'object' || Array.isArray(declarations))
-    return {programs: [], diagnostics: [finding('MINIAPP_NATIVE_PRESENTATIONS_INVALID',
+    return {programs: [], sourceFiles: [], diagnostics: [finding('MINIAPP_NATIVE_PRESENTATIONS_INVALID',
       'nativePresentations must map entrypoint IDs to native presentation descriptors.', 'script.json')]};
   const programs = [];
+  const sourceFiles = [];
   const diagnostics = [];
   const visited = new Set();
   for (const [identifier, presentation] of Object.entries(declarations)) {
-    if (!presentation || !engines.has(presentation.engine) || typeof presentation.sourcePath !== 'string') {
+    if (!presentation || !['expo', 'scriptwidget'].includes(presentation.engine) ||
+        !['jsx', 'tsx', 'javascript', 'expo-layout'].includes(presentation.sourceFormat) ||
+        (presentation.sourceFormat === 'expo-layout' && presentation.engine !== 'expo') ||
+        typeof presentation.sourcePath !== 'string') {
       diagnostics.push(finding('MINIAPP_NATIVE_PRESENTATION_INVALID',
-        'Native presentation ' + identifier + ' must declare an installed engine and sourcePath.', 'script.json'));
+        'Native presentation ' + identifier + ' must declare an Expo or ScriptWidget renderer, a supported sourceFormat, and sourcePath.', 'script.json'));
       continue;
     }
-    // Declarative Expo-layout JSON is validated by the original native layout decoder.
-    if (presentation.sourceFormat === 'expo-layout') continue;
     const entryFile = child(input.sourceRoot, presentation.sourcePath);
     const identity = presentation.engine + ':' + entryFile;
     if (visited.has(identity)) continue;
@@ -264,6 +266,21 @@ async function validateNativePresentations(input, sdk, compiler) {
     if (!await fs.stat(entryFile).then(info => info.isFile(), () => false)) {
       diagnostics.push(finding('MINIAPP_PRESENTATION_SOURCE_MISSING',
         'Native presentation source does not exist: ' + presentation.sourcePath, presentation.sourcePath));
+      continue;
+    }
+    sourceFiles.push(entryFile);
+    if (presentation.sourceFormat === 'expo-layout') {
+      // The actual native compiler accepts a serialized layout expression, which
+      // may be JSON or JavaScript (including a props => layout function).
+      // Parse with the original Expo Babel parser; native layout decoding still
+      // belongs to the native renderer, so no replacement schema is invented.
+      const requireSDK = createRequire(path.join(child(sdk.sdkRoot, descriptor.toolingRoot), 'package.json'));
+      const parser = requireSDK('@babel/parser');
+      try { parser.parseExpression(await fs.readFile(entryFile, 'utf8'), {sourceType: 'script'}); }
+      catch (error) {
+        diagnostics.push({...finding('MINIAPP_PRESENTATION_LAYOUT_INVALID', error.message, presentation.sourcePath),
+          ...(error.loc ? {line: error.loc.line, column: error.loc.column + 1} : {})});
+      }
       continue;
     }
     let nativeRoot = path.dirname(entryFile);
@@ -289,20 +306,21 @@ async function validateNativePresentations(input, sdk, compiler) {
       ...(diagnostic.file ? {file: slash(path.relative(input.sourceRoot,
         path.resolve(nativeRoot, diagnostic.file)))} : {})})));
   }
-  return {programs, diagnostics: deduplicate(diagnostics)};
+  return {programs, sourceFiles, diagnostics: deduplicate(diagnostics)};
 }
 
-async function copyNativePresentationSources(input, programs, stage) {
-  const copied = new Set();
+async function copyNativePresentationSources(input, programs, stage, declaredSources = []) {
+  const sources = new Set(declaredSources);
   for (const program of programs) for (const source of program.getSourceFiles()) {
-    if (source.isDeclarationFile || !inside(input.sourceRoot, source.fileName) ||
-        source.fileName.includes(path.sep + 'node_modules' + path.sep) || copied.has(source.fileName)) continue;
-    copied.add(source.fileName);
-    const target = child(stage, path.relative(input.sourceRoot, source.fileName));
-    await fs.mkdir(path.dirname(target), {recursive: true});
-    await fs.copyFile(source.fileName, target);
+    if (!source.isDeclarationFile && inside(input.sourceRoot, source.fileName) &&
+        !source.fileName.includes(path.sep + 'node_modules' + path.sep)) sources.add(source.fileName);
   }
-  if (programs.length && input.engine === 'nativescript') await copyResources(input, stage);
+  for (const source of sources) {
+    const target = child(stage, path.relative(input.sourceRoot, source));
+    await fs.mkdir(path.dirname(target), {recursive: true});
+    await fs.copyFile(source, target);
+  }
+  if (sources.size && input.engine === 'nativescript') await copyResources(input, stage);
 }
 
 async function retainSources(input, stage, parsed, nativePrograms = []) {
@@ -646,7 +664,7 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
       report.diagnostics.push(...await buildNativeScript(ts, input, parsed, stage, descriptor));
     else if (input.engine === 'expo') await buildExpo(input, parsed, stage, descriptor);
     else await buildScriptWidget(input, parsed, stage);
-    await copyNativePresentationSources(input, native.programs, stage);
+    await copyNativePresentationSources(input, native.programs, stage, native.sourceFiles);
     if (report.diagnostics.some(item => item.category === 'error')) return report;
     await writeJSON(path.join(stage, 'hanlin.authoring.json'), {
       schemaVersion: 1, engine: input.engine, entry: input.entry,
