@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-24T20:30:20.368834+00:00",
+  "source": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+  "item": {
+    "name": "ReactNativeHeaders",
+    "source": "maven",
+    "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-headers-release.tar.gz",
+    "sha256": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd",
+    "subpath": "ReactNativeHeaders.xcframework",
+    "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
+  },
+  "transportURL": "https://repo.maven.apache.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-headers-release.tar.gz",
+  "primaryURLAttempt": "HTTP403 from urllib after redirect; retained tool result",
+  "bytes": 1845331,
+  "sha256": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd"
+}

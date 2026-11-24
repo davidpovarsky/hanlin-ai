@@ -297,6 +297,50 @@ export async function signAndVerifyXCFramework(
   }
 }
 
+// Keep the verified archive's original maps outside Clang's discoverable Headers
+// paths: the generated consumer projection deliberately removes those originals.
+const originalHeaderModulemapsName = '.original-header-modulemaps.json';
+
+export async function preserveOriginalReactNativeHeaderModulemaps(xcfPath, artifactSHA256) {
+  const recordPath = resolve(xcfPath, originalHeaderModulemapsName);
+  let previousText = null;
+  let previous = null;
+  try {
+    previousText = await readFile(recordPath, 'utf8');
+    previous = JSON.parse(previousText);
+  } catch (_) {}
+  const info = parseXCFrameworkInfoPlist(await readFile(resolve(xcfPath, 'Info.plist'), 'utf8'));
+  const libraries = info.AvailableLibraries.filter((lib) =>
+    lib.SupportedPlatform === 'ios' &&
+    (!lib.SupportedPlatformVariant || lib.SupportedPlatformVariant === 'simulator'));
+  if (libraries.length === 0) throw new Error('ReactNativeHeaders has no iOS modulemap source slices');
+  const sliceIDs = libraries.map((lib) => lib.LibraryIdentifier).sort();
+  const previousMatches = previous?.schemaVersion === 1 && previous.artifactSHA256 === artifactSHA256 &&
+    JSON.stringify(Object.keys(previous.slices ?? {}).sort()) === JSON.stringify(sliceIDs);
+  const slices = {};
+  for (const lib of libraries) {
+    const sourcePath = resolve(xcfPath, lib.LibraryIdentifier, lib.HeadersPath, 'module.modulemap');
+    let content;
+    if (existsSync(sourcePath)) {
+      content = await readFile(sourcePath, 'utf8');
+    } else {
+      const saved = previousMatches ? previous.slices[lib.LibraryIdentifier] : null;
+      if (!saved || saved.headersPath !== lib.HeadersPath || typeof saved.content !== 'string' ||
+          saved.sha256 !== sha256(Buffer.from(saved.content, 'utf8'))) {
+        throw new Error(`Missing or invalid original ReactNativeHeaders modulemap source for ${lib.LibraryIdentifier}`);
+      }
+      content = saved.content;
+    }
+    if (!/\bmodule\s+[A-Za-z0-9_]+\s*\{/.test(content)) {
+      throw new Error(`Invalid original ReactNativeHeaders modulemap for ${lib.LibraryIdentifier}`);
+    }
+    slices[lib.LibraryIdentifier] = { headersPath: lib.HeadersPath, sha256: sha256(Buffer.from(content, 'utf8')), content };
+  }
+  const nextText = JSON.stringify({ schemaVersion: 1, artifactSHA256, slices }, null, 2) + '\n';
+  if (nextText !== previousText) await writeFile(recordPath, nextText, 'utf8');
+  return slices;
+}
+
 async function downloadFile(url, destPath) {
   const curlBin = process.platform === 'win32' ? 'curl.exe' : 'curl';
   try {
@@ -386,6 +430,9 @@ async function prepare() {
           await rm(targetDir, { recursive: true, force: true });
         } else {
           try {
+            if (item.name === 'ReactNativeHeaders') {
+              await preserveOriginalReactNativeHeaderModulemaps(targetDir, item.sha256);
+            }
             await cleanBundleMetadataAndSignatures(targetDir);
             await pruneNonIOSSlicesFromXCFramework(targetDir);
             const broken = await findBrokenSymlinks(targetDir);
@@ -438,6 +485,9 @@ async function prepare() {
       }
       await cleanBundleMetadataAndSignatures(targetDir);
       await pruneNonIOSSlicesFromXCFramework(targetDir);
+      if (item.name === 'ReactNativeHeaders') {
+        await preserveOriginalReactNativeHeaderModulemaps(targetDir, item.sha256);
+      }
       await writeFile(
         manifestPath,
         JSON.stringify({ name: item.name, version: item.version, sha256: item.sha256, stagedAt: new Date().toISOString() }, null, 2),
@@ -532,19 +582,19 @@ async function prepare() {
     async function stageModularFrameworks() {
       console.log('[HanlinExpo] Staging modular header frameworks in ModularFrameworks...');
       const modularFwsRoot = resolve(artifactsRoot, 'ModularFrameworks');
+      const slice = 'ios-arm64_x86_64-simulator';
+      const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
+      const originalSources = await preserveOriginalReactNativeHeaderModulemaps(
+        resolve(artifactsRoot, 'ReactNativeHeaders.xcframework'),
+        lock.artifacts.find((item) => item.name === 'ReactNativeHeaders').sha256
+      );
+      const originalSource = originalSources[slice];
+      if (!originalSource) throw new Error(`Missing original ReactNativeHeaders modulemap source for ${slice}`);
+      // Validate the original authority before replacing an existing consumer projection.
       await rm(modularFwsRoot, { recursive: true, force: true });
       await mkdir(modularFwsRoot, { recursive: true });
 
-      const slice = 'ios-arm64_x86_64-simulator';
-      const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
-      const mapPath = resolve(rnHeaders, 'module.modulemap');
-
-      if (!existsSync(mapPath)) {
-        console.warn('[HanlinExpo] Warning: ReactNativeHeaders module.modulemap not found');
-        return;
-      }
-
-      let content = await readFile(mapPath, 'utf8');
+      let content = originalSource.content;
       content = content.replace(
         /module ReactCommon \{[\s\S]*?\}/,
         `module ReactCommon {
