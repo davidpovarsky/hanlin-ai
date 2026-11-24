@@ -1,0 +1,13 @@
+{
+  "reviewer": "/root/entrypoints",
+  "status": "PASS_NO_CONCRETE_BLOCKER",
+  "baseCommit": "ce876c32a9dd0f3c324222f549c4642c13f8a700",
+  "workflowSHA256": "8db985018d69ed5879533028f8f6d15b4d40bd6a2c49abf866cc2930603ba838",
+  "findings": [
+    "Exact byte comparison confirms only four complete CLI NO lines were removed",
+    "Both inherited Config NO declarations remain",
+    "All other arguments, actions, conditions and settings are unchanged",
+    "No global YES setting was introduced"
+  ],
+  "reviewerExecution": "Read-only source and retained evidence review; no syntax/compile/native checks repeated."
+}

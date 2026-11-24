@@ -1,0 +1,7 @@
+{
+  "yaml": "PASS",
+  "exactFourArgumentRemoval": "PASS",
+  "changedBashBodies": 4,
+  "bashSyntaxPassed": 4,
+  "nativeExecution": "NOT_RUN"
+}
