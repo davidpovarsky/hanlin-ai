@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "utc": "2026-11-24T08:02:28.428851+00:00",
+  "argv": [
+    "/usr/local/bin/node",
+    "Scripts/Expo/node_modules/typescript/bin/tsc6",
+    "--project",
+    "Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+    "--pretty",
+    "false"
+  ],
+  "exitCode": 2,
+  "sourceSHA256": "be36b971142046229cb0a8fe3f2ac277a4b4546f5446d56eff63b213da4bc81f",
+  "compilerVersion": "6.0.2",
+  "strict": true,
+  "skipLibCheck": false,
+  "entryPointCorrection": "Use the installed original package bin tsc6, not tsc. The first attempt never entered TypeScript.",
+  "native": "NOT_RUN",
+  "compilerPackageVersion": "6.0.2",
+  "actualCompilerVersion": "6.0.3",
+  "compilerIdentityCorrection": "The initial 6.0.2 label was taken from package.json. Reading the actual compiler export confirms6.0.3 and identical compiler bytes in local and exact-export graphs; compiler-identities.json records the hashes."
+}

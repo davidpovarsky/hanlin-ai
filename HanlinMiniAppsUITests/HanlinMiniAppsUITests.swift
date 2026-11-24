@@ -515,6 +515,212 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         closeExpoApp()
     }
 
+    // These cases use the existing production archive/importer and actual public
+    // Hanlin manual adapters. Exact native callbacks and visible state changes are required.
+    func testStandaloneExpoManualInputLayoutAndDataAdapters() throws {
+        openManualAdapterProbe()
+
+        tapAdapterButton("Input adapters")
+        expectAdapterText("FOCUS_EVENTS:0")
+        tapAdapterButton("Focus manual editor")
+        let editor = app.textViews["manual-editor"].firstMatch
+        XCTAssertTrue(editor.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 10),
+                      "Focused must make its native editor receive keyboard focus")
+        editor.typeText("alpha")
+        expectAdapterText("EDITOR_VALUE:alpha")
+        let other = app.textFields["manual-other-field"].firstMatch
+        XCTAssertTrue(other.waitForExistence(timeout: 10))
+        other.tap()
+        expectAdapterText("FOCUS_VALUE:false")
+        expectAdapterText("FOCUS_EVENTS:1")
+        tapAdapterButton("Reset editor from React")
+        XCTAssertTrue(waitUntil(timeout: 10) { editor.value as? String == "Reset from React" },
+                      "TextEditor must apply the controlled value to the actual native text view")
+        capture(name: "Manual TextEditor and Focused native results")
+        tapAdapterButton("Adapter menu")
+
+        tapAdapterButton("Search adapter")
+        expectAdapterText("MANUAL_SEARCH_CONTENT")
+        tapAdapterButton("MANUAL_SEARCH_ACTIONS:0")
+        XCTAssertTrue(app.buttons["MANUAL_SEARCH_ACTIONS:1"].firstMatch.waitForExistence(timeout: 10))
+        let field = app.searchFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 10))
+        field.tap()
+        field.typeText("hanlin")
+        expectAdapterText("MANUAL_QUERY:hanlin")
+        expectAdapterText("MANUAL_SUBMITS:0")
+        let submit = app.keyboards.buttons.matching(
+            NSPredicate(format: "label == 'Search' OR label == 'search' OR label == 'Go'")).firstMatch
+        if submit.waitForExistence(timeout: 2) && submit.isHittable {
+            submit.tap()
+        } else {
+            field.typeText("\n")
+        }
+        expectAdapterText("MANUAL_SUBMITS:1")
+        expectAdapterText("MANUAL_SUBMITTED:hanlin")
+        capture(name: "Manual Searchable complete native submit")
+        tapAdapterButton("Adapter menu")
+
+        tapAdapterButton("Layout adapters")
+        let v1 = app.buttons["V1"].firstMatch
+        let v2 = app.buttons["V2"].firstMatch
+        let v3 = app.buttons["V3"].firstMatch
+        let h1 = app.buttons["H1"].firstMatch
+        let h2 = app.buttons["H2"].firstMatch
+        let h3 = app.buttons["H3"].firstMatch
+        for element in [v1, v2, v3, h1, h2, h3] {
+            XCTAssertTrue(element.waitForExistence(timeout: 10))
+        }
+        XCTAssertEqual(v1.frame.midY, v2.frame.midY, accuracy: 3, "VGrid must place the first two cells in one row")
+        XCTAssertGreaterThan(v3.frame.minY, v1.frame.minY + 20)
+        XCTAssertEqual(h1.frame.midX, h2.frame.midX, accuracy: 3, "HGrid must place the first two cells in one column")
+        XCTAssertGreaterThan(h3.frame.minX, h1.frame.minX + 30)
+        tapAdapterButton("V3")
+        expectAdapterText("LAYOUT_ACTION:V3")
+        tapAdapterButton("H3")
+        expectAdapterText("LAYOUT_ACTION:H3")
+        let compact = app.buttons["FIT_COMPACT"].firstMatch
+        let wide = app.buttons["FIT_WIDE"].firstMatch
+        XCTAssertTrue(compact.waitForExistence(timeout: 10))
+        XCTAssertFalse(wide.exists, "A 300-point candidate must not fit a 160-point proposal")
+        tapAdapterButton("FIT_COMPACT")
+        expectAdapterText("LAYOUT_ACTION:compact")
+        tapAdapterButton("Expand fit proposal")
+        XCTAssertTrue(wide.waitForExistence(timeout: 10))
+        XCTAssertFalse(compact.exists, "ViewThatFits must switch to its first fitting candidate")
+        tapAdapterButton("FIT_WIDE")
+        expectAdapterText("LAYOUT_ACTION:wide")
+        let inset = app.buttons["INSET_ACTIONS:0"].firstMatch
+        XCTAssertTrue(inset.waitForExistence(timeout: 10))
+        XCTAssertGreaterThan(inset.frame.midY, h3.frame.maxY, "Bottom inset slot must be below its content")
+        tapAdapterButton("INSET_ACTIONS:0")
+        XCTAssertTrue(app.buttons["INSET_ACTIONS:1"].firstMatch.waitForExistence(timeout: 10))
+        tapAdapterButton("Move inset to top")
+        XCTAssertTrue(waitUntil(timeout: 10) {
+            app.buttons["INSET_ACTIONS:1"].firstMatch.frame.maxY < v1.frame.minY
+        }, "Changing the SafeAreaInset edge must move the actual native slot above its content")
+        capture(name: "Manual grids adaptive fit and safe area slots")
+        tapAdapterButton("Adapter menu")
+
+        tapAdapterButton("Table adapter")
+        expectAdapterText("TABLE_SELECTION_EVENTS:0")
+        let kiwi = sdkOnlyText("Kiwi")
+        XCTAssertTrue(kiwi.waitForExistence(timeout: 10))
+        kiwi.tap()
+        expectAdapterText("TABLE_SELECTION:kiwi")
+        expectAdapterText("TABLE_SELECTION_EVENTS:1")
+        tapAdapterButton("Clear table selection")
+        expectAdapterText("TABLE_SELECTION:none")
+        kiwi.tap()
+        expectAdapterText("TABLE_SELECTION_EVENTS:2")
+        tapAdapterButton("Update table values")
+        expectAdapterText("Kiwi updated")
+        expectAdapterText("9")
+        capture(name: "Manual Table native selection and changed rows")
+        tapAdapterButton("Adapter menu")
+
+        tapAdapterButton("Image adapter")
+        expectAdapterText("IMAGE_EMPTY_SLOT")
+        expectAdapterText("IMAGE_PHASE:empty")
+        tapAdapterButton("Load exact PNG")
+        expectAdapterText("IMAGE_PHASE:success")
+        expectAdapterText("IMAGE_SUCCESS_EVENTS:1")
+        capture(name: "Manual AsyncImage decoded exact PNG")
+        tapAdapterButton("Load real missing image")
+        expectAdapterText("IMAGE_FAILURE_SLOT")
+        expectAdapterText("IMAGE_PHASE:failure")
+        expectAdapterText("IMAGE_FAILURE_EVENTS:1")
+        capture(name: "Manual AsyncImage real HTTP failure slot")
+        tapAdapterButton("Adapter menu")
+        tapAdapterButton("Close manual adapters")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoManualPresentationAdaptersAndDismissalEvents() throws {
+        openManualAdapterProbe()
+        for kind in ["Sheet", "FullScreenCover", "Popover"] {
+            tapAdapterButton(kind + " adapter")
+            expectAdapterText(kind + "_CHANGES:0")
+            expectAdapterText(kind + "_DISMISSALS:0")
+            tapAdapterButton("Open " + kind)
+            let content = sdkOnlyText(kind + " native content")
+            XCTAssertTrue(content.waitForExistence(timeout: 10), kind + " must render its actual presented slot")
+            capture(name: "Manual " + kind + " native presentation")
+            tapAdapterButton("Close " + kind + " from React")
+            XCTAssertTrue(waitUntil(timeout: 10) { !content.exists })
+            expectAdapterText(kind + "_DISMISSALS:1")
+            expectAdapterText(kind + "_CHANGES:0")
+
+            tapAdapterButton("Open " + kind)
+            XCTAssertTrue(content.waitForExistence(timeout: 10))
+            if kind == "Sheet" {
+                content.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+                    .press(forDuration: 0.1, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.96)))
+            } else if kind == "Popover" {
+                app.coordinate(withNormalizedOffset: CGVector(dx: 0.02, dy: 0.90)).tap()
+            } else {
+                tapAdapterButton("Close " + kind + " from React")
+            }
+            XCTAssertTrue(waitUntil(timeout: 10) { !content.exists }, kind + " must really dismiss")
+            expectAdapterText(kind + "_DISMISSALS:2")
+            expectAdapterText(kind + (kind == "FullScreenCover" ? "_CHANGES:0" : "_CHANGES:1"))
+            capture(name: "Manual " + kind + " exact dismissal callbacks")
+            tapAdapterButton("Adapter menu")
+        }
+
+        tapAdapterButton("Inspector adapter")
+        expectAdapterText("INSPECTOR_CHANGES:0")
+        tapAdapterButton("Open Inspector")
+        let inspector = sdkOnlyText("Inspector native content")
+        XCTAssertTrue(inspector.waitForExistence(timeout: 10))
+        tapAdapterButton("Inspector native action")
+        capture(name: "Manual Inspector actual native slot")
+        tapAdapterButton("Close Inspector from React")
+        XCTAssertTrue(waitUntil(timeout: 10) { !inspector.exists })
+        expectAdapterText("INSPECTOR_ACTIONS:1")
+        expectAdapterText("INSPECTOR_CHANGES:0")
+        tapAdapterButton("Open Inspector")
+        XCTAssertTrue(inspector.waitForExistence(timeout: 10))
+        tapAdapterButton("Close Inspector from React")
+        XCTAssertTrue(waitUntil(timeout: 10) { !inspector.exists })
+        expectAdapterText("INSPECTOR_CHANGES:0")
+        tapAdapterButton("Adapter menu")
+        tapAdapterButton("Close manual adapters")
+        closeExpoApp()
+    }
+
+    private func openManualAdapterProbe() {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+        launchInstalledPackage(named: probeAPackageName)
+        let open = app.buttons["Open Manual Adapter Probe"].firstMatch
+        if !open.waitForExistence(timeout: 5) || !open.isHittable {
+            let sidebar = app.buttons.matching(NSPredicate(format:
+                "label == 'Show Sidebar' OR identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar'")).firstMatch
+            if sidebar.exists && sidebar.isHittable {
+                sidebar.tap()
+            } else {
+                app.coordinate(withNormalizedOffset: CGVector(dx: 0.01, dy: 0.5))
+                    .press(forDuration: 0.1, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.45, dy: 0.5)))
+            }
+        }
+        tapAdapterButton("Open Manual Adapter Probe")
+        XCTAssertTrue(app.buttons["Input adapters"].firstMatch.waitForExistence(timeout: 10))
+    }
+
+    private func expectAdapterText(_ value: String, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertTrue(sdkOnlyText(value).waitForExistence(timeout: 15),
+                      "Missing exact native adapter result: " + value, file: file, line: line)
+    }
+
+    private func tapAdapterButton(_ label: String, file: StaticString = #filePath, line: UInt = #line) {
+        let button = app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
+        XCTAssertTrue(button.waitForExistence(timeout: 15), "Missing adapter button: " + label, file: file, line: line)
+        XCTAssertTrue(button.isHittable, "Native adapter button is not hittable: " + label, file: file, line: line)
+        button.tap()
+    }
+
     // These two independent source projects were authored by a fresh agent using
     // only the exported original SDK and public documentation. The runner builds
     // their unchanged sources with this app's actual SDK before the real importer

@@ -1,0 +1,13 @@
+{
+  "scope": "Isolated checkout only; resolves the same two declared file: workspace packages without changing installed dependencies or production Metro configuration.",
+  "links": [
+    {
+      "link": "Fixtures/ExpoSwiftUIProbe/node_modules/@hanlin/expo-ui",
+      "target": "Packages/HanlinExpoUI"
+    },
+    {
+      "link": "Fixtures/ExpoSwiftUIProbe/node_modules/@hanlin/expo-native-api",
+      "target": "Packages/HanlinExpoNativeAPIJS"
+    }
+  ]
+}

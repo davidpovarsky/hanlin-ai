@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/local/bin/swiftc",
+    "-frontend",
+    "-parse",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift"
+  ],
+  "exitCode": 0,
+  "swiftVersion": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+  "scope": "PARSE_ONLY; no Apple-framework typecheck or native execution",
+  "inputSHA256": {
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "700fde24b841e544b21ad20edd0bc2edc485465284a81271eaf4cc6630b476cd",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "6031d8ea46c2deafa3eb18bbdc28ecbf9d9848d858d9b6a47e26e72beb256aee"
+  }
+}

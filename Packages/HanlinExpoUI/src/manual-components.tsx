@@ -147,6 +147,7 @@ export interface PresentationProps extends CommonViewModifierProps {
   children: React.ReactNode;
   presented: React.ReactNode;
   onPresentedChange?: (value: boolean) => void;
+  /** Once per transition to dismissed, including a controlled close. */
   onDismiss?: () => void;
 }
 

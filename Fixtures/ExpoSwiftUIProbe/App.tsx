@@ -23,6 +23,7 @@ import {
   hostServices,
 } from '@hanlin/expo-ui';
 import { renderWidget } from './widget';
+import { ManualAdapterProbe } from './ManualAdapterProbe';
 import {
   navigationTitle,
   padding,
@@ -76,6 +77,7 @@ export default function App({ variant = 'A' }: AppProps) {
   const [editorText, setEditorText] = useState<string>('SwiftUI bridge text');
   const [counter, setCounter] = useState<number>(7);
   const [showSearchProbe, setShowSearchProbe] = useState<boolean>(false);
+  const [showManualAdapters, setShowManualAdapters] = useState(false);
   const [searchProbeText, setSearchProbeText] = useState<string>('');
   const [searchProbeSubmits, setSearchProbeSubmits] = useState<number>(0);
   const [searchProbeActions, setSearchProbeActions] = useState<number>(0);
@@ -130,6 +132,8 @@ export default function App({ variant = 'A' }: AppProps) {
 
   const currentBook = TORAH_BOOKS.find((b) => b.id === selectedBookId) ?? TORAH_BOOKS[0];
 
+  if (showManualAdapters) return <ManualAdapterProbe close={() => setShowManualAdapters(false)} />;
+
   if (showSearchProbe) {
     return (
       <View style={styles.container}>
@@ -177,6 +181,7 @@ export default function App({ variant = 'A' }: AppProps) {
               <List modifiers={[listStyle('sidebar')]}>
                 <Section title="ספרי תורה">
                   <Button label="Open Searchable Probe" onPress={() => setShowSearchProbe(true)} />
+                  <Button label="Open Manual Adapter Probe" onPress={() => setShowManualAdapters(true)} />
                   {TORAH_BOOKS.map((book) => (
                     <Button
                       key={book.id}

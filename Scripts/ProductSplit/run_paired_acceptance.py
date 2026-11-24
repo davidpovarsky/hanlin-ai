@@ -11,6 +11,9 @@ import threading
 import time
 import uuid
 import zipfile
+from http.client import HTTPConnection
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import urlsplit
 
 from simulator_entitlements import read_simulator_entitlements
 
@@ -297,6 +300,63 @@ def verify_native_result(result, prefix, selectors, expected, code):
     return summary
 
 
+def start_native_adapter_assets(state):
+    """Own a real loopback image transport; never synthesize an adapter result."""
+    image_path = ROOT / "Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png"
+    image = image_path.read_bytes()
+    if not image.startswith(b"\x89PNG\r\n\x1a\n"):
+        raise RuntimeError("The native adapter PNG fixture is missing or malformed")
+    requests = []
+    origin = "http://localhost:49173"
+
+    class AssetHandler(BaseHTTPRequestHandler):
+        def setup(self):
+            super().setup()
+            self.connection.settimeout(5)
+
+        def do_GET(self):
+            resource = urlsplit(self.path).path
+            status, content_type, body = {
+                "/health": (200, "text/plain", b"ready"),
+                "/pixel.png": (200, "image/png", image),
+            }.get(resource, (404, "text/plain", b"Missing native adapter fixture"))
+            self.send_response(status)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+            requests.append({"path": resource, "status": status, "bytes": len(body),
+                "sha256": hashlib.sha256(body).hexdigest(), "at": time.time()})
+
+        def log_message(self, format, *args):
+            pass
+
+    server = HTTPServer(("127.0.0.1", 49173), AssetHandler)
+    thread = threading.Thread(target=lambda: server.serve_forever(poll_interval=0.1), daemon=True)
+    thread.start()
+    try:
+        connection = HTTPConnection("127.0.0.1", 49173, timeout=5)
+        try:
+            connection.request("GET", "/health")
+            response = connection.getresponse()
+            if response.status != 200 or response.read() != b"ready":
+                raise RuntimeError("Owned native adapter HTTP endpoint did not become ready")
+        finally:
+            connection.close()
+    except Exception:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=5)
+        raise
+    state["native_adapter_assets"] = {"origin": origin,
+        "source": str(image_path.relative_to(ROOT)), "bytes": len(image),
+        "sha256": hashlib.sha256(image).hexdigest(),
+        "scope": "Exact PNG and real HTTP404 only; no mocked renderer, adapter or event.",
+        "requests": requests, "native_request_proof": "NOT_RUN"}
+    return server, thread
+
+
 def main():
     EVIDENCE.mkdir(parents=True, exist_ok=False)
     state = {"status": "INFRA_ERROR", "ui": "NOT_RUN", "build": "NOT_RUN",
@@ -305,6 +365,7 @@ def main():
         "model_boundary": "Existing opt-in simulator HTTP acceptance provider; all Host, permission, OS transitions, storage and result handling are real.",
         "started_at": time.time()}
     simulator = None
+    adapter_assets = None
     try:
         if TEST_SCOPE not in TEST_PLANS:
             raise RuntimeError("Unknown original-product acceptance scope")
@@ -313,7 +374,7 @@ def main():
         state["selected_tests"] = selectors
         if TEST_SCOPE == "miniapp_authoring":
             state["scope"] = "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products"
-            state["model_boundary"] = "Only the HTTP model response sequence is deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts and UI are original production code."
+            state["model_boundary"] = "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code."
         if TEST_SCOPE == "product_and_share":
             state["scope"] += "; original share ingress to Composer and SDK"
             state["os_share_sheet"] = "NOT_RUN; input uses original store APIs and NSItemProvider in the native host suite"
@@ -483,6 +544,8 @@ def main():
             runtime_selectors = [
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
@@ -496,13 +559,20 @@ def main():
                 "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
                 "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
                 "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal"]
+            adapter_assets = start_native_adapter_assets(state)
+            state["original_runtime_selectors"] = runtime_selectors
             runtime_result = EVIDENCE / "OriginalRuntimes.xcresult"
             argv = base + ["-scheme", "HanlinMiniApps", "test-without-building",
                 "-resultBundlePath", str(runtime_result)]
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
             code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
             state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
-                runtime_selectors, 15, code)
+                runtime_selectors, 17, code)
+            observed_images = {(request["path"], request["status"])
+                for request in state["native_adapter_assets"]["requests"]}
+            if not {("/pixel.png", 200), ("/missing.png", 404)}.issubset(observed_images):
+                raise RuntimeError("Native adapter UI passed without the required real image HTTP requests")
+            state["native_adapter_assets"]["native_request_proof"] = "EXECUTED_PASS_RESOURCE_TRANSPORT"
             _, raw = command(modal_fixture["verify_command"], "external-modal-result.json")
             state["external_modal_result"] = json.loads(raw)
         if TEST_SCOPE in {"cross_product", "product_and_share"}:
@@ -557,6 +627,11 @@ def main():
                 except Exception as capture:
                     state["diagnostic_errors"].append(str(capture))
     finally:
+        if adapter_assets:
+            server, thread = adapter_assets
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
         if TEST_SCOPE == "miniapp_authoring":

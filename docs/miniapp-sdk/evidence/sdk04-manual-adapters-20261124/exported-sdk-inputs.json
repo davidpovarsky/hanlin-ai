@@ -1,0 +1,27 @@
+{
+  "project": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters-sdk-project",
+  "sourceCopiesSHA256": {
+    "App.tsx": "3570bea58a9584e0b98356d616444f88c38e7a5cda8e47d715a0eacf78d9cfb1",
+    "ManualAdapterProbe.tsx": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+    "variant-a.ts": "98a563ae71b1621c65dab5f494b055ec9bf8a401eef1ecd3771e2b1059e5eda6",
+    "widget.tsx": "ca4d3aa1ec23bb046618fd33a15c9e478e4b3ae4fd79210f686619c2f20ceaa5",
+    "package.json": "7234c13c597bc7c71862cc1562ba3b4c68cea4528e1c8fa20bd512eb7d2510e7",
+    "script.json": "2f9ee6fe589d89f7312e0c3f41c7652f879e2f2944b0b177e8449505a4875187",
+    "native-adapter-assets/pixel.png": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45"
+  },
+  "sdk": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+  "sdkManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+  "authoringDescriptor": {
+    "schemaVersion": 1,
+    "engine": "expo",
+    "entry": "variant-a.ts",
+    "tsconfig": "tsconfig.json"
+  },
+  "tsconfig": {
+    "include": [
+      "*.ts",
+      "*.tsx"
+    ]
+  },
+  "boundary": "New repository-authored adapter fixture validation against the unchanged exported SDK; not the earlier independent SDK-only authorship experiment."
+}
