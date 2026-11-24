@@ -1,0 +1,21 @@
+{
+  "capturedAt": "2026-11-24T19:06:06.208281+00:00",
+  "sourceHEAD": "312472e91c05a7d32bbef4e936c001d713409370",
+  "files": {
+    "failure.log": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt3/split-native-preparation.log",
+      "bytes": 1815,
+      "sha256": "45c293b1ef521d92eb66257c20f9019f3b68883848da93c3b12b685a73c3aefe"
+    },
+    "before-package.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "bytes": 147,
+      "sha256": "ebe6634d2e019c9da759ac280c1269d721e2105681fdbc8a1796f464d0b9ee9e"
+    },
+    "attempt3-state.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "bytes": 9176,
+      "sha256": "44114ee28ccd1035c35facec287d5e1049804d6483dd4dbf2d23439945866003"
+    }
+  }
+}
