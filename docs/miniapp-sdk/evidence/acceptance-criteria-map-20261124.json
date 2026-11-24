@@ -18,15 +18,20 @@
     "runID": 45343362337,
     "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45343362337",
     "sourceCommit": "4ea670e120a3217423bc73db68dab514c78079de",
-    "status": "IN_PROGRESS",
-    "statusAuthority": "Root-owned45-second watcher observed native preparation and exact export passed; paired actual-product step18 active since07:09:04 UTC. No selected test result inferred.",
+    "status": "COMPLETED",
+    "statusAuthority": "Authenticated run9 artifact and command journal: xcodebuild exit65 after1730.7416s; Clock Sendable compiler error; no app cases started.",
     "selectedCases": 38,
     "aiCases": 25,
     "miniAppsCases": 13,
-    "result": null,
-    "nextCandidateCases": 40,
-    "nextCandidateBoundary": "Two SDK-only native cases plus original-SDK public documentation check integrated at cbb662d3; next40-case native gate not dispatched while current38-case gate remains active.",
-    "lastObservationRecordedAtUTC": "2026-11-24T07:37:02.801872+00:00"
+    "result": "BUILD_FAILED",
+    "nextCandidateCases": 42,
+    "nextCandidateBoundary": "Two SDK-only UI cases and two manual-adapter UI cases integrated; next42=25AI+17MiniApps. Original shipping SDK/doc identity check included. No app gate currently running.",
+    "lastObservationRecordedAtUTC": "2026-11-24T08:17:20.241463+00:00",
+    "executedCases": 0,
+    "evidence": {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124.json",
+      "sha256": "9a61f28d66abd52e4289c1dcaef6ad92a2926e43b7db9f58ec2c6d7ca2e4534d"
+    }
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -682,6 +687,69 @@
       "compilerPolicies": "Original Expo strict declaration checks, original NativeScript strict source/skipLibCheck consumer policy, original ScriptWidget declarations; no added suppressions or invented API types.",
       "newShippingSDKDocs": "PENDING_NEXT_CI",
       "nativeLaunch": "NOT_RUN"
+    },
+    "integrated_source_reconciliation": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/integrated-source-reconciliation-20261124/receipt.json",
+        "sha256": "d9ed0d45e4ac70ec74fbecd32b550551fb0a39ed984de2ee3b91da96f6871762"
+      },
+      "result": "SOURCE_RECONCILIATION_PASS",
+      "scope": "75current source inputs/173local exports/80source reachability cells; no E2E inferred.",
+      "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44"
+    },
+    "nativeapi_version_authority": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/sdk04-nativeapi-version-contract-20261124/receipt.json",
+        "sha256": "1d5a58bc353ea20c7240bbc897d2ea14ca6bbb2e663865b7dec2e7b33639b21b"
+      },
+      "result": "EXECUTED_PASS_PORTABLE_VERSION_CONTRACT",
+      "scope": "Actual Worklets facade drift red1 to affectedgreen6; shared original graph/version authority; no native pass.",
+      "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44"
+    },
+    "actual_store_lifecycle_portable": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/rollback-metadata-20261124/receipt.json",
+        "sha256": "4b0f3bf6541f557dfbb90e664064ea777bab37bfdf19b45a7ab4562f687010d9"
+      },
+      "result": "PORTABLE_PROJECTED_SOURCE_PASS",
+      "scope": "Real store/Core/contracts and original AppleSwiftCrypto; existing lifecycle1 red4issues then green with rollback/cold restore/redo/reinstall/backfill/backup recovery. Apple execution pending.",
+      "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44"
+    },
+    "active_action_capacity": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/action-payload-capacity-20261124/receipt.json",
+        "sha256": "e71a19bbd6a08dd64b2ceae78ce9ede3d1b69b812139d81d40294931fad504c6"
+      },
+      "result": "PORTABLE_PASS_NATIVE_PENDING",
+      "scope": "Four actual portable Core/Foundation cases after2real failures; native Darwin/AppIntent existing selected method pending.",
+      "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44"
+    },
+    "sdk_documentation_staging": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/sdk-documentation-staging-20261124/receipt.json",
+        "sha256": "749179da2753a6135e99312efa23913fd6758f432cc1659592e1b23bc34b79a3"
+      },
+      "result": "SCOPED_COPY_REGRESSION_PASS",
+      "scope": "Actual docs copy now uses existing fingerprint name policy; source bytes preserved; one real red togreen. Fresh complete shipping SDK remains nextCI.",
+      "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44"
+    },
+    "manual13_ui_candidate": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/sdk04-manual-adapters-20261124/receipt.json",
+        "sha256": "42f219e86de9746a33084bea341b5e0d42793eeca2600235186eb5125360208f"
+      },
+      "result": "EXPORTED_SDK_VALIDATE_BUILD_PASS_NATIVE_PENDING",
+      "scope": "Two actual UI methods cover13manual adapters in next42candidate; original compiler6.0.3 strict/no skip zeroerrors; retainedsource byte equality. Native execution remains NOT_RUN.",
+      "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44"
+    },
+    "surface_test_compilation_fix": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/surface-routing-test-compilation-20261124/receipt.json",
+        "sha256": "dc394cd61c478d9ad2e2ded0b1034ff5c7bf7103891959c0960474f5244da9c6"
+      },
+      "result": "SOURCE_SYNTAX_PASS_APPLE_RETEST_PENDING",
+      "scope": "Exact two test-source edits retain assertions/selectors; both full failed job logs retained.",
+      "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44"
     }
   },
   "criteria": [
@@ -696,7 +764,9 @@
         "version_and_operation_audit_6",
         "source_reconciliation",
         "archive_policy_12_after_module_fix",
-        "sdk02_sdk06_portable_gaps"
+        "sdk02_sdk06_portable_gaps",
+        "integrated_source_reconciliation",
+        "surface_test_compilation_fix"
       ],
       "establishedScope": [
         "Ambiguous manifests, collisions, escaping paths and archive integrity policy",
@@ -705,7 +775,7 @@
         "Actual missing-manifest ZIP rejected with production ambiguousManifest/error; one new portable case passed."
       ],
       "remainingRequirements": [
-        "Eight actual Analyzer method results in run45348880385 must establish unsupported exposure, wrong entry and missing/incompatible plugin contracts.",
+        "Eight actual Analyzer method results in the next scoped eight-case Mac run must establish unsupported exposure, wrong entry and missing/incompatible plugin contracts.",
         "Apple import integration remains subject to actual app gate results."
       ],
       "existingTestsWithoutMatchedExecutionReceipt": {
@@ -721,7 +791,7 @@
           "unavailableModernNativePluginsFailBeforeImport"
         ]
       },
-      "closure": "CONDITIONAL; 38 selected passes alone do not establish all listed negative contract cases."
+      "closure": "CONDITIONAL; 42 selected passes alone do not establish all listed negative contract cases."
     },
     {
       "task": "SDK-03",
@@ -737,7 +807,8 @@
         "mac_host_authoring_13",
         "prepared_version_4",
         "version_and_operation_audit_6",
-        "sdk_only_current"
+        "sdk_only_current",
+        "integrated_source_reconciliation"
       ],
       "establishedScope": [
         "Historical original Core/UIKit typechecking and SwiftUI JS closure",
@@ -747,7 +818,7 @@
         "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
       ],
       "remainingRequirements": [
-        "Actual selected Core/direct-runtime application behavior from gate38, with case results.",
+        "Actual selected Core/direct-runtime application behavior from the next42-case app gate, with case results.",
         "Do not claim complete original declaration-body checking: original NativeScript consumer policy is strict source with skipLibCheck=true."
       ],
       "closure": "CONDITIONAL; optional full Apple SDK generator work is explicitly deferred, not an extra gate."
@@ -763,17 +834,21 @@
         "historical_expo_native_api",
         "historical_expo_ownership",
         "source_reconciliation",
-        "sdk_only_current"
+        "sdk_only_current",
+        "integrated_source_reconciliation",
+        "nativeapi_version_authority",
+        "manual13_ui_candidate"
       ],
       "establishedScope": [
         "Current-source strict Expo UI and Widgets valid/negative consumer checks on Mac",
         "Real original Metro build, current graph artifact and source/resource identity",
         "Bounded historical NativeAPI and same-source ownership component evidence",
-        "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
+        "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current.",
+        "Exact current NativeAPI version authority reconciled; two manual-adapter UI methods integrated with strict original exported-SDK build proof, native execution pending."
       ],
       "remainingRequirements": [
         "All-public-exported-adapter native coverage is NOT_ESTABLISHED by the inspected receipts.",
-        "Current selected UIKit/Worklets/Widgets application results remain subject to gate38.",
+        "Current selected UIKit/Worklets/Widgets application results remain subject to the next42-case app gate.",
         "Historical native API declaration receipt has changed inputs and cannot become a whole current-source PASS."
       ],
       "closure": "CONDITIONAL; no all-adapter false PASS from a probe, declarations, bundle or selected suite."
@@ -792,7 +867,9 @@
         "original_expo_graph_and_metro",
         "archive_policy_12_after_module_fix",
         "sdk_only_current",
-        "sdk02_sdk06_portable_gaps"
+        "sdk02_sdk06_portable_gaps",
+        "integrated_source_reconciliation",
+        "surface_test_compilation_fix"
       ],
       "establishedScope": [
         "TS2353 and TS7006 intentional consumer failures already have real recorded proof",
@@ -804,7 +881,7 @@
         "Original ScriptWidget valid/missing-storage permission-contract cases passed against exported original validator and compiler; source locations preserved."
       ],
       "remainingRequirements": [
-        "Actual wrong-entry and full importer version/plugin Analyzer results in isolated eight-case Mac run45348880385.",
+        "Actual wrong-entry and full importer version/plugin Analyzer results in isolated eight-case Mac the next scoped eight-case Mac run.",
         "Native diagnostic presentation/repair/installation receipt remain subject to actual paired app gate. No generic OS permission behavior is inferred from manifest validation."
       ],
       "closure": "CONDITIONAL; the core13 authoring component cases are already proven and need not be rerun merely for this mapping."
@@ -825,7 +902,11 @@
         "historical_expo_ownership",
         "source_reconciliation",
         "archive_policy_12_after_module_fix",
-        "sdk_only_current"
+        "sdk_only_current",
+        "integrated_source_reconciliation",
+        "actual_store_lifecycle_portable",
+        "active_action_capacity",
+        "manual13_ui_candidate"
       ],
       "establishedScope": [
         "Golden and negative compiler/archive/CLI component evidence",
@@ -834,10 +915,10 @@
         "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
       ],
       "remainingRequirements": [
-        "Actual gate38 rows/screenshots/installation receipt for its selected application scope.",
-        "No matched executed receipt was found in the requested evidence set for the complete update/reinstall/rollback/uninstall cycle or permission revocation.",
+        "Actual the next42-case app gate rows/screenshots/installation receipt for its selected application scope.",
         "Existing applicable receipts from another established owner may be linked without new testing after exact source/toolchain/input verification.",
-        "Selected38-case application proof is not the complete80-cell extension/runtime E2E proof."
+        "Selected42-case application proof is not the complete80-cell extension/runtime E2E proof.",
+        "Actual Apple lifecycle method must run after test-compilation repair; portable projected-source lifecycle proof exists. OS permission revocation remains outside those receipts."
       ],
       "closure": "CONDITIONAL; reconcile existing required evidence rather than interpreting source presence, count38, or cancellation as product acceptance."
     }
@@ -861,7 +942,11 @@
       "cliPackagingBoundary": "The public CLI wrapper imports its existing Host miniapp-authoring.mjs by relative layout. MiniAppSDK alone does not contain that wrapper; preserve its executable dependency layout without supplying internal authoring recipes.",
       "kitPreparationEvidence": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/sdk-only-kit-preparation.json",
       "proof": "docs/miniapp-sdk/evidence/sdk-only-authoring-20261124/sdk-only-results.json",
-      "snippetEvidence": "docs/miniapp-sdk/evidence/authoring-guide-snippets-followup-20261124/receipt.json"
+      "snippetEvidence": "docs/miniapp-sdk/evidence/authoring-guide-snippets-followup-20261124/receipt.json",
+      "stagingFixEvidence": {
+        "path": "docs/miniapp-sdk/evidence/sdk-documentation-staging-20261124/receipt.json",
+        "sha256": "749179da2753a6135e99312efa23913fd6758f432cc1659592e1b23bc34b79a3"
+      }
     },
     {
       "task": "SDK-08",
@@ -873,7 +958,7 @@
         "raw CI+device evidence",
         "gate CLOSED only if all mandatory executable evidence exists."
       ],
-      "status": "OPEN; two kit-only packages built, actual importer/native interaction cases prepared but NOT_RUN; physical-device condition BLOCKED_EXTERNAL."
+      "status": "OPEN; two SDK-only and two manual UI cases integrated; next42-case app proof pending; physical-device condition BLOCKED_EXTERNAL."
     },
     {
       "task": "MINIAPP-SDK parent",
@@ -899,8 +984,8 @@
     }
   ],
   "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T07:37:02.801872+00:00",
-  "currentIntegrationBase": "cbb662d3cd669901de2e18f2c7d94c0487aecc20",
+  "updatedAtUTC": "2026-11-24T08:17:20.241463+00:00",
+  "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -934,13 +1019,52 @@
     }
   ],
   "modernContractGate": {
-    "runID": 45348880385,
-    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45348880385",
-    "sourceCommit": "0e48d2f3d7df2b2039b5a3e9f83d7c9536450923",
-    "status": "IN_PROGRESS",
+    "runID": 45352968920,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45352968920",
+    "sourceCommit": "09dbbe6480171be89816db72fb0ec0fa56b7f66f",
+    "status": "COMPLETED",
+    "result": "BUILD_FAILED",
     "selectedCases": 8,
-    "result": null,
-    "dispatchReceipt": "docs/miniapp-sdk/evidence/miniapp-contract-gate-dispatch-20261124.json",
-    "scope": "Mac SwiftPM actual Analyzer cases; separate concurrency from paired app gate; not iOS UI/device proof."
+    "executedCases": 0,
+    "scope": "miniapp_contracts",
+    "exactCause": "Both direct errors originate in HanlinMiniAppSurfaceRoutingTests: missing HanlinScriptUI import and missing inner try in #require(store.claim(id)). RenderingTests was compiler batch attribution only.",
+    "fixIntegratedCommit": "fa2adeba",
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/surface-routing-test-compilation-20261124/receipt.json",
+      "sha256": "dc394cd61c478d9ad2e2ded0b1034ff5c7bf7103891959c0960474f5244da9c6"
+    },
+    "next": "Reviewed two-edit test fix integrated; re-execution pending."
+  },
+  "currentScopeNote": "Original-library SDK completion and selected native acceptance; broad canonical Host-runtime matrix is separately bounded. Historical evidence retains its own exact input applicability.",
+  "modernContractGateHistory": [
+    {
+      "runID": 45348880385,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45348880385",
+      "sourceCommit": "0e48d2f3d7df2b2039b5a3e9f83d7c9536450923",
+      "status": "COMPLETED",
+      "selectedCases": 8,
+      "result": "BUILD_FAILED",
+      "dispatchReceipt": "docs/miniapp-sdk/evidence/miniapp-contract-gate-dispatch-20261124.json",
+      "scope": "Mac SwiftPM actual Analyzer cases; separate concurrency from paired app gate; not iOS UI/device proof.",
+      "executedCases": 0,
+      "correction": "Historical run failed before selected tests; raw compile evidence retained in original-clock-sendable/original-tag-list receipts."
+    }
+  ],
+  "lifecycleGate": {
+    "runID": 45352972636,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45352972636",
+    "sourceCommit": "09dbbe6480171be89816db72fb0ec0fa56b7f66f",
+    "status": "COMPLETED",
+    "result": "BUILD_FAILED",
+    "selectedCases": 1,
+    "executedCases": 0,
+    "scope": "miniapp_lifecycle",
+    "exactCause": "Both direct errors originate in HanlinMiniAppSurfaceRoutingTests: missing HanlinScriptUI import and missing inner try in #require(store.claim(id)). RenderingTests was compiler batch attribution only.",
+    "fixIntegratedCommit": "fa2adeba",
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/surface-routing-test-compilation-20261124/receipt.json",
+      "sha256": "dc394cd61c478d9ad2e2ded0b1034ff5c7bf7103891959c0960474f5244da9c6"
+    },
+    "next": "Reviewed two-edit test fix integrated; re-execution pending."
   }
 }
