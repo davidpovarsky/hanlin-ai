@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "observedAtUTC": "2026-11-24T23:38:35.094772+00:00",
+  "status": "SOURCE_CORRECTION_PREPARED_NATIVE_EXECUTION_PENDING",
+  "sourceBase": "635bc66274436d21236500cda4c2e873b1abe1bd",
+  "historicalExecutionSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "scope": "Integrate the complete original ExpoAsset native module through the existing original Expo/CocoaPods producer, package graph, runtime module provider and native artifact catalog.",
+  "failureEvidence": {
+    "retainedRootRecord": "docs/miniapp-sdk/evidence/primary-runtime-diagnostics-attempt7-20261124",
+    "sharedExtractPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/root-runtime-triage-attempt7/runtime-diagnostic-extract.json",
+    "bytes": 11519,
+    "sha256": "8c525f914f36a18485fd76631ce7e6e6ae08c8c47ccf2b86bada4d39ef10f201",
+    "originalTargetStdout": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/OriginalRuntimes.xcresult/Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-31337823-F212-4CA8-A8FD-9012B4EBF8EE-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-27FB731C-2339-4EF5-964F-0B4600D7CE25/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+      "bytes": 280150173,
+      "sha256": "debaedd9710f7a0c1d706b9bcaefa95587080503552e4ecb3f7455142c483edc"
+    },
+    "exactError": "[runtime not ready]: Error: Cannot find native module 'ExpoAsset'",
+    "pids": [
+      21362,
+      21662,
+      22632
+    ],
+    "boundary": "Bounded extract hash and exact nine ExpoAsset failure lines verified here; full retained stdout identity/extraction originate from root. No full log duplicated or rerun."
+  },
+  "originalPublication": {
+    "package": "expo-asset",
+    "version": "58.0.21",
+    "expoDependencyRange": "~58.0.21",
+    "expoVersion": "58.0.26",
+    "tarball": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+    "tarballBytes": 88332,
+    "tarballSHA256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+    "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA==",
+    "tarballIdentityAuthority": "Native owner's actual existing npm cache observation, matches original npm lock SRI; raw observation retained. No new package download.",
+    "nativeClass": "AssetModule",
+    "nativeName": "ExpoAsset",
+    "tupleNameOverride": null,
+    "completeNativeImplementation": "ios/AssetModule.swift",
+    "implementationSHA256": "a8a030696a86ee885d151e0baff359066bf046a6e29f483b1bc44c0e815a02c3",
+    "publishedNativeForm": "Original Swift source and CocoaPods podspec; actual inventory has no Apple XCFramework prebuild.",
+    "podDependencies": [
+      "ExpoModulesCore"
+    ],
+    "existingOriginalSchemeObserved": "ExpoAsset",
+    "originalPodLockSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+    "filesystemDependency": "Actual ExpoModulesCore AppContext.fileSystem initializes its own FileSystemManager. No separate ExpoFileSystem module is required by this AssetModule path."
+  },
+  "sdk7Authority": {
+    "archiveSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+    "manifestSHA256": "6a5ce216ab722741314a893f8bb226773da27c9d6151f6cbc28f46901b8fcb94",
+    "reusedFullArchiveProof": "docs/miniapp-sdk/evidence/primary-sdk-attempt7-20261124/receipt.json",
+    "retainedSpecificOriginalMembers": "sdk7-original-bootstrap-members.json"
+  },
+  "sourceChanges": [
+    {
+      "path": "Packages/HanlinExpoRuntime/Package.swift",
+      "mode": "100644",
+      "beforeSHA256": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+      "afterSHA256": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37",
+      "bytes": 8705
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+      "mode": "100644",
+      "beforeSHA256": "27505a611dbe1b61ab100ca53c393ca9a72aedb76bbc084015c35423f25804c7",
+      "afterSHA256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
+      "bytes": 14804
+    },
+    {
+      "path": "Scripts/Expo/build-original-expo-source.mjs",
+      "mode": "100644",
+      "beforeSHA256": "5a446cd0e1701a91f4eed5d5a3c5d5ea41be05d15cec668ca36edca3a38b2488",
+      "afterSHA256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+      "bytes": 9828
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "mode": "100644",
+      "beforeSHA256": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f",
+      "afterSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "bytes": 5375
+    },
+    {
+      "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+      "mode": "100644",
+      "beforeSHA256": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+      "afterSHA256": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+      "bytes": 66677
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/upstream-resolution.test.mjs",
+      "mode": "100644",
+      "beforeSHA256": "4ae2f944b0bd1cbeebc78599385c664fdb194eedae42d4cd376b44b5677b1b90",
+      "afterSHA256": "42001deb8dd18953b96f6a22d63fcc5ad9b27ab400ce701a3cf183922cbc35f6",
+      "bytes": 9807
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "mode": "100644",
+      "beforeSHA256": "b2222aad85f1a6c5ba38a6d52282674bb37627e05ab484b637614dfc7b9892f8",
+      "afterSHA256": "f6c92fb61dd5d06f806a9f2c89c931bb57c390201133f941b5c7e7498b2a777d",
+      "bytes": 29012
+    },
+    {
+      "path": "Scripts/SDK/native_artifacts.py",
+      "mode": "100755",
+      "beforeSHA256": "9d093f9207d8f2f3cdfea8c35420c725661c78eda2b97849abb3482240bd7fcc",
+      "afterSHA256": "6c11725c13a7ba9a47ac1c6e2e6056606ef9f5da4899b265daaf62e326f2574b",
+      "bytes": 40936
+    }
+  ],
+  "nativePreparationInputsChanged": [
+    "Scripts/Expo/dependency-lock.json",
+    "Scripts/Expo/prepare-ios-dependencies.mjs",
+    "Scripts/Expo/build-original-expo-source.mjs"
+  ],
+  "requiredNativeTargets": {
+    "previous": 14,
+    "candidate": 15,
+    "added": [
+      "ExpoAsset"
+    ],
+    "existingTargetsRemoved": []
+  },
+  "requiredRegeneration": [
+    {
+      "operation": "Scripts/SDK/generate_manifest.py",
+      "reason": "Refresh generated root Package.swift and docs/agent-sdk/unified-package-manifest.json from changed local manifest before publishing complete source closure.",
+      "state": "PENDING_NATIVE_OWNER"
+    },
+    {
+      "operation": "Original Expo preparation and native artifact export",
+      "reason": "Compile original ExpoAsset scheme from original Expo/CocoaPods sources for iOS device and simulator; validate/export15 required native targets.",
+      "state": "PENDING_NATIVE_OWNER"
+    },
+    {
+      "operation": "Original source audit and Host/SDK preparation",
+      "reason": "Native lock is a direct SDK input; generated inventories and app resource copies must match final source and actual prepared bytes.",
+      "state": "PENDING_NATIVE_OWNER"
+    },
+    {
+      "operation": "Both original Apple consumer builds and affected Expo acceptance",
+      "reason": "Shared Expo startup native module graph changed; former failures cannot count as passes.",
+      "state": "PENDING_NATIVE_OWNER"
+    }
+  ],
+  "originalFailedCases": [
+    "HanlinMiniAppsUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+    "HanlinMiniAppsUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+    "HanlinMiniAppsUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents"
+  ],
+  "verificationHere": {
+    "gitDiffCheck": "PASS",
+    "twoCocoaPodsSourceArtifactsMatchCurrentNpmLockVersionIntegrityAndURL": true,
+    "fileModes": "All eight source file modes preserved from base",
+    "rawPublicationMembers": "Five originals verified against immutable native receipt; extra spm config and source/cache/filesystem observations retained separately.",
+    "nativeCompilation": "NOT_RUN_BY_THIS_AGENT",
+    "tests": "NOT_RUN_BY_THIS_AGENT",
+    "generators": "NOT_RUN_BY_THIS_AGENT",
+    "networkPackageFetch": "NOT_RUN_BY_THIS_AGENT"
+  },
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 4118,
+      "sha256": "ee8198137fc01d41bd18b10007fe40da2595cbefc665d81233ba93bc3c0b8753"
+    },
+    {
+      "path": "raw/installed-publication/Podfile.lock.gz",
+      "bytes": 8723,
+      "sha256": "1a4724b009336f6470d1c89f013c029ff89b1ac77f290986a37abf67f895e945"
+    },
+    {
+      "path": "raw/installed-publication/core-filesystem-observation.json",
+      "bytes": 6019,
+      "sha256": "be675d40290ea3b2baed771a94fd1a44865df341410e69ede2f8a1122c121a9c"
+    },
+    {
+      "path": "raw/installed-publication/original/Package.swift",
+      "bytes": 818,
+      "sha256": "dc49c8256885039c23f11e68c3db8c540861ffd923a6051ea4a57d61f46052cf"
+    },
+    {
+      "path": "raw/installed-publication/original/expo-module.config.json",
+      "bytes": 314,
+      "sha256": "58c11112e257db494f137e470e4a944d92c861b649bb95e6afafb2a22b5981ed"
+    },
+    {
+      "path": "raw/installed-publication/original/ios/AssetModule.swift",
+      "bytes": 3406,
+      "sha256": "a8a030696a86ee885d151e0baff359066bf046a6e29f483b1bc44c0e815a02c3"
+    },
+    {
+      "path": "raw/installed-publication/original/ios/ExpoAsset.podspec",
+      "bytes": 823,
+      "sha256": "1718cbff56334111fd5fc9eda65bd8724bfc4ec7de39b46f260e41cc8db78d7b"
+    },
+    {
+      "path": "raw/installed-publication/original/package.json",
+      "bytes": 2350,
+      "sha256": "a317879b994f92128624136f42832597fc411015de25aa1125dfb73a82487427"
+    },
+    {
+      "path": "raw/installed-publication/original/spm.config.json",
+      "bytes": 718,
+      "sha256": "10006e4f892880396d62a6a6b817d871d53a362abdc4398a936f4a9b50c12c05"
+    },
+    {
+      "path": "raw/installed-publication/pod-source-cache-observation.json",
+      "bytes": 1497,
+      "sha256": "6c555e07812f29555e8e0228bc5955e0b396a7ec1ebf62cf4d70b95b28ed5cbc"
+    },
+    {
+      "path": "raw/installed-publication/receipt.json",
+      "bytes": 13239,
+      "sha256": "06d43bfb7484e87e8c3dc21c7261b76831562259a69f1ec37a554cb5b6d0a825"
+    },
+    {
+      "path": "raw/installed-publication/spm-config-receipt.json",
+      "bytes": 128,
+      "sha256": "e7d95a7cfd61e51868bdbf1fa37a7951e4825eb3d771a177fac0dde35698e9b1"
+    },
+    {
+      "path": "raw/sdk7/expo/LICENSE",
+      "bytes": 1106,
+      "sha256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4"
+    },
+    {
+      "path": "raw/sdk7/expo/src/Expo.fx.tsx",
+      "bytes": 1454,
+      "sha256": "826a406576b7d9ae76a9a17477abebf78e1e0aa1472c4a939e40cf79954acab7"
+    },
+    {
+      "path": "raw/sdk7/expo/src/launch/registerRootComponent.tsx",
+      "bytes": 2718,
+      "sha256": "6ab6910db2fbaba08a9b6dc2843b8b1e0f6da729cb57cd8ce5c5b1a37af2bb76"
+    },
+    {
+      "path": "raw/sdk7/expo-asset/LICENSE",
+      "bytes": 1106,
+      "sha256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4"
+    },
+    {
+      "path": "raw/sdk7/expo-asset/src/ExpoAsset.ts",
+      "bytes": 759,
+      "sha256": "aa6242252197244d06e3da57df3fedcf99fb5f191e0d1ae55f822e27fe0465bb"
+    },
+    {
+      "path": "raw/sdk7/expo-modules-autolinking/src/platforms/apple/apple.ts",
+      "bytes": 19425,
+      "sha256": "ec83bc4060126d837acb71071ebb5d63331c54e7319dce6c738b6e8bbe73cf1a"
+    },
+    {
+      "path": "sdk7-original-bootstrap-members.json",
+      "bytes": 1521,
+      "sha256": "e554a558fa8a5e36fe98f8f9a71a6e5cceef932c494cf97a47beafb82915d8c0"
+    },
+    {
+      "path": "source-changes.json",
+      "bytes": 2280,
+      "sha256": "5a0e8c164c8a8cec1f2bf08b270c2f18f495585b4769d1285646ffbd7e72429c"
+    }
+  ]
+}

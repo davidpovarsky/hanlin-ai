@@ -9,9 +9,10 @@ import {sourceBuildIdentity} from '../../Expo/build-original-expo-source.mjs';
 
 test('Expo uses its published coherent matrix rather than unrelated latest React or Worklets',()=>{
   const matrix={'@expo/ui':'~58.0.29','expo-brownfield':'~58.0.20',react:'19.3.0','react-native':'0.88.1','react-native-worklets':'0.13.0'};
-  const ranges=expoRanges({version:'58.0.26',dependencies:{'expo-modules-core':'~58.1.0'}},matrix);
-  assert.equal(ranges.react,'19.3.0');assert.equal(ranges['react-native-worklets'],'0.13.0');assert.equal(ranges['expo-modules-core'],'~58.1.0');
+  const ranges=expoRanges({version:'58.0.26',dependencies:{'expo-modules-core':'~58.1.0','expo-asset':'~58.0.21'}},matrix);
+  assert.equal(ranges.react,'19.3.0');assert.equal(ranges['react-native-worklets'],'0.13.0');assert.equal(ranges['expo-modules-core'],'~58.1.0');assert.equal(ranges['expo-asset'],'~58.0.21');
   assert.throws(()=>expoRanges({version:'58.0.26',dependencies:{}},{}),/does not specify/);
+  assert.throws(()=>expoRanges({version:'58.0.26',dependencies:{'expo-modules-core':'~58.1.0'}},matrix),/does not specify expo-asset/);
 });
 test('a package publication must contain its original integrity',()=>{
   assert.throws(()=>latestMetadata({name:'expo',version:'58.0.26',dist:{tarball:'https://registry.npmjs.org/expo.tgz'}}),/Incomplete/);
