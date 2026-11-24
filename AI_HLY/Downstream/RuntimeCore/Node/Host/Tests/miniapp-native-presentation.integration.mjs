@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp, mkdir, writeFile, readFile, rm, access, rename} from 'node:fs/promises';
+import {mkdtemp, mkdir, writeFile, readFile, rm, access, rename, copyFile, symlink} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import {runMiniAppOperation} from '../miniapp-authoring.mjs';
@@ -126,4 +126,30 @@ test('native layout syntax, missing source and unsupported renderer fail with ac
     assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_NATIVE_PRESENTATION_INVALID' && d.file === 'script.json' && d.message.includes('wrongRenderer')));
     assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_NATIVE_PRESENTATION_INVALID' && d.message.includes('wrongFormat')));
   } finally { await rm(root, {recursive: true, force: true}); }
+});
+
+
+test('an original Metro configuration error is reported without silently substituting another transformer', async () => {
+  const root = await project('expo');
+  const clonedSDK = await mkdtemp(path.join(os.tmpdir(), 'miniapp-original-metro-'));
+  try {
+    const manifest = JSON.parse(await readFile(path.join(sdkRoot, 'miniapp-sdk.json'), 'utf8'));
+    await json(path.join(clonedSDK, 'miniapp-sdk.json'), manifest);
+    const expoRoot = manifest.engines.expo.toolingRoot;
+    await mkdir(path.join(clonedSDK, expoRoot), {recursive: true});
+    for (const file of ['package.json', 'tsconfig.json', 'babel.config.cjs'])
+      await copyFile(path.join(sdkRoot, expoRoot, file), path.join(clonedSDK, expoRoot, file));
+    await symlink(path.join(sdkRoot, expoRoot, 'node_modules'), path.join(clonedSDK, expoRoot, 'node_modules'), 'dir');
+    for (const [engine, descriptor] of Object.entries(manifest.engines)) if (engine !== 'expo')
+      await symlink(path.join(sdkRoot, descriptor.toolingRoot), path.join(clonedSDK, descriptor.toolingRoot), 'dir');
+    const missing = 'hanlin-intentionally-missing-metro-configuration-dependency';
+    await writeFile(path.join(clonedSDK, expoRoot, 'metro.config.cjs'), 'require(' + JSON.stringify(missing) + ');');
+    const report = await runMiniAppOperation({operation: 'build', engine: 'expo', projectRoot: root}, {sdkRoot: clonedSDK});
+    assert.equal(report.succeeded, false);
+    assert.ok(report.diagnostics.some(d => d.message.includes("Cannot find module '" + missing + "'")), JSON.stringify(report.diagnostics));
+    assert.equal(report.preparedPackagePath, undefined);
+  } finally {
+    await rm(root, {recursive: true, force: true});
+    await rm(clonedSDK, {recursive: true, force: true});
+  }
 });

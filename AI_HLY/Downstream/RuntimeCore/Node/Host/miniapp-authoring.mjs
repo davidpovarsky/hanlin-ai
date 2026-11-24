@@ -562,12 +562,18 @@ async function buildExpo(input, parsed, stage, sdkEngine) {
   }
   const requireSDK = createRequire(path.join(parsed.toolingRoot, 'package.json'));
   const metro = requireSDK('metro');
-  const {getDefaultConfig, mergeConfig} = requireSDK('@react-native/metro-config');
-  // The original configuration supplies the actual NativeScript/Worklets Babel plugins.
-  let original = {};
-  try { original = requireSDK(path.join(parsed.toolingRoot, 'metro.config.cjs')); }
-  catch (error) { if (error.code !== 'MODULE_NOT_FOUND') throw error; }
-  const config = mergeConfig(getDefaultConfig(parsed.toolingRoot), original, {
+  const {mergeConfig} = requireSDK('metro-config');
+  // Preserve the complete original Expo configuration, including its matching
+  // transformer and Babel preset. Missing dependencies inside that config are
+  // real errors; they must not silently select another renderer's transformer.
+  const configPath = path.join(parsed.toolingRoot, 'metro.config.cjs');
+  const hasOriginalConfig = await fs.stat(configPath).then(info => info.isFile(), error => {
+    if (error.code === 'ENOENT') return false;
+    throw error;
+  });
+  const original = hasOriginalConfig ? requireSDK(configPath)
+    : requireSDK('expo/metro-config').getDefaultConfig(parsed.toolingRoot);
+  const config = mergeConfig(original, {
     projectRoot: parsed.toolingRoot,
     watchFolders: [input.sourceRoot, parsed.toolingRoot],
     maxWorkers: 1,
