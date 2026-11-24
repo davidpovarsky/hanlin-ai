@@ -322,6 +322,18 @@ jobs:
             shasum -a 256 "$host_root/global-package-state.mjs" "$host_root/Tests/package-lifecycle.test.mjs" "$host_root/package-lock.json"
             node --test "$host_root/Tests/package-lifecycle.test.mjs"
           } 2>&1 | tee "$SPLIT_EVIDENCE/package-lifecycle.log"
+          if [[ '${{ inputs.paired_test_scope }}' == 'miniapp_authoring' ]]; then
+            miniapp_cli_root="$(mktemp -d "$RUNNER_TEMP/hanlin-cli-preflight.XXXXXX")"
+            mkdir -p "$miniapp_cli_root/Tests"
+            cp "$host_root/miniapp-authoring.mjs" "$miniapp_cli_root/"
+            cp "$host_root/Tests/miniapp-authoring.test.mjs" "$miniapp_cli_root/Tests/"
+            ln -s "$host_root/node_modules" "$miniapp_cli_root/node_modules"
+            (cd "$miniapp_cli_root"
+              unset HANLIN_AUTHORING_TYPESCRIPT
+              export HANLIN_MINIAPP_REPOSITORY_ROOT="$GITHUB_WORKSPACE"
+              node --test --test-name-pattern='the real CLI archives and revalidates retained source, diagnostics and output identity' Tests/miniapp-authoring.test.mjs
+            ) 2>&1 | tee "$SPLIT_EVIDENCE/miniapp-cli-relocation.log"
+          fi
       - name: Prepare the existing pinned metadata tool
         if: ${{ !inputs.signing_preflight_only }}
         uses: ./.github/actions/prepare-nativescript-metadata-tool

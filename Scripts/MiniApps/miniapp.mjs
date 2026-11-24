@@ -2,6 +2,7 @@
 import {promises as fs} from 'node:fs';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
+import {createRequire} from 'node:module';
 import {pathToFileURL} from 'node:url';
 import {runMiniAppOperation} from '../../AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs';
 
@@ -16,10 +17,20 @@ for (let index = 0; index < argumentsList.length; index += 2) {
 }
 if (!['sdk', 'validate', 'build'].includes(operation) || !options.sdk ||
   (operation !== 'sdk' && !options.project)) throw new Error('A known operation, --sdk and (for validate/build) --project are required.');
-const compiler = process.env.HANLIN_AUTHORING_TYPESCRIPT
-  ? (await import(process.env.HANLIN_AUTHORING_TYPESCRIPT.startsWith('file:')
-      ? process.env.HANLIN_AUTHORING_TYPESCRIPT : pathToFileURL(process.env.HANLIN_AUTHORING_TYPESCRIPT).href)).default
-  : undefined;
+let compilerLocation = process.env.HANLIN_AUTHORING_TYPESCRIPT;
+if (compilerLocation && !compilerLocation.startsWith('file:')) {
+  // Resolve npm package names from the caller's working directory. A copied
+  // RuntimeHost test and an external CLI user need not share this CLI's folder.
+  // Existing absolute/relative local-file overrides keep their original meaning.
+  const candidate = path.resolve(compilerLocation);
+  const localPath = await fs.stat(candidate).then(() => true, error => {
+    if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return false;
+    throw error;
+  });
+  const requireCompiler = createRequire(path.join(process.cwd(), 'package.json'));
+  compilerLocation = pathToFileURL(requireCompiler.resolve(localPath ? candidate : compilerLocation)).href;
+}
+const compiler = compilerLocation ? (await import(compilerLocation)).default : undefined;
 let report = await runMiniAppOperation({
   operation, engine: options.engine, resource: options.resource,
   projectRoot: options.project && path.resolve(options.project)
