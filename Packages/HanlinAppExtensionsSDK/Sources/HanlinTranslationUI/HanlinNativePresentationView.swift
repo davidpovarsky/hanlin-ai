@@ -10,10 +10,10 @@ import SwiftUI
 /// extension. It consumes prepared values; SwiftUI never evaluates JavaScript.
 public struct HanlinNativePresentationView: View {
     public let prepared: HanlinPreparedWidget
-    public let actionBuilder: (HanlinWidgetActionCommand, ButtonRole?, AnyView) -> AnyView
+    public let actionBuilder: (HanlinWidgetActionCommand, SwiftUI.ButtonRole?, AnyView) -> AnyView
 
     public init(prepared: HanlinPreparedWidget,
-                actionBuilder: @escaping (HanlinWidgetActionCommand, ButtonRole?, AnyView) -> AnyView) {
+                actionBuilder: @escaping (HanlinWidgetActionCommand, SwiftUI.ButtonRole?, AnyView) -> AnyView) {
         self.prepared = prepared
         self.actionBuilder = actionBuilder
     }
