@@ -1087,7 +1087,7 @@
       ],
       "completionEvidence": {
         "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
-        "sha256": "bdd68155e001855c992085855a24ef3ebe11d37a8e67b70d47cd30697881d217"
+        "sha256": "7b279ee8af9f7ed5d9ab5de03a8301628676ca6be2e473f6d78fc3e5d1ba3335"
       }
     },
     {
@@ -1161,12 +1161,18 @@
         "Concrete generated GroupBox children loss, orphan modern widget publication and false private return acknowledgement are corrected with narrowly executed regression evidence."
       ],
       "remainingRequirements": [
-        "All-public-exported-adapter native coverage is NOT_ESTABLISHED by the inspected receipts.",
-        "Current selected UIKit/Worklets/Widgets application results remain subject to active complete52 run45375410965 atsource999599c2.",
-        "Historical native API declaration receipt has changed inputs and cannot become a whole current-source PASS.",
-        "Actual corrected52case run must execute installed metadata, GroupBox content/native events, selected modifier behavior, hosted action/publication and existing return callback case. DefaultDocumentGroupLaunchActions requires a genuine document container; no all83per-effect semantic proof is inferred."
+        "Successful complete52 run45375410965 atsource999599c2 with actual selected native behavior and current full shipping-SDK identity."
       ],
-      "closure": "CONDITIONAL; no all-adapter false PASS from a probe, declarations, bundle or selected suite."
+      "closure": "CLOSEABLE_AFTER_CURRENT52_AND_SHIPPING_IDENTITY; no concrete local public adapter contract gap remains in review. Retain explicit OS/context evidence limits without adding a universal semantic gate.",
+      "coverageLimitations": [
+        "Typed/registration/source-forwarding contracts do not claim exhaustive OS semantics for all83 generated modifiers or every original upstream API.",
+        "DefaultDocumentGroupLaunchActions requires a genuine document container absent from approved ordinary host scope; contextual leaf is documented and typed, with no new scene gate.",
+        "Historical native API receipt with changed inputs is not a blanket current-source pass."
+      ],
+      "scopeClarification": {
+        "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+        "sha256": "7b279ee8af9f7ed5d9ab5de03a8301628676ca6be2e473f6d78fc3e5d1ba3335"
+      }
     },
     {
       "task": "SDK-06",
@@ -1217,7 +1223,7 @@
       ],
       "completionEvidence": {
         "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
-        "sha256": "bdd68155e001855c992085855a24ef3ebe11d37a8e67b70d47cd30697881d217"
+        "sha256": "7b279ee8af9f7ed5d9ab5de03a8301628676ca6be2e473f6d78fc3e5d1ba3335"
       }
     },
     {
@@ -1334,12 +1340,12 @@
       ],
       "completionEvidence": {
         "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
-        "sha256": "bdd68155e001855c992085855a24ef3ebe11d37a8e67b70d47cd30697881d217"
+        "sha256": "7b279ee8af9f7ed5d9ab5de03a8301628676ca6be2e473f6d78fc3e5d1ba3335"
       }
     }
   ],
   "recordingOutcome": "Task-scoped evidence reconciliation:SDK01/02/06 completed in Asana with readback. No new native application/device result, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T10:44:55.329622+00:00",
+  "updatedAtUTC": "2026-11-24T10:48:31.750488+00:00",
   "currentIntegrationBase": "999599c242c064564c40866a1979c463f1d0e95f",
   "gateHistory": [
     {
@@ -1647,6 +1653,6 @@
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
-    "sha256": "bdd68155e001855c992085855a24ef3ebe11d37a8e67b70d47cd30697881d217"
+    "sha256": "7b279ee8af9f7ed5d9ab5de03a8301628676ca6be2e473f6d78fc3e5d1ba3335"
   }
 }

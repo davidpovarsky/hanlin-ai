@@ -127,5 +127,25 @@
     ],
     "boundary": "Existing non-widget consumers do not duplicate every unsafeFlag. No universal flag equality or actual Apple compilation inferred; no new tests/builds/edits."
   },
-  "result": "3 scoped original DoDs completed and read back in Asana; current full integration and device acceptance remain open"
+  "result": "3 scoped original DoDs completed and read back in Asana; current full integration and device acceptance remain open",
+  "sdk04Clarification": {
+    "reviewer": "sdk_only_author",
+    "atUTC": "2026-11-24T10:48:31.748551+00:00",
+    "result": "No concrete local public adapter source/type/forwarding-contract gap identified. After complete52 and current shipping identity pass, the narrow API/types/adapter-contract DoD can close.",
+    "correction": "Earlier conditional-even-after52 language overextended the original DoD into universal native semantics; this is not an additional gate.",
+    "groups": {
+      "generatedModifiers": "83 effective per-name typed/payload/registration/source mappings and selected native contexts",
+      "manualAdapters": "13 typed adapters with grouped real native assertions",
+      "generatedViews": "3 real native cases plus1 documented document-host-only contextual leaf",
+      "originalReexports": "Original contract/provenance evidence; no invented wrapper per upstream callable"
+    },
+    "limits": "No83 independent OS-effect/all-upstream-API claim. No new document scene/full Apple generator gate. No tests or re-audit performed for this clarification."
+  },
+  "freezeTaskVerification": {
+    "project": "1219603102275846",
+    "activeTasksRead": 103,
+    "method": "Free project task pagination reached next_page=null after quick lookup returnedempty and premium search was unavailable",
+    "result": "No clearly dedicated active legacy Scripting/ScriptUI development task identified. Freeze is explicitly recorded in the existing parent/current task notes.",
+    "preserved": "Active original ScriptWidget/Expo tasks and shared infrastructure remain active. No duplicate task or unrelated status mutation."
+  }
 }
