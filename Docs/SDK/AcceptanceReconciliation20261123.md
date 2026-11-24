@@ -1,8 +1,26 @@
-# Current SDK acceptance reconciliation — 2026-11-23
+# Current SDK acceptance reconciliation — 2026-11-24
 
 This is a source/evidence reconciliation of Asana SDK-02, SDK-03, SDK-05, SDK-06, SDK-07 and SDK-08, not a new test execution or blanket completion claim. All six tasks were incomplete when read on 23 November. Current user authorization supersedes historical owner-pause instructions; those entries remain historical records and do not impose a new pause. No former external worker was resumed.
 
-## Current execution checkpoint — 23 November, 23:54 UTC
+## Current execution checkpoint — 24 November, 00:46 UTC
+
+The central source now includes original paired terminal evidence (143b0812/c33ab645), Native15 terminal evidence (f2d2f30e), and the opt-in native responder diagnostics (37d108e1). The compact transcript backdrop repair and read-only auto-follow diagnostics are recorded with their original viewport evidence in this checkpoint. These later changes were not executed by the frozen main37 source a051e6a2076db8f0783f8c1a62fd6470e21b3d71.
+
+| Scope | Current actual evidence |
+| --- | --- |
+| Main37 | [45292517683](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45292517683)/1@a051 is terminal **FAIL before execution:0PASS/0FAIL/37NOT_RUN**. Original build/seal and simulator boot passed, then fresh current-product admission timed out on git rev-parse HEAD after30s. Calendar privacy preparation and xcodebuild test-without-building were never executed. Sole root observer and original metadata/log collector ended00:46:29 UTC. Same26unit+11UI identities/deadlines; no additional dispatch or replay. |
+| Paired three | [45283243206](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45283243206)/1@4cfa actually executed **1 PASS /2 FAIL /0 NOT_RUN**. Full original package/state transfer and rollback passed278.871s. Cancellation failed122.734s at editor focus before typing/Send; its actual cancellation/return behavior is NOT_RUN. Return failed118.086s at unreachable review-toggle; explicit approval/companion return is NOT_RUN. [Original terminal custody](../../docs/agent-sdk/evidence/paired-native-45283243206/README.md). |
+| Return viewport | Three original AX snapshots put the review toggle below the334point viewport; original video also shows an unconditional120point Composer gradient hiding the last activity even though the composer is outside the transcript. The source-compatible flag now removes that backdrop only for the external compact host. This has syntax/source review only; native repair acceptance is NOT_RUN. Auto-follow cause remains under investigation. [Exact original frames and candidate](../../docs/agent-sdk/evidence/paired-return-viewport-45283243206/README.md). |
+| Native15 | [45292176348](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45292176348)/1@e325 actually passed **15/15**, including executor cancellation0.183766s. Both test processes and actual iOS compile exited0. Strict iOS acceptance remains **BLOCKED** because the SDK lock changed ZIPFoundation0.9.19 to0.9.21. Original focused dependency graphs prove ZIP absent from all three compiled closures, preserving15 passes for explicit qualified reuse. Exact-pin repair and fresh build-only admission are being prepared; no gate was relaxed.21 prior passes retain explicit reuse attribution; historicale7 baseline12 remains historical. |
+| Motion B | Existing [45290086669](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45290086669)/1@51f56b49 is infrastructure **BLOCKED**. The owned simulator bootstatus reached its300s bound and bounded shutdown also timed out; build and B's original method are NOT_RUN. The sole sequential observer/collector ended. Earlier actual productB failure remains separate; no A/C or retry was dispatched. |
+| Anytype | The external owner reports source composition8dc5ee02db71517a5eb08535a6b266da62adfe30 accepted with original control1method/27subcases. Candidate Apple23methods/32cases remain NOT_RUN; separate canonical22check/same-process PASS retains its actual source. No duplicate root run. |
+| Otzaria producer | Existing owner receipt still lists focused45281860828@3f38 as PENDING. Its declared controller PID is absent, but no focused terminal intake/qualification is present in the owner's evidence directory. This is an ownership/status observation, not a native conclusion. SDK07 coordination comment requests the original receipt; no second watcher, download, live call or unqualified pin adoption. |
+
+The paired test's legacy allow-once selector does not match the original scoped Host request, whose correct current control is allow-remember. It is a demonstrated subsequent test-navigation defect, not the recorded failed tap. A narrow shipping revoke flow is being prepared to isolate that same original permission between cases. Actual review, explicit authorization, request payload and result/private-state assertions remain required.
+
+All18Native assets remain UNPUBLISHED. No final SDK or Host pin adoption, release, merge or task completion has occurred. The local native integration object59ab remains unintegrated pending its strict build gate. Physical-device/system-model and live-provider scopes remain separate.
+
+## Historical execution checkpoint — 23 November, 23:54 UTC
 
 The main application implementation remains4cfa52348e80cf635caf04c541fd84ee1ddb50bd, plus the reviewed Calendar preparation helper6affb118b5ff65f9d349f9d09c587c44a0463e79. The frozen new acceptance source is **a051e6a2076db8f0783f8c1a62fd6470e21b3d71**, tree8fa44dddd1485d7036c853c1ffb4a06f844960ea. Later evidence documents do not imply another native execution. PR17 is OPEN/DRAFT against603576fa0aec5af1eea403d402f9ff676f3f09c8.
 

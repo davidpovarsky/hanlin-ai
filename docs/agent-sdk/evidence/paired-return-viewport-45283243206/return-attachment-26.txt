@@ -1,0 +1,242 @@
+Attributes: Button, 0x1145c3e80, {{81.0, 355.7}, {286.0, 26.0}}, identifier: 'hanlin-tool-consent-review-toggle', label: 'Using a tool, Awaiting approval', value: Collapsed
+Element subtree:
+ →Button, 0x1145c3e80, {{81.0, 355.7}, {286.0, 26.0}}, identifier: 'hanlin-tool-consent-review-toggle', label: 'Using a tool, Awaiting approval', value: Collapsed
+Path to element:
+ →Application, 0x11452cf00, pid: 76409, label: 'Hanlin AI'
+  ↳Window, 0x11452cdc0, {{0.0, 0.0}, {402.0, 874.0}}
+   ↳Other, 0x11452cc80, {{0.0, 0.0}, {402.0, 874.0}}
+    ↳Other, 0x11452cb40, {{0.0, 0.0}, {402.0, 874.0}}
+     ↳Other, 0x11452ca00, {{0.0, 0.0}, {402.0, 874.0}}
+      ↳Other, 0x11452c8c0, {{0.0, 0.0}, {402.0, 874.0}}
+       ↳Other, 0x11452c780, {{0.0, 0.0}, {402.0, 874.0}}
+        ↳Other, 0x11452c640, {{0.0, 0.0}, {402.0, 874.0}}
+         ↳Other, 0x11452c500, {{0.0, 0.0}, {402.0, 874.0}}
+          ↳Other, 0x11452c3c0, {{0.0, 0.0}, {402.0, 874.0}}
+           ↳Other, 0x11452c280, {{0.0, 0.0}, {402.0, 874.0}}
+            ↳Other, 0x11452c140, {{0.0, 0.0}, {402.0, 840.0}}, identifier: 'hanlin-compact-chat-workspace'
+             ↳Other, 0x11452c000, {{0.0, 0.0}, {402.0, 340.0}}
+              ↳Other, 0x1145c2f80, {{0.0, 0.0}, {402.0, 340.0}}
+               ↳Other, 0x1145c30c0, {{0.0, 0.0}, {402.0, 340.0}}
+                ↳Other, 0x1145c3200, {{0.0, 0.0}, {402.0, 340.0}}
+                 ↳Other, 0x1145c3340, {{0.0, 0.0}, {402.0, 340.0}}
+                  ↳ScrollView, 0x1145c3480, {{0.0, 0.0}, {402.0, 334.0}}, identifier: 'hanlin-chat-transcript'
+                   ↳Other, 0x1145c35c0, {{0.0, 133.3}, {402.0, 418.0}}
+                    ↳Other, 0x1145c3700, {{16.0, 143.3}, {370.0, 352.0}}
+                     ↳Other, 0x1145c3840, {{16.0, 217.7}, {362.0, 277.7}}, identifier: 'hanlin-assistant-bubble'
+                      ↳Other, 0x1145c3980, {{16.0, 253.7}, {362.0, 241.7}}, identifier: 'hanlin-agent-activity-toggle'
+                       ↳Other, 0x1145c3ac0, {{16.0, 299.7}, {362.0, 195.7}}
+                        ↳Other, 0x1145c3c00, {{43.0, 344.7}, {335.0, 142.7}}
+                         ↳Other, 0x1145c3d40, {{69.6, 346.3}, {308.8, 133.5}}, identifier: 'hanlin-tool-approval-68BF8FCE-7F1F-45AD-939B-F573BBAFDFBD'
+                          ↳Button, 0x1145c3e80, {{81.0, 355.7}, {286.0, 26.0}}, identifier: 'hanlin-tool-consent-review-toggle', label: 'Using a tool, Awaiting approval', value: Collapsed
+Query chain:
+ →Find: Target Application 'com.itorah.chavrusachat'
+  Output: {
+    Application, 0x11457af80, pid: 76409, label: 'Hanlin AI'
+  }
+  ↪︎Find: Descendants matching type Any
+    Output: {
+      Window (Main), 0x1145430c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Window, 0x11456d540, {{0.0, 0.0}, {402.0, 874.0}}
+      Window, 0x11456db80, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x114543200, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x114543340, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456d680, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456dcc0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x114543480, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456d7c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456d900, {{0.0, 546.0}, {402.0, 328.0}}
+      Other, 0x11456de00, {{0.0, 546.0}, {402.0, 328.0}}
+      Other, 0x1145435c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456da40, {{0.0, 546.0}, {402.0, 328.0}}, identifier: 'inputView'
+      Other, 0x11456df40, {{0.0, 546.0}, {402.0, 44.0}}, identifier: 'SystemInputAssistantView'
+      Other, 0x11456ef80, {{0.0, 546.0}, {402.0, 329.0}}
+      Other, 0x11456f340, {{0.0, 590.0}, {402.0, 226.0}}
+      Other, 0x11457a6c0, {{0.0, 590.0}, {402.0, 284.0}}
+      Other, 0x114543700, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456e080, {{0.0, 546.0}, {402.0, 44.0}}
+      Other, 0x11456f0c0, {{0.0, 546.0}, {402.0, 329.0}}
+      Keyboard, 0x11456f480, {{0.0, 590.0}, {402.0, 226.0}}
+      Button, 0x11457a800, {{8.5, 805.7}, {68.1, 68.7}}, label: 'Emoji'
+      Button, 0x11457aa80, {{325.4, 805.4}, {68.1, 68.7}}, identifier: 'dictation', label: 'Dictate'
+      Other, 0x114543840, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456e1c0, {{0.0, 546.0}, {402.0, 44.0}}, identifier: 'CenterPageView'
+      Other, 0x11456f200, {{0.0, 546.0}, {402.0, 329.0}}
+      Other, 0x11456f5c0, {{0.0, 590.0}, {402.0, 226.0}}
+      StaticText, 0x11457a940, {{8.5, 805.7}, {0.0, 0.0}}
+      StaticText, 0x11457abc0, {{325.4, 805.4}, {0.0, 0.0}}
+      Other, 0x114543980, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456d040, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456e300, {{0.0, -54.0}, {402.0, 1244.0}}
+      Other, 0x11456e580, {{0.0, 546.0}, {402.0, 44.0}}
+      Other, 0x11456f700, {{0.0, 590.0}, {402.0, 226.0}}, identifier: 'UIKeyboardLayoutStar Preview'
+      Other, 0x114543ac0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456d180, {{0.0, 791.0}, {402.0, 83.0}}
+      ScrollView, 0x11456e440, {{0.0, 546.0}, {402.0, 44.0}}
+      Other, 0x11456e6c0, {{0.0, 546.0}, {402.0, 44.0}}
+      Key, 0x11456f840, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Left'
+      Key, 0x11456f980, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Right'
+      Key, 0x11456fac0, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Left'
+      Key, 0x11456fc00, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Right'
+      Key, 0x11456fd40, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Left'
+      Key, 0x11456fe80, {{0.0, 590.0}, {0.0, 0.0}}, label: 'Padding-Right'
+      Key, 0x114578000, {{4.7, 597.0}, {39.3, 54.0}}, label: 'Q'
+      Key, 0x114578140, {{44.0, 597.0}, {39.7, 54.0}}, label: 'W'
+      Key, 0x114578280, {{83.7, 597.0}, {39.3, 54.0}}, label: 'E'
+      Key, 0x1145783c0, {{123.0, 597.0}, {39.7, 54.0}}, label: 'R'
+      Key, 0x114578500, {{162.7, 597.0}, {39.3, 54.0}}, label: 'T'
+      Key, 0x114578640, {{202.0, 597.0}, {39.7, 54.0}}, label: 'Y'
+      Key, 0x114578780, {{241.7, 597.0}, {39.3, 54.0}}, label: 'U'
+      Key, 0x1145788c0, {{281.0, 597.0}, {39.7, 54.0}}, label: 'I'
+      Key, 0x114578a00, {{320.7, 597.0}, {39.3, 54.0}}, label: 'O'
+      Key, 0x114578b40, {{360.0, 597.0}, {39.7, 54.0}}, label: 'P'
+      Key, 0x114578c80, {{24.3, 651.0}, {39.3, 54.0}}, label: 'A'
+      Key, 0x114578dc0, {{63.7, 651.0}, {39.7, 54.0}}, label: 'S'
+      Key, 0x114578f00, {{103.3, 651.0}, {39.3, 54.0}}, label: 'D'
+      Key, 0x114579040, {{142.7, 651.0}, {39.7, 54.0}}, label: 'F'
+      Key, 0x114579180, {{182.3, 651.0}, {39.3, 54.0}}, label: 'G'
+      Key, 0x1145792c0, {{221.7, 651.0}, {39.7, 54.0}}, label: 'H'
+      Key, 0x114579400, {{261.3, 651.0}, {39.3, 54.0}}, label: 'J'
+      Key, 0x114579540, {{300.7, 651.0}, {39.7, 54.0}}, label: 'K'
+      Key, 0x114579680, {{340.3, 651.0}, {39.3, 54.0}}, label: 'L'
+      Button, 0x1145797c0, {{4.7, 705.0}, {51.3, 54.0}}, identifier: 'shift', label: 'shift', Selected
+      Key, 0x114579900, {{63.7, 705.0}, {39.7, 54.0}}, label: 'Z'
+      Key, 0x114579a40, {{103.3, 705.0}, {39.3, 54.0}}, label: 'X'
+      Key, 0x114579b80, {{142.7, 705.0}, {39.7, 54.0}}, label: 'C'
+      Key, 0x114579cc0, {{182.3, 705.0}, {39.3, 54.0}}, label: 'V'
+      Key, 0x114579e00, {{221.7, 705.0}, {39.7, 54.0}}, label: 'B'
+      Key, 0x114579f40, {{261.3, 705.0}, {39.3, 54.0}}, label: 'N'
+      Key, 0x11457a080, {{300.7, 705.0}, {39.7, 54.0}}, label: 'M'
+      Key, 0x11457a1c0, {{348.0, 705.0}, {51.7, 54.0}}, identifier: 'delete', label: 'delete'
+      Key, 0x11457a300, {{4.7, 759.0}, {98.7, 54.0}}, identifier: 'more', label: 'numbers'
+      Key, 0x11457a440, {{103.3, 759.0}, {197.3, 54.0}}, identifier: 'space', label: 'space'
+      Button, 0x11457a580, {{300.7, 759.0}, {99.0, 54.0}}, identifier: 'Return', label: 'return'
+      Other, 0x114543c00, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456d2c0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456d400, {{0.0, 791.0}, {402.0, 83.0}}
+      Other, 0x11456e800, {{0.0, 546.0}, {402.0, 44.0}}, label: 'Typing Predictions'
+      Other, 0x114543d40, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x11456e940, {{0.0, 546.0}, {402.0, 44.0}}
+      Other, 0x114543e80, {{0.0, 0.0}, {402.0, 840.0}}, identifier: 'hanlin-compact-chat-workspace'
+      Other, 0x11456ea80, {{0.0, 546.0}, {402.0, 44.0}}
+      Other, 0x11457e6c0, {{0.0, 0.0}, {402.0, 340.0}}
+      Other, 0x1145861c0, {{0.0, 62.0}, {402.0, 778.0}}
+      Button, 0x114586080, {{351.0, 340.0}, {36.0, 36.0}}, identifier: 'arrow.down', label: 'Down'
+      ScrollView, 0x114585f40, {{22.0, 376.0}, {358.0, 36.0}}, identifier: 'active-tool-chips-above-composer', Disabled
+      Other, 0x114586300, {{88.0, 438.0}, {285.0, 86.0}}, identifier: 'hanlin-composer-surface'
+      Button, 0x11456ca00, {{18.0, 480.0}, {52.0, 52.0}}, identifier: 'hanlin-composer-general-menu', label: 'Open action center'
+      Button, 0x11456cb40, {{27.0, 551.0}, {40.0, 40.0}}, label: 'Trash', Disabled
+      Button, 0x11456cdc0, {{335.0, 551.0}, {40.0, 40.0}}, label: 'Selected', Selected
+      Button, 0x11456ebc0, {{0.0, 546.0}, {134.0, 44.0}}, label: 'I'
+      Button, 0x11456ed00, {{134.0, 546.0}, {134.0, 44.0}}, label: 'The'
+      Button, 0x11456ee40, {{268.0, 546.0}, {134.0, 44.0}}, label: 'I’m'
+      NavigationBar, 0x11457ed00, {{0.0, 62.0}, {402.0, 54.0}}, identifier: '_TtGC7SwiftUI32NavigationStackHosting'
+      Other, 0x11457d400, {{0.0, 0.0}, {402.0, 340.0}}
+      Toolbar, 0x114587340, {{0.0, 0.0}, {402.0, 340.0}}, identifier: 'Toolbar', label: 'Toolbar'
+      Other, 0x114585e00, {{22.0, 376.0}, {121.7, 36.0}}
+      TextView, 0x1145870c0, {{91.0, 438.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', Keyboard Focused
+      Other, 0x11454b340, {{88.0, 480.0}, {283.0, 44.0}}, identifier: 'hanlin-composer-quick-bar'
+      Image, 0x11456cc80, {{27.0, 551.0}, {40.0, 40.0}}, identifier: 'trash.circle.fill', label: 'Trash', Disabled
+      Image, 0x11456cf00, {{335.0, 551.0}, {40.0, 40.0}}, identifier: 'checkmark.circle.fill', label: 'Selected', Selected
+      Button, 0x11457ee40, {{16.0, 62.0}, {44.0, 44.0}}, identifier: 'BackButton', label: 'Hanlin'
+      Other, 0x11457ea80, {{72.0, 67.0}, {147.0, 34.0}}
+      Other, 0x11457df40, {{235.0, 71.0}, {36.0, 26.0}}
+      Other, 0x11457db80, {{287.0, 66.0}, {41.0, 36.0}}
+      Button, 0x11457d540, {{344.0, 66.0}, {38.0, 36.0}}, identifier: 'TopOverflowBarButtonItem', label: 'More'
+      Other, 0x11457d2c0, {{0.0, 0.0}, {402.0, 340.0}}
+      Other, 0x114585b80, {{0.0, 0.0}, {402.0, 340.0}}
+      Button, 0x114585cc0, {{22.0, 378.0}, {37.0, 32.0}}, identifier: 'composer-chip-tools', label: 'Tools', value: Enabled, Disabled
+      Button, 0x114586580, {{65.0, 378.0}, {36.0, 32.0}}, identifier: 'composer-chip-skills', label: 'Skills', value: Enabled, Disabled
+      Button, 0x114586440, {{107.0, 378.0}, {36.7, 32.0}}, identifier: 'composer-chip-runtimes', label: 'Runtimes', value: Enabled, Disabled
+      Other, 0x114587200, {{91.0, 438.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'
+      Other, 0x114586f80, {{340.0, 438.0}, {30.0, 38.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+      Other, 0x11454af80, {{91.0, 454.0}, {282.0, 19.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+      Other, 0x11454b480, {{88.0, 480.0}, {144.0, 44.0}}
+      Button, 0x11456c640, {{236.0, 480.0}, {44.0, 44.0}}, identifier: 'hanlin-composer-tools-direct', label: 'Tools, Skills & MCP'
+      Button, 0x11456c780, {{284.0, 480.0}, {44.0, 44.0}}, identifier: 'hanlin-chat-mic', label: 'Start Recording'
+      Button, 0x11456c8c0, {{337.0, 485.0}, {34.0, 34.0}}, identifier: 'hanlin-chat-stop', label: 'Stop'
+      Other, 0x11457ebc0, {{72.0, 67.0}, {147.0, 34.0}}
+      Other, 0x11457de00, {{235.0, 71.0}, {36.0, 26.0}}
+      Other, 0x11457da40, {{287.0, 66.0}, {41.0, 36.0}}
+      Other, 0x11457d180, {{0.0, 0.0}, {402.0, 340.0}}
+      Other, 0x1145866c0, {{91.0, 438.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+      Other, 0x114586800, {{91.0, 438.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+      Other, 0x114587480, {{367.0, 437.0}, {3.0, 36.0}}
+      Other, 0x11454b0c0, {{94.0, 470.0}, {276.0, 3.0}}
+      Toolbar, 0x11454b5c0, {{88.0, 480.0}, {144.0, 44.0}}, identifier: 'Toolbar', label: 'Toolbar'
+      TextField, 0x11457e800, {{72.0, 67.0}, {147.0, 34.0}}, placeholderValue: 'Please enter the group chat name', value: Please enter the g...
+      StaticText, 0x11457e080, {{74.5, 73.8}, {142.0, 20.3}}, label: 'Agent Acceptance Chat'
+      Button, 0x11457dcc0, {{241.0, 73.0}, {23.7, 22.0}}, identifier: 'checkmark.bubble', label: 'Checkmark In A Speech Bubble', Selected
+      Button, 0x11457d900, {{287.0, 66.0}, {41.0, 36.0}}, label: 'Edit'
+      Other, 0x11457d040, {{0.0, 0.0}, {402.0, 340.0}}
+      Other, 0x114586e40, {{83.8, 424.5}, {16.5, 16.5}}
+      Other, 0x114586940, {{91.0, 438.0}, {2.0, 0.0}}
+      Other, 0x114586a80, {{83.8, 424.5}, {16.5, 16.5}}
+      Other, 0x114586bc0, {{91.0, 438.0}, {2.0, 0.0}}
+      Other, 0x11454b700, {{88.0, 480.0}, {144.0, 44.0}}
+      Other, 0x11457e940, {{72.0, 67.0}, {133.0, 30.0}}
+      Other, 0x11457e580, {{72.0, 67.0}, {147.0, 34.0}}
+      StaticText, 0x11457e440, {{79.0, 67.0}, {133.0, 34.0}}, label: 'Please enter the group chat name'
+      Other, 0x11457e300, {{79.0, 69.0}, {133.0, 30.0}}
+      Button, 0x11457d7c0, {{287.0, 66.0}, {41.0, 36.0}}
+      StaticText, 0x11457cf00, {{73.0, 116.0}, {5.3, 13.3}}, identifier: 'hanlin-phase2-request-count', label: '1'
+      StaticText, 0x11457cdc0, {{86.3, 116.0}, {242.7, 13.3}}, identifier: 'hanlin-phase2-chat-id', label: 'F8565AC0-ABE1-4540-B205-729160A6FBAD'
+      ScrollView, 0x11457cc80, {{0.0, 0.0}, {402.0, 334.0}}, identifier: 'hanlin-chat-transcript'
+      Other, 0x114585540, {{201.0, 228.0}, {0.0, 0.0}}
+      Other, 0x11454b840, {{104.0, 478.0}, {112.0, 48.0}}
+      Other, 0x11457e1c0, {{79.0, 74.0}, {0.0, 21.0}}
+      Image, 0x11457d680, {{296.7, 75.0}, {21.7, 18.0}}, identifier: 'slider.horizontal.3', label: 'Edit'
+      Other, 0x11457cb40, {{0.0, 0.0}, {402.0, 334.0}}
+      Other, 0x11457c8c0, {{0.0, 0.0}, {402.0, 334.0}}
+      Other, 0x11457c780, {{0.0, 133.3}, {402.0, 418.0}}
+      Other, 0x11454b980, {{104.0, 478.0}, {112.0, 48.0}}
+      Other, 0x11457ca00, {{0.0, 0.0}, {402.0, 156.0}}
+      Other, 0x11457c640, {{16.0, 143.3}, {370.0, 352.0}}
+      Other, 0x11454bac0, {{104.0, 478.0}, {0.0, 0.0}}
+      StaticText, 0x11457c500, {{108.7, 143.3}, {277.3, 62.3}}, identifier: 'hanlin-user-bubble', label: 'PAIRED_OPEN_69A6901C-4990-4499-974E-DB682894F0A8'
+      Other, 0x11457c3c0, {{16.0, 217.7}, {362.0, 277.7}}, identifier: 'hanlin-assistant-bubble'
+      Other, 0x11454bc00, {{91.0, 478.0}, {138.0, 48.0}}
+      Other, 0x11457c280, {{16.0, 217.7}, {133.7, 30.0}}
+      Image, 0x11457c140, {{16.0, 223.7}, {24.0, 24.0}}, label: 'defaultIcon'
+      StaticText, 0x11457c000, {{46.0, 228.5}, {103.7, 14.3}}, label: 'Agent Acceptance'
+      Other, 0x114553c00, {{16.0, 253.7}, {362.0, 241.7}}, identifier: 'hanlin-agent-activity-toggle'
+      Other, 0x11454bd40, {{91.0, 478.0}, {138.0, 48.0}}
+      Button, 0x114553e80, {{16.0, 253.7}, {362.0, 46.0}}, identifier: 'hanlin-reasoning-toggle', label: 'Waiting for your confirmation', value: Expanded
+      Other, 0x114585900, {{16.0, 299.7}, {362.0, 195.7}}
+      Other, 0x11454be80, {{96.0, 480.0}, {128.0, 44.0}}
+      StaticText, 0x114553d40, {{16.0, 253.7}, {362.0, 46.0}}, identifier: 'hanlin-reasoning-toggle', label: 'Waiting for your confirmation'
+      Image, 0x114586d00, {{19.3, 267.0}, {15.7, 19.3}}, identifier: 'hanlin-reasoning-toggle', label: 'Sparkle'
+      Image, 0x114585a40, {{283.7, 273.7}, {9.7, 5.7}}, identifier: 'hanlin-reasoning-toggle', label: 'Go Down'
+      Other, 0x1145857c0, {{26.0, 299.7}, {1.0, 191.7}}
+      Button, 0x114585680, {{43.0, 301.7}, {335.0, 43.0}}, label: 'Actions requiring your approval', value: Expanded
+      Other, 0x114584a00, {{43.0, 344.7}, {335.0, 142.7}}
+      Other, 0x11454b200, {{96.0, 480.0}, {128.0, 44.0}}
+      StaticText, 0x1145852c0, {{43.0, 301.7}, {335.0, 43.0}}, label: 'Actions requiring your approval'
+      Image, 0x114584dc0, {{42.7, 314.0}, {23.0, 18.3}}, identifier: 'gearshape.2', label: 'Advanced'
+      Image, 0x114584c80, {{309.7, 320.3}, {9.7, 5.7}}, identifier: 'chevron.down', label: 'Go Down'
+      Other, 0x114584500, {{53.0, 344.7}, {1.0, 138.7}}
+      Other, 0x1145843c0, {{69.6, 346.3}, {308.8, 133.5}}, identifier: 'hanlin-tool-approval-68BF8FCE-7F1F-45AD-939B-F573BBAFDFBD'
+      Other, 0x11456c000, {{96.0, 480.0}, {128.0, 44.0}}
+      Button, 0x114584000, {{81.0, 355.7}, {286.0, 26.0}}, identifier: 'hanlin-tool-consent-review-toggle', label: 'Using a tool, Awaiting approval', value: Collapsed
+      Button, 0x114584b40, {{108.0, 386.7}, {130.7, 14.3}}, identifier: 'hanlin-tool-consent-visible-request', label: 'Review request details'
+      StaticText, 0x114584f00, {{108.0, 403.0}, {232.0, 26.3}}, label: 'This permission will also apply in your other conversations.'
+      Button, 0x114585180, {{165.3, 434.3}, {47.7, 36.0}}, identifier: 'hanlin-tool-consent-deny', label: 'Deny'
+      Button, 0x114585040, {{220.0, 434.3}, {147.0, 36.0}}, identifier: 'hanlin-tool-consent-allow-remember', label: 'Allow and remember', Disabled
+      Other, 0x114585400, {{70.0, 479.3}, {0.0, 0.0}}
+      Button, 0x11456c140, {{95.7, 487.6}, {128.7, 28.7}}, identifier: 'hanlin-composer-model-picker', label: 'Agent Acceptance'
+      Image, 0x114584140, {{80.3, 358.3}, {20.7, 20.7}}, identifier: 'wrench.and.screwdriver', label: 'Wrench And Screwdriver Crossed'
+      StaticText, 0x114584280, {{108.0, 360.2}, {78.7, 17.0}}, label: 'Using a tool'
+      Image, 0x114584640, {{198.0, 363.7}, {5.7, 9.7}}, identifier: 'chevron.down', label: 'Go Down'
+      Image, 0x114584780, {{253.3, 363.3}, {9.3, 11.0}}, identifier: 'lock.shield', label: 'Padlock In A Shield'
+      StaticText, 0x1145848c0, {{272.0, 362.0}, {95.0, 13.3}}, label: 'Awaiting approval'
+      Image, 0x11456c280, {{103.0, 494.0}, {16.0, 16.0}}, label: 'defaultIcon'
+      StaticText, 0x11456c3c0, {{124.0, 496.2}, {77.7, 11.7}}, label: 'Agent Acceptance'
+      Image, 0x11456c500, {{209.3, 497.3}, {6.7, 9.7}}, identifier: 'chevron.up.chevron.down', label: 'Up And Down Chevrons'
+    }
+    ↪︎Find: Elements matching predicate '"hanlin-tool-consent-review-toggle" IN identifiers'
+      Output: {
+        Button, 0x114536440, {{81.0, 355.7}, {286.0, 26.0}}, identifier: 'hanlin-tool-consent-review-toggle', label: 'Using a tool, Awaiting approval', value: Collapsed
+      }
+      ↪︎Find: First Match
+        Output: {
+          Button, 0x10a8b0640, {{81.0, 355.7}, {286.0, 26.0}}, identifier: 'hanlin-tool-consent-review-toggle', label: 'Using a tool, Awaiting approval', value: Collapsed
+        }
