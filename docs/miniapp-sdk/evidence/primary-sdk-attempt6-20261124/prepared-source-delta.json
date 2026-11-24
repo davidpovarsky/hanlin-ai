@@ -1,0 +1,65 @@
+{
+  "executionSource": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "snapshotRoot": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt6",
+  "ledgerSHA256": "296e5801cf96f816152473f92b5a7530635369ce9c3e8586a745707c558c4672",
+  "paths": 3,
+  "payloadBytes": 662281,
+  "contentChanges": 3,
+  "modeChanges": 0,
+  "canonicalBinding": {
+    "algorithm": "SHA256 of compact UTF-8 JSON rows sorted by path, keys in order path,beforeSHA256,afterSHA256,bytes,contentFrom",
+    "sha256": "f236b2645efa7b8b55e3c443ec279bb137aaf1649760c01e26458522531a8165"
+  },
+  "rows": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "afterSHA256": "9028752022b0e28a3d1f533c5ec4d0d85e6e9736b0c19b2c47c926cf3481e66a",
+      "bytes": 147521,
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.json",
+      "semanticDelta": [
+        {
+          "jsonPointer": "/sourceCommit",
+          "before": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+          "after": "bd6da170da7936fe3c5353ddaf8b25c97477a380"
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "afterSHA256": "2825bae8731c9c8674d746feb913ed890f880c4fc5ee65ff57f9d85171a9dc1a",
+      "bytes": 21494,
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.md",
+      "semanticDelta": [
+        {
+          "field": "rendered source commit",
+          "before": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+          "after": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "beforeSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "afterSHA256": "03a4c8fec52f59a8737e870364773c43b1de4e15a4b0ffe0195e3ff5dea18cfd",
+      "bytes": 493266,
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/source-inventory.json",
+      "semanticDelta": [
+        {
+          "jsonPointer": "/sourceCommit",
+          "before": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+          "after": "bd6da170da7936fe3c5353ddaf8b25c97477a380"
+        }
+      ]
+    }
+  ],
+  "classification": "Only provenance sourceCommit changes; no implementation/API/source inventory rows changed. Not materialized by this inspection."
+}
