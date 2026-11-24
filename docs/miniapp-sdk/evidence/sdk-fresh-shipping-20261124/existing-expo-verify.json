@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/local/bin/node",
+    "Scripts/MiniApps/install-tooling.mjs",
+    "--verify",
+    "--tooling-root=/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo"
+  ],
+  "exitCode": 1,
+  "scope": "Existing production preflight, read-only; no preparation/install"
+}

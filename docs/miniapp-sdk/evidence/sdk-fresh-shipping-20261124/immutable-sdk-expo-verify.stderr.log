@@ -1,0 +1,10 @@
+file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-shipping-20261124/Scripts/MiniApps/install-tooling.mjs:108
+  catch(error){if(error.code==='ENOENT')throw new Error('No verified original npm installation receipt. Run Scripts/MiniApps/install-tooling.mjs for '+toolingRoot);throw error;}
+                                              ^
+
+Error: No verified original npm installation receipt. Run Scripts/MiniApps/install-tooling.mjs for /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo
+    at readReceipt (file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-shipping-20261124/Scripts/MiniApps/install-tooling.mjs:108:47)
+    at async verifyInstalledGraph (file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-shipping-20261124/Scripts/MiniApps/install-tooling.mjs:115:17)
+    at async file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-shipping-20261124/Scripts/MiniApps/install-tooling.mjs:155:17
+
+Node.js v24.22.0
