@@ -1,0 +1,48 @@
+{
+  "status": "SOURCE_CORROBORATION_PASS",
+  "scope": "Source and recorded native-result inspection only; this is not a rerun of the analyzer.",
+  "base": "c0e33300da596cc3f42b00a79f2c7ec1eed9e0aa",
+  "runSource": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+  "sourceIdentity": {
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift": {
+      "runSourceSHA256": "e13b930558bc268c319cd28c5a7678e88571554a430476812847bff3b946ff55",
+      "isolatedBaseSHA256": "e13b930558bc268c319cd28c5a7678e88571554a430476812847bff3b946ff55",
+      "equal": true
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift": {
+      "runSourceSHA256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+      "isolatedBaseSHA256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+      "equal": true
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift": {
+      "runSourceSHA256": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+      "isolatedBaseSHA256": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+      "equal": true
+    },
+    "Scripts/MiniApps/resolve-upstreams.mjs": {
+      "runSourceSHA256": "873bc51d0bd6e859e5929a4f0cefb934cf340e82ad7cee61aafe6f2b0546a337",
+      "isolatedBaseSHA256": "873bc51d0bd6e859e5929a4f0cefb934cf340e82ad7cee61aafe6f2b0546a337",
+      "equal": true
+    }
+  },
+  "versions": {
+    "nativeScriptRuntimeVersion": "9.1.1",
+    "nativeScriptCoreVersion": "9.1.4"
+  },
+  "generatedAuthority": {
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+    "generator": "Scripts/MiniApps/resolve-upstreams.mjs",
+    "bindingLine": "const fields={nativeScriptRuntimeVersion:ns['@nativescript/ios'],nativeScriptCoreVersion:ns['@nativescript/core'],nativeScriptSwiftUIVersion:ns['@nativescript/swift-ui'],expoSDKVersion:expo.expo,expoUIVersion:expo['@expo/ui'],expoWidgetsVersion:expo['expo-widgets'],reactNativeVersion:expo['react-native'],nativeApiVersion:expo['@nativescript/react-native'],reactNativeWorkletsVersion:expo['react-native-worklets']};",
+    "runtimePackage": "@nativescript/ios",
+    "corePackage": "@nativescript/core"
+  },
+  "fixtureCoreDependency": "9.1.0",
+  "actualProductionMessageTemplate": "message: \"NativeScript core @nativescript/core \\(coreVersion) is supported by embedded runtime \\(nativeScriptRuntimeVersion).\"",
+  "sourceResolvedMessage": "NativeScript core @nativescript/core 9.1.0 is supported by embedded runtime 9.1.1.",
+  "beforeExpectedSubstring": "supported by embedded runtime 9.1.4",
+  "beforeWouldMatch": false,
+  "correctedExpectedSubstring": "supported by embedded runtime 9.1.1",
+  "correctedWouldMatch": true,
+  "onlyTestEdit": "One nativeScriptCoreVersion reference becomes nativeScriptRuntimeVersion in the informational success-message expectation.",
+  "unchanged": "Fixtures, both installability assertions, unsupported Core expectation, analyzer implementation, generated authority, acceptance filters and runtime policies."
+}

@@ -252,7 +252,7 @@ struct HanlinScriptAnalyzerTests {
         ))
         let supportedPreview = try analyzer.analyze(supported)
         #expect(supportedPreview.canInstall)
-        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime \(HanlinMiniAppHostVersions.nativeScriptCoreVersion)") })
+        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime \(HanlinMiniAppHostVersions.nativeScriptRuntimeVersion)") })
 
         let unsupported = try package(files: [
             "script.json": #"{"name":"Unsupported Core Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,
