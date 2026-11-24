@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "3b6138be596ffdfc05758264ec36bec0e3c8a4af",
+  "sourceCommit": "00d86e42ab09e99831d042c617c23e17bc91f894",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -17,40 +17,71 @@
   "preparedRuntimeContract": {
     "source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
     "versions": {
-      "nativeScriptRuntimeVersion": "9.1.0",
+      "nativeScriptRuntimeVersion": "9.1.1",
+      "nativeScriptCoreVersion": "9.1.4",
       "nativeScriptSwiftUIVersion": "4.0.2",
-      "expoSDKVersion": "58.0.3",
-      "expoUIVersion": "58.0.3",
+      "expoSDKVersion": "58.0.26",
+      "expoUIVersion": "58.0.29",
       "expoUIBridgeVersion": "3.0.0"
     },
+    "versionSources": {
+      "HanlinScriptAnalyzer": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "HanlinMiniAppHostVersions": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "HanlinNativeScriptSession": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+      "HanlinNativeScriptHostVersions": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift",
+      "HanlinExpoSession": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+      "HanlinExpoHostVersions": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+      "HanlinExpoBridgeMetadata": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
+      "HanlinGeneratedBridgeMetadata": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift"
+    },
+    "nativeSession": {
+      "runtimeVersion": "9.1.1",
+      "coreVersion": "9.1.4",
+      "swiftUIVersion": "4.0.2"
+    },
+    "expoSession": {
+      "sdkVersion": "58.0.26",
+      "uiVersion": "58.0.29",
+      "runtimeVersion": "58.0.29",
+      "bridgeVersion": "3.0.0"
+    },
+    "bridgeGenerationBaseline": {
+      "source": "Tools/SwiftUIBridge/configuration.json",
+      "runtimeVersion": "58.0.3",
+      "expoUIVersion": "58.0.3",
+      "generatedRuntimeVersion": "58.0.3"
+    },
     "minimumVersionSource": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
-    "policy": "Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. Widget runtime/plugin exact pins remain authoritative.",
+    "policy": "Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. NativeScript prepared runtime requires the installed iOS major/minor and no newer patch; Core and iOS versions are independent. Widget runtime/plugin exact pins remain authoritative. The Expo bridge-generation baseline is separate from installed original Expo versions.",
     "stableDiagnosticCodes": [
       "MINIAPP_BRIDGE_VERSION_INVALID",
       "MINIAPP_BRIDGE_VERSION_MISMATCH",
       "MINIAPP_CORE_VERSION_MISMATCH",
       "MINIAPP_DEPENDENCY_VERSION_INVALID",
+      "MINIAPP_ENTRYPOINT_DECLARATION_INVALID",
       "MINIAPP_ENTRYPOINT_INVALID",
-      "MINIAPP_EXPO_VERSION_MISMATCH"
+      "MINIAPP_EXPO_VERSION_MISMATCH",
+      "MINIAPP_NATIVE_PRESENTATION_INVALID"
     ],
     "status": "shared importer/direct-session minimum policy; numeric build precedence ignores build labels. Source pin consistency checked; full schemas and installed Host acceptance remain separate gates"
   },
   "nativeScript": {
     "toolingDependencies": {
-      "@nativescript/core": "9.1.0",
+      "@nativescript/core": "9.1.4",
       "@nativescript/swift-ui": "4.0.2"
     },
     "toolingDevDependencies": {
-      "@nativescript/ios": "9.1.0",
-      "@nativescript/vite": "8.0.0",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.23",
       "typescript": "5.9.3",
       "vite": "8.0.0"
     },
     "pinnedNativeContract": {
-      "coreVersion": "9.1.0",
-      "iosRuntimeVersion": "9.1.0",
+      "coreVersion": "9.1.4",
+      "iosRuntimeVersion": "9.1.1",
       "iosSPMRepository": "https://github.com/NativeScript/ios-spm.git",
-      "iosSPMTagRevision": "a8e26efad02d792a62d2d015f0f7a632e336b2d1"
+      "iosSPMTagRevision": "33605a91197dc86bd9f15fecaad6e897223caa8a"
     },
     "swiftUI": {
       "package": "@nativescript/swift-ui",
@@ -74,21 +105,21 @@
     "publicExports": [
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 2,
+        "line": 4,
         "name": "HanlinRuntimeKind",
         "kind": "TypeAliasDeclaration",
         "type": "'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell'"
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 3,
+        "line": 5,
         "name": "RuntimeJSONValue",
         "kind": "TypeAliasDeclaration",
         "type": "null | boolean | number | string | RuntimeJSONValue[] | { [key: string]: RuntimeJSONValue }"
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 4,
+        "line": 6,
         "name": "RuntimeExecutionLimits",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -108,7 +139,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 9,
+        "line": 11,
         "name": "RuntimeOutputArtifact",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -134,7 +165,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 10,
+        "line": 12,
         "name": "RuntimeExecutionResult",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -202,7 +233,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 22,
+        "line": 24,
         "name": "RuntimeExecutionOptions",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -228,7 +259,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 27,
+        "line": 29,
         "name": "RuntimeRequestHandle",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -254,7 +285,184 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 44,
+        "line": 36,
+        "name": "MiniAppOperation",
+        "kind": "TypeAliasDeclaration",
+        "type": "'display' | 'insert' | 'replaceSelection' | 'replaceDocument' | 'custom'"
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 37,
+        "name": "MiniAppContent",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "kind",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "'text' | 'url' | 'file' | 'json'"
+          },
+          {
+            "name": "text",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "attachmentID",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "typeIdentifier",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 41,
+        "name": "MiniAppSharedContext",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "id",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "appID",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "actionID",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "operation",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "MiniAppOperation"
+          },
+          {
+            "name": "inputs",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "MiniAppContent[]"
+          },
+          {
+            "name": "opensInNewWindow",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "source",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "{\n    appID: string; displayName: string; documentID?: string; documentTitle?: string;\n    revision?: string; documentText?: string; kind?: string; locator?: string; sceneID?: string;\n    selection?: {location: number; length: number; text: string; blockIDs: string[]};\n    metadata: Record<string, string>;\n  }"
+          }
+        ]
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 51,
+        "name": "MiniAppOutput",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "operation",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "MiniAppOperation"
+          },
+          {
+            "name": "status",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "'success' | 'error' | 'cancelled'"
+          },
+          {
+            "name": "items",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "MiniAppContent[]"
+          },
+          {
+            "name": "message",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "metadata",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "Record<string, string>"
+          }
+        ]
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 58,
+        "name": "MiniAppSharing",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "getContext",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<MiniAppSharedContext>"
+          },
+          {
+            "name": "complete",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<{ok: true}>"
+          },
+          {
+            "name": "cancel",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<{ok: true}>"
+          },
+          {
+            "name": "readAttachment",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<{base64: string}>"
+          },
+          {
+            "name": "writeAttachment",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<MiniAppContent>"
+          }
+        ]
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 77,
         "name": "createHostServices",
         "kind": "FunctionDeclaration"
       }
@@ -497,274 +705,280 @@
           "line": 91
         },
         {
+          "selector": "clearLegacyProviderIfMatches:ifMatches:",
+          "classMethod": true,
+          "signature": "+ (void)clearLegacyProviderIfMatches:(id<HanlinNativeServicesProvider>)provider NS_SWIFT_NAME(clearLegacyProvider(ifMatches:));",
+          "line": 93
+        },
+        {
           "selector": "legacyProvider",
           "classMethod": true,
           "signature": "+ (nullable id<HanlinNativeServicesProvider>)legacyProvider;",
-          "line": 92
+          "line": 95
         },
         {
           "selector": "currentProvider",
           "classMethod": true,
           "signature": "+ (nullable id<HanlinNativeServicesProvider>)currentProvider;",
-          "line": 93
+          "line": 96
         },
         {
           "selector": "executeRuntime:completion:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 96
+          "line": 99
         },
         {
           "selector": "cancelRuntime:",
           "classMethod": true,
           "signature": "+ (BOOL)cancelRuntime:(NSString *)requestID;",
-          "line": 97
+          "line": 100
         },
         {
           "selector": "dataRootDirectory",
           "classMethod": true,
           "signature": "+ (nullable NSString *)dataRootDirectory;",
-          "line": 98
+          "line": 101
         },
         {
           "selector": "stateDirectory",
           "classMethod": true,
           "signature": "+ (nullable NSString *)stateDirectory;",
-          "line": 99
+          "line": 102
         },
         {
           "selector": "documentsDirectory",
           "classMethod": true,
           "signature": "+ (nullable NSString *)documentsDirectory;",
-          "line": 100
+          "line": 103
         },
         {
           "selector": "cacheDirectory",
           "classMethod": true,
           "signature": "+ (nullable NSString *)cacheDirectory;",
-          "line": 101
+          "line": 104
         },
         {
           "selector": "executeJavaScript:completion:",
           "classMethod": true,
           "signature": "+ (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 103
+          "line": 106
         },
         {
           "selector": "executeNode:completion:",
           "classMethod": true,
           "signature": "+ (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 104
+          "line": 107
         },
         {
           "selector": "nodeHealthCheckWithCompletion:",
           "classMethod": true,
           "signature": "+ (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
-          "line": 105
+          "line": 108
         },
         {
           "selector": "executePython:completion:",
           "classMethod": true,
           "signature": "+ (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 106
+          "line": 109
         },
         {
           "selector": "pythonVersion",
           "classMethod": true,
           "signature": "+ (nullable NSString *)pythonVersion;",
-          "line": 107
+          "line": 110
         },
         {
           "selector": "fetchURL:completion:",
           "classMethod": true,
           "signature": "+ (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 108
+          "line": 111
         },
         {
           "selector": "sendRequest:action:capability:payloadJSON:completion:",
           "classMethod": true,
           "signature": "+ (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 110
+          "line": 113
         },
         {
           "selector": "registerRequestHandler:capability:handler:",
           "classMethod": true,
           "signature": "+ (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
-          "line": 116
+          "line": 119
         },
         {
           "selector": "executeJavaScriptSync:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)executeJavaScriptSync:(NSString *)source;",
-          "line": 121
+          "line": 124
         },
         {
           "selector": "executeNodeSync:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)executeNodeSync:(NSString *)source;",
-          "line": 122
+          "line": 125
         },
         {
           "selector": "executePythonSync:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)executePythonSync:(NSString *)source;",
-          "line": 123
+          "line": 126
         },
         {
           "selector": "fetchURLSync:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)fetchURLSync:(NSString *)urlString;",
-          "line": 124
+          "line": 127
         },
         {
           "selector": "sendRequestSync:action:capability:payloadJSON:",
           "classMethod": true,
           "signature": "+ (nullable NSString *)sendRequestSync:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON;",
-          "line": 125
+          "line": 128
         },
         {
           "selector": "registerAction:capability:",
           "classMethod": true,
           "signature": "+ (void)registerAction:(NSString *)action capability:(NSString *)capability;",
-          "line": 129
+          "line": 132
         },
         {
           "selector": "roundTripValue:key:",
           "classMethod": true,
           "signature": "+ (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;",
-          "line": 130
+          "line": 133
         },
         {
           "selector": "sharedBridge",
           "classMethod": true,
           "signature": "+ (instancetype)sharedBridge;",
-          "line": 132
+          "line": 135
         },
         {
           "selector": "executeRuntime:completion:",
           "classMethod": false,
           "signature": "- (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 133
+          "line": 136
         },
         {
           "selector": "cancelRuntime:",
           "classMethod": false,
           "signature": "- (BOOL)cancelRuntime:(NSString *)requestID;",
-          "line": 134
+          "line": 137
         },
         {
           "selector": "dataRootDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)dataRootDirectory;",
-          "line": 135
+          "line": 138
         },
         {
           "selector": "stateDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)stateDirectory;",
-          "line": 136
+          "line": 139
         },
         {
           "selector": "documentsDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)documentsDirectory;",
-          "line": 137
+          "line": 140
         },
         {
           "selector": "cacheDirectory",
           "classMethod": false,
           "signature": "- (nullable NSString *)cacheDirectory;",
-          "line": 138
+          "line": 141
         },
         {
           "selector": "executeJavaScript:completion:",
           "classMethod": false,
           "signature": "- (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 139
+          "line": 142
         },
         {
           "selector": "executeNode:completion:",
           "classMethod": false,
           "signature": "- (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 140
+          "line": 143
         },
         {
           "selector": "nodeHealthCheckWithCompletion:",
           "classMethod": false,
           "signature": "- (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion;",
-          "line": 141
+          "line": 144
         },
         {
           "selector": "executePython:completion:",
           "classMethod": false,
           "signature": "- (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 142
+          "line": 145
         },
         {
           "selector": "pythonVersion",
           "classMethod": false,
           "signature": "- (nullable NSString *)pythonVersion;",
-          "line": 143
+          "line": 146
         },
         {
           "selector": "fetchURL:completion:",
           "classMethod": false,
           "signature": "- (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 144
+          "line": 147
         },
         {
           "selector": "sendRequest:action:capability:payloadJSON:completion:",
           "classMethod": false,
           "signature": "- (void)sendRequest:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion;",
-          "line": 145
+          "line": 148
         },
         {
           "selector": "registerRequestHandler:capability:handler:",
           "classMethod": false,
           "signature": "- (void)registerRequestHandler:(NSString *)action capability:(NSString *)capability handler:(HanlinBridgeRequestHandlerBlock)handler;",
-          "line": 150
+          "line": 153
         },
         {
           "selector": "executeJavaScriptSync:",
           "classMethod": false,
           "signature": "- (nullable NSString *)executeJavaScriptSync:(NSString *)source;",
-          "line": 153
+          "line": 156
         },
         {
           "selector": "executeNodeSync:",
           "classMethod": false,
           "signature": "- (nullable NSString *)executeNodeSync:(NSString *)source;",
-          "line": 154
+          "line": 157
         },
         {
           "selector": "executePythonSync:",
           "classMethod": false,
           "signature": "- (nullable NSString *)executePythonSync:(NSString *)source;",
-          "line": 155
+          "line": 158
         },
         {
           "selector": "fetchURLSync:",
           "classMethod": false,
           "signature": "- (nullable NSString *)fetchURLSync:(NSString *)urlString;",
-          "line": 156
+          "line": 159
         },
         {
           "selector": "sendRequestSync:action:capability:payloadJSON:",
           "classMethod": false,
           "signature": "- (nullable NSString *)sendRequestSync:(NSString *)targetID action:(NSString *)action capability:(NSString *)capability payloadJSON:(NSString *)payloadJSON;",
-          "line": 157
+          "line": 160
         },
         {
           "selector": "registerAction:capability:",
           "classMethod": false,
           "signature": "- (void)registerAction:(NSString *)action capability:(NSString *)capability;",
-          "line": 161
+          "line": 164
         },
         {
           "selector": "roundTripValue:key:",
           "classMethod": false,
           "signature": "- (NSString *)roundTripValue:(NSString *)value key:(NSString *)key;",
-          "line": 162
+          "line": 165
         }
       ],
       "status": "generic_source_wired_native_acceptance_pending",
@@ -776,32 +990,32 @@
   "expo": {
     "declaredAndLocked": {
       "expo": {
-        "declared": "58.0.0",
-        "locked": "58.0.0"
+        "declared": "58.0.26",
+        "locked": "58.0.26"
       },
       "@expo/ui": {
-        "declared": "58.0.3",
-        "locked": "58.0.3"
+        "declared": "58.0.29",
+        "locked": "58.0.29"
       },
       "react": {
         "declared": "19.3.0",
         "locked": "19.3.0"
       },
       "react-native": {
-        "declared": "0.88.0",
-        "locked": "0.88.0"
+        "declared": "0.88.1",
+        "locked": "0.88.1"
       },
       "expo-modules-core": {
-        "declared": "58.0.3",
-        "locked": "58.0.3"
+        "declared": "58.1.0",
+        "locked": "58.1.0"
       },
       "expo-modules-jsi": {
-        "declared": "58.0.2",
-        "locked": "58.0.2"
+        "declared": "58.0.23",
+        "locked": "58.0.23"
       },
       "react-native-worklets": {
-        "declared": "0.13.1",
-        "locked": "0.13.1"
+        "declared": "0.13.0",
+        "locked": "0.13.0"
       },
       "@nativescript/react-native": {
         "declared": "9.1.2",
@@ -814,10 +1028,10 @@
         "base64-js": "1.5.1"
       },
       "peerDependencies": {
-        "@expo/ui": "58.0.3",
-        "expo": "58.0.0",
+        "@expo/ui": "58.0.29",
+        "expo": "58.0.26",
         "react": "19.3.0",
-        "react-native": "0.88.0"
+        "react-native": "0.88.1"
       },
       "generatedBridgeVersion": "3.0.0",
       "generatedRuntimeContract": "58.0.3",
@@ -870,9 +1084,9 @@
       "packageVersion": "1.0.0",
       "peerDependencies": {
         "@nativescript/react-native": "9.1.2",
-        "react": "*",
-        "react-native": ">=0.88.0",
-        "react-native-worklets": "0.13.1"
+        "react": "19.3.0",
+        "react-native": "0.88.1",
+        "react-native-worklets": "0.13.0"
       }
     },
     "nativeModule": {
@@ -892,20 +1106,83 @@
     "hostInvoke": {
       "source": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
       "operations": [
+        "actions.register",
+        "actions.next",
+        "actions.complete",
         "capabilities.has",
         "runtime.execute",
         "files.read",
         "files.write",
         "files.delete",
         "files.list",
-        "widgets.publish"
+        "liveActivities.areEnabled",
+        "liveActivities.list",
+        "liveActivities.start",
+        "liveActivities.update",
+        "liveActivities.end",
+        "widgets.publish",
+        "miniapps.context",
+        "miniapps.readAttachment",
+        "miniapps.writeAttachment",
+        "miniapps.complete",
+        "miniapps.cancel",
+        "miniapps.return"
+      ],
+      "routes": [
+        {
+          "kind": "direct",
+          "source": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+          "operations": [
+            "actions.register",
+            "actions.next",
+            "actions.complete",
+            "capabilities.has",
+            "runtime.execute",
+            "files.read",
+            "files.write",
+            "files.delete",
+            "files.list",
+            "liveActivities.areEnabled",
+            "liveActivities.list",
+            "liveActivities.start",
+            "liveActivities.update",
+            "liveActivities.end",
+            "widgets.publish"
+          ]
+        },
+        {
+          "kind": "delegated",
+          "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+          "suppliedBy": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+          "operations": [
+            "miniapps.context",
+            "miniapps.readAttachment",
+            "miniapps.writeAttachment",
+            "miniapps.complete",
+            "miniapps.cancel",
+            "miniapps.return"
+          ],
+          "condition": "An active external MiniApp invocation supplies the typed callback."
+        }
       ],
       "facadeOperations": [
+        "miniapps.context",
+        "miniapps.complete",
+        "miniapps.return",
+        "miniapps.cancel",
+        "miniapps.return",
+        "miniapps.readAttachment",
+        "miniapps.writeAttachment",
         "runtime.execute",
         "files.read",
         "files.write",
         "files.delete",
         "files.list",
+        "liveActivities.areEnabled",
+        "liveActivities.list",
+        "liveActivities.start",
+        "liveActivities.update",
+        "liveActivities.end",
         "widgets.publish"
       ],
       "status": "partial_source_wiring_not_surface_acceptance"
@@ -4846,21 +5123,212 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 10,
+        "line": 15,
+        "name": "HanlinExpoRootProps",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "hanlin",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "{\n    kind: 'embeddedResult';\n    handler: string;\n    ownerID: string;\n    installedPackageID: string;\n    generation: number;\n    resultReference?: string;\n    payload?: MiniAppJSONValue;\n  }"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 27,
         "name": "HanlinRuntimeKind",
         "kind": "TypeAliasDeclaration",
         "type": "'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell'"
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 11,
+        "line": 28,
+        "name": "MiniAppOperation",
+        "kind": "TypeAliasDeclaration",
+        "type": "'display' | 'insert' | 'replaceSelection' | 'replaceDocument' | 'custom'"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 29,
+        "name": "MiniAppContent",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "kind",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "'text' | 'url' | 'file' | 'json'"
+          },
+          {
+            "name": "text",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "url",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "attachmentID",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "typeIdentifier",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 33,
+        "name": "MiniAppSharedContext",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "id",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "appID",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "actionID",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "operation",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "MiniAppOperation"
+          },
+          {
+            "name": "inputs",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "MiniAppContent[]"
+          },
+          {
+            "name": "opensInNewWindow",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "source",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "{\n    appID: string; displayName: string; documentID?: string; documentTitle?: string;\n    revision?: string; documentText?: string; kind?: string; locator?: string; sceneID?: string;\n    selection?: {location: number; length: number; text: string; blockIDs: string[]};\n    metadata: Record<string, string>;\n  }"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 43,
+        "name": "MiniAppOutput",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "operation",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "MiniAppOperation"
+          },
+          {
+            "name": "status",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "'success' | 'error' | 'cancelled'"
+          },
+          {
+            "name": "items",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "MiniAppContent[]"
+          },
+          {
+            "name": "message",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "metadata",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "Record<string, string>"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 50,
+        "name": "MiniAppSharing",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "getContext",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<MiniAppSharedContext>"
+          },
+          {
+            "name": "complete",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<{ok: true}>"
+          },
+          {
+            "name": "cancel",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<{ok: true}>"
+          },
+          {
+            "name": "readAttachment",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<{base64: string}>"
+          },
+          {
+            "name": "writeAttachment",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<MiniAppContent>"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 58,
         "name": "HanlinDataArea",
         "kind": "TypeAliasDeclaration",
         "type": "'data' | 'documents' | 'state' | 'cache'"
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 13,
+        "line": 60,
         "name": "RuntimeExecutionLimits",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -4880,7 +5348,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 20,
+        "line": 67,
         "name": "RuntimeOutputArtifact",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -4906,7 +5374,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 26,
+        "line": 73,
         "name": "RuntimeExecutionResult",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -4974,10 +5442,20 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 44,
+        "line": 91,
         "name": "hostServices",
         "kind": "variable",
         "members": [
+          {
+            "name": "actions",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
+          {
+            "name": "miniapps",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
           {
             "name": "hasCapability",
             "kind": "MethodDeclaration",
@@ -5013,6 +5491,11 @@
             "kind": "MethodDeclaration",
             "optional": false,
             "type": "Promise<string[]>"
+          },
+          {
+            "name": "liveActivities",
+            "kind": "PropertyAssignment",
+            "optional": false
           },
           {
             "name": "publishWidget",
@@ -5539,6 +6022,481 @@
         "name": "getInstalledBridgeMetadata",
         "kind": "FunctionDeclaration",
         "type": "BridgeMetadata"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+        "line": 1,
+        "name": "MiniAppJSONValue",
+        "kind": "TypeAliasDeclaration",
+        "type": "null | boolean | number | string | MiniAppJSONValue[] | { [key: string]: MiniAppJSONValue }"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+        "line": 3,
+        "name": "MiniAppActionInvocation",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "id",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "action",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "caller",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "MiniAppJSONValue"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+        "line": 10,
+        "name": "MiniAppActionHandler",
+        "kind": "TypeAliasDeclaration",
+        "type": "(invocation: MiniAppActionInvocation) => MiniAppJSONValue | Promise<MiniAppJSONValue>"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+        "line": 11,
+        "name": "MiniAppActionHandlers",
+        "kind": "TypeAliasDeclaration",
+        "type": "Readonly<Record<string, MiniAppActionHandler>>"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+        "line": 12,
+        "name": "MiniAppInvoke",
+        "kind": "TypeAliasDeclaration",
+        "type": "<T>(operation: string, payload: unknown) => Promise<T>"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+        "line": 38,
+        "name": "serveMiniAppActions",
+        "kind": "FunctionDeclaration",
+        "type": "Promise<void>"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 3,
+        "name": "NativeSurfaceJSON",
+        "kind": "TypeAliasDeclaration",
+        "type": "null | boolean | number | string | NativeSurfaceJSON[]\n  | { [key: string]: NativeSurfaceJSON }"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 6,
+        "name": "NativeSurfaceAction",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "__hanlinAppIntent",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "true"
+          },
+          {
+            "name": "name",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "parameters",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "NativeSurfaceJSON"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 12,
+        "name": "NativeSurfaceProperties",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "text",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "systemName",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "systemImage",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "spacing",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "alignment",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "fill",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "cornerRadius",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "value",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "max",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "intent",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "NativeSurfaceAction"
+          },
+          {
+            "name": "font",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "fontWeight",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "'ultraLight' | 'thin' | 'light' | 'regular' | 'medium' | 'semibold' | 'bold' | 'heavy' | 'black'"
+          },
+          {
+            "name": "foregroundStyle",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "padding",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "frame",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "{width?: number; height?: number}"
+          },
+          {
+            "name": "opacity",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "lineLimit",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "minimumScaleFactor",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "strikethrough",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 38,
+        "name": "NativeSurfaceNode",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "kind",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "'text' | 'image' | 'button' | 'hStack' | 'vStack' | 'zStack'\n    | 'fragment' | 'group' | 'groupBox' | 'spacer' | 'divider' | 'progress' | 'label'\n    | 'markdown' | 'contentUnavailableView' | 'circle' | 'capsule' | 'rectangle'\n    | 'roundedRectangle' | 'liveActivityUI' | 'liveActivityContent'\n    | 'liveActivityCompactLeading' | 'liveActivityCompactTrailing' | 'liveActivityMinimal'\n    | 'liveActivityExpandedLeading' | 'liveActivityExpandedTrailing'\n    | 'liveActivityExpandedCenter' | 'liveActivityExpandedBottom'"
+          },
+          {
+            "name": "key",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "properties",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "NativeSurfaceProperties"
+          },
+          {
+            "name": "children",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "NativeSurfaceNode[]"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 51,
+        "name": "NativeSurfaceLiveActivityStart",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "title",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "root",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "NativeSurfaceNode"
+          },
+          {
+            "name": "state",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "NativeSurfaceJSON"
+          },
+          {
+            "name": "actionEntrypointID",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "staleDateEpochMilliseconds",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "relevanceScore",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 63,
+        "name": "ScriptWidgetLiveActivityStart",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "scriptWidgetEntrypointID",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "widgetInstanceID",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "family",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "'systemSmall' | 'systemMedium' | 'systemLarge' | 'systemExtraLarge'"
+          },
+          {
+            "name": "title",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "state",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "Record<string, NativeSurfaceJSON>"
+          },
+          {
+            "name": "staleDateEpochMilliseconds",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "relevanceScore",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 72,
+        "name": "LiveActivityStart",
+        "kind": "TypeAliasDeclaration",
+        "type": "NativeSurfaceLiveActivityStart | ScriptWidgetLiveActivityStart"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 74,
+        "name": "LiveActivityUpdate",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "title",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "root",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "NativeSurfaceNode"
+          },
+          {
+            "name": "state",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "NativeSurfaceJSON"
+          },
+          {
+            "name": "staleDateEpochMilliseconds",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "relevanceScore",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 82,
+        "name": "LiveActivityEnd",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "title",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "root",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "NativeSurfaceNode"
+          },
+          {
+            "name": "state",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "NativeSurfaceJSON"
+          },
+          {
+            "name": "dismissAfterSeconds",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "line": 89,
+        "name": "MiniAppLiveActivities",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "areEnabled",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<boolean>"
+          },
+          {
+            "name": "list",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<string[]>"
+          },
+          {
+            "name": "start",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<{activityID: string}>"
+          },
+          {
+            "name": "update",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<{ok: boolean}>"
+          },
+          {
+            "name": "end",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<{ok: boolean}>"
+          }
+        ]
       }
     ],
     "reexports": [
@@ -5614,6 +6572,36 @@
         "typeOnly": true
       },
       {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 2,
+        "module": "./system-surfaces",
+        "names": [
+          "NativeSurfaceJSON",
+          "NativeSurfaceAction",
+          "NativeSurfaceNode",
+          "NativeSurfaceProperties",
+          "LiveActivityStart",
+          "NativeSurfaceLiveActivityStart",
+          "ScriptWidgetLiveActivityStart",
+          "LiveActivityUpdate",
+          "LiveActivityEnd",
+          "MiniAppLiveActivities"
+        ],
+        "typeOnly": true
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 6,
+        "module": "./miniapp-actions",
+        "names": [
+          "MiniAppActionInvocation",
+          "MiniAppActionHandler",
+          "MiniAppActionHandlers",
+          "MiniAppJSONValue"
+        ],
+        "typeOnly": true
+      },
+      {
         "source": "Packages/HanlinExpoUI/src/index.ts",
         "line": 1,
         "module": "@expo/ui/swift-ui",
@@ -5675,6 +6663,36 @@
           "*"
         ],
         "typeOnly": false
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/modifiers.ts",
+        "line": 7,
+        "module": "@expo/ui/swift-ui/modifiers",
+        "names": [
+          "navigationBarTitleDisplayMode",
+          "preferredColorScheme",
+          "presentationCornerRadius",
+          "sectionIndexLabel"
+        ],
+        "typeOnly": false
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 2,
+        "module": "../../Packages/HanlinExpoUI/src/system-surfaces",
+        "names": [
+          "NativeSurfaceJSON",
+          "NativeSurfaceAction",
+          "NativeSurfaceNode",
+          "NativeSurfaceProperties",
+          "LiveActivityStart",
+          "NativeSurfaceLiveActivityStart",
+          "ScriptWidgetLiveActivityStart",
+          "LiveActivityUpdate",
+          "LiveActivityEnd",
+          "MiniAppLiveActivities"
+        ],
+        "typeOnly": true
       }
     ]
   },
@@ -5772,7 +6790,7 @@
     {
       "id": "INT06-SHELL-SOURCE",
       "owner": "INT-06",
-      "detail": "Generic RuntimeKind.shell still uses the linked native string parser; the public command-string tool uses the portable-shell route. Align the documented source semantics without adding another shell engine."
+      "detail": "Generic RuntimeKind.shell and the public command-string tool share the existing portable-shell route. Structured program/argv execution uses the direct linked ios_system route; native per-surface acceptance remains separate evidence."
     },
     {
       "id": "INT03-NS-RESULT",
@@ -5803,11 +6821,11 @@
   "sources": [
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "sha256": "dec2911594fcefdfc6ba0b6e543f9d7302d72a946c439a921dc9c6cc1cb0f09f"
+      "sha256": "8f3988777a57c934fea7ff0ddeda1255d821a92368b505cce24ece9cc004c470"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "5b7c7a3361f5645d89792908f63a3c101f57ceb965220f9a8dbf9e51e6693dd2"
+      "sha256": "fcc91fd9bee2ac5b84988e2c7ee5d20cb244a212226de607f78cd32214d49fa8"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -5815,7 +6833,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
-      "sha256": "ce9e10937895c7009e709568bd448222f09bddd9bcfa15cc178726b459a910e7"
+      "sha256": "5f24ed0174ff4378b28ea8f32b14de8b99dc73cf348b00008e101fdfd670631b"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
@@ -5827,11 +6845,19 @@
     },
     {
       "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
-      "sha256": "649671e40292cbcdfded8a34869e581f6d9ad51839f241c45b312510208ae0c8"
+      "sha256": "1612ca08cb631ed7373f5281cd17682e055c0522752f0f37d2dc8c70be67a352"
     },
     {
       "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
-      "sha256": "07dd6bf358f8d94cd9333fb4c5400478505d29a874380800eb5e7e4141e4e2ad"
+      "sha256": "f0efcee8a74ac026d5faa2b6924b3f1a0088ae1dc74957e381b4b2bd4d6e7244"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "sha256": "33429f2ec384c535f19764220295c96aefd16fff87890cd7a30c0472f8dcc377"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "sha256": "ac49e5bd03c4a6b6d341aa4fa90cfe2aca673fa77ac11f950e6bcd91ed3ab28a"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -5847,7 +6873,7 @@
     },
     {
       "path": "Packages/HanlinExpoNativeAPIJS/package.json",
-      "sha256": "a2b03cb051457fbbb80c7ed058d199e63b06081ea0092dc8bbdbb9433de30b61"
+      "sha256": "7a46122e4b3ca8e9fb1caa54bb7bdd0a6e4c56226b6c3bdded20e6134bb5909e"
     },
     {
       "path": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
@@ -5855,7 +6881,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Package.swift",
-      "sha256": "3c63a7cc0751b86e445e4048413c61553269e0d0fd087d01544c24dccb8f379c"
+      "sha256": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift",
@@ -5867,15 +6893,19 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
-      "sha256": "b889bee2edf76b6a364e6c6c03f92b830e27e992878c64621117fc8efc41c6d5"
+      "sha256": "45d95e05bd6def0ab99a87515829f1abeaea5404e312fee8b89d12b4282eabee"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostServicesBridge.swift",
       "sha256": "0127d340d0c0a18c2c83e25d558f1ecaa74a473ce47f27de61397cb29ea8c6ab"
     },
     {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+      "sha256": "5c28d3e33ecd38d42ddf13e44ddaab9d277d8dfd9b2742bf6d14293675437a8c"
+    },
+    {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-      "sha256": "2eb1553e20dce0f9424cf99720c4f004c36ac14219f29fe7375b38c4b15659c8"
+      "sha256": "27505a611dbe1b61ab100ca53c393ca9a72aedb76bbc084015c35423f25804c7"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
@@ -5883,7 +6913,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/package.json",
-      "sha256": "140b70efbc40406a004d8e8fb2e6cdca3818e83eb4aebc5fe2cab0d1d8323b41"
+      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
     },
     {
       "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
@@ -5899,7 +6929,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/host-services.ts",
-      "sha256": "03576a9ce5a7c33739e28df5fd9a1306528c5959b011707ccc329fd6cf6daae4"
+      "sha256": "eb1b68fe3175af3e82bf206395ff96eb25c86d6331df55c0bc0678b73ee3f29d"
     },
     {
       "path": "Packages/HanlinExpoUI/src/index.ts",
@@ -5910,12 +6940,20 @@
       "sha256": "aca64e3232f72cbb8a09a5a052c66ec73d42bd36c326b726b2fb95d6a31ce47d"
     },
     {
+      "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+      "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+    },
+    {
       "path": "Packages/HanlinExpoUI/src/modifiers.ts",
-      "sha256": "581daed29172040e28de21b4bedec61baf074c41a945f313e3bb827c008b5dec"
+      "sha256": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+      "sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Package.swift",
-      "sha256": "f2798b093e8df72923abc135e4999f2614c32e8de1d495c480e6fd8fd4db9b34"
+      "sha256": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
@@ -5923,23 +6961,27 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
-      "sha256": "0759b1466eae7382d0d89506b32d5e174266793cd3419e424df7bc82989534f9"
+      "sha256": "7817e45687bd69ba1a93f9aa8d48d66ddf1a63e32109807d949c1bfb3e0bd160"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
-      "sha256": "ace01e583be673a0ae4f021b1bb4e31ab5ef18ea2655802fb21c56c7b17b9f3b"
+      "sha256": "c2e8a138628dfd568a30dcaf0b2fd899347b6065354c86350db7d3f36f4c0b19"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift",
+      "sha256": "caee618f90412968d0390d1cee3c9938417de019fa64a372f70a3ac2682e8d78"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
-      "sha256": "f699d60a220d6142f139435d5ceaa245de6eb7da066af3afe878407b0f268695"
+      "sha256": "6ef3c5c17c41a513484a1341edd31bad3dfcc4a3b9c72f2157e3f3d6112244d3"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
-      "sha256": "bdfbd9aaafdc2b9b8b37b0e33a268f8b6143bdc807fa741ae699fd89ff259564"
+      "sha256": "75f055c7067c2497b64f64714ca175fc09a323236e236b1d57621d4a07c3f7c1"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
-      "sha256": "5c139e30f598ea2da90464bb840684dd3a302d157ffa4102195021944efbb85c"
+      "sha256": "c6cc15960daeb071fc5adc8daf3f041c3e990ee8ce285a0b6c945667763a7dc5"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
@@ -5951,7 +6993,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
-      "sha256": "122b1d09c68e28907fdbce19986824d9bd6596d36bd6f08074c670a386f2f19c"
+      "sha256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
@@ -5959,11 +7001,15 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-      "sha256": "9443a12286831f386d9a7db06b833902d041fe46d990e2014885a10d99b612fb"
+      "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "sha256": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "e685a45b93d6b0b4804ec6b13f0ada720ec2426a629a23a180ce28d1b64ce822"
+      "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
@@ -5975,27 +7021,43 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "b86334ac389d296140ab07d084973503802b6185b3bd30180abd92823f6bb216"
+      "sha256": "6fcf429cf4b8ca0b46b51a283571c95edd70ab7f71bc894cb3f2a6baccbd87da"
+    },
+    {
+      "path": "Scripts/Audit/miniapp-expo-operations.mjs",
+      "sha256": "3315918d0d91b5fd4d8bb77549f3c4553ae82a7796a1a0d1b5bcfd5ba507cb5e"
+    },
+    {
+      "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
+      "sha256": "8c3fe7f93fa9d77913ccef5c69e83fd3a205da411770d67a40be4d24677d202b"
     },
     {
       "path": "Scripts/Expo/build-probe.mjs",
-      "sha256": "25773890b5cb4c7f04f592b6f30a040b698e1165ede845b2144e58b7960abcc8"
+      "sha256": "3c5c51022c132102d0d51709640ad343173f2f2cebdbdbe272f1e6e72698c0ad"
     },
     {
       "path": "Scripts/Expo/check-ui-type-contract.mjs",
-      "sha256": "59570183dfab1e69c4f95ee56438c48c0835b63883a4d13e1af15f43c8a1b32b"
+      "sha256": "5271bdb790f0053b44d912ff227a4fdf63b5cbf50f99999f750893a3798df143"
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "sha256": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
-      "sha256": "01fd60dd46526bb4a874ee1b8a29bb31be180a0151463bb9a5cf922a66f2c6a4"
+      "sha256": "e3da3f23bf663dd927d1db5f34750053c611603cc968f200f51c309f3f8ccf60"
     },
     {
       "path": "Scripts/Expo/package.json",
-      "sha256": "c1c2f07561773e443ebe3b30237774461b506229a48297e19df2af19e9ffe23e"
+      "sha256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91"
     },
     {
       "path": "Scripts/Expo/prepare-types.mjs",
-      "sha256": "b5612d9396c15aba2595de7e0adb4b22941c74e0bdf3934c562152a424655138"
+      "sha256": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e"
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "sha256": "9d1e19f0da2274b72523274f0745e98513e6f66b32a81634ee72b5fab9e820ee"
     },
     {
       "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
@@ -6007,7 +7069,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-host-services.mjs",
-      "sha256": "f74356b5bebb6677548ceaf1cca971627da295ad0fb1b744787025fc665ad343"
+      "sha256": "9389c754c2708ac1592352f9ec0b184f9a154a0a2471259104f2f64dab29726b"
     },
     {
       "path": "Scripts/NativeScript/build-metadata-tool.py",
@@ -6015,23 +7077,23 @@
     },
     {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "4dbef40b5f3892a3fee323e974ea6827d5011f7f1b2871a3963130fb0ab8c789"
+      "sha256": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",
-      "sha256": "7e03d1d97c25f13d1242667f4bba8635391452028cb4e3fb38c0ab215ad2ff8f"
+      "sha256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5"
     },
     {
       "path": "Scripts/NativeScript/host-services.ts",
-      "sha256": "0bff98dcd9a407835db2a38b2030bedb5a1d157dac397a50f935f97a9c420db2"
+      "sha256": "efe0a28483fa36dbb3745f380b2ddd1bc6348af3b12c41ef10f19c2dd9a486a6"
     },
     {
       "path": "Scripts/NativeScript/metadata_public_headers.py",
-      "sha256": "1ed52995d6b4b90a295d852f12917914a7a194e6302b65df437c8332f659532a"
+      "sha256": "5a8a110a3fe4a692faede3211a22b0326065cd43026a4f47c3e3d7d1d5de4e5f"
     },
     {
       "path": "Scripts/NativeScript/package.json",
-      "sha256": "97c1400f8bce0072a89793e44d32006c4ad8f4cb166c878fe13677a78eadb6a5"
+      "sha256": "db255f51de179afb603cffa5d42830a27fcf0e2650d3401364f7338f94a328b5"
     },
     {
       "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
