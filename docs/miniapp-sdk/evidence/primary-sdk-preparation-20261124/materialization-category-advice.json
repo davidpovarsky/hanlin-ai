@@ -1,0 +1,82 @@
+{
+  "exactExecutionBase": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+  "evidenceBase": "b3a7c56fa6b691503fff04a0ddd5a1eeb6f736be",
+  "payloadRoot": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt5",
+  "ledgerPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt5/tracked-delta.json",
+  "ledgerSHA256": "b4381014062cca249740e1ff83c6d78d07680c2b27b51ac0569f2ea96e1a20ff",
+  "counts": {
+    "resolved-Swift-package-lock": 1,
+    "actual-generated-expo-fixture-archive": 16,
+    "original-Expo-Widgets-preparation-receipt": 1,
+    "nativescript-prepared-runtime": 167,
+    "shipped-source-provenance": 3
+  },
+  "fixturePairs": [
+    {
+      "source": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIMalformed.hanlinExpo",
+      "mirror": "AI_HLYUITests/Fixtures/ExpoNativeAPIMalformed.hanlinExpo",
+      "sha256": "6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301",
+      "interpretation": "Actual preparation output copied by existing producer; no import/render acceptance claimed."
+    },
+    {
+      "source": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+      "mirror": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "sha256": "f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba",
+      "interpretation": "Actual preparation output copied by existing producer; no import/render acceptance claimed."
+    },
+    {
+      "source": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+      "mirror": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+      "sha256": "e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3",
+      "interpretation": "Actual preparation output copied by existing producer; no import/render acceptance claimed."
+    },
+    {
+      "source": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "mirror": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "sha256": "39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b",
+      "interpretation": "Actual preparation output copied by existing producer; no import/render acceptance claimed."
+    },
+    {
+      "source": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "mirror": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "sha256": "5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38",
+      "interpretation": "Actual preparation output copied by existing producer; no import/render acceptance claimed."
+    },
+    {
+      "source": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "mirror": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "interpretation": "Actual preparation output copied by existing producer; no import/render acceptance claimed."
+    },
+    {
+      "source": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "mirror": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "interpretation": "Actual preparation output copied by existing producer; no import/render acceptance claimed."
+    },
+    {
+      "source": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "mirror": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "843b3147f81c4022759e01e29264f93273fbad47daad4ba45a5d1fc425d164da",
+      "interpretation": "Actual preparation output copied by existing producer; no import/render acceptance claimed."
+    }
+  ],
+  "widgetRuntimeReceipt": {
+    "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+    "beforeSHA256": "11bce470854088208234f0143dbf4c713a2eadb0968a9a5bfcc350933db205e9",
+    "afterSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+    "changedValues": {
+      "inputSHA256": {
+        "before": "1aafc9b6046f7bec9b7986925c1a10cc8db30a848ce80f69fc77f49d37e8ebea",
+        "after": "f284c49f3cd523b2578778a1041e289c23bf46ebec9254f1975a933aa6014e8b"
+      },
+      "packageLockSHA256": {
+        "before": "e3da3f23bf663dd927d1db5f34750053c611603cc968f200f51c309f3f8ccf60",
+        "after": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf"
+      }
+    }
+  },
+  "applyPolicy": "Use only authenticated contentFrom paths, require destination before SHA from ledger, preserve unrelated source and AGENTS. No production source application was performed in this lane.",
+  "modeBoundary": "One identical-content css-tree/lib/data.js row has observed transferred0755 versus Git100644. The ledger has no original mode field; do not invent authenticated chmod provenance.",
+  "reasonAllCategoriesMatter": "The native preparation materialized current original Core bodies and real fixture archives beyond the four SDK-member delta. Limiting publication to shipped docs would leave the Git checkpoint different from the prepared execution."
+}

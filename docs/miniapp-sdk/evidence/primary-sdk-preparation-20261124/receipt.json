@@ -1,0 +1,409 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T20:49:10.525916+00:00",
+  "status": "PREPARED_SDK_AND_SOURCE_RECONCILED_APPLICATION_BUILD_FAILED",
+  "executionSource": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+  "compatibleEvidenceBase": "b3a7c56fa6b691503fff04a0ddd5a1eeb6f736be",
+  "archive": {
+    "archivePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt5/files/build/runtime-host/RuntimeHostResources.zip",
+    "archiveBytes": 81812167,
+    "archiveSHA256": "5d6d60076fc95165b7c3d330d4202388dc88c3084899291918c69fef3ba92c53",
+    "manifestSHA256": "1d51c86e55ca79792b6b31176de6363008e5874dec4f919e5ef96c789a6d53f9",
+    "manifestBytes": 5219288,
+    "inputSHA256": "5deb2605a46b128985a0f6bb59414aed8167d872cc09deaf24b49fd9ab4fce04",
+    "sourceInputCount": 222,
+    "fileCount": 25661
+  },
+  "snapshotReceipt": {
+    "path": "raw/snapshot-receipt.json",
+    "sha256": "fbcae6ab65a1d090bf9470c81c8208ec44b38c36d4116433ad4944517e0121a4"
+  },
+  "comparison": {
+    "prior": {
+      "source": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+      "evidencePath": "docs/miniapp-sdk/evidence/sdk05-shipping-main16-20261124/",
+      "manifestSHA256": "f84b79a3d9c4f7dc541d6912753cd1be95bfa3ed1876cc4d0ead365aadab12fc",
+      "inputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863"
+    },
+    "changedSourceInputs": 4,
+    "unchangedSourceInputs": 218,
+    "changedMembers": 4,
+    "unchangedMembers": 25657,
+    "reuseGroups": {
+      "declarations": {
+        "members": 5210,
+        "unchanged": 5210,
+        "changed": []
+      },
+      "examples": {
+        "members": 29,
+        "unchanged": 29,
+        "changed": []
+      },
+      "public-docs": {
+        "members": 25,
+        "unchanged": 22,
+        "changed": [
+          "docs/miniapp-sdk/extension-reachability.json",
+          "docs/miniapp-sdk/extension-reachability.md",
+          "docs/miniapp-sdk/source-inventory.json"
+        ]
+      },
+      "original-compilers": {
+        "members": 2,
+        "unchanged": 2,
+        "changed": []
+      }
+    },
+    "report": "sdk-reconciliation.json"
+  },
+  "documentation": {
+    "status": "EXECUTED_PASS",
+    "projects": 4,
+    "diagnostics": 0,
+    "sourceFences": 14,
+    "jsonFences": 7,
+    "nonAuthoringExclusions": 8,
+    "actualReportSHA256": "60376f77aa0e85a5004eca4ac0b31eeb81012d65ceebb48108797bec656f8bdf",
+    "report": "documentation-execution-binding.json",
+    "execution": "Original primary preparation reused; no compiler rerun"
+  },
+  "preparedSource": {
+    "paths": 188,
+    "payloadBytes": 17349363,
+    "contentChanges": 187,
+    "currentObservedModeOnly": 1,
+    "ledgerSHA256": "b4381014062cca249740e1ff83c6d78d07680c2b27b51ac0569f2ea96e1a20ff",
+    "canonicalBinding": "69f9f9702ba336b8504a19ed80c17922ec0585767b2e7fb8d76508bf7aa8cfbf",
+    "beforeHashesMatchBothBases": true,
+    "afterHashesAndSizesMatch": true,
+    "protectedOverlap": [],
+    "plan": "materialization-plan.json",
+    "classification": "nativescript-prepared-source-classification.json",
+    "nativeScriptCounts": {
+      "json-values-equal": 8,
+      "javascript-body-changed": 154,
+      "json-values-changed": 1,
+      "identical-content-observed-mode-row": 1,
+      "line-endings-only": 3
+    },
+    "originalIdentity": {
+      "exact-original-bytes": 105,
+      "original-plus-existing-preparation-transforms": 62
+    },
+    "packagePinComparison": "package-resolved-comparison.json",
+    "swiftPins": 39,
+    "swiftRevisionChanges": [],
+    "appliedToProduction": false
+  },
+  "currentModeObservation": {
+    "path": "raw/native-mode-observation.json",
+    "sha256": "57f039ac3908b8c341c38863ffda359e28222f22e73e0bf7484ffd3a3b09a9fb",
+    "observedAt": "2026-11-24T20:42:40.292902+00:00",
+    "beforeGitMode": "100644",
+    "currentMacMode": "0755",
+    "transferredMode": "0755",
+    "noSnapshotTimeModeLedgerClaim": true
+  },
+  "nativeAcceptance": {
+    "miniApps": "EXECUTED_FAIL",
+    "miniAppsExitCode": 65,
+    "miniAppsElapsedSecondsApprox": 202.4,
+    "pairedFinishedAt": "2026-11-24T20:09:11.196051Z",
+    "aiBuild": "NOT_RUN",
+    "all52ApplicationCases": "NOT_RUN",
+    "physicalDevice": "NOT_RUN",
+    "rawFailure": "raw/miniapps-build-terminal.json",
+    "rawFailureSHA256": "64f4fbf8ddd8590db7e30882f55d80e4a8a056721480a90686693cffceb9a828",
+    "originalBuildLogSHA256": "97914eff511dd01491868bfa0232ccae43d6a81632d45cf9ae0897b84e7de3e3",
+    "supersedesRawSnapshot": "The raw snapshot appAcceptance RUNNING field is stale and is preserved without modification."
+  },
+  "nativePreparation": {
+    "split-native-preparation": {
+      "status": "PASS",
+      "startedAt": "2026-11-24T19:59:47.518522+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-native-preparation.log",
+      "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+      "pid": 36135,
+      "elapsedSeconds": 257.2639884579985,
+      "logBytes": 31023,
+      "exitCode": 0,
+      "finishedAt": "2026-11-24T20:04:04.781086+00:00",
+      "logSHA256": "935c498bc535025d0857e3851bc85d19a20e63de0b7c25a927f26baea66aa7d1"
+    },
+    "split-native-artifacts": {
+      "status": "PASS",
+      "startedAt": "2026-11-24T20:04:04.783629+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-native-artifacts.log",
+      "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+      "pid": 39040,
+      "elapsedSeconds": 40.79924879199825,
+      "logBytes": 1504,
+      "exitCode": 0,
+      "finishedAt": "2026-11-24T20:04:45.583599+00:00",
+      "logSHA256": "620451222f385a197c57758b6ac4021f2c7419c27929669129a3f544ce1397bc"
+    },
+    "split-restore-inputs": {
+      "status": "PASS",
+      "startedAt": "2026-11-24T20:04:45.588000+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-restore-inputs.log",
+      "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+      "pid": 39219,
+      "exitCode": 0,
+      "elapsedSeconds": 0.17616395799996099,
+      "finishedAt": "2026-11-24T20:04:45.765987+00:00",
+      "logBytes": 46,
+      "logSHA256": "11083745170de91dcbe17fa5b4e18d24f0cbc6923d8d241af153c25d718f94ef"
+    },
+    "split-inputs": {
+      "status": "PASS",
+      "startedAt": "2026-11-24T20:04:45.767199+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-inputs.log",
+      "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+      "pid": 39222,
+      "exitCode": 0,
+      "elapsedSeconds": 14.627761415998975,
+      "finishedAt": "2026-11-24T20:05:00.395903+00:00",
+      "logBytes": 102,
+      "logSHA256": "b50c1306238bc3c0c7478af8920b02a639345930b2beb42a995d637405ceb510"
+    }
+  },
+  "boundaries": [
+    "No production source changed in this evidence lane.",
+    "No compiler, original checker, generator, native preparation, build, app test, CI or download executed.",
+    "One bounded current owned-file mode observation was taken on Mac; no process or source mutation.",
+    "Shared archive inspected in place; no additional full archive/payload copy created.",
+    "Native catalog input hashes are bound, but native binary archives were not independently transferred/rehashed here.",
+    "Source/type/member equality does not prove native OS effects or all system-service behavior."
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 5998,
+      "sha256": "9061f70cc0cfa97a67ccc5336b0235627d83d88abee5c16ee074091fb947cb95"
+    },
+    {
+      "path": "documentation-execution-binding.json",
+      "bytes": 7499,
+      "sha256": "185fbef73bbbbdb2f8cba3e4ac20df898859253128449b804701fb0d7298dce4"
+    },
+    {
+      "path": "inspect_primary_sdk.initial-fixture-layout.py",
+      "bytes": 22743,
+      "sha256": "6f672ef7f9f01daa0263b2418eecea89628fd9e6d9b5599922ada1864a24d2bd"
+    },
+    {
+      "path": "inspect_primary_sdk.py",
+      "bytes": 22769,
+      "sha256": "8c06bd475153bddbd5eae3affbc638dabd201c4fceb15d5691187f758bb1a79f"
+    },
+    {
+      "path": "inspection-command.initial-fixture-layout.json",
+      "bytes": 499,
+      "sha256": "773cf1b999051ad7484cb429d7ac59fb85190f74ae08472969eb487840a4dc82"
+    },
+    {
+      "path": "inspection-command.json",
+      "bytes": 1070,
+      "sha256": "f3f124289379c46539c04022a589e02a344905b264107e8c1d749ea00d8fe200"
+    },
+    {
+      "path": "inspection.stderr.initial-fixture-layout.log",
+      "bytes": 365,
+      "sha256": "04444644452c7b1c2832d93ea90100120e2f0072150fe74dc644f45712ce12ca"
+    },
+    {
+      "path": "inspection.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "inspection.stdout.initial-fixture-layout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "inspection.stdout.log",
+      "bytes": 1451,
+      "sha256": "ca36a3bacf4522e4faeaf394e120159ef5b0e469135a6a1ccb0e252e2ab00eea"
+    },
+    {
+      "path": "materialization-category-advice.json",
+      "bytes": 5116,
+      "sha256": "d8b5637186530b347cf338a1ae578d4d599d9064638a6ef0b11b3fab8424dfc6"
+    },
+    {
+      "path": "materialization-plan.json",
+      "bytes": 150151,
+      "sha256": "b46090238a2e888deb8613c816d1550a3de43e3c5a8d905d6ca6779320e6f1dc"
+    },
+    {
+      "path": "native-catalog-binding.json",
+      "bytes": 5070,
+      "sha256": "ae9ad2ef20c04455d7d193ae4a6e82e60f4c91a874b0cea38cd4612552d37f33"
+    },
+    {
+      "path": "nativescript-prepared-source-classification.json",
+      "bytes": 170708,
+      "sha256": "c2e28f402f46a56b2964f182c3a50027d756c20fc5f426a65bbc4623b630d013"
+    },
+    {
+      "path": "package-resolved-comparison.json",
+      "bytes": 31170,
+      "sha256": "8a4c74b79ca969fdffca707f8b495f3a2a0dce710c15b7b7072733451489e4cf"
+    },
+    {
+      "path": "payload-verification-command.initial-assumption.json",
+      "bytes": 3250,
+      "sha256": "93d6673985b0454ffa68df5c27bce1e2ab880fc60781c1f07a11eae6149f4324"
+    },
+    {
+      "path": "payload-verification-command.json",
+      "bytes": 2884,
+      "sha256": "87216ec9cadbe96fd7f08b608f3f162760492327ef106a50a3df1f8d5cb8bc34"
+    },
+    {
+      "path": "payload-verification.json",
+      "bytes": 329625,
+      "sha256": "0911b95e91bc71bdb2375e9e2c7e58f3eb9e4f5cbf3fdd26e766a347fedcb774"
+    },
+    {
+      "path": "raw/build/app-split-evidence/miniapp-documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "60376f77aa0e85a5004eca4ac0b31eeb81012d65ceebb48108797bec656f8bdf"
+    },
+    {
+      "path": "raw/build/app-split-evidence/prepared-native/native-artifacts.json",
+      "bytes": 28573,
+      "sha256": "c97c1b62bbcc2af159642b7c91b0984ef677a8752bf283009f51f71cae81dc2c"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt5/split-native-artifacts.log",
+      "bytes": 1504,
+      "sha256": "620451222f385a197c57758b6ac4021f2c7419c27929669129a3f544ce1397bc"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt5/split-native-preparation.log",
+      "bytes": 31023,
+      "sha256": "935c498bc535025d0857e3851bc85d19a20e63de0b7c25a927f26baea66aa7d1"
+    },
+    {
+      "path": "raw/build/runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "5255b7dfb26b0f86d687813bc2ebfea87e1f9931acf0f991b1ae0e9f612fd1ab"
+    },
+    {
+      "path": "raw/changed-sdk/docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 147521,
+      "sha256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29"
+    },
+    {
+      "path": "raw/changed-sdk/docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1"
+    },
+    {
+      "path": "raw/changed-sdk/docs/miniapp-sdk/source-inventory.json",
+      "bytes": 493266,
+      "sha256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef"
+    },
+    {
+      "path": "raw/changed-sdk/nativescript/node_modules/@hanlin/host-services/package.json",
+      "bytes": 147,
+      "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+    },
+    {
+      "path": "raw/miniapp-sdk.json.gz",
+      "bytes": 1301353,
+      "sha256": "33d2554a75977cb78bf450c1565e38a8193259606bf4f43ef4058e095b55da37"
+    },
+    {
+      "path": "raw/miniapps-build-terminal.json",
+      "bytes": 25871,
+      "sha256": "64f4fbf8ddd8590db7e30882f55d80e4a8a056721480a90686693cffceb9a828"
+    },
+    {
+      "path": "raw/native-mode-observation.json",
+      "bytes": 1864,
+      "sha256": "57f039ac3908b8c341c38863ffda359e28222f22e73e0bf7484ffd3a3b09a9fb"
+    },
+    {
+      "path": "raw/nativescript-original-to-prepared.diff.gz",
+      "bytes": 5088,
+      "sha256": "bc3b255c2b98d84fea8322b77f556da75251eb86bac13475ef2d4c116683b6f2"
+    },
+    {
+      "path": "raw/snapshot-receipt.json",
+      "bytes": 26980,
+      "sha256": "fbcae6ab65a1d090bf9470c81c8208ec44b38c36d4116433ad4944517e0121a4"
+    },
+    {
+      "path": "raw/source-authority/prepare-ios-dependencies.mjs.gz",
+      "bytes": 14187,
+      "sha256": "17c69130920fbf5d842f3cd5a6ae9562c225deec2a4d5b1068b7ad7b340fccd2"
+    },
+    {
+      "path": "raw/tracked-delta.json",
+      "bytes": 102955,
+      "sha256": "b4381014062cca249740e1ff83c6d78d07680c2b27b51ac0569f2ea96e1a20ff"
+    },
+    {
+      "path": "retained-raw-files.json",
+      "bytes": 1514,
+      "sha256": "2eb78e4495643d410cb3e1d69c06f5750c54e09bc5a70a29af779be1c25229ff"
+    },
+    {
+      "path": "sdk-reconciliation.json",
+      "bytes": 14214,
+      "sha256": "a194f114c6db9a03a73287a45ff9e091e636675c46569b5f17f1f27058230db7"
+    },
+    {
+      "path": "sdk-source-binding.json",
+      "bytes": 79075,
+      "sha256": "71ead3470588c69cabf58c9d1a6e47a9254d872d1dffab0822296fa07ab48187"
+    },
+    {
+      "path": "shipped-provenance-binding.json",
+      "bytes": 59073,
+      "sha256": "9ab865d3bf1bc3a2b4dc0dd4c5146bda8d5bfb67b1d1cb82b00c83d14496af46"
+    },
+    {
+      "path": "verify_payload.initial-assumption.py",
+      "bytes": 11014,
+      "sha256": "cb849495ca3fe6861a48b422dbe1934e911e4e7b66c6bb182a706074307f6aeb"
+    },
+    {
+      "path": "verify_payload.py",
+      "bytes": 13688,
+      "sha256": "a8d0e2727cef180e89b663623666c9b467dd6579ee43f6d1d070240373b3e17c"
+    }
+  ]
+}
