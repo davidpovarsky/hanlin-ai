@@ -8,6 +8,7 @@ import {originalManifestValidationSHA256} from './scriptwidget/manifest-validati
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const common = 'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/';
+const networkPolicyPath = 'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift';
 const digest = value => createHash('sha256').update(value).digest('hex');
 const declaration = (source, name) => {
   const match = source.match(new RegExp('(?:struct|enum) ' + name + '\\b[^\\{]*\\{([\\s\\S]*?)\\n\\}'));
@@ -24,12 +25,15 @@ export async function generateScriptWidgetManifest({root = repositoryRoot,
   output = path.join(root, 'Scripts/MiniApps/scriptwidget'), check = false} = {}) {
   const metadata = await readFile(path.join(root, common, 'ScriptMetadata.swift'), 'utf8');
   const packageSource = await readFile(path.join(root, common, 'ScriptWidgetPackage.swift'), 'utf8');
+  const networkPolicySource = await readFile(path.join(root, networkPolicyPath), 'utf8');
   // Shapes/enums/version constants regenerate automatically. Semantic changes need
   // an explicit mapping update; publishing a stale validator would mislead authors.
   const semanticSource = [
     declaration(metadata, 'WidgetPackageManifestValidator'),
     declaration(metadata, 'WidgetRuntimeRequirement'),
     declaration(metadata, 'WidgetPackageTimeline'),
+    // The manifest delegates host syntax to this installed policy, including the host-generated '*' default.
+    between(networkPolicySource, '    static func isValidDomainDeclaration(', '\n    static func host('),
     declaration(packageSource, 'ScriptWidgetPackageName'),
     between(packageSource, '    static func components(_ relative:', '    static func identity('),
     between(packageSource, '    func readManifest()', '    func effectiveManifest()')
@@ -129,11 +133,11 @@ export async function generateScriptWidgetManifest({root = repositoryRoot,
       throw new Error('Original manifest reader/Codable keys differ: ' + name);
   }
   const sourceManifest = JSON.parse(await readFile(path.join(root, 'docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json'), 'utf8'));
-  const sources = ['ScriptMetadata.swift', 'ScriptWidgetPackage.swift'].map(name => {
-    const local = common + name;
+  const sources = [[common + 'ScriptMetadata.swift', metadata], [common + 'ScriptWidgetPackage.swift', packageSource],
+    [networkPolicyPath, networkPolicySource]].map(([local, source]) => {
     const record = sourceManifest.files.find(item => item.local === local);
-    const sha256 = digest(name === 'ScriptMetadata.swift' ? metadata : packageSource);
-    if (!record || record.localSHA256 !== sha256) throw new Error('Original manifest provenance is stale: ' + name);
+    const sha256 = digest(source);
+    if (!record || record.localSHA256 !== sha256) throw new Error('Original manifest provenance is stale: ' + local);
     return {path: local, upstream: record.upstream, commit: record.commit, sha256};
   });
   const schema = {$schema: 'https://json-schema.org/draft/2020-12/schema',

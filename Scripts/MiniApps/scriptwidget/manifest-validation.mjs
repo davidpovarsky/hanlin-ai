@@ -1,6 +1,6 @@
 // Authoring translation of the installed original ScriptWidget Package 2.0
 // validator. Generation verifies the source digest before publishing this mapping.
-export const originalManifestValidationSHA256 = '743545d3b83a1026d1f61b8297aa7ea67454c2eade0959c85ad5d3de987a4ab8';
+export const originalManifestValidationSHA256 = '2ba51a3d9c899d0e0145a88030f358944a374622782d10a0d3e116e963a6c16d';
 const byteCount = value => new TextEncoder().encode(value).length;
 const graphemes = new Intl.Segmenter(undefined, {granularity: 'grapheme'});
 const characterCount = value => [...graphemes.segment(value)].length;
@@ -10,6 +10,14 @@ const components = value => {
   return parts.length >= 1 && parts.length <= 16 && parts.every(part =>
     part && part !== '.' && part !== '..' && !part.includes('\\') && byteCount(part) <= 255 &&
     !/[\p{Cc}\p{Cf}]/u.test(part.replace(/[\u200C\u200D]/g, ''))) ? parts : null;
+};
+// ScriptWidgetNetworkPolicy.isValidDomainDeclaration; its native body is part of the semantic fingerprint.
+const isValidDomainDeclaration = value => {
+  if (value === '*') return true;
+  const normalized = value.toLowerCase();
+  return value === normalized && !normalized.includes('://') && !normalized.includes('/') && !normalized.includes(':') &&
+    !normalized.startsWith('.') && !normalized.endsWith('.') && /^[a-z0-9*.-]+$/.test(normalized) &&
+    (!normalized.includes('*') || normalized.startsWith('*.'));
 };
 const sameIDs = values => new Set(values.map(value => value.toLowerCase())).size === values.length;
 const supports = (minimum, current) => {
@@ -128,8 +136,7 @@ export async function validateScriptWidgetManifest({text, entry, compiler: ts, s
   if (permissions.has('network') && !m.networkDomains.length)
     issue('missing_network_domains', 'Network access must declare at least one host.', '/networkDomains');
   for (const [index, domain] of m.networkDomains.entries()) {
-    if (domain !== domain.toLowerCase() || domain.includes('://') || domain.includes('/') || domain.includes(':') ||
-      domain.startsWith('.') || domain.endsWith('.') || !/^[a-z0-9*.-]+$/.test(domain) || (domain.includes('*') && !domain.startsWith('*.')))
+    if (!isValidDomainDeclaration(domain))
       issue('invalid_network_domain', 'Invalid network host declaration: ' + domain + '.', '/networkDomains/' + index);
   }
   if (m.plugins) {

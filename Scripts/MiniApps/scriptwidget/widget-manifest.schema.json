@@ -519,19 +519,25 @@
   "x-original-contract": {
     "runtimeVersion": "1.0",
     "nativeRuntimeVersion": "1.6",
-    "validationSHA256": "743545d3b83a1026d1f61b8297aa7ea67454c2eade0959c85ad5d3de987a4ab8",
+    "validationSHA256": "2ba51a3d9c899d0e0145a88030f358944a374622782d10a0d3e116e963a6c16d",
     "sources": [
       {
         "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
         "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptMetadata.swift",
         "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
-        "sha256": "27dada0499f2d5d3299bc4a8c7131f066ba148c4b89be6d5a48ce24224120075"
+        "sha256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9"
       },
       {
         "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
         "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptWidgetPackage.swift",
         "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
         "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+        "upstream": "Shared/ScriptWidgetRuntime/Widget/API/ScriptWidgetRuntimeFetch.swift",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
       }
     ]
   }

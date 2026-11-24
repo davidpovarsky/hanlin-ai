@@ -2420,9 +2420,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptMetadata.swift",
       "upstreamBlob": "37a4fb37cbb73a43da3e505e675c185068476ea9",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
-      "localSHA256": "27dada0499f2d5d3299bc4a8c7131f066ba148c4b89be6d5a48ce24224120075",
-      "byteIdentical": true,
-      "adaptation": "Original API/core source compiled in an isolated Swift 5 module. Host adaptations configure product storage, native bundle resources, the existing ZIPFoundation archive backend, and externally prepared JavaScript sessions. Original OS providers and JSExport contracts are retained."
+      "localSHA256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9",
+      "byteIdentical": false,
+      "adaptation": "Original API/core source compiled in an isolated Swift 5 module. Manifest host syntax delegates to the existing ScriptWidgetNetworkPolicy.isValidDomainDeclaration so the host-generated unrestricted networkDomains default is validated consistently; other original manifest rules are retained."
     },
     {
       "repository": "everettjf/scriptwidget",

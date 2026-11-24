@@ -95,6 +95,25 @@ test('genuine action references, legacy controls and nullable optional fields va
   assert.deepEqual(result.diagnostics, []);
 });
 
+test('installed network declarations preserve the generated wildcard and reject malformed hosts', async () => {
+  for (const domain of ['*', 'example.com', '*.example.com', 'api.example.com']) {
+    const manifest = {...original(), permissions: ['storage', 'network'], networkDomains: [domain]};
+    assert.deepEqual((await validate(manifest)).diagnostics, [], domain);
+  }
+  for (const domain of ['Example.com', 'https://example.com', 'example.com/path', 'example.com:443',
+    '.example.com', 'example.com.', 'api*.example.com', 'bad host', '']) {
+    const manifest = {...original(), permissions: ['storage', 'network'], networkDomains: [domain]};
+    const issue = (await validate(manifest)).diagnostics.find(item => item.originalCode === 'invalid_network_domain');
+    assert.ok(issue, domain);
+    assert.equal(issue.jsonPath, '/networkDomains/0');
+    assert.ok(issue.line > 0 && issue.column > 0);
+  }
+  assert.ok((await validate({...original(), networkDomains: ['*']})).diagnostics
+    .some(item => item.originalCode === 'undeclared_network'));
+  assert.ok((await validate({...original(), permissions: ['storage', 'network']})).diagnostics
+    .some(item => item.originalCode === 'missing_network_domains'));
+});
+
 test('original semantic and JSON shape errors include precise manifest locations', async () => {
   const cases = [
     ['missing_control_action', m => { m.controls[0].actionID = 'missing'; }],
@@ -184,10 +203,19 @@ test('changed original semantic rules cannot silently publish a stale authoring 
   const temporary = await fs.mkdtemp(path.join(process.env.HANLIN_AUTHORING_TMP ?? os.tmpdir(), 'scriptwidget-manifest-drift-'));
   t.after(() => fs.rm(temporary, {recursive: true, force: true}));
   const relative = 'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common';
-  await fs.mkdir(path.join(temporary, relative), {recursive: true});
-  for (const name of ['ScriptMetadata.swift', 'ScriptWidgetPackage.swift']) {
-    const originalSource = await fs.readFile(path.join(root, relative, name), 'utf8');
-    await fs.writeFile(path.join(temporary, relative, name), originalSource.replace('actions.count > 16', 'actions.count > 17'));
+  const network = 'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift';
+  const paths = [relative + '/ScriptMetadata.swift', relative + '/ScriptWidgetPackage.swift', network];
+  for (const name of paths) {
+    await fs.mkdir(path.dirname(path.join(temporary, name)), {recursive: true});
+    await fs.copyFile(path.join(root, name), path.join(temporary, name));
   }
+  const metadata = await fs.readFile(path.join(root, paths[0]), 'utf8');
+  assert.ok(metadata.includes('actions.count > 16'));
+  await fs.writeFile(path.join(temporary, paths[0]), metadata.replace('actions.count > 16', 'actions.count > 17'));
+  await assert.rejects(generateScriptWidgetManifest({root: temporary}), /manifest validation changed/);
+  await fs.writeFile(path.join(temporary, paths[0]), metadata);
+  const policy = await fs.readFile(path.join(root, network), 'utf8');
+  assert.ok(policy.includes('if value == "*" { return true }'));
+  await fs.writeFile(path.join(temporary, network), policy.replace('if value == "*" { return true }', 'if value == "*" { return false }'));
   await assert.rejects(generateScriptWidgetManifest({root: temporary}), /manifest validation changed/);
 });

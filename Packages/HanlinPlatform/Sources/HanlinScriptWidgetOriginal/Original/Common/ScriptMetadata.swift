@@ -436,15 +436,7 @@ enum WidgetPackageManifestValidator {
             }
         }
         for domain in manifest.networkDomains {
-            let normalized = domain.lowercased()
-            if domain != normalized
-                || normalized.contains("://")
-                || normalized.contains("/")
-                || normalized.contains(":")
-                || normalized.hasPrefix(".")
-                || normalized.hasSuffix(".")
-                || normalized.range(of: "^[a-z0-9*.-]+$", options: .regularExpression) == nil
-                || (normalized.contains("*") && !normalized.hasPrefix("*.")) {
+            if !ScriptWidgetNetworkPolicy.isValidDomainDeclaration(domain) {
                 error("invalid_network_domain", "Invalid network host declaration: \(domain).")
             }
         }
