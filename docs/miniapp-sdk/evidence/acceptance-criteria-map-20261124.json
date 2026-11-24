@@ -42,6 +42,10 @@
     "failureReceipt": {
       "path": "docs/miniapp-sdk/evidence/native-gate-14-widget-options-20261124/receipt.json",
       "sha256": "ec1c1d798649a7fa66f74f4a1f040ad5902495929f7079cf0395ceea79fa0574"
+    },
+    "priorCorrectionCompilationScope": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-14-widget-options-20261124/prior-corrections-compilation-scope.json",
+      "sha256": "3871d6a18120a9de4c05c6945f533ee8a0ccd7723ac017bd2f524acd3698d5da"
     }
   },
   "userScope": {
@@ -1384,7 +1388,7 @@
     }
   ],
   "recordingOutcome": "Four scoped tasks completed with readback; actual main14 failure retained and correction in progress. No main merge, release, application/device PASS or blanket80E2E claim.",
-  "updatedAtUTC": "2026-11-24T14:02:03.559473+00:00",
+  "updatedAtUTC": "2026-11-24T14:14:12.632682+00:00",
   "currentIntegrationBase": "2a8dc394d279c40997319d2b2b692e1c14e0f34e",
   "gateHistory": [
     {
@@ -1844,6 +1848,32 @@
     "author": "control_authoring",
     "independentReviewer": "entrypoints",
     "shippingSDKReviewer": "sdk_only_author",
-    "newCIStarted": false
+    "newCIStarted": false,
+    "additionalStaticFinding": {
+      "source": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "lines": [
+        160,
+        161
+      ],
+      "cause": "HanlinObject.mapValues result passed to dictionary-typed PreparedWidgetPublisher",
+      "reviewScope": "233 changed production Swift files;39 object-pattern files traced",
+      "status": "AUTHOR_CORRECTING_WITH_INDEPENDENT_REVIEW",
+      "compilerExecution": "NOT_EXECUTED_FOR_THIS_FINDING"
+    }
+  },
+  "main14ShippingSDK": {
+    "status": "PASS_EXPECTED_PROVENANCE_DELTA",
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/sdk05-shipping-main14-20261124/receipt.json",
+      "sha256": "70c9b295242b238cb02ffcccd9c92b29e850d18705789f2542e3c66637fe7458"
+    },
+    "manifestSHA256": "17df84a3ea5121d8b6362a03d095114ff3ce7702ad605a97b91f21666480a7e6",
+    "inputSHA256": "2613c6ccdeb2ea17dd5268b5a0eb90f0f7e136f3c46e39faeb94c7fb0777848a",
+    "changedShippingDocuments": 3,
+    "unchangedInputs": 219,
+    "unchangedFileRecords": 25658,
+    "actualSnippetProjects": 4,
+    "actualSnippetDiagnostics": 0,
+    "boundary": "SDK proof only; all52 application cases NOT_RUN. Later adapter correction changes source-authority hashes and requires existing provenance refresh."
   }
 }
