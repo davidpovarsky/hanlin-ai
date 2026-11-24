@@ -45,6 +45,18 @@ public actor HanlinAISDKAgentEngine {
         }
     }
 
+    // The stop predicate and the final stream event inspect the live catalog at
+    // different times. A transient catalog change must remain a reload decision
+    // even when the original tools are available again before finalization.
+    private actor ToolReloadDecision {
+        private(set) var wasRequested = false
+
+        func observe(_ changed: Bool) -> Bool {
+            wasRequested = wasRequested || changed
+            return changed
+        }
+    }
+
     public init(
         configuration: HanlinChatModelConfiguration,
         fetch: FetchFunction? = nil
@@ -210,6 +222,7 @@ public actor HanlinAISDKAgentEngine {
 
                     while true {
                         let currentNames = Set(currentDefinitions.map(\.name))
+                        let toolReload = ToolReloadDecision()
                         // The pinned SDK replaces an empty list with stepCountIs(1).
                         // An explicit never-stop condition preserves the nil-budget contract.
                         var stopConditions: [StopCondition] = [{ _ in false }]
@@ -236,7 +249,7 @@ public actor HanlinAISDKAgentEngine {
                         if let dynamicTools {
                             stopConditions.append { _ in
                                 let latest = await dynamicTools()
-                                return Set(latest.map(\.name)) != currentNames
+                                return await toolReload.observe(Set(latest.map(\.name)) != currentNames)
                             }
                         }
 
@@ -399,7 +412,8 @@ public actor HanlinAISDKAgentEngine {
                                    limit.map({ nextOffset < $0 }) ?? true,
                                    let dynamicTools {
                                     let latestDefinitions = await dynamicTools()
-                                    if Set(latestDefinitions.map(\.name)) != currentNames {
+                                    let reloadWasRequested = await toolReload.wasRequested
+                                    if reloadWasRequested || Set(latestDefinitions.map(\.name)) != currentNames {
                                         let completedSteps = try await result.steps
                                         for step in completedSteps {
                                             for msg in step.response.messages {
