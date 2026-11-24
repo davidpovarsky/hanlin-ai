@@ -64,7 +64,9 @@ public enum HanlinScriptWidgetLiveActivityPreparation {
             if case let .scriptwidget(descriptor) = widget.payload { environment = descriptor.environment ?? [:] }
             environment["family"] = .string(family)
             environment["widgetFamily"] = .string(family)
-            environment["presentation"] = .string("liveActivity")
+            // The presentation context belongs only to snippet/translation surfaces.
+            environment["presentation"] = nil
+            environment["liveActivity"] = .bool(true)
             environment["timestamp"] = .number(Date.now.timeIntervalSince1970 * 1_000)
             environment["settings"] = try HanlinWidgetJSON.value(instance.settings.mapValues { $0.toAny() })
             let execution = try HanlinScriptWidgetRuntime.shared.run(

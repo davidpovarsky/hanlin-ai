@@ -6,8 +6,12 @@ declare function $import(path: string): boolean;
 declare function $render(element: JSX.Element): void;
 declare function $error(message: string): void;
 declare function $getenv(key: "presentation"): ScriptWidgetPresentationContext | "";
+declare function $getenv(key: "liveActivity"): true | "";
 declare function $getenv(key: string): ScriptWidgetJSON;
-declare const $widget: Readonly<Record<string, ScriptWidgetJSON | undefined>> & {readonly presentation?: ScriptWidgetPresentationContext};
+declare const $widget: Readonly<Record<string, ScriptWidgetJSON | undefined>> & {
+  readonly presentation?: ScriptWidgetPresentationContext;
+  readonly liveActivity?: true;
+};
 declare function $fetch(url: string, options?: ScriptWidgetHTTPOptions): ScriptWidgetNativePromise<string>;
 declare const fetch: typeof $fetch;
 

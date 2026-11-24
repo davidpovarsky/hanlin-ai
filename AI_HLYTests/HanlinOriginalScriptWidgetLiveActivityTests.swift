@@ -16,6 +16,12 @@ struct HanlinOriginalScriptWidgetLiveActivityTests {
             packageID: try .init(validating: "package.original-island"), generation: 1, entrypointID: "island")
         let source = """
         async function $main() {
+          if ($getenv('presentation') !== '' || $widget.presentation !== undefined) {
+            throw new Error('Live Activity must not replace the typed presentation context');
+          }
+          if ($getenv('liveActivity') !== true || $widget.liveActivity !== true) {
+            throw new Error('Live Activity must expose its typed Boolean environment field');
+          }
           const prior = $storage.get('count') || 0;
           if (__hanlinAction === 'increment') $storage.set('count', prior + 1);
           const count = $storage.get('count') || 0;
@@ -51,6 +57,8 @@ struct HanlinOriginalScriptWidgetLiveActivityTests {
             revision: 1, title: "Original")
         let prepared = try HanlinScriptWidgetLiveActivityPreparation.load(
             store: store, attributes: first.attributes, state: first.state)
+        #expect(prepared.context.environment["presentation"] == nil)
+        #expect(prepared.context.environment["liveActivity"] == .bool(true))
         let island = try #require(prepared.dynamicIsland)
         let pairs: [(HanlinScriptWidgetPreparedNode?, String)] = [
             (island.expandedLeading, "L2"), (island.expandedTrailing, "T2"),

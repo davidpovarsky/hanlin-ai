@@ -87,8 +87,9 @@ public enum HanlinWidgetActionExecutor {
             environment["settings"] = try HanlinWidgetJSON.value((instance?.settings ?? [:]).mapValues { $0.toAny() })
             environment["family"] = .string(widget.family)
             environment["widgetFamily"] = .string(widget.family)
-            if context.environment["presentation"] == .string("liveActivity") {
-                environment["presentation"] = .string("liveActivity")
+            if context.environment["liveActivity"] == .bool(true) {
+                environment["presentation"] = nil
+                environment["liveActivity"] = .bool(true)
             }
             environment["timestamp"] = .number(Date.now.timeIntervalSince1970 * 1_000)
             if action.kind != .reload {
