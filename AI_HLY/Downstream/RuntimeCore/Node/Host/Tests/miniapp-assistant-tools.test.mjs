@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp, writeFile, readFile, rm} from 'node:fs/promises';
+import {mkdtemp, mkdir, writeFile, readFile, rm} from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import {pathToFileURL} from 'node:url';
@@ -42,7 +42,10 @@ test('both engines require dedicated source declarations and a real optional ren
 
 test('malformed IDs, action schemas and renderer metadata cannot become attachable capabilities', () => {
   for (const mutate of [
-    action => { action.id = 'Uppercase'; },
+    action => { action.id = 'non+canonical'; },
+    action => { action.id = 'searchText\n'; },
+    action => { action.id = 'שאל'; },
+    action => { action.id = 'A'.repeat(256); },
     action => { action.id = 'two..separators'; },
     action => { action.inputSchema = {type: 'array'}; },
     action => { action.exportedSymbol = ''; },
@@ -56,6 +59,80 @@ test('malformed IDs, action schemas and renderer metadata cannot become attachab
   script.entrypoints[0].assistantTool.actions = [];
   assert.ok(validateAssistantToolManifest(script, 'expo').length);
   assert.ok(validateAssistantToolManifest(manifest(), 'scriptwidget').length);
+});
+
+test('case-distinct assistant action IDs dispatch separately through both generated wrappers', async t => {
+  for (const engine of ['nativescript', 'expo']) {
+    const script = manifest(engine), entry = script.entrypoints[0];
+    const action = entry.assistantTool.actions[0];
+    entry.assistantTool.actions = [
+      {...action, id: 'searchText'},
+      {...action, id: 'searchtext', exportedSymbol: 'lowerHandler'}
+    ];
+    assert.deepEqual(validateAssistantToolManifest(script, engine), []);
+    const duplicate = structuredClone(script);
+    duplicate.entrypoints[0].assistantTool.actions[1].id = 'searchText';
+    assert.ok(validateAssistantToolManifest(duplicate, engine).length);
+
+    const root = await mkdtemp(path.join(os.tmpdir(), 'hanlin-assistant-case-'));
+    t.after(() => rm(root, {recursive: true, force: true}));
+    await writeFile(path.join(root, 'tool.mjs'),
+      'export function searchText(args, context) { globalThis.__hanlinAssistantCaseFixture.calls++; return {handler:"camel", args, ...context}; }\n'
+      + 'export function lowerHandler(args, context) { globalThis.__hanlinAssistantCaseFixture.calls++; return {handler:"lower", args, ...context}; }\n');
+    await writeFile(path.join(root, 'index.mjs'), 'throw new Error("APP_ENTRYPOINT_MUST_NOT_RUN");\n');
+    await writeFile(path.join(root, 'bundle.mjs'), assistantToolWrapper(entry, './tool.mjs', engine));
+
+    // Stub only the existing transports; execute the original generated wrapper
+    // without rewriting its imports, registrations or action-dispatch function.
+    const state = {handlers: new Map(), calls: 0, componentName: null, component: null};
+    const previousState = globalThis.__hanlinAssistantCaseFixture;
+    const previousBridge = globalThis.HanlinNativeServicesBridge;
+    globalThis.__hanlinAssistantCaseFixture = state;
+    globalThis.HanlinNativeServicesBridge = {activeSessionBridge: () => ({
+      registerRequestHandlerCapabilityHandler: (id, capability, handler) => {
+        assert.equal(capability, 'assistant-tool'); state.handlers.set(id, handler);
+      }
+    })};
+    try {
+      if (engine === 'expo') {
+        const packages = [
+          ['react-native', 'export const AppRegistry = {registerComponent(name, provider) { const state = globalThis.__hanlinAssistantCaseFixture; state.componentName = name; state.component = provider(); }};\n'],
+          ['@hanlin/expo-ui', 'export const hostServices = {actions: {register(handlers) { globalThis.__hanlinAssistantCaseFixture.handlers = new Map(Object.entries(handlers)); return Promise.resolve(); }}};\n']
+        ];
+        for (const [name, source] of packages) {
+          const directory = path.join(root, 'node_modules', name);
+          await mkdir(directory, {recursive: true});
+          await writeFile(path.join(directory, 'package.json'), JSON.stringify({name, type: 'module', exports: './index.mjs'}));
+          await writeFile(path.join(directory, 'index.mjs'), source);
+        }
+      }
+      await import(pathToFileURL(path.join(root, 'bundle.mjs')).href);
+      assert.deepEqual([...state.handlers.keys()], ['searchText', 'searchtext']);
+      assert.equal(state.calls, 0);
+      if (engine === 'expo') {
+        assert.equal(state.componentName, 'HanlinAssistantTool');
+        assert.equal(state.component(), null);
+      }
+      const envelope = {arguments: {query: 'text'}, configuration: {scope: 'user-picked'}};
+      const call = id => engine === 'expo'
+        ? state.handlers.get(id)({caller: 'case-test', parameters: envelope})
+        : new Promise((resolve, reject) => state.handlers.get(id)('case-test', JSON.stringify(envelope),
+          (result, error) => error ? reject(new Error(error)) : resolve(JSON.parse(result))));
+      for (const [id, handler] of [['searchText', 'camel'], ['searchtext', 'lower']]) {
+        assert.deepEqual(await call(id), {
+          handler, args: envelope.arguments, configuration: envelope.configuration, actionID: id, caller: 'case-test'
+        });
+      }
+      assert.equal(state.calls, 2);
+      assert.equal(state.handlers.has('SearchText'), false);
+      assert.equal(state.handlers.has('lowerHandler'), false);
+    } finally {
+      if (previousState === undefined) delete globalThis.__hanlinAssistantCaseFixture;
+      else globalThis.__hanlinAssistantCaseFixture = previousState;
+      if (previousBridge === undefined) delete globalThis.HanlinNativeServicesBridge;
+      else globalThis.HanlinNativeServicesBridge = previousBridge;
+    }
+  }
 });
 
 test('configuration validates nested catalogs, unique keys and geographic bounds', () => {
@@ -125,4 +202,10 @@ test('public and canonical JSON schemas share the exact assistant configuration 
   const published = JSON.parse(await readFile(new URL('Scripts/MiniApps/assistant-tools.schema.json', repository), 'utf8'));
   const canonical = JSON.parse(await readFile(new URL('Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json', repository), 'utf8'));
   for (const [name, definition] of Object.entries(published.$defs)) assert.deepEqual(canonical.$defs[name], definition, name);
+  assert.deepEqual(published.$defs.assistantToolAction.properties.id, {$ref: '#/$defs/actionIdentifier'});
+  const actionPattern = new RegExp(published.$defs.actionIdentifier.pattern);
+  for (const id of ['searchText', 'searchtext', 'HTTPGet', 'A', 'a-B.C_D']) assert.ok(actionPattern.test(id), id);
+  for (const id of ['', 'two..separators', 'searchText\n', 'שאל', 'name+suffix']) assert.equal(actionPattern.test(id), false, id);
+  assert.equal(published.$defs.actionIdentifier.maxLength, 255);
+  assert.equal(new RegExp(canonical.$defs.identifier.pattern).test('searchText'), false, 'General identifiers remain lowercase');
 });

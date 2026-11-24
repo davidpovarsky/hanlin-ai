@@ -218,6 +218,34 @@ struct HanlinCapabilityAttachmentTests {
         }
     }
 
+    @Test("Assistant action IDs preserve case and reject only exact duplicates")
+    func assistantActionIDsPreserveCase() throws {
+        let raw = Data(#"""
+        {"title":"Search","summary":"Case-sensitive actions","actions":[
+          {"id":"searchText","title":"Camel","summary":"Camel-case export","inputSchema":{"type":"object"}},
+          {"id":"searchtext","title":"Lower","summary":"Separate action","inputSchema":{"type":"object"},"exportedSymbol":"lowerHandler"}
+        ]}
+        """#.utf8)
+        let declaration = try JSONDecoder().decode(HanlinAssistantToolDeclaration.self, from: raw)
+        try declaration.validateDefinition()
+        #expect(declaration.actions.map(\.id) == ["searchText", "searchtext"])
+        let restored = try JSONDecoder().decode(
+            HanlinAssistantToolDeclaration.self, from: JSONEncoder().encode(declaration)
+        )
+        #expect(restored == declaration)
+        #expect(restored.actions[0].exportedSymbol == nil)
+        #expect(restored.actions[1].exportedSymbol == "lowerHandler")
+        var duplicate = declaration
+        duplicate.actions[1].id = "searchText"
+        #expect(throws: HanlinContractError.self) { try duplicate.validateDefinition() }
+        #expect(HanlinAppID(rawValue: "searchText") == nil)
+        for invalidID in ["searchText\n", "searchText..More"] {
+            var invalid = declaration
+            invalid.actions[0].id = invalidID
+            #expect(throws: HanlinContractError.self) { try invalid.validateDefinition() }
+        }
+    }
+
     private func fixture() -> HanlinComposerCapabilityDescriptor {
         .init(reference: .init(kind: .miniApp, sourceID: "installed-a", capabilityID: "search", revision: "7"),
               title: "Search", actions: [.init(id: "search", title: "Search")],

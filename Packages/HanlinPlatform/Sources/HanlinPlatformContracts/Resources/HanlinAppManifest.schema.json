@@ -1114,9 +1114,7 @@
       ],
       "properties": {
         "id": {
-          "type": "string",
-          "maxLength": 255,
-          "pattern": "^[a-z0-9]+(?:[-._][a-z0-9]+)*$"
+          "$ref": "#/$defs/actionIdentifier"
         },
         "title": {
           "type": "string",
