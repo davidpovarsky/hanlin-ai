@@ -4,7 +4,7 @@
     {
       "repository": "https://github.com/openclaw/openclaw",
       "ref": "main",
-      "revision": "6341f93c9c565364ea86b417f21ffde4519b51b7",
+      "revision": "28d42b7c570c41d629e70913278fab057e914344",
       "license": "MIT",
       "purpose": "upstream tracking only; canonical extractor/package owned by its implementation task"
     },
