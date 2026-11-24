@@ -2792,6 +2792,10 @@ final class HanlinScriptingPlatform {
     }
 
     nonisolated private static func safeMessage(_ error: Error) -> String {
+        if let storeError = error as? HanlinAtomicScriptStoreError,
+           case .generationMetadataUnavailable = storeError {
+            return String(localized: "This saved version is missing its launch metadata. Import that version's package again to restore it.", bundle: HanlinLocalization.bundle)
+        }
         if let storageError = error as? HanlinScriptExtensionStoreError,
            storageError == .appGroupUnavailable {
             return String(localized: "Hanlin cannot access shared storage. This action is unavailable in this installation.", bundle: HanlinLocalization.bundle)
