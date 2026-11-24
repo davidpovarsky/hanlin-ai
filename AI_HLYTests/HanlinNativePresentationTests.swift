@@ -228,11 +228,11 @@ final class HanlinNativePresentationTests: XCTestCase {
     private func text(in prepared: HanlinPreparedWidget) -> [String] {
         guard case let .scriptwidget(node, _) = prepared else { return [] }
         func collect(_ node: HanlinScriptWidgetPreparedNode) -> [String] {
-            node.children.flatMap { child in
+            node.children.flatMap { child -> [String] in
                 switch child {
-                case let .element(element): collect(element)
-                case let .value(.string(value)): [value]
-                default: []
+                case let .element(element): return collect(element)
+                case let .value(.string(value)): return [value]
+                default: return []
                 }
             }
         }
