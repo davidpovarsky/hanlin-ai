@@ -1,6 +1,6 @@
 import { Button, Navigation, Text, VStack, useEffect, useState } from "scripting"
 
-const bridge = (globalThis as any).MiniApps
+const bridge: typeof MiniApps = (globalThis as any).MiniApps
 
 function App() {
   const [isPresented, setIsPresented] = useState(false)
@@ -13,8 +13,8 @@ function App() {
   useEffect(() => {
     bridge.getContext().then(context => {
       setRequestID(String(context.id).toLowerCase())
-      setInput(context.inputs[0].text)
-      setDocumentID(context.source.documentID)
+      setInput(context.inputs[0].text!)
+      setDocumentID(context.source.documentID!)
     }).catch(value => setError(String(value)))
   }, [])
 
