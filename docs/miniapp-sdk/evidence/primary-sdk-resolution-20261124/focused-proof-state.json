@@ -1,0 +1,97 @@
+{
+  "sourceHEAD": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "candidateSHA256": "1928091c166895c98a6527ddb2c28fad2ccde56dd698497e5d80781d0d4d58a8",
+  "originalCLI_SHA256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+  "sdkManifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+  "baselineLog": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.log",
+  "baselineLogSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
+  "phases": {
+    "candidate-build": {
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin/node",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/candidate/Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
+        "--archive",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/ModularTextSearch.candidate.hanlinExpo",
+        "--report",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/candidate-build.json"
+      ],
+      "startedAt": "2026-11-24T21:41:29.582279+00:00",
+      "status": "PASS",
+      "pid": 93277,
+      "exitCode": 0,
+      "finishedAt": "2026-11-24T21:41:42.662381+00:00",
+      "seconds": 13.067187833999924,
+      "logSHA256": "53f646d79dd0a9d4e32d5cae736066c9c8e7b8a4931a3d87706025b4b577d8d8"
+    },
+    "candidate-negative": {
+      "status": "PASS",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin/node",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/candidate/Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/negative-project",
+        "--report",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/candidate-negative.json"
+      ],
+      "startedAt": "2026-11-24T21:42:41.735046+00:00",
+      "pid": 93965,
+      "exitCode": 1,
+      "seconds": 4.513139500006218,
+      "finishedAt": "2026-11-24T21:42:46.251108+00:00",
+      "logSHA256": "1d6bdf49e1fc7775d07ef1759499f2af8cafd38aebe7c1e4b902c0b532c7261a"
+    }
+  },
+  "status": "PASS",
+  "phase": "candidate-negative",
+  "bundleSourceProof": {
+    "mapKeys": [
+      "version",
+      "sections",
+      "debugId"
+    ],
+    "sourceCount": 831,
+    "moduleSourceCount": 818,
+    "outsideSDKModuleSources": [],
+    "firstSources": [
+      "__prelude__",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/metro-runtime/src/polyfills/require.js",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@react-native/js-polyfills/console.js",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@react-native/js-polyfills/error-guard.js",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search/index.ts",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/react-native/index.js",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/react-native/Libraries/Utilities/warnOnce.js",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/invariant/browser.js",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/react-native/Libraries/Components/ActivityIndicator/ActivityIndicator.js",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@babel/runtime/helpers/objectWithoutProperties.js",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/react-native/Libraries/StyleSheet/StyleSheet.js"
+    ]
+  },
+  "archiveSHA256": "73fd3b23612e10988f5611c75b267ea766ad8a6d702ca8ae1504649538de3de7",
+  "collectorRecovery": "Read actual indexed Metro source-map sections; reused successful build and existing archive without a rerun.",
+  "negativeDiagnostics": [
+    {
+      "code": "TS2322",
+      "category": "error",
+      "message": "Type 'string' is not assignable to type 'number'.",
+      "file": "index.ts",
+      "line": 1,
+      "column": 14,
+      "endLine": 1,
+      "endColumn": 35
+    }
+  ],
+  "finishedAt": "2026-11-24T21:42:46.251213+00:00"
+}
