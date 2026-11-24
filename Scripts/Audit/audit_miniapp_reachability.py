@@ -3,7 +3,7 @@
 import argparse
 import hashlib
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import plistlib
 import re
 import subprocess
@@ -14,15 +14,70 @@ RUNTIMES = ["node", "typeScript", "localPython", "javaScriptCore", "shell"]
 ENGINES = ["hanlinNativeScript", "hanlinExpo"]
 
 
+class TrackedSources:
+    """Read working bytes first; missing tracked files use their exact HEAD blob."""
+
+    def __init__(self, root: Path):
+        self.root = root
+        self.tracked = set(subprocess.check_output(
+            ["git", "ls-files", "-z"], cwd=root).decode("utf-8").split("\0")) - {""}
+        self.cache = {}
+
+    def prefetch(self, files) -> None:
+        missing = []
+        for file in dict.fromkeys(files):
+            relative = PurePosixPath(file)
+            if relative.is_absolute() or ".." in relative.parts or str(relative) != file or file not in self.tracked:
+                raise ValueError(f"Audit source is not a normalized tracked file: {file}")
+            if file in self.cache:
+                continue
+            local = self.root / file
+            if local.exists() or local.is_symlink():
+                self.cache[file] = local.read_bytes()
+            else:
+                if "\n" in file or "\r" in file:
+                    raise ValueError(f"Audit source cannot be addressed by the git batch protocol: {file!r}")
+                missing.append(file)
+        if not missing:
+            return
+        # Equivalent to git show HEAD:path, batched for sparse Swift inventories.
+        result = subprocess.run(["git", "cat-file", "--batch"], cwd=self.root,
+            input="".join(f"HEAD:{file}\n" for file in missing).encode("utf-8"),
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        output, position = result.stdout, 0
+        for file in missing:
+            end = output.find(b"\n", position)
+            header = output[position:end].split()
+            if end < position or len(header) != 3 or header[1] != b"blob" or not header[2].isdigit():
+                raise ValueError(f"Missing tracked HEAD source: {file}: {output[position:end]!r}")
+            size = int(header[2])
+            position = end + 1
+            if position + size >= len(output) or output[position + size:position + size + 1] != b"\n":
+                raise ValueError(f"Incomplete tracked HEAD blob: {file}")
+            self.cache[file] = output[position:position + size]
+            position += size + 1
+        if position != len(output):
+            raise ValueError("Unexpected trailing data in tracked source batch")
+
+    def read_bytes(self, file: str) -> bytes:
+        self.prefetch([file])
+        return self.cache[file]
+
+    def read_text(self, file: str) -> str:
+        return self.read_bytes(file).decode("utf-8-sig")
+
+
 def build() -> dict:
-    sdk = json.loads((OUT / "source-inventory.json").read_text(encoding="utf-8"))
+    sources = TrackedSources(ROOT)
+    sdk = json.loads(sources.read_text("docs/miniapp-sdk/source-inventory.json"))
+    sources.prefetch(entry["path"] for entry in sdk["sources"])
     for entry in sdk["sources"]:
-        if hashlib.sha256((ROOT / entry["path"]).read_bytes()).hexdigest() != entry["sha256"]:
+        if hashlib.sha256(sources.read_bytes(entry["path"])).hexdigest() != entry["sha256"]:
             raise ValueError(f"SDK authority is stale: {entry['path']}; run its source audit first.")
     refs = {}
 
     def ref(name: str, file: str, anchor: str) -> str:
-        data = (ROOT / file).read_bytes()
+        data = sources.read_bytes(file)
         text = data.decode("utf-8")
         if anchor not in text:
             raise ValueError(f"Audit anchor changed: {file}: {anchor}")
@@ -30,27 +85,30 @@ def build() -> dict:
                       "anchor": anchor, "sha256": hashlib.sha256(data).hexdigest()}
         return name
 
-    ref("shareWrite", "ChavrusaChatShare/ShareViewController.swift", "store.commit(batchID, items: items)")
+    ref("shareWrite", "Packages/HanlinAppExtensionsSDK/Sources/HanlinShareExtensionUI/HanlinShareViewController.swift", "store.commit(batchID, items: items)")
     ref("shareOwnedStore", "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareInboxStore.swift", "public struct HanlinShareInboxStore")
     ref("shareProviderCopy", "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinShareItemLoader.swift", "return provider.loadFileRepresentation(")
     ref("shareRead", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "func pendingBatches()")
     ref("shareReview", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift", "struct ChavrusaShareInboxView")
     ref("shareSelection", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift", "var shareActionTargets:")
-    ref("translationSnapshot", "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift", "HanlinExtensionNodeView(")
+    ref("translationSnapshot", "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderMiniAppView.swift", "HanlinExtensionNodeView(")
     ref("extensionIntent", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift", "public func perform()")
     ref("extensionQueue", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift", "public func enqueue(")
     ref("extensionReceipts", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift", "public struct HanlinInvocationReceipt")
     ref("extensionExecutor", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift", "public actor HanlinInvocationExecutor")
     ref("resume", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "private func processPendingResumeCommands()")
     ref("headless", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "func executeHeadlessAction(")
-    ref("expoIntentRejection", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "guard entrypoint.runtimeProfile != .hanlinExpo else")
-    ref("expoExposureRejection", "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift", "Expo exposure '")
+    ref("expoActionDispatch", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "return try await adapter.actionChannel.invoke(")
+    ref("nativeActionDispatch", "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift", "func invokeRegisteredAction(")
+    ref("resumeDispatch", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "func dispatchResumeCommand(")
+    ref("translationContinuation", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", '"source": .string("translationUI")')
+    ref("translationAction", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift", "private var scriptActionIntent: HanlinInvokeScriptActionIntent?")
     ref("widgetBundle", "HanlinScriptingWidgets/HanlinScriptingWidgets.swift", "struct HanlinScriptingWidgetBundle")
     ref("widgetCallback", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetActionExecutor.swift", "public static func perform(")
     ref("widgetIntent", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinGenericWidgetActionIntent.swift", "public func perform()")
-    ref("shortcutIntent", "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift", "struct HanlinRunScriptActionIntent")
+    ref("shortcutIntent", "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift", "struct HanlinRunScriptActionIntent")
     ref("hostShortcuts", "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift", "struct ChavrusaChatShortcuts")
-    ref("notification", "ChavrusaChatNotificationService/NotificationService.swift", "override func didReceive(")
+    ref("notification", "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift", "override func didReceive(")
     ref("requestBroker", "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift", "public func request(")
     ref("nativeBridge", "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h", "@protocol HanlinNativeServicesProvider")
     ref("nativeAdapter", "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift", "public func executeRuntime(")
@@ -66,64 +124,132 @@ def build() -> dict:
     ref("appBootstrap", "AI_HLY/AI_HLY.swift", "@main")
     ref("projectTargets", "AI_HLY.xcodeproj/project.pbxproj", "/* Begin PBXNativeTarget section */")
     ref("audit", "Scripts/Audit/audit_miniapp_reachability.py", "Curated source-backed extension matrix")
-    for target in ["ChavrusaChatShare", "ChavrusaChatTranslationProvider", "HanlinScriptingWidgets", "ChavrusaChatNotificationService"]:
-        ref(target + "Info", target + "/Info.plist", "<plist")
+    ref("miniAppsBootstrap", "HanlinMiniAppsApp/HanlinMiniAppsApp.swift", "@main")
+    ref("miniAppsWidgetBundle", "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift", "struct HanlinMiniAppsWidgetBundle")
+    ref("sharePrincipal", "ChavrusaChatShare/ShareViewController.swift", "ShareViewController: HanlinShareViewController")
+    ref("miniAppsSharePrincipal", "HanlinMiniAppsExtensions/Share/ShareViewController.swift", "ShareViewController: HanlinShareViewController")
+    ref("nativeRuntimeDispatch", "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift", "HanlinRuntimeWireProtocol.execute(")
+    ref("expoRuntimeDispatch", "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift", "HanlinRuntimeWireProtocol.execute(")
+    ref("nativePresentationExecutor", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNativePresentation.swift", "public enum HanlinNativePresentationExecutor")
+    ref("nativePresentationView", "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift", "public struct HanlinNativePresentationContentView")
+    ref("nativeSnippet", "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift", "public struct HanlinShowMiniAppSnippetIntent")
+    ref("nativeTranslation", "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderNativePresentationView.swift", "session.context.finish(translation:")
+    ref("originalControlWidgets", "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift", "public struct ScriptWidgetButtonControlWidget: ControlWidget")
+    ref("originalToggleWidget", "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift", "public struct ScriptWidgetControlWidget: ControlWidget")
+    ref("originalControlProvider", "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetSelectTimerIntent.swift", "public struct ScriptWidgetButtonControlProvider")
+    ref("originalControlActions", "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetSelectTimerIntent.swift", "HanlinScriptWidgetControlCatalog.perform(")
+    ref("controlCatalog", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetControls.swift", "public enum HanlinScriptWidgetControlCatalog")
+    ref("controlCompiler", "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift", "HanlinOriginalScriptWidgetControls.read(data, entryPath: entryPath)")
+    ref("controlUpstream", "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json", "ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift")
+    ref("controlSourceRefresh", "Scripts/MiniApps/refresh-original-sources.mjs", "const controlTargetRoot=")
+    ref("scriptWidgetLiveActivity", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift", "public enum HanlinScriptWidgetLiveActivityController")
+    ref("scriptWidgetActivityRenderer", "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift", "public struct HanlinOriginalScriptWidgetLiveActivityWidget")
+    ref("originalExpoWidget", "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift", "public struct HanlinOriginalExpoWidget: Widget")
+    ref("originalExpoModule", "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift", "public final class WidgetsModule: Module")
+    ref("originalExpoActivity", "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift", "public struct WidgetLiveActivity")
+    ref("originalExpoRegistry", "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift", "public enum HanlinExpoWidgetsIntegration")
+    ref("shareSDKFacade", "AI_HLY/Downstream/SDK/HanlinApplicationComponents.swift", "func prepareSharedDraft(")
+    ref("shareComposer", "AI_HLY/Views/Components/ChatViewBottom.swift", "ChavrusaShareInboxView(platform: .shared, useInChat:")
+    ref("hostControlButtonRegistration", "HanlinScriptingWidgets/HanlinScriptingWidgets.swift", "ScriptWidgetButtonControlWidget()")
+    ref("hostControlToggleRegistration", "HanlinScriptingWidgets/HanlinScriptingWidgets.swift", "ScriptWidgetControlWidget()")
+    ref("miniAppsControlButtonRegistration", "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift", "ScriptWidgetButtonControlWidget()")
+    ref("miniAppsControlToggleRegistration", "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift", "ScriptWidgetControlWidget()")
+    ref("currentScope", "docs/miniapp-sdk/README.md", "## Entry points and native surfaces")
+    extension_directories = {
+        "ChavrusaChatShare": "ChavrusaChatShare",
+        "ChavrusaChatTranslationProvider": "ChavrusaChatTranslationProvider",
+        "HanlinScriptingWidgets": "HanlinScriptingWidgets",
+        "ChavrusaChatNotificationService": "ChavrusaChatNotificationService",
+        "HanlinMiniAppsShare": "HanlinMiniAppsExtensions/Share",
+        "HanlinMiniAppsTranslationProvider": "HanlinMiniAppsExtensions/Translation",
+        "HanlinMiniAppsWidgets": "HanlinMiniAppsExtensions/Widgets",
+    }
+    for target, directory in extension_directories.items():
+        ref(target + "Info", directory + "/Info.plist", "<plist")
 
-    tracked = subprocess.check_output(["git", "ls-files", "*.swift"], cwd=ROOT, text=True, encoding="utf-8").splitlines()
-    share_references = [p for p in tracked if p.startswith("AI_HLY/") and "ChavrusaShareInbox" in (ROOT / p).read_text(encoding="utf-8-sig")]
-    if share_references != ["AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift", "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift"]:
+    tracked = sorted(p for p in sources.tracked if p.endswith(".swift"))
+    sources.prefetch(tracked)
+    swift = {p: sources.read_text(p) for p in tracked}
+    share_references = [p for p in tracked if p.startswith("AI_HLY/") and "ChavrusaShareInbox" in swift[p]]
+    if share_references != [
+        "AI_HLY/Downstream/SDK/HanlinApplicationComponents.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+        "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
+        "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
+        "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
+        "AI_HLY/Views/Components/ChatViewBottom.swift",
+    ]:
         raise ValueError(f"Share inbox callers changed; re-audit reachability: {share_references}")
-    optional_surfaces = {symbol: [p for p in tracked if re.search(rf"\b{symbol}\b", (ROOT / p).read_text(encoding="utf-8-sig"))]
+    optional_surfaces = {symbol: [p for p in tracked if re.search(rf"\b{symbol}\b", swift[p])]
                          for symbol in ["ControlWidget", "CSSearchableIndex", "CoreSpotlight"]}
-    project = (ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8")
+    project = sources.read_text("AI_HLY.xcodeproj/project.pbxproj")
     targets = project.split("/* Begin PBXNativeTarget section */")[1].split("/* End PBXNativeTarget section */")[0]
     target_names = sorted(re.findall(r"\bname = ([^;]+);", targets))
-    entitlement_files = ["AI_HLY/AI_HLY.entitlements"] + [
-        f"{target}/{target}.entitlements" for target in ["ChavrusaChatShare", "ChavrusaChatTranslationProvider", "HanlinScriptingWidgets", "ChavrusaChatNotificationService"]]
+    entitlement_files = ["AI_HLY/AI_HLY.entitlements", "HanlinMiniAppsApp/HanlinMiniApps.entitlements"] + [
+        f"{directory}/{target}.entitlements" for target, directory in extension_directories.items()]
     entitlements = {}
     for file in entitlement_files:
-        data = (ROOT / file).read_bytes()
+        data = sources.read_bytes(file)
         entitlements[file] = {"declared": plistlib.loads(data), "sha256": hashlib.sha256(data).hexdigest(),
                               "exportedSignatureVerified": False}
     paths = {
-        "share": {"target": "ChavrusaChatShare", "refs": ["shareWrite", "shareOwnedStore", "shareProviderCopy", "shareRead", "shareReview", "shareSelection", "extensionQueue", "extensionReceipts", "resume", "headless"],
-                  "stop": "Owned batches feed a Host chooser of installed NativeScript declared share actions, bound to generation/entry/action, durable INT-02 receipts, cancellation and actual result review. Busy VM leaves unstarted actions queued. Source wiring is not an executed share-sheet/UI/device proof; Expo action parity remains disconnected. Historical share-inbox.json is retained.", "owner": "INT-04"},
-        "translation": {"target": "ChavrusaChatTranslationProvider", "refs": ["translationSnapshot", "extensionIntent", "extensionQueue", "resume", "expoExposureRejection"],
-                        "stop": "Declarative snapshot/action continuation is not an NS/Expo runtime route. Resume requires an appIntent entrypoint; Expo non-widget exposure is rejected.", "owner": "INT-02/INT-03"},
-        "widget": {"target": "HanlinScriptingWidgets", "refs": ["widgetBundle", "widgetIntent", "widgetCallback"],
-                   "stop": "Existing Expo/ScriptWidget callbacks commit revision/nonces in the widget-specific runtime. They do not expose the five canonical Host runtimes or an NS foreground VM.", "owner": "INT-02/INT-03"},
+        "share": {"target": "ChavrusaChatShare / HanlinMiniAppsShare", "refs": ["sharePrincipal", "miniAppsSharePrincipal", "shareWrite", "shareOwnedStore", "shareProviderCopy", "shareRead", "shareReview", "shareSelection", "shareSDKFacade", "shareComposer", "extensionQueue", "extensionReceipts", "resume", "resumeDispatch", "headless", "nativeActionDispatch", "expoActionDispatch"],
+                  "stop": "Owned share batches feed a Host chooser of installed NativeScript or Expo declared share actions, bound to installation/generation/entry/action. Resume dispatch uses the request broker; NativeScript invokes its registered action and Expo uses its foreground session action channel. An authored handler can call the canonical Host facade. Durable action receipts exist, but the original share ingress does not return a generic RuntimeExecutionResult automatically.", "owner": "INT-04"},
+        "translation": {"target": "ChavrusaChatTranslationProvider / HanlinMiniAppsTranslationProvider", "refs": ["translationSnapshot", "translationContinuation", "translationAction", "extensionIntent", "extensionQueue", "resume", "resumeDispatch", "headless", "nativeActionDispatch", "expoActionDispatch", "nativeTranslation"],
+                        "stop": "A declared NativeScript/Expo foreground action can carry selected text through an App Intent and the same Host action dispatch. Separately, native presentation programs render/edit/finish translation in the extension through original widget engines; that local presentation is not a canonical Host runtime passthrough. Neither route implies per-surface executed receipt coverage.", "owner": "INT-02/INT-03"},
+        "widget": {"target": "HanlinScriptingWidgets / HanlinMiniAppsWidgets", "refs": ["widgetBundle", "miniAppsWidgetBundle", "widgetIntent", "widgetCallback", "originalExpoWidget", "originalExpoModule"],
+                   "stop": "Original Expo/ScriptWidget widgets and their widget-local callbacks are implemented. Revision/nonces and installed identities govern local actions. This does not establish an extension ingress to the five canonical Host runtimes or a NativeScript foreground VM.", "owner": "INT-02/INT-03"},
         "notification": {"target": "ChavrusaChatNotificationService", "refs": ["notification"],
-                         "stop": "Media attachment/category delivery only; no authenticated package event envelope, Host consumer or MiniApp receipt.", "owner": "INT-05"},
-        "liveActivity": {"target": "HanlinScriptingWidgets", "refs": ["widgetBundle", "extensionIntent", "extensionQueue"],
-                         "stop": "Static ActivityKit presentation is not a canonical Node/TS/Python/JSC/Shell execution path.", "owner": "INT-02/INT-03"},
-        "hostAppIntent": {"target": "AI_Hanlin / HanlinScriptExtensions", "refs": ["extensionIntent", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "requestBroker", "headless", "nativeSession", "expoIntentRejection"],
-                          "stop": "NS declared action can dispatch through the existing broker and persist its action value/status in a protected durable receipt. Busy NS session leaves unstarted work queued; Expo yields an explicit unsupported receipt. Native queue/executor cases and real compiled-intent result passed; actual NS/Expo system ingress readback, full context and attachment acceptance remain open.", "owner": "INT-02/INT-03"},
-        "shortcuts": {"target": "HanlinScriptingWidgets / AI_Hanlin", "refs": ["shortcutIntent", "hostShortcuts", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "headless", "expoIntentRejection"],
-                      "stop": "Generic MiniApp action enqueues foreground continuation. Registered Siri phrases are alarm/notification operations; not an all-runtime MiniApp API.", "owner": "INT-02/INT-03"},
-        "foreground": {"target": "AI_Hanlin", "refs": ["nativeBridge", "nativeAdapter", "nativeSession", "expoFacade", "expoModule", "expoAdapter", "runtimeBroker", "callerContext"],
-                       "stop": "NS generic async facade and Expo use the same canonical JSON/full-receipt route. NS captures its bound bridge, with session-owned cancel handles and teardown cancellation. Actual VM/metadata/backend tests are pending; legacy NS strings keep their historical result boundary.", "owner": "INT-03/INT-06/SDK-03/SDK-04"},
+                         "stop": "Media attachment/category delivery only; no package event envelope, canonical Host consumer or MiniApp action receipt is established by this source route.", "owner": "INT-05"},
+        "liveActivity": {"target": "HanlinScriptingWidgets / HanlinMiniAppsWidgets", "refs": ["widgetBundle", "miniAppsWidgetBundle", "scriptWidgetLiveActivity", "scriptWidgetActivityRenderer", "originalExpoActivity", "originalExpoModule"],
+                         "stop": "Original Expo ActivityKit and ScriptWidget original-renderer activities have native start/update/end and local action paths. They are distinct from the retained legacy presentation. None is classified here as a Node/TypeScript/Python/JSC/Shell extension passthrough.", "owner": "INT-02/INT-03"},
+        "hostAppIntent": {"target": "HanlinApp / HanlinMiniApps / HanlinScriptExtensions", "refs": ["extensionIntent", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "resumeDispatch", "requestBroker", "headless", "nativeSession", "nativeActionDispatch", "expoActionDispatch"],
+                          "stop": "Declared NativeScript and Expo actions dispatch through the installed-package broker and persist action value/status in a durable receipt. NativeScript admission preserves its one-VM ownership; Expo uses the visible foreground action channel. A handler may use its canonical Host facade, but the returned action value is not automatically the complete generic runtime receipt.", "owner": "INT-02/INT-03"},
+        "shortcuts": {"target": "HanlinApp / HanlinMiniApps / HanlinWidgetUI", "refs": ["shortcutIntent", "hostShortcuts", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "resumeDispatch", "headless", "nativeActionDispatch", "expoActionDispatch"],
+                      "stop": "Hanlin's typed installed-package action intent enqueues foreground continuation for NativeScript or Expo. ChavrusaChatShortcuts advertises alarm/notification phrases; the upstream ScriptWidget AppShortcutsProvider is not registered. Native snippets and original control intents are separate native UI/action surfaces.", "owner": "INT-02/INT-03"},
+        "foreground": {"target": "HanlinApp / HanlinMiniApps", "refs": ["appBootstrap", "miniAppsBootstrap", "nativeBridge", "nativeAdapter", "nativeRuntimeDispatch", "nativeSession", "expoFacade", "expoModule", "expoAdapter", "expoRuntimeDispatch", "runtimeWire", "runtimeBroker", "callerContext"],
+                       "stop": "NativeScript generic async and Expo facades reach the shared canonical JSON/full RuntimeExecutionResult route. NativeScript captures its bound bridge and session-owned cancellation; legacy strings retain their historical boundary. This generator records source wiring and imports no native or physical acceptance verdict.", "owner": "INT-03/INT-06/SDK-03/SDK-04"},
     }
+    original_surfaces = {
+        "scriptWidgetControls": {"engines": ["scriptwidget"],
+            "refs": ["originalControlWidgets", "originalToggleWidget", "originalControlProvider", "originalControlActions", "controlCatalog", "controlCompiler", "widgetCallback", "hostControlButtonRegistration", "hostControlToggleRegistration", "miniAppsControlButtonRegistration", "miniAppsControlToggleRegistration", "controlUpstream", "controlSourceRefresh"],
+            "sourceSupport": "Original button/toggle ControlWidget wrappers, configuration intents, entity/value providers and actions are registered in both widget bundles. Original widget.json actions/controls are projected into current installation/generation state and the widget action executor. Original source provenance and automatic refresh are retained."},
+        "widgets": {"engines": ["expo-widgets", "scriptwidget"],
+            "refs": ["widgetBundle", "miniAppsWidgetBundle", "widgetCallback", "originalExpoWidget", "originalExpoModule", "originalExpoRegistry"],
+            "sourceSupport": "Original engine widget rendering and actions exist, including the original Expo Widgets module, registration picker, timeline and configuration integration. This is separate from a canonical Host-runtime bridge."},
+        "nativePresentations": {"engines": ["expo-widgets", "scriptwidget"],
+            "refs": ["nativePresentationExecutor", "nativePresentationView", "nativeSnippet", "nativeTranslation"],
+            "sourceSupport": "Declared native snippet/translation programs execute through original widget engines with invocation-owned state and actual native controls. Translation expansion/text replacement uses the native provider context; it is not a React Native or NativeScript VM inside the extension."},
+        "liveActivities": {"engines": ["expo-widgets", "scriptwidget"],
+            "refs": ["scriptWidgetLiveActivity", "scriptWidgetActivityRenderer", "originalExpoActivity", "originalExpoModule", "widgetBundle", "miniAppsWidgetBundle"],
+            "sourceSupport": "Original Expo ActivityKit and original ScriptWidget component/region rendering have native lifecycle integration. Local controls refresh declared activity state with current installation/generation checks."},
+    }
+    for route in original_surfaces.values():
+        route.update({"status": "source-wired", "canonicalHostRuntimePassthroughEstablished": False,
+                      "realSurfaceE2E": False, "onDeviceProof": None})
     rows = []
     for surface, route in paths.items():
         for engine in ENGINES:
             for runtime in RUNTIMES:
-                has_tail = True
-                connected_source = surface == "foreground" or (surface in ["share", "hostAppIntent", "shortcuts"] and engine == "hanlinNativeScript")
-                wired = has_tail and connected_source
+                wired = surface in ["foreground", "share", "translation", "hostAppIntent", "shortcuts"]
                 structured_receipt = wired and surface == "foreground"
                 rows.append({"surface": surface, "engine": engine, "runtime": runtime,
                     "status": "not-tested" if structured_receipt else "partially-wired" if wired else "disconnected", "path": surface,
-                    "runtimeTail": (["expoFacade", "expoModule", "expoAdapter", "runtimeBroker"] if engine == "hanlinExpo"
-                                    else ["nativeFacade", "nativeBridge", "nativeAdapter", "runtimeWire", "runtimeBroker"]) if has_tail else [],
+                    "runtimeTail": (["expoFacade", "expoModule", "expoAdapter", "runtimeWire", "runtimeBroker"] if engine == "hanlinExpo"
+                                    else ["nativeFacade", "nativeBridge", "nativeAdapter", "runtimeWire", "runtimeBroker"]) if wired else [],
                     "sourcePathReachesCanonicalExecutor": wired,
                     "structuredReceiptReturnedToIngressInSource": structured_receipt,
-                    "durableActionReceiptInSource": surface in ["share", "hostAppIntent", "shortcuts"] and engine == "hanlinNativeScript",
+                    "durableActionReceiptInSource": wired and surface != "foreground",
+                    "routeCondition": "Foreground package action continuation; original native presentations remain separate" if surface == "translation" else
+                                      "Declared registered package handler can call its canonical Host facade" if wired and surface != "foreground" else
+                                      "Direct canonical Host facade call" if wired else "No canonical Host runtime route established",
                     "realSurfaceE2E": False, "onDeviceProof": None,
                     "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing" if structured_receipt else
                                       "Durable action receipt; runtime receipt readback to ingress incomplete" if wired else "No connected canonical-runtime receipt",
-                    "callerContext": {"hostAdapterReachable": wired, "canPresentUI": (False if engine == "hanlinNativeScript" and surface != "foreground" else True) if wired else None,
+                    "callerContext": {"hostAdapterReachable": wired, "canPresentUI": True if wired and (engine == "hanlinExpo" or surface == "foreground") else None,
                         "userGesturePresent": False if wired else None,
-                        "note": "NS headless provider explicitly sets canPresentUI=false; actual user gesture, all OS-prompt services and device behavior still need validation" if wired and surface != "foreground" else
+                        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler." if wired and surface != "foreground" and engine == "hanlinNativeScript" else
                                 "Host-bound package/session identity" if wired else "No canonical Host call context is connected from this ingress"},
                     "engineVersionSource": "source-inventory.json#/" + ("expo" if engine == "hanlinExpo" else "nativeScript"),
                     "permissions": ["Declared App Group is not exported-signature proof", "Actual service OS permission/availability still required"],
@@ -139,11 +265,13 @@ def build() -> dict:
         "sdkSources": sdk["sources"], "history": {"ownerTestFlightBuild": "93401", "source": "7fa8fe26",
             "boundary": "Historical owner delivery only; not current branch/signature/matrix acceptance"},
         "targetsDeclaredInProject": target_names, "entitlements": entitlements, "optionalSurfaceSymbolScan": optional_surfaces,
-        "sourceRefs": refs, "paths": paths, "matrix": rows,
+        "sourceRefs": refs, "paths": paths, "matrix": rows, "originalLibrarySurfaces": original_surfaces,
+        "matrixScope": "Eight ingress categories by two native app engines by five canonical Host runtimes; not an inventory of all original widget/presentation APIs.",
+        "sourceReadPolicy": "Current local bytes take precedence; only missing tracked files use exact HEAD blobs, including the Swift symbol scan.",
         "systemServices": {"authority": "source-inventory.json#/systemServices",
-            "publicBindingStatus": {e: "No generic SystemServicesBroker binding in the inspected Host bridge; direct native metadata APIs are a separate, unverified path" for e in ENGINES},
+            "publicBindingStatus": {e: "No generic HanlinSystemServicesBroker facade in the inspected Host adapter. Original native SDK APIs and ScriptWidget service providers are separate API paths; this does not classify them as absent." for e in ENGINES},
             "availabilityIsNotGrantMetadata": True, "devicePermissionChecksExecuted": False},
-        "acceptance": {"fourExtensionsByTwoEnginesByFiveRuntimes": 40, "additionalSurfaceCells": 40,
+        "acceptance": {"fourExtensionCategoriesByTwoEnginesByFiveRuntimes": 40, "additionalSurfaceCells": 40,
             "executedSurfaceE2EPasses": 0, "signedPhysicalAcceptance": "NOT_RUN"}}
 
 
@@ -151,7 +279,7 @@ def markdown(value: dict) -> str:
     lines = ["# NativeScript / Expo extension reachability", "", "Status: **IN_PROGRESS — source audit only**.", "",
         f"Base commit: `{value['sourceCommit']}`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).",
         "Runtime/API/version authority is [source-inventory.json](source-inventory.json); this matrix consumes it rather than maintaining a second SDK contract.", "",
-        "The four actual extension targets × two engines × five canonical runtimes form40 cells. Live Activity, Host AppIntent, Shortcuts and foreground add40 more.",
+        "The share, translation, widget and notification ingress categories × two native app engines × five canonical Host runtimes form 40 cells. Live Activity, Host AppIntent, Shortcuts and foreground add 40 more. These 80 cells describe Host-runtime passthrough, not all original widget, control or presentation capabilities.",
         "A declared bridge, rendered snapshot, queued command or widget-local callback is not a complete ingress → executor → returned receipt proof. No signed physical or per-surface E2E pass is inferred.", "",
         "| Surface | Engine | Node | TS | Python | JSC | Shell |", "|---|---|---|---|---|---|---|"]
     for surface in value["paths"]:
@@ -165,16 +293,24 @@ def markdown(value: dict) -> str:
             ref = value["sourceRefs"][key]
             links.append(f"[{key}](../../{ref['file']}#L{ref['line']})")
         lines += [f"- **{surface}** ({route['target']}): {route['stop']} Follow-up: {route['owner']}. Sources: " + ", ".join(links) + "."]
+    lines += ["", "## Original library surfaces outside the 80 cells", ""]
+    for surface, route in value["originalLibrarySurfaces"].items():
+        links = []
+        for key in route["refs"]:
+            ref = value["sourceRefs"][key]
+            links.append(f"[{key}](../../{ref['file']}#L{ref['line']})")
+        lines += [f"- **{surface}** ({', '.join(route['engines'])}): {route['sourceSupport']} Source support only; no canonical Host-runtime passthrough or executed E2E pass is inferred. Sources: " + ", ".join(links) + "."]
     lines += ["", "## Identity, permissions and proof", "",
         "- App Group/other entitlements in JSON are source declarations. Exported signed entitlement/profile identity is NOT_VERIFIED here.",
         "- TestFlight93401 is the historical owner delivery at7fa8fe26. It does not prove this branch, current framework identity, or this matrix. No IPA is generated by this audit.",
-        "- NS legacy callbacks keep string/error semantics. The generated generic facade exposes all five canonical kinds/full receipts and session-owned cancellation in source; native VM/metadata execution remains pending. One global active NS session requires real arbitration, not a second unowned VM.",
-        "- Expo's facade routes all5 canonical kinds through the shared runtime.execute wire. Native legacy backend/name/failure cases passed in43315911311; complete JS-module/system-ingress receipt coverage remains open under INT-06.",
-        "- The17 SystemServicesBroker declarations are inventoried separately. They do not prove a public NS/Expo binding, actual OS permission, UI presentation context or device availability. Direct native metadata calls are a separate path.",
-        "- ControlWidget/CoreSpotlight names occur in exposure contracts; the source scan does not find an implemented corresponding target/index. They are not added as executable surfaces.",
-        "- Existing ResumeQueue delivery metadata/leases/dedup/TTL/cancellation and protected Receipts have actual17-case foundation evidence in43318804647, plus12 affected queue cases including per-item damage isolation in43394176076. Actual compiled-intent receipt passed in43325255401; generic NS/Expo attachments/system ingress and physical AppGroup acceptance remain open. No automatic Host engine launch inside an extension.", "",
+        "- NS legacy callbacks keep string/error semantics. The generic facade exposes all five canonical kinds/full receipts and session-owned cancellation in source. One process-wide native VM keeps its existing admission/ownership rules. This audit does not load execution evidence.",
+        "- Expo's facade routes all five canonical kinds through the shared runtime.execute wire. Declared Expo actions use their actual foreground action channel and can call that facade; they are no longer rejected as a group. Per-ingress returned runtime receipts still need separate acceptance evidence.",
+        "- SystemServicesBroker declarations are inventoried separately from original NativeScript/Expo APIs and installed ScriptWidget native providers. This matrix does not equate a missing generic broker facade with missing original service APIs, or declarations with OS authorization/device execution.",
+        "- Original ScriptWidget button/toggle Control Widgets are implemented in both existing Widget extensions and recorded above. They are not Node/Shell passthrough rows. No dedicated per-package Core Spotlight index is implemented by this integration; a symbol occurrence alone is not evidence of one.",
+        "- ResumeQueue delivery metadata, leases, deduplication, cancellation and durable receipts are source-backed paths. Their historical and current executed evidence belongs to the corresponding acceptance run, not this generator. No automatic canonical Host engine launch inside an extension is inferred.",
+        "- Legacy Scripting/ScriptUI development remains frozen. A custom home entrypoint, upstream ScriptWidget AppShortcutsProvider registration, keyboard/rich-notification UI and a dedicated per-package Spotlight index are not added by this map.", "",
         "## Verification", "", "Run the SDK source audit first, then `py -3 Scripts/Audit/audit_miniapp_reachability.py --check`. Both fail on source drift; runtime execution is not part of this audit.",
-        "INT-02/03/04/05/06/07 and SDK-02…08 remain open. This is the prerequisite map, not their implementation or final acceptance.", ""]
+        "Task completion and native acceptance are tracked separately. This generated map reports current source routes and does not set task status or establish final acceptance.", ""]
     return "\n".join(lines)
 
 
@@ -200,7 +336,7 @@ def main() -> None:
     else:
         output.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
         (OUT / "extension-reachability.md").write_text(markdown(value), encoding="utf-8", newline="\n")
-        print("Wrote 80 reachability cells; four-extension matrix = 40. All physical/E2E gates remain open.")
+        print("Wrote 80 canonical Host-runtime reachability cells plus separate original-library surface records; no physical/E2E pass inferred.")
 
 
 if __name__ == "__main__":
