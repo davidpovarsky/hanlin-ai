@@ -7,7 +7,9 @@ import plistlib
 import shutil
 import subprocess
 import sys
+import threading
 import time
+import uuid
 import zipfile
 
 from simulator_entitlements import read_simulator_entitlements
@@ -39,18 +41,90 @@ TEST_PLANS = {
 }
 
 
+COMMAND_HEARTBEAT_SECONDS = 30
+
+
 def command(argv, name, timeout=60, allow_failure=False):
     started = time.monotonic()
-    with (EVIDENCE / name).open("wb") as log:
+    log_path = EVIDENCE / name
+    identity = {"command_id": uuid.uuid4().hex, "argv": argv, "log": name,
+        "runner_pid": os.getpid(), "pid": None, "started_at": time.time(), "timeout": timeout}
+
+    def checkpoint(status, **details):
+        # A running record is an observation, never evidence of completion. The
+        # journal retains interrupted commands even when cleanup starts another.
+        record = {**identity, "status": status, "observed_at": time.time(),
+            "seconds": time.monotonic() - started, "log_bytes": log_path.stat().st_size,
+            "completion_recorded": False, **details}
+        encoded = json.dumps(record) + "\n"
+        with (EVIDENCE / "command-events.jsonl").open("a") as journal:
+            journal.write(encoded)
+            journal.flush()
+            os.fsync(journal.fileno())
+        temporary = EVIDENCE / "active-command.json.tmp"
+        with temporary.open("w") as current:
+            current.write(encoded)
+            current.flush()
+            os.fsync(current.fileno())
+        temporary.replace(EVIDENCE / "active-command.json")
+        print(f"Paired command {status}: {name}; pid={record['pid']}; "
+            f"elapsed={record['seconds']:.1f}s; log_bytes={record['log_bytes']}; "
+            f"observed_exit={record.get('observed_returncode')}", flush=True)
+
+    with log_path.open("wb") as log:
+        checkpoint("starting")
+        process = None
         try:
-            process = subprocess.run(argv, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, timeout=timeout)
-            code = process.returncode
-        except subprocess.TimeoutExpired:
-            code = -1
-    output = (EVIDENCE / name).read_bytes()
+            # Keep subprocess.run's streaming, timeout kill/wait and exception
+            # cleanup semantics; Popen exposes the actual PID for observations.
+            with subprocess.Popen(argv, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT) as process:
+                identity["pid"] = process.pid
+                stopped = threading.Event()
+                observer = None
+                timed_out = False
+
+                def heartbeat():
+                    while not stopped.wait(COMMAND_HEARTBEAT_SECONDS):
+                        try:
+                            observed = process.poll()
+                            checkpoint("running" if observed is None else "exited_unrecorded",
+                                observed_returncode=observed)
+                        except Exception as error:
+                            print(f"Command checkpoint unavailable: {name}: {error}", file=sys.stderr, flush=True)
+
+                try:
+                    observed = process.poll()
+                    checkpoint("running" if observed is None else "exited_unrecorded",
+                        observed_returncode=observed)
+                    observer = threading.Thread(target=heartbeat, daemon=True)
+                    observer.start()
+                    process.communicate(timeout=timeout)
+                    code = process.returncode
+                except subprocess.TimeoutExpired:
+                    timed_out = True
+                    process.kill()
+                    process.wait()
+                    code = -1
+                except BaseException:
+                    process.kill()
+                    raise
+                finally:
+                    stopped.set()
+                    if observer is not None and observer.ident is not None:
+                        observer.join()
+        except BaseException as error:
+            checkpoint("launch_failed" if process is None else "interrupted",
+                exception_type=type(error).__name__, exception_message=str(error),
+                observed_returncode=process.poll() if process is not None else None)
+            raise
+    output = log_path.read_bytes()
     with (EVIDENCE / "commands.jsonl").open("a") as log:
         log.write(json.dumps({"argv": argv, "exit": code, "seconds": time.monotonic() - started,
             "log": name, "sha256": hashlib.sha256(output).hexdigest()}) + "\n")
+        log.flush()
+        os.fsync(log.fileno())
+    checkpoint("timed_out" if timed_out else "completed", completion_recorded=True,
+        exit=code, observed_returncode=process.returncode)
     if code and not allow_failure:
         raise RuntimeError(f"{argv[0]} exit {code}; inspect {name}")
     return code, output.decode(errors="replace")

@@ -1,0 +1,37 @@
+{
+  "initial_result": "4 passed; 1 SIGINT assertion failed",
+  "reason": "Existing Python subprocess.run/Popen KeyboardInterrupt cleanup may return before an immediate poll observes child death. The production checkpoint correctly retained observed_returncode=null. The test-only observer now reaps its owned child to verify SIGKILL without adding a production wait.",
+  "production_changed_after_initial_test": false,
+  "changed_test_methods": [
+    "test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt"
+  ],
+  "before_test_method_sha256": {
+    "setUp": "d431591b5bfcfa7e945872a9f39511e92b0f7d5199087e0db690bb803776c271",
+    "records": "dcae256484186d301cc529d67fb58b5140b96f2c2a124231d0f2ebadc902155b",
+    "assert_completed_contract": "27d44732a752a422c4d5a18bf4adb64be8c97a931c7dba1d9fd9de79fa0b79d3",
+    "test_success_keeps_streamed_output_environment_and_completed_contract": "54b4566173ae34e8733017af393be72d148786288113de940bdb38d12b3ea11f",
+    "test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout": "731c3f65610ca7542a83e5beb064934214518dc2f197c5c74dea7940ce98cc09",
+    "test_timeout_retains_partial_output_kills_child_and_preserves_minus_one": "6606ab7737a8852c546d70496e8c104ea1d1401f48b7c707c2853f701e4d772a",
+    "test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt": "790682bacae1eaf9020752d3afe18218927bf4aa7b1080177583c5393fcb98e9",
+    "test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup": "888d938030b0939025c1046fb237e8193906e87a515b39f25d3e728b4cb21cc6"
+  },
+  "after_test_method_sha256": {
+    "setUp": "d431591b5bfcfa7e945872a9f39511e92b0f7d5199087e0db690bb803776c271",
+    "records": "dcae256484186d301cc529d67fb58b5140b96f2c2a124231d0f2ebadc902155b",
+    "assert_completed_contract": "27d44732a752a422c4d5a18bf4adb64be8c97a931c7dba1d9fd9de79fa0b79d3",
+    "test_success_keeps_streamed_output_environment_and_completed_contract": "54b4566173ae34e8733017af393be72d148786288113de940bdb38d12b3ea11f",
+    "test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout": "731c3f65610ca7542a83e5beb064934214518dc2f197c5c74dea7940ce98cc09",
+    "test_timeout_retains_partial_output_kills_child_and_preserves_minus_one": "6606ab7737a8852c546d70496e8c104ea1d1401f48b7c707c2853f701e4d772a",
+    "test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt": "7d22e3cc003cfbd0c84c45ebfca6f5f2d2539de3db3edabe519d0638e58939e8",
+    "test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup": "888d938030b0939025c1046fb237e8193906e87a515b39f25d3e728b4cb21cc6"
+  },
+  "unaffected_passing_cases_reused": [
+    "test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup",
+    "test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout",
+    "test_success_keeps_streamed_output_environment_and_completed_contract",
+    "test_timeout_retains_partial_output_kills_child_and_preserves_minus_one"
+  ],
+  "reexecution_scope": [
+    "test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt"
+  ]
+}

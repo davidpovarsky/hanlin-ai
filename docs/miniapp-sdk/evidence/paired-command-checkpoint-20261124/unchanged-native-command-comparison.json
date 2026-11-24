@@ -1,0 +1,50 @@
+{
+  "base_commit": "3a67bd43ed273a6948207e4db4e3ff446d2fa351",
+  "all_other_function_asts_identical": true,
+  "all_native_command_call_asts_identical": true,
+  "command_call_count": 35,
+  "test_plans_and_expected_counts_identical": true,
+  "all_source_after_command_helper_byte_identical": true,
+  "unchanged_native_source_sha256": "a0fe534fe8790df8117b200c069ed2e36bcc47f436bbcdc2135e02bb3d2f59fa",
+  "test_plans": {
+    "miniapp_authoring": [
+      [
+        "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+        "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+        "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+        "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+        "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+        "AI_HLYTests/HanlinNativePresentationTests",
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+        "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+        "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+        "AI_HLYUITests/MiniAppAuthoringUITests"
+      ],
+      25
+    ],
+    "cross_product": [
+      [
+        "AI_HLYUITests/HanlinPairedProductUITests"
+      ],
+      3
+    ],
+    "shared_ingress": [
+      [
+        "AI_HLYTests/ShareInboxHostIntegrationTests",
+        "AI_HLYUITests/HanlinShareInboxUITests"
+      ],
+      5
+    ],
+    "product_and_share": [
+      [
+        "AI_HLYUITests/HanlinPairedProductUITests",
+        "AI_HLYTests/ShareInboxHostIntegrationTests",
+        "AI_HLYUITests/HanlinShareInboxUITests"
+      ],
+      8
+    ]
+  }
+}
