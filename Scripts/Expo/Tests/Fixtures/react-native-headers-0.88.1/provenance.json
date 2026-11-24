@@ -1,0 +1,8 @@
+{
+  "package": "react-native-artifacts",
+  "version": "0.88.1",
+  "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-headers-release.tar.gz",
+  "sha256": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd",
+  "modulemapSHA256": "fdfc08b213f4eb8979cdb02f47187e35b5f0b05118d204a6faac324b8b2197a2",
+  "purpose": "Original archive fixture for repeated header-module projection; not a production dependency pin."
+}

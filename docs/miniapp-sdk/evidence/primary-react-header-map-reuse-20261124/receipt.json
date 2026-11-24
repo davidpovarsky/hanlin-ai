@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T20:44:48.497954+00:00",
+  "status": "SOURCE_AND_ORIGINAL_TWO_PASS_PROOF_COMPLETE_NATIVE_REVALIDATION_PENDING",
+  "sourceBase": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+  "sourceCorrection": {
+    "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+    "beforeSHA256": "81b44608fbc6c04dbbf315435b06c21cd62c43d7a75b511a3105ecb91f3fb44a",
+    "afterSHA256": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+    "rootIndependentReview": "PASS exact candidate; cleanup/prune/CI and raw/backup data flow reviewed",
+    "scope": "Only original source-map retention, reuse completeness and validation-before-projection; no original API/import/compiler flag changes",
+    "patchRawSHA256": "e87585d524d720675fa371c7568728b9acb6d4f57b11f1a477e0082e038c900d"
+  },
+  "originalArtifact": {
+    "at": "2026-11-24T20:30:20.368834+00:00",
+    "source": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+    "item": {
+      "name": "ReactNativeHeaders",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-headers-release.tar.gz",
+      "sha256": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd",
+      "subpath": "ReactNativeHeaders.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
+    },
+    "transportURL": "https://repo.maven.apache.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-headers-release.tar.gz",
+    "primaryURLAttempt": "HTTP403 from urllib after redirect; retained tool result",
+    "bytes": 1845331,
+    "sha256": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd"
+  },
+  "regression": {
+    "testPath": "Scripts/Expo/Tests/react-header-map-reuse.test.mjs",
+    "testSHA256": "4e3ea95d816169a71f78fdff27e631578c7564e0f791ffbfcca8235b2284a63e",
+    "fixturePath": "Scripts/Expo/Tests/Fixtures/react-native-headers-0.88.1/headers.tar.gz",
+    "fixtureBytes": 1845331,
+    "fixtureSHA256": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd",
+    "baseline": {
+      "startedAt": "2026-11-24T20:35:57.349630+00:00",
+      "elapsedSeconds": 11.836628497578204,
+      "argv": [
+        "node",
+        "--test",
+        "Scripts/Expo/Tests/react-header-map-reuse.test.mjs"
+      ],
+      "source": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+      "exitCode": 1,
+      "testSHA256": "4e3ea95d816169a71f78fdff27e631578c7564e0f791ffbfcca8235b2284a63e",
+      "stdoutSHA256": "874e88a5219438adfb91288264e17a7f38b55eedf77f3a90c172aa6ab54786ed",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "candidate": {
+      "startedAt": "2026-11-24T20:36:22.388226+00:00",
+      "elapsedSeconds": 32.89520112797618,
+      "argv": [
+        "node",
+        "--test",
+        "Scripts/Expo/Tests/react-header-map-reuse.test.mjs"
+      ],
+      "exitCode": 0,
+      "sourceSHA256": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+      "testSHA256": "4e3ea95d816169a71f78fdff27e631578c7564e0f791ffbfcca8235b2284a63e",
+      "node": "v24.22.0",
+      "stdoutSHA256": "e56372bc1fe2167bd4a1acb77f11aee7ec15828823e91bd57cb70129cf9aa143",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "actualSummary": {
+      "originalArchiveSHA256": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd",
+      "originalModulemapSHA256": "fdfc08b213f4eb8979cdb02f47187e35b5f0b05118d204a6faac324b8b2197a2",
+      "projectedFiles": 2808,
+      "appDelegateHeaders": 9,
+      "repeatedPasses": 2,
+      "rejectedSourceMutations": 5
+    },
+    "platform": "Oracle Linux aarch64; filesystem/staging proof, no Apple compilation",
+    "recoveredExistingCompletion": true
+  },
+  "attempt5": {
+    "source": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+    "status": "FAIL",
+    "finishedAt": "2026-11-24T20:09:11.198485+00:00",
+    "pairedPhase": {
+      "status": "FAIL",
+      "startedAt": "2026-11-24T20:05:00.399345+00:00",
+      "finishedAt": "2026-11-24T20:09:11.196051+00:00",
+      "elapsedSeconds": 250.79286124999635,
+      "exitCode": 1,
+      "logSHA256": "20f25477745cd222966740bcc27001b4ce3d24d28233e320c917f5125b50d77a"
+    },
+    "miniBuild": {
+      "exitCode": 65,
+      "elapsedSeconds": 202.4,
+      "bytes": 5340384,
+      "sha256": "97914eff511dd01491868bfa0232ccae43d6a81632d45cf9ae0897b84e7de3e3",
+      "error": "Clang dependency scanning failure; HanlinExpoSession.swift:11:29 cannot resolve React_RCTAppDelegate"
+    },
+    "observedTerminalCapture": "2026-11-24T20:41:49.568336+00:00",
+    "appCaseBoundary": "AI build and all 52 cases NOT_RUN",
+    "earlierStaleRunningSnapshotSuperseded": true
+  },
+  "rawCapture": {
+    "capturedAt": "2026-11-24T20:41:49.568336+00:00",
+    "files": {
+      "attempt5-state.json": {
+        "bytes": 14374,
+        "sha256": "1154a906d8f0dcb97699a6eb33ff6c8ea89723335bcf84010c2e1b1535e1e033",
+        "compressedBytes": 2895,
+        "compressedSHA256": "606bb5c77a0bd97a82229978440c9a82364f3aa0136820810aadfb50361b25fd"
+      },
+      "attempt5-paired.log": {
+        "bytes": 5978,
+        "sha256": "20f25477745cd222966740bcc27001b4ce3d24d28233e320c917f5125b50d77a",
+        "compressedBytes": 669,
+        "compressedSHA256": "fb79d692c52b0ffbb8ebf380a6940824b656e872888bba1668e38038210a867e"
+      },
+      "attempt5-native-preparation.log": {
+        "bytes": 31023,
+        "sha256": "935c498bc535025d0857e3851bc85d19a20e63de0b7c25a927f26baea66aa7d1",
+        "compressedBytes": 10174,
+        "compressedSHA256": "e8d044929e6be9a4803b81f77d0f1a5be1eedd4567eead34d7428230e00b336b"
+      },
+      "mini-build.log": {
+        "bytes": 5340384,
+        "sha256": "97914eff511dd01491868bfa0232ccae43d6a81632d45cf9ae0897b84e7de3e3",
+        "compressedBytes": 203610,
+        "compressedSHA256": "b8074cd63a258c468332b21880a668dcde30b830be0e946e5d36f074b85d5342"
+      },
+      "attempt5-acceptance.json": {
+        "bytes": 2633,
+        "sha256": "b11415e25f0e4ffd21088f159b8856bfe298189e624741b89cffb54cd2c990a0",
+        "compressedBytes": 1199,
+        "compressedSHA256": "d9bd2a8312c4d39ddcc04cfa96376e66f8bafe52e028a05f0e1faa7ffca26666"
+      },
+      "attempt5-command-events.jsonl": {
+        "bytes": 28526,
+        "sha256": "21c6d73d22e039da793a995a52ac5d2573c3831956112960b6074435e87d054b",
+        "compressedBytes": 3169,
+        "compressedSHA256": "4417f773bde76aac44ef47b4c2a586a882e0c94b71ec4458cd08703ed5b6710e"
+      },
+      "attempt5-commands.jsonl": {
+        "bytes": 4442,
+        "sha256": "b4cf2860b0a1b927e2375b5391025cac36e745930a94e778e89a7452ccf3d755",
+        "compressedBytes": 1837,
+        "compressedSHA256": "6981626dc4a002e4e90a83642cf90120438be27bfd55428c5d07d7defa209380"
+      }
+    }
+  },
+  "provenanceImpact": {
+    "directNativeArtifactInput": true,
+    "directSDKOrInventoryOrReachabilityInput": false,
+    "engineNativeIdentityChanged": false,
+    "normalFinalHostHookRetained": true
+  },
+  "boundaries": {
+    "MacCorrectionApplied": false,
+    "correctedNativePreparation": "NOT_RUN",
+    "correctedMiniAppsBuild": "NOT_RUN",
+    "AIBuild": "NOT_RUN",
+    "all52Cases": "NOT_RUN"
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2541,
+      "sha256": "55375eea1739fac1d6c092da3adafb7e5d6d0039da2d61af7e540bb7e047db18"
+    },
+    {
+      "path": "after-result.json",
+      "bytes": 574,
+      "sha256": "ede4aa4f0e585ab9a33f17372851b95e46edf53859d6a05ead658427277ac1f7"
+    },
+    {
+      "path": "after.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "after.stdout.log.gz",
+      "bytes": 2908,
+      "sha256": "2883514afecf8ebc7f9bcd2ded08d5f8764c0ed7c973b208a719359d096b7e8e"
+    },
+    {
+      "path": "archive-receipt.json",
+      "bytes": 906,
+      "sha256": "13d3cce4ef96d8fca9425f75ecc9a4f2af0bb0539dda64b704b3f8fe28adaec1"
+    },
+    {
+      "path": "attempt5-acceptance.json.gz",
+      "bytes": 1199,
+      "sha256": "d9bd2a8312c4d39ddcc04cfa96376e66f8bafe52e028a05f0e1faa7ffca26666"
+    },
+    {
+      "path": "attempt5-command-events.jsonl.gz",
+      "bytes": 3169,
+      "sha256": "4417f773bde76aac44ef47b4c2a586a882e0c94b71ec4458cd08703ed5b6710e"
+    },
+    {
+      "path": "attempt5-commands.jsonl.gz",
+      "bytes": 1837,
+      "sha256": "6981626dc4a002e4e90a83642cf90120438be27bfd55428c5d07d7defa209380"
+    },
+    {
+      "path": "attempt5-first-native-failure.json",
+      "bytes": 25871,
+      "sha256": "64f4fbf8ddd8590db7e30882f55d80e4a8a056721480a90686693cffceb9a828"
+    },
+    {
+      "path": "attempt5-native-preparation.log.gz",
+      "bytes": 10174,
+      "sha256": "e8d044929e6be9a4803b81f77d0f1a5be1eedd4567eead34d7428230e00b336b"
+    },
+    {
+      "path": "attempt5-paired.log.gz",
+      "bytes": 669,
+      "sha256": "fb79d692c52b0ffbb8ebf380a6940824b656e872888bba1668e38038210a867e"
+    },
+    {
+      "path": "attempt5-react-module-closure.json",
+      "bytes": 875,
+      "sha256": "206774fb77d87b3bcdc38957ebd2c402372044ac59a7dc268b771936649c4eff"
+    },
+    {
+      "path": "attempt5-react-original-maps.json",
+      "bytes": 6415,
+      "sha256": "0804c7eccebdf1f262e744639097878f456ee9e2ead48f0100db7d44a356775e"
+    },
+    {
+      "path": "attempt5-state.json.gz",
+      "bytes": 2895,
+      "sha256": "606bb5c77a0bd97a82229978440c9a82364f3aa0136820810aadfb50361b25fd"
+    },
+    {
+      "path": "before-result.json",
+      "bytes": 523,
+      "sha256": "6ddb9713c199bc662375905ef3409eb4ecd74b8bfa731ecd8ffa8ff1cb2d4ce5"
+    },
+    {
+      "path": "before.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "before.stdout.log.gz",
+      "bytes": 3045,
+      "sha256": "46a96914d25a32551ca4d2abb8a0c8e49eac3fde72a0a3524efe8f32992d3349"
+    },
+    {
+      "path": "mini-build.log.gz",
+      "bytes": 203610,
+      "sha256": "b8074cd63a258c468332b21880a668dcde30b830be0e946e5d36f074b85d5342"
+    },
+    {
+      "path": "original-ios-arm64.modulemap.txt",
+      "bytes": 5629,
+      "sha256": "fdfc08b213f4eb8979cdb02f47187e35b5f0b05118d204a6faac324b8b2197a2"
+    },
+    {
+      "path": "original-ios-arm64_x86_64-simulator.modulemap.txt",
+      "bytes": 5629,
+      "sha256": "fdfc08b213f4eb8979cdb02f47187e35b5f0b05118d204a6faac324b8b2197a2"
+    },
+    {
+      "path": "source-diff.patch.gz",
+      "bytes": 1819,
+      "sha256": "bbc28746f64fbed62cef1c70596545e645525c817fa0dd4631d6a01ec2cc59b9"
+    },
+    {
+      "path": "terminal-capture.json",
+      "bytes": 1961,
+      "sha256": "f06d7b07b63cd150078eb588e7e3e5e7d96811afe1e86731c66f8d11b135619b"
+    }
+  ]
+}
