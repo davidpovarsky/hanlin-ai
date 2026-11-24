@@ -13,3 +13,7 @@ The existing installer calls in shipping, paired, simulator, performance, Expo v
 Direct Xcode and the generic apple-devtools `apple-build` command still consume a prepared graph. The correct developer sequence is to resolve original inputs, install through this helper, prepare NativeScript/Expo native inputs and RuntimeHost resources, then invoke xcodebuild or open the prepared project. A late Xcode target build phase is not used to mutate an already resolved package graph. Existing repository manual app workflows are the canonical complete build entrypoints.
 
 [Machine receipt](result.json) binds source hashes, original compiler bytes, actual commands, logs and their hashes. These are portable Linux results. Native Apple application acceptance remains a separate gate owned by the integration agent.
+
+## Native preparation follow-up
+
+The original ExpoModulesJSI producer writes its native build state under the installed package's `apple/.DerivedData`, `.build`, `.swiftpm`, `.generated` and `Products` directories. Those exact known output subtrees now stay outside both authoring receipts and SDK copies. The focused real-npm regression confirms that generated native metadata preserves reuse without deleting prepared products, while original declarations and unrelated `src/build` and `dist` files remain included and checked. One selected test executed and passed; [the follow-up receipt](native-output-seam.json) records the authentic producer source hash and separate log.

@@ -5,7 +5,7 @@ import {cp, mkdir, readFile, readdir, realpath, rename, rm, stat, writeFile} fro
 import path from 'node:path';
 import {createRequire} from 'node:module';
 import {fileURLToPath, pathToFileURL} from 'node:url';
-import {isAuthoringFile,excludedDirectories,isNativeDirectory,verifyInstalledGraph} from './install-tooling.mjs';
+import {isAuthoringFile,excludedDirectories,isNativeDirectory,isGeneratedNativeOutput,verifyInstalledGraph} from './install-tooling.mjs';
 export {verifyInstalledGraph,inspectInstalledGraph} from './install-tooling.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -24,6 +24,7 @@ export async function copyAuthoringTree(source, destination, receipt, label, anc
     if (excludedDirectories.has(item.name) || isNativeDirectory(item.name) || (excludeDependencyTrees && item.name === 'node_modules')) continue;
     const src = path.join(source,item.name), dest = path.join(destination,item.name);
     const relative = path.posix.join(label,item.name);
+    if (isGeneratedNativeOutput(relative)) continue;
     const info = item.isSymbolicLink() ? await stat(src) : item;
     if (info.isDirectory()) {
       await copyAuthoringTree(src,dest,receipt,relative,nextAncestors,excludeDependencyTrees);

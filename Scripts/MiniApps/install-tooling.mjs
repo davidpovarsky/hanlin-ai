@@ -11,6 +11,10 @@ const readJSON = async file => JSON.parse(await readFile(file,'utf8'));
 export const receiptName = '.hanlin-miniapp-install.json';
 export const excludedDirectories = new Set(['.git','.bin','.cache','prebuilds','Pods','DerivedData']);
 export const isNativeDirectory = name => /\.(?:xcframework|framework|app)$/.test(name);
+// Original expo-modules-jsi/apple/scripts/build-xcframework.sh declares these
+// native output roots. They are not npm authoring sources; unrelated build/dist
+// directories remain part of the exact content receipt and SDK.
+export const isGeneratedNativeOutput = relative => /(?:^|\/)node_modules\/expo-modules-jsi\/apple\/(?:\.DerivedData|\.build|\.swiftpm|\.generated|Products)(?:\/|$)/.test(relative);
 export const isAuthoringFile = name => name !== receiptName &&
   !/\.(?:a|o|dylib|so|node|dll|exe|pdb|xcframework|framework|app|tgz|tar|gz|zip)$/i.test(name) &&
   /(?:\.(?:[cm]?js|jsx|tsx?|json|map|md|txt|yaml|yml|css|html|wasm|png|jpe?g|webp|gif|svg|ttf|otf)$|(?:^|\/)(?:LICENSE|NOTICE|COPYING|AUTHORS)(?:\.[^/]*)?$)/i.test(name);
@@ -21,7 +25,7 @@ async function inventory(source,{prefix='',excluded=new Set(),ancestors=new Set(
   const nextAncestors=new Set(ancestors).add(canonical),files=[];
   for(const entry of (await readdir(source,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))) {
     const relative=path.posix.join(prefix,entry.name);
-    if(excluded.has(relative)||excludedDirectories.has(entry.name)||isNativeDirectory(entry.name))continue;
+    if(excluded.has(relative)||excludedDirectories.has(entry.name)||isNativeDirectory(entry.name)||isGeneratedNativeOutput(relative))continue;
     const full=path.join(source,entry.name),info=entry.isSymbolicLink()?await stat(full):entry;
     if(info.isDirectory())files.push(...await inventory(full,{prefix:relative,excluded,ancestors:nextAncestors}));
     else if(info.isFile()&&isAuthoringFile(entry.name)) {

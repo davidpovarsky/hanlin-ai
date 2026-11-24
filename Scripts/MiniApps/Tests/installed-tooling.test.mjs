@@ -6,6 +6,7 @@ import {mkdtemp,mkdir,readFile,writeFile,rm,cp} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {ensureInstalledTooling,verifyInstalledGraph,resealInstalledTooling} from '../install-tooling.mjs';
+import {copyAuthoringTree} from '../stage-sdk.mjs';
 
 const sha=value=>createHash('sha256').update(value).digest('hex');
 const json=async(file,value)=>writeFile(file,JSON.stringify(value)+'\n');
@@ -87,3 +88,36 @@ test('real original npm install rejects stale transitive bytes and local declara
     assert.equal((await ensure()).status,'reused');
   });
 }));
+
+test('native ExpoModulesJSI build output preserves a verified install and stays out of the author SDK',async()=>{
+  const directory=await mkdtemp(path.join(tmpdir(),'hanlin-jsi-output-integrity-'));
+  const source=path.join(directory,'original-jsi'),toolingRoot=path.join(directory,'tooling'),cache=path.join(directory,'npm-cache');
+  const npm=args=>execFileSync(process.platform==='win32'?'npm.cmd':'npm',[...args,'--cache',cache,'--offline','--ignore-scripts','--no-audit','--no-fund'],{cwd:directory,encoding:'utf8',stdio:['ignore','pipe','pipe']});
+  try {
+    await mkdir(path.join(source,'apple'),{recursive:true});await mkdir(path.join(source,'src/build'),{recursive:true});await mkdir(path.join(source,'dist'),{recursive:true});await mkdir(toolingRoot);
+    await json(path.join(source,'package.json'),{name:'expo-modules-jsi',version:'58.0.23',files:['apple/source.d.ts','src/build/config.ts','dist/index.d.ts']});
+    await writeFile(path.join(source,'apple/source.d.ts'),'export declare const original: number;\n');
+    await writeFile(path.join(source,'src/build/config.ts'),'export const authored = 1;\n');
+    await writeFile(path.join(source,'dist/index.d.ts'),'export declare const published: number;\n');
+    const tarball=path.join(directory,JSON.parse(npm(['pack',source,'--pack-destination',directory,'--json']))[0].filename);
+    await json(path.join(toolingRoot,'package.json'),{name:'native-output-fixture',version:'1.0.0',private:true,dependencies:{'expo-modules-jsi':'file:'+tarball}});
+    npm(['install','--package-lock-only','--prefix',toolingRoot]);
+    const ensure=()=>ensureInstalledTooling({toolingRoot,ignoreScripts:true,npmArguments:['--offline','--cache',cache]});
+    assert.equal((await ensure()).status,'installed');
+    const installed=path.join(toolingRoot,'node_modules/expo-modules-jsi');
+    for(const output of ['.DerivedData','.build','.swiftpm','.generated','Products']) {
+      await mkdir(path.join(installed,'apple',output),{recursive:true});
+      await writeFile(path.join(installed,'apple',output,'generated.json'),'{"nativeBuild":"prepared"}\n');
+    }
+    assert.equal((await ensure()).status,'reused');
+    assert.equal(await readFile(path.join(installed,'apple/Products/generated.json'),'utf8'),'{"nativeBuild":"prepared"}\n');
+    const copied=[],sdk=path.join(directory,'sdk');
+    await copyAuthoringTree(path.join(toolingRoot,'node_modules'),sdk,copied,'expo/node_modules');
+    assert.ok(copied.some(file=>file.path.endsWith('/src/build/config.ts')));
+    assert.ok(copied.some(file=>file.path.endsWith('/dist/index.d.ts')));
+    assert.ok(copied.some(file=>file.path.endsWith('/apple/source.d.ts')));
+    assert.ok(!copied.some(file=>file.path.endsWith('/generated.json')));
+    await writeFile(path.join(installed,'apple/source.d.ts'),'export declare const original: string;\n');
+    await assert.rejects(verifyInstalledGraph(toolingRoot),/original file is missing or changed:.*apple\/source.d.ts/);
+  } finally {await rm(directory,{recursive:true,force:true});}
+});

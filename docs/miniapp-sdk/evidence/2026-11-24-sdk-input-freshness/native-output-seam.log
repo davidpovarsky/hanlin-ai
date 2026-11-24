@@ -1,0 +1,12 @@
+[MiniApps] Preparing original npm inputs: No verified original npm installation receipt. Run Scripts/MiniApps/install-tooling.mjs for /dev/shm/hanlin-jsi-output-integrity-mvIQhq/tooling
+
+added 1 package in 301ms
+✔ native ExpoModulesJSI build output preserves a verified install and stays out of the author SDK (1294.078129ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1385.172974
