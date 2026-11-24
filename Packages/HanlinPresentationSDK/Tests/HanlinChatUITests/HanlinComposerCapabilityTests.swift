@@ -81,6 +81,32 @@ struct HanlinComposerCapabilityDraftTests {
         #expect(first.text == "Find texts")
     }
 
+    @Test func changingAnActionConsolidatesOnlyItsDuplicateAndKeepsTheEditingIdentity() {
+        let draft = HanlinComposerDraft()
+        let reference = HanlinCapabilityReference(kind: .miniApp, sourceID: "library", capabilityID: "assistant")
+        var editing = HanlinCapabilityAttachment(reference: reference, title: "Library",
+            configuration: .object(["scope": .string("edited")]))
+        let alreadySelected = HanlinCapabilityAttachment(reference: reference, title: "Library",
+            actionID: "search", configuration: .object(["scope": .string("previous")]))
+        let otherProvider = HanlinCapabilityAttachment(
+            reference: .init(kind: .miniApp, sourceID: "other", capabilityID: "assistant"),
+            title: "Other library", actionID: "search")
+        draft.attach(editing)
+        draft.attach(alreadySelected)
+        draft.attach(otherProvider)
+        let submitted = draft.capabilitySnapshot
+
+        editing.actionID = "search"
+        draft.updateCapability(editing)
+
+        #expect(draft.capabilityAttachments.count == 2)
+        #expect(draft.capabilityAttachments.first?.id == editing.id)
+        #expect(draft.capabilityAttachments.first?.configuration == editing.configuration)
+        #expect(draft.capabilityAttachments.last == otherProvider)
+        #expect(submitted.count == 3)
+        #expect(submitted[1].configuration == alreadySelected.configuration)
+    }
+
     @Test func repeatedPickerSelectionKeepsConfigurationAndRemovalIsScoped() {
         let draft = HanlinComposerDraft()
         let reference = HanlinCapabilityReference(kind: .tool, sourceID: "native", capabilityID: "search")

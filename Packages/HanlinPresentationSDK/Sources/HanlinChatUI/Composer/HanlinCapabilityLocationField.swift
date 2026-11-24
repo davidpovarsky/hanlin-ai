@@ -7,15 +7,17 @@ import HanlinPlatformContracts
 /// there is no location permission request and no places search on selection.
 struct HanlinCapabilityLocationField: View {
     let title: String
+    let fieldKey: String
     @Binding var value: HanlinJSONValue?
     let minimumRadius: Double?
     let maximumRadius: Double?
     @State private var position: MapCameraPosition
     @State private var visibleCenter: CLLocationCoordinate2D?
 
-    init(title: String, value: Binding<HanlinJSONValue?>,
+    init(title: String, fieldKey: String, value: Binding<HanlinJSONValue?>,
          minimumRadius: Double?, maximumRadius: Double?) {
         self.title = title
+        self.fieldKey = fieldKey
         _value = value
         self.minimumRadius = minimumRadius
         self.maximumRadius = maximumRadius
@@ -86,13 +88,16 @@ struct HanlinCapabilityLocationField: View {
                 // and a hardware keyboard as well as direct map interaction.
                 HanlinCapabilityNumberField(
                     title: String(localized: "hanlin.composer.capabilities.latitude", bundle: HanlinLocalization.bundle),
-                    value: member("latitude"))
+                    value: member("latitude"),
+                    accessibilityID: "hanlin-capability-input-\(fieldKey).latitude")
                 HanlinCapabilityNumberField(
                     title: String(localized: "hanlin.composer.capabilities.longitude", bundle: HanlinLocalization.bundle),
-                    value: member("longitude"))
+                    value: member("longitude"),
+                    accessibilityID: "hanlin-capability-input-\(fieldKey).longitude")
                 HanlinCapabilityNumberField(
                     title: String(localized: "hanlin.composer.capabilities.radius", bundle: HanlinLocalization.bundle),
-                    value: member("radiusMeters"))
+                    value: member("radiusMeters"),
+                    accessibilityID: "hanlin-capability-input-\(fieldKey).radiusMeters")
             }
         }
     }

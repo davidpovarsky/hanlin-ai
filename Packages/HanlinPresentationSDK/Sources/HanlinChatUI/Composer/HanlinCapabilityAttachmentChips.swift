@@ -28,7 +28,7 @@ public struct HanlinCapabilityAttachmentChips: View {
                             if let onEdit {
                                 Button { onEdit(attachment) } label: { attachmentLabel(attachment) }
                                     .buttonStyle(.plain)
-                                    .accessibilityIdentifier("hanlin-capability-edit-\(attachment.id.uuidString)")
+                                    .accessibilityIdentifier("hanlin-capability-edit-\(attachment.id.uuidString)-\(attachment.reference.id)")
                             } else {
                                 attachmentLabel(attachment)
                             }
@@ -93,7 +93,12 @@ public struct HanlinCapabilityAttachmentChips: View {
                 case let .object(location):
                     if let latitude = location["latitude"]?.composerNumber,
                        let longitude = location["longitude"]?.composerNumber {
-                        display = "\(latitude.formatted(.number.precision(.fractionLength(3)))), \(longitude.formatted(.number.precision(.fractionLength(3))))"
+                        let coordinates = "\(latitude.formatted(.number.precision(.fractionLength(3)))), \(longitude.formatted(.number.precision(.fractionLength(3))))"
+                        if let radius = location["radiusMeters"]?.composerNumber {
+                            display = coordinates + " · " + radius.formatted() + " m"
+                        } else {
+                            display = coordinates
+                        }
                     } else { display = "" }
                 case .null: display = ""
                 }

@@ -44,6 +44,11 @@ public final class HanlinComposerDraft {
     public func updateCapability(_ attachment: HanlinCapabilityAttachment) {
         guard let index = capabilityAttachments.firstIndex(where: { $0.id == attachment.id }) else { return }
         capabilityAttachments[index] = attachment
+        // An action can be changed in the configuration page. Keep that page's
+        // identity and latest values while consolidating an existing selection.
+        capabilityAttachments.removeAll {
+            $0.id != attachment.id && $0.selectionKey == attachment.selectionKey
+        }
     }
 
     public func clearCapabilities() {

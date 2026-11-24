@@ -49,6 +49,7 @@ public struct HanlinCapabilityPicker: View {
                                 Label(String(localized: "hanlin.composer.capabilities.chooseActionAutomatically",
                                              bundle: HanlinLocalization.bundle), systemImage: "sparkles")
                             }
+                            .accessibilityIdentifier("hanlin-capability-action-automatic-\(capability.id)")
                             ForEach(capability.actions) { action in
                                 Button { onSelect(capability, action.id) } label: {
                                     if attachments.contains(where: {
@@ -59,6 +60,7 @@ public struct HanlinCapabilityPicker: View {
                                         Text(action.title)
                                     }
                                 }
+                                .accessibilityIdentifier("hanlin-capability-action-\(capability.id)-\(action.id)")
                             }
                         } label: { row(capability) }
                         .accessibilityIdentifier("hanlin-capability-attach-\(capability.id)")

@@ -32,7 +32,7 @@ public struct HanlinCapabilityConfigurationView<CustomPanel: View>: View {
         panels.first { $0.id == selectedPanelID } ?? panels.first
     }
     private var issues: [HanlinComposerValidationIssue] {
-        capability.configuration?.validationIssues(for: attachment.configuration) ?? []
+        capability.validationIssues(for: attachment)
     }
     private var hasUnsupportedPanel: Bool {
         panels.contains { panel in
@@ -141,18 +141,18 @@ private struct HanlinCapabilityFieldView: View {
                 LabeledContent(field.title) {
                     TextField(field.placeholder ?? field.title, text: stringValue, axis: .vertical)
                         .textFieldStyle(.roundedBorder)
+                        .accessibilityIdentifier("hanlin-capability-input-\(field.key)")
                 }
             case .toggle:
                 Toggle(field.title, isOn: Binding(
                     get: { if case let .bool(flag)? = value { flag } else { false } },
                     set: { setValue(.bool($0)) }))
             case .number:
-                HanlinCapabilityNumberField(title: field.title, value: numericValue)
+                HanlinCapabilityNumberField(title: field.title, value: numericValue,
+                                            accessibilityID: "hanlin-capability-input-\(field.key)")
             case .choice:
                 Picker(field.title, selection: stringValue) {
-                    if !field.required {
-                        Text("hanlin.composer.capabilities.noSelection", bundle: HanlinLocalization.bundle).tag("")
-                    }
+                    Text("hanlin.composer.capabilities.noSelection", bundle: HanlinLocalization.bundle).tag("")
                     ForEach(field.options) { option in Text(option.title).tag(option.id) }
                 }
                 .pickerStyle(.menu)
@@ -171,10 +171,11 @@ private struct HanlinCapabilityFieldView: View {
                     }
                 }
             case .location:
-                HanlinCapabilityLocationField(title: field.title, value: numericValue,
+                HanlinCapabilityLocationField(title: field.title, fieldKey: field.key, value: numericValue,
                                               minimumRadius: field.minimum, maximumRadius: field.maximum)
             }
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-capability-field-\(field.key)")
     }
 
@@ -193,6 +194,7 @@ private struct HanlinCapabilityFieldView: View {
             }
         ))
         .toggleStyle(.switch)
+        .accessibilityIdentifier("hanlin-capability-option-\(field.key)-\(option.id)")
     }
 }
 
@@ -205,6 +207,7 @@ private extension HanlinComposerOption {
 struct HanlinCapabilityNumberField: View {
     let title: String
     @Binding var value: HanlinJSONValue?
+    var accessibilityID: String = ""
 
     private var text: Binding<String> {
         Binding(get: {
@@ -230,6 +233,7 @@ struct HanlinCapabilityNumberField: View {
             TextField(title, text: text)
                 .textFieldStyle(.roundedBorder)
                 .multilineTextAlignment(.trailing)
+                .accessibilityIdentifier(accessibilityID)
                 #if canImport(UIKit)
                 .keyboardType(.numbersAndPunctuation)
                 #endif
