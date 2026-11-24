@@ -1,0 +1,15 @@
+{
+  "recordedAtUTC": "2026-11-24T09:06:34.077745+00:00",
+  "reviewer": "/root/control_authoring",
+  "reviewedCommit": "9183c70660f465c557a4d7cf278aa17b80ef7c9b",
+  "result": "NO_CONCRETE_SOURCE_ROUTING_BLOCKER",
+  "workflowSHA256": "4e61939d1c7af7940ec5b72afedacef04b9f4e73d183b42b8eb9fc0073d9c185",
+  "findings": [
+    "New job requires non-audit/non-registration paired miniapp_scriptwidget scope.",
+    "Only corresponding paired scope is newly excluded from main app job.",
+    "Prior modern/lifecycle/main steps and permissions/concurrency/defaults10dispatchinputs unchanged.",
+    "Byte-identical reusable callee accepts original falsefoundation/trueclean/exactquotedfilter.",
+    "Both methods actually belong to HanlinDualWidgetEnginesTests, including extension declaration."
+  ],
+  "boundary": "Independent read-only source review; no tests/CI queries or native execution inferred."
+}
