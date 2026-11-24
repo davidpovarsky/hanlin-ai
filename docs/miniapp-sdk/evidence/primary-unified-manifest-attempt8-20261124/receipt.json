@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "observedAtUTC": "2026-11-24T23:52:17.371981+00:00",
+  "sourceHead": "9784a44652187f049aed853ac8549bc0db39bc90",
+  "scope": "Original unified Swift package manifest generation on Oracle; not Apple consumer compilation or runtime acceptance",
+  "generator": {
+    "path": "Scripts/SDK/generate_manifest.py",
+    "sha256": "47ae0d5c34fa5c3baa870b4213a98c6999958f57c71f19a8be421fb6723182ec"
+  },
+  "outputs": {
+    "Package.swift": "2238e4db391c3460cd81d6bfaf972ad7fa6683828e105de4e7df234d14ab3b0c",
+    "docs/agent-sdk/unified-package-manifest.json": "3051ec46a9e5bcdebccf3a1e7091c5df8c659cd8f49968678bfaf012c40712ec"
+  },
+  "members": [
+    {
+      "path": "state.json",
+      "bytes": 1049,
+      "sha256": "241c9f756ce0392aa1ab2e21660b3609d32696add66b266ceac76c4658c9abf6"
+    },
+    {
+      "path": "generation.log",
+      "bytes": 3605,
+      "sha256": "bfdac7652f38881e2b162197e3c546afdd97bc4cbd7e1256021a167ea447f001"
+    }
+  ]
+}
