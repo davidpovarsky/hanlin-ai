@@ -5,5 +5,8 @@
   "tsconfig": "tsconfig.json",
   "resources": [
     "native"
-  ]
+  ],
+  "assistantTools": {
+    "assistant-search": "assistant-tool.ts"
+  }
 }

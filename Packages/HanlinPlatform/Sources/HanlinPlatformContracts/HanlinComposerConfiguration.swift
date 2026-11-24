@@ -1,7 +1,7 @@
 import Foundation
 
 /// Declarative configuration rendered inside the existing composer bubble.
-/// Field keys are structured tool arguments, never executable source.
+/// Field keys carry structured user configuration into the assistant-tool\n/// context. They are separate from the model's arguments and never executable source.
 public struct HanlinComposerConfiguration: Codable, Hashable, Sendable {
     public var schemaVersion: Int
     public var panels: [HanlinComposerPanel]
@@ -86,8 +86,9 @@ public struct HanlinComposerConfiguration: Codable, Hashable, Sendable {
             return issues + [.init(key: "configuration", message: "Composer configuration must be an object.")]
         }
         let fields = panels.flatMap(\.fields)
-        // Host custom views may own additional structured fields. The host's
-        // existing action input schema still validates them at dispatch.
+        // Host custom views may own additional structured fields. Their
+        // provider validates those values; action inputSchema applies only to
+        // model arguments, not to this separate configuration context.
         if !panels.contains(where: { $0.customViewID != nil }) {
             let keys = Set(fields.map(\.key))
             for (key, _) in values where !keys.contains(key) {
@@ -265,7 +266,7 @@ public struct HanlinComposerField: Codable, Hashable, Sendable, Identifiable {
         title = try values.decode(String.self, forKey: .title)
         kind = try values.decode(Kind.self, forKey: .kind)
         required = try values.decodeIfPresent(Bool.self, forKey: .required) ?? false
-        defaultValue = try values.decodeIfPresent(HanlinJSONValue.self, forKey: .defaultValue)
+        defaultValue = values.contains(.defaultValue) ? try values.decode(HanlinJSONValue.self, forKey: .defaultValue) : nil
         options = try values.decodeIfPresent([HanlinComposerOption].self, forKey: .options) ?? []
         minimum = try values.decodeIfPresent(Double.self, forKey: .minimum)
         maximum = try values.decodeIfPresent(Double.self, forKey: .maximum)

@@ -786,7 +786,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                         throw HanlinContractError.invalidSchema(reason: "assistantTool requires metadata and a dedicated source, separate from the foreground app")
                     }
                     let declaration = try JSONDecoder().decode(
-                        HanlinAssistantToolDeclaration.self, from: metadata.canonicalJSONData()
+                        HanlinAssistantToolDeclaration.self, from: metadata.canonicalJSONData(limits: .unbounded)
                     )
                     try declaration.validateDefinition()
                     let directory = path.split(separator: "/").dropLast().joined(separator: "/")

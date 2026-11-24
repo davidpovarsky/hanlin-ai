@@ -103,7 +103,7 @@ public struct HanlinAssistantToolAction: Codable, Hashable, Sendable, Identifiab
 
     private static func schema(_ root: HanlinJSONValue) throws -> HanlinJSONSchemaDocument {
         try HanlinJSONSchemaDocument.decodeCanonicalJSON(
-            root.canonicalJSONData(), defaultDialect: .draft2020_12
+            root.canonicalJSONData(limits: .unbounded), defaultDialect: .draft2020_12, limits: .unbounded
         )
     }
 }
