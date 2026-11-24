@@ -18,12 +18,12 @@
     "runID": 45335292541,
     "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45335292541",
     "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
-    "status": "IN_PROGRESS",
-    "statusAuthority": "Parent-reported active state for this mapping; no CI polling was performed.",
+    "status": "COMPLETED",
+    "statusAuthority": "Authenticated run8 job/artifact retained in eighth-native-gate-20261124.json; xcodebuild exit65, no selected tests started.",
     "selectedCases": 38,
     "aiCases": 25,
     "miniAppsCases": 13,
-    "result": null,
+    "result": "BUILD_FAILED",
     "acceptanceRequires": [
       "Exact successful test rows for all selected cases, no failures or skips in that selected gate",
       "Actual exported diagnostic-sheet and repaired-application screenshots",
@@ -34,7 +34,15 @@
       "Complete 80-cell extension/runtime E2E matrix",
       "Fresh-agent SDK/docs-only authoring",
       "Every public adapter merely because it is declared or compiled"
-    ]
+    ],
+    "priorObservation": {
+      "status": "IN_PROGRESS",
+      "statusAuthority": "Parent-reported active state for this mapping; no CI polling was performed.",
+      "result": null
+    },
+    "completedObservationAtUTC": "2026-11-24T06:46:38.460345+00:00",
+    "evidence": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124.json",
+    "executedCases": 0
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -776,7 +784,7 @@
       "taskID": "1220373832827017",
       "url": "https://app.asana.com/0/0/1220373832827017",
       "exactCriterion": "DoD: מבחן 'סוכן חדש מקבל רק התיעוד וה-SDK' מסוגל לבנות שתי חבילות אמיתיות ללא ניחוש/עיון בקוד פנימי; כל snippet נבדק אוטומטית.",
-      "status": "PENDING_FRESH_AGENT_AND_SNIPPET_EVIDENCE",
+      "status": "FRESH_AGENT_IN_PROGRESS; exported SDK hashes and all25791 files verified",
       "planBoundary": "Parent plans a fresh builtin agent with fork none using the actual exported run8 SDK/docs/types and public CLI. Do not provide internal source recipes or pre-authored fixtures; do not build a supposed current SDK from local NativeScript9.1.0.",
       "notEquivalent": "A scripted HTTP repair response demonstrates the original product pipeline, not independent fresh-agent authoring of both engines.",
       "publicReferences": [
@@ -786,7 +794,8 @@
         "Scripts/MiniApps/stage-sdk.mjs",
         "Scripts/Runtime/prepare-runtime-host.sh"
       ],
-      "cliPackagingBoundary": "The public CLI wrapper imports its existing Host miniapp-authoring.mjs by relative layout. MiniAppSDK alone does not contain that wrapper; preserve its executable dependency layout without supplying internal authoring recipes."
+      "cliPackagingBoundary": "The public CLI wrapper imports its existing Host miniapp-authoring.mjs by relative layout. MiniAppSDK alone does not contain that wrapper; preserve its executable dependency layout without supplying internal authoring recipes.",
+      "kitPreparationEvidence": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/sdk-only-kit-preparation.json"
     },
     {
       "task": "SDK-08",

@@ -1,0 +1,38 @@
+{
+  "status": "BUILD_FAILED",
+  "ui": "NOT_RUN",
+  "build": "NOT_RUN",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products",
+  "model_boundary": "Only the HTTP model response sequence is deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts and UI are original production code.",
+  "started_at": 1795500410.268148,
+  "test_scope": "miniapp_authoring",
+  "selected_tests": [
+    "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+    "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+    "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+    "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+    "AI_HLYTests/HanlinNativePresentationTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+    "AI_HLYUITests/MiniAppAuthoringUITests"
+  ],
+  "sha": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+  "simulator": "502E8287-119A-488E-9125-F63D98BE0464",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+  "device": "iPad mini (A20 Pro)",
+  "app_intents_metadata": {},
+  "error": "xcodebuild exit 65; inspect mini-build.log",
+  "diagnostic_errors": [],
+  "attachment_exports": [],
+  "result_bundles": [
+    "MiniBuild.xcresult"
+  ],
+  "duration_seconds": 1597.6527721881866
+}
