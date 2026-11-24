@@ -192,6 +192,23 @@ struct AutomaticWebSearchCacheTests {
         #expect(await cache.cacheStatistics().bypasses == 1)
     }
 
+    @Test func diagnosticBypassDoesNotReplaceNormalCachedResults() async throws {
+        let provider = Provider(controlled: true)
+        let cache = AutomaticWebSearchCoordinator(providers: [provider])
+        let first = Task { try await cache.search(query: "cache alpha") }
+        try await waitUntil { await provider.calls == 1 }
+        await provider.finish(1)
+        _ = try await first.value
+        let diagnostic = Task { try await cache.search(query: "cache alpha", bypassCache: true) }
+        try await waitUntil { await provider.calls == 2 }
+        await provider.finish(2)
+        let fresh = try await diagnostic.value
+        #expect(fresh.0.links == ["https://example.com/2"])
+        let (cached, backend) = try await cache.search(query: "cache alpha")
+        #expect(cached.links == ["https://example.com/1"] && backend.contains("cached"))
+        #expect(await provider.calls == 2)
+    }
+
     @Test func invalidationSeparatesGenerationsAndPreventsLateRepopulation() async throws {
         let provider = Provider(controlled: true)
         let cache = AutomaticWebSearchCoordinator(providers: [provider])

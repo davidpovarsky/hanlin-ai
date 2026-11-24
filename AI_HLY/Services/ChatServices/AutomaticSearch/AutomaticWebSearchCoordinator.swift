@@ -176,14 +176,12 @@ actor AutomaticWebSearchCoordinator {
 
         let output: SearchOutput
         if bypassCache {
-            // A diagnostic/refresh must perform its own request, even while an
-            // equivalent ordinary search is in flight.
+            // A diagnostic must perform its own request, even while an
+            // equivalent ordinary search is in flight. It does not alter
+            // normal cache contents; explicit invalidation starts a refresh.
             cacheCounters.bypasses += 1
             output = try await freshSearch(query: trimmedQuery, count: count)
             try Task.checkCancellation()
-            if generation == cacheGeneration {
-                updateCache(key: cacheKey, output: output)
-            }
         } else {
             cacheCounters.misses += 1
             let key = FlightKey(queryKey: cacheKey, generation: generation)
@@ -227,6 +225,10 @@ actor AutomaticWebSearchCoordinator {
         count: Int,
         continuation: CheckedContinuation<SearchOutput, any Error>
     ) {
+        guard !Task.isCancelled else {
+            continuation.resume(throwing: CancellationError())
+            return
+        }
         if var existing = inFlight[key] {
             existing.waiters[waiterID] = continuation
             inFlight[key] = existing
