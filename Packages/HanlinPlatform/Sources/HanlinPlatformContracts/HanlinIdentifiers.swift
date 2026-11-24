@@ -57,9 +57,10 @@ extension HanlinStringIdentifier {
 private enum HanlinIdentifierValidator {
     static func validate(
         _ value: String,
-        kind: String
+        kind: String,
+        allowsUppercase: Bool = false
     ) throws {
-        if let reason = validationFailure(for: value) {
+        if let reason = validationFailure(for: value, allowsUppercase: allowsUppercase) {
             throw HanlinContractError.invalidIdentifier(
                 kind: kind,
                 value: value,
@@ -68,7 +69,7 @@ private enum HanlinIdentifierValidator {
         }
     }
 
-    private static func validationFailure(for value: String) -> String? {
+    private static func validationFailure(for value: String, allowsUppercase: Bool) -> String? {
         guard !value.isEmpty else {
             return "value is empty"
         }
@@ -81,19 +82,23 @@ private enum HanlinIdentifierValidator {
         guard let first = value.utf8.first, let last = value.utf8.last else {
             return "value is empty"
         }
-        guard isLowercaseLetterOrDigit(first), isLowercaseLetterOrDigit(last) else {
-            return "value must begin and end with a lowercase ASCII letter or digit"
+        let letterKind = allowsUppercase ? "ASCII" : "lowercase ASCII"
+        func isLetterOrDigit(_ byte: UInt8) -> Bool {
+            isLowercaseLetterOrDigit(byte) || (allowsUppercase && (65 ... 90).contains(byte))
+        }
+        guard isLetterOrDigit(first), isLetterOrDigit(last) else {
+            return "value must begin and end with a \(letterKind) letter or digit"
         }
 
         var previousWasSeparator = false
         for byte in value.utf8 {
-            if isLowercaseLetterOrDigit(byte) {
+            if isLetterOrDigit(byte) {
                 previousWasSeparator = false
                 continue
             }
             let isSeparator = byte == 45 || byte == 46 || byte == 95
             guard isSeparator else {
-                return "allowed characters are lowercase ASCII letters, digits, '.', '-', and '_'"
+                return "allowed characters are \(letterKind) letters, digits, '.', '-', and '_'"
             }
             guard !previousWasSeparator else {
                 return "adjacent separators are not canonical"
@@ -144,11 +149,13 @@ public struct HanlinRouteID: HanlinStringIdentifier {
     }
 }
 
+/// Action identifiers preserve the case of prepared JavaScript export names.
+/// Other canonical identifiers retain their lowercase-only contract.
 public struct HanlinActionID: HanlinStringIdentifier {
     public static let identifierKind = "action"
     public let rawValue: String
     public init(validating rawValue: String) throws {
-        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind)
+        try HanlinIdentifierValidator.validate(rawValue, kind: Self.identifierKind, allowsUppercase: true)
         self.rawValue = rawValue
     }
 }
