@@ -122,5 +122,9 @@
 	</dict>
 	<key>ScriptWidgetServiceKeychainGroup</key>
 	<string>$(AppIdentifierPrefix)com.itorah.chavrusachat.scriptwidget.services</string>
+	<key>ExpoWidgetsAppGroupIdentifier</key>
+	<string>group.com.itorah.chavrusachat</string>
+	<key>HanlinExpoWidgetsProductIdentifier</key>
+	<string>com.itorah.chavrusachat</string>
 </dict>
 </plist>

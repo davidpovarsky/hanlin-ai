@@ -18311,6 +18311,144 @@
           }
         }
       }
+    },
+    "Choose an Expo widget registered by a MiniApp.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose an Expo widget registered by a MiniApp."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו וידג׳ט Expo שמיני־אפליקציה רשמה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择迷你应用注册的 Expo 小组件。"
+          }
+        }
+      }
+    },
+    "This Expo widget has no timeline.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This Expo widget has no timeline."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לווידג׳ט Expo הזה אין ציר זמן."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此 Expo 小组件没有时间线。"
+          }
+        }
+      }
+    },
+    "Choose a current Expo widget from this app.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a current Expo widget from this app."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו וידג׳ט Expo פעיל מהאפליקציה הזו."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择此应用当前可用的 Expo 小组件。"
+          }
+        }
+      }
+    },
+    "Expo widget unavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo widget unavailable"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "וידג׳ט Expo אינו זמין"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo 小组件不可用"
+          }
+        }
+      }
+    },
+    "Expo MiniApp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo MiniApp"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מיני־אפליקציית Expo"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo 迷你应用"
+          }
+        }
+      }
+    },
+    "Original Expo widget layouts and timelines registered by your MiniApps.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original Expo widget layouts and timelines registered by your MiniApps."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תצוגות וצירי זמן מקוריים של Expo שנרשמו באמצעות המיני־אפליקציות שלכם."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "由迷你应用注册的原生 Expo 小组件布局和时间线。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

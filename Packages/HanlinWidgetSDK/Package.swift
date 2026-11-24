@@ -18,6 +18,7 @@ let package = Package(
             .product(name: "HanlinScriptExtensions", package: "HanlinPlatform"),
             .product(name: "HanlinScriptUI", package: "HanlinPlatform"),
             .product(name: "HanlinExpoWidgetNative", package: "HanlinExpoRuntime"),
+            .product(name: "HanlinExpoWidgetsOriginal", package: "HanlinExpoRuntime"),
             .product(name: "HanlinLocalization", package: "HanlinPresentationSDK")
         ])
     ],

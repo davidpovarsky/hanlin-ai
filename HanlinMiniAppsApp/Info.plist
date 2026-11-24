@@ -132,5 +132,9 @@
 	<string>$(AppIdentifierPrefix)com.itorah.hanlinminiapps.scriptwidget.services</string>
 	<key>com.apple.developer.translation-ui-provider.network-access</key>
 	<true/>
+	<key>ExpoWidgetsAppGroupIdentifier</key>
+	<string>group.com.itorah.chavrusachat</string>
+	<key>HanlinExpoWidgetsProductIdentifier</key>
+	<string>com.itorah.hanlinminiapps</string>
 </dict>
 </plist>

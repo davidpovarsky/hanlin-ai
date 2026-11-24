@@ -413,6 +413,75 @@
           }
         }
       }
+    },
+    "Expo widget": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo widget"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "וידג׳ט Expo"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo 小组件"
+          }
+        }
+      }
+    },
+    "Widget": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widget"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "וידג׳ט"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "小组件"
+          }
+        }
+      }
+    },
+    "Choose a widget registered by an installed MiniApp using the original Expo Widgets API.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a widget registered by an installed MiniApp using the original Expo Widgets API."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו וידג׳ט שמיני־אפליקציה מותקנת רשמה באמצעות ה־API המקורי של Expo Widgets."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择已安装的迷你应用通过原生 Expo Widgets API 注册的小组件。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

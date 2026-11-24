@@ -277,3 +277,25 @@ in `verification/sefaria-original-client-live-20261123.json`. Reproduce with
 `node Scripts/MiniApps/verify-sefaria-live.mjs`. This check used Node HTTPS as
 the adapter for the original ScriptWidget HTTP contract; it is distinct from
 native JavaScriptCore/provider and device UI acceptance evidence.
+
+## Original Expo Widgets configuration
+
+The **Expo MiniApp** WidgetKit configuration selects registrations produced by the
+original `expo-widgets` `createWidget` API. Its entity identifier includes the
+containing product and installed package identity; the picker shows the package
+identifier with the original widget name. Active registrations are suggested.
+An existing disabled configuration retains its exact identity and shows an
+unavailable state until that installation publishes an active generation.
+
+The host delegates stored timelines to the original `parseTimeline` path and
+passes its entries directly to original `WidgetsEntryView`. It preserves the
+original timeline policy and all seven supported WidgetKit families. Each app
+and its own widget extension declares the same existing Expo App Group and its
+actual containing product identifier. There is no fallback to the other app
+or a similarly named package.
+
+`AI_HLYTests/HanlinOriginalExpoWidgetTests.swift` adds one Apple case using the
+actual original `AppContext`, `WidgetObject`, records, timeline parser, public
+provider and picker. It checks the embedded original runtime resource,
+product/installation identity and native timeline values. Syntax validation
+does not execute this case; acceptance requires its Apple test result.

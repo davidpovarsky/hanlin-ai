@@ -73,5 +73,7 @@
 	<true/>
 	<key>ScriptWidgetServiceKeychainGroup</key>
 	<string>$(AppIdentifierPrefix)com.itorah.hanlinminiapps.scriptwidget.services</string>
+	<key>HanlinExpoWidgetsProductIdentifier</key>
+	<string>com.itorah.hanlinminiapps</string>
 </dict>
 </plist>
