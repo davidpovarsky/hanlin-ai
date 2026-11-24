@@ -133,6 +133,39 @@ def command(argv, name, timeout=60, allow_failure=False):
     return code, output.decode(errors="replace")
 
 
+def command_phase_status(record):
+    if record.get("completion_recorded"):
+        if record["status"] == "timed_out":
+            return "TIMED_OUT"
+        if record["status"] == "completed" and record.get("exit") is not None:
+            return "EXECUTED_PASS" if record["exit"] == 0 else "EXECUTED_FAIL"
+    return {"launch_failed": "LAUNCH_FAILED", "interrupted": "INTERRUPTED"}.get(record["status"], "INCOMPLETE")
+
+
+def record_build_phases(state):
+    """Use durable build observations; later diagnostic commands cannot replace them."""
+    phases = {"mini-build.log": "mini_build", "ai-build.log": "ai_build"}
+    state.update(mini_build="NOT_RUN", ai_build="NOT_RUN", build_commands={})
+    journal = EVIDENCE / "command-events.jsonl"
+    try:
+        records = [json.loads(line) for line in journal.read_text().splitlines()] if journal.exists() else []
+    except (OSError, ValueError) as error:
+        state.update(build="INCOMPLETE", mini_build="UNKNOWN", ai_build="UNKNOWN", build_evidence_error=str(error))
+        return
+    for record in records:
+        phase = phases.get(record.get("log"))
+        if phase:
+            state[phase] = command_phase_status(record)
+            state["build_commands"][phase] = {key: record.get(key) for key in
+                ("log", "command_id", "status", "completion_recorded", "exit", "observed_returncode")}
+    values = [state[phase] for phase in phases.values()]
+    if all(value == "EXECUTED_PASS" for value in values):
+        state["build"] = "EXECUTED_PASS"
+    else:
+        state["build"] = next((value for value in reversed(values) if value not in {"NOT_RUN", "EXECUTED_PASS"}),
+            "INCOMPLETE" if "EXECUTED_PASS" in values else "NOT_RUN")
+
+
 def capture_app_intents_metadata(app):
     """Preserve compiler output without interpreting its schema or claiming execution."""
     destination = EVIDENCE / "app-intents-metadata" / app.name
@@ -360,6 +393,7 @@ def start_native_adapter_assets(state):
 def main():
     EVIDENCE.mkdir(parents=True, exist_ok=False)
     state = {"status": "INFRA_ERROR", "ui": "NOT_RUN", "build": "NOT_RUN",
+        "mini_build": "NOT_RUN", "ai_build": "NOT_RUN",
         "physical_device": "NOT_RUN", "provisioned_distribution": "NOT_RUN",
         "scope": "Two shipping targets, actual App Group, original Host request/return/cancel, original ScriptUI import and private-data transfer/rollback",
         "model_boundary": "Existing opt-in simulator HTTP acceptance provider; all Host, permission, OS transitions, storage and result handling are real.",
@@ -434,7 +468,6 @@ def main():
         mini_action = "build-for-testing" if TEST_SCOPE == "miniapp_authoring" else "build"
         command(base + ["-scheme", "HanlinMiniApps", mini_action,
             "-resultBundlePath", str(EVIDENCE / "MiniBuild.xcresult")], "mini-build.log", timeout=2400)
-        state["mini_build"] = "EXECUTED_PASS"
         state["app_intents_metadata"]["com.itorah.hanlinminiapps"] = capture_app_intents_metadata(products["com.itorah.hanlinminiapps"])
         # The original full-app workflow uses this exact pinned upstream generator:
         # Xcode 27.2 advertises its outputs but can omit the generator build commands.
@@ -444,13 +477,9 @@ def main():
             "--derived-data-path", str(derived),
             "--evidence", str(EVIDENCE / "original-a2ui-schemas")],
             "original-a2ui-generator.log", timeout=360)
-        state["build"] = "EXECUTED_FAIL"
-        state["ai_build"] = "EXECUTED_FAIL"
         command(base + ["-scheme", "AI_HLY", "build-for-testing",
             "-resultBundlePath", str(EVIDENCE / "AIBuild.xcresult")], "ai-build.log", timeout=1800)
-        state["ai_build"] = "EXECUTED_PASS"
         state["app_intents_metadata"]["com.itorah.chavrusachat"] = capture_app_intents_metadata(products["com.itorah.chavrusachat"])
-        state["build"] = "EXECUTED_PASS"
         state["status"] = "INFRA_ERROR"
         expected_names = {"com.itorah.chavrusachat": "Hanlin AI",
                           "com.itorah.hanlinminiapps": "Hanlin MiniApps"}
@@ -649,6 +678,7 @@ def main():
                         "path": destination.name, "exit_code": code})
                 except Exception as error:
                     state["attachment_exports"].append({"result": bundle.name, "error": str(error)})
+        record_build_phases(state)
         state["result_bundles"] = [p.name for p in EVIDENCE.glob("*.xcresult")]
         state["duration_seconds"] = time.time() - state["started_at"]
         (EVIDENCE / "acceptance.json").write_text(json.dumps(state, indent=2) + "\n")

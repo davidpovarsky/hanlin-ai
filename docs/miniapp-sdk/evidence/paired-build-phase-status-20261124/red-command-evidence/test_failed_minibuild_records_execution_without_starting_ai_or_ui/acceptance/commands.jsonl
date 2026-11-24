@@ -1,0 +1,1 @@
+{"argv": ["/usr/bin/python3", "-c", "import sys; print('build failed',flush=True); sys.exit(65)"], "exit": 65, "seconds": 0.02964505087584257, "log": "mini-build.log", "sha256": "637578f64218650d2b23b44cddbbfb95420d46a047154def48c17510b1a03353"}

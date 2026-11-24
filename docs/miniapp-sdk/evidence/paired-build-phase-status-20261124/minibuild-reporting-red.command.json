@@ -1,0 +1,27 @@
+{
+  "cwd": "/mnt/development/projects/worktrees/hanlin-paired-build-status-20261124",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py",
+    "-k",
+    "failed_minibuild_records_execution"
+  ],
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PAIRED_COMMAND_TEST_EVIDENCE": "/mnt/development/projects/worktrees/hanlin-paired-build-status-20261124/docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/red-command-evidence"
+  },
+  "exitCode": 1,
+  "seconds": 0.2170874122530222,
+  "outputs": {
+    "minibuild-reporting-red.stdout.txt": {
+      "bytes": 296,
+      "sha256": "c7b558d68f1fac75361948014ce02e06682f8fa3ae034a4b6f7a3c53d1760eea"
+    },
+    "minibuild-reporting-red.stderr.txt": {
+      "bytes": 896,
+      "sha256": "9f40b5645067b6f8531284028b76057dd601d653ffb4904bfb35c1e3725201b6"
+    }
+  }
+}

@@ -46,6 +46,47 @@ class PairedCommandEvidenceTests(unittest.TestCase):
             self.assertEqual(record["sha256"], hashlib.sha256((self.evidence / record["log"]).read_bytes()).hexdigest())
         return records
 
+    def test_failed_minibuild_records_execution_without_starting_ai_or_ui(self):
+        # Stub only simulator discovery/cleanup. The failed build command and
+        # the production main/finally receipt path execute for real on Linux.
+        evidence = self.evidence / "acceptance"
+        real_command = runner.command
+        observed = []
+        discovery = {
+            "source-sha.txt": "portable-reporting-harness\n",
+            "sdk.txt": "27.2\n",
+            "runtimes.json": json.dumps({"runtimes": [{"isAvailable": True,
+                "identifier": "iOS-27-2", "supportedDeviceTypes": [{"identifier": "test-iPad"}]}]}),
+            "device-types.json": json.dumps({"devicetypes": [{"productFamily": "iPad",
+                "identifier": "test-iPad", "name": "Portable receipt harness"}]}),
+            "created-simulator.txt": "portable-receipt-harness\n",
+        }
+
+        def isolated_command(argv, name, **options):
+            observed.append(name)
+            if name == "mini-build.log":
+                self.assertEqual(options, {"timeout": 2400})
+                return real_command([sys.executable, "-c", "import sys; print('build failed',flush=True); sys.exit(65)"],
+                    name, **options)
+            return 0, discovery.get(name, "")
+
+        with patch.multiple(runner, EVIDENCE=evidence, TEST_SCOPE="miniapp_authoring"), \
+                patch.object(runner, "command", isolated_command), \
+                patch.object(runner.subprocess, "run"), \
+                patch.dict(os.environ, {"SPLIT_DERIVED_DATA": str(self.evidence / "derived")}):
+            self.assertEqual(runner.main(), 1)
+        receipt = json.loads((evidence / "acceptance.json").read_text())
+        self.assertEqual(receipt["build"], "EXECUTED_FAIL")
+        self.assertEqual(receipt["mini_build"], "EXECUTED_FAIL")
+        self.assertEqual(receipt["ai_build"], "NOT_RUN")
+        self.assertEqual(receipt["ui"], "NOT_RUN")
+        self.assertEqual(receipt["status"], "BUILD_FAILED")
+        self.assertNotIn("ai-build.log", observed)
+        self.assertNotIn("original-runtimes.log", observed)
+        self.assertNotIn("paired-tests.log", observed)
+        completed = [json.loads(line) for line in (evidence / "commands.jsonl").read_text().splitlines()]
+        self.assertEqual([(record["log"], record["exit"]) for record in completed], [("mini-build.log", 65)])
+
     def test_success_keeps_streamed_output_environment_and_completed_contract(self):
         source = ("import os,sys; "
                   "print('out:'+os.environ['PAIRED_COMMAND_PROBE'], flush=True); "
@@ -71,6 +112,33 @@ class PairedCommandEvidenceTests(unittest.TestCase):
         record = self.assert_completed_contract(1)[0]
         self.assertEqual(record["argv"], argv)
         self.assertEqual(record["exit"], 0)
+        self.assertEqual(runner.command_phase_status(events[-1]), "EXECUTED_PASS")
+
+    def test_build_phase_aggregation_requires_both_builds_and_ignores_cleanup(self):
+        state = {"ui": "NOT_RUN"}
+        runner.record_build_phases(state)
+        self.assertEqual((state["build"], state["mini_build"], state["ai_build"]), ("NOT_RUN",) * 3)
+        runner.command([sys.executable, "-c", "print('mini build')"], "mini-build.log")
+        runner.record_build_phases(state)
+        self.assertEqual((state["build"], state["mini_build"], state["ai_build"]),
+            ("INCOMPLETE", "EXECUTED_PASS", "NOT_RUN"))
+        runner.command([sys.executable, "-c", "print('ai build')"], "ai-build.log")
+        runner.command([sys.executable, "-c", "import sys; sys.exit(9)"], "cleanup.log", allow_failure=True)
+        runner.record_build_phases(state)
+        self.assertEqual((state["build"], state["mini_build"], state["ai_build"]), ("EXECUTED_PASS",) * 3)
+        self.assertEqual(state["ui"], "NOT_RUN")
+        self.assertEqual(set(state["build_commands"]), {"mini_build", "ai_build"})
+
+    def test_launch_failure_is_not_reported_as_an_executed_build(self):
+        with self.assertRaises(FileNotFoundError):
+            runner.command([str(self.evidence / "missing-executable")], "mini-build.log")
+        state = {"ui": "NOT_RUN"}
+        runner.record_build_phases(state)
+        self.assertEqual(state["build"], "LAUNCH_FAILED")
+        self.assertEqual(state["mini_build"], "LAUNCH_FAILED")
+        self.assertEqual(state["ai_build"], "NOT_RUN")
+        self.assertEqual(state["ui"], "NOT_RUN")
+        self.assertFalse((self.evidence / "commands.jsonl").exists())
 
     def test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout(self):
         argv = [sys.executable, "-c", "import sys; print('failed', flush=True); sys.exit(7)"]
@@ -86,6 +154,7 @@ class PairedCommandEvidenceTests(unittest.TestCase):
         self.assertEqual(final["status"], "completed")
         self.assertTrue(final["completion_recorded"])
         self.assertEqual(final["exit"], -signal.SIGHUP)
+        self.assertEqual(runner.command_phase_status(final), "EXECUTED_FAIL")
 
     def test_timeout_retains_partial_output_kills_child_and_preserves_minus_one(self):
         argv = [sys.executable, "-c", "import time; print('before-timeout', flush=True); time.sleep(30)"]
@@ -95,6 +164,7 @@ class PairedCommandEvidenceTests(unittest.TestCase):
         self.assertEqual(final["status"], "timed_out")
         self.assertEqual(final["timeout"], 0.2)
         self.assertEqual(final["observed_returncode"], -signal.SIGKILL)
+        self.assertEqual(runner.command_phase_status(final), "TIMED_OUT")
         self.assertTrue(final["completion_recorded"])
         with self.assertRaises(ProcessLookupError):
             os.kill(final["pid"], 0)
@@ -148,6 +218,7 @@ except KeyboardInterrupt:
                 final = self.records("command-events.jsonl")[-1]
                 self.assertEqual(final["status"], "interrupted")
                 self.assertEqual(final["exception_type"], "KeyboardInterrupt")
+                self.assertEqual(runner.command_phase_status(final), "INTERRUPTED")
                 self.assertFalse(final["completion_recorded"])
                 self.assertIn(final["observed_returncode"], (None, -signal.SIGKILL))
                 cleanup = json.loads((self.evidence / "child-cleanup.json").read_text())
@@ -211,6 +282,7 @@ runner.command([sys.executable, '-c', sys.argv[3], str(runner.EVIDENCE/'command-
                 retained_events = self.records("command-events.jsonl")
                 unfinished_id = active["command_id"]
                 self.assertTrue(all(not e["completion_recorded"] for e in retained_events))
+                self.assertEqual(runner.command_phase_status(retained_events[-1]), "INCOMPLETE")
                 self.assertFalse((self.evidence / "commands.jsonl").exists())
                 # A successful cleanup command may overwrite only the latest
                 # observation; it must not erase the unfinished command journal.
