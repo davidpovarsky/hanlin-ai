@@ -374,6 +374,8 @@ def main():
                 "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
                 "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
                 "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+                "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+                "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
                 "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal"]
             runtime_result = EVIDENCE / "OriginalRuntimes.xcresult"
             argv = base + ["-scheme", "HanlinMiniApps", "test-without-building",
@@ -381,7 +383,7 @@ def main():
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
             code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
             state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
-                runtime_selectors, 11, code)
+                runtime_selectors, 13, code)
             _, raw = command(modal_fixture["verify_command"], "external-modal-result.json")
             state["external_modal_result"] = json.loads(raw)
         if TEST_SCOPE in {"cross_product", "product_and_share"}:
