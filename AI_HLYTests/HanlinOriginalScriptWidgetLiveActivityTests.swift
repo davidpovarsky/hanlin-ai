@@ -78,10 +78,16 @@ struct HanlinOriginalScriptWidgetLiveActivityTests {
         #expect(retained.node == prepared.node)
     }
 
-    @Test func removedWidgetCannotProduceANewLiveActivitySnapshot() throws {
+    @Test func inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot() throws {
         let (root, store, instance) = try fixture()
         defer { try? FileManager.default.removeItem(at: root) }
+        let prepared = try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
+            entityID: instance.entityID, family: "systemMedium", revision: 1, title: "Original")
         try store.invalidateWidgetActions(installedPackageID: instance.identity.installedPackageID)
+        #expect(throws: HanlinWidgetActionError.inactiveInstance) {
+            try HanlinScriptWidgetLiveActivityPreparation.load(store: store,
+                attributes: prepared.attributes, state: prepared.state)
+        }
         #expect(throws: HanlinWidgetActionError.inactiveInstance) {
             try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
                 entityID: instance.entityID, family: "systemMedium", revision: 1, title: "Original")
@@ -137,9 +143,18 @@ struct HanlinOriginalScriptWidgetLiveActivityTests {
             let ended = try await HanlinScriptWidgetLiveActivityController.end(store: store,
                 systemActivityID: systemID, installedPackageID: installedID.rawValue, dismissAfterSeconds: 0)
             #expect(ended)
+            let secondID = try await HanlinScriptWidgetLiveActivityController.start(store: store,
+                entityID: instance.entityID, family: "systemMedium", title: "Lifecycle activity")
+            let secondActivity = try #require(Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.first { $0.id == secondID })
+            try store.invalidateWidgetActions(installedPackageID: installedID)
+            let inactiveSnapshot = try #require(try store.load())
+            #expect(await HanlinScriptWidgetLiveActivityController.reconcile(snapshot: inactiveSnapshot) >= 1)
+            #expect(throws: HanlinWidgetActionError.inactiveInstance) {
+                try HanlinScriptWidgetLiveActivityPreparation.load(store: store,
+                    attributes: secondActivity.attributes, state: secondActivity.content.state)
+            }
         } catch {
-            _ = try? await HanlinScriptWidgetLiveActivityController.end(store: store,
-                systemActivityID: systemID, installedPackageID: installedID.rawValue, dismissAfterSeconds: 0)
+            _ = try? await HanlinScriptWidgetLiveActivityController.endActivities(store: store, identity: identity)
             throw error
         }
     }

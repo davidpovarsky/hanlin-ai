@@ -782,6 +782,26 @@
 			isa = PBXBuildFile;
 			productRef = AC1900000000000000000043;
 		};
+		AC1900000000000000000051 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000050;
+		};
+		AC1900000000000000000053 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000050;
+		};
+		AC1900000000000000000052 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000050;
+		};
+		AC1900000000000000000054 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000050;
+		};
+		AC1A6C96CE3730871961A620 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000050";
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2374,6 +2394,7 @@
 				"AC190000000000000000000C" ,
 				"AC190000000000000000000D" ,
 				"AC1900000000000000000049" ,
+				"AC1900000000000000000051" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2400,6 +2421,7 @@
 				"AC1900000000000000000010" ,
 				"AC1900000000000000000011" ,
 				"AC190000000000000000004B" ,
+				"AC1900000000000000000053" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2420,6 +2442,7 @@
 				"E3A100000000000000000001" ,
 				"AC1900000000000000000022" ,
 				"AC1900000000000000000023" ,
+				"AC1900000000000000000054" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2491,6 +2514,7 @@
 				"AC1900000000000000000047" ,
 				"AC1900000000000000000048" ,
 				"AC190000000000000000004A" ,
+				"AC1900000000000000000052" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2516,6 +2540,7 @@
 				"AC1ACECBCE5DE78D1F638406",
 				"AC1A18E8388907D5BA70D589",
 				"AC1A81E995779F79D4F7E3A2",
+				"AC1A6C96CE3730871961A620",
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2775,6 +2800,7 @@
 				"AC1900000000000000000004" ,
 				"AC1900000000000000000040" ,
 				"AC1900000000000000000043" ,
+				"AC1900000000000000000050" ,
 			);
 			"productName" = "AI_HLY";
 			"productReference" = "D7B6C3C12D50A55D004E3AD6";
@@ -2808,6 +2834,7 @@
 				"AC1900000000000000000004" ,
 				"AC1900000000000000000040" ,
 				"AC1900000000000000000043" ,
+				"AC1900000000000000000050" ,
 			);
 			"productName" = "AI_HLYTests";
 			"productReference" = "B10000000000000000000002";
@@ -2859,6 +2886,7 @@
 				"A10000000000000000000015" ,
 				"AC1900000000000000000044" ,
 				"AC1900000000000000000040" ,
+				"AC1900000000000000000050" ,
 			);
 			productName = HanlinScriptingWidgets;
 			productReference = D20000000000000000000020 /* HanlinScriptingWidgets.appex */;
@@ -2993,6 +3021,7 @@
 				"AC1800000000000000000002" ,
 				"F70000000000000000000051" ,
 				"AC1900000000000000000043" ,
+				"AC1900000000000000000050" ,
 			);
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
@@ -3045,6 +3074,7 @@
 				"A10000000000000000000015",
 				"AC1900000000000000000044",
 				"AC1900000000000000000040",
+				"AC1900000000000000000050",
 			);
 			"productName" = "HanlinMiniAppsWidgets";
 			"productReference" = "AC1A06108AD498E0B09DC231";
@@ -4228,6 +4258,7 @@
 		F80000000000000000000015 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				APS_ENVIRONMENT = "development";
 				"CODE_SIGNING_ALLOWED" = "YES";
 				"CODE_SIGNING_REQUIRED" = "YES";
 				"CODE_SIGN_STYLE" = "Automatic";
@@ -4282,6 +4313,7 @@
 		F80000000000000000000016 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				APS_ENVIRONMENT = "production";
 				"CODE_SIGNING_ALLOWED" = "YES";
 				"CODE_SIGNING_REQUIRED" = "YES";
 				"CODE_SIGN_STYLE" = "Automatic";
@@ -5035,6 +5067,11 @@
 		26B9238591CBD8BD492D137C = { isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsPicker; };
 		D7532BF517832175AD2CF8EE = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsBridge; };
 		499632C6BDF7BBBDF296C7D6 = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinTextStudioMiniApp; };
+		AC1900000000000000000050 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinExpoWidgetsOriginal;
+		};
 /* End XCSwiftPackageProductDependency section */
 
 /* Integrated standalone target and transport objects */

@@ -132,7 +132,8 @@
     "SWCompression",
     "TorahLibraryKit",
     "ZIPFoundation",
-    "HanlinTranslationUI"
+    "HanlinTranslationUI",
+    "HanlinExpoWidgetsOriginal"
   ],
   "native_framework_refs": [
     "A10000000000000000000020",

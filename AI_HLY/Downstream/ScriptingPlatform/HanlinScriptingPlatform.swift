@@ -14,6 +14,7 @@ import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
 import HanlinNativeScriptRuntime
 import HanlinExpoRuntime
+import ExpoWidgets
 import HanlinExpoNativeAPI
 import HanlinMiniAppCore
 import HanlinProductSplit
@@ -974,7 +975,9 @@ final class HanlinScriptingPlatform {
                 let session = try HanlinExpoSession(
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
                     sessionID: sessionID,
-                    packageID: id.rawValue,
+                    packageID: package.record.packageID.rawValue,
+                    installedPackageID: package.record.installedPackageID.rawValue,
+                    packageGeneration: package.record.activeGeneration,
                     isNativeAPIGranted: isNativeAPIGranted
                 )
                 expoSession = session
@@ -1377,6 +1380,15 @@ final class HanlinScriptingPlatform {
         defer { activeStoreOperations -= 1 }
         guard let store, let extensionStore else { return }
 
+        // Original Expo registrations share the same installed catalog lifecycle.
+        // Keep disabled choices, remove uninstalled data, and invalidate old
+        // generation layouts before any asynchronous extension publication.
+        HanlinExpoWidgetsIntegration.reconcileRegistrations(
+            installedIDs: Set(installedPackages.map { $0.record.installedPackageID.rawValue }),
+            activeGenerations: Dictionary(uniqueKeysWithValues: installedPackages.filter(\.enabled).map {
+                ($0.record.installedPackageID.rawValue, $0.record.activeGeneration)
+            }))
+
         var widgets: [HanlinScriptWidgetSnapshot] = []
         var intentEntities: [HanlinScriptIntentEntityRecord] = []
         var translationApps: [HanlinScriptTranslationUISnapshot] = []
@@ -1761,6 +1773,8 @@ final class HanlinScriptingPlatform {
             widgetPublicationDiagnostics = packageDiagnostics
             throw error
         }
+
+        await HanlinScriptWidgetLiveActivityController.reconcile(snapshot: newSnapshot)
 
         for package in installedPackages where package.enabled {
             let hasNativeWidget = package.entrypoints.contains {

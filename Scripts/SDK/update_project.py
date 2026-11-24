@@ -15,6 +15,7 @@ PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000
           "HanlinNotificationExtension":"AC1900000000000000000042",
           "HanlinTranslationUI":"AC1900000000000000000043",
           "HanlinWidgetUI":"AC1900000000000000000044",
+          "HanlinExpoWidgetsOriginal":"AC1900000000000000000050",
            "HanlinMiniAppsUI":"AC1900000000000000000045",
            "HanlinPresentationKit":"AC1800000000000000000002",
            "TorahLibraryKit":"F70000000000000000000051"}
@@ -28,16 +29,20 @@ EXTRA_PRODUCT_BUILDS = {
     ("HanlinMiniApps", "TorahLibraryKit"): "AC1900000000000000000048",
     ("AI_Hanlin", "HanlinTranslationUI"): "AC1900000000000000000049",
     ("HanlinMiniApps", "HanlinTranslationUI"): "AC190000000000000000004A",
-    ("AI_HLYTests", "HanlinTranslationUI"): "AC190000000000000000004B"
+    ("AI_HLYTests", "HanlinTranslationUI"): "AC190000000000000000004B",
+    ("AI_Hanlin", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000051",
+    ("HanlinMiniApps", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000052",
+    ("AI_HLYTests", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000053",
+    ("HanlinScriptingWidgets", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000054"
 }
 TARGET_PRODUCTS={
-    "AI_Hanlin": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts", "HanlinTranslationUI"],
-    "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts", "HanlinTranslationUI"],
-    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit", "HanlinTranslationUI"],
+    "AI_Hanlin": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts", "HanlinTranslationUI", "HanlinExpoWidgetsOriginal"],
+    "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts", "HanlinTranslationUI", "HanlinExpoWidgetsOriginal"],
+    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit", "HanlinTranslationUI", "HanlinExpoWidgetsOriginal"],
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
     "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
     "ChavrusaChatTranslationProvider": ["HanlinTranslationUI", "HanlinExtensionContracts"],
-    "HanlinScriptingWidgets": ["HanlinWidgetUI", "HanlinExtensionContracts"],
+    "HanlinScriptingWidgets": ["HanlinWidgetUI", "HanlinExtensionContracts", "HanlinExpoWidgetsOriginal"],
 }
 
 class Span:
@@ -131,6 +136,24 @@ def update():
             text=insert_object(text,"PBXBuildFile",build_id,
                 "\t\t\tisa = PBXBuildFile;\n\t\t\tproductRef = "+PRODUCTS[product]+";\n")
         text=edit_object(text,phase,lambda b:replace_list(b,"files",linked))
+        if name == "HanlinMiniApps":
+            # The genuine Expo Widgets push switch uses the same APNs signing
+            # environments as the original AI app, with its own bundle identity.
+            ai_target = targets["AI_Hanlin"][1]
+            ai_configs = {objects[c]["name"]: objects[c] for c in
+                          objects[ai_target["buildConfigurationList"]]["buildConfigurations"]}
+            for config in objects[target["buildConfigurationList"]]["buildConfigurations"]:
+                config_name = objects[config]["name"]
+                environment = ai_configs[config_name]["buildSettings"]["APS_ENVIRONMENT"]
+                def push_setting(block, value=environment):
+                    setting = "APS_ENVIRONMENT = " + json.dumps(value) + ";"
+                    pattern = r'"?APS_ENVIRONMENT"? = [^;]+;'
+                    if re.search(pattern, block):
+                        return re.sub(pattern, lambda _: setting, block, count=1)
+                    return re.sub(r'("?buildSettings"? = \{)',
+                                  lambda match: match.group(1) + "\n\t\t\t\t" + setting,
+                                  block, count=1)
+                text = edit_object(text, config, push_setting)
         host_modules={"AI_Hanlin":"HanlinApp", "HanlinScriptingWidgets":"HanlinScriptingWidgetsHost"}
         if name in host_modules:
             # The SDK owns the original implementation module names, preserving

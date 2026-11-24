@@ -58,9 +58,19 @@ Use `expo` with a TSX entry or `scriptwidget` for those engines. Engine-specific
 
 For an external development environment, `Scripts/MiniApps/miniapp.mjs` uses the same authoring module and staged original SDK as the application. It is not a separate typechecker or implementation of the engines.
 
+## Original Expo Widgets API
+
+The installed Expo SDK includes the genuine `expo-widgets` JavaScript package and native `WidgetsModule`, its original widget JavaScript runtime, original timeline parser/renderer, and original ActivityKit implementation. Import `createWidget`, `createLiveActivity`, and their types from `expo-widgets`; use the original `@expo/ui/swift-ui` components and the upstream `widget` Babel directive. Both shipping apps register the native module and include its original Live Activity widget and App Intent metadata. The current contract advertises the exact `expo-widgets` version and the `original-widget-api` / `original-live-activity-api` capabilities.
+
+Public names remain the names the author supplies. Internal storage associates each name with the actual product and installed package, so independent installations may use the same public names. Updating an installation retains its WidgetKit selection, while old-generation layouts stop executing; disabling preserves its configuration, and uninstalling removes its registration. Foreground and embedded sessions of the same current installation share the original widget.
+
+The system widget picker selects an original registration. Its configuration supports the original published enum options and typed custom configuration values, which are forwarded to the original renderer's `environment.configuration`. The [original public API probe](../../Fixtures/ExpoWidgetsProbe/App.tsx) exercises real timeline updates/queries, snapshots, configuration enum publication, the shared image directory, and Live Activity creation/query/update/end. Read the installed SDK's `EXPO_WIDGETS_ORIGINAL.md` for its exact resource paths.
+
 ## Typechecking and import diagnostics
 
 The project is checked against actual original declarations. NativeScript's base configuration follows its upstream declaration-check policy while checking authored source strictly; projects can explicitly request declaration checking as well. The validation report identifies `strict`, `skipLibCheck` and whether dependency declarations were checked. Expo strict declaration validation and actual Metro production are separate operations.
+
+A package can include both an ordinary Expo/React UI and a declared native presentation. Each is checked in its own original JSX/type environment, including imported source modules; a native presentation error stops the complete package build and keeps the original file/line/column. Declared Expo layout JSON or JavaScript expressions are validated with the original parser and copied with their actual source format.
 
 An archive that carries source is checked again during import. A supplied success report is not accepted as a replacement for the current compiler. Source hashes and compiled hashes detect inconsistent package contents; they do not identify a trusted publisher.
 
@@ -74,7 +84,7 @@ The current integration connects ordinary launch, declared Share actions, App In
 
 Declared native presentation programs are compiled during import with the original Expo Widgets or ScriptWidget compiler, published as immutable shared artifacts, and run with separate invocation state. Native snippets use real App Intents for their controls. The translation panel keeps editable input and native results inside the extension, and calls the original Apple context for expansion and text replacement. Foreground continuation remains available for packages without a native presentation. See [Current surface implementation](../miniapps/entrypoints-and-system-surfaces.md).
 
-Original ScriptWidget Live Activities use the original component renderer for the Lock Screen and all seven `$dynamic_island` regions. From Expo or NativeScript, call `hostServices.liveActivities.start({scriptWidgetEntrypointID: "widget", state: {count: 1}})` (or the equivalent `createHostServices()` facade). The installed default instance is available without placing a widget on the Home Screen. Declared native button and toggle actions commit actual state and refresh the activity. Prepared trees are retained as immutable artifacts; ActivityKit carries their small content reference.
+Original ScriptWidget Live Activities use the original component renderer for the Lock Screen and all seven `$dynamic_island` regions. From Expo or NativeScript, call `hostServices.liveActivities.start({scriptWidgetEntrypointID: "widget", state: {count: 1}})` (or the equivalent `createHostServices()` facade). The installed default instance is available without placing a widget on the Home Screen. Declared native button and toggle actions commit actual state and refresh the activity. Prepared trees are retained as immutable artifacts; ActivityKit carries their small content reference. The native package details view can start/end these activities directly. Rendering and updates check the current installation generation; disabled, removed or replaced instances are ended when the catalog is published.
 
 The imported modular-search sample retains its editable original logic modules, grouped results, text expansion, version selection and pagination. Its native system snippet uses an explicit Load more action in place of the original Scripting on-appear sentinel. Native code integration and native execution evidence are separate; consult the recorded Apple acceptance run before reporting a product pass.
 
@@ -89,7 +99,7 @@ The imported modular-search sample retains its editable original logic modules, 
 - [Portable authoring evidence](evidence/2026-11-23-authoring-portable.json)
 - [Executed portable transfer tests](evidence/authoring-repair-20261123/transfer-tests.json)
 
-Native acceptance is defined by the `miniapp_authoring` scope of `validate-app-split.yml`. It builds both actual products and exercises original NativeScript/Expo controls, embedded authoring tools, a malformed archive, real source diagnostics, the sheet and repair/import handoff on one iPad Simulator. Its recorded run and xcresult determine PASS/FAIL; source wiring, portable tests and syntax parsing do not establish native success.
+Native acceptance is defined by the `miniapp_authoring` scope of `validate-app-split.yml`. It builds both actual products and exercises original NativeScript/Expo controls, embedded authoring tools, a malformed archive, real source diagnostics, the sheet and repair/import handoff on one iPad Simulator. The current gate selects 21 AI app cases and four standalone runtime cases, including the two original Expo Widgets packages and actual ActivityKit calls. Its recorded run and xcresult determine PASS/FAIL; source wiring, portable tests and syntax parsing do not establish native success.
 
 Older [source inventory](source-inventory.json), [reachability audit](extension-reachability.md), and dated handoffs remain historical snapshots. Their old version numbers and disconnected-surface findings must not override the installed SDK manifest or current source/evidence.
 

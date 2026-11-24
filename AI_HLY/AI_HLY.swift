@@ -1,5 +1,6 @@
 import AI_Hanlin
 import AppIntents
+import ExpoWidgets
 import HanlinTranslationUI
 import SwiftUI
 
@@ -30,6 +31,6 @@ struct MyApp: App {
 /// Register the original SDK's system actions with this application's metadata.
 struct HanlinAppIntents: AppIntentsPackage {
     static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinApplicationIntentsPackage.self, HanlinNativePresentationIntentsPackage.self]
+        [HanlinApplicationIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self]
     }
 }

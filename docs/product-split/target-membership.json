@@ -117,6 +117,7 @@
   },
   "shared_sdk_products": {
     "HanlinAgentActivityCore": "Original shared redaction and native-result DTO implementations; no ChatUI or AgentCore dependency",
-    "HanlinTranslationUI": "Original native snippet and translation presentation UI and AppIntent metadata; no AI chat or credential dependency"
+    "HanlinTranslationUI": "Original native snippet and translation presentation UI and AppIntent metadata; no AI chat or credential dependency",
+    "HanlinExpoWidgetsOriginal": "Original Expo Widgets module, JavaScript runtime, timelines and ActivityKit/AppIntent implementations; installation lifecycle follows each shipping product"
   }
 }

@@ -27,7 +27,8 @@ TEST_PLANS = {
         "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
         "AI_HLYTests/HanlinNativePresentationTests",
         "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
-        "AI_HLYUITests/MiniAppAuthoringUITests"], 19),
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+        "AI_HLYUITests/MiniAppAuthoringUITests"], 21),
     "cross_product": (["AI_HLYUITests/HanlinPairedProductUITests"], 3),
     "shared_ingress": (["AI_HLYTests/ShareInboxHostIntegrationTests", "AI_HLYUITests/HanlinShareInboxUITests"], 5),
     "product_and_share": (["AI_HLYUITests/HanlinPairedProductUITests",
@@ -294,7 +295,9 @@ def main():
             runtime_inputs = [
                 ROOT / "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
                 ROOT / "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
-                ROOT / "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo"]
+                ROOT / "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+                ROOT / "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+                ROOT / "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo"]
             state["runtime_inputs"] = []
             for source in runtime_inputs:
                 destination = documents / source.name
@@ -308,14 +311,15 @@ def main():
             runtime_selectors = [
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
-                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets"]
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities"]
             runtime_result = EVIDENCE / "OriginalRuntimes.xcresult"
             argv = base + ["-scheme", "HanlinMiniApps", "test-without-building",
                 "-resultBundlePath", str(runtime_result)]
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
             code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
             state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
-                runtime_selectors, 3, code)
+                runtime_selectors, 4, code)
         if TEST_SCOPE in {"cross_product", "product_and_share"}:
             archive = fixture_archive(state["sha"])
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,

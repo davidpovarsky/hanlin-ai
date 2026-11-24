@@ -410,6 +410,48 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         closeExpoApp()
     }
 
+    func testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities() throws {
+        for variant in ["A", "B"] {
+            openApps()
+            importAndInstall(archive: "ExpoWidgetsProbe" + variant)
+            launchInstalledPackage(named: "Original Expo Widgets Probe " + variant)
+            let status = app.descendants(matching: .any).matching(identifier: "expo-widgets-status").firstMatch
+            XCTAssertTrue(status.waitForExistence(timeout: 30), "The original Expo Widgets probe did not render")
+            let expected = "EXPO_WIDGETS_PASS:" + variant + ":" + (variant == "A" ? "23" : "31")
+            XCTAssertTrue(waitUntil(timeout: 30) {
+                status.label == expected || status.label.hasPrefix("EXPO_WIDGETS_ERROR:")
+            }, "Original widget methods did not complete: \(status.label)")
+            XCTAssertEqual(status.label, expected, "Original widget API failed: \(status.label)")
+            let start = app.buttons["expo-widgets-start-activity"].firstMatch
+            XCTAssertTrue(start.waitForExistence(timeout: 10))
+            if !start.isHittable { app.swipeUp() }
+            XCTAssertTrue(start.isHittable)
+            start.tap()
+            let activity = app.descendants(matching: .any).matching(identifier: "expo-widgets-activity-status").firstMatch
+            XCTAssertTrue(waitUntil(timeout: 30) {
+                activity.label.hasPrefix("EXPO_WIDGETS_ACTIVITY_PASS:") ||
+                    activity.label.hasPrefix("EXPO_WIDGETS_ACTIVITY_ERROR:")
+            }, "Original ActivityKit methods did not complete: \(activity.label)")
+            XCTAssertTrue(activity.label.hasPrefix("EXPO_WIDGETS_ACTIVITY_PASS:"),
+                "Original create/start/query/update/token/end failed: \(activity.label)")
+            XCTAssertFalse(activity.label.dropFirst("EXPO_WIDGETS_ACTIVITY_PASS:".count).isEmpty,
+                "The actual system activity identifier must be returned")
+            capture(name: "original-expo-widgets-" + variant)
+            closeExpoApp()
+        }
+        // Both packages deliberately use the same public widget names. The
+        // first package checks its existing timeline before writing on relaunch.
+        launchInstalledPackage(named: "Original Expo Widgets Probe A")
+        let retained = app.descendants(matching: .any).matching(identifier: "expo-widgets-status").firstMatch
+        XCTAssertTrue(retained.waitForExistence(timeout: 30))
+        XCTAssertTrue(waitUntil(timeout: 30) {
+            retained.label == "EXPO_WIDGETS_PASS:A:23" || retained.label.hasPrefix("EXPO_WIDGETS_ERROR:")
+        })
+        XCTAssertEqual(retained.label, "EXPO_WIDGETS_PASS:A:23", "The second installation changed the first package's original timeline")
+        capture(name: "original-expo-widgets-relaunch-a")
+        closeExpoApp()
+    }
+
     func testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets() throws {
         openApps()
         importAndInstall(archive: "ExpoNativeAPIProbeA")
@@ -494,12 +536,8 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         source.tap()
         let install = app.buttons["hanlin-package-install"].firstMatch
         XCTAssertTrue(install.waitForExistence(timeout: 30))
-        let approve = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-        if approve.waitForExistence(timeout: 2) {
-            if !approve.isHittable { app.swipeUp() }
-            XCTAssertTrue(approve.isHittable)
-            approve.tap() // Actual existing user consent control, never a stored grant seed.
-        }
+        XCTAssertFalse(app.buttons["hanlin-approve-all-capabilities"].exists,
+                       "Current original framework imports must not add an application capability approval step")
         if !install.isHittable { app.swipeDown() }
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled && install.isHittable })
         install.tap()

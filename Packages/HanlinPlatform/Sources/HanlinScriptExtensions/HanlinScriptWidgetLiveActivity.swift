@@ -94,15 +94,38 @@ public enum HanlinScriptWidgetLiveActivityPreparation {
         return output
     }
 
+    private static func currentWidget(attributes: HanlinScriptWidgetLiveActivityAttributes,
+                                      in snapshot: HanlinScriptExtensionSnapshot) -> HanlinScriptWidgetSnapshot? {
+        guard !snapshot.inactiveWidgetInstallations.contains(attributes.identity.installedPackageID.rawValue),
+              snapshot.widgetInstances.contains(where: {
+                  $0.entityID == attributes.entityID && $0.identity == attributes.identity && $0.engine == .scriptwidget
+              }) else { return nil }
+        return snapshot.widgets.first {
+            $0.identity == attributes.identity && $0.engine == .scriptwidget &&
+                $0.family == attributes.family && $0.validUntil > .now
+        }
+    }
+
+    static func isActive(attributes: HanlinScriptWidgetLiveActivityAttributes,
+                         in snapshot: HanlinScriptExtensionSnapshot) -> Bool {
+        currentWidget(attributes: attributes, in: snapshot) != nil
+    }
+
     public static func load(store: HanlinScriptExtensionStore,
                             attributes: HanlinScriptWidgetLiveActivityAttributes,
                             state: HanlinScriptWidgetLiveActivityAttributes.ContentState) throws
         -> HanlinScriptWidgetLiveActivitySnapshot {
+        guard let current = try store.load(),
+              let widget = currentWidget(attributes: attributes, in: current) else {
+            throw HanlinWidgetActionError.inactiveInstance
+        }
+        let (_, currentDigest) = try store.loadProgram(for: widget)
         let data = try store.loadVerifiedArtifact(ref: state.snapshotRef, sha256: state.snapshotSHA256,
             installedPackageID: attributes.identity.installedPackageID, generation: attributes.identity.generation)
         let prepared = try JSONDecoder().decode(HanlinScriptWidgetLiveActivitySnapshot.self, from: data)
         guard prepared.context.identity == attributes.identity, prepared.context.engine == .scriptwidget,
               prepared.context.family == attributes.family else { throw HanlinWidgetActionError.invalidIdentity }
+        guard prepared.context.artifactSHA256 == currentDigest else { throw HanlinWidgetActionError.staleArtifact }
         return prepared
     }
 }
@@ -122,7 +145,9 @@ public enum HanlinScriptWidgetLiveActivityController {
         }.value
         try Task.checkCancellation()
         return try await MainActor.run {
-            try Activity.request(attributes: prepared.attributes,
+            _ = try HanlinScriptWidgetLiveActivityPreparation.load(
+                store: store, attributes: prepared.attributes, state: prepared.state)
+            return try Activity.request(attributes: prepared.attributes,
                 content: ActivityContent(state: prepared.state, staleDate: staleDate, relevanceScore: relevanceScore),
                 pushType: nil).id
         }
@@ -154,6 +179,8 @@ public enum HanlinScriptWidgetLiveActivityController {
                 revision: previous.revision + 1, title: title ?? previous.title)
         }.value
         try Task.checkCancellation()
+        guard prepared.attributes == attributes else { throw HanlinWidgetActionError.inactiveInstance }
+        _ = try HanlinScriptWidgetLiveActivityPreparation.load(store: store, attributes: attributes, state: prepared.state)
         await activity.update(ActivityContent(state: prepared.state, staleDate: staleDate, relevanceScore: relevanceScore))
         return true
     }
@@ -169,18 +196,32 @@ public enum HanlinScriptWidgetLiveActivityController {
             guard finalState.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
             let attributes = activity.attributes
             let previous = finalState
-            finalState = try await Task.detached(priority: .userInitiated) {
+            let prepared = try await Task.detached(priority: .userInitiated) {
                 try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
                     entityID: attributes.entityID, family: attributes.family, values: values,
-                    revision: previous.revision + 1, title: title ?? previous.title).state
+                    revision: previous.revision + 1, title: title ?? previous.title)
             }.value
             try Task.checkCancellation()
+            guard prepared.attributes == attributes else { throw HanlinWidgetActionError.inactiveInstance }
+            _ = try HanlinScriptWidgetLiveActivityPreparation.load(store: store, attributes: attributes, state: prepared.state)
+            finalState = prepared.state
         }
         let dismissalPolicy: ActivityUIDismissalPolicy = if let dismissAfterSeconds {
             dismissAfterSeconds <= 0 ? .immediate : .after(.now.addingTimeInterval(dismissAfterSeconds))
         } else { .default }
         await activity.end(ActivityContent(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
         return true
+    }
+
+    /// End only activities whose immutable installed generation/variant ceased
+    /// to be current. The current publication is the same catalog the widget reads.
+    @discardableResult
+    public static func reconcile(snapshot: HanlinScriptExtensionSnapshot) async -> Int {
+        let inactive = Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.filter {
+            !HanlinScriptWidgetLiveActivityPreparation.isActive(attributes: $0.attributes, in: snapshot)
+        }
+        for activity in inactive { await activity.end(nil, dismissalPolicy: .immediate) }
+        return inactive.count
     }
 
     @discardableResult

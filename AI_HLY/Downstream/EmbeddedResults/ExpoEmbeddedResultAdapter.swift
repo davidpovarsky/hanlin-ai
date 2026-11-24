@@ -70,6 +70,8 @@ public enum ExpoEmbeddedResultAdapter {
                 applicationRoot: entrypointURL.deletingLastPathComponent(),
                 sessionID: sessionID,
                 packageID: package.record.packageID.rawValue,
+                installedPackageID: package.record.installedPackageID.rawValue,
+                packageGeneration: package.record.activeGeneration,
                 isNativeAPIGranted: true
             )
 

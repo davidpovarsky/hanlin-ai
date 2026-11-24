@@ -58,15 +58,30 @@ enum MiniAppAuthoringDelivery {
             }
         }
         let receipt = try store.receipt(for: transfer.id)
-        let payload: [String: Any] = [
+        let message: String
+        switch receipt.status {
+        case .installed:
+            message = receipt.message ?? "Hanlin MiniApps installed the original package and published its catalog entry."
+        case .failed:
+            message = receipt.message ?? "Hanlin MiniApps could not install the original package."
+        case .received:
+            message = "Hanlin MiniApps received the package and is validating/installing it. Query import_miniapp with transfer_id for the result."
+        case .submitted:
+            message = receipt.message ?? "The receiver submitted this request. Query import_miniapp with transfer_id for its result."
+        case .queued:
+            message = opened
+                ? "The original package is queued in Hanlin MiniApps. Query import_miniapp with transfer_id for its actual installation result."
+                : "The original package remains queued. Open Hanlin MiniApps and retry this wake URL."
+        }
+        var payload: [String: Any] = [
             "transfer_id": transfer.id.uuidString.lowercased(),
             "status": receipt.status.rawValue,
             "companion_opened": opened,
             "wake_url": transfer.wakeURL.absoluteString,
-            "message": opened
-                ? "The original package is queued in Hanlin MiniApps. Query import_miniapp with transfer_id for its actual installation result."
-                : "The original package remains queued. Open Hanlin MiniApps and retry this wake URL."
+            "message": message,
+            "receipt": try JSONSerialization.jsonObject(with: JSONEncoder().encode(receipt))
         ]
+        if let installedID = receipt.installedPackageID { payload["installedPackageID"] = installedID }
         return String(decoding: try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys]), as: UTF8.self)
     }
 
@@ -120,8 +135,11 @@ enum MiniAppAuthoringDelivery {
             // Publish the same actual installed registry before telling the agent
             // that the package is available in the companion catalog.
             try await HanlinMiniAppsProvider(platform: platform).refreshCatalog()
+            let publicationMessage = platform.widgetPublicationDiagnostics[package.record.installedPackageID].map {
+                "The package is installed, but an extension could not be published: " + $0.redactedReportString
+            }
             try store.record(.init(transferID: id, status: .installed,
-                installedPackageID: package.record.installedPackageID.rawValue))
+                installedPackageID: package.record.installedPackageID.rawValue, message: publicationMessage))
         } else {
             let message: String
             if case .failed(let reason) = platform.activity { message = reason }
