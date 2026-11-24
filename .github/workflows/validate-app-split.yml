@@ -101,7 +101,7 @@ on:
       paired_test_scope:
         description: Original cross-product, shared ingress, authoring or isolated MiniApp checks
         type: choice
-        options: [cross_product, shared_ingress, product_and_share, miniapp_authoring, miniapp_contracts, miniapp_lifecycle, miniapp_scriptwidget]
+        options: [cross_product, shared_ingress, product_and_share, miniapp_authoring, miniapp_sdk04, miniapp_contracts, miniapp_lifecycle, miniapp_scriptwidget]
         required: false
         default: cross_product
 
@@ -509,7 +509,7 @@ jobs:
             --log-dir "$SPLIT_EVIDENCE" --run-id "$GITHUB_RUN_ID" --commit-sha "$GITHUB_SHA" \
             --output-json "$SPLIT_EVIDENCE/ci-performance-report.json" --step-summary "$GITHUB_STEP_SUMMARY"
       - name: Upload MiniApp authoring UI attachments
-        if: ${{ always() && inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_authoring' }}
+        if: ${{ always() && inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_authoring' || inputs.paired_test_scope == 'miniapp_sdk04') }}
         uses: actions/upload-artifact@v7.0.2
         with:
           name: miniapp-authoring-ui-${{ github.run_id }}

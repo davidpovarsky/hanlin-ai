@@ -36,6 +36,9 @@ TEST_PLANS = {
         "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
         "AI_HLYTests/HanlinOriginalExpoWidgetTests",
         "AI_HLYUITests/MiniAppAuthoringUITests"], 25),
+    "miniapp_sdk04": ([
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"], 2),
     "cross_product": (["AI_HLYUITests/HanlinPairedProductUITests"], 3),
     "shared_ingress": (["AI_HLYTests/ShareInboxHostIntegrationTests", "AI_HLYUITests/HanlinShareInboxUITests"], 5),
     "product_and_share": (["AI_HLYUITests/HanlinPairedProductUITests",
@@ -409,6 +412,10 @@ def main():
         if TEST_SCOPE == "miniapp_authoring":
             state["scope"] = "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products"
             state["model_boundary"] = "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code."
+        if TEST_SCOPE == "miniapp_sdk04":
+            state["scope"] = "Focused current Expo runtime metadata, generated view/modifier behavior, real files/runtime and installed action-to-widget publication across both shipping products"
+            state["model_boundary"] = "Actual original SDK-built Expo probe, installed platform/store/session and original UI controls. No model responses or synthetic widget publication results."
+            state["acceptance_boundary"] = "Eight selected MiniApps UI cases and two hosted native cases; no all83 modifier semantics, document launch scene, WidgetKit OS rendering, physical device or previously selected42-case inference."
         if TEST_SCOPE == "product_and_share":
             state["scope"] += "; original share ingress to Composer and SDK"
             state["os_share_sheet"] = "NOT_RUN; input uses original store APIs and NSItemProvider in the native host suite"
@@ -426,7 +433,7 @@ def main():
             and not r.get("isInternal") and r["identifier"].endswith("iOS-" + sdk.replace(".", "-")))
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
-        device_family = "iPad" if TEST_SCOPE == "miniapp_authoring" else "iPhone"
+        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04"} else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
             if item.get("productFamily") == device_family and item["identifier"] in supported)
         _, raw = command(["xcrun", "simctl", "create",
@@ -465,7 +472,7 @@ def main():
         state["status"] = "BUILD_FAILED"
         # Same bounded cold MiniApps compilation budget as standalone acceptance.
         # This does not extend first-launch, routing, cancellation or UI deadlines.
-        mini_action = "build-for-testing" if TEST_SCOPE == "miniapp_authoring" else "build"
+        mini_action = "build-for-testing" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04"} else "build"
         command(base + ["-scheme", "HanlinMiniApps", mini_action,
             "-resultBundlePath", str(EVIDENCE / "MiniBuild.xcresult")], "mini-build.log", timeout=2400)
         state["app_intents_metadata"]["com.itorah.hanlinminiapps"] = capture_app_intents_metadata(products["com.itorah.hanlinminiapps"])
@@ -604,6 +611,37 @@ def main():
             state["native_adapter_assets"]["native_request_proof"] = "EXECUTED_PASS_RESOURCE_TRANSPORT"
             _, raw = command(modal_fixture["verify_command"], "external-modal-result.json")
             state["external_modal_result"] = json.loads(raw)
+        if TEST_SCOPE == "miniapp_sdk04":
+            _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
+                "com.itorah.hanlinminiapps", "data"], "sdk04-mini-data-container.txt")
+            documents = Path(raw.strip()) / "Documents"
+            documents.mkdir(exist_ok=True)
+            source = ROOT / "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo"
+            destination = documents / source.name
+            if destination.exists():
+                raise RuntimeError("Owned fresh simulator has an unexpected SDK04 runtime input")
+            shutil.copy2(source, destination)
+            digest = hashlib.sha256(source.read_bytes()).hexdigest()
+            if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+                raise RuntimeError("SDK04 runtime fixture bytes changed")
+            state["runtime_inputs"] = [{"source": os.path.relpath(source, ROOT), "sha256": digest}]
+            runtime_selectors = [
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"]
+            state["original_runtime_selectors"] = runtime_selectors
+            runtime_result = EVIDENCE / "OriginalRuntimes.xcresult"
+            argv = base + ["-scheme", "HanlinMiniApps", "test-without-building",
+                "-resultBundlePath", str(runtime_result)]
+            argv += ["-only-testing:" + selector for selector in runtime_selectors]
+            code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
+            state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
+                runtime_selectors, 8, code)
         if TEST_SCOPE in {"cross_product", "product_and_share"}:
             archive = fixture_archive(state["sha"])
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
@@ -663,7 +701,7 @@ def main():
             thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
-        if TEST_SCOPE == "miniapp_authoring":
+        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04"}:
             state["attachment_exports"] = []
             for name in ["OriginalRuntimes", "Paired"]:
                 bundle = EVIDENCE / (name + ".xcresult")
