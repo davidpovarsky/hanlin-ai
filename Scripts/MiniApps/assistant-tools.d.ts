@@ -31,6 +31,7 @@ export interface HanlinComposerConfiguration {
   panels: HanlinComposerPanel[];
 }
 export interface HanlinAssistantToolAction {
+  /** Case-sensitive action identity. ASCII uppercase is preserved, including in the default export name. */
   id: string;
   title: string;
   summary: string;

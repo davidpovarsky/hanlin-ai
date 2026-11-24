@@ -35,6 +35,7 @@ public struct HanlinMiniAppCatalogItem: Identifiable, Hashable, Sendable {
 public enum HanlinMiniAppCatalogError: Error, Equatable, Sendable {
     case unsupportedImplementation(HanlinAppID)
     case missingEntrypoint(HanlinAppID, HanlinEntryPointKind)
+    case ambiguousEntrypoint(HanlinAppID, HanlinEntryPointKind)
     case missingScriptRuntime(HanlinAppID, HanlinEntryPointKind)
     case unsupportedScriptRuntime(HanlinAppID, HanlinRuntimeProfile)
 }
@@ -94,6 +95,14 @@ public struct HanlinCanonicalMiniAppCatalog: Sendable {
         if let appEntryPoint = descriptor.entryPoints.first(where: { $0.kind == .app }) {
             return engine(for: appEntryPoint, implementation: descriptor.implementation)
         }
+        let assistantEntries = descriptor.entryPoints.filter { $0.kind == .assistantTool }
+        if assistantEntries.count > 1 {
+            // This is catalog classification, not executable selection. Multiple
+            // tools can share one engine; mixed engines have no primary fallback.
+            let engines = assistantEntries.map { engine(for: $0, implementation: descriptor.implementation) }
+            guard let first = engines.first ?? nil, engines.allSatisfy({ $0 == first }) else { return nil }
+            return first
+        }
         if let firstEntryPoint = descriptor.entryPoints.first {
             return engine(for: firstEntryPoint, implementation: descriptor.implementation)
         }
@@ -120,10 +129,22 @@ public struct HanlinMiniAppLaunchPlan: Hashable, Sendable {
 
     public init(
         descriptor: HanlinAppDescriptor,
-        entryPointKind: HanlinEntryPointKind = .app
+        entryPointKind: HanlinEntryPointKind = .app,
+        entryPointHandler: String? = nil
     ) throws {
-        guard let entryPoint = descriptor.entryPoints.first(where: { $0.kind == entryPointKind }) else {
+        let candidates = descriptor.entryPoints.filter { $0.kind == entryPointKind }
+        // Only assistant tools allow several canonical routes. A caller must
+        // select an exact registered handler; a missing/ambiguous choice cannot
+        // silently dispatch the first tool or fall back to the foreground app.
+        if candidates.count > 1 && (entryPointKind != .assistantTool || entryPointHandler == nil) {
+            throw HanlinMiniAppCatalogError.ambiguousEntrypoint(descriptor.id, entryPointKind)
+        }
+        let matches = candidates.filter { entryPointHandler == nil || $0.handler == entryPointHandler }
+        guard let entryPoint = matches.first else {
             throw HanlinMiniAppCatalogError.missingEntrypoint(descriptor.id, entryPointKind)
+        }
+        guard matches.count == 1 else {
+            throw HanlinMiniAppCatalogError.ambiguousEntrypoint(descriptor.id, entryPointKind)
         }
         guard let engine = HanlinCanonicalMiniAppCatalog.engine(for: entryPoint, implementation: descriptor.implementation) else {
             throw HanlinMiniAppCatalogError.unsupportedImplementation(descriptor.id)

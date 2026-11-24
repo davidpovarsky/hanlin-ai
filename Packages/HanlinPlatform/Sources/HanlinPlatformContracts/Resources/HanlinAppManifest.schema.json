@@ -180,6 +180,7 @@
       "type": "object"
     },
     "actionIdentifier": {
+      "description": "Case-sensitive action identity, including prepared JavaScript export names.",
       "maxLength": 255,
       "pattern": "^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*(?![\\s\\S])",
       "type": "string"
@@ -1113,9 +1114,7 @@
       ],
       "properties": {
         "id": {
-          "type": "string",
-          "maxLength": 255,
-          "pattern": "^[a-z0-9]+(?:[-._][a-z0-9]+)*$"
+          "$ref": "#/$defs/actionIdentifier"
         },
         "title": {
           "type": "string",

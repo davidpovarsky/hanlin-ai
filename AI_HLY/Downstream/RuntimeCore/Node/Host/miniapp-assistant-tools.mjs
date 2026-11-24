@@ -118,7 +118,7 @@ export function validateAssistantToolManifest(script, engine) {
     }
     const actions = new Set();
     for (const action of metadata.actions) {
-      if (!object(action) || !nonempty(action.id) || (!/^[a-z0-9]+(?:[-._][a-z0-9]+)*$/.test(action.id) || action.id.length > 255)
+      if (!object(action) || !nonempty(action.id) || (!/^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*(?![\s\S])/.test(action.id) || action.id.length > 255)
         || actions.has(action.id) || !nonempty(action.title) || !nonempty(action.summary)
         || !object(action.inputSchema) || action.inputSchema.type !== 'object'
         || action.outputSchema !== undefined && !object(action.outputSchema)
