@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_FIELD_MAPPING_PASS_COMBINED_GENERATION_PENDING",
+  "baseCommit": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+  "criterion": {
+    "taskID": "1220373483148840",
+    "task": "SDK-01 source authority inventory",
+    "definitionOfDone": "כל API ו-manifest field מתועד מול קוד, וכל נקודת אי-ודאות מצוינת; מתועדים HEAD וגרסאות כלי הבנייה.",
+    "scopeOfThisChange": "Only the previously partial manifest-field/source-authority mapping; API and device acceptance remain separate."
+  },
+  "prior": {
+    "sourceCount": 75,
+    "manifestFamilies": 2,
+    "scriptManifest": {
+      "family": "script.json",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
+      "decoderKnownKeys": [
+        "name",
+        "version",
+        "description",
+        "localizedNames",
+        "localizedDescriptions",
+        "author",
+        "contributors",
+        "icon",
+        "iconImage",
+        "color",
+        "entry",
+        "runInApp",
+        "intentInputTypes",
+        "remoteResource",
+        "hanlinAppID",
+        "hanlinRuntime"
+      ],
+      "unknownFields": "losslessly retained; not executable entrypoints or grants",
+      "status": "partial; engine/package.json/analyzer rules are additional contracts"
+    }
+  },
+  "current": {
+    "fieldOrJSONPointerRows": 334,
+    "families": [
+      {
+        "family": "script.json",
+        "fields": 83
+      },
+      {
+        "family": "nativescript prepared package.json",
+        "fields": 14
+      },
+      {
+        "family": "expo prepared package.json",
+        "fields": 22
+      },
+      {
+        "family": "hanlin.authoring.json",
+        "fields": 14
+      },
+      {
+        "family": "NativeScript installed dependency package.json",
+        "fields": 12
+      },
+      {
+        "family": "original ScriptWidget widget.json",
+        "fields": 48
+      },
+      {
+        "family": "original ScriptWidget meta.json compatibility",
+        "fields": 7
+      },
+      {
+        "family": "canonical compiled Hanlin app",
+        "fields": 134
+      }
+    ],
+    "authorityCount": 19,
+    "sourceSHA256": {
+      "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134",
+      "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
+      "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift": "7444cd9fb26481b8fa52a167f7a942790c4e7d19c7bdd74666fc8c5efe6e70b7",
+      "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift": "99949d3e4d9b1ade6309b773e2978a3bd1a47d1c76441fd65a30ecabb8f3b844",
+      "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift": "3864dc8b4e4de02d55e2227643451ec74befed4b5eb9ca65cada5c6fc4fc392b",
+      "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift": "9c80012c2abcc76f90ca28614f19fdea92331276aa56e803e854251ac5b2ba40",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift": "6ef3c5c17c41a513484a1341edd31bad3dfcc4a3b9c72f2157e3f3d6112244d3",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift": "27505a611dbe1b61ab100ca53c393ca9a72aedb76bbc084015c35423f25804c7",
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+      "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json": "4deb4b2a1071ed0557ae6924a4f4ab3a5d57e467eb8796c4e6febb629ddde022",
+      "Scripts/MiniApps/generate-scriptwidget-manifest.mjs": "ca852f733478f46e5e829b803251aa354a32e48ff0bd21f51b58bfa3d708f791",
+      "Scripts/MiniApps/scriptwidget/manifest-validation.mjs": "326176eac507dc298b91065d2ce93de15869ab801bd02c31edfc0a474d9cd7c5",
+      "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift": "27dada0499f2d5d3299bc4a8c7131f066ba148c4b89be6d5a48ce24224120075",
+      "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd",
+      "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift": "f79c2efa49d41f215a38293d9dbd068283af9d49066878f5a67c6da03b383063",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d"
+    },
+    "implementationSHA256": {
+      "Scripts/Audit/miniapp-manifest-contracts.mjs": "790c5c4fb9fb928df5feb7b981ca3eaef89076f30b255538e8f8df82fc62f0c6",
+      "Scripts/Audit/audit-miniapp-sdk.mjs": "c56ca61571f127b06ea50f5a8afee1ec8dde0ad9a1e54bd8b56da6dcecb22f7c",
+      "Scripts/Audit/Tests/manifest-contracts.test.mjs": "f939724ac769afabeb64e329593d682ba32cd7d5ce28ff9fdfedc92a01f9c326"
+    }
+  },
+  "verification": {
+    "focusedCase": "all current manifest fields have source authorities and future reader/schema drift is visible",
+    "result": "PASS",
+    "methods": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "log": "source-check-final.txt",
+    "run": "source-check-final.json",
+    "driftCases": [
+      "new retained-field consumer rejected",
+      "renamed native input field rejected",
+      "new prepared package reader field rejected",
+      "new installed-dependency field rejected",
+      "original schema/Codable mismatch rejected",
+      "new canonical schema property automatically reaches checked outputs"
+    ],
+    "firstPass": "source-check-attempt-01.txt",
+    "reviewDiscoveredGap": "NativeScript installed dependency metadata needed explicit fields rather than a generic npm passthrough row.",
+    "intermediateFailure": "source-check-attempt-02.txt; application input.pkg and installed dependency pkg were initially conflated by the new source scan; reader-scope-correction.json records the correction.",
+    "nativeExecution": "NOT_RUN; no runtime/application assertion is inferred.",
+    "fullSourceAudit": "NOT_RUN; root owns combined regeneration/check."
+  },
+  "generatedOutputs": {
+    "existing": "docs/miniapp-sdk/source-inventory.json",
+    "newPublicReference": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "writer": "Scripts/Audit/audit-miniapp-sdk.mjs --write",
+    "checker": "Scripts/Audit/audit-miniapp-sdk.mjs --check",
+    "note": "Use the same existing original TypeScript module argument as the current audit. No generated output was manually edited or committed in this lane."
+  },
+  "boundaries": [
+    "Overall source inventory remains IN_PROGRESS_SOURCE_AUDIT; no all-READY label.",
+    "Supported means reader/schema recognized, not native availability; partial marks retained metadata/frozen compatibility.",
+    "Canonical schema is a separate format; enumeration is not parity with every Swift Codable descriptor or active engine.",
+    "Source links are repository-relative provenance, not SDK-resource locators.",
+    "Original widget constraints/provenance remain upstream-owned; no new limits, grants or approval flow.",
+    "No product, runtime, manifest schema, actual decoder, importer, library version, Asana or CI mutation."
+  ]
+}

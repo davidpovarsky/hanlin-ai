@@ -1,0 +1,20 @@
+✖ all current manifest fields have source authorities and future reader/schema drift is visible (75.076712ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 170.475061
+
+✖ failing tests:
+
+test at Scripts/Audit/Tests/manifest-contracts.test.mjs:30:1
+✖ all current manifest fields have source authorities and future reader/schema drift is visible (75.076712ms)
+  Error: Unmapped manifest field drift: NativeScript installed dependency package.json reads; actual=dependencies,hanlinNativeScript,nativescript,optionalDependencies,peerDependencies,peerDependenciesMeta,version; mapped=dependencies,nativescript,optionalDependencies,peerDependencies,peerDependenciesMeta,version
+      at assertKeys (file:///mnt/development/projects/worktrees/hanlin-miniapps-manifest-inventory-20261124/Scripts/Audit/miniapp-manifest-contracts.mjs:52:11)
+      at auditManifestContracts (file:///mnt/development/projects/worktrees/hanlin-miniapps-manifest-inventory-20261124/Scripts/Audit/miniapp-manifest-contracts.mjs:296:3)
+      at async TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-manifest-inventory-20261124/Scripts/Audit/Tests/manifest-contracts.test.mjs:32:20)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

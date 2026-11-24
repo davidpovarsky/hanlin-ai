@@ -7,6 +7,7 @@ import {pathToFileURL} from 'node:url';
 import {createRequire} from 'node:module';
 import {auditPreparedRuntimeContract} from './miniapp-runtime-contract.mjs';
 import {auditExpoOperationRoutes} from './miniapp-expo-operations.mjs';
+import {auditManifestContracts, manifestReferenceMarkdown} from './miniapp-manifest-contracts.mjs';
 
 const compilerArgument = process.argv.indexOf('--typescript-module');
 const compilerFile = compilerArgument >= 0
@@ -20,6 +21,7 @@ const ts = (await import(pathToFileURL(compilerFile).href)).default;
 
 const root = path.resolve(import.meta.dirname, '../..');
 const destination = path.join(root, 'docs/miniapp-sdk/source-inventory.json');
+const manifestReference = path.join(root, 'docs/miniapp-sdk/MANIFEST_REFERENCE.md');
 const files = new Map();
 const compare = (a, b) => a < b ? -1 : a > b ? 1 : 0;
 const relative = file => path.relative(root, file).replaceAll('\\', '/');
@@ -108,13 +110,8 @@ const objcMethods = [...header.text.matchAll(/^[-+]\s*\([^\n]+?\)\s*(\w+)([\s\S]
 const nativeModule = await source('Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift');
 const adapter = await source('AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift');
 const system = await source('AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift');
-const manifest = await source('Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift');
-const keyBlock = manifest.text.match(/private static let knownKeys: Set<String> = \[([\s\S]*?)\]/)?.[1];
-if (!keyBlock) throw new Error('The script.json decoder contract changed; audit its actual keys.');
-const knownKeys = [...keyBlock.matchAll(/"([^"]+)"/g)].map(m => m[1]);
-const canonicalSchema = await json('Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json');
 for (const file of [
-  'Scripts/Audit/audit-miniapp-sdk.mjs', 'Scripts/Audit/miniapp-runtime-contract.mjs', 'Scripts/Audit/miniapp-expo-operations.mjs', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinExpoRuntime/Package.swift',
+  'Scripts/Audit/audit-miniapp-sdk.mjs', 'Scripts/Audit/miniapp-manifest-contracts.mjs', 'Scripts/Audit/miniapp-runtime-contract.mjs', 'Scripts/Audit/miniapp-expo-operations.mjs', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinExpoRuntime/Package.swift',
   'Packages/HanlinExpoNativeAPI/Package.swift', 'AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m',
   'AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift',
@@ -154,6 +151,8 @@ for (const file of [
 const analyzer = await source('Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift');
 const runtimeContract = await auditPreparedRuntimeContract({source, json, nsLock, nsPackage, tooling, lock, bridge});
 const preparedVersions = runtimeContract.versions;
+const manifestContract = await auditManifestContracts({source});
+const manifestMarkdown = manifestReferenceMarkdown(manifestContract);
 
 const wanted = ['expo', '@expo/ui', 'react', 'react-native', 'expo-modules-core', 'expo-modules-jsi', 'react-native-worklets', '@nativescript/react-native'];
 const nativeNames = [...nativeModule.text.matchAll(/AsyncFunction\("([^"]+)"\)/g)].map(m => m[1]);
@@ -168,7 +167,7 @@ const inventory = {
   auditParser: {package: compilerPackage.name, version: compilerPackage.version, reportedCompilerVersion: ts.version,
     sha256: createHash('sha256').update(await readFile(compilerFile)).digest('hex'),
     purpose: 'syntax/export inventory; not strict typecheck or native availability proof'},
-  scope: 'Existing NativeScript + Expo SDK source only; no Scripting-JSC development',
+  scope: 'Existing NativeScript + Expo SDK source and original ScriptWidget package fields; no Scripting-JSC development',
   status: 'IN_PROGRESS_SOURCE_AUDIT',
   evidenceBoundary: 'Exposed declarations and version locks are not a signed binary or per-surface E2E pass. Objective-C records are declarations, not metadata/JS marshalling proof.',
   snapshotIdentity: 'sourceCommit is the base commit; exact source hashes also cover any listed uncommitted source paths at audit time.',
@@ -196,11 +195,8 @@ const inventory = {
     publicExports: expoExports.sort((a, b) => compare(a.source, b.source) || a.line - b.line || compare(a.name, b.name)),
     reexports: reexports.sort((a, b) => compare(a.source, b.source) || a.line - b.line),
   },
-  manifests: [
-    {family: 'script.json', source: manifest.path, decoderKnownKeys: knownKeys, unknownFields: 'losslessly retained; not executable entrypoints or grants', status: 'partial; engine/package.json/analyzer rules are additional contracts'},
-    {family: 'canonical compiled Hanlin app', source: 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json',
-      rootProperties: Object.keys(canonicalSchema.properties ?? {}).sort(), note: 'Do not substitute this schema for the NS/Expo script.json and prepared package.json contract.'},
-  ],
+  manifests: manifestContract.families,
+  manifestCoverage: {...manifestContract, families: undefined, publicReference: 'MANIFEST_REFERENCE.md'},
   systemServices: {source: system.path, declaredMethods: [...system.text.matchAll(/public func (\w+)\(/g)].map(m => m[1]),
     status: 'declarations do not prove NS/Expo public bindings, iOS availability, OS permission or canPresentUI'},
   gaps: [
@@ -220,6 +216,7 @@ if (process.argv.includes('--check')) {
   delete prior.sourceCommit;
   delete prior.uncommittedSourcePaths;
   if (JSON.stringify(prior) !== JSON.stringify(inventory)) throw new Error('SDK source inventory drift. Audit source changes, then regenerate with --write.');
+  if (await readFile(manifestReference, 'utf8') !== manifestMarkdown) throw new Error('Manifest field reference drift. Regenerate with --write after source review.');
   console.log(`PASS: SDK source inventory matches ${inventory.sources.length} sources and ${exports.length} local public exports.`);
 } else if (process.argv.includes('--write')) {
   const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
@@ -228,5 +225,6 @@ if (process.argv.includes('--check')) {
   const uncommittedSourcePaths = inventory.sources.map(s => s.path).filter(p => changed.includes(p));
   await mkdir(path.dirname(destination), {recursive: true});
   await writeFile(destination, JSON.stringify({sourceCommit, uncommittedSourcePaths, ...inventory}, null, 2) + '\n');
+  await writeFile(manifestReference, manifestMarkdown);
   console.log(`Wrote source inventory: ${inventory.sources.length} sources, ${exports.length} local public exports; E2E not inferred.`);
 } else throw new Error('Use --check for read-only drift verification or --write after auditing changes.');
