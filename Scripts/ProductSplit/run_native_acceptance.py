@@ -21,18 +21,23 @@ UI_PLANS = {
     'cross_app': (['HanlinMiniAppsTests/CrossAppInvocationTests',
                   'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
                   'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests',
-                  'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests'], 13),
+                  'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests',
+                  'HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests',
+                  'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests'], 16),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
-    # Cross-app adapters and teardown changed: recheck these two runtime cases
-    # and thirteen producer/UI/owner cases. Do not repeat unchanged storage tests.
+    # The complete affected scope includes the original producer cases plus
+    # actual per-window NativeScript UI/lifetime. Authenticate and retain the
+    # unchanged individual native passes before selecting only remaining cases.
     'production_runtimes': ([
         'HanlinMiniAppsTests/CrossAppInvocationTests',
         'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
         'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests',
         'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests',
+        'HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests',
+        'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
-        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 15),
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 18),
 }
 
 
@@ -152,6 +157,27 @@ def main():
                 'CODE_SIGNING_ALLOWED=YES', 'CODE_SIGNING_REQUIRED=YES', 'CODE_SIGN_IDENTITY=-']
         build = base + ['build-for-testing', '-resultBundlePath', str(EVIDENCE/'Build.xcresult')]
         state['build_command'] = build
+        if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+            from reuse_cross_app_native_proof import (
+                capture_current_environment, download_origin, plan_reuse)
+            origin = download_origin(ROOT, ROOT/'build/miniapps-native-proof-cache')
+            current_environment = capture_current_environment(runtime, device, architecture, build)
+            previous = plan_reuse(ROOT, origin, current_environment)
+            (EVIDENCE/'previous-native-proof.json').write_text(json.dumps(previous, indent=2)+'\n')
+            original_count = expected_tests
+            selectors = [selector for selector in selectors
+                         if selector != 'HanlinMiniAppsTests/CrossAppInvocationTests']
+            selectors += previous['rerun_selectors']
+            expected_tests -= len(previous['reusable_selectors'])
+            state['previous_native_proof'] = previous
+            state['reused_passes'] = previous['reusable_selectors']
+            state['selectors'] = selectors
+            state['native_proof_coverage'] = {
+                'full_affected_scope': original_count,
+                'fresh_execution_required': expected_tests,
+                'authenticated_previous_passes': len(previous['reusable_selectors']),
+                'previous_run_overall_status': 'failure',
+            }
         state['status'] = 'BUILD_FAILED'
         # Run 44270714044 exhausted the 20-minute cold compilation budget while
         # Swift package compilation still progressed on a 3-core/7-GiB runner.
@@ -305,6 +331,10 @@ def main():
                      '--simulator-udid', simulator, '--app-path', str(app_product),
                      '--evidence', str(EVIDENCE/'external-modal')],
                     'external-modal-staging.log', timeout=180)
+            command([sys.executable, 'Scripts/ProductSplit/stage_nativescript_window_fixture.py',
+                     '--simulator-udid', simulator, '--app-path', str(app_product),
+                     '--evidence', str(EVIDENCE/'nativescript-windows')],
+                    'nativescript-window-staging.log', timeout=180)
         argv = base + ['test-without-building',
                 '-resultBundlePath', str(EVIDENCE/'MiniApps.xcresult')]
         argv += ['-only-testing:' + selector for selector in selectors]
@@ -344,6 +374,9 @@ def main():
                     staging = json.loads((EVIDENCE/'external-modal/staging.json').read_text())
                     command(staging['verify_command'], 'external-modal-actual-result.json')
                     state['external_modal_result'] = 'ACTUAL_RUNTIME_RESULT_VERIFIED'
+                    window_staging = json.loads((EVIDENCE/'nativescript-windows/staging.json').read_text())
+                    command(window_staging['verify_command'], 'nativescript-window-actual-results.json')
+                    state['nativescript_window_results'] = 'ACTUAL_RUNTIME_RESULTS_VERIFIED'
                 state.update(status='EXECUTED_PASS',ui='EXECUTED_PASS')
             elif failed:
                 state.update(status='TEST_FAILED',ui='TEST_FAILED')

@@ -86,6 +86,8 @@ final class MiniAppsExternalModalLifetimeUITests: XCTestCase {
                       "The same real engine must complete and persist its actual external result")
         XCTAssertFalse(app.staticTexts["Cancelled"].exists)
         capture("external-modal-result-saved")
+        app.buttons["miniapps.external.cancel"].tap()
+        XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 20))
     }
 
     private func capture(_ name: String) {

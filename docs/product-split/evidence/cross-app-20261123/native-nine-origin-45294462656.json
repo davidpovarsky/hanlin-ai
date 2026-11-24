@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "origin": {
+    "repository": "davidpovarsky/hanlin-ai",
+    "source_sha": "a774de24926ca13d563c45c42917d03b8c04296f",
+    "run_id": 45294462656,
+    "artifact_id": 14881066965,
+    "artifact_name": "app-split-45294462656",
+    "artifact_bytes": 310801759,
+    "artifact_sha256": "a618c629f9f335a0e58a4ae9053de6f99e3cc60bd4a086b9774e0564f23f61d3",
+    "workflow_conclusion": "failure",
+    "native_acceptance_status": "INFRA_ERROR",
+    "actual_passed": 9,
+    "actual_failed": 4,
+    "actual_skipped": 0,
+    "missing_modal_status": "NOT_RUN"
+  },
+  "members": {
+    "app-split-evidence/source-inputs.json": "eba6c9b38eda7fda729beb44b59ba0032e231f02c6b4b03657d474861319d7ca",
+    "app-split-evidence/test-summary.json": "625f05e74e526ba0af24cc604d288f1384629fc1f5e948cfec9addaeacfb7035",
+    "app-split-evidence/test-nodes.json": "c3f1eb07caaf920c784aa3938215e16a17103d36f66437746c5e1a775633fd40",
+    "app-split-evidence/acceptance.json": "e115f565fc8c42791f2e5f88d9753f4a2c889da5fbf3a83095f90a942949fe59",
+    "app-split-evidence/producer-manifest.json": "a7e20fd5cced407516386ab5fb958d73996270e28304c996a660bc246b6e9a18"
+  },
+  "environment": {
+    "xcode": "Xcode 27.2\nBuild version 27B52",
+    "macos_version": "27.0.1",
+    "macos_build": "26A434",
+    "sdk": "27.2",
+    "architecture": "arm64",
+    "simulator_os": "27.2",
+    "simulator_build": "24B8117",
+    "device_type": "com.apple.CoreSimulator.SimDeviceType.iPad-mini-A20-Pro",
+    "compiler_toolchain": "XcodeDefault.xctoolchain",
+    "compiler_overrides": {},
+    "build_options": {
+      "-project": "AI_HLY.xcodeproj",
+      "-scheme": "HanlinMiniApps",
+      "destination": {
+        "platform": "iOS Simulator",
+        "arch": "arm64"
+      },
+      "-parallel-testing-enabled": "NO",
+      "-configuration": "Debug",
+      "remaining_options": [
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-"
+      ]
+    }
+  },
+  "common_files": [
+    "Package.swift",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme",
+    "HanlinMiniAppsApp/Info.plist",
+    "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+    ".github/workflows/validate-app-split.yml"
+  ],
+  "dependency_groups": {
+    "session": {
+      "files": [
+        "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+        "Packages/HanlinMiniAppsBridge/Package.swift",
+        "Packages/HanlinPlatform/Package.swift"
+      ],
+      "prefixes": [
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/",
+        "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/"
+      ]
+    },
+    "draft": {
+      "files": [
+        "Packages/HanlinTextStudioMiniApp/Package.swift",
+        "Packages/HanlinPlatform/Package.swift"
+      ],
+      "prefixes": [
+        "Packages/HanlinTextStudioMiniApp/Sources/",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/",
+        "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/"
+      ]
+    },
+    "binding": {
+      "files": [
+        "Packages/HanlinProductSplit/Package.swift",
+        "Packages/HanlinPlatform/Package.swift",
+        "Packages/HanlinMiniAppsBridge/Package.swift"
+      ],
+      "prefixes": [
+        "HanlinMiniAppsApp/",
+        "Packages/HanlinProductSplit/Sources/",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/",
+        "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/",
+        "AI_HLY/Downstream/ProductSplitIntegration/"
+      ]
+    },
+    "scene": {
+      "files": [
+        "Scripts/ProductSplit/run_native_acceptance.py",
+        "Scripts/ProductSplit/verify_targets.py",
+        "Scripts/ProductSplit/simulator_entitlements.py",
+        "RuntimeDependencies.lock.json"
+      ],
+      "prefixes": [
+        "HanlinMiniAppsApp/",
+        "HanlinMiniAppsTests/",
+        "AI_HLY/",
+        "Packages/",
+        "Scripts/NativeScript/",
+        "Scripts/Expo/",
+        "Scripts/Runtime/",
+        "Scripts/ProductSplit/BuildIO/"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "method": "testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore",
+      "groups": [
+        "session"
+      ],
+      "scope": "Temporary mailbox + restored session; no load(), provider, engine or real app callback is invoked."
+    },
+    {
+      "method": "testTwoWindowsKeepTheirOwnInputOutputAndCallbacks",
+      "groups": [
+        "session"
+      ],
+      "scope": "Two restored session objects and real bridge mailboxes; no provider/engine launch."
+    },
+    {
+      "method": "testCancelAndDisplayDoneReturnNoDocumentMutation",
+      "groups": [
+        "session"
+      ],
+      "scope": "Restored sessions, injected callback, real bridge cancellation/display persistence; platform remains nil."
+    },
+    {
+      "method": "testActualProducerAttachmentOperationsPreserveBytes",
+      "groups": [
+        "session"
+      ],
+      "scope": "Real bridge attachment bytes via restored producer session; no engine launch."
+    },
+    {
+      "method": "testUnavailableCallbackRetainsResultForSourceRecovery",
+      "groups": [
+        "session"
+      ],
+      "scope": "Injected unavailable callback and real persisted pending result; platform remains nil."
+    },
+    {
+      "method": "testTextStudioWindowsRestoreTheirOwnDrafts",
+      "groups": [
+        "draft"
+      ],
+      "scope": "Actual isolated UserDefaults storage namespaces and cold reconstruction; no app UI or engine."
+    },
+    {
+      "method": "testReusingValueWindowKeepsItsInvocationBindingCurrent",
+      "groups": [
+        "binding"
+      ],
+      "scope": "Original SwiftUI window initializer and Binding identity; body/task/prepareStorage not evaluated."
+    },
+    {
+      "method": "testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+      "groups": [
+        "session"
+      ],
+      "scope": "Original state lifetime deinit and actual bridge cancellation; restored session never loads an engine."
+    },
+    {
+      "method": "testActualIncomingRequestsCreateDistinctIPadScenes",
+      "groups": [
+        "scene"
+      ],
+      "scope": "Actual app URL delivery, bootstrap, window routing, provider/runtime catalog and TextStudio scene creation; broad production closure."
+    }
+  ],
+  "review_notes": [
+    "Source checks compare the complete range from each original executed source a774 to current checkout, not the previous commit.",
+    "Raw original test source is bound to the artifact source-inputs manifest. Existing method bodies and shared fixtures/imports/class scaffolding are checked separately, allowing an unrelated new test without falsely reexecuting unchanged methods.",
+    "The full parsed project graph remains identical after removing ONLY new independent UI-test BuildFile/FileReference objects and their additions to HanlinMiniAppsUITests Sources. All original mappings, paths, groups, file order, target settings and framework/resource phases are compared exactly.",
+    "Direct restored-session cases do not call load(), so HanlinScriptingPlatform/NativeScript factory launch changes do not execute on their tested paths. The real URL/scene case includes those callers and is invalidated by their changes.",
+    "NativeScript factory/lifetime source additions and the changed native harness invalidate the actual scene case; that case must execute in the next native run.",
+    "Observed current platform/build inputs are required. A missing or different value invalidates prior reuse.",
+    "Four original UI failures and the omitted modal case are preserved outside this nine-case reuse plan; this descriptor never grants workflow or whole-product acceptance.",
+    "The broad actual-scene closure also binds RuntimeDependencies.lock.json and NativeScript/Expo/runtime generator sources and declared build IO. Direct restored-session/draft/binding cases do not load these engines."
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "status": "SOURCE_AND_CONTROLLED_INPUT_VALIDATED_NATIVE_EXECUTION_PENDING",
+  "source_hashes": {
+    "AI_HLY.xcodeproj/project.pbxproj": "c53c33b1cc487ff3bef7c08488dc7e0ce7568593df84442d94711520b239ca75",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift": "3525e1efbed9a202b0cbf264573c46e4c625471616e89ff088e14d83207388a9",
+    "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift": "fb39c200df1946f8e560efb2fdd2f419512a0bef052c8b36f9a6ecc7b471a24a",
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift": "12fa66d7b499de5661d981a1cf0846c9f10c1c2738e3ca268dbd87080a2f9041",
+    "Scripts/ProductSplit/run_native_acceptance.py": "babc5da960516e44234bde1122e36bb5d775184ed609c99b244ba54cfe62fdbf",
+    "Scripts/ProductSplit/NativeScriptWindowBridgeFixture.swift": "256ac5484931fbd29e5c4f7615f5455ff18b33ff26f1d3e8794dcabbc0384ec8",
+    "Scripts/ProductSplit/stage_nativescript_window_fixture.py": "c510c1194f2ef8047a2aa27624071640bd087ddebdf269d2bc83ec7e1620f980",
+    "Scripts/ProductSplit/reuse_cross_app_native_proof.py": "f38649e1bb303b7e8777e92061a4f701781ccb1e91184fcd462ee43bb23d9c9c",
+    "docs/product-split/evidence/cross-app-20261123/native-nine-origin-45294462656.json": "96f015af2e8099815193082083cbb719b52bf46dee2a5bb8c3cb091e27cf36a9"
+  },
+  "checks": {
+    "actual_foundation_bridge_and_incoming_fixture_linux_compile": "PASS",
+    "controlled_incoming_records": 4,
+    "synthesized_runtime_results": 0,
+    "current_explicit_ui_source_membership": 5,
+    "original_missing_modal_membership_rejected": true,
+    "changed_swift_syntax": "PASS",
+    "python_syntax": "PASS",
+    "review": "UUID expectations canonicalized; caller, actual UI flow, OS-container staging and read-only result verification reviewed by another ChatGPT agent",
+    "native_reuse_verifier": "Authenticated old full ZIP and9Passed nodes; controlled matching environment returns8reusable/1affected-scene; original4failures+omittedmodal retained; original app mapping/path mutations rejected; depth1 history exact-target fetch validated"
+  },
+  "native_ui_cases_executed_by_this_record": 0,
+  "signed_device_sharing_validated": false
+}
