@@ -162,6 +162,9 @@ const operationContract = auditExpoOperationRoutes({adapter, nativeNames, facade
   externalSession: await source('AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift'),
   platform: await source('AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift')});
 const operations = operationContract.operations;
+const preparedWidgetPublication = await source('Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift');
+const preparedWidgetConsumer = await source('Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift');
+const generatedViewProducer = await source('Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift');
 const inventory = {
   schemaVersion: 1,
   auditParser: {package: compilerPackage.name, version: compilerPackage.version, reportedCompilerVersion: ts.version,
@@ -189,10 +192,15 @@ const inventory = {
     hanlinUI: {packageVersion: uiPackage.version, dependencies: uiPackage.dependencies, peerDependencies: uiPackage.peerDependencies, generatedBridgeVersion: bridge.bridgeVersion,
       generatedRuntimeContract: bridge.runtimeVersion, expoUIVersion: bridge.expoUIVersion,
       upstreamViewCount: bridge.expoViews.length, upstreamModifierCount: bridge.expoModifiers.length,
-      reviewedViews: reviewed.views, reviewedModifiers: reviewed.modifiers},
+      reviewedViews: reviewed.views, reviewedModifiers: reviewed.modifiers,
+       generatedViewProducer: {source: generatedViewProducer.path, sha256: generatedViewProducer.sha256}},
     nativeAPIFacade: {packageVersion: nativeAPIPackage.version, peerDependencies: nativeAPIPackage.peerDependencies},
     nativeModule: {source: nativeModule.path, exports: nativeNames},
     hostInvoke: {source: adapter.path, operations, routes: operationContract.routes, facadeOperations, status: 'partial_source_wiring_not_surface_acceptance'},
+    preparedWidgetPublication: {producer: {source: preparedWidgetPublication.path, sha256: preparedWidgetPublication.sha256},
+      consumer: {source: preparedWidgetConsumer.path, sha256: preparedWidgetConsumer.sha256},
+      status: 'source authorities; installed JS/native/store/prepared-consumer execution is separate evidence',
+      osRendering: 'not inferred from state commit or reload request'},
     publicExports: expoExports.sort((a, b) => compare(a.source, b.source) || a.line - b.line || compare(a.name, b.name)),
     reexports: reexports.sort((a, b) => compare(a.source, b.source) || a.line - b.line),
   },
