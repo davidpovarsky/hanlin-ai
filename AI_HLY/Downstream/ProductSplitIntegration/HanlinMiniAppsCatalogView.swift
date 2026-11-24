@@ -77,11 +77,6 @@ public struct HanlinMiniAppsCatalogView: View {
             if let preferencesStore {
                 NavigationStack {
                     MiniAppPreferencesView(store: preferencesStore)
-                        .toolbar {
-                            ToolbarItem(placement: .confirmationAction) {
-                                Button(hanlin: "Done") { self.preferencesStore = nil }
-                            }
-                        }
                 }
             }
         }

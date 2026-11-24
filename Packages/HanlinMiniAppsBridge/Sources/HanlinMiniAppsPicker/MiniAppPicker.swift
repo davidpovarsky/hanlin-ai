@@ -6,6 +6,8 @@ import HanlinMiniAppsBridge
 /// transport request and opens MiniApps; no runtime enters the source process.
 @MainActor
 public struct MiniAppPicker: View {
+    private enum Route: Hashable { case apps }
+    @State private var path: [Route] = []
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var locale
     @Environment(\.scenePhase) private var scenePhase
@@ -32,7 +34,7 @@ public struct MiniAppPicker: View {
     }
 
     public var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             List {
                 if let title = source.documentTitle {
                     Section {
@@ -71,10 +73,7 @@ public struct MiniAppPicker: View {
                                 }
                             }.padding(.vertical, 8)
                         }
-                        NavigationLink {
-                            MiniAppPickerEditor(catalog: catalog, preferences: $preferences,
-                                onLaunch: launch, onChange: change)
-                        } label: {
+                        NavigationLink(value: Route.apps) {
                             Label(MiniAppPickerText.string("More"), systemImage: "ellipsis.circle")
                         }
                         .accessibilityIdentifier("miniapps-more")
@@ -82,9 +81,16 @@ public struct MiniAppPicker: View {
                 } header: { Text(MiniAppPickerText.string("MiniApps")) }
             }
             .navigationTitle(MiniAppPickerText.string("MiniApps"))
+            .navigationDestination(for: Route.self) { _ in
+                MiniAppPickerEditor(catalog: catalog, preferences: $preferences,
+                    onLaunch: launch, onChange: change)
+            }
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(MiniAppPickerText.string("Done")) { dismiss() }
+                if path.isEmpty {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(MiniAppPickerText.string("Done")) { dismiss() }
+                            .accessibilityIdentifier("miniapps-picker-dismiss")
+                    }
                 }
             }
             .alert(MiniAppPickerText.string("MiniApps"), isPresented: Binding(
@@ -192,6 +198,7 @@ public struct MiniAppPreferencesView: View {
 @MainActor
 private struct MiniAppPickerEditor: View {
     @Environment(\.locale) private var locale
+    @Environment(\.dismiss) private var dismiss
     #if os(iOS)
     @State private var nativeEditMode: EditMode = .inactive
     #else
@@ -213,6 +220,7 @@ private struct MiniAppPickerEditor: View {
     var body: some View {
         #if os(iOS)
         editorList.environment(\.editMode, $nativeEditMode)
+            .navigationBarBackButtonHidden(true)
         #else
         editorList
         #endif
@@ -276,11 +284,22 @@ private struct MiniAppPickerEditor: View {
         }
         .navigationTitle(MiniAppPickerText.string("Apps"))
         .toolbar {
-            #if os(iOS)
-            EditButton()
-            #else
-            Button(MiniAppPickerText.string(editing ? "Done" : "Edit")) { editing.toggle() }
-            #endif
+            // Match Share > More > Apps: leading dismissal and trailing Edit
+            // normally; one trailing Done while editing the native list.
+            if !isEditing {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(MiniAppPickerText.string("Done")) { dismiss() }
+                        .accessibilityIdentifier("miniapps-editor-dismiss")
+                }
+            }
+            ToolbarItem(placement: .confirmationAction) {
+                #if os(iOS)
+                EditButton().accessibilityIdentifier("miniapps-editor-edit")
+                #else
+                Button(MiniAppPickerText.string(editing ? "Done" : "Edit")) { editing.toggle() }
+                    .accessibilityIdentifier("miniapps-editor-edit")
+                #endif
+            }
         }
         .alert(MiniAppPickerText.string("MiniApps"), isPresented: Binding(
             get: { errorMessage != nil }, set: { if !$0 { errorMessage = nil } }

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-11-24T00:06:49.959048+00:00",
+  "reason": "The native More/Apps editing view has leading dismissal only outside editing, and exactly one trailing Edit/Done action. The earlier parent sheet added an unrelated Done alongside the editor.",
+  "visual_references": [
+    "https://www.getmatter.com/images/IOSShareExtension_03@2x.png",
+    "https://www.getmatter.com/images/IOSShareExtension_05@2x.png"
+  ],
+  "primary_behavior_reference": "https://support.apple.com/en-bh/guide/iphone/iphc572ca489/27/ios/27",
+  "dismiss_context_reference": "https://developer.apple.com/documentation/swiftui/dismissaction",
+  "reference_limit": "Published actual iOS interface screenshots; not a claim of iOS27 pixel-level visual proof.",
+  "changes": [
+    "Explicit native toolbar positions",
+    "Leading Done absent during editing",
+    "More page owns its pop action; preferences page owns its sheet dismissal",
+    "Root picker toolbar hidden on pushed More path",
+    "Redundant producer parent Done removed"
+  ],
+  "verification": {
+    "swift_parse": "PASS",
+    "independent_source_review": "PASS_AFTER_FIXING_XCTEST_ADD_SHADOW",
+    "selected_native_count": 14,
+    "native_ui": "NOT_YET_RUN",
+    "unchanged_foundation_transport": "11_PREVIOUS_PASS_TESTS_NOT_REPEATED",
+    "picker_apple_compilation": "PENDING_IN_ACTUAL_PRODUCER_AND_CONSUMER_BUILDS"
+  },
+  "superseded_run": {
+    "id": "45292781318",
+    "status": "CANCELLED_WHILE_QUEUED",
+    "job": 138105509696,
+    "executed_steps": 0,
+    "actual_native_tests": 0
+  },
+  "workflow_yaml_changed": false
+}
