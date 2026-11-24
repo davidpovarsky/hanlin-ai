@@ -65,7 +65,7 @@ class PairedCommandEvidenceTests(unittest.TestCase):
         def isolated_command(argv, name, **options):
             observed.append(name)
             if name == "mini-build.log":
-                self.assertEqual(options, {"timeout": 2400})
+                self.assertEqual(options, {"timeout": 3600})
                 return real_command([sys.executable, "-c", "import sys; print('build failed',flush=True); sys.exit(65)"],
                     name, **options)
             return 0, discovery.get(name, "")
