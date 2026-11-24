@@ -1,0 +1,43 @@
+{
+  "aliasEvidence": {
+    "path": "docs/miniapp-sdk/evidence/primary-typescript-alias-identity-20261124/receipt.json",
+    "sha256": "20a4f5c5abf3c294e3a6f522ca3e840b73d869755b26f3935f04b27079eb9043"
+  },
+  "actualManifestIdentity": {
+    "packageName": "@typescript/typescript6",
+    "packageVersion": "6.0.2",
+    "compilerVersion": "6.0.3"
+  },
+  "members": [
+    {
+      "path": "expo/node_modules/typescript/package.json",
+      "bytes": 841,
+      "sha256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+      "matchesAliasEvidence": true,
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "expo/node_modules/typescript/lib/typescript.js",
+      "bytes": 45,
+      "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+      "matchesAliasEvidence": true,
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "expo/node_modules/@typescript/old/package.json",
+      "bytes": 3527,
+      "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+      "matchesAliasEvidence": true,
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "expo/node_modules/@typescript/old/lib/typescript.js",
+      "bytes": 9144216,
+      "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "matchesAliasEvidence": true,
+      "sameAsAttempt6": true
+    }
+  ],
+  "sourceAndLockMatch": true,
+  "boundary": "Read four actual original compiler identity-chain members. No compiler invocation or package download."
+}

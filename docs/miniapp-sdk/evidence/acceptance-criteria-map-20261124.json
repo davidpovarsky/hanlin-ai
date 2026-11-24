@@ -17,19 +17,19 @@
   "activeGate": {
     "route": "PRIMARY_SCALEWAY_MAC",
     "owner": "native_execution",
-    "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
-    "sourceRole": "Actual terminal attempt6 source; both app builds passed, then production authoring fixture failed before52 cases",
+    "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+    "sourceRole": "Root-published resolver correction staged on the primary Mac; finite admission is waiting for native capacity",
     "scope": "miniapp_complete",
-    "attempt": 6,
-    "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
-    "startedAtUTC": "2026-11-24T21:08:27.170164+00:00",
+    "attempt": 7,
+    "status": "WAITING_FOR_NATIVE_CAPACITY",
+    "startedAtUTC": null,
     "controllerPID": null,
     "selectedCases": 52,
     "miniAppsCases": 25,
     "aiCases": 27,
     "caseStatus": "NOT_RUN",
-    "firstMiniAppsBuild": "EXECUTED_PASS",
-    "aiBuild": "EXECUTED_PASS",
+    "firstMiniAppsBuild": "NOT_RUN_ON_CORRECTED_EMBEDDED_HOST",
+    "aiBuild": "NOT_RUN_ON_CORRECTED_EMBEDDED_HOST",
     "acceptanceRequires": [
       "Fresh original native and shipping SDK identity preparation",
       "Both product builds",
@@ -47,159 +47,34 @@
       "acquisitionEvidenceID": "primary_runtimecore_authenticated_transfer"
     },
     "executionObservation": {
-      "attempt": 6,
-      "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
-      "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
-      "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
-      "pairedPhaseExitCode": 1,
-      "observedStoppedAtUTC": "2026-11-24T21:27:03.806Z",
-      "terminalAuthority": "Root direct Mac terminal read reported21:27:03.806 confirms stopped phaseexit1 at21:25:55.926222; sole native execution owner reports matching terminal result.",
-      "actualFixtureObservation": {
-        "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
-        "sha256": "d41453dcdb4405c531b47aa7044bb6c7abd4e500f7b20e82717a345d310ae5ad",
-        "bytes": 14400,
-        "storage": "Retained Oracle raw fixture observation; not a new committed raw receipt in this one-file map change"
+      "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "sourceRole": "Root-published resolver correction staged on the primary Mac; finite admission is waiting for native capacity",
+      "status": "WAITING_FOR_NATIVE_CAPACITY",
+      "startedAtUTC": null,
+      "controllerPID": null,
+      "authority": "Native owner reports exact fd81 source staged at 22:00 UTC; root reports its direct Mac observation at 22:01:06.661 UTC. This map reuses those dated observations and made no native query.",
+      "sourceCorrectionEvidenceID": "primary_sdk_resolution_correction",
+      "lastTerminalAttempt": 6,
+      "lastTerminalSourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "boundary": "Actual source staging and finite capacity waiting are observed; the native controller has not started at this checkpoint. Host/SDK production, corrected embedded app builds and 52 application cases are not complete. Future evidence-only map commits do not change execution target fd81.",
+      "attempt": 7,
+      "observedAtUTC": "2026-11-24T22:01:06.661+00:00",
+      "sourceAdvance": {
+        "status": "SOURCE_STAGED",
+        "reportedBy": "native_execution",
+        "observedAtUTCPrecision": "2026-11-24 22:00 UTC, minute precision as reported",
+        "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+        "preservedPreparedProvenancePaths": 3
       },
-      "fixtureObservedAtUTC": "2026-11-24T21:26:31.828728+00:00",
-      "builds": {
-        "MiniApps": "EXECUTED_PASS",
-        "AI": "EXECUTED_PASS",
-        "authority": "Reported actual results by sole native execution owner and confirmed in root terminal instruction; the attached raw fixture observation itself proves fixture command results, not the app build logs."
-      },
-      "setup": {
-        "codeSigning": "EXECUTED_PASS",
-        "installation": "EXECUTED_PASS",
-        "firstLaunch": "EXECUTED_PASS",
-        "appGroup": "EXECUTED_PASS",
-        "authority": "Sole native execution owner actual terminal report; these are acceptance setup results, not selected52 cases."
-      },
-      "nativeScriptAuthoringFixture": {
-        "status": "EXECUTED_PASS",
-        "command": {
-          "command_id": "660ebac4ae1546d1946115b2738f4ccb",
-          "argv": [
-            "node",
-            "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/authoring-fixture"
-          ],
-          "log": "authoring-fixture-build.log",
-          "runner_pid": 79105,
-          "pid": 89390,
-          "started_at": 1795555536.39314,
-          "timeout": 300,
-          "status": "completed",
-          "observed_at": 1795555542.418506,
-          "seconds": 6.025410249996639,
-          "log_bytes": 3132,
-          "completion_recorded": true,
-          "exit": 0,
-          "observed_returncode": 0
-        },
-        "rawLogSHA256": "c976fdfa15e26a64b095d1f0b19cac25a2d3d83e2213ba00a588d953f1c9cdd5",
-        "buildSucceeded": true,
-        "buildDiagnostics": 0,
-        "compilerVersion": "5.9.3",
-        "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
-        "packageVersions": {
-          "@nativescript/core": "9.1.4",
-          "@nativescript/swift-ui": "4.0.2",
-          "@nativescript/ios": "9.1.1",
-          "@nativescript/types": "9.1.4",
-          "@nativescript/vite": "8.0.24",
-          "typescript": "5.9.3",
-          "vite": "8.0.0",
-          "@hanlin/host-services": "1.0.0"
-        },
-        "typecheck": {
-          "strict": true,
-          "checkJs": false,
-          "skipLibCheck": true,
-          "dependencyDeclarationsChecked": false
-        },
-        "negativeValidationSucceeded": false,
-        "expectedNegativeCodes": [
-          "TS2322",
-          "MINIAPP_SOURCE_CHANGED"
-        ],
-        "scope": "Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded."
-      },
-      "modularSearchProductionFixture": {
-        "status": "EXECUTED_FAIL",
-        "command": {
-          "command_id": "cddaba623e6447fcbaa58eed5db77d52",
-          "argv": [
-            "node",
-            "Scripts/MiniApps/miniapp.mjs",
-            "build",
-            "--sdk",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
-            "--engine",
-            "expo",
-            "--project",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
-            "--archive",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/ModularTextSearch.hanlinExpo",
-            "--report",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.json"
-          ],
-          "log": "modular-search-build.log",
-          "runner_pid": 79105,
-          "pid": 89405,
-          "started_at": 1795555542.4300191,
-          "timeout": 300,
-          "status": "completed",
-          "observed_at": 1795555548.217901,
-          "seconds": 5.787920125003438,
-          "log_bytes": 8365,
-          "completion_recorded": true,
-          "exit": 1,
-          "observed_returncode": 1
-        },
-        "rawLogSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
-        "engine": "expo",
-        "operation": "build",
-        "diagnosticCount": 16,
-        "diagnosticCodes": {
-          "TS2300": 5,
-          "TS2320": 1,
-          "TS6200": 2,
-          "TS2374": 2,
-          "TS2687": 2,
-          "TS2403": 1,
-          "TS7016": 1,
-          "TS2717": 2
-        },
-        "compilerVersion": "6.0.3",
-        "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
-        "typecheck": {
-          "strict": true,
-          "checkJs": false,
-          "skipLibCheck": false,
-          "dependencyDeclarationsChecked": true
-        },
-        "diagnosticFiles": [
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo/node_modules/expo-asset/build/AssetSources.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts",
-          "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@types/react/global.d.ts",
-          "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
-          "../../node_modules/@types/react/global.d.ts",
-          "../../node_modules/react-native/src/types/globals.d.ts"
-        ],
-        "finding": "Actual diagnostics reference the exported SDK, local Scripts/Expo node_modules and sibling Maktabah/SefariaMobile upstream dependency roots. Resolver diagnosis/correction belongs to the native owner; no unverified repair claimed."
-      },
-      "selectedCases": 52,
-      "miniAppsCases": 25,
-      "aiCases": 27,
-      "caseStatus": "NOT_RUN",
-      "physicalDevice": "NOT_RUN",
-      "supersedesRunningEvidence": [
-        "primary_attempt6_miniapps_running_reported",
-        "primary_native_attempt6_preparation"
-      ],
-      "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged."
+      "capacityAdmission": {
+        "startedAtUTC": "2026-11-24T22:00:01.607+00:00",
+        "status": "WAITING_FOR_NATIVE_CAPACITY",
+        "rootObservedAtUTC": "2026-11-24T22:01:06.661+00:00",
+        "reportedElapsedSeconds": 60,
+        "externalBuildOrTestPIDsObserved": 2,
+        "controllerState": "READY",
+        "controllerPID": null
+      }
     },
     "lastExecutedAttempt": {
       "attempt": 6,
@@ -208,8 +83,8 @@
       "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
       "evidenceID": "primary_native_attempt6_terminal"
     },
-    "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged.",
-    "controllerPIDMeaning": "Root observed the controller stopped at21:27:03.806 after terminal failure.",
+    "boundary": "Actual source staging and finite capacity waiting are observed; the native controller has not started at this checkpoint. Host/SDK production, corrected embedded app builds and 52 application cases are not complete. Future evidence-only map commits do not change execution target fd81.",
+    "controllerPIDMeaning": "No native controller start/PID at the root observation of 22:01:06.661 UTC; finite capacity admission was already running.",
     "lastRetainedObservation": {
       "fixtureObservation": {
         "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
@@ -221,168 +96,26 @@
       "scope": "Original fixture logs/command completion only"
     },
     "latestApplicationObservation": {
-      "attempt": 6,
-      "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
-      "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
-      "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
-      "pairedPhaseExitCode": 1,
-      "observedStoppedAtUTC": "2026-11-24T21:27:03.806Z",
-      "terminalAuthority": "Root direct Mac terminal read reported21:27:03.806 confirms stopped phaseexit1 at21:25:55.926222; sole native execution owner reports matching terminal result.",
-      "actualFixtureObservation": {
-        "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
-        "sha256": "d41453dcdb4405c531b47aa7044bb6c7abd4e500f7b20e82717a345d310ae5ad",
-        "bytes": 14400,
-        "storage": "Retained Oracle raw fixture observation; not a new committed raw receipt in this one-file map change"
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/attempt6-acceptance.json",
+        "sha256": "289ec3e653b8236f7fa1acca4f79b35955a32a34df52508178ce60442594fdba",
+        "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
       },
-      "fixtureObservedAtUTC": "2026-11-24T21:26:31.828728+00:00",
-      "builds": {
-        "MiniApps": "EXECUTED_PASS",
-        "AI": "EXECUTED_PASS",
-        "authority": "Reported actual results by sole native execution owner and confirmed in root terminal instruction; the attached raw fixture observation itself proves fixture command results, not the app build logs."
-      },
-      "setup": {
-        "codeSigning": "EXECUTED_PASS",
-        "installation": "EXECUTED_PASS",
-        "firstLaunch": "EXECUTED_PASS",
-        "appGroup": "EXECUTED_PASS",
-        "authority": "Sole native execution owner actual terminal report; these are acceptance setup results, not selected52 cases."
-      },
-      "nativeScriptAuthoringFixture": {
-        "status": "EXECUTED_PASS",
-        "command": {
-          "command_id": "660ebac4ae1546d1946115b2738f4ccb",
-          "argv": [
-            "node",
-            "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/authoring-fixture"
-          ],
-          "log": "authoring-fixture-build.log",
-          "runner_pid": 79105,
-          "pid": 89390,
-          "started_at": 1795555536.39314,
-          "timeout": 300,
-          "status": "completed",
-          "observed_at": 1795555542.418506,
-          "seconds": 6.025410249996639,
-          "log_bytes": 3132,
-          "completion_recorded": true,
-          "exit": 0,
-          "observed_returncode": 0
-        },
-        "rawLogSHA256": "c976fdfa15e26a64b095d1f0b19cac25a2d3d83e2213ba00a588d953f1c9cdd5",
-        "buildSucceeded": true,
-        "buildDiagnostics": 0,
-        "compilerVersion": "5.9.3",
-        "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
-        "packageVersions": {
-          "@nativescript/core": "9.1.4",
-          "@nativescript/swift-ui": "4.0.2",
-          "@nativescript/ios": "9.1.1",
-          "@nativescript/types": "9.1.4",
-          "@nativescript/vite": "8.0.24",
-          "typescript": "5.9.3",
-          "vite": "8.0.0",
-          "@hanlin/host-services": "1.0.0"
-        },
-        "typecheck": {
-          "strict": true,
-          "checkJs": false,
-          "skipLibCheck": true,
-          "dependencyDeclarationsChecked": false
-        },
-        "negativeValidationSucceeded": false,
-        "expectedNegativeCodes": [
-          "TS2322",
-          "MINIAPP_SOURCE_CHANGED"
-        ],
-        "scope": "Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded."
-      },
-      "modularSearchProductionFixture": {
-        "status": "EXECUTED_FAIL",
-        "command": {
-          "command_id": "cddaba623e6447fcbaa58eed5db77d52",
-          "argv": [
-            "node",
-            "Scripts/MiniApps/miniapp.mjs",
-            "build",
-            "--sdk",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
-            "--engine",
-            "expo",
-            "--project",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
-            "--archive",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/ModularTextSearch.hanlinExpo",
-            "--report",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.json"
-          ],
-          "log": "modular-search-build.log",
-          "runner_pid": 79105,
-          "pid": 89405,
-          "started_at": 1795555542.4300191,
-          "timeout": 300,
-          "status": "completed",
-          "observed_at": 1795555548.217901,
-          "seconds": 5.787920125003438,
-          "log_bytes": 8365,
-          "completion_recorded": true,
-          "exit": 1,
-          "observed_returncode": 1
-        },
-        "rawLogSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
-        "engine": "expo",
-        "operation": "build",
-        "diagnosticCount": 16,
-        "diagnosticCodes": {
-          "TS2300": 5,
-          "TS2320": 1,
-          "TS6200": 2,
-          "TS2374": 2,
-          "TS2687": 2,
-          "TS2403": 1,
-          "TS7016": 1,
-          "TS2717": 2
-        },
-        "compilerVersion": "6.0.3",
-        "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
-        "typecheck": {
-          "strict": true,
-          "checkJs": false,
-          "skipLibCheck": false,
-          "dependencyDeclarationsChecked": true
-        },
-        "diagnosticFiles": [
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo/node_modules/expo-asset/build/AssetSources.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts",
-          "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@types/react/global.d.ts",
-          "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
-          "../../node_modules/@types/react/global.d.ts",
-          "../../node_modules/react-native/src/types/globals.d.ts"
-        ],
-        "finding": "Actual diagnostics reference the exported SDK, local Scripts/Expo node_modules and sibling Maktabah/SefariaMobile upstream dependency roots. Resolver diagnosis/correction belongs to the native owner; no unverified repair claimed."
-      },
-      "selectedCases": 52,
-      "miniAppsCases": 25,
-      "aiCases": 27,
-      "caseStatus": "NOT_RUN",
+      "MiniAppsBuild": "EXECUTED_PASS",
+      "AIBuild": "EXECUTED_PASS",
+      "pairedStatus": "INFRA_ERROR",
+      "applicationCases": "NOT_RUN",
       "physicalDevice": "NOT_RUN",
-      "supersedesRunningEvidence": [
-        "primary_attempt6_miniapps_running_reported",
-        "primary_native_attempt6_preparation"
-      ],
-      "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged."
+      "failure": "node exit 1; inspect modular-search-build.log",
+      "boundary": "These app builds used prior attempt6 embedded Host, not the corrected finalaecc archive."
     },
     "preparedSDKReceipt": {
       "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
       "sha256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
       "verifiedAtCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f"
     },
-    "nativePreparation": "EXECUTED_PASS",
-    "shippingSDKIdentity": "RECONCILED_ACTUAL_ATTEMPT6",
-    "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00"
+    "nativePreparation": "PENDING_CURRENT_SOURCE_HOST_REPREPARATION",
+    "shippingSDKIdentity": "PENDING_CORRECTED_HOST_SDK_OUTPUT"
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -2554,6 +2287,256 @@
         "primary_native_attempt6_preparation"
       ],
       "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged."
+    },
+    "primary_sdk_resolution_correction": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/receipt.json",
+        "sha256": "b36360ada2a5da4369fca81e5c1e6008a8b1b4195dca86992984352d3db69d23",
+        "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+      },
+      "authorCommit": "c0586f242edc5f4362e6e657c4a7a858336a44f8",
+      "publishedExecutionTarget": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "status": "FOCUSED_RESOLVER_PROOF_COMPLETE_NATIVE_HOST_REPREPARATION_PENDING",
+      "sourceAtNativeExecution": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "sourcePath": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "baselineModuleSHA256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+      "positiveModuleSHA256": "1928091c166895c98a6527ddb2c28fad2ccde56dd698497e5d80781d0d4d58a8",
+      "finalModuleSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+      "regressionTestSHA256": "958d0e0a71f47fa7677e412cd1a0ed40da43feb898b182df84e63256a05e5865",
+      "toolchain": {
+        "nodeVersion": "v24.5.0",
+        "compilerPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js",
+        "compilerSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+        "compilerPackageVersion": "6.0.2",
+        "compilerReportedVersion": "6.0.3",
+        "versionEvidence": "The original package alias @typescript/typescript6 is 6.0.2; its 45-byte lib/typescript.js requires @typescript/old. The supplied SDK and original Expo lock contain that original typescript dependency at 6.0.3, which the compiler API reports. compilerSHA256 is the wrapper entrypoint SHA, not the compiler implementation SHA. The manifest already records packageVersion 6.0.2 and compilerVersion 6.0.3 explicitly.",
+        "compilerEntrypointKind": "45-byte original @typescript/typescript6 alias-wrapper entrypoint",
+        "actualCompilerPackage": "@typescript/old, the npm alias of typescript locked at 6.0.3",
+        "actualCompilerImplementationSHA256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+      },
+      "actualPositive": {
+        "receipt": {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/candidate-build.json",
+          "sha256": "53f646d79dd0a9d4e32d5cae736066c9c8e7b8a4931a3d87706025b4b577d8d8",
+          "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        },
+        "stateReceipt": {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/focused-proof-state.json",
+          "sha256": "49631d4c5ecc1bad95b8961b3940db4a59ca9f9540d4548037539f665fcd7da4",
+          "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        },
+        "status": "EXECUTED_PASS",
+        "executionModuleSHA256": "1928091c166895c98a6527ddb2c28fad2ccde56dd698497e5d80781d0d4d58a8",
+        "finishedAtUTC": "2026-11-24T21:41:42.662381+00:00",
+        "elapsedSeconds": 13.067187833999924,
+        "exitCode": 0,
+        "diagnostics": 0,
+        "archiveSHA256": "73fd3b23612e10988f5611c75b267ea766ad8a6d702ca8ae1504649538de3de7",
+        "sdkManifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+        "sourceMapRecords": 831,
+        "SDKModuleSourceRecords": 818,
+        "outsideSDKModuleSources": [],
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        }
+      },
+      "actualNegative": {
+        "receipt": {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/candidate-negative.json",
+          "sha256": "1d6bdf49e1fc7775d07ef1759499f2af8cafd38aebe7c1e4b902c0b532c7261a",
+          "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        },
+        "status": "EXECUTED_PASS_EXPECTED_REJECTION",
+        "exitCode": 1,
+        "elapsedSeconds": 4.513139500006218,
+        "finishedAtUTC": "2026-11-24T21:42:46.251108+00:00",
+        "diagnostics": [
+          {
+            "code": "TS2322",
+            "category": "error",
+            "message": "Type 'string' is not assignable to type 'number'.",
+            "file": "index.ts",
+            "line": 1,
+            "column": 14,
+            "endLine": 1,
+            "endColumn": 35
+          }
+        ],
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        }
+      },
+      "positiveApplicabilityToFinal": {
+        "status": "REUSED_VERIFIED_PASS_FOR_UNCHANGED_EXPO_PROJECT_PATH",
+        "evidence": {
+          "unchangedFunctions": [
+            {
+              "name": "buildExpo",
+              "positiveSHA256": "1c07ef5466b525431d7da1683de04bc865f5dbd73bff6c02980220b6a964ddcd",
+              "finalSHA256": "1c07ef5466b525431d7da1683de04bc865f5dbd73bff6c02980220b6a964ddcd",
+              "unchanged": true
+            },
+            {
+              "name": "runMiniAppOperation",
+              "positiveSHA256": "0bcf847843ec0c4ace908c1e3ee985dd1f0dfe1a3c2ca387cef46836fac998bb",
+              "finalSHA256": "0bcf847843ec0c4ace908c1e3ee985dd1f0dfe1a3c2ca387cef46836fac998bb",
+              "unchanged": true
+            },
+            {
+              "name": "validateNativePresentations",
+              "positiveSHA256": "08a0380e73730dae142dba7e2cfa6c4fad330a2c818756f4c5c99d28b691dec8",
+              "finalSHA256": "08a0380e73730dae142dba7e2cfa6c4fad330a2c818756f4c5c99d28b691dec8",
+              "unchanged": true
+            },
+            {
+              "name": "parseProject module/type resolution block",
+              "positiveSHA256": "1ff76f2d7e274fbbc993c29870492c98acb59bc736b1cce3a799d4e7351cb525",
+              "finalSHA256": "1ff76f2d7e274fbbc993c29870492c98acb59bc736b1cce3a799d4e7351cb525",
+              "unchanged": true
+            }
+          ],
+          "actualProjectConfigInputs": [
+            {
+              "path": "tsconfig.json",
+              "sha256": "55a7c670ed7cbb03772ab431e18904fe7a66b801541bd4c6133e87a26685ae8e",
+              "extends": null
+            },
+            {
+              "path": "native/tsconfig.json",
+              "sha256": "04f9897c1e27a4f1bfb0b948d70c482618c84961a61567447ef110ea43dcce93",
+              "extends": null
+            }
+          ],
+          "remainingDelta": "Bound canonical config return paths (actual positive projects have no extends), return internal authority set, and align NativeScript-only emit/package copy. The original Expo compiler/bundler paths for this project are unchanged."
+        },
+        "boundary": "Original positive ran on1928091c, not finalaecc. Unchanged function/config identities establish this specific reuse; final NativeScript/config refinements have separate fresh focused regression."
+      },
+      "finalRegression": {
+        "receipt": {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/regression-state.json",
+          "sha256": "d3cc65397f078b906b76749f4143fd5d2e636ab17ff320e3b359b28d30703ea1",
+          "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        },
+        "rawLog": {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/final-regression.log.gz",
+          "sha256": "a1781a1d35c0f888c20c5410a49b673c38a5615afd906345458ad37a7fd5669d",
+          "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        },
+        "status": "EXECUTED_PASS",
+        "sourceSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "startedAtUTC": "2026-11-24T21:50:02.778877+00:00",
+        "finishedAtUTC": "2026-11-24T21:50:05.487117+00:00",
+        "elapsedSeconds": 2.7059772919965326,
+        "baseline": {
+          "passed": 0,
+          "failed": 3,
+          "skipped": 0,
+          "sourceSHA256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "exitCode": 1
+        },
+        "cases": [
+          "Canonical module/type references use supplied SDK while retaining nested dependency",
+          "NativeScript emit/runtime body agrees with types and preserves noncanonical aliases/extra dependencies",
+          "Missing canonical exports/configs/SDK dependencies do not resolve from ancestor packages"
+        ]
+      },
+      "actualAttempt6Terminal": {
+        "receipt": {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/attempt6-acceptance.json",
+          "sha256": "289ec3e653b8236f7fa1acca4f79b35955a32a34df52508178ce60442594fdba",
+          "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        },
+        "MiniAppsBuild": "EXECUTED_PASS",
+        "AIBuild": "EXECUTED_PASS",
+        "pairedStatus": "INFRA_ERROR",
+        "applicationCases": "NOT_RUN",
+        "physicalDevice": "NOT_RUN",
+        "failure": "node exit 1; inspect modular-search-build.log",
+        "boundary": "These app builds used prior attempt6 embedded Host, not the corrected finalaecc archive."
+      },
+      "collectorCorrection": {
+        "receipt": {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/collector-error-after-positive.json",
+          "sha256": "be49149792bdd70be3da95d19a62e09be5e4c740361f5dd95ab43f88a6a23e14",
+          "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        },
+        "description": "Read actual indexed Metro source-map sections; reused successful build and existing archive without a rerun.",
+        "boundary": "Indexed source-map collector correction reused existing successful output; no positive build rerun."
+      },
+      "regenerationImpactReceipt": {
+        "path": "docs/miniapp-sdk/evidence/primary-authoring-sdk-impact-20261124/receipt.json",
+        "sha256": "06b798f3073d4027424bbe4500a0901ed50b62bf811fbdf00b7eac7d97331411",
+        "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+      },
+      "boundary": "Final source and focused proof are published. New embedded Host/SDK preparation and affected application acceptance remain pending until actual owner observations. No52/physical success inferred."
+    },
+    "upstream_scoped_completion_20261124": {
+      "task": "MINIAPP-UPSTREAM",
+      "taskID": "1220829472845488",
+      "url": "https://app.asana.com/0/0/1220829472845488",
+      "status": "COMPLETED_SCOPED_DOD",
+      "completed": true,
+      "completedAtUTC": "2026-11-24T21:46:16.568Z",
+      "authority": "status_reporting/root reported verified purpose-built Asana tool readback; this map performed no Asana operation.",
+      "readback": {
+        "notesExactEquality": true,
+        "notesCharacters": 12300,
+        "otherEightTasksCompleted": false,
+        "priorFourClosedTasksUntouched": true,
+        "separateEvidenceFileCreated": false,
+        "boundary": "Exact notes/readback facts reported by the executing status owner. No fabricated notes text or independent raw receipt hash."
+      },
+      "completedScope": [
+        "Original library/source and native preparation",
+        "Actual full SDK identity and14 required native targets with0missing",
+        "Both actual Apple consumer application builds"
+      ],
+      "evidenceIDs": [
+        "primary_sdk_attempt6",
+        "primary_native_attempt6_preparation",
+        "primary_native_attempt6_terminal",
+        "primary_sdk_resolution_correction"
+      ],
+      "boundary": "Original scoped UPSTREAM criteria do not require52 application cases or physical-device proof. Resolver correction, full app behavior, repair screenshots and device acceptance remain in the eight separate open tasks. This closure adds no other task completion."
+    },
+    "primary_resolver_published_target": {
+      "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "sourceRole": "Root-published resolver correction staged on the primary Mac; finite admission is waiting for native capacity",
+      "status": "WAITING_FOR_NATIVE_CAPACITY",
+      "startedAtUTC": null,
+      "controllerPID": null,
+      "authority": "Native owner reports exact fd81 source staged at 22:00 UTC; root reports its direct Mac observation at 22:01:06.661 UTC. This map reuses those dated observations and made no native query.",
+      "sourceCorrectionEvidenceID": "primary_sdk_resolution_correction",
+      "lastTerminalAttempt": 6,
+      "lastTerminalSourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "boundary": "Actual source staging and finite capacity waiting are observed; the native controller has not started at this checkpoint. Host/SDK production, corrected embedded app builds and 52 application cases are not complete. Future evidence-only map commits do not change execution target fd81.",
+      "attempt": 7,
+      "observedAtUTC": "2026-11-24T22:01:06.661+00:00",
+      "sourceAdvance": {
+        "status": "SOURCE_STAGED",
+        "reportedBy": "native_execution",
+        "observedAtUTCPrecision": "2026-11-24 22:00 UTC, minute precision as reported",
+        "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+        "preservedPreparedProvenancePaths": 3
+      },
+      "capacityAdmission": {
+        "startedAtUTC": "2026-11-24T22:00:01.607+00:00",
+        "status": "WAITING_FOR_NATIVE_CAPACITY",
+        "rootObservedAtUTC": "2026-11-24T22:01:06.661+00:00",
+        "reportedElapsedSeconds": 60,
+        "externalBuildOrTestPIDsObserved": 2,
+        "controllerState": "READY",
+        "controllerPID": null
+      }
     }
   },
   "criteria": [
@@ -2631,7 +2614,8 @@
         "primary_sdk_attempt6",
         "primary_native_attempt6_preparation",
         "primary_attempt6_miniapps_running_reported",
-        "primary_native_attempt6_terminal"
+        "primary_native_attempt6_terminal",
+        "primary_sdk_resolution_correction"
       ],
       "establishedScope": [
         "Historical original Core/UIKit typechecking and SwiftUI JS closure",
@@ -2641,7 +2625,7 @@
         "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
       ],
       "remainingRequirements": [
-        "Actual selected Core/direct-runtime application case results remain required. Attempt6 both app builds and original NativeScript authoring fixture passed; production Expo modular-search authoring failed before all25+27 application cases.",
+        "Actual selected Core/direct-runtime application cases on corrected embedded Host remain required. Final resolver/NativeScript emit-copy focused regression passed3/0/0; original prior NativeScript fixture passed, but no corrected embedded-Host application cases have run.",
         "Do not claim complete original declaration-body checking: original NativeScript consumer policy is strict source with skipLibCheck=true."
       ],
       "closure": "CONDITIONAL; optional full Apple SDK generator work is explicitly deferred, not an extra gate.",
@@ -2674,9 +2658,19 @@
           ],
           "currentAcceptanceRoute": "Attempt6/sourcebd6da170 actually started21:08:27.170164UTC. Native preparation PASS21:13:12, export PASS21:13:35 and inputs PASS21:13:45. Actual shipping SDK reconciled; four original documentation projects PASS/0diagnostics. Retained21:14:16 paired phase RUNNING; root directly observed MiniApps build RUNNING21:15:21.914. AI and all52 application cases NOT_RUN at the last application checkpoint. Attempt5 terminal MiniApps failure20:09:11 remains historical evidence.",
           "reason": "Actual attempt6 terminal supersedes running checkpoint without changing original criteria or closure."
+        },
+        {
+          "supersededAtUTC": "2026-11-24T22:00:42.753937+00:00",
+          "sourceMapBase": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+          "requirements": [
+            "Actual selected Core/direct-runtime application case results remain required. Attempt6 both app builds and original NativeScript authoring fixture passed; production Expo modular-search authoring failed before all25+27 application cases.",
+            "Do not claim complete original declaration-body checking: original NativeScript consumer policy is strict source with skipLibCheck=true."
+          ],
+          "currentAcceptanceRoute": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN.",
+          "reason": "Record actual source correction and focused proof; current embedded/native acceptance remains pending."
         }
       ],
-      "currentAcceptanceRoute": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN."
+      "currentAcceptanceRoute": "Reviewed resolver correction published atfd81d602; original candidate192 Expo build PASS13.067s/0diagnostics,831 mapped sources with818 dependency sources entirely inside supplied SDK, exact intentional TS2322 rejection4.513s. Finalaecc focused original compiler regression3PASS/0FAIL/0SKIP21:50:05, baseline0PASS/3FAIL. Positive Expo applicability to final source is explicit verified reuse, not rerun. Current-source Host/SDK preparation and both affected product resources/application52 remain pending; no new controller start observed. Last actual attempt6 onbd6da170 had both builds PASS then fixture failure before52."
     },
     {
       "task": "SDK-04",
@@ -2712,7 +2706,8 @@
         "primary_sdk_attempt6",
         "primary_native_attempt6_preparation",
         "primary_attempt6_miniapps_running_reported",
-        "primary_native_attempt6_terminal"
+        "primary_native_attempt6_terminal",
+        "primary_sdk_resolution_correction"
       ],
       "establishedScope": [
         "Current-source strict Expo UI and Widgets valid/negative consumer checks on Mac",
@@ -2724,7 +2719,7 @@
         "Concrete generated GroupBox children loss, orphan modern widget publication and false private return acknowledgement are corrected with narrowly executed regression evidence."
       ],
       "remainingRequirements": [
-        "Correct the actual production modular-search authoring resolver/dependency-root failure and obtain the unchanged complete52 application selection. Attempt6 current SDK identity/docs and both app builds passed, but16 TypeScript diagnostics stopped the fixture stage before all52 cases."
+        "Obtain current corrected embedded Host/SDK identity and unchanged complete52 application selection. Production modular-search authoring correction has actual positive/negative proof with verified final-source applicability; final focused regression passed. Prior native builds passed onbd6, but the corrected resource acceptance is pending."
       ],
       "closure": "CLOSEABLE_AFTER_CURRENT52_AND_SHIPPING_IDENTITY; no concrete local public adapter contract gap remains in review. Retain explicit OS/context evidence limits without adding a universal semantic gate.",
       "coverageLimitations": [
@@ -2762,9 +2757,18 @@
           ],
           "currentAcceptanceRoute": "Attempt6/sourcebd6da170 actually started21:08:27.170164UTC. Native preparation PASS21:13:12, export PASS21:13:35 and inputs PASS21:13:45. Actual shipping SDK reconciled; four original documentation projects PASS/0diagnostics. Retained21:14:16 paired phase RUNNING; root directly observed MiniApps build RUNNING21:15:21.914. AI and all52 application cases NOT_RUN at the last application checkpoint. Attempt5 terminal MiniApps failure20:09:11 remains historical evidence.",
           "reason": "Actual attempt6 terminal supersedes running checkpoint without changing original criteria or closure."
+        },
+        {
+          "supersededAtUTC": "2026-11-24T22:00:42.753937+00:00",
+          "sourceMapBase": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+          "requirements": [
+            "Correct the actual production modular-search authoring resolver/dependency-root failure and obtain the unchanged complete52 application selection. Attempt6 current SDK identity/docs and both app builds passed, but16 TypeScript diagnostics stopped the fixture stage before all52 cases."
+          ],
+          "currentAcceptanceRoute": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN.",
+          "reason": "Record actual source correction and focused proof; current embedded/native acceptance remains pending."
         }
       ],
-      "currentAcceptanceRoute": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN."
+      "currentAcceptanceRoute": "Reviewed resolver correction published atfd81d602; original candidate192 Expo build PASS13.067s/0diagnostics,831 mapped sources with818 dependency sources entirely inside supplied SDK, exact intentional TS2322 rejection4.513s. Finalaecc focused original compiler regression3PASS/0FAIL/0SKIP21:50:05, baseline0PASS/3FAIL. Positive Expo applicability to final source is explicit verified reuse, not rerun. Current-source Host/SDK preparation and both affected product resources/application52 remain pending; no new controller start observed. Last actual attempt6 onbd6da170 had both builds PASS then fixture failure before52."
     },
     {
       "task": "SDK-06",
@@ -2850,7 +2854,8 @@
         "primary_sdk_attempt6",
         "primary_native_attempt6_preparation",
         "primary_attempt6_miniapps_running_reported",
-        "primary_native_attempt6_terminal"
+        "primary_native_attempt6_terminal",
+        "primary_sdk_resolution_correction"
       ],
       "establishedScope": [
         "Golden and negative compiler/archive/CLI component evidence",
@@ -2860,7 +2865,7 @@
         "Actual Apple existing lifecycle method passed on current store/test bytes in45354891567."
       ],
       "remainingRequirements": [
-        "After fixing the production modular-search authoring failure, obtain actual complete52 result rows, inspect diagnostic/repaired-result screenshots and verify the existing nonempty installedPackageID assertion. Both builds/setup passed in attempt6; all52 selected cases NOT_RUN.",
+        "Run affected/pending original paired application acceptance with corrected Host resources, record all52 actual result rows, inspect diagnostic/repaired-result screenshots and verify the existing nonempty installedPackageID assertion. Focused authoring proof is not a selected application case.",
         "Existing applicable receipts from another established owner may be linked without new testing after exact source/toolchain/input verification.",
         "Selected52-case application proof is not the complete80-cell extension/runtime E2E proof.",
         "OS permission revocation is not established by the successful storage lifecycle receipt."
@@ -2901,9 +2906,21 @@
           ],
           "currentAcceptanceRoute": "Attempt6/sourcebd6da170 actually started21:08:27.170164UTC. Native preparation PASS21:13:12, export PASS21:13:35 and inputs PASS21:13:45. Actual shipping SDK reconciled; four original documentation projects PASS/0diagnostics. Retained21:14:16 paired phase RUNNING; root directly observed MiniApps build RUNNING21:15:21.914. AI and all52 application cases NOT_RUN at the last application checkpoint. Attempt5 terminal MiniApps failure20:09:11 remains historical evidence.",
           "reason": "Actual attempt6 terminal supersedes running checkpoint without changing original criteria or closure."
+        },
+        {
+          "supersededAtUTC": "2026-11-24T22:00:42.753937+00:00",
+          "sourceMapBase": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+          "requirements": [
+            "After fixing the production modular-search authoring failure, obtain actual complete52 result rows, inspect diagnostic/repaired-result screenshots and verify the existing nonempty installedPackageID assertion. Both builds/setup passed in attempt6; all52 selected cases NOT_RUN.",
+            "Existing applicable receipts from another established owner may be linked without new testing after exact source/toolchain/input verification.",
+            "Selected52-case application proof is not the complete80-cell extension/runtime E2E proof.",
+            "OS permission revocation is not established by the successful storage lifecycle receipt."
+          ],
+          "currentAcceptanceRoute": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN.",
+          "reason": "Record actual source correction and focused proof; current embedded/native acceptance remains pending."
         }
       ],
-      "currentAcceptanceRoute": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN."
+      "currentAcceptanceRoute": "Reviewed resolver correction published atfd81d602; original candidate192 Expo build PASS13.067s/0diagnostics,831 mapped sources with818 dependency sources entirely inside supplied SDK, exact intentional TS2322 rejection4.513s. Finalaecc focused original compiler regression3PASS/0FAIL/0SKIP21:50:05, baseline0PASS/3FAIL. Positive Expo applicability to final source is explicit verified reuse, not rerun. Current-source Host/SDK preparation and both affected product resources/application52 remain pending; no new controller start observed. Last actual attempt6 onbd6da170 had both builds PASS then fixture failure before52."
     }
   ],
   "additionalDeliveryConditions": [
@@ -2965,7 +2982,7 @@
         "raw CI+device evidence",
         "gate CLOSED only if all mandatory executable evidence exists."
       ],
-      "status": "OPEN; Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN. Latest physical inventory remains7sim/0physical/0unclassified; physical acceptance remains BLOCKED_EXTERNAL on the observed route.",
+      "status": "OPEN; Reviewed resolver correction published atfd81d602; original candidate192 Expo build PASS13.067s/0diagnostics,831 mapped sources with818 dependency sources entirely inside supplied SDK, exact intentional TS2322 rejection4.513s. Finalaecc focused original compiler regression3PASS/0FAIL/0SKIP21:50:05, baseline0PASS/3FAIL. Positive Expo applicability to final source is explicit verified reuse, not rerun. Current-source Host/SDK preparation and both affected product resources/application52 remain pending; no new controller start observed. Last actual attempt6 onbd6da170 had both builds PASS then fixture failure before52. Latest physical snapshot remains7sim/0physical/0unclassified; physical acceptance BLOCKED_EXTERNAL on observed route.",
       "statusHistory": [
         {
           "supersededAtUTC": "2026-11-24T21:15:00.782204+00:00",
@@ -2974,6 +2991,10 @@
         {
           "supersededAtUTC": "2026-11-24T21:29:31.497057+00:00",
           "status": "OPEN; Attempt6/sourcebd6da170 actually started21:08:27.170164UTC. Native preparation PASS21:13:12, export PASS21:13:35 and inputs PASS21:13:45. Actual shipping SDK reconciled; four original documentation projects PASS/0diagnostics. Retained21:14:16 paired phase RUNNING; root directly observed MiniApps build RUNNING21:15:21.914. AI and all52 application cases NOT_RUN at the last application checkpoint. Attempt5 terminal MiniApps failure20:09:11 remains historical evidence. Latest retained physical inventory18:25 remains7 explicitly simulated devices,0physical and0unclassified; physical acceptance remains BLOCKED_EXTERNAL on the observed route."
+        },
+        {
+          "supersededAtUTC": "2026-11-24T22:00:42.753937+00:00",
+          "status": "OPEN; Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN. Latest physical inventory remains7sim/0physical/0unclassified; physical acceptance remains BLOCKED_EXTERNAL on the observed route."
         }
       ]
     },
@@ -3018,11 +3039,24 @@
         "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
         "sha256": "af6787efb997859a4412e30f79f23a59a53bd7e4a9ac6c503c431bc82dfd5575"
       }
+    },
+    {
+      "task": "MINIAPP-UPSTREAM scoped closure",
+      "taskID": "1220829472845488",
+      "status": "COMPLETED_SCOPED_DOD",
+      "completedAtUTC": "2026-11-24T21:46:16.568Z",
+      "evidenceID": "upstream_scoped_completion_20261124",
+      "scope": [
+        "Original library/source and native preparation",
+        "Actual full SDK identity and14 required native targets with0missing",
+        "Both actual Apple consumer application builds"
+      ],
+      "boundary": "Original scoped UPSTREAM criteria do not require52 application cases or physical-device proof. Resolver correction, full app behavior, repair screenshots and device acceptance remain in the eight separate open tasks. This closure adds no other task completion."
     }
   ],
-  "recordingOutcome": "All85 evidence objects from the prior checkpoint preserved; actual attempt6 terminal appended (86 total). Both application builds and setup passed; original NativeScript authoring fixture passed with expected invalid-source rejection. Actual production modular-search authoring failed16 TypeScript diagnostics before52 selected cases. Four tasks remain closed/nine open. Original SDK/docs proof remains valid; no selected-case, screenshot or physical-device success is inferred.",
-  "updatedAtUTC": "2026-11-24T21:29:31.497057+00:00",
-  "currentIntegrationBase": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "recordingOutcome": "All 86 prior evidence objects and history prefixes retained; three new records appended (89). Published final resolver correction and original focused proof recorded without reruns; only UPSTREAM scoped closure added: 5 closed / 8 open. Exact fd81 source staged for attempt7 and finite admission WAITING at 22:01:06.661 UTC, no native controller start. Fresh Host/SDK assembly, both corrected embedded consumers and all 52 application cases remain pending. No physical or screenshot completion inferred.",
+  "updatedAtUTC": "2026-11-24T22:04:40.865184+00:00",
+  "currentIntegrationBase": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -3282,7 +3316,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN. Actual SDK provenance identities and the three generated sourceCommit-only documents remain reconciled. Resolver correction is owned by native_execution. Four closed/nine open,80source/83modifier,7sim/0physical and actual screenshot inspection requirements remain unchanged.",
+  "currentScopeNote": "Reviewed resolver correction published atfd81d602; original candidate192 Expo build PASS13.067s/0diagnostics,831 mapped sources with818 dependency sources entirely inside supplied SDK, exact intentional TS2322 rejection4.513s. Finalaecc focused original compiler regression3PASS/0FAIL/0SKIP21:50:05, baseline0PASS/3FAIL. Positive Expo applicability to final source is explicit verified reuse, not rerun. Current-source Host/SDK preparation and both affected product resources/application52 remain pending; no new controller start observed. Last actual attempt6 onbd6da170 had both builds PASS then fixture failure before52. UPSTREAM scoped task completed by verified Asana readback21:46:16.568Z:fiveclosed/eightopen. Original80source/83modifier, physical7sim/0physical and actual screenshot inspection boundaries remain unchanged.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -3416,87 +3450,21 @@
     }
   ],
   "candidateGate": {
-    "schemaVersion": 1,
-    "sequence": 17,
-    "atUTC": "2026-11-24T16:46:31.480919+00:00",
-    "status": "COMPLETED_INFRASTRUCTURE_FAILURE",
-    "implementationSource": "812fff05f8f4f9509e180a737c70b95ce76251dc",
-    "scope": "miniapp_complete",
+    "status": "REVIEWED_AND_PUBLISHED_RESOLVER_CORRECTION_NATIVE_REPREPARATION_PENDING",
+    "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+    "authorCommit": "c0586f242edc5f4362e6e657c4a7a858336a44f8",
+    "sourcePath": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "sourceSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/receipt.json",
+      "sha256": "b36360ada2a5da4369fca81e5c1e6008a8b1b4195dca86992984352d3db69d23",
+      "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+    },
     "selectedCases": 52,
     "MiniApps": 25,
     "AI": 27,
-    "priorRun": 45430463243,
-    "priorSourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
-    "priorNativeResult": {
-      "miniAppsBuild": "EXECUTED_PASS",
-      "aiBuild": "EXECUTED_FAIL",
-      "applicationCases": "ALL52_NOT_RUN"
-    },
-    "completeNonDocumentationDeltaFromPriorRun": [
-      "AI_HLYTests/HanlinNativePresentationTests.swift",
-      "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
-    ],
-    "fix": {
-      "path": "docs/miniapp-sdk/evidence/main16-test-compiler-20261124/receipt.json",
-      "sha256": "485aed31ca6edbac14f50aa3151ed4bf06fd89a436acd847622403ab49adbdd8"
-    },
-    "fixIntegrationCommit": "812fff05f8f4f9509e180a737c70b95ce76251dc",
-    "independentReview": "Final two source hashes and all six method names / ordered 27+28 assertion calls reviewed by entrypoints and root; preserved52 selectors.",
-    "focusedCompilerCheck": "NOT_RUN_PRIMARY_MAC_BUSY; not treated as pass. Required full27.2 gate remains.",
-    "routing": {
-      "path": "docs/miniapp-sdk/evidence/seventeenth-native-gate-mac-route-20261124.json",
-      "sha256": "189c0ce8e70ab5a1bad667e784ce6f51142faf570dd3885a8e4dd7daab66574a"
-    },
-    "workflow": {
-      "path": ".github/workflows/validate-app-split.yml",
-      "sha256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982"
-    },
-    "runner": {
-      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
-      "sha256": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c"
-    },
-    "budgets": {
-      "firstMiniAppsBuildSeconds": 3600,
-      "aiBuildSeconds": 1800,
-      "runtimeSeconds": 1200,
-      "pairedTestsSeconds": 2100,
-      "pairedJobMinutes": 210
-    },
-    "sourceAuthority": {
-      "reviewer": "sdk_only_author",
-      "changedTestFiles": [
-        "AI_HLYTests/HanlinNativePresentationTests.swift",
-        "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
-      ],
-      "sdkInputMembership": "Both absent from actual MAIN16 222 SDK input records and shipped-file records",
-      "inventoryAndReachability": "Both absent from source-inventory sources, reachability sdkSources/sourceRefs and applicable symbol scans",
-      "generatorWriteOrCheckRequired": false,
-      "expectedUnchangedInputs": 222,
-      "conditionalExpectedInputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
-      "boundary": "Source-input equivalence only. Next resolved original preparation outputs must be attributed to actual next artifact."
-    },
-    "main16ActualSDK": {
-      "path": "docs/miniapp-sdk/evidence/sdk05-shipping-main16-20261124/receipt.json",
-      "sha256": "8c3d5b0fc58e0a3e26e5aa0ebeb88630fcbde7e88f94ce7db5dc11c13e4264a4"
-    },
-    "reusedEvidence": "Scoped prior component passes and exact unaffected SDK proof retained; no redundant compiler/112-member checks or component CI.",
-    "whyExecute": "AI compilation errors are corrected; both current product builds and all52 cases must now complete.",
-    "boundary": "No corrected native-test or app/runtime/device PASS claimed before next actual result. No main merge or release.",
-    "candidateReceipt": {
-      "path": "docs/miniapp-sdk/evidence/native-gate-17-candidate-20261124.json",
-      "sha256": "038ba2b0319f89598b44532b0cd7421dbf148b501ae31b22c3465fcbd18c16b0"
-    },
-    "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
-    "runID": 45441138261,
-    "actualExecution": "NO_RUNNER_NO_STEPS_NO_ARTIFACTS_ALL52_NOT_RUN",
-    "resultReceipt": {
-      "path": "docs/miniapp-sdk/evidence/main17-queue-termination-20261124/receipt.json",
-      "sha256": "9ea2f8a06ad2eaf1553539fa803b24bd0c1a1cb8614b6b0c696b7e5279786a0f"
-    },
-    "toolchainRequirementCorrection": {
-      "path": "docs/miniapp-sdk/evidence/toolchain-routing-correction-20261124.json",
-      "sha256": "b4d5ddca7fb0cb22e67d3186c58fb26600fccaeb3a0d85c98868208d6b256d63"
-    }
+    "actualFocusedProof": "Final3PASS/0FAIL/0SKIP; original Expo positive reused through exact unchanged functions/configs",
+    "boundary": "Final source and focused proof are published. New embedded Host/SDK preparation and affected application acceptance remain pending until actual owner observations. No52/physical success inferred."
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
@@ -3644,48 +3612,18 @@
     }
   ],
   "nextCorrection": {
-    "status": "INTEGRATED_INDEPENDENTLY_REVIEWED_NATIVE_VALIDATION_PENDING",
-    "actualFailureRun": 45430463243,
-    "failedTarget": "AI_HLYTests",
-    "author": "control_authoring",
-    "independentReviewer": "entrypoints",
-    "shippingSDKReviewer": "sdk_only_author",
-    "diagnostics": [
-      {
-        "log": "ai-build.log",
-        "line": 102885,
-        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinNativePresentationTests.swift:231:27: error: type 'Void' cannot conform to 'Sequence' [#ProtocolTypeNonConformance]"
-      },
-      {
-        "log": "ai-build.log",
-        "line": 102957,
-        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift:16:39: error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state"
-      }
-    ],
-    "plannedRepair": [
-      "Explicit [String] closure result and returns in recursive presentation text collector",
-      "UUID-scoped roundtrip from declared UserDefaults app group through genuine original WidgetsStorage.getString; defer cleanup"
-    ],
-    "boundary": "Preserve original library, all test assertions and52 selection. No concurrency suppression or duplicate application build. Full paired acceptance still required.",
-    "integrationCommit": "812fff05f8f4f9509e180a737c70b95ce76251dc",
+    "status": "SOURCE_CORRECTION_PUBLISHED_FOCUSED_PROOF_COMPLETE",
+    "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+    "authorCommit": "c0586f242edc5f4362e6e657c4a7a858336a44f8",
     "receipt": {
-      "path": "docs/miniapp-sdk/evidence/main16-test-compiler-20261124/receipt.json",
-      "sha256": "485aed31ca6edbac14f50aa3151ed4bf06fd89a436acd847622403ab49adbdd8"
+      "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/receipt.json",
+      "sha256": "b36360ada2a5da4369fca81e5c1e6008a8b1b4195dca86992984352d3db69d23",
+      "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
     },
-    "sourceAuthority": {
-      "reviewer": "sdk_only_author",
-      "changedTestFiles": [
-        "AI_HLYTests/HanlinNativePresentationTests.swift",
-        "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
-      ],
-      "sdkInputMembership": "Both absent from actual MAIN16 222 SDK input records and shipped-file records",
-      "inventoryAndReachability": "Both absent from source-inventory sources, reachability sdkSources/sourceRefs and applicable symbol scans",
-      "generatorWriteOrCheckRequired": false,
-      "expectedUnchangedInputs": 222,
-      "conditionalExpectedInputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
-      "boundary": "Source-input equivalence only. Next resolved original preparation outputs must be attributed to actual next artifact."
-    },
-    "focusedCompilerCheck": "NOT_RUN_PRIMARY_MAC_BUSY; not treated as pass. Required full27.2 gate remains."
+    "actualFailureSource": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+    "actualFailure": "16 TypeScript diagnostics in production modular-search authoring before52cases",
+    "next": "Original Host/SDK/provenance preparation, current embedded resources and affected/pending paired acceptance",
+    "boundary": "Final source and focused proof are published. New embedded Host/SDK preparation and affected application acceptance remain pending until actual owner observations. No52/physical success inferred."
   },
   "postDispatchTestCorrection": {
     "commit": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
@@ -4323,6 +4261,376 @@
       },
       "nativePreparation": "EXECUTED_PASS",
       "shippingSDKIdentity": "RECONCILED_ACTUAL_ATTEMPT6"
+    },
+    {
+      "route": "PRIMARY_SCALEWAY_MAC",
+      "owner": "native_execution",
+      "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "sourceRole": "Actual terminal attempt6 source; both app builds passed, then production authoring fixture failed before52 cases",
+      "scope": "miniapp_complete",
+      "attempt": 6,
+      "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
+      "startedAtUTC": "2026-11-24T21:08:27.170164+00:00",
+      "controllerPID": null,
+      "selectedCases": 52,
+      "miniAppsCases": 25,
+      "aiCases": 27,
+      "caseStatus": "NOT_RUN",
+      "firstMiniAppsBuild": "EXECUTED_PASS",
+      "aiBuild": "EXECUTED_PASS",
+      "acceptanceRequires": [
+        "Fresh original native and shipping SDK identity preparation",
+        "Both product builds",
+        "All52 selected cases pass without failures/skips",
+        "Actual diagnostic-sheet/repaired-native-app attachments inspected from Paired.xcresult or a verified export; test PASS alone does not prove export success",
+        "Actual original archive/report handoff and installed tool receipt with nonempty installedPackageID, as verified by the existing UI/provider assertion; no invented standalone receipt JSON"
+      ],
+      "runtimeCoreArtifactRunID": 42926628418,
+      "reactNativeSelection": "Own Scripts/Expo graph0.88.1, actually selected by original JSI producer in attempt4",
+      "runtimeCoreInput": {
+        "kind": "Explicit local original archive",
+        "environmentKey": "RUNTIME_CORE_BUNDLE_ARCHIVE",
+        "bytes": 86253335,
+        "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+        "acquisitionEvidenceID": "primary_runtimecore_authenticated_transfer"
+      },
+      "executionObservation": {
+        "attempt": 6,
+        "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+        "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
+        "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
+        "pairedPhaseExitCode": 1,
+        "observedStoppedAtUTC": "2026-11-24T21:27:03.806Z",
+        "terminalAuthority": "Root direct Mac terminal read reported21:27:03.806 confirms stopped phaseexit1 at21:25:55.926222; sole native execution owner reports matching terminal result.",
+        "actualFixtureObservation": {
+          "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
+          "sha256": "d41453dcdb4405c531b47aa7044bb6c7abd4e500f7b20e82717a345d310ae5ad",
+          "bytes": 14400,
+          "storage": "Retained Oracle raw fixture observation; not a new committed raw receipt in this one-file map change"
+        },
+        "fixtureObservedAtUTC": "2026-11-24T21:26:31.828728+00:00",
+        "builds": {
+          "MiniApps": "EXECUTED_PASS",
+          "AI": "EXECUTED_PASS",
+          "authority": "Reported actual results by sole native execution owner and confirmed in root terminal instruction; the attached raw fixture observation itself proves fixture command results, not the app build logs."
+        },
+        "setup": {
+          "codeSigning": "EXECUTED_PASS",
+          "installation": "EXECUTED_PASS",
+          "firstLaunch": "EXECUTED_PASS",
+          "appGroup": "EXECUTED_PASS",
+          "authority": "Sole native execution owner actual terminal report; these are acceptance setup results, not selected52 cases."
+        },
+        "nativeScriptAuthoringFixture": {
+          "status": "EXECUTED_PASS",
+          "command": {
+            "command_id": "660ebac4ae1546d1946115b2738f4ccb",
+            "argv": [
+              "node",
+              "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/authoring-fixture"
+            ],
+            "log": "authoring-fixture-build.log",
+            "runner_pid": 79105,
+            "pid": 89390,
+            "started_at": 1795555536.39314,
+            "timeout": 300,
+            "status": "completed",
+            "observed_at": 1795555542.418506,
+            "seconds": 6.025410249996639,
+            "log_bytes": 3132,
+            "completion_recorded": true,
+            "exit": 0,
+            "observed_returncode": 0
+          },
+          "rawLogSHA256": "c976fdfa15e26a64b095d1f0b19cac25a2d3d83e2213ba00a588d953f1c9cdd5",
+          "buildSucceeded": true,
+          "buildDiagnostics": 0,
+          "compilerVersion": "5.9.3",
+          "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/host-services": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "negativeValidationSucceeded": false,
+          "expectedNegativeCodes": [
+            "TS2322",
+            "MINIAPP_SOURCE_CHANGED"
+          ],
+          "scope": "Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded."
+        },
+        "modularSearchProductionFixture": {
+          "status": "EXECUTED_FAIL",
+          "command": {
+            "command_id": "cddaba623e6447fcbaa58eed5db77d52",
+            "argv": [
+              "node",
+              "Scripts/MiniApps/miniapp.mjs",
+              "build",
+              "--sdk",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+              "--engine",
+              "expo",
+              "--project",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
+              "--archive",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/ModularTextSearch.hanlinExpo",
+              "--report",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.json"
+            ],
+            "log": "modular-search-build.log",
+            "runner_pid": 79105,
+            "pid": 89405,
+            "started_at": 1795555542.4300191,
+            "timeout": 300,
+            "status": "completed",
+            "observed_at": 1795555548.217901,
+            "seconds": 5.787920125003438,
+            "log_bytes": 8365,
+            "completion_recorded": true,
+            "exit": 1,
+            "observed_returncode": 1
+          },
+          "rawLogSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
+          "engine": "expo",
+          "operation": "build",
+          "diagnosticCount": 16,
+          "diagnosticCodes": {
+            "TS2300": 5,
+            "TS2320": 1,
+            "TS6200": 2,
+            "TS2374": 2,
+            "TS2687": 2,
+            "TS2403": 1,
+            "TS7016": 1,
+            "TS2717": 2
+          },
+          "compilerVersion": "6.0.3",
+          "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": false,
+            "dependencyDeclarationsChecked": true
+          },
+          "diagnosticFiles": [
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo/node_modules/expo-asset/build/AssetSources.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts",
+            "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@types/react/global.d.ts",
+            "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
+            "../../node_modules/@types/react/global.d.ts",
+            "../../node_modules/react-native/src/types/globals.d.ts"
+          ],
+          "finding": "Actual diagnostics reference the exported SDK, local Scripts/Expo node_modules and sibling Maktabah/SefariaMobile upstream dependency roots. Resolver diagnosis/correction belongs to the native owner; no unverified repair claimed."
+        },
+        "selectedCases": 52,
+        "miniAppsCases": 25,
+        "aiCases": 27,
+        "caseStatus": "NOT_RUN",
+        "physicalDevice": "NOT_RUN",
+        "supersedesRunningEvidence": [
+          "primary_attempt6_miniapps_running_reported",
+          "primary_native_attempt6_preparation"
+        ],
+        "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged."
+      },
+      "lastExecutedAttempt": {
+        "attempt": 6,
+        "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+        "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
+        "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
+        "evidenceID": "primary_native_attempt6_terminal"
+      },
+      "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged.",
+      "controllerPIDMeaning": "Root observed the controller stopped at21:27:03.806 after terminal failure.",
+      "lastRetainedObservation": {
+        "fixtureObservation": {
+          "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
+          "sha256": "d41453dcdb4405c531b47aa7044bb6c7abd4e500f7b20e82717a345d310ae5ad",
+          "bytes": 14400,
+          "storage": "Retained Oracle raw fixture observation; not a new committed raw receipt in this one-file map change"
+        },
+        "observedAtUTC": "2026-11-24T21:26:31.828728+00:00",
+        "scope": "Original fixture logs/command completion only"
+      },
+      "latestApplicationObservation": {
+        "attempt": 6,
+        "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+        "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
+        "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
+        "pairedPhaseExitCode": 1,
+        "observedStoppedAtUTC": "2026-11-24T21:27:03.806Z",
+        "terminalAuthority": "Root direct Mac terminal read reported21:27:03.806 confirms stopped phaseexit1 at21:25:55.926222; sole native execution owner reports matching terminal result.",
+        "actualFixtureObservation": {
+          "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
+          "sha256": "d41453dcdb4405c531b47aa7044bb6c7abd4e500f7b20e82717a345d310ae5ad",
+          "bytes": 14400,
+          "storage": "Retained Oracle raw fixture observation; not a new committed raw receipt in this one-file map change"
+        },
+        "fixtureObservedAtUTC": "2026-11-24T21:26:31.828728+00:00",
+        "builds": {
+          "MiniApps": "EXECUTED_PASS",
+          "AI": "EXECUTED_PASS",
+          "authority": "Reported actual results by sole native execution owner and confirmed in root terminal instruction; the attached raw fixture observation itself proves fixture command results, not the app build logs."
+        },
+        "setup": {
+          "codeSigning": "EXECUTED_PASS",
+          "installation": "EXECUTED_PASS",
+          "firstLaunch": "EXECUTED_PASS",
+          "appGroup": "EXECUTED_PASS",
+          "authority": "Sole native execution owner actual terminal report; these are acceptance setup results, not selected52 cases."
+        },
+        "nativeScriptAuthoringFixture": {
+          "status": "EXECUTED_PASS",
+          "command": {
+            "command_id": "660ebac4ae1546d1946115b2738f4ccb",
+            "argv": [
+              "node",
+              "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/authoring-fixture"
+            ],
+            "log": "authoring-fixture-build.log",
+            "runner_pid": 79105,
+            "pid": 89390,
+            "started_at": 1795555536.39314,
+            "timeout": 300,
+            "status": "completed",
+            "observed_at": 1795555542.418506,
+            "seconds": 6.025410249996639,
+            "log_bytes": 3132,
+            "completion_recorded": true,
+            "exit": 0,
+            "observed_returncode": 0
+          },
+          "rawLogSHA256": "c976fdfa15e26a64b095d1f0b19cac25a2d3d83e2213ba00a588d953f1c9cdd5",
+          "buildSucceeded": true,
+          "buildDiagnostics": 0,
+          "compilerVersion": "5.9.3",
+          "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/host-services": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "negativeValidationSucceeded": false,
+          "expectedNegativeCodes": [
+            "TS2322",
+            "MINIAPP_SOURCE_CHANGED"
+          ],
+          "scope": "Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded."
+        },
+        "modularSearchProductionFixture": {
+          "status": "EXECUTED_FAIL",
+          "command": {
+            "command_id": "cddaba623e6447fcbaa58eed5db77d52",
+            "argv": [
+              "node",
+              "Scripts/MiniApps/miniapp.mjs",
+              "build",
+              "--sdk",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+              "--engine",
+              "expo",
+              "--project",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
+              "--archive",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/ModularTextSearch.hanlinExpo",
+              "--report",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.json"
+            ],
+            "log": "modular-search-build.log",
+            "runner_pid": 79105,
+            "pid": 89405,
+            "started_at": 1795555542.4300191,
+            "timeout": 300,
+            "status": "completed",
+            "observed_at": 1795555548.217901,
+            "seconds": 5.787920125003438,
+            "log_bytes": 8365,
+            "completion_recorded": true,
+            "exit": 1,
+            "observed_returncode": 1
+          },
+          "rawLogSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
+          "engine": "expo",
+          "operation": "build",
+          "diagnosticCount": 16,
+          "diagnosticCodes": {
+            "TS2300": 5,
+            "TS2320": 1,
+            "TS6200": 2,
+            "TS2374": 2,
+            "TS2687": 2,
+            "TS2403": 1,
+            "TS7016": 1,
+            "TS2717": 2
+          },
+          "compilerVersion": "6.0.3",
+          "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": false,
+            "dependencyDeclarationsChecked": true
+          },
+          "diagnosticFiles": [
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo/node_modules/expo-asset/build/AssetSources.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts",
+            "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@types/react/global.d.ts",
+            "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
+            "../../node_modules/@types/react/global.d.ts",
+            "../../node_modules/react-native/src/types/globals.d.ts"
+          ],
+          "finding": "Actual diagnostics reference the exported SDK, local Scripts/Expo node_modules and sibling Maktabah/SefariaMobile upstream dependency roots. Resolver diagnosis/correction belongs to the native owner; no unverified repair claimed."
+        },
+        "selectedCases": 52,
+        "miniAppsCases": 25,
+        "aiCases": 27,
+        "caseStatus": "NOT_RUN",
+        "physicalDevice": "NOT_RUN",
+        "supersedesRunningEvidence": [
+          "primary_attempt6_miniapps_running_reported",
+          "primary_native_attempt6_preparation"
+        ],
+        "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged."
+      },
+      "preparedSDKReceipt": {
+        "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
+        "sha256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
+        "verifiedAtCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f"
+      },
+      "nativePreparation": "EXECUTED_PASS",
+      "shippingSDKIdentity": "RECONCILED_ACTUAL_ATTEMPT6",
+      "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00"
     }
   ],
   "main16ShippingSDK": {
@@ -4348,11 +4656,11 @@
   "primaryNativeExecution": {
     "owner": "native_execution",
     "location": "primary Scaleway M2Pro",
-    "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
-    "sourceRole": "Actual completed attempt6 source; app builds PASS, authoring fixture failure before selected cases",
-    "state": "ATTEMPT6_FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
-    "attempt": 6,
-    "startedAtUTC": "2026-11-24T21:08:27.170164+00:00",
+    "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+    "sourceRole": "Root-published resolver correction staged on the primary Mac; finite admission is waiting for native capacity",
+    "state": "WAITING_FOR_NATIVE_CAPACITY",
+    "attempt": 7,
+    "startedAtUTC": null,
     "controllerPID": null,
     "destination": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
     "scope": "Original miniapp_complete52 cases:25MiniApps+27AI, no app/test/selector/budget changes",
@@ -4408,7 +4716,7 @@
       "sha256": "f73c8ad9dee30228410af987190e01792e326b04a17ef38eaa17dd42f947996a",
       "verifiedAtCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380"
     },
-    "sourceRefreshBoundary": "All188 prior prepared paths are already committed in bd6da170. Normal final Host hook generated only three sourceCommit provenance substitutions; exact new SDK identity reconciled. This lane did not materialize those three docs.",
+    "sourceRefreshBoundary": "Prior 188 prepared paths remain committed in bd6da170. Native owner reports the three attempt6 generated provenance files preserved during advance to fd81. Final corrected Host preparation must refresh authoring source hashes and SDK provenance; no new prepared output is assumed equal to attempt6.",
     "previousActualAttempt": {
       "attempt": 5,
       "sourceCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af",
@@ -4417,324 +4725,69 @@
       "evidenceID": "primary_native_attempt5"
     },
     "fullRuntimeCorePreparationAfterTransportFix": "EXECUTED_PASS_ON_ATTEMPT5_AND_ATTEMPT6",
-    "currentRuntimeHostSDKAssembly": "EXECUTED_PASS_ATTEMPT6_AND_ACTUAL_IDENTITY_RECONCILED",
-    "firstMiniAppsBuild": "EXECUTED_PASS",
-    "aiBuild": "EXECUTED_PASS",
+    "currentRuntimeHostSDKAssembly": "NOT_RUN_AFTER_RESOLVER_FIX",
+    "firstMiniAppsBuild": "NOT_RUN_ON_CORRECTED_EMBEDDED_HOST",
+    "aiBuild": "NOT_RUN_ON_CORRECTED_EMBEDDED_HOST",
     "selected52Cases": "NOT_RUN",
-    "nativePass": "BOTH_BUILDS_PASS; APPLICATION_ACCEPTANCE_FAILED_BEFORE52",
-    "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged.",
-    "controllerPIDMeaning": "Stopped according to root direct terminal observation.",
+    "nativePass": "ATTEMPT6_BOTH_BUILDS_PASS; CORRECTED_EMBEDDED_HOST_ACCEPTANCE_PENDING",
+    "boundary": "Actual source staging and finite capacity waiting are observed; the native controller has not started at this checkpoint. Host/SDK production, corrected embedded app builds and 52 application cases are not complete. Future evidence-only map commits do not change execution target fd81.",
+    "controllerPIDMeaning": "No native controller start/PID at the root observation of 22:01:06.661 UTC; finite capacity admission was already running.",
     "latestObservation": {
-      "attempt": 6,
-      "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
-      "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
-      "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
-      "pairedPhaseExitCode": 1,
-      "observedStoppedAtUTC": "2026-11-24T21:27:03.806Z",
-      "terminalAuthority": "Root direct Mac terminal read reported21:27:03.806 confirms stopped phaseexit1 at21:25:55.926222; sole native execution owner reports matching terminal result.",
-      "actualFixtureObservation": {
-        "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
-        "sha256": "d41453dcdb4405c531b47aa7044bb6c7abd4e500f7b20e82717a345d310ae5ad",
-        "bytes": 14400,
-        "storage": "Retained Oracle raw fixture observation; not a new committed raw receipt in this one-file map change"
+      "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "sourceRole": "Root-published resolver correction staged on the primary Mac; finite admission is waiting for native capacity",
+      "status": "WAITING_FOR_NATIVE_CAPACITY",
+      "startedAtUTC": null,
+      "controllerPID": null,
+      "authority": "Native owner reports exact fd81 source staged at 22:00 UTC; root reports its direct Mac observation at 22:01:06.661 UTC. This map reuses those dated observations and made no native query.",
+      "sourceCorrectionEvidenceID": "primary_sdk_resolution_correction",
+      "lastTerminalAttempt": 6,
+      "lastTerminalSourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "boundary": "Actual source staging and finite capacity waiting are observed; the native controller has not started at this checkpoint. Host/SDK production, corrected embedded app builds and 52 application cases are not complete. Future evidence-only map commits do not change execution target fd81.",
+      "attempt": 7,
+      "observedAtUTC": "2026-11-24T22:01:06.661+00:00",
+      "sourceAdvance": {
+        "status": "SOURCE_STAGED",
+        "reportedBy": "native_execution",
+        "observedAtUTCPrecision": "2026-11-24 22:00 UTC, minute precision as reported",
+        "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+        "preservedPreparedProvenancePaths": 3
       },
-      "fixtureObservedAtUTC": "2026-11-24T21:26:31.828728+00:00",
-      "builds": {
-        "MiniApps": "EXECUTED_PASS",
-        "AI": "EXECUTED_PASS",
-        "authority": "Reported actual results by sole native execution owner and confirmed in root terminal instruction; the attached raw fixture observation itself proves fixture command results, not the app build logs."
-      },
-      "setup": {
-        "codeSigning": "EXECUTED_PASS",
-        "installation": "EXECUTED_PASS",
-        "firstLaunch": "EXECUTED_PASS",
-        "appGroup": "EXECUTED_PASS",
-        "authority": "Sole native execution owner actual terminal report; these are acceptance setup results, not selected52 cases."
-      },
-      "nativeScriptAuthoringFixture": {
-        "status": "EXECUTED_PASS",
-        "command": {
-          "command_id": "660ebac4ae1546d1946115b2738f4ccb",
-          "argv": [
-            "node",
-            "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/authoring-fixture"
-          ],
-          "log": "authoring-fixture-build.log",
-          "runner_pid": 79105,
-          "pid": 89390,
-          "started_at": 1795555536.39314,
-          "timeout": 300,
-          "status": "completed",
-          "observed_at": 1795555542.418506,
-          "seconds": 6.025410249996639,
-          "log_bytes": 3132,
-          "completion_recorded": true,
-          "exit": 0,
-          "observed_returncode": 0
-        },
-        "rawLogSHA256": "c976fdfa15e26a64b095d1f0b19cac25a2d3d83e2213ba00a588d953f1c9cdd5",
-        "buildSucceeded": true,
-        "buildDiagnostics": 0,
-        "compilerVersion": "5.9.3",
-        "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
-        "packageVersions": {
-          "@nativescript/core": "9.1.4",
-          "@nativescript/swift-ui": "4.0.2",
-          "@nativescript/ios": "9.1.1",
-          "@nativescript/types": "9.1.4",
-          "@nativescript/vite": "8.0.24",
-          "typescript": "5.9.3",
-          "vite": "8.0.0",
-          "@hanlin/host-services": "1.0.0"
-        },
-        "typecheck": {
-          "strict": true,
-          "checkJs": false,
-          "skipLibCheck": true,
-          "dependencyDeclarationsChecked": false
-        },
-        "negativeValidationSucceeded": false,
-        "expectedNegativeCodes": [
-          "TS2322",
-          "MINIAPP_SOURCE_CHANGED"
-        ],
-        "scope": "Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded."
-      },
-      "modularSearchProductionFixture": {
-        "status": "EXECUTED_FAIL",
-        "command": {
-          "command_id": "cddaba623e6447fcbaa58eed5db77d52",
-          "argv": [
-            "node",
-            "Scripts/MiniApps/miniapp.mjs",
-            "build",
-            "--sdk",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
-            "--engine",
-            "expo",
-            "--project",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
-            "--archive",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/ModularTextSearch.hanlinExpo",
-            "--report",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.json"
-          ],
-          "log": "modular-search-build.log",
-          "runner_pid": 79105,
-          "pid": 89405,
-          "started_at": 1795555542.4300191,
-          "timeout": 300,
-          "status": "completed",
-          "observed_at": 1795555548.217901,
-          "seconds": 5.787920125003438,
-          "log_bytes": 8365,
-          "completion_recorded": true,
-          "exit": 1,
-          "observed_returncode": 1
-        },
-        "rawLogSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
-        "engine": "expo",
-        "operation": "build",
-        "diagnosticCount": 16,
-        "diagnosticCodes": {
-          "TS2300": 5,
-          "TS2320": 1,
-          "TS6200": 2,
-          "TS2374": 2,
-          "TS2687": 2,
-          "TS2403": 1,
-          "TS7016": 1,
-          "TS2717": 2
-        },
-        "compilerVersion": "6.0.3",
-        "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
-        "typecheck": {
-          "strict": true,
-          "checkJs": false,
-          "skipLibCheck": false,
-          "dependencyDeclarationsChecked": true
-        },
-        "diagnosticFiles": [
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo/node_modules/expo-asset/build/AssetSources.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts",
-          "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@types/react/global.d.ts",
-          "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
-          "../../node_modules/@types/react/global.d.ts",
-          "../../node_modules/react-native/src/types/globals.d.ts"
-        ],
-        "finding": "Actual diagnostics reference the exported SDK, local Scripts/Expo node_modules and sibling Maktabah/SefariaMobile upstream dependency roots. Resolver diagnosis/correction belongs to the native owner; no unverified repair claimed."
-      },
-      "selectedCases": 52,
-      "miniAppsCases": 25,
-      "aiCases": 27,
-      "caseStatus": "NOT_RUN",
-      "physicalDevice": "NOT_RUN",
-      "supersedesRunningEvidence": [
-        "primary_attempt6_miniapps_running_reported",
-        "primary_native_attempt6_preparation"
-      ],
-      "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged."
+      "capacityAdmission": {
+        "startedAtUTC": "2026-11-24T22:00:01.607+00:00",
+        "status": "WAITING_FOR_NATIVE_CAPACITY",
+        "rootObservedAtUTC": "2026-11-24T22:01:06.661+00:00",
+        "reportedElapsedSeconds": 60,
+        "externalBuildOrTestPIDsObserved": 2,
+        "controllerState": "READY",
+        "controllerPID": null
+      }
     },
     "latestApplicationObservation": {
-      "attempt": 6,
-      "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
-      "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
-      "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
-      "pairedPhaseExitCode": 1,
-      "observedStoppedAtUTC": "2026-11-24T21:27:03.806Z",
-      "terminalAuthority": "Root direct Mac terminal read reported21:27:03.806 confirms stopped phaseexit1 at21:25:55.926222; sole native execution owner reports matching terminal result.",
-      "actualFixtureObservation": {
-        "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
-        "sha256": "d41453dcdb4405c531b47aa7044bb6c7abd4e500f7b20e82717a345d310ae5ad",
-        "bytes": 14400,
-        "storage": "Retained Oracle raw fixture observation; not a new committed raw receipt in this one-file map change"
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/attempt6-acceptance.json",
+        "sha256": "289ec3e653b8236f7fa1acca4f79b35955a32a34df52508178ce60442594fdba",
+        "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
       },
-      "fixtureObservedAtUTC": "2026-11-24T21:26:31.828728+00:00",
-      "builds": {
-        "MiniApps": "EXECUTED_PASS",
-        "AI": "EXECUTED_PASS",
-        "authority": "Reported actual results by sole native execution owner and confirmed in root terminal instruction; the attached raw fixture observation itself proves fixture command results, not the app build logs."
-      },
-      "setup": {
-        "codeSigning": "EXECUTED_PASS",
-        "installation": "EXECUTED_PASS",
-        "firstLaunch": "EXECUTED_PASS",
-        "appGroup": "EXECUTED_PASS",
-        "authority": "Sole native execution owner actual terminal report; these are acceptance setup results, not selected52 cases."
-      },
-      "nativeScriptAuthoringFixture": {
-        "status": "EXECUTED_PASS",
-        "command": {
-          "command_id": "660ebac4ae1546d1946115b2738f4ccb",
-          "argv": [
-            "node",
-            "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/authoring-fixture"
-          ],
-          "log": "authoring-fixture-build.log",
-          "runner_pid": 79105,
-          "pid": 89390,
-          "started_at": 1795555536.39314,
-          "timeout": 300,
-          "status": "completed",
-          "observed_at": 1795555542.418506,
-          "seconds": 6.025410249996639,
-          "log_bytes": 3132,
-          "completion_recorded": true,
-          "exit": 0,
-          "observed_returncode": 0
-        },
-        "rawLogSHA256": "c976fdfa15e26a64b095d1f0b19cac25a2d3d83e2213ba00a588d953f1c9cdd5",
-        "buildSucceeded": true,
-        "buildDiagnostics": 0,
-        "compilerVersion": "5.9.3",
-        "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
-        "packageVersions": {
-          "@nativescript/core": "9.1.4",
-          "@nativescript/swift-ui": "4.0.2",
-          "@nativescript/ios": "9.1.1",
-          "@nativescript/types": "9.1.4",
-          "@nativescript/vite": "8.0.24",
-          "typescript": "5.9.3",
-          "vite": "8.0.0",
-          "@hanlin/host-services": "1.0.0"
-        },
-        "typecheck": {
-          "strict": true,
-          "checkJs": false,
-          "skipLibCheck": true,
-          "dependencyDeclarationsChecked": false
-        },
-        "negativeValidationSucceeded": false,
-        "expectedNegativeCodes": [
-          "TS2322",
-          "MINIAPP_SOURCE_CHANGED"
-        ],
-        "scope": "Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded."
-      },
-      "modularSearchProductionFixture": {
-        "status": "EXECUTED_FAIL",
-        "command": {
-          "command_id": "cddaba623e6447fcbaa58eed5db77d52",
-          "argv": [
-            "node",
-            "Scripts/MiniApps/miniapp.mjs",
-            "build",
-            "--sdk",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
-            "--engine",
-            "expo",
-            "--project",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
-            "--archive",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/ModularTextSearch.hanlinExpo",
-            "--report",
-            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.json"
-          ],
-          "log": "modular-search-build.log",
-          "runner_pid": 79105,
-          "pid": 89405,
-          "started_at": 1795555542.4300191,
-          "timeout": 300,
-          "status": "completed",
-          "observed_at": 1795555548.217901,
-          "seconds": 5.787920125003438,
-          "log_bytes": 8365,
-          "completion_recorded": true,
-          "exit": 1,
-          "observed_returncode": 1
-        },
-        "rawLogSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
-        "engine": "expo",
-        "operation": "build",
-        "diagnosticCount": 16,
-        "diagnosticCodes": {
-          "TS2300": 5,
-          "TS2320": 1,
-          "TS6200": 2,
-          "TS2374": 2,
-          "TS2687": 2,
-          "TS2403": 1,
-          "TS7016": 1,
-          "TS2717": 2
-        },
-        "compilerVersion": "6.0.3",
-        "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
-        "typecheck": {
-          "strict": true,
-          "checkJs": false,
-          "skipLibCheck": false,
-          "dependencyDeclarationsChecked": true
-        },
-        "diagnosticFiles": [
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo/node_modules/expo-asset/build/AssetSources.d.ts",
-          "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts",
-          "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@types/react/global.d.ts",
-          "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
-          "../../node_modules/@types/react/global.d.ts",
-          "../../node_modules/react-native/src/types/globals.d.ts"
-        ],
-        "finding": "Actual diagnostics reference the exported SDK, local Scripts/Expo node_modules and sibling Maktabah/SefariaMobile upstream dependency roots. Resolver diagnosis/correction belongs to the native owner; no unverified repair claimed."
-      },
-      "selectedCases": 52,
-      "miniAppsCases": 25,
-      "aiCases": 27,
-      "caseStatus": "NOT_RUN",
+      "MiniAppsBuild": "EXECUTED_PASS",
+      "AIBuild": "EXECUTED_PASS",
+      "pairedStatus": "INFRA_ERROR",
+      "applicationCases": "NOT_RUN",
       "physicalDevice": "NOT_RUN",
-      "supersedesRunningEvidence": [
-        "primary_attempt6_miniapps_running_reported",
-        "primary_native_attempt6_preparation"
-      ],
-      "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged."
+      "failure": "node exit 1; inspect modular-search-build.log",
+      "boundary": "These app builds used prior attempt6 embedded Host, not the corrected finalaecc archive."
     },
-    "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00"
+    "lastCommittedCorrectionEvidence": {
+      "path": "docs/miniapp-sdk/evidence/primary-sdk-resolution-20261124/receipt.json",
+      "sha256": "b36360ada2a5da4369fca81e5c1e6008a8b1b4195dca86992984352d3db69d23",
+      "verifiedAtCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+    },
+    "latestSourceAdvanceObservation": {
+      "status": "SOURCE_STAGED",
+      "reportedBy": "native_execution",
+      "observedAtUTCPrecision": "2026-11-24 22:00 UTC, minute precision as reported",
+      "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "preservedPreparedProvenancePaths": 3
+    }
   },
   "primaryNativeExecutionHistory": [
     {
@@ -5172,6 +5225,397 @@
         "selectedApplicationCases": "NOT_RUN",
         "boundary": "Observed running status at the specified checkpoint; no success or later state inferred."
       }
+    },
+    {
+      "owner": "native_execution",
+      "location": "primary Scaleway M2Pro",
+      "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "sourceRole": "Actual completed attempt6 source; app builds PASS, authoring fixture failure before selected cases",
+      "state": "ATTEMPT6_FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
+      "attempt": 6,
+      "startedAtUTC": "2026-11-24T21:08:27.170164+00:00",
+      "controllerPID": null,
+      "destination": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+      "scope": "Original miniapp_complete52 cases:25MiniApps+27AI, no app/test/selector/budget changes",
+      "toolchain": "Xcode 27.0\nBuild version 27A266a",
+      "inputs": {
+        "reactNative": "Own Scripts/Expo graph0.88.1; corrected original producer verified in attempt4",
+        "runtimeCoreArtifactRunID": 42926628418,
+        "runtimeCoreLocalArchiveBytes": 86253335,
+        "runtimeCoreLocalArchiveSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+        "canonicalFacadePackageSHA256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+      },
+      "sourceAdvanceObservation": {
+        "receipt": {
+          "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/source-advance-bd6da170.json",
+          "sha256": "11b1e7efb1e66e0394274d8ad38c394050dbe4204d76a9278cea23a680cd4f36",
+          "bytes": 111458,
+          "storage": "Retained Oracle transfer observation; not a repository-committed receipt"
+        },
+        "result": "SOURCE_READY_HEAVY_RESUME_NOT_STARTED",
+        "sourceBase": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+        "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+        "sourceTree": "c363e0ba72f34025e6cc01e5fe830682fa94defa",
+        "observedAtUTC": "2026-11-24T20:58:57.963601+00:00",
+        "preservedPreparedPaths": 188,
+        "allWorkingContentsMatchMaterializedTarget": true,
+        "sourceHashes": {
+          "Scripts/Expo/prepare-ios-dependencies.mjs": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+          "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+          "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+          "Scripts/Runtime/prepare-runtime-host.sh": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+          "Scripts/ProductSplit/run_paired_acceptance.py": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c",
+          "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+          "docs/miniapp-sdk/source-inventory.json": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+          "docs/miniapp-sdk/extension-reachability.json": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+          "docs/miniapp-sdk/extension-reachability.md": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1"
+        },
+        "toolchain": "Xcode 27.0\nBuild version 27A266a",
+        "nativeStartedAtThisObservation": false,
+        "boundary": "Retained exact Mac source-advance observation; source ready20:58:57, not a native execution/pass. Original phase bodies/selectors/budgets retained.",
+        "committedCopy": {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/raw/build/primary-control/source-advance-bd6da170/receipt.json",
+          "sha256": "11b1e7efb1e66e0394274d8ad38c394050dbe4204d76a9278cea23a680cd4f36",
+          "verifiedAtCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f"
+        }
+      },
+      "lastCommittedPreparationEvidence": {
+        "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
+        "sha256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
+        "verifiedAtCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f"
+      },
+      "latestSourceRefresh": {
+        "path": "docs/miniapp-sdk/evidence/primary-prepared-source-materialization-20261124/receipt.json",
+        "sha256": "f73c8ad9dee30228410af987190e01792e326b04a17ef38eaa17dd42f947996a",
+        "verifiedAtCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380"
+      },
+      "sourceRefreshBoundary": "All188 prior prepared paths are already committed in bd6da170. Normal final Host hook generated only three sourceCommit provenance substitutions; exact new SDK identity reconciled. This lane did not materialize those three docs.",
+      "previousActualAttempt": {
+        "attempt": 5,
+        "sourceCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+        "status": "FAILED_MINIAPPS_BUILD",
+        "finishedAtUTC": "2026-11-24T20:09:11.196051+00:00",
+        "evidenceID": "primary_native_attempt5"
+      },
+      "fullRuntimeCorePreparationAfterTransportFix": "EXECUTED_PASS_ON_ATTEMPT5_AND_ATTEMPT6",
+      "currentRuntimeHostSDKAssembly": "EXECUTED_PASS_ATTEMPT6_AND_ACTUAL_IDENTITY_RECONCILED",
+      "firstMiniAppsBuild": "EXECUTED_PASS",
+      "aiBuild": "EXECUTED_PASS",
+      "selected52Cases": "NOT_RUN",
+      "nativePass": "BOTH_BUILDS_PASS; APPLICATION_ACCEPTANCE_FAILED_BEFORE52",
+      "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged.",
+      "controllerPIDMeaning": "Stopped according to root direct terminal observation.",
+      "latestObservation": {
+        "attempt": 6,
+        "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+        "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
+        "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
+        "pairedPhaseExitCode": 1,
+        "observedStoppedAtUTC": "2026-11-24T21:27:03.806Z",
+        "terminalAuthority": "Root direct Mac terminal read reported21:27:03.806 confirms stopped phaseexit1 at21:25:55.926222; sole native execution owner reports matching terminal result.",
+        "actualFixtureObservation": {
+          "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
+          "sha256": "d41453dcdb4405c531b47aa7044bb6c7abd4e500f7b20e82717a345d310ae5ad",
+          "bytes": 14400,
+          "storage": "Retained Oracle raw fixture observation; not a new committed raw receipt in this one-file map change"
+        },
+        "fixtureObservedAtUTC": "2026-11-24T21:26:31.828728+00:00",
+        "builds": {
+          "MiniApps": "EXECUTED_PASS",
+          "AI": "EXECUTED_PASS",
+          "authority": "Reported actual results by sole native execution owner and confirmed in root terminal instruction; the attached raw fixture observation itself proves fixture command results, not the app build logs."
+        },
+        "setup": {
+          "codeSigning": "EXECUTED_PASS",
+          "installation": "EXECUTED_PASS",
+          "firstLaunch": "EXECUTED_PASS",
+          "appGroup": "EXECUTED_PASS",
+          "authority": "Sole native execution owner actual terminal report; these are acceptance setup results, not selected52 cases."
+        },
+        "nativeScriptAuthoringFixture": {
+          "status": "EXECUTED_PASS",
+          "command": {
+            "command_id": "660ebac4ae1546d1946115b2738f4ccb",
+            "argv": [
+              "node",
+              "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/authoring-fixture"
+            ],
+            "log": "authoring-fixture-build.log",
+            "runner_pid": 79105,
+            "pid": 89390,
+            "started_at": 1795555536.39314,
+            "timeout": 300,
+            "status": "completed",
+            "observed_at": 1795555542.418506,
+            "seconds": 6.025410249996639,
+            "log_bytes": 3132,
+            "completion_recorded": true,
+            "exit": 0,
+            "observed_returncode": 0
+          },
+          "rawLogSHA256": "c976fdfa15e26a64b095d1f0b19cac25a2d3d83e2213ba00a588d953f1c9cdd5",
+          "buildSucceeded": true,
+          "buildDiagnostics": 0,
+          "compilerVersion": "5.9.3",
+          "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/host-services": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "negativeValidationSucceeded": false,
+          "expectedNegativeCodes": [
+            "TS2322",
+            "MINIAPP_SOURCE_CHANGED"
+          ],
+          "scope": "Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded."
+        },
+        "modularSearchProductionFixture": {
+          "status": "EXECUTED_FAIL",
+          "command": {
+            "command_id": "cddaba623e6447fcbaa58eed5db77d52",
+            "argv": [
+              "node",
+              "Scripts/MiniApps/miniapp.mjs",
+              "build",
+              "--sdk",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+              "--engine",
+              "expo",
+              "--project",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
+              "--archive",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/ModularTextSearch.hanlinExpo",
+              "--report",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.json"
+            ],
+            "log": "modular-search-build.log",
+            "runner_pid": 79105,
+            "pid": 89405,
+            "started_at": 1795555542.4300191,
+            "timeout": 300,
+            "status": "completed",
+            "observed_at": 1795555548.217901,
+            "seconds": 5.787920125003438,
+            "log_bytes": 8365,
+            "completion_recorded": true,
+            "exit": 1,
+            "observed_returncode": 1
+          },
+          "rawLogSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
+          "engine": "expo",
+          "operation": "build",
+          "diagnosticCount": 16,
+          "diagnosticCodes": {
+            "TS2300": 5,
+            "TS2320": 1,
+            "TS6200": 2,
+            "TS2374": 2,
+            "TS2687": 2,
+            "TS2403": 1,
+            "TS7016": 1,
+            "TS2717": 2
+          },
+          "compilerVersion": "6.0.3",
+          "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": false,
+            "dependencyDeclarationsChecked": true
+          },
+          "diagnosticFiles": [
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo/node_modules/expo-asset/build/AssetSources.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts",
+            "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@types/react/global.d.ts",
+            "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
+            "../../node_modules/@types/react/global.d.ts",
+            "../../node_modules/react-native/src/types/globals.d.ts"
+          ],
+          "finding": "Actual diagnostics reference the exported SDK, local Scripts/Expo node_modules and sibling Maktabah/SefariaMobile upstream dependency roots. Resolver diagnosis/correction belongs to the native owner; no unverified repair claimed."
+        },
+        "selectedCases": 52,
+        "miniAppsCases": 25,
+        "aiCases": 27,
+        "caseStatus": "NOT_RUN",
+        "physicalDevice": "NOT_RUN",
+        "supersedesRunningEvidence": [
+          "primary_attempt6_miniapps_running_reported",
+          "primary_native_attempt6_preparation"
+        ],
+        "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged."
+      },
+      "latestApplicationObservation": {
+        "attempt": 6,
+        "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+        "status": "FAILED_MODULAR_SEARCH_AUTHORING_FIXTURE",
+        "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00",
+        "pairedPhaseExitCode": 1,
+        "observedStoppedAtUTC": "2026-11-24T21:27:03.806Z",
+        "terminalAuthority": "Root direct Mac terminal read reported21:27:03.806 confirms stopped phaseexit1 at21:25:55.926222; sole native execution owner reports matching terminal result.",
+        "actualFixtureObservation": {
+          "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modular-search-attempt6-failure.json",
+          "sha256": "d41453dcdb4405c531b47aa7044bb6c7abd4e500f7b20e82717a345d310ae5ad",
+          "bytes": 14400,
+          "storage": "Retained Oracle raw fixture observation; not a new committed raw receipt in this one-file map change"
+        },
+        "fixtureObservedAtUTC": "2026-11-24T21:26:31.828728+00:00",
+        "builds": {
+          "MiniApps": "EXECUTED_PASS",
+          "AI": "EXECUTED_PASS",
+          "authority": "Reported actual results by sole native execution owner and confirmed in root terminal instruction; the attached raw fixture observation itself proves fixture command results, not the app build logs."
+        },
+        "setup": {
+          "codeSigning": "EXECUTED_PASS",
+          "installation": "EXECUTED_PASS",
+          "firstLaunch": "EXECUTED_PASS",
+          "appGroup": "EXECUTED_PASS",
+          "authority": "Sole native execution owner actual terminal report; these are acceptance setup results, not selected52 cases."
+        },
+        "nativeScriptAuthoringFixture": {
+          "status": "EXECUTED_PASS",
+          "command": {
+            "command_id": "660ebac4ae1546d1946115b2738f4ccb",
+            "argv": [
+              "node",
+              "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/authoring-fixture"
+            ],
+            "log": "authoring-fixture-build.log",
+            "runner_pid": 79105,
+            "pid": 89390,
+            "started_at": 1795555536.39314,
+            "timeout": 300,
+            "status": "completed",
+            "observed_at": 1795555542.418506,
+            "seconds": 6.025410249996639,
+            "log_bytes": 3132,
+            "completion_recorded": true,
+            "exit": 0,
+            "observed_returncode": 0
+          },
+          "rawLogSHA256": "c976fdfa15e26a64b095d1f0b19cac25a2d3d83e2213ba00a588d953f1c9cdd5",
+          "buildSucceeded": true,
+          "buildDiagnostics": 0,
+          "compilerVersion": "5.9.3",
+          "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/host-services": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "negativeValidationSucceeded": false,
+          "expectedNegativeCodes": [
+            "TS2322",
+            "MINIAPP_SOURCE_CHANGED"
+          ],
+          "scope": "Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded."
+        },
+        "modularSearchProductionFixture": {
+          "status": "EXECUTED_FAIL",
+          "command": {
+            "command_id": "cddaba623e6447fcbaa58eed5db77d52",
+            "argv": [
+              "node",
+              "Scripts/MiniApps/miniapp.mjs",
+              "build",
+              "--sdk",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+              "--engine",
+              "expo",
+              "--project",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
+              "--archive",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/ModularTextSearch.hanlinExpo",
+              "--report",
+              "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.json"
+            ],
+            "log": "modular-search-build.log",
+            "runner_pid": 79105,
+            "pid": 89405,
+            "started_at": 1795555542.4300191,
+            "timeout": 300,
+            "status": "completed",
+            "observed_at": 1795555548.217901,
+            "seconds": 5.787920125003438,
+            "log_bytes": 8365,
+            "completion_recorded": true,
+            "exit": 1,
+            "observed_returncode": 1
+          },
+          "rawLogSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
+          "engine": "expo",
+          "operation": "build",
+          "diagnosticCount": 16,
+          "diagnosticCodes": {
+            "TS2300": 5,
+            "TS2320": 1,
+            "TS6200": 2,
+            "TS2374": 2,
+            "TS2687": 2,
+            "TS2403": 1,
+            "TS7016": 1,
+            "TS2717": 2
+          },
+          "compilerVersion": "6.0.3",
+          "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": false,
+            "dependencyDeclarationsChecked": true
+          },
+          "diagnosticFiles": [
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types/react/global.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/expo/node_modules/expo-asset/build/AssetSources.d.ts",
+            "../../../../../Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/react-native/src/types/globals.d.ts",
+            "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/@types/react/global.d.ts",
+            "../../../../build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/expo-modules-core/build/ts-declarations/global.d.ts",
+            "../../node_modules/@types/react/global.d.ts",
+            "../../node_modules/react-native/src/types/globals.d.ts"
+          ],
+          "finding": "Actual diagnostics reference the exported SDK, local Scripts/Expo node_modules and sibling Maktabah/SefariaMobile upstream dependency roots. Resolver diagnosis/correction belongs to the native owner; no unverified repair claimed."
+        },
+        "selectedCases": 52,
+        "miniAppsCases": 25,
+        "aiCases": 27,
+        "caseStatus": "NOT_RUN",
+        "physicalDevice": "NOT_RUN",
+        "supersedesRunningEvidence": [
+          "primary_attempt6_miniapps_running_reported",
+          "primary_native_attempt6_preparation"
+        ],
+        "boundary": "Both products built and setup completed; production authoring fixture failed before52 selected application cases. The prepared SDK and actual four-project documentation results remain valid within their scope. Raw running snapshots remain unchanged."
+      },
+      "finishedAtUTC": "2026-11-24T21:25:55.926222+00:00"
     }
   ],
   "dedicatedMacPhysicalRouteHistory": [
@@ -5188,11 +5632,11 @@
   ],
   "currentTaskClosureSummary": {
     "authority": {
-      "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
-      "sha256": "af6787efb997859a4412e30f79f23a59a53bd7e4a9ac6c503c431bc82dfd5575"
+      "evidenceID": "upstream_scoped_completion_20261124",
+      "kind": "Executing Asana status owner/root verified tool readback"
     },
-    "closedCount": 4,
-    "openCount": 9,
+    "closedCount": 5,
+    "openCount": 8,
     "closedTasks": [
       {
         "key": "SDK-01",
@@ -5209,6 +5653,13 @@
       {
         "key": "SDK-05",
         "id": "1220373832827017"
+      },
+      {
+        "key": "MINIAPP-UPSTREAM",
+        "id": "1220829472845488",
+        "completedAtUTC": "2026-11-24T21:46:16.568Z",
+        "evidenceID": "upstream_scoped_completion_20261124",
+        "scope": "Original/native/SDK preparation and both Apple consumer builds"
       }
     ],
     "openTasks": [
@@ -5233,11 +5684,6 @@
         "status": "SIMULATOR_PENDING_PHYSICAL_ROUTE_BLOCKED_EXTERNAL"
       },
       {
-        "key": "MINIAPP-UPSTREAM",
-        "id": "1220829472845488",
-        "status": "APPLE_CONSUMER_BUILD_PENDING"
-      },
-      {
         "key": "MINIAPP-REPAIR",
         "id": "1220832299334064",
         "status": "REPAIR_SELECTORS_AND_ATTACHMENTS_PENDING"
@@ -5258,18 +5704,22 @@
         "status": "OPEN_BROADER_SCOPE"
       }
     ],
-    "boundary": "Existing scoped closure decisions retained. No Asana mutation or new closure decision in this evidence-only update."
+    "boundary": "Only UPSTREAM scoped completion added from actual verified Asana readback. Prior four completed tasks remain complete; eight separate application/repair/device tasks remain open. This evidence lane made no Asana mutation.",
+    "priorAuthority": {
+      "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+      "sha256": "af6787efb997859a4412e30f79f23a59a53bd7e4a9ac6c503c431bc82dfd5575"
+    }
   },
   "primaryRouteMapUpdate": {
-    "atUTC": "2026-11-24T21:29:31.497057+00:00",
-    "base": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+    "atUTC": "2026-11-24T22:04:40.865184+00:00",
+    "base": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
     "changedFile": "docs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json",
-    "method": "Preserve original evidence and append verified retained fixture logs/command states plus root/sole-native-owner terminal report. No SDK compilation, tests, generators, native query, CI or Asana mutation.",
-    "newEvidenceRecords": 11,
-    "priorEvidenceObjectsPreserved": 75,
+    "method": "Read immutable committed original positive/negative/regression and terminal receipts; record root publication plus status-owner verified Asana closure. No product build/test/compiler/generator/native query/CI or Asana operation.",
+    "newEvidenceRecords": 3,
+    "priorEvidenceObjectsPreserved": 86,
     "priorProofsAndClosuresPreserved": true,
     "countsAreNotAcceptance": "80canonical Host-runtime source cells and83effective modifier source mappings do not imply E2E/device/API-effect passes.",
-    "latestTerminalObservation": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN.",
+    "latestTerminalObservation": "Reviewed resolver correction published atfd81d602; original candidate192 Expo build PASS13.067s/0diagnostics,831 mapped sources with818 dependency sources entirely inside supplied SDK, exact intentional TS2322 rejection4.513s. Finalaecc focused original compiler regression3PASS/0FAIL/0SKIP21:50:05, baseline0PASS/3FAIL. Positive Expo applicability to final source is explicit verified reuse, not rerun. Current-source Host/SDK preparation and both affected product resources/application52 remain pending; attempt7 exact fd81 source is staged and capacity admission is WAITING at root observation 22:01:06.661 UTC; no native controller has started. Last actual attempt6 onbd6da170 had both builds PASS then fixture failure before52.",
     "evidenceCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f",
     "actualSDKReceipt": {
       "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
@@ -5277,7 +5727,40 @@
       "verifiedAtCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f"
     },
     "supersedesUnpublishedMapCommit": "8b1d392f800e28cf1e60c336719ef41f52bdf9c6",
-    "priorCheckpointEvidenceObjectsPreserved": 85
+    "priorCheckpointEvidenceObjectsPreserved": 86,
+    "currentEvidenceRecords": 89,
+    "closureObservationEvidenceID": "upstream_scoped_completion_20261124",
+    "executionTargetFixedAt": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+    "latestSourceAdmissionObservation": {
+      "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "sourceRole": "Root-published resolver correction staged on the primary Mac; finite admission is waiting for native capacity",
+      "status": "WAITING_FOR_NATIVE_CAPACITY",
+      "startedAtUTC": null,
+      "controllerPID": null,
+      "authority": "Native owner reports exact fd81 source staged at 22:00 UTC; root reports its direct Mac observation at 22:01:06.661 UTC. This map reuses those dated observations and made no native query.",
+      "sourceCorrectionEvidenceID": "primary_sdk_resolution_correction",
+      "lastTerminalAttempt": 6,
+      "lastTerminalSourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "boundary": "Actual source staging and finite capacity waiting are observed; the native controller has not started at this checkpoint. Host/SDK production, corrected embedded app builds and 52 application cases are not complete. Future evidence-only map commits do not change execution target fd81.",
+      "attempt": 7,
+      "observedAtUTC": "2026-11-24T22:01:06.661+00:00",
+      "sourceAdvance": {
+        "status": "SOURCE_STAGED",
+        "reportedBy": "native_execution",
+        "observedAtUTCPrecision": "2026-11-24 22:00 UTC, minute precision as reported",
+        "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+        "preservedPreparedProvenancePaths": 3
+      },
+      "capacityAdmission": {
+        "startedAtUTC": "2026-11-24T22:00:01.607+00:00",
+        "status": "WAITING_FOR_NATIVE_CAPACITY",
+        "rootObservedAtUTC": "2026-11-24T22:01:06.661+00:00",
+        "reportedElapsedSeconds": 60,
+        "externalBuildOrTestPIDsObserved": 2,
+        "controllerState": "READY",
+        "controllerPID": null
+      }
+    }
   },
   "attachmentEvidenceRequirement": {
     "status": "PENDING_ACTUAL_RESULTS_AND_VISUAL_REVIEW",
@@ -5290,7 +5773,7 @@
     "doesNotCreate": "No extra test selector, new product behavior gate or standalone installation-receipt JSON."
   },
   "primaryShippingSDK": {
-    "status": "ACTUAL_ATTEMPT6_PREPARED_SDK_RECONCILED; APPLICATION_AUTHORING_FIXTURE_FAILED",
+    "status": "ACTUAL_ATTEMPT6_ARCHIVE_RECONCILED; CORRECTED_RESOLVER_HOST_SDK_REPREPARATION_PENDING",
     "receipt": {
       "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
       "sha256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
@@ -5327,8 +5810,9 @@
       "report": "prepared-source-delta.json",
       "materializedByThisLane": false
     },
-    "boundary": "Prepared archive/input/docs proof passed and remains unchanged. Both application builds subsequently passed, but the actual modular-search production authoring fixture failed16 TypeScript diagnostics before52 selected cases. SDK receipt is not application completion.",
-    "applicationAcceptanceEvidenceID": "primary_native_attempt6_terminal"
+    "boundary": "Receipt remains actual prior attempt6 SDK identity. Finalaecc changes embedded Host and indirect audit source identities; new producer/archive/report must be captured and reconciled. Focused source CLI success is separate from that new embedded payload.",
+    "applicationAcceptanceEvidenceID": "primary_native_attempt6_terminal",
+    "nextExecutionSourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
   },
   "currentScopeHistory": [
     {
@@ -5340,6 +5824,11 @@
       "supersededAtUTC": "2026-11-24T21:29:31.497057+00:00",
       "currentIntegrationBase": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
       "note": "Attempt6/sourcebd6da170 actually started21:08:27.170164UTC. Native preparation PASS21:13:12, export PASS21:13:35 and inputs PASS21:13:45. Actual shipping SDK reconciled; four original documentation projects PASS/0diagnostics. Retained21:14:16 paired phase RUNNING; root directly observed MiniApps build RUNNING21:15:21.914. AI and all52 application cases NOT_RUN at the last application checkpoint. Attempt5 terminal MiniApps failure20:09:11 remains historical evidence. Exact188 prior prepared paths are materialized; the new3-doc provenance delta is separately bound and not materialized here. Four closed/nine open,80source/83modifier,7sim/0physical and actual screenshot inspection boundaries are unchanged."
+    },
+    {
+      "supersededAtUTC": "2026-11-24T22:00:42.753937+00:00",
+      "currentIntegrationBase": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "note": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN. Actual SDK provenance identities and the three generated sourceCommit-only documents remain reconciled. Resolver correction is owned by native_execution. Four closed/nine open,80source/83modifier,7sim/0physical and actual screenshot inspection requirements remain unchanged."
     }
   ],
   "primaryRouteMapUpdateHistory": [
@@ -5369,6 +5858,25 @@
         "sha256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
         "verifiedAtCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f"
       }
+    },
+    {
+      "atUTC": "2026-11-24T21:29:31.497057+00:00",
+      "base": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "changedFile": "docs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json",
+      "method": "Preserve original evidence and append verified retained fixture logs/command states plus root/sole-native-owner terminal report. No SDK compilation, tests, generators, native query, CI or Asana mutation.",
+      "newEvidenceRecords": 11,
+      "priorEvidenceObjectsPreserved": 75,
+      "priorProofsAndClosuresPreserved": true,
+      "countsAreNotAcceptance": "80canonical Host-runtime source cells and83effective modifier source mappings do not imply E2E/device/API-effect passes.",
+      "latestTerminalObservation": "Attempt6/sourcebd6da170 completed native preparation/export/inputs and actual SDK/documentation successfully. BOTH MiniApps and AI builds, signing/install/first-launch/AppGroup passed. Original NativeScript authoring fixture passed with intentional TS2322/MINIAPP_SOURCE_CHANGED rejection. Production modular-search authoring failed16 TypeScript diagnostics from multiple dependency roots. Paired phase exited1 at21:25:55.926222UTC; root confirmed stopped21:27:03.806. All25+27 selected application cases NOT_RUN.",
+      "evidenceCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f",
+      "actualSDKReceipt": {
+        "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
+        "sha256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
+        "verifiedAtCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f"
+      },
+      "supersedesUnpublishedMapCommit": "8b1d392f800e28cf1e60c336719ef41f52bdf9c6",
+      "priorCheckpointEvidenceObjectsPreserved": 85
     }
   ],
   "primaryShippingSDKHistory": [
@@ -5393,6 +5901,257 @@
       "actualSnippetProjects": 4,
       "actualSnippetDiagnostics": 0,
       "boundary": "Prepared SDK pass is scoped to its own actual source/archive. Do not assume equality after corrected native preparation or provenance refresh."
+    },
+    {
+      "status": "ACTUAL_ATTEMPT6_PREPARED_SDK_RECONCILED; APPLICATION_AUTHORING_FIXTURE_FAILED",
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
+        "sha256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
+        "verifiedAtCommit": "307d8afffbbfc7525a96e49deb97f373f617f13f"
+      },
+      "executionSourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "archive": {
+        "archivePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt6/files/build/runtime-host/RuntimeHostResources.zip",
+        "archiveBytes": 81812179,
+        "archiveSHA256": "6b8ab65a1d8c6a2ae51ff12b606ba830cd19a775dc9764587941c569498475d1",
+        "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+        "manifestBytes": 5219288,
+        "inputSHA256": "78a8ffd73b3f96d984237e7866a723fb876a35d91f6bb16627373d92a6ef1fd9",
+        "sourceInputCount": 222,
+        "fileCount": 25661
+      },
+      "actualSnippetProjects": 4,
+      "actualSnippetDiagnostics": 0,
+      "changedInputsFromAttempt5": 3,
+      "unchangedInputsFromAttempt5": 219,
+      "changedFileRowsFromAttempt5": 3,
+      "unchangedFileRowsFromAttempt5": 25658,
+      "preparedSource": {
+        "paths": 3,
+        "payloadBytes": 662281,
+        "contentChanges": 3,
+        "modeChanges": 0,
+        "classification": "Only sourceCommit substitution in three generated provenance documents",
+        "ledgerSHA256": "296e5801cf96f816152473f92b5a7530635369ce9c3e8586a745707c558c4672",
+        "canonicalBinding": {
+          "algorithm": "SHA256 of compact UTF-8 JSON rows sorted by path, keys in order path,beforeSHA256,afterSHA256,bytes,contentFrom",
+          "sha256": "f236b2645efa7b8b55e3c443ec279bb137aaf1649760c01e26458522531a8165"
+        },
+        "report": "prepared-source-delta.json",
+        "materializedByThisLane": false
+      },
+      "boundary": "Prepared archive/input/docs proof passed and remains unchanged. Both application builds subsequently passed, but the actual modular-search production authoring fixture failed16 TypeScript diagnostics before52 selected cases. SDK receipt is not application completion.",
+      "applicationAcceptanceEvidenceID": "primary_native_attempt6_terminal"
+    }
+  ],
+  "taskClosureHistory": [
+    {
+      "supersededAtUTC": "2026-11-24T22:00:42.753937+00:00",
+      "summary": {
+        "authority": {
+          "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+          "sha256": "af6787efb997859a4412e30f79f23a59a53bd7e4a9ac6c503c431bc82dfd5575"
+        },
+        "closedCount": 4,
+        "openCount": 9,
+        "closedTasks": [
+          {
+            "key": "SDK-01",
+            "id": "1220373483148840"
+          },
+          {
+            "key": "SDK-02",
+            "id": "1220373483150660"
+          },
+          {
+            "key": "SDK-06",
+            "id": "1220373592513501"
+          },
+          {
+            "key": "SDK-05",
+            "id": "1220373832827017"
+          }
+        ],
+        "openTasks": [
+          {
+            "key": "SDK-03",
+            "id": "1220373608755846",
+            "status": "NATIVE_ACCEPTANCE_PENDING"
+          },
+          {
+            "key": "SDK-04",
+            "id": "1220373832827086",
+            "status": "SELECTED_NATIVE_ACCEPTANCE_AND_BOUNDED_COVERAGE_PENDING"
+          },
+          {
+            "key": "SDK-07",
+            "id": "1220373832815088",
+            "status": "COMPLETE52_PENDING"
+          },
+          {
+            "key": "SDK-08",
+            "id": "1220373635419168",
+            "status": "SIMULATOR_PENDING_PHYSICAL_ROUTE_BLOCKED_EXTERNAL"
+          },
+          {
+            "key": "MINIAPP-UPSTREAM",
+            "id": "1220829472845488",
+            "status": "APPLE_CONSUMER_BUILD_PENDING"
+          },
+          {
+            "key": "MINIAPP-REPAIR",
+            "id": "1220832299334064",
+            "status": "REPAIR_SELECTORS_AND_ATTACHMENTS_PENDING"
+          },
+          {
+            "key": "MINIAPP-SCRIPTWIDGET",
+            "id": "1220849081007269",
+            "status": "SELECTED_ORIGINAL_SERVICE_NATIVE_CASES_PENDING"
+          },
+          {
+            "key": "MINIAPP-SDK",
+            "id": "1220373592380175",
+            "status": "OPEN"
+          },
+          {
+            "key": "EXTENSION-RUNTIME-E2E",
+            "id": "1220374212463856",
+            "status": "OPEN_BROADER_SCOPE"
+          }
+        ],
+        "boundary": "Existing scoped closure decisions retained. No Asana mutation or new closure decision in this evidence-only update."
+      }
+    }
+  ],
+  "candidateGateHistory": [
+    {
+      "schemaVersion": 1,
+      "sequence": 17,
+      "atUTC": "2026-11-24T16:46:31.480919+00:00",
+      "status": "COMPLETED_INFRASTRUCTURE_FAILURE",
+      "implementationSource": "812fff05f8f4f9509e180a737c70b95ce76251dc",
+      "scope": "miniapp_complete",
+      "selectedCases": 52,
+      "MiniApps": 25,
+      "AI": 27,
+      "priorRun": 45430463243,
+      "priorSourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+      "priorNativeResult": {
+        "miniAppsBuild": "EXECUTED_PASS",
+        "aiBuild": "EXECUTED_FAIL",
+        "applicationCases": "ALL52_NOT_RUN"
+      },
+      "completeNonDocumentationDeltaFromPriorRun": [
+        "AI_HLYTests/HanlinNativePresentationTests.swift",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
+      ],
+      "fix": {
+        "path": "docs/miniapp-sdk/evidence/main16-test-compiler-20261124/receipt.json",
+        "sha256": "485aed31ca6edbac14f50aa3151ed4bf06fd89a436acd847622403ab49adbdd8"
+      },
+      "fixIntegrationCommit": "812fff05f8f4f9509e180a737c70b95ce76251dc",
+      "independentReview": "Final two source hashes and all six method names / ordered 27+28 assertion calls reviewed by entrypoints and root; preserved52 selectors.",
+      "focusedCompilerCheck": "NOT_RUN_PRIMARY_MAC_BUSY; not treated as pass. Required full27.2 gate remains.",
+      "routing": {
+        "path": "docs/miniapp-sdk/evidence/seventeenth-native-gate-mac-route-20261124.json",
+        "sha256": "189c0ce8e70ab5a1bad667e784ce6f51142faf570dd3885a8e4dd7daab66574a"
+      },
+      "workflow": {
+        "path": ".github/workflows/validate-app-split.yml",
+        "sha256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982"
+      },
+      "runner": {
+        "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+        "sha256": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c"
+      },
+      "budgets": {
+        "firstMiniAppsBuildSeconds": 3600,
+        "aiBuildSeconds": 1800,
+        "runtimeSeconds": 1200,
+        "pairedTestsSeconds": 2100,
+        "pairedJobMinutes": 210
+      },
+      "sourceAuthority": {
+        "reviewer": "sdk_only_author",
+        "changedTestFiles": [
+          "AI_HLYTests/HanlinNativePresentationTests.swift",
+          "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
+        ],
+        "sdkInputMembership": "Both absent from actual MAIN16 222 SDK input records and shipped-file records",
+        "inventoryAndReachability": "Both absent from source-inventory sources, reachability sdkSources/sourceRefs and applicable symbol scans",
+        "generatorWriteOrCheckRequired": false,
+        "expectedUnchangedInputs": 222,
+        "conditionalExpectedInputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+        "boundary": "Source-input equivalence only. Next resolved original preparation outputs must be attributed to actual next artifact."
+      },
+      "main16ActualSDK": {
+        "path": "docs/miniapp-sdk/evidence/sdk05-shipping-main16-20261124/receipt.json",
+        "sha256": "8c3d5b0fc58e0a3e26e5aa0ebeb88630fcbde7e88f94ce7db5dc11c13e4264a4"
+      },
+      "reusedEvidence": "Scoped prior component passes and exact unaffected SDK proof retained; no redundant compiler/112-member checks or component CI.",
+      "whyExecute": "AI compilation errors are corrected; both current product builds and all52 cases must now complete.",
+      "boundary": "No corrected native-test or app/runtime/device PASS claimed before next actual result. No main merge or release.",
+      "candidateReceipt": {
+        "path": "docs/miniapp-sdk/evidence/native-gate-17-candidate-20261124.json",
+        "sha256": "038ba2b0319f89598b44532b0cd7421dbf148b501ae31b22c3465fcbd18c16b0"
+      },
+      "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+      "runID": 45441138261,
+      "actualExecution": "NO_RUNNER_NO_STEPS_NO_ARTIFACTS_ALL52_NOT_RUN",
+      "resultReceipt": {
+        "path": "docs/miniapp-sdk/evidence/main17-queue-termination-20261124/receipt.json",
+        "sha256": "9ea2f8a06ad2eaf1553539fa803b24bd0c1a1cb8614b6b0c696b7e5279786a0f"
+      },
+      "toolchainRequirementCorrection": {
+        "path": "docs/miniapp-sdk/evidence/toolchain-routing-correction-20261124.json",
+        "sha256": "b4d5ddca7fb0cb22e67d3186c58fb26600fccaeb3a0d85c98868208d6b256d63"
+      }
+    }
+  ],
+  "nextCorrectionHistory": [
+    {
+      "status": "INTEGRATED_INDEPENDENTLY_REVIEWED_NATIVE_VALIDATION_PENDING",
+      "actualFailureRun": 45430463243,
+      "failedTarget": "AI_HLYTests",
+      "author": "control_authoring",
+      "independentReviewer": "entrypoints",
+      "shippingSDKReviewer": "sdk_only_author",
+      "diagnostics": [
+        {
+          "log": "ai-build.log",
+          "line": 102885,
+          "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinNativePresentationTests.swift:231:27: error: type 'Void' cannot conform to 'Sequence' [#ProtocolTypeNonConformance]"
+        },
+        {
+          "log": "ai-build.log",
+          "line": 102957,
+          "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift:16:39: error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state"
+        }
+      ],
+      "plannedRepair": [
+        "Explicit [String] closure result and returns in recursive presentation text collector",
+        "UUID-scoped roundtrip from declared UserDefaults app group through genuine original WidgetsStorage.getString; defer cleanup"
+      ],
+      "boundary": "Preserve original library, all test assertions and52 selection. No concurrency suppression or duplicate application build. Full paired acceptance still required.",
+      "integrationCommit": "812fff05f8f4f9509e180a737c70b95ce76251dc",
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/main16-test-compiler-20261124/receipt.json",
+        "sha256": "485aed31ca6edbac14f50aa3151ed4bf06fd89a436acd847622403ab49adbdd8"
+      },
+      "sourceAuthority": {
+        "reviewer": "sdk_only_author",
+        "changedTestFiles": [
+          "AI_HLYTests/HanlinNativePresentationTests.swift",
+          "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
+        ],
+        "sdkInputMembership": "Both absent from actual MAIN16 222 SDK input records and shipped-file records",
+        "inventoryAndReachability": "Both absent from source-inventory sources, reachability sdkSources/sourceRefs and applicable symbol scans",
+        "generatorWriteOrCheckRequired": false,
+        "expectedUnchangedInputs": 222,
+        "conditionalExpectedInputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+        "boundary": "Source-input equivalence only. Next resolved original preparation outputs must be attributed to actual next artifact."
+      },
+      "focusedCompilerCheck": "NOT_RUN_PRIMARY_MAC_BUSY; not treated as pass. Required full27.2 gate remains."
     }
   ]
 }
