@@ -107,10 +107,12 @@
       "why": "New metadata/config validation and importer semantics invalidate focused contract/analyzer tests.",
       "selectors": [
         "HanlinCapabilityAttachmentTests",
-        "HanlinScriptAnalyzerTests"
+        "HanlinScriptAnalyzerTests",
+        "HanlinScriptMiniAppRegistrationTests"
       ],
       "status": "NOT_RUN",
-      "expectedCases": 31
+      "expectedCases": 32,
+      "additionalAffectedSuite": "HanlinScriptMiniAppRegistrationTests"
     },
     {
       "id": "composer_shared",
@@ -144,7 +146,8 @@
       "selectors": [
         "HanlinComposerCapabilityIntegrationTests",
         "HanlinMiniAppAssistantToolTests",
-        "SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation"
+        "SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation",
+        "HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog"
       ],
       "status": "NOT_RUN"
     },
@@ -289,7 +292,7 @@
     "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
     "activeDraftExcluded": "PR18 remains with original owner"
   },
-  "updatedAtUTC": "2026-11-24T23:31:52.166799+00:00",
+  "updatedAtUTC": "2026-11-24T23:54:14.849244+00:00",
   "failureCorrections": [
     {
       "boundary": "manifest ordinary JSON",
@@ -307,5 +310,11 @@
       "boundary": "model history projection",
       "reason": "Persistent typed snapshots project ordinary immutable configuration JSON to model history"
     }
-  ]
+  ],
+  "latestUpstreamIntegration": {
+    "source": "c309eb402",
+    "merge": "e68201c5381e17f78cdd5b2711a827238d537bad",
+    "reason": "Completed App Intent deduplication and case-preserving action IDs; retain assistant metadata during conflict resolution",
+    "taskWorkspaceEquivalent": "6ceb07447 changes already included by identical merge-tree"
+  }
 }
