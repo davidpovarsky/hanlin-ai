@@ -160,13 +160,19 @@ public actor HanlinAISDKAgentEngine {
         guard !modelMessages.isEmpty else {
             throw HanlinAISDKError.invalidConversation("At least one user or assistant message is required.")
         }
+        // Plan credentials use the dedicated stateless Responses transport.
+        // Ordinary API Responses retains its own inference settings.
+        let usesChatGPTPlan = configuration.apiType?.lowercased() == "openai-chatgpt-plan"
         let initialTools = try Self.makeTools(definitions, providerKind: resolvedProvider.descriptor.kind)
         let settings = CallSettings(
-            maxOutputTokens: configuration.maxTokens,
-            temperature: configuration.temperature == HanlinChatGenerationDefaults.temperature
-                ? nil : configuration.temperature,
-            topP: configuration.topP == HanlinChatGenerationDefaults.topP ? nil : configuration.topP,
-            maxRetries: 2
+            maxOutputTokens: usesChatGPTPlan ? nil : configuration.maxTokens,
+            temperature: usesChatGPTPlan ? nil :
+                (configuration.temperature == HanlinChatGenerationDefaults.temperature
+                    ? nil : configuration.temperature),
+            topP: usesChatGPTPlan ? nil :
+                (configuration.topP == HanlinChatGenerationDefaults.topP
+                    ? nil : configuration.topP),
+            maxRetries: usesChatGPTPlan ? 0 : 2
         )
 
         // nil means run until the model completes, the user cancels or a real error occurs.

@@ -1,0 +1,29 @@
+{
+  "checks": 16,
+  "command": [
+    "swiftc",
+    "-swift-version",
+    "6",
+    "-parse-as-library",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanClient.swift",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanWire.swift",
+    "Scripts/Tests/verify_chatgpt_plan_contract.swift",
+    "-o",
+    "siwc-contract"
+  ],
+  "compileExitCode": 0,
+  "inputs": {
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanClient.swift": "14f8bc46a2590eb483b94d292e05a37d732cb34af207872faf897abe50bc3aab",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanWire.swift": "18fed34ca6de1742f18b5b59bd3b4774103acfce57e44803ff537818e8327900",
+    "Scripts/Tests/verify_chatgpt_plan_contract.swift": "e9726a19dcd4f3ef1487dc5ad548d44825991011dccc1663e8c92e88076057f7"
+  },
+  "runCommand": [
+    "./siwc-contract"
+  ],
+  "runExitCode": 0,
+  "scope": "Original SIWC client and wire source, native macOS CryptoKit/Security fixtures; no live account",
+  "sourceSHA": "f87d14f874994e6dfd38a48b91c76c3f568ba113",
+  "toolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "verifiedAtUTC": "2026-11-24T15:32:12.992055+00:00",
+  "xcode": "Xcode 27.0\nBuild version 27A266a"
+}

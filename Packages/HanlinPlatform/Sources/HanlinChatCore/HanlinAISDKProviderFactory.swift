@@ -39,7 +39,7 @@ public enum HanlinAISDKProviderFactory {
         } else if company == "GOOGLE" || company == "GEMINI" || apiType.contains("gemini") {
             kind = .google
         } else if company == "OPENAI" && !isOpenAICompatibleHost(configuration.endpoint.host) {
-            kind = apiType == "openai-responses" ? .openAIResponses : .openAI
+            kind = ["openai-responses", "openai-chatgpt-plan"].contains(apiType) ? .openAIResponses : .openAI
         } else {
             kind = .openAICompatible
         }
@@ -131,7 +131,9 @@ extension HanlinAISDKProviderFactory {
                 apiKey: configuration.apiKey,
                 headers: descriptor.headers,
                 name: "hanlin-openai",
-                fetch: fetch
+                fetch: configuration.apiType?.lowercased() == "openai-chatgpt-plan"
+                    ? HanlinChatGPTPlanTransport.wrap(fetch ?? makeFetch(sessionConfiguration: .default))
+                    : fetch
             ))
             if descriptor.kind == .openAIResponses {
                 model = provider.responses(descriptor.modelID)
@@ -183,6 +185,18 @@ extension HanlinAISDKProviderFactory {
         configuration: HanlinChatModelConfiguration,
         kind: HanlinAISDKProviderKind
     ) -> ProviderOptions? {
+        // ChatGPT plan bearer tokens are authorized for Responses API only.
+        // OpenAI's OSS plan-use contract requires stateless requests. Enforce
+        // store=false in the shared Hanlin SDK, rather than relying on every
+        // host application to remember a provider-specific option.
+        if kind == .openAIResponses {
+            var options: [String: JSONValue] = ["store": .bool(false)]
+            if configuration.supportsReasoning,
+                let effort = configuration.reasoningEffort, !effort.isEmpty {
+                options["reasoningEffort"] = .string(effort)
+            }
+            return ["openai": options]
+        }
         guard configuration.supportsReasoning else { return nil }
 
         switch kind {
