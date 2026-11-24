@@ -3,9 +3,12 @@
 ## Confirmed boundary
 
 The pinned NativeScript/ios-spm 9.1.0 wrapper owns one process-global main VM.
-Creating a second NativeScript object destroys the former VM. Concurrent independent
-NativeScript MiniApp invocations remain BLOCKED_UPSTREAM; the existing guard stays.
-This is a dependency architecture limitation, not a new user-facing permission.
+Creating a second NativeScript object destroys the former VM. Independent main VMs
+for arbitrary whole-package roots remain BLOCKED_UPSTREAM; the existing guard stays
+until a sound shared-context adapter or a separate runtime integration exists.
+Multiple windows do not inherently require multiple VMs. The current Hanlin
+embedded-session and invocation adapters also impose a distinct one-window limit.
+This is runtime/integration behavior, not a new user-facing permission.
 
 ## Source evidence
 
@@ -33,6 +36,67 @@ That does not isolate arbitrary catalog packages or per-invocation input: the
 embedded path still uses Application._rootView and one NativeScriptEmbedder
 delegate, while configuration, module caches and globals remain shared.
 No existing per-invocation view-factory contract turns this into independent apps.
+
+## Actual external-invocation behavior and shared-context path
+
+Read-only review of the producer source at a774de24926ca13d563c45c42917d03b8c04296f
+(and the unchanged app sources in its fixture-only successor) confirms:
+
+- Each external request creates a new `HanlinScriptingPlatform` in
+  `HanlinExternalMiniAppSession.load`. The process-wide preflight in
+  `HanlinScriptingPlatform.launchInstalledApplication` rejects another active
+  NativeScript owner regardless of package identity. Therefore the current new
+  Host window cannot open a second invocation of the same NativeScript package
+  either; that request receives an error result while the first window survives.
+- Reuse of registered NativeScript actions is currently scoped to the same
+  platform instance. It does not solve a different external request scene.
+- `HanlinNativeScriptPresenter.install` installs one shared embedder delegate.
+  Its `presentNativeScriptApp` first detaches its previous sole guest controller.
+  The shipped `IOSNativeWindow._setNativeContent` calls that shared delegate for
+  every embedded window. Adding a native window without a presenter registry
+  would move or replace the prior guest.
+- The shipped `createHostServices()` captures one native bridge. The current
+  adapter captures one immutable `externalMiniAppOperation` closure. Reusing a
+  previously initialized module-level facade for a second invocation would send
+  its context/completion to the first request.
+
+The supported upstream window contract is sufficient for cooperating window
+factories in one JS context: `Application.setWindowContentResolver` receives a
+window plus serialized request data, and `NativeWindow.setContent` owns a fresh
+root view. It does not require another `runMainApplication` call. The current
+Hanlin controller fixtures already export `createRoot()` functions that allocate
+new view trees (`Scripts/NativeScript/build-controller-fixtures.mjs`). Thus a
+same-package, explicitly bound factory adaptation is feasible without changing
+the native engine binary; it has not yet been implemented or proven here.
+
+The smallest sound Hanlin implementation is:
+
+1. Retain one process-owned NativeScript runtime/module instance while individual
+   request-window objects retain their own invocation IDs, provider and lifetime.
+   A second window of that package uses its factory instead of starting a new VM.
+2. Add a window factory entry contract receiving a window/request context and an
+   explicitly bound Host Services facade. Capture that facade in that window's
+   callbacks. Never route asynchronous completion using the globally active window.
+3. Route embedded controllers by the corresponding window/request ID. Preserve
+   SwiftUI Host scenes and their roots; the upstream main-app scene configuration
+   must not replace the Host's application delegate or unrelated scene roots.
+4. Close only the requested view/provider and retain the VM until its final window
+   closes. Restore the same request binding when a scene detaches and reconnects.
+5. Add an actual iPad test with two requests to one factory: distinct text/context,
+   independent edits and delayed callbacks, reverse completion order, first-window
+   survival after closing the second, and scene reconnect. Existing passing engine
+   suites do not prove these new interactions and need not be repeated wholesale.
+
+This is not a transparent promise for every existing arbitrary `Application.run`
+entry. A module can retain a singleton root, capture the first invocation's facade
+at top level, mutate application-wide CSS/state, or bootstrap a framework only once.
+Those entries need a cooperating factory adapter. Loading distinct whole-package
+roots additionally needs explicit module/path/bootstrap ownership; the current
+upstream wrapper still has one application base directory. Removing the guard or
+changing the active provider cannot supply those semantics.
+
+Primary API reference (read 2026-11-24):
+https://docs.nativescript.org/guide/multi-window
 
 ## In-scope fixes
 
