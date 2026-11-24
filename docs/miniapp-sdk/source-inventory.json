@@ -1,8 +1,6 @@
 {
-  "sourceCommit": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
-  "uncommittedSourcePaths": [
-    "Scripts/Audit/audit-miniapp-sdk.mjs"
-  ],
+  "sourceCommit": "42cd5c3e94c1ad69780183f2f348c51961cdffbc",
+  "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
     "package": "@typescript/typescript6",
@@ -1215,7 +1213,7 @@
     "preparedWidgetPublication": {
       "producer": {
         "source": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
-        "sha256": "73267f6b7110ffd25adeb210eddca58f39a76b513dbde981b391e3c83cfdccf5"
+        "sha256": "ce2b136f95d1eccfd27fc876e10307133602d673fd42d860816559510b5a5960"
       },
       "consumer": {
         "source": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
@@ -13819,7 +13817,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
-      "sha256": "73267f6b7110ffd25adeb210eddca58f39a76b513dbde981b391e3c83cfdccf5"
+      "sha256": "ce2b136f95d1eccfd27fc876e10307133602d673fd42d860816559510b5a5960"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
