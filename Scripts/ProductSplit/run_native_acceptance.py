@@ -135,15 +135,6 @@ def main():
             'host': architecture,
             'runtime_supported': runtime['supportedArchitectures'],
         }
-        # Run 44248480774 compiled successfully, but its immediate cold-boot install,
-        # screenshot and simulator log all timed out before either selected UI case.
-        # Start only this owned device before compilation so its first-boot services
-        # can settle during the real build; retain host/command timing for diagnosis.
-        command(['sysctl', 'hw.memsize', 'hw.ncpu'], 'before-boot-host-resources.txt')
-        command(['vm_stat'], 'before-boot-memory.txt')
-        command(['ps', '-axo', 'pid,ppid,%cpu,%mem,state,etime,comm'], 'before-boot-processes.txt')
-        command(['xcrun', 'simctl', 'boot', simulator], 'boot.log')
-        command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=300)
         derived = Path(os.environ['SPLIT_DERIVED_DATA'])
         base = ['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
                 '-destination', 'platform=iOS Simulator,id='+simulator+',arch='+architecture,
@@ -178,6 +169,16 @@ def main():
                 'authenticated_previous_passes': len(previous['reusable_selectors']),
                 'previous_run_overall_status': 'failure',
             }
+        # Authenticate prior proof and capture its environment before booting.
+        # Run 45313324655 exhausted the metadata transport deadline after boot;
+        # even ps and a screenshot then timed out under observed memory pressure.
+        # Start only this owned device before compilation so its first-boot
+        # services can settle during the real build (see run 44248480774).
+        command(['sysctl', 'hw.memsize', 'hw.ncpu'], 'before-boot-host-resources.txt')
+        command(['vm_stat'], 'before-boot-memory.txt')
+        command(['ps', '-axo', 'pid,ppid,%cpu,%mem,state,etime,comm'], 'before-boot-processes.txt')
+        command(['xcrun', 'simctl', 'boot', simulator], 'boot.log')
+        command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=300)
         state['status'] = 'BUILD_FAILED'
         # Run 44270714044 exhausted the 20-minute cold compilation budget while
         # Swift package compilation still progressed on a 3-core/7-GiB runner.

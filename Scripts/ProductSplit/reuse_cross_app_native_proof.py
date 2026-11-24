@@ -52,6 +52,35 @@ def description(root):
     return json.loads((Path(root) / DESCRIPTOR).read_text())
 
 
+def original_artifact_metadata(root, spec):
+    """Use the exact-run listing already exercised by the original Host restore."""
+    endpoint = f"repos/{spec['repository']}/actions/runs/{spec['run_id']}/artifacts?per_page=100"
+    for attempt in (1, 2):
+        try:
+            payload = json.loads(command(root, "gh", "api", endpoint))
+            break
+        except subprocess.TimeoutExpired:
+            # This is a read-only transport retry, never an identity/auth fallback.
+            # Keep the original failure visible in the retained native-step log.
+            print(json.dumps({"event": "ORIGIN_METADATA_TRANSPORT_TIMEOUT",
+                              "endpoint": endpoint, "attempt": attempt,
+                              "maximum_attempts": 2, "timeout_seconds": 120}), flush=True)
+            if attempt == 2:
+                raise
+    matches = [item for item in payload.get("artifacts", [])
+               if item.get("id") == spec["artifact_id"]]
+    require(len(matches) == 1, "Exact original artifact is absent or ambiguous in its run")
+    metadata = matches[0]
+    require(metadata["name"] == spec["artifact_name"]
+            and metadata["size_in_bytes"] == spec["artifact_bytes"] and not metadata["expired"]
+            and metadata.get("digest") == "sha256:" + spec["artifact_sha256"],
+            "Original GitHub artifact identity changed")
+    workflow = metadata.get("workflow_run", {})
+    require(workflow.get("id") == spec["run_id"] and workflow.get("head_sha") == spec["source_sha"],
+            "Artifact does not belong to the original executed source/run")
+    return metadata
+
+
 def download_origin(root, cache_directory):
     """Use the already downloaded exact ZIP when present; otherwise fetch by ID."""
     spec = description(root)["origin"]
@@ -63,14 +92,8 @@ def download_origin(root, cache_directory):
                 and file_digest(archive) == spec["artifact_sha256"],
                 "Cached original artifact has different bytes")
         return archive
-    endpoint = f"repos/{spec['repository']}/actions/artifacts/{spec['artifact_id']}"
-    metadata = json.loads(command(root, "gh", "api", endpoint))
-    require(metadata["id"] == spec["artifact_id"] and metadata["name"] == spec["artifact_name"]
-            and metadata["size_in_bytes"] == spec["artifact_bytes"] and not metadata["expired"],
-            "Original GitHub artifact identity changed")
-    workflow = metadata.get("workflow_run", {})
-    require(workflow.get("id") == spec["run_id"] and workflow.get("head_sha") == spec["source_sha"],
-            "Artifact does not belong to the original executed source/run")
+    metadata = original_artifact_metadata(root, spec)
+    endpoint = f"repos/{spec['repository']}/actions/artifacts/{metadata['id']}"
     partial = archive.with_suffix(".partial")
     try:
         with partial.open("wb") as stream:
