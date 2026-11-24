@@ -41,6 +41,22 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         }
     }
 
+    /// One-shot caret placement after an explicit suggestion replacement.
+    /// It is accepted only for the matching text and draft owner.
+    public struct SelectionRequest: Sendable {
+        public let id: UUID
+        public let ownerID: UUID?
+        public let text: String
+        public let range: NSRange
+
+        public init(text: String, range: NSRange, ownerID: UUID? = nil) {
+            self.id = UUID()
+            self.ownerID = ownerID
+            self.text = text
+            self.range = range
+        }
+    }
+
     /// Reports the existing native view to its owning host without changing text or focus.
     public enum LifecycleEvent: Sendable {
         case attached
@@ -58,6 +74,8 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
     var onPasteFile: ((URL) -> Void)?
     var onSendMessage: (() -> Void)?
     var onMentionTriggered: (() -> Void)?
+    var onCapabilityQueryChange: ((HanlinComposerCapabilityQuery?) -> Void)?
+    var selectionRequest: SelectionRequest?
     var onFocusChange: ((Bool) -> Void)? = nil
     var onLifecycleEvent: ((UITextView, LifecycleEvent) -> Void)? = nil
     /// Optional synchronous read of the same owner mutated by the text Binding.
@@ -83,7 +101,9 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
                 onMentionTriggered: (() -> Void)? = nil,
                 onFocusChange: ((Bool) -> Void)? = nil,
                 onLifecycleEvent: ((UITextView, LifecycleEvent) -> Void)? = nil,
-                readCurrentTextState: (() -> TextState?)? = nil) {
+                readCurrentTextState: (() -> TextState?)? = nil,
+                onCapabilityQueryChange: ((HanlinComposerCapabilityQuery?) -> Void)? = nil,
+                selectionRequest: SelectionRequest? = nil) {
         _text = text; _textHeight = textHeight
         self.placeholderText = placeholderText
         self.minHeight = minHeight; self.maxHeight = maxHeight
@@ -93,6 +113,8 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         self.onFocusChange = onFocusChange
         self.onLifecycleEvent = onLifecycleEvent
         self.readCurrentTextState = readCurrentTextState
+        self.onCapabilityQueryChange = onCapabilityQueryChange
+        self.selectionRequest = selectionRequest
     }
 
     static let mentionRegex = try! NSRegularExpression(pattern: "@[^\\s]+", options: [])
@@ -359,6 +381,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         guard uiView.markedTextRange == nil else { return }
 
         context.coordinator.synchronizeText(in: uiView)
+        context.coordinator.applySelectionRequest(in: uiView)
 
         context.coordinator.updateHeight(in: uiView, deferred: true)
     }
@@ -385,6 +408,8 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         private var lastSynchronizedTextState: TextState?
         private var pendingVersionedEcho: PendingVersionedEcho?
         private var isRebindingOwner = false
+        private var isSynchronizingText = false
+        private var appliedSelectionRequestID: UUID?
         private var isAttached = true
         private var measurementGeneration: UInt64 = 0
         private var heightUpdateTask: Task<Void, Never>?
@@ -550,6 +575,8 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         /// those changes without replacing an unchanged selection or marked text.
         public func synchronizeText(in textView: UITextView) {
             guard textView.markedTextRange == nil else { return }
+            isSynchronizingText = true
+            defer { isSynchronizingText = false }
             let incomingState = parent.currentTextState
             if let pending = pendingVersionedEcho {
                 if let incomingState,
@@ -598,6 +625,26 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             if textView.textColor != desiredColor { textView.textColor = desiredColor }
         }
 
+        func applySelectionRequest(in textView: UITextView) {
+            guard let request = parent.selectionRequest,
+                  appliedSelectionRequestID != request.id,
+                  request.ownerID == nil || request.ownerID == parent.currentTextState?.ownerID,
+                  request.text.utf8.elementsEqual((textView.text ?? "").utf8),
+                  Range(request.range, in: request.text) != nil else { return }
+            appliedSelectionRequestID = request.id
+            isSynchronizingText = true
+            textView.selectedRange = request.range
+            isSynchronizingText = false
+        }
+
+        private func publishCapabilityQuery(in textView: UITextView) {
+            guard !isRebindingOwner, !isSynchronizingText, isEditing else { return }
+            let query = HanlinComposerCapabilityQuery.parse(
+                text: textView.textColor == .placeholderText ? "" : (textView.text ?? ""),
+                selection: textView.selectedRange, hasMarkedText: textView.markedTextRange != nil)
+            parent.onCapabilityQueryChange?(query)
+        }
+
         public func textViewDidBeginEditing(_ textView: UITextView) {
             isEditing = true
             if textView.textColor == .placeholderText {
@@ -628,7 +675,11 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
         public func textViewDidChange(_ textView: UITextView) {
             invalidateMeasurement()
-            guard !isRebindingOwner, textView.markedTextRange == nil else { return }
+            guard !isRebindingOwner else { return }
+            guard textView.markedTextRange == nil else {
+                parent.onCapabilityQueryChange?(nil)
+                return
+            }
             // An explicit clear/replacement can arrive before the delegate for
             // an older native mutation. Do not resurrect that older value.
             if parent.currentTextState != nil, !ownerMatchesLastSynchronization() {
@@ -647,6 +698,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
                 if changed && nativeText.hasSuffix("@") {
                     parent.onMentionTriggered?()
                 }
+                publishCapabilityQuery(in: textView)
                 updateHeight(in: textView, deferred: false)
             }
         }
@@ -672,11 +724,12 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             return true
         }
 
-        #if DEBUG || HANLIN_TESTING
         public func textViewDidChangeSelection(_ textView: UITextView) {
+            #if DEBUG || HANLIN_TESTING
             traceEdit("selection-change", in: textView)
+            #endif
+            publishCapabilityQuery(in: textView)
         }
-        #endif
 
         private static func matchContaining(index: Int, in text: String) -> NSTextCheckingResult? {
             let ns = text as NSString
