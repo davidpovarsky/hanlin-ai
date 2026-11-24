@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
-import {expoRanges,latestMetadata,generatedHostVersions,generatedExpoHostVersions} from '../resolve-upstreams.mjs';
+import {expoRanges,latestMetadata,generatedHostVersions,generatedExpoHostVersions,generatedNativeAPIHostVersions} from '../resolve-upstreams.mjs';
 import {mergeOriginal,originalInHostTarget} from '../refresh-original-sources.mjs';
 import {sourceBuildIdentity} from '../../Expo/build-original-expo-source.mjs';
 
@@ -61,4 +61,11 @@ test('prepared widget namespace keeps original universal layout without importin
   const result=originalInHostTarget(source,'Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/UIBaseView.swift').toString();
   assert.match(result,/UniversalPercentageParentBoundary/);
   assert.doesNotMatch(result,/publishZeroContentOrigin|ShadowNodeProxy/);
+});
+
+test('public Native API metadata uses the same real Worklets and React Native versions',()=>{
+  const source=generatedNativeAPIHostVersions({expo:{'@nativescript/react-native':'9.1.2','react-native-worklets':'0.13.0','react-native':'0.88.1'}});
+  assert.match(source,/workletsVersion = "0\.13\.0"/);
+  assert.match(source,/reactNativeVersion = "0\.88\.1"/);
+  assert.throws(()=>generatedNativeAPIHostVersions({expo:{}}),/Missing exact/);
 });

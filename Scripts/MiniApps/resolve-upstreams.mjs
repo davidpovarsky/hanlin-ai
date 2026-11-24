@@ -85,6 +85,14 @@ export function generatedExpoHostVersions(versions,hermesVersion) {
   return '// Generated from the same exact original inputs used by the native framework producer.\nenum HanlinExpoHostVersions {\n'+Object.entries(fields).map(([name,value])=>`    static let ${name} = ${JSON.stringify(value)}`).join('\n')+'\n}\n';
 }
 
+export function generatedNativeAPIHostVersions(versions) {
+  const fields={nativeApiVersion:versions.expo['@nativescript/react-native'],
+    workletsVersion:versions.expo['react-native-worklets'],reactNativeVersion:versions.expo['react-native']};
+  for(const [name,value] of Object.entries(fields))if(!/^\d+\.\d+\.\d+(?:[-+][\w.-]+)?$/.test(value??''))throw new Error('Missing exact Native API host version: '+name);
+  return '// Generated from the exact original Native API and React Native build graph.\nenum HanlinExpoNativeAPIHostVersions {\n'+
+    Object.entries(fields).map(([name,value])=>`    static let ${name} = ${JSON.stringify(value)}`).join('\n')+'\n}\n';
+}
+
 export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=path.join(tmpdir(),'hanlin-miniapp-upstreams'),apply=false,report=path.join(root,'build/acceptance/miniapp-upstreams/resolution.json')}={}) {
   await mkdir(cache,{recursive:true});
   const expoPackage=await json(path.join(root,'Scripts/Expo/package.json'));
@@ -162,7 +170,8 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
     ['Scripts/NativeScript/package.json',pretty(nsPackage)],['Scripts/NativeScript/dependency-lock.json',pretty(updatedNS)],
     ['Scripts/ExpoNativeAPI/dependency-lock.json',pretty(updatedNative)],
     ['Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift',generatedHostVersions(versions)],
-    ['Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift',generatedExpoHostVersions(versions,hermes)]
+    ['Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift',generatedExpoHostVersions(versions,hermes)],
+    ['Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',generatedNativeAPIHostVersions(versions)]
   ]);
   for(const name of ['Packages/HanlinExpoUI/package.json','Packages/HanlinExpoNativeAPIJS/package.json']) {
     const local=await json(path.join(root,name));for(const dependency of Object.keys(local.peerDependencies??{}))if(versions.expo[dependency])local.peerDependencies[dependency]=versions.expo[dependency];files.set(name,pretty(local));
