@@ -1,0 +1,23 @@
+{
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "/usr/local/bin/swiftc",
+    "-frontend",
+    "-parse",
+    "/mnt/development/projects/worktrees/hanlin-sdk-paired-consent-20261124/AI_HLYUITests/HanlinPairedProductUITests.swift"
+  ],
+  "startedUTC": "2026-11-24T00:57:34.905359+00:00",
+  "finishedUTC": "2026-11-24T00:57:34.961505+00:00",
+  "exitCode": 0,
+  "sourceSHA256": "587f174133c6d5b4bba03973ca38acdaed3cab0527a781c7ff5bca058f87ed21",
+  "status": "PASS_SYNTAX_ONLY",
+  "notProven": [
+    "XCTest API typecheck",
+    "Apple compilation",
+    "UI behavior",
+    "paired return",
+    "autofollow"
+  ]
+}
