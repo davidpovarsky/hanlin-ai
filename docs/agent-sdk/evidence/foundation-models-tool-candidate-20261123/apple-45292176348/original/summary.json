@@ -1,0 +1,1413 @@
+{
+  "scope": "Fifteen affected native cancellation consumers on explicitly composed07431;21 separately source-qualified original product passes",
+  "status": "BLOCKED",
+  "expected_invocations": 15,
+  "expected_method_groups": 7,
+  "current_producer_commit": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "cases": [
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized",
+      "arguments": [
+        false
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized [false]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+      "argument_display": "false",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized",
+      "arguments": [
+        true
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized [true]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "argument_display": "true",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+      "arguments": [
+        "{\"nested\":[{\"number\":1.25}]}",
+        false
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":[{\\\"number\\\":1.25}]}\",false]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=f7b65bb213ae4e0ea464b93db40be9148dcd4d37cb135bbfa4c1c5ae5aa9f6b6",
+      "argument_display": "\"{\"nested\":[{\"number\":1.25}]}\", false",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+      "arguments": [
+        "{\"nested\":[{\"number\":1.25}]}",
+        true
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":[{\\\"number\\\":1.25}]}\",true]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=07f68592f370c5ab1698e1b97b1c352252e3e5af8f63706979348f74af2cca75",
+      "argument_display": "\"{\"nested\":[{\"number\":1.25}]}\", true",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+      "arguments": [
+        "{\"nested\":{\"number\":1e100}}",
+        false
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":{\\\"number\\\":1e100}}\",false]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=155e5bad54ad19af15eef8b1d70ce636b620baf27b67f98b6294de78344bbe98",
+      "argument_display": "\"{\"nested\":{\"number\":1e100}}\", false",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+      "arguments": [
+        "{\"nested\":{\"number\":1e100}}",
+        true
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":{\\\"number\\\":1e100}}\",true]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=38622c62d752bdd318b66425e9ba3e0f16f52c924d2f5125c789e6f2981e6d8a",
+      "argument_display": "\"{\"nested\":{\"number\":1e100}}\", true",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+      "arguments": [
+        "{\"number\":0}",
+        false
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":0}\",false]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=f824e3ee72e4040a38d8803538e0bba40157d50ca4764117cc654f11577a752e",
+      "argument_display": "\"{\"number\":0}\", false",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+      "arguments": [
+        "{\"number\":0}",
+        true
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":0}\",true]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=9ab1f6b37af7f435558fa4ed84df9b7155ba6a15e868d831fbd7a75214175d77",
+      "argument_display": "\"{\"number\":0}\", true",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+      "arguments": [
+        "{\"number\":9007199254740993}",
+        false
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":9007199254740993}\",false]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=a0bea0f782f2f8b5d7eb7476d822f00e6880f865e87d679b5ad63414864323dd",
+      "argument_display": "\"{\"number\":9007199254740993}\", false",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+      "arguments": [
+        "{\"number\":9007199254740993}",
+        true
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":9007199254740993}\",true]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=ebd7a63804c1e8cab55684a66ef1c4d8faaecc94c464e47c30f7ca0e92f63986",
+      "argument_display": "\"{\"number\":9007199254740993}\", true",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeCoreTests",
+      "method": "HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost",
+      "arguments": null,
+      "id": "HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost()",
+      "argument_display": "Rejected native numeric stop-labeled tool cannot reach approval, effect or another provider request",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeSDKTests",
+      "method": "HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor",
+      "arguments": null,
+      "id": "HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()",
+      "argument_display": "Cancelling a waiting native request reaches its public executor and produces no host effect",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeSDKTests",
+      "method": "HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory",
+      "arguments": null,
+      "id": "HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+      "argument_display": "A denied native call has no effect and continues with the correlated tool denial",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeSDKTests",
+      "method": "HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory",
+      "arguments": null,
+      "id": "HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+      "argument_display": "Two same-name calls keep their identities and continue through the original executor",
+      "execution": "EXECUTED"
+    },
+    {
+      "result": "NativeSDKTests",
+      "method": "HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute",
+      "arguments": null,
+      "id": "HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+      "argument_display": "An invalid numeric sibling blocks the complete batch before approval or effect",
+      "execution": "EXECUTED"
+    }
+  ],
+  "methods": [
+    {
+      "result": "NativeCoreTests",
+      "id": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)",
+      "status": "PASS",
+      "expected_status": "PASS"
+    },
+    {
+      "result": "NativeCoreTests",
+      "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)",
+      "status": "PASS",
+      "expected_status": "PASS"
+    },
+    {
+      "result": "NativeCoreTests",
+      "id": "HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost()",
+      "status": "PASS",
+      "expected_status": "PASS"
+    },
+    {
+      "result": "NativeSDKTests",
+      "id": "HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()",
+      "status": "PASS",
+      "expected_status": "PASS"
+    },
+    {
+      "result": "NativeSDKTests",
+      "id": "HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+      "status": "PASS",
+      "expected_status": "PASS"
+    },
+    {
+      "result": "NativeSDKTests",
+      "id": "HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+      "status": "PASS",
+      "expected_status": "PASS"
+    },
+    {
+      "result": "NativeSDKTests",
+      "id": "HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+      "status": "PASS",
+      "expected_status": "PASS"
+    }
+  ],
+  "errors": [
+    "Native cancellation admission rejected: post-build lock changed"
+  ],
+  "process_status": {
+    "preparation_exit": 0,
+    "delta_test_exit": null,
+    "ios_build_exit": 0,
+    "baseline_core_exit": null,
+    "core_test_exit": null,
+    "sdk_test_exit": null,
+    "native_core_test_exit": 0,
+    "native_sdk_test_exit": 0,
+    "baseline_execution": "HISTORICAL_REFERENCE_ONLY",
+    "accepted_cases_execution": "REUSED_VERIFIED",
+    "ios_build_execution": "EXECUTED"
+  },
+  "reuse_admission": {
+    "mode": "REUSED_VERIFIED",
+    "current_source_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+    "current_producer_commit": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+    "reference_manifest_sha256": "676dbcdb376fa334925385bf6ce0b17e777cb2b24b74168a3edcd7d5a250c6c0",
+    "reused_cases": [
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolHeaderAdmissionTests/rejectsUnsupportedTransportHeader",
+        "arguments": null,
+        "id": "HanlinAppleToolHeaderAdmissionTests/rejectsUnsupportedTransportHeader",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolHeaderAdmissionTests/rejectsUnsupportedTransportHeader()",
+        "argument_display": "A non-User-Agent header is rejected before native executor entry",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "2c41a1b7ed6b191be7529550ae1ca4501632ce8d",
+        "run_id": 45273580428,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14867146247
+      },
+      {
+        "result": "CoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance",
+        "arguments": [
+          false
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance [false]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance(_:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "argument_display": "false",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "CoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance",
+        "arguments": [
+          true
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance [true]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance(_:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "argument_display": "true",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"additionalProperties\":true}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"additionalProperties\\\":true}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=9aac8933583abb7914ebb57d1265f5c4fd1a42ce1ec0a7090d3f2dcbaacb1ebf",
+        "argument_display": "\"{\"type\":\"object\",\"additionalProperties\":true}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":2,\"maxItems\":1}},\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"a\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"string\\\"},\\\"minItems\\\":2,\\\"maxItems\\\":1}},\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=94ad2b940777c4d112ca64f57b3f994e6550b396387215181fba5b77ecd65901",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":2,\"maxItems\":1}},\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true}},\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"a\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"string\\\"},\\\"uniqueItems\\\":true}},\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=01ecbfa02e51dca2bf0054a5562ff12f6e9af70cacec80ea1ed35b9ea7018c11",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true}},\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"integer\"}},\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"n\\\":{\\\"type\\\":\\\"integer\\\"}},\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=3bfd07bb2a5904c8bc138995195855fe7738f50ace2b127c5ddb2b27da8d5bc0",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"integer\"}},\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"number\"}},\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"n\\\":{\\\"type\\\":\\\"number\\\"}},\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=63dcca93e6ee35ec39504e98bcf30eccb5c966f105bfb01db85e222aaa942ebf",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"number\"}},\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"minLength\":1}},\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"s\\\":{\\\"type\\\":\\\"string\\\",\\\"minLength\\\":1}},\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=824278a56db893d25da0c2e6da7c6fd6b0755693280bb88d1081dadbab1452e1",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"minLength\":1}},\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"pattern\":\"x+\"}},\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"s\\\":{\\\"type\\\":\\\"string\\\",\\\"pattern\\\":\\\"x+\\\"}},\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=00ff2cdaf25261786fb38734f182123b1cd00d27144125256f775f074459b310",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"pattern\":\"x+\"}},\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":[\"string\",\"null\"]}},\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"x\\\":{\\\"type\\\":[\\\"string\\\",\\\"null\\\"]}},\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=292384b42dffb8badfcba84843b2aec45f1e4447d3073e1260df61192f0eaf5e",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{\"x\":{\"type\":[\"string\",\"null\"]}},\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}},\"required\":[\"x\",\"x\"],\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"x\\\":{\\\"type\\\":\\\"string\\\"}},\\\"required\\\":[\\\"x\\\",\\\"x\\\"],\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=03492fd2be13813919d566c73a6b0b234079df43bdd9e66f8165cc075fb0efe5",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}},\"required\":[\"x\",\"x\"],\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{},\"oneOf\":[{}],\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{},\\\"oneOf\\\":[{}],\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=d8856404f6e00d276eda4f35e239e7547fab8ab95c5dc9ca11a89d2589ed539a",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{},\"oneOf\":[{}],\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{},\"required\":[\"missing\"],\"additionalProperties\":false}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{},\\\"required\\\":[\\\"missing\\\"],\\\"additionalProperties\\\":false}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=d43f55938e4de390ab215ef3f60fb9a58d38b1064f24e75ce565d266ad29337c",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{},\"required\":[\"missing\"],\"additionalProperties\":false}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+        "arguments": [
+          "{\"type\":\"object\",\"properties\":{}}"
+        ],
+        "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{}}\"]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=c1219ff7c42884da3ba40b2039bb37c7aa8229d87a907d290e1466a741a62c2e",
+        "argument_display": "\"{\"type\":\"object\",\"properties\":{}}\"",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSchemaTests/validatesSupportedSubsetBeforeHandoff",
+        "arguments": null,
+        "id": "HanlinAppleToolSchemaTests/validatesSupportedSubsetBeforeHandoff",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/validatesSupportedSubsetBeforeHandoff()",
+        "argument_display": "Required fields, closed objects, enum and array bounds survive admission",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSessionBridgeTests/invalidCanonicalHistoriesFailBeforeGeneration",
+        "arguments": null,
+        "id": "HanlinAppleToolSessionBridgeTests/invalidCanonicalHistoriesFailBeforeGeneration",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/invalidCanonicalHistoriesFailBeforeGeneration()",
+        "argument_display": "History rejects duplicate calls, orphan results and incomplete continuations",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls",
+        "arguments": null,
+        "id": "HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls()",
+        "argument_display": "Nonstreaming use of the original provider preserves native handoff calls",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "6b0030926cd771f2dd9995fd01aecd1efe8bcf4e",
+        "run_id": 45282347722,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14870888736
+      },
+      {
+        "result": "SDKTests",
+        "method": "HanlinAppleToolSessionBridgeTests/nativeSchemaConstructorsAndStructuredNumberRejection",
+        "arguments": null,
+        "id": "HanlinAppleToolSessionBridgeTests/nativeSchemaConstructorsAndStructuredNumberRejection",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeSchemaConstructorsAndStructuredNumberRejection()",
+        "argument_display": "The admitted closed schema constructs through actual public native schema APIs",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+        "run_id": 45259715158,
+        "run_attempt": 1,
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+        "artifact_id": 14860542354
+      },
+      {
+        "result": "StopContinuationTests",
+        "method": "HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine",
+        "arguments": null,
+        "id": "HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine()",
+        "argument_display": "An authorized tool without an additional approval prompt continues after stop with its canonical output",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "e1a295ba60396997a6127c6c2e2c4e6e75f508b3",
+        "run_id": 45273687114,
+        "run_attempt": 1,
+        "producer_commit": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "artifact_id": 14868011763
+      },
+      {
+        "result": "StopContinuationTests",
+        "method": "HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult",
+        "arguments": null,
+        "id": "HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult()",
+        "argument_display": "Denied stop-labeled tool continues with a correlated denial and no host effect",
+        "execution": "REUSED_VERIFIED",
+        "source_commit": "e1a295ba60396997a6127c6c2e2c4e6e75f508b3",
+        "run_id": 45273687114,
+        "run_attempt": 1,
+        "producer_commit": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "artifact_id": 14868011763
+      }
+    ],
+    "reused_invocations": 21,
+    "historical_baseline_cases": [
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance",
+        "arguments": [
+          false
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance [false]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance(_:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "argument_display": "false",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance",
+        "arguments": [
+          true
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance [true]",
+        "status": "PASS",
+        "expected_status": "PASS",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance(_:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "argument_display": "true",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized",
+        "arguments": [
+          false
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized [false]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+        "argument_display": "false",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized",
+        "arguments": [
+          true
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized [true]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeInputStaysNormalized(_:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+        "argument_display": "true",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+        "arguments": [
+          "{\"nested\":[{\"number\":1.25}]}",
+          false
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":[{\\\"number\\\":1.25}]}\",false]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=f7b65bb213ae4e0ea464b93db40be9148dcd4d37cb135bbfa4c1c5ae5aa9f6b6",
+        "argument_display": "\"{\"nested\":[{\"number\":1.25}]}\", false",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+        "arguments": [
+          "{\"nested\":[{\"number\":1.25}]}",
+          true
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":[{\\\"number\\\":1.25}]}\",true]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=07f68592f370c5ab1698e1b97b1c352252e3e5af8f63706979348f74af2cca75",
+        "argument_display": "\"{\"nested\":[{\"number\":1.25}]}\", true",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+        "arguments": [
+          "{\"nested\":{\"number\":1e100}}",
+          false
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":{\\\"number\\\":1e100}}\",false]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=155e5bad54ad19af15eef8b1d70ce636b620baf27b67f98b6294de78344bbe98",
+        "argument_display": "\"{\"nested\":{\"number\":1e100}}\", false",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+        "arguments": [
+          "{\"nested\":{\"number\":1e100}}",
+          true
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"nested\\\":{\\\"number\\\":1e100}}\",true]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=38622c62d752bdd318b66425e9ba3e0f16f52c924d2f5125c789e6f2981e6d8a",
+        "argument_display": "\"{\"nested\":{\"number\":1e100}}\", true",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+        "arguments": [
+          "{\"number\":0}",
+          false
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":0}\",false]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=f824e3ee72e4040a38d8803538e0bba40157d50ca4764117cc654f11577a752e",
+        "argument_display": "\"{\"number\":0}\", false",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+        "arguments": [
+          "{\"number\":0}",
+          true
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":0}\",true]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=9ab1f6b37af7f435558fa4ed84df9b7155ba6a15e868d831fbd7a75214175d77",
+        "argument_display": "\"{\"number\":0}\", true",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+        "arguments": [
+          "{\"number\":9007199254740993}",
+          false
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":9007199254740993}\",false]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=a0bea0f782f2f8b5d7eb7476d822f00e6880f865e87d679b5ad63414864323dd",
+        "argument_display": "\"{\"number\":9007199254740993}\", false",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      },
+      {
+        "result": "BaselineCoreTests",
+        "method": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor",
+        "arguments": [
+          "{\"number\":9007199254740993}",
+          true
+        ],
+        "id": "HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor [\"{\\\"number\\\":9007199254740993}\",true]",
+        "status": "FAIL",
+        "expected_status": "FAIL",
+        "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/nativeNumericInputCannotReachApprovalOrExecutor(_:_:)?args=ebd7a63804c1e8cab55684a66ef1c4d8faaecc94c464e47c30f7ca0e92f63986",
+        "argument_display": "\"{\"number\":9007199254740993}\", true",
+        "execution": "HISTORICAL_REFERENCE_ONLY",
+        "run_id": 45240721804,
+        "run_attempt": 2,
+        "source_commit": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+        "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      }
+    ],
+    "historical_baseline_current_equivalence": false,
+    "source_qualification": {
+      "current_packages_source_commit": "2381719e4a6ed2a2c5520d017980123121fba058",
+      "expected_current_source_files": 404,
+      "compared_source_deltas": {
+        "c93": {
+          "Packages/HanlinAgentSDK/Package.resolved": {
+            "before": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+            "after": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+          },
+          "Packages/HanlinAgentSDK/Package.swift": {
+            "before": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+            "after": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8"
+          },
+          "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": {
+            "before": "52b011d931fcae6c9be2da94ade98e00a13b5fd8379812f8ad293cd9bcbf98ab",
+            "after": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418"
+          },
+          "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": {
+            "before": "484933369535fd96b5c17d77532ec9e63c2481a1d46b8515c3e8dcb50078988c",
+            "after": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57"
+          },
+          "Packages/HanlinPlatform/Package.resolved": {
+            "before": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+            "after": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+          },
+          "Packages/HanlinPlatform/Package.swift": {
+            "before": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+            "after": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665"
+          },
+          "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+            "before": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+            "after": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8"
+          },
+          "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": {
+            "before": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+            "after": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815"
+          }
+        },
+        "header": {
+          "Packages/HanlinAgentSDK/Package.resolved": {
+            "before": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+            "after": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+          },
+          "Packages/HanlinAgentSDK/Package.swift": {
+            "before": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+            "after": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8"
+          },
+          "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": {
+            "before": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+            "after": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418"
+          },
+          "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": {
+            "before": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+            "after": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57"
+          },
+          "Packages/HanlinPlatform/Package.resolved": {
+            "before": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+            "after": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+          },
+          "Packages/HanlinPlatform/Package.swift": {
+            "before": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+            "after": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665"
+          },
+          "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+            "before": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+            "after": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8"
+          },
+          "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": {
+            "before": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+            "after": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815"
+          }
+        },
+        "bridge": {
+          "Packages/HanlinAgentSDK/Package.resolved": {
+            "before": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+            "after": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+          },
+          "Packages/HanlinAgentSDK/Package.swift": {
+            "before": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+            "after": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8"
+          },
+          "Packages/HanlinPlatform/Package.resolved": {
+            "before": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+            "after": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+          },
+          "Packages/HanlinPlatform/Package.swift": {
+            "before": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+            "after": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665"
+          },
+          "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+            "before": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+            "after": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8"
+          },
+          "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": {
+            "before": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+            "after": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815"
+          }
+        },
+        "delta": {
+          "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": {
+            "before": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+            "after": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418"
+          },
+          "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": {
+            "before": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+            "after": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57"
+          },
+          "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+            "before": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+            "after": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8"
+          }
+        }
+      },
+      "snapshot_paths": {
+        "current": {
+          "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/current/00-Package.resolved",
+          "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/current/01-Package.swift",
+          "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/current/02-HanlinAppleToolSessionBridge.swift",
+          "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/current/03-HanlinAppleToolSessionBridgeTests.swift",
+          "Packages/HanlinPlatform/Package.resolved": "source-snapshots/current/04-Package.resolved",
+          "Packages/HanlinPlatform/Package.swift": "source-snapshots/current/05-Package.swift",
+          "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/current/06-HanlinAISDKAgentEngine.swift",
+          "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/current/07-HanlinAppleToolInputBoundaryTests.swift"
+        },
+        "c93": {
+          "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/c93/00-Package.resolved",
+          "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/c93/01-Package.swift",
+          "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/c93/02-HanlinAppleToolSessionBridge.swift",
+          "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/c93/03-HanlinAppleToolSessionBridgeTests.swift",
+          "Packages/HanlinPlatform/Package.resolved": "source-snapshots/c93/04-Package.resolved",
+          "Packages/HanlinPlatform/Package.swift": "source-snapshots/c93/05-Package.swift",
+          "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/c93/06-HanlinAISDKAgentEngine.swift",
+          "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/c93/07-HanlinAppleToolInputBoundaryTests.swift"
+        },
+        "header": {
+          "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/header/00-Package.resolved",
+          "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/header/01-Package.swift",
+          "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/header/02-HanlinAppleToolSessionBridge.swift",
+          "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/header/03-HanlinAppleToolSessionBridgeTests.swift",
+          "Packages/HanlinPlatform/Package.resolved": "source-snapshots/header/04-Package.resolved",
+          "Packages/HanlinPlatform/Package.swift": "source-snapshots/header/05-Package.swift",
+          "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/header/06-HanlinAISDKAgentEngine.swift",
+          "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/header/07-HanlinAppleToolInputBoundaryTests.swift"
+        },
+        "bridge": {
+          "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/bridge/00-Package.resolved",
+          "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/bridge/01-Package.swift",
+          "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/bridge/02-HanlinAppleToolSessionBridge.swift",
+          "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/bridge/03-HanlinAppleToolSessionBridgeTests.swift",
+          "Packages/HanlinPlatform/Package.resolved": "source-snapshots/bridge/04-Package.resolved",
+          "Packages/HanlinPlatform/Package.swift": "source-snapshots/bridge/05-Package.swift",
+          "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/bridge/06-HanlinAISDKAgentEngine.swift",
+          "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/bridge/07-HanlinAppleToolInputBoundaryTests.swift"
+        },
+        "delta": {
+          "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/delta/00-Package.resolved",
+          "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/delta/01-Package.swift",
+          "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/delta/02-HanlinAppleToolSessionBridge.swift",
+          "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/delta/03-HanlinAppleToolSessionBridgeTests.swift",
+          "Packages/HanlinPlatform/Package.resolved": "source-snapshots/delta/04-Package.resolved",
+          "Packages/HanlinPlatform/Package.swift": "source-snapshots/delta/05-Package.swift",
+          "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/delta/06-HanlinAISDKAgentEngine.swift",
+          "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/delta/07-HanlinAppleToolInputBoundaryTests.swift"
+        }
+      },
+      "producer_before": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "producer_after": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+      "only_changed_producer_path": "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift",
+      "actor_bytes_outside_changed_method_sha256": "8995b4233d447950fb3de2e4cfd7f959fd89a14386f6d1829140da5480f9183e",
+      "production_maps_except_changed_method_equal": true,
+      "current_invocations": 15,
+      "current_groups": 7,
+      "reused_invocations": 21,
+      "partition": {
+        "native_Core10": "New appleOnDevice abortSignal reaches original producer options; execute both exact parameter methods (2+8).",
+        "native_bridge4": "Native-only nonnil abortSignal enters existing FoundationModels task group; execute allow, deny, numeric sibling, cancellation with unchanged assertions/deadlines.",
+        "native_Delta1": "Same new native settings reach the original numeric .stop boundary; execute unchanged providerCalls1/zero-effect case.",
+        "cloud_Core2": "Original settings have nil abortSignal. Fixture has no cancellation; setStopper registration precedes the engine iteration and all finish/error paths, so alreadyStopped remains false at registration. Original .toolCalls tool step and no-tool .stop final step have identical continuation decisions across e7 to07431; pure stop predicates, no deferred provider tools or dynamicTools callback.",
+        "cloud_Delta2": "Already executed on07431; same finite no-cancel fixture and unchanged cloud settings. The moved already-stopped callback branch is unreachable before registration. Exact allowed/denied assertions and fixtures retained.",
+        "Schema13_and_pure2": "Original schema/history implementations and helper method bodies do not enter original engine or native profile.",
+        "Authorization1": "Exact early header guard rejects before history/session/profile or engine. Its original helper/immutable fixture remain unchanged.",
+        "doGenerate1": "Same original provider, bridge, helper and immutable fixture as6b. Direct doGenerate aggregates doStream, never constructs HanlinAISDKAgentEngine or StreamTextActor; e7 to07431 sole guard is not reached.",
+        "baseline12": "Historical original e7 negative control only. It is never claimed as current07431 execution or a current07431 baseline equivalence."
+      },
+      "limits": [
+        "No shipping native-tool gate enabled",
+        "No SystemLanguageModel execution",
+        "No admission of later producer sources",
+        "No existing frozen proof helper changed"
+      ]
+    }
+  },
+  "reused_cases": [
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolHeaderAdmissionTests/rejectsUnsupportedTransportHeader",
+      "arguments": null,
+      "id": "HanlinAppleToolHeaderAdmissionTests/rejectsUnsupportedTransportHeader",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolHeaderAdmissionTests/rejectsUnsupportedTransportHeader()",
+      "argument_display": "A non-User-Agent header is rejected before native executor entry",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "2c41a1b7ed6b191be7529550ae1ca4501632ce8d",
+      "run_id": 45273580428,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14867146247
+    },
+    {
+      "result": "CoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance",
+      "arguments": [
+        false
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance [false]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance(_:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+      "argument_display": "false",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "CoreTests",
+      "method": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance",
+      "arguments": [
+        true
+      ],
+      "id": "HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance [true]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests/cloudOriginalInputStillHasExactProvenance(_:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "argument_display": "true",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"additionalProperties\":true}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"additionalProperties\\\":true}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=9aac8933583abb7914ebb57d1265f5c4fd1a42ce1ec0a7090d3f2dcbaacb1ebf",
+      "argument_display": "\"{\"type\":\"object\",\"additionalProperties\":true}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":2,\"maxItems\":1}},\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"a\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"string\\\"},\\\"minItems\\\":2,\\\"maxItems\\\":1}},\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=94ad2b940777c4d112ca64f57b3f994e6550b396387215181fba5b77ecd65901",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":2,\"maxItems\":1}},\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true}},\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"a\\\":{\\\"type\\\":\\\"array\\\",\\\"items\\\":{\\\"type\\\":\\\"string\\\"},\\\"uniqueItems\\\":true}},\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=01ecbfa02e51dca2bf0054a5562ff12f6e9af70cacec80ea1ed35b9ea7018c11",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true}},\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"integer\"}},\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"n\\\":{\\\"type\\\":\\\"integer\\\"}},\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=3bfd07bb2a5904c8bc138995195855fe7738f50ace2b127c5ddb2b27da8d5bc0",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"integer\"}},\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"number\"}},\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"n\\\":{\\\"type\\\":\\\"number\\\"}},\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=63dcca93e6ee35ec39504e98bcf30eccb5c966f105bfb01db85e222aaa942ebf",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"number\"}},\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"minLength\":1}},\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"s\\\":{\\\"type\\\":\\\"string\\\",\\\"minLength\\\":1}},\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=824278a56db893d25da0c2e6da7c6fd6b0755693280bb88d1081dadbab1452e1",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"minLength\":1}},\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"pattern\":\"x+\"}},\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"s\\\":{\\\"type\\\":\\\"string\\\",\\\"pattern\\\":\\\"x+\\\"}},\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=00ff2cdaf25261786fb38734f182123b1cd00d27144125256f775f074459b310",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"pattern\":\"x+\"}},\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":[\"string\",\"null\"]}},\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"x\\\":{\\\"type\\\":[\\\"string\\\",\\\"null\\\"]}},\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=292384b42dffb8badfcba84843b2aec45f1e4447d3073e1260df61192f0eaf5e",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{\"x\":{\"type\":[\"string\",\"null\"]}},\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}},\"required\":[\"x\",\"x\"],\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"x\\\":{\\\"type\\\":\\\"string\\\"}},\\\"required\\\":[\\\"x\\\",\\\"x\\\"],\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=03492fd2be13813919d566c73a6b0b234079df43bdd9e66f8165cc075fb0efe5",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}},\"required\":[\"x\",\"x\"],\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{},\"oneOf\":[{}],\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{},\\\"oneOf\\\":[{}],\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=d8856404f6e00d276eda4f35e239e7547fab8ab95c5dc9ca11a89d2589ed539a",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{},\"oneOf\":[{}],\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{},\"required\":[\"missing\"],\"additionalProperties\":false}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{},\\\"required\\\":[\\\"missing\\\"],\\\"additionalProperties\\\":false}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=d43f55938e4de390ab215ef3f60fb9a58d38b1064f24e75ce565d266ad29337c",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{},\"required\":[\"missing\"],\"additionalProperties\":false}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics",
+      "arguments": [
+        "{\"type\":\"object\",\"properties\":{}}"
+      ],
+      "id": "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics [\"{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{}}\"]",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=c1219ff7c42884da3ba40b2039bb37c7aa8229d87a907d290e1466a741a62c2e",
+      "argument_display": "\"{\"type\":\"object\",\"properties\":{}}\"",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSchemaTests/validatesSupportedSubsetBeforeHandoff",
+      "arguments": null,
+      "id": "HanlinAppleToolSchemaTests/validatesSupportedSubsetBeforeHandoff",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/validatesSupportedSubsetBeforeHandoff()",
+      "argument_display": "Required fields, closed objects, enum and array bounds survive admission",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSessionBridgeTests/invalidCanonicalHistoriesFailBeforeGeneration",
+      "arguments": null,
+      "id": "HanlinAppleToolSessionBridgeTests/invalidCanonicalHistoriesFailBeforeGeneration",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/invalidCanonicalHistoriesFailBeforeGeneration()",
+      "argument_display": "History rejects duplicate calls, orphan results and incomplete continuations",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls",
+      "arguments": null,
+      "id": "HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls()",
+      "argument_display": "Nonstreaming use of the original provider preserves native handoff calls",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "6b0030926cd771f2dd9995fd01aecd1efe8bcf4e",
+      "run_id": 45282347722,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14870888736
+    },
+    {
+      "result": "SDKTests",
+      "method": "HanlinAppleToolSessionBridgeTests/nativeSchemaConstructorsAndStructuredNumberRejection",
+      "arguments": null,
+      "id": "HanlinAppleToolSessionBridgeTests/nativeSchemaConstructorsAndStructuredNumberRejection",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeSchemaConstructorsAndStructuredNumberRejection()",
+      "argument_display": "The admitted closed schema constructs through actual public native schema APIs",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "c93b966e6c378f56b98d7805b5086a72d3061803",
+      "run_id": 45259715158,
+      "run_attempt": 1,
+      "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "artifact_id": 14860542354
+    },
+    {
+      "result": "StopContinuationTests",
+      "method": "HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine",
+      "arguments": null,
+      "id": "HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine()",
+      "argument_display": "An authorized tool without an additional approval prompt continues after stop with its canonical output",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "e1a295ba60396997a6127c6c2e2c4e6e75f508b3",
+      "run_id": 45273687114,
+      "run_attempt": 1,
+      "producer_commit": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+      "artifact_id": 14868011763
+    },
+    {
+      "result": "StopContinuationTests",
+      "method": "HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult",
+      "arguments": null,
+      "id": "HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult()",
+      "argument_display": "Denied stop-labeled tool continues with a correlated denial and no host effect",
+      "execution": "REUSED_VERIFIED",
+      "source_commit": "e1a295ba60396997a6127c6c2e2c4e6e75f508b3",
+      "run_id": 45273687114,
+      "run_attempt": 1,
+      "producer_commit": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+      "artifact_id": 14868011763
+    }
+  ],
+  "historical_baseline_execution": "HISTORICAL_REFERENCE_ONLY",
+  "historical_baseline_current_equivalence": false,
+  "ios_agent_core_compile": "BLOCKED",
+  "current_ios_build": null,
+  "shipping_native_tool_capability": false,
+  "system_model_generation": "NOT_RUN"
+}

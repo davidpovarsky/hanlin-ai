@@ -1,0 +1,14 @@
+{
+  "run_id": 45292176348,
+  "collector_exit": 0,
+  "utc": "2026-11-24T00:28:19.874220+00:00",
+  "candidate_status": "BLOCKED",
+  "candidate_counts": {
+    "PASS": 15,
+    "FAIL": 0,
+    "NOT_RUN": 0
+  },
+  "ios_agent_core_compile": "BLOCKED",
+  "artifact_id": 14877495539,
+  "acquisition_count": 1
+}
