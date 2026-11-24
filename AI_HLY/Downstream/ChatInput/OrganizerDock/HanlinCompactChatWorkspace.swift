@@ -120,6 +120,47 @@ struct HanlinCompactChatWorkspace: View {
         // NavigationStack receives keyboard insets in its own UIKit content
         // host. The persistent sibling dock needs the same visible viewport;
         // the outer workspace owns keyboard avoidance for both children.
+        HanlinSidebarReveal(isPresented: $showsHistory, reservesBackGesture: !path.isEmpty) {
+            historySidebar
+        } content: {
+            workspaceSurface
+        }
+        .modifier(HanlinCompactKeyboardAvoidance(owner: keyboardOwner))
+        .onChange(of: showsHistory) { _, presented in
+            if presented {
+                isCompactComposerInputActive = false
+                keyboardOwner.editor?.resignFirstResponder()
+            }
+        }
+        .onChange(of: path) { oldPath, newPath in
+            showsHistory = false
+            isCompactComposerInputActive = false
+            sessionBridge.expectedActiveSessionID = activeChatID
+            let isHidden = !newPath.isEmpty
+            NotificationCenter.default.post(name: .hideTabBar, object: isHidden)
+
+            // If leaving a pending first-turn chat before handoff completed, cancel cleanly
+            if let pendingTarget = sessionBridge.pendingFirstTurn?.targetChatID,
+               sessionBridge.pendingFirstTurn?.isPendingHandoff == true,
+               !newPath.contains(.chat(pendingTarget)) {
+                sessionBridge.cancelPendingFirstTurn(reason: "Navigated away from pending chat destination.")
+            }
+            _ = oldPath
+        }
+        .onAppear {
+            sessionBridge.expectedActiveSessionID = activeChatID
+            if let defaultIndex = HanlinDefaultChatPolicy.creationModelIndex(in: allModels, providers: apiKeys) {
+                sessionBridge.homeSelectedModelIndex = defaultIndex
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-compact-chat-workspace")
+        .onDisappear {
+            showsHistory = false
+        }
+    }
+
+    private var workspaceSurface: some View {
         VStack(spacing: 0) {
             navigationRoot(availableHeight: max(0, workspaceSize.height - (composerVisible ? dockHeight : 0)))
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -130,51 +171,47 @@ struct HanlinCompactChatWorkspace: View {
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-            // Both flexible slots must accept a smaller keyboard-time proposal.
-            // Observe the proposal directly; do not infer a scene from screen bounds.
-            .onGeometryChange(for: CGSize.self) { proxy in
-                proxy.size
-            } action: { newSize in
-                workspaceSize = newSize
-            }
-            .compactWorkspaceGeometryProbe("workspace")
-            .modifier(HanlinCompactKeyboardAvoidance(owner: keyboardOwner))
-            .animation(.spring(response: 0.36, dampingFraction: 0.88), value: composerVisible)
-            .onChange(of: path) { oldPath, newPath in
-                isCompactComposerInputActive = false
-                sessionBridge.expectedActiveSessionID = activeChatID
-                let isHidden = !newPath.isEmpty
-                NotificationCenter.default.post(name: .hideTabBar, object: isHidden)
-
-                // If leaving a pending first-turn chat before handoff completed, cancel cleanly
-                if let pendingTarget = sessionBridge.pendingFirstTurn?.targetChatID,
-                   sessionBridge.pendingFirstTurn?.isPendingHandoff == true,
-                   !newPath.contains(.chat(pendingTarget)) {
-                    sessionBridge.cancelPendingFirstTurn(reason: "Navigated away from pending chat destination.")
-                }
-                _ = oldPath
-            }
-            .onAppear {
-                sessionBridge.expectedActiveSessionID = activeChatID
-                if let defaultIndex = HanlinDefaultChatPolicy.creationModelIndex(in: allModels, providers: apiKeys) {
-                    sessionBridge.homeSelectedModelIndex = defaultIndex
-                }
-            }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-compact-chat-workspace")
-        .sheet(isPresented: $showsHistory) {
-            NavigationStack {
-                destinationView(for: .allConversations)
-                    .navigationTitle(Text("History", bundle: HanlinLocalization.bundle))
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button(hanlin: "Done") { showsHistory = false }
-                                .accessibilityIdentifier("hanlin-history-done")
-                        }
-                    }
-            }
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+        // Both flexible slots accept the same keyboard-time proposal. The
+        // outer effect keeps this exact subtree mounted while revealing History.
+        .onGeometryChange(for: CGSize.self) { proxy in
+            proxy.size
+        } action: { newSize in
+            workspaceSize = newSize
         }
+        .compactWorkspaceGeometryProbe("workspace")
+        .animation(.spring(response: 0.36, dampingFraction: 0.88), value: composerVisible)
+    }
+
+    private var historySidebar: some View {
+        NavigationStack {
+            conversationLibrary(isPresented: showsHistory)
+                .navigationTitle(Text("History", bundle: HanlinLocalization.bundle))
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(hanlin: "Done") { showsHistory = false }
+                            .accessibilityIdentifier("hanlin-history-done")
+                    }
+                }
+                .safeAreaInset(edge: .bottom, spacing: 0) {
+                    // The original contextual Profile route; no demo settings
+                    // or replacement product menu is introduced by the effect.
+                    Button(action: onOpenProfile) {
+                        Label(hanlin: "Profile", systemImage: "person.crop.circle")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding()
+                    }
+                    .accessibilityIdentifier("hanlin-settings-tab")
+                    .background(.bar)
+                }
+        }
+    }
+
+    private var historyButton: some View {
+        Button { showsHistory = true } label: {
+            Label(hanlin: "History", systemImage: "sidebar.left")
+        }
+        .accessibilityIdentifier("hanlin-history-open")
     }
 
     // MARK: - Navigation Root (ContentView.swift lines 349-380)
@@ -189,10 +226,7 @@ struct HanlinCompactChatWorkspace: View {
                     HanlinWorkspaceActions(onOpenProfile: onOpenProfile,
                         onOpenMiniApps: onOpenMiniApps, onOpenVision: onOpenVision)
                     ToolbarItem(placement: .topBarLeading) {
-                        Button { showsHistory = true } label: {
-                            Label(hanlin: "History", systemImage: "clock.arrow.circlepath")
-                        }
-                        .accessibilityIdentifier("hanlin-history-open")
+                        historyButton
                     }
                     ToolbarItem(placement: .navigationBarLeading) {
                         if loadHistoryMessages {
@@ -234,39 +268,9 @@ struct HanlinCompactChatWorkspace: View {
     private func destinationView(for route: HanlinCompactWorkspaceRoute) -> some View {
         switch route {
         case .allConversations:
-            HanlinCompactConversationLibrary(
-                chatRecords: chatRecords,
-                searchText: $searchText,
-                matchedSnippets: matchedSnippets,
-                forceRefresh: forceRefresh,
-                onSelectConversation: { record, matchedMsgID in
-                    guard let id = record.id else { return }
-                    if let matchedMsgID {
-                        matchedMessageIDByChat[id] = matchedMsgID
-                    }
-                    showsHistory = false
-                    path = [.chat(id)]
-                },
-                onAddNewChat: {
-                    if let created = onCreateAuthorizedNewChat(),
-                       let id = created.id {
-                        showsHistory = false
-                        path = [.chat(id)]
-                    }
-                },
-                onTogglePin: onTogglePin,
-                onEditRecord: onEditRecord,
-                onDeleteRecord: { record in
-                    let deletedID = record.id
-                    onDeleteRecord(record)
-                    if let deletedID {
-                        sessionBridge.clearCachedDraft(for: deletedID)
-                    }
-                },
-                onRefresh: onRefresh
-            )
-            .navigationTransition(.zoom(sourceID: "all-conversations", in: libraryZoom))
-            .toolbarVisibility(.visible, for: .navigationBar)
+            conversationLibrary(isPresented: true)
+                .navigationTransition(.zoom(sourceID: "all-conversations", in: libraryZoom))
+                .toolbarVisibility(.visible, for: .navigationBar)
 
         case .chat(let id):
             if let record = chatRecords.first(where: { $0.id == id }) {
@@ -277,6 +281,9 @@ struct HanlinCompactChatWorkspace: View {
                 .environment(\.hanlinExternalCompactComposerHost, true)
                 .environment(\.hanlinExternalDockHeight, 0)
                 .environment(\.hanlinComposerSessionBridge, sessionBridge)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) { historyButton }
+                }
                 .id(id)
             } else {
                 ContentUnavailableView(
@@ -285,6 +292,42 @@ struct HanlinCompactChatWorkspace: View {
                 )
             }
         }
+    }
+
+    private func conversationLibrary(isPresented: Bool) -> some View {
+        HanlinCompactConversationLibrary(
+            chatRecords: chatRecords,
+            searchText: $searchText,
+            matchedSnippets: matchedSnippets,
+            forceRefresh: forceRefresh,
+            onSelectConversation: { record, matchedMsgID in
+                guard let id = record.id else { return }
+                if let matchedMsgID {
+                    matchedMessageIDByChat[id] = matchedMsgID
+                }
+                showsHistory = false
+                path = [.chat(id)]
+            },
+            onAddNewChat: {
+                if let created = onCreateAuthorizedNewChat(),
+                   let id = created.id {
+                    showsHistory = false
+                    path = [.chat(id)]
+                }
+            },
+            onTogglePin: onTogglePin,
+            onEditRecord: onEditRecord,
+            onDeleteRecord: { record in
+                let deletedID = record.id
+                onDeleteRecord(record)
+                if let deletedID {
+                    sessionBridge.clearCachedDraft(for: deletedID)
+                }
+            },
+            onRefresh: onRefresh,
+            isPresented: isPresented,
+            keyboardOwner: keyboardOwner
+        )
     }
 
     // MARK: - Compact Home Screen (ContentView.swift lines 413-513)
@@ -475,14 +518,36 @@ private struct HanlinCompactKeyboardAvoidance: ViewModifier {
     }
 }
 
-// Registration comes from this workspace's actual ChatViewBottom editor.
-// A settings/sheet input or another pane in the same UIWindow is not an owner.
-// The weak reference needs no walk through SwiftUI's private hosting hierarchy.
+// Ownership comes from this workspace's actual editor or registered history
+// search subtree. Settings/sheet inputs and other panes are not owners.
+// Weak view registrations need no walk through private hosting hierarchies.
 @MainActor
 final class HanlinCompactKeyboardOwner {
     private(set) weak var editor: UITextView?
     fileprivate weak var observer: HanlinCompactKeyboardFrameView?
     private var modelPopoverIDs: Set<UUID> = []
+    private struct SearchFocus {
+        weak var anchor: UIView?
+        weak var window: UIWindow?
+    }
+    private var searchFocus: [UUID: SearchFocus] = [:]
+
+    /// Each actual searchable subtree registers its own view/window and focus.
+    /// A hidden or removed library can revoke only its own registration.
+    func setSearchFocus(_ id: UUID, anchor: UIView, focused: Bool) {
+        guard focused, let window = anchor.window else {
+            removeSearchFocus(id)
+            return
+        }
+        guard searchFocus[id]?.anchor !== anchor || searchFocus[id]?.window !== window else { return }
+        searchFocus[id] = SearchFocus(anchor: anchor, window: window)
+        observer?.ownershipDidChange("history-search-focused")
+    }
+
+    func removeSearchFocus(_ id: UUID) {
+        guard searchFocus.removeValue(forKey: id) != nil else { return }
+        observer?.ownershipDidChange("history-search-unfocused")
+    }
 
     /// The model picker is part of this composer's keyboard context. Its native
     /// search may take focus without moving the source below the keyboard.
@@ -493,8 +558,13 @@ final class HanlinCompactKeyboardOwner {
         observer?.ownershipDidChange(presented ? "model-presented" : "model-dismissed")
     }
 
-    fileprivate var ownsKeyboardFocus: Bool {
-        editor?.isFirstResponder == true || !modelPopoverIDs.isEmpty
+    func ownsKeyboardFocus(in window: UIWindow) -> Bool {
+        let ownsComposer = editor?.window === window
+            && (editor?.isFirstResponder == true || !modelPopoverIDs.isEmpty)
+        let ownsSearch = searchFocus.values.contains {
+            $0.window === window && $0.anchor?.window === window
+        }
+        return ownsComposer || ownsSearch
     }
 
     func observe(_ editor: UITextView, event: NativeMultilineTextEditor.LifecycleEvent) {
@@ -511,6 +581,68 @@ final class HanlinCompactKeyboardOwner {
             guard self.editor === editor else { return }
             self.editor = nil
             observer?.ownershipDidChange("editor-detached")
+        }
+    }
+}
+
+/// A noninteractive anchor for this searchable library's native window. It
+/// contributes focus ownership only; the existing workspace probe remains the
+/// sole keyboard frame observer and overlap writer.
+@MainActor
+struct HanlinCompactSearchFocusRegistration: UIViewRepresentable {
+    let owner: HanlinCompactKeyboardOwner
+    let isFocused: Bool
+
+    func makeUIView(context: Context) -> Anchor {
+        Anchor(owner: owner, focused: isFocused)
+    }
+
+    func updateUIView(_ view: Anchor, context: Context) {
+        view.update(owner: owner, focused: isFocused)
+    }
+
+    static func dismantleUIView(_ view: Anchor, coordinator: Void) {
+        view.disconnect()
+    }
+
+    final class Anchor: UIView {
+        private let token = UUID()
+        private weak var owner: HanlinCompactKeyboardOwner?
+        private var focused: Bool
+
+        init(owner: HanlinCompactKeyboardOwner, focused: Bool) {
+            self.owner = owner
+            self.focused = focused
+            super.init(frame: .zero)
+            isUserInteractionEnabled = false
+            isAccessibilityElement = false
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+
+        override func didMoveToWindow() {
+            super.didMoveToWindow()
+            publishFocus()
+        }
+
+        func update(owner: HanlinCompactKeyboardOwner, focused: Bool) {
+            if self.owner !== owner {
+                self.owner?.removeSearchFocus(token)
+                self.owner = owner
+            }
+            self.focused = focused
+            publishFocus()
+        }
+
+        func disconnect() {
+            owner?.removeSearchFocus(token)
+            owner = nil
+        }
+
+        private func publishFocus() {
+            owner?.setSearchFocus(token, anchor: self, focused: focused)
         }
     }
 }
@@ -648,9 +780,8 @@ fileprivate final class HanlinCompactKeyboardFrameView: UIView {
     private var ownsKeyboardContext: Bool {
         guard owner.observer === self,
               let window, window === observedWindow, window.isKeyWindow,
-              window.windowScene?.activationState == .foregroundActive,
-              let editor = owner.editor, editor.window === window else { return false }
-        return owner.ownsKeyboardFocus
+              window.windowScene?.activationState == .foregroundActive else { return false }
+        return owner.ownsKeyboardFocus(in: window)
     }
 
     private func currentOverlap() -> CGFloat {

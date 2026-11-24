@@ -16,6 +16,7 @@ import SwiftData
 @MainActor
 struct HanlinCompactConversationLibrary: View {
     @State private var showsSavedMessages = false
+    @FocusState private var searchFocused: Bool
     let chatRecords: [ChatRecords]
     @Binding var searchText: String
     let matchedSnippets: [UUID: (AttributedString, UUID)]
@@ -26,6 +27,8 @@ struct HanlinCompactConversationLibrary: View {
     let onEditRecord: (ChatRecords) -> Void
     let onDeleteRecord: (ChatRecords) -> Void
     let onRefresh: () -> Void
+    var isPresented: Bool = true
+    var keyboardOwner: HanlinCompactKeyboardOwner? = nil
 
     private var filteredRecords: [ChatRecords] {
         ListView.filterAndSortChatRecords(chatRecords, searchText: searchText)
@@ -65,6 +68,19 @@ struct HanlinCompactConversationLibrary: View {
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle)
         )
+        .searchFocused($searchFocused)
+        .onChange(of: isPresented) { _, presented in
+            if !presented { searchFocused = false }
+        }
+        .onDisappear { searchFocused = false }
+        .background {
+            if let keyboardOwner {
+                HanlinCompactSearchFocusRegistration(
+                    owner: keyboardOwner, isFocused: searchFocused && isPresented)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
+        }
         .refreshable {
             onRefresh()
         }
@@ -137,6 +153,7 @@ struct HanlinCompactConversationLibrary: View {
                 Label(hanlin: "删除消息", systemImage: "trash")
             }
             .tint(Color(.hanlinHLRed))
+            .accessibilityIdentifier("hanlin-history-delete-action")
         }
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
