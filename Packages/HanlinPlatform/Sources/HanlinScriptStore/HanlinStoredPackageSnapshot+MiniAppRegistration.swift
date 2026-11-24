@@ -115,7 +115,8 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
                 kind: canonicalKind,
                 handler: ep.sourcePath,
                 allowedContexts: contexts,
-                runtimeProfile: epRuntime
+                runtimeProfile: epRuntime,
+                assistantTool: ep.assistantTool
             )
         }
 

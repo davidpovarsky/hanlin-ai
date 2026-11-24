@@ -325,17 +325,20 @@ public struct HanlinEntryPointDescriptor: Codable, Hashable, Sendable {
     public let handler: String
     public let allowedContexts: [HanlinExecutionContext]
     public let runtimeProfile: HanlinRuntimeProfile?
+    public let assistantTool: HanlinAssistantToolDeclaration?
 
     public init(
         kind: HanlinEntryPointKind,
         handler: String,
         allowedContexts: [HanlinExecutionContext],
-        runtimeProfile: HanlinRuntimeProfile? = nil
+        runtimeProfile: HanlinRuntimeProfile? = nil,
+        assistantTool: HanlinAssistantToolDeclaration? = nil
     ) {
         self.kind = kind
         self.handler = handler
         self.allowedContexts = allowedContexts
         self.runtimeProfile = runtimeProfile
+        self.assistantTool = assistantTool
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -343,6 +346,7 @@ public struct HanlinEntryPointDescriptor: Codable, Hashable, Sendable {
         case handler
         case allowedContexts
         case runtimeProfile
+        case assistantTool
     }
 
     public init(from decoder: Decoder) throws {
@@ -351,6 +355,7 @@ public struct HanlinEntryPointDescriptor: Codable, Hashable, Sendable {
         handler = try container.decode(String.self, forKey: .handler)
         allowedContexts = try container.decode([HanlinExecutionContext].self, forKey: .allowedContexts)
         runtimeProfile = try container.decodeIfPresent(HanlinRuntimeProfile.self, forKey: .runtimeProfile)
+        assistantTool = try container.decodeIfPresent(HanlinAssistantToolDeclaration.self, forKey: .assistantTool)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -359,6 +364,7 @@ public struct HanlinEntryPointDescriptor: Codable, Hashable, Sendable {
         try container.encode(handler, forKey: .handler)
         try container.encode(allowedContexts, forKey: .allowedContexts)
         try container.encodeIfPresent(runtimeProfile, forKey: .runtimeProfile)
+        try container.encodeIfPresent(assistantTool, forKey: .assistantTool)
     }
 }
 
