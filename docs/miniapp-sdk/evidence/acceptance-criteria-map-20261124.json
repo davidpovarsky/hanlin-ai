@@ -48,6 +48,18 @@
       "id": 14905155493,
       "bytes": 333706641,
       "sha256": "9064980406b7c59be8fe5f80113039609faed17e351dd9193ef329e933c6b4c8"
+    },
+    "failureEvidence": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/receipt.json",
+      "sha256": "77fc9a4be0dfc93bc8d9a3fa7aeae84ed7a22c7886a3abbdc9fb5ee4b0d272a5"
+    },
+    "sourceFix": {
+      "rootCommit": "baabea9c",
+      "independentReview": {
+        "path": "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/independent-review.json",
+        "sha256": "4f26b8550800d55955ffa8989927c873d106a9c9f9650a911688065de05808de"
+      },
+      "correctedAppleExecution": "NOT_RUN"
     }
   },
   "userScope": {
@@ -856,6 +868,25 @@
         "sha256": "910632da03fbc16b95a01a9c345d3ae80b7ed05f5759251567981d6b4aac4a9b"
       },
       "boundary": "Original compile deadline/root Fragment normalization compiled on Apple; both actual methods failed at shared network wildcard validator before limit assertions. Production correction in progress."
+    },
+    "prior_full_shipping_guide_proof": {
+      "result": "EXECUTED_PASS_TESTED_SOURCE_ONLY",
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/sdk-fresh-shipping-20261124/receipt.json",
+        "sha256": "f4a9fbf01b6c435f5475a8debf7947aae077acdfcd7350ac2e0a96d2dc7aec7d"
+      },
+      "rawReport": {
+        "path": "docs/miniapp-sdk/evidence/sdk-fresh-shipping-20261124/run10-miniapp-documentation-snippets.json",
+        "sha256": "b6b6580828e2d97e3d4c32722dd19fc0db82cb3dbe047033e4ebb29e97c996e1"
+      },
+      "runID": 45354940642,
+      "testedSourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+      "sourceBlocks": 14,
+      "jsonBlocks": 7,
+      "validationProjects": 4,
+      "typeDiagnostics": 0,
+      "guidesByteMatched": 6,
+      "boundary": "Three current guide files changed after tested source; no current guide/example full-SDK PASS inferred. Corrected main preparation must perform fresh authentic full export/check."
     }
   },
   "criteria": [
@@ -1105,7 +1136,7 @@
     }
   ],
   "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T09:06:34.077745+00:00",
+  "updatedAtUTC": "2026-11-24T09:11:47.095269+00:00",
   "currentIntegrationBase": "74ba980dbb91f3a38d4531f043801f5e742c283a",
   "gateHistory": [
     {
@@ -1275,5 +1306,9 @@
     "failed": 2,
     "skipped": 0,
     "cause": "Both methods throw Invalid network host declaration: *. Session synthesizes unrestricted* and network policy accepts it; duplicated manifest validator rejects it. Production correction in progress; assertions not weakened."
+  },
+  "physicalDeviceRouteEvidence": {
+    "path": "docs/miniapp-sdk/evidence/available-device-test-route-20261124.json",
+    "sha256": "db2fdba20d3810a0550948a8174ff511cb7c253fa23441afa89796ba1a1a7de1"
   }
 }

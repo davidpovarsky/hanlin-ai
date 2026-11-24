@@ -1,0 +1,11 @@
+{
+  "recordedAtUTC": "2026-11-24T09:11:47.095269+00:00",
+  "reviewer": "/root/sdk_only_author",
+  "reviewedCommit": "094997a3fa6d1165ca25f642dbf449be5225b2c5",
+  "rootIntegrationCommit": "baabea9c",
+  "result": "NO_CONCRETE_SOURCE_BLOCKER",
+  "productionDelta": "Only two callback annotations qualified as SwiftUI.ButtonRole?, matching actual original renderer signature. Runtime bodies and tests unchanged.",
+  "sourceSHA256": "768b08c9dacf4bb445368386833c3ff2c5c98fbe4581c85ee80c56aba09c0acd",
+  "authoritySHA256": "cb3209fa98cde069a47a12ed95d12d830c66a777fe11bd27eb788ac769e3c2bf",
+  "nativeBoundary": "Read-only independent source review; no tests/CI. Corrected Apple build and42cases not yet executed."
+}
