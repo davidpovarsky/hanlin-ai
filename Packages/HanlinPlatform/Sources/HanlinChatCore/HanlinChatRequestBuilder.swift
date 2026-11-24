@@ -192,6 +192,10 @@ public struct HanlinChatRequestBuilder: Sendable {
         configuration: HanlinChatModelConfiguration,
         cacheScope: HanlinPromptCacheScope? = nil
     ) throws -> URLRequest {
+        guard HanlinAISDKProviderFactory.descriptor(for: configuration).kind != .openAIResponses
+                || requestBody["messages"] == nil else {
+            throw HanlinChatError.invalidRequest("Responses requests must use the original SDK through HanlinChatEngine or HanlinAISDKAgentEngine.")
+        }
         var requestBody = requestBody
         for key in ["prompt_cache_key", "prompt_cache_retention", "prompt_cache_options"] {
             requestBody.removeValue(forKey: key)

@@ -39,7 +39,7 @@ public enum HanlinAISDKProviderFactory {
         } else if company == "GOOGLE" || company == "GEMINI" || apiType.contains("gemini") {
             kind = .google
         } else if company == "OPENAI" && !isOpenAICompatibleHost(configuration.endpoint.host) {
-            kind = ["openai-responses", "openai-chatgpt-plan"].contains(apiType) ? .openAIResponses : .openAI
+            kind = ["openai-response", "openairesponse", "openai-responses", "openai-chatgpt-plan"].contains(apiType) ? .openAIResponses : .openAI
         } else {
             kind = .openAICompatible
         }

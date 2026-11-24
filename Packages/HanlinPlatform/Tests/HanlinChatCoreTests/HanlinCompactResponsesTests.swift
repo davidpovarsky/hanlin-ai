@@ -1,0 +1,188 @@
+import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+import Testing
+@testable import HanlinChatCore
+
+private final class CompactResponsesState: @unchecked Sendable {
+    private let lock = NSLock()
+    private var bodies: [Data] = []
+    private var stops = 0
+    func record(_ data: Data) { lock.lock(); defer { lock.unlock() }; bodies.append(data) }
+    func stop() { lock.lock(); defer { lock.unlock() }; stops += 1 }
+    func reset() { lock.lock(); defer { lock.unlock() }; bodies = []; stops = 0 }
+    var captured: [Data] { lock.lock(); defer { lock.unlock() }; return bodies }
+    var stopCount: Int { lock.lock(); defer { lock.unlock() }; return stops }
+}
+
+private final class CompactResponsesProtocol: URLProtocol, @unchecked Sendable {
+    static let state = CompactResponsesState()
+    override class func canInit(with request: URLRequest) -> Bool {
+        request.url?.host == "api.openai.com" && request.url?.path == "/v1/responses"
+    }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        var body = request.httpBody ?? Data()
+        if body.isEmpty, let stream = request.httpBodyStream {
+            stream.open()
+            defer { stream.close() }
+            var buffer = [UInt8](repeating: 0, count: 4096)
+            while stream.hasBytesAvailable {
+                let count = stream.read(&buffer, maxLength: buffer.count)
+                if count <= 0 { break }
+                body.append(contentsOf: buffer.prefix(count))
+            }
+        }
+        Self.state.record(body)
+        let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1",
+            headerFields: ["Content-Type": "text/event-stream", "x-request-id": "compact-fixture"])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        let payloads = [
+            #"{"type":"response.output_item.added","output_index":0,"item":{"id":"msg_fixture","type":"message","status":"in_progress","role":"assistant","content":[]}}"#,
+            #"{"type":"response.output_text.delta","item_id":"msg_fixture","output_index":0,"content_index":0,"delta":"תשובה🙂"}"#,
+            #"{"type":"response.output_item.done","output_index":0,"item":{"id":"msg_fixture","type":"message","status":"completed","role":"assistant","content":[{"type":"output_text","text":"תשובה🙂","annotations":[]}]}}"#,
+            #"{"type":"response.completed","response":{"id":"resp_fixture","status":"completed","usage":{"input_tokens":100,"input_tokens_details":{"cached_tokens":30,"cache_write_tokens":50},"output_tokens":8}}}"#
+        ]
+        for payload in payloads { client?.urlProtocol(self, didLoad: Data("data: \(payload)\n\n".utf8)) }
+        client?.urlProtocolDidFinishLoading(self)
+    }
+    override func stopLoading() { Self.state.stop() }
+}
+
+private final class HangingCompactResponsesProtocol: URLProtocol, @unchecked Sendable {
+    static let state = CompactResponsesState()
+    override class func canInit(with request: URLRequest) -> Bool {
+        request.url?.host == "api.openai.com" && request.url?.path == "/v1/responses"
+    }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        Self.state.record(Data())
+        let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "HTTP/1.1",
+            headerFields: ["Content-Type": "text/event-stream"])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        for payload in [
+            #"{"type":"response.output_item.added","output_index":0,"item":{"id":"msg_wait","type":"message","status":"in_progress","role":"assistant","content":[]}}"#,
+            #"{"type":"response.output_text.delta","item_id":"msg_wait","output_index":0,"content_index":0,"delta":"partial"}"#
+        ] {
+            client?.urlProtocol(self, didLoad: Data("data: \(payload)\n\n".utf8))
+        }
+        // Keep the real URLSession request open until the consumer cancels.
+    }
+    override func stopLoading() { Self.state.stop() }
+}
+
+@Suite("Compact Responses canonical SDK route", .serialized)
+struct HanlinCompactResponsesTests {
+    private func configuration() -> HanlinChatModelConfiguration {
+        .init(modelID: "gpt-6.2-sol", company: "OpenAI", apiType: "OpenAI-Response",
+            endpoint: "https://api.openai.com/v1/responses", credential: "fixture-only",
+            systemPrompt: "Stable instructions",
+            promptCachePolicy: .init(openAI: .init(mode: .explicit, ttl: .twelveHours)))
+    }
+
+    @Test("Compact requests retain original Responses envelope, message order, cache scope and normalized usage")
+    func originalResponsesWireAndUsage() async throws {
+        CompactResponsesProtocol.state.reset()
+        let session = URLSessionConfiguration.ephemeral
+        session.protocolClasses = [CompactResponsesProtocol.self]
+        let engine = HanlinChatEngine(sessionConfiguration: session)
+        let model = configuration()
+        let scope = HanlinPromptCacheScope(namespace: ["app", "account", "workspace"],
+            conversationID: "conversation", promptVersion: "compact-v1")
+        let source = try await engine.stream(
+            messages: [.system("Additional instructions"), .user("First question"),
+                .assistant("Earlier answer"), .user("Second question")],
+            configuration: model, systemContext: "Changing context", cacheScope: scope
+        )
+        var visible = ""
+        var final: HanlinChatStreamEvent?
+        var metadata: HanlinChatResponseMetadata?
+        for try await event in source {
+            visible += event.content ?? ""
+            if let response = event.responseMetadata { metadata = response }
+            if event.isDone { final = event }
+        }
+        #expect(visible == "תשובה🙂")
+        #expect(metadata?.providerRequestID == "compact-fixture")
+        #expect(metadata?.statusCode == 200)
+        #expect(final?.tokenUsage?.inputTokens == 100)
+        #expect(final?.tokenUsage?.cachedInputTokens == 30)
+        #expect(final?.tokenUsage?.cacheWriteTokens == 50)
+        #expect(final?.tokenUsage?.outputTokens == 8)
+        #expect(final?.tokenUsage?.totalTokens == 108)
+        let bodies = CompactResponsesProtocol.state.captured
+        #expect(bodies.count == 1)
+        let json = try #require(JSONSerialization.jsonObject(with: #require(bodies.first)) as? [String: Any])
+        #expect(json["messages"] == nil)
+        #expect(json["max_tokens"] == nil)
+        #expect(json["max_output_tokens"] as? Int == HanlinChatGenerationDefaults.maxTokens)
+        #expect(json["store"] as? Bool == false)
+        #expect(json["prompt_cache_key"] as? String == scope.key(configuration: model))
+        #expect((json["prompt_cache_options"] as? [String: String]) == ["mode": "explicit", "ttl": "12h"])
+        let input = try #require(json["input"] as? [[String: Any]])
+        let text = input.map { item -> String in
+            if let value = item["content"] as? String { return value }
+            return (item["content"] as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined() ?? ""
+        }
+        #expect(text == ["Stable instructions", "Context:\nChanging context", "Additional instructions",
+            "First question", "Earlier answer", "Second question"])
+        let stable = try #require(input.first?["content"] as? [[String: Any]])
+        #expect((stable.first?["prompt_cache_breakpoint"] as? [String: String]) == ["mode": "explicit", "ttl": "12h"])
+    }
+
+    @Test("Compact facade refuses tool authority and legacy Chat-shaped Responses requests before transport")
+    func unsupportedContractsDoNotSend() async throws {
+        CompactResponsesProtocol.state.reset()
+        let session = URLSessionConfiguration.ephemeral
+        session.protocolClasses = [CompactResponsesProtocol.self]
+        let engine = HanlinChatEngine(sessionConfiguration: session)
+        let model = configuration()
+        await #expect(throws: (any Error).self) {
+            try await engine.stream(messages: [.user("Question")], configuration: model,
+                tools: [["type": "function", "function": ["name": "write"]]])
+        }
+        await #expect(throws: (any Error).self) {
+            try await engine.stream(messages: [.init(role: "tool", content: "Uncorrelated result")],
+                configuration: model)
+        }
+        #expect(throws: (any Error).self) {
+            try HanlinChatRequestBuilder.buildRequest(messages: [.user("Question")], configuration: model)
+        }
+        #expect(CompactResponsesProtocol.state.captured.isEmpty)
+    }
+
+    @Test("Cancelling compact consumption cancels the underlying original SDK URLSession request")
+    func cancellationStopsNativeTransport() async throws {
+        HangingCompactResponsesProtocol.state.reset()
+        let session = URLSessionConfiguration.ephemeral
+        session.protocolClasses = [HangingCompactResponsesProtocol.self]
+        let engine = HanlinChatEngine(sessionConfiguration: session)
+        let source = try await engine.stream(messages: [.user("Question")], configuration: configuration())
+        actor Progress {
+            var receivedText = false
+            func received() { receivedText = true }
+        }
+        let progress = Progress()
+        let consumer = Task {
+            do {
+                for try await event in source {
+                    if event.content == "partial" { await progress.received() }
+                }
+            } catch {}
+        }
+        defer { consumer.cancel() }
+        let deadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while !(await progress.receivedText), ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        try #require(await progress.receivedText)
+        consumer.cancel()
+        await consumer.value
+        let stopDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while HangingCompactResponsesProtocol.state.stopCount == 0, ContinuousClock.now < stopDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(HangingCompactResponsesProtocol.state.stopCount > 0)
+    }
+}

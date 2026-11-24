@@ -37,16 +37,103 @@ public actor HanlinChatEngine {
         messages: [HanlinChatMessage],
         configuration: HanlinChatModelConfiguration,
         systemContext: String? = nil,
-        tools: [[String: Any]]? = nil
+        tools: [[String: Any]]? = nil,
+        cacheScope: HanlinPromptCacheScope? = nil
     ) throws -> AsyncThrowingStream<HanlinChatStreamEvent, Error> {
+        if HanlinAISDKProviderFactory.descriptor(for: configuration).kind == .openAIResponses {
+            return try streamResponses(messages: messages, configuration: configuration,
+                systemContext: systemContext, tools: tools, cacheScope: cacheScope)
+        }
         let request = try HanlinChatRequestBuilder.buildRequest(
             messages: messages,
             configuration: configuration,
             systemContext: systemContext,
-            tools: tools
+            tools: tools,
+            cacheScope: cacheScope
         )
 
         return stream(request: request, configuration: configuration)
+    }
+
+
+    /// Routes Responses through the same original SDK as the application agent.
+    /// This compact message contract contains text only; preserve every supplied
+    /// instruction/message instead of translating a Chat Completions wire body.
+    private func streamResponses(
+        messages: [HanlinChatMessage],
+        configuration: HanlinChatModelConfiguration,
+        systemContext: String?,
+        tools: [[String: Any]]?,
+        cacheScope: HanlinPromptCacheScope?
+    ) throws -> AsyncThrowingStream<HanlinChatStreamEvent, Error> {
+        guard tools?.isEmpty ?? true else {
+            throw HanlinChatError.invalidRequest(
+                "Responses tools require the canonical agent's execution and approval callbacks."
+            )
+        }
+        var sdkMessages: [HanlinAISDKMessage] = []
+        if let stable = configuration.systemPrompt, !stable.isEmpty {
+            sdkMessages.append(.init(role: .system, text: stable, cacheBreakpoint: true))
+        }
+        if let context = systemContext, !context.isEmpty {
+            sdkMessages.append(.init(role: .system, text: "Context:\n\(context)"))
+        }
+        for message in messages {
+            let role: HanlinAISDKMessage.Role
+            switch message.role {
+            case "system", "developer": role = .system
+            case "assistant": role = .assistant
+            case "user": role = .user
+            default:
+                throw HanlinChatError.invalidRequest(
+                    "This compact Responses message role requires the canonical typed agent interface."
+                )
+            }
+            sdkMessages.append(.init(role: role, text: message.content,
+                cacheBreakpoint: role == .system && sdkMessages.isEmpty))
+        }
+        let (stream, continuation) = AsyncThrowingStream<HanlinChatStreamEvent, Error>.makeStream()
+        let fetch = makeAISDKFetch(onResponse: { _, response in
+            continuation.yield(.init(responseMetadata: .init(
+                statusCode: response.statusCode,
+                providerRequestID: response.value(forHTTPHeaderField: "x-request-id")
+                    ?? response.value(forHTTPHeaderField: "request-id")
+            )))
+        })
+        let sdkEngine = try HanlinAISDKAgentEngine(configuration: configuration, fetch: fetch)
+        let originalMessages = sdkMessages
+        let task = Task {
+            do {
+                try Task.checkCancellation()
+                let source = try await sdkEngine.stream(
+                    messages: originalMessages, baseSystemPrompt: nil, tools: [],
+                    cacheScope: cacheScope, prepareStep: { .init(activeToolAliases: []) }
+                )
+                for try await event in source {
+                    try Task.checkCancellation()
+                    switch event {
+                    case .textDelta(let text):
+                        continuation.yield(.init(content: text))
+                    case .reasoningDelta(let text):
+                        continuation.yield(.init(reasoning: text))
+                    case .finished(let reason, let usage):
+                        continuation.yield(.init(tokenUsage: usage, finishReason: reason, isDone: true))
+                    case .cancelled:
+                        throw HanlinChatError.cancelled
+                    default:
+                        break
+                    }
+                }
+                try Task.checkCancellation()
+                continuation.finish()
+            } catch is CancellationError {
+                continuation.finish(throwing: HanlinChatError.cancelled)
+            } catch {
+                continuation.finish(throwing: error)
+            }
+        }
+        continuation.onTermination = { @Sendable _ in task.cancel() }
+        return stream
     }
 
     /// Executes a prebuilt request through the same production transport and
