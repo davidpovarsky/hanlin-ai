@@ -70,6 +70,17 @@ export const sdkInputs = [
  'docs/miniapp-sdk/extension-reachability.json'
 ];
 
+const excludedSDKInputNames = new Set(['node_modules','Tests','evidence','.git']);
+const includesSDKInputName = name => !excludedSDKInputNames.has(name) && !name.includes('.bak.');
+
+// Ship the same public documentation tree that contributes to the SDK identity.
+// Build evidence stays in the repository; original API/type packages are separate.
+export async function copySDKDocumentation(source,destination) {
+  const sourceRoot=path.resolve(source);
+  await cp(sourceRoot,destination,{recursive:true,
+    filter:entry=>entry===sourceRoot || includesSDKInputName(path.basename(entry))});
+}
+
 export async function inputReceipt(root=repositoryRoot) {
   const files=[];
   for(const relative of sdkInputs) {
@@ -88,7 +99,7 @@ export async function inputReceipt(root=repositoryRoot) {
         files.push({path:prefix,sha256:sha(await readFile(src))});return;
       }
       for(const entry of (await readdir(src,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))) {
-        if(['node_modules','Tests','evidence','.git'].includes(entry.name)||entry.name.includes('.bak.'))continue;
+        if(!includesSDKInputName(entry.name))continue;
         await walk(path.join(src,entry.name),path.posix.join(prefix,entry.name));
       }
     }
@@ -174,7 +185,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
     for(const [engine,packages] of Object.entries(expected))for(const [name,version]of Object.entries(packages)) {
       if(engines[engine] && engines[engine].packageVersions[name]!==version)throw new Error('Native/author SDK mismatch: '+engine+' '+name);
     }
-    await cp(path.join(root,'docs/miniapp-sdk'),path.join(staging,'docs/miniapp-sdk'),{recursive:true});
+    await copySDKDocumentation(path.join(root,'docs/miniapp-sdk'),path.join(staging,'docs/miniapp-sdk'));
     for(const file of ['hanlin-expo-runtime.md','hanlin-nativescript-guide.md']) {
       await cp(path.join(root,'docs',file),path.join(staging,'docs',file));
     }

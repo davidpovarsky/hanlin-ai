@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T07:59:17.262986+00:00",
+  "baseSource": "c2fe34037531462a23ce1e69c5de0890e3a35911",
+  "problem": "Existing SDK input fingerprint excludes evidence directories, but actual documentation copy included those ignored files. Prior CI manifests/log bundles therefore shipped without being declared source inputs.",
+  "observedArtifact": "observed-shipping-mismatch.json",
+  "fix": "Use one existing-name inclusion policy for source-input walking and actual documentation copying. Public guides/assets retained byte-for-byte; original API/type package copies unchanged.",
+  "testSetupFailure": {
+    "scope": "Missing tmpdir import in new harness, corrected before regression execution",
+    "countsAsProductRed": false,
+    "stdout": "test-setup-failure.stdout.log"
+  },
+  "red": {
+    "executed": 1,
+    "failed": 1,
+    "actualFailure": "Unfiltered real fs.cp leaves the excluded evidence folder in the output",
+    "stdout": "red.stdout.log"
+  },
+  "green": {
+    "executed": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "stdout": "green.stdout.log",
+    "actualAssertions": [
+      "Public README and nested import/repair guide match actual repository source bytes",
+      "Public binary asset remains byte-identical",
+      "Existing evidence/Tests/node_modules/.git/backup-name exclusions apply to copied docs, including nested evidence"
+    ]
+  },
+  "testSHA256": "c4e33b8faf7fe89ad7506b265d76be26618a893dbc740bdcd5b3c9d84d3bbe0d",
+  "sources": [
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "86f1524d74c431b6522d3481fc177c65ecaee9a2899931aea07e4d23bcc1fd2c"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/stage-sdk.test.mjs",
+      "sha256": "c4e33b8faf7fe89ad7506b265d76be26618a893dbc740bdcd5b3c9d84d3bbe0d"
+    }
+  ],
+  "notRun": [
+    "complete fresh shipping SDK assembly",
+    "original package compiler rerun",
+    "native application build or UI"
+  ],
+  "artifacts": [
+    {
+      "path": "green.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "green.stdout.log",
+      "bytes": 206,
+      "sha256": "538f3762b0a3406d84bd72c608098977f4fb4173ece2f3db5640d95920ec5ec6"
+    },
+    {
+      "path": "observed-shipping-mismatch.json",
+      "bytes": 1952,
+      "sha256": "04a6d46b0e108c52cd583df870b912f72c5892226bdbc82b2f3c71caaf038bd0"
+    },
+    {
+      "path": "red.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "red.stdout.log",
+      "bytes": 974,
+      "sha256": "19faf2bb13a30674b6c7a441d2ba38b2bc303afa787f0ab82c3c2504d0994010"
+    },
+    {
+      "path": "test-setup-failure.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "test-setup-failure.stdout.log",
+      "bytes": 732,
+      "sha256": "70a5e7970204ddd9c6b2a78700e4f0eed8b14d820b0a1474166a87673345854b"
+    }
+  ]
+}

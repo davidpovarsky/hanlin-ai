@@ -66,3 +66,35 @@ test('compiler metadata distinguishes original npm alias version from real compi
   assert.equal(require('./lib/typescript.js').version,'6.0.3');
   assert.ok(files.some(file=>file.path==='scriptwidget/typescript/node_modules/@typescript/old/lib/typescript.js'));
 }));
+
+
+test('SDK documentation staging retains exact guides without excluded evidence', async () => {
+  const fs = await import('node:fs/promises');
+  const {copySDKDocumentation} = await import('../stage-sdk.mjs');
+  const {tmpdir} = await import('node:os');
+  const work = await fs.mkdtemp(path.join(tmpdir(), 'hanlin-sdk-docs-'));
+  const source = path.join(work, 'source'), destination = path.join(work, 'sdk-docs');
+  try {
+    await fs.mkdir(path.join(source, 'reference', 'images'), {recursive:true});
+    const guide = await fs.readFile(new URL('../../../docs/miniapp-sdk/README.md', import.meta.url));
+    const nested = await fs.readFile(new URL('../../../docs/miniapp-sdk/IMPORT_REPAIR.md', import.meta.url));
+    const image = Buffer.from([0,1,2,255]);
+    await fs.writeFile(path.join(source, 'README.md'), guide);
+    await fs.writeFile(path.join(source, 'reference', 'IMPORT_REPAIR.md'), nested);
+    await fs.writeFile(path.join(source, 'reference', 'images', 'public-asset.bin'), image);
+    for (const folder of ['evidence', 'reference/evidence', 'Tests', 'node_modules', '.git']) {
+      await fs.mkdir(path.join(source, folder), {recursive:true});
+      await fs.writeFile(path.join(source, folder, 'intermediate.json'), '{"intermediate":true}');
+    }
+    await fs.writeFile(path.join(source, 'README.bak.old.md'), 'old guide');
+    await copySDKDocumentation(source, destination);
+    assert.deepEqual(await fs.readFile(path.join(destination, 'README.md')), guide);
+    assert.deepEqual(await fs.readFile(path.join(destination, 'reference', 'IMPORT_REPAIR.md')), nested);
+    assert.deepEqual(await fs.readFile(path.join(destination, 'reference', 'images', 'public-asset.bin')), image);
+    for (const excluded of ['evidence', 'reference/evidence', 'Tests', 'node_modules', '.git', 'README.bak.old.md']) {
+      await assert.rejects(fs.access(path.join(destination, excluded)), {code:'ENOENT'}, excluded+' is outside the existing SDK source-input policy');
+    }
+  } finally {
+    await fs.rm(work, {recursive:true,force:true});
+  }
+});
