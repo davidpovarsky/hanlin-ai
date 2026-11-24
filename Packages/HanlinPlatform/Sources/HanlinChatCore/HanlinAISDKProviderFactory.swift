@@ -177,51 +177,153 @@ extension HanlinAISDKProviderFactory {
         return HanlinAISDKResolvedProvider(
             model: .v3(HanlinNonEmptyLanguageModel(base: model)),
             descriptor: descriptor,
-            providerOptions: providerOptions(configuration: configuration, kind: descriptor.kind)
+            providerOptions: try providerOptions(configuration: configuration, kind: descriptor.kind)
         )
     }
 
-    private static func providerOptions(
+    static func providerOptions(
+        configuration: HanlinChatModelConfiguration,
+        kind: HanlinAISDKProviderKind,
+        cacheScope: HanlinPromptCacheScope? = nil,
+        validateExplicitReference: Bool = false
+    ) throws -> ProviderOptions? {
+        var result: ProviderOptions = [:]
+        if kind == .openAIResponses {
+            // Preserve the existing stateless Responses contract, including SIWC.
+            result["openai"] = ["store": .bool(false)]
+        }
+        if configuration.supportsReasoning {
+            switch kind {
+            case .appleOnDevice:
+                break
+            case .openAI, .openAIResponses:
+                if let effort = configuration.reasoningEffort, !effort.isEmpty {
+                    result["openai", default: [:]]["reasoningEffort"] = .string(effort)
+                }
+            case .openAICompatible:
+                if let effort = configuration.reasoningEffort, !effort.isEmpty {
+                    result["hanlin-openai-compatible"] = ["reasoningEffort": .string(effort)]
+                }
+            case .anthropic:
+                result["anthropic"] = ["thinking": .object([
+                    "type": .string("enabled"),
+                    "budgetTokens": .number(Double(max(configuration.thinkingLength, 1_024)))
+                ])]
+            case .google:
+                var thinking: [String: JSONValue] = ["includeThoughts": .bool(true)]
+                if configuration.thinkingLength > 0 {
+                    thinking["thinkingBudget"] = .number(Double(configuration.thinkingLength))
+                }
+                result["google"] = ["thinkingConfig": .object(thinking)]
+            }
+        }
+        let cache = try cacheProviderOptions(
+            configuration: configuration, kind: kind, cacheScope: cacheScope,
+            validateExplicitReference: validateExplicitReference
+        )
+        for (provider, fields) in cache {
+            result[provider, default: [:]].merge(fields) { _, cacheValue in cacheValue }
+        }
+        return result.isEmpty ? nil : result
+    }
+
+    static func cacheProviderOptions(
+        configuration: HanlinChatModelConfiguration,
+        kind: HanlinAISDKProviderKind,
+        cacheScope: HanlinPromptCacheScope?,
+        validateExplicitReference: Bool
+    ) throws -> ProviderOptions {
+        let policy = configuration.promptCachePolicy ?? .automatic
+        guard policy.requestsExplicitControls,
+              configuration.apiType?.lowercased() != "openai-chatgpt-plan" else { return [:] }
+        switch kind {
+        case .appleOnDevice, .openAICompatible:
+            return [:]
+        case .openAI, .openAIResponses:
+            var options: [String: JSONValue] = [:]
+            if let cacheScope {
+                options["promptCacheKey"] = .string(cacheScope.key(configuration: configuration))
+            }
+            if let openAI = policy.openAI {
+                if let retention = openAI.retention {
+                    options["promptCacheRetention"] = .string(retention.rawValue)
+                }
+                if openAI.hasModernOptions {
+                    if kind == .openAI, openAI.ttl == .twelveHours || openAI.comparisonResponseID != nil {
+                        throw HanlinChatError.invalidRequest("Twelve-hour cache lifetime and cache diagnostics require OpenAI Responses.")
+                    }
+                    var controls: [String: JSONValue] = [:]
+                    if let mode = openAI.mode { controls["mode"] = .string(mode.rawValue) }
+                    if let ttl = openAI.ttl { controls["ttl"] = .string(ttl.rawValue) }
+                    if let responseID = openAI.comparisonResponseID {
+                        guard !responseID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                            throw HanlinChatError.invalidRequest("A cache diagnostic comparison requires a response ID.")
+                        }
+                        controls["comparisonResponseId"] = .string(responseID)
+                    }
+                    options["promptCacheOptions"] = .object(controls)
+                }
+            }
+            return options.isEmpty ? [:] : ["openai": options]
+        case .anthropic:
+            return ["anthropic": ["cacheControl": .object([
+                "type": .string("ephemeral"),
+                "ttl": .string(policy.anthropicTTL.rawValue)
+            ])]]
+        case .google:
+            // Engine construction has no conversation scope. Resolve the reference
+            // only when the actual turn supplies its immutable account/conversation.
+            guard validateExplicitReference, let reference = policy.googleCachedContent else { return [:] }
+            let model = HanlinGoogleCachedContentReference.normalizedModel(configuration.baseModelID)
+            guard model.hasPrefix("gemini-2.5-") || model.hasPrefix("gemini-3.") || model.hasPrefix("gemini-3-") else {
+                throw HanlinGoogleCachedContentError.unsupportedModel
+            }
+            guard let cacheScope else {
+                throw HanlinChatError.invalidRequest("Explicit Google cached content requires a conversation cache scope.")
+            }
+            let name = try reference.validatedName(
+                modelID: configuration.baseModelID,
+                scopeKey: cacheScope.key(configuration: configuration)
+            )
+            return ["google": ["cachedContent": .string(name)]]
+        }
+    }
+
+    static func cacheBreakpointOptions(
         configuration: HanlinChatModelConfiguration,
         kind: HanlinAISDKProviderKind
     ) -> ProviderOptions? {
-        // ChatGPT plan bearer tokens are authorized for Responses API only.
-        // OpenAI's OSS plan-use contract requires stateless requests. Enforce
-        // store=false in the shared Hanlin SDK, rather than relying on every
-        // host application to remember a provider-specific option.
-        if kind == .openAIResponses {
-            var options: [String: JSONValue] = ["store": .bool(false)]
-            if configuration.supportsReasoning,
-                let effort = configuration.reasoningEffort, !effort.isEmpty {
-                options["reasoningEffort"] = .string(effort)
-            }
-            return ["openai": options]
-        }
-        guard configuration.supportsReasoning else { return nil }
-
+        let policy = configuration.promptCachePolicy ?? .automatic
+        guard policy.requestsExplicitControls,
+              configuration.apiType?.lowercased() != "openai-chatgpt-plan" else { return nil }
         switch kind {
-        case .appleOnDevice:
-            return nil
-        case .openAI, .openAIResponses:
-            guard let effort = configuration.reasoningEffort, !effort.isEmpty else { return nil }
-            return ["openai": ["reasoningEffort": .string(effort)]]
-        case .openAICompatible:
-            guard let effort = configuration.reasoningEffort, !effort.isEmpty else { return nil }
-            return ["hanlin-openai-compatible": ["reasoningEffort": .string(effort)]]
         case .anthropic:
-            let budget = max(configuration.thinkingLength, 1_024)
-            return ["anthropic": [
-                "thinking": .object([
-                    "type": .string("enabled"),
-                    "budgetTokens": .number(Double(budget))
-                ])
-            ]]
-        case .google:
-            var thinking: [String: JSONValue] = ["includeThoughts": .bool(true)]
-            if configuration.thinkingLength > 0 {
-                thinking["thinkingBudget"] = .number(Double(configuration.thinkingLength))
-            }
-            return ["google": ["thinkingConfig": .object(thinking)]]
+            return ["anthropic": ["cacheControl": .object([
+                "type": .string("ephemeral"), "ttl": .string(policy.anthropicTTL.rawValue)
+            ])]]
+        case .openAI, .openAIResponses:
+            guard policy.openAI?.hasModernOptions == true else { return nil }
+            var marker: [String: JSONValue] = ["mode": .string("explicit")]
+            if let ttl = policy.openAI?.ttl { marker["ttl"] = .string(ttl.rawValue) }
+            return ["openai": ["promptCacheBreakpoint": .object(marker)]]
+        default:
+            return nil
+        }
+    }
+
+    static func validateCachedContentContext(
+        configuration: HanlinChatModelConfiguration,
+        kind: HanlinAISDKProviderKind,
+        hasSystemInstructions: Bool,
+        hasTools: Bool
+    ) throws {
+        let policy = configuration.promptCachePolicy ?? .automatic
+        guard kind == .google, policy.requestsExplicitControls,
+              policy.googleCachedContent != nil else { return }
+        guard !hasSystemInstructions, !hasTools else {
+            throw HanlinChatError.invalidRequest(
+                "Content-only Google cached content cannot be combined with system instructions or tools. Keep the full context and use implicit caching."
+            )
         }
     }
 

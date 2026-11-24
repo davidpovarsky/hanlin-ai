@@ -17,25 +17,17 @@ public struct HanlinChatRequestBuilder: Sendable {
         configuration: HanlinChatModelConfiguration,
         systemContext: String? = nil,
         stream: Bool = true,
-        tools: [[String: Any]]? = nil
+        tools: [[String: Any]]? = nil,
+        cacheScope: HanlinPromptCacheScope? = nil
     ) throws -> URLRequest {
-        var combinedSystem: String? = nil
-        if let systemPrompt = configuration.systemPrompt, !systemPrompt.isEmpty {
-            if let ctx = systemContext, !ctx.isEmpty {
-                combinedSystem = "\(systemPrompt)\n\nContext:\n\(ctx)"
-            } else {
-                combinedSystem = systemPrompt
-            }
-        } else if let ctx = systemContext, !ctx.isEmpty {
-            combinedSystem = "Context:\n\(ctx)"
-        }
-
+        // Keep the stable instruction prefix separate from per-request context.
+        // Providers can reuse the first block even when dynamic context changes.
         var messagePayloads: [[String: Any]] = []
-        if let combinedSystem, !combinedSystem.isEmpty {
-            messagePayloads.append([
-                "role": "system",
-                "content": combinedSystem
-            ])
+        if let systemPrompt = configuration.systemPrompt, !systemPrompt.isEmpty {
+            messagePayloads.append(["role": "system", "content": systemPrompt])
+        }
+        if let context = systemContext, !context.isEmpty {
+            messagePayloads.append(["role": "system", "content": "Context:\n\(context)"])
         }
         for msg in messages {
             messagePayloads.append([
@@ -49,7 +41,8 @@ public struct HanlinChatRequestBuilder: Sendable {
         return try buildRequest(
             formattedMessages: messagePayloads,
             configuration: configuration,
-            tools: tools
+            tools: tools,
+            cacheScope: cacheScope
         )
     }
 
@@ -59,26 +52,30 @@ public struct HanlinChatRequestBuilder: Sendable {
     public static func buildRequest(
         formattedMessages: [[String: Any]],
         configuration: HanlinChatModelConfiguration,
-        tools: [[String: Any]]? = nil
+        tools: [[String: Any]]? = nil,
+        cacheScope: HanlinPromptCacheScope? = nil
     ) throws -> URLRequest {
         switch (configuration.apiType ?? "OpenAI").lowercased() {
         case "anthropic":
             return try buildAnthropicRequest(
                 formattedMessages: formattedMessages,
                 configuration: configuration,
-                tools: tools
+                tools: tools,
+                cacheScope: cacheScope
             )
         case "gemini":
             return try buildGeminiRequest(
                 formattedMessages: formattedMessages,
                 configuration: configuration,
-                tools: tools
+                tools: tools,
+                cacheScope: cacheScope
             )
         default:
             return try buildOpenAIRequest(
                 formattedMessages: formattedMessages,
                 configuration: configuration,
-                tools: tools
+                tools: tools,
+                cacheScope: cacheScope
             )
         }
     }
@@ -88,7 +85,8 @@ public struct HanlinChatRequestBuilder: Sendable {
     public static func buildOpenAIBody(
         formattedMessages: [[String: Any]],
         configuration: HanlinChatModelConfiguration,
-        tools: [[String: Any]]? = nil
+        tools: [[String: Any]]? = nil,
+        cacheScope: HanlinPromptCacheScope? = nil
     ) -> [String: Any] {
         let baseName = configuration.baseModelID.isEmpty ? restoreBaseModelName(from: configuration.modelID) : configuration.baseModelID
         let maxTokens = configuration.maxTokens > 0
@@ -97,7 +95,7 @@ public struct HanlinChatRequestBuilder: Sendable {
 
         var requestBody: [String: Any] = [
             "model": baseName,
-            "messages": formattedMessages,
+            "messages": addOpenAIBreakpoint(to: formattedMessages, configuration: configuration),
             "stream": true,
             "max_tokens": maxTokens
         ]
@@ -161,30 +159,45 @@ public struct HanlinChatRequestBuilder: Sendable {
             requestBody["reasoning"] = ["effort": effort]
         }
 
+        // This body-only API remains nonthrowing. The transport builder below
+        // revalidates the policy before serialization and rejects unsupported controls.
+        if let fields = try? cacheWireFields(configuration: configuration, cacheScope: cacheScope) {
+            requestBody.merge(fields) { _, cacheValue in cacheValue }
+        }
         return requestBody
     }
 
     public static func buildOpenAIRequest(
         formattedMessages: [[String: Any]],
         configuration: HanlinChatModelConfiguration,
-        tools: [[String: Any]]? = nil
+        tools: [[String: Any]]? = nil,
+        cacheScope: HanlinPromptCacheScope? = nil
     ) throws -> URLRequest {
         let requestBody = buildOpenAIBody(
             formattedMessages: formattedMessages,
             configuration: configuration,
-            tools: tools
+            tools: tools,
+            cacheScope: cacheScope
         )
 
         return try buildOpenAIRequest(
             requestBody: requestBody,
-            configuration: configuration
+            configuration: configuration,
+            cacheScope: cacheScope
         )
     }
 
     public static func buildOpenAIRequest(
         requestBody: [String: Any],
-        configuration: HanlinChatModelConfiguration
+        configuration: HanlinChatModelConfiguration,
+        cacheScope: HanlinPromptCacheScope? = nil
     ) throws -> URLRequest {
+        var requestBody = requestBody
+        for key in ["prompt_cache_key", "prompt_cache_retention", "prompt_cache_options"] {
+            requestBody.removeValue(forKey: key)
+        }
+        let cacheFields = try cacheWireFields(configuration: configuration, cacheScope: cacheScope)
+        requestBody.merge(cacheFields) { _, cacheValue in cacheValue }
         var req = URLRequest(url: configuration.endpoint)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -201,7 +214,8 @@ public struct HanlinChatRequestBuilder: Sendable {
     private static func buildAnthropicRequest(
         formattedMessages: [[String: Any]],
         configuration: HanlinChatModelConfiguration,
-        tools: [[String: Any]]?
+        tools: [[String: Any]]?,
+        cacheScope: HanlinPromptCacheScope? = nil
     ) throws -> URLRequest {
         var endpointURL = configuration.endpoint
         let urlStr = endpointURL.absoluteString
@@ -221,7 +235,7 @@ public struct HanlinChatRequestBuilder: Sendable {
         var anthropicMessages: [[String: Any]] = []
         for message in formattedMessages {
             let role = message["role"] as? String ?? "user"
-            if role == "system" {
+            if role == "system" || role == "developer" {
                 if let content = message["content"] as? String, !content.isEmpty {
                     systemParts.append(content)
                 }
@@ -248,7 +262,18 @@ public struct HanlinChatRequestBuilder: Sendable {
             "messages": anthropicMessages
         ]
         if !systemParts.isEmpty {
-            body["system"] = systemParts.joined(separator: "\n\n")
+            let policy = configuration.promptCachePolicy ?? .automatic
+            if policy.requestsExplicitControls {
+                body["system"] = systemParts.enumerated().map { index, text -> [String: Any] in
+                    var block: [String: Any] = ["type": "text", "text": text]
+                    if index == 0 {
+                        block["cache_control"] = ["type": "ephemeral", "ttl": policy.anthropicTTL.rawValue]
+                    }
+                    return block
+                }
+            } else {
+                body["system"] = systemParts.joined(separator: "\n\n")
+            }
         }
         if configuration.temperature > 0 {
             body["temperature"] = configuration.temperature
@@ -270,6 +295,7 @@ public struct HanlinChatRequestBuilder: Sendable {
             if !converted.isEmpty { body["tools"] = converted }
         }
 
+        body.merge(try cacheWireFields(configuration: configuration, cacheScope: cacheScope)) { _, value in value }
         var req = URLRequest(url: endpointURL)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -285,7 +311,8 @@ public struct HanlinChatRequestBuilder: Sendable {
     private static func buildGeminiRequest(
         formattedMessages: [[String: Any]],
         configuration: HanlinChatModelConfiguration,
-        tools: [[String: Any]]?
+        tools: [[String: Any]]?,
+        cacheScope: HanlinPromptCacheScope? = nil
     ) throws -> URLRequest {
         let baseName = configuration.baseModelID.isEmpty ? restoreBaseModelName(from: configuration.modelID) : configuration.baseModelID
         var endpointURL = configuration.endpoint
@@ -313,7 +340,7 @@ public struct HanlinChatRequestBuilder: Sendable {
         var contents: [[String: Any]] = []
         for message in formattedMessages {
             let sourceRole = message["role"] as? String ?? "user"
-            if sourceRole == "system" {
+            if sourceRole == "system" || sourceRole == "developer" {
                 if let content = message["content"] as? String, !content.isEmpty {
                     systemParts.append(content)
                 }
@@ -367,6 +394,12 @@ public struct HanlinChatRequestBuilder: Sendable {
             }
         }
 
+        try HanlinAISDKProviderFactory.validateCachedContentContext(
+            configuration: configuration, kind: .google,
+            hasSystemInstructions: !systemParts.isEmpty,
+            hasTools: body["tools"] != nil
+        )
+        body.merge(try cacheWireFields(configuration: configuration, cacheScope: cacheScope)) { _, value in value }
         var req = URLRequest(url: endpointURL)
         req.httpMethod = "POST"
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -374,6 +407,68 @@ public struct HanlinChatRequestBuilder: Sendable {
         req.timeoutInterval = 60
         req.httpBody = try JSONSerialization.data(withJSONObject: body, options: [.sortedKeys])
         return req
+    }
+
+    private static func cacheWireFields(
+        configuration: HanlinChatModelConfiguration,
+        cacheScope: HanlinPromptCacheScope?
+    ) throws -> [String: Any] {
+        // Legacy dispatch follows apiType, while the SDK can select a native
+        // provider from company. Cache fields must match this actual wire format.
+        let descriptorKind = HanlinAISDKProviderFactory.descriptor(for: configuration).kind
+        let kind: HanlinAISDKProviderKind
+        switch configuration.apiType?.lowercased() {
+        case "anthropic": kind = .anthropic
+        case "gemini": kind = .google
+        default:
+            kind = descriptorKind == .openAI || descriptorKind == .openAIResponses
+                ? descriptorKind : .openAICompatible
+        }
+        let options = try HanlinAISDKProviderFactory.cacheProviderOptions(
+            configuration: configuration, kind: kind, cacheScope: cacheScope,
+            validateExplicitReference: true
+        )
+        let data = try JSONEncoder().encode(options)
+        let providers = try JSONSerialization.jsonObject(with: data) as? [String: [String: Any]] ?? [:]
+        switch kind {
+        case .openAI, .openAIResponses:
+            let source = providers["openai"] ?? [:]
+            var result: [String: Any] = [:]
+            result["prompt_cache_key"] = source["promptCacheKey"]
+            result["prompt_cache_retention"] = source["promptCacheRetention"]
+            if var controls = source["promptCacheOptions"] as? [String: Any] {
+                controls["comparison_response_id"] = controls.removeValue(forKey: "comparisonResponseId")
+                result["prompt_cache_options"] = controls
+            }
+            return result
+        case .anthropic:
+            guard let control = providers["anthropic"]?["cacheControl"] else { return [:] }
+            return ["cache_control": control]
+        case .google:
+            guard let reference = providers["google"]?["cachedContent"] else { return [:] }
+            return ["cachedContent": reference]
+        case .openAICompatible, .appleOnDevice:
+            return [:]
+        }
+    }
+
+    private static func addOpenAIBreakpoint(
+        to messages: [[String: Any]],
+        configuration: HanlinChatModelConfiguration
+    ) -> [[String: Any]] {
+        let descriptor = HanlinAISDKProviderFactory.descriptor(for: configuration)
+        guard let options = HanlinAISDKProviderFactory.cacheBreakpointOptions(
+            configuration: configuration, kind: descriptor.kind
+        )?["openai"]?["promptCacheBreakpoint"],
+              let data = try? JSONEncoder().encode(options),
+              let marker = try? JSONSerialization.jsonObject(with: data),
+              let index = messages.firstIndex(where: {
+                  ["system", "developer"].contains($0["role"] as? String ?? "") && $0["content"] is String
+              }),
+              let text = messages[index]["content"] as? String else { return messages }
+        var messages = messages
+        messages[index]["content"] = [["type": "text", "text": text, "prompt_cache_breakpoint": marker]]
+        return messages
     }
 
     private static func anthropicTools(from tools: [[String: Any]]) -> [[String: Any]] {
