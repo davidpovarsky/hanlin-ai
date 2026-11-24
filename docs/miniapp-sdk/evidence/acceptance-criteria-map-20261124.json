@@ -46,7 +46,8 @@
     "failureEvidence": {
       "path": "docs/miniapp-sdk/evidence/native-gate-13-publication-type-20261124/receipt.json",
       "sha256": "a52bda79b49f50b204c39ed61e97b350300c6561e3debfa943274acb4fab600b"
-    }
+    },
+    "priorWidgetCxxConsumerResult": "Swift compilation not started for either affected target; configuration fix remains pending Apple consumer validation"
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1056,6 +1057,10 @@
     "native_gate_13_publication_type": {
       "path": "docs/miniapp-sdk/evidence/native-gate-13-publication-type-20261124/receipt.json",
       "sha256": "a52bda79b49f50b204c39ed61e97b350300c6561e3debfa943274acb4fab600b"
+    },
+    "main13_prior_widget_consumer_compilation_scope": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-13-publication-type-20261124/prior-widget-consumer-compilation-scope.json",
+      "sha256": "75527c9f973085906c42e443f54d45d8d788b5afbcd5391921fc8f695cbe79bd"
     }
   },
   "criteria": [
