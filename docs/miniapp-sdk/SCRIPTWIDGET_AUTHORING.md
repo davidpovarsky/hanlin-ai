@@ -80,7 +80,7 @@ export function select(event: ScriptWidgetActionEvent<{text: string}>) {
 }
 ```
 
-`actionParameters` is JSON and the native handler receives `parameters` plus an optional Boolean `value`. The original native element tree is used for seven `$dynamic_island` regions: expanded leading/trailing/center/bottom, compact leading/trailing, and minimal. The function captures the original program's region trees; it does not independently start an ActivityKit activity. The Expo/NativeScript `hostServices.liveActivities` API selects the installed ScriptWidget entrypoint for that purpose.
+`actionParameters` is JSON and the native handler receives `parameters` plus an optional Boolean `value`. The original native element tree is used for seven `$dynamic_island` regions: expanded leading/trailing/center/bottom, compact leading/trailing, and minimal. The function captures the original program's region trees; it does not independently start an ActivityKit activity. The Expo/NativeScript `hostServices.liveActivities` API selects the installed ScriptWidget entrypoint for that purpose. Live Activity programs receive `$getenv("liveActivity") === true` and `$widget.liveActivity === true`, including when their native actions run; the snippet/translation `presentation` context is absent on this surface.
 
 `$component(name, builder)` is the installed diagnostic registration hook. Function components are already resolved by the JSX compiler; this hook does not create another component registry. These declarations are emitted only when the generator finds the corresponding actual host bindings. There is no `$miniapp` global.
 
