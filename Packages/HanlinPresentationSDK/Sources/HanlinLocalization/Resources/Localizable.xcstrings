@@ -18449,6 +18449,75 @@
           }
         }
       }
+    },
+    "Configuration JSON must contain an object.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuration JSON must contain an object."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הגדרות ה־JSON חייבות להכיל אובייקט."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "配置 JSON 必须包含一个对象。"
+          }
+        }
+      }
+    },
+    "Select this widget's current options again.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select this widget's current options again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו מחדש את האפשרויות העדכניות של הווידג׳ט הזה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请重新选择此小组件当前可用的选项。"
+          }
+        }
+      }
+    },
+    "Choose one option for each widget parameter.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose one option for each widget parameter."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו אפשרות אחת לכל הגדרה של הווידג׳ט."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请为小组件的每个参数选择一个选项。"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

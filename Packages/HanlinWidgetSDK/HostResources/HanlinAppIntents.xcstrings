@@ -482,6 +482,121 @@
           }
         }
       }
+    },
+    "Widget option": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widget option"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשרות לווידג׳ט"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "小组件选项"
+          }
+        }
+      }
+    },
+    "Widget options": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widget options"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשרויות הווידג׳ט"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "小组件选项"
+          }
+        }
+      }
+    },
+    "Configuration (JSON)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuration (JSON)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הגדרות (JSON)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "配置（JSON）"
+          }
+        }
+      }
+    },
+    "Choose one value for each parameter. These choices override matching JSON values.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose one value for each parameter. These choices override matching JSON values."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו ערך אחד לכל הגדרה. בחירות אלה מחליפות ערכי JSON בעלי אותו שם."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为每个参数选择一个值。这些选择会覆盖 JSON 中的同名值。"
+          }
+        }
+      }
+    },
+    "Additional widget values, for example text, numbers and true or false.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Additional widget values, for example text, numbers and true or false."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ערכי הגדרות נוספים לווידג׳ט, למשל טקסט, מספרים וערכי true או false."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "其他小组件配置值，例如文本、数字以及 true 或 false。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

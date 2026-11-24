@@ -2,6 +2,7 @@ import AppIntents
 @preconcurrency import ExpoWidgets
 import Foundation
 import HanlinLocalization
+import HanlinPlatformContracts
 import SwiftUI
 import WidgetKit
 
@@ -50,18 +51,34 @@ public struct HanlinOriginalExpoWidgetConfiguration: WidgetConfigurationIntent {
     public static let title = LocalizedStringResource("Expo widget", table: "HanlinAppIntents")
     public static let description = IntentDescription(LocalizedStringResource("Choose a widget registered by an installed MiniApp using the original Expo Widgets API.", table: "HanlinAppIntents"))
     @Parameter(title: LocalizedStringResource("Widget", table: "HanlinAppIntents")) public var widget: HanlinOriginalExpoWidgetEntity?
+    @Parameter(title: LocalizedStringResource("Widget options", table: "HanlinAppIntents"),
+        description: LocalizedStringResource("Choose one value for each parameter. These choices override matching JSON values.", table: "HanlinAppIntents"),
+        default: [])
+    public var options: [HanlinOriginalExpoWidgetOptionEntity]
+    @Parameter(title: LocalizedStringResource("Configuration (JSON)", table: "HanlinAppIntents"),
+        description: LocalizedStringResource("Additional widget values, for example text, numbers and true or false.", table: "HanlinAppIntents"),
+        default: "{}")
+    public var configurationJSON: String
     public init() {}
-    public init(widget: HanlinOriginalExpoWidgetEntity?) { self.widget = widget }
+    public init(widget: HanlinOriginalExpoWidgetEntity?, options: [HanlinOriginalExpoWidgetOptionEntity] = [],
+                configurationJSON: String = "{}") {
+        self.widget = widget
+        self.options = options
+        self.configurationJSON = configurationJSON
+    }
 }
 
 public struct HanlinOriginalExpoWidgetEntry: TimelineEntry {
     public let date: Date
     public let original: WidgetsTimelineEntry?
     public let unavailableMessage: String?
-    public init(date: Date = .now, original: WidgetsTimelineEntry? = nil, unavailableMessage: String? = nil) {
+    public let configuration: [String: HanlinValue]
+    public init(date: Date = .now, original: WidgetsTimelineEntry? = nil, unavailableMessage: String? = nil,
+                configuration: [String: HanlinValue] = [:]) {
         self.date = date
         self.original = original
         self.unavailableMessage = unavailableMessage
+        self.configuration = configuration
     }
 }
 
@@ -84,8 +101,15 @@ public struct HanlinOriginalExpoWidgetProvider: AppIntentTimelineProvider {
               HanlinExpoWidgetsIntegration.registeredWidgetNames().contains(selected.id) else {
             return Timeline(entries: [.init(unavailableMessage: String(localized: "Choose a current Expo widget from this app.", bundle: HanlinLocalization.bundle))], policy: .never)
         }
+        let values: [String: HanlinValue]
+        do {
+            values = try HanlinOriginalExpoWidgetOptions.values(widgetID: selected.id,
+                options: configuration.options, json: configuration.configurationJSON)
+        } catch {
+            return Timeline(entries: [.init(unavailableMessage: error.localizedDescription)], policy: .never)
+        }
         let timeline = HanlinExpoWidgetsIntegration.timeline(named: selected.id, family: context.family)
-        let entries = timeline.entries.map { HanlinOriginalExpoWidgetEntry(date: $0.date, original: $0) }
+        let entries = timeline.entries.map { HanlinOriginalExpoWidgetEntry(date: $0.date, original: $0, configuration: values) }
         return Timeline(entries: entries.isEmpty
             ? [.init(unavailableMessage: String(localized: "This Expo widget has no timeline.", bundle: HanlinLocalization.bundle))] : entries, policy: timeline.policy)
     }
@@ -97,7 +121,7 @@ public struct HanlinOriginalExpoWidget: Widget {
         AppIntentConfiguration(kind: HanlinExpoWidgetsIntegration.genericWidgetKind,
             intent: HanlinOriginalExpoWidgetConfiguration.self, provider: HanlinOriginalExpoWidgetProvider()) { entry in
             if let original = entry.original {
-                WidgetsEntryView(entry: original)
+                WidgetsEntryView(entry: original, configuration: entry.configuration.mapValues { $0.toAny() })
             } else {
                 Text(entry.unavailableMessage ?? String(localized: "Expo widget unavailable", bundle: HanlinLocalization.bundle))
                     .multilineTextAlignment(.center)

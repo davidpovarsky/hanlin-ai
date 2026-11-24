@@ -3,6 +3,7 @@ import ExpoModulesCore
 @testable import ExpoWidgets
 import Foundation
 import HanlinWidgetUI
+import HanlinPlatformContracts
 import WidgetKit
 import XCTest
 
@@ -61,8 +62,8 @@ final class HanlinOriginalExpoWidgetTests: XCTestCase {
         defer {
             for id in registrations {
                 defaults.removeObject(forKey: "__hanlin_expo_widget_registration_v1." + id)
-                for suffix in ["layout", "timeline", "initial_props"] {
-                    defaults.removeObject(forKey: "__expo_widgets_" + id + "_" + suffix)
+                for key in defaults.dictionaryRepresentation().keys where key.hasPrefix("__expo_widgets_" + id + "_") {
+                    defaults.removeObject(forKey: key)
                 }
             }
             HanlinExpoWidgetsIntegration.unbind(appContext: first)
@@ -102,6 +103,45 @@ final class HanlinOriginalExpoWidgetTests: XCTestCase {
         XCTAssertEqual(originalTimeline.entries[0].props?["label"] as? String, "מקור")
         XCTAssertEqual(originalTimeline.entries[1].date.timeIntervalSince1970,
             Double(timestamp + 60_000) / 1_000, accuracy: 0.001)
+        var genesis = WidgetConfigurationOptionRecord()
+        genesis.name = "בראשית"
+        genesis.value = "Genesis"
+        genesis.subtitle = "ספר ראשון"
+        var exodus = WidgetConfigurationOptionRecord()
+        exodus.name = "שמות"
+        exodus.value = "Exodus"
+        widget.setConfigurationParameterEnum(parameterName: "book", options: [genesis, exodus])
+        let actualOptions = HanlinOriginalExpoWidgetOptions.options(widgetID: firstID)
+        XCTAssertEqual(Set(actualOptions.map(\.value)), ["Genesis", "Exodus"])
+        let selected = try XCTUnwrap(actualOptions.first { $0.value == "Genesis" })
+        XCTAssertEqual(selected.parameter, "book")
+        XCTAssertEqual(selected.name, "בראשית")
+        XCTAssertEqual(selected.subtitle, "ספר ראשון")
+        let restoredOptions = try await HanlinOriginalExpoWidgetOptionQuery().entities(for: [selected.id])
+        XCTAssertEqual(restoredOptions.map(\.id), [selected.id])
+        let configuration = try HanlinOriginalExpoWidgetOptions.values(widgetID: firstID, options: [selected],
+            json: #"{"book":"JSON value","limit":7.5,"compact":true,"caption":"מקור"}"#)
+        XCTAssertEqual(configuration["book"], .string("Genesis"))
+        XCTAssertEqual(configuration["limit"], .number(7.5))
+        XCTAssertEqual(configuration["compact"], .bool(true))
+        let configuredLayout = """
+          (props, environment) => ({type: 'TextView', props: {
+            text: environment.configuration.book + '|' +
+              typeof environment.configuration.limit + '|' + environment.configuration.limit + '|' +
+              typeof environment.configuration.compact + '|' + environment.configuration.compact + '|' +
+              environment.configuration.caption
+          }})
+          """
+        let configuredNode = evaluateLayout(layout: configuredLayout, props: [:],
+            environment: ["configuration": configuration.mapValues { $0.toAny() }])
+        XCTAssertEqual((configuredNode["props"] as? [String: Any])?["text"] as? String,
+            "Genesis|number|7.5|boolean|true|מקור")
+        _ = WidgetsEntryView(entry: originalTimeline.entries[0], configuration: configuration.mapValues { $0.toAny() })
+        XCTAssertThrowsError(try HanlinOriginalExpoWidgetOptions.values(widgetID: firstID, options: actualOptions, json: "{}"))
+        XCTAssertThrowsError(try HanlinOriginalExpoWidgetOptions.values(widgetID: secondID, options: [selected], json: "{}"))
+        XCTAssertThrowsError(try HanlinOriginalExpoWidgetOptions.values(widgetID: firstID, options: [], json: "[]"))
+        widget.setConfigurationParameterEnum(parameterName: "book", options: nil)
+        XCTAssertThrowsError(try HanlinOriginalExpoWidgetOptions.values(widgetID: firstID, options: [selected], json: "{}"))
         _ = WidgetsTimelineProvider(name: firstID)
         _ = WidgetsEntryView(entry: originalTimeline.entries[0])
         _ = HanlinOriginalExpoWidget()

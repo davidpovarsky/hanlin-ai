@@ -315,3 +315,31 @@ case, `testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension`,
 executes the actual compiler output in JavaScriptCore; the existing durable
 snippet case also checks native toggle state. These Apple cases remain pending
 until the native gate executes them.
+
+### Original Expo configuration values
+
+The system **Expo MiniApp** picker now includes **Widget options** and
+**Configuration (JSON)**. Options come from original
+setConfigurationParameterEnum storage, decoded by original
+widgetConfigurationOptions(name:parameter:fallback:). The option query depends
+on the selected widget; identities include the exact registration, parameter and
+original value. No names, choices or parameter counts are hardcoded.
+
+Choose one enum value per parameter. The optional JSON dictionary preserves
+string, number and Boolean values (and other JSON values accepted by a widget's
+own typed environment). Selected enum values override matching dictionary keys.
+Conflicting options, options from another registration, removed options and
+invalid JSON produce a visible configuration error rather than selecting a
+different value. The timeline forwards the resolved dictionary to original
+WidgetsEntryView, including its interactive callback environment.
+
+This is a generic imported-package configuration flow. Original Expo's config
+plugin generates a separate static Swift AppIntent for each build-time schema;
+an already built host does not generate new Swift parameter declarations at
+import time. All current original scalar configuration types are preserved
+through this generic dictionary and enum picker.
+
+The existing original-Expo native conformance case now also writes actual
+original enum records, restores option entities, verifies type preservation and
+enum precedence through the original JavaScript renderer, and checks stale,
+foreign and conflicting option handling. The Apple case count is unchanged.
