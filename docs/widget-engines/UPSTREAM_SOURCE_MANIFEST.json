@@ -297,9 +297,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagStack.swift",
       "upstreamBlob": "97cb355ccd4a7acd214a3e53c8ab10f5ad6fecbb",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagStack.swift",
-      "localSHA256": "18f2e2f80a13fdc6273029c893bc06bc84d1f23b2defe35887669e621081cc18",
+      "localSHA256": "88bc7858b237c269ea5551cefd5ba9ea014897f2d4d6032f171a5db43a3a9b2f",
       "byteIdentical": false,
-      "adaptation": "Swift 6 MainActor annotations and trailing-space normalization. Renderer context, Button/Toggle intents, dynamic color and bounded image transport are Hanlin adapters; see source diff."
+      "adaptation": "Original stack, list, layout and drawing bodies retained. Swift 6 MainActor isolation for stack/list rendering helpers and trailing-space normalization; build-time original-source projection preserves the list annotation across refreshes."
     },
     {
       "repository": "everettjf/scriptwidget",

@@ -74,6 +74,13 @@ export function originalInHostTarget(bytes,local) {
     // Project all merge sides so an unchanged upstream also repairs older copies.
     return Buffer.from(bytes.toString().replace('private static let forms: [(', 'private static let forms: [@Sendable ('));
   }
+  if(local==='Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagStack.swift') {
+    // The original plain list helper constructs MainActor SwiftUI views. Keep
+    // its complete layout bodies and project isolation on every merge side.
+    const text=bytes.toString(),declaration=/^struct ScriptWidgetElementTagList\s*\{/m.exec(text);
+    if(!declaration||/@MainActor\s*$/.test(text.slice(0,declaration.index)))return bytes;
+    return Buffer.from(text.slice(0,declaration.index)+'@MainActor\n'+text.slice(declaration.index));
+  }
   if(!local.startsWith('Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/'))return bytes;
   // This existing extension target compiles the original Core/UI widget types
   // together in one module. The original source's imports of those same modules

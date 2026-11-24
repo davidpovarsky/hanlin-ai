@@ -83,6 +83,7 @@ class ScriptWidgetElementTagStack {
 /// heights, with the list's `spacing` between them, and a row that does not
 /// fit completely is not drawn. The list takes the room it is offered, as on
 /// Android, and reads the same attributes: `spacing` and the general ones.
+@MainActor
 struct ScriptWidgetElementTagList {
     /// As many rows as Android lays out.
     static let maximumRows = 100
