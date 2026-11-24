@@ -19,17 +19,19 @@ TEST_SCOPE = os.environ.get('SPLIT_NATIVE_TEST_SCOPE', 'baseline')
 UI_PLANS = {
     'cross_app': (['HanlinMiniAppsTests/CrossAppInvocationTests',
                   'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
-                  'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests'], 12),
+                  'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests',
+                  'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests'], 13),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
     # Cross-app adapters and teardown changed: recheck these two runtime cases
-    # and twelve new producer/UI cases. Do not repeat unchanged storage tests.
+    # and thirteen producer/UI/owner cases. Do not repeat unchanged storage tests.
     'production_runtimes': ([
         'HanlinMiniAppsTests/CrossAppInvocationTests',
         'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
         'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests',
+        'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
-        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 14),
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 15),
 }
 
 
