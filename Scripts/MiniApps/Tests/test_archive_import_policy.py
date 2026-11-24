@@ -24,6 +24,7 @@ args.output.mkdir(parents=True, exist_ok=True)
 compiler_root = ROOT / "Packages/HanlinPlatform/Sources/HanlinScriptCompiler"
 contracts_file = ROOT / "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift"
 policy_file = compiler_root / "HanlinArchivePolicy.swift"
+path_file = ROOT / "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift"
 center_file = compiler_root / "HanlinPackageCenter.swift"
 tests_file = ROOT / "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift"
 
@@ -38,6 +39,7 @@ with tempfile.TemporaryDirectory(prefix="hanlin-archive-policy-", dir=os.environ
     parser_body = center[center.index("    private static func centralDirectoryEntryCount"):
                          center.rfind("\n}")]
     production = {
+        "Sources/HanlinPlatformContracts/HanlinPackagePath.swift": path_file.read_text(),
         "Sources/HanlinScriptContracts/ArchiveContracts.swift": "import Foundation\n" + contract_body,
         "Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift": policy_file.read_text(),
         "Sources/HanlinScriptCompiler/DirectoryParser.swift":
@@ -53,8 +55,9 @@ with tempfile.TemporaryDirectory(prefix="hanlin-archive-policy-", dir=os.environ
     (package / "Package.swift").write_text("""// swift-tools-version: 6.0
 import PackageDescription
 let package = Package(name: "ArchiveImportPolicyProbe", targets: [
+    .target(name: "HanlinPlatformContracts"),
     .target(name: "HanlinScriptContracts"),
-    .target(name: "HanlinScriptCompiler", dependencies: ["HanlinScriptContracts"]),
+    .target(name: "HanlinScriptCompiler", dependencies: ["HanlinPlatformContracts", "HanlinScriptContracts"]),
     .testTarget(name: "ArchiveImportPolicyTests", dependencies: ["HanlinScriptCompiler", "HanlinScriptContracts"])
 ])
 """)
@@ -157,7 +160,7 @@ struct HanlinArchiveDirectoryTests {
         "toolchain": toolchain,
         "command": "swift test (isolated portable package; production policy and private parser verbatim)",
         "inputs": [{"path": str(file.relative_to(ROOT)), "sha256": hashlib.sha256(file.read_bytes()).hexdigest()}
-                   for file in [contracts_file, policy_file, center_file, tests_file, Path(__file__)]],
+                   for file in [contracts_file, policy_file, path_file, center_file, tests_file, Path(__file__)]],
         "parserBodySHA256": hashlib.sha256(parser_body.encode()).hexdigest(),
         "rawLog": "archive-import-policy.txt",
         "fixtures": {"ordinaryZIPEntries": len(metadata), "ZIP64Entries": 65_536, "classicZIPEntries": 65_535,

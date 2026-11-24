@@ -37,7 +37,7 @@ public enum HanlinWidgetCompiler {
     public static func preparePresentation(_ declaration: HanlinNativePresentationMetadata,
                                            files: [String: Data]) throws -> HanlinWidgetProgram {
         guard declaration.engine != .legacy,
-              HanlinArchivePolicy.normalizedRelativePath(declaration.sourcePath) == declaration.sourcePath,
+              HanlinPackagePath.normalizedRelativePath(declaration.sourcePath) == declaration.sourcePath,
               let format = HanlinWidgetPackageMetadata.SourceFormat(rawValue: declaration.sourceFormat) else {
             throw HanlinWidgetProgramError.invalidSource
         }

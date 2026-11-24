@@ -1,0 +1,19 @@
+SwiftCompile normal arm64 Compiling\ HanlinWidgetCompiler.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift (in target 'HanlinWidgetCompiler' from project 'HanlinSDK')
+/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift:40:15: error: cannot find 'HanlinArchivePolicy' in scope
+ 38 |                                            files: [String: Data]) throws -> HanlinWidgetProgram {
+ 39 |         guard declaration.engine != .legacy,
+ 40 |               HanlinArchivePolicy.normalizedRelativePath(declaration.sourcePath) == declaration.sourcePath,
+    |               `- error: cannot find 'HanlinArchivePolicy' in scope
+ 41 |               let format = HanlinWidgetPackageMetadata.SourceFormat(rawValue: declaration.sourceFormat) else {
+ 42 |             throw HanlinWidgetProgramError.invalidSource
+Result bundle written to path:
+	/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult
+
+** TEST BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftCompile normal arm64 Compiling\ HanlinWidgetCompiler.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift (in target 'HanlinWidgetCompiler' from project 'HanlinSDK')
+	SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift (in target 'HanlinWidgetCompiler' from project 'HanlinSDK')
+	Building project AI_HLY for testing with scheme HanlinMiniApps
+(3 failures)

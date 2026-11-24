@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "baseSourceSHA": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+  "reviewedSourceCheckpointSHA": "1b34855035c7a4d22bd9ac3d41a47ed1229405e1",
+  "scope": "Focused module visibility and unchanged archive/path behavior only.",
+  "sourceDeltaUnchangedAfterReview": true,
+  "productionAndHarnessInputs": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+      "sha256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift",
+      "sha256": "57b142d4770a8f8916d3d651f1a727a0ae55254cc05a082db12e1c5d22f30ba2"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+      "sha256": "3864dc8b4e4de02d55e2227643451ec74befed4b5eb9ca65cada5c6fc4fc392b"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/test_archive_import_policy.py",
+      "sha256": "296b96b3a70d2fa6b9657cebb0e4b9f98a29d78b43343f66e5ff1e1450fc62f8"
+    }
+  ],
+  "executed": [
+    {
+      "name": "existing archive import policy and real ZIP directory parser",
+      "testMethods": 12,
+      "suites": 2,
+      "status": "EXECUTED_PASS",
+      "receipt": "archive-policy/archive-import-policy.json",
+      "rawLog": "archive-policy/archive-import-policy.txt",
+      "repeated": false
+    },
+    {
+      "name": "complete original PlatformContracts target with actual SwiftPM resource generation",
+      "sourceFiles": 24,
+      "status": "EXECUTED_PASS",
+      "receipt": "module-boundary.json",
+      "rawLog": "module-compile.log"
+    },
+    {
+      "name": "old WidgetCompiler path predicate across a separate Swift module",
+      "status": "EXPECTED_UNDEFINED_SYMBOL_REPRODUCED",
+      "rawLog": "before-consumer-typecheck.log"
+    },
+    {
+      "name": "new WidgetCompiler path predicate across a separate Swift module",
+      "status": "EXECUTED_PASS",
+      "rawLog": "after-consumer-typecheck.log"
+    },
+    {
+      "name": "original normalization and drive-prefix bodies",
+      "status": "BYTE_IDENTICAL",
+      "receipt": "module-boundary.json"
+    }
+  ],
+  "preservedFailure": {
+    "classification": "FAILED_PROBE_SETUP",
+    "receipt": "initial-direct-swiftc/module-boundary.json",
+    "rawLog": "initial-direct-swiftc/module-compile.log",
+    "reason": "The first direct swiftc probe did not generate the Bundle.module accessor required by the existing ManifestSchema source. Only the verification invocation was corrected to use the original SwiftPM target declaration and resource folder; product sources were unchanged."
+  },
+  "independentReview": {
+    "reviewer": "/root/entrypoints",
+    "sourceSHA": "1b34855035c7a4d22bd9ac3d41a47ed1229405e1",
+    "status": "NO_CONCRETE_BLOCKER",
+    "scope": "Public visibility, verbatim path bodies, both package dependency declarations, automatic source membership and absence of cycles. Reviewer ran no tests."
+  },
+  "appleAcceptance": {
+    "status": "NEEDS_TEST",
+    "nativeGate": "38 selected cases; root-owned next run",
+    "previousRun": 45335292541,
+    "previousSourceSHA": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+    "previousStatus": "BUILD_FAILED",
+    "nativeErrorEvidence": "native-before-compiler-error.log"
+  },
+  "notRun": [
+    "Full HanlinWidgetCompiler target with Apple dependencies",
+    "Native gate38",
+    "ZIPFoundation extraction",
+    "Darwin shared store",
+    "UI or device acceptance"
+  ],
+  "reusedPasses": [],
+  "whitespaceCheck": {
+    "productionAndHarness": "PASS",
+    "rawCompilerEvidence": "Compiler diagnostic source excerpts retain their original trailing whitespace; logs are preserved verbatim."
+  }
+}
