@@ -19,11 +19,11 @@
     "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45441138261",
     "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
     "scope": "miniapp_complete",
-    "status": "IN_PROGRESS",
+    "status": "COMPLETED_INFRASTRUCTURE_FAILURE",
     "selectedCases": 52,
     "miniAppsCases": 25,
     "aiCases": 27,
-    "caseStatus": "NOT_RUN_AT_DISPATCH",
+    "caseStatus": "NOT_RUN",
     "dispatchReceipt": {
       "path": "docs/miniapp-sdk/evidence/seventeenth-native-gate-dispatch-20261124.json",
       "sha256": "7a509801a2e0bf85a536f6861f4352995e16286dc0cc9c05a6a2139ea5925508"
@@ -35,7 +35,14 @@
       "Actual diagnostic-sheet/repaired-native-app attachments",
       "Exact original archive/report handoff and nonempty installedPackageID receipt"
     ],
-    "boundary": "Current native/application results pending. MAIN16 full MiniApps build and actual SDK passes retain their own source attribution. Two reviewed AI test corrections require this actual full gate."
+    "boundary": "No build/test execution. Underlying provider/capacity cause unspecified. No cancellation was issued by root.",
+    "firstMiniAppsBuild": "NOT_RUN",
+    "aiBuild": "NOT_RUN",
+    "resultReceipt": {
+      "path": "docs/miniapp-sdk/evidence/main17-queue-termination-20261124/receipt.json",
+      "sha256": "9ea2f8a06ad2eaf1553539fa803b24bd0c1a1cb8614b6b0c696b7e5279786a0f"
+    },
+    "reason": "Hosted runner was not acquired after multiple attempts; no recorded steps or artifacts"
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1084,6 +1091,14 @@
       "actualSnippetProjects": 4,
       "actualSnippetDiagnostics": 0,
       "boundary": "SDK proof is separate from MiniApps build PASS, AI test compilation FAIL, and all52 application cases NOT_RUN."
+    },
+    "main17_hosted_acquisition_failure": {
+      "path": "docs/miniapp-sdk/evidence/main17-queue-termination-20261124/receipt.json",
+      "sha256": "9ea2f8a06ad2eaf1553539fa803b24bd0c1a1cb8614b6b0c696b7e5279786a0f"
+    },
+    "toolchain_requirement_correction": {
+      "path": "docs/miniapp-sdk/evidence/toolchain-routing-correction-20261124.json",
+      "sha256": "b4d5ddca7fb0cb22e67d3186c58fb26600fccaeb3a0d85c98868208d6b256d63"
     }
   },
   "criteria": [
@@ -1399,9 +1414,9 @@
       }
     }
   ],
-  "recordingOutcome": "Four scoped tasks complete. MAIN17 exact52 gate active on reviewed two-test correction; current app/device proof pending. MAIN16 actual MiniApps build and SDK passes retained without attributing application success.",
-  "updatedAtUTC": "2026-11-24T16:48:53.760705+00:00",
-  "currentIntegrationBase": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "recordingOutcome": "Four scoped tasks complete. MAIN17 ended before any build/test from hosted runner acquisition failure. Primary27.0 preparation is now owned and active for the unchanged52 scope; native results pending.",
+  "updatedAtUTC": "2026-11-24T17:31:30.807381+00:00",
+  "currentIntegrationBase": "7f4894011c8e80711847eb0fa24d003bb9368938",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1661,7 +1676,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "MAIN17 differs from MAIN16 only in two AI test files outside SDK/inventory/reachability inputs. No generators rerun. Same original libraries and52selection, assertions, runner/workflow andbudgets. Only this receipt andmap are added after dispatch; tested source remains ce49e30d.",
+  "currentScopeNote": "Corrected prior27.2-only interpretation using actual guidance and unchanged runner conditions. Primary27.0 is version-eligible; original toolchain-bound producers must prepare matching artifacts. Control is sole native execution owner; no active GitHub build, no assertions/selectors weakened, no app code changed.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1798,7 +1813,7 @@
     "schemaVersion": 1,
     "sequence": 17,
     "atUTC": "2026-11-24T16:46:31.480919+00:00",
-    "status": "DISPATCHED",
+    "status": "COMPLETED_INFRASTRUCTURE_FAILURE",
     "implementationSource": "812fff05f8f4f9509e180a737c70b95ce76251dc",
     "scope": "miniapp_complete",
     "selectedCases": 52,
@@ -1867,7 +1882,15 @@
     },
     "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
     "runID": 45441138261,
-    "actualExecution": "PENDING_CURRENT_BUILD_AND_CASE_RESULTS"
+    "actualExecution": "NO_RUNNER_NO_STEPS_NO_ARTIFACTS_ALL52_NOT_RUN",
+    "resultReceipt": {
+      "path": "docs/miniapp-sdk/evidence/main17-queue-termination-20261124/receipt.json",
+      "sha256": "9ea2f8a06ad2eaf1553539fa803b24bd0c1a1cb8614b6b0c696b7e5279786a0f"
+    },
+    "toolchainRequirementCorrection": {
+      "path": "docs/miniapp-sdk/evidence/toolchain-routing-correction-20261124.json",
+      "sha256": "b4d5ddca7fb0cb22e67d3186c58fb26600fccaeb3a0d85c98868208d6b256d63"
+    }
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
@@ -2131,5 +2154,20 @@
     "actualSnippetProjects": 4,
     "actualSnippetDiagnostics": 0,
     "boundary": "SDK proof is separate from MiniApps build PASS, AI test compilation FAIL, and all52 application cases NOT_RUN."
+  },
+  "toolchainRequirementCorrection": {
+    "path": "docs/miniapp-sdk/evidence/toolchain-routing-correction-20261124.json",
+    "sha256": "b4d5ddca7fb0cb22e67d3186c58fb26600fccaeb3a0d85c98868208d6b256d63"
+  },
+  "primaryNativeExecution": {
+    "owner": "control_authoring",
+    "location": "primary Scaleway M2Pro",
+    "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+    "state": "SOURCE_AND_TOOLS_PREPARATION_IN_PROGRESS",
+    "sourceStageJob": "job_9b1c1e4cca8e",
+    "sourceStageState": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/source-stage.json",
+    "destination": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+    "scope": "Original miniapp_complete52 cases; no app/test/selector/budget changes",
+    "nativePass": "NOT_CLAIMED"
   }
 }
